@@ -33,12 +33,61 @@ Technology is prohibited.
 
 #pragma once
 
+#include "../Global.hpp"
+#include <queue>
+#include <array>
+#include <cassert>
+
+
 class EntityManager
 {
 	public:
-		EntityManager()
+		EntityManager() //ctor
 		{
-			
+			Entity entity;
+
+			for (entity = 0; entity < MAX_ENTITIES; ++entity)
+			{
+				EntityManager::AvailableEntities.push(entity); //adding entity
+			}
 		}
+
+		Entity CreateEntity()
+		{
+			assert(AliveEntityCount < MAX_ENTITIES && "Too many entities");
+			Entity ID = AvailableEntities.front();
+			AvailableEntities.pop();
+			++AliveEntityCount;
+
+			return ID;
+		}
+
+		void DestroyEntity(Entity entity)
+		{
+			assert(entity < MAX_ENTITIES && "Entities out of range");
+			mSignatures[entity].reset();
+			AvailableEntities.push(entity);
+			--AliveEntityCount;
+		}
+
+		void SetSignature(Entity entity, Signature signature)
+		{
+			assert(entity < MAX_ENTITIES && "Entities out of range");
+			mSignatures[entity] = signature;
+		}
+
+		Signature GetSignature(Entity entity)
+		{
+			assert(entity < MAX_ENTITIES && "Entities out of range");
+			return mSignatures[entity];
+
+		}
+
+
+
+	private:
+		uint32_t AliveEntityCount{}; // Total living entities
+		std::queue<Entity> AvailableEntities{}; // Queue of unused entity IDs
+		std::array<Signature, MAX_ENTITIES> mSignatures{}; // Array of signatures for index to correspond to ID
 };
 

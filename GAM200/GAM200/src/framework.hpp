@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*!
-\file Main.cpp
+\file framework.hpp
 \team name
 \software name
 \authors
@@ -30,6 +30,15 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
+
 #pragma once
 
-#include "Resource.hpp"
+#include "targetver.hpp"
+#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+// Windows Header Files
+#include <windows.h>
+// C RunTime Header Files
+#include <stdlib.h>
+#include <malloc.h>
+#include <memory.h>
+#include <tchar.h>

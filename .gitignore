@@ -109,3 +109,8 @@ ipch/
 *.ilk
 
 
+GAM200/.vs/
+GAM200/x64/
+
+*.tlog
+*.tlog

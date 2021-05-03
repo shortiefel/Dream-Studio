@@ -31,6 +31,12 @@
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{e874abce-03a0-4874-9baa-3b74ef959ac6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Maths">
+      <UniqueIdentifier>{85cb366c-2c2e-41a3-963b-3b787968ed91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Maths">
+      <UniqueIdentifier>{2745d6e3-f964-47f5-8cad-0286732654ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header\framework.hpp">

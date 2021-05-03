@@ -1,27 +1,22 @@
 /* Start Header**********************************************************************************/
 /*!
-\file targetver.hpp
+\file Global.hpp
 \team name
 \software name
 \authors
 NAME							EMAIL									ROLE
 Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
 Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg
-
 Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
 Chia Yi Da						chiayida98@gmail.com
 Margaret Teo Boon See			Teo.b@digipen.edu
-
 Wang Ao							Ao.Wang@digipen.edu
 Ng Jia Yi						Jiayi.ng@digipen.edu
-
-
-
 \date 26/04/2021
 \brief
 
-This file contains the starting point of the application. This is provided by Elie in CSD1130.
-
+Entity Manager is in charge of assigning entity IDs and keeping records of which IDs are in use
+and not.
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -33,7 +28,13 @@ Technology is prohibited.
 
 #pragma once
 
-// // Including SDKDDKVer.h defines the highest available Windows platform.
-// If you wish to build your application for a previous Windows platform, include WinSDKVer.h and
-// set the _WIN32_WINNT macro to the platform you wish to support before including SDKDDKVer.h.
-#include <SDKDDKVer.h>
+#include <iostream>
+#include <bitset>
+#include <cstdint>
+
+//ECS Components 
+using Entity = std::uint32_t;
+const Entity MAX_ENTITIES = 10000;
+using ComponentType = std::uint8_t;
+const ComponentType MAX_COMPONENTS = 48;
+using Signature = std::bitset<MAX_COMPONENTS>;

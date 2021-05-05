@@ -46,7 +46,9 @@ public:
 
 	Entity CreateEntity()
 	{
+		//error checking
 		assert(AliveEntityCount < MAX_ENTITIES && "Too many entities");
+
 		Entity ID = AvailableEntities.front();
 		AvailableEntities.pop();
 		++AliveEntityCount;
@@ -56,7 +58,9 @@ public:
 
 	void DestroyEntity(Entity entity)
 	{
+		//error checking
 		assert(entity < MAX_ENTITIES && "Entities out of range");
+
 		mSignatures[entity].reset();
 		AvailableEntities.push(entity);
 		--AliveEntityCount;
@@ -64,13 +68,17 @@ public:
 
 	void SetSignature(Entity entity, Signature signature)
 	{
+		//error checking
 		assert(entity < MAX_ENTITIES && "Entities out of range");
+
 		mSignatures[entity] = signature;
 	}
 
 	Signature GetSignature(Entity entity)
 	{
+		//error checking
 		assert(entity < MAX_ENTITIES && "Entities out of range");
+
 		return mSignatures[entity];
 
 	}

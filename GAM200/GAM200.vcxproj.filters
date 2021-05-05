@@ -57,6 +57,9 @@
     <ClInclude Include="src\Header\Entity\EntityManager.hpp">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\Component\ComponentArray.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Header\Main.cpp">

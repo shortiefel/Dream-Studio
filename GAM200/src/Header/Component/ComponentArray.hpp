@@ -41,3 +41,37 @@ class ComponentArrayInterface
 		virtual void EntityDestroyed(Entity entity) = 0; //tells my array its destroyed and it needs to update array mapping
 };
 
+
+//This template is to inherit the interface to prevent repeatation of codes
+//To include inserting and deleting of data
+template<typename T>
+class ComponentArray : public ComponentArrayInterface
+{
+	public:
+		void Insertion(Entity entity, T component)
+		{
+			//error checking
+			assert(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
+
+			size_t newIndex = Size;
+			EntityToIndexMap[entity] = newIndex; //Entity -> Index
+			IndexToEntityMap[newIndex] = entity; //Index -> Entity
+			ComponentArray[newIndex] = component; //Creating of the array and calls it component
+			Size++;
+		}
+
+		void Removing(Entity entity)
+		{
+			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
+
+			//Copies element at the end into deleted element's place 
+			size_t IndexRemoveEntity = IndexToEntityMap[entity];
+			size_t IndexLastElement = Size - 1;
+		}
+
+	private:
+		std::array<T, MAX_ENTITIES> ComponentArrayMAX{};
+		std::unordered_map<Entity, size_t> EntityToIndexMap{};
+		std::unordered_map<size_t, Entity> IndexToEntityMap{};
+		size_t Size;
+};

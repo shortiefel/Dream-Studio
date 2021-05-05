@@ -67,6 +67,11 @@ class ComponentArray : public ComponentArrayInterface
 			//Copies element at the end into deleted element's place 
 			size_t IndexRemoveEntity = IndexToEntityMap[entity];
 			size_t IndexLastElement = Size - 1;
+			ComponentArray[IndexRemoveEntity] = ComponentArray[IndexLastElement];
+
+			//Updating the map when it's shifted
+			Entity EntityLastElement = IndexToEntityMap[IndexLastElement];
+			EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
 		}
 
 	private:

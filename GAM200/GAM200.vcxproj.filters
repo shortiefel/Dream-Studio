@@ -37,6 +37,60 @@
     <Filter Include="Source Files\Maths">
       <UniqueIdentifier>{2745d6e3-f964-47f5-8cad-0286732654ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Factory">
+      <UniqueIdentifier>{397b86fe-c735-4459-9a8f-9194a2407478}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Serialization">
+      <UniqueIdentifier>{30ee0fbd-8658-45ba-bf40-d5a4bcbb6d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Debug">
+      <UniqueIdentifier>{58d1fa96-a081-4ce3-9dbc-a360186114be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debug">
+      <UniqueIdentifier>{529e8d35-9e51-4a33-84a3-c51445f59c18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Factory">
+      <UniqueIdentifier>{458bf8fe-3cb5-421e-b6bc-a88bfa9b1bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Serialization">
+      <UniqueIdentifier>{5615ee73-d337-437e-9861-f0e349d9c368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component\Physics">
+      <UniqueIdentifier>{da4aa9c4-a22f-4f2d-af9a-05320ce7886c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component\Graphics">
+      <UniqueIdentifier>{48ba6d67-7252-4b10-963d-36f0629c78f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component\Transform">
+      <UniqueIdentifier>{28922ce7-4bb9-4877-b34f-40d890d7d403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component\Collision">
+      <UniqueIdentifier>{63132148-113d-4103-ba6d-cf6e6d72c58b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Composition">
+      <UniqueIdentifier>{5d1f7385-616d-4b0f-a1be-03427d7a8568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component\Graphics">
+      <UniqueIdentifier>{db5cd36a-49a1-46f6-8b32-a7ec62b9377e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component\Collision">
+      <UniqueIdentifier>{6853793f-9807-4998-b38d-4065cbc28256}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component\Transform">
+      <UniqueIdentifier>{0d764807-f5b6-4946-ba29-21d8520da23b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component\Physics">
+      <UniqueIdentifier>{9b234115-0ab1-4903-9ccf-37c4cffd0c09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Composition">
+      <UniqueIdentifier>{e4543b88-c0f9-47af-967f-71c9c35ac352}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component\Animation">
+      <UniqueIdentifier>{12f1b7cf-1e23-4398-bdab-96792df73ce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component\Animation">
+      <UniqueIdentifier>{95e669b6-9e05-4996-8b1b-edeb742cb7a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header\framework.hpp">

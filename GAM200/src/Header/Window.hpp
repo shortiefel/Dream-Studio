@@ -5,7 +5,7 @@
 
 class Window {
 public:
-	static Window* Create(const std::string& ttitle = "Test engine", unsigned int twidth = 1280, unsigned int theight = 720);
+	static Window* Create(const std::string& ttitle = "Cel", unsigned int twidth = 1280, unsigned int theight = 720);
 	static void Destroy();
 	static GLFWwindow* GetGLFWwindow();
 

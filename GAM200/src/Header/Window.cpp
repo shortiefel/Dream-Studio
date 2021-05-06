@@ -1,3 +1,7 @@
+/*
+Function definitions for creating and destroying a window using GLFW API
+*/
+
 #include "Window.hpp"
 #include "pch.hpp"
 
@@ -22,7 +26,6 @@ GLFWwindow* Window::GetGLFWwindow() {
 }
 //-------------------------------------------------------------------
 
-
 unsigned int Window::GetWidth() { return w_data.width; }
 unsigned int Window::GetHeight() { return w_data.height; }
 
@@ -44,5 +47,4 @@ Window::Window(const std::string& ttitle, unsigned int twidth, unsigned int thei
 	glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
 	glfwMakeContextCurrent(glfw_window);
 	glfwSetWindowUserPointer(glfw_window, &w_data); //test call back function inside
-
 }

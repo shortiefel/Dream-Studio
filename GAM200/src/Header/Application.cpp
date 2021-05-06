@@ -1,4 +1,11 @@
+/*
+Create a window and other various required manager (e.g Physic / Graphic Manager)
+Contains the main application loop and the game loop
+*/
+
 #include "Application.hpp"
+
+//Static----------------------------------------------
 
 Application* Application::s_instance = 0;
 Window* Application::window = 0;
@@ -26,6 +33,8 @@ void Application::Run() {
 void Application::Destroy() {
     delete s_instance;
 }
+
+//------------------------------------------------------
 
 Application::~Application() {
     //Destroy in reverse order

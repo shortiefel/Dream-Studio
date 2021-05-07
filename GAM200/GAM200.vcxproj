@@ -151,9 +151,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Physic.hpp" />
-    <ClInclude Include="PhysicComponent.hpp" />
-    <ClInclude Include="PhysicManager.hpp" />
     <ClInclude Include="src\Header\Application.hpp" />
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
     <ClInclude Include="src\Header\Entity\EntityManager.hpp" />
@@ -161,16 +158,20 @@
     <ClInclude Include="src\Header\Global.hpp" />
     <ClInclude Include="src\Header\Main.hpp" />
     <ClInclude Include="src\Header\pch.hpp" />
+    <ClInclude Include="src\Header\Physic.hpp" />
+    <ClInclude Include="src\Header\CollisionComponent.hpp" />
+    <ClInclude Include="src\Header\PhysicManager.hpp" />
     <ClInclude Include="src\Header\Resource.hpp" />
+    <ClInclude Include="src\Header\RigidBodyComponent.hpp" />
     <ClInclude Include="src\Header\Singleton.hpp" />
     <ClInclude Include="src\Header\targetver.hpp" />
     <ClInclude Include="src\Header\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Physic.cpp" />
-    <ClCompile Include="PhysicManager.cpp" />
     <ClCompile Include="src\Header\Application.cpp" />
     <ClCompile Include="src\Header\Main.cpp" />
+    <ClCompile Include="src\Header\Physic.cpp" />
+    <ClCompile Include="src\Header\PhysicManager.cpp" />
     <ClCompile Include="src\Header\Singleton.cpp" />
     <ClCompile Include="src\Header\Window.cpp" />
   </ItemGroup>

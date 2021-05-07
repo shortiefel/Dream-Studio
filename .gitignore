@@ -17,6 +17,7 @@
 *.pch
 
 # Libraries
+*.lib
 *.a
 *.la
 *.lo
@@ -110,3 +111,6 @@ ipch/
 
 GAM200/.vs/
 GAM200/x64/
+
+*.tlog
+*.tlog

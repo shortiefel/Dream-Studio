@@ -20,7 +20,7 @@ void Application::Create() {
 //Main application loop is done here
 void Application::Run() {
    //Temporary loop
-    while (1) {
+    while (!glfwWindowShouldClose(window->GetGLFWwindow())) {
         window->OnUpdate();
 
         //temporary break

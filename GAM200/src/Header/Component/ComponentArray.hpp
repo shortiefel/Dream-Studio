@@ -47,36 +47,63 @@ class ComponentArrayInterface
 template<typename T>
 class ComponentArray : public ComponentArrayInterface
 {
-	public:
-		void Insertion(Entity entity, T component)
+public:
+	void Insertion(Entity entity, T component)
+	{
+		//error checking
+		assert(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
+
+		size_t newIndex = Size;
+		EntityToIndexMap[entity] = newIndex; //Entity -> Index
+		IndexToEntityMap[newIndex] = entity; //Index -> Entity
+		ComponentArrayMAX[newIndex] = component; //Creating of the array and calls it component
+		Size++;
+	}
+
+	void Removing(Entity entity)
+	{
+		//error checking
+		assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
+
+		//Copies element at the end into deleted element's place 
+		size_t IndexRemoveEntity = IndexToEntityMap[entity];
+		size_t IndexLastElement = Size - 1;
+		ComponentArrayMAX[IndexRemoveEntity] = ComponentArrayMAX[IndexLastElement];
+
+		//Updating the map when it's shifted
+		Entity EntityLastElement = IndexToEntityMap[IndexLastElement];
+		EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
+		IndexToEntityMap[IndexRemoveEntity] = EntityLastElement;
+
+		EntityLastElement.erase(entity);
+		IndexToEntityMap.erase(IndexLastElement);
+
+		--Size;
+	}
+
+	//referencing to the template to get the data
+	T& GetData(Entity entity)
+	{
+		//error checking
+		assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
+
+		//if exist, return data
+		return ComponentArrayMAX[EntityToIndexMap[entity]];
+	}
+
+	//Completely delete the data
+	void DataDestroyed(Entity entity) override
+	{
+		if (EntityToIndexMap.find(entity) != EntityToIndexMap.end())
 		{
-			//error checking
-			assert(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
-
-			size_t newIndex = Size;
-			EntityToIndexMap[entity] = newIndex; //Entity -> Index
-			IndexToEntityMap[newIndex] = entity; //Index -> Entity
-			ComponentArray[newIndex] = component; //Creating of the array and calls it component
-			Size++;
+			//if exist, delete
+			Removing(entity);
 		}
-
-		void Removing(Entity entity)
-		{
-			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
-
-			//Copies element at the end into deleted element's place 
-			size_t IndexRemoveEntity = IndexToEntityMap[entity];
-			size_t IndexLastElement = Size - 1;
-			ComponentArray[IndexRemoveEntity] = ComponentArray[IndexLastElement];
-
-			//Updating the map when it's shifted
-			Entity EntityLastElement = IndexToEntityMap[IndexLastElement];
-			EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
-		}
+	}
 
 	private:
 		std::array<T, MAX_ENTITIES> ComponentArrayMAX{};
-		std::unordered_map<Entity, size_t> EntityToIndexMap{};
-		std::unordered_map<size_t, Entity> IndexToEntityMap{};
-		size_t Size;
+		std::unordered_map<Entity, size_t> EntityToIndexMap{}; //mapping for entity ID to array index
+		std::unordered_map<size_t, Entity> IndexToEntityMap{}; //mappign array index to entity ID
+		size_t Size; //total size of valid enteries in array
 };

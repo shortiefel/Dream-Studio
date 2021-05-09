@@ -10,10 +10,13 @@ void PhysicSystem::Destroy() { delete s_instance; }
 //---------------------------------------------------------------
 
 void PhysicSystem::Update() {
-	//Apply gravity
+	
 
 	//For all entities in PhysicSystem
 	for (auto const& entity : mEntities) {
+		//Apply gravity if rigidbody exist and rigidbody hasGravity
+		//
+
 		//Check for isColliding (Check collision type to polymorphically change object)
 
 		/*

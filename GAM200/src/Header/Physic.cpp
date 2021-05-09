@@ -1,5 +1,5 @@
 #include "Physic.hpp"
-#include "math.h"
+#include "cmath"
 
 float getLongestSide(float n1, float n2) {
     return sqrt(pow(n1 / 2, 2) + pow(n2 / 2, 2));

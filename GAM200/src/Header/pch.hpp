@@ -4,9 +4,12 @@
 #include <string>
 #include <assert.h>
 
+#include <set>
+
+#include <functional>
+
 #include "glfw3.h"
 
-#include <set>
 
 
 #endif

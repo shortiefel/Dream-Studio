@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include "pch.hpp"
+#include "Event/Event.hpp"
 
 class Window {
 public:
@@ -14,6 +15,8 @@ public:
 
 	void OnUpdate();
 
+	void SetEventCallBack(const std::function<void(Event&)> callback);
+
 	
 private:
 	static GLFWwindow* glfw_window;
@@ -22,6 +25,8 @@ private:
 	struct WinData {
 		std::string title;
 		unsigned int width, height;
+
+		std::function<void(Event&)> eventCallBack;
 	};
 
 	WinData w_data;

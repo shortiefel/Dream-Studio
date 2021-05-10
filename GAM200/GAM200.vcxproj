@@ -125,7 +125,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)/External Resources/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -142,7 +142,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -155,7 +155,10 @@
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
     <ClInclude Include="src\Header\Entity\EntityManager.hpp" />
     <ClInclude Include="src\Header\Event\Event.hpp" />
+    <ClInclude Include="src\Header\Event\EventDispatcher.hpp" />
     <ClInclude Include="src\Header\Event\KeyEvent.hpp" />
+    <ClInclude Include="src\Header\Event\MouseEvent.hpp" />
+    <ClInclude Include="src\Header\Event\WindowEvent.hpp" />
     <ClInclude Include="src\Header\framework.hpp" />
     <ClInclude Include="src\Header\Global.hpp" />
     <ClInclude Include="src\Header\Main.hpp" />
@@ -174,7 +177,6 @@
   <ItemGroup>
     <ClCompile Include="src\Header\Application.cpp" />
     <ClCompile Include="src\Header\Main.cpp" />
-    <ClCompile Include="src\Header\Math\Vector2D.cpp" />
     <ClCompile Include="src\Header\Physic.cpp" />
     <ClCompile Include="src\Header\PhysicSystem.cpp" />
     <ClCompile Include="src\Header\Singleton.cpp" />

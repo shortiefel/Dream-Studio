@@ -37,6 +37,9 @@
     <Filter Include="Source Files\Maths">
       <UniqueIdentifier>{2745d6e3-f964-47f5-8cad-0286732654ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Event">
+      <UniqueIdentifier>{ce2228fc-46d1-4339-aa41-613f9f8b1b64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header\framework.hpp">
@@ -91,10 +94,19 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header\Event\Event.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Event</Filter>
     </ClInclude>
     <ClInclude Include="src\Header\Event\KeyEvent.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\MouseEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\WindowEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\EventDispatcher.hpp">
+      <Filter>Header Files\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +126,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Header\PhysicSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Header\Math\Vector2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

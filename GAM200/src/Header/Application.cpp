@@ -9,18 +9,23 @@ Contains the main application loop and the game loop
 
 Application* Application::s_instance = 0;
 Window* Application::window = 0;
+bool Application::app_run_bool = true;
 
 void Application::Create() {
 	s_instance = new Application();
 
 	//Create window and instantiate managers
     window = Window::Create();
+    s_instance->SetEventCallBack();
 }
 
 //Main application loop is done here
 void Application::Run() {
+
    //Temporary loop
-    while (!glfwWindowShouldClose(window->GetGLFWwindow())) {
+    while (app_run_bool) {
+        /*glClearColor(1, 0, 1, 1);
+        glClear(GL_COLOR_BUFFER_BIT);*/
         window->OnUpdate();
 
         //temporary break
@@ -39,4 +44,38 @@ void Application::Destroy() {
 Application::~Application() {
     //Destroy in reverse order
     Window::Destroy();
+}
+
+
+void Application::OnEvent(Event& event) {
+    EventDispatcher dispatcher(event);
+
+    switch (event.GetEventType()) {
+    case EventType::WINDOW_CLOSE:
+        printf("Window close \n");
+        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+        break;
+    /*case EventType::KEY_PRESSED:
+        printf("Key Press \n");
+        break;
+    case EventType::KEY_RELEASED:
+        printf("Key Release \n");
+        break;
+    case EventType::MOUSE_BUTTON_PRESSED:
+        printf("mouse press \n");
+        break;
+    case EventType::MOUSE_BUTTON_RELEASED:
+        printf("mouse Release \n");
+        break;*/
+    }
+    
+}
+
+void Application::SetEventCallBack() {
+    window->SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+}
+
+bool Application::OnWindowClose(WindowCloseEvent& e) {
+    app_run_bool = false;
+    return true;
 }

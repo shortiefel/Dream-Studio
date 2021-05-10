@@ -3,6 +3,7 @@
 
 #include "Event.hpp"
 
+//KEY_PRESSED, KEY_RELEASED
 class KeyEvent : public Event {
 public:
 	int GetKeyCode() const { return keyCode; }

@@ -26,6 +26,7 @@ public:
 	virtual EventType GetEventType() const override {
 		return EventType::WINDOW_RESIZE;
 	}
+
 private:
 	uiVec2 w_size;
 

@@ -11,6 +11,7 @@ enum class EventType {
 class Event {
 public:
 	virtual EventType GetEventType() const = 0;
+	//virtual std::string GetEventData() const = 0;
 protected:
 	bool handled = false;
 };

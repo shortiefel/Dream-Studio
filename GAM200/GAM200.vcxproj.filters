@@ -90,9 +90,6 @@
     <ClInclude Include="src\Header\ColliderComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Math\Vector2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\Event\Event.hpp">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
@@ -107,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="src\Header\Event\EventDispatcher.hpp">
       <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Vector2D.hpp">
+      <Filter>Header Files\Maths</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

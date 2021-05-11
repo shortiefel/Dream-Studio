@@ -156,8 +156,10 @@ T	Vec2CrossProductMag(const VectorND<T>& pVec0, const VectorND<T>& pVec1) {
 }
 
 
-
+//float vec2
 using Vec2 = VectorND<float>;
+//int vec2
 using iVec2 = VectorND<int>;
+//unsigned int vec2
 using uiVec2 = VectorND<unsigned int>;
 #endif

@@ -52,8 +52,11 @@ void Application::OnEvent(Event& event) {
 
     switch (event.GetEventType()) {
     case EventType::WINDOW_CLOSE:
+#ifdef _DEBUG
         printf("Window close \n");
+#endif
         dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+
         break;
     /*case EventType::KEY_PRESSED:
         printf("Key Press \n");

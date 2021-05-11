@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="src\Header\Application.hpp" />
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
+    <ClInclude Include="src\Header\Component\ComponentManager.hpp" />
     <ClInclude Include="src\Header\Entity\EntityManager.hpp" />
     <ClInclude Include="src\Header\framework.hpp" />
     <ClInclude Include="src\Header\Global.hpp" />

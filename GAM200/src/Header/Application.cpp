@@ -8,14 +8,14 @@ Contains the main application loop and the game loop
 //Static----------------------------------------------
 
 Application* Application::s_instance = 0;
-Window* Application::window = 0;
+//Window* Application::window = 0;
 bool Application::app_run_bool = true;
 
 void Application::Create() {
 	s_instance = new Application();
 
 	//Create window and instantiate managers
-    window = Window::Create();
+    Window::Create();
     s_instance->SetEventCallBack();
 }
 
@@ -26,10 +26,10 @@ void Application::Run() {
     while (app_run_bool) {
         /*glClearColor(1, 0, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT);*/
-        window->OnUpdate();
+        Window::OnUpdate();
 
         //temporary break
-        if (glfwGetKey(window->GetGLFWwindow(), GLFW_KEY_ENTER) == GLFW_PRESS) {
+        if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_ENTER) == GLFW_PRESS) {
             break;
         }
     } 
@@ -75,7 +75,7 @@ void Application::OnEvent(Event& event) {
 }
 
 void Application::SetEventCallBack() {
-    window->SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+    Window::SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 }
 
 bool Application::OnWindowClose(WindowCloseEvent& e) {

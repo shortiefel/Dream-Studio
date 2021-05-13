@@ -18,7 +18,7 @@ public:
 	bool OnWindowClose(WindowCloseEvent& e);
 private:
 	static Application* s_instance;
-	static Window* window;
+	//static Window* window;
 	static bool app_run_bool;
 
 	Application() = default;

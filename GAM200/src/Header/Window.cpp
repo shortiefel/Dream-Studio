@@ -2,9 +2,9 @@
 Function definitions for creating and destroying a window using GLFW API
 */
 
+#include "Debug Tools/Logging.hpp"
 #include "Window.hpp"
 #include "pch.hpp"
-#include <iostream>
 
 #include "Event/KeyEvent.hpp"
 #include "Event/MouseEvent.hpp"
@@ -14,6 +14,24 @@ GLFWwindow* Window::glfw_window = 0;
 //Window* Window::s_instance = 0;
 Window::WinData Window::w_data = {"untitled", 900, 900};
 
+void Window::OnUpdate() {
+	glfwPollEvents();
+	glfwSwapBuffers(glfw_window);
+}
+
+GLFWwindow* Window::GetGLFWwindow() {
+	return glfw_window;
+}
+
+unsigned int Window::GetWidth() { return w_data.width; }
+unsigned int Window::GetHeight() { return w_data.height; }
+
+//Destroy glfw window
+void Window::Destroy() {
+	glfwDestroyWindow(glfw_window);
+	glfwTerminate();
+}
+
 //Create instance of window class
 bool Window::Create(const std::string& ttitle, unsigned int twidth, unsigned int theight) {
 	//For logging purposes
@@ -22,7 +40,7 @@ bool Window::Create(const std::string& ttitle, unsigned int twidth, unsigned int
 	w_data.height = theight;
 
 	if (!glfwInit()) {
-		std::cout << "GLFW initialization has failed \n";
+		LOG_ERROR("GLFW initialization has failed");
 		return false;
 	}
 
@@ -36,117 +54,125 @@ bool Window::Create(const std::string& ttitle, unsigned int twidth, unsigned int
 
 	glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
 	if (!glfw_window) {
-		std::cout << "unable to create openGL context \n";
+		LOG_ERROR("unable to create openGL context");
 		glfwTerminate();
 		return false;
 	}
-	
+
 	glfwMakeContextCurrent(glfw_window);
-	glfwSetWindowUserPointer(glfw_window, &w_data); //test call back function inside
 
 	//Set GLFW callback
-	glfwSetWindowSizeCallback(glfw_window, [](GLFWwindow* window, int width, int height) {
-		WinData& data = *(WinData*)glfwGetWindowUserPointer(window);
-		data.width = width;
-		data.height = height;
+	glfwSetWindowSizeCallback(glfw_window, WindowSizeCallback);
+	glfwSetWindowCloseCallback(glfw_window, WindowCloseCallback);
+	glfwSetKeyCallback(glfw_window, KeyCallback);
+	glfwSetMouseButtonCallback(glfw_window, MouseButtonCallback);
+	glfwSetScrollCallback(glfw_window, ScrollCallback);
+	glfwSetCursorPosCallback(glfw_window, CursorCallBack);
 
-		WindowResizeEvent event(width, height);
-		data.eventCallBack(event);
-		});
-
-	glfwSetWindowCloseCallback(glfw_window, [](GLFWwindow* window) {
-		WinData& data = *(WinData*)glfwGetWindowUserPointer(window);
-		WindowCloseEvent event;
-		data.eventCallBack(event);
-		});
-
-	glfwSetKeyCallback(glfw_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-		WinData& data = *(WinData*)glfwGetWindowUserPointer(window);
-		switch (action) {
-		case GLFW_PRESS: {
-			KeyPressedEvent event(key, false);
-			data.eventCallBack(event);
-			break;
-		}
-		case GLFW_RELEASE: {
-			KeyReleasedEvent event(key);
-			data.eventCallBack(event);
-			break;
-		}
-		case GLFW_REPEAT: {
-			KeyPressedEvent event(key, true);
-			data.eventCallBack(event);
-			break;
-		}
-		}
-		});
-
-	glfwSetMouseButtonCallback(glfw_window, [](GLFWwindow* window, int button, int action, int mods) {
-		WinData& data = *(WinData*)glfwGetWindowUserPointer(window);
-		switch (action) {
-		case GLFW_PRESS: {
-			MousePressedEvent event(button);
-			data.eventCallBack(event);
-			break;
-		}
-		case GLFW_RELEASE: {
-			MouseReleasedEvent event(button);
-			data.eventCallBack(event);
-			break;
-		}
-		}
-		});
-
-	glfwSetScrollCallback(glfw_window, [](GLFWwindow* window, double xoffset, double yoffset) {
-		WinData& data = *(WinData*)glfwGetWindowUserPointer(window);
-		MouseScrolledEvent event((float)xoffset, (float)yoffset);
-		data.eventCallBack(event);
-		});
-
-	glfwSetCursorPosCallback(glfw_window, [](GLFWwindow* window, double xpos, double ypos) {
-		WinData& data = *(WinData*)glfwGetWindowUserPointer(window);
-		MouseMoveEvent event((float)xpos, (float)ypos);
-		data.eventCallBack(event);
-		});
-	
 	GLenum err = glewInit();
 	if (GLEW_OK != err) {
-		std::cerr << "Unable to initialize GLEW - error: "
-			<< glewGetErrorString(err) << " abort program" << std::endl;
+		LOG_ERROR("Unable to initialize GLEW - error: ", glewGetErrorString(err)," abort program");
 		return false;
 	}
 	if (GLEW_VERSION_4_5) {
-		std::cout << "Using glew version: " << glewGetString(GLEW_VERSION) << std::endl;
-		std::cout << "Driver supports OpenGL 4.5\n" << std::endl;
+		LOG_INFO("Using glew version: ", glewGetString(GLEW_VERSION));
+		LOG_INFO("Driver supports OpenGL 4.5");
 	}
 	else {
-		std::cerr << "Driver doesn't support OpenGL 4.5 - abort program" << std::endl;
+		LOG_ERROR("Driver doesn't support OpenGL 4.5 - abort program");
 		return false;
 	}
 
 	return true;
 }
 
-//Destroy glfw window
-void Window::Destroy() {
-	glfwDestroyWindow(glfw_window);
-	glfwTerminate();
-	//delete s_instance;
-}
-
-GLFWwindow* Window::GetGLFWwindow() {
-	return glfw_window;
-}
 
 
-unsigned int Window::GetWidth() { return w_data.width; }
-unsigned int Window::GetHeight() { return w_data.height; }
 
-void Window::OnUpdate() {
-	glfwPollEvents();
-	glfwSwapBuffers(glfw_window);
-}
 
+
+//Event call back order
+//glfw detects event -> call user-defined specific type of event call back function (listed below SetEventCallBack function) 
+//-> within those function the w_data.eventCallBack is called to pass the event details to application
+
+//Set event call back to application
 void Window::SetEventCallBack(const std::function<void(Event&)> callback) {
 	w_data.eventCallBack = callback;
 }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Listed below are function callbacks which are called on glfw side when its instruction/command is executed
+//E.g function WindowSizeCallback is called when glfw detects a window resize event
+
+//Within the function another function callback to application is done to pass the event details to application
+//E.g WindowSizeCallback: w_data.eventCallBack(event)
+
+//Note: functions here follows the parameter order and type specified by the glfw API
+/*
+List of glfw set call back used:
+glfwSetWindowSizeCallback
+glfwSetWindowCloseCallback
+glfwSetKeyCallback
+glfwSetMouseButtonCallback
+glfwSetScrollCallback
+glfwSetCursorPosCallback
+*/
+
+void Window::WindowSizeCallback(GLFWwindow* window, int width, int height) {
+	w_data.width = width;
+	w_data.height = height;
+
+	WindowResizeEvent event(width, height);
+	w_data.eventCallBack(event);
+}
+
+void Window::WindowCloseCallback(GLFWwindow* window) {
+	WindowCloseEvent event;
+	w_data.eventCallBack(event);
+}
+
+void Window::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	switch (action) {
+	case GLFW_PRESS: {
+		KeyPressedEvent event(key, false);
+		w_data.eventCallBack(event);
+		break;
+	}
+	case GLFW_RELEASE: {
+		KeyReleasedEvent event(key);
+		w_data.eventCallBack(event);
+		break;
+	}
+	case GLFW_REPEAT: {
+		KeyPressedEvent event(key, true);
+		w_data.eventCallBack(event);
+		break;
+	}
+	}
+}
+
+void Window::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+	switch (action) {
+	case GLFW_PRESS: {
+		MousePressedEvent event(button);
+		w_data.eventCallBack(event);
+		break;
+	}
+	case GLFW_RELEASE: {
+		MouseReleasedEvent event(button);
+		w_data.eventCallBack(event);
+		break;
+	}
+	}
+}
+
+void Window::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+	MouseScrolledEvent event((float)xoffset, (float)yoffset);
+	w_data.eventCallBack(event);
+}
+
+void Window::CursorCallBack(GLFWwindow* window, double xpos, double ypos) {
+	MouseMoveEvent event((float)xpos, (float)ypos);
+	w_data.eventCallBack(event);
+}
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

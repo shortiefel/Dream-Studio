@@ -3,6 +3,7 @@ Create a window and other various required manager (e.g Physic / Graphic Manager
 Contains the main application loop and the game loop
 */
 
+#include "Debug Tools/Logging.hpp"
 #include "Application.hpp"
 
 //Static----------------------------------------------
@@ -48,28 +49,31 @@ Application::~Application() {
 
 
 void Application::OnEvent(Event& event) {
+
+    LOG_DEBUG(event);
+
     EventDispatcher dispatcher(event);
 
     switch (event.GetEventType()) {
     case EventType::WINDOW_CLOSE:
-#ifdef _DEBUG
-        printf("Window close \n");
-#endif
         dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
 
         break;
-    /*case EventType::KEY_PRESSED:
-        printf("Key Press \n");
-        break;
-    case EventType::KEY_RELEASED:
-        printf("Key Release \n");
-        break;
-    case EventType::MOUSE_BUTTON_PRESSED:
-        printf("mouse press \n");
-        break;
-    case EventType::MOUSE_BUTTON_RELEASED:
-        printf("mouse Release \n");
-        break;*/
+    //case EventType::KEY_PRESSED:
+    //    LOG_INFO(event);
+    //    break;
+    //case EventType::KEY_RELEASED:
+    //    LOG_ERROR(event);
+    //    break;
+    //case EventType::MOUSE_BUTTON_PRESSED:
+    //    LOG_WARNING(event);
+    //    break;
+    //case EventType::MOUSE_BUTTON_RELEASED:
+    //    LOG_DEBUG(event);
+    //    break;
+    //case EventType::MOUSE_MOVE:
+    //    //LOG_ERROR(event);
+    //    break;
     }
     
 }

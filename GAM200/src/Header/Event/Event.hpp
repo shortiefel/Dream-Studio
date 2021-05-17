@@ -1,6 +1,8 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+#include <iostream>
+
 enum class EventType {
 	NONE = 0,
 	WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_MOVED,
@@ -11,11 +13,14 @@ enum class EventType {
 class Event {
 public:
 	virtual EventType GetEventType() const = 0;
-	//virtual std::string GetEventData() const = 0;
+	virtual std::string Details() const = 0;
+
+	friend std::ostream& operator<<(std::ostream& os, const Event& event) {
+		os << event.Details();
+		return os;
+	}
 protected:
 	bool handled = false;
 };
-
-
 
 #endif

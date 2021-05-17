@@ -40,6 +40,12 @@
     <Filter Include="Header Files\Event">
       <UniqueIdentifier>{ce2228fc-46d1-4339-aa41-613f9f8b1b64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Debug Tools">
+      <UniqueIdentifier>{e2569653-54f7-4718-a003-9df322e2df75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Event">
+      <UniqueIdentifier>{eefe8e50-9654-4de1-8147-e960f9aab291}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header\framework.hpp">
@@ -107,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="src\Header\Math\Vector2D.hpp">
       <Filter>Header Files\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
+      <Filter>Header Files\Debug Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

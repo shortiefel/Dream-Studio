@@ -12,6 +12,10 @@ public:
 	virtual EventType GetEventType() const override {
 		return EventType::WINDOW_CLOSE;
 	}
+
+	virtual std::string Details() const override {
+		return std::string{ "Window Closed" };
+	}
 };
 
 class WindowResizeEvent : public Event {
@@ -25,6 +29,10 @@ public:
 
 	virtual EventType GetEventType() const override {
 		return EventType::WINDOW_RESIZE;
+	}
+
+	virtual std::string Details() const override {
+		return std::string{ "Window Resized: " + std::to_string(w_size.x) + ", " + std::to_string(w_size.y) };
 	}
 
 private:

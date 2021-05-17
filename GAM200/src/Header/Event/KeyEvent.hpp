@@ -20,6 +20,11 @@ public:
 	virtual EventType GetEventType() const override {
 		return EventType::KEY_PRESSED;
 	}
+	virtual std::string Details() const override {
+		std::string tem{ "Key Pressed "  };
+		tem += keyRepeat ? "(Hold)" : "(Press)";
+		return tem;
+	}
 
 private:
 	bool keyRepeat = false;
@@ -32,6 +37,10 @@ public:
 
 	virtual EventType GetEventType() const override {
 		return EventType::KEY_RELEASED;
+	}
+
+	virtual std::string Details() const override {
+		return std::string{ "Key Released" };
 	}
 };
 

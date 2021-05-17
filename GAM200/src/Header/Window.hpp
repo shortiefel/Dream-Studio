@@ -19,6 +19,14 @@ public:
 
 	static void SetEventCallBack(const std::function<void(Event&)> callback);
 
+
+	static void WindowSizeCallback(GLFWwindow* window, int width, int height);
+	static void WindowCloseCallback(GLFWwindow* window);
+	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+	static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+	static void CursorCallBack(GLFWwindow* window, double xpos, double ypos);
+
 	
 private:
 	struct WinData {
@@ -33,7 +41,7 @@ private:
 
 	static WinData w_data;
 
-	Window(const std::string& ttitle, unsigned int twidth, unsigned int theight);
+	//Window(const std::string& ttitle, unsigned int twidth, unsigned int theight);
 };
 
 

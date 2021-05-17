@@ -1,7 +1,7 @@
 #ifndef KEY_EVENT_H
 #define KEY_EVENT_H
 
-#include "Event.hpp"
+#include "Event.hpp" //Event
 
 //KEY_PRESSED, KEY_RELEASED
 class KeyEvent : public Event {

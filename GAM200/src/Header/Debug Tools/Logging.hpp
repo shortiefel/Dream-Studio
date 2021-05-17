@@ -28,11 +28,10 @@ LOG_ERROR(...)
 //if not debug mode all logging will not be shown
 #ifdef _DEBUG
 
-#include <Windows.h>
-#include <iostream>
+#include <Windows.h> //Setting console text color
+#include <iostream> //ostream
 
-#include "../Event/Event.hpp"
-#include <stdarg.h>
+#include "../Event/Event.hpp" //checking of event types
 
 //Since mouse moved gets triggered pretty much all the time, this is to prevent it from triggering if you do not need it
 //1 to show and 0 to not show

@@ -1,7 +1,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include <iostream>
+#include <iostream> //operator<< overload
 
 enum class EventType {
 	NONE = 0,

@@ -1,10 +1,10 @@
 #ifndef EVENT_DISPATCHER_H
 #define EVENT_DISPATCHER_H
 
-#include "Event.hpp"
-#include "KeyEvent.hpp"
-#include "MouseEvent.hpp"
-#include "WindowEvent.hpp"
+#include "Event.hpp" //event types
+#include "KeyEvent.hpp" //event types
+#include "MouseEvent.hpp" //event types
+#include "WindowEvent.hpp" //event types
 
 //Polymorphic queue (store Event*)
 //Make singleton
@@ -14,7 +14,7 @@ public:
 
 	template <typename T>
 	void Dispatch(std::function<bool(T&)> eventFunction) {
-		eventFunction(*(T*)&m_event);
+		m_event.handled = eventFunction(*(T*)&m_event);
 	}
 private:
 	Event& m_event;

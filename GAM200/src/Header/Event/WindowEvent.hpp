@@ -1,8 +1,8 @@
 #ifndef WINDOW_EVENT_H
 #define WINDOW_EVENT_H
 
-#include "Event.hpp"
-#include "../Math/Vector2D.hpp"
+#include "Event.hpp" //Event
+#include "../Math/Vector2D.hpp" //Vec2
 
 //WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_MOVED
 class WindowCloseEvent : public Event {

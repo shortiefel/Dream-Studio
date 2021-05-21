@@ -183,6 +183,14 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="External Resources\Imgui\imconfig.h" />
+    <ClInclude Include="External Resources\Imgui\imgui.h" />
+    <ClInclude Include="External Resources\Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="External Resources\Imgui\imgui_internal.h" />
+    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h" />
+    <ClInclude Include="External Resources\Imgui\imstb_textedit.h" />
+    <ClInclude Include="External Resources\Imgui\imstb_truetype.h" />
     <ClInclude Include="src\Header\Application.hpp" />
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
     <ClInclude Include="src\Header\Debug Tools\Logging.hpp" />
@@ -194,6 +202,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Event\WindowEvent.hpp" />
     <ClInclude Include="src\Header\framework.hpp" />
     <ClInclude Include="src\Header\Global.hpp" />
+    <ClInclude Include="src\Header\GUIManager.hpp" />
     <ClInclude Include="src\Header\Main.hpp" />
     <ClInclude Include="src\Header\Math\Vector2D.hpp" />
     <ClInclude Include="src\Header\pch.hpp" />
@@ -208,7 +217,15 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="External Resources\Imgui\imgui.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_demo.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_draw.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_tables.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Header\Application.cpp" />
+    <ClCompile Include="src\Header\GUIManager.cpp" />
     <ClCompile Include="src\Header\Main.cpp" />
     <ClCompile Include="src\Header\Physic.cpp" />
     <ClCompile Include="src\Header\PhysicSystem.cpp" />

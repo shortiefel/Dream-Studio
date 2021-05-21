@@ -14,7 +14,8 @@ public:
 
 	template <typename T>
 	void Dispatch(std::function<bool(T&)> eventFunction) {
-		m_event.handled = eventFunction(*(T*)&m_event);
+		//m_event.handled = 
+		eventFunction(*(T*)&m_event);
 	}
 private:
 	Event& m_event;

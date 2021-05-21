@@ -4,20 +4,24 @@ Contains the main application loop and the game loop
 */
 
 #include "Debug Tools/Logging.hpp"
+#include "GUIManager.hpp"
 #include "Application.hpp"
 
 //Static----------------------------------------------
 
-Application* Application::s_instance = 0;
+Application* Application::s_app_instance = 0;
 //Window* Application::window = 0;
 bool Application::app_run_bool = true;
 
 void Application::Create() {
-	s_instance = new Application();
+    s_app_instance = new Application();
 
 	//Create window and instantiate managers
     Window::Create();
-    s_instance->SetEventCallBack();
+    s_app_instance->SetEventCallBack();
+
+    const char* glsl_version = "#version 450";
+    GUIManager::Create(Window::GetGLFWwindow(), glsl_version);
 }
 
 //Main application loop is done here
@@ -37,13 +41,15 @@ void Application::Run() {
 }
 
 void Application::Destroy() {
-    delete s_instance;
+    delete s_app_instance;
 }
 
 //------------------------------------------------------
 
 Application::~Application() {
     //Destroy in reverse order
+
+    //Imgui destroy
     Window::Destroy();
 }
 

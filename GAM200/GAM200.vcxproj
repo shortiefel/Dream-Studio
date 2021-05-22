@@ -161,6 +161,8 @@
     <ClInclude Include="src\Header\pch.hpp" />
     <ClInclude Include="src\Header\Resource.hpp" />
     <ClInclude Include="src\Header\Singleton.hpp" />
+    <ClInclude Include="src\Header\System\System.hpp" />
+    <ClInclude Include="src\Header\System\SystemManager.hpp" />
     <ClInclude Include="src\Header\targetver.hpp" />
     <ClInclude Include="src\Header\Window.hpp" />
   </ItemGroup>

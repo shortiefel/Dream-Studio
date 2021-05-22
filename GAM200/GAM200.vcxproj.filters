@@ -129,6 +129,12 @@
     <ClInclude Include="src\Header\Component\ComponentManager.hpp">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\System\System.hpp">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\System\SystemManager.hpp">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Header\Main.cpp">

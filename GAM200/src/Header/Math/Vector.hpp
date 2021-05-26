@@ -15,10 +15,7 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \date 26/04/2021
 \brief
 
-To create a data structure that is a simple array with no holes. It contains the mapping from
-entity IDs to array indices. When accessing array, it uses entity ID to look up the actual array index
-but when destroyed, it takes the last elemet of array and move into deleted entity's spott and update
-the map
+Vectors and this supports 2D and 3D vectors
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

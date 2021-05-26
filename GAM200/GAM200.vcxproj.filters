@@ -88,6 +88,9 @@
     <Filter Include="Header Files\Math">
       <UniqueIdentifier>{85cb366c-2c2e-41a3-963b-3b787968ed91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Event">
+      <UniqueIdentifier>{566fe86e-fdc2-455d-a928-e507e1d8062d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header\framework.hpp">
@@ -155,6 +158,21 @@
     </ClInclude>
     <ClInclude Include="src\Header\Math\Vector2D.hpp">
       <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\Event.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\EventDispatcher.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\KeyEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\MouseEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\WindowEvent.hpp">
+      <Filter>Header Files\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

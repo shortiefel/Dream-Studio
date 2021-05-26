@@ -162,6 +162,11 @@
     <ClInclude Include="src\Header\Component\Transform\TransformComponent.hpp" />
     <ClInclude Include="src\Header\Debug Tools\Logging.hpp" />
     <ClInclude Include="src\Header\Entity\EntityManager.hpp" />
+    <ClInclude Include="src\Header\Event\Event.hpp" />
+    <ClInclude Include="src\Header\Event\EventDispatcher.hpp" />
+    <ClInclude Include="src\Header\Event\KeyEvent.hpp" />
+    <ClInclude Include="src\Header\Event\MouseEvent.hpp" />
+    <ClInclude Include="src\Header\Event\WindowEvent.hpp" />
     <ClInclude Include="src\Header\framework.hpp" />
     <ClInclude Include="src\Header\Global.hpp" />
     <ClInclude Include="src\Header\Main.hpp" />

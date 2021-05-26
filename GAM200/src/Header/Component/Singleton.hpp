@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*!
-\file Application.hpp
+\file Singleton.hpp
 \team name
 \software name
 \authors
@@ -23,30 +23,17 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef SINGLETON_H
+#define SINGLETON_H
 
-#include "Window.hpp"
-#include "Event/EventDispatcher.hpp"
-
-class Application {
+class Singleton {
 public:
 	static void Create();
-	static void Run();
 	static void Destroy();
 
-	~Application();
-
-	void OnEvent(Event& event);
-	void SetEventCallBack();
-
-	bool OnWindowClose(WindowCloseEvent& e);
+	static Singleton* Get();
 private:
-	static Application* s_app_instance;
-	//static Window* window;
-	static bool app_run_bool;
-
-	Application() = default;
+	static Singleton* s_instance;
 };
 
 #endif

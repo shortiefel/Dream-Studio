@@ -1,7 +1,7 @@
 #ifndef GUIMANAGER_H
 #define GUIMANAGER_H
 
-#include "pch"
+#include "../../pch.hpp"
 
 class GUIManager {
 public:

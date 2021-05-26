@@ -156,9 +156,6 @@
     <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
       <Filter>Header Files\Debug Tools</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Math\Vector2D.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\Event\Event.hpp">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
@@ -173,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="src\Header\Event\WindowEvent.hpp">
       <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Vector.hpp">
+      <Filter>Header Files\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

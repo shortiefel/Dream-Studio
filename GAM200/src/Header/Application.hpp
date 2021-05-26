@@ -2,6 +2,7 @@
 #define APPLICATION_H
 
 #include "Window.hpp"
+#include "Event/EventDispatcher.hpp"
 
 class Application {
 public:
@@ -10,9 +11,15 @@ public:
 	static void Destroy();
 
 	~Application();
+
+	void OnEvent(Event& event);
+	void SetEventCallBack();
+
+	bool OnWindowClose(WindowCloseEvent& e);
 private:
-	static Application* s_instance;
-	static Window* window;
+	static Application* s_app_instance;
+	//static Window* window;
+	static bool app_run_bool;
 
 	Application() = default;
 };

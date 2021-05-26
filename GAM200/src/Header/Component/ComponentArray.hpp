@@ -101,6 +101,15 @@ public:
 		}
 	}
 
+		void EntityDestroyed(Entity entity) override
+		{
+			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end())
+			{
+				// Remove the entity's component if it existed
+				Removing(entity);
+			}
+		}
+
 	private:
 		std::array<T, MAX_ENTITIES> ComponentArrayMAX{};
 		std::unordered_map<Entity, size_t> EntityToIndexMap{}; //mapping for entity ID to array index

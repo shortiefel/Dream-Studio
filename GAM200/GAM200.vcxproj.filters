@@ -31,9 +31,6 @@
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{e874abce-03a0-4874-9baa-3b74ef959ac6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Maths">
-      <UniqueIdentifier>{85cb366c-2c2e-41a3-963b-3b787968ed91}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Maths">
       <UniqueIdentifier>{2745d6e3-f964-47f5-8cad-0286732654ec}</UniqueIdentifier>
     </Filter>
@@ -42,12 +39,6 @@
     </Filter>
     <Filter Include="Header Files\Serialization">
       <UniqueIdentifier>{30ee0fbd-8658-45ba-bf40-d5a4bcbb6d35}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Debug">
-      <UniqueIdentifier>{58d1fa96-a081-4ce3-9dbc-a360186114be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Debug">
-      <UniqueIdentifier>{529e8d35-9e51-4a33-84a3-c51445f59c18}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Factory">
       <UniqueIdentifier>{458bf8fe-3cb5-421e-b6bc-a88bfa9b1bf1}</UniqueIdentifier>
@@ -90,6 +81,12 @@
     </Filter>
     <Filter Include="Source Files\Component\Animation">
       <UniqueIdentifier>{95e669b6-9e05-4996-8b1b-edeb742cb7a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Debug Tools">
+      <UniqueIdentifier>{58d1fa96-a081-4ce3-9dbc-a360186114be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{85cb366c-2c2e-41a3-963b-3b787968ed91}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +132,30 @@
     <ClInclude Include="src\Header\System\SystemManager.hpp">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp">
+      <Filter>Header Files\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\Physic.hpp">
+      <Filter>Header Files\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\PhysicSystem.hpp">
+      <Filter>Header Files\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\RigidBodyComponent.hpp">
+      <Filter>Header Files\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Graphics\GUIManager.hpp">
+      <Filter>Header Files\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Transform\TransformComponent.hpp">
+      <Filter>Header Files\Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
+      <Filter>Header Files\Debug Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Vector2D.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Header\Main.cpp">
@@ -148,6 +169,15 @@
     </ClCompile>
     <ClCompile Include="src\Header\Application.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Component\Graphics\GUIManager.cpp">
+      <Filter>Source Files\Component\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Component\Physics\Physic.cpp">
+      <Filter>Source Files\Component\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\System\PhysicSystem.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

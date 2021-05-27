@@ -202,9 +202,13 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Event\WindowEvent.hpp" />
     <ClInclude Include="src\Header\framework.hpp" />
     <ClInclude Include="src\Header\Global.hpp" />
-    <ClInclude Include="src\Header\GUIManager.hpp" />
+    <ClInclude Include="src\Header\Layer\GUILayer.hpp" />
+    <ClInclude Include="src\Header\Layer\Layer.hpp" />
+    <ClInclude Include="src\Header\Layer\LayerStack.hpp" />
     <ClInclude Include="src\Header\Main.hpp" />
     <ClInclude Include="src\Header\Math\Vector2D.hpp" />
+    <ClInclude Include="src\Header\Math\Vector3D.hpp" />
+    <ClInclude Include="src\Header\Math\VectorAll.hpp" />
     <ClInclude Include="src\Header\pch.hpp" />
     <ClInclude Include="src\Header\Physic.hpp" />
     <ClInclude Include="src\Header\ColliderComponent.hpp" />
@@ -225,7 +229,8 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClCompile Include="External Resources\Imgui\imgui_tables.cpp" />
     <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Header\Application.cpp" />
-    <ClCompile Include="src\Header\GUIManager.cpp" />
+    <ClCompile Include="src\Header\Layer\GUILayer.cpp" />
+    <ClCompile Include="src\Header\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Header\Main.cpp" />
     <ClCompile Include="src\Header\Physic.cpp" />
     <ClCompile Include="src\Header\PhysicSystem.cpp" />

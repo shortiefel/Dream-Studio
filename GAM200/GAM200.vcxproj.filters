@@ -49,6 +49,12 @@
     <Filter Include="IMGUI">
       <UniqueIdentifier>{a8df56d6-11bd-4913-8b6d-a643c1deb216}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Layer">
+      <UniqueIdentifier>{99b5130e-bd4b-4b74-b808-71031aed115c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layer">
+      <UniqueIdentifier>{68952409-84e5-4746-b150-d4d1255200f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header\framework.hpp">
@@ -120,9 +126,6 @@
     <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
       <Filter>Header Files\Debug Tools</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\GUIManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="External Resources\Imgui\imconfig.h">
       <Filter>IMGUI</Filter>
     </ClInclude>
@@ -147,6 +150,21 @@
     <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h">
       <Filter>IMGUI</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\Layer\Layer.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Layer\LayerStack.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Layer\GUILayer.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\VectorAll.hpp">
+      <Filter>Header Files\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Vector3D.hpp">
+      <Filter>Header Files\Maths</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Header\Main.cpp">
@@ -165,9 +183,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Header\PhysicSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Header\GUIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="External Resources\Imgui\imgui.cpp">
@@ -190,6 +205,12 @@
     </ClCompile>
     <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp">
       <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Header\Layer\GUILayer.cpp">
+      <Filter>Source Files\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Header\Layer\LayerStack.cpp">
+      <Filter>Source Files\Layer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

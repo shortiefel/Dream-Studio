@@ -15,7 +15,18 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \date 26/04/2021
 \brief
 
-Vectors and this supports 2D and 3D vectors
+This file MUST be included to use Vector2 and Vector3 and its functions
+Usage:
+	#include "VectorAll.hpp"
+	MathD::Vec2 testA(1, 2);
+	MathD::Vec2 testB(2, 3);
+	float a = MathD::crossProduct (testA, testB);
+	MathD::Vec3 testA(1, 2, 4);
+	MathD::Vec3 testB(2, 3, 5);
+	MathD::Vec3 ans = MathD::crossProduct (testA, testB);
+	MathD namespace is to prevent name clash with other library
+	This file has other types of vector2d and vector3d in case it is needed
+	Do add more here if other types is needed
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -23,21 +34,6 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
-
-/*
-This file MUST be included to use Vector2 and Vector3 and its functions
-Usage:
-#include "VectorAll.hpp"
-MathD::Vec2 testA(1, 2);
-MathD::Vec2 testB(2, 3);
-float a = MathD::crossProduct (testA, testB);
-MathD::Vec3 testA(1, 2, 4);
-MathD::Vec3 testB(2, 3, 5);
-MathD::Vec3 ans = MathD::crossProduct (testA, testB);
-MathD namespace is to prevent name clash with other library
-This file has other types of vector2d and vector3d in case it is needed
-Do add more here if other types is needed
-*/
 
 #ifndef VECTOR_ALL_HPP
 #define VECTOR_ALL_HPP

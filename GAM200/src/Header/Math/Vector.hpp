@@ -28,35 +28,35 @@ Technology is prohibited.
 #define VectorND_H
 
 template <typename T>
-class VectorND
+class Vector
 {
 public:
 	T x, y, z;
 
 	// Constructors
-	VectorND() : x{ T{} }, y{ T{} }, z{ T{} } {};
-	VectorND(T _x, T _y) : x{ _x }, y{ _y }, z{ _z } {}
+	Vector() : x{ T{} }, y{ T{} }, z{ T{} } {};
+	Vector(T _x, T _y) : x{ _x }, y{ _y }, z{ _z } {}
 
 	// Assignment operators
-	VectorND<T>& operator += (const VectorND<T>& rhs) {
+	Vector<T>& operator += (const VectorND<T>& rhs) {
 		x += rhs.x;
 		y += rhs.y;
 		z += rhs.z;
 		return *this;
 	}
 
-	VectorND<T>& operator -= (const VectorND<T>& rhs) {
+	Vector<T>& operator -= (const VectorND<T>& rhs) {
 		return *this += -rhs;
 	}
 
-	VectorND<T>& operator *= (T rhs) {
+	Vector<T>& operator *= (T rhs) {
 		x *= rhs;
 		y *= rhs;
 		x *= rhs;
 		return *this;
 	}
 
-	VectorND<T>& operator /= (T rhs) {
+	Vector<T>& operator /= (T rhs) {
 		x /= rhs;
 		y /= rhs;
 		z /= rhs;
@@ -64,8 +64,8 @@ public:
 	}
 
 	// Unary operators
-	VectorND<T> operator-() const {
-		VectorND tem;
+	Vector<T> operator-() const {
+		Vector tem;
 		tem.x = -x;
 		tem.y = -y;
 		tem.z = -z;
@@ -77,31 +77,31 @@ public:
 
 // Binary operators
 template <typename T>
-VectorND<T> operator + (const VectorND<T>& lhs, const VectorND<T>& rhs) {
-	VectorND tem(lhs.x, lhs.y, lhs.z);
+Vector<T> operator + (const Vector<T>& lhs, const Vector<T>& rhs) {
+	Vector tem(lhs.x, lhs.y, lhs.z);
 	tem += rhs;
 	return tem;
 }
 
 template <typename T>
-VectorND<T> operator - (const VectorND<T>& lhs, const VectorND<T>& rhs) {
+Vector<T> operator - (const Vector<T>& lhs, const Vector<T>& rhs) {
 	return lhs + -rhs;
 }
 
 template <typename T>
-VectorND<T> operator * (const VectorND<T>& lhs, T rhs) {
-	VectorND tem(lhs.x, lhs.y, lhs.z);
+Vector<T> operator * (const Vector<T>& lhs, T rhs) {
+	Vector tem(lhs.x, lhs.y, lhs.z);
 	tem *= rhs;
 	return tem;
 }
 
 template <typename T>
-VectorND<T> operator * (T lhs, const VectorND<T>& rhs) {
+Vector<T> operator * (T lhs, const Vector<T>& rhs) {
 	return rhs * lhs;
 }
 
 template <typename T>
-VectorND<T> operator / (const VectorND<T>& lhs, T rhs) {
+Vector<T> operator / (const Vector<T>& lhs, T rhs) {
 	VectorND tem(lhs.x, lhs.y, lhs.z);
 	tem /= rhs;
 	return tem;
@@ -117,7 +117,7 @@ VectorND<T> operator / (const VectorND<T>& lhs, T rhs) {
  */
  /**************************************************************************/
 template <typename T>
-void Vec2Normalize(VectorND<T>& pResult, const VectorND<T>& pVec0) {
+void Vec2Normalize(Vector<T>& pResult, const Vector<T>& pVec0) {
 	pResult = pVec0 / Vec2Length(pVec0);
 }
 
@@ -127,7 +127,7 @@ void Vec2Normalize(VectorND<T>& pResult, const VectorND<T>& pVec0) {
  */
  /**************************************************************************/
 template <typename T>
-T Vec2Length(const VectorND<T>& pVec0) {
+T Vec2Length(const Vector<T>& pVec0) {
 	return T(sqrt(pow(pVec0.x, 2) + pow(pVec0.y, 2)));
 }
 
@@ -137,7 +137,7 @@ T Vec2Length(const VectorND<T>& pVec0) {
  */
  /**************************************************************************/
 template <typename T>
-T Vec2SquareLength(const VectorND<T>& pVec0) {
+T Vec2SquareLength(const Vector<T>& pVec0) {
 	return T(pow(pVec0.x, 2) + pow(pVec0.y, 2));
 }
 
@@ -148,8 +148,8 @@ T Vec2SquareLength(const VectorND<T>& pVec0) {
  */
  /**************************************************************************/
 template <typename T>
-T Vec2Distance(const VectorND<T>& pVec0, const VectorND<T>& pVec1) {
-	VectorND tem(pVec0);
+T Vec2Distance(const Vector<T>& pVec0, const Vector<T>& pVec1) {
+	Vector tem(pVec0);
 	tem -= pVec1;
 	return Vec2Length(tem);
 }
@@ -162,8 +162,8 @@ T Vec2Distance(const VectorND<T>& pVec0, const VectorND<T>& pVec1) {
  */
  /**************************************************************************/
 template <typename T>
-T Vec2SquareDistance(const VectorND<T>& pVec0, const VectorND<T>& pVec1) {
-	VectorND tem(pVec0);
+T Vec2SquareDistance(const Vector<T>& pVec0, const Vector<T>& pVec1) {
+	Vector tem(pVec0);
 	tem -= pVec1;
 	return Vec2SquareLength(tem);
 }
@@ -174,7 +174,7 @@ T Vec2SquareDistance(const VectorND<T>& pVec0, const VectorND<T>& pVec1) {
  */
  /**************************************************************************/
 template <typename T>
-T Vec2DotProduct(const VectorND<T>& pVec0, const VectorND<T>& pVec1) {
+T Vec2DotProduct(const Vector<T>& pVec0, const Vector<T>& pVec1) {
 	return T((pVec0.x * pVec1.x) + (pVec0.y * pVec1.y));
 }
 
@@ -185,7 +185,7 @@ T Vec2DotProduct(const VectorND<T>& pVec0, const VectorND<T>& pVec1) {
  */
  /**************************************************************************/
 template <typename T>
-T Vec2CrossProductMag(const VectorND<T>& pVec0, const VectorND<T>& pVec1) {
+T Vec2CrossProductMag(const Vector<T>& pVec0, const Vector<T>& pVec1) {
 	return T((pVec0.x * pVec1.y) - (pVec0.y * pVec1.x));
 }
 
@@ -193,9 +193,9 @@ T Vec2CrossProductMag(const VectorND<T>& pVec0, const VectorND<T>& pVec1) {
 
 
 //float vec2
-using Vec2 = VectorND<float>;
+using Vec2 = Vector<float>;
 //int vec2
-using iVec2 = VectorND<int>;
+using iVec2 = Vector<int>;
 //unsigned int vec2
-using uiVec2 = VectorND<unsigned int>;
+using uiVec2 = Vector<unsigned int>;
 #endif

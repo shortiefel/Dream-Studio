@@ -7,9 +7,10 @@ struct Transform {
 	float x, y, z, 
 		scaleX, scaleY, scaleZ;
 
-	VectorND position;
-	VectorND rotate;
-	VectorND scale;
+
+	VectorND<float> position;
+	VectorND<float> rotate;
+	VectorND<int> scale;
 };
 
 #endif

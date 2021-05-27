@@ -24,178 +24,42 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef VectorND_H
-#define VectorND_H
+/*
+This file MUST be included to use Vector2 and Vector3 and its functions
+Usage:
+#include "VectorAll.hpp"
+MathD::Vec2 testA(1, 2);
+MathD::Vec2 testB(2, 3);
+float a = MathD::crossProduct (testA, testB);
+MathD::Vec3 testA(1, 2, 4);
+MathD::Vec3 testB(2, 3, 5);
+MathD::Vec3 ans = MathD::crossProduct (testA, testB);
+MathD namespace is to prevent name clash with other library
+This file has other types of vector2d and vector3d in case it is needed
+Do add more here if other types is needed
+*/
 
-template <typename T>
-class Vector
-{
-public:
-	T x, y, z;
+#ifndef VECTOR_ALL_HPP
+#define VECTOR_ALL_HPP
 
-	// Constructors
-	Vector() : x{ T{} }, y{ T{} }, z{ T{} } {};
-	Vector(T _x, T _y) : x{ _x }, y{ _y }, z{ _z } {}
+#include "Vector2D.hpp"
+#include "Vector3D.hpp"
 
-	// Assignment operators
-	Vector<T>& operator += (const VectorND<T>& rhs) {
-		x += rhs.x;
-		y += rhs.y;
-		z += rhs.z;
-		return *this;
-	}
+namespace MathD {
+	//float vec2
+	using Vec2 = Vector2D<float>;
+	//int vec2
+	using iVec2 = Vector2D<int>;
+	//unsigned int vec2
+	using uiVec2 = Vector2D<unsigned int>;
 
-	Vector<T>& operator -= (const VectorND<T>& rhs) {
-		return *this += -rhs;
-	}
-
-	Vector<T>& operator *= (T rhs) {
-		x *= rhs;
-		y *= rhs;
-		x *= rhs;
-		return *this;
-	}
-
-	Vector<T>& operator /= (T rhs) {
-		x /= rhs;
-		y /= rhs;
-		z /= rhs;
-		return *this;
-	}
-
-	// Unary operators
-	Vector<T> operator-() const {
-		Vector tem;
-		tem.x = -x;
-		tem.y = -y;
-		tem.z = -z;
-		return tem;
-	}
-
-};
-
-
-// Binary operators
-template <typename T>
-Vector<T> operator + (const Vector<T>& lhs, const Vector<T>& rhs) {
-	Vector tem(lhs.x, lhs.y, lhs.z);
-	tem += rhs;
-	return tem;
-}
-
-template <typename T>
-Vector<T> operator - (const Vector<T>& lhs, const Vector<T>& rhs) {
-	return lhs + -rhs;
-}
-
-template <typename T>
-Vector<T> operator * (const Vector<T>& lhs, T rhs) {
-	Vector tem(lhs.x, lhs.y, lhs.z);
-	tem *= rhs;
-	return tem;
-}
-
-template <typename T>
-Vector<T> operator * (T lhs, const Vector<T>& rhs) {
-	return rhs * lhs;
-}
-
-template <typename T>
-Vector<T> operator / (const Vector<T>& lhs, T rhs) {
-	VectorND tem(lhs.x, lhs.y, lhs.z);
-	tem /= rhs;
-	return tem;
+	//float vec3
+	using Vec3 = Vector3D<float>;
+	//int vec3
+	using iVec3 = Vector3D<int>;
+	//unsigned int vec3
+	using uiVec3 = Vector3D<unsigned int>;
 }
 
 
-
-
-
-/**************************************************************************/
-/*!
-	In this function, pResult will be the unit vector of pVec0
- */
- /**************************************************************************/
-template <typename T>
-void Vec2Normalize(Vector<T>& pResult, const Vector<T>& pVec0) {
-	pResult = pVec0 / Vec2Length(pVec0);
-}
-
-/**************************************************************************/
-/*!
-	This function returns the length of the vector pVec0
- */
- /**************************************************************************/
-template <typename T>
-T Vec2Length(const Vector<T>& pVec0) {
-	return T(sqrt(pow(pVec0.x, 2) + pow(pVec0.y, 2)));
-}
-
-/**************************************************************************/
-/*!
-	This function returns the square of pVec0's length. Avoid the square root
- */
- /**************************************************************************/
-template <typename T>
-T Vec2SquareLength(const Vector<T>& pVec0) {
-	return T(pow(pVec0.x, 2) + pow(pVec0.y, 2));
-}
-
-/**************************************************************************/
-/*!
-	In this function, pVec0 and pVec1 are considered as 2D points.
-	The distance between these 2 2D points is returned
- */
- /**************************************************************************/
-template <typename T>
-T Vec2Distance(const Vector<T>& pVec0, const Vector<T>& pVec1) {
-	Vector tem(pVec0);
-	tem -= pVec1;
-	return Vec2Length(tem);
-}
-
-/**************************************************************************/
-/*!
-	In this function, pVec0 and pVec1 are considered as 2D points.
-	The squared distance between these 2 2D points is returned.
-	Avoid the square root
- */
- /**************************************************************************/
-template <typename T>
-T Vec2SquareDistance(const Vector<T>& pVec0, const Vector<T>& pVec1) {
-	Vector tem(pVec0);
-	tem -= pVec1;
-	return Vec2SquareLength(tem);
-}
-
-/**************************************************************************/
-/*!
-	This function returns the dot product between pVec0 and pVec1
- */
- /**************************************************************************/
-template <typename T>
-T Vec2DotProduct(const Vector<T>& pVec0, const Vector<T>& pVec1) {
-	return T((pVec0.x * pVec1.x) + (pVec0.y * pVec1.y));
-}
-
-/**************************************************************************/
-/*!
-	This function returns the cross product magnitude
-	between pVec0 and pVec1
- */
- /**************************************************************************/
-template <typename T>
-T Vec2CrossProductMag(const Vector<T>& pVec0, const Vector<T>& pVec1) {
-	return T((pVec0.x * pVec1.y) - (pVec0.y * pVec1.x));
-}
-
-
-
-
-//float vec2
-using Vec2 = Vector<float>;
-//int vec2
-using iVec2 = Vector<int>;
-//unsigned int vec2
-using uiVec2 = Vector<unsigned int>;
 #endif

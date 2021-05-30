@@ -17,7 +17,7 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 
 This file MUST be included to use Vector2 and Vector3 and its functions
 Usage:
-	#include "VectorAll.hpp"
+	#include "Vector.hpp"
 	MathD::Vec2 testA(1, 2);
 	MathD::Vec2 testB(2, 3);
 	float a = MathD::crossProduct (testA, testB);

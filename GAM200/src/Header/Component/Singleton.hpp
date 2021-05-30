@@ -1,3 +1,4 @@
+
 /* Start Header**********************************************************************************/
 /*!
 \file Singleton.hpp
@@ -23,6 +24,7 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
+
 #ifndef SINGLETON_H
 #define SINGLETON_H
 

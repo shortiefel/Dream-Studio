@@ -1,7 +1,9 @@
 #ifndef COLLIDER_COMPONENT_H
 #define COLLIDER_COMPONENT_H
 
-#include "Math/Vector2D.hpp"
+
+#include "Math/VectorAll.hpp" //vector 2d
+
 
 enum class CollisionType {
 	CIRCLE = 0,
@@ -14,7 +16,9 @@ enum class CollisionType {
 //when origin is w/2, h/2, object is rotated at the center
 
 struct Collider {
-	Vec2 pos;//, origin;
+
+	MathD::Vec2 pos;//, origin;
+
 	CollisionType cType;
 	bool isTrigger = false, isActive = true;
 
@@ -28,7 +32,9 @@ struct BoxCollider : Collider {
 
 	BoxCollider (float xPos, float yPos, float width, float height, bool istrigger = false) : 
 		 w{ width }, h{ height }, Collider { xPos, yPos, CollisionType::BOX, istrigger } {}
-	BoxCollider(Vec2 position, float width, float height, bool istrigger = false) :
+
+	BoxCollider(MathD::Vec2 position, float width, float height, bool istrigger = false) :
+
 		BoxCollider { position.x, position.y, width, height , istrigger } {}
 };
 
@@ -37,7 +43,9 @@ struct CircleCollider : Collider {
 
 	CircleCollider(float xPos, float yPos, float radius, bool istrigger = false) :
 		r { radius }, Collider{ xPos, yPos, CollisionType::CIRCLE, istrigger } {}
-	CircleCollider(Vec2 position, float radius, bool istrigger = false) :
+
+	CircleCollider(MathD::Vec2 position, float radius, bool istrigger = false) :
+
 		CircleCollider{ position.x, position.y, radius, istrigger } {}
 };
 

@@ -2,7 +2,7 @@
 #define MOUSE_EVENT_H
 
 #include "Event.hpp"
-#include "../Math/Vector2D.hpp"
+#include "../Math/VectorAll.hpp"
 
 //MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, 
 //MOUSE_MOVED, MOUSE_SCROLLED
@@ -57,7 +57,7 @@ public:
 	MouseMoveEvent(float xp, float yp) :
 		pos{ xp, yp } {}
 
-	inline Vec2 GetPos() const { return pos; }
+	inline MathD::Vec2 GetPos() const { return pos; }
 
 	virtual EventType GetEventType() const override {
 		return EventType::MOUSE_MOVE;
@@ -68,7 +68,7 @@ public:
 	}
 
 private:
-	Vec2 pos;
+	MathD::Vec2 pos;
 };
 
 class MouseScrolledEvent : public Event {
@@ -85,7 +85,7 @@ public:
 	}
 
 private:
-	Vec2 scrollOffset;
+	MathD::Vec2 scrollOffset;
 };
 
 #endif

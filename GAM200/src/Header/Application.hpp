@@ -26,13 +26,16 @@ Technology is prohibited.
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "Window.hpp"
-#include "Event/EventDispatcher.hpp"
+//Declaration of class and struct that are used in class Application function declaration
+//header file need not know its data member yet since it is not used
+class Event;
+class WindowCloseEvent;
+struct GLFWwindow;
 
 class Application {
 public:
 	static void Create();
-	static void Run();
+	static void Update();
 	static void Destroy();
 
 	~Application();
@@ -43,7 +46,7 @@ public:
 	bool OnWindowClose(WindowCloseEvent& e);
 private:
 	static Application* s_app_instance;
-	//static Window* window;
+	//static GLFWwindow* s_glfw_window;
 	static bool app_run_bool;
 
 	Application() = default;

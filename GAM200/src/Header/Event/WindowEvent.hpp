@@ -2,7 +2,7 @@
 #define WINDOW_EVENT_H
 
 #include "Event.hpp" //Event
-#include "../Math/Vector2D.hpp" //Vec2
+#include "../Math/VectorAll.hpp" //Vec2
 
 //WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_MOVED
 class WindowCloseEvent : public Event {
@@ -23,7 +23,7 @@ public:
 	WindowResizeEvent(unsigned int w, unsigned int h) :
 		w_size{ w, h } {}
 
-	inline uiVec2 GetSize() const {
+	inline MathD::uiVec2 GetSize() const {
 		return w_size;
 	}
 
@@ -36,7 +36,7 @@ public:
 	}
 
 private:
-	uiVec2 w_size;
+	MathD::uiVec2 w_size;
 
 };
 

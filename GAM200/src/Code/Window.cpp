@@ -4,7 +4,9 @@ Function definitions for creating and destroying a window using GLFW API
 
 #include "Debug Tools/Logging.hpp"
 #include "Window.hpp"
+
 #include "pch.hpp"
+
 
 #include "Event/KeyEvent.hpp"
 #include "Event/MouseEvent.hpp"
@@ -12,28 +14,30 @@ Function definitions for creating and destroying a window using GLFW API
 
 GLFWwindow* Window::glfw_window = 0;
 //Window* Window::s_instance = 0;
-Window::WinData Window::w_data = {"untitled", 900, 900};
 
-void Window::OnUpdate() {
+//Changed on Create
+Window::WinData Window::w_data = {"", 0, 0};
+
+void Window::Update() {
+
 	glfwPollEvents();
 	glfwSwapBuffers(glfw_window);
 }
-
-GLFWwindow* Window::GetGLFWwindow() {
-	return glfw_window;
-}
-
-unsigned int Window::GetWidth() { return w_data.width; }
-unsigned int Window::GetHeight() { return w_data.height; }
 
 //Destroy glfw window
 void Window::Destroy() {
 	glfwDestroyWindow(glfw_window);
 	glfwTerminate();
+
+	LOG_INSTANCE("Window destroyed");
+
 }
 
 //Create instance of window class
 bool Window::Create(const std::string& ttitle, unsigned int twidth, unsigned int theight) {
+
+	LOG_INSTANCE("Window Created");
+
 	//For logging purposes
 	w_data.title = ttitle;
 	w_data.width = twidth;

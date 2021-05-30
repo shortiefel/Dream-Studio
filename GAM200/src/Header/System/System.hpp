@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*!
-\file Application.hpp
+\file System.hpp
 \team name
 \software name
 \authors
@@ -15,41 +15,25 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \date 26/04/2021
 \brief
 
+This is to allow iteration in a list of entities with a certain signature of components
 
-This file contains the starting point of the application. This is provided by Elie in CSD1130.
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
-#ifndef APPLICATION_H
-#define APPLICATION_H
 
-//Declaration of class and struct that are used in class Application function declaration
-//header file need not know its data member yet since it is not used
-class Event;
-class WindowCloseEvent;
-struct GLFWwindow;
+#pragma once
 
-class Application {
-public:
-	static void Create();
-	static void Update();
-	static void Destroy();
+#include "../Global.hpp"
+#include <set> //associative container that contains a sorted set of unique object of type Key
 
-	~Application();
+class System
+{
+	public:
+		std::set<Entity> mEntities;
 
-	void OnEvent(Event& event);
-	void SetEventCallBack();
-
-	bool OnWindowClose(WindowCloseEvent& e);
-private:
-	static Application* s_app_instance;
-	//static GLFWwindow* s_glfw_window;
-	static bool app_run_bool;
-
-	Application() = default;
 };
 
-#endif
+

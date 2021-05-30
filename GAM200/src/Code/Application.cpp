@@ -4,7 +4,6 @@ Contains the main application loop and the game loop
 */
 
 #include "Debug Tools/Logging.hpp"
-
 #include "Application.hpp"
 
 #include "Window.hpp"
@@ -51,8 +50,8 @@ void Application::Update() {
 
 void Application::Destroy() {
     delete s_app_instance;
-
     LOG_INSTANCE("Application destroyed");
+
 }
 
 //------------------------------------------------------
@@ -71,7 +70,7 @@ void Application::OnEvent(Event& event) {
 
     //Send event down the layers
     EventDispatcher dispatcher(event);
-    
+
     switch (event.GetEventType()) {
     case EventType::WINDOW_CLOSE:
         dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));

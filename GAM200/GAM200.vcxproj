@@ -72,23 +72,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/x86;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)/External Resources/lib/x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/x86;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)/External Resources/lib/x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/x64;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)/External Resources/lib/x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/x64;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)/External Resources/lib/x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -96,20 +88,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x86;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/External Resources/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "$(SolutionDir)External Resources\lib\x86\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)External Resources\lib\x86\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -119,22 +105,16 @@ copy "$(SolutionDir)External Resources\lib\x86\glew32.dll" "$(TargetDir)glew32.d
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x86;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/External Resources/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "$(SolutionDir)External Resources\lib\x86\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)External Resources\lib\x86\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -142,20 +122,14 @@ copy "$(SolutionDir)External Resources\lib\x86\glew32.dll" "$(TargetDir)glew32.d
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/External Resources/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "$(SolutionDir)External Resources\lib\x64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -165,43 +139,25 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/External Resources/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "$(SolutionDir)External Resources\lib\x64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="External Resources\Imgui\imconfig.h" />
-    <ClInclude Include="External Resources\Imgui\imgui.h" />
-    <ClInclude Include="External Resources\Imgui\imgui_impl_glfw.h" />
-    <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="External Resources\Imgui\imgui_internal.h" />
-    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h" />
-    <ClInclude Include="External Resources\Imgui\imstb_textedit.h" />
-    <ClInclude Include="External Resources\Imgui\imstb_truetype.h" />
     <ClInclude Include="src\Header\Application.hpp" />
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
-    <ClInclude Include="src\Header\Debug Tools\Logging.hpp" />
+    <ClInclude Include="src\Header\Component\ComponentManager.hpp" />
     <ClInclude Include="src\Header\Entity\EntityManager.hpp" />
-    <ClInclude Include="src\Header\Event\Event.hpp" />
-    <ClInclude Include="src\Header\Event\EventDispatcher.hpp" />
-    <ClInclude Include="src\Header\Event\KeyEvent.hpp" />
-    <ClInclude Include="src\Header\Event\MouseEvent.hpp" />
-    <ClInclude Include="src\Header\Event\WindowEvent.hpp" />
     <ClInclude Include="src\Header\framework.hpp" />
     <ClInclude Include="src\Header\Global.hpp" />
+
     <ClInclude Include="src\Header\Layer\GUILayer.hpp" />
     <ClInclude Include="src\Header\Layer\Layer.hpp" />
     <ClInclude Include="src\Header\Layer\LayerStack.hpp" />
@@ -209,31 +165,22 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Math\Vector2D.hpp" />
     <ClInclude Include="src\Header\Math\Vector3D.hpp" />
     <ClInclude Include="src\Header\Math\VectorAll.hpp" />
+
     <ClInclude Include="src\Header\pch.hpp" />
-    <ClInclude Include="src\Header\Physic.hpp" />
-    <ClInclude Include="src\Header\ColliderComponent.hpp" />
-    <ClInclude Include="src\Header\PhysicSystem.hpp" />
     <ClInclude Include="src\Header\Resource.hpp" />
-    <ClInclude Include="src\Header\RigidBodyComponent.hpp" />
     <ClInclude Include="src\Header\Singleton.hpp" />
+    <ClInclude Include="src\Header\System\System.hpp" />
+    <ClInclude Include="src\Header\System\SystemManager.hpp" />
     <ClInclude Include="src\Header\targetver.hpp" />
-    <ClInclude Include="src\Header\TransformComponent.hpp" />
     <ClInclude Include="src\Header\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="External Resources\Imgui\imgui.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_demo.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_draw.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_tables.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Header\Application.cpp" />
+
     <ClCompile Include="src\Header\Layer\GUILayer.cpp" />
     <ClCompile Include="src\Header\Layer\LayerStack.cpp" />
+
     <ClCompile Include="src\Header\Main.cpp" />
-    <ClCompile Include="src\Header\Physic.cpp" />
-    <ClCompile Include="src\Header\PhysicSystem.cpp" />
     <ClCompile Include="src\Header\Singleton.cpp" />
     <ClCompile Include="src\Header\Window.cpp" />
   </ItemGroup>

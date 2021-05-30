@@ -132,61 +132,8 @@
     <ClInclude Include="src\Header\Application.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-
-    <ClInclude Include="src\Header\Physic.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\RigidBodyComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\TransformComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\PhysicSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\ColliderComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\Event.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\KeyEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\MouseEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\WindowEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\EventDispatcher.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\Math\Vector2D.hpp">
       <Filter>Header Files\Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
-      <Filter>Header Files\Debug Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imconfig.h">
-      <Filter>IMGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imgui.h">
-      <Filter>IMGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imgui_internal.h">
-      <Filter>IMGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h">
-      <Filter>IMGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imstb_textedit.h">
-      <Filter>IMGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imstb_truetype.h">
-      <Filter>IMGUI</Filter>
-
     </ClInclude>
     <ClInclude Include="src\Header\System\System.hpp">
       <Filter>Header Files\System</Filter>
@@ -209,54 +156,28 @@
     <ClInclude Include="src\Header\Math\Vector3D.hpp">
       <Filter>Header Files\Maths</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\Component\ComponentManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Header\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Header\Singleton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Header\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Header\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-
-    <ClCompile Include="src\Header\Physic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Header\PhysicSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="External Resources\Imgui\imgui.cpp">
-      <Filter>IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="External Resources\Imgui\imgui_demo.cpp">
-      <Filter>IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="External Resources\Imgui\imgui_draw.cpp">
-      <Filter>IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="External Resources\Imgui\imgui_tables.cpp">
-      <Filter>IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp">
-      <Filter>IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="External Resources\Imgui\imgui_impl_glfw.cpp">
-      <Filter>IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp">
-      <Filter>IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Header\Layer\GUILayer.cpp">
+    <ClCompile Include="src\Code\Layer\GUILayer.cpp">
       <Filter>Source Files\Layer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Header\Layer\LayerStack.cpp">
+    <ClCompile Include="src\Code\Layer\LayerStack.cpp">
       <Filter>Source Files\Layer</Filter>
     </ClCompile>
-
+    <ClCompile Include="src\Code\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Component\Singleton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

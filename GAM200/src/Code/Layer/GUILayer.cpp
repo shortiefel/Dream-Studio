@@ -1,6 +1,6 @@
-#include "../Debug Tools/Logging.hpp"
-#include "GUILayer.hpp"
-#include "../pch.hpp"
+#include "Debug Tools/Logging.hpp"
+#include "Layer/GUILayer.hpp"
+#include "pch.hpp"
 
 #include "../../../External Resources/Imgui/imgui.h"
 #include "../../../External Resources/Imgui/imgui_impl_glfw.h"

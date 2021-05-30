@@ -154,11 +154,13 @@ public:
 
 #else
 
-#define LOG_INFO(x) ; 
-#define LOG_DEBUG(x) ; 
-#define LOG_WARNING(x) ; 
-#define LOG_ERROR(x) ;
-#endif
+//Do nothing  do {} while (0)
+#define LOG_INFO(x)  do {} while (0)
+#define LOG_EVENT(x)  do {} while (0)
+#define LOG_WARNING(x) do {} while (0)
+#define LOG_ERROR(x)  do {} while (0)
+#define LOG_INSTANCE(x) do {} while (0)
+#endif	
 
 
 

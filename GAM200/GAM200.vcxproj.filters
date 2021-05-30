@@ -97,6 +97,9 @@
     <Filter Include="Source Files\Layer">
       <UniqueIdentifier>{68952409-84e5-4746-b150-d4d1255200f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Imgui">
+      <UniqueIdentifier>{1861c7bb-7c9b-4539-81b8-9692d9dab0a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header\framework.hpp">
@@ -119,9 +122,6 @@
     </ClInclude>
     <ClInclude Include="src\Header\Component\ComponentArray.hpp">
       <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Singleton.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Header\Window.hpp">
       <Filter>Header Files</Filter>
@@ -159,6 +159,33 @@
     <ClInclude Include="src\Header\Component\ComponentManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imconfig.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui_impl_glfw.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui_internal.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imstb_textedit.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imstb_truetype.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Header\Main.cpp">
@@ -176,8 +203,26 @@
     <ClCompile Include="src\Code\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Code\Component\Singleton.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="External Resources\Imgui\imgui.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_demo.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_draw.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_impl_glfw.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_tables.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp">
+      <Filter>Imgui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

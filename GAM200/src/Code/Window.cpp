@@ -2,15 +2,15 @@
 Function definitions for creating and destroying a window using GLFW API
 */
 
-#include "Debug Tools/Logging.hpp"
-#include "Window.hpp"
+#include "../Header/Debug Tools/Logging.hpp"
+#include "../Header/Window.hpp"
 
-#include "pch.hpp"
+#include "../Header/pch.hpp"
 
 
-#include "Event/KeyEvent.hpp"
-#include "Event/MouseEvent.hpp"
-#include "Event/WindowEvent.hpp"
+#include "../Header/Event/KeyEvent.hpp"
+#include "../Header/Event/MouseEvent.hpp"
+#include "../Header/Event/WindowEvent.hpp"
 
 GLFWwindow* Window::glfw_window = 0;
 //Window* Window::s_instance = 0;

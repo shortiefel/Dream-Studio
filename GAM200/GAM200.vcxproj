@@ -88,13 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x86;$(SolutionDir)/src/Code;$(SolutionDir)/src/Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x86;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)/External Resources/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -105,15 +105,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x86;$(SolutionDir)/src/Code;$(SolutionDir)/src/Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x86;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)/External Resources/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -122,10 +122,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x64;$(SolutionDir)/src/Code;$(SolutionDir)/src/Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)/External Resources/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -139,21 +139,30 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x64;$(SolutionDir)/src/Code;$(SolutionDir)/src/Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/External Resources/include/x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)/External Resources/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="External Resources\Imgui\imconfig.h" />
+    <ClInclude Include="External Resources\Imgui\imgui.h" />
+    <ClInclude Include="External Resources\Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="External Resources\Imgui\imgui_internal.h" />
+    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h" />
+    <ClInclude Include="External Resources\Imgui\imstb_textedit.h" />
+    <ClInclude Include="External Resources\Imgui\imstb_truetype.h" />
     <ClInclude Include="src\Header\Application.hpp" />
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
     <ClInclude Include="src\Header\Component\ComponentManager.hpp" />
+    <ClInclude Include="src\Header\Debug Tools\Logging.hpp" />
     <ClInclude Include="src\Header\Entity\EntityManager.hpp" />
     <ClInclude Include="src\Header\framework.hpp" />
     <ClInclude Include="src\Header\Global.hpp" />
@@ -166,15 +175,20 @@
     <ClInclude Include="src\Header\Math\VectorAll.hpp" />
     <ClInclude Include="src\Header\pch.hpp" />
     <ClInclude Include="src\Header\Resource.hpp" />
-    <ClInclude Include="src\Header\Singleton.hpp" />
     <ClInclude Include="src\Header\System\System.hpp" />
     <ClInclude Include="src\Header\System\SystemManager.hpp" />
     <ClInclude Include="src\Header\targetver.hpp" />
     <ClInclude Include="src\Header\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="External Resources\Imgui\imgui.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_demo.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_draw.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_tables.cpp" />
+    <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Code\Application.cpp" />
-    <ClCompile Include="src\Code\Component\Singleton.cpp" />
     <ClCompile Include="src\Code\Layer\GUILayer.cpp" />
     <ClCompile Include="src\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Code\Window.cpp" />

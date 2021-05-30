@@ -1,10 +1,10 @@
-#include "Debug Tools/Logging.hpp"
-#include "Layer/GUILayer.hpp"
-#include "pch.hpp"
+#include "../../Header/Debug Tools/Logging.hpp"
+#include "../../Header/Layer/GUILayer.hpp"
+#include "../../Header/pch.hpp"
 
-#include "../../../External Resources/Imgui/imgui.h"
-#include "../../../External Resources/Imgui/imgui_impl_glfw.h"
-#include "../../../External Resources/Imgui/imgui_impl_opengl3.h"
+#include "../../External Resources/Imgui/imgui.h"
+#include "../../External Resources/Imgui/imgui_impl_glfw.h"
+#include "../../External Resources/Imgui/imgui_impl_opengl3.h"
 
 //Static ----------------------------------------------------------------------------------------
 GUILayer* GUILayer::m_instance;
@@ -12,7 +12,7 @@ GUILayer* GUILayer::m_instance;
 bool GUILayer::Create(GLFWwindow* window, const char* glsl_version) {
     if (m_instance) LOG_WARNING("An instance of GUILayer already exist!");
     m_instance = new GUILayer;
-    LOG_INSTANCE("GUIManager created");
+    LOG_INSTANCE("GUILayer created");
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -40,7 +40,7 @@ void GUILayer::Destroy() {
     ImGui::DestroyContext();
 
     delete m_instance;
-    LOG_INSTANCE("GUIManager destroyed");
+    LOG_INSTANCE("GUILayer destroyed");
 }
 //-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ void GUILayer::Draw() {
     //Render 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
+    
     //Allow drawing menu outside of window-----------------------------------
     ImGuiIO& io = ImGui::GetIO();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)

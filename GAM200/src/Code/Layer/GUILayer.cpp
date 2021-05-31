@@ -2,9 +2,9 @@
 #include "../../Header/Layer/GUILayer.hpp"
 #include "../../Header/pch.hpp"
 
-#include "../../External Resources/Imgui/imgui.h"
-#include "../../External Resources/Imgui/imgui_impl_glfw.h"
-#include "../../External Resources/Imgui/imgui_impl_opengl3.h"
+#include "../../../External Resources/Imgui/imgui.h"
+#include "../../../External Resources/Imgui/imgui_impl_glfw.h"
+#include "../../../External Resources/Imgui/imgui_impl_opengl3.h"
 
 //Static ----------------------------------------------------------------------------------------
 GUILayer* GUILayer::m_instance;

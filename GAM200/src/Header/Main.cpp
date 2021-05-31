@@ -22,17 +22,19 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+//Memory check-----------------------------
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+//-----------------------------
+
 #include "framework.hpp"
 #include "Main.hpp"
 
 #include <stdio.h>
 #include "Application.hpp"
 
-//Memory check-----------------------------
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-//-----------------------------
+
 
 //#define MAX_LOADSTRING 100
 //

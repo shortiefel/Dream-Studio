@@ -5,7 +5,7 @@
 #ifndef LAYER_STACK_H
 #define LAYER_STACK_H
 
-#include "../pch.hpp"
+#include "pch.hpp"
 #include "Layer.hpp"
 
 class LayerStack {

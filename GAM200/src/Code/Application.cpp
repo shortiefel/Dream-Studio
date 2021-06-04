@@ -3,13 +3,13 @@ Create a window and other various required manager (e.g Physic / Graphic Manager
 Contains the main application loop and the game loop
 */
 
-#include "../Header/Debug Tools/Logging.hpp"
-#include "../Header/Application.hpp"
+#include "Debug Tools/Logging.hpp"
+#include "Application.hpp"
 
-#include "../Header/Window.hpp"
-#include "../Header/Event/EventDispatcher.hpp"
-#include "../Header/Layer/LayerStack.hpp"
-#include "../Header/Layer/GUILayer.hpp"
+#include "Window.hpp"
+#include "Event/EventDispatcher.hpp"
+#include "Layer/LayerStack.hpp"
+#include "Layer/GUILayer.hpp"
 
 //Static----------------------------------------------
 

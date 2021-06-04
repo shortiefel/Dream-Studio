@@ -1,5 +1,5 @@
-#include "PhysicSystem.hpp"
-#include "Physic.hpp"
+#include "System/PhysicSystem.hpp"
+#include "Component/Physics/Physic.hpp"
 
 //Static--------------------------------------------------------
 PhysicSystem* PhysicSystem::s_instance = 0;

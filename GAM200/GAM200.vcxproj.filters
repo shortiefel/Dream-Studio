@@ -1,287 +1,195 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\Entity">
-      <UniqueIdentifier>{072da531-1970-4f5c-b675-f7bb8466ed1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component">
-      <UniqueIdentifier>{605fd5eb-8d77-4545-be35-64a83d993b97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\System">
-      <UniqueIdentifier>{70979902-c4f8-46bd-b7ca-928bb1a7fd37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Entity">
-      <UniqueIdentifier>{d5a81688-b8a6-4bf8-af37-e67965f950b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Component">
-      <UniqueIdentifier>{66f7edd6-3bd3-4816-b508-c652e10bf1bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\System">
-      <UniqueIdentifier>{e874abce-03a0-4874-9baa-3b74ef959ac6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Maths">
-      <UniqueIdentifier>{2745d6e3-f964-47f5-8cad-0286732654ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Factory">
-      <UniqueIdentifier>{397b86fe-c735-4459-9a8f-9194a2407478}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Serialization">
-      <UniqueIdentifier>{30ee0fbd-8658-45ba-bf40-d5a4bcbb6d35}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Factory">
-      <UniqueIdentifier>{458bf8fe-3cb5-421e-b6bc-a88bfa9b1bf1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Serialization">
-      <UniqueIdentifier>{5615ee73-d337-437e-9861-f0e349d9c368}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component\Physics">
-      <UniqueIdentifier>{da4aa9c4-a22f-4f2d-af9a-05320ce7886c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component\Graphics">
-      <UniqueIdentifier>{48ba6d67-7252-4b10-963d-36f0629c78f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component\Transform">
-      <UniqueIdentifier>{28922ce7-4bb9-4877-b34f-40d890d7d403}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component\Collision">
-      <UniqueIdentifier>{63132148-113d-4103-ba6d-cf6e6d72c58b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Composition">
-      <UniqueIdentifier>{5d1f7385-616d-4b0f-a1be-03427d7a8568}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Component\Graphics">
-      <UniqueIdentifier>{db5cd36a-49a1-46f6-8b32-a7ec62b9377e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Component\Collision">
-      <UniqueIdentifier>{6853793f-9807-4998-b38d-4065cbc28256}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Component\Transform">
-      <UniqueIdentifier>{0d764807-f5b6-4946-ba29-21d8520da23b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Component\Physics">
-      <UniqueIdentifier>{9b234115-0ab1-4903-9ccf-37c4cffd0c09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Composition">
-      <UniqueIdentifier>{e4543b88-c0f9-47af-967f-71c9c35ac352}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component\Animation">
-      <UniqueIdentifier>{12f1b7cf-1e23-4398-bdab-96792df73ce4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Component\Animation">
-      <UniqueIdentifier>{95e669b6-9e05-4996-8b1b-edeb742cb7a2}</UniqueIdentifier>
-    </Filter>
-
-    <Filter Include="Header Files\Layer">
-      <UniqueIdentifier>{99b5130e-bd4b-4b74-b808-71031aed115c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Layer">
-      <UniqueIdentifier>{68952409-84e5-4746-b150-d4d1255200f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Imgui">
-      <UniqueIdentifier>{1861c7bb-7c9b-4539-81b8-9692d9dab0a8}</UniqueIdentifier>
-
-    <Filter Include="Header Files\Debug Tools">
-      <UniqueIdentifier>{58d1fa96-a081-4ce3-9dbc-a360186114be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{85cb366c-2c2e-41a3-963b-3b787968ed91}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Event">
-      <UniqueIdentifier>{566fe86e-fdc2-455d-a928-e507e1d8062d}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Header\framework.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Global.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Main.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Resource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\targetver.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Entity\EntityManager.hpp">
-      <Filter>Header Files\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Component\ComponentArray.hpp">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Window.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\pch.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Application.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Math\Vector2D.hpp">
-      <Filter>Header Files\Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\System\System.hpp">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\System\SystemManager.hpp">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-
-    <ClInclude Include="src\Header\Layer\Layer.hpp">
-      <Filter>Header Files\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Layer\LayerStack.hpp">
-      <Filter>Header Files\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Layer\GUILayer.hpp">
-      <Filter>Header Files\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Math\VectorAll.hpp">
-      <Filter>Header Files\Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Math\Vector3D.hpp">
-      <Filter>Header Files\Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Component\ComponentManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
-      <Filter>Header Files\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imconfig.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imgui.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imgui_impl_glfw.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imgui_internal.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imstb_textedit.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="External Resources\Imgui\imstb_truetype.h">
-      <Filter>Imgui</Filter>
-
-    <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp">
-      <Filter>Header Files\Component\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Component\Physics\Physic.hpp">
-      <Filter>Header Files\Component\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Component\Physics\PhysicSystem.hpp">
-      <Filter>Header Files\Component\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Component\Physics\RigidBodyComponent.hpp">
-      <Filter>Header Files\Component\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Component\Graphics\GUIManager.hpp">
-      <Filter>Header Files\Component\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Component\Transform\TransformComponent.hpp">
-      <Filter>Header Files\Component\Transform</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
-      <Filter>Header Files\Debug Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\Event.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\EventDispatcher.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\KeyEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\MouseEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Event\WindowEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Math\Vector.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Math\Vector2D.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Math\Vector3D.hpp">
-      <Filter>Header Files\Math</Filter>
-
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Header\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Code\Layer\GUILayer.cpp">
-      <Filter>Source Files\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Code\Layer\LayerStack.cpp">
-      <Filter>Source Files\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Code\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Code\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-
     <ClCompile Include="External Resources\Imgui\imgui.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="External Resources\Imgui\imgui_demo.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="External Resources\Imgui\imgui_draw.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="External Resources\Imgui\imgui_impl_glfw.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="External Resources\Imgui\imgui_tables.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp">
-      <Filter>Imgui</Filter>
-
-    <ClCompile Include="src\Code\Component\Graphics\GUIManager.cpp">
-      <Filter>Source Files\Component\Graphics</Filter>
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Application.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Layer\GUILayer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Header\Main.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Code\Component\Physics\Physic.cpp">
-      <Filter>Source Files\Component\Physics</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Code\System\PhysicSystem.cpp">
-      <Filter>Source Files\System</Filter>
-
+      <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\Code\Window.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Layer\LayerStack.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="External Resources\Imgui\imconfig.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui_impl_glfw.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui_internal.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imstb_textedit.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imstb_truetype.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Application.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\framework.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Global.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Main.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\pch.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Resource.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\targetver.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Window.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp">
+      <Filter>Include\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\ComponentArray.hpp">
+      <Filter>Include\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\ComponentManager.hpp">
+      <Filter>Include\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Entity\EntityManager.hpp">
+      <Filter>Include\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\Event.hpp">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\EventDispatcher.hpp">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Layer\GUILayer.hpp">
+      <Filter>Include\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\KeyEvent.hpp">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Layer\Layer.hpp">
+      <Filter>Include\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Layer\LayerStack.hpp">
+      <Filter>Include\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
+      <Filter>Include\Debug Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\MouseEvent.hpp">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\Physic.hpp">
+      <Filter>Include\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\System\PhysicSystem.hpp">
+      <Filter>Include\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\System\System.hpp">
+      <Filter>Include\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\System\SystemManager.hpp">
+      <Filter>Include\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\RigidBodyComponent.hpp">
+      <Filter>Include\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Transform\TransformComponent.hpp">
+      <Filter>Include\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Vector.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Vector2D.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Vector3D.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Event\WindowEvent.hpp">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="IMGUI">
+      <UniqueIdentifier>{f14a8a56-f47e-48b7-b9c8-c5a12a06cef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{a140a049-374f-43a6-abf3-32cae0728b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{5a5deca2-ec14-410b-bbe9-a40138cb7d76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Component">
+      <UniqueIdentifier>{cc79b8e9-0a74-49f8-a599-e7d98fa59825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Debug Tools">
+      <UniqueIdentifier>{e1a3f171-2b80-480f-a84a-8767e7f803ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Entity">
+      <UniqueIdentifier>{ff9393d6-73f2-4dbe-bef3-13aae52eaa7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Event">
+      <UniqueIdentifier>{66fb1f04-5266-409f-ba14-daa626448fb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Layer">
+      <UniqueIdentifier>{6c517007-9406-4560-aebd-ab90d82684fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Math">
+      <UniqueIdentifier>{acd7abb9-d959-4e52-a912-ddde3f757556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\System">
+      <UniqueIdentifier>{dbfa4c4b-c23b-448b-b339-a8de17b44c63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

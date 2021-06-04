@@ -1,7 +1,8 @@
 #ifndef PHYSIC_H
 #define PHYSIC_H
 
-#include "ColliderComponent.hpp"
+struct BoxCollider;
+struct CircleCollider;
 
 //Collision physic----------------------------------------
 bool isColliding(BoxCollider obj1, BoxCollider obj2);

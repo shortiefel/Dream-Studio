@@ -2,7 +2,7 @@
 #define COLLIDER_COMPONENT_H
 
 
-#include "Math/VectorAll.hpp" //vector 2d
+#include "Math/Vector.hpp" //vector 2d
 
 
 enum class CollisionType {

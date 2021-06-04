@@ -1,8 +1,8 @@
 #ifndef MOUSE_EVENT_H
 #define MOUSE_EVENT_H
 
-#include "Event.hpp"
-#include "../Math/VectorAll.hpp"
+#include "Event/Event.hpp"
+#include "Math/Vector.hpp"
 
 //MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, 
 //MOUSE_MOVED, MOUSE_SCROLLED

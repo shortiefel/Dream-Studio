@@ -1,12 +1,10 @@
-#include "Physic.hpp"
+#include "Component/Physics/Physic.hpp"
+#include "Component/Physics/ColliderComponent.hpp"
 #include "cmath"
 
 float getLongestSide(float n1, float n2) {
     return sqrt(pow(n1 / 2, 2) + pow(n2 / 2, 2));
 }
-
-
-
 
 bool isColliding(BoxCollider obj1, BoxCollider obj2) {
     /*if (obj1.pos.x + obj1.w < obj2.pos.x ||

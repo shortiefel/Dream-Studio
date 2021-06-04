@@ -1,5 +1,5 @@
-#include "../../Header/Debug Tools/Logging.hpp"
-#include "../../Header/Layer/LayerStack.hpp"
+#include "Debug Tools/Logging.hpp"
+#include "Layer/LayerStack.hpp"
 
 LayerStack* LayerStack::m_instance = 0;
 std::vector<Layer*> LayerStack::layerStack;

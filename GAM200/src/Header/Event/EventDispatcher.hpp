@@ -1,7 +1,7 @@
 #ifndef EVENT_DISPATCHER_H
 #define EVENT_DISPATCHER_H
 
-#include "../pch.hpp"
+#include "pch.hpp"
 #include "Event.hpp" //event types
 #include "KeyEvent.hpp" //event types
 #include "MouseEvent.hpp" //event types

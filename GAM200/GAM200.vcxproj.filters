@@ -82,6 +82,16 @@
     <Filter Include="Source Files\Component\Animation">
       <UniqueIdentifier>{95e669b6-9e05-4996-8b1b-edeb742cb7a2}</UniqueIdentifier>
     </Filter>
+
+    <Filter Include="Header Files\Layer">
+      <UniqueIdentifier>{99b5130e-bd4b-4b74-b808-71031aed115c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layer">
+      <UniqueIdentifier>{68952409-84e5-4746-b150-d4d1255200f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui">
+      <UniqueIdentifier>{1861c7bb-7c9b-4539-81b8-9692d9dab0a8}</UniqueIdentifier>
+
     <Filter Include="Header Files\Debug Tools">
       <UniqueIdentifier>{58d1fa96-a081-4ce3-9dbc-a360186114be}</UniqueIdentifier>
     </Filter>
@@ -114,9 +124,6 @@
     <ClInclude Include="src\Header\Component\ComponentArray.hpp">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Singleton.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -126,8 +133,8 @@
     <ClInclude Include="src\Header\Application.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Component\ComponentManager.hpp">
-      <Filter>Header Files\Component</Filter>
+    <ClInclude Include="src\Header\Math\Vector2D.hpp">
+      <Filter>Header Files\Maths</Filter>
     </ClInclude>
     <ClInclude Include="src\Header\System\System.hpp">
       <Filter>Header Files\System</Filter>
@@ -135,6 +142,52 @@
     <ClInclude Include="src\Header\System\SystemManager.hpp">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+
+    <ClInclude Include="src\Header\Layer\Layer.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Layer\LayerStack.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Layer\GUILayer.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\VectorAll.hpp">
+      <Filter>Header Files\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Vector3D.hpp">
+      <Filter>Header Files\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\ComponentManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Debug Tools\Logging.hpp">
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imconfig.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui_impl_glfw.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imgui_internal.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imstb_textedit.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External Resources\Imgui\imstb_truetype.h">
+      <Filter>Imgui</Filter>
+
     <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp">
       <Filter>Header Files\Component\Physics</Filter>
     </ClInclude>
@@ -179,21 +232,47 @@
     </ClInclude>
     <ClInclude Include="src\Header\Math\Vector3D.hpp">
       <Filter>Header Files\Math</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Header\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Header\Singleton.cpp">
+    <ClCompile Include="src\Code\Layer\GUILayer.cpp">
+      <Filter>Source Files\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Layer\LayerStack.cpp">
+      <Filter>Source Files\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Header\Window.cpp">
+    <ClCompile Include="src\Code\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Header\Application.cpp">
-      <Filter>Source Files</Filter>
+
+    <ClCompile Include="External Resources\Imgui\imgui.cpp">
+      <Filter>Imgui</Filter>
     </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_demo.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_draw.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_impl_glfw.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_tables.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp">
+      <Filter>Imgui</Filter>
+
     <ClCompile Include="src\Code\Component\Graphics\GUIManager.cpp">
       <Filter>Source Files\Component\Graphics</Filter>
     </ClCompile>
@@ -202,6 +281,7 @@
     </ClCompile>
     <ClCompile Include="src\Code\System\PhysicSystem.cpp">
       <Filter>Source Files\System</Filter>
+
     </ClCompile>
   </ItemGroup>
 </Project>

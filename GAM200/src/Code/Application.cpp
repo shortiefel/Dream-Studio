@@ -3,61 +3,72 @@ Create a window and other various required manager (e.g Physic / Graphic Manager
 Contains the main application loop and the game loop
 */
 
-#include "Debug Tools/Logging.hpp"
-#include "GUIManager.hpp"
-#include "Application.hpp"
+#include "../Header/Debug Tools/Logging.hpp"
+#include "../Header/Application.hpp"
+
+#include "../Header/Window.hpp"
+#include "../Header/Event/EventDispatcher.hpp"
+#include "../Header/Layer/LayerStack.hpp"
+#include "../Header/Layer/GUILayer.hpp"
 
 //Static----------------------------------------------
 
 Application* Application::s_app_instance = 0;
-//Window* Application::window = 0;
+//GLFWwindow* Application::s_glfw_window = 0;
 bool Application::app_run_bool = true;
 
 void Application::Create() {
+    if (s_app_instance) LOG_WARNING("An instance of application already exist!");
     s_app_instance = new Application();
+    LOG_INSTANCE("Application created");
 
 	//Create window and instantiate managers
-    Window::Create();
+    if (!Window::Create("Dream Engine")) LOG_ERROR("Window creation has failed");
     s_app_instance->SetEventCallBack();
 
+    if (!LayerStack::Create()) LOG_ERROR("LayerStack creation has failed");
+
     const char* glsl_version = "#version 450";
-    GUIManager::Create(Window::GetGLFWwindow(), glsl_version);
+    if (!GUILayer::Create(Window::GetGLFWwindow(), glsl_version)) LOG_ERROR("GUILayer creation has failed");
+
+    LayerStack::AddOverlayLayer(GUILayer::Get());
 }
 
 //Main application loop is done here
-void Application::Run() {
-
+void Application::Update() {
    //Temporary loop
     while (app_run_bool) {
-        /*glClearColor(1, 0, 1, 1);
-        glClear(GL_COLOR_BUFFER_BIT);*/
-        Window::OnUpdate();
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(1, 0, 1, 1);
+        
+        LayerStack::Update();
+        LayerStack::Draw();
 
-        //temporary break
-        if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_ENTER) == GLFW_PRESS) {
-            break;
-        }
+        Window::Update();
     } 
 }
 
 void Application::Destroy() {
     delete s_app_instance;
+    LOG_INSTANCE("Application destroyed");
+
 }
 
 //------------------------------------------------------
 
 Application::~Application() {
     //Destroy in reverse order
-
-    //Imgui destroy
+    GUILayer::Destroy();
+    LayerStack::Destroy();
     Window::Destroy();
 }
 
 
 void Application::OnEvent(Event& event) {
 
-    LOG_DEBUG(event);
+    LOG_EVENT(event);
 
+    //Send event down the layers
     EventDispatcher dispatcher(event);
 
     switch (event.GetEventType()) {

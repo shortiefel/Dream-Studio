@@ -24,6 +24,7 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+
 #ifndef Vector2D_H
 #define Vector2D_H
 

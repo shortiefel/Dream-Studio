@@ -192,6 +192,5 @@ namespace MathD {
 	}
 }
 
-
 #endif
 

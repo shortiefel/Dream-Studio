@@ -22,11 +22,18 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+//Memory check-----------------------------
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+//-----------------------------
+
 #include "framework.hpp"
 #include "Main.hpp"
 
 #include <stdio.h>
 #include "Application.hpp"
+
 
 
 //#define MAX_LOADSTRING 100
@@ -45,10 +52,10 @@ Technology is prohibited.
 //HWND hWnd;
 //
 int main () {
-
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //For memory check
     //use try and except (require logging)
     Application::Create();
-    Application::Run();
+    Application::Update();
     Application::Destroy();
 
     return 1;

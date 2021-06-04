@@ -5,6 +5,7 @@
 
 // Implemented features:
 //  [X] Renderer: User texture binding. Use 'GLuint' OpenGL texture identifier as void*/ImTextureID. Read the FAQ about ImTextureID!
+//  [X] Renderer: Multi-viewport support. Enable with 'io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable'.
 //  [x] Renderer: Desktop GL only: Support for large meshes (64k+ vertices) with 16-bit indices.
 
 // You can copy and use unmodified imgui_impl_* files in your project. See examples/ folder for examples of using this.
@@ -65,7 +66,7 @@ IMGUI_IMPL_API void     ImGui_ImplOpenGL3_DestroyDeviceObjects();
 
 // Otherwise try to detect supported Desktop OpenGL loaders..
 #elif defined(__has_include)
-#if __has_include(<glew.h>)
+#if __has_include(<GL/glew.h>)
     #define IMGUI_IMPL_OPENGL_LOADER_GLEW
 #elif __has_include(<glad/glad.h>)
     #define IMGUI_IMPL_OPENGL_LOADER_GLAD

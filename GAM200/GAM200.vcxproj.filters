@@ -37,6 +37,9 @@
     <Filter Include="Source Files\Maths">
       <UniqueIdentifier>{2745d6e3-f964-47f5-8cad-0286732654ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{60a4eae1-d681-4fd7-8b79-1f496b057ebe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Header\framework.hpp">

@@ -1,7 +1,8 @@
-# GAM200
+# Dream Studio
 
 #Brief:
----TO BE ADDED---
+We are a group of Digipen (Singapore) Students and in this group we have 3 different degree's working together to do up a game. We were inspired from In My Shadows a game that was release in Steam and a movie that was released in 2020, Drømmebyggerne (Dream Builder). Our game will be follow the storyline of Drømmebyggerne and it will be a 2D adventure puzzle game.
+
 
 #Software Name:
 ---TO BE ADDED---

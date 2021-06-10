@@ -93,9 +93,6 @@
     <ClInclude Include="src\Header\Window.hpp">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp">
-      <Filter>Include\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\Component\ComponentArray.hpp">
       <Filter>Include\Component</Filter>
     </ClInclude>
@@ -129,9 +126,6 @@
     <ClInclude Include="src\Header\Event\MouseEvent.hpp">
       <Filter>Include\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Component\Physics\Physic.hpp">
-      <Filter>Include\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\System\PhysicSystem.hpp">
       <Filter>Include\System</Filter>
     </ClInclude>
@@ -140,12 +134,6 @@
     </ClInclude>
     <ClInclude Include="src\Header\System\SystemManager.hpp">
       <Filter>Include\System</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Component\Physics\RigidBodyComponent.hpp">
-      <Filter>Include\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Component\Transform\TransformComponent.hpp">
-      <Filter>Include\Component</Filter>
     </ClInclude>
     <ClInclude Include="src\Header\Math\Vector.hpp">
       <Filter>Include\Math</Filter>
@@ -158,6 +146,18 @@
     </ClInclude>
     <ClInclude Include="src\Header\Event\WindowEvent.hpp">
       <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp">
+      <Filter>Include\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\Physic.hpp">
+      <Filter>Include\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Physics\RigidBodyComponent.hpp">
+      <Filter>Include\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Transform\TransformComponent.hpp">
+      <Filter>Include\Component\Transform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +190,15 @@
     </Filter>
     <Filter Include="Include\System">
       <UniqueIdentifier>{dbfa4c4b-c23b-448b-b339-a8de17b44c63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Component\Graphics">
+      <UniqueIdentifier>{eafddf71-fc57-4359-a496-16e24158be0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Component\Physics">
+      <UniqueIdentifier>{0c1bf060-eec0-4ebf-ba78-3e79b1451993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Component\Transform">
+      <UniqueIdentifier>{65a1c57f-64b8-4473-b396-3d937e0ee05b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

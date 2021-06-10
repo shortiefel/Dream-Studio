@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*!
-\file System.hpp
-\team name
+\file Serialization.hpp
+\team name Dream Studio
 \software name
 \authors
 NAME							EMAIL									ROLE
@@ -12,10 +12,9 @@ Chia Yi Da						chiayida98@gmail.com
 Margaret Teo Boon See			Teo.b@digipen.edu
 Wang Ao							Ao.Wang@digipen.edu
 Ng Jia Yi						Jiayi.ng@digipen.edu
-\date 26/04/2021
+\date 24/05/2021
 \brief
-
-This is to allow iteration in a list of entities with a certain signature of components
+Serialization.hpp: This header file defines the base serializer.
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -23,33 +22,27 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
-
 #pragma once
 
-#include "../Global.hpp"
-#include "Message.hpp"
-#include <set> //associative container that contains a sorted set of unique object of type Key
+#ifndef SERIALIZATION_H
+#define SERIALIZATION_H
 
-class System
+#include <string>
+//Base Serializer Class
+class Serializer
 {
-	public:
-		std::set<Entity> mEntities;
+public:
+	//Open the serialization stream from file.
+	virtual bool OpenFile(const std::string& file) = 0;
 
+	//Does the stream stil have data?
+	virtual bool Is_Good() = 0;
 
-		virtual void SendMessages(Message* message) {};
-
-		///All systems are updated every game frame.
-		virtual void Update(float dt) = 0;
-
-		///Initialize the system.
-		virtual void Initialize() {};
-
-		///Initialize the system.
-		virtual void Draw() {};
-
-		///All systems need a virtual destructor to have their destructor called 
-		virtual ~System() {}
-
+	//Reading types of file
+	virtual void Read_Int(int& i) = 0;
+	virtual void Read_Float(float& f) = 0;
+	virtual void Read_String(std::string& str) = 0;
 };
 
+#endif
 

@@ -135,6 +135,9 @@
     <ClInclude Include="src\Header\System\SystemManager.hpp">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\Script.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Header\Main.cpp">
@@ -147,6 +150,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Header\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Script.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

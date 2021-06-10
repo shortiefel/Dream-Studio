@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*!
-\file System.hpp
-\team name
+\file Composition.hpp
+\team name Dream Studio
 \software name
 \authors
 NAME							EMAIL									ROLE
@@ -12,10 +12,9 @@ Chia Yi Da						chiayida98@gmail.com
 Margaret Teo Boon See			Teo.b@digipen.edu
 Wang Ao							Ao.Wang@digipen.edu
 Ng Jia Yi						Jiayi.ng@digipen.edu
-\date 26/04/2021
+\date 13/05/2021
 \brief
-
-This is to allow iteration in a list of entities with a certain signature of components
+Composition.hpp: This header file defines the Game Object Composition class.
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -23,33 +22,29 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
-
 #pragma once
 
-#include "../Global.hpp"
-#include "Message.hpp"
-#include <set> //associative container that contains a sorted set of unique object of type Key
+#include "../System/Message.hpp"
+#include "../Serialization/Serialization.hpp"
+#include "../Component/Component.hpp"
 
-class System
+//Game object ID type
+typedef unsigned int GOC_ID;
+
+class GameObjectComposition
 {
-	public:
-		std::set<Entity> mEntities;
+public:
+	//create and destroy game object using Game Object factory class
+	friend class Factory;
 
+	//Message interface
+	void SendMessage(Message* message);
 
-		virtual void SendMessages(Message* message) {};
+	//getting Component
+	GameComponent* GetComponent();
 
-		///All systems are updated every game frame.
-		virtual void Update(float dt) = 0;
+	//Initialization for all components
+	void Initialize();
 
-		///Initialize the system.
-		virtual void Initialize() {};
-
-		///Initialize the system.
-		virtual void Draw() {};
-
-		///All systems need a virtual destructor to have their destructor called 
-		virtual ~System() {}
 
 };
-
-

@@ -12,10 +12,10 @@ Chia Yi Da						chiayida98@gmail.com
 Margaret Teo Boon See			Teo.b@digipen.edu
 Wang Ao							Ao.Wang@digipen.edu
 Ng Jia Yi						Jiayi.ng@digipen.edu
-\date 26/04/2021
+\date 13/05/2021
 \brief
 
-This is to allow iteration in a list of entities with a certain signature of components
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -23,33 +23,39 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
-
 #pragma once
 
-#include "../Global.hpp"
-#include "Message.hpp"
-#include <set> //associative container that contains a sorted set of unique object of type Key
+#ifndef MESSAGE_H
+#define MESSAGE_H
 
-class System
+#pragma optimize("", off)
+
+namespace Message_Id // Message id
 {
-	public:
-		std::set<Entity> mEntities;
+    enum MessageIdType
+    {
+        None,
+        Quit,
+        Collide,
+        ToggleDebugInfo,
+        CharacterKey,
+        MouseButton,
+        MouseMove,
+        FileDrop,
+        CollisionStarted,
+        CollisionPersisted,
+        CollisionEnded,
+        Collision
+    };
+}
 
-
-		virtual void SendMessages(Message* message) {};
-
-		///All systems are updated every game frame.
-		virtual void Update(float dt) = 0;
-
-		///Initialize the system.
-		virtual void Initialize() {};
-
-		///Initialize the system.
-		virtual void Draw() {};
-
-		///All systems need a virtual destructor to have their destructor called 
-		virtual ~System() {}
-
+///Base message class. New message types are defined by deriving from this
+///class and mapping defined an element of the MessageIdType enumeration.
+class Message
+{
+public:
+    Message(Message_Id::MessageIdType id) : MessageId(id) {};
+    Message_Id::MessageIdType MessageId;
+    virtual ~Message() {};
 };
-
-
+#endif

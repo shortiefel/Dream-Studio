@@ -160,6 +160,7 @@
     <ClInclude Include="src\Header\Main.hpp" />
     <ClInclude Include="src\Header\pch.hpp" />
     <ClInclude Include="src\Header\Resource.hpp" />
+    <ClInclude Include="src\Header\Script.h" />
     <ClInclude Include="src\Header\Singleton.hpp" />
     <ClInclude Include="src\Header\System\System.hpp" />
     <ClInclude Include="src\Header\System\SystemManager.hpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="src\Header\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Code\Script.cpp" />
     <ClCompile Include="src\Header\Application.cpp" />
     <ClCompile Include="src\Header\Main.cpp" />
     <ClCompile Include="src\Header\Singleton.cpp" />

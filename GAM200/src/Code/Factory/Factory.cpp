@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*!
-\file System.hpp
-\team name
+\file Factory.cpp
+\team name Dream Studio
 \software name
 \authors
 NAME							EMAIL									ROLE
@@ -12,10 +12,9 @@ Chia Yi Da						chiayida98@gmail.com
 Margaret Teo Boon See			Teo.b@digipen.edu
 Wang Ao							Ao.Wang@digipen.edu
 Ng Jia Yi						Jiayi.ng@digipen.edu
-\date 26/04/2021
+\date 13/05/2021
 \brief
-
-This is to allow iteration in a list of entities with a certain signature of components
+Factory.cpp: This file defines a Game Object Factory system.
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -24,32 +23,32 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#pragma once
+#include "Factory.hpp"
 
-#include "../Global.hpp"
-#include "Message.hpp"
-#include <set> //associative container that contains a sorted set of unique object of type Key
+Factory* GameObjectFactory = NULL;
 
-class System
+//Factory constructor
+Factory::Factory()
 {
-	public:
-		std::set<Entity> mEntities;
+	//ErrorIf( GameObjectFactory != NULL, "Factory already created");
 
+	//Creating Game Object Factory
+	GameObjectFactory = this;
+}
 
-		virtual void SendMessages(Message* message) {};
+//Factory deconstructor
+Factory::~Factory()
+{
+	//Delete all Game Object component 
+}
 
-		///All systems are updated every game frame.
-		virtual void Update(float dt) = 0;
+void Factory::Update(float dt)
+{
+	//To delete all objects in the ObjectsToBeDelete list
+}
 
-		///Initialize the system.
-		virtual void Initialize() {};
+//Destroy all Objects in the game
+void Factory::DestroyAll()
+{
 
-		///Initialize the system.
-		virtual void Draw() {};
-
-		///All systems need a virtual destructor to have their destructor called 
-		virtual ~System() {}
-
-};
-
-
+}

@@ -16,6 +16,8 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \brief
 
 This file contain the template implementation of Vector3D
+This file SHOULD NOT be included, instead use Vector.hpp
+namespace MathImplementation is to prevent accidental usage
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -28,81 +30,90 @@ Technology is prohibited.
 #ifndef Vector3D_H
 #define Vector3D_H
 
-template <typename T>
-class Vector3D
-{
-public:
-	T x, y, z;
-
-	// Constructors
-	Vector3D() : x{ T{} }, y{ T{} }, z{ T{} } {};
-	Vector3D(T _x, T _y, T _z) : x{ _x }, y{ _y }, z{ _z } {}
-
-	// Assignment operators
-	Vector3D<T>& operator += (const Vector3D<T>& rhs) {
-		x += rhs.x;
-		y += rhs.y;
-		z += rhs.z;
-		return *this;
-	}
-
-	Vector3D<T>& operator -= (const Vector3D<T>& rhs) {
-		return *this += -rhs;
-	}
-
-	Vector3D<T>& operator *= (T rhs) {
-		x *= rhs;
-		y *= rhs;
-		z *= rhs;
-		return *this;
-	}
-
-	Vector3D<T>& operator /= (T rhs) {
-		x /= rhs;
-		y /= rhs;
-		z /= rhs;
-		return *this;
-	}
-
-	// Unary operators
-	Vector3D<T> operator-() const {
-		Vector3D<T> tem;
-		tem.x = -x;
-		tem.y = -y;
-		tem.z = -z;
-		return tem;
-	}
-};
+#include <iostream>
 
 namespace MathD {
+	namespace MathImplementation {
+		template <typename T>
+		class Vector3D
+		{
+		public:
+			T x, y, z;
+
+			// Constructors
+			Vector3D() : x{ T{} }, y{ T{} }, z{ T{} } {};
+			Vector3D(T _x, T _y, T _z) : x{ _x }, y{ _y }, z{ _z } {}
+
+			// Assignment operators
+			Vector3D<T>& operator += (const Vector3D<T>& rhs) {
+				x += rhs.x;
+				y += rhs.y;
+				z += rhs.z;
+				return *this;
+			}
+
+			Vector3D<T>& operator -= (const Vector3D<T>& rhs) {
+				return *this += -rhs;
+			}
+
+			Vector3D<T>& operator *= (T rhs) {
+				x *= rhs;
+				y *= rhs;
+				z *= rhs;
+				return *this;
+			}
+
+			Vector3D<T>& operator /= (T rhs) {
+				x /= rhs;
+				y /= rhs;
+				z /= rhs;
+				return *this;
+			}
+
+			// Unary operators
+			Vector3D<T> operator-() const {
+				Vector3D<T> tem;
+				tem.x = -x;
+				tem.y = -y;
+				tem.z = -z;
+				return tem;
+			}
+
+			friend std::ostream& operator<<(std::ostream& os, const MathImplementation::Vector3D<T>& rhs) {
+				os << "(" << rhs.x << ", " << rhs.y << ", " << rhs.z << ")";
+				return os;
+			}
+		};
+	}
+	namespace ML = MathImplementation;
 	// Binary operators
 	template <typename T>
-	Vector3D<T> operator + (const Vector3D<T>& lhs, const Vector3D<T>& rhs) {
-		Vector3D<T> tem(lhs.x, lhs.y, lhs.z);
+	ML::Vector3D<T> operator + (const ML::Vector3D<T>& lhs, const ML::Vector3D<T>& rhs) {
+		ML::Vector3D<T> tem(lhs.x, lhs.y, lhs.z);
 		tem += rhs;
 		return tem;
 	}
 
 	template <typename T>
-	Vector3D<T> operator - (const Vector3D<T>& lhs, const Vector3D<T>& rhs) {
+	ML::Vector3D<T> operator - (const ML::Vector3D<T>& lhs, const ML::Vector3D<T>& rhs) {
 		return lhs + -rhs;
 	}
 
 	template <typename T>
-	Vector3D<T> operator * (const Vector3D<T>& lhs, T rhs) {
-		Vector3D<T> tem(lhs.x, lhs.y, lhs.z);
+	ML::Vector3D<T> operator * (const ML::Vector3D<T>& lhs, T rhs) {
+		ML::Vector3D<T> tem(lhs.x, lhs.y, lhs.z);
 		tem *= rhs;
 		return tem;
 	}
 
 	template <typename T>
-	Vector3D<T> operator * (T lhs, const Vector3D<T>& rhs) {
+	ML::Vector3D<T> operator * (T lhs, const ML::Vector3D<T>& rhs) {
 		return rhs * lhs;
 	}
 
 	template <typename T>
-	Vector3D<T> operator / (const Vector3D<T>& lhs, T rhs) {
-		Vector3D<T> tem(lhs.x, lhs.y, lhs.z);
+	ML::Vector3D<T> operator / (const ML::Vector3D<T>& lhs, T rhs) {
+		ML::Vector3D<T> tem(lhs.x, lhs.y, lhs.z);
 		tem /= rhs;
 		return tem;
 	}
@@ -114,8 +125,8 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	void normalize(Vector3D<T>& pResult, const Vector3D<T>& pVec0) {
-		pResult = pVec0 / length(pVec0);
+	void Normalize(ML::Vector3D<T>& pResult, const ML::Vector3D<T>& pVec0) {
+		pResult = pVec0 / Length(pVec0);
 	}
 
 	/**************************************************************************/
@@ -124,7 +135,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T length(const Vector3D<T>& pVec0) {
+	T Length(const ML::Vector3D<T>& pVec0) {
 		return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z)));
 	}
 
@@ -134,7 +145,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T lengthSq(const Vector3D<T>& pVec0) {
+	T LengthSq(const ML::Vector3D<T>& pVec0) {
 		return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z));
 	}
 
@@ -145,10 +156,10 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T distance(const Vector3D<T>& pVec0, const Vector3D<T>& pVec1) {
-		Vector3D<T> tem(pVec0);
+	T Distance(const ML::Vector3D<T>& pVec0, const ML::Vector3D<T>& pVec1) {
+		ML::Vector3D<T> tem(pVec0);
 		tem -= pVec1;
-		return length(tem);
+		return Length(tem);
 	}
 
 	/**************************************************************************/
@@ -159,10 +170,10 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T distanceSq(const Vector3D<T>& pVec0, const Vector3D<T>& pVec1) {
-		Vector3D<T> tem(pVec0);
+	T DistanceSq(const ML::Vector3D<T>& pVec0, const ML::Vector3D<T>& pVec1) {
+		ML::Vector3D<T> tem(pVec0);
 		tem -= pVec1;
-		return lengthSq(tem);
+		return LengthSq(tem);
 	}
 
 	/**************************************************************************/
@@ -171,7 +182,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T dotProduct(const Vector3D<T>& pVec0, const Vector3D<T>& pVec1) {
+	T DotProduct(const ML::Vector3D<T>& pVec0, const ML::Vector3D<T>& pVec1) {
 		return T((pVec0.x * pVec1.x) + (pVec0.y * pVec1.y) + (pVec0.z * pVec1.z));
 	}
 
@@ -183,8 +194,8 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	Vector3D<T> crossProduct(const Vector3D<T>& pVec0, const Vector3D<T>& pVec1) {
-		Vector3D<T> tem;
+	ML::Vector3D<T> CrossProduct(const ML::Vector3D<T>& pVec0, const ML::Vector3D<T>& pVec1) {
+		ML::Vector3D<T> tem;
 		tem.x = (pVec0.y * pVec1.z) - (pVec0.z * pVec1.y);
 		tem.y = (pVec0.z * pVec1.x) - (pVec0.x * pVec1.z);
 		tem.z = (pVec0.x * pVec1.y) - (pVec0.y * pVec1.x);

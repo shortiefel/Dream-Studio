@@ -27,8 +27,8 @@ Technology is prohibited.
 
 #pragma once
 
-#include "System.hpp"
-#include "../Global.hpp"
+#include "System/System.hpp"
+#include "ECSGlobal.hpp"
 #include <cassert>
 #include <memory>
 #include <unordered_map>
@@ -42,13 +42,13 @@ class SystemManager
 			const char* TypeName = typeid(T).name();
 
 			//error checking
-			assert(Systems.find(TypeName) == Systems.end() && "Register system more than once.");
+			assert(mSystems.find(TypeName) == mSystems.end() && "Register system more than once.");
 
 			//ptr to system for return value
 			auto system = std::make_shared<T>();
-			Systems.insert({ TypeName, system });
-
-			return system;
+			mSystems.insert({ TypeName, system });
+			system->Create();
+			return system; 
 		}
 
 		template<typename T>
@@ -57,16 +57,16 @@ class SystemManager
 			const char* TypeName = typeid(T).name();
 
 			//error checking
-			assert(Systems.find(TypeName) != Systems.end() && "Used before register.");
+			assert(mSystems.find(TypeName) != mSystems.end() && "Used before register.");
 
 			// Set the signature for this system
-			mSignatures.insert({ TypeName, signature });
+			Signatures.insert({ TypeName, signature });
 		}
 
 		void EntityDestroyed(Entity entity)
 		{
 			// Erase destroyed entity from all system lists
-			for (auto const& sys : Systems)
+			for (auto const& sys : mSystems)
 			{
 				auto const& system = sys.second;
 
@@ -77,7 +77,7 @@ class SystemManager
 		void EntitySignatureChanged(Entity entity, Signature entitySignature)
 		{
 			// Notify each system that an entity's signature changed
-			for (auto const& sys : Systems)
+			for (auto const& sys : mSystems)
 			{
 				auto const& Type = sys.first;
 				auto const& systemptr = sys.second;
@@ -98,6 +98,5 @@ class SystemManager
 
 	private:
 		std::unordered_map<const char*, Signature> Signatures{}; //system typ->signature
-		std::unordered_map<const char*, std::shared_ptr<System>> Systems{}; //system ptr->system ptr
-
+		std::unordered_map<const char*, std::shared_ptr<System>> mSystems{}; //system ptr->system ptr
 };

@@ -16,6 +16,8 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \brief
 
 This file contain the template implementation of Vector2D
+This file SHOULD NOT be included, instead use Vector.hpp
+namespace MathImplementation is to prevent accidental usage
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -28,77 +30,86 @@ Technology is prohibited.
 #ifndef Vector2D_H
 #define Vector2D_H
 
-template <typename T>
-class Vector2D
-{
-public:
-	T x, y;
-
-	// Constructors
-	Vector2D() : x{ T{} }, y{ T{} } {};
-	Vector2D(T _x, T _y) : x{ _x }, y{ _y } {}
-
-	// Assignment operators
-	Vector2D<T>& operator += (const Vector2D<T>& rhs) {
-		x += rhs.x;
-		y += rhs.y;
-		return *this;
-	}
-
-	Vector2D<T>& operator -= (const Vector2D<T>& rhs) {
-		return *this += -rhs;
-	}
-
-	Vector2D<T>& operator *= (T rhs) {
-		x *= rhs;
-		y *= rhs;
-		return *this;
-	}
-
-	Vector2D<T>& operator /= (T rhs) {
-		x /= rhs;
-		y /= rhs;
-		return *this;
-	}
-
-	// Unary operators
-	Vector2D<T> operator-() const {
-		Vector2D tem;
-		tem.x = -x;
-		tem.y = -y;
-		return tem;
-	}
-};
+#include <iostream>
 
 namespace MathD {
+	namespace MathImplementation {
+		template <typename T>
+		class Vector2D
+		{
+		public:
+			T x, y;
+
+			// Constructors
+			Vector2D() : x{ T{} }, y{ T{} } {};
+			Vector2D(T _x, T _y) : x{ _x }, y{ _y } {}
+
+			// Assignment operators
+			Vector2D<T>& operator += (const Vector2D<T>& rhs) {
+				x += rhs.x;
+				y += rhs.y;
+				return *this;
+			}
+
+			Vector2D<T>& operator -= (const Vector2D<T>& rhs) {
+				return *this += -rhs;
+			}
+
+			Vector2D<T>& operator *= (T rhs) {
+				x *= rhs;
+				y *= rhs;
+				return *this;
+			}
+
+			Vector2D<T>& operator /= (T rhs) {
+				x /= rhs;
+				y /= rhs;
+				return *this;
+			}
+
+			// Unary operators
+			Vector2D<T> operator-() const {
+				Vector2D tem;
+				tem.x = -x;
+				tem.y = -y;
+				return tem;
+			}
+
+			friend std::ostream& operator<<(std::ostream& os, const MathImplementation::Vector2D<T>& rhs) {
+				os << "(" << rhs.x << ", " << rhs.y << ")";
+				return os;
+			}
+		};
+	}
+	namespace ML = MathImplementation;
 	// Binary operators
 	template <typename T>
-	Vector2D<T> operator + (const Vector2D<T>& lhs, const Vector2D<T>& rhs) {
-		Vector2D<T> tem(lhs.x, lhs.y);
+	ML::Vector2D<T> operator + (const ML::Vector2D<T>& lhs, const ML::Vector2D<T>& rhs) {
+		ML::Vector2D<T> tem(lhs.x, lhs.y);
 		tem += rhs;
 		return tem;
 	}
 
 	template <typename T>
-	Vector2D<T> operator - (const Vector2D<T>& lhs, const Vector2D<T>& rhs) {
+	ML::Vector2D<T> operator - (const ML::Vector2D<T>& lhs, const ML::Vector2D<T>& rhs) {
 		return lhs + -rhs;
 	}
 
 	template <typename T>
-	Vector2D<T> operator * (const Vector2D<T>& lhs, T rhs) {
-		Vector2D<T> tem(lhs.x, lhs.y);
+	ML::Vector2D<T> operator * (const ML::Vector2D<T>& lhs, T rhs) {
+		ML::Vector2D<T> tem(lhs.x, lhs.y);
 		tem *= rhs;
 		return tem;
 	}
 
 	template <typename T>
-	Vector2D<T> operator * (T lhs, const Vector2D<T>& rhs) {
+	ML::Vector2D<T> operator * (T lhs, const ML::Vector2D<T>& rhs) {
 		return rhs * lhs;
 	}
 
 	template <typename T>
-	Vector2D<T> operator / (const Vector2D<T>& lhs, T rhs) {
-		Vector2D<T> tem(lhs.x, lhs.y);
+	ML::Vector2D<T> operator / (const ML::Vector2D<T>& lhs, T rhs) {
+		ML::Vector2D<T> tem(lhs.x, lhs.y);
 		tem /= rhs;
 		return tem;
 	}
@@ -110,8 +121,8 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	void normalize(Vector2D<T>& pResult, const Vector2D<T>& pVec0) {
-		pResult = pVec0 / length(pVec0);
+	void Normalize(ML::Vector2D<T>& pResult, const ML::Vector2D<T>& pVec0) {
+		pResult = pVec0 / Length(pVec0);
 	}
 
 	/**************************************************************************/
@@ -120,7 +131,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T length(const Vector2D<T>& pVec0) {
+	T Length(const ML::Vector2D<T>& pVec0) {
 		return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y)));
 	}
 
@@ -130,7 +141,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T lengthSq(const Vector2D<T>& pVec0) {
+	T LengthSq(const ML::Vector2D<T>& pVec0) {
 		return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y));
 	}
 
@@ -141,10 +152,10 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T distance(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
-		Vector2D<T> tem(pVec0);
+	T Distance(const ML::Vector2D<T>& pVec0, const ML::Vector2D<T>& pVec1) {
+		ML::Vector2D<T> tem(pVec0);
 		tem -= pVec1;
-		return length(tem);
+		return Length(tem);
 	}
 
 	/**************************************************************************/
@@ -155,10 +166,10 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T distanceSq(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
-		Vector2D<T> tem(pVec0);
+	T DistanceSq(const ML::Vector2D<T>& pVec0, const ML::Vector2D<T>& pVec1) {
+		ML::Vector2D<T> tem(pVec0);
 		tem -= pVec1;
-		return lengthSq(tem);
+		return LengthSq(tem);
 	}
 
 	/**************************************************************************/
@@ -167,7 +178,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T dotProduct(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
+	T DotProduct(const ML::Vector2D<T>& pVec0, const ML::Vector2D<T>& pVec1) {
 		return T((pVec0.x * pVec1.x) + (pVec0.y * pVec1.y));
 	}
 
@@ -178,7 +189,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T crossProduct(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
+	T CrossProduct(const ML::Vector2D<T>& pVec0, const ML::Vector2D<T>& pVec1) {
 		return T((pVec0.x * pVec1.y) - (pVec0.y * pVec1.x));
 	}
 

@@ -25,23 +25,32 @@
     <ClCompile Include="src\Code\Application.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Code\Layer\GUILayer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="src\Header\Main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Code\Component\Physics\Physic.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Code\System\PhysicSystem.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Code\Window.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\Code\Layer\GUILayer.cpp">
+      <Filter>Source\Layer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Code\Layer\LayerStack.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\System\PhysicSystem.cpp">
+      <Filter>Source\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Header\System\GraphicSystem.cpp">
+      <Filter>Source\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Graphic\glslshader.cpp">
+      <Filter>Source\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Graphic\Graphic.cpp">
+      <Filter>Source\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Physic\Physic.cpp">
+      <Filter>Source\Physic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,9 +82,6 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="src\Header\framework.hpp">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Header\Global.hpp">
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="src\Header\Main.hpp">
@@ -150,14 +156,35 @@
     <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp">
       <Filter>Include\Component\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Component\Physics\Physic.hpp">
-      <Filter>Include\Component\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\Component\Physics\RigidBodyComponent.hpp">
       <Filter>Include\Component\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Component\Transform\TransformComponent.hpp">
-      <Filter>Include\Component\Transform</Filter>
+    <ClInclude Include="src\Header\Coordinator\Coordinator.hpp">
+      <Filter>Include\Coordinator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\System\GraphicSystem.hpp">
+      <Filter>Include\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Graphics\TransformComponent.hpp">
+      <Filter>Include\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\ECSGlobal.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Matrix.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\Matrix3.hpp">
+      <Filter>Include\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Physic\Physic.hpp">
+      <Filter>Include\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Graphic\glslshader.hpp">
+      <Filter>Include\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Graphic\Graphic.hpp">
+      <Filter>Include\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -197,8 +224,26 @@
     <Filter Include="Include\Component\Physics">
       <UniqueIdentifier>{0c1bf060-eec0-4ebf-ba78-3e79b1451993}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Include\Component\Transform">
-      <UniqueIdentifier>{65a1c57f-64b8-4473-b396-3d937e0ee05b}</UniqueIdentifier>
+    <Filter Include="Include\Coordinator">
+      <UniqueIdentifier>{d14a90c2-3b43-4fe1-a337-b941db1f4cfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Layer">
+      <UniqueIdentifier>{0a9fb1a7-829e-417d-905a-5db1272347fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\System">
+      <UniqueIdentifier>{b832560a-ee18-4384-a0a0-2e554506447e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Graphic">
+      <UniqueIdentifier>{b91f86a0-acb8-4984-802a-a5521ca6b5be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Physic">
+      <UniqueIdentifier>{8b8a7069-a49b-4eef-8374-4e56f8cdaa43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Graphic">
+      <UniqueIdentifier>{c5308f26-0fd5-4b85-9392-0b77893c3e12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Physic">
+      <UniqueIdentifier>{dc1ea627-26d8-4fc4-a174-0c97291fd9aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

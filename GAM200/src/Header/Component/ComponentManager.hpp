@@ -27,9 +27,9 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 #pragma once
 
-#include "ComponentArray.hpp"
-#include "../Global.hpp"
-#include <any> //type safe container
+#include "Component/ComponentArray.hpp"
+#include "ECSGlobal.hpp"
+//#include <any> //type safe container
 #include <memory>
 #include <unordered_map>
 
@@ -40,13 +40,13 @@ public:
 	template<typename T>
 	void RegisterCom()
 	{
-		const char* TypeName = typeid(T).name;
+		const char* TypeName = typeid(T).name();
 
 		//error checking 
-		assert(mComponentTypes.find(TypeName)) == mComponentTypes.end() && "Register Component more than 1 time";
+		assert(mComponentTypes.find(TypeName) == mComponentTypes.end() && "Register Component more than 1 time");
 
 		mComponentTypes.insert({ TypeName, NextComType }); //adding to com type map
-		mComponentArrayInter.insert({ TypeName, std::make_shared < ComponentArray<T>() });//ptr to comarray
+		mComponentArrayInter.insert({ TypeName, std::make_shared < ComponentArray<T>>() });//ptr to comarray
 
 		++NextComType;
 
@@ -93,9 +93,6 @@ public:
 		}
 	}
 
-
-
-
 private:
 	std::unordered_map<const char*, ComponentType> mComponentTypes{}; //type string ptr -> com type
 	std::unordered_map<const char*, std::shared_ptr<ComponentArrayInterface>> mComponentArrayInter{}; //type string ptr -> com array
@@ -109,7 +106,7 @@ private:
 
 		assert(mComponentTypes.find(TypeName) != mComponentTypes.end() && "Component not registered yet.");
 
-		return std::static_pointer_cast<ComponentArray<T>>(mComponentArrays[TypeName]);
+		return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayInter[TypeName]);
 	}
 
 

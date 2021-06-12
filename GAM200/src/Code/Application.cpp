@@ -11,11 +11,28 @@ Contains the main application loop and the game loop
 #include "Layer/LayerStack.hpp"
 #include "Layer/GUILayer.hpp"
 
+//-----testing only----------------------------------
+#include "Coordinator/Coordinator.hpp" // testing only
+#include "Component/Graphics/TransformComponent.hpp" // testing only
+#include "Component/Physics/ColliderComponent.hpp"
+#include "System/GraphicSystem.hpp"
+#include "System/PhysicSystem.hpp"
+
+Entity ent;
+std::shared_ptr<GraphicSystem> graphicSystem;
+Coordinator gCoordinator; //-----------------------
+
+#include "Math/Matrix.hpp"
+#include "Math/Vector.hpp"
+#include <iostream>
+//---------------------------------------------
+
 //Static----------------------------------------------
 
 Application* Application::s_app_instance = 0;
 //GLFWwindow* Application::s_glfw_window = 0;
 bool Application::app_run_bool = true;
+
 
 void Application::Create() {
     if (s_app_instance) LOG_WARNING("An instance of application already exist!");
@@ -32,6 +49,23 @@ void Application::Create() {
     if (!GUILayer::Create(Window::GetGLFWwindow(), glsl_version)) LOG_ERROR("GUILayer creation has failed");
 
     LayerStack::AddOverlayLayer(GUILayer::Get());
+
+    //-------testing only---------------------------
+    gCoordinator.Init();
+    gCoordinator.RegisterComponent<Collider>();
+    gCoordinator.RegisterComponent<Transform>();
+
+    graphicSystem = gCoordinator.RegSystem<GraphicSystem>();
+    
+    Signature signature;
+    signature.set(gCoordinator.GetComType<Transform>());
+    gCoordinator.setSystemSignature<GraphicSystem>(signature);
+
+    ent = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        ent,
+        Transform{ MathD::Vec3 {0.f, 0.f, 0.f}, MathD::Vec2 {2.f, 1.f}, MathD::Vec2{0.f,0.f} });
+    //----------------------------------------
 }
 
 //Main application loop is done here
@@ -41,6 +75,11 @@ void Application::Update() {
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(1, 0, 1, 1);
         
+        //-------Testing only-----------------------------------------
+        graphicSystem->Update(0.f); //Testing only
+        graphicSystem->Render();
+        //---------------------------------------------------
+
         LayerStack::Update();
         LayerStack::Draw();
 

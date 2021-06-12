@@ -15,7 +15,7 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \date 26/04/2021
 \brief
 
-This file MUST be included to use Vector2 and Vector3 and its functions
+This file SHOULD be included to use Vector2 and Vector3 and its functions
 Usage:
 	#include "Vector.hpp"
 	MathD::Vec2 testA(1, 2);
@@ -43,18 +43,18 @@ Technology is prohibited.
 
 namespace MathD {
 	//float vec2
-	using Vec2 = Vector2D<float>;
+	using Vec2 = ML::Vector2D<float>;
 	//int vec2
-	using iVec2 = Vector2D<int>;
+	using iVec2 = ML::Vector2D<int>;
 	//unsigned int vec2
-	using uiVec2 = Vector2D<unsigned int>;
+	using uiVec2 = ML::Vector2D<unsigned int>;
 
 	//float vec3
-	using Vec3 = Vector3D<float>;
+	using Vec3 = ML::Vector3D<float>;
 	//int vec3
-	using iVec3 = Vector3D<int>;
+	using iVec3 = ML::Vector3D<int>;
 	//unsigned int vec3
-	using uiVec3 = Vector3D<unsigned int>;
+	using uiVec3 = ML::Vector3D<unsigned int>;
 }
 
 

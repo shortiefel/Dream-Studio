@@ -26,7 +26,7 @@ Technology is prohibited.
 
 #pragma once
 
-#include "../Global.hpp"
+#include "ECSGlobal.hpp"
 #include <set> //associative container that contains a sorted set of unique object of type Key
 
 class System
@@ -34,6 +34,8 @@ class System
 	public:
 		std::set<Entity> mEntities;
 
+		virtual bool Create() = 0;
+		virtual void Destroy() = 0;
 };
 
 

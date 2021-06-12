@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*!
-\file TransformComponent.hpp
+\file Global.hpp
 \team name
 \software name
 \authors
@@ -15,7 +15,9 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \date 26/04/2021
 \brief
 
-This file contain basic things that is needed for transformation
+Entity Manager is in charge of assigning entity IDs and keeping records of which IDs are in use
+and not.
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -24,14 +26,15 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef TRANSFORM_COMPONENT_H
-#define TRANSFORM_COMPONENT_H
+#pragma once
 
-#include "../../Math/Vector.hpp"
+//#include <iostream>
+#include <bitset>
+#include <cstdint>
 
-struct Transform {
-	float x, y, 
-		scaleX, scaleY;
-};
-
-#endif
+//ECS Components 
+using Entity = std::uint32_t;
+const Entity MAX_ENTITIES = 10000;
+using ComponentType = std::uint8_t;
+const ComponentType MAX_COMPONENTS = 48;
+using Signature = std::bitset<MAX_COMPONENTS>;

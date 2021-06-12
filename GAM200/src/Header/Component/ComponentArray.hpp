@@ -29,7 +29,7 @@ Technology is prohibited.
 
 #pragma once
 
-#include "../Global.hpp"
+#include "ECSGlobal.hpp"
 #include <array>
 #include <cassert>
 #include <unordered_map>
@@ -48,7 +48,7 @@ template<typename T>
 class ComponentArray : public ComponentArrayInterface
 {
 public:
-	void Insertion(Entity entity, T component)
+	void InsertCom(Entity entity, T component)
 	{
 		//error checking
 		assert(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
@@ -75,7 +75,7 @@ public:
 		EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
 		IndexToEntityMap[IndexRemoveEntity] = EntityLastElement;
 
-		EntityLastElement.erase(entity);
+		EntityToIndexMap.erase(entity);
 		IndexToEntityMap.erase(IndexLastElement);
 
 		--Size;
@@ -91,28 +91,18 @@ public:
 		return ComponentArrayMAX[EntityToIndexMap[entity]];
 	}
 
-	//Completely delete the data
-	void DataDestroyed(Entity entity) override
+	void EntityDestroyed(Entity entity) override
 	{
 		if (EntityToIndexMap.find(entity) != EntityToIndexMap.end())
 		{
-			//if exist, delete
+			// Remove the entity's component if it existed
 			Removing(entity);
 		}
 	}
-
-		void EntityDestroyed(Entity entity) override
-		{
-			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end())
-			{
-				// Remove the entity's component if it existed
-				Removing(entity);
-			}
-		}
 
 	private:
 		std::array<T, MAX_ENTITIES> ComponentArrayMAX{};
 		std::unordered_map<Entity, size_t> EntityToIndexMap{}; //mapping for entity ID to array index
 		std::unordered_map<size_t, Entity> IndexToEntityMap{}; //mappign array index to entity ID
-		size_t Size; //total size of valid enteries in array
+		size_t Size = size_t{}; //total size of valid enteries in array
 };

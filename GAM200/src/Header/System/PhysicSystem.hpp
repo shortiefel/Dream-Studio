@@ -1,20 +1,26 @@
+/*
+This file has the class to manage physic: PhysicSystem
+includes declaration to static function for a singleton PhysicSystem
+*/
+
 #ifndef PHYSIC_SYSTEM_H
 #define PHYSIC_SYSTEM_H
 
-#include "Component/ComponentArray.hpp"
+#include "ECSGlobal.hpp"
 #include "pch.hpp"
+#include "System/System.hpp"
 
-class PhysicSystem {
+class PhysicSystem : public System {
 public:
-	static void Create();
-	static PhysicSystem* Get();
-	static void Destroy();
-	void Update();
+	virtual bool Create() override;
+	virtual void Destroy() override;
+	~PhysicSystem();
+
+	//static PhysicSystem* Get();
+	void Update(float dt);
 private:
 	float gravity = 10.f;
-	static PhysicSystem* s_instance;
-
-	std::set<Entity> mEntities;
+	//static PhysicSystem* s_instance;
 };
 
 #endif

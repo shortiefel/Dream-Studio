@@ -3,7 +3,86 @@ This file has the function definition for Graphic
 */
 
 #include "Graphic/Graphic.hpp"
+#include <iostream>
+#include <fstream>
 
-namespace Graphic {
+namespace GraphicImplementation {
+    void setup_vao() {
+        std::array<MathD::Vec2, 4> pos_vtx{
+             MathD::Vec2(1.f, -1.f), MathD::Vec2(1.f, 1.f),
+             MathD::Vec2(-1.f, 1.f), MathD::Vec2(-1.f, -1.f)
+        };
+        std::array<MathD::Vec3, 4> clr_vtx{
+            MathD::Vec3(1.f, 0.f, 0.f),
+            MathD::Vec3(1.f, 0.f, 0.f),
+            MathD::Vec3(1.f, 0.f, 0.f),
+            MathD::Vec3(1.f, 0.f, 0.f)
+        };
 
+        GLuint vbo_hdl;
+        glCreateBuffers(1, &vbo_hdl);
+
+        glNamedBufferStorage(vbo_hdl,
+            sizeof(MathD::Vec2) * pos_vtx.size() + sizeof(MathD::Vec3) * clr_vtx.size(),
+            nullptr, GL_DYNAMIC_STORAGE_BIT);
+        glNamedBufferSubData(vbo_hdl, 0,
+            sizeof(MathD::Vec2) * pos_vtx.size(), pos_vtx.data());
+        glNamedBufferSubData(vbo_hdl, sizeof(MathD::Vec2) * pos_vtx.size(),
+            sizeof(MathD::Vec3) * clr_vtx.size(), clr_vtx.data());
+
+        GLuint vaoid;
+        glCreateVertexArrays(1, &vaoid);
+        glEnableVertexArrayAttrib(vaoid, 0);
+        glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, sizeof(MathD::Vec2));
+        glVertexArrayAttribFormat(vaoid, 0, 2, GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vaoid, 0, 0);
+
+        glEnableVertexArrayAttrib(vaoid, 1);
+        glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl,
+            sizeof(MathD::Vec2) * pos_vtx.size(),
+            sizeof(MathD::Vec3));
+        glVertexArrayAttribFormat(vaoid, 1, 3, GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vaoid, 1, 1);
+
+        GLModel mdl;
+        mdl.vaoid = vaoid;
+        mdl.primitive_type = GL_TRIANGLE_FAN;
+        //mdl.setup_shdrpgm(vtx_shdr, frg_shdr);
+        mdl.draw_cnt = pos_vtx.size(); // number of vertices
+        mdl.primitive_cnt = mdl.draw_cnt - 2; // number of primitives
+        models.insert(std::pair<std::string, GLModel>("Square", mdl));
+	}
+    
+    void setup_shdr() {
+        std::vector<std::pair<GLenum, std::string>> shdr_files{
+        std::make_pair(GL_VERTEX_SHADER, "shaders/OpenGLEngine.vert"),
+        std::make_pair(GL_FRAGMENT_SHADER, "shaders/OpenGLEngine.frag")
+        }; 
+
+        GLSLShader shdr_pgm;
+        shdr_pgm.CompileLinkValidate(shdr_files);
+
+        if (GL_FALSE == shdr_pgm.IsLinked()) {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << shdr_pgm.GetLog() << "\n";
+            std::exit(EXIT_FAILURE);
+        }
+
+        shdrpgms.insert(std::pair<std::string, GLSLShader>("Default", shdr_pgm));
+    }
+
+    void create_square_instance() {
+        /*GLObject tem_obj;
+        tem_obj.init();*/
+
+        /*tem_obj.mdl_ref = models.find("Square");
+        tem_obj.shd_ref = shdrpgms.find("Default");*/
+
+        //objects.insert(std::pair<std::string, GLObject>("Square 1", tem_obj));
+    }
+
+    void GLObject::init() {
+        //color = MathD::Vec3(0.f, 0.f, 0.f);
+        // create a entity with transform
+    }
 }

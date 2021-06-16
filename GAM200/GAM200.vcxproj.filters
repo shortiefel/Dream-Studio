@@ -52,6 +52,9 @@
     <ClCompile Include="src\Code\Physic\Physic.cpp">
       <Filter>Source\Physic</Filter>
     </ClCompile>
+    <ClCompile Include="src\Code\MathLib.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Resources\Imgui\imconfig.h">
@@ -185,6 +188,12 @@
     </ClInclude>
     <ClInclude Include="src\Header\Graphic\Graphic.hpp">
       <Filter>Include\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Graphics\RendererComponent.hpp">
+      <Filter>Include\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Math\MathLib.hpp">
+      <Filter>Include\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

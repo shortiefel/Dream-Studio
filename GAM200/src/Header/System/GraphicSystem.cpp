@@ -2,10 +2,18 @@
 This file has the function definition for class GraphicsSystem
 */
 
+//#include "pch.hpp"
+
 #include "Debug Tools/Logging.hpp"
 #include "System/GraphicSystem.hpp"
+
 #include "Coordinator/Coordinator.hpp"
 #include "Component/Graphics/TransformComponent.hpp"
+#include "Component/Graphics/RendererComponent.hpp"
+
+#include "Graphic/Graphic.hpp"
+
+#include "Math/Matrix.hpp"
 
 extern Coordinator gCoordinator;
 
@@ -19,11 +27,24 @@ extern Coordinator gCoordinator;
 
 void GraphicSystem::Update(float dt) {
 	//For all entities in PhysicSystem
+	
 	for (auto const& entity : mEntities) {
-		auto transform = gCoordinator.GetCom<Transform>(entity);
+		auto& transform = gCoordinator.GetCom<Transform>(entity);
+		auto& renderer = gCoordinator.GetCom<Renderer2D>(entity);
 
 		//Update the matrix (model to ndc)
+		renderer.mdl_to_ndc_xform = { MathD::Vec3(transform.scale.x, 0, 0), MathD::Vec3(0, transform.scale.y, 0), MathD::Vec3(0, 0, 1.f) };
 
+		//orientation.x += orientation.y * static_cast<GLfloat>(dt);
+		GLfloat rad = MathD::radians(transform.rotation);
+		MathD::Mat3 temMat3{ MathD::Vec3(cos(rad), sin(rad), 0), MathD::Vec3(-sin(rad), cos(rad), 0), MathD::Vec3(0, 0, 1.f) };
+		renderer.mdl_to_ndc_xform = temMat3 * renderer.mdl_to_ndc_xform;
+		
+		temMat3 = { MathD::Vec3(1.f, 0, 0), MathD::Vec3(0, 1.f, 0), MathD::Vec3(transform.position.x, transform.position.y, 1.f) };
+		renderer.mdl_to_ndc_xform = temMat3 * renderer.mdl_to_ndc_xform;
+
+		// world to ndc * mdl to world
+		//renderer.mdl_to_ndc_xform = camera2d.world_to_ndc_xform * renderer.mdl_to_ndc_xform;
 	}
 }
 
@@ -48,6 +69,7 @@ void GraphicSystem::Render() {
 
 bool GraphicSystem::Create() {
 	//Set up vao for box
+	GraphicImplementation::setup_shdr();
 	
 	LOG_INSTANCE("Graphic System created");
 	return true;

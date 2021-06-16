@@ -10,17 +10,19 @@ includes declaration to static function for a singleton PhysicSystem
 #include "pch.hpp"
 #include "System/System.hpp"
 
-class PhysicSystem : public System {
-public:
-	virtual bool Create() override;
-	virtual void Destroy() override;
-	~PhysicSystem();
+namespace PhysicImplementation {
+	class PhysicSystem : public System {
+	public:
+		virtual bool Create() override;
+		virtual void Destroy() override;
+		~PhysicSystem();
 
-	//static PhysicSystem* Get();
-	void Update(float dt);
-private:
-	float gravity = 10.f;
-	//static PhysicSystem* s_instance;
-};
+		//static PhysicSystem* Get();
+		void Update(float dt);
+	private:
+		float gravity = 10.f;
+		//static PhysicSystem* s_instance;
+	};
+}
 
 #endif

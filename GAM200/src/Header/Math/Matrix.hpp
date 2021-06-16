@@ -22,9 +22,9 @@ Usage:
 
 namespace MathD {
 	//float matrix3
-	using Mat3 = ML::Matrix3<float>;
+	using Mat3 = MathImplementation::Matrix3<float>;
 	//int matrix3
-	using iMat3 = ML::Matrix3<int>;
+	using iMat3 = MathImplementation::Matrix3<int>;
 }
 
 #endif

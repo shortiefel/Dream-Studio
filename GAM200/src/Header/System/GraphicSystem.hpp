@@ -6,8 +6,7 @@ includes declaration to static function for a singleton GraphicsSystem
 #ifndef GRAPHIC_SYSTEM_H
 #define GRAPHIC_SYSTEM_H
 
-#include "ECSGlobal.hpp"
-#include "pch.hpp"
+//#include "pch.hpp"
 #include "System/system.hpp"
 
 class GraphicSystem : public System {

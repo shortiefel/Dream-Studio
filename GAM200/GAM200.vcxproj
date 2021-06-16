@@ -178,6 +178,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Application.hpp" />
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
     <ClInclude Include="src\Header\Component\ComponentManager.hpp" />
+    <ClInclude Include="src\Header\Component\Graphics\RendererComponent.hpp" />
     <ClInclude Include="src\Header\Component\Graphics\TransformComponent.hpp" />
     <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp" />
     <ClInclude Include="src\Header\Component\Physics\RigidBodyComponent.hpp" />
@@ -197,6 +198,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Layer\Layer.hpp" />
     <ClInclude Include="src\Header\Layer\LayerStack.hpp" />
     <ClInclude Include="src\Header\Main.hpp" />
+    <ClInclude Include="src\Header\Math\MathLib.hpp" />
     <ClInclude Include="src\Header\Math\Matrix.hpp" />
     <ClInclude Include="src\Header\Math\Matrix3.hpp" />
     <ClInclude Include="src\Header\Math\Vector.hpp" />
@@ -225,6 +227,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClCompile Include="src\Code\Graphic\Graphic.cpp" />
     <ClCompile Include="src\Code\Layer\GUILayer.cpp" />
     <ClCompile Include="src\Code\Layer\LayerStack.cpp" />
+    <ClCompile Include="src\Code\MathLib.cpp" />
     <ClCompile Include="src\Code\Physic\Physic.cpp" />
     <ClCompile Include="src\Code\System\PhysicSystem.cpp" />
     <ClCompile Include="src\Code\Window.cpp" />

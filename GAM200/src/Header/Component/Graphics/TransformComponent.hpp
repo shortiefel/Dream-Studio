@@ -6,10 +6,10 @@
 struct Transform {
 	MathD::Vec3 position = MathD::Vec3{}; // x and y for 2d position and z for the layering (whether it appear on top or below)
 	MathD::Vec2 scale = MathD::Vec2{};
-	MathD::Vec2 rotation = MathD::Vec2{};
+	float rotation = float{}; // in degree
 
 	Transform() = default;
-	Transform(MathD::Vec3 pos, MathD::Vec2 s, MathD::Vec2 r) : 
+	Transform(MathD::Vec3 pos, MathD::Vec2 s, float r) :
 		position{ pos }, scale{ s }, rotation{ r } {}
 
 private:

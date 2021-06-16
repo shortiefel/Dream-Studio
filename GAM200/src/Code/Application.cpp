@@ -15,6 +15,7 @@ Contains the main application loop and the game loop
 #include "Coordinator/Coordinator.hpp" // testing only
 #include "Component/Graphics/TransformComponent.hpp" // testing only
 #include "Component/Physics/ColliderComponent.hpp"
+#include "Component/Graphics/RendererComponent.hpp"
 #include "System/GraphicSystem.hpp"
 #include "System/PhysicSystem.hpp"
 
@@ -22,8 +23,7 @@ Entity ent;
 std::shared_ptr<GraphicSystem> graphicSystem;
 Coordinator gCoordinator; //-----------------------
 
-#include "Math/Matrix.hpp"
-#include "Math/Vector.hpp"
+#include "Math/MathLib.hpp"
 #include <iostream>
 //---------------------------------------------
 
@@ -54,17 +54,23 @@ void Application::Create() {
     gCoordinator.Init();
     gCoordinator.RegisterComponent<Collider>();
     gCoordinator.RegisterComponent<Transform>();
+    gCoordinator.RegisterComponent<Renderer2D>();
 
     graphicSystem = gCoordinator.RegSystem<GraphicSystem>();
     
     Signature signature;
     signature.set(gCoordinator.GetComType<Transform>());
+    signature.set(gCoordinator.GetComType<Renderer2D>());
     gCoordinator.setSystemSignature<GraphicSystem>(signature);
 
     ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent,
-        Transform{ MathD::Vec3 {0.f, 0.f, 0.f}, MathD::Vec2 {2.f, 1.f}, MathD::Vec2{0.f,0.f} });
+        Transform{ MathD::Vec3 {0.f, 0.f, 0.f}, MathD::Vec2 {2.f, 1.f}, 1.f });
+    
+    gCoordinator.AddComponent(
+        ent,
+        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
     //----------------------------------------
 }
 

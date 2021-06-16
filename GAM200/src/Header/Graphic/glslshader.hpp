@@ -32,8 +32,8 @@ program object.
 //#include <string>
 //#include <vector>
 //#include <map>
-#include "Math/Matrix.hpp"
-#include "Math/Vector.hpp"
+#include "Math/MathLib.hpp"
+
 
 #include "pch.hpp"
 

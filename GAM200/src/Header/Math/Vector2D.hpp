@@ -30,86 +30,84 @@ Technology is prohibited.
 #ifndef Vector2D_H
 #define Vector2D_H
 
-#include <iostream>
+#include <iostream> // for operator<< 
 
-namespace MathD {
-	namespace MathImplementation {
-		template <typename T>
-		class Vector2D
-		{
-		public:
-			T x, y;
+namespace MathImplementation {
+	template <typename T>
+	class Vector2D
+	{
+	public:
+		T x, y;
 
-			// Constructors
-			Vector2D() : x{ T{} }, y{ T{} } {};
-			Vector2D(T _x, T _y) : x{ _x }, y{ _y } {}
+		// Constructors
+		Vector2D() : x{ T{} }, y{ T{} } {};
+		Vector2D(T _x, T _y) : x{ _x }, y{ _y } {}
 
-			// Assignment operators
-			Vector2D<T>& operator += (const Vector2D<T>& rhs) {
-				x += rhs.x;
-				y += rhs.y;
-				return *this;
-			}
+		// Assignment operators
+		Vector2D<T>& operator += (const Vector2D<T>& rhs) {
+			x += rhs.x;
+			y += rhs.y;
+			return *this;
+		}
 
-			Vector2D<T>& operator -= (const Vector2D<T>& rhs) {
-				return *this += -rhs;
-			}
+		Vector2D<T>& operator -= (const Vector2D<T>& rhs) {
+			return *this += -rhs;
+		}
 
-			Vector2D<T>& operator *= (T rhs) {
-				x *= rhs;
-				y *= rhs;
-				return *this;
-			}
+		Vector2D<T>& operator *= (T rhs) {
+			x *= rhs;
+			y *= rhs;
+			return *this;
+		}
 
-			Vector2D<T>& operator /= (T rhs) {
-				x /= rhs;
-				y /= rhs;
-				return *this;
-			}
+		Vector2D<T>& operator /= (T rhs) {
+			x /= rhs;
+			y /= rhs;
+			return *this;
+		}
 
-			// Unary operators
-			Vector2D<T> operator-() const {
-				Vector2D tem;
-				tem.x = -x;
-				tem.y = -y;
-				return tem;
-			}
+		// Unary operators
+		Vector2D<T> operator-() const {
+			Vector2D tem;
+			tem.x = -x;
+			tem.y = -y;
+			return tem;
+		}
 
-			friend std::ostream& operator<<(std::ostream& os, const MathImplementation::Vector2D<T>& rhs) {
-				os << "(" << rhs.x << ", " << rhs.y << ")";
-				return os;
-			}
-		};
-	}
-	namespace ML = MathImplementation;
+		friend std::ostream& operator<<(std::ostream& os, const Vector2D<T>& rhs) {
+			os << "(" << rhs.x << ", " << rhs.y << ")";
+			return os;
+		}
+	};
+	
 	// Binary operators
 	template <typename T>
-	ML::Vector2D<T> operator + (const ML::Vector2D<T>& lhs, const ML::Vector2D<T>& rhs) {
-		ML::Vector2D<T> tem(lhs.x, lhs.y);
+	Vector2D<T> operator + (const Vector2D<T>& lhs, const Vector2D<T>& rhs) {
+		Vector2D<T> tem(lhs.x, lhs.y);
 		tem += rhs;
 		return tem;
 	}
 
 	template <typename T>
-	ML::Vector2D<T> operator - (const ML::Vector2D<T>& lhs, const ML::Vector2D<T>& rhs) {
+	Vector2D<T> operator - (const Vector2D<T>& lhs, const Vector2D<T>& rhs) {
 		return lhs + -rhs;
 	}
 
 	template <typename T>
-	ML::Vector2D<T> operator * (const ML::Vector2D<T>& lhs, T rhs) {
-		ML::Vector2D<T> tem(lhs.x, lhs.y);
+	Vector2D<T> operator * (const Vector2D<T>& lhs, T rhs) {
+		Vector2D<T> tem(lhs.x, lhs.y);
 		tem *= rhs;
 		return tem;
 	}
 
 	template <typename T>
-	ML::Vector2D<T> operator * (T lhs, const ML::Vector2D<T>& rhs) {
+	Vector2D<T> operator * (T lhs, const Vector2D<T>& rhs) {
 		return rhs * lhs;
 	}
 
 	template <typename T>
-	ML::Vector2D<T> operator / (const ML::Vector2D<T>& lhs, T rhs) {
-		ML::Vector2D<T> tem(lhs.x, lhs.y);
+	Vector2D<T> operator / (const Vector2D<T>& lhs, T rhs) {
+		Vector2D<T> tem(lhs.x, lhs.y);
 		tem /= rhs;
 		return tem;
 	}
@@ -121,7 +119,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	void Normalize(ML::Vector2D<T>& pResult, const ML::Vector2D<T>& pVec0) {
+	void Normalize(Vector2D<T>& pResult, const Vector2D<T>& pVec0) {
 		pResult = pVec0 / Length(pVec0);
 	}
 
@@ -131,7 +129,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T Length(const ML::Vector2D<T>& pVec0) {
+	T Length(const Vector2D<T>& pVec0) {
 		return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y)));
 	}
 
@@ -141,7 +139,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T LengthSq(const ML::Vector2D<T>& pVec0) {
+	T LengthSq(const Vector2D<T>& pVec0) {
 		return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y));
 	}
 
@@ -152,8 +150,8 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T Distance(const ML::Vector2D<T>& pVec0, const ML::Vector2D<T>& pVec1) {
-		ML::Vector2D<T> tem(pVec0);
+	T Distance(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
+		Vector2D<T> tem(pVec0);
 		tem -= pVec1;
 		return Length(tem);
 	}
@@ -166,8 +164,8 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T DistanceSq(const ML::Vector2D<T>& pVec0, const ML::Vector2D<T>& pVec1) {
-		ML::Vector2D<T> tem(pVec0);
+	T DistanceSq(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
+		Vector2D<T> tem(pVec0);
 		tem -= pVec1;
 		return LengthSq(tem);
 	}
@@ -178,7 +176,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T DotProduct(const ML::Vector2D<T>& pVec0, const ML::Vector2D<T>& pVec1) {
+	T DotProduct(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
 		return T((pVec0.x * pVec1.x) + (pVec0.y * pVec1.y));
 	}
 
@@ -189,7 +187,7 @@ namespace MathD {
 	 */
 	 /**************************************************************************/
 	template <typename T>
-	T CrossProduct(const ML::Vector2D<T>& pVec0, const ML::Vector2D<T>& pVec1) {
+	T CrossProduct(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
 		return T((pVec0.x * pVec1.y) - (pVec0.y * pVec1.x));
 	}
 

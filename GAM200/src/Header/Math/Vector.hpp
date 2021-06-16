@@ -43,18 +43,18 @@ Technology is prohibited.
 
 namespace MathD {
 	//float vec2
-	using Vec2 = ML::Vector2D<float>;
+	using Vec2 = MathImplementation::Vector2D<float>;
 	//int vec2
-	using iVec2 = ML::Vector2D<int>;
+	using iVec2 = MathImplementation::Vector2D<int>;
 	//unsigned int vec2
-	using uiVec2 = ML::Vector2D<unsigned int>;
+	using uiVec2 = MathImplementation::Vector2D<unsigned int>;
 
 	//float vec3
-	using Vec3 = ML::Vector3D<float>;
+	using Vec3 = MathImplementation::Vector3D<float>;
 	//int vec3
-	using iVec3 = ML::Vector3D<int>;
+	using iVec3 = MathImplementation::Vector3D<int>;
 	//unsigned int vec3
-	using uiVec3 = ML::Vector3D<unsigned int>;
+	using uiVec3 = MathImplementation::Vector3D<unsigned int>;
 }
 
 

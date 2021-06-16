@@ -5,12 +5,11 @@ This file has the functions declaration to be called by the graphic system
 #ifndef GRAPHIC_H
 #define GRAPHIC_H
 
+#include "Graphic/glslshader.hpp" // for GLSLShader
 #include "pch.hpp"
-#include "Math/Matrix.hpp"
-#include "Math/Vector.hpp"
-//#include "Graphic/glslshader.hpp"
+#include "Math/MathLib.hpp"
 
-namespace Graphic {
+namespace GraphicImplementation {
     struct GLModel {
         GLenum primitive_type = GLenum{}; // which OpenGL primitive to be rendered?
         GLuint primitive_cnt = GLuint{};
@@ -30,13 +29,11 @@ namespace Graphic {
         MathD::Mat3 mdl_xform = MathD::Mat3{}; // model-to-ndc transformation
 
 
-        std::map<std::string, GLModel>::iterator mdl_ref;
-        //std::map<std::string, GLSLShader>::iterator shd_ref;
-
-
+        /*std::map<std::string, GLModel>::iterator mdl_ref;
+        std::map<std::string, GLSLShader>::iterator shd_ref;*/
 
         // function to initialize object's state
-        void init(std::ifstream& ifs);
+        void init();
 
         // function to render object's model (specified by index mdl_ref)
         // uses model transformation matrix mdl_to_ndc_xform matrix
@@ -46,6 +43,14 @@ namespace Graphic {
         // function to update the object's model transformation matrix
         void update(GLdouble delta_time);
     };
+
+    static std::map<std::string, GLModel> models;
+    static std::map<std::string, GLSLShader> shdrpgms;
+    //static std::map<std::string, GLObject> objects;
+
+    void setup_vao();
+    void setup_shdr();
+    void create_square_instance();
 }
 
 #endif

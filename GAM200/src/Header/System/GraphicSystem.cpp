@@ -1,6 +1,13 @@
+/* Start Header**********************************************************************************/
 /*
+@file    GraphicSystem.cpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    16/06/2021
+\brief
 This file has the function definition for class GraphicsSystem
+
 */
+/* End Header **********************************************************************************/
 
 //#include "pch.hpp"
 
@@ -12,6 +19,7 @@ This file has the function definition for class GraphicsSystem
 #include "Component/Graphics/RendererComponent.hpp"
 
 #include "Graphic/Graphic.hpp"
+#include "Graphic/Camera.hpp"
 
 #include "Math/Matrix.hpp"
 
@@ -44,31 +52,47 @@ void GraphicSystem::Update(float dt) {
 		renderer.mdl_to_ndc_xform = temMat3 * renderer.mdl_to_ndc_xform;
 
 		// world to ndc * mdl to world
-		//renderer.mdl_to_ndc_xform = camera2d.world_to_ndc_xform * renderer.mdl_to_ndc_xform;
+		renderer.mdl_to_ndc_xform = GraphicImplementation::camera2d.world_to_ndc_xform * renderer.mdl_to_ndc_xform;
 	}
 }
 
 void GraphicSystem::Render() {
 	//For all entities in PhysicSystem
 	for (auto const& entity : mEntities) {
-		auto transform = gCoordinator.GetCom<Transform>(entity);
+		auto& transform = gCoordinator.GetCom<Transform>(entity);
+		auto& renderer = gCoordinator.GetCom<Renderer2D>(entity);
 
-		/*GLint uniform_var_loc1 = glGetUniformLocation(
-			shd_ref->second.GetHandle(), "uModel_to_NDC");
+		// load shader program in use by this object
+		renderer.shd_ref->second.Use();
+		
+		// bind VAO of this object's model
+		glBindVertexArray(renderer.mdl_ref->second.vaoid);
+		
+		GLint uniform_var_loc1 = glGetUniformLocation(
+			renderer.shd_ref->second.GetHandle(), "uModel_to_NDC");
+
 		if (uniform_var_loc1 >= 0) {
-			glUniform3fv(uniform_var_loc1, 1,
-				glm::value_ptr(transform.));
+			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE,
+				MathD::value_ptr(renderer.mdl_to_ndc_xform));
 		}
 
 		else {
 			std::cout << "Uniform variable doesn't exist!!!\n";
 			std::exit(EXIT_FAILURE);
-		}*/
+		}
+		
+		//glDrawElements(mdl_ref->second.primitive_type, mdl_ref->second.draw_cnt, GL_UNSIGNED_SHORT, NULL);
+		glDrawArrays(renderer.mdl_ref->second.primitive_type, 0, renderer.mdl_ref->second.draw_cnt);
+
+		// unbind VAO and unload shader program
+		glBindVertexArray(0);
+		renderer.shd_ref->second.UnUse();
 	}
 }
 
 bool GraphicSystem::Create() {
 	//Set up vao for box
+	GraphicImplementation::setup_vao();
 	GraphicImplementation::setup_shdr();
 	
 	LOG_INSTANCE("Graphic System created");

@@ -18,14 +18,28 @@ enum class ColliderType {
 struct Collider {
 
 	MathD::Vec2 pos = MathD::Vec2{};//, origin;
-	float w = float{}, h = float{};
+	MathD::Vec2 scale = MathD::Vec2{};
 
 	ColliderType cType = ColliderType::CIRCLE;
 	bool isTrigger = false, isActive = true;
 
 	Collider() = default;
-	Collider (float xPos, float yPos, ColliderType c, float wVal, float hVal = 0, bool istrigger = false) :
-		pos{ xPos, yPos }, cType{ c }, w{ wVal }, h{ hVal }, isTrigger{ istrigger } {}
+
+	//offsetPosition -> how far away from the transform center
+	//offsetScale -> how much it changes the transform scale
+	/*Collider(ColliderType c, MathD::Vec2 offsetPosition, MathD::Vec2 offsetScale, bool trigger = false) :
+		cType{ c }, pos{ offsetPosition }, scale { offsetScale.x, offsetScale.y }, isTrigger{ trigger } {}
+
+	Collider(ColliderType c, float offsetxPos, float offsetyPos, MathD::Vec2 offsetScale, bool trigger = false) :
+		Collider{ c, MathD::Vec2 { offsetxPos, offsetyPos }, offsetScale, trigger } {}
+
+	Collider (ColliderType c, float offsetxPos, float offsetyPos,  float offsetWidth, float offsetHeight, bool trigger = false) :
+		Collider{ c, MathD::Vec2 { offsetxPos, offsetyPos }, MathD::Vec2 { offsetWidth, offsetHeight }, trigger } {}*/
+
+	Collider(ColliderType c, bool trigger = false) :
+		cType{ c }, pos{ MathD::Vec2{ 0.f, 0.f } }, scale{ MathD::Vec2{ 0.f, 0.f } }, isTrigger{ trigger } {}
+
+	
 	//void SetActive(bool t) { isActive = t; }
 };
 

@@ -1,4 +1,9 @@
+/* Start Header**********************************************************************************/
 /*
+@file    Matrix.hpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    16/06/2021
+\brief
 This file SHOULD be included to use Matrix3 and its functions
 Usage:
 	#include "Matrix.hpp"
@@ -14,6 +19,7 @@ Usage:
 	This file has other types of Matrix3 in case it is needed
 	Do add more here if other types is needed
 */
+/* End Header **********************************************************************************/
 
 #ifndef MATRIX_HPP
 #define MATRIX_HPP

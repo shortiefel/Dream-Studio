@@ -192,6 +192,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Event\WindowEvent.hpp" />
     <ClInclude Include="src\Header\framework.hpp" />
     <ClInclude Include="src\Header\ECSGlobal.hpp" />
+    <ClInclude Include="src\Header\Graphic\Camera.hpp" />
     <ClInclude Include="src\Header\Graphic\glslshader.hpp" />
     <ClInclude Include="src\Header\Graphic\Graphic.hpp" />
     <ClInclude Include="src\Header\Layer\GUILayer.hpp" />
@@ -223,11 +224,11 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClCompile Include="External Resources\Imgui\imgui_tables.cpp" />
     <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Code\Application.cpp" />
+    <ClCompile Include="src\Code\Graphic\Camera.cpp" />
     <ClCompile Include="src\Code\Graphic\glslshader.cpp" />
     <ClCompile Include="src\Code\Graphic\Graphic.cpp" />
     <ClCompile Include="src\Code\Layer\GUILayer.cpp" />
     <ClCompile Include="src\Code\Layer\LayerStack.cpp" />
-    <ClCompile Include="src\Code\MathLib.cpp" />
     <ClCompile Include="src\Code\Physic\Physic.cpp" />
     <ClCompile Include="src\Code\System\PhysicSystem.cpp" />
     <ClCompile Include="src\Code\Window.cpp" />

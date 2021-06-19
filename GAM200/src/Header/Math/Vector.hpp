@@ -1,18 +1,8 @@
 /* Start Header**********************************************************************************/
-/*!
-\file Vector.hpp
-\team name
-\software name
-\authors
-NAME							EMAIL									ROLE
-Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
-Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg
-Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
-Chia Yi Da						chiayida98@gmail.com
-Margaret Teo Boon See			Teo.b@digipen.edu
-Wang Ao							Ao.Wang@digipen.edu
-Ng Jia Yi						Jiayi.ng@digipen.edu
-\date 26/04/2021
+/*
+@file    Vector.hpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    16/06/2021
 \brief
 
 This file SHOULD be included to use Vector2 and Vector3 and its functions

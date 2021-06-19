@@ -1,18 +1,8 @@
 /* Start Header**********************************************************************************/
-/*!
-\file Vector2D.hpp
-\team name
-\software name
-\authors
-NAME							EMAIL									ROLE
-Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
-Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg
-Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
-Chia Yi Da						chiayida98@gmail.com
-Margaret Teo Boon See			Teo.b@digipen.edu
-Wang Ao							Ao.Wang@digipen.edu
-Ng Jia Yi						Jiayi.ng@digipen.edu
-\date 26/04/2021
+/*
+@file    Vector2D.hpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    16/06/2021
 \brief
 
 This file contain the template implementation of Vector2D

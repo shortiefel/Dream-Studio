@@ -1,12 +1,22 @@
+/* Start Header**********************************************************************************/
 /*
+@file    Graphic.cpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    16/06/2021
+\brief
 This file has the function definition for Graphic
+
 */
+/* End Header **********************************************************************************/
 
 #include "Graphic/Graphic.hpp"
 #include <iostream>
 #include <fstream>
 
 namespace GraphicImplementation {
+    std::map<std::string, GLModel> models;
+    std::map<std::string, GLSLShader> shdrpgms;
+
     void setup_vao() {
         std::array<MathD::Vec2, 4> pos_vtx{
              MathD::Vec2(1.f, -1.f), MathD::Vec2(1.f, 1.f),
@@ -54,6 +64,7 @@ namespace GraphicImplementation {
 	}
     
     void setup_shdr() {
+        std::cout << "shdr should be registered \n";
         std::vector<std::pair<GLenum, std::string>> shdr_files{
         std::make_pair(GL_VERTEX_SHADER, "shaders/OpenGLEngine.vert"),
         std::make_pair(GL_FRAGMENT_SHADER, "shaders/OpenGLEngine.frag")
@@ -67,22 +78,22 @@ namespace GraphicImplementation {
             std::cout << shdr_pgm.GetLog() << "\n";
             std::exit(EXIT_FAILURE);
         }
-
-        shdrpgms.insert(std::pair<std::string, GLSLShader>("Default", shdr_pgm));
+        shdrpgms.insert(std::pair<std::string, GLSLShader>("Default", shdr_pgm));   
     }
 
-    void create_square_instance() {
-        /*GLObject tem_obj;
-        tem_obj.init();*/
+    //void create_square_instance() {
+    //    /*GLObject tem_obj;
+    //    tem_obj.init();*/
 
-        /*tem_obj.mdl_ref = models.find("Square");
-        tem_obj.shd_ref = shdrpgms.find("Default");*/
+    //    /*tem_obj.mdl_ref = models.find("Square");
+    //    tem_obj.shd_ref = shdrpgms.find("Default");*/
 
-        //objects.insert(std::pair<std::string, GLObject>("Square 1", tem_obj));
-    }
+    //    //objects.insert(std::pair<std::string, GLObject>("Square 1", tem_obj));
+    //    std::cout << "third: " << shdrpgms.size() << "\n";
+    //}
 
-    void GLObject::init() {
-        //color = MathD::Vec3(0.f, 0.f, 0.f);
-        // create a entity with transform
-    }
+    //void GLObject::init() {
+    //    //color = MathD::Vec3(0.f, 0.f, 0.f);
+    //    // create a entity with transform
+    //}
 }

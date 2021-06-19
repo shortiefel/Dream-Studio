@@ -1,4 +1,9 @@
+/* Start Header**********************************************************************************/
 /*
+@file    Matrix3.hpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    16/06/2021
+\brief
 This matrix implementation is column major
 Eg: To initialize a matrix
 0 1 2
@@ -10,6 +15,7 @@ Note: MathD::Mat3 is a type name done in matrix.hpp
 namespace MathImplementation is to prevent accidental usage
 
 */
+/* End Header **********************************************************************************/
 
 
 #ifndef MATRIX_3_HPP
@@ -87,6 +93,15 @@ namespace MathImplementation {
 
 			}
 			return os;
+		}
+
+		/**************************************************************************/
+		/*!
+		This function return ptr to matrix in column major
+		*/
+		/**************************************************************************/
+		T* GetPtr() {
+			return m;
 		}
 	};
 

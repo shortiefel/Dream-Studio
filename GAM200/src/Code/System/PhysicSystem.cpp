@@ -1,11 +1,23 @@
+/* Start Header**********************************************************************************/
 /*
+@file    PhysicSystem.cpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    19/06/2021
+\brief
 This file has the function definition for class PhysicSystem
+
 */
+/* End Header **********************************************************************************/
+
 
 #include "Debug Tools/Logging.hpp"
 #include "System/PhysicSystem.hpp"
 #include "Physic/Physic.hpp"
 
+#include "Coordinator/Coordinator.hpp"
+#include "Component/Graphics/TransformComponent.hpp"
+
+extern Coordinator gCoordinator;
 
 //Static--------------------------------------------------------
 //PhysicSystem* PhysicSystem::s_instance = 0;
@@ -17,27 +29,34 @@ void PhysicSystem::Update(float dt) {
 
 
 	//For all entities in PhysicSystem
-	for (auto const& entity : mEntities) {
-		//Apply gravity if rigidbody exist and rigidbody hasGravity
-		//
+	for (std::set<Entity>::iterator entity1 = mEntities.begin(); entity1 != mEntities.end(); ++entity1) {
+		auto& transform1 = gCoordinator.GetCom<Transform>(*entity1);
+		auto collider1 = gCoordinator.GetCom<Collider>(*entity1);
 
-		//Check for isColliding (Check collision type to polymorphically change object)
+		collider1.pos += MathD::Vec2{ transform1.pos };
+		collider1.scale += transform1.scale;
+
+		for (std::set<Entity>::iterator entity2 = ++entity1; entity2 != mEntities.end(); ++entity2) {
+			auto& transform2 = gCoordinator.GetCom<Transform>(*entity2);
+			auto collider2 = gCoordinator.GetCom<Collider>(*entity2);
+
+			collider2.pos += MathD::Vec2{ transform2.pos };
+			collider2.scale += transform2.scale;
+
+			//Apply gravity if rigidbody exist and rigidbody hasGravity
+			
+			if (!PhysicImplementation::isColliding(collider1, collider2)) {
+
+			}
+			//
+			//else if (obj1.isTrigger || obj2.isTrigger) {
+			//	
+			//}
+
+			//else resolve collision by pushing object out
 
 
-		////Get component for collider
-		////if object is box then cast to box
-		//if (!Physic::isColliding (obj1, obj2)) {
-
-		//}
-		//
-		//else if (obj1.isTrigger || obj2.isTrigger) {
-		//	
-		//}
-
-		//else resolve collision by pushing object out
-
-
-
+		}
 	}
 }
 

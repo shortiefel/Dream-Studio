@@ -84,14 +84,14 @@ void Application::Create() {
     camera = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         camera,
-        Transform{ MathD::Vec3 {0.f, 0.f, 0.f}, MathD::Vec2 {0.f, 0.f}, 0.f });
+        Transform{ MathD::Vec2 {0.f, 0.f}, MathD::Vec2 {0.f, 0.f}, 0.f });
 
     GraphicImplementation::camera2d.init(Window::GetGLFWwindow(), &gCoordinator.GetCom<Transform>(camera));
 
     ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent,
-        Transform{ MathD::Vec3 {-150.f, 0.f, 0.f}, MathD::Vec2 {100.f, 100.f}, 0.f });
+        Transform{ MathD::Vec2 {-150.f, 0.f}, MathD::Vec2 {100.f, 100.f}, 0.f });
     
     gCoordinator.AddComponent(
         ent,
@@ -106,7 +106,7 @@ void Application::Create() {
     ent2 = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent2,
-        Transform{ MathD::Vec3 {100.f, 0.f, 0.f}, MathD::Vec2 {100.f, 100.f}, 0.f });
+        Transform{ MathD::Vec2 {100.f, 0.f}, MathD::Vec2 {100.f, 100.f}, 0.f });
 
     gCoordinator.AddComponent(
         ent2,
@@ -126,11 +126,11 @@ void Application::Update() {
         glClearColor(1, 0, 1, 1);
         
         //-------Testing only-----------------------------------------
-        physicSystem->Update(0.f); //Testing only
-
         GraphicImplementation::camera2d.update(Window::GetGLFWwindow());
         graphicSystem->Update(0.f); //Testing only
         graphicSystem->Render();
+
+        physicSystem->Update(0.f); //Testing only
         //---------------------------------------------------
 
         LayerStack::Update();

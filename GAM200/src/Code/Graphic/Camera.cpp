@@ -20,7 +20,7 @@ namespace GraphicImplementation {
         MathD::Mat3 view_xform = MathD::Mat3(
             1.f, 0.f, 0.f,
             0.f, 1.f, 0.f,
-            -transform->position.x, -transform->position.y, 1.f);
+            -transform->pos.x, -transform->pos.y, 1.f);
         MathD::Mat3 camwin_to_ndc_xform = MathD::Mat3(
             2.f / (ar * height), 0.f, 0.f,
             0.f, 2.f / height, 0.f,
@@ -92,7 +92,7 @@ namespace GraphicImplementation {
             MathD::Mat3(
             1.f, 0.f, 0.f,
             0.f, 1.f, 0.f,
-            -transform->position.x, -transform->position.y, 1.f);
+            -transform->pos.x, -transform->pos.y, 1.f);
         
     }
 }

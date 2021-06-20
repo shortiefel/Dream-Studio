@@ -18,14 +18,28 @@ a degree to radian function
 
 namespace MathD {
     template <typename T>
-    T radians(T deg) {
-        deg = deg * PI / 180;
-        return deg;
+    inline T radians(T deg) {
+        return deg * PI / 180;
     }
 
     template <typename T>
-    T* value_ptr(MathImplementation::Matrix3<T>& mat) {
+    inline T degrees(T rad) {
+        return rad * 180 / PI;
+    }
+
+    template <typename T>
+    inline T* value_ptr(MathImplementation::Matrix3<T>& mat) {
         return mat.GetPtr();
+    }
+
+    template <typename T>
+    inline T getLength(T n1, T n2) {
+        return sqrt(pow(n1 / 2, 2) + pow(n2 / 2, 2));
+    }
+
+    template <typename T>
+    inline T getSqLength(T n1, T n2) {
+        return pow(n1 / 2, 2) + pow(n2 / 2, 2);
     }
 }
 

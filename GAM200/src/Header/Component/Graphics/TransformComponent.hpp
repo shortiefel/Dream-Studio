@@ -1,16 +1,29 @@
+/* Start Header**********************************************************************************/
+/*
+@file    TransformComponent.hpp
+@author  
+@date    19/06/2021
+\brief
+
+
+*/
+/* End Header **********************************************************************************/
+
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
 #include "Math/Vector.hpp"
 
+//Scale value for circle in both axis is same
 struct Transform {
-	MathD::Vec3 position = MathD::Vec3{}; // x and y for 2d position and z for the layering (whether it appear on top or below)
+	MathD::Vec2 pos = MathD::Vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
 	MathD::Vec2 scale = MathD::Vec2{};
 	float rotation = float{}; // in degree
+	int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
 	Transform() = default;
-	Transform(MathD::Vec3 pos, MathD::Vec2 s, float r) :
-		position{ pos }, scale{ s }, rotation{ r } {}
+	Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, float tAngle, int tLayer = 0) :
+		pos{ tPos }, scale{ tScale }, rotation{ tAngle }, layer{ tLayer } {}
 
 private:
 	//matrix for model to ndc transform

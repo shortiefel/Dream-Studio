@@ -48,7 +48,7 @@ void GraphicSystem::Update(float dt) {
 		MathD::Mat3 temMat3{ MathD::Vec3(cos(rad), sin(rad), 0), MathD::Vec3(-sin(rad), cos(rad), 0), MathD::Vec3(0, 0, 1.f) };
 		renderer.mdl_to_ndc_xform = temMat3 * renderer.mdl_to_ndc_xform;
 		
-		temMat3 = { MathD::Vec3(1.f, 0, 0), MathD::Vec3(0, 1.f, 0), MathD::Vec3(transform.position.x, transform.position.y, 1.f) };
+		temMat3 = { MathD::Vec3(1.f, 0, 0), MathD::Vec3(0, 1.f, 0), MathD::Vec3(transform.pos.x, transform.pos.y, 1.f) };
 		renderer.mdl_to_ndc_xform = temMat3 * renderer.mdl_to_ndc_xform;
 
 		// world to ndc * mdl to world

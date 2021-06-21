@@ -6,10 +6,12 @@
 \brief
 This file has the function definition for Physic
 
+collider position is in the center of itself and width and height is only half of itself total width and height
+
 */
 /* End Header **********************************************************************************/
 
-
+#include "Debug Tools/Logging.hpp" // to be removed
 #include "Physic/Physic.hpp"
 #include "Math/MathLib.hpp"
 
@@ -59,10 +61,10 @@ namespace PhysicImplementation {
     }
 
     bool isCollidingBOXtoBOX(const Collider& obj1, const Collider& obj2) {
-        if (obj1.pos.x + obj1.scale.x < obj2.pos.x ||
-            obj1.pos.x          > obj2.pos.x + obj2.scale.x ||
-            obj1.pos.y + obj1.scale.y < obj2.pos.y ||
-            obj1.pos.y          > obj2.pos.y + obj2.scale.y)
+        if (obj1.pos.x + obj1.scale.x < obj2.pos.x - obj2.scale.x ||
+            obj1.pos.x - obj1.scale.x > obj2.pos.x + obj2.scale.x ||
+            obj1.pos.y + obj1.scale.y < obj2.pos.y - obj2.scale.y ||
+            obj1.pos.y - obj1.scale.y > obj2.pos.y + obj2.scale.y)
             return false;
         return true;
     }
@@ -82,14 +84,17 @@ namespace PhysicImplementation {
         if (!isCollidingCIRCLEtoCIRCLE(tem, obj2)) return false;
 
         //Colliding with inner circle
-        tem.scale.x = obj1.scale.x < obj1.scale.y ? obj1.scale.x / 2.f : obj1.scale.y / 2.f;
+        //tem.scale.x = obj1.scale.x < obj1.scale.y ? obj1.scale.x / 2.f : obj1.scale.y / 2.f;
+        tem.scale.x = obj1.scale.x < obj1.scale.y ? obj1.scale.x : obj1.scale.y;
         if (isCollidingCIRCLEtoCIRCLE(tem, obj2)) return true;
 
         //p = Point on circle that is closest to the box object
         MathD::Vec2 p = obj2.pos + obj2.scale.x * (obj1.pos - obj2.pos);
         //if p is in box then there is collision
-        if (p.x > obj1.pos.x && p.x < obj1.pos.x + obj1.scale.x && 
-            p.y > obj1.pos.y && p.y < obj1.pos.y + obj1.scale.y)
+        /*if (p.x > obj1.pos.x && p.x < obj1.pos.x + obj1.scale.x && 
+            p.y > obj1.pos.y && p.y < obj1.pos.y + obj1.scale.y)*/
+        if (p.x > obj1.pos.x - obj1.scale.x && p.x < obj1.pos.x + obj1.scale.x &&
+            p.y > obj1.pos.y - obj1.scale.y && p.y < obj1.pos.y + obj1.scale.y)
             return true;
 
         return false;
@@ -103,8 +108,9 @@ namespace PhysicImplementation {
         float rad = obj1.scale.x + obj2.scale.x;
         rad = pow(rad,2);
         MathD::Vec2 tem = obj1.pos - obj2.pos;
-        float tl = abs(tem.x) + abs(tem.y);
-        tl = pow(tl, 2);
+        /*float tl = abs(tem.x) + abs(tem.y);
+        tl = pow(tl, 2);*/
+        float tl = tem.x * tem.x + tem.y * tem.y;
 
         if (rad < tl) return false;
         return true;
@@ -133,46 +139,53 @@ namespace PhysicImplementation {
         Normalize(dir, dir);
         //dot product normalized dir with x-axis vector = cos rad between them
         //acos give rad of angle and degree changes it to degress
-        int angle = MathD::degrees(acos(DotProduct(dir, MathD::Vec2{ 1.f, 0.f })));
-        //make angle between 0 - 360
-        angle = angle % 360;
-        //make angle between 0 - 180
-        angle -= 180;
-        angle = abs(angle);
-
+        //int angle = static_cast<int>(MathD::degrees(acos(DotProduct(dir, MathD::Vec2{ 1.f, 0.f }))));
+        ////make angle between 0 - 360
+        //angle = angle % 360;
+        ////make angle between 0 - 180
+        //angle -= 180;
+        //angle = abs(angle);
+        //angle = static_cast<int>(angle * (col1.scale.x / col1.scale.y));
+        //angle = static_cast<int>(angle * (col2.scale.x / col2.scale.y));
+        
         float lenX = 0.f, lenY = 0.f;
         //if angle = 45/135 move in x and y axis
-        if (angle == 45 || angle == 135) {
+        /*if (angle == 45 || angle == 135) {
             lenX = col1.scale.x + col2.scale.x - abs(col2.pos.x - col1.pos.x);
             lenY = col1.scale.y + col2.scale.y - abs(col2.pos.y - col1.pos.y);
-        }
+        }*/
 
         //between 45 and 135 move in y axis
-        else if (angle > 45 && angle < 135) {
+        //if (angle > 45 && angle < 135) {
             lenY = col1.scale.y + col2.scale.y - abs(col2.pos.y - col1.pos.y);
-        }
+        //}
 
         //0 - 45, 135 - 180 move in x axis
-        else {
+        //else {
             lenX = col1.scale.x + col2.scale.x - abs(col2.pos.x - col1.pos.x);
-        }
+        //}
+
+            if (lenX > lenY) lenX = 0.f;
+            else if (lenX < lenY) lenY = 0.f;
+
+        MathD::Vec2 up{ 0.f, dir.y }, right{ dir.x, 0.f };
 
         if (col1.isMoveable && col2.isMoveable) {
-            trans1.pos += lenX / 2 * -dir; //for col1
-            trans2.pos += lenX / 2 * dir; //for col2
-            trans1.pos += lenY / 2 * -dir; //for col1
-            trans2.pos += lenY / 2 * dir; //for col2
+            trans1.pos += lenX / 2 * -right; //for col1
+            trans2.pos += lenX / 2 * right; //for col2
+            trans1.pos += lenY / 2 * -up; //for col1
+            trans2.pos += lenY / 2 * up; //for col2
         }
 
         //if only one moveable it should move by the full length amount
         else if (col1.isMoveable) {
-            trans1.pos += lenX * -dir; //for col1
-            trans1.pos += lenY * -dir; //for col1
+            trans1.pos += lenX * -right; //for col1
+            trans1.pos += lenY * -up; //for col1
         }
 
         else if (col2.isMoveable) {
-            trans2.pos += lenX * dir; //for col2
-            trans2.pos += lenY * dir; //for col2
+            trans2.pos += lenX * right; //for col2
+            trans2.pos += lenY * up; //for col2
         }
     }
 

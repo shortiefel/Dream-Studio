@@ -38,6 +38,7 @@ Coordinator gCoordinator; //-----------------------
 #include "Math/MathLib.hpp"
 #include <iostream>
 //---------------------------------------------
+bool up = false, down = false, left = false, right = false;
 
 //Static----------------------------------------------
 
@@ -91,7 +92,7 @@ void Application::Create() {
     ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent,
-        Transform{ MathD::Vec2 {-150.f, 0.f}, MathD::Vec2 {100.f, 100.f}, 0.f });
+        Transform{ MathD::Vec2 {-150.f, 0.f}, MathD::Vec2 {60.f, 100.f}, 0.f });
     
     gCoordinator.AddComponent(
         ent,
@@ -99,7 +100,7 @@ void Application::Create() {
 
     gCoordinator.AddComponent(
         ent,
-        Collider{ ColliderType::BOX });
+        Collider{ ColliderType::BOX, true });
 
     //----------------------------------------
 
@@ -126,11 +127,28 @@ void Application::Update() {
         glClearColor(1, 0, 1, 1);
         
         //-------Testing only-----------------------------------------
+        if (up) {
+            auto& transform1 = gCoordinator.GetCom<Transform>(ent);
+            transform1.pos.y += 2.f;
+        }
+        if (down) {
+            auto& transform1 = gCoordinator.GetCom<Transform>(ent);
+            transform1.pos.y -= 2.f;
+        }
+        if (left) {
+            auto& transform1 = gCoordinator.GetCom<Transform>(ent);
+            transform1.pos.x -= 2.f;
+        }
+        if (right) {
+            auto& transform1 = gCoordinator.GetCom<Transform>(ent);
+            transform1.pos.x += 2.f;
+        }
+        physicSystem->Update(0.f); //Testing only
+
         GraphicImplementation::camera2d.update(Window::GetGLFWwindow());
         graphicSystem->Update(0.f); //Testing only
         graphicSystem->Render();
 
-        physicSystem->Update(0.f); //Testing only
         //---------------------------------------------------
 
         LayerStack::Update();
@@ -168,12 +186,12 @@ void Application::OnEvent(Event& event) {
         dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
 
         break;
-    //case EventType::KEY_PRESSED:
-    //    LOG_INFO(event);
-    //    break;
-    //case EventType::KEY_RELEASED:
-    //    LOG_ERROR(event);
-    //    break;
+    case EventType::KEY_PRESSED:
+        
+        break;
+    case EventType::KEY_RELEASED:
+        
+        break;
     //case EventType::MOUSE_BUTTON_PRESSED:
     //    LOG_WARNING(event);
     //    break;

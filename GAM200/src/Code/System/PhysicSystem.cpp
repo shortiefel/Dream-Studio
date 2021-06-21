@@ -6,6 +6,10 @@
 \brief
 This file has the function definition for class PhysicSystem
 
+collider only store offset from transform position
+in update transform position and scale is added to collider position and scale as
+collision checks only takes in collider
+
 */
 /* End Header **********************************************************************************/
 
@@ -46,14 +50,18 @@ void PhysicSystem::Update(float dt) {
 			//Apply gravity if rigidbody exist and rigidbody hasGravity
 			
 			if (!PhysicImplementation::isColliding(collider1, collider2)) {
-
+				
 			}
 			//
-			//else if (obj1.isTrigger || obj2.isTrigger) {
-			//	
-			//}
+			else if (collider1.isTrigger || collider2.isTrigger) {
+				LOG_INFO("Trigger");
+			}
 
 			//else resolve collision by pushing object out
+			else {
+				LOG_INFO("Collision resolute");
+				PhysicImplementation::CollisionResolution(transform1, collider1, transform2, collider2);
+			}
 
 
 		}

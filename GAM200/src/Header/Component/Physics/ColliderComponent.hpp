@@ -18,7 +18,7 @@
 
 enum class ColliderType {
 	CIRCLE = 0,
-	BOX
+	SQUARE
 };
 
 //pos is the world scale position of the object at the top left corner of the object

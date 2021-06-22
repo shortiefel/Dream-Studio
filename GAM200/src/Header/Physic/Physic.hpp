@@ -15,20 +15,21 @@ This file has the functions declaration to be called by the physic system
 
 #include "Component/Physics/ColliderComponent.hpp"
 #include "Component/Graphics/TransformComponent.hpp"
+#include "Math/MathLib.hpp"
 
 namespace PhysicImplementation {
 	//Collision physic----------------------------------------
-	bool isColliding(const Collider& obj1, const Collider& obj2);
-	bool isCollidingBOXtoBOX(const Collider& obj1, const Collider& obj2);
-	bool isCollidingBOXtoCIRCLE(const Collider& obj1, const Collider& obj2);
-	bool isCollidingCIRCLEtoBOX(const Collider& obj1, const Collider& obj2);
-	bool isCollidingCIRCLEtoCIRCLE(const Collider& obj1, const Collider& obj2);
+	bool isColliding(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2);
+	bool isCollidingSQUAREtoSQUARE(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2);
+	bool isCollidingSQUAREtoCIRCLE(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2);
+	bool isCollidingCIRCLEtoSQUARE(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2);
+	bool isCollidingCIRCLEtoCIRCLE(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2);
 
-	void CollisionResolution(Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
-	void CollisionResolutionBOXtoBOX(Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
-	void CollisionResolutionBOXtoCIRCLE(Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
-	void CollisionResolutionCIRCLEtoBOX(Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
-	void CollisionResolutionCIRCLEtoCIRCLE(Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
+	void CollisionResolution(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
+	void CollisionResolutionSQUAREtoSQUARE(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
+	void CollisionResolutionSQUAREtoCIRCLE(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
+	void CollisionResolutionCIRCLEtoSQUARE(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
+	void CollisionResolutionCIRCLEtoCIRCLE(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
 	//--------------------------------------------------------
 
 	//void applyGravity(); //Vec2 position

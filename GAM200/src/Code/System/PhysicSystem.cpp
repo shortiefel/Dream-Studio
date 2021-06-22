@@ -48,8 +48,10 @@ void PhysicSystem::Update(float dt) {
 			collider2.scale += transform2.scale;
 
 			//Apply gravity if rigidbody exist and rigidbody hasGravity
-			
-			if (!PhysicImplementation::isColliding(collider1, collider2)) {
+
+			//Direction from collider2 towards collider1
+			MathD::Vec2 dir = MathD::Vec2{};
+			if (!PhysicImplementation::isColliding(dir, collider1, collider2)) {
 				
 			}
 			//
@@ -59,8 +61,7 @@ void PhysicSystem::Update(float dt) {
 
 			//else resolve collision by pushing object out
 			else {
-				LOG_INFO("Collision resolute");
-				PhysicImplementation::CollisionResolution(transform1, collider1, transform2, collider2);
+				PhysicImplementation::CollisionResolution(dir, transform1, collider1, transform2, collider2);
 			}
 
 

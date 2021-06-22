@@ -92,7 +92,7 @@ void Application::Create() {
     ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent,
-        Transform{ MathD::Vec2 {-150.f, 0.f}, MathD::Vec2 {60.f, 100.f}, 0.f });
+        Transform{ MathD::Vec2 {-150.f, 0.f}, MathD::Vec2 {100.f, 60.f}, 0.f });
     
     gCoordinator.AddComponent(
         ent,
@@ -100,7 +100,7 @@ void Application::Create() {
 
     gCoordinator.AddComponent(
         ent,
-        Collider{ ColliderType::BOX, true });
+        Collider{ ColliderType::SQUARE, true });
 
     //----------------------------------------
 
@@ -115,7 +115,7 @@ void Application::Create() {
 
     gCoordinator.AddComponent(
         ent2,
-        Collider{ ColliderType::BOX });
+        Collider{ ColliderType::SQUARE, false });
     //-------------------------------------------------------------------------------------------------------------------
 }
 

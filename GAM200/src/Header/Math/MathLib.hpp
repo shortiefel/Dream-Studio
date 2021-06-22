@@ -34,12 +34,12 @@ namespace MathD {
 
     template <typename T>
     inline T getLength(T n1, T n2) {
-        return sqrt(pow(n1 / 2, 2) + pow(n2 / 2, 2));
+        return sqrt(pow(n1, 2) + pow(n2, 2));
     }
 
     template <typename T>
     inline T getSqLength(T n1, T n2) {
-        return pow(n1 / 2, 2) + pow(n2 / 2, 2);
+        return pow(n1, 2) + pow(n2, 2);
     }
 }
 

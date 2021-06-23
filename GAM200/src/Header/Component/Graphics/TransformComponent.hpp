@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TransformComponent.hpp
-@author  
+@author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    19/06/2021
 \brief
-
+This file contain the transform struct to be used by the ECS and various system
 
 */
 /* End Header **********************************************************************************/

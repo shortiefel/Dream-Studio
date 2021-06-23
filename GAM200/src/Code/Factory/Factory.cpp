@@ -1,3 +1,15 @@
+/* Start Header**********************************************************************************/
+/*
+@file    Factory.cpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    23/06/2021
+\brief
+This file allow user to create shapes easily with function: CreateSquare and CreateCircle
+It also setup all the components and system when a factory is created
+
+*/
+/* End Header **********************************************************************************/
+
 #include "Factory/Factory.hpp"
 
 #include "Coordinator/Coordinator.hpp"
@@ -12,6 +24,12 @@
 #include "System/PhysicSystem.hpp"
 //#include "Graphic/Camera.hpp"
 
+#define CREATE_SHAPE(str, type, mv) \
+gCoordinator.AddComponent(ent, \
+Renderer2D{ GraphicImplementation::models.find(str),  GraphicImplementation::shdrpgms.find("Default") }); \
+gCoordinator.AddComponent(ent, \
+Collider{ type, mv });
+
 //Entity ent;
 //Entity ent2;
 //Entity camera;
@@ -19,7 +37,7 @@
 //std::shared_ptr<PhysicSystem> physicSystem;
 Coordinator gCoordinator;
 
-void Factory::SetUp() {
+void Factory::Create() {
     gCoordinator.Init();
     gCoordinator.RegisterComponent<Collider>();
     gCoordinator.RegisterComponent<Transform>();
@@ -39,6 +57,22 @@ void Factory::SetUp() {
     gCoordinator.setSystemSignature<PhysicSystem>(signature);
 }
 
-void CreateSquare(MathD::Vec2 pos = MathD::Vec2{ 0.f, 0.f }, MathD::Vec2 scale = MathD::Vec2{ 20.f, 20.f }, bool isMoveable = false) {
 
+void Factory::InstantiateSquare(MathD::Vec2 pos, MathD::Vec2 scale, bool isMoveable) {
+    Entity ent = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        ent,
+        Transform{ pos, scale, 0.f });
+
+    CREATE_SHAPE("Square", ColliderType::SQUARE, isMoveable)
+}
+
+
+void Factory::InstantiateCircle(MathD::Vec2 pos, MathD::Vec2 scale, bool isMoveable) {
+    Entity ent = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        ent,
+        Transform{ pos, scale, 0.f });
+
+    CREATE_SHAPE("Circle", ColliderType::CIRCLE, isMoveable)
 }

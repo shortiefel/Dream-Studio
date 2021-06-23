@@ -1,3 +1,14 @@
+/* Start Header**********************************************************************************/
+/*
+@file    RendererComponent.hpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    19/06/2021
+\brief
+This file contain the renderer2D struct to be used by the ECS and various system
+
+*/
+/* End Header **********************************************************************************/
+
 #ifndef RENDERER_COMPONENT_HPP
 #define RENDERER_COMPONENT_HPP
 

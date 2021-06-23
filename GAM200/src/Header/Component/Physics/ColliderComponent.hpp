@@ -4,7 +4,7 @@
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    19/06/2021
 \brief
-
+This file contain the collider struct to be used by the ECS and various system
 
 */
 /* End Header **********************************************************************************/

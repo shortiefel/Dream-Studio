@@ -58,6 +58,9 @@
     <ClCompile Include="src\Code\Factory\Factory.cpp">
       <Filter>Source\Factory</Filter>
     </ClCompile>
+    <ClCompile Include="src\Code\GameScene.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Resources\Imgui\imconfig.h">
@@ -203,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="src\Header\Factory\Factory.hpp">
       <Filter>Include\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\GameScene.hpp">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

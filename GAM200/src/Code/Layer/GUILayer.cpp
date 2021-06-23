@@ -73,6 +73,7 @@ void GUILayer::Update() {
     //ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
     //ImGui::DockSpaceOverViewport();
 
+    //Call your function to draw UI stuff here
     ImGui::Begin("Hello, world!");
     ImGui::Text("Hello from another window!");
     ImGui::End();

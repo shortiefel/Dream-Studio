@@ -61,27 +61,5 @@ struct Collider {
 	//void SetActive(bool t) { isActive = t; }
 };
 
-//struct BoxCollider : Collider {
-//	float w, h;
-//
-//	BoxCollider (float xPos, float yPos, float width, float height, bool istrigger = false) : 
-//		 w{ width }, h{ height }, Collider { xPos, yPos, ColliderType::BOX, istrigger } {}
-//
-//	BoxCollider(MathD::Vec2 position, float width, float height, bool istrigger = false) :
-//
-//		BoxCollider { position.x, position.y, width, height , istrigger } {}
-//};
-//
-//struct CircleCollider : Collider {
-//	float r;
-//
-//	CircleCollider(float xPos, float yPos, float radius, bool istrigger = false) :
-//		r { radius }, Collider{ xPos, yPos, ColliderType::CIRCLE, istrigger } {}
-//
-//	CircleCollider(MathD::Vec2 position, float radius, bool istrigger = false) :
-//
-//		CircleCollider{ position.x, position.y, radius, istrigger } {}
-//};
-
 
 #endif

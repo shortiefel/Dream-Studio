@@ -47,7 +47,6 @@ class SystemManager
 			//ptr to system for return value
 			auto system = std::make_shared<T>();
 			mSystems.insert({ TypeName, system });
-			system->Create();
 			return system; 
 		}
 

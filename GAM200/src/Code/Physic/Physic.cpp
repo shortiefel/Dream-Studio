@@ -28,29 +28,6 @@ float length = float{}; //Reused for circle circle
 bool cornerBool = bool{};
 
 namespace PhysicImplementation {
-   /*struct BoxCollider : Collider {
-        float w, h;
-
-       BoxCollider (float xPos, float yPos, float width, float height, bool istrigger = false) :
-             w{ width }, h{ height }, Collider { xPos, yPos, ColliderType::BOX, istrigger } {}
-
-        BoxCollider(MathD::Vec2 position, float width, float height, bool istrigger = false) :
-
-           BoxCollider { position.x, position.y, width, height , istrigger } {}
-   };
-
-   struct CircleCollider : Collider {
-       float r;
-
-      CircleCollider(float xPos, float yPos, float radius, bool istrigger = false) :
-           r { radius }, Collider{ xPos, yPos, ColliderType::CIRCLE, istrigger } {}
-
-        CircleCollider(MathD::Vec2 position, float radius, bool istrigger = false) :
-
-            CircleCollider{ position.x, position.y, radius, istrigger } {}
-    };
-   */
-    
     //Collision checks-------------------------------------------------------------------------------
     bool isColliding(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2) {
         if (obj1.cType == ColliderType::CIRCLE) {
@@ -245,5 +222,4 @@ namespace PhysicImplementation {
             trans2.pos += length * -dir; //for col2
         }
     }
-   
 }

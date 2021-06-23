@@ -19,15 +19,16 @@ includes declaration to static function for a singleton GraphicsSystem
 class GraphicSystem : public System {
 public:
 	
-	virtual bool Create() override;
+	static bool Create(const std::shared_ptr<GraphicSystem>& graphicSystem);
 	virtual void Destroy() override;
 	~GraphicSystem();
 	//void Destroy();
 
-	void Update(float dt);
-	void Render();
+	static void Update(float dt);
+	static void Render();
 private:
 	//static GraphicSystem* gs;
+	static std::shared_ptr<GraphicSystem> GS;
 };
 
 #endif

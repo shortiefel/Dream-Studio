@@ -19,28 +19,34 @@ Contains the main application loop and the game loop
 #include "Layer/LayerStack.hpp"
 #include "Layer/GUILayer.hpp"
 
-//-----testing only----------------------------------
+#include "Factory/Factory.hpp"
+////-----testing only----------------------------------
 #include "Coordinator/Coordinator.hpp" // testing only
 #include "Component/Graphics/TransformComponent.hpp" // testing only
 #include "Component/Physics/ColliderComponent.hpp"
 #include "Component/Graphics/RendererComponent.hpp"
-#include "System/GraphicSystem.hpp"
-#include "System/PhysicSystem.hpp"
-#include "Graphic/Camera.hpp"
 
-Entity ent;
-Entity ent2;
+//
+//Entity ent;
+//Entity ent2;
+//Entity ent3;
+//Entity ent4, ent5;
 Entity camera;
-std::shared_ptr<GraphicSystem> graphicSystem;
-std::shared_ptr<PhysicSystem> physicSystem;
-Coordinator gCoordinator; //-----------------------
-
-#include "Math/MathLib.hpp"
-#include <iostream>
-//---------------------------------------------
+//std::shared_ptr<GraphicSystem> graphicSystem;
+//std::shared_ptr<PhysicSystem> physicSystem;
+extern Coordinator gCoordinator; //-----------------------
+//
+//#include "Math/MathLib.hpp"
+//#include <iostream>
+////---------------------------------------------
 bool up = false, down = false, left = false, right = false;
 
 //Static----------------------------------------------
+
+#include "Graphic/Camera.hpp"
+
+#include "System/GraphicSystem.hpp"
+#include "System/PhysicSystem.hpp"
 
 Application* Application::s_app_instance = 0;
 //GLFWwindow* Application::s_glfw_window = 0;
@@ -63,24 +69,7 @@ void Application::Create() {
 
     LayerStack::AddOverlayLayer(GUILayer::Get());
 
-    //-------testing only------------------------------------------------------------------------------------------------------
-    gCoordinator.Init();
-    gCoordinator.RegisterComponent<Collider>();
-    gCoordinator.RegisterComponent<Transform>();
-    gCoordinator.RegisterComponent<Renderer2D>();
-
-    graphicSystem = gCoordinator.RegSystem<GraphicSystem>();
-    physicSystem = gCoordinator.RegSystem<PhysicSystem>();
-    
-    Signature signature;
-    signature.set(gCoordinator.GetComType<Transform>());
-    signature.set(gCoordinator.GetComType<Renderer2D>());
-    gCoordinator.setSystemSignature<GraphicSystem>(signature);
-
-    Signature signature2;
-    signature2.set(gCoordinator.GetComType<Transform>());
-    signature2.set(gCoordinator.GetComType<Collider>());
-    gCoordinator.setSystemSignature<PhysicSystem>(signature2);
+    Factory::SetUp();
 
     camera = gCoordinator.createEntity();
     gCoordinator.AddComponent(
@@ -89,34 +78,73 @@ void Application::Create() {
 
     GraphicImplementation::camera2d.init(Window::GetGLFWwindow(), &gCoordinator.GetCom<Transform>(camera));
 
-    ent = gCoordinator.createEntity();
-    gCoordinator.AddComponent(
-        ent,
-        Transform{ MathD::Vec2 {-150.f, 0.f}, MathD::Vec2 {100.f, 60.f}, 0.f });
-    
-    gCoordinator.AddComponent(
-        ent,
-        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+    //ent = gCoordinator.createEntity();
+    //gCoordinator.AddComponent(
+    //    ent,
+    //    Transform{ MathD::Vec2 {-150.f, 0.f}, MathD::Vec2 {60.f, 60.f}, 0.f });
+    //
+    //gCoordinator.AddComponent(
+    //    ent,
+    //    Renderer2D{ GraphicImplementation::models.find("Circle"),  GraphicImplementation::shdrpgms.find("Default") });
 
-    gCoordinator.AddComponent(
-        ent,
-        Collider{ ColliderType::SQUARE, true });
+    //gCoordinator.AddComponent(
+    //    ent,
+    //    Collider{ ColliderType::CIRCLE, true });
 
-    //----------------------------------------
+    //////----------------------------------------
 
-    ent2 = gCoordinator.createEntity();
-    gCoordinator.AddComponent(
-        ent2,
-        Transform{ MathD::Vec2 {100.f, 0.f}, MathD::Vec2 {100.f, 100.f}, 0.f });
+    //ent2 = gCoordinator.createEntity();
+    //gCoordinator.AddComponent(
+    //    ent2,
+    //    Transform{ MathD::Vec2 {100.f, 0.f}, MathD::Vec2 {50.f, 50.f}, 0.f });
 
-    gCoordinator.AddComponent(
-        ent2,
-        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+    //gCoordinator.AddComponent(
+    //    ent2,
+    //    Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
 
-    gCoordinator.AddComponent(
-        ent2,
-        Collider{ ColliderType::SQUARE, false });
+    //gCoordinator.AddComponent(
+    //    ent2,
+    //    Collider{ ColliderType::SQUARE, true });
     //-------------------------------------------------------------------------------------------------------------------
+
+    /*ent3 = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        ent3,
+        Transform{ MathD::Vec2 {100.f, 0.f}, MathD::Vec2 {50.f, 50.f}, 0.f });
+
+    gCoordinator.AddComponent(
+        ent3,
+        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+
+    gCoordinator.AddComponent(
+        ent3,
+        Collider{ ColliderType::SQUARE, true });*/
+
+    //ent4 = gCoordinator.createEntity();
+
+    //gCoordinator.AddComponent(
+    //    ent4,
+    //    Transform{ MathD::Vec2 {-100.f, 200.f}, MathD::Vec2 {20.f, 20.f}, 0.f });
+    //gCoordinator.AddComponent(
+    //    ent4,
+    //    Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+    //gCoordinator.AddComponent(
+    //    ent4,
+    //    Collider{ ColliderType::SQUARE, false });
+
+    //ent5 = gCoordinator.createEntity();
+
+    //gCoordinator.AddComponent(
+    //    ent5,
+    //    Transform{ MathD::Vec2 {300.f, 100.f}, MathD::Vec2 {50.f, 50.f}, 0.f });
+    //gCoordinator.AddComponent(
+    //    ent5,
+    //    Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+    //gCoordinator.AddComponent(
+    //    ent5,
+    //    Collider{ ColliderType::SQUARE, false });
+
+    
 }
 
 //Main application loop is done here
@@ -126,8 +154,8 @@ void Application::Update() {
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(1, 0, 1, 1);
         
-        //-------Testing only-----------------------------------------
-        if (up) {
+        ////-------Testing only-----------------------------------------
+        /*if (up) {
             auto& transform1 = gCoordinator.GetCom<Transform>(ent);
             transform1.pos.y += 2.f;
         }
@@ -142,15 +170,14 @@ void Application::Update() {
         if (right) {
             auto& transform1 = gCoordinator.GetCom<Transform>(ent);
             transform1.pos.x += 2.f;
-        }
-        physicSystem->Update(0.f); //Testing only
+        }*/
+        PhysicSystem::Update(0.f); //Testing only
 
         GraphicImplementation::camera2d.update(Window::GetGLFWwindow());
-        graphicSystem->Update(0.f); //Testing only
-        graphicSystem->Render();
+        GraphicSystem::Update(0.f); //Testing only
+        GraphicSystem::Render();
 
         //---------------------------------------------------
-
         LayerStack::Update();
         LayerStack::Draw();
 

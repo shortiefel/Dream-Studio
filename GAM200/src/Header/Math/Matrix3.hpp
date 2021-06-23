@@ -21,12 +21,12 @@ namespace MathImplementation is to prevent accidental usage
 #ifndef MATRIX_3_HPP
 #define MATRIX_3_HPP
 
-#define EPSILON		0.0001f
-#define PI 3.14159265358f
-
 //#include "Debug Tools/Logging.hpp"
 #include <iostream> // for operator<< 
 #include "Math/Vector.hpp"
+
+#define EPSILON		0.0001f
+#define PI 3.14159265358f
 
 namespace MathD {
 	namespace MathImplementation {

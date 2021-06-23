@@ -13,15 +13,16 @@ includes declaration to static function for a singleton PhysicSystem
 
 class PhysicSystem : public System {
 public:
-	virtual bool Create() override;
+	static bool Create(const std::shared_ptr<PhysicSystem>& physicSystem);
 	virtual void Destroy() override;
 	~PhysicSystem();
 
 	//static PhysicSystem* Get();
-	void Update(float dt);
+	static void Update(float dt);
+	
 private:
-	float gravity = 10.f;
-	//static PhysicSystem* s_instance;
+	//float gravity = 10.f;
+	static std::shared_ptr<PhysicSystem> PS;
 };
 
 

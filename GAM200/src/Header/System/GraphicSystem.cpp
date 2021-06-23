@@ -24,19 +24,12 @@ This file has the function definition for class GraphicsSystem
 #include "Math/Matrix.hpp"
 
 extern Coordinator gCoordinator;
-
-//GraphicSystem* GraphicSystem::gs = 0;
-//
-
-//
-//void GraphicSystem::Destroy() {
-//	delete gs;
-//}
+std::shared_ptr<GraphicSystem> GraphicSystem::GS;
 
 void GraphicSystem::Update(float dt) {
 	//For all entities in PhysicSystem
 	
-	for (auto const& entity : mEntities) {
+	for (auto const& entity : GS->mEntities) {
 		auto& transform = gCoordinator.GetCom<Transform>(entity);
 		auto& renderer = gCoordinator.GetCom<Renderer2D>(entity);
 
@@ -58,7 +51,7 @@ void GraphicSystem::Update(float dt) {
 
 void GraphicSystem::Render() {
 	//For all entities in PhysicSystem
-	for (auto const& entity : mEntities) {
+	for (auto const& entity : GS->mEntities) {
 		auto& transform = gCoordinator.GetCom<Transform>(entity);
 		auto& renderer = gCoordinator.GetCom<Renderer2D>(entity);
 
@@ -90,7 +83,9 @@ void GraphicSystem::Render() {
 	}
 }
 
-bool GraphicSystem::Create() {
+bool GraphicSystem::Create(const std::shared_ptr<GraphicSystem>& graphicSystem) {
+	GS = graphicSystem;
+
 	//Set up vao for box
 	GraphicImplementation::setup_vao();
 	GraphicImplementation::setup_shdr();

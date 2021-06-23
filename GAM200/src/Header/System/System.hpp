@@ -34,7 +34,7 @@ class System
 	public:
 		std::set<Entity> mEntities;
 
-		virtual bool Create() = 0;
+		//virtual bool Create() = 0;
 		virtual void Destroy() = 0;
 };
 

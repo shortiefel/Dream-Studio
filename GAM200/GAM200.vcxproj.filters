@@ -25,9 +25,6 @@
     <ClCompile Include="src\Code\Application.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Header\Main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="src\Code\Window.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -54,6 +51,12 @@
     </ClCompile>
     <ClCompile Include="src\Code\Graphic\Camera.cpp">
       <Filter>Source\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Factory\Factory.cpp">
+      <Filter>Source\Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +201,9 @@
     <ClInclude Include="src\Header\Graphic\Camera.hpp">
       <Filter>Include\Graphic</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\Factory\Factory.hpp">
+      <Filter>Include\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -256,6 +262,12 @@
     </Filter>
     <Filter Include="Source\Physic">
       <UniqueIdentifier>{dc1ea627-26d8-4fc4-a174-0c97291fd9aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Factory">
+      <UniqueIdentifier>{34e50e1e-db35-4ae4-ad5b-58491d05e72d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Factory">
+      <UniqueIdentifier>{4bf1861e-b9b7-4b8f-a541-18170daf07a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

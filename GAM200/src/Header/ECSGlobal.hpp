@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*!
-\file Application.hpp
+\file Global.hpp
 \team name
 \software name
 \authors
@@ -15,41 +15,26 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \date 26/04/2021
 \brief
 
+Entity Manager is in charge of assigning entity IDs and keeping records of which IDs are in use
+and not.
 
-This file contains the starting point of the application. This is provided by Elie in CSD1130.
+
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
-#ifndef APPLICATION_H
-#define APPLICATION_H
 
-//Declaration of class and struct that are used in class Application function declaration
-//header file need not know its data member yet since it is not used
-class Event;
-class WindowCloseEvent;
-struct GLFWwindow;
+#pragma once
 
-class Application {
-public:
-	static void Create();
-	static void Update();
-	static void Destroy();
+//#include <iostream>
+#include <bitset>
+#include <cstdint>
 
-	~Application();
-
-	void OnEvent(Event& event);
-	void SetEventCallBack();
-
-	bool OnWindowClose(WindowCloseEvent& e);
-private:
-	static Application* s_app_instance;
-	//static GLFWwindow* s_glfw_window;
-	static bool app_run_bool;
-
-	Application() = default;
-};
-
-#endif
+//ECS Components 
+using Entity = std::uint32_t;
+const Entity MAX_ENTITIES = 10000;
+using ComponentType = std::uint8_t;
+const ComponentType MAX_COMPONENTS = 48;
+using Signature = std::bitset<MAX_COMPONENTS>;

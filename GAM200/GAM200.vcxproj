@@ -179,6 +179,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Application.hpp" />
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
     <ClInclude Include="src\Header\Component\ComponentManager.hpp" />
+    <ClInclude Include="src\Header\Component\Graphics\CameraComponent.hpp" />
     <ClInclude Include="src\Header\Component\Graphics\RendererComponent.hpp" />
     <ClInclude Include="src\Header\Component\Graphics\TransformComponent.hpp" />
     <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp" />
@@ -213,6 +214,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Physic\Physic.hpp" />
     <ClInclude Include="src\Header\Resource.hpp" />
     <ClInclude Include="src\Header\Script\Script.hpp" />
+    <ClInclude Include="src\Header\System\CameraSystem.hpp" />
     <ClInclude Include="src\Header\System\GraphicSystem.hpp" />
     <ClInclude Include="src\Header\System\PhysicSystem.hpp" />
     <ClInclude Include="src\Header\System\ScriptSystem.hpp" />
@@ -239,6 +241,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClCompile Include="src\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Code\Main.cpp" />
     <ClCompile Include="src\Code\Physic\Physic.cpp" />
+    <ClCompile Include="src\Code\System\CameraSystem.cpp" />
     <ClCompile Include="src\Code\System\PhysicSystem.cpp" />
     <ClCompile Include="src\Code\System\ScriptSystem.cpp" />
     <ClCompile Include="src\Code\Window.cpp" />

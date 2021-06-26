@@ -18,8 +18,6 @@ Technology is prohibited.
 #define SCRIPT_COMPONENT_HPP
 
 #include "Script/Script.hpp"
-//#include <memory>
-//#include "pch.hpp"
 
 using Custom_Script = std::shared_ptr<Script>;
 

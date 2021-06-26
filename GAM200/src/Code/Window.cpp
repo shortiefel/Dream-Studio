@@ -7,7 +7,6 @@ Function definitions for creating and destroying a window using GLFW API
 
 #include "pch.hpp"
 
-
 #include "Event/KeyEvent.hpp"
 #include "Event/MouseEvent.hpp"
 #include "Event/WindowEvent.hpp"
@@ -17,8 +16,6 @@ GLFWwindow* Window::glfw_window = 0;
 
 //Changed on Create
 Window::WinData Window::w_data = {"", 0, 0};
-
-extern bool up, down, left, right; // to be removed
 
 void Window::Update() {
 

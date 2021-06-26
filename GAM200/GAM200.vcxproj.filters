@@ -64,6 +64,9 @@
     <ClCompile Include="src\Code\System\ScriptSystem.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
+    <ClCompile Include="src\Code\System\CameraSystem.cpp">
+      <Filter>Source\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Resources\Imgui\imconfig.h">
@@ -224,6 +227,12 @@
     </ClInclude>
     <ClInclude Include="src\Code\PlayerController.hpp">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Graphics\CameraComponent.hpp">
+      <Filter>Include\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\System\CameraSystem.hpp">
+      <Filter>Include\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

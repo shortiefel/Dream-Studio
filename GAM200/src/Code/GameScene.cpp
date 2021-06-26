@@ -26,6 +26,8 @@ Technology is prohibited.
 #include "Factory/Factory.hpp"
 
 #include "Coordinator/Coordinator.hpp"
+
+#include "Component/Graphics/CameraComponent.hpp"
 #include "Component/Graphics/TransformComponent.hpp"
 #include "Component/Physics/ColliderComponent.hpp"
 #include "Component/Graphics/RendererComponent.hpp"
@@ -33,6 +35,7 @@ Technology is prohibited.
 
 #include "Graphic/Camera.hpp"
 
+#include "System/CameraSystem.hpp"
 #include "System/GraphicSystem.hpp"
 #include "System/PhysicSystem.hpp"
 #include "System/ScriptSystem.hpp"
@@ -40,11 +43,8 @@ Technology is prohibited.
 #include "PlayerController.hpp" //Temporary for Native Scripting test
 
 extern Coordinator gCoordinator;
-Entity camera;
 
-//Entity player;
-
-bool up = false, down = false, left = false, right = false;
+Entity temcam, temcam2, temcam3; int num = 1;//Temporary
 
 void GameScene::Create() {
     //Serialization
@@ -52,7 +52,10 @@ void GameScene::Create() {
 
     //Reset all system
   
-    //--------------------------------------------------
+    //Test code--------------------------------------------
+    //W A S D, I J K L and arrow keys to move
+    //V to switch camera
+
     Entity ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent,
@@ -77,14 +80,43 @@ void GameScene::Create() {
         Custom_Script{ std::make_shared<AnotherController>() });
 
 
-    //--------------------------------------------------
 
-    camera = gCoordinator.createEntity();
+
+
+
+    temcam = gCoordinator.createEntity();
     gCoordinator.AddComponent(
-        camera,
-        Transform{ MathD::Vec2 {0.f, 0.f}, MathD::Vec2 {0.f, 0.f}, 0.f });
+        temcam,
+        Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{0.f,0.f}, 0.f });
 
-    GraphicImplementation::camera2d.init(Window::GetGLFWwindow(), &gCoordinator.GetCom<Transform>(camera));
+    gCoordinator.AddComponent(
+        temcam,
+        Camera2D{ true });
+    gCoordinator.AddComponent(temcam,
+        Custom_Script{ std::make_shared<CameraController>() });
+
+    temcam2 = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        temcam2,
+        Transform{ MathD::Vec2{240.f,100.f}, MathD::Vec2{0.f,0.f}, 0.f });
+    gCoordinator.AddComponent(
+        temcam2,
+        Camera2D{ false });
+    gCoordinator.AddComponent(temcam2,
+        Custom_Script{ std::make_shared<CameraController>() });
+
+
+    temcam3 = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        temcam3,
+        Transform{ MathD::Vec2{-40.f,-240.f}, MathD::Vec2{0.f,0.f}, 0.f });
+    gCoordinator.AddComponent(
+        temcam3,
+        Camera2D{ false });
+    gCoordinator.AddComponent(temcam3,
+        Custom_Script{ std::make_shared<CameraController>() });
+
+    //--------------------------------------------------
 
     /*Factory::InstantiateCircle();
     Factory::InstantiateSquare();*/
@@ -105,10 +137,41 @@ void GameScene::Stop() {
 }
 
 void GameScene::Update(float dt) {
+    //testing code------------------------------
+    static bool state = false;
+    if (!state && glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_V) == GLFW_PRESS) {
+        num = num < 3 ? num + 1 : 1;
+        state = true;
+    }
+
+    else if (state && glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_V) == GLFW_RELEASE) {
+        state = false;
+    }
+    auto& cam = gCoordinator.GetCom<Camera2D>(temcam);
+    cam.isActive = false;
+    auto& cam1 = gCoordinator.GetCom<Camera2D>(temcam2);
+    cam1.isActive = false;
+    auto& cam2 = gCoordinator.GetCom<Camera2D>(temcam3);
+    cam2.isActive = false;
+
+    if (num == 1) {
+        auto& cam = gCoordinator.GetCom<Camera2D>(temcam);
+        cam.isActive = true;
+    }
+    else if (num == 2) {
+        auto& cam = gCoordinator.GetCom<Camera2D>(temcam2);
+        cam.isActive = true;
+    }
+    else if (num == 3) {
+        auto& cam = gCoordinator.GetCom<Camera2D>(temcam3);
+        cam.isActive = true;
+    }
+    
+    //------------------------------------
     ScriptSystem::Update(dt);
     PhysicSystem::Update(dt);
 
-    GraphicImplementation::camera2d.update(Window::GetGLFWwindow());
+    CameraSystem::Update(dt);
     GraphicSystem::Update(dt);
     GraphicSystem::Render();
 

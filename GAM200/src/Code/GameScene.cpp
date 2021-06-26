@@ -7,6 +7,11 @@
 An application of the dream engine can have multiple game scene to be used
 When created and deleted, it should rebuild the systems and get the correct information from textfiles
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
@@ -21,86 +26,153 @@ When created and deleted, it should rebuild the systems and get the correct info
 #include "Factory/Factory.hpp"
 
 #include "Coordinator/Coordinator.hpp"
+
+#include "Component/Graphics/CameraComponent.hpp"
 #include "Component/Graphics/TransformComponent.hpp"
 #include "Component/Physics/ColliderComponent.hpp"
 #include "Component/Graphics/RendererComponent.hpp"
+#include "Component/Script/ScriptComponent.hpp"
 
 #include "Graphic/Camera.hpp"
 
+#include "System/CameraSystem.hpp"
 #include "System/GraphicSystem.hpp"
 #include "System/PhysicSystem.hpp"
+#include "System/ScriptSystem.hpp"
+
+#include "PlayerController.hpp" //Temporary for Native Scripting test
 
 extern Coordinator gCoordinator;
-Entity camera;
 
-//Entity player;
-
-bool up = false, down = false, left = false, right = false;
+Entity temcam, temcam2, temcam3; int num = 1;//Temporary
 
 void GameScene::Create() {
     //Serialization
     //Read from text file all information
 
     //Reset all system
+  
+    //Test code--------------------------------------------
+    //W A S D, I J K L and arrow keys to move
+    //V to switch camera
 
-    if (!LayerStack::Create()) LOG_ERROR("LayerStack creation has failed");
-
-    const char* glsl_version = "#version 450";
-    if (!GUILayer::Create(Window::GetGLFWwindow(), glsl_version)) LOG_ERROR("GUILayer creation has failed");
-
-    LayerStack::AddOverlayLayer(GUILayer::Get());
-
-    Factory::Create();
-
-    camera = gCoordinator.createEntity();
+    Entity ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
-        camera,
-        Transform{ MathD::Vec2 {0.f, 0.f}, MathD::Vec2 {0.f, 0.f}, 0.f });
+        ent,
+        Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{20.f,20.f}, 0.f });
+    gCoordinator.AddComponent(ent,
+        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+    gCoordinator.AddComponent(ent,
+            Collider{ ColliderType::SQUARE, true });
+    gCoordinator.AddComponent(ent,
+        Custom_Script{ std::make_shared<PlayerController>() });
 
-    GraphicImplementation::camera2d.init(Window::GetGLFWwindow(), &gCoordinator.GetCom<Transform>(camera));
 
-    /*player = gCoordinator.createEntity();
+    Entity ent1 = gCoordinator.createEntity();
     gCoordinator.AddComponent(
-        player,
-        Transform{ MathD::Vec2 {-150.f, 0.f}, MathD::Vec2 {60.f, 60.f}, 0.f });
+        ent1,
+        Transform{ MathD::Vec2{-100.f,0.f}, MathD::Vec2{20.f,40.f}, 0.f });
+    gCoordinator.AddComponent(ent1,
+        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+    gCoordinator.AddComponent(ent1,
+        Collider{ ColliderType::SQUARE, true });
+    gCoordinator.AddComponent(ent1,
+        Custom_Script{ std::make_shared<AnotherController>() });
+
+
+
+
+
+
+    temcam = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        temcam,
+        Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{0.f,0.f}, 0.f });
 
     gCoordinator.AddComponent(
-        player,
-        Renderer2D{ GraphicImplementation::models.find("Circle"),  GraphicImplementation::shdrpgms.find("Default") });
+        temcam,
+        Camera2D{ true });
+    gCoordinator.AddComponent(temcam,
+        Custom_Script{ std::make_shared<CameraController>() });
 
+    temcam2 = gCoordinator.createEntity();
     gCoordinator.AddComponent(
-        player,
-        Collider{ ColliderType::CIRCLE, true });
+        temcam2,
+        Transform{ MathD::Vec2{240.f,100.f}, MathD::Vec2{0.f,0.f}, 0.f });
+    gCoordinator.AddComponent(
+        temcam2,
+        Camera2D{ false });
+    gCoordinator.AddComponent(temcam2,
+        Custom_Script{ std::make_shared<CameraController>() });
 
-    Factory::InstantiateCircle();
+
+    temcam3 = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        temcam3,
+        Transform{ MathD::Vec2{-40.f,-240.f}, MathD::Vec2{0.f,0.f}, 0.f });
+    gCoordinator.AddComponent(
+        temcam3,
+        Camera2D{ false });
+    gCoordinator.AddComponent(temcam3,
+        Custom_Script{ std::make_shared<CameraController>() });
+
+    //--------------------------------------------------
+
+    /*Factory::InstantiateCircle();
     Factory::InstantiateSquare();*/
 }
 
+//When user click play to run their game
+void GameScene::Play() {
+    //Compile the script
+    //Save position of entity temporary (to be changed back after stopping)
+
+    ScriptSystem::Play();
+}
+
+//When user click stop to run their game
+void GameScene::Stop() {
+    //Set position of entity back to before play
+    ScriptSystem::Stop();
+}
+
 void GameScene::Update(float dt) {
-
-    ////-------Testing only-----------------------------------------
-    /*if (up) {
-        auto& transform1 = gCoordinator.GetCom<Transform>(player);
-        transform1.pos.y += 2.f;
+    //testing code------------------------------
+    static bool state = false;
+    if (!state && glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_V) == GLFW_PRESS) {
+        num = num < 3 ? num + 1 : 1;
+        state = true;
     }
-    if (down) {
-        auto& transform1 = gCoordinator.GetCom<Transform>(player);
-        transform1.pos.y -= 2.f;
-    }
-    if (left) {
-        auto& transform1 = gCoordinator.GetCom<Transform>(player);
-        transform1.pos.x -= 2.f;
-    }
-    if (right) {
-        auto& transform1 = gCoordinator.GetCom<Transform>(player);
-        transform1.pos.x += 2.f;
-    }*/
-    //-------Testing only-----------------------------------------
 
-    PhysicSystem::Update(dt); //Testing only
+    else if (state && glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_V) == GLFW_RELEASE) {
+        state = false;
+    }
+    auto& cam = gCoordinator.GetCom<Camera2D>(temcam);
+    cam.isActive = false;
+    auto& cam1 = gCoordinator.GetCom<Camera2D>(temcam2);
+    cam1.isActive = false;
+    auto& cam2 = gCoordinator.GetCom<Camera2D>(temcam3);
+    cam2.isActive = false;
 
-    GraphicImplementation::camera2d.update(Window::GetGLFWwindow());
-    GraphicSystem::Update(dt); //Testing only
+    if (num == 1) {
+        auto& cam = gCoordinator.GetCom<Camera2D>(temcam);
+        cam.isActive = true;
+    }
+    else if (num == 2) {
+        auto& cam = gCoordinator.GetCom<Camera2D>(temcam2);
+        cam.isActive = true;
+    }
+    else if (num == 3) {
+        auto& cam = gCoordinator.GetCom<Camera2D>(temcam3);
+        cam.isActive = true;
+    }
+    
+    //------------------------------------
+    ScriptSystem::Update(dt);
+    PhysicSystem::Update(dt);
+
+    CameraSystem::Update(dt);
+    GraphicSystem::Update(dt);
     GraphicSystem::Render();
 
     LayerStack::Update();
@@ -109,7 +181,6 @@ void GameScene::Update(float dt) {
 
 void GameScene::Destroy() {
     //Destroy in reverse order
-    GUILayer::Destroy();
-    LayerStack::Destroy();
-    Window::Destroy();
+    //Rebuild the layers for a difference game scene
+    //Remove all entity
 }

@@ -1,22 +1,13 @@
 /* Start Header**********************************************************************************/
-/*!
-\file SystemManager.hpp
-\team name
-\software name
-\authors
-NAME							EMAIL									ROLE
-Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
-Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg		
-Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
-Chia Yi Da						chiayida98@gmail.com
-Margaret Teo Boon See			Teo.b@digipen.edu
-Wang Ao							Ao.Wang@digipen.edu
-Ng Jia Yi						Jiayi.ng@digipen.edu
-\date 26/04/2021
+/*
+@file    .hpp
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@date    19/06/2021
 \brief
 
-Maintining a record of registered systems and the signatures. Each system is to have a set of 
+Maintining a record of registered systems and the signatures. Each system is to have a set of
 signature to allow the manager to add the correct entities to the system's list
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

@@ -1,11 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
-@file    PhysicSystem.hpp
+@file    CameraSystem.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
-@date    19/06/2021
+@date    26/06/2021
 \brief
-This file has the class to manage physic: PhysicSystem
-includes declaration to static function for a singleton PhysicSystem
+This file contain the CameraSystem declaration
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -15,27 +14,26 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef PHYSIC_SYSTEM_H
-#define PHYSIC_SYSTEM_H
+#ifndef CAMERA_SYSTEM_HPP
+#define CAMERA_SYSTEM_HPP
 
-//#include "ECSGlobal.hpp"
 #include "pch.hpp"
 #include "System/System.hpp"
+#include "Math/MathLib.hpp"
 
-
-class PhysicSystem : public System {
+class CameraSystem : public System {
 public:
-	static bool Create(const std::shared_ptr<PhysicSystem>& physicSystem);
+	static bool Create(const std::shared_ptr<CameraSystem>& cameraSystem);
 	virtual void Destroy() override;
-	~PhysicSystem();
+	~CameraSystem();
 
-	//static PhysicSystem* Get();
 	static void Update(float dt);
-	
-private:
-	//float gravity = 10.f;
-	static std::shared_ptr<PhysicSystem> PS;
-};
 
+	static MathD::Mat3 GetTransform();
+private:
+	static MathD::Mat3 world_to_ndc_xform;
+	static std::shared_ptr<CameraSystem> CS;
+	static GLFWwindow* pwindow;
+};
 
 #endif

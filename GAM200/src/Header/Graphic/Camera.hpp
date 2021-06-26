@@ -17,7 +17,7 @@ This file contains function declaration for camera
 #include "Component/Graphics/TransformComponent.hpp"
 
 namespace GraphicImplementation {
-    struct Camera2D {
+    struct CameraTemp {
         //GLObject* pgo = nullptr; // pointer to game object that embeds camera
         Transform* transform = nullptr;
 
@@ -43,7 +43,7 @@ namespace GraphicImplementation {
         void update(GLFWwindow*);
     };
 
-    extern Camera2D camera2d;
+    extern CameraTemp camera2d;
 }
 
 #endif

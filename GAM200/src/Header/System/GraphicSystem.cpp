@@ -6,6 +6,11 @@
 \brief
 This file has the function definition for class GraphicsSystem
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
@@ -13,6 +18,7 @@ This file has the function definition for class GraphicsSystem
 
 #include "Debug Tools/Logging.hpp"
 #include "System/GraphicSystem.hpp"
+#include "System/CameraSystem.hpp"
 
 #include "Coordinator/Coordinator.hpp"
 #include "Component/Graphics/TransformComponent.hpp"
@@ -27,7 +33,7 @@ extern Coordinator gCoordinator;
 std::shared_ptr<GraphicSystem> GraphicSystem::GS;
 
 void GraphicSystem::Update(float dt) {
-	//For all entities in PhysicSystem
+	//For all entities in GraphicSystem
 	
 	for (auto const& entity : GS->mEntities) {
 		auto& transform = gCoordinator.GetCom<Transform>(entity);
@@ -45,7 +51,8 @@ void GraphicSystem::Update(float dt) {
 		renderer.mdl_to_ndc_xform = temMat3 * renderer.mdl_to_ndc_xform;
 
 		// world to ndc * mdl to world
-		renderer.mdl_to_ndc_xform = GraphicImplementation::camera2d.world_to_ndc_xform * renderer.mdl_to_ndc_xform;
+		//renderer.mdl_to_ndc_xform = GraphicImplementation::camera2d.world_to_ndc_xform * renderer.mdl_to_ndc_xform;
+		renderer.mdl_to_ndc_xform = CameraSystem::GetTransform() * renderer.mdl_to_ndc_xform;
 	}
 }
 

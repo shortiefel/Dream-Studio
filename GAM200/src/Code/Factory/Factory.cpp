@@ -7,6 +7,11 @@
 This file allow user to create shapes easily with function: CreateSquare and CreateCircle
 It also setup all the components and system when a factory is created
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
@@ -15,14 +20,17 @@ It also setup all the components and system when a factory is created
 #include "Coordinator/Coordinator.hpp"
 
 //Components
+#include "Component/Graphics/CameraComponent.hpp"
 #include "Component/Graphics/TransformComponent.hpp"
-#include "Component/Physics/ColliderComponent.hpp"
 #include "Component/Graphics/RendererComponent.hpp"
+#include "Component/Physics/ColliderComponent.hpp"
+#include "Component/Script/ScriptComponent.hpp"
 
 //Systems
+#include "System/CameraSystem.hpp"
 #include "System/GraphicSystem.hpp"
 #include "System/PhysicSystem.hpp"
-//#include "Graphic/Camera.hpp"
+#include "System/ScriptSystem.hpp"
 
 #define CREATE_SHAPE(str, type, mv) \
 gCoordinator.AddComponent(ent, \
@@ -39,14 +47,22 @@ Coordinator gCoordinator;
 
 void Factory::Create() {
     gCoordinator.Init();
-    gCoordinator.RegisterComponent<Collider>();
+    gCoordinator.RegisterComponent<Camera2D>();
     gCoordinator.RegisterComponent<Transform>();
     gCoordinator.RegisterComponent<Renderer2D>();
+    gCoordinator.RegisterComponent<Collider>();
+    gCoordinator.RegisterComponent<Custom_Script>();
 
+    CameraSystem::Create(gCoordinator.RegSystem<CameraSystem>());
     GraphicSystem::Create(gCoordinator.RegSystem<GraphicSystem>());
     PhysicSystem::Create(gCoordinator.RegSystem<PhysicSystem>());
+    ScriptSystem::Create(gCoordinator.RegSystem<ScriptSystem>());
     
     Signature signature;
+    signature.set(gCoordinator.GetComType<Camera2D>());
+    gCoordinator.setSystemSignature<CameraSystem>(signature);
+
+    signature.reset();
     signature.set(gCoordinator.GetComType<Transform>());
     signature.set(gCoordinator.GetComType<Renderer2D>());
     gCoordinator.setSystemSignature<GraphicSystem>(signature);
@@ -55,9 +71,15 @@ void Factory::Create() {
     signature.set(gCoordinator.GetComType<Transform>());
     signature.set(gCoordinator.GetComType<Collider>());
     gCoordinator.setSystemSignature<PhysicSystem>(signature);
+
+    signature.reset();
+    signature.set(gCoordinator.GetComType<Custom_Script>());
+    gCoordinator.setSystemSignature<ScriptSystem>(signature);
+
+
 }
 
-
+//Function will be called when GUI inspector request a Square entity
 void Factory::InstantiateSquare(MathD::Vec2 pos, MathD::Vec2 scale, bool isMoveable) {
     Entity ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
@@ -67,7 +89,7 @@ void Factory::InstantiateSquare(MathD::Vec2 pos, MathD::Vec2 scale, bool isMovea
     CREATE_SHAPE("Square", ColliderType::SQUARE, isMoveable)
 }
 
-
+//Function will be called when GUI inspector request a Circle entity
 void Factory::InstantiateCircle(MathD::Vec2 pos, MathD::Vec2 scale, bool isMoveable) {
     Entity ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(

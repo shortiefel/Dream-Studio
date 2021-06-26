@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
-@file    GameScene.hpp
+@file    ScriptComponent.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
-@date    23/06/2021
+@date    26/06/2021
 \brief
-This contain the declaration of GameScene class with its function
+This file contain the Script component
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -14,16 +14,11 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef GAME_SCENE_HPP
-#define GAME_SCENE_HPP
+#ifndef SCRIPT_COMPONENT_HPP
+#define SCRIPT_COMPONENT_HPP
 
-class GameScene {
-public:
-	static void Create();
-	static void Destroy();
-	static void Play();
-	static void Stop();
-	static void Update(float dt);
-};
+#include "Script/Script.hpp"
+
+using Custom_Script = std::shared_ptr<Script>;
 
 #endif

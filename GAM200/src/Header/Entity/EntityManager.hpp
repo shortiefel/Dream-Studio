@@ -25,7 +25,7 @@ Technology is prohibited.
 
 #pragma once
 
-#include "../Global.hpp"
+#include "ECSGlobal.hpp"
 #include <queue>
 #include <array>
 #include <cassert>

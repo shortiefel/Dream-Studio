@@ -7,6 +7,11 @@
 Create a window and other various required manager (e.g Physic / Graphic Manager)
 Contains the main application loop and the game loop
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
@@ -16,6 +21,8 @@ Contains the main application loop and the game loop
 #include "Window.hpp"
 
 #include "Event/EventDispatcher.hpp"
+#include "Layer/LayerStack.hpp"
+#include "Layer/GUILayer.hpp"
 
 #include "Factory/Factory.hpp"
 #include "GameScene.hpp"
@@ -35,8 +42,18 @@ void Application::Create() {
 	//Create window and instantiate managers
     if (!Window::Create("Dream Engine")) LOG_ERROR("Window creation has failed");
     s_app_instance->SetEventCallBack();
+    
+    if (!LayerStack::Create()) LOG_ERROR("LayerStack creation has failed");
+
+    const char* glsl_version = "#version 450";
+    if (!GUILayer::Create(Window::GetGLFWwindow(), glsl_version)) LOG_ERROR("GUILayer creation has failed");
+
+    LayerStack::AddOverlayLayer(GUILayer::Get());
+
+    Factory::Create();
 
     GameScene::Create();
+    GameScene::Play(); //Temporary placement (will be linked to GUI play button)
 }
 
 //Main application loop is done here
@@ -61,8 +78,10 @@ void Application::Destroy() {
 //------------------------------------------------------
 
 Application::~Application() {
-    GameScene::Destroy();
-    
+    GameScene::Destroy(); //Destroy currently active game scene
+    GUILayer::Destroy();
+    LayerStack::Destroy();
+    Window::Destroy();
 }
 
 

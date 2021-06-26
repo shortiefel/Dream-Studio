@@ -140,43 +140,11 @@ void Window::WindowCloseCallback(GLFWwindow* window) {
 void Window::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	switch (action) {
 	case GLFW_PRESS: {
-		//to be removed--------------------------
-		switch (key) { 
-		case GLFW_KEY_W: 
-			up = true;
-			break;
-		case GLFW_KEY_S:
-			down = true;
-			break;
-		case GLFW_KEY_A:
-			left = true;
-			break;
-		case GLFW_KEY_D:
-			right = true;
-			break;
-		}
-		//---------------------------------------
 		KeyPressedEvent event(key, false);
 		w_data.eventCallBack(event);
 		break;
 	}
 	case GLFW_RELEASE: {
-		//to be removed--------------------------
-		switch (key) {
-		case GLFW_KEY_W:
-			up = false;
-			break;
-		case GLFW_KEY_S:
-			down = false;
-			break;
-		case GLFW_KEY_A:
-			left = false;
-			break;
-		case GLFW_KEY_D:
-			right = false;
-			break;
-		}
-		//---------------------------------------
 		KeyReleasedEvent event(key);
 		w_data.eventCallBack(event);
 		break;

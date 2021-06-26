@@ -7,6 +7,11 @@
 An application of the dream engine can have multiple game scene to be used
 When created and deleted, it should rebuild the systems and get the correct information from textfiles
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
@@ -24,11 +29,15 @@ When created and deleted, it should rebuild the systems and get the correct info
 #include "Component/Graphics/TransformComponent.hpp"
 #include "Component/Physics/ColliderComponent.hpp"
 #include "Component/Graphics/RendererComponent.hpp"
+#include "Component/Script/ScriptComponent.hpp"
 
 #include "Graphic/Camera.hpp"
 
 #include "System/GraphicSystem.hpp"
 #include "System/PhysicSystem.hpp"
+#include "System/ScriptSystem.hpp"
+
+#include "PlayerController.hpp" //Temporary for Native Scripting test
 
 extern Coordinator gCoordinator;
 Entity camera;
@@ -42,15 +51,33 @@ void GameScene::Create() {
     //Read from text file all information
 
     //Reset all system
+  
+    //--------------------------------------------------
+    Entity ent = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        ent,
+        Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{20.f,20.f}, 0.f });
+    gCoordinator.AddComponent(ent,
+        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+    gCoordinator.AddComponent(ent,
+            Collider{ ColliderType::SQUARE, true });
+    gCoordinator.AddComponent(ent,
+        Custom_Script{ std::make_shared<PlayerController>() });
 
-    if (!LayerStack::Create()) LOG_ERROR("LayerStack creation has failed");
 
-    const char* glsl_version = "#version 450";
-    if (!GUILayer::Create(Window::GetGLFWwindow(), glsl_version)) LOG_ERROR("GUILayer creation has failed");
+    Entity ent1 = gCoordinator.createEntity();
+    gCoordinator.AddComponent(
+        ent1,
+        Transform{ MathD::Vec2{-100.f,0.f}, MathD::Vec2{20.f,40.f}, 0.f });
+    gCoordinator.AddComponent(ent1,
+        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+    gCoordinator.AddComponent(ent1,
+        Collider{ ColliderType::SQUARE, true });
+    gCoordinator.AddComponent(ent1,
+        Custom_Script{ std::make_shared<AnotherController>() });
 
-    LayerStack::AddOverlayLayer(GUILayer::Get());
 
-    Factory::Create();
+    //--------------------------------------------------
 
     camera = gCoordinator.createEntity();
     gCoordinator.AddComponent(
@@ -59,48 +86,30 @@ void GameScene::Create() {
 
     GraphicImplementation::camera2d.init(Window::GetGLFWwindow(), &gCoordinator.GetCom<Transform>(camera));
 
-    /*player = gCoordinator.createEntity();
-    gCoordinator.AddComponent(
-        player,
-        Transform{ MathD::Vec2 {-150.f, 0.f}, MathD::Vec2 {60.f, 60.f}, 0.f });
-
-    gCoordinator.AddComponent(
-        player,
-        Renderer2D{ GraphicImplementation::models.find("Circle"),  GraphicImplementation::shdrpgms.find("Default") });
-
-    gCoordinator.AddComponent(
-        player,
-        Collider{ ColliderType::CIRCLE, true });
-
-    Factory::InstantiateCircle();
+    /*Factory::InstantiateCircle();
     Factory::InstantiateSquare();*/
 }
 
+//When user click play to run their game
+void GameScene::Play() {
+    //Compile the script
+    //Save position of entity temporary (to be changed back after stopping)
+
+    ScriptSystem::Play();
+}
+
+//When user click stop to run their game
+void GameScene::Stop() {
+    //Set position of entity back to before play
+    ScriptSystem::Stop();
+}
+
 void GameScene::Update(float dt) {
-
-    ////-------Testing only-----------------------------------------
-    /*if (up) {
-        auto& transform1 = gCoordinator.GetCom<Transform>(player);
-        transform1.pos.y += 2.f;
-    }
-    if (down) {
-        auto& transform1 = gCoordinator.GetCom<Transform>(player);
-        transform1.pos.y -= 2.f;
-    }
-    if (left) {
-        auto& transform1 = gCoordinator.GetCom<Transform>(player);
-        transform1.pos.x -= 2.f;
-    }
-    if (right) {
-        auto& transform1 = gCoordinator.GetCom<Transform>(player);
-        transform1.pos.x += 2.f;
-    }*/
-    //-------Testing only-----------------------------------------
-
-    PhysicSystem::Update(dt); //Testing only
+    ScriptSystem::Update(dt);
+    PhysicSystem::Update(dt);
 
     GraphicImplementation::camera2d.update(Window::GetGLFWwindow());
-    GraphicSystem::Update(dt); //Testing only
+    GraphicSystem::Update(dt);
     GraphicSystem::Render();
 
     LayerStack::Update();
@@ -109,7 +118,6 @@ void GameScene::Update(float dt) {
 
 void GameScene::Destroy() {
     //Destroy in reverse order
-    GUILayer::Destroy();
-    LayerStack::Destroy();
-    Window::Destroy();
+    //Rebuild the layers for a difference game scene
+    //Remove all entity
 }

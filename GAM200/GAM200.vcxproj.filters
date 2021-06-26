@@ -61,6 +61,9 @@
     <ClCompile Include="src\Code\GameScene.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\Code\System\ScriptSystem.cpp">
+      <Filter>Source\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Resources\Imgui\imconfig.h">
@@ -210,6 +213,18 @@
     <ClInclude Include="src\Header\GameScene.hpp">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\Component\Script\ScriptComponent.hpp">
+      <Filter>Include\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Script\Script.hpp">
+      <Filter>Include\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\System\ScriptSystem.hpp">
+      <Filter>Include\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Code\PlayerController.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -274,6 +289,9 @@
     </Filter>
     <Filter Include="Include\Factory">
       <UniqueIdentifier>{4bf1861e-b9b7-4b8f-a541-18170daf07a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Script">
+      <UniqueIdentifier>{483481f8-2f2d-4834-a45e-21413a89b39a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,3 +1,22 @@
+/* Start Header**********************************************************************************/
+/*
+@file    LayerStack.cpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    16/06/2021
+\brief
+This file contain LayerStack definition
+Layerstacks will hold all the layers and acts sort of like the layer manager
+All layers will be updated and drawn properly
+Layerstack will settle the ordering of the layers during run time to draw in the correct order
+
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
+
 #include "Debug Tools/Logging.hpp"
 #include "Layer/LayerStack.hpp"
 

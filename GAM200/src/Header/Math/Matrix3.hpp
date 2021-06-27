@@ -14,6 +14,11 @@ MathD::Mat3 matrix3 (0, 3, 6, 1, 4, 7, 2, 5, 8);
 Note: MathD::Mat3 is a type name done in matrix.hpp
 namespace MathImplementation is to prevent accidental usage
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 

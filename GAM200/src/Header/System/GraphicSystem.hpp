@@ -7,13 +7,18 @@
 This file has the class to manage graphics: GraphicsSystem
 includes declaration to static function for a singleton GraphicsSystem
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
 #ifndef GRAPHIC_SYSTEM_H
 #define GRAPHIC_SYSTEM_H
 
-//#include "pch.hpp"
+#include "pch.hpp"
 #include "System/system.hpp"
 
 class GraphicSystem : public System {

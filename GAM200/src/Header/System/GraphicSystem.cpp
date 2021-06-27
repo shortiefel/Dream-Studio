@@ -25,7 +25,6 @@ Technology is prohibited.
 #include "Component/Graphics/RendererComponent.hpp"
 
 #include "Graphic/Graphic.hpp"
-#include "Graphic/Camera.hpp"
 
 #include "Math/Matrix.hpp"
 
@@ -51,7 +50,6 @@ void GraphicSystem::Update(float dt) {
 		renderer.mdl_to_ndc_xform = temMat3 * renderer.mdl_to_ndc_xform;
 
 		// world to ndc * mdl to world
-		//renderer.mdl_to_ndc_xform = GraphicImplementation::camera2d.world_to_ndc_xform * renderer.mdl_to_ndc_xform;
 		renderer.mdl_to_ndc_xform = CameraSystem::GetTransform() * renderer.mdl_to_ndc_xform;
 	}
 }

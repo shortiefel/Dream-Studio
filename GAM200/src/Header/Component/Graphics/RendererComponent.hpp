@@ -6,19 +6,23 @@
 \brief
 This file contain the renderer2D struct to be used by the ECS and various system
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
 #ifndef RENDERER_COMPONENT_HPP
 #define RENDERER_COMPONENT_HPP
 
-//#include "Math/Matrix.hpp"
-
+//#include "pch.hpp"
+//#include "Graphic/glslshader.hpp"
 #include "Graphic/Graphic.hpp"
-#include "Graphic/glslshader.hpp"
 #include "Math/Matrix.hpp"
-#include "pch.hpp"
 
+class GLSLShader;
 struct Renderer2D {
 	MathD::Mat3 mdl_to_ndc_xform;
 

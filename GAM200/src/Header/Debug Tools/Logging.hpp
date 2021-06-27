@@ -1,27 +1,39 @@
-//This file allow text to be written to console and changing color of text to indicate type of message
-//Allow user to track all the instructions that are supposed to be done
-
-//How to Use:
-//include file Logging.hpp before any other files to prevent redefinition
+/* Start Header**********************************************************************************/
 /*
+@file    ScriptComponent.hpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    26/05/2021
+\brief
+This file allow text to be written to console and changing color of text to indicate type of message
+Allow user to track all the instructions that are supposed to be done
+
+How to Use:
+include file Logging.hpp before any other files to prevent redefinition
+
 Can display up to a total of 3 variable (different or same types)
 E.g. A string variable or Event type (to display type of events)
 
-//Used for printing of normal information to check whether something works (Blue text)
+Used for printing of normal information to check whether something works (Blue text)
 LOG_INFO(...) 
 
-//Used for printing of event information (Green text)
+Used for printing of event information (Green text)
 LOG_EVENT(...)
 
-//Used for printing of warnings (Purple text)
+Used for printing of warnings (Purple text)
 LOG_WARNING(...) 
 
-//Used for printing of errors (Red text)
+Used for printing of errors (Red text)
 LOG_ERROR(...)
 
-//Used for printing of instance (Eg: application, manager) creation and destruction (Yellow text)
+Used for printing of instance (Eg: application, manager) creation and destruction (Yellow text)
 LOG_INSTANCE(...)
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
+/* End Header **********************************************************************************/
 
 #ifndef LOGGING_H
 #define LOGGING_H

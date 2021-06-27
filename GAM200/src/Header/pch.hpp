@@ -26,9 +26,10 @@ Technology is prohibited.
 #ifndef PCH_H
 #define PCH_H
 
-#include <string>
-#include <assert.h>
+#include "Debug Tools/Logging.hpp"
+#include <cassert>
 
+#include <string>
 #include <set>
 #include <vector>
 #include <map>

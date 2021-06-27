@@ -30,7 +30,6 @@ Technology is prohibited.
 #include "pch.hpp"
 
 class Event; //To show that class Event exist but header doesnt need to know what it is yet
-
 class Window {
 public:
 	static bool Create(const std::string& ttitle = "untitled", unsigned int twidth = 1280, unsigned int theight = 720);

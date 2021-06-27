@@ -6,6 +6,11 @@
 \brief
 This file has the functions declaration to be called by the physic system
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
@@ -13,8 +18,10 @@ This file has the functions declaration to be called by the physic system
 #ifndef PHYSIC_H
 #define PHYSIC_H
 
-#include "Component/Physics/ColliderComponent.hpp"
-#include "Component/Graphics/TransformComponent.hpp"
+//#include "Component/Physics/ColliderComponent.hpp"
+//#include "Component/Graphics/TransformComponent.hpp"
+struct Collider;
+struct Transform;
 #include "Math/MathLib.hpp"
 
 namespace PhysicImplementation {

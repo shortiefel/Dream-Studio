@@ -10,6 +10,11 @@ collider only store offset from transform position
 in update transform position and scale is added to collider position and scale as
 collision checks only takes in collider
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
@@ -17,6 +22,9 @@ collision checks only takes in collider
 #include "Debug Tools/Logging.hpp"
 #include "System/PhysicSystem.hpp"
 #include "Physic/Physic.hpp"
+
+#include "Component/Physics/ColliderComponent.hpp"
+#include "Component/Graphics/TransformComponent.hpp"
 
 #include "Coordinator/Coordinator.hpp"
 

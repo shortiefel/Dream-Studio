@@ -18,6 +18,11 @@ Usage:
 	MathD namespace is to prevent name clash with other library
 	This file has other types of Matrix3 in case it is needed
 	Do add more here if other types is needed
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 

@@ -13,11 +13,18 @@ for a period of time, it looks like one object is pushing another.
 collider position is in the center of itself and width and height is only half of itself total width and height
 Note: Currently Oval collider does not exist as it is complicated and hard to compute
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
 #include "Debug Tools/Logging.hpp" // to be removed
 #include "Physic/Physic.hpp"
+#include "Component/Physics/ColliderComponent.hpp"
+#include "Component/Graphics/TransformComponent.hpp"
 
 //Both used only for square to circle collision
 //Nearest point on square to circle

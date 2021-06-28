@@ -1,5 +1,6 @@
 #pragma once
 /*
+NOTE: TESTING ONLY (WILL BE DELETED)
 This file is only for testing purposes and will probably not be used
 */
 #include "Debug Tools/Logging.hpp"
@@ -13,7 +14,7 @@ extern Coordinator gCoordinator;
 
 class PlayerController : public Script {
 public:
-	virtual void OnDestroy(const Entity& ent) override { LOG_INFO("player destroy"); }
+	virtual void OnDestroy(const Entity& ent) override {  }
 	virtual void Update(const Entity& ent, float dt) override {
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_W) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
@@ -38,7 +39,7 @@ public:
 
 class AnotherController : public Script {
 public:
-	virtual void Init(const Entity& ent) override { LOG_INFO("Another Init"); }
+	virtual void Init(const Entity& ent) override {  }
 	virtual void Update(const Entity& ent, float dt) override {
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_I) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
@@ -63,7 +64,7 @@ public:
 
 class CameraController : public Script {
 public:
-	virtual void Init(const Entity& ent) override { LOG_INFO("Another Init"); }
+	virtual void Init(const Entity& ent) override {  }
 	virtual void Update(const Entity& ent, float dt) override {
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_UP) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);

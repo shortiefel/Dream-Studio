@@ -28,10 +28,10 @@ Technology is prohibited.
 #include <crtdbg.h>
 //-----------------------------
 
-#include "framework.hpp"
+//#include "framework.hpp"
 #include "Main.hpp"
 
-#include <stdio.h>
+//#include <stdio.h>
 #include "Application.hpp"
 
 

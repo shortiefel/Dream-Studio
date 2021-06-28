@@ -6,6 +6,11 @@
 \brief
 This file contain the transform struct to be used by the ECS and various system
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
@@ -24,10 +29,6 @@ struct Transform {
 	Transform() = default;
 	Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, float tAngle, int tLayer = 0) :
 		pos{ tPos }, scale{ tScale }, rotation{ tAngle }, layer{ tLayer } {}
-
-private:
-	//matrix for model to ndc transform
-	//MathD::Mat3 mdl_to_ndc = MathD::Mat3{};
 };
 
 #endif

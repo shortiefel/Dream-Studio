@@ -49,9 +49,6 @@
     <ClCompile Include="src\Code\Physic\Physic.cpp">
       <Filter>Source\Physic</Filter>
     </ClCompile>
-    <ClCompile Include="src\Code\Graphic\Camera.cpp">
-      <Filter>Source\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="src\Code\Main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -207,9 +204,6 @@
     <ClInclude Include="src\Header\Math\MathLib.hpp">
       <Filter>Include\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Graphic\Camera.hpp">
-      <Filter>Include\Graphic</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\Factory\Factory.hpp">
       <Filter>Include\Factory</Filter>
     </ClInclude>
@@ -232,6 +226,12 @@
       <Filter>Include\Component\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Header\System\CameraSystem.hpp">
+      <Filter>Include\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\ComponentList.hpp">
+      <Filter>Include\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\System\SystemList.hpp">
       <Filter>Include\System</Filter>
     </ClInclude>
   </ItemGroup>

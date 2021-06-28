@@ -16,14 +16,14 @@ Technology is prohibited.
 
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
-#include "Debug Tools/Logging.hpp"
+
 class Script {
 public:
-	virtual void Init(const Entity& ent) { LOG_INFO("Default init"); }
-	virtual void Update(const Entity& ent, float dt) { LOG_INFO("Default update"); }
+	virtual void Init(const Entity& ent) {}
+	virtual void Update(const Entity& ent, float dt) {}
 	//Should be called when entity is destroyed
 	//also when game scene stop is pressed
-	virtual void OnDestroy(const Entity& ent) { LOG_INFO("Default destroy"); }
+	virtual void OnDestroy(const Entity& ent) {}
 
 	//Will be in late update after physic checks
 	//Otherwise it might go into the next loop

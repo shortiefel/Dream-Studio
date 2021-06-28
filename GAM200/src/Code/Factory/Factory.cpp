@@ -20,17 +20,9 @@ Technology is prohibited.
 #include "Coordinator/Coordinator.hpp"
 
 //Components
-#include "Component/Graphics/CameraComponent.hpp"
-#include "Component/Graphics/TransformComponent.hpp"
-#include "Component/Graphics/RendererComponent.hpp"
-#include "Component/Physics/ColliderComponent.hpp"
-#include "Component/Script/ScriptComponent.hpp"
-
+#include "Component/ComponentList.hpp"
 //Systems
-#include "System/CameraSystem.hpp"
-#include "System/GraphicSystem.hpp"
-#include "System/PhysicSystem.hpp"
-#include "System/ScriptSystem.hpp"
+#include "System/SystemList.hpp"
 
 #define CREATE_SHAPE(str, type, mv) \
 gCoordinator.AddComponent(ent, \
@@ -75,8 +67,6 @@ void Factory::Create() {
     signature.reset();
     signature.set(gCoordinator.GetComType<Custom_Script>());
     gCoordinator.setSystemSignature<ScriptSystem>(signature);
-
-
 }
 
 //Function will be called when GUI inspector request a Square entity

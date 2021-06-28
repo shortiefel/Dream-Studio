@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
-@file    Layer.hpp
+@file    SystemList.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
-@date    16/06/2021
+@date    27/06/2021
 \brief
-This file contain the Layer declaration
+List of all System
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -14,19 +14,12 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef LAYER_H
-#define LAYER_H
+#ifndef SYSTEM_LIST_HPP
+#define SYSTEM_LIST_HPP
 
-class Event;
-
-class Layer {
-public:
-	virtual void Update() = 0;
-	virtual void Draw() = 0;
-	virtual bool OnEvent(Event& e) = 0;
-//private:
-//	bool isActive = true;
-// instead can check if graphic component is active or not
-};
+#include "System/CameraSystem.hpp"
+#include "System/GraphicSystem.hpp"
+#include "System/PhysicSystem.hpp"
+#include "System/ScriptSystem.hpp"
 
 #endif

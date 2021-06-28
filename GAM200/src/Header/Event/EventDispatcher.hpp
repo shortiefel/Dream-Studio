@@ -1,3 +1,19 @@
+/* Start Header**********************************************************************************/
+/*
+@file    EventDispatcher.hpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    26/05/2021
+\brief
+This file contain the Event dispatcher declaration
+
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
+
 #ifndef EVENT_DISPATCHER_H
 #define EVENT_DISPATCHER_H
 

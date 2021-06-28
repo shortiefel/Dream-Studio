@@ -27,18 +27,11 @@ Technology is prohibited.
 
 #include "Coordinator/Coordinator.hpp"
 
-#include "Component/Graphics/CameraComponent.hpp"
-#include "Component/Graphics/TransformComponent.hpp"
-#include "Component/Physics/ColliderComponent.hpp"
-#include "Component/Graphics/RendererComponent.hpp"
-#include "Component/Script/ScriptComponent.hpp"
+//Components
+#include "Component/ComponentList.hpp"
+//Systems
+#include "System/SystemList.hpp"
 
-#include "Graphic/Camera.hpp"
-
-#include "System/CameraSystem.hpp"
-#include "System/GraphicSystem.hpp"
-#include "System/PhysicSystem.hpp"
-#include "System/ScriptSystem.hpp"
 
 #include "PlayerController.hpp" //Temporary for Native Scripting test
 

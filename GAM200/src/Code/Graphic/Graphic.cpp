@@ -6,6 +6,11 @@
 \brief
 This file has the function definition for Graphic
 
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
@@ -73,7 +78,7 @@ namespace GraphicImplementation {
         GLModel mdl;
         mdl.vaoid = vaoid;
         mdl.primitive_type = GL_TRIANGLE_FAN;
-        mdl.draw_cnt = pos_vtx.size(); // number of vertices
+        mdl.draw_cnt = static_cast<GLuint>(pos_vtx.size()); // number of vertices
         mdl.primitive_cnt = mdl.draw_cnt - 2; // number of primitives
         models.insert(std::pair<std::string, GLModel>("Circle", mdl));
     }
@@ -118,7 +123,7 @@ namespace GraphicImplementation {
         mdl.vaoid = vaoid;
         mdl.primitive_type = GL_TRIANGLE_FAN;
         //mdl.setup_shdrpgm(vtx_shdr, frg_shdr);
-        mdl.draw_cnt = pos_vtx.size(); // number of vertices
+        mdl.draw_cnt = static_cast<GLuint>(pos_vtx.size()); // number of vertices
         mdl.primitive_cnt = mdl.draw_cnt - 2; // number of primitives
         models.insert(std::pair<std::string, GLModel>("Square", mdl));
 	}

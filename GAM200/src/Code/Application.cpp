@@ -39,7 +39,7 @@ void Application::Create() {
     s_app_instance = new Application();
     LOG_INSTANCE("Application created");
 
-	//Create window and instantiate managers
+////Create window and instantiate managers
     if (!Window::Create("Dream Engine")) LOG_ERROR("Window creation has failed");
     s_app_instance->SetEventCallBack();
     
@@ -58,7 +58,7 @@ void Application::Create() {
 
 //Main application loop is done here
 void Application::Update() {
-   //Temporary loop
+    //Temporary loop
     while (app_run_bool) {
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(1, 0, 1, 1);

@@ -17,13 +17,7 @@ Technology is prohibited.
 #ifndef CAMERA_COMPONENT_HPP
 #define CAMERA_COMPONENT_HPP
 
-#include "Math/MathLib.hpp"
-
 struct Camera2D {
-    //GLObject* pgo = nullptr; // pointer to game object that embeds camera
-    //Transform* transform = nullptr;
-    //MathD::Mat3 world_to_ndc_xform = MathD::Mat3{};
-
     // window parameters
     int height{ 1000 };
     float ar = float{};

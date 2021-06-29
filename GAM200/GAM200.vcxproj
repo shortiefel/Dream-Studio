@@ -72,22 +72,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/src/Header;$(SolutionDir)/External Resources/include/x86;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/x86;$(SolutionDir)/src/Header;$(SolutionDir)/External Resources/include/Mono;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/src/Header;$(SolutionDir)/External Resources/include/x86;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/x86;$(SolutionDir)/src/Header;$(SolutionDir)/External Resources/include/Mono;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/x64;$(SolutionDir)/src/Header;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/x64;$(SolutionDir)/src/Header;$(SolutionDir)/External Resources/include/Mono;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/x64;$(SolutionDir)/src/Header;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/x64;$(SolutionDir)/src/Header;$(SolutionDir)/External Resources/include/Mono;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -102,11 +102,13 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)External Resources\lib\x86\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)External Resources\lib\x86\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
+copy "$(SolutionDir)External Resources\lib\x86\glew32.dll" "$(TargetDir)glew32.dll" /Y
+copy "$(SolutionDir)External Resources\lib\x86\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,11 +146,13 @@ copy "$(SolutionDir)External Resources\lib\x86\glew32.dll" "$(TargetDir)glew32.d
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)External Resources\lib\x64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
+copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y
+copy "$(SolutionDir)External Resources\lib\x64\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -175,14 +179,14 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="External Resources\Imgui\imconfig.h" />
-    <ClInclude Include="External Resources\Imgui\imgui.h" />
-    <ClInclude Include="External Resources\Imgui\imgui_impl_glfw.h" />
-    <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="External Resources\Imgui\imgui_internal.h" />
-    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h" />
-    <ClInclude Include="External Resources\Imgui\imstb_textedit.h" />
-    <ClInclude Include="External Resources\Imgui\imstb_truetype.h" />
+    <ClInclude Include="External Resources\include\Imgui\imconfig.h" />
+    <ClInclude Include="External Resources\include\Imgui\imgui.h" />
+    <ClInclude Include="External Resources\include\Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="External Resources\include\Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="External Resources\include\Imgui\imgui_internal.h" />
+    <ClInclude Include="External Resources\include\Imgui\imstb_rectpack.h" />
+    <ClInclude Include="External Resources\include\Imgui\imstb_textedit.h" />
+    <ClInclude Include="External Resources\include\Imgui\imstb_truetype.h" />
     <ClInclude Include="src\Code\PlayerController.hpp" />
     <ClInclude Include="src\Header\Application.hpp" />
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
@@ -222,6 +226,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Physic\Physic.hpp" />
     <ClInclude Include="src\Header\Resource.hpp" />
     <ClInclude Include="src\Header\Script\Script.hpp" />
+    <ClInclude Include="src\Header\Script\ScriptEmbed.hpp" />
     <ClInclude Include="src\Header\System\CameraSystem.hpp" />
     <ClInclude Include="src\Header\System\GraphicSystem.hpp" />
     <ClInclude Include="src\Header\System\PhysicSystem.hpp" />
@@ -233,13 +238,13 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="External Resources\Imgui\imgui.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_demo.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_draw.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_tables.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_demo.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_draw.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_tables.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Code\Application.cpp" />
     <ClCompile Include="src\Code\Factory\Factory.cpp" />
     <ClCompile Include="src\Code\GameScene.cpp" />
@@ -249,6 +254,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClCompile Include="src\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Code\Main.cpp" />
     <ClCompile Include="src\Code\Physic\Physic.cpp" />
+    <ClCompile Include="src\Code\Script\ScriptEmbed.cpp" />
     <ClCompile Include="src\Code\System\CameraSystem.cpp" />
     <ClCompile Include="src\Code\System\PhysicSystem.cpp" />
     <ClCompile Include="src\Code\System\ScriptSystem.cpp" />

@@ -31,6 +31,7 @@ struct Renderer2D {
 
 	Renderer2D(std::map<std::string, GraphicImplementation::GLModel>::iterator m, std::map<std::string, GLSLShader>::iterator s) :
 		mdl_ref{ m }, shd_ref{ s } {}
+
 	Renderer2D() : mdl_ref{ GraphicImplementation::models.begin() }, shd_ref{ GraphicImplementation::shdrpgms.begin() } {}
 };
 

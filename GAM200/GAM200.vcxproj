@@ -183,6 +183,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="External Resources\Imgui\imstb_rectpack.h" />
     <ClInclude Include="External Resources\Imgui\imstb_textedit.h" />
     <ClInclude Include="External Resources\Imgui\imstb_truetype.h" />
+    <ClInclude Include="External Resources\stb_image\stb_image.h" />
     <ClInclude Include="src\Code\PlayerController.hpp" />
     <ClInclude Include="src\Header\Application.hpp" />
     <ClInclude Include="src\Header\Component\ComponentArray.hpp" />
@@ -190,6 +191,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Component\ComponentManager.hpp" />
     <ClInclude Include="src\Header\Component\Graphics\CameraComponent.hpp" />
     <ClInclude Include="src\Header\Component\Graphics\RendererComponent.hpp" />
+    <ClInclude Include="src\Header\Component\Graphics\TextureComponent.hpp" />
     <ClInclude Include="src\Header\Component\Graphics\TransformComponent.hpp" />
     <ClInclude Include="src\Header\Component\Physics\ColliderComponent.hpp" />
     <ClInclude Include="src\Header\Component\Physics\RigidBodyComponent.hpp" />
@@ -240,6 +242,7 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="External Resources\Imgui\imgui_tables.cpp" />
     <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="External Resources\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Code\Application.cpp" />
     <ClCompile Include="src\Code\Factory\Factory.cpp" />
     <ClCompile Include="src\Code\GameScene.cpp" />
@@ -253,7 +256,15 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClCompile Include="src\Code\System\PhysicSystem.cpp" />
     <ClCompile Include="src\Code\System\ScriptSystem.cpp" />
     <ClCompile Include="src\Code\Window.cpp" />
+    <ClCompile Include="src\Header\Component\Graphics\TextureComponent.cpp" />
     <ClCompile Include="src\Header\System\GraphicSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\OpenGLEngine.frag" />
+    <None Include="shaders\OpenGLEngine.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\image1.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

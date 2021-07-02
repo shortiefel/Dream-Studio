@@ -14,63 +14,109 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Graphic/Graphic.hpp"
+#include "Graphic/Graphic.hpp" 
 #include <iostream>
 #include <fstream>
 
 namespace GraphicImplementation {
     std::map<std::string, GLModel> models;
     std::map<std::string, GLSLShader> shdrpgms;
+    GLuint setup_texobj(std::string, GLuint, GLuint);
+
+	void setup_vao_square() {
+        // container contains vertices of Position, Color and Texture Coordinates respectively
+        std::array<GLVertCont, 4> vtx = {
+            MathD::Vec2(-1.f, -1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(0.f, 0.f),
+            MathD::Vec2(1.f, -1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(1.f, 0.f),
+            MathD::Vec2(1.f, 1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(1.f, 1.f),
+            MathD::Vec2(-1.f, 1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(0.f, 1.f)
+        };
+
+        // VAO handle definition
+        GLuint vbo_hdl;
+        glCreateBuffers(1, &vbo_hdl);
+        glNamedBufferStorage(vbo_hdl, sizeof(GLVertCont) * vtx.size(),
+            vtx.data(), GL_DYNAMIC_STORAGE_BIT);
+
+		GLuint vaoid;
+		glCreateVertexArrays(1, &vaoid);
+
+        // Square vertex
+        glEnableVertexArrayAttrib(vaoid, 0);
+        glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, 2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+        glVertexArrayAttribFormat(vaoid, 0, 2, GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vaoid, 0, 0);
+
+        // Color vertex
+        glEnableVertexArrayAttrib(vaoid, 1);
+        glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl, sizeof(MathD::Vec2),
+            2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+        glVertexArrayAttribFormat(vaoid, 1, 3, GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vaoid, 1, 1);
+
+        // Texture vertex
+        glEnableVertexArrayAttrib(vaoid, 2);
+        glVertexArrayVertexBuffer(vaoid, 2, vbo_hdl, sizeof(MathD::Vec2) + sizeof(MathD::Vec3),
+            2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+        glVertexArrayAttribFormat(vaoid, 2, 2, GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vaoid, 2, 2);
+
+        glBindVertexArray(0);
+
+		GLModel mdl;
+        mdl.vaoid = vaoid;
+        //mdl.setup_shdrpgm(vtx_shdr, frg_shdr);
+        mdl.primitive_type = GL_TRIANGLE_FAN;
+        mdl.draw_cnt = 4; // number of vertices
+        mdl.primitive_cnt = 2; // number of primitives
+        models.insert(std::pair<std::string, GLModel>("Square", mdl));
+    }
 
     void setup_vao_circle() {
-        int const count{ 30 };
+        // Number of vertices
+        int const count{ 52 };
+        float rad = MathD::radians(360.f / static_cast<float>(count - 2));
 
-        std::vector<MathD::Vec2> pos_vtx(count);
-        float const rad{ MathD::radians(360.f / static_cast<float>(count-2)) };
-
-        pos_vtx[0] = MathD::Vec2(0.f, 0.f);
+        std::array<GLVertCont, count> vtx;
+        vtx[0] = { MathD::Vec2(0.f, 0.f), MathD::Vec3(0.f, 1.f, 0.f), MathD::Vec2(0.5f, 0.5f) };
 
         for (int col{ 1 }; col < count; ++col) {
-            pos_vtx[col] = MathD::Vec2(cos(rad * col), sin(rad * col));
-        }
-
-        std::vector<MathD::Vec3> clr_vtx(count);
-        for (int col{ 0 }; col < count; ++col) {
-            clr_vtx[col] = MathD::Vec3(
-                0.f,
-                1.f,
-                0.f);
+            vtx[col] = { MathD::Vec2(cos(rad * col), sin(rad * col)), 
+            MathD::Vec3(0.f, 1.f, 0.f), 
+            MathD::Vec2(0.5f + cos(rad * col), 0.5f + sin(rad * col))};
         }
 
         // Generate a VAO handle to encapsulate the VBO(s) and
         // state of this triangle mesh
 
-        // transfer vertex position and color attributes to VBO
+        // VAO handle definition
         GLuint vbo_hdl;
         glCreateBuffers(1, &vbo_hdl);
+        glNamedBufferStorage(vbo_hdl, sizeof(GLVertCont) * vtx.size(),
+            vtx.data(), GL_DYNAMIC_STORAGE_BIT);
 
-        glNamedBufferStorage(vbo_hdl,
-            sizeof(MathD::Vec2) * pos_vtx.size(),
-            nullptr, GL_DYNAMIC_STORAGE_BIT);
-        glNamedBufferSubData(vbo_hdl, 0,
-            sizeof(MathD::Vec2) * pos_vtx.size(), pos_vtx.data());
-        glNamedBufferSubData(vbo_hdl, sizeof(MathD::Vec2) * pos_vtx.size(),
-            sizeof(MathD::Vec3) * clr_vtx.size(), clr_vtx.data());
-
-        // encapsulate information about contents of VBO and VBO handle
-        // to another object called VAO
         GLuint vaoid;
         glCreateVertexArrays(1, &vaoid);
+
+        // Position vertex
         glEnableVertexArrayAttrib(vaoid, 0);
-        glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, sizeof(MathD::Vec2));
+        glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, 2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
         glVertexArrayAttribFormat(vaoid, 0, 2, GL_FLOAT, GL_FALSE, 0);
         glVertexArrayAttribBinding(vaoid, 0, 0);
 
+        // Colour vertex
         glEnableVertexArrayAttrib(vaoid, 1);
-        glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl,
-            sizeof(MathD::Vec2) * pos_vtx.size(), sizeof(MathD::Vec3));
+        glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl, sizeof(MathD::Vec2),
+            2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
         glVertexArrayAttribFormat(vaoid, 1, 3, GL_FLOAT, GL_FALSE, 0);
         glVertexArrayAttribBinding(vaoid, 1, 1);
+
+        // Texture vertex
+        glEnableVertexArrayAttrib(vaoid, 2);
+        glVertexArrayVertexBuffer(vaoid, 2, vbo_hdl, sizeof(MathD::Vec2) + sizeof(MathD::Vec3),
+            2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+        glVertexArrayAttribFormat(vaoid, 2, 2, GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vaoid, 2, 2);
 
         glBindVertexArray(0);
 
@@ -78,55 +124,10 @@ namespace GraphicImplementation {
         GLModel mdl;
         mdl.vaoid = vaoid;
         mdl.primitive_type = GL_TRIANGLE_FAN;
-        mdl.draw_cnt = static_cast<GLuint>(pos_vtx.size()); // number of vertices
+        mdl.draw_cnt = static_cast<GLuint>(count); // number of vertices
         mdl.primitive_cnt = mdl.draw_cnt - 2; // number of primitives
         models.insert(std::pair<std::string, GLModel>("Circle", mdl));
     }
-    void setup_vao_square() {
-        std::array<MathD::Vec2, 4> pos_vtx{
-             MathD::Vec2(1.f, -1.f), MathD::Vec2(1.f, 1.f),
-             MathD::Vec2(-1.f, 1.f), MathD::Vec2(-1.f, -1.f)
-        };
-        std::array<MathD::Vec3, 4> clr_vtx{
-            MathD::Vec3(1.f, 0.f, 0.f),
-            MathD::Vec3(1.f, 0.f, 0.f),
-            MathD::Vec3(1.f, 0.f, 0.f),
-            MathD::Vec3(1.f, 0.f, 0.f)
-        };
-
-        GLuint vbo_hdl;
-        glCreateBuffers(1, &vbo_hdl);
-
-        glNamedBufferStorage(vbo_hdl,
-            sizeof(MathD::Vec2) * pos_vtx.size() + sizeof(MathD::Vec3) * clr_vtx.size(),
-            nullptr, GL_DYNAMIC_STORAGE_BIT);
-        glNamedBufferSubData(vbo_hdl, 0,
-            sizeof(MathD::Vec2) * pos_vtx.size(), pos_vtx.data());
-        glNamedBufferSubData(vbo_hdl, sizeof(MathD::Vec2) * pos_vtx.size(),
-            sizeof(MathD::Vec3) * clr_vtx.size(), clr_vtx.data());
-
-        GLuint vaoid;
-        glCreateVertexArrays(1, &vaoid);
-        glEnableVertexArrayAttrib(vaoid, 0);
-        glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, sizeof(MathD::Vec2));
-        glVertexArrayAttribFormat(vaoid, 0, 2, GL_FLOAT, GL_FALSE, 0);
-        glVertexArrayAttribBinding(vaoid, 0, 0);
-
-        glEnableVertexArrayAttrib(vaoid, 1);
-        glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl,
-            sizeof(MathD::Vec2) * pos_vtx.size(),
-            sizeof(MathD::Vec3));
-        glVertexArrayAttribFormat(vaoid, 1, 3, GL_FLOAT, GL_FALSE, 0);
-        glVertexArrayAttribBinding(vaoid, 1, 1);
-
-        GLModel mdl;
-        mdl.vaoid = vaoid;
-        mdl.primitive_type = GL_TRIANGLE_FAN;
-        //mdl.setup_shdrpgm(vtx_shdr, frg_shdr);
-        mdl.draw_cnt = static_cast<GLuint>(pos_vtx.size()); // number of vertices
-        mdl.primitive_cnt = mdl.draw_cnt - 2; // number of primitives
-        models.insert(std::pair<std::string, GLModel>("Square", mdl));
-	}
     
     void setup_vao() {
         setup_vao_square();
@@ -134,11 +135,9 @@ namespace GraphicImplementation {
     }
 
     void setup_shdr() {
-        std::cout << "shdr should be registered \n";
-        std::vector<std::pair<GLenum, std::string>> shdr_files{
+        std::vector<std::pair<GLenum, std::string>> shdr_files {
         std::make_pair(GL_VERTEX_SHADER, "shaders/OpenGLEngine.vert"),
-        std::make_pair(GL_FRAGMENT_SHADER, "shaders/OpenGLEngine.frag")
-        }; 
+        std::make_pair(GL_FRAGMENT_SHADER, "shaders/OpenGLEngine.frag")}; 
 
         GLSLShader shdr_pgm;
         shdr_pgm.CompileLinkValidate(shdr_files);
@@ -148,8 +147,17 @@ namespace GraphicImplementation {
             std::cout << shdr_pgm.GetLog() << "\n";
             std::exit(EXIT_FAILURE);
         }
+
         shdrpgms.insert(std::pair<std::string, GLSLShader>("Default", shdr_pgm));   
     }
+
+
+    /*
+    $(SolutionDir)images will be the default location for all image files.
+    Standardize image size to be 256 texels width and height with each texel 
+    representing 32-bit RGBA value.
+    */
+
 
     //void create_square_instance() {
     //    /*GLObject tem_obj;

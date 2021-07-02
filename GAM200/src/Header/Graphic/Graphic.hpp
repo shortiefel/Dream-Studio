@@ -21,14 +21,29 @@ Technology is prohibited.
 #include "Graphic/glslshader.hpp" // for GLSLShader
 #include "pch.hpp"
 #include "Math/MathLib.hpp"
+#include "Math/Vector2D.hpp"
 
 namespace GraphicImplementation {
     struct GLModel {
-        GLenum primitive_type = GLenum{}; // which OpenGL primitive to be rendered?
+        GLenum primitive_type = GLenum{};
         GLuint primitive_cnt = GLuint{};
         GLuint vaoid = GLuint{}; // handle to VAO
         GLuint draw_cnt = GLuint{}; // how many elements of primitive of type
     };
+
+    // container that contains 3 different vectors of vertex coordinates
+    // Object Position, Color and Texture Coordinates respectively
+    struct GLVertCont {
+        MathD::Vec2 ObjPos_vtx;
+        MathD::Vec3 Clr_vtx;
+        MathD::Vec2 TexPos_vtx;
+    };
+    
+    //struct GLSprite {
+    //    GLuint spriteWidth, spriteHeight;
+    //    GLuint spritesheetWidth, spritesheetHeight;
+    //    MathD::Vec2 position;
+    //};
 
     //struct GLObject {
     //    // orientation.x and orientation.y will be angle_disp and angle_speed respectively
@@ -53,6 +68,7 @@ namespace GraphicImplementation {
     //    void update(GLdouble delta_time);
     //};
     
+
     extern std::map<std::string, GLModel> models;
     extern std::map<std::string, GLSLShader> shdrpgms;
     //static std::map<std::string, GLObject> objects;

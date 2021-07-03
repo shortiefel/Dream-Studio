@@ -38,12 +38,13 @@ Technology is prohibited.
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/mono-config.h>
 #include <string>
-#if 1
+#if 0
 MonoString*
 getMessage();
 
 int main(int argc, char* argv)
 {
+	//Relative path of where to find Mono folders
 	std::string libDir = "External Resources/Mono/lib", etcDir = "External Resources/Mono/etc";
 	mono_set_dirs(libDir.c_str(), etcDir.c_str());
 

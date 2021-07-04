@@ -17,7 +17,8 @@ Technology is prohibited.
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
-#include "Math/Vector.hpp"
+#include "Graphic/Graphic.hpp"
+#include "Math/MathLib.hpp"
 
 //Scale value for circle in both axis is same
 struct Transform {
@@ -26,9 +27,19 @@ struct Transform {
 	float rotation = float{}; // in degree
 	int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
+	MathD::Mat3 mdl_to_ndc_xform;
+
+	std::map<std::string, GraphicImplementation::GLModel>::iterator mdl_ref = GraphicImplementation::models.begin();
+	std::map<std::string, GLSLShader>::iterator shd_ref = GraphicImplementation::shdrpgms.begin();
+
 	Transform() = default;
-	Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, float tAngle, int tLayer = 0) :
-		pos{ tPos }, scale{ tScale }, rotation{ tAngle }, layer{ tLayer } {}
+	Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, float tAngle, std::string shape = "Square", std::string shader = "Default", int tLayer = 0) :
+		pos{ tPos }, scale{ tScale }, rotation{ tAngle }, 
+		mdl_ref{ GraphicImplementation::models.find(shape) },
+		shd_ref{ GraphicImplementation::shdrpgms.find(shader) },
+		layer{ tLayer } {}
+	Transform(const Transform&) = default;
+	Transform& operator=(const Transform&) = default;
 };
 
 #endif

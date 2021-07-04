@@ -61,6 +61,9 @@ struct Collider {
 	//Change of type constructor: Copy an existing Collider but with a different type
 	Collider(ColliderType c, MathD::Vec2 tPos, MathD::Vec2 tScale, bool moveable, bool tTrigger) :
 		cType{ c }, pos{ tPos }, scale{ tScale }, isMoveable{ moveable }, isTrigger{ tTrigger } {}
+
+	Collider(const Collider&) = default;
+	Collider& operator=(const Collider&) = default;
 };
 
 

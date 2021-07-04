@@ -34,6 +34,10 @@ Technology is prohibited.
 #include <vector>
 #include <map>
 #include <array>
+#include <unordered_map>
+#include <string>
+
+#include <memory>
 
 #include <functional>
 

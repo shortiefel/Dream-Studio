@@ -26,6 +26,8 @@ struct Camera2D {
 
     Camera2D(bool active = true, int ht = 1000) :
         isActive{ active }, height{ ht } {}
+    Camera2D(const Camera2D&) = default;
+    Camera2D& operator=(const Camera2D&) = default;
 };
 
 #endif

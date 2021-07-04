@@ -43,6 +43,15 @@
     <ClCompile Include="src\Code\System\CameraSystem.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
+    <ClCompile Include="External Resources\stb_image\stb_image.cpp">
+      <Filter>Stb_Image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Management\ResourceManager.cpp">
+      <Filter>Source\Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Component\Graphics\TextureComponent.cpp">
+      <Filter>Source\Graphic</Filter>
+
     <ClCompile Include="External Resources\include\Imgui\imgui.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
@@ -177,9 +186,6 @@
     <ClInclude Include="src\Header\Graphic\Graphic.hpp">
       <Filter>Include\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Component\Graphics\RendererComponent.hpp">
-      <Filter>Include\Component\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\Math\MathLib.hpp">
       <Filter>Include\Math</Filter>
     </ClInclude>
@@ -213,6 +219,14 @@
     <ClInclude Include="src\Header\System\SystemList.hpp">
       <Filter>Include\System</Filter>
     </ClInclude>
+    <ClInclude Include="External Resources\stb_image\stb_image.h">
+      <Filter>Stb_Image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Component\Graphics\TextureComponent.hpp">
+      <Filter>Include\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Management\ResourceManager.hpp">
+      <Filter>Include\Managment</Filter>
     <ClInclude Include="External Resources\include\Imgui\imconfig.h">
       <Filter>Imgui</Filter>
     </ClInclude>
@@ -305,6 +319,34 @@
     <Filter Include="Include\Script">
       <UniqueIdentifier>{483481f8-2f2d-4834-a45e-21413a89b39a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Graphic\Shaders">
+      <UniqueIdentifier>{8169d9dd-1047-4e48-91cc-1295193e02e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stb_Image">
+      <UniqueIdentifier>{18cf391c-2cbe-4d8f-b026-a7f14117eea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{169c5f57-7ef4-4656-9854-1c90c207348b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Managment">
+      <UniqueIdentifier>{20b52236-3f5d-44c3-a7c9-d9ca3a35f4d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Managment">
+      <UniqueIdentifier>{36c97a5d-0a5f-4538-b61d-0a947442a04b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\OpenGLEngine.frag">
+      <Filter>Source\Graphic\Shaders</Filter>
+    </None>
+    <None Include="shaders\OpenGLEngine.vert">
+      <Filter>Source\Graphic\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\image1.png">
+      <Filter>Assets</Filter>
+    </Image>
     <Filter Include="Imgui">
       <UniqueIdentifier>{dc605824-af16-4126-9a05-3f8c65a19af9}</UniqueIdentifier>
     </Filter>

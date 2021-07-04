@@ -18,7 +18,12 @@ Technology is prohibited.
 #define SCRIPT_COMPONENT_HPP
 
 #include "Script/Script.hpp"
+#include <string>
 
 using Custom_Script = std::shared_ptr<Script>;
+
+struct CSharpScript {
+	std::string className = std::string{};
+};
 
 #endif

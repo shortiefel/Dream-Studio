@@ -18,9 +18,9 @@ Technology is prohibited.
 #include "Layer/GUILayer.hpp"
 #include "pch.hpp"
 
-#include "../../../External Resources/Imgui/imgui.h"
-#include "../../../External Resources/Imgui/imgui_impl_glfw.h"
-#include "../../../External Resources/Imgui/imgui_impl_opengl3.h"
+#include "../../../External Resources/Include/Imgui/imgui.h"
+#include "../../../External Resources/Include/Imgui/imgui_impl_glfw.h"
+#include "../../../External Resources/Include/Imgui/imgui_impl_opengl3.h"
 
 //Static ----------------------------------------------------------------------------------------
 GUILayer* GUILayer::m_instance;

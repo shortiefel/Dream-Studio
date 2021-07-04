@@ -39,6 +39,7 @@ void Factory::Create() {
     gCoordinator.RegisterComponent<Collider>();
     gCoordinator.RegisterComponent<Custom_Script>();
     gCoordinator.RegisterComponent<Texture>();
+    //gCoordinator.RegisterComponent<CSharpScript>();
 
     CameraSystem::Create(gCoordinator.RegSystem<CameraSystem>());
     GraphicSystem::Create(gCoordinator.RegSystem<GraphicSystem>());

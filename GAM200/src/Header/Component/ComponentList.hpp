@@ -21,6 +21,6 @@ Technology is prohibited.
 #include "Component/Graphics/TransformComponent.hpp"
 #include "Component/Physics/ColliderComponent.hpp"
 #include "Component/Script/ScriptComponent.hpp"
-#include "Component/Graphics/RendererComponent.hpp"
+#include "Component/Graphics/TextureComponent.hpp"
 
 #endif

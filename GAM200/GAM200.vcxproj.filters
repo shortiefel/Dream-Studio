@@ -67,7 +67,10 @@
     <ClCompile Include="External Resources\stb_image\stb_image.cpp">
       <Filter>Stb_Image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Header\Component\Graphics\TextureComponent.cpp">
+    <ClCompile Include="src\Code\Management\ResourceManager.cpp">
+      <Filter>Source\Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Code\Component\Graphics\TextureComponent.cpp">
       <Filter>Source\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -204,9 +207,6 @@
     <ClInclude Include="src\Header\Graphic\Graphic.hpp">
       <Filter>Include\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\Header\Component\Graphics\RendererComponent.hpp">
-      <Filter>Include\Component\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Header\Math\MathLib.hpp">
       <Filter>Include\Math</Filter>
     </ClInclude>
@@ -245,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="src\Header\Component\Graphics\TextureComponent.hpp">
       <Filter>Include\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Header\Management\ResourceManager.hpp">
+      <Filter>Include\Managment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +325,12 @@
     </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>{169c5f57-7ef4-4656-9854-1c90c207348b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Managment">
+      <UniqueIdentifier>{20b52236-3f5d-44c3-a7c9-d9ca3a35f4d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Managment">
+      <UniqueIdentifier>{36c97a5d-0a5f-4538-b61d-0a947442a04b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

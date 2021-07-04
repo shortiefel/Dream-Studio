@@ -24,6 +24,8 @@ Technology is prohibited.
 #include "Layer/LayerStack.hpp"
 #include "Layer/GUILayer.hpp"
 
+#include "Management/ResourceManager.hpp"
+
 #include "Factory/Factory.hpp"
 #include "GameScene.hpp"
 
@@ -52,6 +54,8 @@ void Application::Create() {
 
     Factory::Create();
 
+    ResourceManager::Create();
+
     GameScene::Create();
     GameScene::Play(); //Temporary placement (will be linked to GUI play button)
 }
@@ -79,6 +83,7 @@ void Application::Destroy() {
 
 Application::~Application() {
     GameScene::Destroy(); //Destroy currently active game scene
+    ResourceManager::Destroy();
     GUILayer::Destroy();
     LayerStack::Destroy();
     Window::Destroy();

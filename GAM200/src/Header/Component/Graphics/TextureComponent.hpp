@@ -6,7 +6,10 @@
 
 class Texture {
 public:
-	Texture(const std::string&);
+	Texture(const std::string);
+	Texture() = default;
+	Texture(const Texture&) = default;
+	Texture& operator= (const Texture&) = default;
 	~Texture();
 
 	void Bind(GLuint slot = 0) const;
@@ -17,10 +20,11 @@ public:
 	inline GLuint getTexObj() const { return texobj_hdl; }
 
 private:
-	GLuint texobj_hdl;
-	std::string filepath;
-	unsigned char* localBuffer;
-	GLint width, height, BPP; //BPP - bits per pixel
+	GLuint texobj_hdl = GLuint{};
+	//I dont think u need to store anything below this line
+	std::string filepath = "";
+	
+	GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
 };
 
 #endif

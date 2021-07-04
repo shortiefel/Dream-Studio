@@ -24,11 +24,6 @@ Technology is prohibited.
 //Systems
 #include "System/SystemList.hpp"
 
-#define CREATE_SHAPE(str, type, mv) \
-gCoordinator.AddComponent(ent, \
-Renderer2D{ GraphicImplementation::models.find(str),  GraphicImplementation::shdrpgms.find("Default") }); \
-gCoordinator.AddComponent(ent, \
-Collider{ type, mv });
 
 //Entity ent;
 //Entity ent2;
@@ -41,9 +36,9 @@ void Factory::Create() {
     gCoordinator.Init();
     gCoordinator.RegisterComponent<Camera2D>();
     gCoordinator.RegisterComponent<Transform>();
-    gCoordinator.RegisterComponent<Renderer2D>();
     gCoordinator.RegisterComponent<Collider>();
     gCoordinator.RegisterComponent<Custom_Script>();
+    gCoordinator.RegisterComponent<Texture>();
 
     CameraSystem::Create(gCoordinator.RegSystem<CameraSystem>());
     GraphicSystem::Create(gCoordinator.RegSystem<GraphicSystem>());
@@ -56,7 +51,7 @@ void Factory::Create() {
 
     signature.reset();
     signature.set(gCoordinator.GetComType<Transform>());
-    signature.set(gCoordinator.GetComType<Renderer2D>());
+    signature.set(gCoordinator.GetComType<Texture>());
     gCoordinator.setSystemSignature<GraphicSystem>(signature);
 
     signature.reset();
@@ -74,9 +69,9 @@ void Factory::InstantiateSquare(MathD::Vec2 pos, MathD::Vec2 scale, bool isMovea
     Entity ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent,
-        Transform{ pos, scale, 0.f });
-
-    CREATE_SHAPE("Square", ColliderType::SQUARE, isMoveable)
+        Transform{ pos, scale, 0.f, "Square" });
+    gCoordinator.AddComponent(ent,
+        Collider{ ColliderType::SQUARE, isMoveable });
 }
 
 //Function will be called when GUI inspector request a Circle entity
@@ -84,7 +79,7 @@ void Factory::InstantiateCircle(MathD::Vec2 pos, MathD::Vec2 scale, bool isMovea
     Entity ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent,
-        Transform{ pos, scale, 0.f });
-
-    CREATE_SHAPE("Circle", ColliderType::CIRCLE, isMoveable)
+        Transform{ pos, scale, 0.f, "Circle" });
+    gCoordinator.AddComponent(ent,
+        Collider{ ColliderType::CIRCLE, isMoveable });
 }

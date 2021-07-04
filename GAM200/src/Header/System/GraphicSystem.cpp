@@ -22,27 +22,25 @@ Technology is prohibited.
 
 #include "Coordinator/Coordinator.hpp"
 #include "Component/Graphics/TransformComponent.hpp"
-#include "Component/Graphics/RendererComponent.hpp"
 #include "Component/Graphics/TextureComponent.hpp"
 
 #include "Graphic/Graphic.hpp"
 
 #include "Math/Matrix.hpp"
-
+#include "../../External Resources/stb_image/stb_image.h" //-----remove
 extern Coordinator gCoordinator;
 std::shared_ptr<GraphicSystem> GraphicSystem::GS;
 
 GLuint setup_texobj(std::string);
-
+GLuint texobj_hdl; //-----remove
 void GraphicSystem::Update(float dt) {
 	//For all entities in GraphicSystem
 	
 	for (auto const& entity : GS->mEntities) {
 		auto& transform = gCoordinator.GetCom<Transform>(entity);
-		auto& renderer = gCoordinator.GetCom<Renderer2D>(entity);
-
+		
 		//Update the matrix (model to ndc)
-		renderer.mdl_to_ndc_xform = { MathD::Vec3(transform.scale.x, 0, 0), 
+		transform.mdl_to_ndc_xform = { MathD::Vec3(transform.scale.x, 0, 0),
 									  MathD::Vec3(0, transform.scale.y, 0),
 									  MathD::Vec3(0, 0, 1.f) };
 
@@ -52,16 +50,16 @@ void GraphicSystem::Update(float dt) {
 							 MathD::Vec3(-sin(rad), cos(rad), 0), 
 							 MathD::Vec3(0, 0, 1.f) };
 
-		renderer.mdl_to_ndc_xform = temMat3 * renderer.mdl_to_ndc_xform;
+		transform.mdl_to_ndc_xform = temMat3 * transform.mdl_to_ndc_xform;
 		
 		temMat3 = { MathD::Vec3(1.f, 0, 0), 
 					MathD::Vec3(0, 1.f, 0), 
 					MathD::Vec3(transform.pos.x, transform.pos.y, 1.f) };
 
-		renderer.mdl_to_ndc_xform = temMat3 * renderer.mdl_to_ndc_xform;
+		transform.mdl_to_ndc_xform = temMat3 * transform.mdl_to_ndc_xform;
 
 		// world to ndc * mdl to world
-		renderer.mdl_to_ndc_xform = CameraSystem::GetTransform() * renderer.mdl_to_ndc_xform;
+		transform.mdl_to_ndc_xform = CameraSystem::GetTransform() * transform.mdl_to_ndc_xform;
 	}
 }
 
@@ -69,21 +67,28 @@ void GraphicSystem::Render() {
 	//For all entities in PhysicSystem
 	for (auto const& entity : GS->mEntities) {
 		auto& transform = gCoordinator.GetCom<Transform>(entity);
-		auto& renderer = gCoordinator.GetCom<Renderer2D>(entity);
+		auto& texture = gCoordinator.GetCom<Texture>(entity);
 
-		glBindVertexArray(renderer.mdl_ref->second.vaoid);
+		glBindVertexArray(transform.mdl_ref->second.vaoid);
 
 		// leaving it here atm, need to change to texture tag with model(?)
 		// have not call ~texture() yet
 		// frames super low, (no texture > test2 > test1) 
 		// assumption is bc of doing texture loading in render
-		Texture texture("Assets/Textures/test2.png");
-		texture.Bind(6);
+		//Texture texture("Assets/Textures/test2.png");
+		//texture.Bind(6);
+		glBindTextureUnit(6, texture.getTexObj());
+		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 		// load shader program in use by this object
-		renderer.shd_ref->second.Use();
+		//renderer.shd_ref->second.Use();
+		glUseProgram(transform.shd_ref->second.GetHandle());
 
-		GLuint tex_loc = glGetUniformLocation(renderer.shd_ref->second.GetHandle(), "uTex2d");
+		GLuint tex_loc = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uTex2d");
 		glUniform1i(tex_loc, 6);
 		if (tex_loc == -1) {
 			std::cout << "uTex2d variable doesn't exist!!!\n";
@@ -94,22 +99,22 @@ void GraphicSystem::Render() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// bind VAO of this object's model
-		glBindVertexArray(renderer.mdl_ref->second.vaoid);
+		//glBindVertexArray(renderer.mdl_ref->second.vaoid);
 		
-		GLint uniform_var_loc1 = glGetUniformLocation(renderer.shd_ref->second.GetHandle(), "uModel_to_NDC");
-		glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, MathD::value_ptr(renderer.mdl_to_ndc_xform));
+		GLint uniform_var_loc1 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uModel_to_NDC");
+		glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, MathD::value_ptr(transform.mdl_to_ndc_xform));
 		if (uniform_var_loc1 == -1) {
 			std::cout << "uModel_to_NDC variable doesn't exist!!!\n";
 			std::exit(EXIT_FAILURE);
 		}
 
 		//glDrawElements(mdl_ref->second.primitive_type, mdl_ref->second.draw_cnt, GL_UNSIGNED_SHORT, NULL);
-		glDrawArrays(renderer.mdl_ref->second.primitive_type, 0, renderer.mdl_ref->second.draw_cnt);
+		glDrawArrays(transform.mdl_ref->second.primitive_type, 0, transform.mdl_ref->second.draw_cnt);
 
 		// unbind VAO and unload shader program
 		texture.Unbind();
 		glBindVertexArray(0);
-		renderer.shd_ref->second.UnUse();
+		transform.shd_ref->second.UnUse();
 	}
 }
 

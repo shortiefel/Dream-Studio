@@ -52,25 +52,25 @@ void GameScene::Create() {
     Entity ent = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent,
-        Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{20.f,20.f}, 0.f });
-    gCoordinator.AddComponent(ent,
-        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+        Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{20.f,20.f}, 0.f, "Square" });
     gCoordinator.AddComponent(ent,
             Collider{ ColliderType::SQUARE, true });
     gCoordinator.AddComponent(ent,
         Custom_Script{ std::make_shared<PlayerController>() });
+    gCoordinator.AddComponent(ent,
+        Texture{ "Assets/Textures/test1.png" });
 
 
     Entity ent1 = gCoordinator.createEntity();
     gCoordinator.AddComponent(
         ent1,
-        Transform{ MathD::Vec2{-100.f,0.f}, MathD::Vec2{20.f,40.f}, 0.f });
-    gCoordinator.AddComponent(ent1,
-        Renderer2D{ GraphicImplementation::models.find("Square"),  GraphicImplementation::shdrpgms.find("Default") });
+        Transform{ MathD::Vec2{-100.f,0.f}, MathD::Vec2{100.f,100.f}, 0.f, "Square" });
     gCoordinator.AddComponent(ent1,
         Collider{ ColliderType::SQUARE, true });
     gCoordinator.AddComponent(ent1,
         Custom_Script{ std::make_shared<AnotherController>() });
+    gCoordinator.AddComponent(ent1,
+        Texture{ "Assets/Textures/test2.png" });
 
 
 

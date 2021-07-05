@@ -65,6 +65,10 @@ void Factory::Create() {
     gCoordinator.setSystemSignature<ScriptSystem>(signature);
 }
 
+//Prefix options------------------------------------------------------------------------------
+
+//Create blank transform
+
 //Function will be called when GUI inspector request a Square entity
 void Factory::InstantiateSquare(MathD::Vec2 pos, MathD::Vec2 scale, bool isMoveable) {
     Entity ent = gCoordinator.createEntity();
@@ -84,3 +88,5 @@ void Factory::InstantiateCircle(MathD::Vec2 pos, MathD::Vec2 scale, bool isMovea
     gCoordinator.AddComponent(ent,
         Collider{ ColliderType::CIRCLE, isMoveable });
 }
+
+//------------------------------------------------------------------------------

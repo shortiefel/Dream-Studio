@@ -255,6 +255,9 @@
     <ClInclude Include="src\Header\TimeClock\TimeClock.hpp">
       <Filter>Source\TimeClock</Filter>
     </ClInclude>
+    <ClInclude Include="src\Header\DreamEngine.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\OpenGLEngine.frag">

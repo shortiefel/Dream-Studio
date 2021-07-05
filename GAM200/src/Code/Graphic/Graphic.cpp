@@ -136,8 +136,8 @@ namespace GraphicImplementation {
 
     void setup_shdr() {
         std::vector<std::pair<GLenum, std::string>> shdr_files {
-        std::make_pair(GL_VERTEX_SHADER, "Shader/OpenGLEngine.vert"),
-        std::make_pair(GL_FRAGMENT_SHADER, "Shader/OpenGLEngine.frag")}; 
+        std::make_pair(GL_VERTEX_SHADER, "shaders/OpenGLEngine.vert"),
+        std::make_pair(GL_FRAGMENT_SHADER, "shaders/OpenGLEngine.frag")}; 
 
         GLSLShader shdr_pgm;
         shdr_pgm.CompileLinkValidate(shdr_files);

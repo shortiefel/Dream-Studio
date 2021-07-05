@@ -84,6 +84,8 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)/External Resources/include/x64;$(SolutionDir)/src/Header;$(SolutionDir)/External Resources/include/Mono;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/x64;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -149,9 +151,14 @@ copy "$(SolutionDir)External Resources\lib\x86\glew32.dll" "$(TargetDir)glew32.d
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)External Resources\lib\x64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+      <Command>if not exist $(TargetDir)Shader mkdir $(TargetDir)Shader\
+copy "$(SolutionDir)Shader\OpenGLEngine.frag" "$(TargetDir)Shader\OpenGLEngine.frag" /Y
+copy "$(SolutionDir)Shader\OpenGLEngine.vert" "$(TargetDir)Shader\OpenGLEngine.vert" /Y
+copy "$(SolutionDir)External Resources\lib\x64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
 copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\x64\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+
+
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -42,7 +42,16 @@ void Window::Destroy() {
 	glfwTerminate();
 
 	LOG_INSTANCE("Window destroyed");
+}
 
+void Window::DisplayFPS(int fps) {
+	std::string stitle = { w_data.title };
+	stitle += " | FPS: ";
+	char buffer[5];
+	sprintf_s(buffer, "%d", fps);
+	stitle += buffer;
+
+	glfwSetWindowTitle(glfw_window, stitle.c_str());
 }
 
 //Create instance of window class

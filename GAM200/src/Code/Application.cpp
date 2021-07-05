@@ -25,6 +25,7 @@ Technology is prohibited.
 #include "Layer/GUILayer.hpp"
 
 #include "Management/ResourceManager.hpp"
+#include "TimeClock/TimeClock.hpp"
 
 #include "Factory/Factory.hpp"
 #include "GameScene.hpp"
@@ -34,7 +35,9 @@ Technology is prohibited.
 Application* Application::s_app_instance = 0;
 //GLFWwindow* Application::s_glfw_window = 0;
 bool Application::app_run_bool = true;
+float Application::m_lastframeTime = 0.f;
 
+TimeClock Application::timeClock;
 
 void Application::Create() {
     if (s_app_instance) LOG_WARNING("An instance of application already exist!");
@@ -64,12 +67,18 @@ void Application::Create() {
 void Application::Update() {
     //Temporary loop
     while (app_run_bool) {
+        float current_time = static_cast<float>(glfwGetTime());
+        timeClock.UpdateTimeClock(current_time, m_lastframeTime);
+        m_lastframeTime = current_time;
+
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(1, 0, 1, 1);
 
-        GameScene::Update(0.f);
+        GameScene::Update(timeClock.GetSec());
 
         Window::Update();
+
+        Window::DisplayFPS(timeClock.GetFPS());
     } 
 }
 

@@ -179,15 +179,14 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-
-    <ClInclude Include="External Resources\Imgui\imconfig.h" />
-    <ClInclude Include="External Resources\Imgui\imgui.h" />
-    <ClInclude Include="External Resources\Imgui\imgui_impl_glfw.h" />
-    <ClInclude Include="External Resources\Imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="External Resources\Imgui\imgui_internal.h" />
-    <ClInclude Include="External Resources\Imgui\imstb_rectpack.h" />
-    <ClInclude Include="External Resources\Imgui\imstb_textedit.h" />
-    <ClInclude Include="External Resources\Imgui\imstb_truetype.h" />
+    <ClInclude Include="External Resources\include\Imgui\imconfig.h" />
+    <ClInclude Include="External Resources\include\Imgui\imgui.h" />
+    <ClInclude Include="External Resources\include\Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="External Resources\include\Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="External Resources\include\Imgui\imgui_internal.h" />
+    <ClInclude Include="External Resources\include\Imgui\imstb_rectpack.h" />
+    <ClInclude Include="External Resources\include\Imgui\imstb_textedit.h" />
+    <ClInclude Include="External Resources\include\Imgui\imstb_truetype.h" />
     <ClInclude Include="External Resources\stb_image\stb_image.h" />
     <ClInclude Include="src\Code\PlayerController.hpp" />
     <ClInclude Include="src\Header\Application.hpp" />
@@ -217,7 +216,6 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\Layer\GUILayer.hpp" />
     <ClInclude Include="src\Header\Layer\Layer.hpp" />
     <ClInclude Include="src\Header\Layer\LayerStack.hpp" />
-    <ClInclude Include="src\Header\Main.hpp" />
     <ClInclude Include="src\Header\Management\ResourceManager.hpp" />
     <ClInclude Include="src\Header\Math\MathLib.hpp" />
     <ClInclude Include="src\Header\Math\Matrix.hpp" />
@@ -238,17 +236,17 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
     <ClInclude Include="src\Header\System\SystemList.hpp" />
     <ClInclude Include="src\Header\System\SystemManager.hpp" />
     <ClInclude Include="src\Header\targetver.hpp" />
+    <ClInclude Include="src\Header\TimeClock\TimeClock.hpp" />
     <ClInclude Include="src\Header\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
-
-    <ClCompile Include="External Resources\Imgui\imgui.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_demo.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_draw.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_tables.cpp" />
-    <ClCompile Include="External Resources\Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_demo.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_draw.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_tables.cpp" />
+    <ClCompile Include="External Resources\include\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="External Resources\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Code\Application.cpp" />
     <ClCompile Include="src\Code\Component\Graphics\TextureComponent.cpp" />
@@ -271,9 +269,6 @@ copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.d
   <ItemGroup>
     <None Include="shaders\OpenGLEngine.frag" />
     <None Include="shaders\OpenGLEngine.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="images\image1.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

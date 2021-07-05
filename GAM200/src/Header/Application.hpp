@@ -31,6 +31,7 @@ Technology is prohibited.
 class Event;
 class WindowCloseEvent;
 struct GLFWwindow;
+class TimeClock;
 
 class Application {
 public:
@@ -48,6 +49,9 @@ private:
 	static Application* s_app_instance;
 	//static GLFWwindow* s_glfw_window;
 	static bool app_run_bool;
+	static float m_lastframeTime;
+
+	static TimeClock timeClock;
 
 	Application() = default;
 };

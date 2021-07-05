@@ -9,7 +9,7 @@ This file is only for testing purposes and will probably not be used
 //-----------------------------------------------
 #include "Coordinator/Coordinator.hpp"
 extern Coordinator gCoordinator;
-
+#define SPEED 200.f
 //-----------------------------------------------
 
 class PlayerController : public Script {
@@ -18,19 +18,19 @@ public:
 	virtual void Update(const Entity& ent, float dt) override {
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_W) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.y += 2.f;
+			transform1.pos.y += SPEED * dt;
 		}
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_S) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.y -= 2.f;
+			transform1.pos.y -= SPEED * dt;
 		}
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_A) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.x -= 2.f;
+			transform1.pos.x -= SPEED * dt;
 		}
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_D) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.x += 2.f;
+			transform1.pos.x += SPEED * dt;
 		}
 	}
 
@@ -43,19 +43,19 @@ public:
 	virtual void Update(const Entity& ent, float dt) override {
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_I) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.y += 2.f;
+			transform1.pos.y += SPEED * dt;
 		}
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_K) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.y -= 2.f;
+			transform1.pos.y -= SPEED * dt;
 		}
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_J) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.x -= 2.f;
+			transform1.pos.x -= SPEED * dt;
 		}
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_L) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.x += 2.f;
+			transform1.pos.x += SPEED * dt;
 		}
 	}
 
@@ -68,19 +68,19 @@ public:
 	virtual void Update(const Entity& ent, float dt) override {
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_UP) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.y += 2.f;
+			transform1.pos.y += SPEED * dt;
 		}
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_DOWN) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.y -= 2.f;
+			transform1.pos.y -= SPEED * dt;
 		}
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_LEFT) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.x -= 2.f;
+			transform1.pos.x -= SPEED * dt;
 		}
 		if (glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_RIGHT) == GLFW_PRESS) {
 			auto& transform1 = gCoordinator.GetCom<Transform>(ent);
-			transform1.pos.x += 2.f;
+			transform1.pos.x += SPEED * dt;
 		}
 	}
 

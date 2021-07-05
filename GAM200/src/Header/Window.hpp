@@ -39,6 +39,8 @@ public:
 	static inline unsigned int GetWidth()     { return w_data.width; }
 	static inline unsigned int GetHeight()    { return w_data.height; }
 
+	static void DisplayFPS(int fps);
+
 	static void Update();
 
 	static void SetEventCallBack(const std::function<void(Event&)> callback);

@@ -70,6 +70,7 @@ void Application::Update() {
         float current_time = static_cast<float>(glfwGetTime());
         timeClock.UpdateTimeClock(current_time, m_lastframeTime);
         m_lastframeTime = current_time;
+        Window::DisplayFPS(timeClock.GetFPS());
 
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(1, 0, 1, 1);
@@ -78,7 +79,7 @@ void Application::Update() {
 
         Window::Update();
 
-        Window::DisplayFPS(timeClock.GetFPS());
+        
     } 
 }
 

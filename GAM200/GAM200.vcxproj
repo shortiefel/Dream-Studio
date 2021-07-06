@@ -151,7 +151,6 @@ copy "$(SolutionDir)External Resources\lib\x86\glew32.dll" "$(TargetDir)glew32.d
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)External Resources\lib\x64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
 copy "$(SolutionDir)External Resources\lib\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y
-copy "$(SolutionDir)External Resources\lib\x64\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -27,7 +27,7 @@ Technology is prohibited.
 #include "Graphic/Graphic.hpp"
 
 #include "Math/Matrix.hpp"
-#include "../../External Resources/stb_image/stb_image.h" //-----remove
+//#include "../../External Resources/include/stb_image/stb_image.h" //-----remove
 extern Coordinator gCoordinator;
 std::shared_ptr<GraphicSystem> GraphicSystem::GS;
 

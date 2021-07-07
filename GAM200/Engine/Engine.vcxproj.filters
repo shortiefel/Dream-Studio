@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\ECS">
+      <UniqueIdentifier>{694982dd-8adb-4315-9cb7-b81b15f4fd3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphic">
+      <UniqueIdentifier>{90cd0000-6091-4e77-8f9d-bb0e17660e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layer">
+      <UniqueIdentifier>{1fd5cfba-4ec3-4ff9-9bdd-947f73e758bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Management">
+      <UniqueIdentifier>{b2987e44-4388-4574-9f1a-1ec44e9c1c13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Script">
+      <UniqueIdentifier>{9b9f8deb-72be-47cd-a369-fe0fadc7aa3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physic">
+      <UniqueIdentifier>{caa0de69-3b99-47cb-80e2-42ee504354e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{55979778-d0ee-48a8-86ab-90b4e8b6ef2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TimeClock">
+      <UniqueIdentifier>{12e76191-510e-48d8-8bb4-72fed4d781ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component">
+      <UniqueIdentifier>{f002ab8f-8e69-4a54-a0ba-614ba3c9ee08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\System">
+      <UniqueIdentifier>{477c246d-46cc-4f71-8b0b-ed7e91e3f186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS">
+      <UniqueIdentifier>{38484ae9-3121-45a0-abea-b1fc673760d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component">
+      <UniqueIdentifier>{93455636-adec-49a7-9448-b3e84d83313c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\System">
+      <UniqueIdentifier>{c466bcaa-2ed7-4e90-9b3f-ffb00add535e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Entity">
+      <UniqueIdentifier>{33f523f1-a77d-49d3-91ea-f208b0ce4b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Graphic">
+      <UniqueIdentifier>{8fb2487f-b91c-42d2-85f1-a9885228a4c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Script">
+      <UniqueIdentifier>{89b27efc-c0ec-43ed-88c5-890b7914020d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Physic">
+      <UniqueIdentifier>{af952700-4ed5-4a9b-8589-d402e60aaab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{2c324679-896f-4828-b398-d29db448b296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Event">
+      <UniqueIdentifier>{a40e8163-c32f-485f-8f89-d04e90157c25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Debug tools">
+      <UniqueIdentifier>{967eb37c-ba1b-4926-9892-0ae12898aab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphic">
+      <UniqueIdentifier>{ea95df9b-ffaa-4e2d-a678-7dbdd6ee8e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Layer">
+      <UniqueIdentifier>{67ed461d-94b3-4e15-9a95-1b844bddd92b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Management">
+      <UniqueIdentifier>{2d55c4e4-2a75-44e8-9b75-7171204c14ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{f6ab3394-9dd0-462f-84fb-026904b8e317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Script">
+      <UniqueIdentifier>{586ac100-6351-458b-8cb4-92751512eff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Physic">
+      <UniqueIdentifier>{565117d0-0c49-459e-9360-9b6b78311101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Resources">
+      <UniqueIdentifier>{0a2d9f69-5915-4047-b1bd-cca7bc37067c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Resources\Stb">
+      <UniqueIdentifier>{7fc0ac53-e215-4beb-99b6-3b02ddc75ec2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\Code\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp">
+      <Filter>Source Files\ECS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\PhysicSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Factory.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\glslshader.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\Graphic.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Layer\LayerStack.cpp">
+      <Filter>Source Files\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Management\ResourceManager.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Scene\GameScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Physic\Physic.cpp">
+      <Filter>Source Files\Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Script\ScriptEmbed.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp">
+      <Filter>External Resources\Stb</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
+      <Filter>Header Files\Debug tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Coordinator.hpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Factory.hpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp">
+      <Filter>Header Files\ECS\Component\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp">
+      <Filter>Header Files\ECS\Component\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp">
+      <Filter>Header Files\ECS\Component\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp">
+      <Filter>Header Files\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\GraphicSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\PhysicSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\System.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\SystemManager.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\Event.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\EventDispatcher.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\KeyEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\MouseEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\WindowEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\MathLib.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Matrix.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Matrix3.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector2D.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector3D.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\TimeClock\TimeClock.hpp">
+      <Filter>Header Files\TimeClock</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\glslshader.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\Graphic.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Layer\Layer.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Management\ResourceManager.hpp">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Physic\Physic.hpp">
+      <Filter>Header Files\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\Script.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\ScriptEmbed.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Scene\GameScene.hpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Application.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\DreamEngine.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\framework.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\pch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Resource.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\targetver.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Window.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\stb_image\stb_image.h">
+      <Filter>External Resources\Stb</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

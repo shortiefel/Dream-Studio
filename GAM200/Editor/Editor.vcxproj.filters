@@ -25,9 +25,6 @@
     <Filter Include="Source Files\Layer">
       <UniqueIdentifier>{e8cd3e07-1f52-4de7-8ceb-e3faa3b9eaf2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External Resources\Engine">
-      <UniqueIdentifier>{9775eb69-4834-4917-9dc3-42e636e83488}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\Imgui\imconfig.h">
@@ -56,9 +53,6 @@
     </ClInclude>
     <ClInclude Include="Editor\Header\Layer\GUILayer.hpp">
       <Filter>Header Files\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\Engine\Header\DreamEngine.hpp">
-      <Filter>External Resources\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

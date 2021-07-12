@@ -21,17 +21,19 @@ Technology is prohibited.
 
 struct GLFWwindow;
 
-class GUILayer : public Layer{
-public:
-	static bool Create(GLFWwindow* window, const char* glsl_version); 
-	static void Destroy();
-	inline static GUILayer* Get() { return m_instance; }
+namespace Editor {
+	class GUILayer : public Engine::Layer {
+	public:
+		static bool Create(GLFWwindow* window, const char* glsl_version);
+		static void Destroy();
+		inline static GUILayer* Get() { return m_instance; }
 
-	virtual void Draw() override;
-	virtual void Update() override;
-	virtual bool OnEvent(Event& e) override;
-private:
-	static GUILayer* m_instance;
-};
+		virtual void Draw() override;
+		virtual void Update() override;
+		virtual bool OnEvent(Engine::Event& e) override;
+	private:
+		static GUILayer* m_instance;
+	};
+}
 
 #endif

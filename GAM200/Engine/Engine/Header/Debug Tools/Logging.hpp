@@ -44,7 +44,8 @@ Technology is prohibited.
 #include <Windows.h> //Setting console text color
 #include <iostream> //ostream
 
-#include "../Event/Event.hpp" //checking of event types
+#include "Engine/Header/Event/Event.hpp" //checking of event types
+
 
 //Since mouse moved gets triggered pretty much all the time, this is to prevent it from triggering if you do not need it
 //1 to show and 0 to not show
@@ -58,112 +59,114 @@ enum class LogState {
 	Instance
 };
 
-#define LOG_INFO(...)    Logging::AddLog(LogState::Info, __VA_ARGS__)
-#define LOG_EVENT(...)   Logging::AddLog(LogState::Event, __VA_ARGS__)
-#define LOG_WARNING(...) Logging::AddLog(LogState::Warning, __VA_ARGS__)
-#define LOG_ERROR(...)   Logging::AddLog(LogState::Error, __VA_ARGS__)
-#define LOG_INSTANCE(...)   Logging::AddLog(LogState::Instance, __VA_ARGS__)
+#define LOG_INFO(...)    Engine::Logging::AddLog(LogState::Info, __VA_ARGS__)
+#define LOG_EVENT(...)   Engine::Logging::AddLog(LogState::Event, __VA_ARGS__)
+#define LOG_WARNING(...) Engine::Logging::AddLog(LogState::Warning, __VA_ARGS__)
+#define LOG_ERROR(...)   Engine::Logging::AddLog(LogState::Error, __VA_ARGS__)
+#define LOG_INSTANCE(...)   Engine::Logging::AddLog(LogState::Instance, __VA_ARGS__)
 
 
-//EmptyClass is used to have default parameter for logging that can be ignored
-class EmptyClass {
-	friend std::ostream& operator<< (std::ostream& os, const EmptyClass&) { return os; }
-};
+namespace Engine {
+	//EmptyClass is used to have default parameter for logging that can be ignored
+	class EmptyClass {
+		friend std::ostream& operator<< (std::ostream& os, const EmptyClass&) { return os; }
+	};
 
-class Logging {
-public:
-	template <typename T, typename Y = EmptyClass, typename U = EmptyClass>
-	static void AddLog(LogState ls, const T& t1, const Y& t2 = EmptyClass(), const U& t3 = EmptyClass()) {
-		if (CheckType(t1)) return;
-		if (CheckType(t2)) return;
-		if (CheckType(t3)) return;
+	class Logging {
+	public:
+		template <typename T, typename Y = EmptyClass, typename U = EmptyClass>
+		static void AddLog(LogState ls, const T& t1, const Y& t2 = EmptyClass(), const U& t3 = EmptyClass()) {
+			if (CheckType(t1)) return;
+			if (CheckType(t2)) return;
+			if (CheckType(t3)) return;
 
-		int col = 7;
-		switch (ls) {
-		case LogState::Info:
-			col = 9;
-			std::cout << "[Info] ";
-			break;
-		case LogState::Event:
-			col = 10;
-			std::cout << "[Event] ";
-			break;
-		case LogState::Warning:
-			col = 13;
-			std::cout << "[Warning] ";
-			break;
-		case LogState::Error:
-			col = 4;
-			std::cout << "[Error] ";
-			break;
-		case LogState::Instance:
-			col = 14;
-			std::cout << "[Instance] ";
-			break;
+			int col = 7;
+			switch (ls) {
+			case LogState::Info:
+				col = 9;
+				std::cout << "[Info] ";
+				break;
+			case LogState::Event:
+				col = 10;
+				std::cout << "[Event] ";
+				break;
+			case LogState::Warning:
+				col = 13;
+				std::cout << "[Warning] ";
+				break;
+			case LogState::Error:
+				col = 4;
+				std::cout << "[Error] ";
+				break;
+			case LogState::Instance:
+				col = 14;
+				std::cout << "[Instance] ";
+				break;
+			}
+
+
+			/*switch (ls) {
+			case LogState::Info:
+				col = 9;
+				break;
+			case LogState::Keys:
+				col = 10;
+				break;
+			case LogState::Warning:
+				col = 13;
+				break;
+			case LogState::Error:
+				col = 4;
+				break;
+			case LogState::Instance:
+				col = 14;
+				break;
+			}*/
+
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), col);
+
+
+			/*switch (ls) {
+			case LogState::Info:
+				std::cout << "[Info] ";
+				break;
+			case LogState::Keys:
+				std::cout << "[Keys] ";
+				break;
+			case LogState::Warning:
+				std::cout << "[Warning] ";
+				break;
+			case LogState::Error:
+				std::cout << "[Error] ";
+				break;
+			case LogState::Instance:
+				std::cout << "[Instance] ";
+				break;
+			}*/
+
+			std::cout << t1 << " ";
+			if (typeid(Y) != typeid (EmptyClass))
+				std::cout << t2 << " ";
+			if (typeid(U) != typeid (EmptyClass))
+				std::cout << t3;
+			std::cout << "\n";
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 		}
 
+		//Check type is used to check for Event type (to remove mouse move event from flooding the console)
+		template <typename T>
+		static bool CheckType(const T&) {
+			return 0;
+		}
 
-		/*switch (ls) {
-		case LogState::Info:
-			col = 9;
-			break;
-		case LogState::Keys:
-			col = 10;
-			break;
-		case LogState::Warning:
-			col = 13;
-			break;
-		case LogState::Error:
-			col = 4;
-			break;
-		case LogState::Instance:
-			col = 14;
-			break;
-		}*/
+		template <>
+		static bool CheckType(const Event& tem) {
+			if (!SHOW_MOUSE_MOVED && tem.GetEventType() == EventType::MOUSE_MOVE) return 1;
+			return 0;
+		}
 
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), col);
-
-
-		/*switch (ls) {
-		case LogState::Info:
-			std::cout << "[Info] ";
-			break;
-		case LogState::Keys:
-			std::cout << "[Keys] ";
-			break;
-		case LogState::Warning:
-			std::cout << "[Warning] ";
-			break;
-		case LogState::Error:
-			std::cout << "[Error] ";
-			break;
-		case LogState::Instance:
-			std::cout << "[Instance] ";
-			break;
-		}*/
-
-		std::cout << t1 << " ";
-		if (typeid(Y) != typeid (EmptyClass))
-			std::cout << t2 << " ";
-		if (typeid(U) != typeid (EmptyClass))
-			std::cout << t3;
-		std::cout << "\n";
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-	}
-
-	//Check type is used to check for Event type (to remove mouse move event from flooding the console)
-	template <typename T>
-	static bool CheckType(const T&) {
-		return 0;
-	}
-
-	template <>
-	static bool CheckType(const Event& tem) {
-		if (!SHOW_MOUSE_MOVED && tem.GetEventType() == EventType::MOUSE_MOVE) return 1;
-		return 0;
-	}
-
-};
+	};
+}
 
 #else
 
@@ -173,6 +176,7 @@ public:
 #define LOG_WARNING(x) do {} while (0)
 #define LOG_ERROR(x)  do {} while (0)
 #define LOG_INSTANCE(x) do {} while (0)
+
 #endif	
 
 

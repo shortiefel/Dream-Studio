@@ -17,91 +17,93 @@ Technology is prohibited.
 #ifndef MOUSE_EVENT_H
 #define MOUSE_EVENT_H
 
-#include "Event/Event.hpp"
-#include "Math/Vector.hpp"
+#include "Engine/Header/Event/Event.hpp"
+#include "Engine/Header/Math/Vector.hpp"
 
-//MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, 
-//MOUSE_MOVED, MOUSE_SCROLLED
-class MousePressedEvent : public Event {
-public:
-	MousePressedEvent(int b) :
-		button{ b } {}
+namespace Engine {
+	//MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, 
+	//MOUSE_MOVED, MOUSE_SCROLLED
+	class MousePressedEvent : public Event {
+	public:
+		MousePressedEvent(int b) :
+			button{ b } {}
 
-	virtual EventType GetEventType() const override {
-		return EventType::MOUSE_BUTTON_PRESSED;
-	}
-
-	virtual std::string Details() const override {
-		std::string tem{ "Mouse Pressed: " };
-		switch (button) {
-		case GLFW_MOUSE_BUTTON_LEFT:
-			tem += "Left";
-			break;
-		case GLFW_MOUSE_BUTTON_RIGHT:
-			tem += "Right";
-			break;
-		case GLFW_MOUSE_BUTTON_MIDDLE:
-			tem += "Middle";
-			break;
+		virtual EventType GetEventType() const override {
+			return EventType::MOUSE_BUTTON_PRESSED;
 		}
-		return tem;
-	}
 
-private:
-	int button;
-};
+		virtual std::string Details() const override {
+			std::string tem{ "Mouse Pressed: " };
+			switch (button) {
+			case GLFW_MOUSE_BUTTON_LEFT:
+				tem += "Left";
+				break;
+			case GLFW_MOUSE_BUTTON_RIGHT:
+				tem += "Right";
+				break;
+			case GLFW_MOUSE_BUTTON_MIDDLE:
+				tem += "Middle";
+				break;
+			}
+			return tem;
+		}
 
-class MouseReleasedEvent : public Event {
-public:
-	MouseReleasedEvent(int b) :
-		button{ b } {}
+	private:
+		int button;
+	};
 
-	virtual EventType GetEventType() const override {
-		return EventType::MOUSE_BUTTON_RELEASED;
-	}
+	class MouseReleasedEvent : public Event {
+	public:
+		MouseReleasedEvent(int b) :
+			button{ b } {}
 
-	virtual std::string Details() const override {
-		return std::string{  "Mouse Released" };
-	}
+		virtual EventType GetEventType() const override {
+			return EventType::MOUSE_BUTTON_RELEASED;
+		}
 
-private:
-	int button;
-};
+		virtual std::string Details() const override {
+			return std::string{ "Mouse Released" };
+		}
 
-class MouseMoveEvent : public Event {
-public:
-	MouseMoveEvent(float xp, float yp) :
-		pos{ xp, yp } {}
+	private:
+		int button;
+	};
 
-	inline MathD::Vec2 GetPos() const { return pos; }
+	class MouseMoveEvent : public Event {
+	public:
+		MouseMoveEvent(float xp, float yp) :
+			pos{ xp, yp } {}
 
-	virtual EventType GetEventType() const override {
-		return EventType::MOUSE_MOVE;
-	}
+		inline MathD::Vec2 GetPos() const { return pos; }
 
-	virtual std::string Details() const override {
-		return std::string{ "Mouse Moved: " + std::to_string(pos.x) + ", " + std::to_string(pos.y) };
-	}
+		virtual EventType GetEventType() const override {
+			return EventType::MOUSE_MOVE;
+		}
 
-private:
-	MathD::Vec2 pos;
-};
+		virtual std::string Details() const override {
+			return std::string{ "Mouse Moved: " + std::to_string(pos.x) + ", " + std::to_string(pos.y) };
+		}
 
-class MouseScrolledEvent : public Event {
-public:
-	MouseScrolledEvent(float x, float y) :
-		scrollOffset{ x,y } {}
+	private:
+		MathD::Vec2 pos;
+	};
 
-	virtual EventType GetEventType() const override {
-		return EventType::MOUSE_SCROLLED;
-	}
+	class MouseScrolledEvent : public Event {
+	public:
+		MouseScrolledEvent(float x, float y) :
+			scrollOffset{ x,y } {}
 
-	virtual std::string Details() const override {
-		return std::string{ "Mouse Scrolled: " + std::to_string(scrollOffset.x) + ", " + std::to_string(scrollOffset.y) };
-	}
+		virtual EventType GetEventType() const override {
+			return EventType::MOUSE_SCROLLED;
+		}
 
-private:
-	MathD::Vec2 scrollOffset;
-};
+		virtual std::string Details() const override {
+			return std::string{ "Mouse Scrolled: " + std::to_string(scrollOffset.x) + ", " + std::to_string(scrollOffset.y) };
+		}
+
+	private:
+		MathD::Vec2 scrollOffset;
+	};
+}
 
 #endif

@@ -18,64 +18,66 @@ Technology is prohibited.
 #ifndef GRAPHIC_H
 #define GRAPHIC_H
 
-#include "Graphic/glslshader.hpp" // for GLSLShader
-#include "pch.hpp"
-#include "Math/MathLib.hpp"
-#include "Math/Vector2D.hpp"
+#include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
+#include "Engine/Header/pch.hpp"
+#include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/Math/Vector2D.hpp"
 
-namespace GraphicImplementation {
-    struct GLModel {
-        GLenum primitive_type = GLenum{};
-        GLuint primitive_cnt = GLuint{};
-        GLuint vaoid = GLuint{}; // handle to VAO
-        GLuint draw_cnt = GLuint{}; // how many elements of primitive of type
-    };
+namespace Engine {
+    namespace GraphicImplementation {
+        struct GLModel {
+            GLenum primitive_type = GLenum{};
+            GLuint primitive_cnt = GLuint{};
+            GLuint vaoid = GLuint{}; // handle to VAO
+            GLuint draw_cnt = GLuint{}; // how many elements of primitive of type
+        };
 
-    // container that contains 3 different vectors of vertex coordinates
-    // Object Position, Color and Texture Coordinates respectively
-    struct GLVertCont {
-        MathD::Vec2 ObjPos_vtx;
-        MathD::Vec3 Clr_vtx;
-        MathD::Vec2 TexPos_vtx;
-    };
-    
-    //struct GLSprite {
-    //    GLuint spriteWidth, spriteHeight;
-    //    GLuint spritesheetWidth, spritesheetHeight;
-    //    MathD::Vec2 position;
-    //};
+        // container that contains 3 different vectors of vertex coordinates
+        // Object Position, Color and Texture Coordinates respectively
+        struct GLVertCont {
+            MathD::Vec2 ObjPos_vtx;
+            MathD::Vec3 Clr_vtx;
+            MathD::Vec2 TexPos_vtx;
+        };
 
-    //struct GLObject {
-    //    // orientation.x and orientation.y will be angle_disp and angle_speed respectively
-    //    // both values specified in degrees
-    //    MathD::Vec2 orientation = MathD::Vec2{};
+        //struct GLSprite {
+        //    GLuint spriteWidth, spriteHeight;
+        //    GLuint spritesheetWidth, spritesheetHeight;
+        //    MathD::Vec2 position;
+        //};
 
-    //    MathD::Vec2 scaling = MathD::Vec2{}; // scaling parameters
-    //    MathD::Vec2 position = MathD::Vec2{}; // translatin vector coordinates
-    //    MathD::Vec3 color = MathD::Vec3{};
-    //    MathD::Mat3 mdl_to_ndc_xform = MathD::Mat3{}; // model (model-to-world) transform
-    //    MathD::Mat3 mdl_xform = MathD::Mat3{}; // model-to-ndc transformation
+        //struct GLObject {
+        //    // orientation.x and orientation.y will be angle_disp and angle_speed respectively
+        //    // both values specified in degrees
+        //    MathD::Vec2 orientation = MathD::Vec2{};
 
-    //    // function to initialize object's state
-    //    void init();
+        //    MathD::Vec2 scaling = MathD::Vec2{}; // scaling parameters
+        //    MathD::Vec2 position = MathD::Vec2{}; // translatin vector coordinates
+        //    MathD::Vec3 color = MathD::Vec3{};
+        //    MathD::Mat3 mdl_to_ndc_xform = MathD::Mat3{}; // model (model-to-world) transform
+        //    MathD::Mat3 mdl_xform = MathD::Mat3{}; // model-to-ndc transformation
 
-    //    // function to render object's model (specified by index mdl_ref)
-    //    // uses model transformation matrix mdl_to_ndc_xform matrix
-    //    // and shader program specified by index shd_ref
-    //    void draw() const;
+        //    // function to initialize object's state
+        //    void init();
 
-    //    // function to update the object's model transformation matrix
-    //    void update(GLdouble delta_time);
-    //};
-    
+        //    // function to render object's model (specified by index mdl_ref)
+        //    // uses model transformation matrix mdl_to_ndc_xform matrix
+        //    // and shader program specified by index shd_ref
+        //    void draw() const;
 
-    extern std::map<std::string, GLModel> models;
-    extern std::map<std::string, GLSLShader> shdrpgms;
-    //static std::map<std::string, GLObject> objects;
+        //    // function to update the object's model transformation matrix
+        //    void update(GLdouble delta_time);
+        //};
 
-    void setup_vao();
-    void setup_shdr();
-    //void create_square_instance();
+
+        extern std::map<std::string, GLModel> models;
+        extern std::map<std::string, GLSLShader> shdrpgms;
+        //static std::map<std::string, GLObject> objects;
+
+        void setup_vao();
+        void setup_shdr();
+        //void create_square_instance();
+    }
 }
 
 #endif

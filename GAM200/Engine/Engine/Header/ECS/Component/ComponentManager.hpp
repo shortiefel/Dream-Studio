@@ -27,88 +27,89 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 #pragma once
 
-#include "ECS/Component/ComponentArray.hpp"
-#include "ECS/ECSGlobal.hpp"
+#include "Engine/Header/ECS/Component/ComponentArray.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 //#include <any> //type safe container
 #include <memory>
 #include <unordered_map>
 
-
-class ComponentManager
-{
-public:
-	template<typename T>
-	void RegisterCom()
+namespace Engine {
+	class ComponentManager
 	{
-		const char* TypeName = typeid(T).name();
-
-		//error checking 
-		assert(mComponentTypes.find(TypeName) == mComponentTypes.end() && "Register Component more than 1 time");
-
-		mComponentTypes.insert({ TypeName, NextComType }); //adding to com type map
-		mComponentArrayInter.insert({ TypeName, std::make_shared < ComponentArray<T>>() });//ptr to comarray
-
-		++NextComType;
-
-	}
-
-	template<typename T>
-	ComponentType GetterComType()
-	{
-		const char* TypeName = typeid(T).name();
-
-		//error checking
-		assert(mComponentTypes.find(TypeName) != mComponentTypes.end() && "Component not registered");
-
-		//used to create signature
-		return mComponentTypes[TypeName];
-	}
-
-	template<typename T>
-	void AddCom(Entity entity, T component)
-	{
-		GetComArry<T>()->InsertCom(entity, component);
-	}
-
-	template<typename T>
-	void RemoveCom(Entity entity)
-	{
-		GetComArry<T>()->RemoveCom(entity);
-	}
-
-	template<typename T>
-	T& GetCom(Entity entity)
-	{
-		//a reference to component from array for entity
-		return GetComArry<T>()->GetData(entity);
-	}
-
-	void DestoryEntity(Entity entity)
-	{
-		//tell com arry that entity is destroyed, if exist remove
-		for (auto const& notify : mComponentArrayInter)
+	public:
+		template<typename T>
+		void RegisterCom()
 		{
-			auto const& com = notify.second;
-			com->EntityDestroyed(entity);
+			const char* TypeName = typeid(T).name();
+
+			//error checking 
+			assert(mComponentTypes.find(TypeName) == mComponentTypes.end() && "Register Component more than 1 time");
+
+			mComponentTypes.insert({ TypeName, NextComType }); //adding to com type map
+			mComponentArrayInter.insert({ TypeName, std::make_shared < ComponentArray<T>>() });//ptr to comarray
+
+			++NextComType;
+
 		}
-	}
 
-private:
-	std::unordered_map<const char*, ComponentType> mComponentTypes{}; //type string ptr -> com type
-	std::unordered_map<const char*, std::shared_ptr<ComponentArrayInterface>> mComponentArrayInter{}; //type string ptr -> com array
-	ComponentType NextComType{}; //registering
+		template<typename T>
+		ComponentType GetterComType()
+		{
+			const char* TypeName = typeid(T).name();
 
-	//static ptr to ComArray
-	template<typename T>
-	std::shared_ptr<ComponentArray<T>> GetComArry()
-	{
-		const char* TypeName = typeid(T).name();
+			//error checking
+			assert(mComponentTypes.find(TypeName) != mComponentTypes.end() && "Component not registered");
 
-		assert(mComponentTypes.find(TypeName) != mComponentTypes.end() && "Component not registered yet.");
+			//used to create signature
+			return mComponentTypes[TypeName];
+		}
 
-		return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayInter[TypeName]);
-	}
+		template<typename T>
+		void AddCom(Entity entity, T component)
+		{
+			GetComArry<T>()->InsertCom(entity, component);
+		}
+
+		template<typename T>
+		void RemoveCom(Entity entity)
+		{
+			GetComArry<T>()->RemoveCom(entity);
+		}
+
+		template<typename T>
+		T& GetCom(Entity entity)
+		{
+			//a reference to component from array for entity
+			return GetComArry<T>()->GetData(entity);
+		}
+
+		void DestoryEntity(Entity entity)
+		{
+			//tell com arry that entity is destroyed, if exist remove
+			for (auto const& notify : mComponentArrayInter)
+			{
+				auto const& com = notify.second;
+				com->EntityDestroyed(entity);
+			}
+		}
+
+	private:
+		std::unordered_map<const char*, ComponentType> mComponentTypes{}; //type string ptr -> com type
+		std::unordered_map<const char*, std::shared_ptr<ComponentArrayInterface>> mComponentArrayInter{}; //type string ptr -> com array
+		ComponentType NextComType{}; //registering
+
+		//static ptr to ComArray
+		template<typename T>
+		std::shared_ptr<ComponentArray<T>> GetComArry()
+		{
+			const char* TypeName = typeid(T).name();
+
+			assert(mComponentTypes.find(TypeName) != mComponentTypes.end() && "Component not registered yet.");
+
+			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayInter[TypeName]);
+		}
 
 
 
-};
+	};
+}

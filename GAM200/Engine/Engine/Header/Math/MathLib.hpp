@@ -18,33 +18,35 @@ Technology is prohibited.
 #ifndef MATH_LIB_HPP
 #define MATH_LIB_HPP
 
-#include "Math/Matrix.hpp"
-#include "Math/Vector.hpp"
+#include "Engine/Header/Math/Matrix.hpp"
+#include "Engine/Header/Math/Vector.hpp"
 
-namespace MathD {
-    template <typename T>
-    inline T radians(T deg) {
-        return deg * PI / 180;
-    }
+namespace Engine {
+    namespace MathD {
+        template <typename T>
+        inline T radians(T deg) {
+            return deg * PI / 180;
+        }
 
-    template <typename T>
-    inline T degrees(T rad) {
-        return rad * 180 / PI;
-    }
+        template <typename T>
+        inline T degrees(T rad) {
+            return rad * 180 / PI;
+        }
 
-    template <typename T>
-    inline T* value_ptr(MathImplementation::Matrix3<T>& mat) {
-        return mat.GetPtr();
-    }
+        template <typename T>
+        inline T* value_ptr(MathImplementation::Matrix3<T>& mat) {
+            return mat.GetPtr();
+        }
 
-    template <typename T>
-    inline T getLength(T n1, T n2) {
-        return sqrt(pow(n1, 2) + pow(n2, 2));
-    }
+        template <typename T>
+        inline T getLength(T n1, T n2) {
+            return sqrt(pow(n1, 2) + pow(n2, 2));
+        }
 
-    template <typename T>
-    inline T getSqLength(T n1, T n2) {
-        return pow(n1, 2) + pow(n2, 2);
+        template <typename T>
+        inline T getSqLength(T n1, T n2) {
+            return pow(n1, 2) + pow(n2, 2);
+        }
     }
 }
 

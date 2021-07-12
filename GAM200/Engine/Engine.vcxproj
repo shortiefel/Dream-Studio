@@ -73,27 +73,27 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)/Engine/Header;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
     <LibraryPath>
     </LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Engine/Header;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Engine/Header;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Engine/Header;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />

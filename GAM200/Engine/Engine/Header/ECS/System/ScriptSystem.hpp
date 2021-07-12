@@ -18,23 +18,25 @@ Technology is prohibited.
 #ifndef SCRIPT_SYSTEM_HPP
 #define SCRIPT_SYSTEM_HPP
 
-#include "pch.hpp"
-#include "ECS/System/System.hpp"
+#include "Engine/Header/pch.hpp"
+#include "Engine/Header/ECS/System/System.hpp"
 
-class ScriptSystem : public System {
-public:
-	static bool Create(const std::shared_ptr<ScriptSystem>& scriptSystem);
-	virtual void Destroy() override;
-	~ScriptSystem();
+namespace Engine {
+	class ScriptSystem : public System {
+	public:
+		static bool Create(const std::shared_ptr<ScriptSystem>& scriptSystem);
+		virtual void Destroy() override;
+		~ScriptSystem();
 
-	//Called when user press play
-	static void Play();
-	//Opposite of play
-	static void Stop();
-	static void Update(float dt);
+		//Called when user press play
+		static void Play();
+		//Opposite of play
+		static void Stop();
+		static void Update(float dt);
 
-private:
-	static std::shared_ptr<ScriptSystem> SS;
-};
+	private:
+		static std::shared_ptr<ScriptSystem> SS;
+	};
+}
 
 #endif

@@ -16,64 +16,67 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Debug Tools/Logging.hpp"
-#include "ECS/System/CameraSystem.hpp"
+#include "Engine/Header/Debug Tools/Logging.hpp"
+#include "Engine/Header/ECS/System/CameraSystem.hpp"
 
-#include "Window.hpp" //To get GLFWwindow
+#include "Engine/Header/Window.hpp" //To get GLFWwindow
 
-#include "ECS/Component/Graphics/CameraComponent.hpp"
-#include "ECS/Component/Graphics/TransformComponent.hpp"
+#include "Engine/Header/ECS/Component/Graphics/CameraComponent.hpp"
+#include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
-#include "ECS/Coordinator.hpp"
+#include "Engine/Header/ECS/Coordinator.hpp"
 
-extern Coordinator gCoordinator;
-std::shared_ptr<CameraSystem> CameraSystem::CS;
-MathD::Mat3 CameraSystem::world_to_ndc_xform;
-GLFWwindow* CameraSystem::pwindow;
+namespace Engine {
+    extern Coordinator gCoordinator;
+    std::shared_ptr<CameraSystem> CameraSystem::CS;
+    MathD::Mat3 CameraSystem::world_to_ndc_xform;
+    GLFWwindow* CameraSystem::pwindow;
 
-//Update function to change the world to NDC transform that will be used
-//to create the graphics
-void CameraSystem::Update(float dt) {
-	for (auto const& entity : CS->mEntities) {
-		auto& cam = gCoordinator.GetCom<Camera2D>(entity);
-        if (cam.isActive == false) continue;
-        const auto& transform = gCoordinator.GetCom<Transform>(entity);
-        
-        GLsizei fb_width, fb_height;
-        glfwGetFramebufferSize(pwindow, &fb_width, &fb_height);
-        cam.ar = static_cast<GLfloat>(fb_width) / fb_height;
+    //Update function to change the world to NDC transform that will be used
+    //to create the graphics
+    void CameraSystem::Update(float dt) {
+        for (auto const& entity : CS->mEntities) {
+            auto& cam = gCoordinator.GetCom<Camera2D>(entity);
+            if (cam.isActive == false) continue;
+            const auto& transform = gCoordinator.GetCom<Transform>(entity);
 
-        // compute world-to-NDC transformation matrix
-        world_to_ndc_xform =
-            MathD::Mat3(
-                2.f / (cam.ar * cam.height), 0.f, 0.f,
-                0.f, 2.f / cam.height, 0.f,
-                0.f, 0.f, 1.f)
-            *
-            MathD::Mat3(
-                1.f, 0.f, 0.f,
-                0.f, 1.f, 0.f,
-                -transform.pos.x, -transform.pos.y, 1.f);
-        break; //Just need one transform
-	}
+            GLsizei fb_width, fb_height;
+            glfwGetFramebufferSize(pwindow, &fb_width, &fb_height);
+            cam.ar = static_cast<GLfloat>(fb_width) / fb_height;
+
+            // compute world-to-NDC transformation matrix
+            world_to_ndc_xform =
+                MathD::Mat3(
+                    2.f / (cam.ar * cam.height), 0.f, 0.f,
+                    0.f, 2.f / cam.height, 0.f,
+                    0.f, 0.f, 1.f)
+                *
+                MathD::Mat3(
+                    1.f, 0.f, 0.f,
+                    0.f, 1.f, 0.f,
+                    -transform.pos.x, -transform.pos.y, 1.f);
+            break; //Just need one transform
+        }
+    }
+
+    MathD::Mat3 CameraSystem::GetTransform() {
+        return world_to_ndc_xform;
+    }
+
+    bool CameraSystem::Create(const std::shared_ptr<CameraSystem>& cameraSystem) {
+        CS = cameraSystem;
+        pwindow = Window::GetGLFWwindow();
+
+        //world_to_ndc_xform = { 1.f,0.f,0.f,  0.f,1.f,0.f,  0.f,0.f,1.f };
+
+        LOG_INSTANCE("Camera System created");
+        return true;
+    }
+
+    void CameraSystem::Destroy() {
+        LOG_INSTANCE("Camera System destroyed");
+    }
+
+    CameraSystem::~CameraSystem() { Destroy(); }
+
 }
-
-MathD::Mat3 CameraSystem::GetTransform() {
-    return world_to_ndc_xform;
-}
-
-bool CameraSystem::Create(const std::shared_ptr<CameraSystem>& cameraSystem) {
-	CS = cameraSystem;
-    pwindow = Window::GetGLFWwindow();
-
-    //world_to_ndc_xform = { 1.f,0.f,0.f,  0.f,1.f,0.f,  0.f,0.f,1.f };
-
-	LOG_INSTANCE("Camera System created");
-	return true;
-}
-
-void CameraSystem::Destroy() {
-	LOG_INSTANCE("Camera System destroyed");
-}
-
-CameraSystem::~CameraSystem() { Destroy(); }

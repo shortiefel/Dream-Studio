@@ -17,10 +17,10 @@ Technology is prohibited.
 #ifndef COMPONENT_LIST_HPP
 #define COMPONENT_LIST_HPP
 
-#include "ECS/Component/Graphics/CameraComponent.hpp"
-#include "ECS/Component/Graphics/TransformComponent.hpp"
-#include "ECS/Component/Physics/ColliderComponent.hpp"
-#include "ECS/Component/Script/ScriptComponent.hpp"
-#include "ECS/Component/Graphics/TextureComponent.hpp"
+#include "Engine/Header/ECS/Component/Graphics/CameraComponent.hpp"
+#include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
+#include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
+#include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
+#include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 
 #endif

@@ -17,23 +17,25 @@ Technology is prohibited.
 #ifndef CAMERA_SYSTEM_HPP
 #define CAMERA_SYSTEM_HPP
 
-#include "pch.hpp"
-#include "ECS/System/System.hpp"
-#include "Math/MathLib.hpp"
+#include "Engine/Header/pch.hpp"
+#include "Engine/Header/ECS/System/System.hpp"
+#include "Engine/Header/Math/MathLib.hpp"
 
-class CameraSystem : public System {
-public:
-	static bool Create(const std::shared_ptr<CameraSystem>& cameraSystem);
-	virtual void Destroy() override;
-	~CameraSystem();
+namespace Engine {
+	class CameraSystem : public System {
+	public:
+		static bool Create(const std::shared_ptr<CameraSystem>& cameraSystem);
+		virtual void Destroy() override;
+		~CameraSystem();
 
-	static void Update(float dt);
+		static void Update(float dt);
 
-	static MathD::Mat3 GetTransform();
-private:
-	static MathD::Mat3 world_to_ndc_xform;
-	static std::shared_ptr<CameraSystem> CS;
-	static GLFWwindow* pwindow;
-};
+		static MathD::Mat3 GetTransform();
+	private:
+		static MathD::Mat3 world_to_ndc_xform;
+		static std::shared_ptr<CameraSystem> CS;
+		static GLFWwindow* pwindow;
+	};
+}
 
 #endif

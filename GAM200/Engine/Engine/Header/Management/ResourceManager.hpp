@@ -17,15 +17,17 @@ Technology is prohibited.
 #ifndef RESOURCE_MANAGER_HPP
 #define RESOUCE_MANAGER_HPP
 
-#include "pch.hpp"
+#include "Engine/Header/pch.hpp"
 
-class ResourceManager {
-public:
-	static void Create();
-	static void Destroy();
-	static GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
-private:
-	static std::unordered_map<std::string, GLuint> textureList;
-};
+namespace Engine {
+	class ResourceManager {
+	public:
+		static void Create();
+		static void Destroy();
+		static GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+	private:
+		static std::unordered_map<std::string, GLuint> textureList;
+	};
+}
 
 #endif

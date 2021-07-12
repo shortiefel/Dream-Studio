@@ -17,13 +17,15 @@ Technology is prohibited.
 #ifndef GAME_SCENE_HPP
 #define GAME_SCENE_HPP
 
-class GameScene {
-public:
-	static void Create();
-	static void Destroy();
-	static void Play();
-	static void Stop();
-	static void Update(float dt);
-};
+namespace Engine {
+	class GameScene {
+	public:
+		static void Create();
+		static void Destroy();
+		static void Play();
+		static void Stop();
+		static void Update(float dt);
+	};
+}
 
 #endif

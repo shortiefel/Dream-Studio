@@ -257,9 +257,6 @@
     <ClInclude Include="Engine\Header\Layer\Layer.hpp">
       <Filter>Header Files\Layer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
-      <Filter>Header Files\Layer</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Management\ResourceManager.hpp">
       <Filter>Header Files\Management</Filter>
     </ClInclude>
@@ -284,9 +281,6 @@
     <ClInclude Include="Engine\Header\framework.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\pch.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Resource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -298,6 +292,12 @@
     </ClInclude>
     <ClInclude Include="..\External Resources\include\stb_image\stb_image.h">
       <Filter>External Resources\Stb</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\pch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
+      <Filter>Header Files\Layer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

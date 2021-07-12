@@ -17,9 +17,9 @@ Technology is prohibited.
 #ifndef SYSTEM_LIST_HPP
 #define SYSTEM_LIST_HPP
 
-#include "ECS/System/CameraSystem.hpp"
-#include "ECS/System/GraphicSystem.hpp"
-#include "ECS/System/PhysicSystem.hpp"
-#include "ECS/System/ScriptSystem.hpp"
+#include "Engine/Header/ECS/System/CameraSystem.hpp"
+#include "Engine/Header/ECS/System/GraphicSystem.hpp"
+#include "Engine/Header/ECS/System/PhysicSystem.hpp"
+#include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
 #endif

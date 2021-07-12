@@ -25,68 +25,69 @@ Technology is prohibited.
 
 #pragma once
 
-#include "ECS/ECSGlobal.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include <queue>
 #include <array>
 #include <cassert>
 
-
-class EntityManager
-{
-public:
-	EntityManager() //ctor
+namespace Engine {
+	class EntityManager
 	{
-		Entity entity;
-
-		for (entity = 0; entity < MAX_ENTITIES; ++entity)
+	public:
+		EntityManager() //ctor
 		{
-			EntityManager::AvailableEntities.push(entity); //adding entity
+			Entity entity;
+
+			for (entity = 0; entity < MAX_ENTITIES; ++entity)
+			{
+				EntityManager::AvailableEntities.push(entity); //adding entity
+			}
 		}
-	}
 
-	Entity CreateEntity()
-	{
-		//error checking
-		assert(AliveEntityCount < MAX_ENTITIES && "Too many entities");
+		Entity CreateEntity()
+		{
+			//error checking
+			assert(AliveEntityCount < MAX_ENTITIES && "Too many entities");
 
-		Entity ID = AvailableEntities.front();
-		AvailableEntities.pop();
-		++AliveEntityCount;
+			Entity ID = AvailableEntities.front();
+			AvailableEntities.pop();
+			++AliveEntityCount;
 
-		return ID;
-	}
+			return ID;
+		}
 
-	void DestroyEntity(Entity entity)
-	{
-		//error checking
-		assert(entity < MAX_ENTITIES && "Entities out of range");
+		void DestroyEntity(Entity entity)
+		{
+			//error checking
+			assert(entity < MAX_ENTITIES && "Entities out of range");
 
-		mSignatures[entity].reset();
-		AvailableEntities.push(entity);
-		--AliveEntityCount;
-	}
+			mSignatures[entity].reset();
+			AvailableEntities.push(entity);
+			--AliveEntityCount;
+		}
 
-	void SetSignature(Entity entity, Signature signature)
-	{
-		//error checking
-		assert(entity < MAX_ENTITIES && "Entities out of range");
+		void SetSignature(Entity entity, Signature signature)
+		{
+			//error checking
+			assert(entity < MAX_ENTITIES && "Entities out of range");
 
-		mSignatures[entity] = signature;
-	}
+			mSignatures[entity] = signature;
+		}
 
-	Signature GetSignature(Entity entity)
-	{
-		//error checking
-		assert(entity < MAX_ENTITIES && "Entities out of range");
+		Signature GetSignature(Entity entity)
+		{
+			//error checking
+			assert(entity < MAX_ENTITIES && "Entities out of range");
 
-		return mSignatures[entity];
+			return mSignatures[entity];
 
-	}
-
+		}
 
 
-private:
-	uint32_t AliveEntityCount{}; // Total living entities
-	std::queue<Entity> AvailableEntities{}; // Queue of unused entity IDs
-	std::array<Signature, MAX_ENTITIES> mSignatures{}; // Array of signatures for index to correspond to ID
-};
+
+	private:
+		uint32_t AliveEntityCount{}; // Total living entities
+		std::queue<Entity> AvailableEntities{}; // Queue of unused entity IDs
+		std::array<Signature, MAX_ENTITIES> mSignatures{}; // Array of signatures for index to correspond to ID
+	};
+}

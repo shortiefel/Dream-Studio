@@ -29,14 +29,15 @@ Technology is prohibited.
 #ifndef COORDINATOR_H
 #define COORDINATOR_H
 
-#include "ECS/Component/ComponentManager.hpp"
-#include "ECS/Entity/EntityManager.hpp"
-#include "ECS/System/SystemManager.hpp"
-#include "ECS/ECSGlobal.hpp"
+#include "Engine/Header/ECS/Component/ComponentManager.hpp"
+#include "Engine/Header/ECS/Entity/EntityManager.hpp"
+#include "Engine/Header/ECS/System/SystemManager.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include <memory>
 
-class Coordinator
-{
+namespace Engine {
+	class Coordinator
+	{
 	public:
 		void Init()
 		{
@@ -46,7 +47,7 @@ class Coordinator
 			sysManager = std::make_unique<SystemManager>();
 		}
 
-		
+
 		/**
 		* Entity Manager
 		* --> acts as coordinator when creating and destroying entity
@@ -126,7 +127,7 @@ class Coordinator
 		}
 
 		/**
-		* Event Manager 
+		* Event Manager
 		* --> acts as coordinator to listen, and send event
 		*/
 
@@ -139,8 +140,8 @@ class Coordinator
 		std::unique_ptr<EntityManager>entityManager;
 		std::unique_ptr<SystemManager>sysManager;
 
-};
-
+	};
+}
 
 #endif // !COORDINATOR_H
 

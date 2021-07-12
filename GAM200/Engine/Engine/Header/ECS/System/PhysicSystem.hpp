@@ -19,23 +19,23 @@ Technology is prohibited.
 #define PHYSIC_SYSTEM_H
 
 //#include "ECSGlobal.hpp"
-#include "pch.hpp"
-#include "ECS/System/System.hpp"
+#include "Engine/Header/pch.hpp"
+#include "Engine/Header/ECS/System/System.hpp"
 
+namespace Engine {
+	class PhysicSystem : public System {
+	public:
+		static bool Create(const std::shared_ptr<PhysicSystem>& physicSystem);
+		virtual void Destroy() override;
+		~PhysicSystem();
 
-class PhysicSystem : public System {
-public:
-	static bool Create(const std::shared_ptr<PhysicSystem>& physicSystem);
-	virtual void Destroy() override;
-	~PhysicSystem();
+		//static PhysicSystem* Get();
+		static void Update(float dt);
 
-	//static PhysicSystem* Get();
-	static void Update(float dt);
-	
-private:
-	//float gravity = 10.f;
-	static std::shared_ptr<PhysicSystem> PS;
-};
-
+	private:
+		//float gravity = 10.f;
+		static std::shared_ptr<PhysicSystem> PS;
+	};
+}
 
 #endif

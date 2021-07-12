@@ -14,49 +14,52 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Debug Tools/Logging.hpp"
-#include "ECS/System/ScriptSystem.hpp"
-#include "ECS/Component/Script/ScriptComponent.hpp"
+#include "Engine/Header/Debug Tools/Logging.hpp"
+#include "Engine/Header/ECS/System/ScriptSystem.hpp"
+#include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
 
-#include "ECS/Coordinator.hpp"
+#include "Engine/Header/ECS/Coordinator.hpp"
 
-extern Coordinator gCoordinator;
-std::shared_ptr<ScriptSystem> ScriptSystem::SS;
+namespace Engine {
+	extern Coordinator gCoordinator;
+	std::shared_ptr<ScriptSystem> ScriptSystem::SS;
 
 
-void ScriptSystem::Update(float dt) {
-	for (auto const& entity : SS->mEntities) {
-		auto& cscript = gCoordinator.GetCom<Custom_Script>(entity);
-		cscript->Update(entity, dt);
+	void ScriptSystem::Update(float dt) {
+		for (auto const& entity : SS->mEntities) {
+			auto& cscript = gCoordinator.GetCom<Custom_Script>(entity);
+			cscript->Update(entity, dt);
+		}
 	}
-}
 
-//Function is called when GameScene Play function is called
-//Function is called whenever user press play
-void ScriptSystem::Play() {
-	for (auto const& entity : SS->mEntities) {
-		auto& cscript = gCoordinator.GetCom<Custom_Script>(entity);
-		cscript->Init(entity);
+	//Function is called when GameScene Play function is called
+	//Function is called whenever user press play
+	void ScriptSystem::Play() {
+		for (auto const& entity : SS->mEntities) {
+			auto& cscript = gCoordinator.GetCom<Custom_Script>(entity);
+			cscript->Init(entity);
+		}
 	}
-}
 
-//Function is opposite of play
-void ScriptSystem::Stop() {
-	/*for (auto const& entity : SS->mEntities) {
-		auto& cscript = gCoordinator.GetCom<Custom_Script>(entity);
-		cscript->OnDestroy();
-	}*/
-}
+	//Function is opposite of play
+	void ScriptSystem::Stop() {
+		/*for (auto const& entity : SS->mEntities) {
+			auto& cscript = gCoordinator.GetCom<Custom_Script>(entity);
+			cscript->OnDestroy();
+		}*/
+	}
 
-bool ScriptSystem::Create(const std::shared_ptr<ScriptSystem>& scriptSystem) {
-	SS = scriptSystem;
-	LOG_INSTANCE("Script System created");
-	
-	return true;
-}
-void ScriptSystem::Destroy() {
-	LOG_INSTANCE("Script System destroyed");
-	//delete s_instance; 
-}
+	bool ScriptSystem::Create(const std::shared_ptr<ScriptSystem>& scriptSystem) {
+		SS = scriptSystem;
+		LOG_INSTANCE("Script System created");
 
-ScriptSystem::~ScriptSystem() { Destroy(); }
+		return true;
+	}
+	void ScriptSystem::Destroy() {
+		LOG_INSTANCE("Script System destroyed");
+		//delete s_instance; 
+	}
+
+	ScriptSystem::~ScriptSystem() { Destroy(); }
+
+}

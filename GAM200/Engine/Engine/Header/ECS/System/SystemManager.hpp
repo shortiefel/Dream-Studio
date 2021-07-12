@@ -18,14 +18,15 @@ Technology is prohibited.
 
 #pragma once
 
-#include "ECS/System/System.hpp"
-#include "ECS/ECSGlobal.hpp"
+#include "Engine/Header/ECS/System/System.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include <cassert>
 #include <memory>
 #include <unordered_map>
 
-class SystemManager
-{
+namespace Engine {
+	class SystemManager
+	{
 	public:
 		template<typename T>
 		std::shared_ptr<T> SystemReg()
@@ -38,7 +39,7 @@ class SystemManager
 			//ptr to system for return value
 			auto system = std::make_shared<T>();
 			mSystems.insert({ TypeName, system });
-			return system; 
+			return system;
 		}
 
 		template<typename T>
@@ -89,4 +90,5 @@ class SystemManager
 	private:
 		std::unordered_map<const char*, Signature> Signatures{}; //system typ->signature
 		std::unordered_map<const char*, std::shared_ptr<System>> mSystems{}; //system ptr->system ptr
-};
+	};
+}

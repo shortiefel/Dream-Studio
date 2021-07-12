@@ -17,31 +17,33 @@ Technology is prohibited.
 #ifndef DELTA_TIME_HPP
 #define DELTA_TIME_HPP
 
+namespace Engine {
 #define FPS_Interval .5f
 
-class TimeClock {
-public:
-	TimeClock() : m_time{ 0.f } {}
-	TimeClock(float time) : m_time{ time }, fps{ static_cast<int>(1 / m_time) } {}
+	class TimeClock {
+	public:
+		TimeClock() : m_time{ 0.f } {}
+		TimeClock(float time) : m_time{ time }, fps{ static_cast<int>(1 / m_time) } {}
 
-	inline float GetSec() const { return m_time; }
-	inline float GetMilliSec() const { return m_time * 1000.f; }
-	inline int GetFPS() const { return fps; }
+		inline float GetSec() const { return m_time; }
+		inline float GetMilliSec() const { return m_time * 1000.f; }
+		inline int GetFPS() const { return fps; }
 
-	void UpdateTimeClock(float current_time, float last_time) {
-		static float new_wait_time = current_time;
-		m_time = current_time - last_time;
-		
-		//Update fps by FPS_Interval
-		if (current_time - new_wait_time > FPS_Interval) {
-			new_wait_time = current_time;
-			fps = static_cast<int>(1 / m_time);
+		void UpdateTimeClock(float current_time, float last_time) {
+			static float new_wait_time = current_time;
+			m_time = current_time - last_time;
+
+			//Update fps by FPS_Interval
+			if (current_time - new_wait_time > FPS_Interval) {
+				new_wait_time = current_time;
+				fps = static_cast<int>(1 / m_time);
+			}
 		}
-	}
 
-private:
-	float m_time = 0.f;
-	int fps = 0;
-};
+	private:
+		float m_time = 0.f;
+		int fps = 0;
+	};
+}
 
 #endif

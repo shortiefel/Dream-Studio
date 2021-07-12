@@ -33,6 +33,7 @@ Technology is prohibited.
 
 //#include <stdio.h>
 #include "Engine/Header/Application.hpp"
+#include "GUI.hpp"
 
 //#include <mono/jit/jit.h>
 //#include <mono/metadata/assembly.h>
@@ -42,11 +43,13 @@ Technology is prohibited.
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //For memory check
 	//use try and except (require logging)
-	Application::Create(); //Needed for game
+	Engine::Application::Create(); //Needed for game
+	Editor::GUI::Create();
 
-	Application::Update(); //Needed for game
+	Engine::Application::Update(); //Needed for game
 
-	Application::Destroy(); //Needed for game
+	Editor::GUI::Destroy();
+	Engine::Application::Destroy(); //Needed for game
 
 	return 1;
 }

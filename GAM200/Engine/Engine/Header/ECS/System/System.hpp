@@ -26,16 +26,17 @@ Technology is prohibited.
 
 #pragma once
 
-#include "ECS/ECSGlobal.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include <set> //associative container that contains a sorted set of unique object of type Key
 
-class System
-{
+namespace Engine {
+	class System
+	{
 	public:
 		std::set<Entity> mEntities;
 
 		//virtual bool Create() = 0;
 		virtual void Destroy() = 0;
-};
-
+	};
+}
 

@@ -18,22 +18,24 @@ Technology is prohibited.
 #ifndef GRAPHIC_SYSTEM_H
 #define GRAPHIC_SYSTEM_H
 
-#include "pch.hpp"
-#include "ECS/System/system.hpp"
+#include "Engine/Header/pch.hpp"
+#include "Engine/Header/ECS/System/system.hpp"
 
-class GraphicSystem : public System {
-public:
-	
-	static bool Create(const std::shared_ptr<GraphicSystem>& graphicSystem);
-	virtual void Destroy() override;
-	~GraphicSystem();
-	//void Destroy();
+namespace Engine {
+	class GraphicSystem : public System {
+	public:
 
-	static void Update(float dt);
-	static void Render();
-private:
-	//static GraphicSystem* gs;
-	static std::shared_ptr<GraphicSystem> GS;
-};
+		static bool Create(const std::shared_ptr<GraphicSystem>& graphicSystem);
+		virtual void Destroy() override;
+		~GraphicSystem();
+		//void Destroy();
+
+		static void Update(float dt);
+		static void Render();
+	private:
+		//static GraphicSystem* gs;
+		static std::shared_ptr<GraphicSystem> GS;
+	};
+}
 
 #endif

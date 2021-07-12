@@ -17,44 +17,46 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Debug Tools/Logging.hpp"
-#include "Layer/LayerStack.hpp"
+#include "Engine/Header/Debug Tools/Logging.hpp"
+#include "Engine/Header/Layer/LayerStack.hpp"
 
-LayerStack* LayerStack::m_instance = 0;
-std::vector<Layer*> LayerStack::layerStack;
-unsigned int LayerStack::layerCount = 0;
+namespace Engine {
+	LayerStack* LayerStack::m_instance = 0;
+	std::vector<Layer*> LayerStack::layerStack;
+	unsigned int LayerStack::layerCount = 0;
 
-void LayerStack::AddOverlayLayer(Layer* layer) {
-	layerStack.emplace_back(layer);
-}
-
-void LayerStack::Update() {
-	for (Layer* layer : layerStack) {
-		layer->Update();
+	void LayerStack::AddOverlayLayer(Layer* layer) {
+		layerStack.emplace_back(layer);
 	}
-}
 
-void LayerStack::Draw() {
-	for (Layer* layer : layerStack) {
-		layer->Draw();
+	void LayerStack::Update() {
+		for (Layer* layer : layerStack) {
+			layer->Update();
+		}
 	}
-}
 
-bool LayerStack::Create() {
-	if (m_instance) LOG_WARNING("An instance of layerstack already exist!");
+	void LayerStack::Draw() {
+		for (Layer* layer : layerStack) {
+			layer->Draw();
+		}
+	}
 
-	m_instance = new LayerStack;
-	LOG_INSTANCE("LayerStack created");
-	if (!m_instance) return false;
+	bool LayerStack::Create() {
+		if (m_instance) LOG_WARNING("An instance of layerstack already exist!");
 
-	return true;
-}
+		m_instance = new LayerStack;
+		LOG_INSTANCE("LayerStack created");
+		if (!m_instance) return false;
 
-void LayerStack::Destroy() {
-	//Remove GUILayer because it will destroy itself
-	//Clear out layerStack
-	
+		return true;
+	}
 
-	delete m_instance;
-	LOG_INSTANCE("LayerStack destroyed");
+	void LayerStack::Destroy() {
+		//Remove GUILayer because it will destroy itself
+		//Clear out layerStack
+
+
+		delete m_instance;
+		LOG_INSTANCE("LayerStack destroyed");
+	}
 }

@@ -54,6 +54,9 @@
     <ClInclude Include="Editor\Header\Layer\GUILayer.hpp">
       <Filter>Header Files\Layer</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\GUI.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files\Layer</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Code\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

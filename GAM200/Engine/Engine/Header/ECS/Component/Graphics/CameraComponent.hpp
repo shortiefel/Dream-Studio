@@ -17,17 +17,19 @@ Technology is prohibited.
 #ifndef CAMERA_COMPONENT_HPP
 #define CAMERA_COMPONENT_HPP
 
-struct Camera2D {
-    // window parameters
-    int height{ 1000 };
-    float ar = float{};
+namespace Engine {
+    struct Camera2D {
+        // window parameters
+        int height{ 1000 };
+        float ar = float{};
 
-    bool isActive = true;
+        bool isActive = true;
 
-    Camera2D(bool active = true, int ht = 1000) :
-        isActive{ active }, height{ ht } {}
-    Camera2D(const Camera2D&) = default;
-    Camera2D& operator=(const Camera2D&) = default;
-};
+        Camera2D(bool active = true, int ht = 1000) :
+            isActive{ active }, height{ ht } {}
+        Camera2D(const Camera2D&) = default;
+        Camera2D& operator=(const Camera2D&) = default;
+    };
+}
 
 #endif

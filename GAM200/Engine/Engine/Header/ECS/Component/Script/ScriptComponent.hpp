@@ -17,13 +17,15 @@ Technology is prohibited.
 #ifndef SCRIPT_COMPONENT_HPP
 #define SCRIPT_COMPONENT_HPP
 
-#include "Script/Script.hpp"
+#include "Engine/Header/Script/Script.hpp"
 #include <string>
 
-using Custom_Script = std::shared_ptr<Script>;
+namespace Engine {
+	using Custom_Script = std::shared_ptr<Script>;
 
-struct CSharpScript {
-	std::string className = std::string{};
-};
+	struct CSharpScript {
+		std::string className = std::string{};
+	};
+}
 
 #endif

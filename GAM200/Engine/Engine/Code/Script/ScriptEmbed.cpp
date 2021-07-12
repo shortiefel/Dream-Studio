@@ -25,16 +25,18 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Script/ScriptEmbed.hpp"
+#include "Engine/Header/Script/ScriptEmbed.hpp"
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
 
-MonoDomain* domain;
+namespace Engine {
+	MonoDomain* domain;
 
-namespace ScriptEmbed {
-	void Init() {
-		//domain = mono_jit_init("Test name");
+	namespace ScriptEmbed {
+		void Init() {
+			//domain = mono_jit_init("Test name");
 
+		}
 	}
 }

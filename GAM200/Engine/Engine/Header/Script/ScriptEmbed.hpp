@@ -17,8 +17,10 @@ Technology is prohibited.
 #ifndef SCRIPT_EMBED_HPP
 #define SCRIPT_EMBED_HPP
 
-namespace ScriptEmbed {
-	void Init();
+namespace Engine {
+	namespace ScriptEmbed {
+		void Init();
+	}
 }
 
 #endif

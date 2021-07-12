@@ -14,63 +14,65 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include <ECS/Component/Graphics/TextureComponent.hpp>
-#include "Management/ResourceManager.hpp"
+#include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
 //#include "../../External Resources/stb_image/stb_image.h"
 
-Texture::Texture(const std::string path) : 
-	texobj_hdl{0}, filepath{path}, width{0}, height{0}, BPP{0} 
-{
-	// flips image in vertically
-	// OpenGL - Cartesian coordinate system
-	// PNG - top left
-	///stbi_set_flip_vertically_on_load(1);
+namespace Engine {
+	Texture::Texture(const std::string path) :
+		texobj_hdl{ 0 }, filepath{ path }, width{ 0 }, height{ 0 }, BPP{ 0 }
+	{
+		// flips image in vertically
+		// OpenGL - Cartesian coordinate system
+		// PNG - top left
+		///stbi_set_flip_vertically_on_load(1);
 
-	// reads and write the width and height into variable, 4 - RBGA
-	//unsigned char* 
-	////localBuffer = stbi_load(path.c_str(), &width, &height, &BPP, 4);
-	//localBuffer = ResourceManager::LoadTexture(filepath, &width, &height, &BPP, 4);
-	texobj_hdl = ResourceManager::LoadTexture(filepath, &width, &height, &BPP, 4);
-	// checking for error when loading image
-	/*if (stbi_failure_reason())
-		std::cout << stbi_failure_reason() << std::endl;*/
+		// reads and write the width and height into variable, 4 - RBGA
+		//unsigned char* 
+		////localBuffer = stbi_load(path.c_str(), &width, &height, &BPP, 4);
+		//localBuffer = ResourceManager::LoadTexture(filepath, &width, &height, &BPP, 4);
+		texobj_hdl = ResourceManager::LoadTexture(filepath, &width, &height, &BPP, 4);
+		// checking for error when loading image
+		/*if (stbi_failure_reason())
+			std::cout << stbi_failure_reason() << std::endl;*/
 
-	// define and initialize a handle to texture object that will
-	// encapsulate two-dimensional textures
-	//glCreateTextures(GL_TEXTURE_2D, 1, &texobj_hdl);
-	//// allocate GPU storage for texture image data loaded from file
-	//glTextureStorage2D(texobj_hdl, 1, GL_RGBA8, width, height);
-	//// copy image data from client memory to GPU texture buffer memory
-	//glTextureSubImage2D(texobj_hdl, 0, 0, 0, width, height,
-	//	GL_RGBA, GL_UNSIGNED_BYTE, localBuffer);
-	
-	// free memory
-	/*if (localBuffer) 
-		stbi_image_free(localBuffer);*/
-}
+			// define and initialize a handle to texture object that will
+			// encapsulate two-dimensional textures
+			//glCreateTextures(GL_TEXTURE_2D, 1, &texobj_hdl);
+			//// allocate GPU storage for texture image data loaded from file
+			//glTextureStorage2D(texobj_hdl, 1, GL_RGBA8, width, height);
+			//// copy image data from client memory to GPU texture buffer memory
+			//glTextureSubImage2D(texobj_hdl, 0, 0, 0, width, height,
+			//	GL_RGBA, GL_UNSIGNED_BYTE, localBuffer);
 
-Texture::~Texture()
-{
-	//Problem is caused by ECS data being copied when moved from one part to another
-	//Texture component gets copied and so destroyed afterwards which would cause the texture to be corrupted
-	//now done by resourcemanager destroy function
-	//glDeleteTextures(1, &texobj_hdl);
-}
+			// free memory
+			/*if (localBuffer)
+				stbi_image_free(localBuffer);*/
+	}
 
-void Texture::Bind(GLuint slot) const
-{
-	glBindTextureUnit(slot, texobj_hdl);
+	Texture::~Texture()
+	{
+		//Problem is caused by ECS data being copied when moved from one part to another
+		//Texture component gets copied and so destroyed afterwards which would cause the texture to be corrupted
+		//now done by resourcemanager destroy function
+		//glDeleteTextures(1, &texobj_hdl);
+	}
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	void Texture::Bind(GLuint slot) const
+	{
+		glBindTextureUnit(slot, texobj_hdl);
 
-	//glActiveTexture(GL_TEXTURE0 + slot);
-	//glBindTexture(GL_TEXTURE_2D, texobj_hdl);
-}
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-void Texture::Unbind() const
-{
-	glBindTexture(GL_TEXTURE_2D, 0);
+		//glActiveTexture(GL_TEXTURE0 + slot);
+		//glBindTexture(GL_TEXTURE_2D, texobj_hdl);
+	}
+
+	void Texture::Unbind() const
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 }

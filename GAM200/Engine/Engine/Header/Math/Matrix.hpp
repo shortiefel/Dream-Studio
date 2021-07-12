@@ -29,13 +29,15 @@ Technology is prohibited.
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
 
-#include "Math/Matrix3.hpp"
+#include "Engine/Header/Math/Matrix3.hpp"
 
-namespace MathD {
-	//float matrix3
-	using Mat3 = MathImplementation::Matrix3<float>;
-	//int matrix3
-	using iMat3 = MathImplementation::Matrix3<int>;
+namespace Engine {
+	namespace MathD {
+		//float matrix3
+		using Mat3 = MathImplementation::Matrix3<float>;
+		//int matrix3
+		using iMat3 = MathImplementation::Matrix3<int>;
+	}
 }
 
 #endif

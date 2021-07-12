@@ -24,6 +24,9 @@ Technology is prohibited.
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Event/WindowEvent.hpp"
 
+#include <sstream> //Stringstream
+#include <iomanip> //Set precision
+
 
 namespace Engine {
 	GLFWwindow* Window::glfw_window = 0;
@@ -46,14 +49,20 @@ namespace Engine {
 		LOG_INSTANCE("Window destroyed");
 	}
 
-	void Window::DisplayFPS(int fps) {
-		std::string stitle = { w_data.title };
+	void Window::DisplayFPS(float fps) {
+		std::stringstream sstr;
+		sstr << std::fixed << std::setprecision(2) << w_data.title <<
+			" | FPS: " << fps;
+		
+		glfwSetWindowTitle(glfw_window, sstr.str().c_str());
+
+		/*std::string stitle = { w_data.title };
 		stitle += " | FPS: ";
 		char buffer[5];
 		sprintf_s(buffer, "%d", fps);
-		stitle += buffer;
+		stitle += buffer;*/
 
-		glfwSetWindowTitle(glfw_window, stitle.c_str());
+		//glfwSetWindowTitle(glfw_window, stitle.c_str());
 	}
 
 	//Create instance of window class

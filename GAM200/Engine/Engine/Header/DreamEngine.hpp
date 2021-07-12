@@ -18,27 +18,27 @@ Technology is prohibited.
 #ifndef DREAM_ENGINE_HPP
 #define DREAM_ENGINE_HPP
 
-//Logging
-#include "Debug Tools/Logging.hpp"
-
-//ECS core
-#include "ECS/Component/ComponentList.hpp"
-#include "ECS/System/SystemList.hpp"
-#include "ECS/Entity/EntityManager.hpp"
-#include "ECS/Coordinator.hpp"
-
-//Math
-#include "Math/MathLib.hpp"
-
-//Management
-#include "Management/ResourceManager.hpp"
-
-//Game related
-#include "Scene/GameScene.hpp"
-
-//Layers
-#include "Layer/Layer.hpp"
-#include "Layer/LayerStack.hpp"
+////Logging
+//#include "Debug Tools/Logging.hpp"
+//
+////ECS core
+//#include "ECS/Component/ComponentList.hpp"
+//#include "ECS/System/SystemList.hpp"
+//#include "ECS/Entity/EntityManager.hpp"
+//#include "ECS/Coordinator.hpp"
+//
+////Math
+//#include "Math/MathLib.hpp"
+//
+////Management
+//#include "Management/ResourceManager.hpp"
+//
+////Game related
+//#include "Scene/Scene.hpp"
+//
+////Layers
+//#include "Layer/Layer.hpp"
+//#include "Layer/LayerStack.hpp"
 
 
 #endif

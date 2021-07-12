@@ -73,27 +73,27 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
     <LibraryPath>
     </LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/$(Platform);$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
@@ -172,8 +172,9 @@
     <ClCompile Include="Engine\Code\Graphic\Graphic.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="Engine\Code\Management\ResourceManager.cpp" />
+    <ClCompile Include="Engine\Code\Management\SceneSerializer.cpp" />
     <ClCompile Include="Engine\Code\Physic\Physic.cpp" />
-    <ClCompile Include="Engine\Code\Scene\GameScene.cpp" />
+    <ClCompile Include="Engine\Code\Scene\Scene.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptEmbed.cpp" />
     <ClCompile Include="Engine\Code\Window.cpp" />
   </ItemGroup>
@@ -181,6 +182,7 @@
     <ClInclude Include="..\External Resources\include\stb_image\stb_image.h" />
     <ClInclude Include="Engine\Header\Application.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp" />
+    <ClInclude Include="Engine\Header\DeltaTime\DeltaTime.hpp" />
     <ClInclude Include="Engine\Header\DreamEngine.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp" />
@@ -213,6 +215,7 @@
     <ClInclude Include="Engine\Header\Layer\Layer.hpp" />
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp" />
     <ClInclude Include="Engine\Header\Management\ResourceManager.hpp" />
+    <ClInclude Include="Engine\Header\Management\SceneSerializer.hpp" />
     <ClInclude Include="Engine\Header\Math\MathLib.hpp" />
     <ClInclude Include="Engine\Header\Math\Matrix.hpp" />
     <ClInclude Include="Engine\Header\Math\Matrix3.hpp" />
@@ -222,11 +225,10 @@
     <ClInclude Include="Engine\Header\pch.hpp" />
     <ClInclude Include="Engine\Header\Physic\Physic.hpp" />
     <ClInclude Include="Engine\Header\Resource.hpp" />
-    <ClInclude Include="Engine\Header\Scene\GameScene.hpp" />
+    <ClInclude Include="Engine\Header\Scene\Scene.hpp" />
     <ClInclude Include="Engine\Header\Script\Script.hpp" />
     <ClInclude Include="Engine\Header\Script\ScriptEmbed.hpp" />
     <ClInclude Include="Engine\Header\targetver.hpp" />
-    <ClInclude Include="Engine\Header\TimeClock\TimeClock.hpp" />
     <ClInclude Include="Engine\Header\Window.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

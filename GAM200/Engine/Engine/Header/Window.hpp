@@ -28,7 +28,6 @@ Technology is prohibited.
 #define WINDOW_HPP
 
 #include "pch.hpp"
-#include <string>
 
 namespace Engine {
 	class Event; //Forward declaration
@@ -43,7 +42,7 @@ namespace Engine {
 		static inline unsigned int GetWidth() { return w_data.width; }
 		static inline unsigned int GetHeight() { return w_data.height; }
 
-		static void DisplayFPS(int fps);
+		static void DisplayFPS(float fps);
 
 		static void Update();
 

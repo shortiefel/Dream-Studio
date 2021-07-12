@@ -25,10 +25,10 @@ Technology is prohibited.
 //#include "Layer/GUILayer.hpp"
 
 #include "Engine/Header/Management/ResourceManager.hpp"
-#include "Engine/Header/TimeClock/TimeClock.hpp"
+#include "Engine/Header/DeltaTime/DeltaTime.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
-#include "Engine/Header/Scene/GameScene.hpp"
+#include "Engine/Header/Scene/Scene.hpp"
 
 namespace Engine {
     //Static----------------------------------------------
@@ -38,7 +38,7 @@ namespace Engine {
     bool Application::app_run_bool = true;
     float Application::m_lastframeTime = 0.f;
 
-    TimeClock Application::timeClock;
+    DeltaTime Application::deltaTime;
 
     void Application::Create() {
         if (s_app_instance) LOG_WARNING("An instance of application already exist!");
@@ -60,8 +60,8 @@ namespace Engine {
 
         ResourceManager::Create();
 
-        GameScene::Create();
-        GameScene::Play(); //Temporary placement (will be linked to GUI play button)
+        Scene::Create();
+        Scene::Play(); //Temporary placement (will be linked to GUI play button)
     }
 
     //Main application loop is done here
@@ -69,14 +69,14 @@ namespace Engine {
         //Temporary loop
         while (app_run_bool) {
             float current_time = static_cast<float>(glfwGetTime());
-            timeClock.UpdateTimeClock(current_time, m_lastframeTime);
+            deltaTime.UpdateDeltaTime(current_time, m_lastframeTime);
             m_lastframeTime = current_time;
-            Window::DisplayFPS(timeClock.GetFPS());
+            Window::DisplayFPS(deltaTime.GetFPS());
 
             glClear(GL_COLOR_BUFFER_BIT);
             glClearColor(1, 0, 1, 1);
 
-            GameScene::Update(timeClock.GetSec());
+            Scene::Update(deltaTime.GetSec());
 
             Window::Update();
         }
@@ -91,7 +91,7 @@ namespace Engine {
     //------------------------------------------------------
 
     Application::~Application() {
-        GameScene::Destroy(); //Destroy currently active game scene
+        Scene::Destroy(); //Destroy currently active game scene
         ResourceManager::Destroy();
         //GUILayer::Destroy();
         LayerStack::Destroy();

@@ -27,12 +27,11 @@ Technology is prohibited.
 #define APPLICATION_H
 
 namespace Engine {
-	//Declaration of class and struct that are used in class Application function declaration
-	//header file need not know its data member yet since it is not used
+	//Forward declaration
+	struct GLFWwindow;
 	class Event;
 	class WindowCloseEvent;
-	struct GLFWwindow;
-	class TimeClock;
+	class DeltaTime;
 
 	class Application {
 	public:
@@ -52,7 +51,7 @@ namespace Engine {
 		static bool app_run_bool;
 		static float m_lastframeTime;
 
-		static TimeClock timeClock;
+		static DeltaTime deltaTime;
 
 		Application() = default;
 	};

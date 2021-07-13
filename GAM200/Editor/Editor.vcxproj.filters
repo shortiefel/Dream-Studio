@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="External Resources">
+      <UniqueIdentifier>{4df3febe-50aa-4a62-90a8-71aadc843ff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Resources\Imgui">
+      <UniqueIdentifier>{52575c54-ed32-40f3-823f-f92a3f5f65e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Layer">
+      <UniqueIdentifier>{0d558f68-0f76-46be-aa2d-dc5d95839758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layer">
+      <UniqueIdentifier>{e8cd3e07-1f52-4de7-8ceb-e3faa3b9eaf2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\External Resources\include\Imgui\imconfig.h">
+      <Filter>External Resources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\Imgui\imgui.h">
+      <Filter>External Resources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\Imgui\imgui_impl_glfw.h">
+      <Filter>External Resources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\Imgui\imgui_impl_opengl3.h">
+      <Filter>External Resources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\Imgui\imgui_internal.h">
+      <Filter>External Resources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\Imgui\imstb_rectpack.h">
+      <Filter>External Resources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\Imgui\imstb_textedit.h">
+      <Filter>External Resources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\Imgui\imstb_truetype.h">
+      <Filter>External Resources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Header\Layer\GUILayer.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Header\GUI.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
+      <Filter>External Resources\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\Imgui\imgui_demo.cpp">
+      <Filter>External Resources\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\Imgui\imgui_draw.cpp">
+      <Filter>External Resources\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\Imgui\imgui_impl_glfw.cpp">
+      <Filter>External Resources\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\Imgui\imgui_impl_opengl3.cpp">
+      <Filter>External Resources\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\Imgui\imgui_tables.cpp">
+      <Filter>External Resources\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\Imgui\imgui_widgets.cpp">
+      <Filter>External Resources\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\Layer\GUILayer.cpp">
+      <Filter>Source Files\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

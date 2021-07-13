@@ -1,0 +1,144 @@
+/* Start Header**********************************************************************************/
+/*
+@file    Application.cpp
+@author  Ow Jian Wen	jianwen123321@hotmail.com
+@date    19/06/2021
+\brief
+Create a window and other various required manager (e.g Physic / Graphic Manager)
+Contains the main application loop and the game loop
+
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
+
+
+#include "Engine/Header/Debug Tools/Logging.hpp"
+#include "Engine/Header/Application.hpp"
+#include "Engine/Header/Window.hpp"
+
+#include "Engine/Header/Event/EventDispatcher.hpp"
+#include "Engine/Header/Layer/LayerStack.hpp"
+//#include "Layer/GUILayer.hpp"
+
+#include "Engine/Header/Management/ResourceManager.hpp"
+#include "Engine/Header/DeltaTime/DeltaTime.hpp"
+
+#include "Engine/Header/ECS/Factory.hpp"
+#include "Engine/Header/Scene/Scene.hpp"
+#include "Engine/Header/Management/SceneSerializer.hpp" // remove
+namespace Engine {
+    //Static----------------------------------------------
+
+    Application* Application::s_app_instance = 0;
+    //GLFWwindow* Application::s_glfw_window = 0;
+    bool Application::app_run_bool = true;
+    float Application::m_lastframeTime = 0.f;
+
+    DeltaTime Application::deltaTime;
+
+    void Application::Create() {
+        if (s_app_instance) LOG_WARNING("An instance of application already exist!");
+        s_app_instance = new Application();
+        LOG_INSTANCE("Application created");
+
+        ////Create window and instantiate managers
+        if (!Window::Create("Dream Engine")) LOG_ERROR("Window creation has failed");
+        s_app_instance->SetEventCallBack();
+
+        if (!LayerStack::Create()) LOG_ERROR("LayerStack creation has failed");
+
+        //const char* glsl_version = "#version 450";
+        //if (!GUILayer::Create(Window::GetGLFWwindow(), glsl_version)) LOG_ERROR("GUILayer creation has failed");
+
+        //LayerStack::AddOverlayLayer(GUILayer::Get());
+
+        Factory::Create();
+
+        ResourceManager::Create();
+
+        Scene::Create();
+        Scene::Play(); //Temporary placement (will be linked to GUI play button)
+
+        SceneSerializer::Deserialize("Assets/test1.json"); // remove
+        //SceneSerializer::Serialize("Assets/test1.json"); // remove
+    }
+
+    //Main application loop is done here
+    void Application::Update() {
+        //Temporary loop
+        while (app_run_bool) {
+            float current_time = static_cast<float>(glfwGetTime());
+            deltaTime.UpdateDeltaTime(current_time, m_lastframeTime);
+            m_lastframeTime = current_time;
+            Window::DisplayFPS(deltaTime.GetFPS());
+
+            glClear(GL_COLOR_BUFFER_BIT);
+            glClearColor(1, 0, 1, 1);
+
+            Scene::Update(deltaTime.GetSec());
+
+            Window::Update();
+        }
+    }
+
+    void Application::Destroy() {
+        delete s_app_instance;
+        LOG_INSTANCE("Application destroyed");
+
+    }
+
+    //------------------------------------------------------
+
+    Application::~Application() {
+        Scene::Destroy(); //Destroy currently active game scene
+        ResourceManager::Destroy();
+        //GUILayer::Destroy();
+        LayerStack::Destroy();
+        Window::Destroy();
+    }
+
+
+    void Application::OnEvent(Event& event) {
+
+        LOG_EVENT(event);
+
+        //Send event down the layers
+        EventDispatcher dispatcher(event);
+
+        switch (event.GetEventType()) {
+        case EventType::WINDOW_CLOSE:
+            dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+
+            break;
+            /*case EventType::KEY_PRESSED:
+
+                break;
+            case EventType::KEY_RELEASED:
+
+                break;*/
+                //case EventType::MOUSE_BUTTON_PRESSED:
+                //    LOG_WARNING(event);
+                //    break;
+                //case EventType::MOUSE_BUTTON_RELEASED:
+                //    LOG_DEBUG(event);
+                //    break;
+                //case EventType::MOUSE_MOVE:
+                //    //LOG_ERROR(event);
+                //    break;
+        }
+
+    }
+
+    void Application::SetEventCallBack() {
+        Window::SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+    }
+
+    bool Application::OnWindowClose(WindowCloseEvent& e) {
+        app_run_bool = false;
+        return true;
+    }
+}

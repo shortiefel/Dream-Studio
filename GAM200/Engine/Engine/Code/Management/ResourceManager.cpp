@@ -16,7 +16,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
-#include "stb_image.h"
+#include "stb_image/stb_image.h"
 
 namespace Engine {
 	std::unordered_map<std::string, GLuint> ResourceManager::textureList;

@@ -25,7 +25,7 @@ namespace Engine {
 	struct Transform {
 		MathD::Vec2 pos = MathD::Vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
 		MathD::Vec2 scale = MathD::Vec2{};
-		float rotation = float{}; // in degree
+		//float rotation = float{}; // in degree
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
 		MathD::Mat3 mdl_to_ndc_xform;
@@ -34,8 +34,8 @@ namespace Engine {
 		std::map<std::string, GLSLShader>::iterator shd_ref = GraphicImplementation::shdrpgms.begin();
 
 		Transform() = default;
-		Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, float tAngle, std::string shape = "Square", std::string shader = "Default", int tLayer = 0) :
-			pos{ tPos }, scale{ tScale }, rotation{ tAngle },
+		Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, std::string shape = "Square", std::string shader = "Default", int tLayer = 0) :
+			pos{ tPos }, scale{ tScale },
 			mdl_ref{ GraphicImplementation::models.find(shape) },
 			shd_ref{ GraphicImplementation::shdrpgms.find(shader) },
 			layer{ tLayer } {}

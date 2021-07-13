@@ -73,27 +73,27 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
     <LibraryPath>
     </LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/stb_image;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
@@ -179,11 +179,31 @@
     <ClCompile Include="Engine\Code\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\External Resources\include\rapidjson\allocators.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\cursorstreamwrapper.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\document.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\encodedstream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\encodings.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\filereadstream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\filewritestream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\fwd.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\memorybuffer.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\memorystream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\pointer.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\prettywriter.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\rapidjson.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\reader.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\schema.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\stream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\stringbuffer.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\uri.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\writer.h" />
     <ClInclude Include="..\External Resources\include\stb_image\stb_image.h" />
     <ClInclude Include="Engine\Header\Application.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp" />
     <ClInclude Include="Engine\Header\DeltaTime\DeltaTime.hpp" />
-    <ClInclude Include="Engine\Header\DreamEngine.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp" />

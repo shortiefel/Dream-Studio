@@ -49,65 +49,65 @@ namespace Engine {
         //W A S D, I J K L and arrow keys to move
         //V to switch camera
 
-        /*Entity ent = gCoordinator.createEntity();
-        gCoordinator.AddComponent(
-            ent,
-            Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{20.f,20.f}, 0.f, "Square" });
-        gCoordinator.AddComponent(ent,
-                Collider{ ColliderType::SQUARE, true });
-        gCoordinator.AddComponent(ent,
-            Custom_Script{ std::make_shared<PlayerController>() });
-        gCoordinator.AddComponent(ent,
-            Texture{ "Assets/Textures/test1.png" });
+        //Entity ent = gCoordinator.createEntity();
+        //gCoordinator.AddComponent(
+        //    ent,
+        //    Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{20.f,20.f}, "Square" });
+        //gCoordinator.AddComponent(ent,
+        //        Collider{ ColliderType::SQUARE, true });
+        ///*gCoordinator.AddComponent(ent,
+        //    Custom_Script{ std::make_shared<PlayerController>() });*/
+        //gCoordinator.AddComponent(ent,
+        //    Texture{ "Assets/Textures/test1.png" });
 
 
-        Entity ent1 = gCoordinator.createEntity();
-        gCoordinator.AddComponent(
-            ent1,
-            Transform{ MathD::Vec2{-100.f,0.f}, MathD::Vec2{100.f,100.f}, 0.f, "Square" });
-        gCoordinator.AddComponent(ent1,
-            Collider{ ColliderType::SQUARE, true });
-        gCoordinator.AddComponent(ent1,
-            Custom_Script{ std::make_shared<AnotherController>() });
-        gCoordinator.AddComponent(ent1,
-            Texture{ "Assets/Textures/test2.png" });
-
-
-
+        //Entity ent1 = gCoordinator.createEntity();
+        //gCoordinator.AddComponent(
+        //    ent1,
+        //    Transform{ MathD::Vec2{-100.f,0.f}, MathD::Vec2{100.f,100.f}, "Square" });
+        //gCoordinator.AddComponent(ent1,
+        //    Collider{ ColliderType::SQUARE, true });
+        ///*gCoordinator.AddComponent(ent1,
+        //    Custom_Script{ std::make_shared<AnotherController>() });*/
+        //gCoordinator.AddComponent(ent1,
+        //    Texture{ "Assets/Textures/test2.png" });
 
 
 
-        temcam = gCoordinator.createEntity();
-        gCoordinator.AddComponent(
-            temcam,
-            Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{0.f,0.f}, 0.f });
-
-        gCoordinator.AddComponent(
-            temcam,
-            Camera2D{ true });
-        gCoordinator.AddComponent(temcam,
-            Custom_Script{ std::make_shared<CameraController>() });
-
-        temcam2 = gCoordinator.createEntity();
-        gCoordinator.AddComponent(
-            temcam2,
-            Transform{ MathD::Vec2{240.f,100.f}, MathD::Vec2{0.f,0.f}, 0.f });
-        gCoordinator.AddComponent(
-            temcam2,
-            Camera2D{ false });
-        gCoordinator.AddComponent(temcam2,
-            Custom_Script{ std::make_shared<CameraController>() });
 
 
-        temcam3 = gCoordinator.createEntity();
-        gCoordinator.AddComponent(
-            temcam3,
-            Transform{ MathD::Vec2{-40.f,-240.f}, MathD::Vec2{0.f,0.f}, 0.f });
-        gCoordinator.AddComponent(
-            temcam3,
-            Camera2D{ false });
-        gCoordinator.AddComponent(temcam3,
-            Custom_Script{ std::make_shared<CameraController>() });*/
+
+        //temcam = gCoordinator.createEntity();
+        //gCoordinator.AddComponent(
+        //    temcam,
+        //    Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{0.f,0.f} });
+
+        //gCoordinator.AddComponent(
+        //    temcam,
+        //    Camera2D{ true });
+        ///*gCoordinator.AddComponent(temcam,
+        //    Custom_Script{ std::make_shared<CameraController>() });*/
+
+        //temcam2 = gCoordinator.createEntity();
+        //gCoordinator.AddComponent(
+        //    temcam2,
+        //    Transform{ MathD::Vec2{240.f,100.f}, MathD::Vec2{0.f,0.f} });
+        //gCoordinator.AddComponent(
+        //    temcam2,
+        //    Camera2D{ false });
+        ///*gCoordinator.AddComponent(temcam2,
+        //    Custom_Script{ std::make_shared<CameraController>() });*/
+
+
+        //temcam3 = gCoordinator.createEntity();
+        //gCoordinator.AddComponent(
+        //    temcam3,
+        //    Transform{ MathD::Vec2{-40.f,-240.f}, MathD::Vec2{0.f,0.f} });
+        //gCoordinator.AddComponent(
+        //    temcam3,
+        //    Camera2D{ false });
+        ///*gCoordinator.AddComponent(temcam3,
+        //    Custom_Script{ std::make_shared<CameraController>() });*/
 
             //--------------------------------------------------
 

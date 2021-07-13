@@ -25,6 +25,8 @@ namespace Engine {
 
         bool isActive = true;
 
+        Camera2D(int ht, float ratio, bool active ) :
+            height{ ht }, ar{ ratio }, isActive{ active } {}
         Camera2D(bool active = true, int ht = 1000) :
             isActive{ active }, height{ ht } {}
         Camera2D(const Camera2D&) = default;

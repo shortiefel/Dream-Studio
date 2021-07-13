@@ -29,7 +29,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/Scene/Scene.hpp"
-
+#include "Engine/Header/Management/SceneSerializer.hpp" // remove
 namespace Engine {
     //Static----------------------------------------------
 
@@ -62,6 +62,9 @@ namespace Engine {
 
         Scene::Create();
         Scene::Play(); //Temporary placement (will be linked to GUI play button)
+
+        SceneSerializer::Deserialize("Assets/test1.json"); // remove
+        //SceneSerializer::Serialize("Assets/test1.json"); // remove
     }
 
     //Main application loop is done here

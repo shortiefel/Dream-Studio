@@ -83,6 +83,17 @@ namespace Engine {
 			return ComponentArrayMAX[EntityToIndexMap[entity]];
 		}
 
+		bool HasData(T*& com, Entity entity)
+		{
+			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) return false;
+			//error checking
+			//assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
+
+			//if exist, return data
+			com = &ComponentArrayMAX[EntityToIndexMap[entity]];
+			return true;
+		}
+
 		void EntityDestroyed(Entity entity) override
 		{
 			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end())

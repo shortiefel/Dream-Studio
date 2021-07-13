@@ -74,7 +74,7 @@ namespace Engine {
         Entity ent = gCoordinator.createEntity();
         gCoordinator.AddComponent(
             ent,
-            Transform{ pos, scale, 0.f, "Square" });
+            Transform{ pos, scale, "Square" });
         gCoordinator.AddComponent(ent,
             Collider{ ColliderType::SQUARE, isMoveable });
     }
@@ -84,7 +84,7 @@ namespace Engine {
         Entity ent = gCoordinator.createEntity();
         gCoordinator.AddComponent(
             ent,
-            Transform{ pos, scale, 0.f, "Circle" });
+            Transform{ pos, scale, "Circle" });
         gCoordinator.AddComponent(ent,
             Collider{ ColliderType::CIRCLE, isMoveable });
     }

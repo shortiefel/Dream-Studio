@@ -41,9 +41,9 @@ Technology is prohibited.
 
 #include <functional>
 
-#include <glew.h>
-#include <glfw3.h>
-
+//External Resources
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 
 #endif

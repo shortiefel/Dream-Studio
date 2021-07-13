@@ -43,6 +43,7 @@ Technology is prohibited.
 
 #include <Windows.h> //Setting console text color
 #include <iostream> //ostream
+#include <assert.h>
 
 #include "Engine/Header/Event/Event.hpp" //checking of event types
 
@@ -64,7 +65,7 @@ enum class LogState {
 #define LOG_WARNING(...) Engine::Logging::AddLog(LogState::Warning, __VA_ARGS__)
 #define LOG_ERROR(...)   Engine::Logging::AddLog(LogState::Error, __VA_ARGS__)
 #define LOG_INSTANCE(...)   Engine::Logging::AddLog(LogState::Instance, __VA_ARGS__)
-
+#define LOG_ASSERT(t) assert(t)
 
 namespace Engine {
 	//EmptyClass is used to have default parameter for logging that can be ignored

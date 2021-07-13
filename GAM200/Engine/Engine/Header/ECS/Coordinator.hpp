@@ -64,6 +64,10 @@ namespace Engine {
 			sysManager->EntityDestroyed(entity);
 		}
 
+		inline const std::vector<Entity>& GetUsedEntityVector() const {
+			return entityManager->GetUsedEntityVector();
+		}
+
 		/**
 		* Component Manager
 		* --> acts as coordinator when registering, adding, removing.
@@ -102,6 +106,12 @@ namespace Engine {
 		T& GetCom(Entity entity)
 		{
 			return compManager->GetCom<T>(entity);
+		}
+
+		template<typename T>
+		bool HasCom(T*& com, Entity entity)
+		{
+			return compManager->HasCom<T>(com, entity);
 		}
 
 		template<typename T>

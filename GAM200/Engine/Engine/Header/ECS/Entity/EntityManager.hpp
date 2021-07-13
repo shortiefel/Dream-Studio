@@ -51,6 +51,7 @@ namespace Engine {
 
 			Entity ID = AvailableEntities.front();
 			AvailableEntities.pop();
+			UsedEntities.emplace_back(ID);
 			++AliveEntityCount;
 
 			return ID;
@@ -83,10 +84,14 @@ namespace Engine {
 
 		}
 
+		inline const std::vector<Entity>& GetUsedEntityVector() const {
+			return UsedEntities;
+		}
 
 
-	private:
+		std::vector<Entity> UsedEntities{};
 		uint32_t AliveEntityCount{}; // Total living entities
+	private:
 		std::queue<Entity> AvailableEntities{}; // Queue of unused entity IDs
 		std::array<Signature, MAX_ENTITIES> mSignatures{}; // Array of signatures for index to correspond to ID
 	};

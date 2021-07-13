@@ -82,6 +82,12 @@ namespace Engine {
 			//a reference to component from array for entity
 			return GetComArry<T>()->GetData(entity);
 		}
+		template<typename T>
+		bool HasCom(T*& com, Entity entity)
+		{
+			//a reference to component from array for entity
+			return GetComArry<T>()->HasData(com, entity);
+		}
 
 		void DestoryEntity(Entity entity)
 		{

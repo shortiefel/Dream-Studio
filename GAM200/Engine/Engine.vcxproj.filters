@@ -97,6 +97,9 @@
     <Filter Include="Header Files\DeltaTime">
       <UniqueIdentifier>{12e76191-510e-48d8-8bb4-72fed4d781ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External Resources\Json">
+      <UniqueIdentifier>{33fc9dad-4f01-4208-9c69-030a239e58f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -275,9 +278,6 @@
     <ClInclude Include="Engine\Header\Application.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\DreamEngine.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\framework.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -304,6 +304,69 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\DeltaTime\DeltaTime.hpp">
       <Filter>Header Files\DeltaTime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\allocators.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\cursorstreamwrapper.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\document.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\encodedstream.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\encodings.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\filereadstream.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\filewritestream.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\fwd.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\istreamwrapper.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\memorybuffer.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\memorystream.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\ostreamwrapper.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\pointer.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\prettywriter.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\rapidjson.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\reader.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\schema.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\stream.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\stringbuffer.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\uri.h">
+      <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\writer.h">
+      <Filter>External Resources\Json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

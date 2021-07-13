@@ -35,10 +35,11 @@ namespace Engine {
 		inline GLint getWidth() const { return width; }
 		inline GLint getHeight() const { return height; }
 		inline GLuint getTexObj() const { return texobj_hdl; }
+		inline std::string getFilepath() const { return filepath; }
 
 	private:
 		GLuint texobj_hdl = GLuint{};
-		//I dont think u need to store anything below this line
+		
 		std::string filepath = "";
 
 		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel

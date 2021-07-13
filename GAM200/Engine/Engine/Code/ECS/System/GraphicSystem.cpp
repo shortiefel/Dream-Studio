@@ -47,16 +47,16 @@ namespace Engine {
 										  MathD::Vec3(0, 0, 1.f) };
 
 			//orientation.x += orientation.y * static_cast<GLfloat>(dt);
-			GLfloat rad = MathD::radians(transform.rotation);
+			/*GLfloat rad = MathD::radians(20.f);
 			MathD::Mat3 temMat3{ MathD::Vec3(cos(rad), sin(rad), 0),
 								 MathD::Vec3(-sin(rad), cos(rad), 0),
 								 MathD::Vec3(0, 0, 1.f) };
 
-			transform.mdl_to_ndc_xform = temMat3 * transform.mdl_to_ndc_xform;
+			transform.mdl_to_ndc_xform = temMat3 * transform.mdl_to_ndc_xform;*/
 
-			temMat3 = { MathD::Vec3(1.f, 0, 0),
-						MathD::Vec3(0, 1.f, 0),
-						MathD::Vec3(transform.pos.x, transform.pos.y, 1.f) };
+			MathD::Mat3 temMat3 = { MathD::Vec3(1.f, 0, 0),
+									MathD::Vec3(0, 1.f, 0),
+									MathD::Vec3(transform.pos.x, transform.pos.y, 1.f) };
 
 			transform.mdl_to_ndc_xform = temMat3 * transform.mdl_to_ndc_xform;
 

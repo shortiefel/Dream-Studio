@@ -19,9 +19,10 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/pch.hpp"
 
-#include "../../../External Resources/Include/Imgui/imgui.h"
-#include "../../../External Resources/Include/Imgui/imgui_impl_glfw.h"
-#include "../../../External Resources/Include/Imgui/imgui_impl_opengl3.h"
+//External Resources
+#include "Imgui/imgui.h"
+#include "Imgui/imgui_impl_glfw.h"
+#include "Imgui/imgui_impl_opengl3.h"
 
 namespace Editor {
     //Static ----------------------------------------------------------------------------------------

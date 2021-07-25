@@ -23,8 +23,12 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
+
 #ifndef APPLICATION_H
 #define APPLICATION_H
+
+typedef void (*FuncNoData)();
+typedef void (*Func1Param)(float);
 
 namespace Engine {
 	//Forward declaration
@@ -35,25 +39,34 @@ namespace Engine {
 
 	class Application {
 	public:
+		static bool app_run_bool;
+
 		static void Create();
-		static void Update();
+		/*Main application loop is done here
+		defaultRender - whether to use default rendering or not (For scene update)*/
+		static void Update(bool defaultRender);
 		static void Destroy();
 
+		//Destroy other stuff when application is destroyed
 		~Application();
 
 		void OnEvent(Event& event);
+		//Set event call back for events
 		void SetEventCallBack();
 
-		bool OnWindowClose(WindowCloseEvent& e);
+		//Set up function callback for editor function
+		static void SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3);
 	private:
 		static Application* s_app_instance;
 		//static GLFWwindow* s_glfw_window;
-		static bool app_run_bool;
+
 		static float m_lastframeTime;
 
-		static DeltaTime deltaTime;
-
 		Application() = default;
+
+		static FuncNoData CreateFunc;
+		static Func1Param UpdateFunc;
+		static FuncNoData DestroyFunc;
 	};
 }
 

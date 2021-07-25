@@ -35,6 +35,8 @@ namespace Engine {
 	//Changed on Create
 	Window::WinData Window::w_data = { "", 0, 0 };
 
+	float Window::aspectRatio;
+
 	void Window::Update() {
 
 		glfwPollEvents();
@@ -47,6 +49,12 @@ namespace Engine {
 		glfwTerminate();
 
 		LOG_INSTANCE("Window destroyed");
+	}
+
+	MathD::Vec2 Window::GetWindowPosition() {
+		int xpos, ypos;
+		glfwGetWindowPos(glfw_window, &xpos, &ypos);
+		return MathD::Vec2{ (float)xpos, (float)ypos };
 	}
 
 	void Window::DisplayFPS(float fps) {
@@ -74,6 +82,8 @@ namespace Engine {
 		w_data.title = ttitle;
 		w_data.width = twidth;
 		w_data.height = theight;
+
+		aspectRatio = (float)w_data.height / (float)w_data.width;
 
 		if (!glfwInit()) {
 			LOG_ERROR("GLFW initialization has failed");

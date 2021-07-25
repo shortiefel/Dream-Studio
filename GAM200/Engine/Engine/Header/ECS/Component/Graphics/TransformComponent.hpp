@@ -6,6 +6,12 @@
 \brief
 This file contain the transform struct to be used by the ECS and various system
 
+//Serialize list
+-vec2 float:	Position
+-vec2 float:    Scale
+-string:		Shape
+-string:		Shader
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

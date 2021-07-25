@@ -19,11 +19,23 @@
     <Filter Include="External Resources\Imgui">
       <UniqueIdentifier>{52575c54-ed32-40f3-823f-f92a3f5f65e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Layer">
-      <UniqueIdentifier>{0d558f68-0f76-46be-aa2d-dc5d95839758}</UniqueIdentifier>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{6b468164-12c6-4f60-a0ab-4dd01f8f7bc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Layer">
-      <UniqueIdentifier>{e8cd3e07-1f52-4de7-8ceb-e3faa3b9eaf2}</UniqueIdentifier>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{8b96502a-323e-4e9b-a985-8ed6d66d6d69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Management">
+      <UniqueIdentifier>{28ae1df5-c522-4258-93b9-c0117f28a627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Management">
+      <UniqueIdentifier>{981e98f7-af32-4050-aed9-56fcdf33d02c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphic">
+      <UniqueIdentifier>{c0409082-060d-4ae7-a6dc-b26c019f2b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphic">
+      <UniqueIdentifier>{f4ee5b18-d115-495c-b9d6-214c638c3b20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,11 +63,17 @@
     <ClInclude Include="..\External Resources\include\Imgui\imstb_truetype.h">
       <Filter>External Resources\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Header\Layer\GUILayer.hpp">
-      <Filter>Header Files\Layer</Filter>
+    <ClInclude Include="Editor\Header\Management\EditorSceneSerializer.hpp">
+      <Filter>Header Files\Management</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Header\GUI.hpp">
+    <ClInclude Include="Editor\Header\EditorStartPoint.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Header\Graphic\EditorSceneCamera.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI.hpp">
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,14 +98,20 @@
     <ClCompile Include="..\External Resources\include\Imgui\imgui_widgets.cpp">
       <Filter>External Resources\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Code\Layer\GUILayer.cpp">
-      <Filter>Source Files\Layer</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\Code\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Code\GUI.cpp">
+    <ClCompile Include="Editor\Code\Management\EditorSceneSerializer.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\EditorStartPoint.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\Graphic\EditorSceneCamera.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

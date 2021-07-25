@@ -47,8 +47,8 @@ namespace Engine {
             // compute world-to-NDC transformation matrix
             world_to_ndc_xform =
                 MathD::Mat3(
-                    2.f / (cam.ar * cam.height), 0.f, 0.f,
-                    0.f, 2.f / cam.height, 0.f,
+                    2.f / (cam.ar * CAMERA_HEIGHT * cam.fov), 0.f, 0.f,
+                    0.f, 2.f / CAMERA_HEIGHT * cam.fov, 0.f,
                     0.f, 0.f, 1.f)
                 *
                 MathD::Mat3(

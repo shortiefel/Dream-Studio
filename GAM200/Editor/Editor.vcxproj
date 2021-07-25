@@ -73,12 +73,12 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
@@ -87,12 +87,12 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
@@ -206,8 +206,10 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
     <ClInclude Include="..\External Resources\include\Imgui\imstb_rectpack.h" />
     <ClInclude Include="..\External Resources\include\Imgui\imstb_textedit.h" />
     <ClInclude Include="..\External Resources\include\Imgui\imstb_truetype.h" />
-    <ClInclude Include="Editor\Header\GUI.hpp" />
-    <ClInclude Include="Editor\Header\Layer\GUILayer.hpp" />
+    <ClInclude Include="Editor\Header\EditorStartPoint.hpp" />
+    <ClInclude Include="Editor\Header\Graphic\EditorSceneCamera.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUI.hpp" />
+    <ClInclude Include="Editor\Header\Management\EditorSceneSerializer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp" />
@@ -217,9 +219,11 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
     <ClCompile Include="..\External Resources\include\Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_tables.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Editor\Code\GUI.cpp" />
-    <ClCompile Include="Editor\Code\Layer\GUILayer.cpp" />
+    <ClCompile Include="Editor\Code\EditorStartPoint.cpp" />
+    <ClCompile Include="Editor\Code\Graphic\EditorSceneCamera.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI.cpp" />
     <ClCompile Include="Editor\Code\Main.cpp" />
+    <ClCompile Include="Editor\Code\Management\EditorSceneSerializer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

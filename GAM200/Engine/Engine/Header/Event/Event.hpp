@@ -29,8 +29,15 @@ namespace Engine {
 
 	class Event {
 	public:
-		virtual EventType GetEventType() const = 0;
+		virtual EventType GetEventType() const {
+			std::cout << "rip\n";
+			return EventType::KEY_PRESSED;
+		}
 		virtual std::string Details() const = 0;
+
+		virtual void CallRegisteredFunctions() {
+			
+		}
 
 		friend std::ostream& operator<<(std::ostream& os, const Event& event) {
 			os << event.Details();

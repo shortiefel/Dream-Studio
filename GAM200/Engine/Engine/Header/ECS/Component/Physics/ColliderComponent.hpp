@@ -6,6 +6,13 @@
 \brief
 This file contain the collider struct to be used by the ECS and various system
 
+//Serialize list
+-ColliderType:  ColliderType
+-vec2 float:	Position
+-vec2 float:    Scale
+-bool:			isMoveable
+-bool:			isTrigger
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

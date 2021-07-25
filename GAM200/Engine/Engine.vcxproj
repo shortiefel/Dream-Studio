@@ -162,17 +162,20 @@
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp" />
     <ClCompile Include="Engine\Code\Application.cpp" />
+    <ClCompile Include="Engine\Code\DeltaTime\DeltaTime.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Factory.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\PhysicSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp" />
+    <ClCompile Include="Engine\Code\EngineCore.cpp" />
+    <ClCompile Include="Engine\Code\Event\WindowEvent.cpp" />
     <ClCompile Include="Engine\Code\Graphic\glslshader.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Graphic.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="Engine\Code\Management\ResourceManager.cpp" />
-    <ClCompile Include="Engine\Code\Management\SceneSerializer.cpp" />
+    <ClCompile Include="Engine\Code\Management\GameSceneSerializer.cpp" />
     <ClCompile Include="Engine\Code\Physic\Physic.cpp" />
     <ClCompile Include="Engine\Code\Scene\Scene.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptEmbed.cpp" />
@@ -224,6 +227,7 @@
     <ClInclude Include="Engine\Header\ECS\System\System.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemManager.hpp" />
+    <ClInclude Include="Engine\Header\EngineCore.hpp" />
     <ClInclude Include="Engine\Header\Event\Event.hpp" />
     <ClInclude Include="Engine\Header\Event\EventDispatcher.hpp" />
     <ClInclude Include="Engine\Header\Event\KeyEvent.hpp" />
@@ -235,7 +239,7 @@
     <ClInclude Include="Engine\Header\Layer\Layer.hpp" />
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp" />
     <ClInclude Include="Engine\Header\Management\ResourceManager.hpp" />
-    <ClInclude Include="Engine\Header\Management\SceneSerializer.hpp" />
+    <ClInclude Include="Engine\Header\Management\GameSceneSerializer.hpp" />
     <ClInclude Include="Engine\Header\Math\MathLib.hpp" />
     <ClInclude Include="Engine\Header\Math\Matrix.hpp" />
     <ClInclude Include="Engine\Header\Math\Matrix3.hpp" />

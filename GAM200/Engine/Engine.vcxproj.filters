@@ -100,6 +100,12 @@
     <Filter Include="External Resources\Json">
       <UniqueIdentifier>{33fc9dad-4f01-4208-9c69-030a239e58f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\DeltaTime">
+      <UniqueIdentifier>{32af4b01-18e5-4235-9c80-32f6e9608402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Event">
+      <UniqueIdentifier>{818e1702-019a-4760-b11a-08a8efa47c26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -150,8 +156,17 @@
     <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp">
       <Filter>External Resources\Stb</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Management\SceneSerializer.cpp">
+    <ClCompile Include="Engine\Code\Management\GameSceneSerializer.cpp">
       <Filter>Source Files\Management</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\DeltaTime\DeltaTime.cpp">
+      <Filter>Source Files\DeltaTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\EngineCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Event\WindowEvent.cpp">
+      <Filter>Source Files\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -299,7 +314,7 @@
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
       <Filter>Header Files\Layer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Management\SceneSerializer.hpp">
+    <ClInclude Include="Engine\Header\Management\GameSceneSerializer.hpp">
       <Filter>Header Files\Management</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\DeltaTime\DeltaTime.hpp">
@@ -367,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="..\External Resources\include\rapidjson\writer.h">
       <Filter>External Resources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\EngineCore.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

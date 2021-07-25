@@ -6,6 +6,9 @@
 \brief
 This file contain the TextureComponent declaration
 
+//Serialize list
+-string: pathname
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

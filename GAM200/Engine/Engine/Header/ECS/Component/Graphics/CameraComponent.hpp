@@ -7,6 +7,13 @@
 This file contain the Camera component
 
 
+//Serialize list
+-string:    pathname
+-float:     fov
+-float:     AR
+-bool:      isActive
+
+
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of
@@ -18,17 +25,18 @@ Technology is prohibited.
 #define CAMERA_COMPONENT_HPP
 
 namespace Engine {
+    constexpr int CAMERA_HEIGHT = 1000;
+
     struct Camera2D {
         // window parameters
-        int height{ 1000 };
-        float ar = float{};
+        float ar = float{}, fov = float{};
 
         bool isActive = true;
 
-        Camera2D(int ht, float ratio, bool active ) :
-            height{ ht }, ar{ ratio }, isActive{ active } {}
-        Camera2D(bool active = true, int ht = 1000) :
-            isActive{ active }, height{ ht } {}
+        Camera2D(float fieldOfView, float ratio, bool active) :
+            fov{ fieldOfView }, ar{ ratio }, isActive{ active } {}
+        Camera2D(bool active = true) :
+            isActive{ active } {}
         Camera2D(const Camera2D&) = default;
         Camera2D& operator=(const Camera2D&) = default;
     };

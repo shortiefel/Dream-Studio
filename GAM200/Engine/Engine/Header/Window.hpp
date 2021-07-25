@@ -28,12 +28,25 @@ Technology is prohibited.
 #define WINDOW_HPP
 
 #include "pch.hpp"
+#include "Engine/Header/Math/MathLib.hpp"
+
+//
+#define ASPECT_RATIO_FIX(size) \
+float temY = size.x * Engine::Window::aspectRatio; \
+if (temY < size.y) { \
+	size.y = temY; \
+} \
+else { \
+	size.x = size.y * (1 / Engine::Window::aspectRatio); \
+}
 
 namespace Engine {
 	class Event; //Forward declaration
 
 	class Window {
 	public:
+		static float aspectRatio;
+
 		static bool Create(const std::string& ttitle = "untitled", unsigned int twidth = 1280, unsigned int theight = 720);
 		static void Destroy();
 
@@ -41,6 +54,8 @@ namespace Engine {
 		static inline GLFWwindow* GetGLFWwindow() { return glfw_window; }
 		static inline unsigned int GetWidth() { return w_data.width; }
 		static inline unsigned int GetHeight() { return w_data.height; }
+
+		static MathD::Vec2 GetWindowPosition();
 
 		static void DisplayFPS(float fps);
 

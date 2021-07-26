@@ -209,6 +209,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
     <ClInclude Include="Editor\Header\EditorStartPoint.hpp" />
     <ClInclude Include="Editor\Header\Graphic\EditorSceneCamera.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUIWindow.hpp" />
     <ClInclude Include="Editor\Header\Management\EditorSceneSerializer.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +223,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
     <ClCompile Include="Editor\Code\EditorStartPoint.cpp" />
     <ClCompile Include="Editor\Code\Graphic\EditorSceneCamera.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI_Window.cpp" />
     <ClCompile Include="Editor\Code\Main.cpp" />
     <ClCompile Include="Editor\Code\Management\EditorSceneSerializer.cpp" />
   </ItemGroup>

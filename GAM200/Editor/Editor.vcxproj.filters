@@ -75,6 +75,9 @@
     <ClInclude Include="Editor\Header\GUI\GUI.hpp">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUIWindow.hpp">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -111,6 +114,9 @@
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Code\GUI\GUI.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Window.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>

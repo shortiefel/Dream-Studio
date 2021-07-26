@@ -269,6 +269,9 @@ static void ShowDemoWindowMisc();
 // You may then search for keywords in the code when you are interested by a specific feature.
 void ImGui::ShowDemoWindow(bool* p_open)
 {
+#if 1
+    ShowExampleAppDockSpace(p_open);
+#else
     // Exceptionally add an extra assert here for people confused about initial Dear ImGui setup
     // Most ImGui functions would normally just crash if the context is missing.
     IM_ASSERT(ImGui::GetCurrentContext() != NULL && "Missing dear imgui context. Refer to examples app!");
@@ -575,6 +578,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
     // End of ShowDemoWindow()
     ImGui::PopItemWidth();
     ImGui::End();
+#endif
 }
 
 static void ShowDemoWindowWidgets()

@@ -50,9 +50,9 @@ namespace Engine {
 		//Destroy other stuff when application is destroyed
 		~Application();
 
-		void OnEvent(Event& event);
+		//void OnEvent(Event& event);
 		//Set event call back for events
-		void SetEventCallBack();
+		//void SetEventCallBack();
 
 		//Set up function callback for editor function
 		static void SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3);

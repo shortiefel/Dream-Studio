@@ -19,6 +19,28 @@ Technology is prohibited.
 
 #include <iostream> //operator<< overload
 
+//#define EventType_To_String(x) #x
+
+//Definition for the CallRegisteredFunctions and RegisterFunction
+//Functions would do the same thing but *this,
+//functions from registeredFunctions and type of 
+//function pointer would be different
+//Note: Can be found in Event.hpp
+#define Call_and_Register_Definition(xType, fp) \
+	void xType::CallRegisteredFunctions() {\
+		for (auto& func : registeredFunctions) {\
+			if (func(*this)) {\
+				this->handled = true;\
+				break;\
+			}\
+		}\
+	}\
+\
+	void xType::RegisterFunction(fp func) {\
+		registeredFunctions.emplace_back(func);\
+	}
+
+
 namespace Engine {
 	enum class EventType {
 		NONE = 0,
@@ -29,15 +51,12 @@ namespace Engine {
 
 	class Event {
 	public:
-		virtual EventType GetEventType() const {
-			std::cout << "rip\n";
-			return EventType::KEY_PRESSED;
-		}
+		//return variable of type EventType
+		virtual EventType GetEventType() const = 0;
+		//return string of EventType
 		virtual std::string Details() const = 0;
-
-		virtual void CallRegisteredFunctions() {
-			
-		}
+		//Call all registered functions
+		virtual void CallRegisteredFunctions() = 0;
 
 		friend std::ostream& operator<<(std::ostream& os, const Event& event) {
 			os << event.Details();

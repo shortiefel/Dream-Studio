@@ -61,7 +61,7 @@ namespace Engine {
 
 		static void Update();
 
-		static void SetEventCallBack(const std::function<void(Event&)> callback);
+		//static void SetEventCallBack(const std::function<void(Event&)> callback);
 
 
 		static void WindowSizeCallback(GLFWwindow* window, int width, int height);
@@ -77,7 +77,7 @@ namespace Engine {
 			std::string title;
 			unsigned int width, height;
 
-			std::function<void(Event&)> eventCallBack;
+			//std::function<void(Event&)> eventCallBack;
 		};
 
 		static WinData w_data;

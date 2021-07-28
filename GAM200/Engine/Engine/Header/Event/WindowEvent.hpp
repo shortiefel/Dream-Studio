@@ -21,11 +21,11 @@ Technology is prohibited.
 #include "Engine/Header/Math/Vector.hpp" //Vec2
 #include "Engine/Header/pch.hpp"
 
-
-
 namespace Engine {
 	class WindowCloseEvent;
 	typedef bool (*WinCloseFP)(const WindowCloseEvent&);
+	class WindowResizeEvent;
+	typedef bool (*WinResizeFP)(const WindowResizeEvent&);
 
 	//WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_MOVED
 	class WindowCloseEvent : public Event {
@@ -53,9 +53,12 @@ namespace Engine {
 		virtual EventType GetEventType() const override;
 		virtual std::string Details() const override;
 
+		virtual void CallRegisteredFunctions() override;
+		static void RegisterFunction(WinResizeFP func);
+
 	private:
 		MathD::uiVec2 w_size;
-
+		static std::vector<WinResizeFP> registeredFunctions;
 	};
 }
 

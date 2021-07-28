@@ -31,13 +31,13 @@ namespace Engine {
 	//(currently on hold) Make singleton
 	class EventDispatcher {
 	public:
-		EventDispatcher(Event& event) : m_event(event) {}
+		//EventDispatcher(Event& event) : m_event(event) {}
 
-		template <typename T>
-		void Dispatch(std::function<bool(T&)> eventFunction) {
-			//m_event.handled = 
-			eventFunction(*(T*)&m_event);
-		}
+		//template <typename T>
+		//void Dispatch(std::function<bool(T&)> eventFunction) {
+		//	//m_event.handled = 
+		//	eventFunction(*(T*)&m_event);
+		//}
 		/*EventDispatcher() {}
 		EventDispatcher(Event* event) {
 			v_event.push_back(event);
@@ -48,9 +48,11 @@ namespace Engine {
 				std::cout << v_event.size() << " " << (*i)->Details() << "\n";
 			}
 		}*/
+		
+		static void SendEvent(Event& event);
 
 	private:
-		Event& m_event;
+		//Event& m_event;
 		//std::vector<Event*> v_event;
 	};
 }

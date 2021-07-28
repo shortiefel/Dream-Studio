@@ -18,7 +18,11 @@ Technology is prohibited.
 
 namespace Engine {
 	std::vector<WinCloseFP> WindowCloseEvent::registeredFunctions;
+	std::vector<WinResizeFP> WindowResizeEvent::registeredFunctions;
 
+	/*-------------------------------------------------------------------------------------------------
+	Window close event
+	-------------------------------------------------------------------------------------------------*/
 	EventType WindowCloseEvent::GetEventType() const {
 		return EventType::WINDOW_CLOSE;
 	}
@@ -27,24 +31,12 @@ namespace Engine {
 		return std::string{ "Window Closed" };
 	}
 
-	void WindowCloseEvent::CallRegisteredFunctions() {
-		for (auto& func : registeredFunctions) {
-			if (func(*this)) {
-				this->handled = true;
-				break;
-			}
-		}
-	}
-
-	//static
-	void WindowCloseEvent::RegisterFunction(WinCloseFP func) {
-		registeredFunctions.emplace_back(func);
-	}
+	Call_and_Register_Definition(WindowCloseEvent, WinCloseFP);
 
 
-
-
-
+	/*-------------------------------------------------------------------------------------------------
+	Window resize event
+	-------------------------------------------------------------------------------------------------*/
 	WindowResizeEvent::WindowResizeEvent(unsigned int w, unsigned int h) :
 		w_size{ w, h } {}
 
@@ -55,4 +47,6 @@ namespace Engine {
 	std::string WindowResizeEvent::Details() const {
 		return std::string{ "Window Resized: " + std::to_string(w_size.x) + ", " + std::to_string(w_size.y) };
 	}
+
+	Call_and_Register_Definition(WindowResizeEvent, WinResizeFP);
 }

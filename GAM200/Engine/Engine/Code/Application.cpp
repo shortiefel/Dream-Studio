@@ -46,7 +46,7 @@ namespace Engine {
 
         ////Create window and instantiate managers
         if (!Window::Create("Dream Engine")) LOG_ERROR("Window creation has failed");
-        s_app_instance->SetEventCallBack();
+        //s_app_instance->SetEventCallBack();
         
         WindowCloseEvent::RegisterFunction(&OnWindowClose);
 
@@ -71,7 +71,6 @@ namespace Engine {
             Engine::EngineCore::Update(DeltaTime::GetSec(), defaultRender);
             
             if (UpdateFunc != nullptr) UpdateFunc(Engine::DeltaTime::GetSec());
-            //Scene::Update(DeltaTime::GetSec(), defaultRender);
             
             Engine::Window::Update();
         }
@@ -91,40 +90,41 @@ namespace Engine {
     }
 
 
-    void Application::OnEvent(Event& event) {
+    //void Application::OnEvent(Event& event) {
 
-        LOG_EVENT(event);
+    //    //LOG_EVENT(event);
 
-        //Send event down the layers
-        //EventDispatcher dispatcher(event);
-        
-        switch (event.GetEventType()) {
-        case EventType::WINDOW_CLOSE:
-            //dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-            event.CallRegisteredFunctions();
-            break;
-            /*case EventType::KEY_PRESSED:
+    //    //Send event down the layers
+    //    //EventDispatcher dispatcher(event);
+    //    //event.CallRegisteredFunctions();
 
-                break;
-            case EventType::KEY_RELEASED:
+    //    //switch (event.GetEventType()) {
+    //    //case EventType::WINDOW_CLOSE:
+    //    //    //dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+    //    //    //event.CallRegisteredFunctions();
+    //    //    break;
+    //    //    /*case EventType::KEY_PRESSED:
 
-                break;*/
-                //case EventType::MOUSE_BUTTON_PRESSED:
-                //    LOG_WARNING(event);
-                //    break;
-                //case EventType::MOUSE_BUTTON_RELEASED:
-                //    LOG_DEBUG(event);
-                //    break;
-                //case EventType::MOUSE_MOVE:
-                //    //LOG_ERROR(event);
-                //    break;
-        }
+    //    //        break;
+    //    //    case EventType::KEY_RELEASED:
 
-    }
+    //    //        break;*/
+    //    //        //case EventType::MOUSE_BUTTON_PRESSED:
+    //    //        //    LOG_WARNING(event);
+    //    //        //    break;
+    //    //        //case EventType::MOUSE_BUTTON_RELEASED:
+    //    //        //    LOG_DEBUG(event);
+    //    //        //    break;
+    //    //        //case EventType::MOUSE_MOVE:
+    //    //        //    //LOG_ERROR(event);
+    //    //        //    break;
+    //    //}
+
+    //}
    
-    void Application::SetEventCallBack() {
+    /*void Application::SetEventCallBack() {
         Window::SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
-    }
+    }*/
 
     void Application::SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3) {
         CreateFunc = func1;

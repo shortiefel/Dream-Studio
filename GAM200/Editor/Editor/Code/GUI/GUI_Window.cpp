@@ -18,6 +18,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Window.hpp"
+#include "Engine/Header/Event/EventDispatcher.hpp"
 
 //Create a window with an image
 //E.g Game window 
@@ -95,8 +96,8 @@ namespace Editor {
 				bool quit = false;
 				ImGui::MenuItem("Quit", NULL, &quit);
 				if (quit) {
-					printf("%s\n", "Quit");
-					//Send event to quit
+					Engine::WindowCloseEvent event;
+					Engine::EventDispatcher::SendEvent(event);
 				}
 
 				ImGui::EndMenu();

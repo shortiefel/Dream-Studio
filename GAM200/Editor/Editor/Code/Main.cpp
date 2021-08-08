@@ -28,27 +28,21 @@ Technology is prohibited.
 #include <crtdbg.h>
 //-----------------------------
 
-//#include "framework.hpp"
-//#include "Resource.hpp"
-
-//#include <stdio.h>
 #include "Engine/Header/Application.hpp"
-#include "GUI.hpp"
-
-//#include <mono/jit/jit.h>
-//#include <mono/metadata/assembly.h>
-//#include <mono/metadata/mono-config.h>
-//#include <string>
+#include "Editor/Header/EditorStartPoint.hpp"
 
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //For memory check
 	//use try and except (require logging)
 	Engine::Application::Create(); //Needed for game
-	Editor::GUI::Create();
 
-	Engine::Application::Update(); //Needed for game
+	Engine::Application::SetupCallbackFunction(
+		&Editor::EditorStartPoint::Create,
+		&Editor::EditorStartPoint::Update,
+		&Editor::EditorStartPoint::Destroy);
 
-	Editor::GUI::Destroy();
+	Engine::Application::Update(false); //Needed for game
+
 	Engine::Application::Destroy(); //Needed for game
 
 	return 1;

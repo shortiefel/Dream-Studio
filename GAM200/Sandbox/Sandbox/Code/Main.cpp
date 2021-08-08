@@ -28,11 +28,9 @@ Technology is prohibited.
 int main() {
 	
 	Engine::Application::Create(); //Needed for game
-	
 
-	Engine::Application::Update(); //Needed for game
+	Engine::Application::Update(true); //Needed for game
 
-	
 	Engine::Application::Destroy(); //Needed for game
 
 	return 1;

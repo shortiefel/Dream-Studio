@@ -20,6 +20,7 @@ Technology is prohibited.
 
 #include "Engine/Header/pch.hpp"
 
+#include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Event/WindowEvent.hpp"
@@ -35,6 +36,8 @@ namespace Engine {
 	//Changed on Create
 	Window::WinData Window::w_data = { "", 0, 0 };
 
+	float Window::aspectRatio;
+
 	void Window::Update() {
 
 		glfwPollEvents();
@@ -47,6 +50,12 @@ namespace Engine {
 		glfwTerminate();
 
 		LOG_INSTANCE("Window destroyed");
+	}
+
+	MathD::Vec2 Window::GetWindowPosition() {
+		int xpos, ypos;
+		glfwGetWindowPos(glfw_window, &xpos, &ypos);
+		return MathD::Vec2{ (float)xpos, (float)ypos };
 	}
 
 	void Window::DisplayFPS(float fps) {
@@ -74,6 +83,8 @@ namespace Engine {
 		w_data.title = ttitle;
 		w_data.width = twidth;
 		w_data.height = theight;
+
+		aspectRatio = (float)w_data.height / (float)w_data.width;
 
 		if (!glfwInit()) {
 			LOG_ERROR("GLFW initialization has failed");
@@ -132,9 +143,9 @@ namespace Engine {
 	//-> within those function the w_data.eventCallBack is called to pass the event details to application
 
 	//Set event call back to application
-	void Window::SetEventCallBack(const std::function<void(Event&)> callback) {
+	/*void Window::SetEventCallBack(const std::function<void(Event&)> callback) {
 		w_data.eventCallBack = callback;
-	}
+	}*/
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//Listed below are function callbacks which are called on glfw side when its instruction/command is executed
@@ -159,29 +170,34 @@ namespace Engine {
 		w_data.height = height;
 
 		WindowResizeEvent event(width, height);
-		w_data.eventCallBack(event);
+		EventDispatcher::SendEvent(event);
+		//w_data.eventCallBack(event);
 	}
 
 	void Window::WindowCloseCallback(GLFWwindow* window) {
 		WindowCloseEvent event;
-		w_data.eventCallBack(event);
+		EventDispatcher::SendEvent(event);
+		//w_data.eventCallBack(event);
 	}
 
 	void Window::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 		switch (action) {
 		case GLFW_PRESS: {
 			KeyPressedEvent event(key, false);
-			w_data.eventCallBack(event);
+			EventDispatcher::SendEvent(event);
+			//w_data.eventCallBack(event);
 			break;
 		}
 		case GLFW_RELEASE: {
 			KeyReleasedEvent event(key);
-			w_data.eventCallBack(event);
+			EventDispatcher::SendEvent(event);
+			//w_data.eventCallBack(event);
 			break;
 		}
 		case GLFW_REPEAT: {
 			KeyPressedEvent event(key, true);
-			w_data.eventCallBack(event);
+			EventDispatcher::SendEvent(event);
+			//w_data.eventCallBack(event);
 			break;
 		}
 		}
@@ -191,12 +207,14 @@ namespace Engine {
 		switch (action) {
 		case GLFW_PRESS: {
 			MousePressedEvent event(button);
-			w_data.eventCallBack(event);
+			EventDispatcher::SendEvent(event);
+			//w_data.eventCallBack(event);
 			break;
 		}
 		case GLFW_RELEASE: {
 			MouseReleasedEvent event(button);
-			w_data.eventCallBack(event);
+			EventDispatcher::SendEvent(event);
+			//w_data.eventCallBack(event);
 			break;
 		}
 		}
@@ -204,12 +222,14 @@ namespace Engine {
 
 	void Window::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 		MouseScrolledEvent event((float)xoffset, (float)yoffset);
-		w_data.eventCallBack(event);
+		EventDispatcher::SendEvent(event);
+		//w_data.eventCallBack(event);
 	}
 
 	void Window::CursorCallBack(GLFWwindow* window, double xpos, double ypos) {
 		MouseMoveEvent event((float)xpos, (float)ypos);
-		w_data.eventCallBack(event);
+		EventDispatcher::SendEvent(event);
+		//w_data.eventCallBack(event);
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

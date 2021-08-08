@@ -71,31 +71,31 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\target\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\target-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/target/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/target/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\target\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\target-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\target\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\target-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/target/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/target/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\target\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\target-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -110,13 +110,20 @@
       <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
+      <Command>copy "$(SolutionDir)\target\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
+
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
+
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
+
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -133,13 +140,20 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
       <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
+      <Command>copy "$(SolutionDir)\target\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
+
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
+
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
+
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -160,13 +174,20 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
       <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
+      <Command>copy "$(SolutionDir)\target\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
+
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
+
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
+
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -187,13 +208,20 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
       <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
+      <Command>copy "$(SolutionDir)\target\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
+
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
+
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
+
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
+
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -206,8 +234,11 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
     <ClInclude Include="..\External Resources\include\Imgui\imstb_rectpack.h" />
     <ClInclude Include="..\External Resources\include\Imgui\imstb_textedit.h" />
     <ClInclude Include="..\External Resources\include\Imgui\imstb_truetype.h" />
-    <ClInclude Include="Editor\Header\GUI.hpp" />
-    <ClInclude Include="Editor\Header\Layer\GUILayer.hpp" />
+    <ClInclude Include="Editor\Header\EditorStartPoint.hpp" />
+    <ClInclude Include="Editor\Header\Graphic\EditorSceneCamera.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUI.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUIWindow.hpp" />
+    <ClInclude Include="Editor\Header\Management\EditorSceneSerializer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp" />
@@ -217,9 +248,17 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
     <ClCompile Include="..\External Resources\include\Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_tables.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Editor\Code\GUI.cpp" />
-    <ClCompile Include="Editor\Code\Layer\GUILayer.cpp" />
+    <ClCompile Include="Editor\Code\EditorStartPoint.cpp" />
+    <ClCompile Include="Editor\Code\Graphic\EditorSceneCamera.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI_Window.cpp" />
     <ClCompile Include="Editor\Code\Main.cpp" />
+    <ClCompile Include="Editor\Code\Management\EditorSceneSerializer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Engine\Engine.vcxproj">
+      <Project>{f1ed2fb0-16c2-4362-a3e4-6992be2f6f90}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

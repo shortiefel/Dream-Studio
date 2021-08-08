@@ -24,7 +24,7 @@ namespace Engine {
 		static void Destroy();
 		static void Play();
 		static void Stop();
-		static void Update(float dt);
+		static void Update(float dt, bool defaultRender);
 	};
 }
 

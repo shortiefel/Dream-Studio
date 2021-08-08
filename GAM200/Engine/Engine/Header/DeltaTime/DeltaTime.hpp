@@ -22,26 +22,16 @@ namespace Engine {
 
 	class DeltaTime {
 	public:
-		DeltaTime() : m_time{ 0.f } {}
-		DeltaTime(float time) : m_time{ time }, fps{ 1 / m_time } {}
+		/*DeltaTime() : m_time{ 0.f } {}
+		DeltaTime(float time) : m_time{ time }, fps{ 1 / m_time } {}*/
 
-		inline float GetSec() const { return m_time; }
-		//inline float GetMilliSec() const { return m_time * 1000.f; }
-		inline float GetFPS() const { return fps; }
+		inline static float GetSec() { return m_time; }
+		inline static float GetFPS() { return fps; }
 
-		void UpdateDeltaTime(float current_time, float last_time) {
-			static float new_wait_time = current_time;
-			m_time = current_time - last_time;
-
-			//Update fps by FPS_Interval
-			if (current_time - new_wait_time > FPS_Interval) {
-				new_wait_time = current_time;
-				fps = 1 / m_time;
-			}
-		}
+		static void UpdateDeltaTime(float current_time, float last_time);
 
 	private:
-		float m_time = 0.f, fps = 0;
+		static float m_time, fps;
 	};
 }
 

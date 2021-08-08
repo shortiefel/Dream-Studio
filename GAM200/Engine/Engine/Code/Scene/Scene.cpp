@@ -49,16 +49,18 @@ namespace Engine {
         //W A S D, I J K L and arrow keys to move
         //V to switch camera
 
-        //Entity ent = gCoordinator.createEntity();
-        //gCoordinator.AddComponent(
-        //    ent,
-        //    Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{20.f,20.f}, "Square" });
+        /*Entity ent2 = gCoordinator.createEntity();
+        gCoordinator.AddComponent(
+            ent2,
+            Transform{ MathD::Vec2{50.f,0.f}, MathD::Vec2{200.f,200.f}, "Circle" });
+        gCoordinator.AddComponent(ent2,
+            Texture{ "Assets/Textures/test2.png" });*/
+
         //gCoordinator.AddComponent(ent,
         //        Collider{ ColliderType::SQUARE, true });
         ///*gCoordinator.AddComponent(ent,
         //    Custom_Script{ std::make_shared<PlayerController>() });*/
-        //gCoordinator.AddComponent(ent,
-        //    Texture{ "Assets/Textures/test1.png" });
+
 
 
         //Entity ent1 = gCoordinator.createEntity();
@@ -71,9 +73,6 @@ namespace Engine {
         //    Custom_Script{ std::make_shared<AnotherController>() });*/
         //gCoordinator.AddComponent(ent1,
         //    Texture{ "Assets/Textures/test2.png" });
-
-
-
 
 
 
@@ -129,7 +128,11 @@ namespace Engine {
         ScriptSystem::Stop();
     }
 
-    void Scene::Update(float dt) {
+    /*
+    dt - delta time
+    defaultRender - whether to use default rendering or not
+    */
+    void Scene::Update(float dt, bool defaultRender) {
         //testing code------------------------------
         /*static bool state = false;
         if (!state && glfwGetKey(Window::GetGLFWwindow(), GLFW_KEY_V) == GLFW_PRESS) {
@@ -165,8 +168,11 @@ namespace Engine {
         PhysicSystem::Update(dt);
 
         CameraSystem::Update(dt);
-        GraphicSystem::Update(dt);
-        GraphicSystem::Render();
+
+        if (defaultRender) {
+            GraphicSystem::Update(dt);
+            GraphicSystem::Render();
+        }
 
         LayerStack::Update();
         LayerStack::Draw();

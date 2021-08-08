@@ -19,42 +19,46 @@ Technology is prohibited.
 
 #include "Engine/Header/Event/Event.hpp" //Event
 #include "Engine/Header/Math/Vector.hpp" //Vec2
+#include "Engine/Header/pch.hpp"
 
 namespace Engine {
+	class WindowCloseEvent;
+	typedef bool (*WinCloseFP)(const WindowCloseEvent&);
+	class WindowResizeEvent;
+	typedef bool (*WinResizeFP)(const WindowResizeEvent&);
+
 	//WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_MOVED
 	class WindowCloseEvent : public Event {
 	public:
 		WindowCloseEvent() {}
 
-		virtual EventType GetEventType() const override {
-			return EventType::WINDOW_CLOSE;
-		}
+		virtual EventType GetEventType() const override;
+		virtual std::string Details() const override;
 
-		virtual std::string Details() const override {
-			return std::string{ "Window Closed" };
-		}
+		virtual void CallRegisteredFunctions() override;
+		static void RegisterFunction(WinCloseFP func);
+
+	private:
+		static std::vector<WinCloseFP> registeredFunctions;
 	};
 
 	class WindowResizeEvent : public Event {
 	public:
-		WindowResizeEvent(unsigned int w, unsigned int h) :
-			w_size{ w, h } {}
+		WindowResizeEvent(unsigned int w, unsigned int h);
 
 		inline MathD::uiVec2 GetSize() const {
 			return w_size;
 		}
 
-		virtual EventType GetEventType() const override {
-			return EventType::WINDOW_RESIZE;
-		}
+		virtual EventType GetEventType() const override;
+		virtual std::string Details() const override;
 
-		virtual std::string Details() const override {
-			return std::string{ "Window Resized: " + std::to_string(w_size.x) + ", " + std::to_string(w_size.y) };
-		}
+		virtual void CallRegisteredFunctions() override;
+		static void RegisterFunction(WinResizeFP func);
 
 	private:
 		MathD::uiVec2 w_size;
-
+		static std::vector<WinResizeFP> registeredFunctions;
 	};
 }
 

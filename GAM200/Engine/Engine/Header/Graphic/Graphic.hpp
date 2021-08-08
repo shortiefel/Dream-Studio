@@ -40,6 +40,12 @@ namespace Engine {
             MathD::Vec2 TexPos_vtx;
         };
 
+        void CreateFramebuffer(unsigned int* framebuffer, unsigned int* texColorBuffer);
+        //exist = false to remove framebuffer, to set buffer ignore exist
+        void SetFramebuffer(unsigned int f, bool exist = true);
+        void BindFramebuffer();
+        void UnbindFramebuffer();
+
         //struct GLSprite {
         //    GLuint spriteWidth, spriteHeight;
         //    GLuint spritesheetWidth, spritesheetHeight;

@@ -200,6 +200,11 @@ copy "$(SolutionDir)\Editor\Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Asset
   <ItemGroup>
     <ClCompile Include="Sandbox\Code\Main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Engine\Engine.vcxproj">
+      <Project>{f1ed2fb0-16c2-4362-a3e4-6992be2f6f90}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

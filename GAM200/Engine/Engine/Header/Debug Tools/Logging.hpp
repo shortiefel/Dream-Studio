@@ -170,15 +170,15 @@ namespace Engine {
 }
 
 #else
+//do {} while (0) to remove warnings
+#define LOG_INFO(...)		do {} while (0)
+#define LOG_EVENT(...)		do {} while (0)
+#define LOG_WARNING(...)	do {} while (0)
+#define LOG_ERROR(...)		do {} while (0)
+#define LOG_INSTANCE(...)   do {} while (0)
+#define LOG_ASSERT(t)		do {} while (0)
 
-//Do nothing  do {} while (0)
-#define LOG_INFO(x)  do {} while (0)
-#define LOG_EVENT(x)  do {} while (0)
-#define LOG_WARNING(x) do {} while (0)
-#define LOG_ERROR(x)  do {} while (0)
-#define LOG_INSTANCE(x) do {} while (0)
-
-#endif	
+#endif
 
 
 

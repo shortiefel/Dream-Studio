@@ -26,6 +26,8 @@ Technology is prohibited.
 
 #include "Engine/Header/EngineCore.hpp"
 
+#include <Tracy.hpp>
+
 namespace Engine {
     //Static----------------------------------------------------------------------------------
 
@@ -73,6 +75,8 @@ namespace Engine {
             if (UpdateFunc != nullptr) UpdateFunc(Engine::DeltaTime::GetSec());
             
             Engine::Window::Update();
+
+            FrameMark;
         }
     }
 

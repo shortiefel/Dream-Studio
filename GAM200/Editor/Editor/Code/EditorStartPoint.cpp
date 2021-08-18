@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*
-@file    EditorStartPoint.hpp
+@file    EditorStartPoint.cpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    23/07/2021
 \brief

@@ -37,6 +37,12 @@
     <Filter Include="Header Files\Graphic">
       <UniqueIdentifier>{f4ee5b18-d115-495c-b9d6-214c638c3b20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{ab70eb80-25fc-4c92-ac78-d51893f707b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tools">
+      <UniqueIdentifier>{7a462d4d-83cb-4cad-856b-98c7a76ced64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\Imgui\imconfig.h">
@@ -78,6 +84,9 @@
     <ClInclude Include="Editor\Header\GUI\GUIWindow.hpp">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\Tools\Profiler.hpp">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -118,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="Editor\Code\GUI\GUI_Window.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Header\Tools\Profiler.cpp">
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

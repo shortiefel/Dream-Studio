@@ -60,10 +60,12 @@ namespace Engine {
 
 	//Function is opposite of play
 	void ScriptSystem::Stop() {
-		/*for (auto const& entity : SS->mEntities) {
-			auto& cscript = gCoordinator.GetCom<Custom_Script>(entity);
-			cscript->OnDestroy();
-		}*/
+		std::string func = "Destroy";
+		for (auto const& entity : SS->mEntities) {
+			auto& cscript = gCoordinator.GetCom<CSharpScript>(entity);
+
+			ScriptEmbed::CallFunction(entityToMonoObject[entity], cscript.className, func);
+		}
 	}
 
 	bool ScriptSystem::Create(const std::shared_ptr<ScriptSystem>& scriptSystem) {

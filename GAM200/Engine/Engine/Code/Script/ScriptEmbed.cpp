@@ -54,33 +54,7 @@ namespace Engine {
 		MonoAssembly* assem;
 		MonoImage* image;
 
-		std::vector<MonoImage*> images_v;
-		//std::vector < std::pair<Entity, MonoObject*> > instances_v;
-
-		void ReloadMono();
-		MonoDomain* create_child_domain();
 		void destroy_child_domain();
-
-		//--------------------------------------------------------------------------------
-		char* Read(std::string filename, size_t* len) {
-			std::ifstream file(filename.c_str(), std::ifstream::binary);
-			if (file) {
-				// get length of file:
-				file.seekg(0, file.end);
-				auto length = file.tellg();
-				*len = length;
-				file.seekg(0, file.beg);
-
-				char* arr = new char[length];
-				file.read(arr, length);
-				file.close();
-
-				return arr;
-			}
-			return nullptr;
-
-		}
-		//--------------------------------------------------------------------------------
 
 		void Create() {
 			//Will to be changed to be automatic (can detect folders
@@ -90,13 +64,10 @@ namespace Engine {
 			domain = mono_jit_init("Root Domain");
 
 			mono_thread_set_main(mono_thread_current());
-
-			//ReloadMono();
-			
 		}
 
 		void Destroy() {
-			create_child_domain();
+			destroy_child_domain();
 			//clean up root domain
 			mono_jit_cleanup(mono_domain_get());
 		}
@@ -104,7 +75,7 @@ namespace Engine {
 		void ReloadMono() {
 			destroy_child_domain();
 
-			domain = create_child_domain();
+			domain = mono_domain_create_appdomain((char*)("Child_Domain"), NULL);
 			if (!domain) {
 				mono_environment_exitcode_set(-1);
 			}
@@ -138,31 +109,10 @@ namespace Engine {
 				return;
 			}
 
-			/*MonoObject* obj2 = mono_object_new(mono_domain_get(), klass);
-			if (!obj2) {
-				LOG_ERROR("Failed loading obj");
-				return;
-			}*/
-
-			//instances_v.push_back(std::make_pair{ ent, obj });
-
 			MonoMethod* method = mono_class_get_method_from_name(klass, "Init", -1);
 			if (method) {
 				mono_runtime_invoke(method, object.get(), nullptr, nullptr);
 			}
-
-			//method = mono_class_get_method_from_name(klass, "ShowHealth", -1);
-			//if (method) {
-			//	mono_runtime_invoke(method, obj, nullptr, nullptr);
-			//}
-
-
-			////method = mono_class_get_method_from_name(klass, "ShowHealth", -1);
-			//if (method) {
-			//	mono_runtime_invoke(method, obj2, nullptr, nullptr);
-			//}
-
-			
 		}
 
 		void CallFunction(std::shared_ptr<MonoObject*>& object, std::string& className, std::string& func) {
@@ -174,15 +124,12 @@ namespace Engine {
 			}
 		}
 
-		MonoDomain* create_child_domain() {
-			//std::string childDomainName = ;
-			MonoDomain* childDomain = mono_domain_create_appdomain((char*)("Child_Domain"), NULL);
 
-			//mono_thread_push_appdomain_ref(childDomain);
-
-			return childDomain;
-		}
-
+		/*-----------------------------------------------------
+			Destroy child domain
+			-Check if child domain exist
+			-delete if it exist
+		-----------------------------------------------------*/
 		void destroy_child_domain() {
 			MonoDomain* currentDomain = mono_domain_get();
 			//Check if there is a child domain first
@@ -191,7 +138,6 @@ namespace Engine {
 					LOG_ERROR("Scripting: Unable to set domain");
 				}
 
-				//mono_thread_pop_appdomain_ref();
 				mono_domain_unload(currentDomain);
 			}
 		}

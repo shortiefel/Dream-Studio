@@ -39,11 +39,6 @@ public class Test : MonoBehaviour
         Console.WriteLine("init Test!");
     }
 
-    public override void Update()
-    {
-        
-    }
-
     public void ShowHealth()
     {
         Console.WriteLine("Health: " + health);

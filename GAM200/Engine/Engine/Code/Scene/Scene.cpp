@@ -184,6 +184,7 @@ namespace Engine {
     }
 
     void Scene::Destroy() {
+        Scene::Stop(); //Temporary for when pausing game (for editor)
         //Destroy in reverse order
         //Rebuild the layers for a difference game scene
         //Remove all entity

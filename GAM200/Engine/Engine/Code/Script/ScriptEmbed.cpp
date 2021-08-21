@@ -20,12 +20,13 @@ Steps to test
 
 When entering play mode
 Compiles        
-serialize    
-shut down child domain       
-create child domain    
-load assemblies    
-deserialize
-
+Serialize
+Stop child domain
+Create child domain
+Load assemblies
+Load objects
+Deserialize
+Initialize object
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -36,8 +37,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Script/ScriptEmbed.hpp"
-
-#include <string>
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/threads.h>
@@ -52,8 +52,10 @@ namespace Engine {
 	namespace ScriptEmbed {
 		MonoDomain* domain;
 		MonoAssembly* assem;
-		std::vector<MonoImage*> images;
-		std::vector<MonoObject*> instances;
+		MonoImage* image;
+
+		std::vector<MonoImage*> images_v;
+		//std::vector < std::pair<Entity, MonoObject*> > instances_v;
 
 		void ReloadMono();
 		MonoDomain* create_child_domain();
@@ -89,7 +91,8 @@ namespace Engine {
 
 			mono_thread_set_main(mono_thread_current());
 
-			ReloadMono();
+			//ReloadMono();
+			
 		}
 
 		void Destroy() {
@@ -112,112 +115,63 @@ namespace Engine {
 				return;
 			}
 
-			MonoImage* image = mono_assembly_get_image(assem);
-			images.emplace_back(image);
+			image = mono_assembly_get_image(assem);
+			//images_v.emplace_back(image);
 			if (!image) {
 				LOG_ERROR("Failed loading image");
 				return;
 			}
+		}
 
-			MonoClass* klass = mono_class_from_name(image, "", "Test");
 
+
+		void ReloadObject(std::shared_ptr<MonoObject*>& object, std::string& className) {
+			MonoClass* klass = mono_class_from_name(image, "", className.c_str());
 			if (!klass) {
 				LOG_ERROR("Failed loading class");
 				return;
 			}
 
-
-			MonoObject* obj = mono_object_new(mono_domain_get(), klass);
-			if (!obj) {
+			object = std::make_shared<MonoObject*>(mono_object_new(mono_domain_get(), klass));
+			if (!(object.get())) {
 				LOG_ERROR("Failed loading obj");
 				return;
 			}
 
-			MonoObject* obj2 = mono_object_new(mono_domain_get(), klass);
+			/*MonoObject* obj2 = mono_object_new(mono_domain_get(), klass);
 			if (!obj2) {
 				LOG_ERROR("Failed loading obj");
 				return;
-			}
+			}*/
 
-			//instances.push_back(obj);
+			//instances_v.push_back(std::make_pair{ ent, obj });
 
-			MonoMethod* method = mono_class_get_method_from_name(klass, "Damage", -1);
+			MonoMethod* method = mono_class_get_method_from_name(klass, "Init", -1);
 			if (method) {
-				mono_runtime_invoke(method, obj, nullptr, nullptr);
+				mono_runtime_invoke(method, object.get(), nullptr, nullptr);
 			}
-
-			method = mono_class_get_method_from_name(klass, "ShowHealth", -1);
-			if (method) {
-				mono_runtime_invoke(method, obj, nullptr, nullptr);
-			}
-
 
 			//method = mono_class_get_method_from_name(klass, "ShowHealth", -1);
+			//if (method) {
+			//	mono_runtime_invoke(method, obj, nullptr, nullptr);
+			//}
+
+
+			////method = mono_class_get_method_from_name(klass, "ShowHealth", -1);
+			//if (method) {
+			//	mono_runtime_invoke(method, obj2, nullptr, nullptr);
+			//}
+
+			
+		}
+
+		void CallFunction(std::shared_ptr<MonoObject*>& object, std::string& className, std::string& func) {
+			MonoClass* klass = mono_class_from_name(image, "", className.c_str());
+			MonoMethod* method = mono_class_get_method_from_name( klass, func.c_str(), -1);
+
 			if (method) {
-				mono_runtime_invoke(method, obj2, nullptr, nullptr);
+				mono_runtime_invoke(method, object.get(), nullptr, nullptr);
 			}
-			
-
-			
-			
-
-
-
-			//size_t length;
-			//std::string filename = "C:/Users/jianw/Desktop/Digipen/GAM200/GAM200/Editor/Assets/testing.cs";
-			//char* data = Read(filename.c_str(), &length);
-			//
-
-			//MonoImageOpenStatus status;
-			//// open the assembly from the data we read, so we never lock files
-			//auto image = mono_image_open_from_data_with_name(data, length, true /* copy data */, &status, false /* ref only */, filename.c_str());
-			//if (status != MONO_IMAGE_OK || image == nullptr)
-			//{
-			//	LOG_ERROR("F1ailed loading assembly");
-			//	return;
-			//}
-
-			//// load the assembly
-			//auto  assembly = mono_assembly_load_from_full(image, filename.c_str(), &status, false);
-			//if (status != MONO_IMAGE_OK || assembly == nullptr)
-			//{
-			//	mono_image_close(image);
-			//	LOG_ERROR("Failed loading assembly");
-			//}
-
-			//// save the image for lookups later and for cleaning up
-			//images.push_back(image);
-
-			//if (!assembly) {
-			//	LOG_ERROR("Couldn't find assembly");
-			//}
-
-			//// locate the class we want to load
-			//MonoClass* klass = mono_class_from_name(image, "TestSpace", "Test");
-			//if (klass == nullptr) {
-			//	LOG_ERROR("Failed loading class");
-			//}
-
-			//// create the class (doesn't run constructors)
-			//MonoObject* obj = mono_object_new(mono_domain_get(), klass);
-			//if (obj == nullptr) {
-			//	LOG_ERROR("Failed loading class instance %s");
-			//}
-
-			//// initialize the class instance (runs default constructors)
-			//mono_runtime_object_init(obj);
-			//if (obj == nullptr) {
-			//	LOG_ERROR("Failed initializing class instance %s");
-			//}
-
-			//// save the class instance for lookups later
-			//instances.push_back(obj);
-
-			//MonoMethod* method = mono_class_get_method_from_name(klass, "Run", -1);
-			//
-
-			//// call the Run method. This will block until the managed code decides to exit
-			//mono_runtime_invoke(method, obj, NULL, NULL);
 		}
 
 		MonoDomain* create_child_domain() {

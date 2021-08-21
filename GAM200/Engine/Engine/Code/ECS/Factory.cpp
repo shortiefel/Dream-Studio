@@ -37,8 +37,8 @@ namespace Engine {
         gCoordinator.RegisterComponent<Camera2D>();
         gCoordinator.RegisterComponent<Transform>();
         gCoordinator.RegisterComponent<Collider>();
-        gCoordinator.RegisterComponent<CSharpScript>();
         gCoordinator.RegisterComponent<Texture>();
+        gCoordinator.RegisterComponent<CSharpScript>();
         //gCoordinator.RegisterComponent<CSharpScript>();
 
         CameraSystem::Create(gCoordinator.RegSystem<CameraSystem>());

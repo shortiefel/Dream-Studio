@@ -41,10 +41,11 @@ namespace Engine {
 		ScriptEmbed::Create();
 
 		Scene::Create();
-		Scene::Play(); //Temporary placement (will be linked to GUI play button)
 
 		GameSceneSerializer::Deserialize("Assets/test1.json"); // remove
 		//SceneSerializer::Serialize("Assets/test1.json"); // remove
+
+		Scene::Play(); //Temporary placement (will be linked to GUI play button)
 	}
 
 	void EngineCore::Update(float dt, bool defaultRender) {

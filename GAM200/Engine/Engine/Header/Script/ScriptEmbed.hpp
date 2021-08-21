@@ -18,6 +18,8 @@ Technology is prohibited.
 #define SCRIPT_EMBED_HPP
 
 #include <mono/metadata/assembly.h>
+#include <string>
+#include <memory>
 
 namespace Engine {
 	namespace ScriptEmbed {
@@ -31,13 +33,24 @@ namespace Engine {
 		void Destroy();
 		/*-----------------------------------------------------
 			Called when play button is pressed
-			Reload mono
 			-Serialize
 			-Stop child domain
 			-Create child domain
-			-Deserialize
+			-Load assemblies
 		-----------------------------------------------------*/
 		void ReloadMono();
+		/*-----------------------------------------------------
+			Called when play button is pressed (After ReloadMono)
+			-Load objects
+			-Deserialize
+			-Initialize object
+		-----------------------------------------------------*/
+		void ReloadObject(std::shared_ptr<MonoObject*>& object, std::string& className);
+		/*-----------------------------------------------------
+			Call a specific virtual function
+			E.g: Init, Update
+		-----------------------------------------------------*/
+		void CallFunction(std::shared_ptr<MonoObject*>& object, std::string& className, std::string& func);
 	}
 }
 

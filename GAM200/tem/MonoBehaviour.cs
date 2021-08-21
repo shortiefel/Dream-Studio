@@ -12,6 +12,12 @@ void        Update          ()
 void        OnEnable        ()
 void        OnDisable       ()
 
+Example code: (not yet done)
+GetComponent<Transform>.enabled = true;
+
+
+Limitations:
+Doesnt support namespace (class cant be in a namespace)
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

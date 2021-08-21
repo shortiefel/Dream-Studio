@@ -1,5 +1,5 @@
 [
-    
+
     {
         "Transform": {
             "Position": [ 0.0, 0.0 ],
@@ -14,7 +14,10 @@
             "isTrigger": false,
             "isMoveable": true
         },
-        "Texture": { "Filepath": "Assets/Textures/test2.png" }
+        "Texture": {
+            "Filepath": "Assets/Textures/test2.png"
+        },
+        "CSharpScript": { "Class": "Test" }
     },
     {
         "Transform": {

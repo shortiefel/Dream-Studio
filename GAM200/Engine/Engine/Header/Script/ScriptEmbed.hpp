@@ -17,9 +17,27 @@ Technology is prohibited.
 #ifndef SCRIPT_EMBED_HPP
 #define SCRIPT_EMBED_HPP
 
+#include <mono/metadata/assembly.h>
+
 namespace Engine {
 	namespace ScriptEmbed {
-		void Init();
+		/*-----------------------------------------------------
+			Set up mono
+		-----------------------------------------------------*/
+		void Create();
+		/*-----------------------------------------------------
+			Clean up mono
+		-----------------------------------------------------*/
+		void Destroy();
+		/*-----------------------------------------------------
+			Called when play button is pressed
+			Reload mono
+			-Serialize
+			-Stop child domain
+			-Create child domain
+			-Deserialize
+		-----------------------------------------------------*/
+		void ReloadMono();
 	}
 }
 

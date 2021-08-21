@@ -103,11 +103,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
@@ -118,13 +120,22 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
+copy "$(SolutionDir)External Resources\lib\$(Platform)\TracyProfiler.dll" "$(TargetDir)TracyProfiler.dll" /Y
+
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
+copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y
+
+
+
+if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
+copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(TargetDir)Data\tem.dll" /Y
+copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(ProjectDir)Data\tem.dll" /Y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,11 +144,13 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
@@ -148,13 +161,22 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
+copy "$(SolutionDir)External Resources\lib\$(Platform)\TracyProfiler.dll" "$(TargetDir)TracyProfiler.dll" /Y
+
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
+copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y
+
+
+
+if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
+copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(TargetDir)Data\tem.dll" /Y
+copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(ProjectDir)Data\tem.dll" /Y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -165,6 +187,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;TRACY_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -172,6 +195,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;TracyProfiler.lib;Tracy.lib;brotlicommon-static.lib;brotlidec-static.lib;ws2_32.lib;freetype.lib;glfw3.lib;libpng16.lib;zlib.lib;bz2.lib;capstone.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
@@ -190,7 +214,14 @@ if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
+copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y
+
+
+
+if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
+copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(TargetDir)Data\tem.dll" /Y
+copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(ProjectDir)Data\tem.dll" /Y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -201,6 +232,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;TRACY_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -208,6 +240,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;TracyProfiler.lib;Tracy.lib;brotlicommon-static.lib;brotlidec-static.lib;ws2_32.lib;freetype.lib;glfw3.lib;libpng16.lib;zlib.lib;bz2.lib;capstone.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
@@ -226,7 +259,14 @@ if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
 copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
+copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y
+
+
+
+if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
+copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(TargetDir)Data\tem.dll" /Y
+copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(ProjectDir)Data\tem.dll" /Y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -264,6 +304,9 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{f1ed2fb0-16c2-4362-a3e4-6992be2f6f90}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\tem\tem.csproj">
+      <Project>{bbf9bef2-4749-4595-966c-52bdd1995ea5}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

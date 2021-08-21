@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/Scene/Scene.hpp"
 #include "Engine/Header/Management/GameSceneSerializer.hpp" // remove
+#include "Engine/Header/Script/ScriptEmbed.hpp"
 
 namespace Engine {
 	void EngineCore::Create() {
@@ -37,6 +38,8 @@ namespace Engine {
 
 		ResourceManager::Create();
 
+		ScriptEmbed::Create();
+
 		Scene::Create();
 		Scene::Play(); //Temporary placement (will be linked to GUI play button)
 
@@ -50,6 +53,8 @@ namespace Engine {
 
 	void EngineCore::Destroy() {
 		Scene::Destroy(); //Destroy currently active game scene
+
+		ScriptEmbed::Destroy();
 		ResourceManager::Destroy();
 		//GUILayer::Destroy();
 		LayerStack::Destroy();

@@ -37,7 +37,7 @@ namespace Engine {
         gCoordinator.RegisterComponent<Camera2D>();
         gCoordinator.RegisterComponent<Transform>();
         gCoordinator.RegisterComponent<Collider>();
-        gCoordinator.RegisterComponent<Custom_Script>();
+        gCoordinator.RegisterComponent<CSharpScript>();
         gCoordinator.RegisterComponent<Texture>();
         //gCoordinator.RegisterComponent<CSharpScript>();
 
@@ -61,7 +61,7 @@ namespace Engine {
         gCoordinator.setSystemSignature<PhysicSystem>(signature);
 
         signature.reset();
-        signature.set(gCoordinator.GetComType<Custom_Script>());
+        signature.set(gCoordinator.GetComType<CSharpScript>());
         gCoordinator.setSystemSignature<ScriptSystem>(signature);
     }
 

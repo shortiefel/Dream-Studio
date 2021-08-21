@@ -139,6 +139,20 @@ namespace Engine {
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
 
+			CSharpScript* script = nullptr;
+			if (gCoordinator.HasCom<CSharpScript>(script, entList[i]) && script != nullptr) {
+				LOG_ASSERT(script);
+				rapidjson::Value objType(rapidjson::kObjectType);
+
+				rapidjson::Value scriptFP;
+				char buffer[200];
+				int len = sprintf_s(buffer, "%s", script->className.c_str());
+				scriptFP.SetString(buffer, len, doc.GetAllocator());
+				objType.AddMember("Class", scriptFP, doc.GetAllocator());
+
+				entityObject.AddMember("CSharpScript", objType, doc.GetAllocator());
+			}
+
 			doc.PushBack(entityObject, doc.GetAllocator());
 		}
 		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
@@ -202,6 +216,14 @@ namespace Engine {
 				gCoordinator.AddComponent(ent,
 					Texture {
 						itr->value["Filepath"].GetString()
+					});
+			}
+
+			itr = obj.FindMember("CSharpScript");
+			if (itr != obj.MemberEnd()) {
+				gCoordinator.AddComponent(ent,
+					CSharpScript{
+						itr->value["Class"].GetString()
 					});
 			}
 		}

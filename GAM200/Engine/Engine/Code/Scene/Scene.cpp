@@ -37,6 +37,9 @@ Technology is prohibited.
 namespace Engine {
     extern Coordinator gCoordinator;
 
+    std::string Scene::sceneName = std::string{};
+    bool Scene::playing = false;
+
     //Entity temcam, temcam2, temcam3; int num = 1;//Temporary
 
     void Scene::Create() {
@@ -112,19 +115,21 @@ namespace Engine {
 
             /*Factory::InstantiateCircle();
             Factory::InstantiateSquare();*/
+
+        playing = true;
     }
 
     //When user click play to run their game
     void Scene::Play() {
         //Compile the script
-        //Save position of entity temporary (to be changed back after stopping)
+        //Serialize everything
 
         ScriptSystem::Play();
     }
 
     //When user click stop to run their game
     void Scene::Stop() {
-        //Set position of entity back to before play
+        //Deserialize everything
         ScriptSystem::Stop();
     }
 

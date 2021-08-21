@@ -19,6 +19,7 @@ Technology is prohibited.
 
 #include "Editor/Header/GUI/GUI.hpp"
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
+#include "Editor/Header/Tools/Profiler.hpp"
 
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 #include "Engine/Header/Window.hpp"
@@ -29,6 +30,8 @@ namespace Editor {
 
 		//Deserialize then put as position
 		EditorSceneCamera::Create({ 150.f,100.f });
+
+		Profiler::Profiler_Setup();
 	}
 
 	void EditorStartPoint::Update(float dt) {
@@ -45,6 +48,7 @@ namespace Editor {
 
 		GUI::Update();
 		GUI::Draw();
+		Profiler::Profiler_Draw();
 
 	}
 	void EditorStartPoint::Destroy() {

@@ -54,6 +54,7 @@ namespace Engine {
 		static inline GLFWwindow* GetGLFWwindow() { return glfw_window; }
 		static inline unsigned int GetWidth() { return w_data.width; }
 		static inline unsigned int GetHeight() { return w_data.height; }
+		static inline void* GetNativewindow() { return (void*)glfw_window; }
 
 		static MathD::Vec2 GetWindowPosition();
 

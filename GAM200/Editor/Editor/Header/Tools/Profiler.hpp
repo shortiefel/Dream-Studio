@@ -19,7 +19,8 @@ Technology is prohibited.
 
 namespace Editor {
 	namespace Profiler {
-
+		void Profiler_Setup();
+		void Profiler_Draw();
 	}
 }
 

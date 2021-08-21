@@ -1,0 +1,6 @@
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\bin\Release\tem.dll
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\bin\Release\tem.pdb
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Release\tem.csproj.AssemblyReference.cache
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Release\tem.csproj.CoreCompileInputs.cache
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Release\tem.dll
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Release\tem.pdb

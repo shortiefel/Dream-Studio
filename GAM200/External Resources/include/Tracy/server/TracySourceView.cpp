@@ -2,9 +2,9 @@
 #include <inttypes.h>
 #include <stdio.h>
 
-#include <capstone.h>
+#include <capstone/capstone.h>
 
-#include "imgui.h"
+#include "Imgui/imgui.h"
 #include "TracyCharUtil.hpp"
 #include "TracyColor.hpp"
 #include "TracyFilesystem.hpp"

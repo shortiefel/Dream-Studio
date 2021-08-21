@@ -25,6 +25,9 @@ namespace Engine {
 
 	struct CSharpScript {
 		std::string className = std::string{};
+
+		CSharpScript() = default;
+		CSharpScript(std::string cn) : className{ cn } {}
 	};
 }
 

@@ -17,6 +17,8 @@ Technology is prohibited.
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
+#include <string>
+
 namespace Engine {
 	class Scene {
 	public:
@@ -25,6 +27,10 @@ namespace Engine {
 		static void Play();
 		static void Stop();
 		static void Update(float dt, bool defaultRender);
+
+	private:
+		static std::string sceneName;
+		static bool playing;
 	};
 }
 

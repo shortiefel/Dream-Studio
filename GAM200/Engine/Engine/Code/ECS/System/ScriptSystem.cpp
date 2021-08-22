@@ -27,44 +27,37 @@ Technology is prohibited.
 namespace Engine {
 	extern Coordinator gCoordinator;
 	std::shared_ptr<ScriptSystem> ScriptSystem::SS;
-
-	//static std::vector <std::pair<Entity, MonoObject*>> instances_v;
-
-	static std::unordered_map<Entity, std::shared_ptr<MonoObject*>> entityToMonoObject;
 	
 	void ScriptSystem::Update(float dt) {
-		std::string func = "Update";
 		for (auto const& entity : SS->mEntities) {
 			auto& cscript = gCoordinator.GetCom<CSharpScript>(entity);
-
-			ScriptEmbed::CallFunction(entityToMonoObject[entity], cscript.className, func);
+			ScriptEmbed::CallFunction(cscript.object, cscript.UpdateFunc);
 		}
 	}
 
 	//Function is called when GameScene Play function is called
 	//Function is called whenever user press play
 	void ScriptSystem::Play() {
-		entityToMonoObject.clear();
 
 		ScriptEmbed::ReloadMono();
-
-		std::shared_ptr<MonoObject*> obj = nullptr;
+		std::string func = "Constructor";
 		for (auto const& entity : SS->mEntities) {
 			auto& cscript = gCoordinator.GetCom<CSharpScript>(entity);
 			//Store obj---------------------------------------------------------
-			ScriptEmbed::ReloadObject(obj, cscript.className);
-
-			entityToMonoObject[entity] = obj;
+			void* param[] = { (void*)&entity };
+			ScriptEmbed::ReloadObject(cscript.object, cscript, param);
+			//ScriptEmbed::CallFunction(cscript.object, cscript.className, func);
+			//MonoMethod* tem;
+			//void* param[] = { (void*)&entity }; //Change to entity.id for the future
+			//ScriptEmbed::CallFunction(cscript.object, tem, param);
 		}
 	}
 
 	//Function is opposite of play
 	void ScriptSystem::Stop() {
-		std::string func = "Destroy";
 		for (auto const& entity : SS->mEntities) {
 			auto& cscript = gCoordinator.GetCom<CSharpScript>(entity);
-
-			ScriptEmbed::CallFunction(entityToMonoObject[entity], cscript.className, func);
+			ScriptEmbed::CallFunction(cscript.object, cscript.DestroyFunc);
 		}
 	}
 

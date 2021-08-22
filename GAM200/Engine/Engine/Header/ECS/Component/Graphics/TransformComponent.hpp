@@ -36,14 +36,11 @@ namespace Engine {
 
 		MathD::Mat3 mdl_to_ndc_xform;
 
-		std::map<std::string, GraphicImplementation::GLModel>::iterator mdl_ref = GraphicImplementation::models.begin();
-		std::map<std::string, GLSLShader>::iterator shd_ref = GraphicImplementation::shdrpgms.begin();
+		
 
 		Transform() = default;
-		Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, std::string shape = "Square", std::string shader = "Default", int tLayer = 0) :
+		Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, int tLayer = 0) :
 			pos{ tPos }, scale{ tScale },
-			mdl_ref{ GraphicImplementation::models.find(shape) },
-			shd_ref{ GraphicImplementation::shdrpgms.find(shader) },
 			layer{ tLayer } {}
 		Transform(const Transform&) = default;
 		Transform& operator=(const Transform&) = default;

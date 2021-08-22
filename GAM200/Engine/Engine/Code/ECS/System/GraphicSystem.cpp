@@ -75,7 +75,7 @@ namespace Engine {
 			auto& transform = gCoordinator.GetCom<Transform>(entity);
 			auto& texture = gCoordinator.GetCom<Texture>(entity);
 
-			glBindVertexArray(transform.mdl_ref->second.vaoid);
+			glBindVertexArray(texture.get_mdl_ref()->second.vaoid);
 
 			// leaving it here atm, need to change to texture tag with model(?)
 			// have not call ~texture() yet
@@ -92,9 +92,9 @@ namespace Engine {
 
 			// load shader program in use by this object
 			//renderer.shd_ref->second.Use();
-			glUseProgram(transform.shd_ref->second.GetHandle());
+			glUseProgram(texture.get_shd_ref()->second.GetHandle());
 
-			GLuint tex_loc = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uTex2d");
+			GLuint tex_loc = glGetUniformLocation(texture.get_shd_ref()->second.GetHandle(), "uTex2d");
 			glUniform1i(tex_loc, 6);
 			if (tex_loc == -1) {
 				std::cout << "uTex2d variable doesn't exist!!!\n";
@@ -107,7 +107,7 @@ namespace Engine {
 			// bind VAO of this object's model
 			//glBindVertexArray(renderer.mdl_ref->second.vaoid);
 
-			GLint uniform_var_loc1 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uModel_to_NDC");
+			GLint uniform_var_loc1 = glGetUniformLocation(texture.get_shd_ref()->second.GetHandle(), "uModel_to_NDC");
 			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, MathD::value_ptr(transform.mdl_to_ndc_xform));
 			if (uniform_var_loc1 == -1) {
 				std::cout << "uModel_to_NDC variable doesn't exist!!!\n";
@@ -115,13 +115,13 @@ namespace Engine {
 			}
 
 			//glDrawElements(mdl_ref->second.primitive_type, mdl_ref->second.draw_cnt, GL_UNSIGNED_SHORT, NULL);
-			glDrawArrays(transform.mdl_ref->second.primitive_type, 0, transform.mdl_ref->second.draw_cnt);
+			glDrawArrays(texture.get_mdl_ref()->second.primitive_type, 0, texture.get_mdl_ref()->second.draw_cnt);
 
 			// unbind VAO and unload shader program
 			texture.Unbind();
 			glBindVertexArray(0);
 
-			transform.shd_ref->second.UnUse();
+			texture.get_shd_ref()->second.UnUse();
 		}
 
 		GraphicImplementation::UnbindFramebuffer();

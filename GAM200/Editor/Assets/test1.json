@@ -3,9 +3,7 @@
     {
         "Transform": {
             "Position": [ 0.0, 0.0 ],
-            "Scale": [ 20.0, 20.0 ],
-            "Shape": "Square",
-            "Shader": "Default"
+            "Scale": [ 20.0, 20.0 ]
         },
         "Collider": {
             "ColliderType": 1,
@@ -15,16 +13,16 @@
             "isMoveable": true
         },
         "Texture": {
-            "Filepath": "Assets/Textures/test2.png"
+            "Filepath": "Assets/Textures/test2.png",
+            "Shape": "Square",
+            "Shader": "Default"
         },
         "CSharpScript": { "Class": "Test" }
     },
     {
         "Transform": {
             "Position": [ -100.0, 0.0 ],
-            "Scale": [ 100.0, 100.0 ],
-            "Shape": "Square",
-            "Shader": "Default"
+            "Scale": [ 100.0, 100.0 ]
         },
         "Collider": {
             "ColliderType": 1,
@@ -33,14 +31,17 @@
             "isTrigger": false,
             "isMoveable": true
         },
-        "Texture": { "Filepath": "Assets/Textures/test1.png" }
+        "Texture": {
+            "Filepath": "Assets/Textures/test1.png",
+            "Shape": "Square",
+            "Shader": "Default"
+        },
+        "CSharpScript": { "Class": "Test" }
     },
     {
         "Transform": {
             "Position": [ 0.0, 0.0 ],
-            "Scale": [ 0.0, 0.0 ],
-            "Shape": "Square",
-            "Shader": "Default"
+            "Scale": [ 0.0, 0.0 ]
         },
         "Camera2D": {
             "FOV": 1.0,
@@ -51,9 +52,7 @@
     {
         "Transform": {
             "Position": [ 240.0, 100.0 ],
-            "Scale": [ 0.0, 0.0 ],
-            "Shape": "Square",
-            "Shader": "Default"
+            "Scale": [ 0.0, 0.0 ]
         },
         "Camera2D": {
             "FOV": 1.0,
@@ -64,9 +63,7 @@
     {
         "Transform": {
             "Position": [ -40.0, -240.0 ],
-            "Scale": [ 0.0, 0.0 ],
-            "Shape": "Square",
-            "Shader": "Default"
+            "Scale": [ 0.0, 0.0 ]
         },
         "Camera2D": {
             "FOV": 1.0,

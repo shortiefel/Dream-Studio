@@ -18,6 +18,7 @@ Technology is prohibited.
 #define SCRIPT_EMBED_HPP
 
 #include <mono/metadata/assembly.h>
+#include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
 #include <string>
 #include <memory>
 
@@ -43,14 +44,17 @@ namespace Engine {
 			Called when play button is pressed (After ReloadMono)
 			-Load objects
 			-Deserialize
-			-Initialize object
+			-Call Constructor
+			-Call init object
 		-----------------------------------------------------*/
-		void ReloadObject(std::shared_ptr<MonoObject*>& object, std::string& className);
+		void ReloadObject(MonoObject*& object, CSharpScript& cSharpScript, void** param);
 		/*-----------------------------------------------------
 			Call a specific virtual function
 			E.g: Init, Update
 		-----------------------------------------------------*/
-		void CallFunction(std::shared_ptr<MonoObject*>& object, std::string& className, std::string& func);
+		void CallFunction(MonoObject*& object, std::string& className, std::string& func);
+
+		void CallFunction(MonoObject*& object, MonoMethod*& method, void** param = nullptr);
 	}
 }
 

@@ -76,17 +76,6 @@ namespace Engine {
 				scale.PushBack(trans->scale.y, doc.GetAllocator());
 				objType.AddMember("Scale", scale, doc.GetAllocator());
 
-				rapidjson::Value shapeFP;
-				char buffer[200];
-				int len = sprintf_s(buffer, "%s", trans->mdl_ref->first.c_str());
-				shapeFP.SetString(buffer, len, doc.GetAllocator());
-				objType.AddMember("Shape", shapeFP, doc.GetAllocator());
-
-				rapidjson::Value shaderFP;
-				len = sprintf_s(buffer, "%s", trans->shd_ref->first.c_str());
-				shaderFP.SetString(buffer, len, doc.GetAllocator());
-				objType.AddMember("Shader", shaderFP, doc.GetAllocator());
-
 				entityObject.AddMember("Transform", objType, doc.GetAllocator());
 			}
 
@@ -136,6 +125,17 @@ namespace Engine {
 				texFP.SetString(buffer, len, doc.GetAllocator());
 				objType.AddMember("Filepath", texFP, doc.GetAllocator());
 
+				rapidjson::Value shapeFP;
+				
+				len = sprintf_s(buffer, "%s", tex->get_mdl_ref()->first.c_str());
+				shapeFP.SetString(buffer, len, doc.GetAllocator());
+				objType.AddMember("Shape", shapeFP, doc.GetAllocator());
+
+				rapidjson::Value shaderFP;
+				len = sprintf_s(buffer, "%s", tex->get_shd_ref()->first.c_str());
+				shaderFP.SetString(buffer, len, doc.GetAllocator());
+				objType.AddMember("Shader", shaderFP, doc.GetAllocator());
+
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
 
@@ -184,8 +184,6 @@ namespace Engine {
 					Transform{
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
-						itr->value["Shape"].GetString(),
-						itr->value["Shader"].GetString()
 					});
 			}
 
@@ -215,7 +213,9 @@ namespace Engine {
 			if (itr != obj.MemberEnd()) {
 				gCoordinator.AddComponent(ent,
 					Texture {
-						itr->value["Filepath"].GetString()
+						itr->value["Filepath"].GetString(),
+						itr->value["Shape"].GetString(),
+						itr->value["Shader"].GetString()
 					});
 			}
 

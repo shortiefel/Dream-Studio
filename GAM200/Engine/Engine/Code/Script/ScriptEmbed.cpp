@@ -47,14 +47,40 @@ Technology is prohibited.
 
 #include <fstream> //remove
 #include <vector> //remove
+#include <iostream>
+#include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
+#include "Engine/Header/ECS/Coordinator.hpp"
 
 namespace Engine {
+	extern Coordinator gCoordinator;
+
 	namespace ScriptEmbed {
 		MonoDomain* domain;
 		MonoAssembly* assem;
 		MonoImage* image;
-
+		
 		void destroy_child_domain();
+
+		
+
+		/*-----------------------------------------------------
+			Get Component by type
+			return null if doesnt exist
+		-----------------------------------------------------*/
+		//template <typename T>
+		void GetComponentInScriptEmbeded(int id, Transform* outTransform) {
+			//call hascomponent with entityid
+			outTransform = nullptr;
+			gCoordinator.HasCom<Transform>(outTransform, id);
+			printf("%s\n","this is called ");
+		}
+
+		void SetComponentInScriptEmbeded(int id, Transform* inTransform) {
+			//call hascomponent with entityid
+			Transform* transform = nullptr;
+			gCoordinator.HasCom<Transform>(transform, id);
+			*transform = *inTransform;
+		}
 
 		void Create() {
 			//Will to be changed to be automatic (can detect folders
@@ -64,6 +90,10 @@ namespace Engine {
 			domain = mono_jit_init("Root Domain");
 
 			mono_thread_set_main(mono_thread_current());
+			
+			mono_add_internal_call("GameObject::GetTransform_Native", GetComponentInScriptEmbeded);
+			mono_add_internal_call("GameObject::SetTransform_Native", SetComponentInScriptEmbeded);
+			
 		}
 
 		void Destroy() {
@@ -92,35 +122,62 @@ namespace Engine {
 				LOG_ERROR("Failed loading image");
 				return;
 			}
+	
 		}
 
 
 
-		void ReloadObject(std::shared_ptr<MonoObject*>& object, std::string& className) {
-			MonoClass* klass = mono_class_from_name(image, "", className.c_str());
+		void ReloadObject(MonoObject*& object, CSharpScript& cSharpScript, void** param) {
+			MonoClass* klass = mono_class_from_name(image, "", cSharpScript.className.c_str());
 			if (!klass) {
 				LOG_ERROR("Failed loading class");
 				return;
 			}
 
-			object = std::make_shared<MonoObject*>(mono_object_new(mono_domain_get(), klass));
-			if (!(object.get())) {
+			object = (mono_object_new(mono_domain_get(), klass));
+			if (!(object)) {
 				LOG_ERROR("Failed loading obj");
 				return;
 			}
 
-			MonoMethod* method = mono_class_get_method_from_name(klass, "Init", -1);
+			//Call Constructor and Init
+			klass = mono_class_from_name(image, "", "MonoBehaviour");
+			MonoMethod* method = mono_class_get_method_from_name(klass, "Constructor", -1);
+			method = mono_object_get_virtual_method(object, method);
 			if (method) {
-				mono_runtime_invoke(method, object.get(), nullptr, nullptr);
+				mono_runtime_invoke(method, object, param, nullptr);
+			}
+			
+			method = mono_class_get_method_from_name(klass, "Init", -1);
+			method = mono_object_get_virtual_method(object, method);
+			if (method) {
+				mono_runtime_invoke(method, object, nullptr, nullptr);
+			}
+
+			//Set up virtual functions in MonoBehaviour
+			method = mono_class_get_method_from_name(klass, "Update", -1);
+			cSharpScript.UpdateFunc = mono_object_get_virtual_method(object, method);
+			
+
+			method = mono_class_get_method_from_name(klass, "Destroy", -1);
+			cSharpScript.DestroyFunc = mono_object_get_virtual_method(object, method);
+			
+		}
+
+		void CallFunction(MonoObject*& object, std::string& className, std::string& func) {
+			MonoClass* klass = mono_class_from_name(image, "", "MonoBehaviour");
+			MonoMethod* method = mono_class_get_method_from_name( klass, func.c_str(), -1);
+			
+			//void* param[] = { tem };
+
+			if (method) {
+				mono_runtime_invoke(method, object, nullptr, nullptr);
 			}
 		}
 
-		void CallFunction(std::shared_ptr<MonoObject*>& object, std::string& className, std::string& func) {
-			MonoClass* klass = mono_class_from_name(image, "", className.c_str());
-			MonoMethod* method = mono_class_get_method_from_name( klass, func.c_str(), -1);
-
+		void CallFunction(MonoObject*& object, MonoMethod*& method, void** param) {
 			if (method) {
-				mono_runtime_invoke(method, object.get(), nullptr, nullptr);
+				mono_runtime_invoke(method, object, param, nullptr);
 			}
 		}
 
@@ -141,5 +198,7 @@ namespace Engine {
 				mono_domain_unload(currentDomain);
 			}
 		}
+
+		
 	}
 }

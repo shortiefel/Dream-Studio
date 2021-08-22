@@ -22,11 +22,12 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
 #include "Engine/Header/pch.hpp"
+#include "Engine/Header/Graphic/Graphic.hpp"
 
 namespace Engine {
 	class Texture {
 	public:
-		Texture(const std::string);
+		Texture(const std::string, std::string shape = "Square", std::string shader = "Default");
 		Texture() = default;
 		Texture(const Texture&) = default;
 		Texture& operator= (const Texture&) = default;
@@ -39,11 +40,17 @@ namespace Engine {
 		inline GLint getHeight() const { return height; }
 		inline GLuint getTexObj() const { return texobj_hdl; }
 		inline std::string getFilepath() const { return filepath; }
+		inline std::map<std::string, GraphicImplementation::GLModel>::iterator get_mdl_ref() const { return mdl_ref; }
+		inline std::map<std::string, GLSLShader>::iterator get_shd_ref() const { return shd_ref; }
+		
 
 	private:
 		GLuint texobj_hdl = GLuint{};
 		
 		std::string filepath = "";
+
+		std::map<std::string, GraphicImplementation::GLModel>::iterator mdl_ref = GraphicImplementation::models.begin();
+		std::map<std::string, GLSLShader>::iterator shd_ref = GraphicImplementation::shdrpgms.begin();
 
 		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
 	};

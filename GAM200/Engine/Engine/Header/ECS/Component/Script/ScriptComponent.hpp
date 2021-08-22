@@ -17,17 +17,24 @@ Technology is prohibited.
 #ifndef SCRIPT_COMPONENT_HPP
 #define SCRIPT_COMPONENT_HPP
 
-#include "Engine/Header/Script/Script.hpp"
+//#include "Engine/Header/Script/Script.hpp"
+
 #include <string>
+#include <mono/metadata/threads.h>
 
 namespace Engine {
-	using Custom_Script = std::shared_ptr<Script>;
+	//using Custom_Script = std::shared_ptr<Script>;
 
 	struct CSharpScript {
 		std::string className = std::string{};
 
 		CSharpScript() = default;
 		CSharpScript(std::string cn) : className{ cn } {}
+
+		MonoObject* object = nullptr;
+
+		MonoMethod* UpdateFunc = nullptr;
+		MonoMethod* DestroyFunc = nullptr;
 	};
 }
 

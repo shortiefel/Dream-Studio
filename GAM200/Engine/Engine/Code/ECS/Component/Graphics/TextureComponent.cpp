@@ -19,8 +19,10 @@ Technology is prohibited.
 //#include "../../External Resources/stb_image/stb_image.h"
 
 namespace Engine {
-	Texture::Texture(const std::string path) :
-		texobj_hdl{ 0 }, filepath{ path }, width{ 0 }, height{ 0 }, BPP{ 0 }
+	Texture::Texture(const std::string path, std::string shape, std::string shader) :
+		texobj_hdl{ 0 }, filepath{ path }, width{ 0 }, height{ 0 }, BPP{ 0 },
+		mdl_ref{ GraphicImplementation::models.find(shape) },
+		shd_ref{ GraphicImplementation::shdrpgms.find(shader) }
 	{
 		// flips image in vertically
 		// OpenGL - Cartesian coordinate system
@@ -49,6 +51,7 @@ namespace Engine {
 			/*if (localBuffer)
 				stbi_image_free(localBuffer);*/
 	}
+
 
 	Texture::~Texture()
 	{

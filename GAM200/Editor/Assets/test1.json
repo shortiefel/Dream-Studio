@@ -35,8 +35,7 @@
             "Filepath": "Assets/Textures/test1.png",
             "Shape": "Square",
             "Shader": "Default"
-        },
-        "CSharpScript": { "Class": "Test" }
+        }
     },
     {
         "Transform": {

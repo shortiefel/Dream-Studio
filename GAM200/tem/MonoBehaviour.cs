@@ -28,10 +28,10 @@ Technology is prohibited.
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+//using System.Collections.Generic;
+/*using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks;*/
 using System.Runtime.CompilerServices; //For internal calls
 
 
@@ -46,11 +46,33 @@ using System.Runtime.CompilerServices; //For internal calls
 public struct Vec2
 {
     public float x, y;
+
+    public Vec2(float n1, float n2)
+    {
+        x = n1;
+        y = n2;
+    }
 }
 
-public class Transform
+public struct Transform
 {
-    public Vec2 pos, scale;
+    public Vec2 position, scale;
+
+    public override string ToString()
+    {
+        return "Pos: " + position.x + " " + position.y + " scale: " + scale.x + " " + scale.y + "\n";
+    }
+
+    /*public void Move(Vec2 speed)
+    {
+
+    }*/
+
+    public Transform (Vec2 p, Vec2 s)
+    {
+        position = p;
+        scale = s;
+    }
 }
 
 public class GameObject
@@ -76,18 +98,9 @@ public class GameObject
     internal static extern void SetTransform_Native(int entityID, ref Transform inTransform);
 }
 
-
-
-//public class TransformComponent {
-
-
-
-
-//}
-
 public class MonoBehaviour
 {
-    GameObject gameObject;
+    public GameObject gameObject;
 
     public virtual void Init() {}
     public virtual void Update() {}
@@ -96,14 +109,9 @@ public class MonoBehaviour
     public void Constructor(int id)
     {
         //entityId = id;
-        //Transform trans = new Transform();
-        //trans.GetTransform_Native(entityId, out trans);
 
-        //gameObject = new GameObject();
-
-        //Transform trans = new Transform();
-
-        //gameObject.transform = trans;
+        gameObject = new GameObject();
+        gameObject.entityId = id;
     }
 
 
@@ -118,6 +126,33 @@ public class MonoBehaviour
         Console.WriteLine("OnDisable");
     }
 
+    public T GetComponent<T>() where T : new()
+    {
+        if (HasComponent(gameObject.entityId, typeof(T)))
+        {
+            T component = new T();
+            return component;
+        }
+
+        return default(T);
+    }
+
+    public bool HasComponent(int id, Type type)
+    {
+        
+        switch (GenericTypeFinder.dictonary[type])
+        {
+            case genTypes.Transform:
+                return HasComponent_Transform_Engine(id);
+            default:
+                return false;
+
+        }
+    }
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool HasComponent_Transform_Engine(int entityID);
+
     /* public Transform GetComponent()
      {
          Transform trans = new Transform();
@@ -128,7 +163,7 @@ public class MonoBehaviour
      [MethodImplAttribute(MethodImplOptions.InternalCall)]
      extern public Transform GetComponentInternalCall(int entityId);*/
 
-    
+
 
 
 

@@ -48,8 +48,9 @@ Technology is prohibited.
 #include <fstream> //remove
 #include <vector> //remove
 #include <iostream>
-#include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
+#include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/ECS/Coordinator.hpp"
+
 
 namespace Engine {
 	extern Coordinator gCoordinator;
@@ -72,7 +73,7 @@ namespace Engine {
 			//call hascomponent with entityid
 			outTransform = nullptr;
 			gCoordinator.HasCom<Transform>(outTransform, id);
-			printf("%s\n","this is called ");
+			
 		}
 
 		void SetComponentInScriptEmbeded(int id, Transform* inTransform) {
@@ -80,6 +81,11 @@ namespace Engine {
 			Transform* transform = nullptr;
 			gCoordinator.HasCom<Transform>(transform, id);
 			*transform = *inTransform;
+		}
+
+		bool HasComponent_Transform_Engine(int id) {
+			Transform* tem = nullptr;
+			return gCoordinator.HasCom<Transform>(tem, id);
 		}
 
 		void Create() {
@@ -93,6 +99,8 @@ namespace Engine {
 			
 			mono_add_internal_call("GameObject::GetTransform_Native", GetComponentInScriptEmbeded);
 			mono_add_internal_call("GameObject::SetTransform_Native", SetComponentInScriptEmbeded);
+
+			mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
 			
 		}
 

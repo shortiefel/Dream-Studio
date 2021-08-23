@@ -44,12 +44,8 @@ namespace Engine {
 		for (auto const& entity : SS->mEntities) {
 			auto& cscript = gCoordinator.GetCom<CSharpScript>(entity);
 			//Store obj---------------------------------------------------------
-			void* param[] = { (void*)&entity };
+			void* param[] = { (void*)&entity }; //Change to entity.id for the future
 			ScriptEmbed::ReloadObject(cscript.object, cscript, param);
-			//ScriptEmbed::CallFunction(cscript.object, cscript.className, func);
-			//MonoMethod* tem;
-			//void* param[] = { (void*)&entity }; //Change to entity.id for the future
-			//ScriptEmbed::CallFunction(cscript.object, tem, param);
 		}
 	}
 

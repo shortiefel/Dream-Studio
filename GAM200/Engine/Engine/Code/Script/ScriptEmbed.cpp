@@ -69,21 +69,39 @@ namespace Engine {
 			return null if doesnt exist
 		-----------------------------------------------------*/
 		//template <typename T>
-		void GetComponentInScriptEmbeded(int id, Transform* outTransform) {
+		void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform) {
 			//call hascomponent with entityid
 			outTransform = nullptr;
 			gCoordinator.HasCom<Transform>(outTransform, id);
 			
 		}
 
-		void SetComponentInScriptEmbeded(int id, Transform* inTransform) {
+		void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform) {
 			//call hascomponent with entityid
 			Transform* transform = nullptr;
 			gCoordinator.HasCom<Transform>(transform, id);
 			*transform = *inTransform;
 		}
 
-		bool HasComponent_Transform_Engine(int id) {
+
+
+		//void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform) {
+		//	//call hascomponent with entityid
+		//	outTransform = nullptr;
+		//	gCoordinator.HasCom<Transform>(outTransform, id);
+
+		//}
+
+		//void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform) {
+		//	//call hascomponent with entityid
+		//	Transform* transform = nullptr;
+		//	gCoordinator.HasCom<Transform>(transform, id);
+		//	*transform = *inTransform;
+		//}
+
+
+
+		bool HasComponent_Transform_Engine(unsigned int id) {
 			Transform* tem = nullptr;
 			return gCoordinator.HasCom<Transform>(tem, id);
 		}

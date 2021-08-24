@@ -52,11 +52,44 @@ public struct Vec2
         x = n1;
         y = n2;
     }
+
+    public override string ToString()
+    {
+        return "Vec2: " + x + " " + y + "\n";
+    }
+}
+
+public class EntityComponent
+{
+    public uint entityId;
 }
 
 public struct Transform
 {
     public Vec2 position, scale;
+    /*public Vec2 _position
+    {
+        get
+        {
+            Console.WriteLine("Getting values");
+            GetTransform_Position_(entityId, out Vec2 result);
+            return result;
+        }   // get method
+        set
+        {
+            Console.WriteLine("Setting values");
+            SetTransform_Position_(entityId, ref value);
+        }  // set method
+    }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTransform_Position_(uint entityID, out Vec2 outTransform);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetTransform_Position_(uint entityID, ref Vec2 inTransform);*/
+    /*public Vec2 _scale
+    {
+
+    }*/
 
     public override string ToString()
     {
@@ -73,18 +106,26 @@ public struct Transform
         position = p;
         scale = s;
     }
+
+    public Transform(Transform trans)
+    {
+        position = trans.position;
+        scale = trans.scale;
+    }
 }
 
 public class GameObject
 {
-    public int entityId;
+    public uint entityId;
 
+    //public Transform _transform;
     public Transform transform
     {
         get
         {
             Console.WriteLine("Getting values");
             GetTransform_Native(entityId, out Transform result);
+            //_transform = result;
             return result;
         }   // get method
         set {
@@ -93,9 +134,9 @@ public class GameObject
         }  // set method
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_Native(int entityID, out Transform outTransform);
+    internal static extern void GetTransform_Native(uint entityID, out Transform outTransform);
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTransform_Native(int entityID, ref Transform inTransform);
+    internal static extern void SetTransform_Native(uint entityID, ref Transform inTransform);
 }
 
 public class MonoBehaviour
@@ -106,7 +147,7 @@ public class MonoBehaviour
     public virtual void Update() {}
     public virtual void Destroy() {}
 
-    public void Constructor(int id)
+    public void Constructor(uint id)
     {
         //entityId = id;
 
@@ -137,7 +178,7 @@ public class MonoBehaviour
         return default(T);
     }
 
-    public bool HasComponent(int id, Type type)
+    public bool HasComponent(uint id, Type type)
     {
         
         switch (GenericTypeFinder.dictonary[type])
@@ -151,7 +192,7 @@ public class MonoBehaviour
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Transform_Engine(int entityID);
+    internal static extern bool HasComponent_Transform_Engine(uint entityID);
 
     /* public Transform GetComponent()
      {

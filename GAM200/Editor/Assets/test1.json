@@ -2,7 +2,7 @@
 
     {
         "Transform": {
-            "Position": [ 0.0, 0.0 ],
+            "Position": [ 100.0, 200.0 ],
             "Scale": [ 20.0, 20.0 ]
         },
         "Collider": {
@@ -21,7 +21,7 @@
     },
     {
         "Transform": {
-            "Position": [ -100.0, 0.0 ],
+            "Position": [ -100.0, 100.0 ],
             "Scale": [ 100.0, 100.0 ]
         },
         "Collider": {

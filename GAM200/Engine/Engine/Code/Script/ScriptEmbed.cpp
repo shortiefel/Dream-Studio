@@ -71,16 +71,21 @@ namespace Engine {
 		//template <typename T>
 		void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform) {
 			//call hascomponent with entityid
-			outTransform = nullptr;
-			gCoordinator.HasCom<Transform>(outTransform, id);
-			
+			Transform* transform = nullptr;
+			gCoordinator.HasCom<Transform>(transform, id);
+			*outTransform = *transform;
+
+			/*Transform& transform = gCoordinator.GetCom<Transform>(id);
+			*outTransform = transform;*/
 		}
 
 		void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform) {
 			//call hascomponent with entityid
-			Transform* transform = nullptr;
+			/*Transform* transform = nullptr;
 			gCoordinator.HasCom<Transform>(transform, id);
-			*transform = *inTransform;
+			*transform = *inTransform;*/
+			Transform& transform = gCoordinator.GetCom<Transform>(id);
+			transform = *inTransform;
 		}
 
 

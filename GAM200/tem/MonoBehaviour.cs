@@ -101,17 +101,7 @@ public struct Transform
 
     }*/
 
-    public Transform (Vec2 p, Vec2 s)
-    {
-        position = p;
-        scale = s;
-    }
-
-    public Transform(Transform trans)
-    {
-        position = trans.position;
-        scale = trans.scale;
-    }
+    
 }
 
 public class GameObject
@@ -124,8 +114,9 @@ public class GameObject
         get
         {
             Console.WriteLine("Getting values");
+            //Transform tem = new Transform();
             GetTransform_Native(entityId, out Transform result);
-            //_transform = result;
+            //return new Transform(result);
             return result;
         }   // get method
         set {

@@ -29,7 +29,7 @@ Technology is prohibited.
 namespace Engine {
     extern Coordinator gCoordinator;
     std::shared_ptr<CameraSystem> CameraSystem::CS;
-    MathD::Mat3 CameraSystem::world_to_ndc_xform;
+    glm::mat3 CameraSystem::world_to_ndc_xform;
     GLFWwindow* CameraSystem::pwindow;
 
     //Update function to change the world to NDC transform that will be used
@@ -46,20 +46,20 @@ namespace Engine {
 
             // compute world-to-NDC transformation matrix
             world_to_ndc_xform =
-                MathD::Mat3(
+                glm::mat3(
                     2.f / (cam.ar * CAMERA_HEIGHT * cam.fov), 0.f, 0.f,
                     0.f, 2.f / CAMERA_HEIGHT * cam.fov, 0.f,
                     0.f, 0.f, 1.f)
                 *
-                MathD::Mat3(
+                glm::mat3(
                     1.f, 0.f, 0.f,
                     0.f, 1.f, 0.f,
-                    -transform.pos.x, -transform.pos.y, 1.f);
+                    -transform.position.x, -transform.position.y, 1.f);
             break; //Just need one transform
         }
     }
 
-    MathD::Mat3 CameraSystem::GetTransform() {
+    glm::mat3 CameraSystem::GetTransform() {
         return world_to_ndc_xform;
     }
 

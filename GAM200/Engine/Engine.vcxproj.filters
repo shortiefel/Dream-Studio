@@ -177,6 +177,9 @@
     <ClCompile Include="Engine\Code\Event\EventDispatcher.cpp">
       <Filter>Source Files\Event</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Script\ScriptInternalCall.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -394,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\EngineCore.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\ScriptInternalCall.hpp">
+      <Filter>Header Files\Script</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

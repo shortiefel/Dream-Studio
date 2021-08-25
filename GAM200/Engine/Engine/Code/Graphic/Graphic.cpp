@@ -34,10 +34,10 @@ namespace Engine {
         void setup_vao_square() {
             // container contains vertices of Position, Color and Texture Coordinates respectively
             std::array<GLVertCont, 4> vtx = {
-                MathD::Vec2(-1.f, -1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(0.f, 0.f),
-                MathD::Vec2(1.f, -1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(1.f, 0.f),
-                MathD::Vec2(1.f, 1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(1.f, 1.f),
-                MathD::Vec2(-1.f, 1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(0.f, 1.f)
+                glm::vec2(-1.f, -1.f), glm::vec3(1.f, 0.f, 0.f), glm::vec2(0.f, 0.f),
+                glm::vec2(1.f, -1.f),  glm::vec3(1.f, 0.f, 0.f), glm::vec2(1.f, 0.f),
+                glm::vec2(1.f, 1.f),   glm::vec3(1.f, 0.f, 0.f), glm::vec2(1.f, 1.f),
+                glm::vec2(-1.f, 1.f),  glm::vec3(1.f, 0.f, 0.f), glm::vec2(0.f, 1.f)
             };
 
             // VAO handle definition
@@ -51,21 +51,21 @@ namespace Engine {
 
             // Square vertex
             glEnableVertexArrayAttrib(vaoid, 0);
-            glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, 2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+            glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, 2 * sizeof(glm::vec2) + sizeof(glm::vec3));
             glVertexArrayAttribFormat(vaoid, 0, 2, GL_FLOAT, GL_FALSE, 0);
             glVertexArrayAttribBinding(vaoid, 0, 0);
 
             // Color vertex
             glEnableVertexArrayAttrib(vaoid, 1);
-            glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl, sizeof(MathD::Vec2),
-                2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+            glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl, sizeof(glm::vec2),
+                2 * sizeof(glm::vec2) + sizeof(glm::vec3));
             glVertexArrayAttribFormat(vaoid, 1, 3, GL_FLOAT, GL_FALSE, 0);
             glVertexArrayAttribBinding(vaoid, 1, 1);
 
             // Texture vertex
             glEnableVertexArrayAttrib(vaoid, 2);
-            glVertexArrayVertexBuffer(vaoid, 2, vbo_hdl, sizeof(MathD::Vec2) + sizeof(MathD::Vec3),
-                2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+            glVertexArrayVertexBuffer(vaoid, 2, vbo_hdl, sizeof(glm::vec2) + sizeof(glm::vec3),
+                2 * sizeof(glm::vec2) + sizeof(glm::vec3));
             glVertexArrayAttribFormat(vaoid, 2, 2, GL_FLOAT, GL_FALSE, 0);
             glVertexArrayAttribBinding(vaoid, 2, 2);
 
@@ -83,15 +83,15 @@ namespace Engine {
         void setup_vao_circle() {
             // Number of vertices
             int const count{ 52 };
-            float rad = MathD::radians(360.f / static_cast<float>(count - 2));
+            float rad = glm::radians(360.f / static_cast<float>(count - 2));
 
             std::array<GLVertCont, count> vtx;
-            vtx[0] = { MathD::Vec2(0.f, 0.f), MathD::Vec3(0.f, 1.f, 0.f), MathD::Vec2(0.5f, 0.5f) };
+            vtx[0] = { glm::vec2(0.f, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec2(0.5f, 0.5f) };
 
             for (int col{ 1 }; col < count; ++col) {
-                vtx[col] = { MathD::Vec2(cos(rad * col), sin(rad * col)),
-                MathD::Vec3(0.f, 1.f, 0.f),
-                MathD::Vec2(0.5f + cos(rad * col), 0.5f + sin(rad * col)) };
+                vtx[col] = { glm::vec2(cos(rad * col), sin(rad * col)),
+                glm::vec3(0.f, 1.f, 0.f),
+                glm::vec2(0.5f + cos(rad * col), 0.5f + sin(rad * col)) };
             }
 
             // Generate a VAO handle to encapsulate the VBO(s) and
@@ -108,21 +108,21 @@ namespace Engine {
 
             // Position vertex
             glEnableVertexArrayAttrib(vaoid, 0);
-            glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, 2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+            glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, 2 * sizeof(glm::vec2) + sizeof(glm::vec3));
             glVertexArrayAttribFormat(vaoid, 0, 2, GL_FLOAT, GL_FALSE, 0);
             glVertexArrayAttribBinding(vaoid, 0, 0);
 
             // Colour vertex
             glEnableVertexArrayAttrib(vaoid, 1);
-            glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl, sizeof(MathD::Vec2),
-                2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+            glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl, sizeof(glm::vec2),
+                2 * sizeof(glm::vec2) + sizeof(glm::vec3));
             glVertexArrayAttribFormat(vaoid, 1, 3, GL_FLOAT, GL_FALSE, 0);
             glVertexArrayAttribBinding(vaoid, 1, 1);
 
             // Texture vertex
             glEnableVertexArrayAttrib(vaoid, 2);
-            glVertexArrayVertexBuffer(vaoid, 2, vbo_hdl, sizeof(MathD::Vec2) + sizeof(MathD::Vec3),
-                2 * sizeof(MathD::Vec2) + sizeof(MathD::Vec3));
+            glVertexArrayVertexBuffer(vaoid, 2, vbo_hdl, sizeof(glm::vec2) + sizeof(glm::vec3),
+                2 * sizeof(glm::vec2) + sizeof(glm::vec3));
             glVertexArrayAttribFormat(vaoid, 2, 2, GL_FLOAT, GL_FALSE, 0);
             glVertexArrayAttribBinding(vaoid, 2, 2);
 

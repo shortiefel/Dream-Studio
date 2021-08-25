@@ -26,29 +26,29 @@ Technology is prohibited.
 #define SCENE_CAMERA_HEIGHT 500
 
 namespace Editor {
-    Engine::MathD::Vec2 EditorSceneCamera::position;
+    glm::vec2 EditorSceneCamera::position;
     float EditorSceneCamera::ar;
-	Engine::MathD::Mat3 EditorSceneCamera::world_to_ndc_xform;
+    //glm::mat3 EditorSceneCamera::world_to_ndc_xform;
 
-    void EditorSceneCamera::Update(float dt) {
-        // compute world-to-NDC transformation matrix
-        world_to_ndc_xform =
-            Engine::MathD::Mat3(
+    /*void EditorSceneCamera::Update(float dt) {
+        return;
+    }*/
+
+    glm::mat3 EditorSceneCamera::GetTransform() {
+        return 
+            // compute world-to-NDC transformation matrix
+            glm::mat3(
                 2.f / (ar * SCENE_CAMERA_HEIGHT), 0.f, 0.f,
                 0.f, 2.f / SCENE_CAMERA_HEIGHT, 0.f,
                 0.f, 0.f, 1.f)
             *
-            Engine::MathD::Mat3(
+            glm::mat3(
                 1.f, 0.f, 0.f,
                 0.f, 1.f, 0.f,
                 -position.x, -position.y, 1.f);
     }
 
-    Engine::MathD::Mat3 EditorSceneCamera::GetTransform() {
-        return world_to_ndc_xform;
-    }
-
-    void EditorSceneCamera::Create(Engine::MathD::Vec2 pos) {
+    void EditorSceneCamera::Create(glm::vec2 pos) {
         position = pos;
 
         GLsizei fb_width, fb_height;

@@ -70,7 +70,7 @@ namespace Engine {
     //Create blank transform
 
     //Function will be called when GUI inspector request a Square entity
-    void Factory::InstantiateSquare(MathD::Vec2 pos, MathD::Vec2 scale, bool isMoveable) {
+    void Factory::InstantiateSquare(glm::vec2 pos, glm::vec2 scale, bool isMoveable) {
         Entity ent = gCoordinator.createEntity();
         gCoordinator.AddComponent(
             ent,
@@ -80,7 +80,7 @@ namespace Engine {
     }
 
     //Function will be called when GUI inspector request a Circle entity
-    void Factory::InstantiateCircle(MathD::Vec2 pos, MathD::Vec2 scale, bool isMoveable) {
+    void Factory::InstantiateCircle(glm::vec2 pos, glm::vec2 scale, bool isMoveable) {
         Entity ent = gCoordinator.createEntity();
         gCoordinator.AddComponent(
             ent,

@@ -24,23 +24,33 @@ Technology is prohibited.
 #define TRANSFORM_HPP
 
 #include "Engine/Header/Graphic/Graphic.hpp"
-#include "Engine/Header/Math/MathLib.hpp"
+
+#include <glm/glm.hpp>
 
 namespace Engine {
 	//Scale value for circle in both axis is same
 	struct Transform {
-		MathD::Vec2 pos = MathD::Vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
-		MathD::Vec2 scale = MathD::Vec2{};
+		glm::vec2 position = glm::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
+		glm::vec2 scale = glm::vec2{};
 		//float rotation = float{}; // in degree
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
-		MathD::Mat3 mdl_to_ndc_xform;
+		//glm::mat3 mdl_to_ndc_xform = glm::mat3{};
 
-		
+		inline glm::mat3 GetTransform() const {
+			return glm::mat3{ glm::vec3(1.f, 0, 0),
+							  glm::vec3(0, 1.f, 0),
+							  glm::vec3(position.x, position.y, 1.f) }
+				*
+				//Scale
+				glm::mat3{ glm::vec3(scale.x, 0, 0),
+							 glm::vec3(0, scale.y, 0),
+							 glm::vec3(0, 0, 1.f) };
+		}
 
 		Transform() = default;
-		Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, int tLayer = 0) :
-			pos{ tPos }, scale{ tScale },
+		Transform(glm::vec2 tPos, glm::vec2 tScale, int tLayer = 0) :
+			position{ tPos }, scale{ tScale },
 			layer{ tLayer } {}
 		Transform(const Transform&) = default;
 		Transform& operator=(const Transform&) = default;

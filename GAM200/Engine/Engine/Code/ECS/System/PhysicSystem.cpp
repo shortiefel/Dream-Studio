@@ -28,6 +28,8 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Coordinator.hpp"
 
+#include <glm/gtc/constants.hpp>
+
 namespace Engine {
 	extern Coordinator gCoordinator;
 	std::shared_ptr<PhysicSystem> PhysicSystem::PS;
@@ -45,8 +47,8 @@ namespace Engine {
 			auto& transform1 = gCoordinator.GetCom<Transform>(*entity1);
 			auto collider1 = gCoordinator.GetCom<Collider>(*entity1);
 
-			collider1.pos += MathD::Vec2{ transform1.pos };
-			collider1.scale += transform1.scale;
+			collider1.offset_position += glm::vec2{ transform1.position };
+			collider1.offset_scale += transform1.scale;
 
 			for (std::set<Entity>::iterator entity2 = entity1; entity2 != PS->mEntities.end(); ++entity2) {
 				//for (auto const& entity2 : mEntities) {
@@ -54,13 +56,13 @@ namespace Engine {
 				auto& transform2 = gCoordinator.GetCom<Transform>(*entity2);
 				auto collider2 = gCoordinator.GetCom<Collider>(*entity2);
 
-				collider2.pos += MathD::Vec2{ transform2.pos };
-				collider2.scale += transform2.scale;
+				collider2.offset_position += glm::vec2{ transform2.position };
+				collider2.offset_scale += transform2.scale;
 
 				//Apply gravity if rigidbody exist and rigidbody hasGravity
 
 				//Direction from collider2 towards collider1
-				MathD::Vec2 dir = MathD::Vec2{};
+				glm::vec2 dir = glm::vec2{};
 				if (!PhysicImplementation::isColliding(dir, collider1, collider2)) {
 
 				}
@@ -75,13 +77,13 @@ namespace Engine {
 					//To prevent object from sharing the same position
 					//by moving it slightly out of each other and setting a direction
 					//as previous direction would be dividing by 0
-					MathD::Vec2 EpsilonCheck = collider2.pos - collider1.pos;
-					if (EpsilonCheck.x < EPSILON && EpsilonCheck.x > -EPSILON &&
-						EpsilonCheck.y < EPSILON && EpsilonCheck.y > -EPSILON) {
+					glm::vec2 EpsilonCheck = collider2.offset_position - collider1.offset_position;
+					if (EpsilonCheck.x < glm::epsilon<float>() && EpsilonCheck.x > -glm::epsilon<float>() &&
+						EpsilonCheck.y < glm::epsilon<float>() && EpsilonCheck.y > -glm::epsilon<float>()) {
 						std::cout << "too close \n";
-						collider1.pos.x -= 0.3f * transform1.scale.x;
-						transform1.pos.x -= 0.3f * transform1.scale.x;
-						dir = MathD::Vec2{ 1.f, 0.f };
+						collider1.offset_position.x -= 0.3f * transform1.scale.x;
+						transform1.position.x -= 0.3f * transform1.scale.x;
+						dir = glm::vec2{ 1.f, 0.f };
 					}
 					PhysicImplementation::CollisionResolution(dir, transform1, collider1, transform2, collider2);
 				}

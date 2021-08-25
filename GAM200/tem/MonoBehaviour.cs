@@ -34,105 +34,10 @@ using System.Text;
 using System.Threading.Tasks;*/
 using System.Runtime.CompilerServices; //For internal calls
 
-
-/*public class Transform
-{
-
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern void GetTransform_Native(int entityID, out Transform outTransform);
-}*/
-
-public struct Vec2
-{
-    public float x, y;
-
-    public Vec2(float n1, float n2)
-    {
-        x = n1;
-        y = n2;
-    }
-
-    public override string ToString()
-    {
-        return "Vec2: " + x + " " + y + "\n";
-    }
-}
-
-public class EntityComponent
-{
-    public uint entityId;
-}
-
-public struct Transform
-{
-    public Vec2 position, scale;
-    /*public Vec2 _position
-    {
-        get
-        {
-            Console.WriteLine("Getting values");
-            GetTransform_Position_(entityId, out Vec2 result);
-            return result;
-        }   // get method
-        set
-        {
-            Console.WriteLine("Setting values");
-            SetTransform_Position_(entityId, ref value);
-        }  // set method
-    }
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_Position_(uint entityID, out Vec2 outTransform);
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTransform_Position_(uint entityID, ref Vec2 inTransform);*/
-    /*public Vec2 _scale
-    {
-
-    }*/
-
-    public override string ToString()
-    {
-        return "Pos: " + position.x + " " + position.y + " scale: " + scale.x + " " + scale.y + "\n";
-    }
-
-    /*public void Move(Vec2 speed)
-    {
-
-    }*/
-
-    
-}
-
-public class GameObject
-{
-    public uint entityId;
-
-    //public Transform _transform;
-    public Transform transform
-    {
-        get
-        {
-            Console.WriteLine("Getting values");
-            //Transform tem = new Transform();
-            GetTransform_Native(entityId, out Transform result);
-            //return new Transform(result);
-            return result;
-        }   // get method
-        set {
-            Console.WriteLine("Setting values");
-            SetTransform_Native(entityId, ref value); 
-        }  // set method
-    }
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_Native(uint entityID, out Transform outTransform);
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTransform_Native(uint entityID, ref Transform inTransform);
-}
-
 public class MonoBehaviour
 {
-    public GameObject gameObject;
+    //public GameObject gameObject;
+    uint entityId;
 
     public virtual void Init() {}
     public virtual void Update() {}
@@ -140,10 +45,10 @@ public class MonoBehaviour
 
     public void Constructor(uint id)
     {
-        //entityId = id;
+        entityId = id;
 
-        gameObject = new GameObject();
-        gameObject.entityId = id;
+        //gameObject = new GameObject();
+        //gameObject.entityId = id;
     }
 
 
@@ -158,11 +63,42 @@ public class MonoBehaviour
         Console.WriteLine("OnDisable");
     }
 
-    public T GetComponent<T>() where T : new()
+
+
+
+
+
+
+
+
+
+
+    /*public Transform GetTransform()
     {
-        if (HasComponent(gameObject.entityId, typeof(T)))
+        Console.WriteLine("Getting values");
+        GetTransform_Native(0, out Transform result);
+        return result;
+    }
+    public void SetTransform(Transform trans)
+    {
+        Console.WriteLine("Setting values");
+        SetTransform_Native(0, ref trans);
+    }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTransform_Native(uint entityID, out Transform outTransform);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetTransform_Native(uint entityID, ref Transform inTransform);*/
+
+
+
+
+    public T GetComponent<T>() where T : Component, new()
+    {
+        if (HasComponent(entityId, typeof(T)))
         {
             T component = new T();
+            component.entityId = entityId;
             return component;
         }
 
@@ -185,36 +121,6 @@ public class MonoBehaviour
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Transform_Engine(uint entityID);
 
-    /* public Transform GetComponent()
-     {
-         Transform trans = new Transform();
-         //GetComponentInternalCall(entityId, ref trans);
-         return trans;
-     }
-
-     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-     extern public Transform GetComponentInternalCall(int entityId);*/
-
-
-
-
-
-    /*public ref T GetComponent<T>()
-    {
-        return ref GetComponentInternalCall<T>(entityId);
-    }
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public ref T GetComponentInternalCall<T>(int entityId);*/
-
-
-
-    /*public ref T GetComponent<T>()
-    {
-        return ref GetComponentInternalCall<T>(entityId);
-    }
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public ref T GetComponentInternalCall<T>(int entityId);*/
+    
 }
 

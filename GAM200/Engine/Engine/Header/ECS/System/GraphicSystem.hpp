@@ -20,8 +20,9 @@ Technology is prohibited.
 
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/ECS/System/system.hpp"
-#include "Engine/Header/Math/Matrix.hpp"
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
+
+#include <glm/glm.hpp>
 
 namespace Engine {
 	class GraphicSystem : public System {
@@ -32,8 +33,8 @@ namespace Engine {
 		~GraphicSystem();
 		//void Destroy();
 
-		static void Update(float dt, MathD::Mat3 camMatrix = CameraSystem::GetTransform());
-		static void Render();
+		//static void Update(float dt);
+		static void Render(glm::mat3 camMatrix = CameraSystem::GetTransform());
 	private:
 		//static GraphicSystem* gs;
 		static std::shared_ptr<GraphicSystem> GS;

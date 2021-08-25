@@ -20,8 +20,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
 #include "Engine/Header/pch.hpp"
-#include "Engine/Header/Math/MathLib.hpp"
-#include "Engine/Header/Math/Vector2D.hpp"
+#include <glm/glm.hpp>
 
 namespace Engine {
     namespace GraphicImplementation {
@@ -35,9 +34,9 @@ namespace Engine {
         // container that contains 3 different vectors of vertex coordinates
         // Object Position, Color and Texture Coordinates respectively
         struct GLVertCont {
-            MathD::Vec2 ObjPos_vtx;
-            MathD::Vec3 Clr_vtx;
-            MathD::Vec2 TexPos_vtx;
+            glm::vec2 ObjPos_vtx;
+            glm::vec3 Clr_vtx;
+            glm::vec2 TexPos_vtx;
         };
 
         void CreateFramebuffer(unsigned int* framebuffer, unsigned int* texColorBuffer);

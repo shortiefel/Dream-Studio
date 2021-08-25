@@ -16,9 +16,10 @@ Technology is prohibited.
 
 #include "Editor/Header/GUI/GUIWindow.hpp"
 
-#include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
+
+#include <glm/glm.hpp>
 
 //Create a window with an image
 //E.g Game window 
@@ -63,7 +64,7 @@ namespace Editor {
 		}
 
 		void GUI_DockSpace() {
-			Engine::MathD::Vec2 winPos = Engine::Window::GetWindowPosition();
+			glm::vec2 winPos = Engine::Window::GetWindowPosition();
 			ImGui::SetNextWindowPos(ImVec2{ winPos.x, winPos.y });
 			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetWidth(),
 											 (float)Engine::Window::GetHeight() });

@@ -52,10 +52,10 @@ namespace Engine {
 		LOG_INSTANCE("Window destroyed");
 	}
 
-	MathD::Vec2 Window::GetWindowPosition() {
+	glm::vec2 Window::GetWindowPosition() {
 		int xpos, ypos;
 		glfwGetWindowPos(glfw_window, &xpos, &ypos);
-		return MathD::Vec2{ (float)xpos, (float)ypos };
+		return glm::vec2{ (float)xpos, (float)ypos };
 	}
 
 	void Window::DisplayFPS(float fps) {

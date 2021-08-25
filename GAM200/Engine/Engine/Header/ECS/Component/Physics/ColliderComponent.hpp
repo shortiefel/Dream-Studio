@@ -25,7 +25,7 @@ Technology is prohibited.
 #define COLLIDER_COMPONENT_H
 
 
-#include "Engine/Header/Math/Vector.hpp" //vector 2d
+#include <glm/glm.hpp>
 
 namespace Engine {
 	enum class ColliderType {
@@ -42,8 +42,8 @@ namespace Engine {
 
 		ColliderType cType = ColliderType::CIRCLE;
 
-		MathD::Vec2 pos = MathD::Vec2{};//, origin;
-		MathD::Vec2 scale = MathD::Vec2{};
+		glm::vec2 offset_position = glm::vec2{};//, origin;
+		glm::vec2 offset_scale = glm::vec2{};
 
 		bool isTrigger = false, isActive = true;
 		//Will be pushed if moveable
@@ -51,23 +51,12 @@ namespace Engine {
 
 		Collider() = default;
 
-		//offsetPosition -> how far away from the transform center
-		//offsetScale -> how much it changes the transform scale
-		/*Collider(ColliderType c, MathD::Vec2 offsetPosition, MathD::Vec2 offsetScale, bool trigger = false) :
-			cType{ c }, pos{ offsetPosition }, scale { offsetScale.x, offsetScale.y }, isTrigger{ trigger } {}
-
-		Collider(ColliderType c, float offsetxPos, float offsetyPos, MathD::Vec2 offsetScale, bool trigger = false) :
-			Collider{ c, MathD::Vec2 { offsetxPos, offsetyPos }, offsetScale, trigger } {}
-
-		Collider (ColliderType c, float offsetxPos, float offsetyPos,  float offsetWidth, float offsetHeight, bool trigger = false) :
-			Collider{ c, MathD::Vec2 { offsetxPos, offsetyPos }, MathD::Vec2 { offsetWidth, offsetHeight }, trigger } {}*/
-
 		Collider(ColliderType c, bool moveable = false, bool trigger = false) :
-			cType{ c }, pos{ MathD::Vec2{ 0.f, 0.f } }, scale{ MathD::Vec2{ 0.f, 0.f } }, isMoveable{ moveable }, isTrigger{ trigger } {}
+			cType{ c }, offset_position{ glm::vec2{ 0.f, 0.f } }, offset_scale{ glm::vec2{ 0.f, 0.f } }, isMoveable{ moveable }, isTrigger{ trigger } {}
 
 		//Change of type constructor: Copy an existing Collider but with a different type
-		Collider(ColliderType c, MathD::Vec2 tPos, MathD::Vec2 tScale, bool moveable, bool tTrigger) :
-			cType{ c }, pos{ tPos }, scale{ tScale }, isMoveable{ moveable }, isTrigger{ tTrigger } {}
+		Collider(ColliderType c, glm::vec2 tPos, glm::vec2 tScale, bool moveable, bool tTrigger) :
+			cType{ c }, offset_position{ tPos }, offset_scale{ tScale }, isMoveable{ moveable }, isTrigger{ tTrigger } {}
 
 		Collider(const Collider&) = default;
 		Collider& operator=(const Collider&) = default;

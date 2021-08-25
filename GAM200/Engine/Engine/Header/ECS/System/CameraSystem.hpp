@@ -19,7 +19,7 @@ Technology is prohibited.
 
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/ECS/System/System.hpp"
-#include "Engine/Header/Math/MathLib.hpp"
+#include <glm/glm.hpp>
 
 namespace Engine {
 	class CameraSystem : public System {
@@ -30,9 +30,9 @@ namespace Engine {
 
 		static void Update(float dt);
 
-		static MathD::Mat3 GetTransform();
+		static glm::mat3 GetTransform();
 	private:
-		static MathD::Mat3 world_to_ndc_xform;
+		static glm::mat3 world_to_ndc_xform;
 		static std::shared_ptr<CameraSystem> CS;
 		static GLFWwindow* pwindow;
 	};

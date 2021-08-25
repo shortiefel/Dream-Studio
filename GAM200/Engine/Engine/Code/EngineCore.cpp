@@ -38,7 +38,7 @@ namespace Engine {
 
 		ResourceManager::Create();
 
-		ScriptEmbed::Create();
+		Scripting::Create();
 
 		Scene::Create();
 
@@ -55,7 +55,7 @@ namespace Engine {
 	void EngineCore::Destroy() {
 		Scene::Destroy(); //Destroy currently active game scene
 
-		ScriptEmbed::Destroy();
+		Scripting::Destroy();
 		ResourceManager::Destroy();
 		//GUILayer::Destroy();
 		LayerStack::Destroy();

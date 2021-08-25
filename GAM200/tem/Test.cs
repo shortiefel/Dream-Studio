@@ -11,20 +11,21 @@ public class Test : MonoBehaviour
 
     public override void Init()
     {
-        //gameObject.transform = new Transform(new Vec2(100, 200), new Vec2(30, 70));
-        Console.WriteLine(gameObject.transform);
-        Console.WriteLine(gameObject.transform.position);
-        //gameObject.transform.position = new Vec2(500, -100);
+        Transform go2 = GetComponent<Transform>();
 
-        /*GameObject go2 = new GameObject();
-        go2.entityId = 1;
-        go2.transform = new Transform(new Vec2(500, 200), new Vec2(100, 20));*/
-        //Console.WriteLine(this.GetType());
+        //Transform tem = GetTransform();
+        //Vec2 pos = go2.GetPosition();
+        //Console.WriteLine(pos);
+        go2.position = new Vec2(-300, -300);
+        Console.WriteLine(go2.position);
+        //Console.WriteLine(go2);
 
-        //Transform t = GetComponent<Transform>();
-        //gameObject.CheckString();
-        //Console.WriteLine(t);
-        //gameObject.transform.position = mew Vec2(400, 100);
+        //go2.scale = new Vec2(30, 100);
+        Console.WriteLine(go2.position + new Vec2(10,10));
+
+        go2.position += new Vec2(500, 500);
+        Console.WriteLine(go2.position);
+
 
     }
 }

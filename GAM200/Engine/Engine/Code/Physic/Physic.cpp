@@ -29,7 +29,7 @@ Technology is prohibited.
 namespace Engine {
     //Both used only for square to circle collision
     //Nearest point on square to circle
-    MathD::Vec2 nearestPoint = MathD::Vec2{};
+    glm::vec2 nearestPoint = glm::vec2{};
     //Length of nearest point to center of circle
     float length = float{}; //Reused for circle circle
     //Check whether it is in corner
@@ -37,7 +37,7 @@ namespace Engine {
 
     namespace PhysicImplementation {
         //Collision checks-------------------------------------------------------------------------------
-        bool isColliding(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isColliding(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
             if (obj1.cType == ColliderType::CIRCLE) {
                 if (obj2.cType == ColliderType::CIRCLE)
                     return isCollidingCIRCLEtoCIRCLE(dir, obj1, obj2);
@@ -56,45 +56,45 @@ namespace Engine {
             return false;
         }
 
-        bool isCollidingSQUAREtoSQUARE(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingSQUAREtoSQUARE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
             //Check whether obj1 is outside range of obj2
-            if (obj1.pos.x + obj1.scale.x < obj2.pos.x - obj2.scale.x ||
-                obj1.pos.x - obj1.scale.x > obj2.pos.x + obj2.scale.x ||
-                obj1.pos.y + obj1.scale.y < obj2.pos.y - obj2.scale.y ||
-                obj1.pos.y - obj1.scale.y > obj2.pos.y + obj2.scale.y)
+            if (obj1.offset_position.x + obj1.offset_scale.x < obj2.offset_position.x - obj2.offset_scale.x ||
+                obj1.offset_position.x - obj1.offset_scale.x > obj2.offset_position.x + obj2.offset_scale.x ||
+                obj1.offset_position.y + obj1.offset_scale.y < obj2.offset_position.y - obj2.offset_scale.y ||
+                obj1.offset_position.y - obj1.offset_scale.y > obj2.offset_position.y + obj2.offset_scale.y)
                 return false;
 
-            dir = (obj1.pos - obj2.pos);
-            Normalize(dir, dir);
+            dir = (obj1.offset_position - obj2.offset_position);
+            dir = glm::normalize(dir);
             return true;
         }
 
-        bool isCollidingSQUAREtoCIRCLE(MathD::Vec2& dir, const Collider& col1, const Collider& col2) {
+        bool isCollidingSQUAREtoCIRCLE(glm::vec2& dir, const Collider& col1, const Collider& col2) {
             cornerBool = true;
             //Check if circle is corner of square (same logic as square to square collision
-            if (col2.pos.x < col1.pos.x - col1.scale.x)
-                nearestPoint.x = col1.pos.x - col1.scale.x;
-            else if (col2.pos.x > col1.pos.x + col1.scale.x)
-                nearestPoint.x = col1.pos.x + col1.scale.x;
+            if (col2.offset_position.x < col1.offset_position.x - col1.offset_scale.x)
+                nearestPoint.x = col1.offset_position.x - col1.offset_scale.x;
+            else if (col2.offset_position.x > col1.offset_position.x + col1.offset_scale.x)
+                nearestPoint.x = col1.offset_position.x + col1.offset_scale.x;
             else {
                 cornerBool = false;
             }
 
-            if (col2.pos.y < col1.pos.y - col1.scale.y)
-                nearestPoint.y = col1.pos.y - col1.scale.y;
-            else if (col2.pos.y > col1.pos.y + col1.scale.y)
-                nearestPoint.y = col1.pos.y + col1.scale.y;
+            if (col2.offset_position.y < col1.offset_position.y - col1.offset_scale.y)
+                nearestPoint.y = col1.offset_position.y - col1.offset_scale.y;
+            else if (col2.offset_position.y > col1.offset_position.y + col1.offset_scale.y)
+                nearestPoint.y = col1.offset_position.y + col1.offset_scale.y;
             else {
                 cornerBool = false;
             }
 
             if (cornerBool) {
                 //Store how much it intersect
-                length = col2.scale.x - Length(nearestPoint - col2.pos);
+                length = col2.offset_scale.x - glm::length(nearestPoint - col2.offset_position);
                 if (length < 0) return false;
 
-                dir = col1.pos - col2.pos;
-                Normalize(dir, dir);
+                dir = col1.offset_position - col2.offset_position;
+                dir = glm::normalize(dir);
                 return true;
             }
 
@@ -105,20 +105,20 @@ namespace Engine {
             return false;
         }
 
-        bool isCollidingCIRCLEtoSQUARE(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingCIRCLEtoSQUARE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
             return isCollidingSQUAREtoCIRCLE(dir, obj2, obj1);
         }
 
-        bool isCollidingCIRCLEtoCIRCLE(MathD::Vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingCIRCLEtoCIRCLE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
             //if (obj1.scale.x == obj1.scale.y && obj2.scale.x == obj2.scale.y) {
-            float rad = obj1.scale.x + obj2.scale.x;
+            float rad = obj1.offset_scale.x + obj2.offset_scale.x;
             rad = (float)pow(rad, 2);
-            dir = obj1.pos - obj2.pos;
+            dir = obj1.offset_position - obj2.offset_position;
             float tl = dir.x * dir.x + dir.y * dir.y;
 
             if (rad < tl) return false;
             //only calculate if it collides
-            Normalize(dir, dir);
+            dir = glm::normalize(dir);
             return true;
             /*}
 
@@ -129,7 +129,7 @@ namespace Engine {
 
 
         //Collision resolution-------------------------------------------------------------------------------
-        void CollisionResolution(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        void CollisionResolution(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
             if (col1.cType == ColliderType::CIRCLE) {
                 if (col2.cType == ColliderType::CIRCLE)
                     CollisionResolutionCIRCLEtoCIRCLE(dir, trans1, col1, trans2, col2);
@@ -145,70 +145,70 @@ namespace Engine {
             }
         }
 
-        void CollisionResolutionSQUAREtoSQUARE(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        void CollisionResolutionSQUAREtoSQUARE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
             float lenX = 0.f, lenY = 0.f;
             //Get difference in distance (see how much they intersect)
-            lenY = col1.scale.y + col2.scale.y - abs(col2.pos.y - col1.pos.y);
-            lenX = col1.scale.x + col2.scale.x - abs(col2.pos.x - col1.pos.x);
+            lenY = col1.offset_scale.y + col2.offset_scale.y - abs(col2.offset_position.y - col1.offset_position.y);
+            lenX = col1.offset_scale.x + col2.offset_scale.x - abs(col2.offset_position.x - col1.offset_position.x);
             //more x mean intersect on y
             //E.g one square on top of another square, lenX is huge but they are intersecting in y axis
             if (lenX > lenY) lenX = 0.f;
             else if (lenX < lenY) lenY = 0.f;
 
-            MathD::Vec2 up{ 0.f, dir.y }, right{ dir.x, 0.f };
+            glm::vec2 up{ 0.f, dir.y }, right{ dir.x, 0.f };
 
             if (col1.isMoveable && col2.isMoveable) {
-                trans1.pos += lenX / 2 * right; //for col1
-                trans2.pos += lenX / 2 * -right; //for col2
-                trans1.pos += lenY / 2 * up; //for col1
-                trans2.pos += lenY / 2 * -up; //for col2
+                trans1.position += lenX / 2 * right; //for col1
+                trans2.position += lenX / 2 * -right; //for col2
+                trans1.position += lenY / 2 * up; //for col1
+                trans2.position += lenY / 2 * -up; //for col2
             }
 
             //if only one moveable it should move by the full length amount
             else if (col1.isMoveable) {
-                trans1.pos += lenX * right; //for col1
-                trans1.pos += lenY * up; //for col1
+                trans1.position += lenX * right; //for col1
+                trans1.position += lenY * up; //for col1
             }
 
             else if (col2.isMoveable) {
-                trans2.pos += lenX * -right; //for col2
-                trans2.pos += lenY * -up; //for col2
+                trans2.position += lenX * -right; //for col2
+                trans2.position += lenY * -up; //for col2
             }
         }
 
-        void CollisionResolutionSQUAREtoCIRCLE(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        void CollisionResolutionSQUAREtoCIRCLE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
             if (!cornerBool) {
                 CollisionResolutionSQUAREtoSQUARE(dir, trans1, col1, trans2, col2);
                 return;
             }
 
             if (col1.isMoveable && col2.isMoveable) {
-                trans1.pos += length / 2 * dir;
-                trans2.pos += length / 2 * -dir; // for col2
+                trans1.position += length / 2 * dir;
+                trans2.position += length / 2 * -dir; // for col2
             }
 
             //if only one moveable it should move by the full length amount
             else if (col1.isMoveable) {
-                trans1.pos += length * dir;
+                trans1.position += length * dir;
 
             }
 
             else if (col2.isMoveable) {
                 //length is calculated in collision detection
-                trans2.pos += length * -dir; // for col2
+                trans2.position += length * -dir; // for col2
             }
         }
 
-        void CollisionResolutionCIRCLEtoSQUARE(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        void CollisionResolutionCIRCLEtoSQUARE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
             CollisionResolutionSQUAREtoCIRCLE(dir, trans2, col2, trans1, col1);
         }
 
-        void CollisionResolutionCIRCLEtoCIRCLE(MathD::Vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
-            MathD::Vec2 len = col1.pos - col2.pos;
-            length = Length(len);
+        void CollisionResolutionCIRCLEtoCIRCLE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+            glm::vec2 len = col1.offset_position - col2.offset_position;
+            length = glm::length(len);
 
             //length is the distance between the two object
-            length = col1.scale.x + col2.scale.x - length;
+            length = col1.offset_scale.x + col2.offset_scale.x - length;
 
             //E.g object1 is radius 5, object2 is radius 3
             //distance between the two object is 7, difference between distance and total radius is 1
@@ -217,17 +217,17 @@ namespace Engine {
             //if both moveable then both will move length/2 in direction opposite each other
             //since dir is from col1, object2 will move in dir and object1 will move in -dir
             if (col1.isMoveable && col2.isMoveable) {
-                trans1.pos += length / 2 * dir; //for col1
-                trans2.pos += length / 2 * -dir; //for col2
+                trans1.position += length / 2 * dir; //for col1
+                trans2.position += length / 2 * -dir; //for col2
             }
 
             //if only one moveable it should move by the full length amount
             else if (col1.isMoveable) {
-                trans1.pos += length * dir; //for col1
+                trans1.position += length * dir; //for col1
             }
 
             else if (col2.isMoveable) {
-                trans2.pos += length * -dir; //for col2
+                trans2.position += length * -dir; //for col2
             }
         }
     }

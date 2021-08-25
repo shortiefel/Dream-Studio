@@ -25,6 +25,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/Graphic.hpp"
 
+#include <glm/gtc/type_ptr.hpp>
+
 //#include "Engine/Header/Math/Matrix.hpp"
 //#include "../../External Resources/include/stb_image/stb_image.h" //-----remove
 
@@ -34,37 +36,37 @@ namespace Engine {
 
 	//GLuint setup_texobj(std::string);
 	//GLuint texobj_hdl; //-----remove
-	void GraphicSystem::Update(float dt, MathD::Mat3 camMatrix) {
-		//For all entities in GraphicSystem
+	//void GraphicSystem::Update(float dt) {
+	//	//For all entities in GraphicSystem
 
-		for (auto const& entity : GS->mEntities) {
-			auto& transform = gCoordinator.GetCom<Transform>(entity);
-			//Update the matrix (model to ndc)
-			//orientation.x += orientation.y * static_cast<GLfloat>(dt);
-			/*
-			GLfloat rad = MathD::radians(20.f);
-			MathD::Mat3 temMat3{ MathD::Vec3(cos(rad), sin(rad), 0),
-								 MathD::Vec3(-sin(rad), cos(rad), 0),
-								 MathD::Vec3(0, 0, 1.f) };
-			*/
+	//	//for (auto const& entity : GS->mEntities) {
+	//	//	auto& transform = gCoordinator.GetCom<Transform>(entity);
+	//	//	//Update the matrix (model to ndc)
+	//	//	//orientation.x += orientation.y * static_cast<GLfloat>(dt);
+	//	//	/*
+	//	//	GLfloat rad = MathD::radians(20.f);
+	//	//	MathD::Mat3 temMat3{ MathD::Vec3(cos(rad), sin(rad), 0),
+	//	//						 MathD::Vec3(-sin(rad), cos(rad), 0),
+	//	//						 MathD::Vec3(0, 0, 1.f) };
+	//	//	*/
 
-			transform.mdl_to_ndc_xform =
-				//Translate
-				MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
-							  MathD::Vec3(0, 1.f, 0),
-							  MathD::Vec3(transform.pos.x, transform.pos.y, 1.f) }
-				*
-				//Scale
-				MathD::Mat3{ MathD::Vec3(transform.scale.x, 0, 0),
-							 MathD::Vec3(0, transform.scale.y, 0),
-							 MathD::Vec3(0, 0, 1.f) };
+	//	//	//mdl_to_ndc_xform =
+	//	//	//	//Translate
+	//	//	//	glm::mat3{  glm::vec3(1.f, 0, 0),
+	//	//	//				  glm::vec3(0, 1.f, 0),
+	//	//	//				  glm::vec3(transform.position.x, transform.position.y, 1.f) }
+	//	//	//	*
+	//	//	//	//Scale
+	//	//	//	glm::mat3{   glm::vec3(transform.scale.x, 0, 0),
+	//	//	//				 glm::vec3(0, transform.scale.y, 0),
+	//	//	//				 glm::vec3(0, 0, 1.f) };
 
-			//world to ndc * mdl to world
-			transform.mdl_to_ndc_xform = camMatrix * transform.mdl_to_ndc_xform;
-		}
-	}
+	//	//	////world to ndc * mdl to world
+	//	//	//mdl_to_ndc_xform = camMatrix * mdl_to_ndc_xform;
+	//	//}
+	//}
 
-	void GraphicSystem::Render() {
+	void GraphicSystem::Render(glm::mat3 camMatrix) {
 		GraphicImplementation::BindFramebuffer();
 
 		glClearColor(1, 0, 1, 1);
@@ -108,7 +110,7 @@ namespace Engine {
 			//glBindVertexArray(renderer.mdl_ref->second.vaoid);
 
 			GLint uniform_var_loc1 = glGetUniformLocation(texture.get_shd_ref()->second.GetHandle(), "uModel_to_NDC");
-			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, MathD::value_ptr(transform.mdl_to_ndc_xform));
+			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, glm::value_ptr(camMatrix * transform.GetTransform()));
 			if (uniform_var_loc1 == -1) {
 				std::cout << "uModel_to_NDC variable doesn't exist!!!\n";
 				std::exit(EXIT_FAILURE);

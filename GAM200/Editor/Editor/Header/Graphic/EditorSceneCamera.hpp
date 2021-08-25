@@ -16,22 +16,20 @@ Technology is prohibited.
 #ifndef EDITOR_SCENE_CAMERA_HPP
 #define EDITOR_SCENE_CAMERA_HPP
 
-#include "Engine/Header/Math/MathLib.hpp"
+#include <glm/glm.hpp>
 
 namespace Editor {
 	class EditorSceneCamera {
 	public:
-		static void Create(Engine::MathD::Vec2 pos);
+		static void Create(glm::vec2 pos);
 		static void Destroy();
 
-		static void Update(float dt);
+		//static void Update(float dt);
 
-		static Engine::MathD::Mat3 GetTransform();
+		static glm::mat3 GetTransform();
 	private:
-		static Engine::MathD::Vec2 position;
+		static glm::vec2 position;
 		static float ar;
-
-		static Engine::MathD::Mat3 world_to_ndc_xform;
 	};
 }
 

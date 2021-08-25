@@ -175,7 +175,7 @@ namespace Engine {
         CameraSystem::Update(dt);
 
         if (defaultRender) {
-            GraphicSystem::Update(dt);
+            //GraphicSystem::Update(dt);
             GraphicSystem::Render();
         }
 

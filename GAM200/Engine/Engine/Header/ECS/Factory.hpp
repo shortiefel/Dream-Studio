@@ -17,14 +17,15 @@ Technology is prohibited.
 #ifndef FACTORY_HPP
 #define FACTORY_HPP
 
-#include "Engine/Header/Math/MathLib.hpp"
+//#include "Engine/Header/Math/MathLib.hpp"
+#include <glm/glm.hpp>
 
 namespace Engine {
 	class Factory {
 	public:
 		static void Create();
-		static void InstantiateSquare(MathD::Vec2 pos = MathD::Vec2{ 0.f, 0.f }, MathD::Vec2 scale = MathD::Vec2{ 20.f, 20.f }, bool isMoveable = false);
-		static void InstantiateCircle(MathD::Vec2 pos = MathD::Vec2{ 0.f, 0.f }, MathD::Vec2 scale = MathD::Vec2{ 20.f, 20.f }, bool isMoveable = false);
+		static void InstantiateSquare(glm::vec2 pos = glm::vec2{ 0.f, 0.f }, glm::vec2 scale = glm::vec2{ 20.f, 20.f }, bool isMoveable = false);
+		static void InstantiateCircle(glm::vec2 pos = glm::vec2{ 0.f, 0.f }, glm::vec2 scale = glm::vec2{ 20.f, 20.f }, bool isMoveable = false);
 	};
 }
 

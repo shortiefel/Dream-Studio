@@ -37,14 +37,14 @@ namespace Editor {
 	void EditorStartPoint::Update(float dt) {
 		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
 		GUI::SetGameFBO();
-		Engine::GraphicSystem::Update(dt);
+		//Engine::GraphicSystem::Update(dt);
 		Engine::GraphicSystem::Render();
 
-		EditorSceneCamera::Update(dt);
+		//EditorSceneCamera::Update(dt);
 
 		GUI::SetSceneFBO();
-		Engine::GraphicSystem::Update(dt, EditorSceneCamera::GetTransform());
-		Engine::GraphicSystem::Render();
+		//Engine::GraphicSystem::Update(dt);
+		Engine::GraphicSystem::Render(EditorSceneCamera::GetTransform());
 
 		GUI::Update();
 		GUI::Draw();

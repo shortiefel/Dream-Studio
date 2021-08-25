@@ -19,8 +19,9 @@ Technology is prohibited.
 #define MOUSE_EVENT_H
 
 #include "Engine/Header/Event/Event.hpp"
-#include "Engine/Header/Math/Vector.hpp"
 #include "Engine/Header/pch.hpp"
+
+#include <glm/glm.hpp>
 
 namespace Engine {
 	//MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, 
@@ -78,7 +79,7 @@ namespace Engine {
 	public:
 		MouseMoveEvent(float xp, float yp);
 		//Get mouse position when moved
-		MathD::Vec2 GetPos() const;
+		glm::vec2 GetPos() const;
 		virtual EventType GetEventType() const override;
 		virtual std::string Details() const override;
 
@@ -86,7 +87,7 @@ namespace Engine {
 		static void RegisterFunction(MouseMoveFP func);
 
 	private:
-		MathD::Vec2 pos;
+		glm::vec2 pos;
 		static std::vector<MouseMoveFP> registeredFunctions;
 	};
 
@@ -100,7 +101,7 @@ namespace Engine {
 	class MouseScrolledEvent : public Event {
 	public:
 		MouseScrolledEvent(float x, float y);
-		MathD::Vec2 GetScroll() const;
+		glm::vec2 GetScroll() const;
 		virtual EventType GetEventType() const override;
 		virtual std::string Details() const override;
 
@@ -108,7 +109,7 @@ namespace Engine {
 		static void RegisterFunction(MouseScrollFP func);
 
 	private:
-		MathD::Vec2 scrollOffset;
+		glm::vec2 scrollOffset;
 		static std::vector<MouseScrollFP> registeredFunctions;
 	};
 }

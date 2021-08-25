@@ -76,7 +76,7 @@ namespace Engine {
 	MouseMoveEvent::MouseMoveEvent(float xp, float yp) :
 		pos{ xp, yp } {}
 
-	MathD::Vec2 MouseMoveEvent::GetPos() const { return pos; }
+	glm::vec2 MouseMoveEvent::GetPos() const { return pos; }
 
 	EventType MouseMoveEvent::GetEventType() const {
 		return EventType::MOUSE_MOVE;
@@ -95,7 +95,7 @@ namespace Engine {
 	MouseScrolledEvent::MouseScrolledEvent(float x, float y) :
 		scrollOffset{ x,y } {}
 
-	MathD::Vec2 MouseScrolledEvent::GetScroll() const {
+	glm::vec2 MouseScrolledEvent::GetScroll() const {
 		return scrollOffset;
 	}
 

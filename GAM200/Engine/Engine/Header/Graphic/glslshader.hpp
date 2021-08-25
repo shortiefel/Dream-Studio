@@ -32,7 +32,7 @@ program object.
 //#include <string>
 //#include <vector>
 //#include <map>
-#include "Engine/Header/Math/MathLib.hpp"
+#include <glm/glm.hpp>
 
 
 #include "Engine/Header/pch.hpp"
@@ -149,8 +149,8 @@ namespace Engine {
         void SetUniform(GLchar const* name, GLfloat x, GLfloat y);
         void SetUniform(GLchar const* name, GLfloat x, GLfloat y, GLfloat z);
         void SetUniform(GLchar const* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-        void SetUniform(GLchar const* name, MathD::Vec2 const& val);
-        void SetUniform(GLchar const* name, MathD::Vec3 const& val);
+        void SetUniform(GLchar const* name, glm::vec2 const& val);
+        void SetUniform(GLchar const* name, glm::vec3 const& val);
         //void SetUniform(GLchar const *name, glm::vec4 const& val);
         //void SetUniform(GLchar const *name, MathD::Mat3 const& val);
         //void SetUniform(GLchar const *name, glm::mat4 const& val);

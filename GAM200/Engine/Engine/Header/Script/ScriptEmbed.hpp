@@ -23,7 +23,7 @@ Technology is prohibited.
 #include <memory>
 
 namespace Engine {
-	namespace ScriptEmbed {
+	namespace Scripting {
 		/*-----------------------------------------------------
 			Set up mono
 		-----------------------------------------------------*/

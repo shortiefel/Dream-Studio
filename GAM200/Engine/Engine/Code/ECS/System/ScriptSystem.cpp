@@ -31,7 +31,7 @@ namespace Engine {
 	void ScriptSystem::Update(float dt) {
 		for (auto const& entity : SS->mEntities) {
 			auto& cscript = gCoordinator.GetCom<CSharpScript>(entity);
-			ScriptEmbed::CallFunction(cscript.object, cscript.UpdateFunc);
+			Scripting::CallFunction(cscript.object, cscript.UpdateFunc);
 		}
 	}
 
@@ -39,13 +39,13 @@ namespace Engine {
 	//Function is called whenever user press play
 	void ScriptSystem::Play() {
 
-		ScriptEmbed::ReloadMono();
+		Scripting::ReloadMono();
 		std::string func = "Constructor";
 		for (auto const& entity : SS->mEntities) {
 			auto& cscript = gCoordinator.GetCom<CSharpScript>(entity);
 			//Store obj---------------------------------------------------------
 			void* param[] = { (void*)&entity }; //Change to entity.id for the future
-			ScriptEmbed::ReloadObject(cscript.object, cscript, param);
+			Scripting::ReloadObject(cscript.object, cscript, param);
 		}
 	}
 
@@ -53,7 +53,7 @@ namespace Engine {
 	void ScriptSystem::Stop() {
 		for (auto const& entity : SS->mEntities) {
 			auto& cscript = gCoordinator.GetCom<CSharpScript>(entity);
-			ScriptEmbed::CallFunction(cscript.object, cscript.DestroyFunc);
+			Scripting::CallFunction(cscript.object, cscript.DestroyFunc);
 		}
 	}
 

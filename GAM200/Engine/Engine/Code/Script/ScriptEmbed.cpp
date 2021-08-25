@@ -37,25 +37,25 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Script/ScriptEmbed.hpp"
-#include "Engine/Header/ECS/ECSGlobal.hpp"
+#include "Engine/Header/Script/ScriptInternalCall.hpp"
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/threads.h>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/environment.h>
 
+#include <glm/glm.hpp>
 
-#include <fstream> //remove
-#include <vector> //remove
-#include <iostream>
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/ECS/Coordinator.hpp"
 
+#include <iostream> //remove
+
+
 
 namespace Engine {
-	extern Coordinator gCoordinator;
-
-	namespace ScriptEmbed {
+	namespace Scripting {
 		MonoDomain* domain;
 		MonoAssembly* assem;
 		MonoImage* image;
@@ -68,48 +68,7 @@ namespace Engine {
 			Get Component by type
 			return null if doesnt exist
 		-----------------------------------------------------*/
-		//template <typename T>
-		void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform) {
-			//call hascomponent with entityid
-			Transform* transform = nullptr;
-			gCoordinator.HasCom<Transform>(transform, id);
-			*outTransform = *transform;
-
-			/*Transform& transform = gCoordinator.GetCom<Transform>(id);
-			*outTransform = transform;*/
-		}
-
-		void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform) {
-			//call hascomponent with entityid
-			/*Transform* transform = nullptr;
-			gCoordinator.HasCom<Transform>(transform, id);
-			*transform = *inTransform;*/
-			Transform& transform = gCoordinator.GetCom<Transform>(id);
-			transform = *inTransform;
-		}
-
-
-
-		//void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform) {
-		//	//call hascomponent with entityid
-		//	outTransform = nullptr;
-		//	gCoordinator.HasCom<Transform>(outTransform, id);
-
-		//}
-
-		//void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform) {
-		//	//call hascomponent with entityid
-		//	Transform* transform = nullptr;
-		//	gCoordinator.HasCom<Transform>(transform, id);
-		//	*transform = *inTransform;
-		//}
-
-
-
-		bool HasComponent_Transform_Engine(unsigned int id) {
-			Transform* tem = nullptr;
-			return gCoordinator.HasCom<Transform>(tem, id);
-		}
+		
 
 		void Create() {
 			//Will to be changed to be automatic (can detect folders
@@ -120,11 +79,10 @@ namespace Engine {
 
 			mono_thread_set_main(mono_thread_current());
 			
-			mono_add_internal_call("GameObject::GetTransform_Native", GetComponentInScriptEmbeded);
-			mono_add_internal_call("GameObject::SetTransform_Native", SetComponentInScriptEmbeded);
+			//mono_add_internal_call("GameObject::GetTransform_Native", GetComponentInScriptEmbeded);
+			//mono_add_internal_call("GameObject::SetTransform_Native", SetComponentInScriptEmbeded);
 
-			mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
-			
+			RegisterInternalCall();
 		}
 
 		void Destroy() {

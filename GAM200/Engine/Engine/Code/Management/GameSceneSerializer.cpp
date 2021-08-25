@@ -34,7 +34,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 
 #define Get2DFloatValue(str) \
-	MathD::Vec2 {\
+	glm::vec2 {\
 		itr->value[str].GetArray()[0].GetFloat(), \
 		itr->value[str].GetArray()[1].GetFloat() }
 
@@ -67,8 +67,8 @@ namespace Engine {
 				rapidjson::Value objType(rapidjson::kObjectType);
 
 				rapidjson::Value pos(rapidjson::kArrayType);
-				pos.PushBack(trans->pos.x, doc.GetAllocator());
-				pos.PushBack(trans->pos.y, doc.GetAllocator());
+				pos.PushBack(trans->position.x, doc.GetAllocator());
+				pos.PushBack(trans->position.y, doc.GetAllocator());
 				objType.AddMember("Position", pos, doc.GetAllocator());
 
 				rapidjson::Value scale(rapidjson::kArrayType);
@@ -87,13 +87,13 @@ namespace Engine {
 				objType.AddMember("ColliderType", rapidjson::Value((int)col->cType).Move(), doc.GetAllocator());
 
 				rapidjson::Value pos(rapidjson::kArrayType);
-				pos.PushBack(col->pos.x, doc.GetAllocator());
-				pos.PushBack(col->pos.y, doc.GetAllocator());
+				pos.PushBack(col->offset_position.x, doc.GetAllocator());
+				pos.PushBack(col->offset_position.y, doc.GetAllocator());
 				objType.AddMember("Position", pos, doc.GetAllocator());
 
 				rapidjson::Value scale(rapidjson::kArrayType);
-				scale.PushBack(col->scale.x, doc.GetAllocator());
-				scale.PushBack(col->scale.y, doc.GetAllocator());
+				scale.PushBack(col->offset_scale.x, doc.GetAllocator());
+				scale.PushBack(col->offset_scale.y, doc.GetAllocator());
 				objType.AddMember("Scale", scale, doc.GetAllocator());
 
 				objType.AddMember("isMoveable", col->isMoveable, doc.GetAllocator());

@@ -43,9 +43,9 @@ namespace Engine {
 		Scene::Create();
 
 		GameSceneSerializer::Deserialize("Assets/test1.json"); // remove
-		//SceneSerializer::Serialize("Assets/test1.json"); // remove
+		GameSceneSerializer::Serialize("Assets/test2.json"); // remove
 
-		Scene::Play(); //Temporary placement (will be linked to GUI play button)
+		//Scene::Play(); //Temporary placement (will be linked to GUI play button)
 	}
 
 	void EngineCore::Update(float dt, bool defaultRender) {

@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 public class Test : MonoBehaviour
 {
     //Transform transform;
-    public int health = 10;
+    public int health;
+    private int notHealth;
+    private char thisIsBool;
 
     public override void Init()
     {

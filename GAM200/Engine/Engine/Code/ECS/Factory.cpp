@@ -38,13 +38,13 @@ namespace Engine {
         gCoordinator.RegisterComponent<Transform>();
         gCoordinator.RegisterComponent<Collider>();
         gCoordinator.RegisterComponent<Texture>();
-        gCoordinator.RegisterComponent<CSharpScript>();
+        //gCoordinator.RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSharpScript>();
 
         CameraSystem::Create(gCoordinator.RegSystem<CameraSystem>());
         GraphicSystem::Create(gCoordinator.RegSystem<GraphicSystem>());
         PhysicSystem::Create(gCoordinator.RegSystem<PhysicSystem>());
-        ScriptSystem::Create(gCoordinator.RegSystem<ScriptSystem>());
+        //ScriptSystem::Create(gCoordinator.RegSystem<ScriptSystem>());
 
         Signature signature;
         signature.set(gCoordinator.GetComType<Camera2D>());
@@ -60,9 +60,9 @@ namespace Engine {
         signature.set(gCoordinator.GetComType<Collider>());
         gCoordinator.setSystemSignature<PhysicSystem>(signature);
 
-        signature.reset();
-        signature.set(gCoordinator.GetComType<CSharpScript>());
-        gCoordinator.setSystemSignature<ScriptSystem>(signature);
+        //signature.reset();
+        //signature.set(gCoordinator.GetComType<CSScript>());
+        //gCoordinator.setSystemSignature<ScriptSystem>(signature);
     }
 
     //Prefix options------------------------------------------------------------------------------

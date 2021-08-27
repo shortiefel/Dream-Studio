@@ -44,11 +44,11 @@ Technology is prohibited.
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/environment.h>
 
-#include <glm/glm.hpp>
-
-#include "Engine/Header/ECS/ECSGlobal.hpp"
-#include "Engine/Header/ECS/Component/ComponentList.hpp"
-#include "Engine/Header/ECS/Coordinator.hpp"
+//#include <glm/glm.hpp>
+//
+//#include "Engine/Header/ECS/ECSGlobal.hpp"
+//#include "Engine/Header/ECS/Component/ComponentList.hpp"
+//#include "Engine/Header/ECS/Coordinator.hpp"
 
 #include <iostream> //remove
 
@@ -61,13 +61,6 @@ namespace Engine {
 		MonoImage* image;
 		
 		void destroy_child_domain();
-
-		
-
-		/*-----------------------------------------------------
-			Get Component by type
-			return null if doesnt exist
-		-----------------------------------------------------*/
 		
 
 		void Create() {
@@ -78,9 +71,6 @@ namespace Engine {
 			domain = mono_jit_init("Root Domain");
 
 			mono_thread_set_main(mono_thread_current());
-			
-			//mono_add_internal_call("GameObject::GetTransform_Native", GetComponentInScriptEmbeded);
-			//mono_add_internal_call("GameObject::SetTransform_Native", SetComponentInScriptEmbeded);
 
 			RegisterInternalCall();
 		}
@@ -116,8 +106,8 @@ namespace Engine {
 
 
 
-		void ReloadObject(MonoObject*& object, CSharpScript& cSharpScript, void** param) {
-			MonoClass* klass = mono_class_from_name(image, "", cSharpScript.className.c_str());
+		void ReloadObject(MonoObject*& object, CSClass& csScript, void** param) {
+			MonoClass* klass = mono_class_from_name(image, "", csScript.className.c_str());
 			if (!klass) {
 				LOG_ERROR("Failed loading class");
 				return;
@@ -145,23 +135,32 @@ namespace Engine {
 
 			//Set up virtual functions in MonoBehaviour
 			method = mono_class_get_method_from_name(klass, "Update", -1);
-			cSharpScript.UpdateFunc = mono_object_get_virtual_method(object, method);
+			csScript.UpdateFunc = mono_object_get_virtual_method(object, method);
 			
 
 			method = mono_class_get_method_from_name(klass, "Destroy", -1);
-			cSharpScript.DestroyFunc = mono_object_get_virtual_method(object, method);
-			
-		}
+			csScript.DestroyFunc = mono_object_get_virtual_method(object, method);
 
-		void CallFunction(MonoObject*& object, std::string& className, std::string& func) {
-			MonoClass* klass = mono_class_from_name(image, "", "MonoBehaviour");
-			MonoMethod* method = mono_class_get_method_from_name( klass, func.c_str(), -1);
-			
-			//void* param[] = { tem };
 
-			if (method) {
-				mono_runtime_invoke(method, object, nullptr, nullptr);
-			}
+			/*Testing only*/
+
+			//mono_field_set_value();
+
+			/*klass = mono_class_from_name(image, "", "Test");
+			void* ptr = nullptr;
+			MonoClassField* iter = mono_class_get_fields(klass, &ptr);
+			const char* name = mono_field_get_name(iter);
+			iter = mono_class_get_fields(klass, &ptr);
+			const char* name2 = mono_field_get_name(iter);
+			iter = mono_class_get_fields(klass, &ptr);
+			const char* name3 = mono_field_get_name(iter);
+
+			MONO_TYPE_BOOLEAN;
+			MONO_TYPE_CHAR;
+			MONO_TYPE_R4;*/
+
+			//--------------------------
+			
 		}
 
 		void CallFunction(MonoObject*& object, MonoMethod*& method, void** param) {

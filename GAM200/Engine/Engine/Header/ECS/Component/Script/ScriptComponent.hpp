@@ -25,11 +25,11 @@ Technology is prohibited.
 namespace Engine {
 	//using Custom_Script = std::shared_ptr<Script>;
 
-	struct CSharpScript {
+	struct CSScript {
 		std::string className = std::string{};
 
-		CSharpScript() = default;
-		CSharpScript(std::string cn) : className{ cn } {}
+		CSScript() = default;
+		CSScript(std::string cn) : className{ cn } {}
 
 		MonoObject* object = nullptr;
 

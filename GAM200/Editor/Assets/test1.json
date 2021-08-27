@@ -17,7 +17,22 @@
             "Shape": "Square",
             "Shader": "Default"
         },
-        "CSharpScript": { "Class": "Test" }
+        "CSScript": [
+            {
+                "Class": "Normal class",
+                "Variable": [
+                    {
+                        "Name": "Normal Variable",
+                        "Type": "Normal Type"
+                    }
+                ]
+
+            },
+            {
+                "Class":  "Not normal class"
+            }
+        ]
+        
     },
     {
         "Transform": {

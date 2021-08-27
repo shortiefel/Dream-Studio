@@ -32,6 +32,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Entity/EntityManager.hpp"
 #include "Engine/Header/ECS/Coordinator.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
+#include "Engine/Header/Script/ScriptEngine.hpp"
 
 #define Get2DFloatValue(str) \
 	glm::vec2 {\
@@ -139,8 +140,8 @@ namespace Engine {
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
 
-			CSharpScript* script = nullptr;
-			if (gCoordinator.HasCom<CSharpScript>(script, entList[i]) && script != nullptr) {
+			/*CSScript* script = nullptr;
+			if (gCoordinator.HasCom<CSScript>(script, entList[i]) && script != nullptr) {
 				LOG_ASSERT(script);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -150,8 +151,8 @@ namespace Engine {
 				scriptFP.SetString(buffer, len, doc.GetAllocator());
 				objType.AddMember("Class", scriptFP, doc.GetAllocator());
 
-				entityObject.AddMember("CSharpScript", objType, doc.GetAllocator());
-			}
+				entityObject.AddMember("CSScript", objType, doc.GetAllocator());
+			}*/
 
 			doc.PushBack(entityObject, doc.GetAllocator());
 		}
@@ -219,13 +220,48 @@ namespace Engine {
 					});
 			}
 
-			itr = obj.FindMember("CSharpScript");
+			itr = obj.FindMember("CSScript");
 			if (itr != obj.MemberEnd()) {
-				gCoordinator.AddComponent(ent,
-					CSharpScript{
-						itr->value["Class"].GetString()
-					});
+				auto& classArrayRapidJSon = obj["CSScript"];
+
+				Scripting::CSClassInstance classInstance;
+				for (rapidjson::SizeType i = 0; i < classArrayRapidJSon.Size(); i++) {
+					//std::cout << classArray[i]["Class"].GetString() << " \n";
+					const auto& className = classArrayRapidJSon[i]["Class"].GetString();
+					
+					classInstance.emplace(className, std::move(Scripting::CSScriptInstance{ className }));
+					;
+					//Scripting::ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
+					
+					auto& scriptVariableMap = Scripting::ScriptEngine::csEntityClassInstance[ent].find(className)->second.csVariableMap;
+					
+
+					//auto& variableArrayRapidJSon = classArrayRapidJSon[i]["Variable"];
+					//for (rapidjson::SizeType o = 0; o < variableArrayRapidJSon.Size(); o++) {
+					//	.csVariableMap
+					//	std::cout << variableArrayRapidJSon[o]["Name"].GetString() << " \n";
+					//	std::cout << variableArrayRapidJSon[o]["Type"].GetString() << " \n";
+					//	//std::cout << variableArray[o]["Data"].GetString() << " \n";
+					//}
+				}
+				
+
+				
+				
+				
 			}
 		}
 	}
 }
+
+//{
+//"Class": "Test",
+//{
+//	"Name": "IsThisBool",
+//	"Type" : 1
+//},
+//				{
+//					"Name": "IsThisBool",
+//					"Type" : 1
+//				}
+//			}

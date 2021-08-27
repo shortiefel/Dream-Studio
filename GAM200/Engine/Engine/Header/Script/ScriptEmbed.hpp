@@ -18,7 +18,8 @@ Technology is prohibited.
 #define SCRIPT_EMBED_HPP
 
 #include <mono/metadata/assembly.h>
-#include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
+//#include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
+#include "Engine/Header/Script/ScriptClass.hpp"
 #include <string>
 #include <memory>
 
@@ -47,7 +48,7 @@ namespace Engine {
 			-Call Constructor
 			-Call init object
 		-----------------------------------------------------*/
-		void ReloadObject(MonoObject*& object, CSharpScript& cSharpScript, void** param);
+		void ReloadObject(MonoObject*& object, CSClass& csScript, void** param);
 		/*-----------------------------------------------------
 			Call a specific virtual function
 			E.g: Init, Update

@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Layer/LayerStack.hpp"
 //#include "Layer/GUILayer.hpp"
+#include "Engine/Header/Script/ScriptEngine.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
 
@@ -124,13 +125,14 @@ namespace Engine {
         //Compile the script
         //Serialize everything
 
-        ScriptSystem::Play();
+        //ScriptSystem::Play();
+        Scripting::ScriptEngine::Play();
     }
 
     //When user click stop to run their game
     void Scene::Stop() {
         //Deserialize everything
-        ScriptSystem::Stop();
+        //ScriptSystem::Stop();
     }
 
     /*
@@ -169,7 +171,7 @@ namespace Engine {
         }*/
 
         //------------------------------------
-        ScriptSystem::Update(dt);
+        //ScriptSystem::Update(dt);
         PhysicSystem::Update(dt);
 
         CameraSystem::Update(dt);

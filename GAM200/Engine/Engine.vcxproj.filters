@@ -180,6 +180,12 @@
     <ClCompile Include="Engine\Code\Script\ScriptInternalCall.cpp">
       <Filter>Source Files\Script</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Script\ScriptEngine.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -399,6 +405,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Script\ScriptInternalCall.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\ScriptClass.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\ScriptEngine.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp">
       <Filter>Header Files\Script</Filter>
     </ClInclude>
   </ItemGroup>

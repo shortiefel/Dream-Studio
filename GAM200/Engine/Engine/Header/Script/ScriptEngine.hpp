@@ -29,7 +29,30 @@ namespace Engine {
 		
 		class ScriptEngine {
 		public:
+			static void InitEntityClassInstance();
 			static void Play();
+			/*-----------------------------------------------------
+			Set up mono
+			-----------------------------------------------------*/
+			static void Create();
+			/*-----------------------------------------------------
+				Clean up mono
+			-----------------------------------------------------*/
+			static void Destroy();
+			/*-----------------------------------------------------
+				Called when play button is pressed (After ReloadMono)
+				-Load objects
+				-Deserialize
+				-Call Constructor
+				-Call init object
+			-----------------------------------------------------*/
+			static void ReloadObject(MonoObject*& object, CSClass& csScript, void** param);
+			/*-----------------------------------------------------
+				Call a specific virtual function
+				E.g: Init, Update
+			-----------------------------------------------------*/
+			static void CallFunction(MonoObject*& object, MonoMethod*& method, void** param = nullptr);
+
 
 		//private:
 			static CSEntityClassInstance csEntityClassInstance;

@@ -51,16 +51,19 @@ namespace Engine {
 			
 
 			CSPublicVariable(const std::string& vn, CSType type);
+			
 			//Dont allow copying because variableData is newed each time
 			CSPublicVariable(const CSPublicVariable&) = delete;
 			CSPublicVariable(CSPublicVariable&& rhs) noexcept;
+
+
 
 			void SetVariableData(void* data);
 
 			~CSPublicVariable();
 
 		private:
-			void* variableData;
+			//void* variableData;
 		};
 
 	}

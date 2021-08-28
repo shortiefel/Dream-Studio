@@ -30,11 +30,13 @@ namespace Engine {
 		struct CSClass {
 			std::string className = std::string{};
 
-			//CSClass() = default;
+			CSClass() = default;
 			CSClass(std::string cn) : className{ cn } {}
 
 			MonoObject* object = nullptr;
 
+			MonoMethod* ConstructorFunc = nullptr;
+			MonoMethod* InitFunc = nullptr;
 			MonoMethod* UpdateFunc = nullptr;
 			MonoMethod* DestroyFunc = nullptr;
 		};
@@ -51,6 +53,12 @@ namespace Engine {
 			std::unordered_map<std::string, CSPublicVariable> csVariableMap;
 
 			CSScriptInstance(std::string cn) : csClass(cn) {}
+
+			CSScriptInstance(CSScriptInstance&& rhs) noexcept {
+				csClass = std::move(rhs.csClass);
+				csVariableMap = std::move(rhs.csVariableMap);
+			}
+			CSScriptInstance(const CSScriptInstance&) = delete;
 		};
 
 		//Map of string(Class name) and CSScriptInstance

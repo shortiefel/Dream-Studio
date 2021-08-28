@@ -97,8 +97,8 @@ namespace Engine {
 				scale.PushBack(col->offset_scale.y, doc.GetAllocator());
 				objType.AddMember("Scale", scale, doc.GetAllocator());
 
-				objType.AddMember("isMoveable", col->isMoveable, doc.GetAllocator());
 				objType.AddMember("isTrigger", col->isTrigger, doc.GetAllocator());
+				objType.AddMember("isMoveable", col->isMoveable, doc.GetAllocator());
 
 				entityObject.AddMember("Collider", objType, doc.GetAllocator());
 			}
@@ -140,24 +140,55 @@ namespace Engine {
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
 
-			/*CSScript* script = nullptr;
-			if (gCoordinator.HasCom<CSScript>(script, entList[i]) && script != nullptr) {
-				LOG_ASSERT(script);
-				rapidjson::Value objType(rapidjson::kObjectType);
+			//CSScript* script = nullptr;
+			auto& entityclassInstance = Scripting::ScriptEngine::csEntityClassInstance[entList[i]];
+			if (entityclassInstance.size()) {
 
-				rapidjson::Value scriptFP;
-				char buffer[200];
-				int len = sprintf_s(buffer, "%s", script->className.c_str());
-				scriptFP.SetString(buffer, len, doc.GetAllocator());
-				objType.AddMember("Class", scriptFP, doc.GetAllocator());
+				rapidjson::Value classArray(rapidjson::kArrayType);
 
-				entityObject.AddMember("CSScript", objType, doc.GetAllocator());
-			}*/
+				for (const auto& [className, scriptInstance] : entityclassInstance) {
+
+					
+
+					rapidjson::Value classNameFP;
+					char buffer[200];
+					int len = sprintf_s(buffer, "%s", className.c_str());
+					classNameFP.SetString(buffer, len, doc.GetAllocator());
+
+					rapidjson::Value classObj(rapidjson::kObjectType);
+					classObj.AddMember("Class", classNameFP, doc.GetAllocator());
+
+
+					if (scriptInstance.csVariableMap.size()) {
+						rapidjson::Value variableArray(rapidjson::kArrayType);
+
+						for (const auto& [variableName, variableInstance] : scriptInstance.csVariableMap) {
+							rapidjson::Value variableObject(rapidjson::kObjectType);
+
+							rapidjson::Value variableFP;
+							len = sprintf_s(buffer, "%s", variableName.c_str());
+							variableFP.SetString(buffer, len, doc.GetAllocator());
+							variableObject.AddMember("Name", variableFP, doc.GetAllocator());
+							variableObject.AddMember("Type", (int)variableInstance.variableType, doc.GetAllocator());
+							//Add member data
+
+
+							variableArray.PushBack(variableObject, doc.GetAllocator());
+						}
+						classObj.AddMember("Variable", variableArray, doc.GetAllocator());
+					}
+
+					classArray.PushBack(classObj, doc.GetAllocator());
+				}
+
+				entityObject.AddMember("CSScript", classArray, doc.GetAllocator());
+			}
 
 			doc.PushBack(entityObject, doc.GetAllocator());
 		}
 		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 		doc.Accept(writer);
+
 	}
 
 	void GameSceneSerializer::Deserialize(std::string filename) {
@@ -223,31 +254,38 @@ namespace Engine {
 			itr = obj.FindMember("CSScript");
 			if (itr != obj.MemberEnd()) {
 				auto& classArrayRapidJSon = obj["CSScript"];
-
 				Scripting::CSClassInstance classInstance;
 				for (rapidjson::SizeType i = 0; i < classArrayRapidJSon.Size(); i++) {
-					//std::cout << classArray[i]["Class"].GetString() << " \n";
 					const auto& className = classArrayRapidJSon[i]["Class"].GetString();
+					std::cout << className << " \n";
+					Scripting::CSScriptInstance csScriptInstance{ className };
+					//classInstance.emplace(className, std::move(csScriptInstance));
 					
-					classInstance.emplace(className, std::move(Scripting::CSScriptInstance{ className }));
-					;
-					//Scripting::ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
-					
-					auto& scriptVariableMap = Scripting::ScriptEngine::csEntityClassInstance[ent].find(className)->second.csVariableMap;
+					//auto& scriptVariableMap = Scripting::ScriptEngine::csEntityClassInstance[ent].find(className)->second.csVariableMap;
 					
 
-					//auto& variableArrayRapidJSon = classArrayRapidJSon[i]["Variable"];
-					//for (rapidjson::SizeType o = 0; o < variableArrayRapidJSon.Size(); o++) {
-					//	.csVariableMap
-					//	std::cout << variableArrayRapidJSon[o]["Name"].GetString() << " \n";
-					//	std::cout << variableArrayRapidJSon[o]["Type"].GetString() << " \n";
-					//	//std::cout << variableArray[o]["Data"].GetString() << " \n";
-					//}
+					auto& variableArrayRapidJSon = classArrayRapidJSon[i]["Variable"];
+					for (rapidjson::SizeType o = 0; o < variableArrayRapidJSon.Size(); o++) {
+						const auto& variableName = variableArrayRapidJSon[o]["Name"].GetString();
+						
+						Scripting::CSPublicVariable csPublicvariable{ variableName, Scripting::CSType{variableArrayRapidJSon[o]["Type"].GetInt()} };
+						csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
+						
+						//std::cout << variableName << " \n";
+						//std::cout << variableArrayRapidJSon[o]["Type"].GetInt() << " \n";
+						//std::cout << variableArray[o]["Data"].GetString() << " \n";
+					}
+
+					classInstance.emplace(className, std::move(csScriptInstance));
+					//std::cout << "class emplace " << classInstance.size() << "\n";
 				}
-				
 
 				
 				
+				//std::cout << "before emplace " << Scripting::ScriptEngine::csEntityClassInstance.find(ent)->second.size() << "\n";
+				Scripting::ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
+				//std::cout << "After emplace " << Scripting::ScriptEngine::csEntityClassInstance[ent].size() << "\n";
+				//std::cout << "end emplace \n";
 				
 			}
 		}

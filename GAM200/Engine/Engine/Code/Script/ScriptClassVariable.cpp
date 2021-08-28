@@ -20,16 +20,30 @@ namespace Engine {
 	namespace Scripting {
 
 		CSPublicVariable::CSPublicVariable(const std::string& vn, CSType type) : variableName(vn), variableType(type) {
-			variableData = nullptr; //Place holder
+			unsigned int size = 0;
+			switch (variableType) {
+			case CSType::FLOAT:
+			case CSType::INT:
+			case CSType::UINT:
+				size = 4;
+				break;
+			case CSType::VEC2:
+				size = 4 * 2;
+				break;
+
+			}
+			//variableData = new char[size];
+			//variableData = nullptr;
 		}
 
 		CSPublicVariable::CSPublicVariable(CSPublicVariable&& rhs) noexcept {
+			
 			variableName = std::move(rhs.variableName);
 			variableType = rhs.variableType;
 
-			variableData = rhs.variableData;
+			//variableData = rhs.variableData;
 
-			rhs.variableData = nullptr;
+			//rhs.variableData = nullptr;
 		}
 
 		void CSPublicVariable::SetVariableData(void* data) {
@@ -37,7 +51,7 @@ namespace Engine {
 		}
 
 		CSPublicVariable::~CSPublicVariable() {
-			delete[] variableData;
+			//delete[] variableData;
 		}
 	}
 }

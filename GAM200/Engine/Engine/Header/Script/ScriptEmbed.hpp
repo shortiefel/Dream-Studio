@@ -28,34 +28,34 @@ namespace Engine {
 		/*-----------------------------------------------------
 			Set up mono
 		-----------------------------------------------------*/
-		void Create();
-		/*-----------------------------------------------------
-			Clean up mono
-		-----------------------------------------------------*/
-		void Destroy();
-		/*-----------------------------------------------------
-			Called when play button is pressed
-			-Serialize
-			-Stop child domain
-			-Create child domain
-			-Load assemblies
-		-----------------------------------------------------*/
-		void ReloadMono();
-		/*-----------------------------------------------------
-			Called when play button is pressed (After ReloadMono)
-			-Load objects
-			-Deserialize
-			-Call Constructor
-			-Call init object
-		-----------------------------------------------------*/
-		void ReloadObject(MonoObject*& object, CSClass& csScript, void** param);
-		/*-----------------------------------------------------
-			Call a specific virtual function
-			E.g: Init, Update
-		-----------------------------------------------------*/
-		void CallFunction(MonoObject*& object, std::string& className, std::string& func);
+		//void Create();
+		///*-----------------------------------------------------
+		//	Clean up mono
+		//-----------------------------------------------------*/
+		//void Destroy();
+		///*-----------------------------------------------------
+		//	Called when play button is pressed
+		//	-Serialize
+		//	-Stop child domain
+		//	-Create child domain
+		//	-Load assemblies
+		//-----------------------------------------------------*/
+		//void ReloadMono();
+		///*-----------------------------------------------------
+		//	Called when play button is pressed (After ReloadMono)
+		//	-Load objects
+		//	-Deserialize
+		//	-Call Constructor
+		//	-Call init object
+		//-----------------------------------------------------*/
+		//void ReloadObject(MonoObject*& object, CSClass& csScript, void** param);
+		///*-----------------------------------------------------
+		//	Call a specific virtual function
+		//	E.g: Init, Update
+		//-----------------------------------------------------*/
+		////void CallFunction(MonoObject*& object, std::string& className, std::string& func);
 
-		void CallFunction(MonoObject*& object, MonoMethod*& method, void** param = nullptr);
+		//void CallFunction(MonoObject*& object, MonoMethod*& method, void** param = nullptr);
 	}
 }
 

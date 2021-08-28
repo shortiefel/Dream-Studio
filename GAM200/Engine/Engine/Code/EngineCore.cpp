@@ -22,8 +22,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/Scene/Scene.hpp"
-#include "Engine/Header/Management/GameSceneSerializer.hpp" // remove
-#include "Engine/Header/Script/ScriptEmbed.hpp"
+#include "Engine/Header/Script/ScriptEngine.hpp"
 
 namespace Engine {
 	void EngineCore::Create() {
@@ -38,14 +37,14 @@ namespace Engine {
 
 		ResourceManager::Create();
 
-		Scripting::Create();
+		Scripting::ScriptEngine::Create();
 
 		Scene::Create();
 
-		GameSceneSerializer::Deserialize("Assets/test1.json"); // remove
-		GameSceneSerializer::Serialize("Assets/test2.json"); // remove
+		//GameSceneSerializer::Deserialize("Assets/test1.json"); // remove
+		//GameSceneSerializer::Serialize("Assets/test2.json"); // remove
 
-		//Scene::Play(); //Temporary placement (will be linked to GUI play button)
+		Scene::Play(); //Temporary placement (will be linked to GUI play button)
 	}
 
 	void EngineCore::Update(float dt, bool defaultRender) {
@@ -55,7 +54,7 @@ namespace Engine {
 	void EngineCore::Destroy() {
 		Scene::Destroy(); //Destroy currently active game scene
 
-		Scripting::Destroy();
+		Scripting::ScriptEngine::Destroy();
 		ResourceManager::Destroy();
 		//GUILayer::Destroy();
 		LayerStack::Destroy();

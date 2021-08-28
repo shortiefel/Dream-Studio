@@ -20,6 +20,7 @@ Technology is prohibited.
 namespace Engine {
 	namespace Scripting {
 		//Register Internal call for C# side to use
+		//ScriptInternalCall.hpp
 		void RegisterInternalCall();
 	}
 }

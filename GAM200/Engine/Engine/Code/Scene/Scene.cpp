@@ -22,7 +22,9 @@ Technology is prohibited.
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Layer/LayerStack.hpp"
 //#include "Layer/GUILayer.hpp"
+
 #include "Engine/Header/Script/ScriptEngine.hpp"
+#include "Engine/Header/Management/GameSceneSerializer.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
 
@@ -116,6 +118,11 @@ namespace Engine {
 
             /*Factory::InstantiateCircle();
             Factory::InstantiateSquare();*/
+
+        GameSceneSerializer::Deserialize("Assets/test1.json");
+        GameSceneSerializer::Serialize("Assets/test2.json");
+
+        //Scripting::ScriptEngine::InitEntityClassInstance();
 
         playing = true;
     }

@@ -19,20 +19,9 @@
         },
         "CSScript": [
             {
-                "Class": "Normal class",
-                "Variable": [
-                    {
-                        "Name": "Normal Variable",
-                        "Type": "Normal Type"
-                    }
-                ]
-
-            },
-            {
-                "Class":  "Not normal class"
+                "Class": "Test"
             }
         ]
-        
     },
     {
         "Transform": {

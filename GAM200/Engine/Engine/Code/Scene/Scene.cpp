@@ -35,12 +35,10 @@ Technology is prohibited.
 //Systems
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
-
-//#include "PlayerController.hpp" //Temporary for Native Scripting test
 namespace Engine {
     extern Coordinator gCoordinator;
 
-    std::string Scene::sceneName = std::string{};
+    std::string sceneName = std::string{};
     bool Scene::playing = false;
 
     //Entity temcam, temcam2, temcam3; int num = 1;//Temporary
@@ -119,10 +117,10 @@ namespace Engine {
             /*Factory::InstantiateCircle();
             Factory::InstantiateSquare();*/
 
-        GameSceneSerializer::Deserialize("Assets/test1.json");
-        GameSceneSerializer::Serialize("Assets/test2.json");
+        GameSceneSerializer::Deserialize("Assets/Scene/test1.json");
+        
 
-        //Scripting::ScriptEngine::InitEntityClassInstance();
+        Scripting::ScriptEngine::InitEntityClassInstance();
 
         playing = true;
     }
@@ -188,6 +186,8 @@ namespace Engine {
             GraphicSystem::Render();
         }
 
+        Scripting::ScriptEngine::PlayRunTime();
+
         LayerStack::Update();
         LayerStack::Draw();
     }
@@ -198,4 +198,19 @@ namespace Engine {
         //Rebuild the layers for a difference game scene
         //Remove all entity
     }
+
+
+    bool OnSceneSave(const SaveEvent& e) {
+        std::cout << "Saving... \n";
+        Scripting::ScriptEngine::RecheckPublicVariable();
+        //Change to sceneName (might be fullName(path + name) instead)
+        GameSceneSerializer::Serialize("Assets/Scene/test2.json");
+        return true;
+    }
+
+    SaveEventFP Scene::GetSceneSave() {
+        return OnSceneSave;
+    }
+
+    
 }

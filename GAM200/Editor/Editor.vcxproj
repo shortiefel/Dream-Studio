@@ -120,7 +120,6 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
-copy "$(SolutionDir)External Resources\lib\$(Platform)\TracyProfiler.dll" "$(TargetDir)TracyProfiler.dll" /Y
 
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
@@ -135,7 +134,9 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
 if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
 copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(TargetDir)Data\tem.dll" /Y
 copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(ProjectDir)Data\tem.dll" /Y
-</Command>
+
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\EngineCS.dll" /Y 
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\EngineCS.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -161,7 +162,6 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
-copy "$(SolutionDir)External Resources\lib\$(Platform)\TracyProfiler.dll" "$(TargetDir)TracyProfiler.dll" /Y
 
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
@@ -176,7 +176,9 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
 if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
 copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(TargetDir)Data\tem.dll" /Y
 copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(ProjectDir)Data\tem.dll" /Y
-</Command>
+
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\EngineCS.dll" /Y 
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\EngineCS.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -206,7 +208,6 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
-copy "$(SolutionDir)External Resources\lib\$(Platform)\TracyProfiler.dll" "$(TargetDir)TracyProfiler.dll" /Y
 
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
@@ -221,7 +222,9 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
 if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
 copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(TargetDir)Data\tem.dll" /Y
 copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(ProjectDir)Data\tem.dll" /Y
-</Command>
+
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\EngineCS.dll" /Y 
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\EngineCS.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -251,7 +254,6 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
-copy "$(SolutionDir)External Resources\lib\$(Platform)\TracyProfiler.dll" "$(TargetDir)TracyProfiler.dll" /Y
 
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
@@ -266,7 +268,9 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
 if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
 copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(TargetDir)Data\tem.dll" /Y
 copy "$(SolutionDir)tem\bin\$(Configuration)\tem.dll" "$(ProjectDir)Data\tem.dll" /Y
-</Command>
+
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\EngineCS.dll" /Y 
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\EngineCS.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

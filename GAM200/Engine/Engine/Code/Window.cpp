@@ -24,10 +24,11 @@ Technology is prohibited.
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Event/WindowEvent.hpp"
+#include "Engine/Header/Event/UtilityEvent.hpp"
 
 #include <sstream> //Stringstream
 #include <iomanip> //Set precision
-
+#include "Engine/Header/EngineCore.hpp"
 
 namespace Engine {
 	GLFWwindow* Window::glfw_window = 0;
@@ -183,8 +184,15 @@ namespace Engine {
 	void Window::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 		switch (action) {
 		case GLFW_PRESS: {
-			KeyPressedEvent event(key, false);
-			EventDispatcher::SendEvent(event);
+			if (mods == GLFW_MOD_CONTROL && key == GLFW_KEY_S) {
+				SaveEvent event;
+				EventDispatcher::SendEvent(event);
+			}
+
+			else {
+				KeyPressedEvent event(key, false);
+				EventDispatcher::SendEvent(event);
+			}
 			//w_data.eventCallBack(event);
 			break;
 		}

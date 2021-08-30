@@ -19,6 +19,8 @@ Technology is prohibited.
 
 #include <string>
 
+#include "Engine/Header/Event/UtilityEvent.hpp"
+
 namespace Engine {
 	class Scene {
 	public:
@@ -28,8 +30,9 @@ namespace Engine {
 		static void Stop();
 		static void Update(float dt, bool defaultRender);
 
+		class SaveEvent;
+		static SaveEventFP GetSceneSave();
 	private:
-		static std::string sceneName;
 		static bool playing;
 	};
 }

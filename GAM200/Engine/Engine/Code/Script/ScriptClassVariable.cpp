@@ -15,25 +15,31 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
+#include <glm/glm.hpp>
 
 namespace Engine {
 	namespace Scripting {
 
 		CSPublicVariable::CSPublicVariable(const std::string& vn, CSType type) : variableName(vn), variableType(type) {
 			unsigned int size = 0;
-			switch (variableType) {
+			size = GetVariableSize(variableType);
+			variableData = new char[size];
+		}
+
+		unsigned int CSPublicVariable::GetVariableSize(CSType type) const {
+			switch (type) {
+
 			case CSType::FLOAT:
 			case CSType::INT:
 			case CSType::UINT:
-				size = 4;
+				return 4;
+			case CSType::CHAR:
+			case CSType::BOOL:
+				return 1;
 				break;
 			case CSType::VEC2:
-				size = 4 * 2;
-				break;
-
+				return (4 * 2);
 			}
-			//variableData = new char[size];
-			//variableData = nullptr;
 		}
 
 		CSPublicVariable::CSPublicVariable(CSPublicVariable&& rhs) noexcept {
@@ -41,17 +47,21 @@ namespace Engine {
 			variableName = std::move(rhs.variableName);
 			variableType = rhs.variableType;
 
-			//variableData = rhs.variableData;
+			variableData = rhs.variableData;
 
-			//rhs.variableData = nullptr;
+			rhs.variableData = nullptr;
 		}
 
 		void CSPublicVariable::SetVariableData(void* data) {
+			memcpy(variableData, data, GetVariableSize(variableType));
+		}
 
+		void CSPublicVariable::GetVariableDataVoid(void* value) const {
+			memcpy(value, variableData, GetVariableSize(variableType));
 		}
 
 		CSPublicVariable::~CSPublicVariable() {
-			//delete[] variableData;
+			delete[] variableData;
 		}
 	}
 }

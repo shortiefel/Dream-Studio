@@ -22,7 +22,6 @@ Technology is prohibited.
 
 #include <string>
 
-
 namespace Engine {
 	namespace Scripting {
 
@@ -30,11 +29,12 @@ namespace Engine {
 		Script variable data
 		-----------------------------------------------------------------------------------------------------------------------------------*/
 		enum class CSType {
+			NONE,
+			CHAR,
+			BOOL,
 			FLOAT,
 			INT,
 			UINT,
-			STRING,
-			BOOL,
 			VEC2
 		};
 
@@ -56,14 +56,26 @@ namespace Engine {
 			CSPublicVariable(const CSPublicVariable&) = delete;
 			CSPublicVariable(CSPublicVariable&& rhs) noexcept;
 
+			unsigned int GetVariableSize(CSType type) const;
 
-
+			//Used for Editor to set the values
 			void SetVariableData(void* data);
+			void SetToCS();
+
+			template<typename T>
+			T GetVariableData() const{
+				T value;
+				GetVariableDataVoid(&value);
+				return value;
+			}
+
 
 			~CSPublicVariable();
 
 		private:
-			//void* variableData;
+			void GetVariableDataVoid(void* value) const;
+
+			void* variableData;
 		};
 
 	}

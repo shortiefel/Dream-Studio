@@ -24,7 +24,10 @@ Technology is prohibited.
 #include "Engine/Header/Scene/Scene.hpp"
 #include "Engine/Header/Script/ScriptEngine.hpp"
 
+#include <iostream>
+
 namespace Engine {
+
 	void EngineCore::Create() {
 		if (!LayerStack::Create()) LOG_ERROR("LayerStack creation has failed");
 
@@ -38,6 +41,8 @@ namespace Engine {
 		ResourceManager::Create();
 
 		Scripting::ScriptEngine::Create();
+
+		SaveEvent::RegisterFunction(Scene::GetSceneSave());
 
 		Scene::Create();
 
@@ -59,4 +64,5 @@ namespace Engine {
 		//GUILayer::Destroy();
 		LayerStack::Destroy();
 	}
+
 }

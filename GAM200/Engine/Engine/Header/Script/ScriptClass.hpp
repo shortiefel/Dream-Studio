@@ -34,6 +34,7 @@ namespace Engine {
 			CSClass(std::string cn) : className{ cn } {}
 
 			MonoObject* object = nullptr;
+			MonoClass* klass = nullptr;
 
 			MonoMethod* ConstructorFunc = nullptr;
 			MonoMethod* InitFunc = nullptr;

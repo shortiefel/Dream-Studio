@@ -31,6 +31,13 @@ namespace Engine {
 		public:
 			static void InitEntityClassInstance();
 			static void Play();
+			static void PlayRunTime();
+			/*-----------------------------------------------------
+			Called when saving
+			-To add/remove public variable from map
+			-----------------------------------------------------*/
+			static void RecheckPublicVariable();
+			static CSType GetCSType(MonoType* mt);
 			/*-----------------------------------------------------
 			Set up mono
 			-----------------------------------------------------*/

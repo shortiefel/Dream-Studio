@@ -186,6 +186,9 @@
     <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp">
       <Filter>Source Files\Script</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Event\UtilityEvent.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -415,6 +418,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp">
       <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\UtilityEvent.hpp">
+      <Filter>Header Files\Event</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

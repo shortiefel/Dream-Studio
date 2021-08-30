@@ -4,3 +4,6 @@ C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Release\tem.csproj.Assembly
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Release\tem.csproj.CoreCompileInputs.cache
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Release\tem.dll
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Release\tem.pdb
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\bin\Release\EngineCS.dll
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\bin\Release\EngineCS.pdb
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Release\tem.csproj.CopyComplete

@@ -33,6 +33,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Coordinator.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/Script/ScriptEngine.hpp"
+#include "Engine/Header/Script/ScriptClassVariable.hpp"
 
 #define Get2DFloatValue(str) \
 	glm::vec2 {\
@@ -170,7 +171,32 @@ namespace Engine {
 							variableFP.SetString(buffer, len, doc.GetAllocator());
 							variableObject.AddMember("Name", variableFP, doc.GetAllocator());
 							variableObject.AddMember("Type", (int)variableInstance.variableType, doc.GetAllocator());
-							//Add member data
+							
+							switch (variableInstance.variableType) {
+							case Scripting::CSType::CHAR:
+								variableObject.AddMember("Data", variableInstance.GetVariableData<char>(), doc.GetAllocator());
+								break;
+							case Scripting::CSType::BOOL:
+								variableObject.AddMember("Data", variableInstance.GetVariableData<bool>(), doc.GetAllocator());
+								break;
+							case Scripting::CSType::FLOAT:
+								variableObject.AddMember("Data", variableInstance.GetVariableData<float>(), doc.GetAllocator());
+								break;
+							case Scripting::CSType::INT:
+								variableObject.AddMember("Data", variableInstance.GetVariableData<int>(), doc.GetAllocator());
+								break;
+							case Scripting::CSType::UINT:
+								variableObject.AddMember("Data", variableInstance.GetVariableData<unsigned int>(), doc.GetAllocator());
+								break;
+							case Scripting::CSType::VEC2:
+								glm::vec2 tem = variableInstance.GetVariableData<glm::vec2>();
+								rapidjson::Value dataVec2(rapidjson::kArrayType);
+								dataVec2.PushBack(tem.x, doc.GetAllocator());
+								dataVec2.PushBack(tem.y, doc.GetAllocator());
+								variableObject.AddMember("Data", dataVec2, doc.GetAllocator());
+								break;
+							}
+							
 
 
 							variableArray.PushBack(variableObject, doc.GetAllocator());
@@ -189,6 +215,7 @@ namespace Engine {
 		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 		doc.Accept(writer);
 
+		fclose(fp);
 	}
 
 	void GameSceneSerializer::Deserialize(std::string filename) {
@@ -253,53 +280,119 @@ namespace Engine {
 
 			itr = obj.FindMember("CSScript");
 			if (itr != obj.MemberEnd()) {
-				auto& classArrayRapidJSon = obj["CSScript"];
+//#if 1
+
 				Scripting::CSClassInstance classInstance;
-				for (rapidjson::SizeType i = 0; i < classArrayRapidJSon.Size(); i++) {
-					const auto& className = classArrayRapidJSon[i]["Class"].GetString();
-					std::cout << className << " \n";
+				for (auto& classJSon : itr->value.GetArray()) {
+					const auto& className = classJSon["Class"].GetString();
+
 					Scripting::CSScriptInstance csScriptInstance{ className };
-					//classInstance.emplace(className, std::move(csScriptInstance));
-					
-					//auto& scriptVariableMap = Scripting::ScriptEngine::csEntityClassInstance[ent].find(className)->second.csVariableMap;
-					
 
-					auto& variableArrayRapidJSon = classArrayRapidJSon[i]["Variable"];
-					for (rapidjson::SizeType o = 0; o < variableArrayRapidJSon.Size(); o++) {
-						const auto& variableName = variableArrayRapidJSon[o]["Name"].GetString();
-						
-						Scripting::CSPublicVariable csPublicvariable{ variableName, Scripting::CSType{variableArrayRapidJSon[o]["Type"].GetInt()} };
-						csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
-						
-						//std::cout << variableName << " \n";
-						//std::cout << variableArrayRapidJSon[o]["Type"].GetInt() << " \n";
-						//std::cout << variableArray[o]["Data"].GetString() << " \n";
+					rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
+					if (variableItr != classJSon.MemberEnd()) {
+						for (auto& variableData : variableItr->value.GetArray()) {
+							const auto& variableName = variableData["Name"].GetString();
+							const auto& variableType = Scripting::CSType{ variableData["Type"].GetInt() };
+
+
+							Scripting::CSPublicVariable csPublicvariable{ variableName, variableType };
+							
+
+							if (variableType == Scripting::CSType::CHAR) {
+								char charData = variableData["Data"].GetInt();
+								csPublicvariable.SetVariableData(&charData);
+							}
+
+							else if (variableType == Scripting::CSType::BOOL) {
+								bool boolData = variableData["Data"].GetBool();
+								csPublicvariable.SetVariableData(&boolData);
+							}
+
+							else if (variableType == Scripting::CSType::FLOAT) {
+								float floatData = variableData["Data"].GetFloat();
+								csPublicvariable.SetVariableData(&floatData);
+							}
+							else if (variableType == Scripting::CSType::INT) {
+								int intData = variableData["Data"].GetInt();
+								csPublicvariable.SetVariableData(&intData);
+							}
+							else if (variableType == Scripting::CSType::UINT) {
+								unsigned int uinData = variableData["Data"].GetUint();
+								csPublicvariable.SetVariableData(&uinData);
+							}
+							
+							else if (variableType == Scripting::CSType::VEC2) {
+								glm::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
+													variableData["Data"].GetArray()[1].GetFloat() };
+								csPublicvariable.SetVariableData(&vec2Data);
+							}
+
+							csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
+						}
 					}
-
 					classInstance.emplace(className, std::move(csScriptInstance));
-					//std::cout << "class emplace " << classInstance.size() << "\n";
 				}
 
-				
-				
-				//std::cout << "before emplace " << Scripting::ScriptEngine::csEntityClassInstance.find(ent)->second.size() << "\n";
+
+//#else
+				//auto& classArrayRapidJSon = obj["CSScript"];
+				//Scripting::CSClassInstance classInstance;
+				//for (rapidjson::SizeType i = 0; i < classArrayRapidJSon.Size(); i++) {
+				//	const auto& className = classArrayRapidJSon[i]["Class"].GetString();
+				//	//std::cout << className << " \n";
+				//	Scripting::CSScriptInstance csScriptInstance{ className };
+				//	//classInstance.emplace(className, std::move(csScriptInstance));
+				//	
+				//	//auto& scriptVariableMap = Scripting::ScriptEngine::csEntityClassInstance[ent].find(className)->second.csVariableMap;
+				//	
+				//	
+				//	const auto& variableArrayRapidJSon = classArrayRapidJSon[i]["Variable"].GetArray();
+
+				//	std::cout << className << " has " << variableArrayRapidJSon.Size() << "\n";
+				//	for (rapidjson::SizeType o = 0; o < variableArrayRapidJSon.Size(); o++) {
+				//		const auto& variableName = variableArrayRapidJSon[o]["Name"].GetString();
+				//		const auto& variableType = Scripting::CSType{ variableArrayRapidJSon[o]["Type"].GetInt() };
+				//		
+				//		Scripting::CSPublicVariable csPublicvariable{ variableName, variableType };
+
+				//		/*if (variableType == Scripting::CSType::FLOAT) {
+				//			float floatData = variableArrayRapidJSon[o]["Data"].GetFloat();
+				//			csPublicvariable.SetVariableData(&floatData);
+				//		}
+				//		else if (variableType == Scripting::CSType::INT) {
+				//				int intData = variableArrayRapidJSon[o]["Data"].GetInt();
+				//				csPublicvariable.SetVariableData(&intData);
+				//		}
+				//		else if (variableType == Scripting::CSType::UINT) {
+				//				unsigned int uinData = variableArrayRapidJSon[o]["Data"].GetUint();
+				//				csPublicvariable.SetVariableData(&uinData);
+				//		}
+				//		else if (variableType == Scripting::CSType::BOOL) {
+				//				bool boolData = variableArrayRapidJSon[o]["Data"].GetBool();
+				//				csPublicvariable.SetVariableData(&boolData);
+				//		}
+				//		else if (variableType == Scripting::CSType::VEC2) {
+				//				glm::vec2 vec2Data{ variableArrayRapidJSon[o]["Data"].GetArray()[0].GetFloat(), 
+				//									variableArrayRapidJSon[o]["Data"].GetArray()[1].GetFloat() };
+				//				csPublicvariable.SetVariableData(&vec2Data);
+				//		}*/
+				//		
+
+				//		csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
+				//		
+				//		//std::cout << variableName << " \n";
+				//		//std::cout << variableArrayRapidJSon[o]["Type"].GetInt() << " \n";
+				//		//std::cout << variableArray[o]["Data"].GetString() << " \n";
+				//	}
+
+				//	classInstance.emplace(className, std::move(csScriptInstance));
+				//	//std::cout << "class emplace " << classInstance.size() << "\n";
+				//}
+
+//#endif
+
 				Scripting::ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
-				//std::cout << "After emplace " << Scripting::ScriptEngine::csEntityClassInstance[ent].size() << "\n";
-				//std::cout << "end emplace \n";
-				
 			}
 		}
 	}
 }
-
-//{
-//"Class": "Test",
-//{
-//	"Name": "IsThisBool",
-//	"Type" : 1
-//},
-//				{
-//					"Name": "IsThisBool",
-//					"Type" : 1
-//				}
-//			}

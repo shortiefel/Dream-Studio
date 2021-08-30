@@ -4,17 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+public enum TEST
+{
+    tem = 0,
+    tem1,
+    tem2
+}
+
 public class Test : MonoBehaviour
 {
     //Transform transform;
     public int health;
-    private int notHealth;
-    private char thisIsBool;
+    public Vec2 vec2Test;
+    public TEST testEnum;
+    public char testChar;
+
 
     public override void Init()
     {
         Transform go2 = GetComponent<Transform>();
-
         //Transform tem = GetTransform();
         //Vec2 pos = go2.GetPosition();
         //Console.WriteLine(pos);

@@ -24,6 +24,41 @@ namespace Engine {
 			unsigned int size = 0;
 			size = GetVariableSize(variableType);
 			variableData = new char[size];
+
+	
+			void* v = nullptr;
+
+			if (variableType == CSType::FLOAT) {
+				float tem{};
+				v = &tem;
+			}
+
+			else if (variableType == CSType::INT) {
+				int tem{};
+				v = &tem;
+			}
+
+			else if (variableType == CSType::UINT) {
+				unsigned int tem{};
+				v = &tem;
+			}
+
+			else if (variableType == CSType::CHAR) {
+				char tem{};
+				v = &tem;
+			}
+
+			else if (variableType == CSType::BOOL) {
+				bool tem{};
+				v = &tem;
+			}
+
+			else if (variableType == CSType::VEC2) {
+				glm::vec2 tem{};
+				v = &tem;
+			}
+			 
+			SetVariableData(v);
 		}
 
 		unsigned int CSPublicVariable::GetVariableSize(CSType type) const {

@@ -16,7 +16,7 @@ Technology is prohibited.
 
 #ifndef ENGINE_CORE_HPP
 #define ENGINE_CORE_HPP
-#include "Engine/Header/Event/UtilityEvent.hpp"
+
 namespace Engine {
 	class EngineCore {
 	public:

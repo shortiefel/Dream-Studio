@@ -24,6 +24,8 @@ Technology is prohibited.
 #include "Engine/Header/Scene/Scene.hpp"
 #include "Engine/Header/Script/ScriptEngine.hpp"
 
+#include "Engine/Header/Event/UtilityEvent.hpp"
+#include "Engine/Header/Event/KeyEvent.hpp"
 #include <iostream>
 
 namespace Engine {
@@ -43,13 +45,15 @@ namespace Engine {
 		Scripting::ScriptEngine::Create();
 
 		SaveEvent::RegisterFunction(Scene::GetSceneSave());
+		StateEvent::RegisterFunction(Scene::GetStateChange());
+		KeyPressedEvent::
 
 		Scene::Create();
 
 		//GameSceneSerializer::Deserialize("Assets/test1.json"); // remove
 		//GameSceneSerializer::Serialize("Assets/test2.json"); // remove
 
-		Scene::Play(); //Temporary placement (will be linked to GUI play button)
+		//Scene::Play(); //Temporary placement (will be linked to GUI play button)
 	}
 
 	void EngineCore::Update(float dt, bool defaultRender) {

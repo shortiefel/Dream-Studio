@@ -24,7 +24,7 @@
                     {
                         "Name": "health",
                         "Type": 4,
-                        "Data": 0
+                        "Data": 10
                     },
                     {
                         "Name": "testChar",

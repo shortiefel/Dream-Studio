@@ -19,8 +19,14 @@
         },
         "CSScript": [
             {
-                "Class": "Test"
-               
+                "Class": "Test",
+                "Variable": [
+                    {
+                        "Name": "health",
+                        "Type": 4,
+                        "Data": 10
+                    }
+                ]
             } 
         ]
     },

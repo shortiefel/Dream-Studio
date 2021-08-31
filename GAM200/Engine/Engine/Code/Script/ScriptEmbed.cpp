@@ -6,27 +6,7 @@
 \brief
 This file has the function definition for ScriptEmbed
 
-find assembly with mono_domain_assembly_open and 
-get class inside file (class should be same name as filename)
-c++ code will find method and call it (method like: update, init)
 
-Steps to test
-1. call code from c# class from dll
-2. call code that is overwritten
-3. runtime creation of dll
-4. combine 2 files into 1 dll
-5. comb through folders to get all dll (Resource System) (might do it at a later time)
-
-
-When entering play mode
-Compiles        
-Serialize
-Stop child domain
-Create child domain
-Load assemblies
-Load objects
-Deserialize
-Initialize object
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

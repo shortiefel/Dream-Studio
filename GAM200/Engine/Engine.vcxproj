@@ -181,6 +181,7 @@
     <ClCompile Include="Engine\Code\Event\WindowEvent.cpp" />
     <ClCompile Include="Engine\Code\Graphic\glslshader.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Graphic.cpp" />
+    <ClCompile Include="Engine\Code\Input\Input.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="Engine\Code\Management\ResourceManager.cpp" />
     <ClCompile Include="Engine\Code\Management\GameSceneSerializer.cpp" />
@@ -248,6 +249,8 @@
     <ClInclude Include="Engine\Header\framework.hpp" />
     <ClInclude Include="Engine\Header\Graphic\glslshader.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Graphic.hpp" />
+    <ClInclude Include="Engine\Header\Input\Input.hpp" />
+    <ClInclude Include="Engine\Header\Input\InputCode.hpp" />
     <ClInclude Include="Engine\Header\Layer\Layer.hpp" />
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp" />
     <ClInclude Include="Engine\Header\Management\ResourceManager.hpp" />

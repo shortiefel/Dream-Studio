@@ -30,8 +30,12 @@ namespace Engine {
 		static void Stop();
 		static void Update(float dt, bool defaultRender);
 
-		class SaveEvent;
 		static SaveEventFP GetSceneSave();
+		static StateEventFP GetStateChange();
+
+		static void InvertPlaying();
+		static void SetPlaying(bool state);
+		static bool GetPlaying();
 	private:
 		static bool playing;
 	};

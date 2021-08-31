@@ -32,4 +32,21 @@ namespace Engine {
 	}
 
 	Call_and_Register_Definition(SaveEvent, SaveEventFP);
+
+
+	/*-------------------------------------------------------------------------------------------------
+	State event - Play/Stop state
+	-------------------------------------------------------------------------------------------------*/
+	std::vector<StateEventFP> StateEvent::registeredFunctions;
+
+	EventType StateEvent::GetEventType() const {
+		return EventType::STATE_CHANGE;
+	}
+	std::string StateEvent::Details() const {
+		return "State change";
+	}
+
+	Call_and_Register_Definition(StateEvent, StateEventFP);
+
+
 }

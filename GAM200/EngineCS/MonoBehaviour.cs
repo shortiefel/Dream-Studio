@@ -18,6 +18,7 @@ GetComponent<Transform>.enabled = true;
 
 Limitations:
 Doesnt support namespace (class cant be in a namespace)
+Doesnt support public enum and string
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

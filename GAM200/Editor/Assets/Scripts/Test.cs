@@ -18,6 +18,7 @@ public class Test : MonoBehaviour
     public Vec2 vec2Test;
     public TEST testEnum;
     public char testChar;
+    public Vec2 newvec2Test;
 
 
     public override void Init()
@@ -31,11 +32,27 @@ public class Test : MonoBehaviour
         //Console.WriteLine(go2);
 
         //go2.scale = new Vec2(30, 100);
-        Console.WriteLine(go2.position + new Vec2(10,10));
+        /*Console.WriteLine(go2.position + new Vec2(10,10));
 
         go2.position += new Vec2(500, 500);
-        Console.WriteLine(go2.position);
+        Console.WriteLine(go2.position);*/
 
+
+    }
+
+
+    public override void Update()
+    {
+        //Console.WriteLine("new Update");
+        //Console.WriteLine(Input::GetMouse);
+        if (Input.IsKeyPressed(KeyCode.A)) {
+            Console.WriteLine("new Update");
+        }
+
+        if (Input.IsKeyPressed(KeyCode.B))
+        {
+            Console.WriteLine(" Update");
+        }
 
     }
 }

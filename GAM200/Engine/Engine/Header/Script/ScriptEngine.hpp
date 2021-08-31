@@ -29,14 +29,24 @@ namespace Engine {
 		
 		class ScriptEngine {
 		public:
-			static void InitEntityClassInstance();
-			static void Play();
+			
+			static void PlayInit();
 			static void PlayRunTime();
+
+			static bool CompileCS();
+
+
+			
 			/*-----------------------------------------------------
-			Called when saving
-			-To add/remove public variable from map
+			Update information by
+			-Reinstantiating Classes
+			-Adding/Removing public variable from map
+			Called when saving/playing
 			-----------------------------------------------------*/
-			static void RecheckPublicVariable();
+			static void UpdateMapData();
+			/*-----------------------------------------------------
+			Get enum CSType from MonoType
+			-----------------------------------------------------*/
 			static CSType GetCSType(MonoType* mt);
 			/*-----------------------------------------------------
 			Set up mono
@@ -47,13 +57,21 @@ namespace Engine {
 			-----------------------------------------------------*/
 			static void Destroy();
 			/*-----------------------------------------------------
-				Called when play button is pressed (After ReloadMono)
-				-Load objects
-				-Deserialize
-				-Call Constructor
-				-Call init object
+			Called when play button is pressed
+			-Stop child domain
+			-Create child domain
+			-Load assemblies
 			-----------------------------------------------------*/
-			static void ReloadObject(MonoObject*& object, CSClass& csScript, void** param);
+			static void ReloadMono();
+			
+			///*-----------------------------------------------------
+			//	Called when play button is pressed (After ReloadMono)
+			//	-Load objects
+			//	-Deserialize
+			//	-Call Constructor
+			//	-Call init object
+			//-----------------------------------------------------*/
+			//static void ReloadObject(MonoObject*& object, CSClass& csScript, void** param);
 			/*-----------------------------------------------------
 				Call a specific virtual function
 				E.g: Init, Update
@@ -61,8 +79,19 @@ namespace Engine {
 			static void CallFunction(MonoObject*& object, MonoMethod*& method, void** param = nullptr);
 
 
-		//private:
 			static CSEntityClassInstance csEntityClassInstance;
+
+		//private:
+			/*-----------------------------------------------------
+			-To add/remove public variable from map
+			-Set their values
+			-----------------------------------------------------*/
+			static void InitPublicVariable();
+			/*-----------------------------------------------------
+			-To add/remove class from map
+			-Find the function from c#
+			-----------------------------------------------------*/
+			static void InitEntityClassInstance();
 		};
 	}
 }

@@ -24,6 +24,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/ECS/Coordinator.hpp"
 
+#include "Engine/Header/Input/Input.hpp" //Input key/mouse code
+
 namespace Engine {
 
 	extern Coordinator gCoordinator;
@@ -38,6 +40,10 @@ namespace Engine {
 		void GetTransform_Scale_Engine(unsigned int id, glm::vec2* outVec2);
 		void SetTransform_Scale_Engine(unsigned int id, glm::vec2* inVec2);
 
+		bool Input_IsKeyPressed(Input_KeyCode key);
+		bool Input_IsMouseButtonPressed(Input_MouseCode button);
+		void Input_GetMousePosition(glm::vec2* outPosition);
+
 		bool HasComponent_Transform_Engine(unsigned int id);
 
 
@@ -46,6 +52,10 @@ namespace Engine {
 			mono_add_internal_call("Transform::SetTransform_Position_Engine", SetTransform_Position_Engine);
 			mono_add_internal_call("Transform::GetTransform_Scale_Engine", GetTransform_Scale_Engine);
 			mono_add_internal_call("Transform::SetTransform_Scale_Engine", SetTransform_Scale_Engine);
+
+			mono_add_internal_call("Input::IsKeyPressed_Engine", Input_IsKeyPressed);
+			mono_add_internal_call("Input::IsMousePressed_Engine", Input_IsMouseButtonPressed);
+			mono_add_internal_call("Input::GetMousePosition_Engine", Input_GetMousePosition);
 
 			mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
 		}
@@ -104,11 +114,32 @@ namespace Engine {
 
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Input
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		bool Input_IsKeyPressed(Input_KeyCode key)
+		{
+			return Input::IsKeyPressed(key);
+		}
+		
+		bool Input_IsMouseButtonPressed(Input_MouseCode button)
+		{
+			return Input::IsMousePressed(button);
+		}
+
+		void Input_GetMousePosition(glm::vec2* outPosition)
+		{
+			glm::vec2 result = Input::GetMousePosition();
+			*outPosition = result;
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Check if component exist
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		bool HasComponent_Transform_Engine(unsigned int id) {
 			Transform* tem = nullptr;
 			return gCoordinator.HasCom<Transform>(tem, id);
 		}
+
+		
 	}
 }

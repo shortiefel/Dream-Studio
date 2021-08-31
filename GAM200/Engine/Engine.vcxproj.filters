@@ -106,6 +106,12 @@
     <Filter Include="Source Files\Event">
       <UniqueIdentifier>{818e1702-019a-4760-b11a-08a8efa47c26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{96a88a28-9e0f-478f-aeeb-bd141b3a49f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{4fb24a35-354d-4178-820e-052bad316c6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -188,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Event\UtilityEvent.cpp">
       <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Input\Input.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +430,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Event\UtilityEvent.hpp">
       <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Input\InputCode.hpp">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Input\Input.hpp">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,6 +6,26 @@
 \brief
 This file contain the definition of ScriptEngine
 
+find assembly with mono_domain_assembly_open and
+get class inside file (class should be same name as filename)
+c++ code will find method and call it (method like: update, init)
+
+Steps to test
+3. runtime creation of dll
+4. combine 2 files into 1 dll
+
+
+
+When entering play mode
+Compiles
+Serialize
+Stop child domain
+Create child domain
+Load assemblies
+Load objects
+Deserialize
+Initialize object
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -26,6 +46,8 @@ Technology is prohibited.
 #include <mono/metadata/environment.h>
 #include <mono/metadata/debug-helpers.h> //MonoMethodDesc
 #include <mono/metadata/attrdefs.h> //Attribute
+
+#include <cstdlib> //For file to be run by cmd (std::system)
 
 /*-------------------------------------
 Terminology
@@ -56,12 +78,9 @@ namespace Engine {
 		MonoImage* image;
 		MonoImage* imageCore;
 
-		void ReloadMono();
 		void destroy_child_domain();
 
-		void ScriptEngine::Play() {
-			ReloadMono();
-			
+		void ScriptEngine::PlayInit() {
 			//Entity and map of classScript
 			for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
 				//Single class and (class and CS public variable)
@@ -86,111 +105,11 @@ namespace Engine {
 			}
 		}
 
-		void ScriptEngine::InitEntityClassInstance() {
-			ReloadMono();
-
-			for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
-				for (auto& [className, csScriptInstance] : classScriptInstances) {
-					auto& csClass = csScriptInstance.csClass;
-					csClass.klass = mono_class_from_name(image, "", className.c_str());
-					if (!csClass.klass) {
-						LOG_ERROR("Failed loading class");
-						return;
-					}
-					
-					csClass.object = (mono_object_new(mono_domain_get(), csClass.klass));
-					if (!(csClass.object)) {
-						LOG_ERROR("Failed loading obj");
-						return;
-					}
-
-
-					std::string methodDesc = "MonoBehaviour:.ctor(uint)";
-					MonoMethodDesc* description = mono_method_desc_new(methodDesc.c_str(), NULL);
-					csClass.ConstructorFunc = mono_method_desc_search_in_image(description, imageCore);
-
-					methodDesc = className + ":Init()";
-					description = mono_method_desc_new(methodDesc.c_str(), NULL);
-					csClass.InitFunc = mono_method_desc_search_in_image(description, image);
-
-					methodDesc = className + ":Update()";
-					description = mono_method_desc_new(methodDesc.c_str(), NULL);
-					csClass.UpdateFunc = mono_method_desc_search_in_image(description, image);
-
-					methodDesc = className + ":Destroy()";
-					description = mono_method_desc_new(methodDesc.c_str(), NULL);
-					csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
-
-					
-					/*klass = mono_class_from_name(image, "", "MonoBehaviour");
-
-					MonoMethod* method = mono_class_get_method_from_name(klass, "Constructor", -1);
-					csClass.ConstructorFunc = mono_object_get_virtual_method(csClass.object, method);
-					
-					method = mono_class_get_method_from_name(klass, "Init", -1);
-					csClass.InitFunc = mono_object_get_virtual_method(csClass.object, method);
-
-					method = mono_class_get_method_from_name(klass, "Update", -1);
-					csClass.UpdateFunc = mono_object_get_virtual_method(csClass.object, method);
-
-					method = mono_class_get_method_from_name(klass, "Destroy", -1);
-					csClass.DestroyFunc = mono_object_get_virtual_method(csClass.object, method);*/
-
-
-
-
-					/*csClass.ConstructorFunc = mono_class_get_method_from_name(klass, "Constructor", -1);
-					csClass.InitFunc = mono_class_get_method_from_name(klass, "Init", -1);
-					csClass.UpdateFunc = mono_class_get_method_from_name(klass, "Update", -1);
-					csClass.DestroyFunc = mono_class_get_method_from_name(klass, "Destroy", -1);*/
-				}
-			}
-		}
-
-		void ScriptEngine::RecheckPublicVariable() {
-			for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
-				for (auto& [className, csScriptInstance] : classScriptInstances) {
-					auto& variableMap = csScriptInstance.csVariableMap;
-
-					std::unordered_map<std::string, CSPublicVariable> oldVariable;
-					oldVariable.reserve(variableMap.size());
-
-					for (auto& [variableName, variableData] : variableMap) {
-						oldVariable.emplace(variableName, std::move(variableData));
-					}
-
-					variableMap.clear();
-
-					MonoClassField* classField;
-					void* ptr = nullptr;
-					while ((classField = mono_class_get_fields(csScriptInstance.csClass.klass, &ptr)) != nullptr) {
-						const char* name = mono_field_get_name(classField);
-						unsigned int flags = mono_field_get_flags(classField);
-
-						//Ignore private variables
-						if ((flags & MONO_FIELD_ATTR_PUBLIC) == 0)
-							continue;
-
-						MonoType* variableType = mono_field_get_type(classField);
-						CSType csType = GetCSType(variableType);
-
-						char* typeName = mono_type_get_name(variableType);
-
-						if (oldVariable.find(name) != oldVariable.end() && oldVariable.find(name)->second.variableType == csType) {
-							variableMap.emplace(name, std::move(oldVariable.at(name)));
-						}
-						else {
-							if (csType == CSType::NONE) {
-								LOG_WARNING("Type not found");
-								continue;
-							}
-							CSPublicVariable publicVariable = { name, csType };
-							variableMap.emplace(name, std::move(publicVariable));
-						}
-
-					}
-				}
-			}
+		bool ScriptEngine::CompileCS() {
+			destroy_child_domain();
+			int status = std::system("CompileCS.bat");
+			if (status > 0) return false;
+			return true;
 		}
 
 		CSType ScriptEngine::GetCSType(MonoType* mt) {
@@ -230,11 +149,45 @@ namespace Engine {
 			mono_jit_cleanup(mono_domain_get());
 		}
 
-		
+		void ScriptEngine::ReloadMono() {
+			destroy_child_domain();
 
+			domain = mono_domain_create_appdomain((char*)("Child_Domain"), NULL);
+			if (!domain) {
+				mono_environment_exitcode_set(-1);
+			}
 
+			else {
+				mono_domain_set(domain, false);
+			}
 
-		void ScriptEngine::ReloadObject(MonoObject*& object, CSClass& csScript, void** param) {
+			assem = mono_domain_assembly_open(domain, "Data/CSScript.dll");
+			if (!assem) {
+				LOG_ERROR("Failed loading assembly");
+				return;
+			}
+
+			image = mono_assembly_get_image(assem);
+			if (!image) {
+				LOG_ERROR("Failed loading image");
+				return;
+			}
+
+			MonoAssembly* assemCore = mono_domain_assembly_open(domain, "Data/EngineCS.dll");
+			if (!assemCore) {
+				LOG_ERROR("Failed loading assembly");
+				return;
+			}
+			imageCore = mono_assembly_get_image(assemCore);
+			if (!imageCore) {
+				LOG_ERROR("Failed loading image");
+				return;
+			}
+			
+		}
+
+		//void ScriptEngine::ReloadObject(MonoObject*& object, CSClass& csScript, void** param) {
+
 			//MonoClass* klass = mono_class_from_name(image, "", csScript.className.c_str());
 			//if (!klass) {
 			//	LOG_ERROR("Failed loading class");
@@ -289,7 +242,7 @@ namespace Engine {
 
 			//--------------------------
 
-		}
+		//}
 
 		void ScriptEngine::CallFunction(MonoObject*& object, MonoMethod*& method, void** param) {
 			if (method) {
@@ -297,46 +250,126 @@ namespace Engine {
 			}
 		}
 
+		void ScriptEngine::UpdateMapData() {
+			ReloadMono();
+			InitEntityClassInstance();
+			InitPublicVariable();
+		}
 
-		/*-----------------------------------------------------
-			Called when play button is pressed
-			-Serialize
-			-Stop child domain
-			-Create child domain
-			-Load assemblies
-		-----------------------------------------------------*/
-		void ReloadMono() {
-			destroy_child_domain();
+		/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Private static function called within class
+		------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		void ScriptEngine::InitEntityClassInstance() {
+			
+			for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
+				for (auto& [className, csScriptInstance] : classScriptInstances) {
+					auto& csClass = csScriptInstance.csClass;
 
-			domain = mono_domain_create_appdomain((char*)("Child_Domain"), NULL);
-			if (!domain) {
-				mono_environment_exitcode_set(-1);
-			}
+					csClass.klass = mono_class_from_name(image, "", className.c_str());
+					if (!csClass.klass) {
+						LOG_ERROR("Failed loading class");
+						return;
+					}
 
-			assem = mono_domain_assembly_open(domain, "Data/tem.dll");
-			if (!assem) {
-				LOG_ERROR("Failed loading assembly");
-				return;
-			}
+					csClass.object = (mono_object_new(mono_domain_get(), csClass.klass));
+					if (!(csClass.object)) {
+						LOG_ERROR("Failed loading obj");
+						return;
+					}
+					
 
-			image = mono_assembly_get_image(assem);
-			if (!image) {
-				LOG_ERROR("Failed loading image");
-				return;
-			}
+					std::string methodDesc = "MonoBehaviour:.ctor(uint)";
+					MonoMethodDesc* description = mono_method_desc_new(methodDesc.c_str(), NULL);
+					csClass.ConstructorFunc = mono_method_desc_search_in_image(description, imageCore);
+
+					methodDesc = className + ":Init()";
+					description = mono_method_desc_new(methodDesc.c_str(), NULL);
+					csClass.InitFunc = mono_method_desc_search_in_image(description, image);
+
+					methodDesc = className + ":Update()";
+					description = mono_method_desc_new(methodDesc.c_str(), NULL);
+					csClass.UpdateFunc = mono_method_desc_search_in_image(description, image);
+
+					methodDesc = className + ":Destroy()";
+					description = mono_method_desc_new(methodDesc.c_str(), NULL);
+					csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
 
 
-			MonoAssembly* assemCore = mono_domain_assembly_open(domain, "Data/EngineCS.dll");
-			if (!assemCore) {
-				LOG_ERROR("Failed loading assembly");
-				return;
-			}
-			imageCore = mono_assembly_get_image(assemCore);
-			if (!imageCore) {
-				LOG_ERROR("Failed loading image");
-				return;
+					/*klass = mono_class_from_name(image, "", "MonoBehaviour");
+
+					MonoMethod* method = mono_class_get_method_from_name(klass, "Constructor", -1);
+					csClass.ConstructorFunc = mono_object_get_virtual_method(csClass.object, method);
+
+					method = mono_class_get_method_from_name(klass, "Init", -1);
+					csClass.InitFunc = mono_object_get_virtual_method(csClass.object, method);
+
+					method = mono_class_get_method_from_name(klass, "Update", -1);
+					csClass.UpdateFunc = mono_object_get_virtual_method(csClass.object, method);
+
+					method = mono_class_get_method_from_name(klass, "Destroy", -1);
+					csClass.DestroyFunc = mono_object_get_virtual_method(csClass.object, method);*/
+
+
+
+
+					/*csClass.ConstructorFunc = mono_class_get_method_from_name(klass, "Constructor", -1);
+					csClass.InitFunc = mono_class_get_method_from_name(klass, "Init", -1);
+					csClass.UpdateFunc = mono_class_get_method_from_name(klass, "Update", -1);
+					csClass.DestroyFunc = mono_class_get_method_from_name(klass, "Destroy", -1);*/
+				}
 			}
 		}
+
+		void ScriptEngine::InitPublicVariable() {
+			for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
+				for (auto& [className, csScriptInstance] : classScriptInstances) {
+					auto& variableMap = csScriptInstance.csVariableMap;
+
+					std::unordered_map<std::string, CSPublicVariable> oldVariable;
+					oldVariable.reserve(variableMap.size());
+
+					for (auto& [variableName, variableData] : variableMap) {
+						oldVariable.emplace(variableName, std::move(variableData));
+					}
+
+					variableMap.clear();
+
+					MonoClassField* classField;
+					void* ptr = nullptr;
+					while ((classField = mono_class_get_fields(csScriptInstance.csClass.klass, &ptr)) != nullptr) {
+						const char* name = mono_field_get_name(classField);
+						unsigned int flags = mono_field_get_flags(classField);
+
+						//Ignore private variables
+						if ((flags & MONO_FIELD_ATTR_PUBLIC) == 0)
+							continue;
+
+						MonoType* variableType = mono_field_get_type(classField);
+						CSType csType = GetCSType(variableType);
+
+						char* typeName = mono_type_get_name(variableType);
+
+						if (oldVariable.find(name) != oldVariable.end() && oldVariable.find(name)->second.variableType == csType) {
+							variableMap.emplace(name, std::move(oldVariable.at(name)));
+						}
+						else {
+							if (csType == CSType::NONE) {
+								LOG_WARNING("Type not found");
+								continue;
+							}
+							CSPublicVariable publicVariable = { name, csType };
+							variableMap.emplace(name, std::move(publicVariable));
+						}
+
+					}
+				}
+			}
+		}
+
+
+		/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Local Functions
+		------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 		/*-----------------------------------------------------
 			Destroy child domain
@@ -350,7 +383,6 @@ namespace Engine {
 				if (!mono_domain_set(mono_get_root_domain(), false)) {
 					LOG_ERROR("Scripting: Unable to set domain");
 				}
-
 				mono_domain_unload(currentDomain);
 			}
 		}

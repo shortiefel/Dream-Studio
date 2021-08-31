@@ -41,6 +41,8 @@ namespace Engine {
     std::string sceneName = std::string{};
     bool Scene::playing = false;
 
+    bool SceneSave();
+
     //Entity temcam, temcam2, temcam3; int num = 1;//Temporary
 
     void Scene::Create() {
@@ -117,27 +119,31 @@ namespace Engine {
             /*Factory::InstantiateCircle();
             Factory::InstantiateSquare();*/
 
-        GameSceneSerializer::Deserialize("Assets/Scene/test1.json");
+        GameSceneSerializer::Deserialize("Assets/Scene/test3.json");
         
 
-        Scripting::ScriptEngine::InitEntityClassInstance();
-
-        playing = true;
+        Scripting::ScriptEngine::UpdateMapData();
     }
 
     //When user click play to run their game
     void Scene::Play() {
         //Compile the script
         //Serialize everything
-
-        //ScriptSystem::Play();
-        Scripting::ScriptEngine::Play();
+        //Restart Mono
+        //Init game
+        std::cout << "Playing \n";
+        if (!SceneSave()) return;
+        //Scripting::ScriptEngine::ClearMapData();
+        //GameSceneSerializer::Deserialize("Assets/Scene/test3.json");
+        Scripting::ScriptEngine::PlayInit();
     }
 
     //When user click stop to run their game
     void Scene::Stop() {
         //Deserialize everything
         //ScriptSystem::Stop();
+
+        std::cout << "Stopping \n";
     }
 
     /*
@@ -186,7 +192,9 @@ namespace Engine {
             GraphicSystem::Render();
         }
 
-        Scripting::ScriptEngine::PlayRunTime();
+        if (playing) {
+            Scripting::ScriptEngine::PlayRunTime();
+        }
 
         LayerStack::Update();
         LayerStack::Draw();
@@ -201,16 +209,59 @@ namespace Engine {
 
 
     bool OnSceneSave(const SaveEvent& e) {
-        std::cout << "Saving... \n";
-        Scripting::ScriptEngine::RecheckPublicVariable();
-        //Change to sceneName (might be fullName(path + name) instead)
-        GameSceneSerializer::Serialize("Assets/Scene/test2.json");
-        return true;
+        if (Scene::GetPlaying() != true) {
+            std::cout << "Saving... \n";
+            SceneSave();
+            return true;
+        }
+
+        std::cout << "Scene is Playing. unable to Save... \n";
+        return false;
     }
 
     SaveEventFP Scene::GetSceneSave() {
         return OnSceneSave;
     }
 
-    
+
+    bool SceneSave() {
+        if (!Scripting::ScriptEngine::CompileCS()) {
+            std::cout << "Fail to compile \n";
+            Scene::SetPlaying(false);
+            return false;
+        }
+
+        Scripting::ScriptEngine::UpdateMapData();
+        //Change to sceneName (might be fullName(path + name) instead)
+        GameSceneSerializer::Serialize("Assets/Scene/test3.json");
+
+        return true;
+    }
+
+    void Scene::InvertPlaying() {
+        playing = !playing;
+
+        if (playing) Play();
+        else Stop();
+    }
+
+    void Scene::SetPlaying(bool state) {
+        playing = state;
+
+        if (playing) Play();
+        else Stop();
+    }
+
+    bool Scene::GetPlaying() {
+        return playing;
+    }
+
+    bool StateChange(const StateEvent& e) {
+        Scene::InvertPlaying();
+        return true;
+    }
+
+    StateEventFP Scene::GetStateChange() {
+        return StateChange;
+    }
 }

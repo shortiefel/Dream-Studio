@@ -38,6 +38,25 @@ namespace Engine {
 	private:
 		static std::vector<SaveEventFP> registeredFunctions;
 	};
+
+
+	/*-------------------------------------------------------------------------------------------------
+	State event - Play/Stop state
+	-------------------------------------------------------------------------------------------------*/
+	class StateEvent;
+	typedef bool (*StateEventFP)(const StateEvent&);
+	
+	class StateEvent : public Event {
+	public:
+		virtual EventType GetEventType() const override;
+		virtual std::string Details() const override;
+
+		virtual void CallRegisteredFunctions() override;
+		static void RegisterFunction(StateEventFP func);
+	private:
+		static std::vector<StateEventFP> registeredFunctions;
+	};
+
 }
 
 #endif

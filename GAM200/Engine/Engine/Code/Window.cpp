@@ -25,6 +25,7 @@ Technology is prohibited.
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Event/WindowEvent.hpp"
 #include "Engine/Header/Event/UtilityEvent.hpp"
+#include "Engine/Header/Input/Input.hpp"
 
 #include <sstream> //Stringstream
 #include <iomanip> //Set precision
@@ -184,22 +185,30 @@ namespace Engine {
 	void Window::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 		switch (action) {
 		case GLFW_PRESS: {
-			if (mods == GLFW_MOD_CONTROL && key == GLFW_KEY_S) {
-				SaveEvent event;
-				EventDispatcher::SendEvent(event);
+			if (mods == GLFW_MOD_CONTROL) {
+				if (key == GLFW_KEY_S) {
+					SaveEvent event;
+					EventDispatcher::SendEvent(event);
+				}
+
+				else if (key == GLFW_KEY_P){
+					StateEvent event;
+					EventDispatcher::SendEvent(event);
+				}
 			}
 
 			else {
 				KeyPressedEvent event(key, false);
 				EventDispatcher::SendEvent(event);
 			}
-			//w_data.eventCallBack(event);
+			Input::SetInputKeyStatus(key, true);
 			break;
 		}
 		case GLFW_RELEASE: {
 			KeyReleasedEvent event(key);
 			EventDispatcher::SendEvent(event);
 			//w_data.eventCallBack(event);
+			Input::SetInputKeyStatus(key, false);
 			break;
 		}
 		case GLFW_REPEAT: {
@@ -216,12 +225,14 @@ namespace Engine {
 		case GLFW_PRESS: {
 			MousePressedEvent event(button);
 			EventDispatcher::SendEvent(event);
+			Input::SetInputMouseStatus(button, true);
 			//w_data.eventCallBack(event);
 			break;
 		}
 		case GLFW_RELEASE: {
 			MouseReleasedEvent event(button);
 			EventDispatcher::SendEvent(event);
+			Input::SetInputMouseStatus(button, false);
 			//w_data.eventCallBack(event);
 			break;
 		}
@@ -237,6 +248,7 @@ namespace Engine {
 	void Window::CursorCallBack(GLFWwindow* window, double xpos, double ypos) {
 		MouseMoveEvent event((float)xpos, (float)ypos);
 		EventDispatcher::SendEvent(event);
+		Input::SetInputMousePosition(xpos, ypos);
 		//w_data.eventCallBack(event);
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

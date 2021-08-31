@@ -20,6 +20,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Event/Event.hpp" //Event
 #include "Engine/Header/pch.hpp"
+#include "Engine/Header/Input/Input.hpp"
 
 namespace Engine {
 	//KEY_PRESSED, KEY_RELEASED
@@ -29,10 +30,10 @@ namespace Engine {
 	class KeyEvent : public Event {
 	public:
 		//Get the key code of pressed/released key
-		int GetKeyCode() const;
+		Input_KeyCode GetKeyCode() const;
 	protected:
-		KeyEvent(int keycode);
-		int keyCode;
+		KeyEvent(Input_KeyCode keycode);
+		Input_KeyCode keyCode;
 	};
 
 
@@ -40,20 +41,20 @@ namespace Engine {
 	Key pressed event
 	-------------------------------------------------------------------------------------------------*/
 	class KeyPressedEvent;
-	typedef bool (*KeyPressFP)(const KeyPressedEvent&);
+	typedef bool (*KeyPressedFP)(const KeyPressedEvent&);
 
 	class KeyPressedEvent : public KeyEvent {
 	public:
-		KeyPressedEvent(int keycode, bool repeat);
+		KeyPressedEvent(Input_KeyCode keycode, bool repeat);
 		virtual EventType GetEventType() const override;
 		virtual std::string Details() const override;
 
 		virtual void CallRegisteredFunctions() override;
-		static void RegisterFunction(KeyPressFP func);
+		static void RegisterFunction(KeyPressedFP func);
 
 	private:
 		bool keyRepeat = false;
-		static std::vector<KeyPressFP> registeredFunctions;
+		static std::vector<KeyPressedFP> registeredFunctions;
 	};
 
 
@@ -61,18 +62,18 @@ namespace Engine {
 	Key released event
 	-------------------------------------------------------------------------------------------------*/
 	class KeyReleasedEvent;
-	typedef bool (*KeyReleaseFP)(const KeyReleasedEvent&);
+	typedef bool (*KeyReleasedFP)(const KeyReleasedEvent&);
 
 	class KeyReleasedEvent : public KeyEvent {
 	public:
-		KeyReleasedEvent(int keycode);
+		KeyReleasedEvent(Input_KeyCode keycode);
 		virtual EventType GetEventType() const override;
 		virtual std::string Details() const override;
 
 		virtual void CallRegisteredFunctions() override;
-		static void RegisterFunction(KeyReleaseFP func);
+		static void RegisterFunction(KeyReleasedFP func);
 	private:
-		static std::vector<KeyReleaseFP> registeredFunctions;
+		static std::vector<KeyReleasedFP> registeredFunctions;
 	};
 }
 

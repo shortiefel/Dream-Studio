@@ -50,8 +50,10 @@ public struct Transform : Component
 
     public void Move(Vec2 dir)
     {
-
+        MoveTransform_Position_Engine(entityId, ref dir);
     }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void MoveTransform_Position_Engine(uint entityID, ref Vec2 inVec2);
 }
 
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -27,9 +27,14 @@ namespace Engine {
 		static bool IsMousePressed(Input_MouseCode button);
 		static glm::vec2 GetMousePosition();
 
-		static void SetInputKeyStatus(int key, bool status);
-		static void SetInputMouseStatus(int button, bool status);
-		static void SetInputMousePosition(double xPos, double yPos);
+		static void SetKeyStatus(int key, bool status);
+		static void SetMouseStatus(int button, bool status);
+		static void SetMousePosition(double xPos, double yPos);
+
+		//Get Input key code with GLFW code
+		static Input_KeyCode GetKeyCode(int key);
+		//Get Input Mouse code with GLFW code
+		static Input_MouseCode GetMouseCode(int button);
 
 
 	private:

@@ -18,85 +18,82 @@ Technology is prohibited.
 #include <glm/glm.hpp>
 
 namespace Engine {
-	namespace Scripting {
-
-		CSPublicVariable::CSPublicVariable(const std::string& vn, CSType type) : variableName(vn), variableType(type) {
-			unsigned int size = 0;
-			size = GetVariableSize(variableType);
-			variableData = new char[size];
+	CSPublicVariable::CSPublicVariable(const std::string& vn, CSType type) : variableName(vn), variableType(type) {
+		unsigned int size = 0;
+		size = GetVariableSize(variableType);
+		variableData = new char[size];
 
 	
-			void* v = nullptr;
+		void* v = nullptr;
 
-			if (variableType == CSType::FLOAT) {
-				float tem{};
-				v = &tem;
-			}
+		if (variableType == CSType::FLOAT) {
+			float tem{};
+			v = &tem;
+		}
 
-			else if (variableType == CSType::INT) {
-				int tem{};
-				v = &tem;
-			}
+		else if (variableType == CSType::INT) {
+			int tem{};
+			v = &tem;
+		}
 
-			else if (variableType == CSType::UINT) {
-				unsigned int tem{};
-				v = &tem;
-			}
+		else if (variableType == CSType::UINT) {
+			unsigned int tem{};
+			v = &tem;
+		}
 
-			else if (variableType == CSType::CHAR) {
-				char tem{};
-				v = &tem;
-			}
+		else if (variableType == CSType::CHAR) {
+			char tem{};
+			v = &tem;
+		}
 
-			else if (variableType == CSType::BOOL) {
-				bool tem{};
-				v = &tem;
-			}
+		else if (variableType == CSType::BOOL) {
+			bool tem{};
+			v = &tem;
+		}
 
-			else if (variableType == CSType::VEC2) {
-				glm::vec2 tem{};
-				v = &tem;
-			}
+		else if (variableType == CSType::VEC2) {
+			glm::vec2 tem{};
+			v = &tem;
+		}
 			 
-			SetVariableData(v);
+		SetVariableData(v);
+	}
+
+	unsigned int CSPublicVariable::GetVariableSize(CSType type) const {
+		switch (type) {
+
+		case CSType::FLOAT:
+		case CSType::INT:
+		case CSType::UINT:
+			return 4;
+		case CSType::CHAR:
+		case CSType::BOOL:
+			return 1;
+			break;
+		case CSType::VEC2:
+			return (4 * 2);
 		}
+	}
 
-		unsigned int CSPublicVariable::GetVariableSize(CSType type) const {
-			switch (type) {
-
-			case CSType::FLOAT:
-			case CSType::INT:
-			case CSType::UINT:
-				return 4;
-			case CSType::CHAR:
-			case CSType::BOOL:
-				return 1;
-				break;
-			case CSType::VEC2:
-				return (4 * 2);
-			}
-		}
-
-		CSPublicVariable::CSPublicVariable(CSPublicVariable&& rhs) noexcept {
+	CSPublicVariable::CSPublicVariable(CSPublicVariable&& rhs) noexcept {
 			
-			variableName = std::move(rhs.variableName);
-			variableType = rhs.variableType;
+		variableName = std::move(rhs.variableName);
+		variableType = rhs.variableType;
 
-			variableData = rhs.variableData;
+		variableData = rhs.variableData;
 
-			rhs.variableData = nullptr;
-		}
+		rhs.variableData = nullptr;
+	}
 
-		void CSPublicVariable::SetVariableData(void* data) {
-			memcpy(variableData, data, GetVariableSize(variableType));
-		}
+	void CSPublicVariable::SetVariableData(void* data) {
+		memcpy(variableData, data, GetVariableSize(variableType));
+	}
 
-		void CSPublicVariable::GetVariableDataVoid(void* value) const {
-			memcpy(value, variableData, GetVariableSize(variableType));
-		}
+	void CSPublicVariable::GetVariableDataVoid(void* value) const {
+		memcpy(value, variableData, GetVariableSize(variableType));
+	}
 
-		CSPublicVariable::~CSPublicVariable() {
-			delete[] variableData;
-		}
+	CSPublicVariable::~CSPublicVariable() {
+		delete[] variableData;
 	}
 }

@@ -1,0 +1,4 @@
+#pragma classflags("forceupdate")
+#pragma namespace("\\\\.\\root\\ServiceModel")
+#pragma deleteinstance("__NAMESPACE.Name='ms_409'", NOFAIL)
+

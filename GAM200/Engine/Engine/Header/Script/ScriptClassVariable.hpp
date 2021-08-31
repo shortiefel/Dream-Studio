@@ -23,62 +23,58 @@ Technology is prohibited.
 #include <string>
 
 namespace Engine {
-	namespace Scripting {
+	/*-----------------------------------------------------------------------------------------------------------------------------------
+	Script variable data
+	-----------------------------------------------------------------------------------------------------------------------------------*/
+	enum class CSType {
+		NONE,
+		CHAR,
+		BOOL,
+		FLOAT,
+		INT,
+		UINT,
+		VEC2
+	};
 
-		/*-----------------------------------------------------------------------------------------------------------------------------------
-		Script variable data
-		-----------------------------------------------------------------------------------------------------------------------------------*/
-		enum class CSType {
-			NONE,
-			CHAR,
-			BOOL,
-			FLOAT,
-			INT,
-			UINT,
-			VEC2
-		};
+	class CSPublicVariable {
+	public:
+		std::string variableName;
+		CSType variableType;
 
-		class CSPublicVariable {
-		public:
-			std::string variableName;
-			CSType variableType;
-
-			//Function to give buffer space
-			//Get variable type size
+		//Function to give buffer space
+		//Get variable type size
 			
-			//Set c# side with data
-			//Get data
+		//Set c# side with data
+		//Get data
 			
 
-			CSPublicVariable(const std::string& vn, CSType type);
+		CSPublicVariable(const std::string& vn, CSType type);
 			
-			//Dont allow copying because variableData is newed each time
-			CSPublicVariable(const CSPublicVariable&) = delete;
-			CSPublicVariable(CSPublicVariable&& rhs) noexcept;
+		//Dont allow copying because variableData is newed each time
+		CSPublicVariable(const CSPublicVariable&) = delete;
+		CSPublicVariable(CSPublicVariable&& rhs) noexcept;
 
-			unsigned int GetVariableSize(CSType type) const;
+		unsigned int GetVariableSize(CSType type) const;
 
-			//Used for Editor to set the values
-			void SetVariableData(void* data);
-			void SetToCS();
+		//Used for Editor to set the values
+		void SetVariableData(void* data);
+		void SetToCS();
 
-			template<typename T>
-			T GetVariableData() const{
-				T value;
-				GetVariableDataVoid(&value);
-				return value;
-			}
+		template<typename T>
+		T GetVariableData() const{
+			T value;
+			GetVariableDataVoid(&value);
+			return value;
+		}
 
 
-			~CSPublicVariable();
+		~CSPublicVariable();
 
-		private:
-			void GetVariableDataVoid(void* value) const;
+	private:
+		void GetVariableDataVoid(void* value) const;
 
-			void* variableData;
-		};
-
-	}
+		void* variableData;
+	};
 }
 
 #endif

@@ -18,11 +18,9 @@ Technology is prohibited.
 #define SCRIPT_INTERNAL_CALL
 
 namespace Engine {
-	namespace Scripting {
-		//Register Internal call for C# side to use
-		//ScriptInternalCall.hpp
-		void RegisterInternalCall();
-	}
+	//Register Internal call for C# side to use
+	//Found in ScriptInternalCall.hpp
+	void RegisterInternalCall();
 }
 
 #endif

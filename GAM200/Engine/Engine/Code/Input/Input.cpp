@@ -330,16 +330,24 @@ namespace Engine {
 		return mousePosition;
 	}
 
-	void Input::SetInputKeyStatus(int key, bool status) {
+	void Input::SetKeyStatus(int key, bool status) {
 		InputKeyStatus[GLFWtoInputKey[key]] = status;
 	}
 
-	void Input::SetInputMouseStatus(int button, bool status) {
+	void Input::SetMouseStatus(int button, bool status) {
 		InputMouseStatus[GLFWtoInputMouse[button]] = status;
 	}
 
-	void Input::SetInputMousePosition(double xPos, double yPos) {
+	void Input::SetMousePosition(double xPos, double yPos) {
 		mousePosition = glm::vec2{ xPos, yPos };
+	}
+
+	Input_KeyCode Input::GetKeyCode(int key) {
+		return GLFWtoInputKey[key];
+	}
+
+	Input_MouseCode Input::GetMouseCode(int button) {
+		return GLFWtoInputMouse[button];
 	}
 
 }

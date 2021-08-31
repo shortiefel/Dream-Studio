@@ -298,11 +298,11 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClCompile Include="Editor\Header\Tools\Profiler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EngineCS\EngineCS.csproj">
+      <Project>{d2643572-4949-4db4-9e76-91ca36d5b4ae}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{f1ed2fb0-16c2-4362-a3e4-6992be2f6f90}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\tem\tem.csproj">
-      <Project>{bbf9bef2-4749-4595-966c-52bdd1995ea5}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

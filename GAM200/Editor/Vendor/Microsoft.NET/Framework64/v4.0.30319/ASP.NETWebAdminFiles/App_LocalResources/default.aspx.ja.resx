@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="AppConfig" type="System.String">
+    <value>アプリケーション構成</value>
+  </data>
+  <data name="Application" type="System.String">
+    <value>&lt;b&gt;アプリケーション:&lt;/b&gt;{0}</value>
+  </data>
+  <data name="CurrentUserName" type="System.String">
+    <value>&lt;b&gt;現在のユーザー名:&lt;/b&gt;{0}</value>
+  </data>
+  <data name="EnablesConfig" type="System.String">
+    <value>アプリケーションの構成設定を管理できるようにします。</value>
+  </data>
+  <data name="EnablesData" type="System.String">
+    <value>Web サイトによって使用される管理データが格納される場所と方法を指定できるようにします。</value>
+  </data>
+  <data name="EnablesSecurity" type="System.String">
+    <value>サイトのユーザー、ロールおよびアクセス許可を設定または編集できるようにします。</value>
+  </data>
+  <data name="ExistingUsers" type="System.String">
+    <value>既存のユーザー: &lt;b&gt; {0} &lt;/b&gt;</value>
+  </data>  
+  <data name="Home" type="System.String">
+    <value>ホーム</value>
+  </data>
+  <data name="Security" type="System.String">
+    <value>セキュリティ</value>
+  </data>
+  <data name="ProviderConfig" type="System.String">
+    <value>プロバイダー構成</value>
+  </data>
+  <data name="Welcome" type="System.String">
+    <value>Web サイト管理ツールへようこそ</value>
+  </data>
+  <data name="WindowsAuth" type="System.String">
+    <value>サイトはユーザー管理に Windows 認証を使用しています。</value>
+  </data>
+</root>

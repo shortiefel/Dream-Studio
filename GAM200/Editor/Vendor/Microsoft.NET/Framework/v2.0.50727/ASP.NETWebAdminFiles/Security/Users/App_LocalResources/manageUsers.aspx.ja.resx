@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Active" type="System.String">
+    <value>アクティブ</value>
+  </data>
+  <data name="AddToRoles" type="System.String">
+    <value>ユーザーにロールを追加:</value>
+  </data>
+  <data name="AddToRoles2" type="System.String">
+    <value>&lt;b&gt;" {0} "&lt;/b&gt; をロールに追加します:</value>
+  </data>
+  <data name="AreYouSure" type="System.String">
+    <value>ユーザー "&lt;b&gt;{0}&lt;/b&gt;" を削除しますか?&lt;br&gt;&lt;br&gt;ユーザー名、ロール内のユーザー メンバシップ、およびこのユーザーに関連付けられているすべてのプロファイル プロパティ値などのすべての情報が削除されます。</value>
+  </data>
+  <data name="Back" type="System.String">
+    <value>戻る</value>
+  </data>
+  <data name="DeleteUser" type="System.String">
+    <value>ユーザーの削除</value>
+  </data>
+  <data name="EditRoles" type="System.String">
+    <value>ロールの編集</value>
+  </data>
+  <data name="EditUser" type="System.String">
+    <value>ユーザーの編集</value>
+  </data>
+  <data name="Email" type="System.String">
+    <value>電子メール</value>
+  </data>
+  <data name="For" type="System.String">
+    <value>検索項目:</value>
+  </data>
+  <data name="Instructions" type="System.String">
+    <value>行をクリックしてユーザーを選択し、&lt;b&gt;ユーザーの編集&lt;/b&gt;をクリックしてユーザーのパスワードや別のプロパティを表示または変更します。選択したユーザーにロールを割り当てるには、右の適切なチェック ボックスを選択してください。&lt;br&gt;&lt;br&gt;ユーザーをアプリケーションにログインさせずに、そのユーザーの情報をデータベースに残す場合は、チェック ボックスをクリアして状態を非アクティブに設定してください。</value>
+  </data>
+  <data name="ManageUsers" type="System.String">
+    <value>ユーザーの管理</value>
+  </data>
+  <data name="No" type="System.String">
+    <value>いいえ</value>
+  </data>
+  <data name="NoRolesDefined" type="System.String">
+    <value>ロールが定義されませんでした。</value>
+  </data>  
+  <data name="NoUsersCreated" type="System.String">
+    <value>ユーザーが作成されませんでした。</value>
+  </data>
+  <data name="NotFoundUsers" type="System.String">
+    <value>この検索では、ユーザーは見つかりませんでした。</value>
+  </data>
+  <data name="SearchBy" type="System.String">
+    <value>検索条件:</value>
+  </data>
+  <data name="SearchFor" type="System.String">
+    <value>ユーザーの検索</value>
+  </data>
+  <data name="RolesNotEnabled" type="System.String">
+    <value>ロールが有効化されていません。</value>
+  </data>
+  <data name="UserID" type="System.String">
+    <value>ユーザー ID</value>
+  </data>
+  <data name="Username" type="System.String">
+    <value>ユーザー名</value>
+  </data>
+  <data name="Yes" type="System.String">
+    <value>はい</value>
+  </data>
+  <data name="SearchForUsers" type="System.String">
+    <value>ユーザーの検索</value>
+  </data>
+  <data name="CreateNewUser" type="System.String">
+    <value>新しいユーザーの作成</value>
+  </data>
+  <data name="Roles" type="System.String">
+    <value>ロール</value>
+  </data>
+</root>

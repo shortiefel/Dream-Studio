@@ -19,15 +19,15 @@ public class Test : MonoBehaviour
     public TEST testEnum;
     public char testChar;
     public Vec2 newvec2Test;
-
+    Transform go2;
 
     public override void Init()
     {
-        Transform go2 = GetComponent<Transform>();
+        go2 = GetComponent<Transform>();
         //Transform tem = GetTransform();
         //Vec2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
-        go2.position = new Vec2(-300, -300);
+        go2.position = new Vec2(200, -300);
         Console.WriteLine(go2.position);
         //Console.WriteLine(go2);
 
@@ -46,12 +46,12 @@ public class Test : MonoBehaviour
         //Console.WriteLine("new Update");
         //Console.WriteLine(Input::GetMouse);
         if (Input.IsKeyPressed(KeyCode.A)) {
-            Console.WriteLine("new Update");
+            go2.Move(new Vec2(10, 0));
         }
 
         if (Input.IsKeyPressed(KeyCode.B))
         {
-            Console.WriteLine(" Update");
+            Console.WriteLine("change Update");
         }
 
     }

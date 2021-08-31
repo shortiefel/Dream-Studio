@@ -64,6 +64,17 @@ namespace Engine {
 			sysManager->EntityDestroyed(entity);
 		}
 
+		void destroyAllEntity()
+		{
+			const std::vector<Entity>& listOfEntity = entityManager->GetUsedEntityVector();
+			for (auto& ent : listOfEntity) {
+				entityManager->DestroyEntity(ent);
+				compManager->DestoryEntity(ent);
+				sysManager->EntityDestroyed(ent);
+			}
+			entityManager->ClearUsedEntityVector();
+		}
+
 		inline const std::vector<Entity>& GetUsedEntityVector() const {
 			return entityManager->GetUsedEntityVector();
 		}

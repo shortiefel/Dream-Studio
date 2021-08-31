@@ -24,8 +24,7 @@ Technology is prohibited.
 #include "Engine/Header/Scene/Scene.hpp"
 #include "Engine/Header/Script/ScriptEngine.hpp"
 
-#include "Engine/Header/Event/UtilityEvent.hpp"
-#include "Engine/Header/Event/KeyEvent.hpp"
+#include "Engine/Header/Event/KeyEvent.hpp" //Register function
 #include <iostream>
 
 namespace Engine {
@@ -39,16 +38,12 @@ namespace Engine {
 		//LayerStack::AddOverlayLayer(GUILayer::Get());
 
 		Factory::Create();
-
 		ResourceManager::Create();
+		ScriptEngine::Create();
 
-		Scripting::ScriptEngine::Create();
+		KeyPressedEvent::RegisterFunction(Scene::GetSceneHotKey());
 
-		SaveEvent::RegisterFunction(Scene::GetSceneSave());
-		StateEvent::RegisterFunction(Scene::GetStateChange());
-		KeyPressedEvent::
-
-		Scene::Create();
+		Scene::Create("test3");
 
 		//GameSceneSerializer::Deserialize("Assets/test1.json"); // remove
 		//GameSceneSerializer::Serialize("Assets/test2.json"); // remove
@@ -63,7 +58,7 @@ namespace Engine {
 	void EngineCore::Destroy() {
 		Scene::Destroy(); //Destroy currently active game scene
 
-		Scripting::ScriptEngine::Destroy();
+		ScriptEngine::Destroy();
 		ResourceManager::Destroy();
 		//GUILayer::Destroy();
 		LayerStack::Destroy();

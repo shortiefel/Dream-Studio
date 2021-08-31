@@ -23,48 +23,46 @@ Technology is prohibited.
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
 
 namespace Engine {
-	namespace Scripting {
-		/*-----------------------------------------------------------------------------------------------------------------------------------
-		Script classes
-		-----------------------------------------------------------------------------------------------------------------------------------*/
-		struct CSClass {
-			std::string className = std::string{};
+	/*-----------------------------------------------------------------------------------------------------------------------------------
+	Script classes
+	-----------------------------------------------------------------------------------------------------------------------------------*/
+	struct CSClass {
+		std::string className = std::string{};
 
-			CSClass() = default;
-			CSClass(std::string cn) : className{ cn } {}
+		CSClass() = default;
+		CSClass(std::string cn) : className{ cn } {}
 
-			MonoObject* object = nullptr;
-			MonoClass* klass = nullptr;
+		MonoObject* object = nullptr;
+		MonoClass* klass = nullptr;
 
-			MonoMethod* ConstructorFunc = nullptr;
-			MonoMethod* InitFunc = nullptr;
-			MonoMethod* UpdateFunc = nullptr;
-			MonoMethod* DestroyFunc = nullptr;
-		};
+		MonoMethod* ConstructorFunc = nullptr;
+		MonoMethod* InitFunc = nullptr;
+		MonoMethod* UpdateFunc = nullptr;
+		MonoMethod* DestroyFunc = nullptr;
+	};
 
 
-		/*-----------------------------------------------------------------------------------------------------------------------------------
-		Instance of a script object
-		-CS class to call update/destroy function
-		-Access to CS script public variable
-		-----------------------------------------------------------------------------------------------------------------------------------*/
-		struct CSScriptInstance {
-			CSClass csClass;
-			//map(variableName, variableData)
-			std::unordered_map<std::string, CSPublicVariable> csVariableMap;
+	/*-----------------------------------------------------------------------------------------------------------------------------------
+	Instance of a script object
+	-CS class to call update/destroy function
+	-Access to CS script public variable
+	-----------------------------------------------------------------------------------------------------------------------------------*/
+	struct CSScriptInstance {
+		CSClass csClass;
+		//map(variableName, variableData)
+		std::unordered_map<std::string, CSPublicVariable> csVariableMap;
 
-			CSScriptInstance(std::string cn) : csClass(cn) {}
+		CSScriptInstance(std::string cn) : csClass(cn) {}
 
-			CSScriptInstance(CSScriptInstance&& rhs) noexcept {
-				csClass = std::move(rhs.csClass);
-				csVariableMap = std::move(rhs.csVariableMap);
-			}
-			CSScriptInstance(const CSScriptInstance&) = delete;
-		};
+		CSScriptInstance(CSScriptInstance&& rhs) noexcept {
+			csClass = std::move(rhs.csClass);
+			csVariableMap = std::move(rhs.csVariableMap);
+		}
+		CSScriptInstance(const CSScriptInstance&) = delete;
+	};
 
-		//Map of string(Class name) and CSScriptInstance
-		using CSClassInstance = std::unordered_map<std::string, CSScriptInstance>;
-	}
+	//Map of string(Class name) and CSScriptInstance
+	using CSClassInstance = std::unordered_map<std::string, CSScriptInstance>;
 }
 
 #endif

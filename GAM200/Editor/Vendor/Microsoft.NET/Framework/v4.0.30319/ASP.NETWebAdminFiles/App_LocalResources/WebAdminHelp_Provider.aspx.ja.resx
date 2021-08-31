@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Title00" type="System.String">
+    <value>Web サイト管理ツール プロバイダー タブ</value>
+  </data>
+  <data name="WebSiteAdministrationToolProviderTab01" type="System.String">
+    <value>Web サイト管理ツール プロバイダー タブ</value>
+  </data>
+  <data name="WebSiteAdministrationToolProviderTab02" type="System.String">
+    <value>Web サイト管理ツールの [&lt;span class=UI&gt;プロバイダー&lt;/span&gt;] タブを使用すると、ユーザー アカウント、ロール、およびその他の設定などのアプリケーション機能のデータを ASP.NET が保存する方法を管理できます。</value>
+  </data>
+  <data name="Introduction01" type="System.String">
+    <value>はじめに</value>
+  </data>
+  <data name="Introduction02" type="System.String">
+    <value>ASP.NET では、メンバーシップおよびロール管理などのさまざまな機能のデータ ストレージを管理するために、プロバイダー クラスを使用します。プロバイダー クラスは、メンバーシップでのユーザー アカウント管理のような特定の ASP.NET 機能を公開するコンポーネントです。これらのアプリケーション機能の 1 つ 1 つにデータ ストレージが必要です。各プロバイダー クラスは同じアプリケーション機能を実行するものの、各プロバイダー クラスは異なる方法でデータを保存できます。たとえば、ASP.NET メンバーシップの異なるプロバイダー クラスは次のような異なる方法でユーザー アカウント情報を保存します:</value>
+  </data>
+  <data name="Introduction03" type="System.String">
+    <value>Microsoft SQL Server データベース </value>
+  </data>
+  <data name="Introduction04" type="System.String">
+    <value>Microsoft Windows Active Directory ディレクトリ サービス</value>
+  </data>
+  <data name="Introduction05" type="System.String">
+    <value>カスタム ユーザー データベース</value>
+  </data>
+  <data name="Introduction06" type="System.String">
+    <value>これらのプロバイダー クラスの 1 つ 1 つは、ユーザー アカウント管理に対するタスクの同じコア セットを実行し、ユーザーは同じ方法でアプリケーションのプロバイダー クラスを使用して操作します。</value>
+  </data>
+  <data name="ConfiguringProvidersintheWebSiteAdministrationTool01" type="System.String">
+    <value>Web サイト管理ツールのプロバイダーの構成</value>
+  </data>
+  <data name="ConfiguringProvidersintheWebSiteAdministrationTool02" type="System.String">
+    <value>Web サイト管理ツールでは、メンバーシップおよびロールなどの、アプリケーション機能の異なるプロバイダー クラスを使用することができます。ASP.NET は、各種類のアプリケーション機能に対して数個のプロバイダー クラスと一緒にインストールされます。たとえば ASP.NET は、SQL Server データベースに情報を保存するメンバーシップのプロバイダー クラス (&lt;span class=LanguageKeyword&gt;AspNetSqlMembershipProvider&lt;/span&gt;) と、Active Directory にメンバーシップ情報を保存する別のプロバイダー クラスを含んでいます。</value>
+  </data>
+  <data name="ManagingProviderSettings01" type="System.String">
+    <value>プロバイダー設定の管理</value>
+  </data>
+  <data name="ManagingProviderSettings02" type="System.String">
+    <value>Web サイト管理ツールを使用して、Web サイトのプロバイダーを変更およびテストすることができます。アプリケーションでは、アプリケーション機能に対して単一のプロバイダーを使用することも、数個の異なるプロバイダーを使用することもできます。 </value>
+  </data>
+  <data name="ManagingProviderSettings03" type="System.String">
+    <value>既定では、Web サイト管理ツールはすべてのアプリケーション機能に対して &lt;span class=LanguageKeyword&gt;AspNetSqlProvider&lt;/span&gt; プロバイダーを使用します。 </value>
+  </data>
+  <data name="ManagingProviderSettings04" type="System.String">
+    <value>Web サイト管理ツールを使用すると、次の方法で Web サイトのプロバイダーを管理できます:</value>
+  </data>
+  <data name="ManagingProviderSettings05" type="System.String">
+    <value>ローカル Windows グループをロールの承認に使用する場合、既定の &lt;span class=LanguageKeyword&gt;AspNetSqlRoleProvider&lt;/span&gt; プロバイダーから代替の &lt;span class=LanguageKeyword&gt;AspNetWindowsTokenRoleProvider&lt;/span&gt; プロバイダーに変更します。</value>
+  </data>
+  <data name="ManagingProviderSettings06" type="System.String">
+    <value>すべてのアプリケーション機能に同一のプロバイダーを使用するか、または各アプリケーション機能に異なるプロバイダーを使用するかを指定します。一般的に、情報を保存する場所を明確に管理する場合、またはロールなどの 1 つだけの機能に別のプロバイダーを使用する場合にのみ、個別のプロバイダーを選択します。</value>
+  </data>
+  <data name="SelectingaSingleProvidervs.DifferentProviders01" type="System.String">
+    <value>単一プロバイダーか異なるプロバイダーかの選択</value>
+  </data>
+  <data name="SelectingaSingleProvidervs.DifferentProviders02" type="System.String">
+    <value>すべてのアプリケーション機能で同一のプロバイダーを使用するように Web サイトを構成することができます。この場合、メンバーシップやロールなどのデータすべてが単一データ ストア (通常は、単一データベース) に保存されます。または、アプリケーション機能ごとに異なるプロバイダーを選択することもできます。 </value>
+  </data>
+  <data name="SelectingaSingleProvidervs.DifferentProviders03" type="System.String">
+    <value>Web サイト管理ツールの [&lt;span class=UI&gt;プロバイダー&lt;/span&gt;] タブでは、すべての機能に同一のプロバイダーを使用するか、または各アプリケーション機能にプロバイダーを個別に指定するかを最初に選択します。次のオプションを選択することができます:</value>
+  </data>
+  <data name="SelectingaSingleProvidervs.DifferentProviders04" type="System.String">
+    <value>すべてのアプリケーション機能に単一プロバイダーを指定するには、[&lt;span class=UI&gt;すべてのサイト管理データに対して 1 つのプロバイダーを選択します。&lt;/span&gt;] をクリックします。</value>
+  </data>
+  <data name="SelectingaSingleProvidervs.DifferentProviders05" type="System.String">
+    <value>特定のアプリケーション機能に対するプロバイダーを指定するには、[&lt;span class=UI&gt;各機能に対して異なるプロバイダーを選択します。(高度なオプション)&lt;/span&gt;] をクリックし、各アプリケーション機能に対するプロバイダーを選択します。</value>
+  </data>
+  <data name="ConfiguringtheSQLServerProvider01" type="System.String">
+    <value>SQL Server プロバイダーの構成</value>
+  </data>
+  <data name="ConfiguringtheSQLServerProvider02" type="System.String">
+    <value>SQL Server データベースにアプリケーション機能データを保存する SQL Server プロバイダーを使用する場合、適切なデータベースを作成して SQL Server を最初に構成しなければなりません。ASP.NET には、このタスクを実行する aspnet_regsql.exe というコマンドライン ユーティリティが含まれています。</value>
+  </data>
+  <data name="ConfiguringtheSQLServerProvider03" type="System.String">
+    <value>aspnet_regsql.exe 実行可能ファイルは、Web サーバー上の WINDOWS\Microsoft.NET\Framework\versionNumber フォルダーにあります。aspnet_regsql.exe ユーティリティは、SQL Server データベースを作成するためと、既存のデータベースにオプションを追加または削除するための両方に使用されます。</value>
+  </data>
+  <data name="ConfiguringtheSQLServerProvider04" type="System.String">
+    <value>コマンドライン引数を指定しないで aspnet_regsql.exe 実行可能ファイルを実行し、SQL Server に対する接続情報を指定するのに役立つウィザードを実行したり、サポートされている機能すべてのデータベース要素をインストールまたは削除したりすることができます。個別の機能のデータベース要素を構成するために、コマンドライン ユーティリティとして aspnet_regsql.exe 実行可能ファイルを実行することもできます。</value>
+  </data>
+  <data name="ConfiguringtheSQLServerProvider05" type="System.String">
+    <value>aspnet_regsql.exe ウィザードを実行するには、次の例に示すとおりコマンドライン引数を指定しないで aspnet_regsql.exe 実行可能ファイルを実行します。</value>
+  </data>
+  <data name="ConfiguringtheSQLServerProvider06" type="System.String">
+    <value>aspnet_regsql.exe ユーティリティで使用できる追加オプションに関するオンライン ヘルプを参照するには、/? オプションを使用します。</value>
+  </data>
+  <data name="BehindtheScenes01" type="System.String">
+    <value>セキュリティ情報の管理</value>
+  </data>
+  <data name="BehindtheScenes02" type="System.String">
+    <value>&lt;span class=UI&gt;[プロバイダー]&lt;/span&gt; タブでは、アプリケーションの Web.config ファイルに保存される構成設定を管理します。具体的には、&lt;span class=UI&gt;[プロバイダー]&lt;/span&gt; タブで管理される設定は構成ファイルの [&amp;lt;membership&amp;gt;] および [&amp;lt;roleManager&amp;gt;] セクションに存在します。 </value>
+  </data>
+  <data name="BehindtheScenes03" type="System.String">
+    <value>次のコードは、ロール管理に使用される &lt;span class=LanguageKeyword&gt;AspNetWindowsTokenRoleProvider&lt;/span&gt; プロバイダーを指定した後、Web サイト管理ツールによって生成された Web.config ファイルです。</value>
+  </data>
+  <data name="MoreInformation01" type="System.String">
+    <value>詳細</value>
+  </data>
+  <data name="MoreInformation02" type="System.String">
+    <value>詳細情報については、.NET Framework クラス リファレンスおよび ASP.NET 設定スキーマの次のセクションを参照してください:</value>
+  </data>
+  <data name="MoreInformation03" type="System.String">
+    <value>membership 要素 (ASP.NET 設定スキーマ)</value>
+  </data>
+  <data name="MoreInformation04" type="System.String">
+    <value>profile 要素 (ASP.NET 設定スキーマ)</value>
+  </data>
+  <data name="MoreInformation05" type="System.String">
+    <value>roleManager 要素 (ASP.NET 設定スキーマ)</value>
+  </data>
+  <data name="SeeAlso01" type="System.String">
+    <value>関連項目</value>
+  </data>
+  <data name="SeeAlso02" type="System.String">
+    <value>Web サイト管理ツール概要</value>
+  </data>
+  <data name="SeeAlso03" type="System.String">
+    <value>Web サイト管理ツール セキュリティ タブ</value>
+  </data>
+  <data name="SeeAlso04" type="System.String">
+    <value>Web サイト管理ツール アプリケーション タブ</value>
+  </data>
+  <data name="SeeAlso05" type="System.String">
+    <value>Web サイト管理ツールの構成</value>
+  </data>
+</root>

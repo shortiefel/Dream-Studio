@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Title00" type="System.String">
+    <value>Web サイト管理ツール アプリケーション タブ</value>
+  </data>
+  <data name="WebSiteAdministrationToolApplicationTab01" type="System.String">
+    <value>Web サイト管理ツール アプリケーション タブ</value>
+  </data>
+  <data name="WebSiteAdministrationToolApplicationTab02" type="System.String">
+    <value>Web サイト管理ツールの [&lt;span class=UI&gt;アプリケーション&lt;/span&gt;] タブを使用すると、Web アプリケーションおよびサイトに関連する共通の設定を管理できます。</value>
+  </data>
+  <data name="Introduction01" type="System.String">
+    <value>はじめに</value>
+  </data>
+  <data name="Introduction02" type="System.String">
+    <value>[&lt;span class=UI&gt;アプリケーション&lt;/span&gt;] タブを使用すると、次の項目を管理できます。</value>
+  </data>
+  <data name="Introduction03" type="System.String">
+    <value>アプリケーション設定の名前/値の組み合わせ </value>
+  </data>
+  <data name="Introduction04" type="System.String">
+    <value>アプリケーション設定は、Web アプリケーションで構成可能な値のテキストを表す名前/値の組み合わせです。アプリケーション設定は、ファイル パス、XML Web サービス URL、共通に使用されるテキスト、または 1 か所に保存して簡単に変更できるようにする任意の情報などのカスタム アプリケーション構成情報を格納するために使用されます。</value>
+  </data>
+  <data name="Introduction05" type="System.String">
+    <value>重要   アプリケーション設定はテキスト形式で構成ファイルに保存されています。このため、アプリケーション設定を使用するときはセキュリティに関して適切に対処してください。ユーザー名、パスワード、またはデータベース接続文字列などの重要情報をアプリケーション設定に保存しないでください。</value>
+  </data>
+  <data name="Introduction06" type="System.String">
+    <value>簡易メール転送プロトコル (SMTP) の設定</value>
+  </data>
+  <data name="Introduction07" type="System.String">
+    <value>Web サイトに電子メールを送信する機能が必要な場合 (例: ユーザーへのパスワードの送信)、サイトが使用する SMTP サーバーを指定しなければなりません。</value>
+  </data>
+  <data name="Introduction08" type="System.String">
+    <value>アプリケーションの状態</value>
+  </data>
+  <data name="Introduction09" type="System.String">
+    <value>メンテナンスのためにアプリケーションをオフラインにしたり (シャットダウン)、または新しい Microsoft SQL Server Express Edition データベースをオンラインにしたりすることができます。</value>
+  </data>
+  <data name="Introduction10" type="System.String">
+    <value>デバッグとトレース</value>
+  </data>
+  <data name="Introduction11" type="System.String">
+    <value>デバッグとトレースでは、Web アプリケーションに伴う問題を診断および修正することができ、主に開発過程で使用されることを目的としています。デバッグを有効にすると、.NET Framework または Microsoft Visual Studio デバッガがコードをステップ スルーするために使用する情報が生成されて Web サイトのページがコンパイルされます。トレースを有効にすると、個々の Web 要求、要求と共に送信される HTTP ヘッダー、ページ上のコントロールの状態、およびページ処理に関するその他の詳細などの情報が生成されます。 </value>
+  </data>
+  <data name="ConfiguringApplicationSettings01" type="System.String">
+    <value>アプリケーション設定の構成</value>
+  </data>
+  <data name="ConfiguringApplicationSettings02" type="System.String">
+    <value>アプリケーション設定を作成するとき、作成される設定の名前と値を指定します。これにより、&lt;span class=LanguageKeyword&gt;ConfigurationSettings&lt;/span&gt; クラスの &lt;span class=LanguageKeyword&gt;AppSettings&lt;/span&gt; プロパティを使用してアプリケーションの設定値にアクセスできるようになります。たとえば、AppName というアプリケーション設定を、アプリケーション名を表す値と共に定義した場合、次のコード例が示すようにページの見出しの設定に使用することができます。</value>
+  </data>
+  <data name="ConfiguringApplicationSettings03" type="System.String">
+    <value>[Visual Basic]</value>
+  </data>
+  <data name="ConfiguringApplicationSettings04" type="System.String">
+    <value></value>
+  </data>
+  <data name="ConfiguringApplicationSettings05" type="System.String">
+    <value>[C#]</value>
+  </data>
+  <data name="TakingApplicationsOfflineandOnline01" type="System.String">
+    <value>アプリケーションのオフラインおよびオンライン</value>
+  </data>
+  <data name="TakingApplicationsOfflineandOnline02" type="System.String">
+    <value>Web サイトのメンテナンスを実行する場合、サイトをオフラインにすることができます。これにより、サイトがページを処理することのないように Web サイトを実行しているプロセスをシャットダウンします。その後、編集中にページが要求されてエラーが発生することなく、ページや他のファイルを編集することができます。アプリケーションのオフラインでも、SQL Server Standard Edition を使用し、.mdf データベース ファイルをアプリケーションにスワップまたは追加する場合に役立ちます。アプリケーションが実行中の場合、新しい .mdf ファイルをアタッチすることはできません。</value>
+  </data>
+  <data name="TakingApplicationsOfflineandOnline03" type="System.String">
+    <value>ファイルの編集、あるいは .mdf ファイルの追加または変更が終わったら、アプリケーションをオンラインにすることができます。</value>
+  </data>
+  <data name="ConfiguringSMTPSettings01" type="System.String">
+    <value>SMTP 設定の構成</value>
+  </data>
+  <data name="ConfiguringSMTPSettings02" type="System.String">
+    <value>Web サイトの一部の機能では、アプリケーションで電子メールを送信できる機能が必要です。電子メールを送信するには、アプリケーションから電子メール受信者に電子メールを転送する簡易メール転送プロトコル (SMTP) サーバーへのアクセスがアプリケーションに必要です。 </value>
+  </data>
+  <data name="ConfiguringSMTPSettings03" type="System.String">
+    <value>IIS) には、既定ではインストールされていませんが SMTP 仮想サーバーが含まれています。お使いのコンピュータから電子メールを送信する場合、Microsoft Windows コントロール パネルにある [&lt;span class=UI&gt;プログラムの追加と削除&lt;/span&gt;] を使用して SMTP サーバーをインストールすることができます。SMTP サーバーは、IIS の一部の Windows コンポーネントとして利用できます。IIS SMTP サーバーをインストールした後、Internet Information Services 管理コンソールを使用して SMTP サーバーを構成できます。IIS SMTP 仮想サーバーに関する詳細情報は、サポート技術情報 (KB) の検索ページを参照してください。</value>
+  </data>
+  <data name="ConfiguringSMTPSettings04" type="System.String">
+    <value>メモ   SMTP サーバーをコンピュータにインストールする場合、SMTP サーバーがスパム サーバーとして悪用されることのないように、セキュリティ上の十分な注意が必要です。IIS SMTP 仮想サーバーのセキュリティ強化に関する詳細情報は、Microsoft.com で SMTP セキュリティを検索してください。</value>
+  </data>
+  <data name="ConfiguringSMTPSettings05" type="System.String">
+    <value>IIS SMTP サーバーをインストールしない場合、またはアプリケーションを異なるコンピュータで実行する場合、ネットワーク管理者または Web サーバー管理者に SMTP サーバーの構成設定について問い合わせてください。</value>
+  </data>
+  <data name="ConfiguringSMTPSettings06" type="System.String">
+    <value>次の表は SMTP 設定についての説明です。</value>
+  </data>
+  <data name="ConfiguringSMTPSettings07" type="System.String">
+    <value>設定
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings08" type="System.String">
+    <value>説明
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings09" type="System.String">
+    <value>
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings10" type="System.String">
+    <value>サーバー名
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings11" type="System.String">
+    <value>SMTP サーバーの名前です。既定は &lt;span class=code&gt;localhost&lt;/span&gt; で、ASP.NET はローカル コンピュータ上で SMTP サーバーを使用します。通常、これが既定の SMTP 仮想サーバーです。その他の場合は、ネットワーク上で使用可能な SMTP サーバー名を指定します。
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings12" type="System.String">
+    <value>
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings13" type="System.String">
+    <value>サーバー ポート
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings14" type="System.String">
+    <value>SMTP サーバーのポートです。既定は 25 です。
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings15" type="System.String">
+    <value>
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings16" type="System.String">
+    <value>差出人
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings17" type="System.String">
+    <value>Web サイトから送信される電子メールの &lt;span class=UI&gt;From:&lt;/span&gt; ヘッダーに表示される電子メール アドレスです。
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings18" type="System.String">
+    <value>
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings19" type="System.String">
+    <value>認証
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings20" type="System.String">
+    <value>SMTP サーバーが存在する場合に SMTP サーバーが使用する認証の種類です。SMTP サーバーが&lt;span class=UI&gt;基本認証&lt;/span&gt;を使用する場合、アカウント名およびサーバー経由で電子メール メッセージを転送することが許可されているユーザー アカウントのパスワードを指定します。</value>
+  </data>
+  <data name="ConfiguringSMTPSettings21" type="System.String">
+    <value>&lt;span class=UI&gt;基本認証&lt;/span&gt;のユーザー名とパスワードは Web.config ファイル内にテキスト形式で保存されています。
+</value>
+  </data>
+  <data name="ConfiguringSMTPSettings22" type="System.String">
+    <value>
+</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing01" type="System.String">
+    <value>デバッグとトレースの構成</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing02" type="System.String">
+    <value>デバッグとトレースの設定を変更するには、Web アプリケーションが実行されているコンピュータで管理者権限が与えられていなければなりません。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing03" type="System.String">
+    <value>デバッグとトレース機能を管理するには、[&lt;span class=UI&gt;デバッグとトレースの構成&lt;/span&gt;] をクリックして、次のオプションを設定します:</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing04" type="System.String">
+    <value>デバッグの有効化</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing05" type="System.String">
+    <value>Web サイトのすべてのページのデバッグを有効にするには、このオプションを選択します。 </value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing06" type="System.String">
+    <value>トレース情報のキャプチャ</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing07" type="System.String">
+    <value>Web サイトのすべてのページのトレースを有効にするには、このオプションを選択します。このチェック ボックスがオンになっている場合、ページの残りのオプションが選択可能になります。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing08" type="System.String">
+    <value>トレース情報を取得するように設定された場合、次の項目を選択できます: </value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing09" type="System.String">
+    <value>個々のページにトレース情報を表示</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing10" type="System.String">
+    <value>サイトの Web ページの下部にトレース情報を追加するには、このオプションを選択します。個々のページのトレース情報を表示しない場合でも、トレース情報は取得されます。トレース情報を表示するには、トレース情報ビューアとして動作する Trace.axd を Web サイトに要求できます。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing11" type="System.String">
+    <value>ローカル要求のみ</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing12" type="System.String">
+    <value>Web サーバー (localhost) からの要求に対してのみトレース情報を表示するには、このオプションを選択します。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing13" type="System.String">
+    <value>すべての要求</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing14" type="System.String">
+    <value>任意のコンピュータからトレース情報を表示するには、このオプションを選択します。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing15" type="System.String">
+    <value>[&lt;span class=UI&gt;トレース結果の並べ替え順序の選択&lt;/span&gt;] では、トレース情報の表示方法を次のとおり指定します:</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing16" type="System.String">
+    <value>時間別</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing17" type="System.String">
+    <value>トレース情報を取得順で表示するには、このオプションを選択します。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing18" type="System.String">
+    <value>カテゴリ別</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing19" type="System.String">
+    <value>トレース情報をユーザー定義カテゴリ内のアルファベット順で表示するには、このオプションを選択します。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing20" type="System.String">
+    <value>キャッシュするトレース要求数</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing21" type="System.String">
+    <value>サーバーに保存するトーレス要求の数を入力します。トレース ビューア (http://server/application/trace.axd) を使用してキャッシュされた情報を参照できます。既定は 10 です。[&lt;span class=UI&gt;最近のトレース結果&lt;/span&gt;] オプションを選択しないで制限に達した場合、トレースは自動的に無効になります。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing22" type="System.String">
+    <value>[&lt;span class=UI&gt;キャッシュするトレース結果の選択&lt;/span&gt;] では、トレース出力の表示方法を次のとおり指定します:</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing23" type="System.String">
+    <value>最近のトレース結果</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing24" type="System.String">
+    <value>最近のトレース出力を表示し、[&lt;span class=UI&gt;キャッシュするトレース要求数&lt;/span&gt;] に示された制限を超える古いトレース データを破棄するには、このオプションを選択します。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing25" type="System.String">
+    <value>一番古いトレース結果</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing26" type="System.String">
+    <value>[&lt;span class=UI&gt;キャッシュするトレース要求数&lt;/span&gt;] に達するまで要求されたトレース データを表示するには、このオプションを選択します。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing27" type="System.String">
+    <value>メモ   Web アプリケーションのパフォーマンスを最大限に上げるために、Web サイトのトラブルシューティングが終了したらデバッグとトレースを無効にしてください。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing28" type="System.String">
+    <value>セキュリティ メモ   ページに対するトレースが有効にされているとき、サーバーからページを要求する任意のブラウザ上でトレース情報が表示される可能性があります。トレースではサーバー変数の値などの重要な情報が表示されるため、セキュリティ上の問題が発生する可能性があります。運用サーバーに Web アプリケーションを発行する前に、必ずページ トレースを無効にしてください。 </value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing29" type="System.String">
+    <value>Web サイトのカスタム エラー ページを構成するには、[&lt;span class=UI&gt;既定のエラー ページの定義&lt;/span&gt;] をクリックしてから、次の項目を指定します。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing30" type="System.String">
+    <value>既定のエラー メッセージの使用</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing31" type="System.String">
+    <value>既定のエラー ページを使用するには、このオプションを選択します。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing32" type="System.String">
+    <value>既定のエラー ページとして使用する URL を指定してください。</value>
+  </data>
+  <data name="ConfiguringDebuggingandTracing33" type="System.String">
+    <value>カスタム エラー ページを使用するには、このオプションを選択してから、使用するページを選択します。</value>
+  </data>
+  <data name="BehindtheScenes01" type="System.String">
+    <value>セキュリティ情報の管理</value>
+  </data>
+  <data name="BehindtheScenes02" type="System.String">
+    <value>[&lt;span class=UI&gt;アプリケーション&lt;/span&gt;] タブでは、アプリケーションの Web.config ファイルに保存された構成設定を管理するための簡単な Web インターフェイスが使用できます。 </value>
+  </data>
+  <data name="ApplicationSettings01" type="System.String">
+    <value>アプリケーション設定</value>
+  </data>
+  <data name="ApplicationSettings02" type="System.String">
+    <value>[&lt;span class=UI&gt;アプリケーション&lt;/span&gt;] タブの [&lt;span class=UI&gt;アプリケーションの設定&lt;/span&gt;] 機能で管理される設定は、Web アプリケーションの Web.config ファイルの &amp;lt;appSettings&amp;gt; セクションに存在します。これは、.NET Framework によって提供される定義済みの構成セクションです。次のコードで強調された行は、&lt;span class=code&gt;ApplicationName&lt;/span&gt; という名前のアプリケーション設定を作るために Web サイト管理ツールを使用した後に生成される、構成ファイルの例です。</value>
+  </data>
+  <data name="TakingApplicationsOfflineandOnline01" type="System.String">
+    <value>アプリケーションをオフラインおよびオンライン</value>
+  </data>
+  <data name="TakingApplicationsOfflineandOnline02" type="System.String">
+    <value>オフライン設定は、Web サイトの Web.config  ファイルの [&amp;lt;httpRuntime&amp;gt;] セクションに存在します。次のコードで強調された行は、アプリケーションをオフラインにするために Web サイト管理ツールを使用した後に生成されます。</value>
+  </data>
+  <data name="TakingApplicationsOfflineandOnline03" type="System.String">
+    <value>[&lt;span class=LanguageKeyword&gt;httpRuntime&lt;/span&gt;] 設定が無効になっている限り、ASP.NET は要求を受信したときにアプリケーションの System.AppDomain オブジェクトを作成しません。実質的に、Web アプリケーションは開始できません。 </value>
+  </data>
+  <data name="SMTPSettings01" type="System.String">
+    <value>SMTP 設定</value>
+  </data>
+  <data name="SMTPSettings02" type="System.String">
+    <value>[&lt;span class=UI&gt;アプリケーション&lt;/span&gt;] タブの [&lt;span class=UI&gt;SMTP 設定&lt;/span&gt;] 機能で管理される設定は、Web サイトの Web.config ファイルの [&amp;lt;mailSettings&amp;gt;] セクションに存在します。これは [&amp;lt;system.web&amp;gt;] 要素ではなく、[&amp;lt;system.net&amp;gt;] 要素の子です。次のコードで強調された行は、SMTP 設定を指定するために Web サイト管理ツールを使用した後に生成されます。</value>
+  </data>
+  <data name="DebuggingandTracing01" type="System.String">
+    <value>デバッグとトレース</value>
+  </data>
+  <data name="DebuggingandTracing02" type="System.String">
+    <value>[&lt;span class=UI&gt;アプリケーション&lt;/span&gt;] タブの [&lt;span class=UI&gt;デバッグとトレース&lt;/span&gt;] 機能で管理される設定は、Web.config ファイルの [&amp;lt;trace&amp;gt;, &amp;lt;compilation&amp;gt;] および [&amp;lt;customErrors&amp;gt;] セクションに存在します。次のコードは、トレースとデバッグの両方を有効にし、既定のカスタム エラー ページを作成するために Web サイト管理ツールを使用した後に生成される、構成ファイルの例です。</value>
+  </data>
+  <data name="DebuggingandTracing03" type="System.String">
+    <value>これは、デバッグとトレースの両方が有効にされ、トレースが Web サーバーから要求されたページにのみ表示され、トレース結果がカテゴリ順に並べ替えられ、表示される最新のトレース結果が 10 件キャッシュされる場合の例です。既定のエラー ページは myErrorPage.aspx です。</value>
+  </data>
+  <data name="MoreInformation01" type="System.String">
+    <value>詳細</value>
+  </data>
+  <data name="MoreInformation02" type="System.String">
+    <value>.NET Framework クラス リファレンスおよび ASP.NET 設定スキーマの詳細情報については、次を参照してください:</value>
+  </data>
+  <data name="MoreInformation03" type="System.String">
+    <value>System.Configuration.ConfigurationSettings</value>
+  </data>
+  <data name="MoreInformation04" type="System.String">
+    <value>compilation 要素 (ASP.NET 設定スキーマ)</value>
+  </data>
+  <data name="MoreInformation05" type="System.String">
+    <value>customErrors 要素 (ASP.NET 設定スキーマ)</value>
+  </data>
+  <data name="MoreInformation06" type="System.String">
+    <value>trace 要素 (ASP.NET 設定スキーマ)</value>
+  </data>
+  <data name="SeeAlso01" type="System.String">
+    <value>関連項目</value>
+  </data>
+  <data name="SeeAlso02" type="System.String">
+    <value>Web サイト管理ツール概要</value>
+  </data>
+  <data name="SeeAlso03" type="System.String">
+    <value>Web サイト管理ツール セキュリティ タブ</value>
+  </data>
+  <data name="SeeAlso04" type="System.String">
+    <value>Web サイト管理ツール プロバイダ タブ</value>
+  </data>
+  <data name="SeeAlso05" type="System.String">
+    <value>Web サイト管理ツールの構成</value>
+  </data>
+</root>

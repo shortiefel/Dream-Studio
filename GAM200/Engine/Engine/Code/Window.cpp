@@ -185,34 +185,20 @@ namespace Engine {
 	void Window::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 		switch (action) {
 		case GLFW_PRESS: {
-			if (mods == GLFW_MOD_CONTROL) {
-				if (key == GLFW_KEY_S) {
-					SaveEvent event;
-					EventDispatcher::SendEvent(event);
-				}
-
-				else if (key == GLFW_KEY_P){
-					StateEvent event;
-					EventDispatcher::SendEvent(event);
-				}
-			}
-
-			else {
-				KeyPressedEvent event(key, false);
-				EventDispatcher::SendEvent(event);
-			}
-			Input::SetInputKeyStatus(key, true);
+			KeyPressedEvent event(Input::GetKeyCode(key), false);
+			EventDispatcher::SendEvent(event);
+			Input::SetKeyStatus(key, true);
 			break;
 		}
 		case GLFW_RELEASE: {
-			KeyReleasedEvent event(key);
+			KeyReleasedEvent event(Input::GetKeyCode(key));
 			EventDispatcher::SendEvent(event);
 			//w_data.eventCallBack(event);
-			Input::SetInputKeyStatus(key, false);
+			Input::SetKeyStatus(key, false);
 			break;
 		}
 		case GLFW_REPEAT: {
-			KeyPressedEvent event(key, true);
+			KeyPressedEvent event(Input::GetKeyCode(key), true);
 			EventDispatcher::SendEvent(event);
 			//w_data.eventCallBack(event);
 			break;
@@ -225,14 +211,14 @@ namespace Engine {
 		case GLFW_PRESS: {
 			MousePressedEvent event(button);
 			EventDispatcher::SendEvent(event);
-			Input::SetInputMouseStatus(button, true);
+			Input::SetMouseStatus(button, true);
 			//w_data.eventCallBack(event);
 			break;
 		}
 		case GLFW_RELEASE: {
 			MouseReleasedEvent event(button);
 			EventDispatcher::SendEvent(event);
-			Input::SetInputMouseStatus(button, false);
+			Input::SetMouseStatus(button, false);
 			//w_data.eventCallBack(event);
 			break;
 		}
@@ -248,7 +234,7 @@ namespace Engine {
 	void Window::CursorCallBack(GLFWwindow* window, double xpos, double ypos) {
 		MouseMoveEvent event((float)xpos, (float)ypos);
 		EventDispatcher::SendEvent(event);
-		Input::SetInputMousePosition(xpos, ypos);
+		Input::SetMousePosition(xpos, ypos);
 		//w_data.eventCallBack(event);
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

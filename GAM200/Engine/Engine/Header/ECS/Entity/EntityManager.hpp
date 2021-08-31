@@ -88,6 +88,10 @@ namespace Engine {
 			return UsedEntities;
 		}
 
+		inline void ClearUsedEntityVector()  {
+			UsedEntities.clear();
+		}
+
 
 		std::vector<Entity> UsedEntities{};
 		uint32_t AliveEntityCount{}; // Total living entities

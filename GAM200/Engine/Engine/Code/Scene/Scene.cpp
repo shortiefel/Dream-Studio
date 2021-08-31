@@ -27,7 +27,6 @@ Technology is prohibited.
 #include "Engine/Header/Management/GameSceneSerializer.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
-
 #include "Engine/Header/ECS/Coordinator.hpp"
 
 //Components
@@ -38,14 +37,20 @@ Technology is prohibited.
 namespace Engine {
     extern Coordinator gCoordinator;
 
-    std::string sceneName = std::string{};
     bool Scene::playing = false;
+    std::string Scene::fullPathName = std::string{};
 
+    
+    //Save Scene
+    //Return false if fail (fail to compile)
     bool SceneSave();
+    //Shortcut key for scene
+    //E.g: Ctrl p (play / stop), Ctrl s (save)
+    bool SceneHotKey(const KeyPressedEvent& e);
 
     //Entity temcam, temcam2, temcam3; int num = 1;//Temporary
 
-    void Scene::Create() {
+    void Scene::Create(std::string scenename) {
         //Serialization
         //Read from text file all information
 
@@ -119,10 +124,11 @@ namespace Engine {
             /*Factory::InstantiateCircle();
             Factory::InstantiateSquare();*/
 
-        GameSceneSerializer::Deserialize("Assets/Scene/test3.json");
+        fullPathName = "Assets/Scene/" + scenename + ".json";
+        GameSceneSerializer::Deserialize(fullPathName);
         
 
-        Scripting::ScriptEngine::UpdateMapData();
+        ScriptEngine::UpdateMapData();
     }
 
     //When user click play to run their game
@@ -133,16 +139,16 @@ namespace Engine {
         //Init game
         std::cout << "Playing \n";
         if (!SceneSave()) return;
-        //Scripting::ScriptEngine::ClearMapData();
-        //GameSceneSerializer::Deserialize("Assets/Scene/test3.json");
-        Scripting::ScriptEngine::PlayInit();
+        ScriptEngine::PlayInit();
     }
 
     //When user click stop to run their game
     void Scene::Stop() {
         //Deserialize everything
-        //ScriptSystem::Stop();
+        ScriptEngine::Stop();
+        gCoordinator.destroyAllEntity();
 
+        GameSceneSerializer::Deserialize(fullPathName);
         std::cout << "Stopping \n";
     }
 
@@ -193,7 +199,7 @@ namespace Engine {
         }
 
         if (playing) {
-            Scripting::ScriptEngine::PlayRunTime();
+            ScriptEngine::PlayRunTime();
         }
 
         LayerStack::Update();
@@ -201,39 +207,53 @@ namespace Engine {
     }
 
     void Scene::Destroy() {
-        Scene::Stop(); //Temporary for when pausing game (for editor)
+        if (playing) Scene::Stop(); 
         //Destroy in reverse order
-        //Rebuild the layers for a difference game scene
         //Remove all entity
     }
 
+    std::string& Scene::GetFullPath() {
+        return fullPathName;
+    }
 
-    bool OnSceneSave(const SaveEvent& e) {
-        if (Scene::GetPlaying() != true) {
-            std::cout << "Saving... \n";
-            SceneSave();
-            return true;
+    bool SceneHotKey(const KeyPressedEvent& e) {
+        if (Input::IsKeyPressed(Input_KeyCode::Control)) {
+            //Play / Stop
+            if (e.GetKeyCode() == Input_KeyCode::P) {
+                Scene::InvertPlaying();
+                return true;
+            }
+
+            //Save
+            else if (e.GetKeyCode() == Input_KeyCode::S) {
+                if (Scene::GetPlaying() != true) {
+                    std::cout << "Saving... \n";
+                    SceneSave();
+                    return true;
+                }
+
+                std::cout << "Scene is Playing. unable to Save... \n";
+                return false;
+            }
         }
 
-        std::cout << "Scene is Playing. unable to Save... \n";
-        return false;
+        return true;
     }
 
-    SaveEventFP Scene::GetSceneSave() {
-        return OnSceneSave;
+    KeyPressedFP Scene::GetSceneHotKey() {
+        return SceneHotKey;
     }
-
 
     bool SceneSave() {
-        if (!Scripting::ScriptEngine::CompileCS()) {
+        if (!ScriptEngine::CompileCS()) {
             std::cout << "Fail to compile \n";
             Scene::SetPlaying(false);
             return false;
         }
 
-        Scripting::ScriptEngine::UpdateMapData();
+        ScriptEngine::UpdateMapData();
         //Change to sceneName (might be fullName(path + name) instead)
-        GameSceneSerializer::Serialize("Assets/Scene/test3.json");
+        GameSceneSerializer::Serialize(Scene::GetFullPath());
 
         return true;
     }
@@ -254,14 +274,5 @@ namespace Engine {
 
     bool Scene::GetPlaying() {
         return playing;
-    }
-
-    bool StateChange(const StateEvent& e) {
-        Scene::InvertPlaying();
-        return true;
-    }
-
-    StateEventFP Scene::GetStateChange() {
-        return StateChange;
     }
 }

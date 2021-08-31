@@ -17,7 +17,6 @@ Technology is prohibited.
 #include "Engine/Header/Event/MouseEvent.hpp"
 
 
-
 namespace Engine {
 	std::vector<MousePressFP> MousePressedEvent::registeredFunctions;
 	std::vector<MouseReleaseFP> MouseReleasedEvent::registeredFunctions;

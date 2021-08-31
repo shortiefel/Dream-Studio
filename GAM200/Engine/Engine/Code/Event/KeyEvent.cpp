@@ -17,20 +17,20 @@ Technology is prohibited.
 #include "Engine/Header/Event/KeyEvent.hpp"
 
 namespace Engine {
-	std::vector<KeyPressFP> KeyPressedEvent::registeredFunctions;
-	std::vector<KeyReleaseFP> KeyReleasedEvent::registeredFunctions;
+	std::vector<KeyPressedFP> KeyPressedEvent::registeredFunctions;
+	std::vector<KeyReleasedFP> KeyReleasedEvent::registeredFunctions;
 
 	/*-------------------------------------------------------------------------------------------------
 	Key event
 	-------------------------------------------------------------------------------------------------*/
-	int KeyEvent::GetKeyCode() const { return keyCode; }
-	KeyEvent::KeyEvent(int keycode) : keyCode{ keycode } {}
+	Input_KeyCode KeyEvent::GetKeyCode() const { return keyCode; }
+	KeyEvent::KeyEvent(Input_KeyCode keycode) : keyCode{ keycode } {}
 		
 
 	/*-------------------------------------------------------------------------------------------------
 	Key pressed event
 	-------------------------------------------------------------------------------------------------*/
-	KeyPressedEvent::KeyPressedEvent(int keycode, bool repeat) :
+	KeyPressedEvent::KeyPressedEvent(Input_KeyCode keycode, bool repeat) :
 		KeyEvent(keycode), keyRepeat{ repeat } {}
 
 	EventType KeyPressedEvent::GetEventType() const {
@@ -42,13 +42,13 @@ namespace Engine {
 		return tem;
 	}
 
-	Call_and_Register_Definition(KeyPressedEvent, KeyPressFP);
+	Call_and_Register_Definition(KeyPressedEvent, KeyPressedFP);
 
 
 	/*-------------------------------------------------------------------------------------------------
 	Key released event
 	-------------------------------------------------------------------------------------------------*/
-	KeyReleasedEvent::KeyReleasedEvent(int keycode) :
+	KeyReleasedEvent::KeyReleasedEvent(Input_KeyCode keycode) :
 		KeyEvent(keycode) {}
 
 	EventType KeyReleasedEvent::GetEventType() const {
@@ -59,5 +59,5 @@ namespace Engine {
 		return std::string{ "Key Released" };
 	}
 
-	Call_and_Register_Definition(KeyReleasedEvent, KeyReleaseFP);
+	Call_and_Register_Definition(KeyReleasedEvent, KeyReleasedFP);
 }

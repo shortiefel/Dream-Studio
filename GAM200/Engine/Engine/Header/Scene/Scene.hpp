@@ -17,26 +17,27 @@ Technology is prohibited.
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
-#include <string>
-
-#include "Engine/Header/Event/UtilityEvent.hpp"
+#include "Engine/Header/Event/KeyEvent.hpp"
 
 namespace Engine {
 	class Scene {
 	public:
-		static void Create();
+		static void Create(std::string scenename);
 		static void Destroy();
 		static void Play();
 		static void Stop();
 		static void Update(float dt, bool defaultRender);
 
-		static SaveEventFP GetSceneSave();
-		static StateEventFP GetStateChange();
+		static KeyPressedFP GetSceneHotKey();
 
 		static void InvertPlaying();
 		static void SetPlaying(bool state);
 		static bool GetPlaying();
+
+		static std::string& GetFullPath();
 	private:
+		//Path + scene name
+		static std::string fullPathName;
 		static bool playing;
 	};
 }

@@ -17,7 +17,6 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
-#include "Engine/Header/Script/ScriptEmbed.hpp"
 
 #include "Engine/Header/ECS/Coordinator.hpp"
 

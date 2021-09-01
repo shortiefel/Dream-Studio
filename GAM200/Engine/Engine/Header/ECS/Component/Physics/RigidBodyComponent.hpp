@@ -18,13 +18,11 @@ Technology is prohibited.
 #define RIGIDBODY_H
 
 namespace Engine {
-	//Currently not in used - pending further confirmation
-	//struct RigidBody {
-	//	//Gravity will be applied by default when rigidbody is applied
+	struct RigidBody {
 	//	//object cannot be pushed by default
 	//	bool hasGravity = true, isMoveable = false;
 	//
-	//};
+	};
 }
 
 #endif

@@ -129,7 +129,7 @@
     <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\PhysicSystem.cpp">
+    <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp">
@@ -153,11 +153,8 @@
     <ClCompile Include="Engine\Code\Scene\Scene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Physic\Physic.cpp">
+    <ClCompile Include="Engine\Code\Physic\Collision.cpp">
       <Filter>Source Files\Physic</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Script\ScriptEmbed.cpp">
-      <Filter>Source Files\Script</Filter>
     </ClCompile>
     <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp">
       <Filter>External Resources\Stb</Filter>
@@ -192,7 +189,7 @@
     <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp">
       <Filter>Source Files\Script</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Event\UtilityEvent.cpp">
+    <ClCompile Include="Engine\Code\Event\OverlapColliderEvent.cpp">
       <Filter>Source Files\Event</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Input\Input.cpp">
@@ -248,7 +245,7 @@
     <ClInclude Include="Engine\Header\ECS\System\GraphicSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\PhysicSystem.hpp">
+    <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp">
@@ -308,14 +305,8 @@
     <ClInclude Include="Engine\Header\Management\ResourceManager.hpp">
       <Filter>Header Files\Management</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Physic\Physic.hpp">
+    <ClInclude Include="Engine\Header\Physic\Collision.hpp">
       <Filter>Header Files\Physic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\Script.hpp">
-      <Filter>Header Files\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\ScriptEmbed.hpp">
-      <Filter>Header Files\Script</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Scene\Scene.hpp">
       <Filter>Header Files\Scene</Filter>
@@ -428,7 +419,7 @@
     <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp">
       <Filter>Header Files\Script</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Event\UtilityEvent.hpp">
+    <ClInclude Include="Engine\Header\Event\OverlapColliderEvent.hpp">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Input\InputCode.hpp">

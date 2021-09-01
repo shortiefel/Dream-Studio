@@ -146,6 +146,7 @@ namespace Engine {
     void Scene::Stop() {
         //Deserialize everything
         ScriptEngine::Stop();
+        CollisionSystem::Stop();
         gCoordinator.destroyAllEntity();
 
         GameSceneSerializer::Deserialize(fullPathName);
@@ -188,8 +189,10 @@ namespace Engine {
         }*/
 
         //------------------------------------
-        //ScriptSystem::Update(dt);
-        PhysicSystem::Update(dt);
+        if (playing) {
+            ScriptEngine::PlayRunTime();
+            CollisionSystem::Update(dt);
+        }
 
         CameraSystem::Update(dt);
 
@@ -198,9 +201,7 @@ namespace Engine {
             GraphicSystem::Render();
         }
 
-        if (playing) {
-            ScriptEngine::PlayRunTime();
-        }
+        
 
         LayerStack::Update();
         LayerStack::Draw();

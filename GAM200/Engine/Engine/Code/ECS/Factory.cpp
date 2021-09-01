@@ -28,8 +28,6 @@ namespace Engine {
     //Entity ent;
     //Entity ent2;
     //Entity camera;
-    //std::shared_ptr<GraphicSystem> graphicSystem;
-    //std::shared_ptr<PhysicSystem> physicSystem;
     Coordinator gCoordinator;
 
     void Factory::Create() {
@@ -38,12 +36,13 @@ namespace Engine {
         gCoordinator.RegisterComponent<Transform>();
         gCoordinator.RegisterComponent<Collider>();
         gCoordinator.RegisterComponent<Texture>();
+        gCoordinator.RegisterComponent<RigidBody>();
         //gCoordinator.RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSharpScript>();
 
         CameraSystem::Create(gCoordinator.RegSystem<CameraSystem>());
         GraphicSystem::Create(gCoordinator.RegSystem<GraphicSystem>());
-        PhysicSystem::Create(gCoordinator.RegSystem<PhysicSystem>());
+        CollisionSystem::Create(gCoordinator.RegSystem<CollisionSystem>());
         //ScriptSystem::Create(gCoordinator.RegSystem<ScriptSystem>());
 
         Signature signature;
@@ -58,7 +57,7 @@ namespace Engine {
         signature.reset();
         signature.set(gCoordinator.GetComType<Transform>());
         signature.set(gCoordinator.GetComType<Collider>());
-        gCoordinator.setSystemSignature<PhysicSystem>(signature);
+        gCoordinator.setSystemSignature<CollisionSystem>(signature);
 
         //signature.reset();
         //signature.set(gCoordinator.GetComType<CSScript>());

@@ -28,24 +28,21 @@ namespace Engine {
 	class ScriptEngine {
 	public:
 			
-		/*
+		/*-----------------------------------------------------
 		Start runtime
-		*/
+		-----------------------------------------------------*/
 		static void PlayInit();
-		/*
+		/*-----------------------------------------------------
 		Update runtime
-		*/
+		-----------------------------------------------------*/
 		static void PlayRunTime();
-		/*
+		/*-----------------------------------------------------
 		Pausing the runtime
 		-opposite of play
-		*/
+		-----------------------------------------------------*/
 		static void Stop();
-
-		static bool CompileCS();
-
-
-			
+		//Compile CS files together
+		static bool CompileCS();	
 		/*-----------------------------------------------------
 		Update information by
 		-Reinstantiating Classes
@@ -72,25 +69,12 @@ namespace Engine {
 		-Load assemblies
 		-----------------------------------------------------*/
 		static void ReloadMono();
-			
-		///*-----------------------------------------------------
-		//	Called when play button is pressed (After ReloadMono)
-		//	-Load objects
-		//	-Deserialize
-		//	-Call Constructor
-		//	-Call init object
-		//-----------------------------------------------------*/
-		//static void ReloadObject(MonoObject*& object, CSClass& csScript, void** param);
+		
 		/*-----------------------------------------------------
 			Call a specific virtual function
 			E.g: Init, Update
 		-----------------------------------------------------*/
 		static void CallFunction(MonoObject*& object, MonoMethod*& method, void** param = nullptr);
-
-
-		static CSEntityClassInstance csEntityClassInstance;
-
-	//private:
 		/*-----------------------------------------------------
 		-To add/remove public variable from map
 		-Set their values
@@ -101,6 +85,8 @@ namespace Engine {
 		-Find the function from c#
 		-----------------------------------------------------*/
 		static void InitEntityClassInstance();
+
+		static CSEntityClassInstance csEntityClassInstance;
 	};
 }
 

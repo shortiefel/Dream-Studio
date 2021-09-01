@@ -24,7 +24,6 @@ Technology is prohibited.
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Event/WindowEvent.hpp"
-#include "Engine/Header/Event/UtilityEvent.hpp"
 #include "Engine/Header/Input/Input.hpp"
 
 #include <sstream> //Stringstream

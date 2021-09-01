@@ -11,10 +11,7 @@ get class inside file (class should be same name as filename)
 c++ code will find method and call it (method like: update, init)
 
 Steps to test
-3. runtime creation of dll
 4. combine 2 files into 1 dll
-
-
 
 When entering play mode
 Compiles
@@ -27,29 +24,6 @@ Deserialize
 Initialize object
 
 
-Copyright (C) 2021 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents
-without the prior written consent of DigiPen Institute of
-Technology is prohibited.
-*/
-/* End Header **********************************************************************************/
-
-#include "Engine/Header/Debug Tools/Logging.hpp"
-#include "Engine/Header/Script/ScriptEngine.hpp"
-
-#include "Engine/Header/Script/ScriptEmbed.hpp"
-#include "Engine/Header/Script/ScriptInternalCall.hpp"
-
-#include <mono/jit/jit.h>
-#include <mono/metadata/threads.h>
-#include <mono/metadata/assembly.h>
-#include <mono/metadata/environment.h>
-#include <mono/metadata/debug-helpers.h> //MonoMethodDesc
-#include <mono/metadata/attrdefs.h> //Attribute
-
-#include <cstdlib> //For file to be run by cmd (std::system)
-
-/*-------------------------------------
 Terminology
 
 CSPublicVariable
@@ -66,8 +40,40 @@ CSClassInstance
 
 CSEntityClassInstance
 -Map of entity id and CSClassInstance
+
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
+
+#include "Engine/Header/Debug Tools/Logging.hpp"
+#include "Engine/Header/Script/ScriptEngine.hpp"
+
+#include "Engine/Header/Script/ScriptInternalCall.hpp"
+
+#include "Engine/Header/Event/OverlapColliderEvent.hpp"
+
+#include <mono/jit/jit.h>
+#include <mono/metadata/threads.h>
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/environment.h>
+#include <mono/metadata/debug-helpers.h> //MonoMethodDesc
+#include <mono/metadata/attrdefs.h> //Attribute
+
+#include <cstdlib> //For file to be run by cmd (std::system)
+
+
+#define OverlapFunctionCalls(name)\
+if (csScriptInstance.csClass.name != nullptr) \
+mono_runtime_invoke(csScriptInstance.csClass.name, csScriptInstance.csClass.object, nullptr, nullptr);
+/*-------------------------------------
+
 -------------------------------------*/
 #include <iostream>
+
 
 namespace Engine {
 	CSEntityClassInstance ScriptEngine::csEntityClassInstance;
@@ -78,6 +84,7 @@ namespace Engine {
 	MonoImage* imageCore;
 
 	void destroy_child_domain();
+	bool CallOverlapFunc(const OverlapColliderEvent& e); //To be registered to Event
 
 	void ScriptEngine::PlayInit() {
 		//Entity and map of classScript
@@ -144,6 +151,8 @@ namespace Engine {
 		mono_thread_set_main(mono_thread_current());
 
 		RegisterInternalCall();
+
+		OverlapColliderEvent::RegisterFunction(CallOverlapFunc);
 	}
 
 	void ScriptEngine::Destroy() {
@@ -185,67 +194,39 @@ namespace Engine {
 		if (!imageCore) {
 			LOG_ERROR("Failed loading image");
 			return;
-		}
-			
+		}	
 	}
 
-	//void ScriptEngine::ReloadObject(MonoObject*& object, CSClass& csScript, void** param) {
+	bool CallOverlapFunc(const OverlapColliderEvent& e) {
+		//std::cout << "calling overlap function \n";
+		if (ScriptEngine::csEntityClassInstance.find(e.self) != ScriptEngine::csEntityClassInstance.end()) {
+			for (auto& [className, csScriptInstance] : ScriptEngine::csEntityClassInstance[e.self]) {
+				switch (e.type) {
+				case OverlapType::OnCollisionEnter:
+					OverlapFunctionCalls(OnCollisionEnter);
+					break;
+				case OverlapType::OnCollisionStay:
+					OverlapFunctionCalls(OnCollisionStay);
+					break;
+				case OverlapType::OnCollisionExit:
+					OverlapFunctionCalls(OnCollisionExit);
+					break;
+				case OverlapType::OnTriggerEnter:
+					OverlapFunctionCalls(OnTriggerEnter);
+					break;
+				case OverlapType::OnTriggerStay:
+					OverlapFunctionCalls(OnTriggerStay);
+					break;
+				case OverlapType::OnTriggerExit:
+					OverlapFunctionCalls(OnTriggerExit);
+					break;
 
-		//MonoClass* klass = mono_class_from_name(image, "", csScript.className.c_str());
-		//if (!klass) {
-		//	LOG_ERROR("Failed loading class");
-		//	return;
-		//}
+				}
+			}
+		}
+		return true;
+	}
 
-		//object = (mono_object_new(mono_domain_get(), klass));
-		//if (!(object)) {
-		//	LOG_ERROR("Failed loading obj");
-		//	return;
-		//}
-
-		////Call Constructor and Init
-		//klass = mono_class_from_name(image, "", "MonoBehaviour");
-		//MonoMethod* method = mono_class_get_method_from_name(klass, "Constructor", -1);
-		//method = mono_object_get_virtual_method(object, method);
-		//if (method) {
-		//	mono_runtime_invoke(method, object, param, nullptr);
-		//}
-
-		//method = mono_class_get_method_from_name(klass, "Init", -1);
-		//method = mono_object_get_virtual_method(object, method);
-		//if (method) {
-		//	mono_runtime_invoke(method, object, nullptr, nullptr);
-		//}
-
-		////Set up virtual functions in MonoBehaviour
-		//method = mono_class_get_method_from_name(klass, "Update", -1);
-		//csScript.UpdateFunc = mono_object_get_virtual_method(object, method);
-
-
-		//method = mono_class_get_method_from_name(klass, "Destroy", -1);
-		//csScript.DestroyFunc = mono_object_get_virtual_method(object, method);
-
-
-		/*Testing only*/
-
-		//mono_field_set_value();
-
-		/*klass = mono_class_from_name(image, "", "Test");
-		void* ptr = nullptr;
-		MonoClassField* iter = mono_class_get_fields(klass, &ptr);
-		const char* name = mono_field_get_name(iter);
-		iter = mono_class_get_fields(klass, &ptr);
-		const char* name2 = mono_field_get_name(iter);
-		iter = mono_class_get_fields(klass, &ptr);
-		const char* name3 = mono_field_get_name(iter);
-
-		MONO_TYPE_BOOLEAN;
-		MONO_TYPE_CHAR;
-		MONO_TYPE_R4;*/
-
-		//--------------------------
-
-	//}
 
 	void ScriptEngine::CallFunction(MonoObject*& object, MonoMethod*& method, void** param) {
 		if (method) {
@@ -298,27 +279,30 @@ namespace Engine {
 				csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
 
 
-				/*klass = mono_class_from_name(image, "", "MonoBehaviour");
+				methodDesc = className + ":OnCollisionEnter()";
+				description = mono_method_desc_new(methodDesc.c_str(), NULL);
+				csClass.OnCollisionEnter = mono_method_desc_search_in_image(description, image);
 
-				MonoMethod* method = mono_class_get_method_from_name(klass, "Constructor", -1);
-				csClass.ConstructorFunc = mono_object_get_virtual_method(csClass.object, method);
+				methodDesc = className + ":OnCollisionStay()";
+				description = mono_method_desc_new(methodDesc.c_str(), NULL);
+				csClass.OnCollisionStay = mono_method_desc_search_in_image(description, image);
 
-				method = mono_class_get_method_from_name(klass, "Init", -1);
-				csClass.InitFunc = mono_object_get_virtual_method(csClass.object, method);
-
-				method = mono_class_get_method_from_name(klass, "Update", -1);
-				csClass.UpdateFunc = mono_object_get_virtual_method(csClass.object, method);
-
-				method = mono_class_get_method_from_name(klass, "Destroy", -1);
-				csClass.DestroyFunc = mono_object_get_virtual_method(csClass.object, method);*/
+				methodDesc = className + ":OnCollisionExit()";
+				description = mono_method_desc_new(methodDesc.c_str(), NULL);
+				csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
 
 
+				methodDesc = className + ":OnTriggerEnter()";
+				description = mono_method_desc_new(methodDesc.c_str(), NULL);
+				csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
 
+				methodDesc = className + ":OnTriggerStay()";
+				description = mono_method_desc_new(methodDesc.c_str(), NULL);
+				csClass.OnTriggerStay = mono_method_desc_search_in_image(description, image);
 
-				/*csClass.ConstructorFunc = mono_class_get_method_from_name(klass, "Constructor", -1);
-				csClass.InitFunc = mono_class_get_method_from_name(klass, "Init", -1);
-				csClass.UpdateFunc = mono_class_get_method_from_name(klass, "Update", -1);
-				csClass.DestroyFunc = mono_class_get_method_from_name(klass, "Destroy", -1);*/
+				methodDesc = className + ":OnTriggerExit()";
+				description = mono_method_desc_new(methodDesc.c_str(), NULL);
+				csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
 			}
 		}
 	}

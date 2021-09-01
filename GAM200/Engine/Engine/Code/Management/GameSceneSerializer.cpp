@@ -99,9 +99,16 @@ namespace Engine {
 				objType.AddMember("Scale", scale, doc.GetAllocator());
 
 				objType.AddMember("isTrigger", col->isTrigger, doc.GetAllocator());
-				objType.AddMember("isMoveable", col->isMoveable, doc.GetAllocator());
 
 				entityObject.AddMember("Collider", objType, doc.GetAllocator());
+			}
+
+			RigidBody* rb = nullptr;
+			if (gCoordinator.HasCom<RigidBody>(rb, entList[i]) && col != nullptr) {
+				LOG_ASSERT(rb);
+				rapidjson::Value objType(rapidjson::kObjectType);
+
+				entityObject.AddMember("RigidBody", objType, doc.GetAllocator());
 			}
 
 			Camera2D* cam = nullptr;
@@ -253,8 +260,15 @@ namespace Engine {
 						ColliderType(itr->value["ColliderType"].GetInt()),
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
-						itr->value["isMoveable"].GetBool(),
 						itr->value["isTrigger"].GetBool()
+					});
+			}
+
+			itr = obj.FindMember("RigidBody");
+			if (itr != obj.MemberEnd()) {
+				gCoordinator.AddComponent(ent,
+					RigidBody{
+						
 					});
 			}
 

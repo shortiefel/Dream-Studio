@@ -39,6 +39,12 @@ namespace Engine {
 		MonoMethod* InitFunc = nullptr;
 		MonoMethod* UpdateFunc = nullptr;
 		MonoMethod* DestroyFunc = nullptr;
+		MonoMethod* OnCollisionEnter = nullptr;
+		MonoMethod* OnCollisionStay = nullptr;
+		MonoMethod* OnCollisionExit = nullptr;
+		MonoMethod* OnTriggerEnter = nullptr;
+		MonoMethod* OnTriggerStay = nullptr;
+		MonoMethod* OnTriggerExit = nullptr;
 	};
 
 

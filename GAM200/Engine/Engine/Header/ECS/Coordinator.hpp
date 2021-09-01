@@ -119,6 +119,15 @@ namespace Engine {
 			return compManager->GetCom<T>(entity);
 		}
 
+		//Check only (data is not given)
+		template<typename T>
+		bool HasComCheck(Entity entity)
+		{
+			T* com;
+			return compManager->HasCom<T>(com, entity);
+		}
+
+		//Check and retrieve data
 		template<typename T>
 		bool HasCom(T*& com, Entity entity)
 		{

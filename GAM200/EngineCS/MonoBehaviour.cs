@@ -43,6 +43,12 @@ public class MonoBehaviour
     public virtual void Init() {}
     public virtual void Update() {}
     public virtual void Destroy() {}
+    public virtual void OnCollisionEnter() {}
+    public virtual void OnCollisionStay() {}
+    public virtual void OnCollisionExit() {}
+    public virtual void OnTriggerEnter() {}
+    public virtual void OnTriggerStay() {}
+    public virtual void OnTriggerExit() {}
 
     public MonoBehaviour() { }
     public MonoBehaviour (uint id)
@@ -52,48 +58,6 @@ public class MonoBehaviour
         //gameObject = new GameObject();
         //gameObject.entityId = id;
     }
-
-
-
-    public virtual void OnEnable()
-    {
-        Console.WriteLine("OnEnable");
-    }
-
-    public virtual void OnDisable()
-    {
-        Console.WriteLine("OnDisable");
-    }
-
-
-
-
-
-
-
-
-
-
-
-    /*public Transform GetTransform()
-    {
-        Console.WriteLine("Getting values");
-        GetTransform_Native(0, out Transform result);
-        return result;
-    }
-    public void SetTransform(Transform trans)
-    {
-        Console.WriteLine("Setting values");
-        SetTransform_Native(0, ref trans);
-    }
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_Native(uint entityID, out Transform outTransform);
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTransform_Native(uint entityID, ref Transform inTransform);*/
-
-
-
 
     public T GetComponent<T>() where T : Component, new()
     {
@@ -123,6 +87,45 @@ public class MonoBehaviour
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Transform_Engine(uint entityID);
 
-    
+
+
+
+
+    /*public virtual void OnEnable()
+    {
+        Console.WriteLine("OnEnable");
+    }
+
+    public virtual void OnDisable()
+    {
+        Console.WriteLine("OnDisable");
+    }*/
+
+
+
+
+
+
+
+
+
+
+
+    /*public Transform GetTransform()
+    {
+        Console.WriteLine("Getting values");
+        GetTransform_Native(0, out Transform result);
+        return result;
+    }
+    public void SetTransform(Transform trans)
+    {
+        Console.WriteLine("Setting values");
+        SetTransform_Native(0, ref trans);
+    }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTransform_Native(uint entityID, out Transform outTransform);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetTransform_Native(uint entityID, ref Transform inTransform);*/
 }
 

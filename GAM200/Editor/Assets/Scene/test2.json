@@ -1,17 +1,17 @@
 [
-    
+
     {
         "Transform": {
-            "Position": [ 200.0, 200.0 ],
+            "Position": [ -140.0, 60.0 ],
             "Scale": [ 20.0, 20.0 ]
         },
         "Collider": {
             "ColliderType": 1,
             "Position": [ 0.0, 0.0 ],
-            "Scale": [ 0.0, 0.0 ],
-            "isTrigger": false,
-            "isMoveable": true
+            "Scale": [ 1.0, 1.0 ],
+            "isTrigger": false
         },
+        "RigidBody": {},
         "Texture": {
             "Filepath": "Assets/Textures/test2.png",
             "Shape": "Square",
@@ -25,16 +25,6 @@
                         "Name": "health",
                         "Type": 4,
                         "Data": 10
-                    },
-                    {
-                        "Name": "testChar",
-                        "Type": 1,
-                        "Data": 0
-                    },
-                    {
-                        "Name": "vec2Test",
-                        "Type": 6,
-                        "Data": [ 0.0, 0.0 ]
                     }
                 ]
             }
@@ -42,21 +32,33 @@
     },
     {
         "Transform": {
-            "Position": [ -100.0, 100.0 ],
+            "Position": [ 100.0, -100.0 ],
             "Scale": [ 100.0, 100.0 ]
         },
         "Collider": {
             "ColliderType": 1,
             "Position": [ 0.0, 0.0 ],
-            "Scale": [ 0.0, 0.0 ],
-            "isTrigger": false,
-            "isMoveable": true
+            "Scale": [ 1.0, 1.0 ],
+            "isTrigger": false
         },
+        "RigidBody": {},
         "Texture": {
             "Filepath": "Assets/Textures/test1.png",
             "Shape": "Square",
             "Shader": "Default"
-        }
+        },
+        "CSScript": [
+            {
+                "Class": "Test2",
+                "Variable": [
+                    {
+                        "Name": "nothealth",
+                        "Type": 4,
+                        "Data": 0
+                    }
+                ]
+            }
+        ]
     },
     {
         "Transform": {

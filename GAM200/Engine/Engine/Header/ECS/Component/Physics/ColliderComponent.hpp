@@ -46,17 +46,15 @@ namespace Engine {
 		glm::vec2 offset_scale = glm::vec2{};
 
 		bool isTrigger = false, isActive = true;
-		//Will be pushed if moveable
-		bool isMoveable = false;
 
 		Collider() = default;
 
-		Collider(ColliderType c, bool moveable = false, bool trigger = false) :
-			cType{ c }, offset_position{ glm::vec2{ 0.f, 0.f } }, offset_scale{ glm::vec2{ 0.f, 0.f } }, isMoveable{ moveable }, isTrigger{ trigger } {}
+		Collider(ColliderType c, bool trigger = false) :
+			cType{ c }, offset_position{ glm::vec2{ 0.f, 0.f } }, offset_scale{ glm::vec2{ 0.f, 0.f } }, isTrigger{ trigger } {}
 
 		//Change of type constructor: Copy an existing Collider but with a different type
-		Collider(ColliderType c, glm::vec2 tPos, glm::vec2 tScale, bool moveable, bool tTrigger) :
-			cType{ c }, offset_position{ tPos }, offset_scale{ tScale }, isMoveable{ moveable }, isTrigger{ tTrigger } {}
+		Collider(ColliderType c, glm::vec2 tPos, glm::vec2 tScale, bool tTrigger) :
+			cType{ c }, offset_position{ tPos }, offset_scale{ tScale }, isTrigger{ tTrigger } {}
 
 		Collider(const Collider&) = default;
 		Collider& operator=(const Collider&) = default;

@@ -96,6 +96,7 @@ namespace Engine {
 
 			collider1.offset_position += glm::vec2{ transform1.position };
 			collider1.offset_scale *= transform1.scale;
+			collider1.angle += transform1.angle;
 			
 			for (std::set<Entity>::iterator entity2 = entity1; entity2 != CS->mEntities.end(); ++entity2) {
 				if (entity1 == entity2) continue;
@@ -110,12 +111,13 @@ namespace Engine {
 
 				collider2.offset_position += glm::vec2{ transform2.position };
 				collider2.offset_scale *= transform2.scale;
+				collider2.angle += transform2.angle;
 
 				//Direction from collider2 towards collider1
 				glm::vec2 dir = glm::vec2{};
 				
 				if (CollisionImplementation::isColliding(dir, collider1, ent1IsMoveable,
-														   collider2, ent2IsMoveable)) {
+														      collider2, ent2IsMoveable)) {
 
 					AddOverlap(*entity1, collider1.isTrigger, *entity2, collider2.isTrigger);
 					AddOverlap(*entity2, collider2.isTrigger, *entity1, collider1.isTrigger);

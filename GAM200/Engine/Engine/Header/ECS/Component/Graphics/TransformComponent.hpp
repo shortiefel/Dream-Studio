@@ -32,15 +32,21 @@ namespace Engine {
 	struct Transform {
 		glm::vec2 position = glm::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
 		glm::vec2 scale = glm::vec2{};
-		//float rotation = float{}; // in degree
+		float angle = float{}; // in degree
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
 		//glm::mat3 mdl_to_ndc_xform = glm::mat3{};
 
 		inline glm::mat3 GetTransform() const {
-			return glm::mat3{ glm::vec3(1.f, 0, 0),
+			return 
+				//Translation
+				glm::mat3{ glm::vec3(1.f, 0, 0),
 							  glm::vec3(0, 1.f, 0),
 							  glm::vec3(position.x, position.y, 1.f) }
+				*
+				glm::mat3{ glm::vec3(std::cos(angle), std::sin(angle), 0),
+							  glm::vec3(-std::sin(angle), std::cos(angle), 0),
+							  glm::vec3(0.f, 0.f, 1.f) }
 				*
 				//Scale
 				glm::mat3{ glm::vec3(scale.x, 0, 0),
@@ -49,8 +55,8 @@ namespace Engine {
 		}
 
 		Transform() = default;
-		Transform(glm::vec2 tPos, glm::vec2 tScale, int tLayer = 0) :
-			position{ tPos }, scale{ tScale },
+		Transform(glm::vec2 tPos, glm::vec2 tScale, float rotationAngle, int tLayer = 0) :
+			position{ tPos }, scale{ tScale }, angle{ rotationAngle },
 			layer{ tLayer } {}
 		Transform(const Transform&) = default;
 		Transform& operator=(const Transform&) = default;

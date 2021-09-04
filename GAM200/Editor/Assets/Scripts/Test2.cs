@@ -19,7 +19,7 @@ public class Test2 : MonoBehaviour
         //Console.WriteLine(pos);
 
         //Console.WriteLine(go2);
-
+        //go2.position = new Vec2(-70F, 110F);
         //go2.scale = new Vec2(30, 100);
         /*Console.WriteLine(go2.position + new Vec2(10,10));
 
@@ -63,6 +63,16 @@ public class Test2 : MonoBehaviour
     public override void OnCollisionExit()
     {
         Console.WriteLine("Test2222 Collision Exit");
+    }
+
+    public override void OnTriggerEnter()
+    {
+        Console.WriteLine("Test2222 Trigger Enter");
+    }
+
+    public override void OnTriggerExit()
+    {
+        Console.WriteLine("Test2222 Trigger Exit");
     }
 }
 

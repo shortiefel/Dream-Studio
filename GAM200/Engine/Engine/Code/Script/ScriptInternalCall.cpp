@@ -38,6 +38,8 @@ namespace Engine {
 	void MoveTransform_Position_Engine(unsigned int id, glm::vec2* inVec2);
 	void GetTransform_Scale_Engine(unsigned int id, glm::vec2* outVec2);
 	void SetTransform_Scale_Engine(unsigned int id, glm::vec2* inVec2);
+	void GetTransform_Angle_Engine(unsigned int id, float* outVec2);
+	void SetTransform_Angle_Engine(unsigned int id, float* inVec2);
 
 	bool Input_IsKeyPressed(Input_KeyCode key);
 	bool Input_IsMouseButtonPressed(Input_MouseCode button);
@@ -52,6 +54,8 @@ namespace Engine {
 		mono_add_internal_call("Transform::MoveTransform_Position_Engine", MoveTransform_Position_Engine);
 		mono_add_internal_call("Transform::GetTransform_Scale_Engine", GetTransform_Scale_Engine);
 		mono_add_internal_call("Transform::SetTransform_Scale_Engine", SetTransform_Scale_Engine);
+		mono_add_internal_call("Transform::GetTransform_Angle_Engine", GetTransform_Angle_Engine);
+		mono_add_internal_call("Transform::SetTransform_Angle_Engine", SetTransform_Angle_Engine);
 
 		mono_add_internal_call("Input::IsKeyPressed_Engine", Input_IsKeyPressed);
 		mono_add_internal_call("Input::IsMousePressed_Engine", Input_IsMouseButtonPressed);
@@ -98,13 +102,13 @@ namespace Engine {
 		gCoordinator.HasCom<Transform>(transform, id);
 		transform->position = *inVec2;
 	}
-
 	void MoveTransform_Position_Engine(unsigned int id, glm::vec2* inVec2) {
 		//call hascomponent with entityid
 		Transform* transform = nullptr;
 		gCoordinator.HasCom<Transform>(transform, id);
 		transform->position += *inVec2;
 	}
+
 
 	void GetTransform_Scale_Engine(unsigned int id, glm::vec2* outVec2) {
 		//call hascomponent with entityid
@@ -117,6 +121,20 @@ namespace Engine {
 		Transform* transform = nullptr;
 		gCoordinator.HasCom<Transform>(transform, id);
 		transform->scale = *inVec2;
+	}
+
+
+	void GetTransform_Angle_Engine(unsigned int id, float* outVec2) {
+		//call hascomponent with entityid
+		Transform* transform = nullptr;
+		gCoordinator.HasCom<Transform>(transform, id);
+		*outVec2 = transform->angle;
+	}
+	void SetTransform_Angle_Engine(unsigned int id, float* inVec2) {
+		//call hascomponent with entityid
+		Transform* transform = nullptr;
+		gCoordinator.HasCom<Transform>(transform, id);
+		transform->angle = *inVec2;
 	}
 
 

@@ -27,7 +27,7 @@ public class Test : MonoBehaviour
         //Transform tem = GetTransform();
         //Vec2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
-        //go2.position = new Vec2(200, -300);
+        //go2.position = new Vec2(0, 0);
         Console.WriteLine(go2.position);
         //Console.WriteLine(go2);
 
@@ -64,6 +64,16 @@ public class Test : MonoBehaviour
             go2.Move(new Vec2(0, -10));
         }
 
+        if (Input.IsKeyPressed(KeyCode.Q))
+        {
+            go2.angle += 0.1F;
+        }
+
+        if (Input.IsKeyPressed(KeyCode.E))
+        {
+            go2.angle -= 0.1F;
+        }
+
     }
 
     public override void OnCollisionEnter() {
@@ -73,6 +83,16 @@ public class Test : MonoBehaviour
     public override void OnCollisionExit()
     {
         Console.WriteLine("Test Collision Exit");
+    }
+
+    public override void OnTriggerEnter()
+    {
+        Console.WriteLine("Test Trigger Enter");
+    }
+
+    public override void OnTriggerExit()
+    {
+        Console.WriteLine("Test Trigger Exit");
     }
 
 }

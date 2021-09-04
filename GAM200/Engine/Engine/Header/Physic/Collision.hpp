@@ -27,6 +27,10 @@ namespace Engine {
 	namespace CollisionImplementation {
 		//Collision physic----------------------------------------
 		bool isColliding(glm::vec2& dir, const Collider& obj1, bool ent1Moveable, const Collider& obj2, bool ent2Moveable);
+		/*
+		Shape 1's diagonal (center to one corner) is checked with Shape 2's edge (Repeated for all diagonal to all edge)
+		Shape 1 and Shape 2 switch position and is checked again
+		*/
 		bool isCollidingSQUAREtoSQUARE(glm::vec2& dir, const Collider& obj1, const Collider& obj2);
 		bool isCollidingSQUAREtoCIRCLE(glm::vec2& dir, const Collider& obj1, const Collider& obj2);
 		bool isCollidingCIRCLEtoSQUARE(glm::vec2& dir, const Collider& obj1, const Collider& obj2);

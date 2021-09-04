@@ -7,7 +7,7 @@
 This file has the function definition for Physic
 
 The physic here simulate pushing physic by moving objects out of each other 
-in opposite direction (Note: is moveable have to be true) and when applied 
+in opposite direction (Note: Need ti have rigidbody) and when applied 
 for a period of time, it looks like one object is pushing another.
 
 collider position is in the center of itself and width and height is only half of itself total width and height
@@ -61,51 +61,142 @@ namespace Engine {
         }
 
         bool isCollidingSQUAREtoSQUARE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
-            //Check whether obj1 is outside range of obj2
-            if (obj1.offset_position.x + obj1.offset_scale.x < obj2.offset_position.x - obj2.offset_scale.x ||
-                obj1.offset_position.x - obj1.offset_scale.x > obj2.offset_position.x + obj2.offset_scale.x ||
-                obj1.offset_position.y + obj1.offset_scale.y < obj2.offset_position.y - obj2.offset_scale.y ||
-                obj1.offset_position.y - obj1.offset_scale.y > obj2.offset_position.y + obj2.offset_scale.y)
-                return false;
+            //AABB
+            ////Check whether obj1 is outside range of obj2
+            //if (obj1.offset_position.x + obj1.offset_scale.x < obj2.offset_position.x - obj2.offset_scale.x ||
+            //    obj1.offset_position.x - obj1.offset_scale.x > obj2.offset_position.x + obj2.offset_scale.x ||
+            //    obj1.offset_position.y + obj1.offset_scale.y < obj2.offset_position.y - obj2.offset_scale.y ||
+            //    obj1.offset_position.y - obj1.offset_scale.y > obj2.offset_position.y + obj2.offset_scale.y)
+            //    return false;
 
-            dir = (obj1.offset_position - obj2.offset_position);
-            dir = glm::normalize(dir);
+            //dir = (obj1.offset_position - obj2.offset_position);
+            //dir = glm::normalize(dir);
+            //return true;
+
+            std::vector<glm::vec2> obj1Corner(4);
+            glm::vec2 xaxis1{ glm::cos(glm::radians(obj1.angle)), glm::sin(glm::radians(obj1.angle)) };
+            glm::vec2 yaxis1{ glm::cos(glm::radians(90.f + obj1.angle)), glm::sin(glm::radians(90.f + obj1.angle)) };
+            glm::vec2 obj1Cen = obj1.offset_position;
+            obj1Corner[0] = obj1Cen + obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top right
+            obj1Corner[1] = obj1Cen - obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top left
+            obj1Corner[2] = obj1Cen - obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot left
+            obj1Corner[3] = obj1Cen + obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot right
+            
+            std::vector<glm::vec2> obj2Corner(4);
+            glm::vec2 xaxis2{ glm::cos(glm::radians(obj2.angle)), glm::sin(glm::radians(obj2.angle)) };
+            glm::vec2 yaxis2{ glm::cos(glm::radians(90 + obj2.angle)), glm::sin(glm::radians(90 + obj2.angle)) };
+            glm::vec2 obj2Cen = obj2.offset_position;
+            obj2Corner[0] = obj2Cen + obj2.offset_scale.x * xaxis2 + obj2.offset_scale.y * yaxis2; //top right
+            obj2Corner[1] = obj2Cen - obj2.offset_scale.x * xaxis2 + obj2.offset_scale.y * yaxis2; //top left
+            obj2Corner[2] = obj2Cen - obj2.offset_scale.x * xaxis2 - obj2.offset_scale.y * yaxis2; //bot left
+            obj2Corner[3] = obj2Cen + obj2.offset_scale.x * xaxis2 - obj2.offset_scale.y * yaxis2; //bot right
+
+            std::vector<glm::vec2>* shape1 = &obj1Corner;
+            glm::vec2* shape1Cen = &obj1Cen;
+            std::vector<glm::vec2>* shape2 = &obj2Corner;
+            glm::vec2* shape2Cen = &obj2Cen;
+
+            for (int num = 0; num < 2; num++) {
+                if (num == 1) {
+                    shape1 = &obj2Corner;
+                    //shape1Cen = &obj2Cen;
+                    shape2 = &obj1Corner;
+                    //shape2Cen = &obj1Cen;
+                }
+
+                ////Diagonals of shape1
+                //for (int p = 0; p < shape1->size(); p++) {
+                //    glm::vec2 line1_Start = *shape1Cen;
+                //    glm::vec2 line1_End = (*shape1)[p];
+                //
+                //    //Line Edge of shape2
+                //    for (int q = 0; q < shape2->size(); q++) {
+                //        glm::vec2 line2_Start = (*shape2)[q];
+                //        glm::vec2 line2_End = (*shape2)[(q + 1) % shape2->size()];
+
+                //        float h = (line2_End.x - line2_Start.x) * (line1_Start.y - line1_End.y) - (line1_Start.x - line1_End.x) * (line2_End.y - line2_Start.y);
+                //        float t1 = ((line2_Start.y - line2_End.y) * (line1_Start.x - line2_Start.x) + (line2_End.x - line2_Start.x) * (line1_Start.y - line2_Start.y)) / h;
+                //        float t2 = ((line1_Start.y - line1_End.y) * (line1_Start.x - line2_Start.x) + (line1_End.x - line1_Start.x) * (line1_Start.y - line2_Start.y)) / h;
+
+                //
+                //        if (t1 >= 0.0f && t1 < 1.0f && t2 >= 0.0f && t2 < 1.0f)
+                //        {
+
+                //            //dir.x += (1.0f - t1) * (line1_End.x - line1_Start.x);
+                //            //dir.y += (1.0f - t1) * (line1_End.y - line1_Start.y);
+                //            return true;
+                //        }
+                //    }
+                //}
+
+                for (int a = 0; a < shape1->size(); a++) {
+                    int b = (a + 1) % shape1->size();
+                    glm::vec2 axisProj = { -((*shape1)[b].y - (*shape1)[a].y), (*shape1)[b].x - (*shape1)[a].x };
+                    axisProj = glm::normalize(axisProj);
+
+                    // Work out min and max 1D points for r1
+                    float min_r1 = INFINITY, max_r1 = -INFINITY;
+                    for (int p = 0; p < shape1->size(); p++)
+                    {
+                        float q = ((*shape1)[p].x * axisProj.x + (*shape1)[p].y * axisProj.y);
+                        min_r1 = std::min(min_r1, q);
+                        max_r1 = std::max(max_r1, q);
+                    }
+
+                    // Work out min and max 1D points for r2
+                    float min_r2 = INFINITY, max_r2 = -INFINITY;
+                    for (int p = 0; p < shape2->size(); p++)
+                    {
+                        float q = ((*shape2)[p].x * axisProj.x + (*shape2)[p].y * axisProj.y);
+                        min_r2 = std::min(min_r2, q);
+                        max_r2 = std::max(max_r2, q);
+                    }
+
+                    if (!(max_r2 >= min_r1 && max_r1 >= min_r2))
+                        return false;
+                }
+            }
+
+            //dir = glm::vec2{ overlap ,overlap };
+            //return false;
             return true;
         }
 
         bool isCollidingSQUAREtoCIRCLE(glm::vec2& dir, const Collider& col1, const Collider& col2) {
-            cornerBool = true;
-            //Check if circle is corner of square (same logic as square to square collision
-            if (col2.offset_position.x < col1.offset_position.x - col1.offset_scale.x)
-                nearestPoint.x = col1.offset_position.x - col1.offset_scale.x;
-            else if (col2.offset_position.x > col1.offset_position.x + col1.offset_scale.x)
-                nearestPoint.x = col1.offset_position.x + col1.offset_scale.x;
-            else {
-                cornerBool = false;
-            }
+            //AABB
+            //cornerBool = true;
+            ////Check if circle is corner of square (same logic as square to square collision
+            //if (col2.offset_position.x < col1.offset_position.x - col1.offset_scale.x)
+            //    nearestPoint.x = col1.offset_position.x - col1.offset_scale.x;
+            //else if (col2.offset_position.x > col1.offset_position.x + col1.offset_scale.x)
+            //    nearestPoint.x = col1.offset_position.x + col1.offset_scale.x;
+            //else {
+            //    cornerBool = false;
+            //}
 
-            if (col2.offset_position.y < col1.offset_position.y - col1.offset_scale.y)
-                nearestPoint.y = col1.offset_position.y - col1.offset_scale.y;
-            else if (col2.offset_position.y > col1.offset_position.y + col1.offset_scale.y)
-                nearestPoint.y = col1.offset_position.y + col1.offset_scale.y;
-            else {
-                cornerBool = false;
-            }
+            //if (col2.offset_position.y < col1.offset_position.y - col1.offset_scale.y)
+            //    nearestPoint.y = col1.offset_position.y - col1.offset_scale.y;
+            //else if (col2.offset_position.y > col1.offset_position.y + col1.offset_scale.y)
+            //    nearestPoint.y = col1.offset_position.y + col1.offset_scale.y;
+            //else {
+            //    cornerBool = false;
+            //}
 
-            if (cornerBool) {
-                //Store how much it intersect
-                length = col2.offset_scale.x - glm::length(nearestPoint - col2.offset_position);
-                if (length < 0) return false;
+            //if (cornerBool) {
+            //    //Store how much it intersect
+            //    length = col2.offset_scale.x - glm::length(nearestPoint - col2.offset_position);
+            //    if (length < 0) return false;
 
-                dir = col1.offset_position - col2.offset_position;
-                dir = glm::normalize(dir);
-                return true;
-            }
+            //    dir = col1.offset_position - col2.offset_position;
+            //    dir = glm::normalize(dir);
+            //    return true;
+            //}
 
-            else {
-                return isCollidingSQUAREtoSQUARE(dir, col1, col2);
-            }
+            //else {
+            //    return isCollidingSQUAREtoSQUARE(dir, col1, col2);
+            //}
 
+            //return false;
             return false;
         }
 
@@ -124,11 +215,6 @@ namespace Engine {
             //only calculate if it collides
             dir = glm::normalize(dir);
             return true;
-            /*}
-
-            else {
-                return false;
-            }*/
         }
 
 
@@ -150,34 +236,52 @@ namespace Engine {
         }
 
         void CollisionResolutionSQUAREtoSQUARE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
-            float lenX = 0.f, lenY = 0.f;
-            //Get difference in distance (see how much they intersect)
-            lenY = col1.offset_scale.y + col2.offset_scale.y - abs(col2.offset_position.y - col1.offset_position.y);
-            lenX = col1.offset_scale.x + col2.offset_scale.x - abs(col2.offset_position.x - col1.offset_position.x);
-            //more x mean intersect on y
-            //E.g one square on top of another square, lenX is huge but they are intersecting in y axis
-            if (lenX > lenY) lenX = 0.f;
-            else if (lenX < lenY) lenY = 0.f;
+            //float lenX = 0.f, lenY = 0.f;
+            ////Get difference in distance (see how much they intersect)
+            //lenY = col1.offset_scale.y + col2.offset_scale.y - abs(col2.offset_position.y - col1.offset_position.y);
+            //lenX = col1.offset_scale.x + col2.offset_scale.x - abs(col2.offset_position.x - col1.offset_position.x);
+            ////more x mean intersect on y
+            ////E.g one square on top of another square, lenX is huge but they are intersecting in y axis
+            //if (lenX > lenY) lenX = 0.f;
+            //else if (lenX < lenY) lenY = 0.f;
 
-            glm::vec2 up{ 0.f, dir.y }, right{ dir.x, 0.f };
+            //glm::vec2 up{ 0.f, dir.y }, right{ dir.x, 0.f };
+
+            //if (ent1IsMoveable && ent2IsMoveable) {
+            //    trans1.position += lenX / 2 * right; //for col1
+            //    trans2.position += lenX / 2 * -right; //for col2
+            //    trans1.position += lenY / 2 * up; //for col1
+            //    trans2.position += lenY / 2 * -up; //for col2
+            //}
+
+            ////if only one moveable it should move by the full length amount
+            //else if (ent1IsMoveable) {
+            //    trans1.position += lenX * right; //for col1
+            //    trans1.position += lenY * up; //for col1
+            //}
+
+            //else if (ent2IsMoveable) {
+            //    trans2.position += lenX * -right; //for col2
+            //    trans2.position += lenY * -up; //for col2
+            //}
 
             if (ent1IsMoveable && ent2IsMoveable) {
-                trans1.position += lenX / 2 * right; //for col1
-                trans2.position += lenX / 2 * -right; //for col2
-                trans1.position += lenY / 2 * up; //for col1
-                trans2.position += lenY / 2 * -up; //for col2
+                /*trans1.position += 
+                trans2.position += */
+                std::cout << "Resolving 1\n";
             }
 
             //if only one moveable it should move by the full length amount
             else if (ent1IsMoveable) {
-                trans1.position += lenX * right; //for col1
-                trans1.position += lenY * up; //for col1
+                //std::cout << "Resolving 2\n";
+                trans1.position -= dir;
             }
 
             else if (ent2IsMoveable) {
-                trans2.position += lenX * -right; //for col2
-                trans2.position += lenY * -up; //for col2
+                //std::cout << "Resolving 3\n";
+                trans2.position += dir;
             }
+
         }
 
         void CollisionResolutionSQUAREtoCIRCLE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {

@@ -46,7 +46,18 @@ public struct Transform : Component
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetTransform_Scale_Engine(uint entityID, ref Vec2 inVec2);
 
-    public override string ToString() { return "Pos: " + position + " scale: " + scale; }
+    public float angle
+    {
+        get { GetTransform_Angle_Engine(entityId, out float result);
+              return result; }
+        set { SetTransform_Angle_Engine(entityId, ref value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTransform_Angle_Engine(uint entityID, out float outVec2);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetTransform_Angle_Engine(uint entityID, ref float inVec2);
+
+    //public override string ToString() { return "Pos: " + position + " scale: " + scale; }
 
     public void Move(Vec2 dir)
     {

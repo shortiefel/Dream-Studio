@@ -78,6 +78,8 @@ namespace Engine {
 				scale.PushBack(trans->scale.y, doc.GetAllocator());
 				objType.AddMember("Scale", scale, doc.GetAllocator());
 
+				objType.AddMember("Angle", trans->angle, doc.GetAllocator());
+
 				entityObject.AddMember("Transform", objType, doc.GetAllocator());
 			}
 
@@ -97,6 +99,8 @@ namespace Engine {
 				scale.PushBack(col->offset_scale.x, doc.GetAllocator());
 				scale.PushBack(col->offset_scale.y, doc.GetAllocator());
 				objType.AddMember("Scale", scale, doc.GetAllocator());
+
+				objType.AddMember("Angle", col->angle, doc.GetAllocator());
 
 				objType.AddMember("isTrigger", col->isTrigger, doc.GetAllocator());
 
@@ -250,6 +254,7 @@ namespace Engine {
 					Transform{
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
+						itr->value["Angle"].GetFloat(),
 					});
 			}
 
@@ -260,6 +265,7 @@ namespace Engine {
 						ColliderType(itr->value["ColliderType"].GetInt()),
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
+						itr->value["Angle"].GetFloat(),
 						itr->value["isTrigger"].GetBool()
 					});
 			}

@@ -1,0 +1,6 @@
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\EngineCS\bin\Debug\EngineCS.dll
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\EngineCS\bin\Debug\EngineCS.pdb
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.csproj.AssemblyReference.cache
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.csproj.CoreCompileInputs.cache
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.dll
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.pdb

@@ -24,49 +24,49 @@ Technology is prohibited.
 
 
 namespace Engine {
-	extern Coordinator gCoordinator;
-	std::shared_ptr<ScriptSystem> ScriptSystem::SS;
-	
-	void ScriptSystem::Update(float dt) {
-		/*for (auto const& entity : SS->mEntities) {
-			auto& cscript = gCoordinator.GetCom<CSScript>(entity);
-			Scripting::CallFunction(cscript.object, cscript.UpdateFunc);
-		}*/
-	}
+	//extern Coordinator gCoordinator;
+	//std::shared_ptr<ScriptSystem> ScriptSystem::SS;
+	//
+	//void ScriptSystem::Update(float dt) {
+	//	/*for (auto const& entity : SS->mEntities) {
+	//		auto& cscript = gCoordinator.GetCom<CSScript>(entity);
+	//		Scripting::CallFunction(cscript.object, cscript.UpdateFunc);
+	//	}*/
+	//}
 
-	//Function is called when GameScene Play function is called
-	//Function is called whenever user press play
-	void ScriptSystem::Play() {
+	////Function is called when GameScene Play function is called
+	////Function is called whenever user press play
+	//void ScriptSystem::Play() {
 
-		//Scripting::ReloadMono();
-		//std::string func = "Constructor";
-		//for (auto const& entity : SS->mEntities) {
-		//	auto& cscript = gCoordinator.GetCom<CSScript>(entity);
-		//	//Store obj---------------------------------------------------------
-		//	void* param[] = { (void*)&entity }; //Change to entity.id for the future
-		//	Scripting::ReloadObject(cscript.object, cscript, param);
-		//}
-	}
+	//	//Scripting::ReloadMono();
+	//	//std::string func = "Constructor";
+	//	//for (auto const& entity : SS->mEntities) {
+	//	//	auto& cscript = gCoordinator.GetCom<CSScript>(entity);
+	//	//	//Store obj---------------------------------------------------------
+	//	//	void* param[] = { (void*)&entity }; //Change to entity.id for the future
+	//	//	Scripting::ReloadObject(cscript.object, cscript, param);
+	//	//}
+	//}
 
-	//Function is opposite of play
-	void ScriptSystem::Stop() {
-		/*for (auto const& entity : SS->mEntities) {
-			auto& cscript = gCoordinator.GetCom<CSScript>(entity);
-			Scripting::CallFunction(cscript.object, cscript.DestroyFunc);
-		}*/
-	}
+	////Function is opposite of play
+	//void ScriptSystem::Stop() {
+	//	/*for (auto const& entity : SS->mEntities) {
+	//		auto& cscript = gCoordinator.GetCom<CSScript>(entity);
+	//		Scripting::CallFunction(cscript.object, cscript.DestroyFunc);
+	//	}*/
+	//}
 
-	bool ScriptSystem::Create(const std::shared_ptr<ScriptSystem>& scriptSystem) {
-		/*SS = scriptSystem;
-		LOG_INSTANCE("Script System created");
+	//bool ScriptSystem::Create(const std::shared_ptr<ScriptSystem>& scriptSystem) {
+	//	/*SS = scriptSystem;
+	//	LOG_INSTANCE("Script System created");
 
-		return true;*/
-	}
-	void ScriptSystem::Destroy() {
-		//LOG_INSTANCE("Script System destroyed");
-		//delete s_instance; 
-	}
+	//	return true;*/
+	//}
+	//void ScriptSystem::Destroy() {
+	//	//LOG_INSTANCE("Script System destroyed");
+	//	//delete s_instance; 
+	//}
 
-	ScriptSystem::~ScriptSystem() { Destroy(); }
+	//ScriptSystem::~ScriptSystem() { Destroy(); }
 
 }

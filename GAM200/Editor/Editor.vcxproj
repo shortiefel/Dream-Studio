@@ -73,12 +73,12 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
@@ -87,12 +87,12 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Editor/Header;$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>

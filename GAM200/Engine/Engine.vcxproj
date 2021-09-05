@@ -73,27 +73,27 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
     <LibraryPath>
     </LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/Mono;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <LibraryPath />

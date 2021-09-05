@@ -29,6 +29,7 @@ public class Test : MonoBehaviour
         //Console.WriteLine(pos);
         //go2.position = new Vec2(0, 0);
         Console.WriteLine(go2.position);
+       
         //Console.WriteLine(go2);
 
         //go2.scale = new Vec2(30, 100);

@@ -142,9 +142,9 @@ namespace Engine {
 
 
 	void ScriptEngine::Create() {
-		//Will to be changed to be automatic (can detect folders
-		mono_set_dirs("C:/Users/jianw/Desktop/Digipen/GAM200/GAM200/External Resources/include/Mono/lib",
-			"C:/Users/jianw/Desktop/Digipen/GAM200/GAM200/External Resources/include/Mono/etc");
+		//Rlative path from exe
+		mono_set_dirs("Vendor/Mono/lib",
+				      "Vendor/Mono/etc");
 
 		domain = mono_jit_init("Root Domain");
 

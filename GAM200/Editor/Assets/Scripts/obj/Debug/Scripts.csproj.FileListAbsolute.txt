@@ -1,0 +1,5 @@
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Data\CSScript.dll
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Data\CSScript.pdb
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csprojResolveAssemblyReference.cache
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb

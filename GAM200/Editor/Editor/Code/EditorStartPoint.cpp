@@ -41,7 +41,7 @@ namespace Editor {
 
 		GUI::SetSceneFBO();
 		Engine::GraphicSystem::Update(dt, EditorSceneCamera::GetTransform());
-		Engine::GraphicSystem::Render();
+		Engine::GraphicSystem::Render(EditorSceneCamera::GetTransform());
 
 		GUI::Update();
 		GUI::Draw();

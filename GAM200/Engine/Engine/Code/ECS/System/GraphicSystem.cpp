@@ -23,6 +23,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 
+#include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
+
 #include "Engine/Header/Graphic/Graphic.hpp"
 
 //#include "Engine/Header/Math/Matrix.hpp"
@@ -31,6 +33,10 @@ Technology is prohibited.
 namespace Engine {
 	extern Coordinator gCoordinator;
 	std::shared_ptr<GraphicSystem> GraphicSystem::GS;
+
+	GLboolean GraphicSystem::isDebugDraw = GL_TRUE;
+	GLint GraphicSystem::ID = 0;
+
 
 	//GLuint setup_texobj(std::string);
 	//GLuint texobj_hdl; //-----remove
@@ -64,10 +70,11 @@ namespace Engine {
 		}
 	}
 
-	void GraphicSystem::Render() {
+	void GraphicSystem::Render(MathD::Mat3 camMatrix) {
 		GraphicImplementation::BindFramebuffer();
 
-		glClearColor(1, 0, 1, 1);
+		// set background to purple color
+		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//For all entities in GraphicSystem
@@ -77,23 +84,18 @@ namespace Engine {
 
 			glBindVertexArray(transform.mdl_ref->second.vaoid);
 
-			// leaving it here atm, need to change to texture tag with model(?)
-			// have not call ~texture() yet
-			// frames super low, (no texture > test2 > test1) 
-			// assumption is bc of doing texture loading in render
-			//Texture texture("Assets/Textures/test2.png");
-			//texture.Bind(6);
+			// bind to slot 6
 			glBindTextureUnit(6, texture.getTexObj());
-
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-			// load shader program in use by this object
-			//renderer.shd_ref->second.Use();
+			// load shader program
 			glUseProgram(transform.shd_ref->second.GetHandle());
 
+
+			// set uniform variable for texture colour; from slot 6
 			GLuint tex_loc = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uTex2d");
 			glUniform1i(tex_loc, 6);
 			if (tex_loc == -1) {
@@ -104,9 +106,7 @@ namespace Engine {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			// bind VAO of this object's model
-			//glBindVertexArray(renderer.mdl_ref->second.vaoid);
-
+			// set uniform variable for uModel_to_NDC matrix
 			GLint uniform_var_loc1 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uModel_to_NDC");
 			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, MathD::value_ptr(transform.mdl_to_ndc_xform));
 			if (uniform_var_loc1 == -1) {
@@ -114,13 +114,108 @@ namespace Engine {
 				std::exit(EXIT_FAILURE);
 			}
 
-			//glDrawElements(mdl_ref->second.primitive_type, mdl_ref->second.draw_cnt, GL_UNSIGNED_SHORT, NULL);
+			// set uniform variable for uID
+			ID = 0;
+			uniform_var_loc1 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uID");
+			glUniform1i(uniform_var_loc1, ID);
+			if (uniform_var_loc1 == -1) {
+				std::cout << "uID = 0 variable doesn't exist!!!\n";
+				std::exit(EXIT_FAILURE);
+			}
+
+			// draw object
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			glDrawArrays(transform.mdl_ref->second.primitive_type, 0, transform.mdl_ref->second.draw_cnt);
+
+			// when debugDraw is on
+			if (isDebugDraw == GL_TRUE) {
+				// when object has collider, get collider matrix
+				Collider* col = nullptr;
+				if (gCoordinator.HasCom<Collider>(col, entity) && col != nullptr) {
+					// set uniform variable for Collider_Matrix matrix
+					MathD::Mat3 colliderMat;
+
+					MathD::Vec2 p = MathD::Vec2{};
+					MathD::Vec2 s = MathD::Vec2{};
+
+
+					p = col->pos + transform.pos;
+					s = col->scale + transform.scale;
+
+					colliderMat = {
+						//Translate
+						MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
+									  MathD::Vec3(0, 1.f, 0),
+									  MathD::Vec3(p.x, p.y, 1.f) }
+						*
+						//Scale
+						MathD::Mat3{ MathD::Vec3(s.x, 0, 0),
+										MathD::Vec3(0, s.y, 0),
+										MathD::Vec3(0, 0, 1.f) }
+					};
+
+
+					colliderMat = camMatrix * colliderMat;
+
+
+					/*
+					colliderMat = MathD::Mat3{ MathD::Vec3(col->scale.x, 0, 0),
+											   MathD::Vec3(0, col->scale.y, 0),
+											   MathD::Vec3(col->pos.x, col->pos.y, 1.f) };
+
+				
+
+					//colliderMat = MathD::Mat3{ MathD::Vec3(transform.pos.x, 0, 0),
+					//						   MathD::Vec3(0, transform.pos.y, 0),
+					//						   MathD::Vec3(transform.scale.x, transform.scale.y, 1.f) };
+
+
+
+					//colliderMat = transform.mdl_to_ndc_xform;
+
+
+					/*
+					colliderMat =
+						//Translate
+						MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
+									  MathD::Vec3(0, 1.f, 0),
+									  MathD::Vec3(transform.pos.x, transform.pos.y, 1.f) }
+						*
+						//Scale
+						MathD::Mat3{ MathD::Vec3(transform.scale.x, 0, 0),
+									 MathD::Vec3(0, transform.scale.y, 0),
+									 MathD::Vec3(0, 0, 1.f) };
+					*/
+
+
+					GLint uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "Collider_Matrix");
+					glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, MathD::value_ptr(colliderMat));
+					if (uniform_var_loc3 == -1) {
+						std::cout << "Collider_Matrix variable doesn't exist!!!\n";
+						std::exit(EXIT_FAILURE);
+					}
+
+					// set uniform variable for uID
+					ID = 1;
+					uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uID");
+					glUniform1i(uniform_var_loc3, ID);
+					if (uniform_var_loc3 == -1) {
+						std::cout << "uID = 1 variable doesn't exist!!!\n";
+						std::exit(EXIT_FAILURE);
+					}
+
+					//std::cout << "Entity: " << entity << " case: " << ID << std::endl;
+
+					// draw outlines of object
+					glLineWidth(3.f);
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+					glDrawArrays(transform.mdl_ref->second.primitive_type, 0, transform.mdl_ref->second.draw_cnt);
+				}
+			}
 
 			// unbind VAO and unload shader program
 			texture.Unbind();
 			glBindVertexArray(0);
-
 			transform.shd_ref->second.UnUse();
 		}
 

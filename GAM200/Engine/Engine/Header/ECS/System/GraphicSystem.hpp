@@ -32,8 +32,12 @@ namespace Engine {
 		~GraphicSystem();
 		//void Destroy();
 
+
+		static GLboolean isDebugDraw;
+		static GLint ID;
+
 		static void Update(float dt, MathD::Mat3 camMatrix = CameraSystem::GetTransform());
-		static void Render();
+		static void Render(MathD::Mat3 camMatrix = CameraSystem::GetTransform());
 	private:
 		//static GraphicSystem* gs;
 		static std::shared_ptr<GraphicSystem> GS;

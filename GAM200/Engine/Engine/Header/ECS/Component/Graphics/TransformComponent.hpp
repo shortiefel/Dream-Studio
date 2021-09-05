@@ -44,8 +44,8 @@ namespace Engine {
 							  glm::vec3(0, 1.f, 0),
 							  glm::vec3(position.x, position.y, 1.f) }
 				*
-				glm::mat3{ glm::vec3(std::cos(angle), std::sin(angle), 0),
-							  glm::vec3(-std::sin(angle), std::cos(angle), 0),
+				glm::mat3{ glm::vec3(std::cos(glm::radians(angle)), std::sin(glm::radians(angle)), 0),
+							  glm::vec3(-std::sin(glm::radians(angle)), std::cos(glm::radians(angle)), 0),
 							  glm::vec3(0.f, 0.f, 1.f) }
 				*
 				//Scale

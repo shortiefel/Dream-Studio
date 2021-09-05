@@ -71,6 +71,18 @@ public class MonoBehaviour
         return default(T);
     }
 
+    public T GetComponentWithID<T>(uint id) where T : Component, new()
+    {
+        if (HasComponent(id, typeof(T)))
+        {
+            T component = new T();
+            component.entityId = id;
+            return component;
+        }
+
+        return default(T);
+    }
+
     public bool HasComponent(uint id, Type type)
     {
         

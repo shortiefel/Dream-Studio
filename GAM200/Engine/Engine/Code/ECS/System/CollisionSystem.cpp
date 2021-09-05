@@ -140,6 +140,7 @@ namespace Engine {
 					glm::vec2 EpsilonCheck = collider2.offset_position - collider1.offset_position;
 					if (EpsilonCheck.x < glm::epsilon<float>() && EpsilonCheck.x > -glm::epsilon<float>() &&
 						EpsilonCheck.y < glm::epsilon<float>() && EpsilonCheck.y > -glm::epsilon<float>()) {
+						std::cout << "too close \n";
 						collider1.offset_position.x -= 0.3f * transform1.scale.x;
 						transform1.position.x -= 0.3f * transform1.scale.x;
 						dir = glm::vec2{ 1.f, 0.f };

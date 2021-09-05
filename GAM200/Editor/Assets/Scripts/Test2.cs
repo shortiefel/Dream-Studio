@@ -10,47 +10,62 @@ public class Test2 : MonoBehaviour
     public int nothealth;
 
     Transform go2;
+    Transform objTrans1;
 
     public override void Init()
     {
         go2 = GetComponent<Transform>();
+        objTrans1 = GetComponentWithID<Transform>(0); //DOesnt work for replay since number is hardcoded, entity value doesnt reset
         //Transform tem = GetTransform();
         //Vec2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
 
         //Console.WriteLine(go2);
-        //go2.position = new Vec2(-70F, 110F);
+        //go2.position = new Vec2(-104.378f, 138.301f);
         //go2.scale = new Vec2(30, 100);
         /*Console.WriteLine(go2.position + new Vec2(10,10));
 
         go2.position += new Vec2(500, 500);
         Console.WriteLine(go2.position);*/
 
-
     }
 
 
     public override void Update()
     {
-        //Console.WriteLine("new Update");
-        //Console.WriteLine(Input::GetMouse);
-        if (Input.IsKeyPressed(KeyCode.Left)) {
+
+
+        //objTrans1.position = go2.position;
+
+        //Console.WriteLine(go2.position);
+        //Console.WriteLine(go2.position);
+        if (Input.IsKeyPressed(KeyCode.J)) {
             go2.Move(new Vec2(-10, 0));
         }
 
-        if (Input.IsKeyPressed(KeyCode.Right))
+        if (Input.IsKeyPressed(KeyCode.L))
         {
             go2.Move(new Vec2(10, 0));
         }
 
-        if (Input.IsKeyPressed(KeyCode.Up))
+        if (Input.IsKeyPressed(KeyCode.I))
         {
             go2.Move(new Vec2(0, 10));
         }
 
-        if (Input.IsKeyPressed(KeyCode.Down))
+        if (Input.IsKeyPressed(KeyCode.K))
         {
             go2.Move(new Vec2(0, -10));
+        }
+
+        if (Input.IsKeyPressed(KeyCode.U))
+        {
+            go2.angle += 5;
+        }
+
+        if (Input.IsKeyPressed(KeyCode.O))
+        {
+            go2.angle -= 5;
         }
 
     }

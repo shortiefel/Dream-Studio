@@ -25,6 +25,11 @@ public struct Vec2
         return new Vec2(lhs.x + rhs.x, lhs.y + rhs.y);
     }
 
+    public static Vec2 operator *(Vec2 lhs, float num)
+    {
+        return new Vec2(lhs.x * num, lhs.y * num);
+    }
+
     public override string ToString()
     {
         return "Vec2: " + x + " " + y;

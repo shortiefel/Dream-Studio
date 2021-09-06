@@ -2,14 +2,14 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\jianwen.o\Desktop\Gam200\GAM200\GAM200\bin\Release\x64\Editor\Editor.exe</FullPath>
+      <FullPath>C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\bin\Release\x64\Editor\Editor.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
   <SatelliteDlls />
   <NonRecipeFileRefs>
     <NonRecipeFileRef>
-      <FullPath>C:\Users\jianwen.o\Desktop\Gam200\GAM200\GAM200\EngineCS\EngineCS.csproj</FullPath>
+      <FullPath>C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\EngineCS\EngineCS.csproj</FullPath>
     </NonRecipeFileRef>
   </NonRecipeFileRefs>
 </Project>

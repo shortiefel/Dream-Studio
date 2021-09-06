@@ -1,2 +1,4 @@
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\bin-int\Release\x64\Editor\Editor.vcxproj.AssemblyReference.cache
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\bin-int\Release\x64\Editor\Editor.vcxproj.CopyComplete
+C:\Users\jianwen.o\Desktop\Gam200\GAM200\GAM200\bin-int\Release\x64\Editor\Editor.vcxproj.AssemblyReference.cache
+C:\Users\jianwen.o\Desktop\Gam200\GAM200\GAM200\bin-int\Release\x64\Editor\Editor.vcxproj.CopyComplete

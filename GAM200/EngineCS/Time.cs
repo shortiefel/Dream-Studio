@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices; //For internal calls
 
-public static class Time
+public  class Time
 {
-    public static float deltaTime;
-
-    static void SetDeltaTime(float dt)
+    public static float dt
     {
-        deltaTime = dt;
+        get
+        {
+            GetDeltaTime_Engine(out float result);
+            return result;
+        }
     }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetDeltaTime_Engine(out float outFloat);
 }

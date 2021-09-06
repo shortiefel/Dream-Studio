@@ -47,32 +47,32 @@ public class Test : MonoBehaviour
         //Console.WriteLine("new Update");
         //Console.WriteLine(Input::GetMouse);
         if (Input.IsKeyPressed(KeyCode.A)) {
-            go2.Move(new Vec2(-5, 0));
+            go2.Move(new Vec2(-250 * Time.dt, 0));
         }
 
         if (Input.IsKeyPressed(KeyCode.D))
         {
-            go2.Move(new Vec2(5, 0));
+            go2.Move(new Vec2(250 * Time.dt, 0));
         }
 
         if (Input.IsKeyPressed(KeyCode.W))
         {
-            go2.Move(new Vec2(0, 5));
+            go2.Move(new Vec2(0, 250 * Time.dt));
         }
 
         if (Input.IsKeyPressed(KeyCode.S))
         {
-            go2.Move(new Vec2(0, -5));
+            go2.Move(new Vec2(0, -250 * Time.dt));
         }
 
         if (Input.IsKeyPressed(KeyCode.Q))
         {
-            go2.angle += 5;
+            go2.angle += 250 * Time.dt;
         }
 
         if (Input.IsKeyPressed(KeyCode.E))
         {
-            go2.angle -= 5;
+            go2.angle -= 250 * Time.dt;
         }
 
     }

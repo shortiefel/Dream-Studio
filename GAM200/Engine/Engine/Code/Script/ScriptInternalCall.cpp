@@ -26,6 +26,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
+#include "Engine/Header/DeltaTime/DeltaTime.hpp" //To get deltaTime
+
 namespace Engine {
 
 	extern Coordinator gCoordinator;
@@ -47,6 +49,8 @@ namespace Engine {
 
 	bool HasComponent_Transform_Engine(unsigned int id);
 
+	void GetDeltaTime_Engine(float* dt);
+
 
 	void RegisterInternalCall() {
 		mono_add_internal_call("Transform::GetTransform_Position_Engine", GetTransform_Position_Engine);
@@ -62,6 +66,8 @@ namespace Engine {
 		mono_add_internal_call("Input::GetMousePosition_Engine", Input_GetMousePosition);
 
 		mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
+
+		mono_add_internal_call("Time::GetDeltaTime_Engine", GetDeltaTime_Engine);
 	}
 
 
@@ -163,5 +169,10 @@ namespace Engine {
 	bool HasComponent_Transform_Engine(unsigned int id) {
 		Transform* tem = nullptr;
 		return gCoordinator.HasCom<Transform>(tem, id);
+	}
+
+
+	void GetDeltaTime_Engine(float* dt) {
+		*dt = DeltaTime::GetSec();
 	}
 }

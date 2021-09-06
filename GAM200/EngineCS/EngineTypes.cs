@@ -45,7 +45,8 @@ public struct Transform : Component
     internal static extern void GetTransform_Scale_Engine(uint entityID, out Vec2 outVec2);
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetTransform_Scale_Engine(uint entityID, ref Vec2 inVec2);
-
+    //-----------------------------------------------------------------------------------------------------------------
+    //Angle
     public float angle
     {
         get { GetTransform_Angle_Engine(entityId, out float result);

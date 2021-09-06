@@ -144,26 +144,25 @@ namespace Engine {
             std::vector<glm::vec2> obj1Corner(4);
             glm::vec2 xaxis1{ glm::cos(glm::radians(obj1.angle)), glm::sin(glm::radians(obj1.angle)) };
             glm::vec2 yaxis1{ glm::cos(glm::radians(90.f + obj1.angle)), glm::sin(glm::radians(90.f + obj1.angle)) };
-            glm::vec2 obj1Cen = obj1.offset_position;
             
-            obj1Corner[0] = obj1Cen + obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top right
-            obj1Corner[1] = obj1Cen - obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top left
-            obj1Corner[2] = obj1Cen - obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot left
-            obj1Corner[3] = obj1Cen + obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot right
+            obj1Corner[0] = obj1.offset_position + obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top right
+            obj1Corner[1] = obj1.offset_position - obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top left
+            obj1Corner[2] = obj1.offset_position - obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot left
+            obj1Corner[3] = obj1.offset_position + obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot right
             
             std::vector<glm::vec2> obj2Corner(4);
             glm::vec2 xaxis2{ glm::cos(glm::radians(obj2.angle)), glm::sin(glm::radians(obj2.angle)) };
             glm::vec2 yaxis2{ glm::cos(glm::radians(90 + obj2.angle)), glm::sin(glm::radians(90 + obj2.angle)) };
-            glm::vec2 obj2Cen = obj2.offset_position;
-            obj2Corner[0] = obj2Cen + obj2.offset_scale.x * xaxis2 + obj2.offset_scale.y * yaxis2; //top right
-            obj2Corner[1] = obj2Cen - obj2.offset_scale.x * xaxis2 + obj2.offset_scale.y * yaxis2; //top left
-            obj2Corner[2] = obj2Cen - obj2.offset_scale.x * xaxis2 - obj2.offset_scale.y * yaxis2; //bot left
-            obj2Corner[3] = obj2Cen + obj2.offset_scale.x * xaxis2 - obj2.offset_scale.y * yaxis2; //bot right
+
+            obj2Corner[0] = obj2.offset_position + obj2.offset_scale.x * xaxis2 + obj2.offset_scale.y * yaxis2; //top right
+            obj2Corner[1] = obj2.offset_position - obj2.offset_scale.x * xaxis2 + obj2.offset_scale.y * yaxis2; //top left
+            obj2Corner[2] = obj2.offset_position - obj2.offset_scale.x * xaxis2 - obj2.offset_scale.y * yaxis2; //bot left
+            obj2Corner[3] = obj2.offset_position + obj2.offset_scale.x * xaxis2 - obj2.offset_scale.y * yaxis2; //bot right
 
             std::vector<glm::vec2>* shape1 = &obj1Corner;
-            glm::vec2* shape1Cen = &obj1Cen;
+            //glm::vec2* shape1Cen = &obj1Cen;
             std::vector<glm::vec2>* shape2 = &obj2Corner;
-            glm::vec2* shape2Cen = &obj2Cen;
+            //glm::vec2* shape2Cen = &obj2Cen;
 
             float overlap = INFINITY;
 
@@ -202,7 +201,7 @@ namespace Engine {
                 }
             }
 
-            dir = (obj2Cen - obj1Cen);
+            dir = (obj2.offset_position - obj1.offset_position);
             dir = glm::normalize(dir);
             dir *= overlap;
             return true;
@@ -243,6 +242,8 @@ namespace Engine {
             //    return isCollidingSQUAREtoSQUARE(dir, col1, col2);
             //}
             //return false;
+
+#if 0
             std::vector<glm::vec2> obj1Corner(4);
             glm::vec2 xaxis1{ glm::cos(glm::radians(obj1.angle)), glm::sin(glm::radians(obj1.angle)) };
             glm::vec2 yaxis1{ glm::cos(glm::radians(90.f + obj1.angle)), glm::sin(glm::radians(90.f + obj1.angle)) };
@@ -293,6 +294,150 @@ namespace Engine {
             dir = glm::normalize(dir);
             dir *= overlap;
             return true;
+#else
+            std::vector<glm::vec2> obj1Corner(4);
+            glm::vec2 xaxis1{ glm::cos(glm::radians(obj1.angle)), glm::sin(glm::radians(obj1.angle)) };
+            glm::vec2 yaxis1{ glm::cos(glm::radians(90.f + obj1.angle)), glm::sin(glm::radians(90.f + obj1.angle)) };
+
+            obj1Corner[0] = obj1.offset_position + obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top right
+            obj1Corner[1] = obj1.offset_position - obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top left
+            obj1Corner[2] = obj1.offset_position - obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot left
+            obj1Corner[3] = obj1.offset_position + obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot right
+
+            std::vector<glm::vec2> obj2Corner(4);
+            obj2Corner[0] = glm::vec2{ obj2.offset_position.x + obj2.offset_scale.x, obj2.offset_position.y };                       //Right
+            obj2Corner[1] = glm::vec2{ obj2.offset_position.x                      , obj2.offset_position.y + obj2.offset_scale.y }; //Up
+            obj2Corner[2] = glm::vec2{ obj2.offset_position.x - obj2.offset_scale.x, obj2.offset_position.y };                       //Left
+            obj2Corner[3] = glm::vec2{ obj2.offset_position.x                      , obj2.offset_position.y - obj2.offset_scale.y }; //Down
+
+            //glm::vec2 obj1Cen = obj1.offset_position;
+            //std::vector<glm::vec2>* shape1 = &obj1Corner;
+            //glm::vec2* shape1Cen = &obj1Cen;
+            //std::vector<glm::vec2>* shape2 = &obj2Corner;
+            //glm::vec2* shape2Cen = &obj2Cen;
+
+            //float overlap = INFINITY;
+
+            //for (int num = 0; num < 2; num++) {
+            //    if (num == 1) {
+            //        shape1 = &obj2Corner;
+            //        shape2 = &obj1Corner;
+            //    }
+            //    for (int a = 0; a < shape1->size(); a++) {
+            //        int b = (a + 1) % shape1->size();
+            //        glm::vec2 axisProj = { -((*shape1)[b].y - (*shape1)[a].y), (*shape1)[b].x - (*shape1)[a].x };
+            //        axisProj = glm::normalize(axisProj);
+
+            //        // Work out min and max 1D points for r1
+            //        float min_r1 = INFINITY, max_r1 = -INFINITY;
+            //        for (int p = 0; p < shape1->size(); p++)
+            //        {
+            //            float q = ((*shape1)[p].x * axisProj.x + (*shape1)[p].y * axisProj.y);
+            //            min_r1 = std::min(min_r1, q);
+            //            max_r1 = std::max(max_r1, q);
+            //        }
+
+            //        // Work out min and max 1D points for r2
+            //        float min_r2 = INFINITY, max_r2 = -INFINITY;
+            //        for (int p = 0; p < shape2->size(); p++)
+            //        {
+            //            float q = ((*shape2)[p].x * axisProj.x + (*shape2)[p].y * axisProj.y);
+            //            min_r2 = std::min(min_r2, q);
+            //            max_r2 = std::max(max_r2, q);
+            //        }
+
+            //        overlap = std::min(std::min(max_r1, max_r2) - std::max(min_r1, min_r2), overlap);
+
+            //        if (!(max_r2 >= min_r1 && max_r1 >= min_r2))
+            //            return false;
+            //    }
+            //}
+
+            //dir = (obj2Cen - obj1Cen);
+            //dir = glm::normalize(dir);
+            //dir *= overlap;
+            //return true;
+
+            float overlap = INFINITY;
+
+            float min_r2 = INFINITY, max_r2 = -INFINITY;
+
+            //for (int a = 0; a < obj1Corner.size(); a++) {
+            //    int b = (a + 1) % obj1Corner.size();
+            //    glm::vec2 axisProj = { -obj1Corner[b].y - obj1Corner[a].y, obj1Corner[b].x - obj1Corner[a].x };
+            //    axisProj = glm::normalize(axisProj);
+
+            //    // Work out min and max 1D points for r1
+            //    float min_r1 = INFINITY, max_r1 = -INFINITY;
+
+            //    for (int p = 0; p < obj1Corner.size(); p++)
+            //    {
+            //        float q = obj1Corner[p].x * axisProj.x + obj1Corner[p].y * axisProj.y;
+            //        min_r1 = std::min(min_r1, q);
+            //        max_r1 = std::max(max_r1, q);
+            //    }
+
+            //    //Circle min and max is the same for a single axis (no need for loop)
+            //    {
+            //        //Center point
+            //        float q = (obj2.offset_position.x * axisProj.x + obj2.offset_position.y * axisProj.y);
+            //        float temq1 = q - obj2.offset_scale.x;
+            //        float temq2 = q + obj2.offset_scale.x;
+
+            //        min_r2 = std::min(min_r2, temq1);
+            //        max_r2 = std::max(max_r2, temq1);
+
+            //        min_r2 = std::min(min_r2, temq2);
+            //        max_r2 = std::max(max_r2, temq2);
+            //    }
+
+            //    overlap = std::min(std::min(max_r1, max_r2) - std::max(min_r1, min_r2), overlap);
+
+            //    if (!(max_r2 >= min_r1 && max_r1 >= min_r2))
+            //        return false;
+            //}
+
+            for (int a = 0; a < obj2Corner.size(); a++) {
+                int b = (a + 1) % obj2Corner.size();
+                glm::vec2 axisProj = { -obj2Corner[b].y - obj2Corner[a].y, obj2Corner[b].x - obj2Corner[a].x };
+                axisProj = glm::normalize(axisProj);
+
+                // Work out min and max 1D points for r1
+                float min_r1 = INFINITY, max_r1 = -INFINITY;
+
+
+                for (int p = 0; p < obj1Corner.size(); p++)
+                {
+                    float q = obj1Corner[p].x * axisProj.x + obj1Corner[p].y * axisProj.y;
+                    min_r1 = std::min(min_r1, q);
+                    max_r1 = std::max(max_r1, q);
+                }
+
+                //Circle min and max is the same for a single axis (no need for loop)
+                {
+                    //Center point
+                    float q = (obj2.offset_position.x * axisProj.x + obj2.offset_position.y * axisProj.y);
+                    float temq1 = q - obj2.offset_scale.x;
+                    float temq2 = q + obj2.offset_scale.x;
+                    
+                    min_r2 = std::min(min_r2, temq1);
+                    max_r2 = std::max(max_r2, temq1);
+                    
+                    min_r2 = std::min(min_r2, temq2);
+                    max_r2 = std::max(max_r2, temq2);
+                }
+
+                overlap = std::min(std::min(max_r1, max_r2) - std::max(min_r1, min_r2), overlap);
+
+                if (!(max_r2 >= min_r1 && max_r1 >= min_r2))
+                    return false;
+            }
+
+            dir = (obj2.offset_position - obj1.offset_position);
+            dir = glm::normalize(dir);
+            dir *= overlap;
+            return true;
+#endif
         }
 
         bool isCollidingCIRCLEtoSQUARE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {

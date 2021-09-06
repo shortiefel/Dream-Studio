@@ -40,22 +40,22 @@ public class Test2 : MonoBehaviour
         //Console.WriteLine(go2.position);
         //Console.WriteLine(go2.position);
         if (Input.IsKeyPressed(KeyCode.J)) {
-            go2.Move(new Vec2(-100 * Time.dt, 0));
+            go2.Move(new Vec2(-200 * Time.dt, 0));
         }
 
         if (Input.IsKeyPressed(KeyCode.L))
         {
-            go2.Move(new Vec2(100 * Time.dt, 0));
+            go2.Move(new Vec2(200 * Time.dt, 0));
         }
 
         if (Input.IsKeyPressed(KeyCode.I))
         {
-            go2.Move(new Vec2(0, 100 * Time.dt));
+            go2.Move(new Vec2(0, 200 * Time.dt));
         }
 
         if (Input.IsKeyPressed(KeyCode.K))
         {
-            go2.Move(new Vec2(0, -100 * Time.dt));
+            go2.Move(new Vec2(0, -200 * Time.dt));
         }
 
         if (Input.IsKeyPressed(KeyCode.U))

@@ -2,6 +2,7 @@
 /*
 @file    Graphic.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
+		 Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 \brief
 This file has the functions declaration to be called by the graphic system

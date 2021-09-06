@@ -114,8 +114,5 @@ namespace Engine {
 
 			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayInter[TypeName]);
 		}
-
-
-
 	};
 }

@@ -2,6 +2,7 @@
 /*
 @file    GraphicSystem.cpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
+		 Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 \brief
 This file has the function definition for class GraphicsSystem
@@ -22,7 +23,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Coordinator.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
-
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 
 #include "Engine/Header/Graphic/Graphic.hpp"
@@ -135,9 +135,9 @@ namespace Engine {
 					// set uniform variable for Collider_Matrix matrix
 					MathD::Mat3 colliderMat;
 
+					// p = position, s = scale
 					MathD::Vec2 p = MathD::Vec2{};
 					MathD::Vec2 s = MathD::Vec2{};
-
 
 					p = col->pos + transform.pos;
 					s = col->scale + transform.scale;
@@ -145,49 +145,18 @@ namespace Engine {
 					colliderMat = {
 						//Translate
 						MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
-									  MathD::Vec3(0, 1.f, 0),
-									  MathD::Vec3(p.x, p.y, 1.f) }
+									 MathD::Vec3(0, 1.f, 0),
+									 MathD::Vec3(p.x, p.y, 1.f) }
 						*
 						//Scale
 						MathD::Mat3{ MathD::Vec3(s.x, 0, 0),
-										MathD::Vec3(0, s.y, 0),
-										MathD::Vec3(0, 0, 1.f) }
+									 MathD::Vec3(0, s.y, 0),
+									 MathD::Vec3(0, 0, 1.f) }
 					};
-
 
 					colliderMat = camMatrix * colliderMat;
 
-
-					/*
-					colliderMat = MathD::Mat3{ MathD::Vec3(col->scale.x, 0, 0),
-											   MathD::Vec3(0, col->scale.y, 0),
-											   MathD::Vec3(col->pos.x, col->pos.y, 1.f) };
-
-				
-
-					//colliderMat = MathD::Mat3{ MathD::Vec3(transform.pos.x, 0, 0),
-					//						   MathD::Vec3(0, transform.pos.y, 0),
-					//						   MathD::Vec3(transform.scale.x, transform.scale.y, 1.f) };
-
-
-
-					//colliderMat = transform.mdl_to_ndc_xform;
-
-
-					/*
-					colliderMat =
-						//Translate
-						MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
-									  MathD::Vec3(0, 1.f, 0),
-									  MathD::Vec3(transform.pos.x, transform.pos.y, 1.f) }
-						*
-						//Scale
-						MathD::Mat3{ MathD::Vec3(transform.scale.x, 0, 0),
-									 MathD::Vec3(0, transform.scale.y, 0),
-									 MathD::Vec3(0, 0, 1.f) };
-					*/
-
-
+					// set collider matrix to slot 1
 					GLint uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "Collider_Matrix");
 					glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, MathD::value_ptr(colliderMat));
 					if (uniform_var_loc3 == -1) {

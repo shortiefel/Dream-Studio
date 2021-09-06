@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TextureComponent.cpp
-@author  
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    02/07/2021
 \brief
 This file contain the TextureComponent definition

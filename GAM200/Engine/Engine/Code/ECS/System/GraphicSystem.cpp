@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 
 #include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 
@@ -72,8 +73,10 @@ namespace Engine {
 		glClearColor(1, 0, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		auto& transformArray = DreamECS::GetComponentArrayData<Transform>();
 		//For all entities in GraphicSystem
 		for (auto const& entity : GS->mEntities) {
+			
 			auto& transform = DreamECS::GetComponent<Transform>(entity);
 			auto& texture = DreamECS::GetComponent<Texture>(entity);
 

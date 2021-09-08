@@ -5,11 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices; //For internal calls
 
+public struct Entity
+{
+    public uint id;
+}
+
 //Default Component that contains entityId
 public interface Component
 {
     uint entityId { get; set; }
 }
+
 /*public class Component
 {
     public uint entityId;

@@ -246,7 +246,6 @@ namespace Engine {
 		fclose(fp);
 		for (auto& obj : doc.GetArray()) {
 			Entity ent = DreamECS::CreateEntity();
-
 			rapidjson::Value::ConstMemberIterator itr = obj.FindMember("Transform");
 			if (itr != obj.MemberEnd()) {
 				DreamECS::AddComponent(ent, 

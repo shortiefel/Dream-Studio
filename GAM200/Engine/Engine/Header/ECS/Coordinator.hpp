@@ -72,7 +72,7 @@ namespace Engine {
 				compManager->DestoryEntity(ent);
 				sysManager->EntityDestroyed(ent);
 			}
-			entityManager->ClearUsedEntityVector();
+			entityManager->ResetEntityManager();
 		}
 
 		inline const std::vector<Entity>& GetUsedEntityVector() const {
@@ -138,6 +138,11 @@ namespace Engine {
 		ComponentType GetComType()
 		{
 			return compManager->GetterComType<T>();
+		}
+
+		template<typename T>
+		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
+			return compManager->GetComponentArrayData<T>();
 		}
 
 		/**

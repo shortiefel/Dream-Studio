@@ -42,18 +42,18 @@ namespace Engine {
 		template<typename T>
 		static void RegisterComponent()
 		{
-			gCoordinator.RegisterComponent();
+			gCoordinator.RegisterComponent<T>();
 		}
 
 		template<typename T>
 		static void AddComponent(Entity entity, T com) {
-			gCoordinator.AddComponent(entity, com);
+			gCoordinator.AddComponent<T>(entity, com);
 		}
 
 		template<typename T>
 		static void RemoveComponent(Entity entity)
 		{
-			gCoordinator.RemoveComponent(entity);
+			gCoordinator.RemoveComponent<T>(entity);
 		}
 		template <typename T>
 		static T& GetComponent(Entity entity) {
@@ -73,7 +73,12 @@ namespace Engine {
 
 		template<typename T>
 		static ComponentType GetComponentType() {
-			return gCoordinator.GetComType();
+			return gCoordinator.GetComType<T>();
+		}
+
+		template<typename T>
+		static std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
+			return gCoordinator.GetComponentArrayData<T>();
 		}
 
 		/*--------------------------------------------------------------------------------------------------------------
@@ -81,12 +86,12 @@ namespace Engine {
 		--------------------------------------------------------------------------------------------------------------*/
 		template<typename T>
 		static std::shared_ptr<T> RegisterSystem() {
-			return gCoordinator.RegSystem();
+			return gCoordinator.RegSystem<T>();
 		}
 
 		template<typename T>
 		static void setSystemSignature(Signature sign) {
-			gCoordinator.setSystemSignature(sign);
+			gCoordinator.setSystemSignature<T>(sign);
 		}
 
 	private:

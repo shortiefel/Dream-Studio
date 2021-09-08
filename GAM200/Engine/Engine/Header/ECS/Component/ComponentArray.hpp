@@ -2,6 +2,7 @@
 /*
 @file    ComponentArray.hpp
 @author  Tan Wei Ling Felicia	 weilingfelicia.tan@digipen.edu
+		 Ow Jian Wen			 jianwen.o@digipen.edu
 @date    26/04/2021
 \brief
 To create a data structure that is a simple array with no holes. It contains the mapping from
@@ -26,41 +27,37 @@ Technology is prohibited.
 #include <unordered_map>
 
 namespace Engine {
-	class ComponentArrayInterface
-	{
+	class ComponentArrayInterface {
 	public:
-		virtual ~ComponentArrayInterface() = default; //for it to be used everywhere i think ?
-		virtual void EntityDestroyed(Entity entity) = 0; //tells my array its destroyed and it needs to update array mapping
+		virtual ~ComponentArrayInterface() = default;
+		virtual void EntityDestroyed(Entity entity) = 0;
 	};
 
 
 	//This template is to inherit the interface to prevent repeatation of codes
 	//To include inserting and deleting of data
 	template<typename T>
-	class ComponentArray : public ComponentArrayInterface
-	{
+	class ComponentArray : public ComponentArrayInterface {
 	public:
-		void InsertCom(Entity entity, T component)
-		{
+		void InsertCom(Entity entity, T component) {
 			//error checking
-			assert(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
+			LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
 
 			size_t newIndex = Size;
 			EntityToIndexMap[entity] = newIndex; //Entity -> Index
 			IndexToEntityMap[newIndex] = entity; //Index -> Entity
-			ComponentArrayMAX[newIndex] = component; //Creating of the array and calls it component
+			componentArray[newIndex] = component; //Creating of the array and calls it component
 			Size++;
 		}
 
-		void Removing(Entity entity)
-		{
+		void Removing(Entity entity) {
 			//error checking
 			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
 
 			//Copies element at the end into deleted element's place 
 			size_t IndexRemoveEntity = IndexToEntityMap[entity];
 			size_t IndexLastElement = Size - 1;
-			ComponentArrayMAX[IndexRemoveEntity] = ComponentArrayMAX[IndexLastElement];
+			componentArray[IndexRemoveEntity] = componentArray[IndexLastElement];
 
 			//Updating the map when it's shifted
 			Entity EntityLastElement = IndexToEntityMap[IndexLastElement];
@@ -74,37 +71,35 @@ namespace Engine {
 		}
 
 		//referencing to the template to get the data
-		T& GetData(Entity entity)
-		{
+		T& GetData(Entity entity) {
 			//error checking
-			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
+			LOG_ASSERT(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
 
 			//if exist, return data
-			return ComponentArrayMAX[EntityToIndexMap[entity]];
+			return componentArray[EntityToIndexMap[entity]];
 		}
 
-		bool HasData(T*& com, Entity entity)
-		{
+		bool HasData(T*& com, Entity entity) {
 			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) return false;
 			//error checking
-			//assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
+			LOG_ASSERT(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
 
 			//if exist, return data
-			com = &ComponentArrayMAX[EntityToIndexMap[entity]];
+			com = &componentArray[EntityToIndexMap[entity]];
 			return true;
 		}
 
-		void EntityDestroyed(Entity entity) override
-		{
+		void EntityDestroyed(Entity entity) override {
 			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end())
-			{
-				// Remove the entity's component if it existed
 				Removing(entity);
-			}
+		}
+
+		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
+			return componentArray;
 		}
 
 	private:
-		std::array<T, MAX_ENTITIES> ComponentArrayMAX{};
+		std::array<T, MAX_ENTITIES> componentArray{};
 		std::unordered_map<Entity, size_t> EntityToIndexMap{}; //mapping for entity ID to array index
 		std::unordered_map<size_t, Entity> IndexToEntityMap{}; //mappign array index to entity ID
 		size_t Size = size_t{}; //total size of valid enteries in array

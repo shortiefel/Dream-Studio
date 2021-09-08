@@ -28,29 +28,39 @@ Technology is prohibited.
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include <queue>
 #include <array>
-#include <cassert>
 
 namespace Engine {
 	class EntityManager
 	{
 	public:
-		EntityManager() //ctor
-		{
-			Entity entity;
+		//EntityManager() //ctor
+		//{
+		//	Entity entity;
 
-			for (entity = 0; entity < MAX_ENTITIES; ++entity)
-			{
-				EntityManager::AvailableEntities.push(entity); //adding entity
-			}
-		}
+		//	for (entity = 0; entity < MAX_ENTITIES; ++entity)
+		//	{
+		//		EntityManager::AvailableEntities.push(entity); //adding entity
+		//	}
+		//}
 
 		Entity CreateEntity()
 		{
 			//error checking
-			assert(AliveEntityCount < MAX_ENTITIES && "Too many entities");
+			LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
 
-			Entity ID = AvailableEntities.front();
-			AvailableEntities.pop();
+			Entity ID;
+			
+			if (AvailableEntities.size()) {
+				ID = AvailableEntities.front();
+				AvailableEntities.pop();
+			}
+
+			else {
+				ID = currentMaxId;
+				++currentMaxId;
+			}
+
+
 			UsedEntities.emplace_back(ID);
 			++AliveEntityCount;
 
@@ -60,7 +70,7 @@ namespace Engine {
 		void DestroyEntity(Entity entity)
 		{
 			//error checking
-			assert(entity < MAX_ENTITIES && "Entities out of range");
+			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
 
 			mSignatures[entity].reset();
 			AvailableEntities.push(entity);
@@ -70,7 +80,7 @@ namespace Engine {
 		void SetSignature(Entity entity, Signature signature)
 		{
 			//error checking
-			assert(entity < MAX_ENTITIES && "Entities out of range");
+			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
 
 			mSignatures[entity] = signature;
 		}
@@ -78,7 +88,7 @@ namespace Engine {
 		Signature GetSignature(Entity entity)
 		{
 			//error checking
-			assert(entity < MAX_ENTITIES && "Entities out of range");
+			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
 
 			return mSignatures[entity];
 
@@ -88,8 +98,9 @@ namespace Engine {
 			return UsedEntities;
 		}
 
-		inline void ClearUsedEntityVector()  {
+		inline void ResetEntityManager()  {
 			UsedEntities.clear();
+			currentMaxId = 0;
 		}
 
 
@@ -98,5 +109,7 @@ namespace Engine {
 	private:
 		std::queue<Entity> AvailableEntities{}; // Queue of unused entity IDs
 		std::array<Signature, MAX_ENTITIES> mSignatures{}; // Array of signatures for index to correspond to ID
+
+		uint32_t currentMaxId = uint32_t{};
 	};
 }

@@ -38,7 +38,7 @@ using System.Runtime.CompilerServices; //For internal calls
 public class MonoBehaviour
 {
     //public GameObject gameObject;
-    uint entityId;
+    Entity entity;
 
     public virtual void Init() {}
     public virtual void Update() {}
@@ -53,7 +53,7 @@ public class MonoBehaviour
     public MonoBehaviour() { }
     public MonoBehaviour (uint id)
     {
-        entityId = id;
+        entity.id = id;
         Console.WriteLine("Constructor ");
         //gameObject = new GameObject();
         //gameObject.entityId = id;
@@ -61,10 +61,10 @@ public class MonoBehaviour
 
     public T GetComponent<T>() where T : Component, new()
     {
-        if (HasComponent(entityId, typeof(T)))
+        if (HasComponent(entity.id, typeof(T)))
         {
             T component = new T();
-            component.entityId = entityId;
+            component.entityId = entity.id;
             return component;
         }
 
@@ -101,7 +101,12 @@ public class MonoBehaviour
 
     
 
-
+    void Destroy(uint id)
+    {
+        Destroy_Engine_Engine(id);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void Destroy_Engine_Engine(uint entityID);
 
 
 

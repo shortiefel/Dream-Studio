@@ -27,6 +27,8 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 #pragma once
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
+
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 //#include <any> //type safe container
@@ -34,66 +36,62 @@ Technology is prohibited.
 #include <unordered_map>
 
 namespace Engine {
-	class ComponentManager
-	{
+	class ComponentManager {
 	public:
 		template<typename T>
-		void RegisterCom()
-		{
+		void RegisterCom() {
 			const char* TypeName = typeid(T).name();
 
 			//error checking 
-			assert(mComponentTypes.find(TypeName) == mComponentTypes.end() && "Register Component more than 1 time");
+			LOG_ASSERT(mComponentTypes.find(TypeName) == mComponentTypes.end() && "Register Component more than 1 time");
 
 			mComponentTypes.insert({ TypeName, NextComType }); //adding to com type map
 			mComponentArrayInter.insert({ TypeName, std::make_shared < ComponentArray<T>>() });//ptr to comarray
 
 			++NextComType;
-
 		}
 
 		template<typename T>
-		ComponentType GetterComType()
-		{
+		ComponentType GetterComType() {
 			const char* TypeName = typeid(T).name();
 
 			//error checking
-			assert(mComponentTypes.find(TypeName) != mComponentTypes.end() && "Component not registered");
+			LOG_ASSERT(mComponentTypes.find(TypeName) != mComponentTypes.end() && "Component not registered");
 
 			//used to create signature
 			return mComponentTypes[TypeName];
 		}
 
 		template<typename T>
-		void AddCom(Entity entity, T component)
-		{
-			GetComArry<T>()->InsertCom(entity, component);
+		void AddCom(Entity entity, T component) {
+			GetComArray<T>()->InsertCom(entity, component);
 		}
 
 		template<typename T>
-		void RemoveCom(Entity entity)
-		{
-			GetComArry<T>()->RemoveCom(entity);
+		void RemoveCom(Entity entity) {
+			GetComArray<T>()->RemoveCom(entity);
 		}
 
 		template<typename T>
-		T& GetCom(Entity entity)
-		{
+		T& GetCom(Entity entity) {
 			//a reference to component from array for entity
-			return GetComArry<T>()->GetData(entity);
-		}
-		template<typename T>
-		bool HasCom(T*& com, Entity entity)
-		{
-			//a reference to component from array for entity
-			return GetComArry<T>()->HasData(com, entity);
+			return GetComArray<T>()->GetData(entity);
 		}
 
-		void DestoryEntity(Entity entity)
-		{
+		template<typename T>
+		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
+			return GetComArray<T>()->GetComponentArrayData();
+		}
+
+		template<typename T>
+		bool HasCom(T*& com, Entity entity) {
+			//a reference to component from array for entity
+			return GetComArray<T>()->HasData(com, entity);
+		}
+
+		void DestoryEntity(Entity entity) {
 			//tell com arry that entity is destroyed, if exist remove
-			for (auto const& notify : mComponentArrayInter)
-			{
+			for (auto const& notify : mComponentArrayInter) {
 				auto const& com = notify.second;
 				com->EntityDestroyed(entity);
 			}
@@ -106,11 +104,10 @@ namespace Engine {
 
 		//static ptr to ComArray
 		template<typename T>
-		std::shared_ptr<ComponentArray<T>> GetComArry()
-		{
+		std::shared_ptr<ComponentArray<T>> GetComArray() {
 			const char* TypeName = typeid(T).name();
 
-			assert(mComponentTypes.find(TypeName) != mComponentTypes.end() && "Component not registered yet.");
+			LOG_ASSERT(mComponentTypes.find(TypeName) != mComponentTypes.end() && "Component not registered yet.");
 
 			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayInter[TypeName]);
 		}

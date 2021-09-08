@@ -238,6 +238,7 @@
     <ClInclude Include="Engine\Header\ECS\System\System.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemManager.hpp" />
+    <ClInclude Include="Engine\Header\ECS\temECSDescription.hpp" />
     <ClInclude Include="Engine\Header\EngineCore.hpp" />
     <ClInclude Include="Engine\Header\Event\Event.hpp" />
     <ClInclude Include="Engine\Header\Event\EventDispatcher.hpp" />

@@ -112,6 +112,9 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{4fb24a35-354d-4178-820e-052bad316c6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\New ECS">
+      <UniqueIdentifier>{820842ed-1b94-4476-88d4-29d15dae98c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Input\Input.hpp">
       <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\temECSDescription.hpp">
+      <Filter>Header Files\New ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

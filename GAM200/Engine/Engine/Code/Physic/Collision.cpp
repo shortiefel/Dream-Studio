@@ -27,14 +27,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
 namespace Engine {
-    //Both used only for square to circle collision
-    //Nearest point on square to circle
-    glm::vec2 nearestPoint = glm::vec2{};
-    //Length of nearest point to center of circle
-    float length = float{}; //Reused for circle circle
-    //Check whether it is in corner
-    bool cornerBool = bool{};
-
+    //Check if entity have rigidbody (movable)
     bool ent1IsMoveable, ent2IsMoveable;
 
     namespace CollisionImplementation {
@@ -48,7 +41,6 @@ namespace Engine {
                     return isCollidingCIRCLEtoCIRCLE(dir, obj1, obj2);
                 else
                     return isCollidingCIRCLEtoSQUARE(dir, obj1, obj2);
-
             }
 
             else {
@@ -62,18 +54,6 @@ namespace Engine {
         }
 
         bool isCollidingSQUAREtoSQUARE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
-            //AABB
-            ////Check whether obj1 is outside range of obj2
-            //if (obj1.offset_position.x + obj1.offset_scale.x < obj2.offset_position.x - obj2.offset_scale.x ||
-            //    obj1.offset_position.x - obj1.offset_scale.x > obj2.offset_position.x + obj2.offset_scale.x ||
-            //    obj1.offset_position.y + obj1.offset_scale.y < obj2.offset_position.y - obj2.offset_scale.y ||
-            //    obj1.offset_position.y - obj1.offset_scale.y > obj2.offset_position.y + obj2.offset_scale.y)
-            //    return false;
-            // 
-            //dir = (obj1.offset_position - obj2.offset_position);
-            //dir = glm::normalize(dir);
-            //return true;
-
             //SAT method
             std::vector<glm::vec2> obj1Corner(4);
             glm::vec2 xaxis1{ glm::cos(glm::radians(obj1.angle)), glm::sin(glm::radians(obj1.angle)) };
@@ -140,40 +120,6 @@ namespace Engine {
         }
 
         bool isCollidingSQUAREtoCIRCLE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
-            //AABB
-            //cornerBool = true;
-            ////Check if circle is corner of square (same logic as square to square collision
-            //if (col2.offset_position.x < col1.offset_position.x - col1.offset_scale.x)
-            //    nearestPoint.x = col1.offset_position.x - col1.offset_scale.x;
-            //else if (col2.offset_position.x > col1.offset_position.x + col1.offset_scale.x)
-            //    nearestPoint.x = col1.offset_position.x + col1.offset_scale.x;
-            //else {
-            //    cornerBool = false;
-            //}
-
-            //if (col2.offset_position.y < col1.offset_position.y - col1.offset_scale.y)
-            //    nearestPoint.y = col1.offset_position.y - col1.offset_scale.y;
-            //else if (col2.offset_position.y > col1.offset_position.y + col1.offset_scale.y)
-            //    nearestPoint.y = col1.offset_position.y + col1.offset_scale.y;
-            //else {
-            //    cornerBool = false;
-            //}
-
-            //if (cornerBool) {
-            //    //Store how much it intersect
-            //    length = col2.offset_scale.x - glm::length(nearestPoint - col2.offset_position);
-            //    if (length < 0) return false;
-
-            //    dir = col1.offset_position - col2.offset_position;
-            //    dir = glm::normalize(dir);
-            //    return true;
-            //}
-
-            //else {
-            //    return isCollidingSQUAREtoSQUARE(dir, col1, col2);
-            //}
-            //return false;
-
             //SAT method
             std::vector<glm::vec2> obj1Corner(4);
             glm::vec2 xaxis1{ glm::cos(glm::radians(obj1.angle)), glm::sin(glm::radians(obj1.angle)) };
@@ -269,8 +215,10 @@ namespace Engine {
         //Collision resolution-------------------------------------------------------------------------------
         void CollisionResolution(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
             if (col1.cType == ColliderType::CIRCLE) {
-                if (col2.cType == ColliderType::CIRCLE)
+                if (col2.cType == ColliderType::CIRCLE) {
                     CollisionResolutionCIRCLEtoCIRCLE(dir, trans1, col1, trans2, col2);
+                    return;
+                }
 
                 else if (col2.cType == ColliderType::SQUARE) {
                     bool tem = ent1IsMoveable;
@@ -390,7 +338,7 @@ namespace Engine {
 
         void CollisionResolutionCIRCLEtoCIRCLE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
             glm::vec2 len = col1.offset_position - col2.offset_position;
-            length = glm::length(len);
+            float length = glm::length(len);
 
             //length is the distance between the two object
             length = col1.offset_scale.x + col2.offset_scale.x - length;

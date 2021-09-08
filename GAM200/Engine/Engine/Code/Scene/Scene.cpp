@@ -27,7 +27,7 @@ Technology is prohibited.
 #include "Engine/Header/Management/GameSceneSerializer.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
-#include "Engine/Header/ECS/Coordinator.hpp"
+#include "Engine/Header/ECS/ECSWrapper.hpp"
 
 //Components
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
@@ -35,7 +35,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
 namespace Engine {
-    extern Coordinator gCoordinator;
+    //extern Coordinator gCoordinator;
 
     bool Scene::playing = false;
     std::string Scene::fullPathName = std::string{};
@@ -147,7 +147,7 @@ namespace Engine {
         //Deserialize everything
         ScriptEngine::Stop();
         CollisionSystem::Stop();
-        gCoordinator.destroyAllEntity();
+        DreamECS::DestroyAllEntity();
 
         GameSceneSerializer::Deserialize(fullPathName);
         std::cout << "Stopping \n";

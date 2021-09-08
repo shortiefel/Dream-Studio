@@ -18,6 +18,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
+#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
 #include <glm/glm.hpp>
 
@@ -133,6 +135,35 @@ namespace Editor {
 		void GUI_Inspector() {
 			if (inspector_bool) {
 				ImGui::Begin("Inspector", &inspector_bool, window_flags);
+
+				Engine::Transform* comp;
+				Engine::Entity entity_selected = 0;
+				bool check_selection;
+
+				ImGui::Checkbox("Transform", &check_selection);
+
+
+				//if (check_selection == true) {
+					if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
+					{
+						ImGui::Text("Position");
+						ImGui::DragFloat("X", &comp->position.x, 0.0f);
+						//ImGui::SameLine();
+						ImGui::DragFloat("Y", &comp->position.y, 0.0f);
+
+						glm::vec2 scaling = glm::vec2{};
+						ImGui::InputFloat("Scaling", &comp->scale.x, 0.01f, 1.0f, "%.3f");
+						ImGui::SameLine();
+						ImGui::InputFloat("", &comp->scale.y, 0.01f, 1.0f, "%.3f");
+
+
+					}
+				//}
+
+
+
+
+
 				ImGui::End();
 			}
 		}

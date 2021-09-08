@@ -24,10 +24,10 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/CameraComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
-#include "Engine/Header/ECS/Coordinator.hpp"
+#include "Engine/Header/ECS/ECSWrapper.hpp"
 
 namespace Engine {
-    extern Coordinator gCoordinator;
+    //extern Coordinator gCoordinator;
     std::shared_ptr<CameraSystem> CameraSystem::CS;
     glm::mat3 CameraSystem::world_to_ndc_xform;
     GLFWwindow* CameraSystem::pwindow;
@@ -36,9 +36,9 @@ namespace Engine {
     //to create the graphics
     void CameraSystem::Update(float dt) {
         for (auto const& entity : CS->mEntities) {
-            auto& cam = gCoordinator.GetCom<Camera2D>(entity);
+            auto& cam = DreamECS::GetComponent<Camera2D>(entity);
             if (cam.isActive == false) continue;
-            const auto& transform = gCoordinator.GetCom<Transform>(entity);
+            const auto& transform = DreamECS::GetComponent<Transform>(entity);
 
             GLsizei fb_width, fb_height;
             glfwGetFramebufferSize(pwindow, &fb_width, &fb_height);

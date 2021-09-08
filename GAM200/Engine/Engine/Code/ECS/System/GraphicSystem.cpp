@@ -19,7 +19,7 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 
-#include "Engine/Header/ECS/Coordinator.hpp"
+#include "Engine/Header/ECS/ECSWrapper.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 
@@ -31,7 +31,7 @@ Technology is prohibited.
 //#include "../../External Resources/include/stb_image/stb_image.h" //-----remove
 
 namespace Engine {
-	extern Coordinator gCoordinator;
+	//extern Coordinator gCoordinator;
 	std::shared_ptr<GraphicSystem> GraphicSystem::GS;
 
 	//GLuint setup_texobj(std::string);
@@ -74,8 +74,8 @@ namespace Engine {
 
 		//For all entities in GraphicSystem
 		for (auto const& entity : GS->mEntities) {
-			auto& transform = gCoordinator.GetCom<Transform>(entity);
-			auto& texture = gCoordinator.GetCom<Texture>(entity);
+			auto& transform = DreamECS::GetComponent<Transform>(entity);
+			auto& texture = DreamECS::GetComponent<Texture>(entity);
 
 			glBindVertexArray(texture.get_mdl_ref()->second.vaoid);
 

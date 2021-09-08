@@ -30,7 +30,7 @@ Technology is prohibited.
 #include <rapidjson/filewritestream.h>
 
 #include "Engine/Header/ECS/Entity/EntityManager.hpp"
-#include "Engine/Header/ECS/Coordinator.hpp"
+#include "Engine/Header/ECS/ECSWrapper.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/Script/ScriptEngine.hpp"
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
@@ -41,8 +41,7 @@ Technology is prohibited.
 		itr->value[str].GetArray()[1].GetFloat() }
 
 namespace Engine {
-	//extern EntityManager entityManager;
-	extern Coordinator gCoordinator;
+	//extern Coordinator gCoordinator;
 
 	void GameSceneSerializer::Serialize(std::string filename) {
 		FILE* fp;
@@ -58,13 +57,13 @@ namespace Engine {
 		
 		rapidjson::Document doc (rapidjson::kArrayType);
 
-		const std::vector<Entity>& entList = gCoordinator.GetUsedEntityVector();
+		const std::vector<Entity>& entList = DreamECS::GetUsedEntityVector();
 		size_t num = entList.size();
 		for (size_t i = 0; i < num; i++) {
 			rapidjson::Value entityObject(rapidjson::kObjectType);
 
 			Transform* trans = nullptr;
-			if (gCoordinator.HasCom<Transform>(trans, entList[i]) && trans != nullptr) {
+			if (DreamECS::HasComponent<Transform>(trans, entList[i]) && trans != nullptr) {
 				LOG_ASSERT(trans);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -84,7 +83,7 @@ namespace Engine {
 			}
 
 			Collider* col = nullptr;
-			if (gCoordinator.HasCom<Collider>(col, entList[i]) && col != nullptr) {
+			if (DreamECS::HasComponent<Collider>(col, entList[i]) && col != nullptr) {
 				LOG_ASSERT(col);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -108,7 +107,7 @@ namespace Engine {
 			}
 
 			RigidBody* rb = nullptr;
-			if (gCoordinator.HasCom<RigidBody>(rb, entList[i]) && col != nullptr) {
+			if (DreamECS::HasComponent<RigidBody>(rb, entList[i]) && col != nullptr) {
 				LOG_ASSERT(rb);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -116,7 +115,7 @@ namespace Engine {
 			}
 
 			Camera2D* cam = nullptr;
-			if (gCoordinator.HasCom<Camera2D>(cam, entList[i]) && cam != nullptr) {
+			if (DreamECS::HasComponent<Camera2D>(cam, entList[i]) && cam != nullptr) {
 				LOG_ASSERT(cam);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -128,7 +127,7 @@ namespace Engine {
 			}
 
 			Texture* tex = nullptr;
-			if (gCoordinator.HasCom<Texture>(tex, entList[i]) && tex != nullptr) {
+			if (DreamECS::HasComponent<Texture>(tex, entList[i]) && tex != nullptr) {
 				LOG_ASSERT(tex);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -246,11 +245,11 @@ namespace Engine {
 
 		fclose(fp);
 		for (auto& obj : doc.GetArray()) {
-			Entity ent = gCoordinator.createEntity();
+			Entity ent = DreamECS::CreateEntity();
 
 			rapidjson::Value::ConstMemberIterator itr = obj.FindMember("Transform");
 			if (itr != obj.MemberEnd()) {
-				gCoordinator.AddComponent(ent, 
+				DreamECS::AddComponent(ent, 
 					Transform{
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
@@ -260,7 +259,7 @@ namespace Engine {
 
 			itr = obj.FindMember("Collider");
 			if (itr != obj.MemberEnd()) {
-				gCoordinator.AddComponent(ent,
+				DreamECS::AddComponent(ent,
 					Collider {
 						ColliderType(itr->value["ColliderType"].GetInt()),
 						Get2DFloatValue("Position"),
@@ -272,7 +271,7 @@ namespace Engine {
 
 			itr = obj.FindMember("RigidBody");
 			if (itr != obj.MemberEnd()) {
-				gCoordinator.AddComponent(ent,
+				DreamECS::AddComponent(ent,
 					RigidBody{
 						
 					});
@@ -280,7 +279,7 @@ namespace Engine {
 
 			itr = obj.FindMember("Camera2D");
 			if (itr != obj.MemberEnd()) {
-				gCoordinator.AddComponent(ent,
+				DreamECS::AddComponent(ent,
 					Camera2D {
 						itr->value["FOV"].GetFloat(),
 						itr->value["AR"].GetFloat(),
@@ -290,7 +289,7 @@ namespace Engine {
 
 			itr = obj.FindMember("Texture");
 			if (itr != obj.MemberEnd()) {
-				gCoordinator.AddComponent(ent,
+				DreamECS::AddComponent(ent,
 					Texture {
 						itr->value["Filepath"].GetString(),
 						itr->value["Shape"].GetString(),

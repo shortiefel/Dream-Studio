@@ -198,6 +198,9 @@
     <ClCompile Include="Engine\Code\Input\Input.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\ECSWrapper.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -433,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\temECSDescription.hpp">
       <Filter>Header Files\New ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\ECSWrapper.hpp">
+      <Filter>Header Files\ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

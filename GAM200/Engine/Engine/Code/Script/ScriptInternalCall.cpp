@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/ECS/Coordinator.hpp"
+#include "Engine/Header/ECS/ECSWrapper.hpp"
 
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
@@ -30,7 +31,8 @@ Technology is prohibited.
 
 namespace Engine {
 
-	extern Coordinator gCoordinator;
+	//extern Coordinator gCoordinator;
+	//Coordinator& gCoordinator = DreamECS::GetCoordinator();
 
 	/*void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform);
 	void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform);*/
@@ -72,24 +74,24 @@ namespace Engine {
 
 
 		
-	void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform) {
-		//call hascomponent with entityid
-		Transform* transform = nullptr;
-		gCoordinator.HasCom<Transform>(transform, id);
-		*outTransform = *transform;
+	//void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform) {
+	//	//call hascomponent with entityid
+	//	Transform* transform = nullptr;
+	//	DreamECS::HasComponent<Transform>(transform, id);
+	//	*outTransform = *transform;
 
-		/*Transform& transform = gCoordinator.GetCom<Transform>(id);
-		*outTransform = transform;*/
-	}
+	//	/*Transform& transform = gCoordinator.GetCom<Transform>(id);
+	//	*outTransform = transform;*/
+	//}
 
-	void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform) {
-		//call hascomponent with entityid
-		/*Transform* transform = nullptr;
-		gCoordinator.HasCom<Transform>(transform, id);
-		*transform = *inTransform;*/
-		Transform& transform = gCoordinator.GetCom<Transform>(id);
-		transform = *inTransform;
-	}
+	//void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform) {
+	//	//call hascomponent with entityid
+	//	/*Transform* transform = nullptr;
+	//	gCoordinator.HasCom<Transform>(transform, id);
+	//	*transform = *inTransform;*/
+	//	Transform& transform = DreamECS::GetComponent<Transform>(id);
+	//	transform = *inTransform;
+	//}
 
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -98,20 +100,20 @@ namespace Engine {
 	void GetTransform_Position_Engine(unsigned int id, glm::vec2* outVec2) {
 		//call hascomponent with entityid
 		Transform* transform = nullptr;
-		gCoordinator.HasCom<Transform>(transform, id);
+		DreamECS::HasComponent<Transform>(transform, id);
 		*outVec2 = transform->position;
 
 	}
 	void SetTransform_Position_Engine(unsigned int id, glm::vec2* inVec2) {
 		//call hascomponent with entityid
 		Transform* transform = nullptr;
-		gCoordinator.HasCom<Transform>(transform, id);
+		DreamECS::HasComponent<Transform>(transform, id);
 		transform->position = *inVec2;
 	}
 	void MoveTransform_Position_Engine(unsigned int id, glm::vec2* inVec2) {
 		//call hascomponent with entityid
 		Transform* transform = nullptr;
-		gCoordinator.HasCom<Transform>(transform, id);
+		DreamECS::HasComponent<Transform>(transform, id);
 		transform->position += *inVec2;
 	}
 
@@ -119,13 +121,13 @@ namespace Engine {
 	void GetTransform_Scale_Engine(unsigned int id, glm::vec2* outVec2) {
 		//call hascomponent with entityid
 		Transform* transform = nullptr;
-		gCoordinator.HasCom<Transform>(transform, id);
+		DreamECS::HasComponent<Transform>(transform, id);
 		*outVec2 = transform->scale;
 	}
 	void SetTransform_Scale_Engine(unsigned int id, glm::vec2* inVec2) {
 		//call hascomponent with entityid
 		Transform* transform = nullptr;
-		gCoordinator.HasCom<Transform>(transform, id);
+		DreamECS::HasComponent<Transform>(transform, id);
 		transform->scale = *inVec2;
 	}
 
@@ -133,13 +135,13 @@ namespace Engine {
 	void GetTransform_Angle_Engine(unsigned int id, float* outVec2) {
 		//call hascomponent with entityid
 		Transform* transform = nullptr;
-		gCoordinator.HasCom<Transform>(transform, id);
+		DreamECS::HasComponent<Transform>(transform, id);
 		*outVec2 = transform->angle;
 	}
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2) {
 		//call hascomponent with entityid
 		Transform* transform = nullptr;
-		gCoordinator.HasCom<Transform>(transform, id);
+		DreamECS::HasComponent<Transform>(transform, id);
 		transform->angle = *inVec2;
 	}
 
@@ -168,7 +170,7 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool HasComponent_Transform_Engine(unsigned int id) {
 		Transform* tem = nullptr;
-		return gCoordinator.HasCom<Transform>(tem, id);
+		return DreamECS::HasComponent<Transform>(tem, id);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

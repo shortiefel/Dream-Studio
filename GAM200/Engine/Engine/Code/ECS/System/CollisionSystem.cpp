@@ -30,12 +30,12 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Physics/RigidBodyComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
-#include "Engine/Header/ECS/Coordinator.hpp"
+#include "Engine/Header/ECS/ECSWrapper.hpp"
 
 #include <glm/gtc/constants.hpp>
 
 namespace Engine {
-	extern Coordinator gCoordinator;
+	//extern Coordinator gCoordinator;
 	std::shared_ptr<CollisionSystem> CollisionSystem::CS;
 	std::unordered_map<Entity, std::vector<Entity>> overlapMap;
 
@@ -91,8 +91,8 @@ namespace Engine {
 		//For all entities in CollisionSystem
 		for (std::set<Entity>::iterator entity1 = CS->mEntities.begin(); entity1 != CS->mEntities.end(); ++entity1) {
 			//for (auto const& entity1 : mEntities) {
-			auto& transform1 = gCoordinator.GetCom<Transform>(*entity1);
-			auto collider1 = gCoordinator.GetCom<Collider>(*entity1);
+			auto& transform1 = DreamECS::GetComponent<Transform>(*entity1);
+			auto collider1 = DreamECS::GetComponent<Collider>(*entity1);
 
 			/*collider1.offset_position += glm::vec2{ transform1.position };
 			collider1.offset_scale *= transform1.scale;
@@ -104,13 +104,13 @@ namespace Engine {
 			for (std::set<Entity>::iterator entity2 = entity1; entity2 != CS->mEntities.end(); ++entity2) {
 				if (entity1 == entity2) continue;
 				
-				bool ent1IsMoveable = gCoordinator.HasComCheck<RigidBody>(*entity1),
-					 ent2IsMoveable = gCoordinator.HasComCheck<RigidBody>(*entity2);
+				bool ent1IsMoveable = DreamECS::HasComponentCheck<RigidBody>(*entity1),
+					 ent2IsMoveable = DreamECS::HasComponentCheck<RigidBody>(*entity2);
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 				
 
-				auto& transform2 = gCoordinator.GetCom<Transform>(*entity2);
-				auto collider2 = gCoordinator.GetCom<Collider>(*entity2);
+				auto& transform2 = DreamECS::GetComponent<Transform>(*entity2);
+				auto collider2 = DreamECS::GetComponent<Collider>(*entity2);
 
 				/*collider2.offset_position += glm::vec2{ transform2.position };
 				collider2.offset_scale *= transform2.scale;

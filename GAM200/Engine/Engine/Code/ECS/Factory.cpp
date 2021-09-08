@@ -19,6 +19,8 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Coordinator.hpp"
 
+#include "Engine/Header/ECS/ECSWrapper.hpp"
+
 //Components
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 //Systems
@@ -28,9 +30,10 @@ namespace Engine {
     //Entity ent;
     //Entity ent2;
     //Entity camera;
-    Coordinator gCoordinator;
+    //Coordinator gCoordinator;
 
     void Factory::Create() {
+        Coordinator& gCoordinator = DreamECS::GetCoordinator();
         gCoordinator.Init();
         gCoordinator.RegisterComponent<Camera2D>();
         gCoordinator.RegisterComponent<Transform>();
@@ -70,6 +73,7 @@ namespace Engine {
 
     //Function will be called when GUI inspector request a Square entity
     void Factory::InstantiateSquare(glm::vec2 pos, glm::vec2 scale, bool isMoveable) {
+        Coordinator& gCoordinator = DreamECS::GetCoordinator();
         Entity ent = gCoordinator.createEntity();
         gCoordinator.AddComponent(
             ent,
@@ -80,6 +84,7 @@ namespace Engine {
 
     //Function will be called when GUI inspector request a Circle entity
     void Factory::InstantiateCircle(glm::vec2 pos, glm::vec2 scale, bool isMoveable) {
+        Coordinator& gCoordinator = DreamECS::GetCoordinator();
         Entity ent = gCoordinator.createEntity();
         gCoordinator.AddComponent(
             ent,

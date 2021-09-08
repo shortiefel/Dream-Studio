@@ -23,10 +23,10 @@ namespace Engine {
 	class GameSceneSerializer {
 	public:
 		//From scene to a file
-		static void Serialize(std::string filename);
+		static void SerializeScene(std::string filename);
 
 		//From file to a scene
-		static void Deserialize(std::string filename);
+		static void DeserializeScene(std::string filename);
 	};
 }
 #endif

@@ -43,7 +43,7 @@ Technology is prohibited.
 namespace Engine {
 	//extern Coordinator gCoordinator;
 
-	void GameSceneSerializer::Serialize(std::string filename) {
+	void GameSceneSerializer::SerializeScene(std::string filename) {
 		FILE* fp;
 		fopen_s(&fp, filename.c_str(), "wb");
 
@@ -228,7 +228,7 @@ namespace Engine {
 		fclose(fp);
 	}
 
-	void GameSceneSerializer::Deserialize(std::string filename) {
+	void GameSceneSerializer::DeserializeScene(std::string filename) {
 		FILE* fp;
 		fopen_s(&fp, filename.c_str(), "rb");
 

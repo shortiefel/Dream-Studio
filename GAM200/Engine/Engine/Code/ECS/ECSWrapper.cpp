@@ -5,8 +5,10 @@
 namespace Engine {
 	Coordinator DreamECS::gCoordinator;
 
-
-	Coordinator& DreamECS::GetCoordinator() { return gCoordinator; }
+	void DreamECS::Init()
+	{
+		gCoordinator.Init();
+	}
 
 	Entity DreamECS::CreateEntity()
 	{

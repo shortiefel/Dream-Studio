@@ -18,7 +18,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
 
-#include "Engine/Header/ECS/Coordinator.hpp"
 
 #include <mono/metadata/threads.h>
 

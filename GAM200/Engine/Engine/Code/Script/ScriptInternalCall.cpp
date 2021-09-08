@@ -22,7 +22,6 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
-#include "Engine/Header/ECS/Coordinator.hpp"
 #include "Engine/Header/ECS/ECSWrapper.hpp"
 
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code

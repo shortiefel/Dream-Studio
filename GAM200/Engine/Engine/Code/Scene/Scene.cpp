@@ -125,7 +125,7 @@ namespace Engine {
             Factory::InstantiateSquare();*/
 
         fullPathName = "Assets/Scene/" + scenename + ".json";
-        GameSceneSerializer::Deserialize(fullPathName);
+        GameSceneSerializer::DeserializeScene(fullPathName);
         
 
         ScriptEngine::UpdateMapData();
@@ -149,7 +149,7 @@ namespace Engine {
         CollisionSystem::Stop();
         DreamECS::DestroyAllEntity();
 
-        GameSceneSerializer::Deserialize(fullPathName);
+        GameSceneSerializer::DeserializeScene(fullPathName);
         std::cout << "Stopping \n";
     }
 
@@ -254,7 +254,7 @@ namespace Engine {
 
         ScriptEngine::UpdateMapData();
         //Change to sceneName (might be fullName(path + name) instead)
-        GameSceneSerializer::Serialize(Scene::GetFullPath());
+        GameSceneSerializer::SerializeScene(Scene::GetFullPath());
 
         return true;
     }

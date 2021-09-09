@@ -79,6 +79,8 @@ namespace Engine {
 
 				objType.AddMember("Angle", trans->angle, doc.GetAllocator());
 
+				objType.AddMember("IsActive", trans->isActive, doc.GetAllocator());
+
 				entityObject.AddMember("Transform", objType, doc.GetAllocator());
 			}
 
@@ -101,7 +103,9 @@ namespace Engine {
 
 				objType.AddMember("Angle", col->angle, doc.GetAllocator());
 
-				objType.AddMember("isTrigger", col->isTrigger, doc.GetAllocator());
+				objType.AddMember("IsTrigger", col->isTrigger, doc.GetAllocator());
+
+				objType.AddMember("IsActive", col->isActive, doc.GetAllocator());
 
 				entityObject.AddMember("Collider", objType, doc.GetAllocator());
 			}
@@ -110,6 +114,8 @@ namespace Engine {
 			if (DreamECS::HasComponent<RigidBody>(rb, entList[i]) && col != nullptr) {
 				LOG_ASSERT(rb);
 				rapidjson::Value objType(rapidjson::kObjectType);
+
+				objType.AddMember("IsActive", rb->isActive, doc.GetAllocator());
 
 				entityObject.AddMember("RigidBody", objType, doc.GetAllocator());
 			}
@@ -121,7 +127,7 @@ namespace Engine {
 
 				objType.AddMember("FOV", cam->fov, doc.GetAllocator());
 				objType.AddMember("AR", cam->ar, doc.GetAllocator());
-				objType.AddMember("isActive", cam->isActive, doc.GetAllocator());
+				objType.AddMember("IsActive", cam->isActive, doc.GetAllocator());
 
 				entityObject.AddMember("Camera2D", objType, doc.GetAllocator());
 			}
@@ -148,13 +154,13 @@ namespace Engine {
 				shaderFP.SetString(buffer, len, doc.GetAllocator());
 				objType.AddMember("Shader", shaderFP, doc.GetAllocator());
 
+				objType.AddMember("IsActive", tex->GetActive(), doc.GetAllocator());
+
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
 
-			//CSScript* script = nullptr;
-			auto& entityclassInstance = ScriptEngine::csEntityClassInstance[entList[i]];
-			if (entityclassInstance.size()) {
-
+			if (ScriptEngine::csEntityClassInstance.find(entList[i]) != ScriptEngine::csEntityClassInstance.end()) {
+				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(entList[i])->second;
 				rapidjson::Value classArray(rapidjson::kArrayType);
 
 				for (const auto& [className, scriptInstance] : entityclassInstance) {
@@ -168,6 +174,8 @@ namespace Engine {
 
 					rapidjson::Value classObj(rapidjson::kObjectType);
 					classObj.AddMember("Class", classNameFP, doc.GetAllocator());
+
+					classObj.AddMember("IsActive", scriptInstance.isActive, doc.GetAllocator());
 
 
 					if (scriptInstance.csVariableMap.size()) {
@@ -253,6 +261,7 @@ namespace Engine {
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
 						itr->value["Angle"].GetFloat(),
+						itr->value["IsActive"].GetBool()
 					});
 			}
 
@@ -264,7 +273,8 @@ namespace Engine {
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
 						itr->value["Angle"].GetFloat(),
-						itr->value["isTrigger"].GetBool()
+						itr->value["IsTrigger"].GetBool(),
+						itr->value["IsActive"].GetBool()
 					});
 			}
 
@@ -272,7 +282,7 @@ namespace Engine {
 			if (itr != obj.MemberEnd()) {
 				DreamECS::AddComponent(ent,
 					RigidBody{
-						
+						itr->value["IsActive"].GetBool()
 					});
 			}
 
@@ -282,7 +292,7 @@ namespace Engine {
 					Camera2D {
 						itr->value["FOV"].GetFloat(),
 						itr->value["AR"].GetFloat(),
-						itr->value["isActive"].GetBool()
+						itr->value["IsActive"].GetBool()
 					});
 			}
 
@@ -292,7 +302,8 @@ namespace Engine {
 					Texture {
 						itr->value["Filepath"].GetString(),
 						itr->value["Shape"].GetString(),
-						itr->value["Shader"].GetString()
+						itr->value["Shader"].GetString(),
+						itr->value["IsActive"].GetBool()
 					});
 			}
 
@@ -302,7 +313,9 @@ namespace Engine {
 				for (auto& classJSon : itr->value.GetArray()) {
 					const auto& className = classJSon["Class"].GetString();
 
-					CSScriptInstance csScriptInstance{ className };
+					CSScriptInstance csScriptInstance{ 
+						className, 
+						classJSon["IsActive"].GetBool() };
 
 					rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
 					if (variableItr != classJSon.MemberEnd()) {
@@ -346,11 +359,13 @@ namespace Engine {
 							csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
 						}
 					}
+					std::cout << " in thise right now \n";
 					classInstance.emplace(className, std::move(csScriptInstance));
 				}
 
 				ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
 			}
 		}
+		std::cout << "size in serialize " << ScriptEngine::csEntityClassInstance.size() << "\n";
 	}
 }

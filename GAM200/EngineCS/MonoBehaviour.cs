@@ -38,11 +38,11 @@ using System.Runtime.CompilerServices; //For internal calls
 public class MonoBehaviour
 {
     //public GameObject gameObject;
-    Entity entity;
+    public uint entityId;
 
-    public virtual void Init() {}
-    public virtual void Update() {}
-    public virtual void Destroy() {}
+    public virtual void OnInit() {}
+    public virtual void OnUpdate() {}
+    public virtual void OnDestroy() {}
     public virtual void OnCollisionEnter() {}
     public virtual void OnCollisionStay() {}
     public virtual void OnCollisionExit() {}
@@ -53,7 +53,7 @@ public class MonoBehaviour
     public MonoBehaviour() { }
     public MonoBehaviour (uint id)
     {
-        entity.id = id;
+        entityId = id;
         Console.WriteLine("Constructor ");
         //gameObject = new GameObject();
         //gameObject.entityId = id;
@@ -61,10 +61,10 @@ public class MonoBehaviour
 
     public T GetComponent<T>() where T : Component, new()
     {
-        if (HasComponent(entity.id, typeof(T)))
+        if (HasComponent(entityId, typeof(T)))
         {
             T component = new T();
-            component.entityId = entity.id;
+            component.entityId = entityId;
             return component;
         }
 
@@ -99,14 +99,109 @@ public class MonoBehaviour
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Transform_Engine(uint entityID);
 
-    
 
-    void Destroy(uint id)
+    public void DestroySelf()
     {
-        Destroy_Engine_Engine(id);
+        Destroy_Entity_Engine(entityId);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Destroy_Engine_Engine(uint entityID);
+    internal static extern void Destroy_Entity_Engine(uint entityID);
+
+
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //Destroy
+    public void Destroy<T>(T type)
+    {
+        Console.WriteLine("Destroy not yet done");
+        if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+        {
+            Destroy_Script_Engine(entityId, typeof(T).ToString());
+            return;
+        }
+
+        switch (GenericTypeFinder.dictonary[typeof(T)])
+        {
+            case genTypes.Transform:
+                Destroy_Transform_Engine(entityId);
+                break;
+            case genTypes.Collider:
+                Destroy_Collider_Engine(entityId);
+                break;
+            default:
+                return;
+
+        }
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool Destroy_Transform_Engine(uint entityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool Destroy_Collider_Engine(uint entityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool Destroy_Script_Engine(uint entityID, String className);
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //Enable
+    public void Enable<T>(T type)
+    {
+        Console.WriteLine("Enable not yet done");
+        if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+        {
+            Active_Script_Engine(entityId, true, typeof(T).ToString());
+            return;
+        }
+
+        switch (GenericTypeFinder.dictonary[typeof(T)])
+        {
+            case genTypes.Transform:
+                //Destroy_Transform_Engine(entityId);
+                break;
+            case genTypes.Collider:
+                //Destroy_Collider_Engine(entityId);
+                break;
+            default:
+                return;
+
+        }
+    }
+
+
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //Disable
+    public void Disable<T>(T type)
+    {
+        Console.WriteLine("Disable not yet done");
+        if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+        {
+            Active_Script_Engine(entityId, false, typeof(T).ToString());
+            return;
+        }
+
+        switch (GenericTypeFinder.dictonary[typeof(T)])
+        {
+            case genTypes.Transform:
+                //Active_Transform_Engine(entityId, false);
+                break;
+            case genTypes.Collider:
+                //Active_Collider_Engine(entityId, false);
+                break;
+            default:
+                return;
+
+        }
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool Active_Transform_Engine(uint entityID, bool active);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool Active_Collider_Engine(uint entityID, bool active);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool Active_Script_Engine(uint entityID, bool active, String className);
+
 
 
 

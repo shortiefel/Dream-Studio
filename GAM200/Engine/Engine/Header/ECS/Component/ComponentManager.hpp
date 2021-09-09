@@ -91,9 +91,9 @@ namespace Engine {
 
 		void DestoryEntity(Entity entity) {
 			//tell com arry that entity is destroyed, if exist remove
-			for (auto const& notify : mComponentArrayInter) {
-				auto const& com = notify.second;
-				com->EntityDestroyed(entity);
+			for (auto const& [name, compArray] : mComponentArrayInter) {
+				printf("%s\n", "destroying entity");
+				compArray->EntityDestroyed(entity);
 			}
 		}
 

@@ -21,15 +21,15 @@ public class Test : MonoBehaviour
     public Vec2 newvec2Test;*/
     Transform go2;
 
-    public override void Init()
+    public override void OnInit()
     {
         go2 = GetComponent<Transform>();
         //Transform tem = GetTransform();
         //Vec2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
         //go2.position = new Vec2(0, 0);
-        Console.WriteLine(go2.position);
-       
+        Console.WriteLine("init");
+
         //Console.WriteLine(go2);
 
         //go2.scale = new Vec2(30, 100);
@@ -38,11 +38,10 @@ public class Test : MonoBehaviour
         go2.position += new Vec2(500, 500);
         Console.WriteLine(go2.position);*/
 
-
     }
 
 
-    public override void Update()
+    public override void OnUpdate()
     {
         //Console.WriteLine("new Update");
         //Console.WriteLine(Input::GetMouse);
@@ -75,9 +74,15 @@ public class Test : MonoBehaviour
             go2.angle -= 250 * Time.dt;
         }
 
+        
+
+        if (Input.IsKeyPressed(KeyCode.X))
+        {
+            DestroySelf();
+        }
     }
 
-    public override void OnCollisionEnter() {
+    /*public override void OnCollisionEnter() {
         Console.WriteLine("Test Collision Enter");
     }
 
@@ -94,7 +99,7 @@ public class Test : MonoBehaviour
     public override void OnTriggerExit()
     {
         Console.WriteLine("Test Trigger Exit");
-    }
+    }*/
 
 }
 

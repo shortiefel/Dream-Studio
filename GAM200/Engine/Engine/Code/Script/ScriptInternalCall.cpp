@@ -15,6 +15,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Script/ScriptInternalCall.hpp"
+#include "Engine/Header/Script/ScriptEngine.hpp"
 
 #include <mono/metadata/assembly.h>
 
@@ -27,6 +28,16 @@ Technology is prohibited.
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
 #include "Engine/Header/DeltaTime/DeltaTime.hpp" //To get deltaTime
+
+#define SetEngineType(ID, type, paramName, param)\
+		type* ctype = nullptr;\
+		DreamECS::HasComponent<type>(ctype, ID);\
+		ctype->paramName = param;
+
+#define GetEngineType(ID, type, paramName, param)\
+type* ctype = nullptr;\
+DreamECS::HasComponent<type>(ctype, ID);\
+param = ctype->paramName;
 
 namespace Engine {
 
@@ -50,6 +61,15 @@ namespace Engine {
 
 	bool HasComponent_Transform_Engine(unsigned int id);
 
+	void Destroy_Entity_Engine(unsigned int id);
+	void Destroy_Transform_Engine(unsigned int id);
+	void Destroy_Collider_Engine(unsigned int id);
+	void Destroy_Script_Engine(unsigned int id, MonoString* str);
+
+	void Active_Transform_Engine(unsigned int id, bool boolean);
+	void Active_Collider_Engine(unsigned int id, bool boolean);
+	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str);
+
 	void GetDeltaTime_Engine(float* dt);
 
 
@@ -67,6 +87,15 @@ namespace Engine {
 		mono_add_internal_call("Input::GetMousePosition_Engine", Input_GetMousePosition);
 
 		mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
+		
+		mono_add_internal_call("MonoBehaviour::Destroy_Entity_Engine", Destroy_Entity_Engine);
+		mono_add_internal_call("MonoBehaviour::Destroy_Transform_Engine", Destroy_Transform_Engine);
+		mono_add_internal_call("MonoBehaviour::Destroy_Collider_Engine", Destroy_Collider_Engine);
+		mono_add_internal_call("MonoBehaviour::Destroy_Script_Engine", Destroy_Script_Engine);
+
+		mono_add_internal_call("MonoBehaviour::Active_Transform_Engine", Active_Transform_Engine);
+		mono_add_internal_call("MonoBehaviour::Active_Collider_Engine", Active_Collider_Engine);
+		mono_add_internal_call("MonoBehaviour::Active_Script_Engine", Active_Script_Engine);
 
 		mono_add_internal_call("Time::GetDeltaTime_Engine", GetDeltaTime_Engine);
 	}
@@ -97,17 +126,11 @@ namespace Engine {
 	Transform
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetTransform_Position_Engine(unsigned int id, glm::vec2* outVec2) {
-		//call hascomponent with entityid
-		Transform* transform = nullptr;
-		DreamECS::HasComponent<Transform>(transform, id);
-		*outVec2 = transform->position;
+		GetEngineType(id, Transform, position, *outVec2);
 
 	}
 	void SetTransform_Position_Engine(unsigned int id, glm::vec2* inVec2) {
-		//call hascomponent with entityid
-		Transform* transform = nullptr;
-		DreamECS::HasComponent<Transform>(transform, id);
-		transform->position = *inVec2;
+		SetEngineType(id, Transform, position, *inVec2);
 	}
 	void MoveTransform_Position_Engine(unsigned int id, glm::vec2* inVec2) {
 		//call hascomponent with entityid
@@ -118,30 +141,19 @@ namespace Engine {
 
 
 	void GetTransform_Scale_Engine(unsigned int id, glm::vec2* outVec2) {
-		//call hascomponent with entityid
-		Transform* transform = nullptr;
-		DreamECS::HasComponent<Transform>(transform, id);
-		*outVec2 = transform->scale;
+		GetEngineType(id, Transform, scale, *outVec2);
 	}
 	void SetTransform_Scale_Engine(unsigned int id, glm::vec2* inVec2) {
-		//call hascomponent with entityid
-		Transform* transform = nullptr;
-		DreamECS::HasComponent<Transform>(transform, id);
-		transform->scale = *inVec2;
+		SetEngineType(id, Transform, scale, *inVec2);
 	}
 
 
 	void GetTransform_Angle_Engine(unsigned int id, float* outVec2) {
-		//call hascomponent with entityid
-		Transform* transform = nullptr;
-		DreamECS::HasComponent<Transform>(transform, id);
-		*outVec2 = transform->angle;
+		GetEngineType(id, Transform, angle, *outVec2);
+
 	}
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2) {
-		//call hascomponent with entityid
-		Transform* transform = nullptr;
-		DreamECS::HasComponent<Transform>(transform, id);
-		transform->angle = *inVec2;
+		SetEngineType(id, Transform, angle, *inVec2);
 	}
 
 
@@ -171,6 +183,44 @@ namespace Engine {
 		Transform* tem = nullptr;
 		return DreamECS::HasComponent<Transform>(tem, id);
 	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Destroy
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void Destroy_Entity_Engine(unsigned int id) {
+		ScriptEngine::csEntityClassInstance.erase(id);
+		DreamECS::DestroyEntity(id);
+	}
+
+	void Destroy_Transform_Engine(unsigned int id) {
+
+	}
+
+	void Destroy_Collider_Engine(unsigned int id) {
+
+	}
+
+	void Destroy_Script_Engine(unsigned int id, MonoString* str) {
+		auto& classes = ScriptEngine::csEntityClassInstance[id];
+		classes.erase(std::string{ mono_string_to_utf8(str) });
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Active
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void Active_Transform_Engine(unsigned int id, bool boolean) {
+		SetEngineType(id, Transform, isActive, boolean);
+	}
+
+	void Active_Collider_Engine(unsigned int id, bool boolean) {
+		SetEngineType(id, Collider, isActive, boolean);
+	}
+
+	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {
+		auto& classes = ScriptEngine::csEntityClassInstance[id];
+		classes.find(std::string{ mono_string_to_utf8(str) })->second.isActive = boolean;
+	}
+
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Deltatime

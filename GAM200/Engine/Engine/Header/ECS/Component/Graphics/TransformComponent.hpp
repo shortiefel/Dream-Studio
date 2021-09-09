@@ -33,6 +33,7 @@ namespace Engine {
 		glm::vec2 position = glm::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
 		glm::vec2 scale = glm::vec2{};
 		float angle = float{}; // in degree
+		bool isActive = true;
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
 		//glm::mat3 mdl_to_ndc_xform = glm::mat3{};
@@ -55,9 +56,9 @@ namespace Engine {
 		}
 
 		Transform() = default;
-		Transform(glm::vec2 tPos, glm::vec2 tScale, float rotationAngle, int tLayer = 0) :
+		Transform(glm::vec2 tPos, glm::vec2 tScale, float rotationAngle, bool active = true, int tLayer = 0) :
 			position{ tPos }, scale{ tScale }, angle{ rotationAngle },
-			layer{ tLayer } {}
+			isActive{ active }, layer{ tLayer } {}
 		Transform(const Transform&) = default;
 		Transform& operator=(const Transform&) = default;
 	};

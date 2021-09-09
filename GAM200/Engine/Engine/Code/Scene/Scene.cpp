@@ -127,7 +127,7 @@ namespace Engine {
         fullPathName = "Assets/Scene/" + scenename + ".json";
         GameSceneSerializer::DeserializeScene(fullPathName);
         
-
+        //ScriptEngine::CompileCS();
         ScriptEngine::UpdateMapData();
     }
 
@@ -254,7 +254,9 @@ namespace Engine {
 
         ScriptEngine::UpdateMapData();
         //Change to sceneName (might be fullName(path + name) instead)
+        std::cout << "size in time " << ScriptEngine::csEntityClassInstance.size() << "\n";
         GameSceneSerializer::SerializeScene(Scene::GetFullPath());
+        std::cout << "size in time " << ScriptEngine::csEntityClassInstance.size() << "\n";
 
         return true;
     }

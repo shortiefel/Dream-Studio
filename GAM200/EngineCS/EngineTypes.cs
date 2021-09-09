@@ -5,10 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices; //For internal calls
 
-public struct Entity
-{
-    public uint id;
-}
 
 //Default Component that contains entityId
 public interface Component
@@ -72,6 +68,7 @@ public struct Transform : Component
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void MoveTransform_Position_Engine(uint entityID, ref Vec2 inVec2);
+
 }
 
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -85,7 +82,11 @@ Other scripts
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Collider
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+public struct Collider : Component
+{
+    public uint entityId { get; set; }
 
+}
 
 
 

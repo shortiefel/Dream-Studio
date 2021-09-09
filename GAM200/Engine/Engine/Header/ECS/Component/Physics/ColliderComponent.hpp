@@ -54,8 +54,8 @@ namespace Engine {
 			cType{ c }, offset_position{ glm::vec2{ 0.f, 0.f } }, offset_scale{ glm::vec2{ 0.f, 0.f } }, angle{ 0.f }, isTrigger{ trigger } {}
 
 		//Change of type constructor: Copy an existing Collider but with a different type
-		Collider(ColliderType c, glm::vec2 tPos, glm::vec2 tScale, float rotation, bool tTrigger) :
-			cType{ c }, offset_position{ tPos }, offset_scale{ tScale }, angle { rotation }, isTrigger{ tTrigger } {}
+		Collider(ColliderType c, glm::vec2 tPos, glm::vec2 tScale, float rotation, bool tTrigger, bool active = true) :
+			cType{ c }, offset_position{ tPos }, offset_scale{ tScale }, angle{ rotation }, isTrigger{ tTrigger }, isActive{ active } {}
 
 		Collider(const Collider&) = default;
 		Collider& operator=(const Collider&) = default;

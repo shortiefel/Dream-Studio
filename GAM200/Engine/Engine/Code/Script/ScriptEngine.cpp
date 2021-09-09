@@ -92,9 +92,9 @@ namespace Engine {
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
-				if (csScriptInstance.csClass.ConstructorFunc != nullptr)
+				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr)
 					mono_runtime_invoke(csScriptInstance.csClass.ConstructorFunc, csScriptInstance.csClass.object, param, nullptr);
-				if (csScriptInstance.csClass.InitFunc != nullptr)
+				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr)
 					mono_runtime_invoke(csScriptInstance.csClass.InitFunc, csScriptInstance.csClass.object, nullptr, nullptr);
 			}
 		}
@@ -102,10 +102,12 @@ namespace Engine {
 
 	void ScriptEngine::PlayRunTime() {
 		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
+			if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) continue;
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
-				void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
-				if (csScriptInstance.csClass.UpdateFunc != nullptr)
+				//Run time check in case it is deleted 
+				if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) break;
+				if (csScriptInstance.isActive && csScriptInstance.csClass.UpdateFunc != nullptr)
 					mono_runtime_invoke(csScriptInstance.csClass.UpdateFunc, csScriptInstance.csClass.object, nullptr, nullptr);
 			}
 		}
@@ -266,15 +268,15 @@ namespace Engine {
 				MonoMethodDesc* description = mono_method_desc_new(methodDesc.c_str(), NULL);
 				csClass.ConstructorFunc = mono_method_desc_search_in_image(description, imageCore);
 
-				methodDesc = className + ":Init()";
+				methodDesc = className + ":OnInit()";
 				description = mono_method_desc_new(methodDesc.c_str(), NULL);
 				csClass.InitFunc = mono_method_desc_search_in_image(description, image);
 
-				methodDesc = className + ":Update()";
+				methodDesc = className + ":OnUpdate()";
 				description = mono_method_desc_new(methodDesc.c_str(), NULL);
 				csClass.UpdateFunc = mono_method_desc_search_in_image(description, image);
 
-				methodDesc = className + ":Destroy()";
+				methodDesc = className + ":OnDestroy()";
 				description = mono_method_desc_new(methodDesc.c_str(), NULL);
 				csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
 
@@ -310,6 +312,8 @@ namespace Engine {
 	void ScriptEngine::InitPublicVariable() {
 		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
+				if (csScriptInstance.csClass.klass == nullptr) continue;
+
 				auto& variableMap = csScriptInstance.csVariableMap;
 
 				std::unordered_map<std::string, CSPublicVariable> oldVariable;

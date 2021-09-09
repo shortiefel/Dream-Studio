@@ -101,6 +101,7 @@ namespace Engine {
 		inline void ResetEntityManager()  {
 			UsedEntities.clear();
 			currentMaxId = 0;
+			AvailableEntities = std::queue<Entity>();
 		}
 
 

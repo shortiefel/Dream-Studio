@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Test2 : MonoBehaviour
+public class NewTest2 : MonoBehaviour
 {
     //Transform transform;
-    public int nothealth;
+
 
     Transform go2;
     Transform objTrans1;
 
-    public override void Init()
+    public override void OnInit()
     {
         go2 = GetComponent<Transform>();
         objTrans1 = GetComponentWithID<Transform>(0); //DOesnt work for replay since number is hardcoded, entity value doesnt reset
@@ -31,7 +31,7 @@ public class Test2 : MonoBehaviour
     }
 
 
-    public override void Update()
+    public override void OnUpdate()
     {
 
 

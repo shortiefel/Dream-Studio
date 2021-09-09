@@ -22,6 +22,10 @@ namespace Engine {
 	//	//object cannot be pushed by default
 	//	bool hasGravity = true, isMoveable = false;
 	//
+		bool isActive = true;
+
+		RigidBody() = default;
+		RigidBody(bool active) : isActive{ active } {}
 	};
 }
 

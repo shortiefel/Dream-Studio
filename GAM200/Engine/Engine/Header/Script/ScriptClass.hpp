@@ -57,8 +57,9 @@ namespace Engine {
 		CSClass csClass;
 		//map(variableName, variableData)
 		std::unordered_map<std::string, CSPublicVariable> csVariableMap;
+		bool isActive = true;
 
-		CSScriptInstance(std::string cn) : csClass(cn) {}
+		CSScriptInstance(std::string cn, bool active = true) : csClass(cn), isActive{ active }{}
 
 		CSScriptInstance(CSScriptInstance&& rhs) noexcept {
 			csClass = std::move(rhs.csClass);

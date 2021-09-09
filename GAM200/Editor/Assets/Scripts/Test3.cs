@@ -9,7 +9,7 @@ class Test3 : MonoBehaviour
 {
     Transform go2;
 
-    public override void Init()
+    public override void OnInit()
     {
         go2 = GetComponent<Transform>();
         //Transform tem = GetTransform();

@@ -29,7 +29,7 @@ Technology is prohibited.
 
 namespace Engine {
 	//Scale value for circle in both axis is same
-	struct Transform {
+	struct Transform  {
 		glm::vec2 position = glm::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
 		glm::vec2 scale = glm::vec2{};
 		float angle = float{}; // in degree

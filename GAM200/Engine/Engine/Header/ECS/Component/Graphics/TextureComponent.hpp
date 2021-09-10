@@ -23,11 +23,12 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
+#include "Engine/Header/ECS/Component/IComponent.hpp"
 
 namespace Engine {
-	class Texture {
+	class Texture : public IComponent {
 	public:
-		Texture(const std::string, std::string shape = "Square", std::string shader = "Default", bool active = true);
+		Texture(Entity ID, const std::string path, std::string shape = "Square", std::string shader = "Default", bool active = true);
 		Texture() = default;
 		Texture(const Texture&) = default;
 		Texture& operator= (const Texture&) = default;

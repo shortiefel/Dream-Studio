@@ -57,6 +57,11 @@ namespace Engine {
 			return entityManager->CreateEntity();
 		}
 
+		void DuplicateEntity(Entity ent) {
+			createEntity();
+
+		}
+
 		void destroyEntity(Entity entity)
 		{
 			entityManager->DestroyEntity(entity);
@@ -117,6 +122,12 @@ namespace Engine {
 		T& GetCom(Entity entity)
 		{
 			return compManager->GetCom<T>(entity);
+		}
+
+		template<typename T>
+		T* GetComTest(Entity entity)
+		{
+			return compManager->GetComTest<T>(entity);
 		}
 
 		//Check only (data is not given)

@@ -440,5 +440,8 @@
     <ClInclude Include="Engine\Header\ECS\ECSWrapper.hpp">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

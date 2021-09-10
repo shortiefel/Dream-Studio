@@ -19,7 +19,8 @@ Technology is prohibited.
 //#include "../../External Resources/stb_image/stb_image.h"
 
 namespace Engine {
-	Texture::Texture(const std::string path, std::string shape, std::string shader, bool active) :
+	Texture::Texture(Entity ID, const std::string path, std::string shape, std::string shader, bool active) :
+		IComponent{ ID }, 
 		texobj_hdl{ 0 }, filepath{ path }, width{ 0 }, height{ 0 }, BPP{ 0 },
 		mdl_ref{ GraphicImplementation::models.find(shape) },
 		shd_ref{ GraphicImplementation::shdrpgms.find(shader) },

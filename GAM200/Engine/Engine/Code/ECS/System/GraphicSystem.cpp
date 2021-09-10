@@ -33,7 +33,7 @@ Technology is prohibited.
 
 namespace Engine {
 	//extern Coordinator gCoordinator;
-	std::shared_ptr<GraphicSystem> GraphicSystem::GS;
+	//std::shared_ptr<GraphicSystem> GraphicSystem::GS;
 
 	//GLuint setup_texobj(std::string);
 	//GLuint texobj_hdl; //-----remove
@@ -73,12 +73,78 @@ namespace Engine {
 		glClearColor(1, 0, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		auto& transformArray = DreamECS::GetComponentArrayData<Transform>();
+#if 1
+		//Check texture because less Texture component on entity than Transform
+		const auto& textureArray = DreamECS::GetComponentArrayData<Texture>();
+		for (const auto& texture : textureArray) {
+			if (Entity_Check(texture.entityId)) break;
+			if (!texture.GetActive()) continue;
+
+			Transform* transform = DreamECS::GetComponentTest<Transform>(texture.entityId);
+			if (!transform || !transform->isActive) continue;
+
+			const auto& mdl_ref = texture.get_mdl_ref();
+			const auto& shd_ref = texture.get_shd_ref();
+			glBindVertexArray(mdl_ref->second.vaoid);
+			glBindTextureUnit(6, texture.getTexObj());
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+			const auto& shd_ref_handle = shd_ref->second.GetHandle();
+			glUseProgram(shd_ref_handle);
+
+			GLuint tex_loc = glGetUniformLocation(shd_ref_handle, "uTex2d");
+			glUniform1i(tex_loc, 6);
+			if (tex_loc == -1) {
+				std::cout << "uTex2d variable doesn't exist!!!\n";
+				std::exit(EXIT_FAILURE);
+			}
+
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			// bind VAO of this object's model
+			//glBindVertexArray(renderer.mdl_ref->second.vaoid);
+
+			GLint uniform_var_loc1 = glGetUniformLocation(shd_ref_handle, "uModel_to_NDC");
+			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, glm::value_ptr(camMatrix * transform->GetTransform()));
+			if (uniform_var_loc1 == -1) {
+				std::cout << "uModel_to_NDC variable doesn't exist!!!\n";
+				std::exit(EXIT_FAILURE);
+			}
+
+			//glDrawElements(mdl_ref->second.primitive_type, mdl_ref->second.draw_cnt, GL_UNSIGNED_SHORT, NULL);
+			glDrawArrays(mdl_ref->second.primitive_type, 0, mdl_ref->second.draw_cnt);
+
+			// unbind VAO and unload shader program
+			texture.Unbind();
+			glBindVertexArray(0);
+
+			shd_ref->second.UnUse();
+		}
+#else
+		const auto& transformArray = DreamECS::GetComponentArrayData<Transform>();
+		for (const auto& transform : transformArray) {
+			if (Entity_Check(transform.entityId)) break;
+			Texture* textureTest = DreamECS::GetComponentTest<Texture>(transform.entityId);
+			if (textureTest) {
+				std::cout << transform.entityId << "\n";
+			}
+		}
 		//For all entities in GraphicSystem
 		for (auto const& entity : GS->mEntities) {
-			
+			//std::cout << "id " << entity << "\n";
 			auto& transform = DreamECS::GetComponent<Transform>(entity);
 			auto& texture = DreamECS::GetComponent<Texture>(entity);
+			
+
+			
+
+
+
 
 			glBindVertexArray(texture.get_mdl_ref()->second.vaoid);
 
@@ -128,12 +194,13 @@ namespace Engine {
 
 			texture.get_shd_ref()->second.UnUse();
 		}
+#endif
 
 		GraphicImplementation::UnbindFramebuffer();
 	}
 
 	bool GraphicSystem::Create(const std::shared_ptr<GraphicSystem>& graphicSystem) {
-		GS = graphicSystem;
+		//GS = graphicSystem;
 
 		//Set up vao for box
 		GraphicImplementation::setup_vao();

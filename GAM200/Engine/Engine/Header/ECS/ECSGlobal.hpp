@@ -36,7 +36,14 @@ namespace Engine {
 	//ECS Components 
 	using Entity = std::uint32_t;
 	const Entity MAX_ENTITIES = 10000;
+	//Values is used to check whether entity is in used
+	//instead of bit comparision
+	const Entity DEFAULT_ENTITY = MAX_ENTITIES + 1;
 	using ComponentType = std::uint8_t;
 	const ComponentType MAX_COMPONENTS = 48;
 	using Signature = std::bitset<MAX_COMPONENTS>;
+
+//Check whether entity is in used
+#define Entity_Check(entity)\
+(entity > MAX_ENTITIES)
 }

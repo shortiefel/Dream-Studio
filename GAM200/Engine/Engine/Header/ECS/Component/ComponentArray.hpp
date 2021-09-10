@@ -79,6 +79,17 @@ namespace Engine {
 			return componentArray[EntityToIndexMap[entity]];
 		}
 
+		//referencing to the template to get the data
+		T* GetDataTest(Entity entity) {
+			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) return nullptr;
+
+			//error checking
+			LOG_ASSERT(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
+
+			//if exist, return data
+			return &componentArray[EntityToIndexMap[entity]];
+		}
+
 		bool HasData(T*& com, Entity entity) {
 			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) return false;
 			//error checking

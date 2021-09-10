@@ -24,19 +24,21 @@ Technology is prohibited.
 #ifndef CAMERA_COMPONENT_HPP
 #define CAMERA_COMPONENT_HPP
 
+#include "Engine/Header/ECS/Component/IComponent.hpp"
+
 namespace Engine {
     constexpr int CAMERA_HEIGHT = 1000;
 
-    struct Camera2D {
+    struct Camera2D : public IComponent {
         // window parameters
         float ar = float{}, fov = float{};
 
         bool isActive = true;
-
-        Camera2D(float fieldOfView, float ratio, bool active) :
+        
+        Camera2D() = default;
+        Camera2D(Entity ID, float fieldOfView, float ratio, bool active) :
+            IComponent{ ID },//num{ ID },
             fov{ fieldOfView }, ar{ ratio }, isActive{ active } {}
-        Camera2D(bool active = true) :
-            isActive{ active } {}
         Camera2D(const Camera2D&) = default;
         Camera2D& operator=(const Camera2D&) = default;
     };

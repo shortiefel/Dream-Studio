@@ -42,13 +42,15 @@ namespace Engine {
         //ScriptSystem::Create(gCoordinator.RegSystem<ScriptSystem>());
 
         Signature signature;
-        signature.set(DreamECS::GetComponentType<Camera2D>());
-        DreamECS::setSystemSignature<CameraSystem>(signature);
-
-        signature.reset();
         signature.set(DreamECS::GetComponentType<Transform>());
         signature.set(DreamECS::GetComponentType<Texture>());
         DreamECS::setSystemSignature<GraphicSystem>(signature);
+
+        signature.reset();
+        signature.set(DreamECS::GetComponentType<Transform>());
+        signature.set(DreamECS::GetComponentType<Camera2D>());
+        DreamECS::setSystemSignature<CameraSystem>(signature);
+        
 
         signature.reset();
         signature.set(DreamECS::GetComponentType<Transform>());
@@ -66,22 +68,24 @@ namespace Engine {
 
     //Function will be called when GUI inspector request a Square entity
     void Factory::InstantiateSquare(glm::vec2 pos, glm::vec2 scale, bool isMoveable) {
-        Entity ent = DreamECS::CreateEntity();
+        printf("%s\n", "Doesnt work");
+        /*Entity ent = DreamECS::CreateEntity();
         DreamECS::AddComponent(
             ent,
-            Transform{ pos, scale, 0 });
+            Transform{ ent, pos, scale, 0 });
         DreamECS::AddComponent(ent,
-            Collider{ ColliderType::SQUARE, isMoveable });
+            Collider{ ent, ColliderType::SQUARE, isMoveable });*/
     }
 
     //Function will be called when GUI inspector request a Circle entity
     void Factory::InstantiateCircle(glm::vec2 pos, glm::vec2 scale, bool isMoveable) {
-        Entity ent = DreamECS::CreateEntity();
+        printf("%s\n", "Doesnt work");
+        /*Entity ent = DreamECS::CreateEntity();
         DreamECS::AddComponent(
             ent,
-            Transform{ pos, scale, 0 });
+            Transform{ ent, pos, scale, 0 });
         DreamECS::AddComponent(ent,
-            Collider{ ColliderType::CIRCLE, isMoveable });
+            Collider{ ent, ColliderType::CIRCLE, isMoveable });*/
     }
     //------------------------------------------------------------------------------
 

@@ -17,15 +17,17 @@ Technology is prohibited.
 #ifndef RIGIDBODY_H
 #define RIGIDBODY_H
 
+#include "Engine/Header/ECS/Component/IComponent.hpp"
+
 namespace Engine {
-	struct RigidBody {
+	struct RigidBody : public IComponent {
 	//	//object cannot be pushed by default
 	//	bool hasGravity = true, isMoveable = false;
 	//
 		bool isActive = true;
 
 		RigidBody() = default;
-		RigidBody(bool active) : isActive{ active } {}
+		RigidBody(Entity ID, bool active) : IComponent{ ID }, isActive{ active } {}
 	};
 }
 

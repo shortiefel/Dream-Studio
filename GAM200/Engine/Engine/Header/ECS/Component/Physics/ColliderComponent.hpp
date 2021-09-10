@@ -26,6 +26,7 @@ Technology is prohibited.
 
 
 #include <glm/glm.hpp>
+#include "Engine/Header/ECS/Component/IComponent.hpp"
 
 namespace Engine {
 	enum class ColliderType {
@@ -38,7 +39,7 @@ namespace Engine {
 	//when origin is 0, object is rotated at the top left corner
 	//when origin is w/2, h/2, object is rotated at the center
 
-	struct Collider {
+	struct Collider : public IComponent {
 
 		ColliderType cType = ColliderType::CIRCLE;
 
@@ -50,12 +51,12 @@ namespace Engine {
 
 		Collider() = default;
 
-		Collider(ColliderType c, bool trigger = false) :
-			cType{ c }, offset_position{ glm::vec2{ 0.f, 0.f } }, offset_scale{ glm::vec2{ 0.f, 0.f } }, angle{ 0.f }, isTrigger{ trigger } {}
+		Collider(Entity ID, ColliderType c, bool trigger = false) :
+			IComponent{ ID }, cType{ c }, offset_position{ glm::vec2{ 0.f, 0.f } }, offset_scale{ glm::vec2{ 0.f, 0.f } }, angle{ 0.f }, isTrigger{ trigger } {}
 
 		//Change of type constructor: Copy an existing Collider but with a different type
-		Collider(ColliderType c, glm::vec2 tPos, glm::vec2 tScale, float rotation, bool tTrigger, bool active = true) :
-			cType{ c }, offset_position{ tPos }, offset_scale{ tScale }, angle{ rotation }, isTrigger{ tTrigger }, isActive{ active } {}
+		Collider(Entity ID, ColliderType c, glm::vec2 tPos, glm::vec2 tScale, float rotation, bool tTrigger, bool active = true) :
+			IComponent{ ID }, cType{ c }, offset_position{ tPos }, offset_scale{ tScale }, angle{ rotation }, isTrigger{ tTrigger }, isActive{ active } {}
 
 		Collider(const Collider&) = default;
 		Collider& operator=(const Collider&) = default;

@@ -258,6 +258,7 @@ namespace Engine {
 			if (itr != obj.MemberEnd()) {
 				DreamECS::AddComponent(ent, 
 					Transform{
+						ent,
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
 						itr->value["Angle"].GetFloat(),
@@ -269,6 +270,7 @@ namespace Engine {
 			if (itr != obj.MemberEnd()) {
 				DreamECS::AddComponent(ent,
 					Collider {
+						ent,
 						ColliderType(itr->value["ColliderType"].GetInt()),
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
@@ -282,6 +284,7 @@ namespace Engine {
 			if (itr != obj.MemberEnd()) {
 				DreamECS::AddComponent(ent,
 					RigidBody{
+						ent,
 						itr->value["IsActive"].GetBool()
 					});
 			}
@@ -290,6 +293,7 @@ namespace Engine {
 			if (itr != obj.MemberEnd()) {
 				DreamECS::AddComponent(ent,
 					Camera2D {
+						ent,
 						itr->value["FOV"].GetFloat(),
 						itr->value["AR"].GetFloat(),
 						itr->value["IsActive"].GetBool()
@@ -300,6 +304,7 @@ namespace Engine {
 			if (itr != obj.MemberEnd()) {
 				DreamECS::AddComponent(ent,
 					Texture {
+						ent,
 						itr->value["Filepath"].GetString(),
 						itr->value["Shape"].GetString(),
 						itr->value["Shader"].GetString(),
@@ -359,13 +364,11 @@ namespace Engine {
 							csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
 						}
 					}
-					std::cout << " in thise right now \n";
 					classInstance.emplace(className, std::move(csScriptInstance));
 				}
 
 				ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
 			}
 		}
-		std::cout << "size in serialize " << ScriptEngine::csEntityClassInstance.size() << "\n";
 	}
 }

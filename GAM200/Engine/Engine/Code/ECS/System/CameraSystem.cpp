@@ -28,15 +28,44 @@ Technology is prohibited.
 
 namespace Engine {
     //extern Coordinator gCoordinator;
-    std::shared_ptr<CameraSystem> CameraSystem::CS;
+    //std::shared_ptr<CameraSystem> CameraSystem::CS;
     glm::mat3 CameraSystem::world_to_ndc_xform;
     GLFWwindow* CameraSystem::pwindow;
 
     //Update function to change the world to NDC transform that will be used
     //to create the graphics
     void CameraSystem::Update(float dt) {
+#if 1
+        auto& camArray = DreamECS::GetComponentArrayData<Camera2D>();
+        for (auto& cam : camArray) {
+            if (Entity_Check(cam.entityId)) break;
+            if (!cam.isActive) continue;
+
+            Transform* transform = DreamECS::GetComponentTest<Transform>(cam.entityId);
+            if (!transform || !transform->isActive) continue;
+
+
+            GLsizei fb_width, fb_height;
+            glfwGetFramebufferSize(pwindow, &fb_width, &fb_height);
+            cam.ar = static_cast<GLfloat>(fb_width) / fb_height;
+
+            // compute world-to-NDC transformation matrix
+            world_to_ndc_xform =
+                glm::mat3(
+                    2.f / (cam.ar * CAMERA_HEIGHT * cam.fov), 0.f, 0.f,
+                    0.f, 2.f / CAMERA_HEIGHT * cam.fov, 0.f,
+                    0.f, 0.f, 1.f)
+                *
+                glm::mat3(
+                    1.f, 0.f, 0.f,
+                    0.f, 1.f, 0.f,
+                    -transform->position.x, -transform->position.y, 1.f);
+            break; //Just need one transform
+        }
+#else
         for (auto const& entity : CS->mEntities) {
-            auto& cam = DreamECS::GetComponent<Camera2D>(entity);
+            auto cam = DreamECS::GetComponent<Camera2D>(entity);
+
             if (cam.isActive == false) continue;
             const auto& transform = DreamECS::GetComponent<Transform>(entity);
 
@@ -57,6 +86,7 @@ namespace Engine {
                     -transform.position.x, -transform.position.y, 1.f);
             break; //Just need one transform
         }
+#endif
     }
 
     glm::mat3 CameraSystem::GetTransform() {
@@ -64,7 +94,7 @@ namespace Engine {
     }
 
     bool CameraSystem::Create(const std::shared_ptr<CameraSystem>& cameraSystem) {
-        CS = cameraSystem;
+        //CS = cameraSystem;
         pwindow = Window::GetGLFWwindow();
 
         //world_to_ndc_xform = { 1.f,0.f,0.f,  0.f,1.f,0.f,  0.f,0.f,1.f };

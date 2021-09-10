@@ -31,6 +31,7 @@ namespace Engine {
 		Entity related functions
 		--------------------------------------------------------------------------------------------------------------*/
 		static Entity CreateEntity();
+		static void DuplicateEntity(Entity ent);
 		static void DestroyEntity(Entity entity);
 		static void DestroyAllEntity();
 		static const std::vector<Entity>& GetUsedEntityVector();
@@ -58,6 +59,11 @@ namespace Engine {
 		template <typename T>
 		static T& GetComponent(Entity entity) {
 			return gCoordinator.GetCom<T>(entity);
+		}
+
+		template <typename T>
+		static T* GetComponentTest(Entity entity) {
+			return gCoordinator.GetComTest<T>(entity);
 		}
 
 		//Check only (data is not given)

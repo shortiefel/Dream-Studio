@@ -225,6 +225,7 @@
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp" />

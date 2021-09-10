@@ -33,7 +33,7 @@ namespace Engine {
 
 	private:
 		//float gravity = 10.f;
-		static std::shared_ptr<CollisionSystem> CS;
+		//static std::shared_ptr<CollisionSystem> CS;
 	};
 }
 

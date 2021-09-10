@@ -30,7 +30,7 @@ public class Test : MonoBehaviour
         //go2.position = new Vec2(0, 0);
         Console.WriteLine("init");
 
-        Console.WriteLine(go2);
+        //Console.WriteLine(go2);
 
         //go2.scale = new Vec2(30, 100);
         /*Console.WriteLine(go2.position + new Vec2(10,10));
@@ -78,7 +78,7 @@ public class Test : MonoBehaviour
 
         if (Input.IsKeyPressed(KeyCode.X))
         {
-            Console.WriteLine(go2);
+            Console.WriteLine(go2.position);
             //DestroySelf();
         }
     }

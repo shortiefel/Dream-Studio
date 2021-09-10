@@ -26,10 +26,11 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Graphic.hpp"
 
 #include <glm/glm.hpp>
+#include "Engine/Header/ECS/Component/IComponent.hpp"
 
 namespace Engine {
 	//Scale value for circle in both axis is same
-	struct Transform  {
+	struct Transform : public IComponent {
 		glm::vec2 position = glm::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
 		glm::vec2 scale = glm::vec2{};
 		float angle = float{}; // in degree
@@ -56,7 +57,8 @@ namespace Engine {
 		}
 
 		Transform() = default;
-		Transform(glm::vec2 tPos, glm::vec2 tScale, float rotationAngle, bool active = true, int tLayer = 0) :
+		Transform(Entity ID, glm::vec2 tPos, glm::vec2 tScale, float rotationAngle, bool active = true, int tLayer = 0) :
+			IComponent{ ID },
 			position{ tPos }, scale{ tScale }, angle{ rotationAngle },
 			isActive{ active }, layer{ tLayer } {}
 		Transform(const Transform&) = default;

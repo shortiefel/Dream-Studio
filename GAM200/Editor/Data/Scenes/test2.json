@@ -1,0 +1,96 @@
+[
+
+    {
+        "Transform": {
+            "Position": [ -140.0, 60.0 ],
+            "Scale": [ 20.0, 20.0 ]
+        },
+        "Collider": {
+            "ColliderType": 1,
+            "Position": [ 0.0, 0.0 ],
+            "Scale": [ 1.0, 1.0 ],
+            "isTrigger": false
+        },
+        "RigidBody": {},
+        "Texture": {
+            "Filepath": "Assets/Textures/test2.png",
+            "Shape": "Square",
+            "Shader": "Default"
+        },
+        "CSScript": [
+            {
+                "Class": "Test",
+                "Variable": [
+                    {
+                        "Name": "health",
+                        "Type": 4,
+                        "Data": 10
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "Transform": {
+            "Position": [ 100.0, -100.0 ],
+            "Scale": [ 100.0, 100.0 ]
+        },
+        "Collider": {
+            "ColliderType": 1,
+            "Position": [ 0.0, 0.0 ],
+            "Scale": [ 1.0, 1.0 ],
+            "isTrigger": false
+        },
+        "RigidBody": {},
+        "Texture": {
+            "Filepath": "Assets/Textures/test1.png",
+            "Shape": "Square",
+            "Shader": "Default"
+        },
+        "CSScript": [
+            {
+                "Class": "Test2",
+                "Variable": [
+                    {
+                        "Name": "nothealth",
+                        "Type": 4,
+                        "Data": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "Transform": {
+            "Position": [ 0.0, 0.0 ],
+            "Scale": [ 0.0, 0.0 ]
+        },
+        "Camera2D": {
+            "FOV": 1.0,
+            "AR": 1.7777777910232545,
+            "isActive": true
+        }
+    },
+    {
+        "Transform": {
+            "Position": [ 240.0, 100.0 ],
+            "Scale": [ 0.0, 0.0 ]
+        },
+        "Camera2D": {
+            "FOV": 1.0,
+            "AR": 0.0,
+            "isActive": false
+        }
+    },
+    {
+        "Transform": {
+            "Position": [ -40.0, -240.0 ],
+            "Scale": [ 0.0, 0.0 ]
+        },
+        "Camera2D": {
+            "FOV": 1.0,
+            "AR": 0.0,
+            "isActive": false
+        }
+    }
+]

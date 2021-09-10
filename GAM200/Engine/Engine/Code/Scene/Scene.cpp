@@ -51,80 +51,10 @@ namespace Engine {
     //Entity temcam, temcam2, temcam3; int num = 1;//Temporary
 
     void Scene::Create(std::string scenename) {
-        //Serialization
-        //Read from text file all information
 
-        //Reset all system
+        //Reset all system    
 
-        //Test code--------------------------------------------
-        //W A S D, I J K L and arrow keys to move
-        //V to switch camera
-
-        /*Entity ent2 = gCoordinator.createEntity();
-        gCoordinator.AddComponent(
-            ent2,
-            Transform{ MathD::Vec2{50.f,0.f}, MathD::Vec2{200.f,200.f}, "Circle" });
-        gCoordinator.AddComponent(ent2,
-            Texture{ "Assets/Textures/test2.png" });*/
-
-        //gCoordinator.AddComponent(ent,
-        //        Collider{ ColliderType::SQUARE, true });
-        ///*gCoordinator.AddComponent(ent,
-        //    Custom_Script{ std::make_shared<PlayerController>() });*/
-
-
-
-        //Entity ent1 = gCoordinator.createEntity();
-        //gCoordinator.AddComponent(
-        //    ent1,
-        //    Transform{ MathD::Vec2{-100.f,0.f}, MathD::Vec2{100.f,100.f}, "Square" });
-        //gCoordinator.AddComponent(ent1,
-        //    Collider{ ColliderType::SQUARE, true });
-        ///*gCoordinator.AddComponent(ent1,
-        //    Custom_Script{ std::make_shared<AnotherController>() });*/
-        //gCoordinator.AddComponent(ent1,
-        //    Texture{ "Assets/Textures/test2.png" });
-
-
-
-        //temcam = gCoordinator.createEntity();
-        //gCoordinator.AddComponent(
-        //    temcam,
-        //    Transform{ MathD::Vec2{0.f,0.f}, MathD::Vec2{0.f,0.f} });
-
-        //gCoordinator.AddComponent(
-        //    temcam,
-        //    Camera2D{ true });
-        ///*gCoordinator.AddComponent(temcam,
-        //    Custom_Script{ std::make_shared<CameraController>() });*/
-
-        //temcam2 = gCoordinator.createEntity();
-        //gCoordinator.AddComponent(
-        //    temcam2,
-        //    Transform{ MathD::Vec2{240.f,100.f}, MathD::Vec2{0.f,0.f} });
-        //gCoordinator.AddComponent(
-        //    temcam2,
-        //    Camera2D{ false });
-        ///*gCoordinator.AddComponent(temcam2,
-        //    Custom_Script{ std::make_shared<CameraController>() });*/
-
-
-        //temcam3 = gCoordinator.createEntity();
-        //gCoordinator.AddComponent(
-        //    temcam3,
-        //    Transform{ MathD::Vec2{-40.f,-240.f}, MathD::Vec2{0.f,0.f} });
-        //gCoordinator.AddComponent(
-        //    temcam3,
-        //    Camera2D{ false });
-        ///*gCoordinator.AddComponent(temcam3,
-        //    Custom_Script{ std::make_shared<CameraController>() });*/
-
-            //--------------------------------------------------
-
-            /*Factory::InstantiateCircle();
-            Factory::InstantiateSquare();*/
-
-        fullPathName = "Assets/Scene/" + scenename + ".json";
+        fullPathName = "Data/Scenes/" + scenename + ".json";
         GameSceneSerializer::DeserializeScene(fullPathName);
         
         //ScriptEngine::CompileCS();
@@ -137,7 +67,7 @@ namespace Engine {
         //Serialize everything
         //Restart Mono
         //Init game
-        std::cout << "Playing \n";
+        //std::cout << "Playing \n";
         if (!SceneSave()) return;
         ScriptEngine::PlayInit();
     }
@@ -237,7 +167,6 @@ namespace Engine {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -254,9 +183,7 @@ namespace Engine {
 
         ScriptEngine::UpdateMapData();
         //Change to sceneName (might be fullName(path + name) instead)
-        std::cout << "size in time " << ScriptEngine::csEntityClassInstance.size() << "\n";
         GameSceneSerializer::SerializeScene(Scene::GetFullPath());
-        std::cout << "size in time " << ScriptEngine::csEntityClassInstance.size() << "\n";
 
         return true;
     }

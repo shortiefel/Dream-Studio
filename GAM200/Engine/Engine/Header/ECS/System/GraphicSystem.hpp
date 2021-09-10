@@ -37,7 +37,7 @@ namespace Engine {
 		static void Render(glm::mat3 camMatrix = CameraSystem::GetTransform());
 	private:
 		//static GraphicSystem* gs;
-		static std::shared_ptr<GraphicSystem> GS;
+		//static std::shared_ptr<GraphicSystem> GS;
 	};
 }
 

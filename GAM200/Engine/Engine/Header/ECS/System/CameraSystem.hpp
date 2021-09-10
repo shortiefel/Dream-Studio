@@ -33,7 +33,7 @@ namespace Engine {
 		static glm::mat3 GetTransform();
 	private:
 		static glm::mat3 world_to_ndc_xform;
-		static std::shared_ptr<CameraSystem> CS;
+		//static std::shared_ptr<CameraSystem> CS;
 		static GLFWwindow* pwindow;
 	};
 }

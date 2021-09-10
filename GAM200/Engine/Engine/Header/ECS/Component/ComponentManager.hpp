@@ -79,6 +79,12 @@ namespace Engine {
 		}
 
 		template<typename T>
+		T* GetComTest(Entity entity) {
+			//a reference to component from array for entity
+			return GetComArray<T>()->GetDataTest(entity);
+		}
+
+		template<typename T>
 		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
 			return GetComArray<T>()->GetComponentArrayData();
 		}

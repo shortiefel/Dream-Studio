@@ -14,7 +14,9 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
+
 #include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/Script/ScriptEngine.hpp"
 
 
 namespace Engine {
@@ -34,6 +36,13 @@ namespace Engine {
 		Entity entTo = gCoordinator.createEntity();
 		gCoordinator.DuplicateEntity(entFrom, entTo);
 		//Duplicate scripts
+		const auto& listOfClassInstance = ScriptEngine::csEntityClassInstance.find(entFrom)->second;
+		CSClassInstance newClassInstance;
+		for (auto& [className, scriptInstance] : listOfClassInstance) {
+			newClassInstance.emplace(className, CSScriptInstance{ className });
+		}
+
+		ScriptEngine::csEntityClassInstance.emplace(entTo, std::move(newClassInstance));
 	}
 
 	void DreamECS::DestroyEntity(Entity entity)

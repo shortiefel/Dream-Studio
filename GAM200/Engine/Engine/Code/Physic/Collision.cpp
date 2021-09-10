@@ -221,9 +221,7 @@ namespace Engine {
                 }
 
                 else if (col2.cType == ColliderType::SQUARE) {
-                    bool tem = ent1IsMoveable;
-                    ent1IsMoveable = ent2IsMoveable;
-                    ent2IsMoveable = tem;
+                    dir = -dir;
                 }
             }
             CollisionResolutionMain(dir, trans1, col1, trans2, col2);

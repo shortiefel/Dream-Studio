@@ -30,8 +30,10 @@ namespace Engine {
 		return gCoordinator.createEntity();
 	}
 
-	void DreamECS::DuplicateEntity(Entity ent) {
-		gCoordinator.DuplicateEntity(ent);
+	void DreamECS::DuplicateEntity(Entity entFrom) {
+		Entity entTo = gCoordinator.createEntity();
+		gCoordinator.DuplicateEntity(entFrom, entTo);
+		//Duplicate scripts
 	}
 
 	void DreamECS::DestroyEntity(Entity entity)

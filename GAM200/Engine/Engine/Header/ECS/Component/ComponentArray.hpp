@@ -39,7 +39,7 @@ namespace Engine {
 	template<typename T>
 	class ComponentArray : public ComponentArrayInterface {
 	public:
-		void InsertCom(Entity entity, T component) {
+		void AddComponent(Entity entity, T component) {
 			//error checking
 			LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
 
@@ -49,6 +49,18 @@ namespace Engine {
 			componentArray[newIndex] = component; //Creating of the array and calls it component
 			Size++;
 		}
+
+		//void InsertCom(Entity entity, T component) {
+		//	//error checking
+		//	LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
+
+		//	size_t newIndex = Size;
+		//	EntityToIndexMap[entity] = newIndex; //Entity -> Index
+		//	IndexToEntityMap[newIndex] = entity; //Index -> Entity
+		//	componentArray[newIndex] = component; //Creating of the array and calls it component
+		//	Size++;
+		//}
+
 
 		void Removing(Entity entity) {
 			//error checking

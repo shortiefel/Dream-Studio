@@ -56,6 +56,7 @@ namespace Engine {
 
         fullPathName = "Data/Scenes/" + scenename + ".json";
         GameSceneSerializer::DeserializeScene(fullPathName);
+        //DreamECS::DuplicateEntity(0);
         
         //ScriptEngine::CompileCS();
         ScriptEngine::UpdateMapData();

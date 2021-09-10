@@ -126,25 +126,11 @@ namespace Engine {
 			shd_ref->second.UnUse();
 		}
 #else
-		const auto& transformArray = DreamECS::GetComponentArrayData<Transform>();
-		for (const auto& transform : transformArray) {
-			if (Entity_Check(transform.entityId)) break;
-			Texture* textureTest = DreamECS::GetComponentTest<Texture>(transform.entityId);
-			if (textureTest) {
-				std::cout << transform.entityId << "\n";
-			}
-		}
 		//For all entities in GraphicSystem
 		for (auto const& entity : GS->mEntities) {
 			//std::cout << "id " << entity << "\n";
 			auto& transform = DreamECS::GetComponent<Transform>(entity);
 			auto& texture = DreamECS::GetComponent<Texture>(entity);
-			
-
-			
-
-
-
 
 			glBindVertexArray(texture.get_mdl_ref()->second.vaoid);
 

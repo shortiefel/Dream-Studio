@@ -30,10 +30,15 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
+#include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 //#include <any> //type safe container
 #include <memory>
 #include <unordered_map>
+
+#define DUPLICATE_COMPONENT(type)\
+type* tem = GetComArray<type>()->GetDataTest(entFrom);\
+if (tem) GetComArray<type>()->AddComponent(entTo, *tem);
 
 namespace Engine {
 	class ComponentManager {
@@ -63,8 +68,17 @@ namespace Engine {
 		}
 
 		template<typename T>
-		void AddCom(Entity entity, T component) {
-			GetComArray<T>()->InsertCom(entity, component);
+		void AddComponent(Entity entity, T component) {
+			GetComArray<T>()->AddComponent(entity, component);
+		}
+		
+		void DuplicateComponents(Entity entFrom, Entity entTo) {
+			//variable name is same so its scoped
+			{ DUPLICATE_COMPONENT(Camera2D); }
+			{ DUPLICATE_COMPONENT(Texture); }
+			{ DUPLICATE_COMPONENT(Transform); }
+			{ DUPLICATE_COMPONENT(Collider); }
+			{ DUPLICATE_COMPONENT(RigidBody); }
 		}
 
 		template<typename T>

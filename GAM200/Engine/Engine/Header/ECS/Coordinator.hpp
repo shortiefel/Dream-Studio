@@ -57,9 +57,8 @@ namespace Engine {
 			return entityManager->CreateEntity();
 		}
 
-		void DuplicateEntity(Entity ent) {
-			createEntity();
-
+		void DuplicateEntity(Entity entFrom, Entity entTo) {
+			compManager->DuplicateComponents(entFrom, entTo);
 		}
 
 		void destroyEntity(Entity entity)
@@ -99,7 +98,7 @@ namespace Engine {
 		template<typename T>
 		void AddComponent(Entity entity, T com)
 		{
-			compManager->AddCom<T>(entity, com);
+			compManager->AddComponent<T>(entity, com);
 			auto Signature = entityManager->GetSignature(entity); //unique signature key
 			Signature.set(compManager->GetterComType<T>(), true); //setting the unique signature key
 			entityManager->SetSignature(entity, Signature);

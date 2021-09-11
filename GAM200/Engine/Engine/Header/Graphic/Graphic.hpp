@@ -39,7 +39,7 @@ namespace Engine {
             glm::vec2 TexPos_vtx;
         };
 
-        void CreateFramebuffer(unsigned int* framebuffer, unsigned int* texColorBuffer);
+        void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer);
         //exist = false to remove framebuffer, to set buffer ignore exist
         void SetFramebuffer(unsigned int f, bool exist = true);
         void BindFramebuffer();

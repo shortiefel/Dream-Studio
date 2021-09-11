@@ -175,7 +175,7 @@ namespace Engine {
 			mono_domain_set(domain, false);
 		}
 
-		assem = mono_domain_assembly_open(domain, "Data/CSScript.dll");
+		assem = mono_domain_assembly_open(domain, "Data/CSScript/CSScript.dll");
 		if (!assem) {
 			LOG_ERROR("Failed loading assembly");
 			return;
@@ -187,7 +187,7 @@ namespace Engine {
 			return;
 		}
 
-		MonoAssembly* assemCore = mono_domain_assembly_open(domain, "Data/EngineCS.dll");
+		MonoAssembly* assemCore = mono_domain_assembly_open(domain, "Data/CSScript/EngineCS.dll");
 		if (!assemCore) {
 			LOG_ERROR("Failed loading assembly");
 			return;

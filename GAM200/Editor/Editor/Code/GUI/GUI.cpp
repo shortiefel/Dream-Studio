@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Window.hpp"
+#include "Engine/Header/Management/Settings.hpp"
 
 //External Resources
 #include <Imgui/imgui.h>
@@ -33,8 +34,6 @@ namespace Editor {
     GUI* GUI::m_instance;
     unsigned int GUI::gameWinFBO, GUI::gameWinTex,
                  GUI::sceneWinFBO, GUI::sceneWinTex;
-
-    
     
 
     void GUI::Update() {
@@ -94,8 +93,8 @@ namespace Editor {
 
         GUI_Window::GUI_Settings_Setup();
 
-        Engine::GraphicImplementation::CreateFramebuffer(&gameWinFBO, &gameWinTex);
-        Engine::GraphicImplementation::CreateFramebuffer(&sceneWinFBO, &sceneWinTex);
+        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight ,&gameWinFBO, &gameWinTex);
+        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight ,&sceneWinFBO, &sceneWinTex);
 
         return true;
     }

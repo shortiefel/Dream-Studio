@@ -22,6 +22,9 @@ Technology is prohibited.
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Event/WindowEvent.hpp"
 
+#include "Engine/Header/Management/GameSceneSerializer.hpp"
+#include "Engine/Header/Management/Settings.hpp"
+
 #include "Engine/Header/DeltaTime/DeltaTime.hpp"
 
 #include "Engine/Header/EngineCore.hpp"
@@ -44,8 +47,9 @@ namespace Engine {
         s_app_instance = new Application();
         LOG_INSTANCE("Application created");
 
+        GameSceneSerializer::DeserializeSetting();
         ////Create window and instantiate managers
-        if (!Window::Create("Dream Engine")) LOG_ERROR("Window creation has failed");
+        if (!Window::Create("Dream Engine", Settings::windowWidth, Settings::windowHeight)) LOG_ERROR("Window creation has failed");
         //s_app_instance->SetEventCallBack();
         
         WindowCloseEvent::RegisterFunction(&OnWindowClose);

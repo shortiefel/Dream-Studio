@@ -22,9 +22,11 @@ Technology is prohibited.
 namespace Engine {
 	class GameSceneSerializer {
 	public:
+		static void SerializeSetting();
+		static void DeserializeSetting();
+
 		//From scene to a file
 		static void SerializeScene(std::string filename);
-
 		//From file to a scene
 		static void DeserializeScene(std::string filename);
 	};

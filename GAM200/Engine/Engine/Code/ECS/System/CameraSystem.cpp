@@ -19,7 +19,8 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 
-#include "Engine/Header/Window.hpp" //To get GLFWwindow
+//#include "Engine/Header/Window.hpp" //To get GLFWwindow
+#include "Engine/Header/Management/Settings.hpp" //To get game window size
 
 #include "Engine/Header/ECS/Component/Graphics/CameraComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
@@ -45,9 +46,10 @@ namespace Engine {
             if (!transform || !transform->isActive) continue;
 
 
-            GLsizei fb_width, fb_height;
-            glfwGetFramebufferSize(pwindow, &fb_width, &fb_height);
-            cam.ar = static_cast<GLfloat>(fb_width) / fb_height;
+            //GLsizei fb_width, fb_height;
+            //glfwGetFramebufferSize(pwindow, &fb_width, &fb_height);
+            cam.ar = Settings::gameAR;
+            
 
             // compute world-to-NDC transformation matrix
             world_to_ndc_xform =
@@ -95,7 +97,7 @@ namespace Engine {
 
     bool CameraSystem::Create(const std::shared_ptr<CameraSystem>& cameraSystem) {
         //CS = cameraSystem;
-        pwindow = Window::GetGLFWwindow();
+        //pwindow = Window::GetGLFWwindow();
 
         //world_to_ndc_xform = { 1.f,0.f,0.f,  0.f,1.f,0.f,  0.f,0.f,1.f };
 

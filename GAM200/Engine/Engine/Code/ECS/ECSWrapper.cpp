@@ -35,7 +35,7 @@ namespace Engine {
 	void DreamECS::DuplicateEntity(Entity entFrom) {
 		Entity entTo = gCoordinator.createEntity();
 		gCoordinator.DuplicateEntity(entFrom, entTo);
-		//Duplicate scripts
+		
 		const auto& listOfClassInstance = ScriptEngine::csEntityClassInstance.find(entFrom)->second;
 		CSClassInstance newClassInstance;
 		for (auto& [className, scriptInstance] : listOfClassInstance) {

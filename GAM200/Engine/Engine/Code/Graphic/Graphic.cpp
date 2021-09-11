@@ -18,6 +18,8 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Graphic.hpp" 
 #include "Engine/Header/Window.hpp" 
 
+#include "Engine/Header/Management/Settings.hpp"
+
 #include <iostream>
 #include <fstream>
 
@@ -159,14 +161,14 @@ namespace Engine {
             shdrpgms.insert(std::pair<std::string, GLSLShader>("Default", shdr_pgm));
         }
 
-        void CreateFramebuffer(unsigned int* framebuffer, unsigned int* texColorBuffer) {
+        void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer) {
             
             glGenFramebuffers(1, framebuffer);
             glBindFramebuffer(GL_FRAMEBUFFER, *framebuffer);
 
             glGenTextures(1, texColorBuffer);
             glBindTexture(GL_TEXTURE_2D, *texColorBuffer);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Window::GetWidth(), Window::GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glBindTexture(GL_TEXTURE_2D, 0);

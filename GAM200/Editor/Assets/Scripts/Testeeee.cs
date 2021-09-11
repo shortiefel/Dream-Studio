@@ -66,7 +66,10 @@ public class TrailTest3 : MonoBehaviour
             go2.angle -= 50 * Time.dt;
         }
 
-        
+        if (Input.IsKeyPressed(KeyCode.M))
+        {
+            Enable(this);
+        }
     }
 
    /* public override void OnCollisionEnter()

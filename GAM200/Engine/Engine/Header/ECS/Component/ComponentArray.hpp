@@ -50,26 +50,31 @@ namespace Engine {
 			Size++;
 		}
 
-		//void InsertCom(Entity entity, T component) {
-		//	//error checking
-		//	LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
-
-		//	size_t newIndex = Size;
-		//	EntityToIndexMap[entity] = newIndex; //Entity -> Index
-		//	IndexToEntityMap[newIndex] = entity; //Index -> Entity
-		//	componentArray[newIndex] = component; //Creating of the array and calls it component
-		//	Size++;
-		//}
-
 
 		void Removing(Entity entity) {
+#if 0
 			//error checking
 			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
 
 			//Copies element at the end into deleted element's place 
-			size_t IndexRemoveEntity = IndexToEntityMap[entity];
+			size_t IndexRemoveEntity = EntityToIndexMap[entity];
+			size_t IndexLastElement = Size - 1;
+
+			componentArray[IndexRemoveEntity] = componentArray[IndexLastElement];
+			EntityToIndexMap[componentArray[IndexRemoveEntity].entityId] = IndexRemoveEntity;
+			componentArray[IndexLastElement].entityId = DEFAULT_ENTITY;
+			EntityToIndexMap.erase(entity);
+
+			--Size;
+#else
+			//error checking
+			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
+
+			//Copies element at the end into deleted element's place 
+			size_t IndexRemoveEntity = EntityToIndexMap[entity];
 			size_t IndexLastElement = Size - 1;
 			componentArray[IndexRemoveEntity] = componentArray[IndexLastElement];
+			componentArray[IndexLastElement].entityId = DEFAULT_ENTITY;
 
 			//Updating the map when it's shifted
 			Entity EntityLastElement = IndexToEntityMap[IndexLastElement];
@@ -80,6 +85,7 @@ namespace Engine {
 			IndexToEntityMap.erase(IndexLastElement);
 
 			--Size;
+#endif
 		}
 
 		//referencing to the template to get the data

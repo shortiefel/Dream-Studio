@@ -186,6 +186,7 @@
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="Engine\Code\Management\ResourceManager.cpp" />
     <ClCompile Include="Engine\Code\Management\GameSceneSerializer.cpp" />
+    <ClCompile Include="Engine\Code\Management\Settings.cpp" />
     <ClCompile Include="Engine\Code\Physic\Collision.cpp" />
     <ClCompile Include="Engine\Code\Scene\Scene.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp" />
     <ClInclude Include="Engine\Header\Management\ResourceManager.hpp" />
     <ClInclude Include="Engine\Header\Management\GameSceneSerializer.hpp" />
+    <ClInclude Include="Engine\Header\Management\Settings.hpp" />
     <ClInclude Include="Engine\Header\Math\MathLib.hpp" />
     <ClInclude Include="Engine\Header\Math\Matrix.hpp" />
     <ClInclude Include="Engine\Header\Math\Matrix3.hpp" />

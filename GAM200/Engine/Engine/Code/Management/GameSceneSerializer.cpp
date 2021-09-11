@@ -17,6 +17,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Management/GameSceneSerializer.hpp"
+#include "Engine/Header/Management/Settings.hpp"
 
 #include "Engine/Header/Debug tools/Logging.hpp"
 
@@ -40,20 +41,59 @@ Technology is prohibited.
 		itr->value[str].GetArray()[0].GetFloat(), \
 		itr->value[str].GetArray()[1].GetFloat() }
 
+#define FILE_CREATION(path, type)\
+FILE* fp;\
+fopen_s(&fp, path, type);\
+if (!fp) {\
+	LOG_WARNING("File is not found");\
+	return;\
+}
+
+#define READ_BUFFER \
+char readBuffer[1000];\
+rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));\
+rapidjson::Document doc;\
+doc.ParseStream(is);\
+fclose(fp);
+
+
 namespace Engine {
-	//extern Coordinator gCoordinator;
+	void GameSceneSerializer::SerializeSetting() {
+		FILE_CREATION("Data/Config.json", "wb");
 
-	void GameSceneSerializer::SerializeScene(std::string filename) {
-		FILE* fp;
-		fopen_s(&fp, filename.c_str(), "wb");
+		rapidjson::Document doc(rapidjson::kObjectType);
 
-		if (!fp) {
-			LOG_WARNING("File is not found");
-			return;
-		}
-		
+		//doc.PushBack(entityObject, doc.GetAllocator());
+
 		char writeBuffer[1000];
 		rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+		doc.Accept(writer);
+
+		fclose(fp);
+	}
+
+	void GameSceneSerializer::DeserializeSetting() {
+		FILE_CREATION("Data/Config.json", "rb");
+		READ_BUFFER;
+
+		rapidjson::Value::ConstMemberIterator itr = doc.FindMember("Window");
+		if (itr != doc.MemberEnd()) {
+			Settings::windowWidth = itr->value["Width"].GetInt();
+			Settings::windowHeight = itr->value["Height"].GetInt();
+		}
+
+		itr = doc.FindMember("Game");
+		if (itr != doc.MemberEnd()) {
+			Settings::gameWidth = itr->value["Width"].GetInt();
+			Settings::gameHeight = itr->value["Height"].GetInt();
+
+			Settings::gameAR = static_cast<GLfloat>(Settings::gameWidth) / Settings::gameHeight;
+		}
+	}
+
+	void GameSceneSerializer::SerializeScene(std::string filename) {
+		FILE_CREATION(filename.c_str(), "wb");	
 		
 		rapidjson::Document doc (rapidjson::kArrayType);
 
@@ -164,9 +204,6 @@ namespace Engine {
 				rapidjson::Value classArray(rapidjson::kArrayType);
 
 				for (const auto& [className, scriptInstance] : entityclassInstance) {
-
-					
-
 					rapidjson::Value classNameFP;
 					char buffer[200];
 					int len = sprintf_s(buffer, "%s", className.c_str());
@@ -176,7 +213,6 @@ namespace Engine {
 					classObj.AddMember("Class", classNameFP, doc.GetAllocator());
 
 					classObj.AddMember("IsActive", scriptInstance.isActive, doc.GetAllocator());
-
 
 					if (scriptInstance.csVariableMap.size()) {
 						rapidjson::Value variableArray(rapidjson::kArrayType);
@@ -214,8 +250,6 @@ namespace Engine {
 								variableObject.AddMember("Data", dataVec2, doc.GetAllocator());
 								break;
 							}
-							
-
 
 							variableArray.PushBack(variableObject, doc.GetAllocator());
 						}
@@ -230,6 +264,8 @@ namespace Engine {
 
 			doc.PushBack(entityObject, doc.GetAllocator());
 		}
+		char writeBuffer[1000];
+		rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 		doc.Accept(writer);
 
@@ -237,21 +273,9 @@ namespace Engine {
 	}
 
 	void GameSceneSerializer::DeserializeScene(std::string filename) {
-		FILE* fp;
-		fopen_s(&fp, filename.c_str(), "rb");
+		FILE_CREATION(filename.c_str(), "rb");
+		READ_BUFFER;
 
-		if (!fp) {
-			LOG_WARNING("File is not found");
-			return;
-		}
-
-		char readBuffer[1000];
-		rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-
-		rapidjson::Document doc;
-		doc.ParseStream(is);
-
-		fclose(fp);
 		for (auto& obj : doc.GetArray()) {
 			Entity ent = DreamECS::CreateEntity();
 			rapidjson::Value::ConstMemberIterator itr = obj.FindMember("Transform");

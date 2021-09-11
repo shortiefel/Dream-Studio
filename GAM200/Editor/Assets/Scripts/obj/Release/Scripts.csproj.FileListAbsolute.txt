@@ -11,3 +11,5 @@ C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\bin\Release\C
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\bin\Release\CSScript.pdb
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\bin\Release\EngineCS.dll
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\obj\Release\Scripts.csprojResolveAssemblyReference.cache
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Data\CSScript\CSScript.dll
+C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Data\CSScript\CSScript.pdb

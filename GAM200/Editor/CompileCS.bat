@@ -13,5 +13,5 @@
 @REM MSBuild version
 set PATH=%CD:~0,3%Windows\Microsoft.NET\Framework64\v4.0.30319
 @REM outDir: C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\  +  Data\
-set outDir=%~dp0Data\
+set outDir=%~dp0Data\CSScript\
 msbuild Assets\Scripts\Scripts.csproj /t:build /p:OutputPath=%outDir%;Configuration=Release

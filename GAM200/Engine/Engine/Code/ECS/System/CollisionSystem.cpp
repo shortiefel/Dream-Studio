@@ -99,6 +99,7 @@ namespace Engine {
 			
 			auto& transform1 = DreamECS::GetComponent<Transform>(ent1Id);
 			if (!transform1.isActive) continue;
+			std::cout << "ColliderArray: " << col1->entityId << "\n";
 
 			Collider collider1 = *col1;
 			collider1.offset_position += glm::vec2{ transform1.position };

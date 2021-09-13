@@ -41,7 +41,7 @@ namespace Engine {
 			mSystems.insert({ TypeName, system });
 			return system;
 		}
-
+#ifndef NEW_ECS
 		template<typename T>
 		void SetSignature(Signature signature)
 		{
@@ -86,9 +86,12 @@ namespace Engine {
 				}
 			}
 		}
+#endif
 
 	private:
+#ifndef NEW_ECS
 		std::unordered_map<const char*, Signature> Signatures{}; //system typ->signature
+#endif
 		std::unordered_map<const char*, std::shared_ptr<System>> mSystems{}; //system ptr->system ptr
 	};
 }

@@ -22,13 +22,16 @@ Transform
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 public struct Transform : Component
 {
-    public uint entityId { get; set;  }
+    public uint entityId { get; set; }
     //-----------------------------------------------------------------------------------------------------------------
     //Position
     public Vec2 position
     {
-        get { GetTransform_Position_Engine(entityId, out Vec2 result);
-              return result; }
+        get
+        {
+            GetTransform_Position_Engine(entityId, out Vec2 result);
+            return result;
+        }
         set { SetTransform_Position_Engine(entityId, ref value); }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
@@ -39,8 +42,11 @@ public struct Transform : Component
     //Scale
     public Vec2 scale
     {
-        get { GetTransform_Scale_Engine(entityId, out Vec2 result);
-              return result; }
+        get
+        {
+            GetTransform_Scale_Engine(entityId, out Vec2 result);
+            return result;
+        }
         set { SetTransform_Scale_Engine(entityId, ref value); }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
@@ -51,8 +57,11 @@ public struct Transform : Component
     //Angle
     public float angle
     {
-        get { GetTransform_Angle_Engine(entityId, out float result);
-              return result; }
+        get
+        {
+            GetTransform_Angle_Engine(entityId, out float result);
+            return result;
+        }
         set { SetTransform_Angle_Engine(entityId, ref value); }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]

@@ -34,7 +34,7 @@ namespace Engine {
         float ar = float{}, fov = float{};
 
         bool isActive = true;
-        
+
         Camera2D() = default;
         Camera2D(Entity ID, float fieldOfView, float ratio, bool active) :
             IComponent{ ID },//num{ ID },

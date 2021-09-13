@@ -21,9 +21,9 @@ Technology is prohibited.
 
 namespace Engine {
 	struct RigidBody : public IComponent {
-	//	//object cannot be pushed by default
-	//	bool hasGravity = true, isMoveable = false;
-	//
+		//	//object cannot be pushed by default
+		//	bool hasGravity = true, isMoveable = false;
+		//
 		bool isActive = true;
 
 		RigidBody() = default;

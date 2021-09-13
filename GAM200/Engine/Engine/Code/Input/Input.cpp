@@ -18,7 +18,7 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 
 namespace Engine {
-	glm::vec2 Input::mousePosition;
+	Math::vec2 Input::mousePosition;
 
 	/*------------------------------------------------------------------------------------------------------------------------------
 	GLFW to input key code map
@@ -100,7 +100,7 @@ namespace Engine {
 		{ GLFW_KEY_RIGHT_CONTROL, Input_KeyCode::Control},
 		{ GLFW_KEY_LEFT_ALT, Input_KeyCode::Alt},
 		{ GLFW_KEY_RIGHT_ALT, Input_KeyCode::Alt},
-		  
+
 		{ GLFW_KEY_SPACE, Input_KeyCode::Space },
 
 		//Right side
@@ -115,29 +115,29 @@ namespace Engine {
 		{ GLFW_KEY_SEMICOLON, Input_KeyCode::Semicolon },
 		{ GLFW_KEY_APOSTROPHE, Input_KeyCode::Apostrophe },
 		{ GLFW_KEY_ENTER, Input_KeyCode::Enter },
-		  
+
 		{ GLFW_KEY_COMMA, Input_KeyCode::Comma },
 		{ GLFW_KEY_PERIOD, Input_KeyCode::Period },
 		{ GLFW_KEY_SLASH, Input_KeyCode::FrontSlash }, /* / */
-		  
-		  
+
+
 		{ GLFW_KEY_PRINT_SCREEN, Input_KeyCode::PrintScreen },
 		{ GLFW_KEY_SCROLL_LOCK, Input_KeyCode::ScrollLock },
 		{ GLFW_KEY_PAUSE, Input_KeyCode::Pause },
-		  
+
 		{ GLFW_KEY_INSERT, Input_KeyCode::Insert },
 		{ GLFW_KEY_DELETE, Input_KeyCode::Delete },
 		{ GLFW_KEY_HOME, Input_KeyCode::Home },
 		{ GLFW_KEY_END, Input_KeyCode::End },
 		{ GLFW_KEY_PAGE_UP, Input_KeyCode::PageUp },
 		{ GLFW_KEY_PAGE_DOWN, Input_KeyCode::PageDown },
-		  
+
 		//Arrow Keys
 		{ GLFW_KEY_LEFT, Input_KeyCode::Left },
 		{ GLFW_KEY_RIGHT, Input_KeyCode::Right },
 		{ GLFW_KEY_UP, Input_KeyCode::Up },
 		{ GLFW_KEY_DOWN, Input_KeyCode::Down },
-		  
+
 		//Keypad
 		{ GLFW_KEY_NUM_LOCK, Input_KeyCode::NumLock },
 		{ GLFW_KEY_KP_0, Input_KeyCode::KP0 },
@@ -297,18 +297,18 @@ namespace Engine {
 	/*------------------------------------------------------------------------------------------------------------------------------
 	GLFW to input mouse code map
 	------------------------------------------------------------------------------------------------------------------------------*/
-	std::unordered_map<int, Input_MouseCode> Input::GLFWtoInputMouse {
+	std::unordered_map<int, Input_MouseCode> Input::GLFWtoInputMouse{
 		{ GLFW_MOUSE_BUTTON_1, Input_MouseCode::Mouse_Left },
 		{ GLFW_MOUSE_BUTTON_2, Input_MouseCode::Mouse_Right },
 		{ GLFW_MOUSE_BUTTON_3, Input_MouseCode::Mouse_Middle },
 		{ GLFW_MOUSE_BUTTON_5, Input_MouseCode::Mouse_LeftSide_Front },
 		{ GLFW_MOUSE_BUTTON_4, Input_MouseCode::Mouse_LeftSide_Back }
 	};
-	
+
 	/*------------------------------------------------------------------------------------------------------------------------------
 	Input mouse to bool map
 	------------------------------------------------------------------------------------------------------------------------------*/
-	std::unordered_map<Input_MouseCode, bool> Input::InputMouseStatus {
+	std::unordered_map<Input_MouseCode, bool> Input::InputMouseStatus{
 		{ Input_MouseCode::Mouse_Left, false },
 		{ Input_MouseCode::Mouse_Right, false },
 		{ Input_MouseCode::Mouse_Middle, false },
@@ -326,7 +326,7 @@ namespace Engine {
 		return InputMouseStatus[button];
 	}
 
-	glm::vec2 Input::GetMousePosition() {
+	Math::vec2 Input::GetMousePosition() {
 		return mousePosition;
 	}
 
@@ -339,7 +339,7 @@ namespace Engine {
 	}
 
 	void Input::SetMousePosition(double xPos, double yPos) {
-		mousePosition = glm::vec2{ xPos, yPos };
+		mousePosition = Math::vec2{ xPos, yPos };
 	}
 
 	Input_KeyCode Input::GetKeyCode(int key) {

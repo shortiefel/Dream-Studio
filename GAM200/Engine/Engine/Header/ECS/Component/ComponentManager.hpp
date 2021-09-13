@@ -15,7 +15,7 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \date 26/04/2021
 \brief
 
-A component manager acts as an in charge of handling the different Component Array whenever a 
+A component manager acts as an in charge of handling the different Component Array whenever a
 component has tpo be added or removed. It contains Component Type, RegisterComponent. it also has
 a unique key which is a map to ComponentArray to the ComponentType
 
@@ -37,8 +37,12 @@ Technology is prohibited.
 #include <unordered_map>
 
 #define DUPLICATE_COMPONENT(type)\
-type* tem = GetComArray<type>()->GetDataTest(entFrom);\
-if (tem) GetComArray<type>()->AddComponent(entTo, *tem);
+type* tptr = GetComArray<type>()->GetDataTest(entFrom);\
+if (tptr) {\
+type t {*tptr};\
+t.SetEntityId(entTo);\
+GetComArray<type>()->AddComponent(t);\
+}
 
 namespace Engine {
 	class ComponentManager {
@@ -68,10 +72,10 @@ namespace Engine {
 		}
 
 		template<typename T>
-		void AddComponent(Entity entity, T component) {
-			GetComArray<T>()->AddComponent(entity, component);
+		void AddComponent(T component) {
+			GetComArray<T>()->AddComponent(component);
 		}
-		
+
 		void DuplicateComponents(Entity entFrom, Entity entTo) {
 			//variable name is same so its scoped
 			{ DUPLICATE_COMPONENT(Camera2D); }
@@ -83,7 +87,7 @@ namespace Engine {
 
 		template<typename T>
 		void RemoveCom(Entity entity) {
-			GetComArray<T>()->RemoveCom(entity);
+			GetComArray<T>()->RemoveComponent(entity);
 		}
 
 		template<typename T>
@@ -109,10 +113,9 @@ namespace Engine {
 			return GetComArray<T>()->HasData(com, entity);
 		}
 
-		void DestoryEntity(Entity entity) {
+		void DestroyEntity(Entity entity) {
 			//tell com arry that entity is destroyed, if exist remove
 			for (auto const& [name, compArray] : mComponentArrayInter) {
-				printf("%s\n", "destroying entity");
 				compArray->EntityDestroyed(entity);
 			}
 		}

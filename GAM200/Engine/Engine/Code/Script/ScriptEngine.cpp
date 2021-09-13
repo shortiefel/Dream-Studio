@@ -102,11 +102,11 @@ namespace Engine {
 
 	void ScriptEngine::PlayRunTime() {
 		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
-			if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) continue;
+			//if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) continue;
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				//Run time check in case it is deleted 
-				if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) break;
+				//if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) break;
 				if (csScriptInstance.isActive && csScriptInstance.csClass.UpdateFunc != nullptr)
 					mono_runtime_invoke(csScriptInstance.csClass.UpdateFunc, csScriptInstance.csClass.object, nullptr, nullptr);
 			}
@@ -132,7 +132,7 @@ namespace Engine {
 		case MONO_TYPE_R4: return CSType::FLOAT;
 		case MONO_TYPE_I4: return CSType::INT;
 		case MONO_TYPE_U4: return CSType::UINT;
-		//case MONO_TYPE_STRING: return CSType::STRING;
+			//case MONO_TYPE_STRING: return CSType::STRING;
 		case MONO_TYPE_VALUETYPE:
 		{
 			char* name = mono_type_get_name(mt);
@@ -146,7 +146,7 @@ namespace Engine {
 	void ScriptEngine::Create() {
 		//Rlative path from exe
 		mono_set_dirs("Vendor/Mono/lib",
-				      "Vendor/Mono/etc");
+			"Vendor/Mono/etc");
 
 		domain = mono_jit_init("Root Domain");
 
@@ -196,7 +196,7 @@ namespace Engine {
 		if (!imageCore) {
 			LOG_ERROR("Failed loading image");
 			return;
-		}	
+		}
 	}
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
@@ -246,7 +246,7 @@ namespace Engine {
 	Private static function called within class
 	------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void ScriptEngine::InitEntityClassInstance() {
-			
+
 		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				auto& csClass = csScriptInstance.csClass;
@@ -262,7 +262,7 @@ namespace Engine {
 					LOG_ERROR("Failed loading obj");
 					return;
 				}
-					
+
 
 				std::string methodDesc = "MonoBehaviour:.ctor(uint)";
 				MonoMethodDesc* description = mono_method_desc_new(methodDesc.c_str(), NULL);

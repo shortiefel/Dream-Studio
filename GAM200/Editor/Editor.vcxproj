@@ -131,7 +131,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
 
 
 
-if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
+if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y</Command>
@@ -171,7 +171,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
 
 
 
-if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
+if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y</Command>
@@ -215,7 +215,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
 
 
 
-if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
+if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y</Command>
@@ -259,7 +259,7 @@ copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders
 
 
 
-if not exist $(TargetDir)Data mkdir $(TargetDir)Data\
+if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y</Command>

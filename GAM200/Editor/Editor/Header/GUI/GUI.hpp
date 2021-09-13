@@ -24,7 +24,7 @@ namespace Editor {
 	public:
 		static bool Create(GLFWwindow* window, const char* glsl_version);
 		static void Destroy();
-		
+
 		static void Update();
 		static void Draw();
 

@@ -25,39 +25,39 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/Graphic.hpp"
 
-#include <glm/glm.hpp>
+#include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 
 namespace Engine {
 	//Scale value for circle in both axis is same
 	struct Transform : public IComponent {
-		glm::vec2 position = glm::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
-		glm::vec2 scale = glm::vec2{};
+		Math::vec2 position = Math::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
+		Math::vec2 scale = Math::vec2{};
 		float angle = float{}; // in degree
 		bool isActive = true;
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
-		//glm::mat3 mdl_to_ndc_xform = glm::mat3{};
+		//Math::mat3 mdl_to_ndc_xform = Math::mat3{};
 
-		inline glm::mat3 GetTransform() const {
-			return 
+		inline Math::mat3 GetTransform() const {
+			return
 				//Translation
-				glm::mat3{ glm::vec3(1.f, 0, 0),
-							  glm::vec3(0, 1.f, 0),
-							  glm::vec3(position.x, position.y, 1.f) }
+				Math::mat3{ Math::vec3(1.f, 0, 0),
+							  Math::vec3(0, 1.f, 0),
+							  Math::vec3(position.x, position.y, 1.f) }
 				*
-				glm::mat3{ glm::vec3(std::cos(glm::radians(angle)), std::sin(glm::radians(angle)), 0),
-							  glm::vec3(-std::sin(glm::radians(angle)), std::cos(glm::radians(angle)), 0),
-							  glm::vec3(0.f, 0.f, 1.f) }
+				Math::mat3{ Math::vec3(std::cos(Math::radians(angle)), std::sin(Math::radians(angle)), 0),
+							  Math::vec3(-std::sin(Math::radians(angle)), std::cos(Math::radians(angle)), 0),
+							  Math::vec3(0.f, 0.f, 1.f) }
 				*
 				//Scale
-				glm::mat3{ glm::vec3(scale.x, 0, 0),
-							 glm::vec3(0, scale.y, 0),
-							 glm::vec3(0, 0, 1.f) };
+				Math::mat3{ Math::vec3(scale.x, 0, 0),
+							 Math::vec3(0, scale.y, 0),
+							 Math::vec3(0, 0, 1.f) };
 		}
 
 		Transform() = default;
-		Transform(Entity ID, glm::vec2 tPos, glm::vec2 tScale, float rotationAngle, bool active = true, int tLayer = 0) :
+		Transform(Entity ID, Math::vec2 tPos, Math::vec2 tScale, float rotationAngle, bool active = true, int tLayer = 0) :
 			IComponent{ ID },
 			position{ tPos }, scale{ tScale }, angle{ rotationAngle },
 			isActive{ active }, layer{ tLayer } {}

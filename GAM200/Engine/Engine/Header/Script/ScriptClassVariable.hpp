@@ -4,7 +4,7 @@
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    26/06/2021
 \brief
-This file contain 
+This file contain
 -enum class for mono type to enum
 -map for storing a CS class with its data
 
@@ -43,13 +43,13 @@ namespace Engine {
 
 		//Function to give buffer space
 		//Get variable type size
-			
+
 		//Set c# side with data
 		//Get data
-			
+
 
 		CSPublicVariable(const std::string& vn, CSType type);
-			
+
 		//Dont allow copying because variableData is newed each time
 		CSPublicVariable(const CSPublicVariable&) = delete;
 		CSPublicVariable(CSPublicVariable&& rhs) noexcept;
@@ -61,7 +61,7 @@ namespace Engine {
 		void SetToCS();
 
 		template<typename T>
-		T GetVariableData() const{
+		T GetVariableData() const {
 			T value;
 			GetVariableDataVoid(&value);
 			return value;

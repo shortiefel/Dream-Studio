@@ -40,18 +40,18 @@ public class MonoBehaviour
     //public GameObject gameObject;
     public uint entityId;
 
-    public virtual void OnInit() {}
-    public virtual void OnUpdate() {}
-    public virtual void OnDestroy() {}
-    public virtual void OnCollisionEnter() {}
-    public virtual void OnCollisionStay() {}
-    public virtual void OnCollisionExit() {}
-    public virtual void OnTriggerEnter() {}
-    public virtual void OnTriggerStay() {}
-    public virtual void OnTriggerExit() {}
+    public virtual void OnInit() { }
+    public virtual void OnUpdate() { }
+    public virtual void OnDestroy() { }
+    public virtual void OnCollisionEnter() { }
+    public virtual void OnCollisionStay() { }
+    public virtual void OnCollisionExit() { }
+    public virtual void OnTriggerEnter() { }
+    public virtual void OnTriggerStay() { }
+    public virtual void OnTriggerExit() { }
 
     public MonoBehaviour() { }
-    public MonoBehaviour (uint id)
+    public MonoBehaviour(uint id)
     {
         entityId = id;
         Console.WriteLine("Constructor ");
@@ -85,7 +85,7 @@ public class MonoBehaviour
 
     public bool HasComponent(uint id, Type type)
     {
-        
+
         switch (GenericTypeFinder.dictonary[type])
         {
             case genTypes.Transform:
@@ -111,7 +111,7 @@ public class MonoBehaviour
 
     //-----------------------------------------------------------------------------------------------------------------
     //Destroy
-    public void Destroy<T>(T type)
+    public void Destroy<T>(T type = default)
     {
         Console.WriteLine("Destroy not yet done");
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))

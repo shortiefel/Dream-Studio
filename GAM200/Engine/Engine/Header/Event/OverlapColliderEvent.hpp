@@ -53,7 +53,7 @@ namespace Engine {
 		static void RegisterFunction(OverlapColliderEventFP func);
 
 		OverlapColliderEvent(unsigned int ent1, unsigned int ent2, OverlapType otype);
-		
+
 		unsigned int self, other;
 		OverlapType type;
 	private:

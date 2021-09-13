@@ -18,14 +18,14 @@ Technology is prohibited.
 
 #include "Engine/Header/Input/InputCode.hpp"
 #include <unordered_map>
-#include "glm/glm.hpp"
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	class Input {
 	public:
 		static bool IsKeyPressed(Input_KeyCode keyCode);
 		static bool IsMousePressed(Input_MouseCode button);
-		static glm::vec2 GetMousePosition();
+		static Math::vec2 GetMousePosition();
 
 		static void SetKeyStatus(int key, bool status);
 		static void SetMouseStatus(int button, bool status);
@@ -38,7 +38,7 @@ namespace Engine {
 
 
 	private:
-		static glm::vec2 mousePosition;
+		static Math::vec2 mousePosition;
 		static std::unordered_map<int, Input_KeyCode> GLFWtoInputKey;
 		static std::unordered_map<Input_KeyCode, bool> InputKeyStatus;
 

@@ -14,12 +14,13 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Script/ScriptInternalCall.hpp"
 #include "Engine/Header/Script/ScriptEngine.hpp"
 
 #include <mono/metadata/assembly.h>
 
-#include <glm/glm.hpp>
+#include "Engine/Header/Math/MathLib.hpp"
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
@@ -47,17 +48,17 @@ namespace Engine {
 	/*void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform);
 	void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform);*/
 
-	void GetTransform_Position_Engine(unsigned int id, glm::vec2* outVec2);
-	void SetTransform_Position_Engine(unsigned int id, glm::vec2* inVec2);
-	void MoveTransform_Position_Engine(unsigned int id, glm::vec2* inVec2);
-	void GetTransform_Scale_Engine(unsigned int id, glm::vec2* outVec2);
-	void SetTransform_Scale_Engine(unsigned int id, glm::vec2* inVec2);
+	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2);
+	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2);
+	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2);
+	void GetTransform_Scale_Engine(unsigned int id, Math::vec2* outVec2);
+	void SetTransform_Scale_Engine(unsigned int id, Math::vec2* inVec2);
 	void GetTransform_Angle_Engine(unsigned int id, float* outVec2);
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2);
 
 	bool Input_IsKeyPressed(Input_KeyCode key);
 	bool Input_IsMouseButtonPressed(Input_MouseCode button);
-	void Input_GetMousePosition(glm::vec2* outPosition);
+	void Input_GetMousePosition(Math::vec2* outPosition);
 
 	bool HasComponent_Transform_Engine(unsigned int id);
 
@@ -87,7 +88,7 @@ namespace Engine {
 		mono_add_internal_call("Input::GetMousePosition_Engine", Input_GetMousePosition);
 
 		mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
-		
+
 		mono_add_internal_call("MonoBehaviour::Destroy_Entity_Engine", Destroy_Entity_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Transform_Engine", Destroy_Transform_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Collider_Engine", Destroy_Collider_Engine);
@@ -101,7 +102,7 @@ namespace Engine {
 	}
 
 
-		
+
 	//void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform) {
 	//	//call hascomponent with entityid
 	//	Transform* transform = nullptr;
@@ -125,14 +126,14 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Transform
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void GetTransform_Position_Engine(unsigned int id, glm::vec2* outVec2) {
+	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2) {
 		GetEngineType(id, Transform, position, *outVec2);
 
 	}
-	void SetTransform_Position_Engine(unsigned int id, glm::vec2* inVec2) {
+	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		SetEngineType(id, Transform, position, *inVec2);
 	}
-	void MoveTransform_Position_Engine(unsigned int id, glm::vec2* inVec2) {
+	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		//call hascomponent with entityid
 		Transform* transform = nullptr;
 		DreamECS::HasComponent<Transform>(transform, id);
@@ -140,10 +141,10 @@ namespace Engine {
 	}
 
 
-	void GetTransform_Scale_Engine(unsigned int id, glm::vec2* outVec2) {
+	void GetTransform_Scale_Engine(unsigned int id, Math::vec2* outVec2) {
 		GetEngineType(id, Transform, scale, *outVec2);
 	}
-	void SetTransform_Scale_Engine(unsigned int id, glm::vec2* inVec2) {
+	void SetTransform_Scale_Engine(unsigned int id, Math::vec2* inVec2) {
 		SetEngineType(id, Transform, scale, *inVec2);
 	}
 
@@ -164,15 +165,15 @@ namespace Engine {
 	{
 		return Input::IsKeyPressed(key);
 	}
-		
+
 	bool Input_IsMouseButtonPressed(Input_MouseCode button)
 	{
 		return Input::IsMousePressed(button);
 	}
 
-	void Input_GetMousePosition(glm::vec2* outPosition)
+	void Input_GetMousePosition(Math::vec2* outPosition)
 	{
-		glm::vec2 result = Input::GetMousePosition();
+		Math::vec2 result = Input::GetMousePosition();
 		*outPosition = result;
 	}
 
@@ -188,16 +189,15 @@ namespace Engine {
 	Destroy
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Destroy_Entity_Engine(unsigned int id) {
-		ScriptEngine::csEntityClassInstance.erase(id);
 		DreamECS::DestroyEntity(id);
 	}
 
 	void Destroy_Transform_Engine(unsigned int id) {
-
+		DreamECS::RemoveComponent<Transform>(id);
 	}
 
 	void Destroy_Collider_Engine(unsigned int id) {
-
+		DreamECS::RemoveComponent<Collider>(id);
 	}
 
 	void Destroy_Script_Engine(unsigned int id, MonoString* str) {

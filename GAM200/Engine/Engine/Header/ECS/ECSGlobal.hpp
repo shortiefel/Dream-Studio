@@ -32,6 +32,12 @@ Technology is prohibited.
 #include <bitset>
 #include <cstdint>
 
+//Check whether entity is in used
+#define Entity_Check(entity)\
+(entity > MAX_ENTITIES)
+
+#define NEW_ECS 1
+
 namespace Engine {
 	//ECS Components 
 	using Entity = std::uint32_t;
@@ -43,7 +49,5 @@ namespace Engine {
 	const ComponentType MAX_COMPONENTS = 48;
 	using Signature = std::bitset<MAX_COMPONENTS>;
 
-//Check whether entity is in used
-#define Entity_Check(entity)\
-(entity > MAX_ENTITIES)
+
 }

@@ -48,7 +48,7 @@ namespace Engine {
 				std::cout << v_event.size() << " " << (*i)->Details() << "\n";
 			}
 		}*/
-		
+
 		static void SendEvent(Event& event);
 
 	private:

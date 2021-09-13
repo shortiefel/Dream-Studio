@@ -53,17 +53,17 @@ namespace Engine {
 		LOG_INSTANCE("Window destroyed");
 	}
 
-	glm::vec2 Window::GetWindowPosition() {
+	Math::vec2 Window::GetWindowPosition() {
 		int xpos, ypos;
 		glfwGetWindowPos(glfw_window, &xpos, &ypos);
-		return glm::vec2{ (float)xpos, (float)ypos };
+		return Math::vec2{ (float)xpos, (float)ypos };
 	}
 
 	void Window::DisplayFPS(float fps) {
 		std::stringstream sstr;
 		sstr << std::fixed << std::setprecision(2) << w_data.title <<
 			" | FPS: " << fps;
-		
+
 		glfwSetWindowTitle(glfw_window, sstr.str().c_str());
 
 		/*std::string stitle = { w_data.title };

@@ -26,14 +26,14 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/Graphic.hpp"
 
-#include <glm/gtc/type_ptr.hpp>
-
 //#include "Engine/Header/Math/Matrix.hpp"
 //#include "../../External Resources/include/stb_image/stb_image.h" //-----remove
 
 namespace Engine {
 	//extern Coordinator gCoordinator;
-	//std::shared_ptr<GraphicSystem> GraphicSystem::GS;
+#ifndef NEW_ECS
+	std::shared_ptr<GraphicSystem> GraphicSystem::GS;
+#endif
 
 	//GLuint setup_texobj(std::string);
 	//GLuint texobj_hdl; //-----remove
@@ -53,34 +53,34 @@ namespace Engine {
 
 	//	//	//mdl_to_ndc_xform =
 	//	//	//	//Translate
-	//	//	//	glm::mat3{  glm::vec3(1.f, 0, 0),
-	//	//	//				  glm::vec3(0, 1.f, 0),
-	//	//	//				  glm::vec3(transform.position.x, transform.position.y, 1.f) }
+	//	//	//	Math::mat3{  Math::vec3(1.f, 0, 0),
+	//	//	//				  Math::vec3(0, 1.f, 0),
+	//	//	//				  Math::vec3(transform.position.x, transform.position.y, 1.f) }
 	//	//	//	*
 	//	//	//	//Scale
-	//	//	//	glm::mat3{   glm::vec3(transform.scale.x, 0, 0),
-	//	//	//				 glm::vec3(0, transform.scale.y, 0),
-	//	//	//				 glm::vec3(0, 0, 1.f) };
+	//	//	//	Math::mat3{   Math::vec3(transform.scale.x, 0, 0),
+	//	//	//				 Math::vec3(0, transform.scale.y, 0),
+	//	//	//				 Math::vec3(0, 0, 1.f) };
 
 	//	//	////world to ndc * mdl to world
 	//	//	//mdl_to_ndc_xform = camMatrix * mdl_to_ndc_xform;
 	//	//}
 	//}
 
-	void GraphicSystem::Render(glm::mat3 camMatrix) {
+	void GraphicSystem::Render(Math::mat3 camMatrix) {
 		GraphicImplementation::BindFramebuffer();
 
 		glClearColor(1, 0, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-#if 1
+#if NEW_ECS
 		//Check texture because less Texture component on entity than Transform
 		const auto& textureArray = DreamECS::GetComponentArrayData<Texture>();
 		for (const auto& texture : textureArray) {
-			if (Entity_Check(texture.entityId)) break;
+			if (Entity_Check(texture.GetEntityId())) break;
 			if (!texture.GetActive()) continue;
 
-			Transform* transform = DreamECS::GetComponentTest<Transform>(texture.entityId);
+			Transform* transform = DreamECS::GetComponentTest<Transform>(texture.GetEntityId());
 			if (!transform || !transform->isActive) continue;
 
 			const auto& mdl_ref = texture.get_mdl_ref();
@@ -110,7 +110,7 @@ namespace Engine {
 			//glBindVertexArray(renderer.mdl_ref->second.vaoid);
 
 			GLint uniform_var_loc1 = glGetUniformLocation(shd_ref_handle, "uModel_to_NDC");
-			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, glm::value_ptr(camMatrix * transform->GetTransform()));
+			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, Math::value_ptr(camMatrix * transform->GetTransform()));
 			if (uniform_var_loc1 == -1) {
 				std::cout << "uModel_to_NDC variable doesn't exist!!!\n";
 				std::exit(EXIT_FAILURE);
@@ -165,7 +165,7 @@ namespace Engine {
 			//glBindVertexArray(renderer.mdl_ref->second.vaoid);
 
 			GLint uniform_var_loc1 = glGetUniformLocation(texture.get_shd_ref()->second.GetHandle(), "uModel_to_NDC");
-			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, glm::value_ptr(camMatrix * transform.GetTransform()));
+			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, Math::value_ptr(camMatrix * transform.GetTransform()));
 			if (uniform_var_loc1 == -1) {
 				std::cout << "uModel_to_NDC variable doesn't exist!!!\n";
 				std::exit(EXIT_FAILURE);

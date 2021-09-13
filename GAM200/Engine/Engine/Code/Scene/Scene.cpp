@@ -15,8 +15,8 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Engine/Header/Scene/Scene.hpp"
 #include "Engine/Header/Debug Tools/Logging.hpp"
+#include "Engine/Header/Scene/Scene.hpp"
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
@@ -40,7 +40,7 @@ namespace Engine {
     bool Scene::playing = false;
     std::string Scene::fullPathName = std::string{};
 
-    
+
     //Save Scene
     //Return false if fail (fail to compile)
     bool SceneSave();
@@ -56,7 +56,7 @@ namespace Engine {
 
         fullPathName = "Data/Scenes/" + scenename + ".json";
         GameSceneSerializer::DeserializeScene(fullPathName);
-        
+
         //ScriptEngine::CompileCS();
         ScriptEngine::UpdateMapData();
     }
@@ -77,7 +77,8 @@ namespace Engine {
         //Deserialize everything
         ScriptEngine::Stop();
         CollisionSystem::Stop();
-        DreamECS::DestroyAllEntity();
+
+        DreamECS::ResetECS();
 
         GameSceneSerializer::DeserializeScene(fullPathName);
         std::cout << "Stopping \n";
@@ -123,6 +124,8 @@ namespace Engine {
             ScriptEngine::PlayRunTime();
             CollisionSystem::Update(dt);
         }
+        if (Input::IsKeyPressed(Input_KeyCode::N))
+            DreamECS::DuplicateEntity(0);
 
         CameraSystem::Update(dt);
 
@@ -131,14 +134,20 @@ namespace Engine {
             GraphicSystem::Render();
         }
 
-        
+
+        DreamECS::ClearDestroyQueue();
 
         LayerStack::Update();
         LayerStack::Draw();
+
+
+
+        if (Input::IsKeyPressed(Input_KeyCode::B))
+            std::cout << DreamECS::GetUsedEntitySet().size() << "\n";
     }
 
     void Scene::Destroy() {
-        if (playing) Scene::Stop(); 
+        if (playing) Scene::Stop();
         //Destroy in reverse order
         //Remove all entity
     }
@@ -158,8 +167,8 @@ namespace Engine {
             //Save
             else if (e.GetKeyCode() == Input_KeyCode::S) {
                 if (Scene::GetPlaying() != true) {
-                    std::cout << "Saving... \n";
                     SceneSave();
+                    std::cout << "Saving... \n";
                     return true;
                 }
 

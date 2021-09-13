@@ -41,7 +41,7 @@ namespace Engine {
     FuncNoData Application::DestroyFunc = nullptr;
 
     bool OnWindowClose(const WindowCloseEvent& e);
-    
+
     void Application::Create() {
         if (s_app_instance) LOG_WARNING("An instance of application already exist!");
         s_app_instance = new Application();
@@ -51,12 +51,12 @@ namespace Engine {
         ////Create window and instantiate managers
         if (!Window::Create("Dream Engine", Settings::windowWidth, Settings::windowHeight)) LOG_ERROR("Window creation has failed");
         //s_app_instance->SetEventCallBack();
-        
+
         WindowCloseEvent::RegisterFunction(&OnWindowClose);
 
         Engine::EngineCore::Create();
     }
-    
+
     void Application::Update(bool defaultRender) {
         //Called here since Application have 
         //to be created before callback is added
@@ -65,7 +65,7 @@ namespace Engine {
         while (app_run_bool) {
             glClearColor(0, 0, 0, 1);
             glClear(GL_COLOR_BUFFER_BIT);
-            
+
 
             float current_time = static_cast<float>(glfwGetTime());
             Engine::DeltaTime::UpdateDeltaTime(current_time, m_lastframeTime);
@@ -73,9 +73,9 @@ namespace Engine {
             Engine::Window::DisplayFPS(DeltaTime::GetFPS());
 
             Engine::EngineCore::Update(DeltaTime::GetSec(), defaultRender);
-            
+
             if (UpdateFunc != nullptr) UpdateFunc(Engine::DeltaTime::GetSec());
-            
+
             Engine::Window::Update();
 
             //FrameMark;
@@ -127,7 +127,7 @@ namespace Engine {
     //    //}
 
     //}
-   
+
     /*void Application::SetEventCallBack() {
         Window::SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
     }*/

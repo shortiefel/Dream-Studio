@@ -14,7 +14,7 @@ public class Input
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern bool IsKeyPressed_Engine(KeyCode key);
-    
+
     public static bool IsMousePressed(MouseCode button)
     {
         return IsMousePressed_Engine(button);

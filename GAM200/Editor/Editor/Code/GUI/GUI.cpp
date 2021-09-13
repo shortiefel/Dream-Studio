@@ -33,8 +33,8 @@ Technology is prohibited.
 namespace Editor {
     GUI* GUI::m_instance;
     unsigned int GUI::gameWinFBO, GUI::gameWinTex,
-                 GUI::sceneWinFBO, GUI::sceneWinTex;
-    
+        GUI::sceneWinFBO, GUI::sceneWinTex;
+
 
     void GUI::Update() {
         ImGui_ImplOpenGL3_NewFrame();
@@ -45,7 +45,7 @@ namespace Editor {
         ImGui::ShowDemoWindow(&show_demo_window);*/
 
         GUI_Window::GUI_DockSpace();
-       
+
         GUI_Window::GUI_GameWindow(gameWinTex);
         GUI_Window::GUI_SceneWindow(sceneWinTex);
         GUI_Window::GUI_Hierarchy();
@@ -81,7 +81,7 @@ namespace Editor {
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         //Allow drawing menu outside of window-----------------------------------
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-        
+
 
         ImGui::StyleColorsDark();
 
@@ -93,8 +93,8 @@ namespace Editor {
 
         GUI_Window::GUI_Settings_Setup();
 
-        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight ,&gameWinFBO, &gameWinTex);
-        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight ,&sceneWinFBO, &sceneWinTex);
+        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight, &gameWinFBO, &gameWinTex);
+        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight, &sceneWinFBO, &sceneWinTex);
 
         return true;
     }
@@ -109,7 +109,7 @@ namespace Editor {
     }
 
     void GUI::SetGameFBO() {
-        Engine::GraphicImplementation::SetFramebuffer(gameWinFBO); 
+        Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
     }
 
     void GUI::SetSceneFBO() {

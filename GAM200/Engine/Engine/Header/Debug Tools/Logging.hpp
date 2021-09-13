@@ -14,13 +14,13 @@ Can display up to a total of 3 variable (different or same types)
 E.g. A string variable or Event type (to display type of events)
 
 Used for printing of normal information to check whether something works (Blue text)
-LOG_INFO(...) 
+LOG_INFO(...)
 
 Used for printing of event information (Green text)
 LOG_EVENT(...)
 
 Used for printing of warnings (Purple text)
-LOG_WARNING(...) 
+LOG_WARNING(...)
 
 Used for printing of errors (Red text)
 LOG_ERROR(...)

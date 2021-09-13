@@ -32,11 +32,13 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/ECSWrapper.hpp"
 
-#include <glm/gtc/constants.hpp>
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	//extern Coordinator gCoordinator;
-	//std::shared_ptr<CollisionSystem> CollisionSystem::CS;
+#ifndef NEW_ECS
+	std::shared_ptr<CollisionSystem> CollisionSystem::CS;
+#endif
 	std::unordered_map<Entity, std::vector<Entity>> overlapMap;
 
 	void AddOverlap(Entity lhs, bool lhsTrigger, Entity rhs, bool rhsTrigger) {
@@ -88,26 +90,25 @@ namespace Engine {
 	}
 
 	void CollisionSystem::Update(float dt) {
-#if 1
+#if NEW_ECS
 		auto& colliderArray = DreamECS::GetComponentArrayData<Collider>();
 		auto colliderStart = colliderArray.begin(),
-			 colliderEnd = colliderArray.end();
-		for (auto& col1 = colliderStart;  col1 < colliderEnd; col1++) {
-			const Entity& ent1Id = col1->entityId;
+			colliderEnd = colliderArray.end();
+		for (auto& col1 = colliderStart; col1 < colliderEnd; col1++) {
+			const Entity& ent1Id = col1->GetEntityId();
 			if (Entity_Check(ent1Id)) break;
 			if (!col1->isActive) continue;
-			
+
 			auto& transform1 = DreamECS::GetComponent<Transform>(ent1Id);
 			if (!transform1.isActive) continue;
-			std::cout << "ColliderArray: " << col1->entityId << "\n";
 
 			Collider collider1 = *col1;
-			collider1.offset_position += glm::vec2{ transform1.position };
+			collider1.offset_position += Math::vec2{ transform1.position };
 			collider1.offset_scale *= transform1.scale;
 			collider1.angle += transform1.angle;
 
-			for (auto col2 = col1;  col2 < colliderEnd; col2++) {
-				const Entity& ent2Id = col2->entityId;
+			for (auto col2 = col1; col2 < colliderEnd; col2++) {
+				const Entity& ent2Id = col2->GetEntityId();
 				if (Entity_Check(ent2Id)) break;
 				if (!col2->isActive || col1 == col2) continue;
 
@@ -119,12 +120,12 @@ namespace Engine {
 				if (!transform2.isActive) continue;
 
 				Collider collider2 = *col2;
-				collider2.offset_position += glm::vec2{ transform2.position };
+				collider2.offset_position += Math::vec2{ transform2.position };
 				collider2.offset_scale *= transform2.scale;
 				collider2.angle += transform2.angle;
 
 				//Direction from collider2 towards collider1
-				glm::vec2 dir = glm::vec2{};
+				Math::vec2 dir = Math::vec2{};
 
 				if (CollisionImplementation::isColliding(dir, collider1, ent1IsMoveable,
 					collider2, ent2IsMoveable)) {
@@ -141,13 +142,13 @@ namespace Engine {
 					//To prevent object from sharing the same position
 					//by moving it slightly out of each other and setting a direction
 					//as previous direction would be dividing by 0
-					glm::vec2 EpsilonCheck = collider2.offset_position - collider1.offset_position;
-					if (EpsilonCheck.x < glm::epsilon<float>() && EpsilonCheck.x > -glm::epsilon<float>() &&
-						EpsilonCheck.y < glm::epsilon<float>() && EpsilonCheck.y > -glm::epsilon<float>()) {
-						std::cout << "too close \n";
-						collider1.offset_position.x -= 0.3f * transform1.scale.x;
-						transform1.position.x -= 0.3f * transform1.scale.x;
-						dir = glm::vec2{ 1.f, 0.f };
+					Math::vec2 EpsilonCheck = collider2.offset_position - collider1.offset_position;
+					if (EpsilonCheck.x < Math::epsilon<float>() && EpsilonCheck.x > -Math::epsilon<float>() &&
+						EpsilonCheck.y < Math::epsilon<float>() && EpsilonCheck.y > -Math::epsilon<float>()) {
+						//std::cout << "too close \n";
+						collider1.offset_position.x -= 0.5f * transform1.scale.x;
+						transform1.position.x -= 0.5f * transform1.scale.x;
+						dir = Math::vec2{ 1.f, 0.f };
 					}
 					CollisionImplementation::CollisionResolution(dir, transform1, collider1, transform2, collider2);
 				}
@@ -203,36 +204,36 @@ namespace Engine {
 			auto& transform1 = DreamECS::GetComponent<Transform>(*entity1);
 			auto collider1 = DreamECS::GetComponent<Collider>(*entity1);
 
-			collider1.offset_position += glm::vec2{ transform1.position };
+			collider1.offset_position += Math::vec2{ transform1.position };
 			collider1.offset_scale *= transform1.scale;
 			collider1.angle += transform1.angle;
-			/*collider1.offset_position = glm::vec2{ transform1.position };
+			/*collider1.offset_position = Math::vec2{ transform1.position };
 			collider1.offset_scale = transform1.scale;
 			collider1.angle = transform1.angle;*/
-			
+
 			for (std::set<Entity>::iterator entity2 = entity1; entity2 != CS->mEntities.end(); ++entity2) {
 				if (entity1 == entity2) continue;
-				
+
 				bool ent1IsMoveable = DreamECS::HasComponentCheck<RigidBody>(*entity1),
-					 ent2IsMoveable = DreamECS::HasComponentCheck<RigidBody>(*entity2);
+					ent2IsMoveable = DreamECS::HasComponentCheck<RigidBody>(*entity2);
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
-				
+
 
 				auto& transform2 = DreamECS::GetComponent<Transform>(*entity2);
 				auto collider2 = DreamECS::GetComponent<Collider>(*entity2);
 
-				collider2.offset_position += glm::vec2{ transform2.position };
+				collider2.offset_position += Math::vec2{ transform2.position };
 				collider2.offset_scale *= transform2.scale;
 				collider2.angle += transform2.angle;
-				/*collider2.offset_position = glm::vec2{ transform2.position };
+				/*collider2.offset_position = Math::vec2{ transform2.position };
 				collider2.offset_scale = transform2.scale;
 				collider2.angle = transform2.angle;*/
 
 				//Direction from collider2 towards collider1
-				glm::vec2 dir = glm::vec2{};
-				
+				Math::vec2 dir = Math::vec2{};
+
 				if (CollisionImplementation::isColliding(dir, collider1, ent1IsMoveable,
-														      collider2, ent2IsMoveable)) {
+					collider2, ent2IsMoveable)) {
 
 					AddOverlap(*entity1, collider1.isTrigger, *entity2, collider2.isTrigger);
 					AddOverlap(*entity2, collider2.isTrigger, *entity1, collider1.isTrigger);
@@ -246,27 +247,27 @@ namespace Engine {
 					//To prevent object from sharing the same position
 					//by moving it slightly out of each other and setting a direction
 					//as previous direction would be dividing by 0
-					glm::vec2 EpsilonCheck = collider2.offset_position - collider1.offset_position;
-					if (EpsilonCheck.x < glm::epsilon<float>() && EpsilonCheck.x > -glm::epsilon<float>() &&
-						EpsilonCheck.y < glm::epsilon<float>() && EpsilonCheck.y > -glm::epsilon<float>()) {
+					Math::vec2 EpsilonCheck = collider2.offset_position - collider1.offset_position;
+					if (EpsilonCheck.x < Math::epsilon<float>() && EpsilonCheck.x > -Math::epsilon<float>() &&
+						EpsilonCheck.y < Math::epsilon<float>() && EpsilonCheck.y > -Math::epsilon<float>()) {
 						std::cout << "too close \n";
 						collider1.offset_position.x -= 0.3f * transform1.scale.x;
 						transform1.position.x -= 0.3f * transform1.scale.x;
-						dir = glm::vec2{ 1.f, 0.f };
+						dir = Math::vec2{ 1.f, 0.f };
 					}
 					CollisionImplementation::CollisionResolution(dir, transform1, collider1, transform2, collider2);
 				}
 
 				else {
-					
-					
+
+
 					const auto& iter1 = overlapMap.find(*entity1);
 					if (iter1 != overlapMap.end()) {
 						size_t size1 = iter1->second.size();
 						for (size_t i = 0; i < size1; i++) {
 							if (iter1->second[i] == *entity2) {
 								overlapMap[*entity1].erase(iter1->second.begin() + i);
-								
+
 								OverlapType type;
 								if (collider1.isTrigger)
 									type = OverlapType::OnTriggerExit;
@@ -285,7 +286,7 @@ namespace Engine {
 						for (size_t i = 0; i < size2; i++) {
 							if (iter2->second[i] == *entity1) {
 								overlapMap[*entity2].erase(iter2->second.begin() + i);
-								
+
 								OverlapType type;
 								if (collider2.isTrigger)
 									type = OverlapType::OnTriggerExit;
@@ -311,7 +312,9 @@ namespace Engine {
 	}
 
 	bool CollisionSystem::Create(const std::shared_ptr<CollisionSystem>& collisionSystem) {
-		//CS = collisionSystem;
+#ifndef NEW_ECS
+		CS = collisionSystem;
+#endif
 		LOG_INSTANCE("Collision System created");
 		return true;
 	}

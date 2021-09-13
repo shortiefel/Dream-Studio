@@ -4,7 +4,7 @@
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    08/09/2021
 \brief
-This file is the wrapper file for ECS 
+This file is the wrapper file for ECS
 -It is made such that in the future the ECS can be changed easily
 
 
@@ -18,8 +18,8 @@ Technology is prohibited.
 #ifndef ECS_WRAPPER_HPP
 #define ECS_WRAPPER_HPP
 
-#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Coordinator.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 
 namespace Engine {
 	class Coordinator;
@@ -33,8 +33,9 @@ namespace Engine {
 		static Entity CreateEntity();
 		static void DuplicateEntity(Entity ent);
 		static void DestroyEntity(Entity entity);
-		static void DestroyAllEntity();
-		static const std::vector<Entity>& GetUsedEntityVector();
+		static const std::unordered_set<Entity>& GetUsedEntitySet();
+		static void ClearDestroyQueue();
+		static void ResetECS();
 
 
 		/*--------------------------------------------------------------------------------------------------------------
@@ -47,8 +48,8 @@ namespace Engine {
 		}
 
 		template<typename T>
-		static void AddComponent(Entity entity, T com) {
-			gCoordinator.AddComponent<T>(entity, com);
+		static void AddComponent(T com) {
+			gCoordinator.AddComponent<T>(com);
 		}
 
 		template<typename T>
@@ -94,14 +95,16 @@ namespace Engine {
 		static std::shared_ptr<T> RegisterSystem() {
 			return gCoordinator.RegSystem<T>();
 		}
-
+#ifndef NEW_ECS
 		template<typename T>
 		static void setSystemSignature(Signature sign) {
 			gCoordinator.setSystemSignature<T>(sign);
 		}
+#endif
 
 	private:
 		static Coordinator gCoordinator;
+		static std::queue<Entity> destroyQueue;
 	};
 }
 

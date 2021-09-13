@@ -275,7 +275,7 @@ namespace Engine {
         }
     }
 
-    void GLSLShader::SetUniform(GLchar const* name, glm::vec2 const& val) {
+    void GLSLShader::SetUniform(GLchar const* name, Math::vec2 const& val) {
         GLint loc = glGetUniformLocation(pgm_handle, name);
         if (loc >= 0) {
             glUniform2f(loc, val.x, val.y);
@@ -285,7 +285,7 @@ namespace Engine {
         }
     }
 
-    void GLSLShader::SetUniform(GLchar const* name, glm::vec3 const& val) {
+    void GLSLShader::SetUniform(GLchar const* name, Math::vec3 const& val) {
         GLint loc = glGetUniformLocation(pgm_handle, name);
         if (loc >= 0) {
             glUniform3f(loc, val.x, val.y, val.z);
@@ -295,7 +295,7 @@ namespace Engine {
         }
     }
 
-    //void GLSLShader::SetUniform(GLchar const *name, glm::vec4 const& val) {
+    //void GLSLShader::SetUniform(GLchar const *name, Math::vec4 const& val) {
     //  GLint loc = glGetUniformLocation(pgm_handle, name);
     //  if (loc >= 0) {
     //    glUniform4f(loc, val.x, val.y, val.z, val.w);
@@ -315,7 +315,7 @@ namespace Engine {
     //  }
     //}
 
-    /*oid GLSLShader::SetUniform(GLchar const *name, glm::mat4 const& val) {
+    /*oid GLSLShader::SetUniform(GLchar const *name, Math::mat4 const& val) {
       GLint loc = glGetUniformLocation(pgm_handle, name);
       if (loc >= 0) {
         glUniformMatrix4fv(loc, 1, GL_FALSE, &val[0][0]);

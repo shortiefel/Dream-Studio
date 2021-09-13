@@ -19,7 +19,7 @@ Technology is prohibited.
 namespace Engine {
 	unsigned int Settings::windowWidth;
 	unsigned int Settings::windowHeight;
-					
+
 	unsigned int Settings::gameWidth;
 	unsigned int Settings::gameHeight;
 	float Settings::gameAR;

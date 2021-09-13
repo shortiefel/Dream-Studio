@@ -14,6 +14,7 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Editor/Header/GUI/GUIWindow.hpp"
 
 #include "Engine/Header/Window.hpp"
@@ -21,7 +22,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/ECSWrapper.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
-#include <glm/glm.hpp>
+#include "Engine/Header/Math/MathLib.hpp"
 
 //Create a window with an image
 //E.g Game window 
@@ -39,7 +40,7 @@ Technology is prohibited.
 		ImGui::End();\
 	}\
 
-    
+
 
 namespace Editor {
 	namespace GUI_Window {
@@ -66,7 +67,7 @@ namespace Editor {
 		}
 
 		void GUI_DockSpace() {
-			glm::vec2 winPos = Engine::Window::GetWindowPosition();
+			Math::vec2 winPos = Engine::Window::GetWindowPosition();
 			ImGui::SetNextWindowPos(ImVec2{ winPos.x, winPos.y });
 			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetWidth(),
 											 (float)Engine::Window::GetHeight() });
@@ -77,7 +78,7 @@ namespace Editor {
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_dock_flags);
 
 			GUI_Menus();
-			
+
 			ImGui::End();
 		}
 
@@ -138,27 +139,35 @@ namespace Editor {
 
 				Engine::Transform* comp;
 				Engine::Entity entity_selected = 0;
-				bool check_selection;
-
-				ImGui::Checkbox("Transform", &check_selection);
-
-
-				//if (check_selection == true) {
-					if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
-					{
-						ImGui::Text("Position");
-						ImGui::DragFloat("X", &comp->position.x, 0.0f);
-						//ImGui::SameLine();
-						ImGui::DragFloat("Y", &comp->position.y, 0.0f);
-
-						glm::vec2 scaling = glm::vec2{};
-						ImGui::InputFloat("Scaling", &comp->scale.x, 0.01f, 1.0f, "%.3f");
-						ImGui::SameLine();
-						ImGui::InputFloat("", &comp->scale.y, 0.01f, 1.0f, "%.3f");
+				float width = 120;
+				bool selectEntity = 0;
 
 
-					}
-				//}
+
+				//if (check_selection = true) {
+				if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
+				{
+					ImGui::Checkbox("Transform", &(comp->isActive));
+					ImGui::Text("Position");
+					ImGui::Text("X: ");
+					ImGui::SameLine();
+					ImGui::InputFloat("", &comp->position.x, 0.0f);
+					ImGui::Text("Y: ");
+					ImGui::SameLine();
+					ImGui::InputFloat("", &comp->position.y, 0.0f);
+
+
+
+					ImGui::Text("Scaling ");
+					ImGui::Text("X: ");
+					ImGui::SameLine();
+					ImGui::InputFloat("", &comp->scale.x, 0.0f);
+					ImGui::Text("Y: ");
+					ImGui::SameLine();
+					ImGui::InputFloat("", &comp->scale.y, 0.0f);
+
+
+				}
 
 
 

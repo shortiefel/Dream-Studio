@@ -67,7 +67,7 @@ namespace Engine {
 		X = 88,
 		Y = 89,
 		Z = 90,
-		
+
 		//Function keys
 		F1 = 290,
 		F2 = 291,
@@ -93,7 +93,7 @@ namespace Engine {
 		F22 = 311,
 		F23 = 312,
 		F24 = 313,
-		
+
 		//Left side
 		Escape = 27,
 		GraveAccent = 96, //` and ~ (Tilde)
@@ -103,9 +103,9 @@ namespace Engine {
 		Shift = 160,
 		Control = 162,
 		Alt = 164,
-		
+
 		Space = 32,
-		
+
 		//Right side
 		Minus = 45,
 		Equal = 61,
@@ -122,12 +122,12 @@ namespace Engine {
 		Comma = 44,
 		Period = 46,
 		FrontSlash = 47, /* / */
-		
+
 
 		PrintScreen = 283,
 		ScrollLock = 281,
 		Pause = 284,
-		
+
 		Insert = 260,
 		Delete = 261,
 		Home = 268,
@@ -153,7 +153,7 @@ namespace Engine {
 		KP7 = 327,
 		KP8 = 328,
 		KP9 = 329,
-		
+
 		KPDecimal = 330,
 		KPDivide = 331,
 		KPMultiply = 332,

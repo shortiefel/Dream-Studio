@@ -25,9 +25,12 @@ Technology is prohibited.
 
 #pragma once
 
+
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include <queue>
 #include <array>
+
+#include <unordered_set>
 
 namespace Engine {
 	class EntityManager
@@ -49,7 +52,7 @@ namespace Engine {
 			LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
 
 			Entity ID;
-			
+
 			if (AvailableEntities.size()) {
 				ID = AvailableEntities.front();
 				AvailableEntities.pop();
@@ -60,8 +63,7 @@ namespace Engine {
 				++currentMaxId;
 			}
 
-
-			UsedEntities.emplace_back(ID);
+			UsedEntities.insert(ID);
 			++AliveEntityCount;
 
 			return ID;
@@ -69,14 +71,23 @@ namespace Engine {
 
 		void DestroyEntity(Entity entity)
 		{
+#if NEW_ECS
 			//error checking
 			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
-
+			UsedEntities.erase(entity);
+			//mSignatures[entity].reset();
+			AvailableEntities.push(entity);
+			--AliveEntityCount;
+#else
+			//error checking
+			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
+			UsedEntities.erase(entity);
 			mSignatures[entity].reset();
 			AvailableEntities.push(entity);
 			--AliveEntityCount;
+#endif
 		}
-
+#ifndef NEW_ECS
 		void SetSignature(Entity entity, Signature signature)
 		{
 			//error checking
@@ -91,26 +102,27 @@ namespace Engine {
 			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
 
 			return mSignatures[entity];
-
 		}
-
-		inline const std::vector<Entity>& GetUsedEntityVector() const {
+#endif
+		inline const std::unordered_set<Entity>& GetUsedEntitySet() const {
 			return UsedEntities;
 		}
 
-		inline void ResetEntityManager()  {
+		inline void ResetEntityManager() {
 			UsedEntities.clear();
 			currentMaxId = 0;
 			AvailableEntities = std::queue<Entity>();
 		}
 
 
-		std::vector<Entity> UsedEntities{};
+		std::unordered_set<Entity> UsedEntities{};
 		uint32_t AliveEntityCount{}; // Total living entities
 	private:
 		std::queue<Entity> AvailableEntities{}; // Queue of unused entity IDs
+#ifndef NEW_ECS
 		std::array<Signature, MAX_ENTITIES> mSignatures{}; // Array of signatures for index to correspond to ID
+#endif
 
-		uint32_t currentMaxId = uint32_t{};
+		uint32_t currentMaxId = 0;
 	};
 }

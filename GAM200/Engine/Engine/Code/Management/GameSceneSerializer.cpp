@@ -16,10 +16,10 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug tools/Logging.hpp"
+
 #include "Engine/Header/Management/GameSceneSerializer.hpp"
 #include "Engine/Header/Management/Settings.hpp"
-
-#include "Engine/Header/Debug tools/Logging.hpp"
 
 //External Resources
 #include <sstream>
@@ -37,7 +37,7 @@ Technology is prohibited.
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
 
 #define Get2DFloatValue(str) \
-	glm::vec2 {\
+	Math::vec2 {\
 		itr->value[str].GetArray()[0].GetFloat(), \
 		itr->value[str].GetArray()[1].GetFloat() }
 
@@ -93,17 +93,17 @@ namespace Engine {
 	}
 
 	void GameSceneSerializer::SerializeScene(std::string filename) {
-		FILE_CREATION(filename.c_str(), "wb");	
-		
-		rapidjson::Document doc (rapidjson::kArrayType);
+		FILE_CREATION(filename.c_str(), "wb");
 
-		const std::vector<Entity>& entList = DreamECS::GetUsedEntityVector();
-		size_t num = entList.size();
-		for (size_t i = 0; i < num; i++) {
+		rapidjson::Document doc(rapidjson::kArrayType);
+
+		const std::unordered_set<Entity>& entList = DreamECS::GetUsedEntitySet();
+		//size_t num = entList.size();
+		for (const auto& ent : entList) {
 			rapidjson::Value entityObject(rapidjson::kObjectType);
 
-			Transform* trans = nullptr;
-			if (DreamECS::HasComponent<Transform>(trans, entList[i]) && trans != nullptr) {
+			Transform* trans = DreamECS::GetComponentTest<Transform>(ent);
+			if (trans != nullptr) {
 				LOG_ASSERT(trans);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -124,8 +124,8 @@ namespace Engine {
 				entityObject.AddMember("Transform", objType, doc.GetAllocator());
 			}
 
-			Collider* col = nullptr;
-			if (DreamECS::HasComponent<Collider>(col, entList[i]) && col != nullptr) {
+			Collider* col = DreamECS::GetComponentTest<Collider>(ent);
+			if (col != nullptr) {
 				LOG_ASSERT(col);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -150,8 +150,8 @@ namespace Engine {
 				entityObject.AddMember("Collider", objType, doc.GetAllocator());
 			}
 
-			RigidBody* rb = nullptr;
-			if (DreamECS::HasComponent<RigidBody>(rb, entList[i]) && col != nullptr) {
+			RigidBody* rb = DreamECS::GetComponentTest<RigidBody>(ent);
+			if (rb != nullptr) {
 				LOG_ASSERT(rb);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -160,8 +160,8 @@ namespace Engine {
 				entityObject.AddMember("RigidBody", objType, doc.GetAllocator());
 			}
 
-			Camera2D* cam = nullptr;
-			if (DreamECS::HasComponent<Camera2D>(cam, entList[i]) && cam != nullptr) {
+			Camera2D* cam = DreamECS::GetComponentTest<Camera2D>(ent);
+			if (cam != nullptr) {
 				LOG_ASSERT(cam);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -172,8 +172,8 @@ namespace Engine {
 				entityObject.AddMember("Camera2D", objType, doc.GetAllocator());
 			}
 
-			Texture* tex = nullptr;
-			if (DreamECS::HasComponent<Texture>(tex, entList[i]) && tex != nullptr) {
+			Texture* tex = DreamECS::GetComponentTest<Texture>(ent);
+			if (tex != nullptr) {
 				LOG_ASSERT(tex);
 				rapidjson::Value objType(rapidjson::kObjectType);
 
@@ -184,7 +184,7 @@ namespace Engine {
 				objType.AddMember("Filepath", texFP, doc.GetAllocator());
 
 				rapidjson::Value shapeFP;
-				
+
 				len = sprintf_s(buffer, "%s", tex->get_mdl_ref()->first.c_str());
 				shapeFP.SetString(buffer, len, doc.GetAllocator());
 				objType.AddMember("Shape", shapeFP, doc.GetAllocator());
@@ -199,8 +199,8 @@ namespace Engine {
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
 
-			if (ScriptEngine::csEntityClassInstance.find(entList[i]) != ScriptEngine::csEntityClassInstance.end()) {
-				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(entList[i])->second;
+			if (ScriptEngine::csEntityClassInstance.find(ent) != ScriptEngine::csEntityClassInstance.end()) {
+				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
 				rapidjson::Value classArray(rapidjson::kArrayType);
 
 				for (const auto& [className, scriptInstance] : entityclassInstance) {
@@ -225,7 +225,7 @@ namespace Engine {
 							variableFP.SetString(buffer, len, doc.GetAllocator());
 							variableObject.AddMember("Name", variableFP, doc.GetAllocator());
 							variableObject.AddMember("Type", (int)variableInstance.variableType, doc.GetAllocator());
-							
+
 							switch (variableInstance.variableType) {
 							case CSType::CHAR:
 								variableObject.AddMember("Data", variableInstance.GetVariableData<char>(), doc.GetAllocator());
@@ -243,7 +243,7 @@ namespace Engine {
 								variableObject.AddMember("Data", variableInstance.GetVariableData<unsigned int>(), doc.GetAllocator());
 								break;
 							case CSType::VEC2:
-								glm::vec2 tem = variableInstance.GetVariableData<glm::vec2>();
+								Math::vec2 tem = variableInstance.GetVariableData<Math::vec2>();
 								rapidjson::Value dataVec2(rapidjson::kArrayType);
 								dataVec2.PushBack(tem.x, doc.GetAllocator());
 								dataVec2.PushBack(tem.y, doc.GetAllocator());
@@ -280,7 +280,7 @@ namespace Engine {
 			Entity ent = DreamECS::CreateEntity();
 			rapidjson::Value::ConstMemberIterator itr = obj.FindMember("Transform");
 			if (itr != obj.MemberEnd()) {
-				DreamECS::AddComponent(ent, 
+				DreamECS::AddComponent(
 					Transform{
 						ent,
 						Get2DFloatValue("Position"),
@@ -292,8 +292,8 @@ namespace Engine {
 
 			itr = obj.FindMember("Collider");
 			if (itr != obj.MemberEnd()) {
-				DreamECS::AddComponent(ent,
-					Collider {
+				DreamECS::AddComponent(
+					Collider{
 						ent,
 						ColliderType(itr->value["ColliderType"].GetInt()),
 						Get2DFloatValue("Position"),
@@ -306,7 +306,7 @@ namespace Engine {
 
 			itr = obj.FindMember("RigidBody");
 			if (itr != obj.MemberEnd()) {
-				DreamECS::AddComponent(ent,
+				DreamECS::AddComponent(
 					RigidBody{
 						ent,
 						itr->value["IsActive"].GetBool()
@@ -315,8 +315,8 @@ namespace Engine {
 
 			itr = obj.FindMember("Camera2D");
 			if (itr != obj.MemberEnd()) {
-				DreamECS::AddComponent(ent,
-					Camera2D {
+				DreamECS::AddComponent(
+					Camera2D{
 						ent,
 						itr->value["FOV"].GetFloat(),
 						itr->value["AR"].GetFloat(),
@@ -326,8 +326,8 @@ namespace Engine {
 
 			itr = obj.FindMember("Texture");
 			if (itr != obj.MemberEnd()) {
-				DreamECS::AddComponent(ent,
-					Texture {
+				DreamECS::AddComponent(
+					Texture{
 						ent,
 						itr->value["Filepath"].GetString(),
 						itr->value["Shape"].GetString(),
@@ -342,8 +342,8 @@ namespace Engine {
 				for (auto& classJSon : itr->value.GetArray()) {
 					const auto& className = classJSon["Class"].GetString();
 
-					CSScriptInstance csScriptInstance{ 
-						className, 
+					CSScriptInstance csScriptInstance{
+						className,
 						classJSon["IsActive"].GetBool() };
 
 					rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
@@ -354,7 +354,7 @@ namespace Engine {
 
 
 							CSPublicVariable csPublicvariable{ variableName, variableType };
-							
+
 
 							if (variableType == CSType::CHAR) {
 								char charData = variableData["Data"].GetInt();
@@ -378,9 +378,9 @@ namespace Engine {
 								unsigned int uinData = variableData["Data"].GetUint();
 								csPublicvariable.SetVariableData(&uinData);
 							}
-							
+
 							else if (variableType == CSType::VEC2) {
-								glm::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
+								Math::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
 													variableData["Data"].GetArray()[1].GetFloat() };
 								csPublicvariable.SetVariableData(&vec2Data);
 							}

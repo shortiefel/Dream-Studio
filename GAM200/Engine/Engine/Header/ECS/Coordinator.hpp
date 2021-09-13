@@ -15,7 +15,7 @@ Ng Jia Yi						Jiayi.ng@digipen.edu
 \date 26/04/2021
 \brief
 
-This file contain the coordinator where it coordinates with the Entity, Component, System and Event 
+This file contain the coordinator where it coordinates with the Entity, Component, System and Event
 in a single space.
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -64,23 +64,19 @@ namespace Engine {
 		void destroyEntity(Entity entity)
 		{
 			entityManager->DestroyEntity(entity);
-			compManager->DestoryEntity(entity);
+			compManager->DestroyEntity(entity);
+#ifndef NEW_ECS
 			sysManager->EntityDestroyed(entity);
+#endif
 		}
 
-		void destroyAllEntity()
+		inline const std::unordered_set<Entity>& GetUsedEntitySet() const {
+			return entityManager->GetUsedEntitySet();
+		}
+
+		void ResetECS()
 		{
-			const std::vector<Entity>& listOfEntity = entityManager->GetUsedEntityVector();
-			for (auto& ent : listOfEntity) {
-				entityManager->DestroyEntity(ent);
-				compManager->DestoryEntity(ent);
-				sysManager->EntityDestroyed(ent);
-			}
 			entityManager->ResetEntityManager();
-		}
-
-		inline const std::vector<Entity>& GetUsedEntityVector() const {
-			return entityManager->GetUsedEntityVector();
 		}
 
 		/**
@@ -90,31 +86,59 @@ namespace Engine {
 		* that it is handling
 		*/
 		template<typename T>
-		void RegisterComponent()
-		{
+		void RegisterComponent() {
 			compManager->RegisterCom<T>();
 		}
 
 		template<typename T>
-		void AddComponent(Entity entity, T com)
-		{
+		void AddComponent(T com) {
+#if NEW_ECS
+			auto ptr = compManager->GetComTest<T>(com.GetEntityId());
+			LOG_ASSERT(!ptr && "Unable add the same component for one entity");
+			if (ptr) return;
+			compManager->AddComponent<T>(com);
+			//auto Signature = entityManager->GetSignature(entity); //unique signature key
+			//Signature.set(compManager->GetterComType<T>(), true); //setting the unique signature key
+			//entityManager->SetSignature(entity, Signature);
+
+			//sysManager->EntitySignatureChanged(entity, Signature); //letting system manager know abt the change in signature on entity
+#else
+			auto ptr = compManager->GetComTest<T>(entity);
+			LOG_ASSERT(!ptr && "Unable add the same component for one entity");
+			if (ptr) return;
 			compManager->AddComponent<T>(entity, com);
 			auto Signature = entityManager->GetSignature(entity); //unique signature key
 			Signature.set(compManager->GetterComType<T>(), true); //setting the unique signature key
 			entityManager->SetSignature(entity, Signature);
 
 			sysManager->EntitySignatureChanged(entity, Signature); //letting system manager know abt the change in signature on entity
+#endif
 		}
 
 		template<typename T>
 		void RemoveComponent(Entity entity)
 		{
+#if NEW_ECS
+			auto ptr = compManager->GetComTest<T>(entity);
+			LOG_ASSERT(ptr && "Unable remove an entity that does not exist");
+			if (!ptr) return;
+			compManager->RemoveCom<T>(entity);
+			/*auto Signature = entityManager->GetSignature(entity);
+			Signature.set(compManager->GetterComType<T>(), false);
+			entityManager->SetSignature(entity, Signature);
+
+			sysManager->EntitySignatureChanged(entity, Signature);*/
+#else
+			auto ptr = compManager->GetComTest<T>(entity);
+			LOG_ASSERT(ptr && "Unable remove an entity that does not exist");
+			if (!ptr) return;
 			compManager->RemoveCom<T>(entity);
 			auto Signature = entityManager->GetSignature(entity);
 			Signature.set(compManager->GetterComType<T>(), false);
 			entityManager->SetSignature(entity, Signature);
 
 			sysManager->EntitySignatureChanged(entity, Signature);
+#endif
 		}
 
 		template<typename T>
@@ -165,11 +189,13 @@ namespace Engine {
 			return sysManager->SystemReg<T>();
 		}
 
+#ifndef NEW_ECS
 		template<typename T>
 		void setSystemSignature(Signature sign)
 		{
 			sysManager->SetSignature<T>(sign);
 		}
+#endif
 
 		/**
 		* Event Manager

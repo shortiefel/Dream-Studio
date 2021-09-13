@@ -21,6 +21,13 @@ Technology is prohibited.
 
 namespace Engine {
 	struct IComponent {
+	public:
+		inline Entity GetEntityId() const { return entityId; }
+		inline void SetEntityId(Entity ent) { entityId = ent; }
+
+		IComponent() : entityId{ DEFAULT_ENTITY } {}
+		IComponent(Entity ent) : entityId{ ent } {}
+	private:
 		Entity entityId = DEFAULT_ENTITY;
 	};
 }

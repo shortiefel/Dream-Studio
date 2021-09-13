@@ -21,6 +21,7 @@ Technology is prohibited.
 
 namespace Engine {
 	Coordinator DreamECS::gCoordinator;
+	std::queue<Entity> DreamECS::destroyQueue;
 
 	void DreamECS::Init()
 	{
@@ -35,7 +36,7 @@ namespace Engine {
 	void DreamECS::DuplicateEntity(Entity entFrom) {
 		Entity entTo = gCoordinator.createEntity();
 		gCoordinator.DuplicateEntity(entFrom, entTo);
-		
+
 		const auto& listOfClassInstance = ScriptEngine::csEntityClassInstance.find(entFrom)->second;
 		CSClassInstance newClassInstance;
 		for (auto& [className, scriptInstance] : listOfClassInstance) {
@@ -47,16 +48,34 @@ namespace Engine {
 
 	void DreamECS::DestroyEntity(Entity entity)
 	{
-		gCoordinator.destroyEntity(entity);
+		//gCoordinator.destroyEntity(entity);
+		destroyQueue.emplace(entity);
 	}
 
-	void DreamECS::DestroyAllEntity()
-	{
-		gCoordinator.destroyAllEntity();
+	const std::unordered_set<Entity>& DreamECS::GetUsedEntitySet() {
+		return gCoordinator.GetUsedEntitySet();
 	}
 
-	const std::vector<Entity>& DreamECS::GetUsedEntityVector() {
-		return gCoordinator.GetUsedEntityVector();
+	void DreamECS::ClearDestroyQueue() {
+		//std::cout << gCoordinator.GetUsedEntitySet().size() << "\n";
+		size_t num = destroyQueue.size();
+		while (num > 0) {
+			Entity& entity = destroyQueue.front();
+			gCoordinator.destroyEntity(entity);
+			ScriptEngine::csEntityClassInstance.erase(entity);
+			destroyQueue.pop();
+			--num;
+		}
+	}
+
+	void DreamECS::ResetECS() {
+		std::unordered_set<Entity> listOfEntity = gCoordinator.GetUsedEntitySet();
+		for (auto& entity : listOfEntity) {
+			gCoordinator.destroyEntity(entity);
+			ScriptEngine::csEntityClassInstance.erase(entity);
+		}
+
+		gCoordinator.ResetECS();
 	}
 
 }

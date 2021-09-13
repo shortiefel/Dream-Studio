@@ -33,7 +33,9 @@ namespace Engine {
 	class System
 	{
 	public:
+#ifndef NEW_ECS
 		std::set<Entity> mEntities;
+#endif
 
 		//virtual bool Create() = 0;
 		virtual void Destroy() = 0;

@@ -20,7 +20,7 @@ Technology is prohibited.
 #include <Imgui/imgui.h>
 
 namespace Editor {
-	namespace GUI_Window {
+    namespace GUI_Window {
         //bool for dockspace (will always be true)
         static bool dockspace_bool = true;
         //Flags for the background window for windows to dock to
@@ -39,14 +39,14 @@ namespace Editor {
         -------------------------------------------------------------------------------------------------*/
         //Set up all variable for GUI_Window
         void    GUI_Settings_Setup();
-		//Note: This function should be called first
-		//Create a docking space for future windows to be docked into it
-		void	GUI_DockSpace		();
-		void	GUI_Hierarchy		();
-        void	GUI_Inspector		();
-        void	GUI_GameWindow      (unsigned int& gameWinTex);
-        void	GUI_SceneWindow		(unsigned int& sceneWinTex);
-	}
+        //Note: This function should be called first
+        //Create a docking space for future windows to be docked into it
+        void	GUI_DockSpace();
+        void	GUI_Hierarchy();
+        void	GUI_Inspector();
+        void	GUI_GameWindow(unsigned int& gameWinTex);
+        void	GUI_SceneWindow(unsigned int& sceneWinTex);
+    }
 }
 
 #endif

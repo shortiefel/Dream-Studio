@@ -15,7 +15,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
-#include <glm/glm.hpp>
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	CSPublicVariable::CSPublicVariable(const std::string& vn, CSType type) : variableName(vn), variableType(type) {
@@ -23,7 +23,7 @@ namespace Engine {
 		size = GetVariableSize(variableType);
 		variableData = new char[size];
 
-	
+
 		void* v = nullptr;
 
 		if (variableType == CSType::FLOAT) {
@@ -52,10 +52,10 @@ namespace Engine {
 		}
 
 		else if (variableType == CSType::VEC2) {
-			glm::vec2 tem{};
+			Math::vec2 tem{};
 			v = &tem;
 		}
-			 
+
 		SetVariableData(v);
 	}
 
@@ -73,10 +73,11 @@ namespace Engine {
 		case CSType::VEC2:
 			return (4 * 2);
 		}
+
 	}
 
 	CSPublicVariable::CSPublicVariable(CSPublicVariable&& rhs) noexcept {
-			
+
 		variableName = std::move(rhs.variableName);
 		variableType = rhs.variableType;
 

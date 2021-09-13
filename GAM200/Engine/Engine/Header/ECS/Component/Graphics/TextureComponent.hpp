@@ -44,11 +44,11 @@ namespace Engine {
 		inline bool GetActive() const { return isActive; }
 		inline std::map<std::string, GraphicImplementation::GLModel>::iterator get_mdl_ref() const { return mdl_ref; }
 		inline std::map<std::string, GLSLShader>::iterator get_shd_ref() const { return shd_ref; }
-		
+
 
 	private:
 		GLuint texobj_hdl = GLuint{};
-		
+
 		std::string filepath = "";
 
 		std::map<std::string, GraphicImplementation::GLModel>::iterator mdl_ref = GraphicImplementation::models.begin();

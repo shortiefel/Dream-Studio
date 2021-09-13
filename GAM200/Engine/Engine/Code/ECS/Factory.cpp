@@ -27,6 +27,21 @@ namespace Engine {
     //Coordinator gCoordinator;
 
     void Factory::Create() {
+#if NEW_ECS
+        DreamECS::Init();
+        DreamECS::RegisterComponent<Camera2D>();
+        DreamECS::RegisterComponent<Transform>();
+        DreamECS::RegisterComponent<Collider>();
+        DreamECS::RegisterComponent<Texture>();
+        DreamECS::RegisterComponent<RigidBody>();
+        //gCoordinator.RegisterComponent<CSScript>();
+        //gCoordinator.RegisterComponent<CSharpScript>();
+
+        CameraSystem::Create(DreamECS::RegisterSystem<CameraSystem>());
+        GraphicSystem::Create(DreamECS::RegisterSystem<GraphicSystem>());
+        CollisionSystem::Create(DreamECS::RegisterSystem<CollisionSystem>());
+
+#else
         DreamECS::Init();
         DreamECS::RegisterComponent<Camera2D>();
         DreamECS::RegisterComponent<Transform>();
@@ -50,7 +65,7 @@ namespace Engine {
         signature.set(DreamECS::GetComponentType<Transform>());
         signature.set(DreamECS::GetComponentType<Camera2D>());
         DreamECS::setSystemSignature<CameraSystem>(signature);
-        
+
 
         signature.reset();
         signature.set(DreamECS::GetComponentType<Transform>());
@@ -60,6 +75,7 @@ namespace Engine {
         //signature.reset();
         //signature.set(gCoordinator.GetComType<CSScript>());
         //gCoordinator.setSystemSignature<ScriptSystem>(signature);
+#endif
     }
 
     //Prefix options------------------------------------------------------------------------------
@@ -67,7 +83,7 @@ namespace Engine {
     //Create blank transform
 
     //Function will be called when GUI inspector request a Square entity
-    void Factory::InstantiateSquare(glm::vec2 pos, glm::vec2 scale, bool isMoveable) {
+    void Factory::InstantiateSquare(Math::vec2 pos, Math::vec2 scale, bool isMoveable) {
         printf("%s\n", "Doesnt work");
         /*Entity ent = DreamECS::CreateEntity();
         DreamECS::AddComponent(
@@ -78,7 +94,7 @@ namespace Engine {
     }
 
     //Function will be called when GUI inspector request a Circle entity
-    void Factory::InstantiateCircle(glm::vec2 pos, glm::vec2 scale, bool isMoveable) {
+    void Factory::InstantiateCircle(Math::vec2 pos, Math::vec2 scale, bool isMoveable) {
         printf("%s\n", "Doesnt work");
         /*Entity ent = DreamECS::CreateEntity();
         DreamECS::AddComponent(

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TextureComponent.cpp
-@author  
+@author
 @date    02/07/2021
 \brief
 This file contain the TextureComponent definition
@@ -20,7 +20,7 @@ Technology is prohibited.
 
 namespace Engine {
 	Texture::Texture(Entity ID, const std::string path, std::string shape, std::string shader, bool active) :
-		IComponent{ ID }, 
+		IComponent{ ID },
 		texobj_hdl{ 0 }, filepath{ path }, width{ 0 }, height{ 0 }, BPP{ 0 },
 		mdl_ref{ GraphicImplementation::models.find(shape) },
 		shd_ref{ GraphicImplementation::shdrpgms.find(shader) },

@@ -21,7 +21,7 @@ Technology is prohibited.
 #include "Engine/Header/Event/Event.hpp"
 #include "Engine/Header/pch.hpp"
 
-#include <glm/glm.hpp>
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	//MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, 
@@ -32,7 +32,7 @@ namespace Engine {
 	-------------------------------------------------------------------------------------------------*/
 	class MousePressedEvent;
 	typedef bool (*MousePressFP)(const MousePressedEvent&);
-	
+
 	class MousePressedEvent : public Event {
 	public:
 		MousePressedEvent(int b);
@@ -53,7 +53,7 @@ namespace Engine {
 	-------------------------------------------------------------------------------------------------*/
 	class MouseReleasedEvent;
 	typedef bool (*MouseReleaseFP)(const MouseReleasedEvent&);
-	
+
 	class MouseReleasedEvent : public Event {
 	public:
 		MouseReleasedEvent(int b);
@@ -79,7 +79,7 @@ namespace Engine {
 	public:
 		MouseMoveEvent(float xp, float yp);
 		//Get mouse position when moved
-		glm::vec2 GetPos() const;
+		Math::vec2 GetPos() const;
 		virtual EventType GetEventType() const override;
 		virtual std::string Details() const override;
 
@@ -87,7 +87,7 @@ namespace Engine {
 		static void RegisterFunction(MouseMoveFP func);
 
 	private:
-		glm::vec2 pos;
+		Math::vec2 pos;
 		static std::vector<MouseMoveFP> registeredFunctions;
 	};
 
@@ -101,7 +101,7 @@ namespace Engine {
 	class MouseScrolledEvent : public Event {
 	public:
 		MouseScrolledEvent(float x, float y);
-		glm::vec2 GetScroll() const;
+		Math::vec2 GetScroll() const;
 		virtual EventType GetEventType() const override;
 		virtual std::string Details() const override;
 
@@ -109,7 +109,7 @@ namespace Engine {
 		static void RegisterFunction(MouseScrollFP func);
 
 	private:
-		glm::vec2 scrollOffset;
+		Math::vec2 scrollOffset;
 		static std::vector<MouseScrollFP> registeredFunctions;
 	};
 }

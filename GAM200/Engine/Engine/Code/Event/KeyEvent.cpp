@@ -25,7 +25,7 @@ namespace Engine {
 	-------------------------------------------------------------------------------------------------*/
 	Input_KeyCode KeyEvent::GetKeyCode() const { return keyCode; }
 	KeyEvent::KeyEvent(Input_KeyCode keycode) : keyCode{ keycode } {}
-		
+
 
 	/*-------------------------------------------------------------------------------------------------
 	Key pressed event

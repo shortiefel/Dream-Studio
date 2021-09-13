@@ -2,10 +2,10 @@
 /*
 @file    MathLib.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
-@date    16/06/2021
+@date    12/09/2021
 \brief
-This file contains Matrix and Vector header file and 
-a degree to radian function
+This file contains access/switch to either glm library and custom math library
+For easy switching to test whether custom math library is working properly
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -18,36 +18,16 @@ Technology is prohibited.
 #ifndef MATH_LIB_HPP
 #define MATH_LIB_HPP
 
-#include "Engine/Header/Math/Matrix.hpp"
-#include "Engine/Header/Math/Vector.hpp"
+//#include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine {
-    namespace MathD {
-        template <typename T>
-        inline T radians(T deg) {
-            return deg * PI / 180;
-        }
-
-        template <typename T>
-        inline T degrees(T rad) {
-            return rad * 180 / PI;
-        }
-
-        template <typename T>
-        inline T* value_ptr(MathImplementation::Matrix3<T>& mat) {
-            return mat.GetPtr();
-        }
-
-        template <typename T>
-        inline T getLength(T n1, T n2) {
-            return sqrt(pow(n1, 2) + pow(n2, 2));
-        }
-
-        template <typename T>
-        inline T getSqLength(T n1, T n2) {
-            return pow(n1, 2) + pow(n2, 2);
-        }
-    }
-}
+#ifdef CUSTOM_MATH
+#include "Engine/Header/Math/MathInternal.hpp"
+namespace Math = MathD;
+#else
+#include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
+#include <glm/gtc/type_ptr.hpp>
+namespace Math = glm;
+#endif
 
 #endif

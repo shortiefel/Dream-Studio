@@ -449,5 +449,8 @@
     <ClInclude Include="Engine\Header\Management\Settings.hpp">
       <Filter>Header Files\Management</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\Math\MathInternal.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

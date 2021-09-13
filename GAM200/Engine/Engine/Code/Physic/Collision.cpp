@@ -6,8 +6,8 @@
 \brief
 This file has the function definition for Physic
 
-The physic here simulate pushing physic by moving objects out of each other 
-in opposite direction (Note: Need ti have rigidbody) and when applied 
+The physic here simulate pushing physic by moving objects out of each other
+in opposite direction (Note: Need ti have rigidbody) and when applied
 for a period of time, it looks like one object is pushing another.
 
 collider position is in the center of itself and width and height is only half of itself total width and height
@@ -32,7 +32,7 @@ namespace Engine {
 
     namespace CollisionImplementation {
         //Collision checks-------------------------------------------------------------------------------
-        bool isColliding(glm::vec2& dir, const Collider& obj1, bool ent1Moveable, const Collider& obj2, bool ent2Moveable) {
+        bool isColliding(Math::vec2& dir, const Collider& obj1, bool ent1Moveable, const Collider& obj2, bool ent2Moveable) {
             ent1IsMoveable = ent1Moveable;
             ent2IsMoveable = ent2Moveable;
 
@@ -53,28 +53,28 @@ namespace Engine {
             return false;
         }
 
-        bool isCollidingSQUAREtoSQUARE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingSQUAREtoSQUARE(Math::vec2& dir, const Collider& obj1, const Collider& obj2) {
             //SAT method
-            std::vector<glm::vec2> obj1Corner(4);
-            glm::vec2 xaxis1{ glm::cos(glm::radians(obj1.angle)), glm::sin(glm::radians(obj1.angle)) };
-            glm::vec2 yaxis1{ glm::cos(glm::radians(90.f + obj1.angle)), glm::sin(glm::radians(90.f + obj1.angle)) };
-            
+            std::vector<Math::vec2> obj1Corner(4);
+            Math::vec2 xaxis1{ Math::cos(Math::radians(obj1.angle)), Math::sin(Math::radians(obj1.angle)) };
+            Math::vec2 yaxis1{ Math::cos(Math::radians(90.f + obj1.angle)), Math::sin(Math::radians(90.f + obj1.angle)) };
+
             obj1Corner[0] = obj1.offset_position + obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top right
             obj1Corner[1] = obj1.offset_position - obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top left
             obj1Corner[2] = obj1.offset_position - obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot left
             obj1Corner[3] = obj1.offset_position + obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot right
-            
-            std::vector<glm::vec2> obj2Corner(4);
-            glm::vec2 xaxis2{ glm::cos(glm::radians(obj2.angle)), glm::sin(glm::radians(obj2.angle)) };
-            glm::vec2 yaxis2{ glm::cos(glm::radians(90 + obj2.angle)), glm::sin(glm::radians(90 + obj2.angle)) };
+
+            std::vector<Math::vec2> obj2Corner(4);
+            Math::vec2 xaxis2{ Math::cos(Math::radians(obj2.angle)), Math::sin(Math::radians(obj2.angle)) };
+            Math::vec2 yaxis2{ Math::cos(Math::radians(90 + obj2.angle)), Math::sin(Math::radians(90 + obj2.angle)) };
 
             obj2Corner[0] = obj2.offset_position + obj2.offset_scale.x * xaxis2 + obj2.offset_scale.y * yaxis2; //top right
             obj2Corner[1] = obj2.offset_position - obj2.offset_scale.x * xaxis2 + obj2.offset_scale.y * yaxis2; //top left
             obj2Corner[2] = obj2.offset_position - obj2.offset_scale.x * xaxis2 - obj2.offset_scale.y * yaxis2; //bot left
             obj2Corner[3] = obj2.offset_position + obj2.offset_scale.x * xaxis2 - obj2.offset_scale.y * yaxis2; //bot right
 
-            std::vector<glm::vec2>* shape1 = &obj1Corner;
-            std::vector<glm::vec2>* shape2 = &obj2Corner;
+            std::vector<Math::vec2>* shape1 = &obj1Corner;
+            std::vector<Math::vec2>* shape2 = &obj2Corner;
 
             float overlap = INFINITY;
 
@@ -85,8 +85,8 @@ namespace Engine {
                 }
                 for (int a = 0; a < shape1->size(); a++) {
                     int b = (a + 1) % shape1->size();
-                    glm::vec2 axisProj = { -((*shape1)[b].y - (*shape1)[a].y), (*shape1)[b].x - (*shape1)[a].x };
-                    axisProj = glm::normalize(axisProj);
+                    Math::vec2 axisProj = { -((*shape1)[b].y - (*shape1)[a].y), (*shape1)[b].x - (*shape1)[a].x };
+                    axisProj = Math::normalize(axisProj);
 
                     // Work out min and max 1D points for r1
                     float min_r1 = INFINITY, max_r1 = -INFINITY;
@@ -114,16 +114,16 @@ namespace Engine {
             }
 
             dir = (obj2.offset_position - obj1.offset_position);
-            dir = glm::normalize(dir);
+            dir = Math::normalize(dir);
             dir *= overlap;
             return true;
         }
 
-        bool isCollidingSQUAREtoCIRCLE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingSQUAREtoCIRCLE(Math::vec2& dir, const Collider& obj1, const Collider& obj2) {
             //SAT method
-            std::vector<glm::vec2> obj1Corner(4);
-            glm::vec2 xaxis1{ glm::cos(glm::radians(obj1.angle)), glm::sin(glm::radians(obj1.angle)) };
-            glm::vec2 yaxis1{ glm::cos(glm::radians(90.f + obj1.angle)), glm::sin(glm::radians(90.f + obj1.angle)) };
+            std::vector<Math::vec2> obj1Corner(4);
+            Math::vec2 xaxis1{ Math::cos(Math::radians(obj1.angle)), Math::sin(Math::radians(obj1.angle)) };
+            Math::vec2 yaxis1{ Math::cos(Math::radians(90.f + obj1.angle)), Math::sin(Math::radians(90.f + obj1.angle)) };
 
             obj1Corner[0] = obj1.offset_position + obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top right
             obj1Corner[1] = obj1.offset_position - obj1.offset_scale.x * xaxis1 + obj1.offset_scale.y * yaxis1; //top left
@@ -131,17 +131,17 @@ namespace Engine {
             obj1Corner[3] = obj1.offset_position + obj1.offset_scale.x * xaxis1 - obj1.offset_scale.y * yaxis1; //bot right
 
             float overlap = INFINITY;
-            glm::vec2 closestPoint = obj1Corner[0];
+            Math::vec2 closestPoint = obj1Corner[0];
             for (int a = 0; a < obj1Corner.size(); a++) {
-                glm::vec2 temVec = { obj1Corner[a].x - obj2.offset_position.x, obj1Corner[a].y - obj2.offset_position.y };
-                glm::vec2 temVec2 = { closestPoint.x - obj2.offset_position.x, closestPoint.y - obj2.offset_position.y };
-                if (glm::dot(temVec, temVec) < glm::dot(temVec2, temVec2))
+                Math::vec2 temVec = { obj1Corner[a].x - obj2.offset_position.x, obj1Corner[a].y - obj2.offset_position.y };
+                Math::vec2 temVec2 = { closestPoint.x - obj2.offset_position.x, closestPoint.y - obj2.offset_position.y };
+                if (Math::dot(temVec, temVec) < Math::dot(temVec2, temVec2))
                     closestPoint = obj1Corner[a];
             }
 
             //Check circle axis (center of circle to closest point)
-            glm::vec2 axisProj = { closestPoint.x - obj2.offset_position.x, closestPoint.y - obj2.offset_position.y };
-            axisProj = glm::normalize(axisProj);
+            Math::vec2 axisProj = { closestPoint.x - obj2.offset_position.x, closestPoint.y - obj2.offset_position.y };
+            axisProj = Math::normalize(axisProj);
 
             float min_r1 = INFINITY, max_r1 = -INFINITY;
             for (int p = 0; p < obj1Corner.size(); p++)
@@ -164,9 +164,9 @@ namespace Engine {
 
             for (int a = 0; a < obj1Corner.size(); a++) {
                 int b = (a + 1) % obj1Corner.size();
-                glm::vec2 axisProj = { -(obj1Corner[b].y - obj1Corner[a].y), obj1Corner[b].x - obj1Corner[a].x };
-                axisProj = glm::normalize(axisProj);
-                
+                Math::vec2 axisProj = { -(obj1Corner[b].y - obj1Corner[a].y), obj1Corner[b].x - obj1Corner[a].x };
+                axisProj = Math::normalize(axisProj);
+
                 // Work out min and max 1D points for r1
                 float min_r1 = INFINITY, max_r1 = -INFINITY;
                 for (int p = 0; p < obj1Corner.size(); p++)
@@ -175,7 +175,7 @@ namespace Engine {
                     min_r1 = std::min(min_r1, q);
                     max_r1 = std::max(max_r1, q);
                 }
-                
+
                 //Circle min and max is the same for a single axis (no need for loop)
                 float min_r2 = INFINITY, max_r2 = -INFINITY;
                 float q = (obj2.offset_position.x * axisProj.x + obj2.offset_position.y * axisProj.y);
@@ -189,16 +189,16 @@ namespace Engine {
             }
 
             dir = (obj2.offset_position - obj1.offset_position);
-            dir = glm::normalize(dir);
+            dir = Math::normalize(dir);
             dir *= overlap;
             return true;
         }
 
-        bool isCollidingCIRCLEtoSQUARE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingCIRCLEtoSQUARE(Math::vec2& dir, const Collider& obj1, const Collider& obj2) {
             return isCollidingSQUAREtoCIRCLE(dir, obj2, obj1);
         }
 
-        bool isCollidingCIRCLEtoCIRCLE(glm::vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingCIRCLEtoCIRCLE(Math::vec2& dir, const Collider& obj1, const Collider& obj2) {
             //if (obj1.scale.x == obj1.scale.y && obj2.scale.x == obj2.scale.y) {
             float rad = obj1.offset_scale.x + obj2.offset_scale.x;
             rad = (float)pow(rad, 2);
@@ -207,13 +207,13 @@ namespace Engine {
 
             if (rad < tl) return false;
             //only calculate if it collides
-            dir = glm::normalize(dir);
+            dir = Math::normalize(dir);
             return true;
         }
 
 
         //Collision resolution-------------------------------------------------------------------------------
-        void CollisionResolution(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        void CollisionResolution(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
             if (col1.cType == ColliderType::CIRCLE) {
                 if (col2.cType == ColliderType::CIRCLE) {
                     CollisionResolutionCIRCLEtoCIRCLE(dir, trans1, col1, trans2, col2);
@@ -227,7 +227,7 @@ namespace Engine {
             CollisionResolutionMain(dir, trans1, col1, trans2, col2);
         }
 
-        void CollisionResolutionMain(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        void CollisionResolutionMain(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
             if (ent1IsMoveable && ent2IsMoveable) {
                 trans1.position -= (dir * 0.5f);
                 trans2.position += (dir * 0.5f);
@@ -244,7 +244,7 @@ namespace Engine {
             }
         }
 
-        //void CollisionResolutionSQUAREtoSQUARE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        //void CollisionResolutionSQUAREtoSQUARE(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
         //    //float lenX = 0.f, lenY = 0.f;
         //    ////Get difference in distance (see how much they intersect)
         //    //lenY = col1.offset_scale.y + col2.offset_scale.y - abs(col2.offset_position.y - col1.offset_position.y);
@@ -254,7 +254,7 @@ namespace Engine {
         //    //if (lenX > lenY) lenX = 0.f;
         //    //else if (lenX < lenY) lenY = 0.f;
 
-        //    //glm::vec2 up{ 0.f, dir.y }, right{ dir.x, 0.f };
+        //    //Math::vec2 up{ 0.f, dir.y }, right{ dir.x, 0.f };
 
         //    //if (ent1IsMoveable && ent2IsMoveable) {
         //    //    trans1.position += lenX / 2 * right; //for col1
@@ -291,7 +291,7 @@ namespace Engine {
 
         //}
 
-        //void CollisionResolutionSQUAREtoCIRCLE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        //void CollisionResolutionSQUAREtoCIRCLE(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
         //    /*if (!cornerBool) {
         //        CollisionResolutionSQUAREtoSQUARE(dir, trans1, col1, trans2, col2);
         //        return;
@@ -329,14 +329,14 @@ namespace Engine {
         //    }
         //}
 
-        /*void CollisionResolutionCIRCLEtoSQUARE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
-            
+        /*void CollisionResolutionCIRCLEtoSQUARE(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+
             CollisionResolutionSQUAREtoCIRCLE(dir, trans2, col2, trans1, col1);
         }*/
 
-        void CollisionResolutionCIRCLEtoCIRCLE(glm::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
-            glm::vec2 len = col1.offset_position - col2.offset_position;
-            float length = glm::length(len);
+        void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+            Math::vec2 len = col1.offset_position - col2.offset_position;
+            float length = Math::length(len);
 
             //length is the distance between the two object
             length = col1.offset_scale.x + col2.offset_scale.x - length;

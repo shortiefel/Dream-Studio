@@ -24,10 +24,10 @@ namespace Engine {
 	//map (entity id, map(classname, CSscript)
 	using CSEntityClassInstance = std::unordered_map<unsigned int, CSClassInstance>;
 
-		
+
 	class ScriptEngine {
 	public:
-			
+
 		/*-----------------------------------------------------
 		Start runtime
 		-----------------------------------------------------*/
@@ -42,7 +42,7 @@ namespace Engine {
 		-----------------------------------------------------*/
 		static void Stop();
 		//Compile CS files together
-		static bool CompileCS();	
+		static bool CompileCS();
 		/*-----------------------------------------------------
 		Update information by
 		-Reinstantiating Classes
@@ -69,7 +69,7 @@ namespace Engine {
 		-Load assemblies
 		-----------------------------------------------------*/
 		static void ReloadMono();
-		
+
 		/*-----------------------------------------------------
 			Call a specific virtual function
 			E.g: Init, Update

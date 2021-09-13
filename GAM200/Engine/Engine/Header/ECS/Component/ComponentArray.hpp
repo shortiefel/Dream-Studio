@@ -6,7 +6,7 @@
 @date    26/04/2021
 \brief
 To create a data structure that is a simple array with no holes. It contains the mapping from
-entity IDs to array indices. When accessing array, it uses entity ID to look up the actual array index 
+entity IDs to array indices. When accessing array, it uses entity ID to look up the actual array index
 but when destroyed, it takes the last elemet of array and move into deleted entity's spott and update
 the map
 
@@ -39,7 +39,17 @@ namespace Engine {
 	template<typename T>
 	class ComponentArray : public ComponentArrayInterface {
 	public:
-		void AddComponent(Entity entity, T component) {
+		void AddComponent(T component) {
+#if NEW_ECS
+			Entity entity = component.GetEntityId();
+			//error checking
+			LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
+
+			size_t newIndex = Size;
+			EntityToIndexMap[entity] = newIndex; //Entity -> Index
+			componentArray[newIndex] = component; //Creating of the array and calls it component
+			Size++;
+#else
 			//error checking
 			LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
 
@@ -47,25 +57,32 @@ namespace Engine {
 			EntityToIndexMap[entity] = newIndex; //Entity -> Index
 			IndexToEntityMap[newIndex] = entity; //Index -> Entity
 			componentArray[newIndex] = component; //Creating of the array and calls it component
+			componentArray[newIndex].SetEntityId(entity);
 			Size++;
+#endif
 		}
 
 
-		void Removing(Entity entity) {
-#if 0
+		void RemoveComponent(Entity entity) {
+#if NEW_ECS
 			//error checking
 			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
 
 			//Copies element at the end into deleted element's place 
 			size_t IndexRemoveEntity = EntityToIndexMap[entity];
 			size_t IndexLastElement = Size - 1;
-
 			componentArray[IndexRemoveEntity] = componentArray[IndexLastElement];
-			EntityToIndexMap[componentArray[IndexRemoveEntity].entityId] = IndexRemoveEntity;
-			componentArray[IndexLastElement].entityId = DEFAULT_ENTITY;
+
+			//Updating the map when it's shifted
+			Entity EntityLastElement = componentArray[IndexLastElement].GetEntityId();
+			EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
+
+			componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
 			EntityToIndexMap.erase(entity);
 
 			--Size;
+
+			//printf("%d with %zd at %d new %d at %s\n", entity, Size, componentArray[IndexRemoveEntity].GetEntityId(), componentArray[IndexLastElement].GetEntityId(), typeid(T).name());
 #else
 			//error checking
 			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
@@ -73,11 +90,15 @@ namespace Engine {
 			//Copies element at the end into deleted element's place 
 			size_t IndexRemoveEntity = EntityToIndexMap[entity];
 			size_t IndexLastElement = Size - 1;
+
 			componentArray[IndexRemoveEntity] = componentArray[IndexLastElement];
-			componentArray[IndexLastElement].entityId = DEFAULT_ENTITY;
+			componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+
+			printf("%d new %d at %s\n", componentArray[IndexRemoveEntity].GetEntityId(), componentArray[IndexLastElement].GetEntityId(), typeid(T).name());
 
 			//Updating the map when it's shifted
 			Entity EntityLastElement = IndexToEntityMap[IndexLastElement];
+
 			EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
 			IndexToEntityMap[IndexRemoveEntity] = EntityLastElement;
 
@@ -120,7 +141,7 @@ namespace Engine {
 
 		void EntityDestroyed(Entity entity) override {
 			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end())
-				Removing(entity);
+				RemoveComponent(entity);
 		}
 
 		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
@@ -130,7 +151,9 @@ namespace Engine {
 	private:
 		std::array<T, MAX_ENTITIES> componentArray{};
 		std::unordered_map<Entity, size_t> EntityToIndexMap{}; //mapping for entity ID to array index
+#ifndef NEW_ECS
 		std::unordered_map<size_t, Entity> IndexToEntityMap{}; //mappign array index to entity ID
+#endif
 		size_t Size = size_t{}; //total size of valid enteries in array
 	};
 }

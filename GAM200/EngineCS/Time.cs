@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices; //For internal calls
 
-public  class Time
+public class Time
 {
     public static float dt
     {

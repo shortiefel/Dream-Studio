@@ -24,108 +24,184 @@ Technology is prohibited.
 #include "Engine/Header/Math/Vector3D.hpp"
 
 namespace Engine {
-	namespace MathD {
+	namespace DreamMath {
 		namespace MathImplementation {
 			template <typename T>
-			class Vector2D
-			{
+			class Vector2D {
 			public:
-				T x, y;
+				union { T x, r, s; };
+				union { T y, g, t; };
 
 				// Constructors
 				Vector2D() : x{ T{} }, y{ T{} } {};
 				Vector2D(T _x, T _y) : x{ _x }, y{ _y } {}
 				//Vector2D(Vector3D<T> t) : x{ t.x }, y{ t.y } {}
 
-				// Assignment operators
-				Vector2D<T>& operator += (const Vector2D<T>& rhs) {
-					x += rhs.x;
-					y += rhs.y;
+				/*---------------------------------------------------------------------------------------------------------------------
+				* Assignment
+				---------------------------------------------------------------------------------------------------------------------*/
+				template<typename U>
+				Vector2D<T>& operator = (const Vector2D<U>& rhs) {
+					x = static_cast<T>(rhs.x);
+					y = static_cast<T>(rhs.y);
 					return *this;
 				}
 
-				Vector2D<T>& operator -= (const Vector2D<T>& rhs) {
-					return *this += -rhs;
+				template<typename U>
+				Vector2D<T>& operator = (U rhs) {
+					x = static_cast<T>(rhs);
+					y = static_cast<T>(rhs);
+					return *this;
 				}
-
-				Vector2D<T>& operator *= (T rhs) {
-					x *= rhs;
-					y *= rhs;
+				/*---------------------------------------------------------------------------------------------------------------------
+				* Add Assignment
+				---------------------------------------------------------------------------------------------------------------------*/
+				template<typename U>
+				Vector2D<T>& operator += (const Vector2D<U>& rhs) {
+					x += static_cast<T>(rhs.x);
+					y += static_cast<T>(rhs.y);
+					return *this;
+				}
+				/*---------------------------------------------------------------------------------------------------------------------
+				* Minus Assignment
+				---------------------------------------------------------------------------------------------------------------------*/
+				template<typename U>
+				Vector2D<T>& operator -= (const Vector2D<U>& rhs) {
+					x -= static_cast<T>(rhs.x);
+					y -= static_cast<T>(rhs.y);
+					return *this;
+				}
+				/*---------------------------------------------------------------------------------------------------------------------
+				* Multiply Assignment
+				---------------------------------------------------------------------------------------------------------------------*/
+				template<typename U>
+				Vector2D<T>& operator *= (const Vector2D<U>& rhs) {
+					x *= static_cast<T>(rhs.x);
+					y *= static_cast<T>(rhs.y);
 					return *this;
 				}
 
-				Vector2D<T>& operator /= (T rhs) {
-					x /= rhs;
-					y /= rhs;
+				template<typename U>
+				Vector2D<T>& operator *= (U rhs) {
+					x *= static_cast<T>(rhs);
+					y *= static_cast<T>(rhs);
+					return *this;
+				}
+				/*---------------------------------------------------------------------------------------------------------------------
+				* Divide Assignment
+				---------------------------------------------------------------------------------------------------------------------*/
+				template<typename U>
+				Vector2D<T>& operator /= (const Vector2D<U>& rhs) {
+					x /= static_cast<T>(rhs.x);
+					y /= static_cast<T>(rhs.y);
 					return *this;
 				}
 
-				// Unary operators
+				template<typename U>
+				Vector2D<T>& operator /= (U rhs) {
+					x /= static_cast<T>(rhs);
+					y /= static_cast<T>(rhs);
+					return *this;
+				}
+				/*---------------------------------------------------------------------------------------------------------------------
+				* Pre/post increment
+				---------------------------------------------------------------------------------------------------------------------*/
+				Vector2D<T>& operator++() {
+					++x;
+					++y;
+					return *this;
+				}
+
+				Vector2D<T>& operator--() {
+					--x;
+					--y;
+					return *this;
+				}
+
+				Vector2D<T> operator++(int) {
+					Vector2D<T> Result(*this);
+					++* this;
+					return Result;
+				}
+
+				Vector2D<T> operator--(int) {
+					Vector2D<T> Result(*this);
+					--* this;
+					return Result;
+				}
+				/*---------------------------------------------------------------------------------------------------------------------
+				* Unary operator
+				---------------------------------------------------------------------------------------------------------------------*/
 				Vector2D<T> operator-() const {
-					Vector2D tem;
-					tem.x = -x;
-					tem.y = -y;
-					return tem;
+					return Vector2D<T>(-x, -y);
 				}
 
+				Vector2D<T> operator+() const {
+					return *this;
+				}
+				/*---------------------------------------------------------------------------------------------------------------------
+				* ostream operator
+				---------------------------------------------------------------------------------------------------------------------*/
 				friend std::ostream& operator<<(std::ostream& os, const Vector2D<T>& rhs) {
 					os << "(" << rhs.x << ", " << rhs.y << ")";
 					return os;
 				}
 			};
 
-			// Binary operators
-			template <typename T>
-			Vector2D<T> operator + (const Vector2D<T>& lhs, const Vector2D<T>& rhs) {
-				Vector2D<T> tem(lhs.x, lhs.y);
-				tem += rhs;
-				return tem;
+			/*---------------------------------------------------------------------------------------------------------------------
+			* Binary Add
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T, typename U>
+			Vector2D<T> operator + (const Vector2D<T>& lhs, const Vector2D<U>& rhs) {
+				return Vector2D<T>(
+					lhs.x + static_cast<T>(rhs.x),
+					lhs.y + static_cast<T>(rhs.y));
 			}
-
-			template <typename T>
-			Vector2D<T> operator - (const Vector2D<T>& lhs, const Vector2D<T>& rhs) {
+			/*---------------------------------------------------------------------------------------------------------------------
+			* Binary Minus
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T, typename U>
+			Vector2D<T> operator - (const Vector2D<T>& lhs, const Vector2D<U>& rhs) {
 				return lhs + -rhs;
 			}
-
-			template <typename T>
-			Vector2D<T> operator * (const Vector2D<T>& lhs, T rhs) {
-				Vector2D<T> tem(lhs.x, lhs.y);
-				tem *= rhs;
-				return tem;
+			/*---------------------------------------------------------------------------------------------------------------------
+			* Binary Multiply
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T, typename U>
+			Vector2D<T> operator * (const Vector2D<T>& lhs, const Vector2D<U>& rhs) {
+				return Vector2D<T>(
+					lhs.x * static_cast<T>(rhs.x), 
+					lhs.y * static_cast<T>(rhs.y));
 			}
 
-			template <typename T>
-			Vector2D<T> operator * (T lhs, const Vector2D<T>& rhs) {
+			template <typename T, typename U>
+			Vector2D<T> operator * (const Vector2D<T>& lhs, U rhs) {
+				return Vector2D<T>(
+					lhs.x * static_cast<T>(rhs), 
+					lhs.y * static_cast<T>(rhs));
+			}
+
+			template <typename T, typename U>
+			Vector2D<T> operator * (U lhs, const Vector2D<T>& rhs) {
 				return rhs * lhs;
 			}
-
-			template <typename T>
-			Vector2D<T> operator / (const Vector2D<T>& lhs, T rhs) {
-				Vector2D<T> tem(lhs.x, lhs.y);
-				tem /= rhs;
-				return tem;
+			/*---------------------------------------------------------------------------------------------------------------------
+			* Binary Divide
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T, typename U>
+			Vector2D<T> operator / (const Vector2D<T>& lhs, const Vector2D<U>& rhs) {
+				return Vector2D<T>(
+					lhs.x / static_cast<T>(rhs.x),
+					lhs.y / static_cast<T>(rhs.y));
 			}
 
-
-			/**************************************************************************/
-			/*!
-				In this function, pResult will be the unit vector of pVec0
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			void Normalize(Vector2D<T>& pResult, const Vector2D<T>& pVec0) {
-				pResult = pVec0 / Length(pVec0);
+			template <typename T, typename U>
+			Vector2D<T> operator / (const Vector2D<T>& lhs, U rhs) {
+				return Vector2D<T>(
+					lhs.x / static_cast<T>(rhs),
+					lhs.y / static_cast<T>(rhs));
 			}
 
-			/**************************************************************************/
-			/*!
-				This function returns the length of the vector pVec0
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			T Length(const Vector2D<T>& pVec0) {
-				return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y)));
-			}
 
 			/**************************************************************************/
 			/*!
@@ -162,16 +238,6 @@ namespace Engine {
 				Vector2D<T> tem(pVec0);
 				tem -= pVec1;
 				return LengthSq(tem);
-			}
-
-			/**************************************************************************/
-			/*!
-				This function returns the dot product between pVec0 and pVec1
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			T DotProduct(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
-				return T((pVec0.x * pVec1.x) + (pVec0.y * pVec1.y));
 			}
 
 			/**************************************************************************/

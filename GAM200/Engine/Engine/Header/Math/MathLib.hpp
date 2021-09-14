@@ -19,10 +19,13 @@ Technology is prohibited.
 #define MATH_LIB_HPP
 
 //#include "Engine/Header/Math/MathLib.hpp"
+#define CUSTOM_MATH
 
 #ifdef CUSTOM_MATH
+#include "Engine/Header/Math/Matrix.hpp"
+#include "Engine/Header/Math/Vector.hpp"
 #include "Engine/Header/Math/MathInternal.hpp"
-namespace Math = MathD;
+namespace Math = Engine::DreamMath;
 #else
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>

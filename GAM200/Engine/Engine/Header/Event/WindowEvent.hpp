@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "Engine/Header/Event/Event.hpp" //Event
 #include "Engine/Header/Math/Vector.hpp" //Vec2
 #include "Engine/Header/pch.hpp"
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	class WindowCloseEvent;
@@ -46,7 +47,7 @@ namespace Engine {
 	public:
 		WindowResizeEvent(unsigned int w, unsigned int h);
 
-		inline MathD::uiVec2 GetSize() const {
+		inline Math::uvec2 GetSize() const {
 			return w_size;
 		}
 
@@ -57,7 +58,7 @@ namespace Engine {
 		static void RegisterFunction(WinResizeFP func);
 
 	private:
-		MathD::uiVec2 w_size;
+		Math::uvec2 w_size;
 		static std::vector<WinResizeFP> registeredFunctions;
 	};
 }

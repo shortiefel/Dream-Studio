@@ -260,6 +260,9 @@
     <ClInclude Include="Engine\Header\Management\ResourceManager.hpp" />
     <ClInclude Include="Engine\Header\Management\GameSceneSerializer.hpp" />
     <ClInclude Include="Engine\Header\Management\Settings.hpp" />
+    <ClInclude Include="Engine\Header\Math\Internal\CommonMath.hpp" />
+    <ClInclude Include="Engine\Header\Math\Internal\MathConstants.hpp" />
+    <ClInclude Include="Engine\Header\Math\Internal\VectorMath.hpp" />
     <ClInclude Include="Engine\Header\Math\MathInternal.hpp" />
     <ClInclude Include="Engine\Header\Math\MathLib.hpp" />
     <ClInclude Include="Engine\Header\Math\Matrix.hpp" />

@@ -40,9 +40,9 @@ namespace Engine {
 	float Window::aspectRatio;
 
 	void Window::Update() {
-
 		glfwPollEvents();
 		glfwSwapBuffers(glfw_window);
+
 	}
 
 	//Destroy glfw window

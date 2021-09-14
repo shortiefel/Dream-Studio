@@ -32,20 +32,20 @@ Technology is prohibited.
 #include "Vector3D.hpp"
 
 namespace Engine {
-	namespace MathD {
+	namespace DreamMath {
 		//float vec2
-		using Vec2 = MathImplementation::Vector2D<float>;
+		using vec2 = MathImplementation::Vector2D<float>;
 		//int vec2
-		using iVec2 = MathImplementation::Vector2D<int>;
+		using ivec2 = MathImplementation::Vector2D<int>;
 		//unsigned int vec2
-		using uiVec2 = MathImplementation::Vector2D<unsigned int>;
+		using uvec2 = MathImplementation::Vector2D<unsigned int>;
 
 		//float vec3
-		using Vec3 = MathImplementation::Vector3D<float>;
+		using vec3 = MathImplementation::Vector3D<float>;
 		//int vec3
-		using iVec3 = MathImplementation::Vector3D<int>;
+		using ivec3 = MathImplementation::Vector3D<int>;
 		//unsigned int vec3
-		using uiVec3 = MathImplementation::Vector3D<unsigned int>;
+		using uvec3 = MathImplementation::Vector3D<unsigned int>;
 	}
 }
 

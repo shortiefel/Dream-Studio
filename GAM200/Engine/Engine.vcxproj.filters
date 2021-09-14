@@ -115,6 +115,9 @@
     <Filter Include="Header Files\New ECS">
       <UniqueIdentifier>{820842ed-1b94-4476-88d4-29d15dae98c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Math\Internal">
+      <UniqueIdentifier>{7c7ec1c6-7fe1-4795-8f27-0bd612319b40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -451,6 +454,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Math\MathInternal.hpp">
       <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Internal\MathConstants.hpp">
+      <Filter>Header Files\Math\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Internal\VectorMath.hpp">
+      <Filter>Header Files\Math\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Internal\CommonMath.hpp">
+      <Filter>Header Files\Math\Internal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -339,7 +339,7 @@ namespace Engine {
 	}
 
 	void Input::SetMousePosition(double xPos, double yPos) {
-		mousePosition = Math::vec2{ xPos, yPos };
+		mousePosition = Math::vec2{ static_cast<float>(xPos), static_cast<float>(yPos) };
 	}
 
 	Input_KeyCode Input::GetKeyCode(int key) {

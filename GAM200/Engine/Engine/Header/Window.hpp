@@ -28,7 +28,7 @@ Technology is prohibited.
 #define WINDOW_HPP
 
 #include "pch.hpp"
-#include <glm/glm.hpp>
+#include "Engine/Header/Math/MathLib.hpp"
 
 //
 #define ASPECT_RATIO_FIX(size) \
@@ -56,7 +56,7 @@ namespace Engine {
 		static inline unsigned int GetHeight() { return w_data.height; }
 		static inline void* GetNativewindow() { return (void*)glfw_window; }
 
-		static glm::vec2 GetWindowPosition();
+		static Math::vec2 GetWindowPosition();
 
 		static void DisplayFPS(float fps);
 

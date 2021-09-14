@@ -29,12 +29,10 @@ Technology is prohibited.
 //#include "Debug Tools/Logging.hpp"
 #include <iostream> // for operator<< 
 #include "Engine/Header/Math/Vector.hpp"
+#include "Engine/Header/Math/Internal/MathConstants.hpp"
 
 namespace Engine {
-#define EPSILON		0.0001f
-#define PI 3.14159265358f
-
-	namespace MathD {
+	namespace DreamMath {
 		namespace MathImplementation {
 			template <typename T>
 			class Matrix3 {
@@ -101,14 +99,14 @@ namespace Engine {
 					return os;
 				}
 
-				/**************************************************************************/
-				/*!
-				This function return ptr to matrix in column major
-				*/
-				/**************************************************************************/
-				T* GetPtr() {
-					return m;
-				}
+				///**************************************************************************/
+				///*!
+				//This function return ptr to matrix in column major
+				//*/
+				///**************************************************************************/
+				//const T* GetPtr() {
+				//	return m;
+				//}
 			};
 
 			template <typename T>
@@ -204,7 +202,7 @@ namespace Engine {
 			template <typename T>
 			void RotDeg(Matrix3<T>& pResult, float angle) {
 				Identity(pResult);
-				RotRad(pResult, PI / 180.f * angle);
+				RotRad(pResult, static_cast<float>(PI) / 180.f * angle);
 			}
 
 			/**************************************************************************/
@@ -239,26 +237,28 @@ namespace Engine {
 					- pMtx.m[1] * (pMtx.m[3] * pMtx.m[8] - pMtx.m[5] * pMtx.m[6])
 					+ pMtx.m[2] * (pMtx.m[3] * pMtx.m[7] - pMtx.m[4] * pMtx.m[6]);
 
-				if (determinant > -EPSILON && determinant < EPSILON) { Identity(pResult); return; }
+				if (determinant > static_cast<float>(-EPSILON) && determinant < static_cast<float>(EPSILON)) { Identity(pResult); return; }
+
+				determinant = 1 / determinant;
 
 				Matrix3<T> tem;
-				tem.m[0] = pMtx.m[4] * pMtx.m[8] - pMtx.m[5] * pMtx.m[7];
-				tem.m[1] = -(pMtx.m[1] * pMtx.m[8] - pMtx.m[2] * pMtx.m[7]);
-				tem.m[2] = pMtx.m[1] * pMtx.m[5] - pMtx.m[2] * pMtx.m[4];
+				tem.m[0] = +(pMtx.m[4] * pMtx.m[8] - pMtx.m[5] * pMtx.m[7]) * determinant;
+				tem.m[1] = -(pMtx.m[1] * pMtx.m[8] - pMtx.m[2] * pMtx.m[7]) * determinant;
+				tem.m[2] = +(pMtx.m[1] * pMtx.m[5] - pMtx.m[2] * pMtx.m[4]) * determinant;
 
-				tem.m[3] = -(pMtx.m[3] * pMtx.m[8] - pMtx.m[5] * pMtx.m[6]);
-				tem.m[4] = pMtx.m[0] * pMtx.m[8] - pMtx.m[2] * pMtx.m[6];
-				tem.m[5] = -(pMtx.m[0] * pMtx.m[5] - pMtx.m[2] * pMtx.m[3]);
+				tem.m[3] = -(pMtx.m[3] * pMtx.m[8] - pMtx.m[5] * pMtx.m[6]) * determinant;
+				tem.m[4] = +(pMtx.m[0] * pMtx.m[8] - pMtx.m[2] * pMtx.m[6]) * determinant;
+				tem.m[5] = -(pMtx.m[0] * pMtx.m[5] - pMtx.m[2] * pMtx.m[3]) * determinant;
 
-				tem.m[6] = pMtx.m[3] * pMtx.m[7] - pMtx.m[4] * pMtx.m[6];
-				tem.m[7] = -(pMtx.m[0] * pMtx.m[7] - pMtx.m[1] * pMtx.m[6]);
-				tem.m[8] = pMtx.m[0] * pMtx.m[4] - pMtx.m[1] * pMtx.m[3];
+				tem.m[6] = +(pMtx.m[3] * pMtx.m[7] - pMtx.m[4] * pMtx.m[6]) * determinant;
+				tem.m[7] = -(pMtx.m[0] * pMtx.m[7] - pMtx.m[1] * pMtx.m[6]) * determinant;
+				tem.m[8] = +(pMtx.m[0] * pMtx.m[4] - pMtx.m[1] * pMtx.m[3]) * determinant;
 
-				for (int i{ 0 }; i < 9; ++i) {
-					pResult.m[i] = tem.m[i] / determinant;
-					//Prevent -0 from appearing
-					//if (pResult.m[i] > -EPSILON && pResult.m[i] < EPSILON) pResult.m[i] = 0;
-				}
+				//for (int i{ 0 }; i < 9; ++i) {
+				//	pResult.m[i] = tem.m[i] / determinant;
+				//	//Prevent -0 from appearing
+				//	//if (pResult.m[i] > -EPSILON && pResult.m[i] < EPSILON) pResult.m[i] = 0;
+				//}
 			}
 		}
 	}

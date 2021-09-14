@@ -32,11 +32,11 @@ Technology is prohibited.
 #include "Engine/Header/Math/Matrix3.hpp"
 
 namespace Engine {
-	namespace MathD {
+	namespace DreamMath {
 		//float matrix3
-		using Mat3 = MathImplementation::Matrix3<float>;
+		using mat3 = MathImplementation::Matrix3<float>;
 		//int matrix3
-		using iMat3 = MathImplementation::Matrix3<int>;
+		using imat3 = MathImplementation::Matrix3<int>;
 	}
 }
 

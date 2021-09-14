@@ -66,6 +66,14 @@ namespace Engine {
 					z += static_cast<T>(rhs.z);
 					return *this;
 				}
+
+				template<typename U>
+				Vector3D<T>& operator += (U rhs) {
+					x += static_cast<T>(rhs);
+					y += static_cast<T>(rhs);
+					z += static_cast<T>(rhs);
+					return *this;
+				}
 				/*---------------------------------------------------------------------------------------------------------------------
 				* Minus Assignment
 				---------------------------------------------------------------------------------------------------------------------*/
@@ -74,6 +82,14 @@ namespace Engine {
 					x -= static_cast<T>(rhs.x);
 					y -= static_cast<T>(rhs.y);
 					z -= static_cast<T>(rhs.z);
+					return *this;
+				}
+
+				template<typename U>
+				Vector3D<T>& operator -= (U rhs) {
+					x -= static_cast<T>(rhs);
+					y -= static_cast<T>(rhs);
+					z -= static_cast<T>(rhs);
 					return *this;
 				}
 				/*---------------------------------------------------------------------------------------------------------------------
@@ -217,66 +233,6 @@ namespace Engine {
 					lhs.x / static_cast<T>(rhs),
 					lhs.y / static_cast<T>(rhs),
 					lhs.z / static_cast<T>(rhs));
-			}
-
-			
-
-
-
-
-
-			/**************************************************************************/
-			/*!
-				This function returns the square of pVec0's length. Avoid the square root
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			T LengthSq(const Vector3D<T>& pVec0) {
-				return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z));
-			}
-
-			/**************************************************************************/
-			/*!
-				In this function, pVec0 and pVec1 are considered as 3D points.
-				The distance between these 2 3D points is returned
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			T Distance(const Vector3D<T>& pVec0, const Vector3D<T>& pVec1) {
-				Vector3D<T> tem(pVec0);
-				tem -= pVec1;
-				return Length(tem);
-			}
-
-			/**************************************************************************/
-			/*!
-				In this function, pVec0 and pVec1 are considered as 3D points.
-				The squared distance between these 2 3D points is returned.
-				Avoid the square root
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			T DistanceSq(const Vector3D<T>& pVec0, const Vector3D<T>& pVec1) {
-				Vector3D<T> tem(pVec0);
-				tem -= pVec1;
-				return LengthSq(tem);
-			}
-		
-
-			/**************************************************************************/
-			/*!
-				This function returns the cross product magnitude
-				between pVec0 and pVec1
-				returns a vector3d
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			Vector3D<T> CrossProduct(const Vector3D<T>& pVec0, const Vector3D<T>& pVec1) {
-				Vector3D<T> tem;
-				tem.x = (pVec0.y * pVec1.z) - (pVec0.z * pVec1.y);
-				tem.y = (pVec0.z * pVec1.x) - (pVec0.x * pVec1.z);
-				tem.z = (pVec0.x * pVec1.y) - (pVec0.y * pVec1.x);
-				return tem;
 			}
 		}
 	}

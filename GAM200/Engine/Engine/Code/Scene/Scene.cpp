@@ -59,11 +59,6 @@ namespace Engine {
 
         //ScriptEngine::CompileCS();
         ScriptEngine::UpdateMapData();
-
-        Math::vec3 tem{ 1.5f, 1.5f, 1.5f };
-        Math::ivec3 tem2{ 1, 1, 1 };
-        std::cout << tem * tem2 << "\n";
-        std::cout << tem2 * tem << "\n";
     }
 
     //When user click play to run their game

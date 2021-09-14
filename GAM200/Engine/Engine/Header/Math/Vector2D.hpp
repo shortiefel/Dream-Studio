@@ -62,6 +62,13 @@ namespace Engine {
 					y += static_cast<T>(rhs.y);
 					return *this;
 				}
+
+				template<typename U>
+				Vector2D<T>& operator += (U rhs) {
+					x += static_cast<T>(rhs);
+					y += static_cast<T>(rhs);
+					return *this;
+				}
 				/*---------------------------------------------------------------------------------------------------------------------
 				* Minus Assignment
 				---------------------------------------------------------------------------------------------------------------------*/
@@ -69,6 +76,13 @@ namespace Engine {
 				Vector2D<T>& operator -= (const Vector2D<U>& rhs) {
 					x -= static_cast<T>(rhs.x);
 					y -= static_cast<T>(rhs.y);
+					return *this;
+				}
+
+				template<typename U>
+				Vector2D<T>& operator -= (U rhs) {
+					x -= static_cast<T>(rhs);
+					y -= static_cast<T>(rhs);
 					return *this;
 				}
 				/*---------------------------------------------------------------------------------------------------------------------
@@ -201,56 +215,6 @@ namespace Engine {
 					lhs.x / static_cast<T>(rhs),
 					lhs.y / static_cast<T>(rhs));
 			}
-
-
-			/**************************************************************************/
-			/*!
-				This function returns the square of pVec0's length. Avoid the square root
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			T LengthSq(const Vector2D<T>& pVec0) {
-				return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y));
-			}
-
-			/**************************************************************************/
-			/*!
-				In this function, pVec0 and pVec1 are considered as 2D points.
-				The distance between these 2 2D points is returned
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			T Distance(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
-				Vector2D<T> tem(pVec0);
-				tem -= pVec1;
-				return Length(tem);
-			}
-
-			/**************************************************************************/
-			/*!
-				In this function, pVec0 and pVec1 are considered as 2D points.
-				The squared distance between these 2 2D points is returned.
-				Avoid the square root
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			T DistanceSq(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
-				Vector2D<T> tem(pVec0);
-				tem -= pVec1;
-				return LengthSq(tem);
-			}
-
-			/**************************************************************************/
-			/*!
-				This function returns the cross product magnitude
-				between pVec0 and pVec1
-			 */
-			 /**************************************************************************/
-			template <typename T>
-			T CrossProduct(const Vector2D<T>& pVec0, const Vector2D<T>& pVec1) {
-				return T((pVec0.x * pVec1.y) - (pVec0.y * pVec1.x));
-			}
-
 		}
 	}
 }

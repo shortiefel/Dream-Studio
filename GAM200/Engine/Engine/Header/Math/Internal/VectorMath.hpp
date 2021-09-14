@@ -24,7 +24,6 @@ Technology is prohibited.
 namespace Engine {
 	namespace DreamMath {
 		namespace MI = MathImplementation;
-		
 
 		/*-------------------------------------------------------------------------------------------------------------------
 		Length
@@ -39,6 +38,38 @@ namespace Engine {
 			return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z)));
 		}
 
+		template <typename T>
+		T lengthSq(const MI::Vector2D<T>& pVec0) {
+			return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y));
+		}
+
+		template <typename T>
+		T lengthSq(const MI::Vector3D<T>& pVec0) {
+			return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z));
+		}
+
+		/*-------------------------------------------------------------------------------------------------------------------
+		Distance
+		-------------------------------------------------------------------------------------------------------------------*/
+		template <typename T>
+		T distance(const MI::Vector2D<T>& pVec0, const MI::Vector2D<T>& pVec1) {
+			return length(pVec0 - pVec1);
+		}
+
+		template <typename T>
+		T distance(const MI::Vector3D<T>& pVec0, const MI::Vector3D<T>& pVec1) {
+			return length(pVec0 - pVec1);
+		}
+
+		template <typename T>
+		T distanceSq(const MI::Vector2D<T>& pVec0, const MI::Vector2D<T>& pVec1) {
+			return lengthSq(pVec0 - pVec1);
+		}
+
+		template <typename T>
+		T distanceSq(const MI::Vector3D<T>& pVec0, const MI::Vector3D<T>& pVec1) {
+			return lengthSq(pVec0 - pVec1);
+		}
 		/*-------------------------------------------------------------------------------------------------------------------
 		Normalize
 		-------------------------------------------------------------------------------------------------------------------*/
@@ -51,19 +82,39 @@ namespace Engine {
 		MI::Vector3D<T> normalize(MI::Vector3D<T>& pResult) {
 			return (pResult / length(pResult));
 		}
-
 		/*-------------------------------------------------------------------------------------------------------------------
 		Dot product
 		-------------------------------------------------------------------------------------------------------------------*/
-		template <typename T>
-		T dot(const MI::Vector2D<T>& pVec0, const MI::Vector2D<T>& pVec1) {
-			return T((pVec0.x * pVec1.x) + (pVec0.y * pVec1.y));
+		//The type of the first parameter is used
+		template <typename T, typename U>
+		T dot(const MI::Vector2D<T>& pVec0, const MI::Vector2D<U>& pVec1) {
+			return T(
+				(pVec0.x * static_cast<T>(pVec1.x)) +
+				(pVec0.y * static_cast<T>(pVec1.y)));
 		}
-
-		template <typename T>
-		T dot(const MI::Vector3D<T>& pVec0, const MI::Vector3D<T>& pVec1) {
-			return T((pVec0.x * pVec1.x) + (pVec0.y * pVec1.y) + (pVec0.z * pVec1.z));
+		//The type of the first parameter is used
+		template <typename T, typename U>
+		T dot(const MI::Vector3D<T>& pVec0, const MI::Vector3D<U>& pVec1) {
+			return T(
+				(pVec0.x * static_cast<T>(pVec1.x)) +
+				(pVec0.y * static_cast<T>(pVec1.y)) +
+				(pVec0.z * static_cast<T>(pVec1.z)));
 		}
-	}
+		//The type of the first parameter is used
+		template <typename T, typename U>
+		T cross(const MI::Vector2D<T>& pVec0, const MI::Vector2D<U>& pVec1) {
+			return T(
+				(pVec0.x * static_cast<T>(pVec1.y)) -
+				(pVec0.y * static_cast<T>(pVec1.x)));
+		}
+		//The type of the first parameter is used
+		template <typename T, typename U>
+		MI::Vector3D<T> cross(const MI::Vector3D<T>& pVec0, const MI::Vector3D<U>& pVec1) {
+			return MI::Vector3D<T>(
+				(pVec0.y * static_cast<T>(pVec1.z)) - (pVec0.z * static_cast<T>(pVec1.y)),
+				(pVec0.z * static_cast<T>(pVec1.x)) - (pVec0.x * static_cast<T>(pVec1.z)),
+				(pVec0.x * static_cast<T>(pVec1.y)) - (pVec0.y * static_cast<T>(pVec1.x)));
+		}		
+	}			
 }
 #endif

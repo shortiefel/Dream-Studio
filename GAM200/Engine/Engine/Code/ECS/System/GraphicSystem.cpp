@@ -25,12 +25,9 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 
 #include "Engine/Header/Graphic/Graphic.hpp"
-
-//#include "Engine/Header/Math/Matrix.hpp"
-//#include "../../External Resources/include/stb_image/stb_image.h" //-----remove
+#include "Engine/Header/Graphic/GraphicOptions.hpp"
 
 namespace Engine {
-	//extern Coordinator gCoordinator;
 #ifndef NEW_ECS
 	std::shared_ptr<GraphicSystem> GraphicSystem::GS;
 #endif
@@ -67,9 +64,12 @@ namespace Engine {
 	//	//}
 	//}
 
+	GLSLShader shd_ref;
+
+
 	void GraphicSystem::Render(Math::mat3 camMatrix) {
 		GraphicImplementation::BindFramebuffer();
-
+		GraphicImplementation::shdrpgms;
 		glClearColor(1, 0, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -83,9 +83,9 @@ namespace Engine {
 			Transform* transform = DreamECS::GetComponentTest<Transform>(texture.GetEntityId());
 			if (!transform || !transform->isActive) continue;
 
-			const auto& mdl_ref = texture.get_mdl_ref();
-			const auto& shd_ref = texture.get_shd_ref();
-			glBindVertexArray(mdl_ref->second.vaoid);
+			const auto& mdl_ref = GraphicImplementation::models[texture.get_mdl_ref()];
+			//const auto& shd_ref = texture.get_shd_ref();
+			glBindVertexArray(mdl_ref.vaoid);
 			glBindTextureUnit(6, texture.getTexObj());
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -93,7 +93,7 @@ namespace Engine {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-			const auto& shd_ref_handle = shd_ref->second.GetHandle();
+			const auto& shd_ref_handle = shd_ref.GetHandle();
 			glUseProgram(shd_ref_handle);
 
 			GLuint tex_loc = glGetUniformLocation(shd_ref_handle, "uTex2d");
@@ -117,13 +117,13 @@ namespace Engine {
 			}
 
 			//glDrawElements(mdl_ref->second.primitive_type, mdl_ref->second.draw_cnt, GL_UNSIGNED_SHORT, NULL);
-			glDrawArrays(mdl_ref->second.primitive_type, 0, mdl_ref->second.draw_cnt);
+			glDrawArrays(mdl_ref.primitive_type, 0, mdl_ref.draw_cnt);
 
 			// unbind VAO and unload shader program
 			texture.Unbind();
 			glBindVertexArray(0);
 
-			shd_ref->second.UnUse();
+			shd_ref.UnUse();
 		}
 #else
 		//For all entities in GraphicSystem
@@ -191,6 +191,8 @@ namespace Engine {
 		//Set up vao for box
 		GraphicImplementation::setup_vao();
 		GraphicImplementation::setup_shdr();
+
+		shd_ref = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT];
 
 		LOG_INSTANCE("Graphic System created");
 		return true;

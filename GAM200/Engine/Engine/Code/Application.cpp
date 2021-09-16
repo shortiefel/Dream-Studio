@@ -22,7 +22,7 @@ Technology is prohibited.
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Event/WindowEvent.hpp"
 
-#include "Engine/Header/Management/GameSceneSerializer.hpp"
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 #include "Engine/Header/Management/Settings.hpp"
 
 #include "Engine/Header/DeltaTime/DeltaTime.hpp"

@@ -18,6 +18,7 @@ Technology is prohibited.
 #define RIGIDBODY_H
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Serialize/Serializer.hpp"
 
 namespace Engine {
 	struct RigidBody : public IComponent {
@@ -26,8 +27,11 @@ namespace Engine {
 		//
 		bool isActive = true;
 
+		RigidBody Deserialize(const Serializer& serializer);
+		void Serialize(const Serializer& serializer);
+
 		RigidBody() = default;
-		RigidBody(Entity ID, bool active) : IComponent{ ID }, isActive{ active } {}
+		RigidBody(Entity ID, bool active = true);
 	};
 }
 

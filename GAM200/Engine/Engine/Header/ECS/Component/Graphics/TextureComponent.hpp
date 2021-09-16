@@ -20,15 +20,18 @@ Technology is prohibited.
 #ifndef TEXTURE_COMPONENT_HPP
 #define TEXTURE_COMPONENT_HPP
 
-#include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
+//#include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
+#include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Serialize/Serializer.hpp"
 
 namespace Engine {
 	class Texture : public IComponent {
 	public:
-		Texture(Entity ID, const std::string path, std::string shape = "Square", std::string shader = "Default", bool active = true);
+		Texture(Entity ID, const std::string path = "", GraphicShape shape = GraphicShape::SQUARE, //GraphicShader shader = "Default",
+			bool active = true);
 		Texture() = default;
 		Texture(const Texture&) = default;
 		Texture& operator= (const Texture&) = default;
@@ -37,13 +40,16 @@ namespace Engine {
 		void Bind(GLuint slot = 0) const;
 		void Unbind() const;
 
+		Texture Deserialize(const Serializer& serializer);
+		void Serialize(const Serializer& serializer);
+
 		inline GLint getWidth() const { return width; }
 		inline GLint getHeight() const { return height; }
 		inline GLuint getTexObj() const { return texobj_hdl; }
 		inline std::string getFilepath() const { return filepath; }
 		inline bool GetActive() const { return isActive; }
-		inline std::map<std::string, GraphicImplementation::GLModel>::iterator get_mdl_ref() const { return mdl_ref; }
-		inline std::map<std::string, GLSLShader>::iterator get_shd_ref() const { return shd_ref; }
+		inline GraphicShape get_mdl_ref() const { return mdl_ref; }
+		//inline GraphicShader get_shd_ref() const { return shd_ref; }
 
 
 	private:
@@ -51,8 +57,8 @@ namespace Engine {
 
 		std::string filepath = "";
 
-		std::map<std::string, GraphicImplementation::GLModel>::iterator mdl_ref = GraphicImplementation::models.begin();
-		std::map<std::string, GLSLShader>::iterator shd_ref = GraphicImplementation::shdrpgms.begin();
+		GraphicShape mdl_ref = GraphicShape{};
+		//GraphicShader shd_ref = GraphicShader{};
 
 		bool isActive = true;
 

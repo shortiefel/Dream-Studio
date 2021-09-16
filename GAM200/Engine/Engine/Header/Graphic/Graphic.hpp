@@ -19,6 +19,7 @@ Technology is prohibited.
 #define GRAPHIC_H
 
 #include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
+#include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 
@@ -75,8 +76,8 @@ namespace Engine {
         //};
 
 
-        extern std::map<std::string, GLModel> models;
-        extern std::map<std::string, GLSLShader> shdrpgms;
+        extern std::map<GraphicShape, GLModel> models;
+        extern std::map<GraphicShader, GLSLShader> shdrpgms;
         //static std::map<std::string, GLObject> objects;
 
         void setup_vao();

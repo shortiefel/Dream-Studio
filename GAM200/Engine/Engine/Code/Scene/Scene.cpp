@@ -24,7 +24,7 @@ Technology is prohibited.
 //#include "Layer/GUILayer.hpp"
 
 #include "Engine/Header/Script/ScriptEngine.hpp"
-#include "Engine/Header/Management/GameSceneSerializer.hpp"
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/ECS/ECSWrapper.hpp"

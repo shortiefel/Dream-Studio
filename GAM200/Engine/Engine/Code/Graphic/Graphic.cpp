@@ -29,8 +29,8 @@ namespace Engine {
         unsigned int fbo;
         bool fbo_exist = false;
 
-        std::map<std::string, GLModel> models;
-        std::map<std::string, GLSLShader> shdrpgms;
+        std::map<GraphicShape, GLModel> models;
+        std::map<GraphicShader, GLSLShader> shdrpgms;
         GLuint setup_texobj(std::string, GLuint, GLuint);
 
         void setup_vao_square() {
@@ -79,7 +79,7 @@ namespace Engine {
             mdl.primitive_type = GL_TRIANGLE_FAN;
             mdl.draw_cnt = 4; // number of vertices
             mdl.primitive_cnt = 2; // number of primitives
-            models.insert(std::pair<std::string, GLModel>("Square", mdl));
+            models.insert(std::pair<GraphicShape, GLModel>(GraphicShape::SQUARE, mdl));
         }
 
         void setup_vao_circle() {
@@ -136,7 +136,7 @@ namespace Engine {
             mdl.primitive_type = GL_TRIANGLE_FAN;
             mdl.draw_cnt = static_cast<GLuint>(count); // number of vertices
             mdl.primitive_cnt = mdl.draw_cnt - 2; // number of primitives
-            models.insert(std::pair<std::string, GLModel>("Circle", mdl));
+            models.insert(std::pair<GraphicShape, GLModel>(GraphicShape::CIRCLE, mdl));
         }
 
         void setup_vao() {
@@ -158,7 +158,7 @@ namespace Engine {
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<std::string, GLSLShader>("Default", shdr_pgm));
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::DEFAULT, shdr_pgm));
         }
 
         void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer) {

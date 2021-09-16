@@ -167,7 +167,11 @@
     <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp" />
     <ClCompile Include="Engine\Code\Application.cpp" />
     <ClCompile Include="Engine\Code\DeltaTime\DeltaTime.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\ECSWrapper.cpp" />
     <ClCompile Include="Engine\Code\ECS\Factory.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp" />
@@ -185,8 +189,7 @@
     <ClCompile Include="Engine\Code\Input\Input.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="Engine\Code\Management\GameState.cpp" />
-    <ClCompile Include="Engine\Code\Management\ResourceManager.cpp" />
-    <ClCompile Include="Engine\Code\Management\GameSceneSerializer.cpp" />
+    <ClCompile Include="Engine\Code\Management\TextureManager.cpp" />
     <ClCompile Include="Engine\Code\Management\Settings.cpp" />
     <ClCompile Include="Engine\Code\Physic\Collision.cpp" />
     <ClCompile Include="Engine\Code\Scene\Scene.cpp" />
@@ -194,6 +197,8 @@
     <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptEngine.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptInternalCall.cpp" />
+    <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp" />
+    <ClCompile Include="Engine\Code\Serialize\Serializer.cpp" />
     <ClCompile Include="Engine\Code\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -255,13 +260,13 @@
     <ClInclude Include="Engine\Header\framework.hpp" />
     <ClInclude Include="Engine\Header\Graphic\glslshader.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Graphic.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp" />
     <ClInclude Include="Engine\Header\Input\Input.hpp" />
     <ClInclude Include="Engine\Header\Input\InputCode.hpp" />
     <ClInclude Include="Engine\Header\Layer\Layer.hpp" />
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp" />
     <ClInclude Include="Engine\Header\Management\GameState.hpp" />
-    <ClInclude Include="Engine\Header\Management\ResourceManager.hpp" />
-    <ClInclude Include="Engine\Header\Management\GameSceneSerializer.hpp" />
+    <ClInclude Include="Engine\Header\Management\TextureManager.hpp" />
     <ClInclude Include="Engine\Header\Management\Settings.hpp" />
     <ClInclude Include="Engine\Header\Math\Internal\CommonMath.hpp" />
     <ClInclude Include="Engine\Header\Math\Internal\MathConstants.hpp" />
@@ -282,6 +287,8 @@
     <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp" />
     <ClInclude Include="Engine\Header\Script\ScriptEngine.hpp" />
     <ClInclude Include="Engine\Header\Script\ScriptInternalCall.hpp" />
+    <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp" />
+    <ClInclude Include="Engine\Header\Serialize\Serializer.hpp" />
     <ClInclude Include="Engine\Header\targetver.hpp" />
     <ClInclude Include="Engine\Header\Window.hpp" />
   </ItemGroup>

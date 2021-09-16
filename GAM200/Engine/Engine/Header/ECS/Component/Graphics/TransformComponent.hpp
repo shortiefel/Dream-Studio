@@ -27,6 +27,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Serialize/Serializer.hpp"
 
 namespace Engine {
 	//Scale value for circle in both axis is same
@@ -39,28 +40,13 @@ namespace Engine {
 
 		//Math::mat3 mdl_to_ndc_xform = Math::mat3{};
 
-		inline Math::mat3 GetTransform() const {
-			return
-				//Translation
-				Math::mat3{ Math::vec3(1.f, 0, 0),
-							  Math::vec3(0, 1.f, 0),
-							  Math::vec3(position.x, position.y, 1.f) }
-				*
-				Math::mat3{ Math::vec3(std::cos(Math::radians(angle)), std::sin(Math::radians(angle)), 0),
-							  Math::vec3(-std::sin(Math::radians(angle)), std::cos(Math::radians(angle)), 0),
-							  Math::vec3(0.f, 0.f, 1.f) }
-				*
-				//Scale
-				Math::mat3{ Math::vec3(scale.x, 0, 0),
-							 Math::vec3(0, scale.y, 0),
-							 Math::vec3(0, 0, 1.f) };
-		}
+		Math::mat3 GetTransform() const;
+
+		Transform Deserialize(const Serializer& serializer);
+		void Serialize(const Serializer& serializer);
 
 		Transform() = default;
-		Transform(Entity ID, Math::vec2 tPos, Math::vec2 tScale, float rotationAngle, bool active = true, int tLayer = 0) :
-			IComponent{ ID },
-			position{ tPos }, scale{ tScale }, angle{ rotationAngle },
-			isActive{ active }, layer{ tLayer } {}
+		Transform(Entity ID, Math::vec2 tPos = Math::vec2{}, Math::vec2 tScale = Math::vec2{}, float rotationAngle = float{}, bool active = true, int tLayer = 0);
 		Transform(const Transform&) = default;
 		Transform& operator=(const Transform&) = default;
 	};

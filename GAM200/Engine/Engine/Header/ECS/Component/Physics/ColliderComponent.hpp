@@ -27,6 +27,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Serialize/Serializer.hpp"
 
 namespace Engine {
 	enum class ColliderType {
@@ -49,15 +50,14 @@ namespace Engine {
 
 		bool isTrigger = false, isActive = true;
 
+		Collider Deserialize(const Serializer& serializer);
+		void Serialize(const Serializer& serializer);
+
 		Collider() = default;
-
-		Collider(Entity ID, ColliderType c, bool trigger = false) :
-			IComponent{ ID }, cType{ c }, offset_position{ Math::vec2{ 0.f, 0.f } }, offset_scale{ Math::vec2{ 0.f, 0.f } }, angle{ 0.f }, isTrigger{ trigger } {}
-
 		//Change of type constructor: Copy an existing Collider but with a different type
-		Collider(Entity ID, ColliderType c, Math::vec2 tPos, Math::vec2 tScale, float rotation, bool tTrigger, bool active = true) :
-			IComponent{ ID }, cType{ c }, offset_position{ tPos }, offset_scale{ tScale }, angle{ rotation }, isTrigger{ tTrigger }, isActive{ active } {}
-
+		/*Collider(Entity ID, ColliderType c, bool trigger = false);*/
+		Collider(Entity ID, ColliderType c = ColliderType::SQUARE, Math::vec2 tPos = Math::vec2{},
+			Math::vec2 tScale = Math::vec2{}, float rotation = float{}, bool tTrigger = false, bool active = true);
 		Collider(const Collider&) = default;
 		Collider& operator=(const Collider&) = default;
 	};

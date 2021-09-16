@@ -52,14 +52,8 @@
     <Filter Include="Header Files\ECS\Entity">
       <UniqueIdentifier>{33f523f1-a77d-49d3-91ea-f208b0ce4b37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ECS\Component\Graphic">
-      <UniqueIdentifier>{8fb2487f-b91c-42d2-85f1-a9885228a4c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ECS\Component\Script">
       <UniqueIdentifier>{89b27efc-c0ec-43ed-88c5-890b7914020d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\Component\Physic">
-      <UniqueIdentifier>{af952700-4ed5-4a9b-8589-d402e60aaab0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Math">
       <UniqueIdentifier>{2c324679-896f-4828-b398-d29db448b296}</UniqueIdentifier>
@@ -118,6 +112,24 @@
     <Filter Include="Header Files\Math\Internal">
       <UniqueIdentifier>{7c7ec1c6-7fe1-4795-8f27-0bd612319b40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Serialize">
+      <UniqueIdentifier>{c29a221e-a1bc-4464-87c8-66a55455d734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Serialize">
+      <UniqueIdentifier>{6b24fb56-6fee-40bd-a87a-cfab6b778e02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Graphics">
+      <UniqueIdentifier>{8fb2487f-b91c-42d2-85f1-a9885228a4c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Physics">
+      <UniqueIdentifier>{af952700-4ed5-4a9b-8589-d402e60aaab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Graphics">
+      <UniqueIdentifier>{db7e9021-e8d2-4f64-b1f5-766debc26ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Physics">
+      <UniqueIdentifier>{5d65f08b-4ac9-4b47-b8c7-324381a9b379}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -125,9 +137,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Window.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp">
-      <Filter>Source Files\ECS\Component</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
@@ -153,7 +162,7 @@
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp">
       <Filter>Source Files\Layer</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Management\ResourceManager.cpp">
+    <ClCompile Include="Engine\Code\Management\TextureManager.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Scene\Scene.cpp">
@@ -164,9 +173,6 @@
     </ClCompile>
     <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp">
       <Filter>External Resources\Stb</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Management\GameSceneSerializer.cpp">
-      <Filter>Source Files\Management</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\DeltaTime\DeltaTime.cpp">
       <Filter>Source Files\DeltaTime</Filter>
@@ -213,6 +219,27 @@
     <ClCompile Include="Engine\Code\Management\GameState.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp">
+      <Filter>Source Files\Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Serialize\Serializer.cpp">
+      <Filter>Source Files\Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp">
+      <Filter>Source Files\ECS\Component\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp">
+      <Filter>Source Files\ECS\Component\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp">
+      <Filter>Source Files\ECS\Component\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp">
+      <Filter>Source Files\ECS\Component\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp">
+      <Filter>Source Files\ECS\Component\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -228,19 +255,16 @@
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp">
-      <Filter>Header Files\ECS\Component\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp">
-      <Filter>Header Files\ECS\Component\Graphic</Filter>
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp">
-      <Filter>Header Files\ECS\Component\Graphic</Filter>
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp">
-      <Filter>Header Files\ECS\Component\Physic</Filter>
+      <Filter>Header Files\ECS\Component\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp">
-      <Filter>Header Files\ECS\Component\Physic</Filter>
+      <Filter>Header Files\ECS\Component\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp">
       <Filter>Header Files\ECS\Component\Script</Filter>
@@ -320,7 +344,7 @@
     <ClInclude Include="Engine\Header\Layer\Layer.hpp">
       <Filter>Header Files\Layer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Management\ResourceManager.hpp">
+    <ClInclude Include="Engine\Header\Management\TextureManager.hpp">
       <Filter>Header Files\Management</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Physic\Collision.hpp">
@@ -352,9 +376,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
       <Filter>Header Files\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Management\GameSceneSerializer.hpp">
-      <Filter>Header Files\Management</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\DeltaTime\DeltaTime.hpp">
       <Filter>Header Files\DeltaTime</Filter>
@@ -475,6 +496,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Management\GameState.hpp">
       <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp">
+      <Filter>Header Files\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Serialize\Serializer.hpp">
+      <Filter>Header Files\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -60,6 +60,16 @@ namespace Engine {
         inline T getSqLength(T n1, T n2) {
             return pow(n1, 2) + pow(n2, 2);
         }
+
+        /*template <typename T, typename U>
+        T min(T num1, U num2) {
+            return (((num1) < static_cast<T>(num2)) ? (num1) : static_cast<T>(num2));
+        }
+
+        template <typename T, typename U>
+        inline T max(T num1, U num2) {
+            return (((num1) > static_cast<T>(num2)) ? (num1) : static_cast<T>(num2));
+        }*/
 	}
 }
 

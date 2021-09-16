@@ -43,6 +43,12 @@
     <Filter Include="Header Files\Tools">
       <UniqueIdentifier>{7a462d4d-83cb-4cad-856b-98c7a76ced64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{4b8a072a-d36d-413f-a4b2-d56f69f21eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{a437fec9-aaa1-4007-b747-011b9e4fd9cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\Imgui\imconfig.h">
@@ -87,6 +93,9 @@
     <ClInclude Include="Editor\Header\Tools\Profiler.hpp">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\Scene\EditorSceneManager.hpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -130,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="Editor\Header\Tools\Profiler.cpp">
       <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\Scene\EditorSceneManager.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

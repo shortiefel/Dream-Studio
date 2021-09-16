@@ -21,6 +21,9 @@ Technology is prohibited.
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 #include "Editor/Header/Tools/Profiler.hpp"
 
+#include "Engine/Header/Event/KeyEvent.hpp" //Register function
+#include "Editor/Header/Scene/EditorSceneManager.hpp"
+
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 #include "Engine/Header/Window.hpp"
 
@@ -31,7 +34,9 @@ namespace Editor {
 		//Deserialize then put as position
 		EditorSceneCamera::Create({ 150.f,100.f });
 
-		Profiler::Profiler_Setup();
+		Engine::KeyPressedEvent::RegisterFunction(EditorSceneManager::GetSceneHotKey());
+
+		//Profiler::Profiler_Setup();
 	}
 
 	void EditorStartPoint::Update(float dt) {

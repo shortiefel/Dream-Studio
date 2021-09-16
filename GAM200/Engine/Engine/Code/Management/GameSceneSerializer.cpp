@@ -21,6 +21,8 @@ Technology is prohibited.
 #include "Engine/Header/Management/GameSceneSerializer.hpp"
 #include "Engine/Header/Management/Settings.hpp"
 
+#include "Engine/Header/Scene/SceneManager.hpp"
+
 //External Resources
 #include <sstream>
 
@@ -90,6 +92,8 @@ namespace Engine {
 
 			Settings::gameAR = static_cast<GLfloat>(Settings::gameWidth) / Settings::gameHeight;
 		}
+
+		SceneManager::SetDefaultScene("test3");
 	}
 
 	void GameSceneSerializer::SerializeScene(std::string filename) {

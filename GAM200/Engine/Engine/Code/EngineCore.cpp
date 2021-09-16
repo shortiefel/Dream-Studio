@@ -21,10 +21,11 @@ Technology is prohibited.
 #include "Engine/Header/Management/ResourceManager.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
-#include "Engine/Header/Scene/Scene.hpp"
+#include "Engine/Header/Scene/SceneManager.hpp"
 #include "Engine/Header/Script/ScriptEngine.hpp"
 
-#include "Engine/Header/Event/KeyEvent.hpp" //Register function
+#include "Engine/Header/Input/Input.hpp"
+
 #include <iostream>
 
 namespace Engine {
@@ -41,18 +42,23 @@ namespace Engine {
 		ResourceManager::Create();
 		ScriptEngine::Create();
 
-		KeyPressedEvent::RegisterFunction(Scene::GetSceneHotKey());
+		//KeyPressedEvent::RegisterFunction(SceneManager::GetSceneHotKey());
 
-		//SceneManager::Create();
-		Scene::Create("test3");
+		SceneManager::StartScene();
 	}
 
 	void EngineCore::Update(float dt, bool defaultRender) {
-		Scene::Update(dt, defaultRender);
+		SceneManager::Update(dt, defaultRender);
+
+		if (Input::IsKeyPressed(Input_KeyCode::G))
+			SceneManager::ChangeScene("test2");
+		if (Input::IsKeyPressed(Input_KeyCode::H))
+			SceneManager::ChangeScene("test3");
+		
 	}
 
 	void EngineCore::Destroy() {
-		Scene::Destroy(); //Destroy currently active game scene
+		SceneManager::Destroy();
 
 		ScriptEngine::Destroy();
 		ResourceManager::Destroy();

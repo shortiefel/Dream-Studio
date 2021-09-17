@@ -78,6 +78,34 @@ public struct Transform : Component
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void MoveTransform_Position_Engine(uint entityID, ref Vec2 inVec2);
 
+    //-----------------------------------------------------------------------------------------------------------------
+    //Forward
+    public Vec2 forward
+    {
+        get
+        {
+            GetTransform_forward_Engine(entityId, out Vec2 result);
+            return result;
+        }
+        set {}
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTransform_forward_Engine(uint entityID, out Vec2 outVec2);
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //Right
+    public Vec2 right
+    {
+        get
+        {
+            GetTransform_right_Engine(entityId, out Vec2 result);
+            return result;
+        }
+        set {}
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTransform_right_Engine(uint entityID, out Vec2 outVec2);
+
 }
 
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------------

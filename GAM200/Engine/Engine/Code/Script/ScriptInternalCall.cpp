@@ -30,15 +30,17 @@ Technology is prohibited.
 
 #include "Engine/Header/DeltaTime/DeltaTime.hpp" //To get deltaTime
 
-#define SetEngineType(ID, type, paramName, param)\
-		type* ctype = nullptr;\
-		DreamECS::HasComponent<type>(ctype, ID);\
-		ctype->paramName = param;
-
 #define GetEngineType(ID, type, paramName, param)\
-type* ctype = nullptr;\
-DreamECS::HasComponent<type>(ctype, ID);\
+type* ctype = DreamECS::GetComponentTest<type>(ID);\
+if (!ctype) return;\
 param = ctype->paramName;
+
+#define SetEngineType(ID, type, paramName, param)\
+type* ctype = DreamECS::GetComponentTest<type>(ID);\
+if (!ctype) return;\
+ctype->paramName = param;
+
+
 
 namespace Engine {
 
@@ -55,6 +57,8 @@ namespace Engine {
 	void SetTransform_Scale_Engine(unsigned int id, Math::vec2* inVec2);
 	void GetTransform_Angle_Engine(unsigned int id, float* outVec2);
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2);
+	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2);
+	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2);
 
 	bool Input_IsKeyPressed(Input_KeyCode key);
 	bool Input_IsMouseButtonPressed(Input_MouseCode button);
@@ -82,6 +86,8 @@ namespace Engine {
 		mono_add_internal_call("Transform::SetTransform_Scale_Engine", SetTransform_Scale_Engine);
 		mono_add_internal_call("Transform::GetTransform_Angle_Engine", GetTransform_Angle_Engine);
 		mono_add_internal_call("Transform::SetTransform_Angle_Engine", SetTransform_Angle_Engine);
+		mono_add_internal_call("Transform::GetTransform_forward_Engine", GetTransform_forward_Engine);
+		mono_add_internal_call("Transform::GetTransform_right_Engine", GetTransform_right_Engine);
 
 		mono_add_internal_call("Input::IsKeyPressed_Engine", Input_IsKeyPressed);
 		mono_add_internal_call("Input::IsMousePressed_Engine", Input_IsMouseButtonPressed);
@@ -135,8 +141,8 @@ namespace Engine {
 	}
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		//call hascomponent with entityid
-		Transform* transform = nullptr;
-		DreamECS::HasComponent<Transform>(transform, id);
+		Transform* transform = DreamECS::GetComponentTest<Transform>(id);
+		if (!transform) return;
 		transform->position += *inVec2;
 	}
 
@@ -155,6 +161,20 @@ namespace Engine {
 	}
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2) {
 		SetEngineType(id, Transform, angle, *inVec2);
+	}
+
+	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2) {
+		Transform* transform = DreamECS::GetComponentTest<Transform>(id);
+		if (!transform) return;
+		float newAngle = Math::radians(transform->angle + 90.f);
+		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
+	}
+
+	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2) {
+		Transform* transform = DreamECS::GetComponentTest<Transform>(id);
+		if (!transform) return;
+		float newAngle = Math::radians(transform->angle);
+		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
 	}
 
 

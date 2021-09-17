@@ -46,22 +46,22 @@ public class Test : MonoBehaviour
         //Console.WriteLine("new Update");
         //Console.WriteLine(Input::GetMouse);
         if (Input.IsKeyPressed(KeyCode.A)) {
-            go2.Move(new Vec2(-250 * Time.dt, 0));
+            go2.position += -go2.right * Time.dt * 250;
         }
 
         if (Input.IsKeyPressed(KeyCode.D))
         {
-            go2.Move(new Vec2(250 * Time.dt, 0));
+            go2.position += go2.right * Time.dt * 250;
         }
 
         if (Input.IsKeyPressed(KeyCode.W))
         {
-            go2.Move(new Vec2(0, 250 * Time.dt));
+            go2.position += go2.forward * Time.dt * 250;
         }
 
         if (Input.IsKeyPressed(KeyCode.S))
         {
-            go2.Move(new Vec2(0, -250 * Time.dt));
+            go2.position += -go2.forward * Time.dt * 250;
         }
 
         if (Input.IsKeyPressed(KeyCode.Q))

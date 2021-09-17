@@ -33,6 +33,7 @@ namespace Editor {
         static bool inspector_bool = true;
         static bool gameWin_bool = true;
         static bool sceneWin_bool = true;
+        static bool asset_bool = true;
 
         /*-------------------------------------------------------------------------------------------------
         Windows creation: Hierarchy, Inspector, Game window, Scene window
@@ -46,6 +47,7 @@ namespace Editor {
         void	GUI_Inspector();
         void	GUI_GameWindow(unsigned int& gameWinTex);
         void	GUI_SceneWindow(unsigned int& sceneWinTex);
+        void    GUI_AssetPanel();
     }
 }
 

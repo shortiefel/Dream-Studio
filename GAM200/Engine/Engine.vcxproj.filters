@@ -240,6 +240,9 @@
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp">
       <Filter>Source Files\ECS\Component\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Management\AssetManager.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -508,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp">
       <Filter>Header Files\ECS\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Management\AssetManager.hpp">
+      <Filter>Header Files\Management</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

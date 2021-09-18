@@ -25,7 +25,8 @@ Technology is prohibited.
 #define CAMERA_COMPONENT_HPP
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/Serializer.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
     constexpr int CAMERA_HEIGHT = 1000;
@@ -35,11 +36,11 @@ namespace Engine {
         float ar = float{}, fov = float{};
         bool isActive = true;
 
-        Camera2D Deserialize(const Serializer& serializer);
-        void Serialize(const Serializer& serializer);
+        Camera2D Deserialize(const DSerializer& _serializer);
+        void Serialize(const SSerializer& _serializer);
 
         Camera2D() = default;
-        Camera2D(Entity ID, float fieldOfView = 1.f, float arRatio = 0.f, bool active = false);
+        Camera2D(Entity _ID, float _fov = 1.f, float _ar = 0.f, bool _active = false);
         Camera2D(const Camera2D&) = default;
         Camera2D& operator=(const Camera2D&) = default;
     };

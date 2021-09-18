@@ -25,13 +25,14 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/Serializer.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
 	class Texture : public IComponent {
 	public:
-		Texture(Entity ID, const std::string path = "", GraphicShape shape = GraphicShape::SQUARE, //GraphicShader shader = "Default",
-			bool active = true);
+		Texture(Entity _ID, const std::string _path = "", GraphicShape _shape = GraphicShape::SQUARE, //GraphicShader shader = "Default",
+			bool _active = true);
 		Texture() = default;
 		Texture(const Texture&) = default;
 		Texture& operator= (const Texture&) = default;
@@ -40,8 +41,8 @@ namespace Engine {
 		void Bind(GLuint slot = 0) const;
 		void Unbind() const;
 
-		Texture Deserialize(const Serializer& serializer);
-		void Serialize(const Serializer& serializer);
+		Texture Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
 		inline GLint getWidth() const { return width; }
 		inline GLint getHeight() const { return height; }

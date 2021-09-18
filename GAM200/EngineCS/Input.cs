@@ -23,7 +23,7 @@ public class Input
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern bool IsMousePressed_Engine(MouseCode button);
 
-    public static Vec2 GetMousePosition_Engine()
+    public static Vec2 GetMousePosition()
     {
         GetMousePosition_Engine(out Vec2 position);
         return position;

@@ -27,7 +27,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/Serializer.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
 	//Scale value for circle in both axis is same
@@ -42,11 +43,11 @@ namespace Engine {
 
 		Math::mat3 GetTransform() const;
 
-		Transform Deserialize(const Serializer& serializer);
-		void Serialize(const Serializer& serializer);
+		Transform Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
 		Transform() = default;
-		Transform(Entity ID, Math::vec2 tPos = Math::vec2{}, Math::vec2 tScale = Math::vec2{}, float rotationAngle = float{}, bool active = true, int tLayer = 0);
+		Transform(Entity _ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{}, float _angle = float{}, bool _active = true, int _layer = 0);
 		Transform(const Transform&) = default;
 		Transform& operator=(const Transform&) = default;
 	};

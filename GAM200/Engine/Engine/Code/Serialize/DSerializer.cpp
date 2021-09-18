@@ -4,7 +4,7 @@
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    16/09/2021
 \brief
-This file has the function definition of Serializer
+This file has the function definition of DSerializer
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -14,7 +14,7 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Engine/Header/Serialize/Serializer.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
 
 #include <rapidjson/document.h>
 
@@ -23,6 +23,6 @@ Technology is prohibited.
 #include <rapidjson/filewritestream.h>
 
 namespace Engine {
-	Serializer::Serializer(const JsonIter& i) : itr{ i } {}
+	DSerializer::DSerializer(const JsonIter& i) : itr{ i } {}
 
 }

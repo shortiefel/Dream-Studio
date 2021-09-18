@@ -19,7 +19,8 @@ Technology is prohibited.
 #include "Engine/Header/Debug tools/Logging.hpp"
 
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
-#include "Engine/Header/Serialize/Serializer.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 #include "Engine/Header/Management/Settings.hpp"
 
 #include "Engine/Header/Scene/SceneManager.hpp"
@@ -43,7 +44,7 @@ Technology is prohibited.
 #define ADD_COMPONENT_WTIH_CHECK(type) \
 itr = obj.FindMember(#type);\
 if (itr != obj.MemberEnd()) {\
-	Serializer serializer{ itr }; \
+	DSerializer serializer{ itr }; \
 		DreamECS::AddComponent(\
 			type{ ent }.Deserialize(serializer)\
 		);\
@@ -116,48 +117,16 @@ namespace Engine {
 			if (trans != nullptr) {
 				LOG_ASSERT(trans);
 				rapidjson::Value objType(rapidjson::kObjectType);
-
-				rapidjson::Value pos(rapidjson::kArrayType);
-				pos.PushBack(trans->position.x, doc.GetAllocator());
-				pos.PushBack(trans->position.y, doc.GetAllocator());
-				objType.AddMember("Position", pos, doc.GetAllocator());
-
-				rapidjson::Value scale(rapidjson::kArrayType);
-				scale.PushBack(trans->scale.x, doc.GetAllocator());
-				scale.PushBack(trans->scale.y, doc.GetAllocator());
-				objType.AddMember("Scale", scale, doc.GetAllocator());
-
-				objType.AddMember("Angle", trans->angle, doc.GetAllocator());
-
-				objType.AddMember("IsActive", trans->isActive, doc.GetAllocator());
-
-				entityObject.AddMember("Transform", objType, doc.GetAllocator());
+				SSerializer serializer(doc, objType, entityObject);
+				trans->Serialize(serializer);
 			}
 
 			Collider* col = DreamECS::GetComponentTest<Collider>(ent);
 			if (col != nullptr) {
 				LOG_ASSERT(col);
 				rapidjson::Value objType(rapidjson::kObjectType);
-
-				objType.AddMember("ColliderType", rapidjson::Value((int)col->cType).Move(), doc.GetAllocator());
-
-				rapidjson::Value pos(rapidjson::kArrayType);
-				pos.PushBack(col->offset_position.x, doc.GetAllocator());
-				pos.PushBack(col->offset_position.y, doc.GetAllocator());
-				objType.AddMember("Position", pos, doc.GetAllocator());
-
-				rapidjson::Value scale(rapidjson::kArrayType);
-				scale.PushBack(col->offset_scale.x, doc.GetAllocator());
-				scale.PushBack(col->offset_scale.y, doc.GetAllocator());
-				objType.AddMember("Scale", scale, doc.GetAllocator());
-
-				objType.AddMember("Angle", col->angle, doc.GetAllocator());
-
-				objType.AddMember("IsTrigger", col->isTrigger, doc.GetAllocator());
-
-				objType.AddMember("IsActive", col->isActive, doc.GetAllocator());
-
-				entityObject.AddMember("Collider", objType, doc.GetAllocator());
+				SSerializer serializer(doc, objType, entityObject);
+				col->Serialize(serializer);
 			}
 
 			RigidBody* rb = DreamECS::GetComponentTest<RigidBody>(ent);

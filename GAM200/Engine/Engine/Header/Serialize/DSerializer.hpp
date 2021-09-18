@@ -1,11 +1,11 @@
 /* Start Header**********************************************************************************/
 /*
-@file    Serializer.hpp
+@file    DSerializer.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    16/09/2021
 \brief
-This file has the function declaration of Serializer
-
+This file has the function declaration of DSerializer
+DSerializer = Deserialize Serializer
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -14,8 +14,8 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef SERIALIZER_HPP
-#define SERIALIZER_HPP
+#ifndef DSERIALIZER_HPP
+#define DSERIALIZER_HPP
 
 #include "Engine/Header/Math/MathLib.hpp"
 
@@ -25,10 +25,13 @@ Technology is prohibited.
 using JsonIter = rapidjson::Value::ConstMemberIterator;
 
 namespace Engine {
-	class Serializer {
+	class DSerializer {
 	public:
-		Serializer(const JsonIter& i);
+		DSerializer(const JsonIter& i);
 
+		/*--------------------------------------------------------------------------------
+		* T GetValue (name)
+		--------------------------------------------------------------------------------*/
 		template <typename T>
 		T GetValue(const char* name) const {
 			printf("Error Cant find\n");

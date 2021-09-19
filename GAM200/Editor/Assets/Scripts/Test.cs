@@ -78,8 +78,8 @@ public class Test : MonoBehaviour
 
         if (Input.IsKeyPressed(KeyCode.X))
         {
-            //Console.WriteLine(go2.position);
-            DestroySelf();
+            Console.WriteLine(health);
+            
         }
     }
 

@@ -59,6 +59,6 @@ namespace Engine {
 		_serializer.SetValue("Angle", angle);
 		_serializer.SetValue("IsActive", isActive);
 
-		_serializer.EndSerialize("Transform");
+		//_serializer.EndSerialize("Transform");
 	}
 }

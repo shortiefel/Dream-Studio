@@ -65,7 +65,6 @@ Technology is prohibited.
 
 #include <cstdlib> //For file to be run by cmd (std::system)
 
-
 #define OverlapFunctionCalls(name)\
 if (csScriptInstance.csClass.name != nullptr) \
 mono_runtime_invoke(csScriptInstance.csClass.name, csScriptInstance.csClass.object, nullptr, nullptr);
@@ -354,6 +353,151 @@ namespace Engine {
 
 				}
 			}
+		}
+	}
+
+	void Serialize(const SSerializer& _serializer) {
+		/*const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
+		rapidjson::Value classArray(rapidjson::kArrayType);
+
+		for (const auto& [className, scriptInstance] : entityclassInstance) {
+			rapidjson::Value classNameFP;
+			char buffer[200];
+			int len = sprintf_s(buffer, "%s", className.c_str());
+			classNameFP.SetString(buffer, len, doc.GetAllocator());
+
+			rapidjson::Value classObj(rapidjson::kObjectType);
+			classObj.AddMember("Class", classNameFP, doc.GetAllocator());
+
+			classObj.AddMember("IsActive", scriptInstance.isActive, doc.GetAllocator());
+
+			if (scriptInstance.csVariableMap.size()) {
+				rapidjson::Value variableArray(rapidjson::kArrayType);
+
+				for (const auto& [variableName, variableInstance] : scriptInstance.csVariableMap) {
+					rapidjson::Value variableObject(rapidjson::kObjectType);
+					SSerializer serializer(doc, variableObject);
+					ScriptEngine::SerializeVariable(serializer, variableName, variableInstance);
+
+					variableArray.PushBack(variableObject, doc.GetAllocator());
+				}
+				classObj.AddMember("Variable", variableArray, doc.GetAllocator());
+			}
+
+			classArray.PushBack(classObj, doc.GetAllocator());
+		}*/
+	}
+
+	void ScriptEngine::SerializeVariable(const SSerializer& _serializer, const CSScriptInstance& _scriptInstance) {
+		for (const auto& [variableName, variableInstance] : _scriptInstance.csVariableMap) {
+			rapidjson::Value variableObject(rapidjson::kObjectType);
+			SSerializer vserializer(_serializer, variableObject);
+
+			vserializer.SetValue("Name", variableName);
+			vserializer.SetValue("Type", (int)variableInstance.variableType);
+
+			switch (variableInstance.variableType) {
+			case CSType::CHAR:
+				vserializer.SetValue("Data", variableInstance.GetVariableData<char>());
+				break;
+			case CSType::BOOL:
+				vserializer.SetValue("Data", variableInstance.GetVariableData<bool>());
+				break;
+			case CSType::FLOAT:
+				vserializer.SetValue("Data", variableInstance.GetVariableData<float>());
+				break;
+			case CSType::INT:
+				vserializer.SetValue("Data", variableInstance.GetVariableData<int>());
+				break;
+			case CSType::UINT:
+				vserializer.SetValue("Data", variableInstance.GetVariableData<unsigned int>());
+				break;
+			case CSType::VEC2:
+				vserializer.SetValue("Data", variableInstance.GetVariableData<Math::vec2>());
+				break;
+			}
+
+			_serializer.SetValueJSonArray(variableObject);
+		}
+
+
+	}
+
+	void ScriptEngine::SerializeClass(const SSerializer& _serializer, const CSClassInstance& _classInstance) {
+		for (const auto& [className, scriptInstance] : _classInstance) {
+
+			rapidjson::Value classObj(rapidjson::kObjectType);
+			SSerializer cserializer(_serializer, classObj);
+
+			cserializer.SetValue("Class", className);
+			cserializer.SetValue("IsActive", scriptInstance.isActive);
+
+			if (scriptInstance.csVariableMap.size()) {
+				rapidjson::Value variableArray(rapidjson::kArrayType);
+
+				SSerializer serializer(cserializer, variableArray);
+				SerializeVariable(serializer, scriptInstance);
+
+				cserializer.SetValueJSon("Variable", variableArray);
+			}
+
+			_serializer.SetValueJSonArray(classObj);
+		}
+	}
+
+
+	void ScriptEngine::Deserialize(const DSerializer& _serializer, CSClassInstance& classInstance) {
+		//CSClassInstance classInstance;
+		for (auto& classJSon : _serializer.GetArray()) {
+			const auto& className = classJSon["Class"].GetString();
+
+			CSScriptInstance csScriptInstance{
+				className,
+				classJSon["IsActive"].GetBool() };
+
+			rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
+			if (variableItr != classJSon.MemberEnd()) {
+				for (auto& variableData : variableItr->value.GetArray()) {
+					const auto& variableName = variableData["Name"].GetString();
+					const auto& variableType = CSType{ variableData["Type"].GetInt() };
+
+
+					CSPublicVariable csPublicvariable{ variableName, variableType };
+
+
+					if (variableType == CSType::CHAR) {
+						char charData = variableData["Data"].GetInt();
+						csPublicvariable.SetVariableData(&charData);
+					}
+
+					else if (variableType == CSType::BOOL) {
+						bool boolData = variableData["Data"].GetBool();
+						csPublicvariable.SetVariableData(&boolData);
+					}
+
+					else if (variableType == CSType::FLOAT) {
+						float floatData = variableData["Data"].GetFloat();
+						csPublicvariable.SetVariableData(&floatData);
+					}
+					else if (variableType == CSType::INT) {
+						int intData = variableData["Data"].GetInt();
+						csPublicvariable.SetVariableData(&intData);
+					}
+					else if (variableType == CSType::UINT) {
+						unsigned int uinData = variableData["Data"].GetUint();
+						csPublicvariable.SetVariableData(&uinData);
+					}
+
+					else if (variableType == CSType::VEC2) {
+						Math::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
+											variableData["Data"].GetArray()[1].GetFloat() };
+						csPublicvariable.SetVariableData(&vec2Data);
+					}
+
+					csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
+				}
+			}
+			classInstance.emplace(className, std::move(csScriptInstance));
 		}
 	}
 

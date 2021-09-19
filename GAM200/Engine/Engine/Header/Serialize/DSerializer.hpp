@@ -68,6 +68,16 @@ namespace Engine {
 				itr->value[name].GetArray()[1].GetFloat() };
 		}
 
+		/*rapidjson::Value& GetArray() const {
+			return  itr->value["ma,e"].GetString();
+		}*/
+
+		const rapidjson::GenericArray<true, rapidjson::Value>& GetArray() const {
+			return (itr->value.GetArray());
+		}
+
+
+
 	private:
 		JsonIter itr;
 	};

@@ -50,6 +50,11 @@ if (itr != obj.MemberEnd()) {\
 		);\
 }
 
+#define SERIALIZE(target)\
+	rapidjson::Value objType(rapidjson::kObjectType);\
+	SSerializer serializer(doc, objType);\
+	target->Serialize(serializer);
+
 #define FILE_CREATION(path, type)\
 FILE* fp;\
 fopen_s(&fp, path, type);\
@@ -116,70 +121,91 @@ namespace Engine {
 			Transform* trans = DreamECS::GetComponentTest<Transform>(ent);
 			if (trans != nullptr) {
 				LOG_ASSERT(trans);
-				rapidjson::Value objType(rapidjson::kObjectType);
-				SSerializer serializer(doc, objType, entityObject);
-				trans->Serialize(serializer);
+				SERIALIZE(trans);
+				entityObject.AddMember("Transform", objType, doc.GetAllocator());
 			}
 
 			Collider* col = DreamECS::GetComponentTest<Collider>(ent);
 			if (col != nullptr) {
 				LOG_ASSERT(col);
-				rapidjson::Value objType(rapidjson::kObjectType);
-				SSerializer serializer(doc, objType, entityObject);
-				col->Serialize(serializer);
+				SERIALIZE(col);
+				entityObject.AddMember("Collider", objType, doc.GetAllocator());
 			}
 
 			RigidBody* rb = DreamECS::GetComponentTest<RigidBody>(ent);
 			if (rb != nullptr) {
 				LOG_ASSERT(rb);
-				rapidjson::Value objType(rapidjson::kObjectType);
-
-				objType.AddMember("IsActive", rb->isActive, doc.GetAllocator());
-
+				SERIALIZE(rb);
 				entityObject.AddMember("RigidBody", objType, doc.GetAllocator());
 			}
 
 			Camera2D* cam = DreamECS::GetComponentTest<Camera2D>(ent);
 			if (cam != nullptr) {
 				LOG_ASSERT(cam);
-				rapidjson::Value objType(rapidjson::kObjectType);
-
-				objType.AddMember("FOV", cam->fov, doc.GetAllocator());
-				objType.AddMember("AR", cam->ar, doc.GetAllocator());
-				objType.AddMember("IsActive", cam->isActive, doc.GetAllocator());
-
+				SERIALIZE(cam);
 				entityObject.AddMember("Camera2D", objType, doc.GetAllocator());
 			}
 
 			Texture* tex = DreamECS::GetComponentTest<Texture>(ent);
 			if (tex != nullptr) {
 				LOG_ASSERT(tex);
-				rapidjson::Value objType(rapidjson::kObjectType);
-
-				rapidjson::Value texFP;
-				char buffer[200];
-				int len = sprintf_s(buffer, "%s", tex->getFilepath().c_str());
-				texFP.SetString(buffer, len, doc.GetAllocator());
-				objType.AddMember("Filepath", texFP, doc.GetAllocator());
-
-				objType.AddMember("Shape", int (tex->get_mdl_ref()), doc.GetAllocator());
-				//objType.AddMember("Shader", tex->get_shd_ref(), doc.GetAllocator());
-				objType.AddMember("IsActive", tex->GetActive(), doc.GetAllocator());
-
+				SERIALIZE(tex);
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
 
 			if (ScriptEngine::csEntityClassInstance.find(ent) != ScriptEngine::csEntityClassInstance.end()) {
+#if 1
+				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
+				rapidjson::Value classArray(rapidjson::kArrayType);
+
+				SSerializer serializer(doc, classArray);
+				ScriptEngine::SerializeClass(serializer, entityclassInstance);
+				{
+					//const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
+					//rapidjson::Value classArray(rapidjson::kArrayType);
+
+					//for (const auto& [className, scriptInstance] : entityclassInstance) {
+
+					//	rapidjson::Value classObj(rapidjson::kObjectType);
+					//	SSerializer cserializer(doc, classObj);
+
+					//	rapidjson::Value classNameFP;
+					//	char buffer[200];
+					//	int len = sprintf_s(buffer, "%s", className.c_str());
+					//	classNameFP.SetString(buffer, len, doc.GetAllocator());
+
+					//	//classObj.AddMember("Class", classNameFP, doc.GetAllocator());
+
+					//	//classObj.AddMember("IsActive", scriptInstance.isActive, doc.GetAllocator());
+					//	cserializer.SetValue("Class", className);
+					//	cserializer.SetValue("IsActive", scriptInstance.isActive);
+
+					//	if (scriptInstance.csVariableMap.size()) {
+					//		rapidjson::Value variableArray(rapidjson::kArrayType);
+
+					//		SSerializer serializer(doc, variableArray);
+					//		ScriptEngine::SerializeVariable(serializer, scriptInstance);
+
+					//		//classObj.AddMember("Variable", variableArray, doc.GetAllocator());
+					//		cserializer.SetValueJSon("Variable", variableArray);
+					//	}
+
+					//	classArray.PushBack(classObj, doc.GetAllocator());
+					//}
+				}
+#else
 				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
 				rapidjson::Value classArray(rapidjson::kArrayType);
 
 				for (const auto& [className, scriptInstance] : entityclassInstance) {
+
+					rapidjson::Value classObj(rapidjson::kObjectType);
+
 					rapidjson::Value classNameFP;
 					char buffer[200];
 					int len = sprintf_s(buffer, "%s", className.c_str());
 					classNameFP.SetString(buffer, len, doc.GetAllocator());
 
-					rapidjson::Value classObj(rapidjson::kObjectType);
 					classObj.AddMember("Class", classNameFP, doc.GetAllocator());
 
 					classObj.AddMember("IsActive", scriptInstance.isActive, doc.GetAllocator());
@@ -228,6 +254,7 @@ namespace Engine {
 
 					classArray.PushBack(classObj, doc.GetAllocator());
 				}
+#endif
 
 				entityObject.AddMember("CSScript", classArray, doc.GetAllocator());
 			}
@@ -258,8 +285,11 @@ namespace Engine {
 
 			itr = obj.FindMember("CSScript");
 			if (itr != obj.MemberEnd()) {
+				DSerializer serializer(itr);
 				CSClassInstance classInstance;
-				for (auto& classJSon : itr->value.GetArray()) {
+
+				ScriptEngine::Deserialize(serializer, classInstance);
+				/*for (auto& classJSon : itr->value.GetArray()) {
 					const auto& className = classJSon["Class"].GetString();
 
 					CSScriptInstance csScriptInstance{
@@ -309,7 +339,7 @@ namespace Engine {
 						}
 					}
 					classInstance.emplace(className, std::move(csScriptInstance));
-				}
+				}*/
 
 				ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
 			}

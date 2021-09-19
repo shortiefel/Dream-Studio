@@ -19,6 +19,8 @@ Technology is prohibited.
 
 //#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/Script/ScriptClass.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
 	//map (entity id, map(classname, CSscript)
@@ -87,6 +89,11 @@ namespace Engine {
 		static void InitEntityClassInstance();
 
 		static CSEntityClassInstance csEntityClassInstance;
+
+
+		static void SerializeClass(const SSerializer& _serializer, const CSClassInstance& _classInstance);
+		static void SerializeVariable(const SSerializer& _serializer, const CSScriptInstance& _scriptInstance);
+		static void Deserialize(const DSerializer& _serializer, CSClassInstance& classInstance);
 	};
 }
 

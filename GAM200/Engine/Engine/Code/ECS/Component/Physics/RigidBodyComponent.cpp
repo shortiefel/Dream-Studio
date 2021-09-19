@@ -25,6 +25,8 @@ namespace Engine {
 	}
 
 	void RigidBody::Serialize(const SSerializer& _serializer) {
+		_serializer.SetValue("IsActive", isActive);
 
+		//_serializer.EndSerialize("RigidBody");
 	}
 }

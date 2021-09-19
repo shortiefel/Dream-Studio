@@ -22,12 +22,14 @@ Technology is prohibited.
 #include <rapidjson/filewritestream.h>
 
 namespace Engine {
-	SSerializer::SSerializer(rapidjson::Document& _doc, rapidjson::Value& _objType, rapidjson::Value& _entityObject) :
-		doc{ _doc }, objType{ _objType }, entityObject{ _entityObject } {}
+	SSerializer::SSerializer(rapidjson::Document& _doc, rapidjson::Value& _objType) :
+		doc{ _doc }, objType{ _objType } {}
 
-	void SSerializer::EndSerialize(const char* _name) const {
+	SSerializer::SSerializer(const SSerializer& _serializer, rapidjson::Value& _objType) : 
+		doc{ _serializer.doc }, objType{ _objType } {}
+
+	/*void SSerializer::EndSerialize(const char* _name, rapidjson::Value& _entityObject) const {
 		rapidjson::Value vName(_name, doc.GetAllocator());
 		entityObject.AddMember(vName, objType, doc.GetAllocator());
-	}
-
+	}*/
 }

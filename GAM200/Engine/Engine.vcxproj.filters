@@ -222,9 +222,6 @@
     <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp">
       <Filter>Source Files\Serialize</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Serialize\Serializer.cpp">
-      <Filter>Source Files\Serialize</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp">
       <Filter>Source Files\ECS\Component\Graphics</Filter>
     </ClCompile>
@@ -239,6 +236,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp">
       <Filter>Source Files\ECS\Component\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Serialize\DSerializer.cpp">
+      <Filter>Source Files\Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp">
+      <Filter>Source Files\Serialize</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -500,14 +503,17 @@
     <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp">
       <Filter>Header Files\Serialize</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Serialize\Serializer.hpp">
-      <Filter>Header Files\Serialize</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp">
       <Filter>Header Files\ECS\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Serialize\DSerializer.hpp">
+      <Filter>Header Files\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Serialize\SSerializer.hpp">
+      <Filter>Header Files\Serialize</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

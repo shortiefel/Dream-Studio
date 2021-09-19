@@ -66,6 +66,10 @@ namespace Engine {
 	}
 
 	void Texture::Serialize(const SSerializer& _serializer) {
+		_serializer.SetValue("Filepath", filepath);
+		_serializer.SetValue("Shape", int(mdl_ref));
+		_serializer.SetValue("IsActive", isActive);
 
+		//_serializer.EndSerialize("Texture");
 	}
 }

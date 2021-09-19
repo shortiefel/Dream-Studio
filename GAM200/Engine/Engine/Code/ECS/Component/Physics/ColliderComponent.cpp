@@ -41,7 +41,5 @@ namespace Engine {
 		_serializer.SetValue("Angle", angle);
 		_serializer.SetValue("IsTrigger", isTrigger);
 		_serializer.SetValue("IsActive", isActive);
-
-		_serializer.EndSerialize("Collider");	
 	}
 }

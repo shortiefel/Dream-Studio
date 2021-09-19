@@ -30,6 +30,10 @@ namespace Engine {
     }
 
     void Camera2D::Serialize(const SSerializer& _serializer) {
+        _serializer.SetValue("FOV", fov);
+        _serializer.SetValue("AR", ar);
+        _serializer.SetValue("IsActive", isActive);
 
+        //_serializer.EndSerialize("Camera2D");
     }
 }

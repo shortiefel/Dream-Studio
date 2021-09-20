@@ -72,7 +72,7 @@ namespace Engine {
 			return  itr->value["ma,e"].GetString();
 		}*/
 
-		const rapidjson::GenericArray<true, rapidjson::Value>& GetArray() const {
+		const rapidjson::GenericArray<true, rapidjson::Value> GetArray() const {
 			return (itr->value.GetArray());
 		}
 

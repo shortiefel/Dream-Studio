@@ -56,6 +56,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
 
+#include "Engine/Header/ECS/ECSWrapper.hpp"
+
 #include <mono/jit/jit.h>
 #include <mono/metadata/threads.h>
 #include <mono/metadata/assembly.h>
@@ -73,6 +75,7 @@ mono_runtime_invoke(csScriptInstance.csClass.name, csScriptInstance.csClass.obje
 -------------------------------------*/
 #include <iostream>
 
+//#define NEWSCRIPTING 1
 
 namespace Engine {
 	CSEntityClassInstance ScriptEngine::csEntityClassInstance;
@@ -86,8 +89,15 @@ namespace Engine {
 	bool CallOverlapFunc(const OverlapColliderEvent& e); //To be registered to Event
 
 	void ScriptEngine::PlayInit() {
+#if NEWSCRIPTING
+		const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+		for (auto& csScript : entScriptArray) {
+			auto& classScriptInstances = csScript.klassInstance;
+			const auto& entityId = csScript.GetEntityId();
+#else
 		//Entity and map of classScript
 		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
+#endif
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
@@ -100,7 +110,14 @@ namespace Engine {
 	}
 
 	void ScriptEngine::PlayRunTime() {
+#if NEWSCRIPTING
+		const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+		for (auto& csScript : entScriptArray) {
+			auto& classScriptInstances = csScript.klassInstance;
+			const auto& entityId = csScript.GetEntityId();
+#else
 		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
+#endif
 			//if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) continue;
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
@@ -245,8 +262,14 @@ namespace Engine {
 	Private static function called within class
 	------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void ScriptEngine::InitEntityClassInstance() {
-
+#if NEWSCRIPTING
+		auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+		for (auto& csScript : entScriptArray) {
+			auto& classScriptInstances = csScript.klassInstance;
+			const auto& entityId = csScript.GetEntityId();
+#else
 		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
+#endif
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				auto& csClass = csScriptInstance.csClass;
 
@@ -309,7 +332,14 @@ namespace Engine {
 	}
 
 	void ScriptEngine::InitPublicVariable() {
+#if NEWSCRIPTING
+		auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+		for (auto& csScript : entScriptArray) {
+			auto& classScriptInstances = csScript.klassInstance;
+			const auto& entityId = csScript.GetEntityId();
+#else
 		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
+#endif
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				if (csScriptInstance.csClass.klass == nullptr) continue;
 

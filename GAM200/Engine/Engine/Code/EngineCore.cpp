@@ -22,7 +22,6 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
-#include "Engine/Header/Script/ScriptEngine.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
 
@@ -40,7 +39,6 @@ namespace Engine {
 
 		Factory::Create();
 		TextureManager::Create();
-		ScriptEngine::Create();
 
 		//KeyPressedEvent::RegisterFunction(SceneManager::GetSceneHotKey());
 
@@ -60,8 +58,9 @@ namespace Engine {
 	void EngineCore::Destroy() {
 		SceneManager::Destroy();
 
-		ScriptEngine::Destroy();
 		TextureManager::Destroy();
+
+		Factory::Destroy();
 		//GUILayer::Destroy();
 		LayerStack::Destroy();
 	}

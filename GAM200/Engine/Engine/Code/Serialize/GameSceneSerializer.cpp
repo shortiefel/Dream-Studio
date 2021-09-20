@@ -152,7 +152,18 @@ namespace Engine {
 				SERIALIZE(tex);
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
+#if 0
 
+			CSScript* csScript = DreamECS::GetComponentTest<CSScript>(ent);
+			if (csScript != nullptr) {
+				LOG_ASSERT(csScript);
+				//SERIALIZE(tex);
+				entityObject.AddMember("CSScript", objType, doc.GetAllocator());
+			}
+
+
+
+#else
 			if (ScriptEngine::csEntityClassInstance.find(ent) != ScriptEngine::csEntityClassInstance.end()) {
 #if 1
 				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
@@ -258,6 +269,7 @@ namespace Engine {
 
 				entityObject.AddMember("CSScript", classArray, doc.GetAllocator());
 			}
+#endif
 
 			doc.PushBack(entityObject, doc.GetAllocator());
 		}
@@ -285,8 +297,15 @@ namespace Engine {
 
 			itr = obj.FindMember("CSScript");
 			if (itr != obj.MemberEnd()) {
+#if 0
+				DSerializer serializer{ itr };
+				DreamECS::AddComponent(
+					std::move(CSScript{ ent }.Deserialize(serializer))
+			);
+#else
 				DSerializer serializer(itr);
 				CSClassInstance classInstance;
+
 
 				ScriptEngine::Deserialize(serializer, classInstance);
 				/*for (auto& classJSon : itr->value.GetArray()) {
@@ -342,6 +361,7 @@ namespace Engine {
 				}*/
 
 				ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
+#endif
 			}
 		}
 	}

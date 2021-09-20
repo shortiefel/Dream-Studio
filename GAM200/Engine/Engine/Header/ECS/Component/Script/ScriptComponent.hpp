@@ -17,24 +17,24 @@ Technology is prohibited.
 #ifndef SCRIPT_COMPONENT_HPP
 #define SCRIPT_COMPONENT_HPP
 
-//#include "Engine/Header/Script/Script.hpp"
-
-#include <string>
-#include <mono/metadata/threads.h>
+#include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Script/ScriptClass.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
-	//using Custom_Script = std::shared_ptr<Script>;
+	struct CSScript : public IComponent {
+		CSClassInstance klassInstance;
+		//std::unordered_map<std::string, CSScriptInstance> tem;
 
-	struct CSScript {
-		std::string className = std::string{};
+		CSScript& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
-		CSScript() = default;
-		CSScript(std::string cn) : className{ cn } {}
-
-		MonoObject* object = nullptr;
-
-		MonoMethod* UpdateFunc = nullptr;
-		MonoMethod* DestroyFunc = nullptr;
+		CSScript(Entity _ID);
+		/*CSScript(CSScript&& rhs) noexcept {
+			klassInstance = std::move(rhs.klassInstance);
+		}
+		CSScript(const CSScript&) = delete;*/
 	};
 }
 

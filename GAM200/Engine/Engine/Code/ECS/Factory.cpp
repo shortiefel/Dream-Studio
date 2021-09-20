@@ -40,6 +40,7 @@ namespace Engine {
         CameraSystem::Create(DreamECS::RegisterSystem<CameraSystem>());
         GraphicSystem::Create(DreamECS::RegisterSystem<GraphicSystem>());
         CollisionSystem::Create(DreamECS::RegisterSystem<CollisionSystem>());
+        ScriptEngine::Create();
 
 #else
         DreamECS::Init();
@@ -76,6 +77,10 @@ namespace Engine {
         //signature.set(gCoordinator.GetComType<CSScript>());
         //gCoordinator.setSystemSignature<ScriptSystem>(signature);
 #endif
+    }
+
+    void Factory::Destroy() {
+        ScriptEngine::Destroy();
     }
 
     //Prefix options------------------------------------------------------------------------------

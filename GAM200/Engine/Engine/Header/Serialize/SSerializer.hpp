@@ -91,6 +91,8 @@ namespace Engine {
 			objType.PushBack(target, doc.GetAllocator());
 		}
 
+		//void EndSerialize(const char* _name, rapidjson::Value& _entityObject) const;
+
 		///*--------------------------------------------------------------------------------
 		//* SetValueArray (name, T)
 		//--------------------------------------------------------------------------------*/

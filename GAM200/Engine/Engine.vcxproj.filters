@@ -130,6 +130,9 @@
     <Filter Include="Source Files\ECS\Component\Physics">
       <UniqueIdentifier>{5d65f08b-4ac9-4b47-b8c7-324381a9b379}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ECS\Component\Script">
+      <UniqueIdentifier>{39dac5dd-bfec-43a6-9988-b9ebbf1eba4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp">
       <Filter>Source Files\Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp">
+      <Filter>Source Files\ECS\Component\Script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

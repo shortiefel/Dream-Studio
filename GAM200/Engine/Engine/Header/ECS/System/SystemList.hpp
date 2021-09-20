@@ -20,6 +20,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 #include "Engine/Header/ECS/System/CollisionSystem.hpp"
-//#include "Engine/Header/ECS/System/ScriptSystem.hpp"
+#include "Engine/Header/Script/ScriptEngine.hpp"
 
 #endif

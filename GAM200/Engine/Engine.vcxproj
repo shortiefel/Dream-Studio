@@ -172,6 +172,7 @@
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\ECSWrapper.cpp" />
     <ClCompile Include="Engine\Code\ECS\Factory.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp" />

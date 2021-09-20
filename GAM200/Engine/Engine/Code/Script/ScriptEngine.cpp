@@ -447,7 +447,6 @@ namespace Engine {
 
 
 	void ScriptEngine::Deserialize(const DSerializer& _serializer, CSClassInstance& classInstance) {
-		//CSClassInstance classInstance;
 		for (auto& classJSon : _serializer.GetArray()) {
 			const auto& className = classJSon["Class"].GetString();
 

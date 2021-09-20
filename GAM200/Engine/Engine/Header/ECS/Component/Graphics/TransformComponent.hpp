@@ -36,7 +36,6 @@ namespace Engine {
 	struct Transform : public IComponent {
 		Math::vec2 position = Math::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
 		Math::vec2 scale = Math::vec2{};
-		Math::vec2 rotation = Math::vec2{};
 		float angle = float{}; // in degree
 		bool isActive = true;
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)

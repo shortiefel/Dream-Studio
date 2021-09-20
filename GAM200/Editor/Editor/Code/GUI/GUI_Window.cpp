@@ -150,32 +150,30 @@ namespace Editor {
 				//if (check_selection = true) {
 				if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
 				{
-					ImGui::Checkbox("Transform", &(comp->isActive));
+					//Updating of position
 					ImGui::Text("Position");
 					ImGui::Text("X: ");
 					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->position.x, 0.0f);
+					ImGui::InputFloat("##posX", &comp->position.x, 0.0f);
 					ImGui::Text("Y: ");
 					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->position.y, 0.0f);
+					ImGui::InputFloat("##posY", &comp->position.y, 0.0f);
 
 
-
+					//Updating of scaling
 					ImGui::Text("Scaling ");
 					ImGui::Text("X: ");
 					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->scale.x, 0.0f);
+					ImGui::InputFloat("##posXscale", &comp->scale.x, 0.0f);
 					ImGui::Text("Y: ");
 					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->scale.y, 0.0f);
+					ImGui::InputFloat("##posYscale", &comp->scale.y, 0.0f);
+
 
 					ImGui::Text("Rotation ");
-					ImGui::Text("X: ");
 					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->rotation.x, 0.0f);
-					ImGui::Text("Y: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->rotation.y, 0.0f);
+					ImGui::SliderAngle("##posRotate", &comp->angle);
+						
 
 				}
 				const auto& classScriptInstances = Engine::ScriptEngine::csEntityClassInstance.find(entity_selected);

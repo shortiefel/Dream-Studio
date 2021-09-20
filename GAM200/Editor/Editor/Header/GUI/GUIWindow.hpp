@@ -1,7 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUIWindow.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen			jianwen123321@hotmail.com
+         Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    26/07/2021
 \brief
 This file contain the GUIWindow declaration

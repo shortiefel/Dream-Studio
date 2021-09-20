@@ -1,7 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ComponentList.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@authors	Ow Jian Wen			jianwen123321@hotmail.com
+			Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    27/06/2021
 \brief
 List of all component

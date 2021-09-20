@@ -1,7 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUIWindow.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen			jianwen123321@hotmail.com
+		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    26/07/2021
 \brief
 This file contain the GUIWindow definition
@@ -168,6 +169,13 @@ namespace Editor {
 					ImGui::SameLine();
 					ImGui::InputFloat("", &comp->scale.y, 0.0f);
 
+					ImGui::Text("Rotation ");
+					ImGui::Text("X: ");
+					ImGui::SameLine();
+					ImGui::InputFloat("", &comp->rotation.x, 0.0f);
+					ImGui::Text("Y: ");
+					ImGui::SameLine();
+					ImGui::InputFloat("", &comp->rotation.y, 0.0f);
 
 				}
 				const auto& classScriptInstances = Engine::ScriptEngine::csEntityClassInstance.find(entity_selected);

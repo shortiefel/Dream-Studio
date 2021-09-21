@@ -246,6 +246,9 @@
     <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Script\Scripting.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -514,6 +517,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\Scripting.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp">
+      <Filter>Header Files\Script</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

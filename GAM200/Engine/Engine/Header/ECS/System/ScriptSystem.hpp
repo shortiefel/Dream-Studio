@@ -42,7 +42,7 @@ namespace Engine {
 		Pausing the runtime
 		-opposite of play
 		-----------------------------------------------------*/
-		static void Stop();
+		//static void Stop();
 		//Compile CS files together
 		static bool CompileCS();
 		/*-----------------------------------------------------
@@ -72,11 +72,6 @@ namespace Engine {
 		-----------------------------------------------------*/
 		static void ReloadMono();
 
-		/*-----------------------------------------------------
-			Call a specific virtual function
-			E.g: Init, Update
-		-----------------------------------------------------*/
-		static void CallFunction(MonoObject*& object, MonoMethod*& method, void** param = nullptr);
 		/*-----------------------------------------------------
 		-To add/remove public variable from map
 		-Set their values

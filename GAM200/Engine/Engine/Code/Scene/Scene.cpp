@@ -33,11 +33,6 @@ Technology is prohibited.
 //Systems
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
-#define RESET_SCENE ScriptSystem::Stop();\
-CollisionSystem::Stop();\
-\
-DreamECS::ResetECS();
-
 namespace Engine {
     //extern Coordinator gCoordinator;
 
@@ -71,10 +66,9 @@ namespace Engine {
         return true;
     }
 
-    //When user click stop to run their game
     void Scene::Stop() {
-        RESET_SCENE;
-
+        CollisionSystem::Stop(); 
+        DreamECS::ResetECS();
         //GameSceneSerializer::DeserializeScene(fullPathSceneName);
         //std::cout << "Stopping \n";
     }

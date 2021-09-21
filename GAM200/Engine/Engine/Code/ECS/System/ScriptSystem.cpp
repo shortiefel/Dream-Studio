@@ -53,6 +53,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
 #include "Engine/Header/Script/ScriptInternalCall.hpp"
+#include "Engine/Header/Script/Scripting.hpp"
 
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
 
@@ -67,12 +68,7 @@ Technology is prohibited.
 
 #include <cstdlib> //For file to be run by cmd (std::system)
 
-#define OverlapFunctionCalls(name)\
-if (csScriptInstance.csClass.name != nullptr) \
-mono_runtime_invoke(csScriptInstance.csClass.name, csScriptInstance.csClass.object, nullptr, nullptr);
-/*-------------------------------------
 
--------------------------------------*/
 #include <iostream>
 
 #define NEWSCRIPTING 1
@@ -85,7 +81,6 @@ namespace Engine {
 	MonoImage* image;
 	MonoImage* imageCore;
 
-	void destroy_child_domain();
 	bool CallOverlapFunc(const OverlapColliderEvent& e); //To be registered to Event
 
 	void ScriptSystem::PlayInit() {
@@ -102,9 +97,9 @@ namespace Engine {
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
 				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr)
-					mono_runtime_invoke(csScriptInstance.csClass.ConstructorFunc, csScriptInstance.csClass.object, param, nullptr);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
 				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr)
-					mono_runtime_invoke(csScriptInstance.csClass.InitFunc, csScriptInstance.csClass.object, nullptr, nullptr);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
 			}
 		}
 	}
@@ -124,14 +119,14 @@ namespace Engine {
 				//Run time check in case it is deleted 
 				//if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) break;
 				if (csScriptInstance.isActive && csScriptInstance.csClass.UpdateFunc != nullptr)
-					mono_runtime_invoke(csScriptInstance.csClass.UpdateFunc, csScriptInstance.csClass.object, nullptr, nullptr);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::UPDATE);
 			}
 		}
 	}
 
-	void ScriptSystem::Stop() {
-		//csEntityClassInstance.clear();
-	}
+	//void ScriptSystem::Stop() {
+	//	//csEntityClassInstance.clear();
+	//}
 
 	bool ScriptSystem::CompileCS() {
 		destroy_child_domain();
@@ -219,36 +214,9 @@ namespace Engine {
 		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(e.self);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
-			switch (e.type) {
-			case OverlapType::OnCollisionEnter:
-				OverlapFunctionCalls(OnCollisionEnter);
-				break;
-			case OverlapType::OnCollisionStay:
-				OverlapFunctionCalls(OnCollisionStay);
-				break;
-			case OverlapType::OnCollisionExit:
-				OverlapFunctionCalls(OnCollisionExit);
-				break;
-			case OverlapType::OnTriggerEnter:
-				OverlapFunctionCalls(OnTriggerEnter);
-				break;
-			case OverlapType::OnTriggerStay:
-				OverlapFunctionCalls(OnTriggerStay);
-				break;
-			case OverlapType::OnTriggerExit:
-				OverlapFunctionCalls(OnTriggerExit);
-				break;
-
-			}
+			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
 		}
 		return true;
-	}
-
-
-	void ScriptSystem::CallFunction(MonoObject*& object, MonoMethod*& method, void** param) {
-		if (method) {
-			mono_runtime_invoke(method, object, param, nullptr);
-		}
 	}
 
 	void ScriptSystem::UpdateMapData() {
@@ -540,14 +508,14 @@ namespace Engine {
 		-delete if it exist
 	-----------------------------------------------------*/
 	void destroy_child_domain() {
-		MonoDomain* currentDomain = mono_domain_get();
-		//Check if there is a child domain first
-		if (currentDomain && currentDomain != mono_get_root_domain()) {
-			if (!mono_domain_set(mono_get_root_domain(), false)) {
-				LOG_ERROR("Scripting: Unable to set domain");
-			}
-			mono_domain_unload(currentDomain);
-		}
+		//MonoDomain* currentDomain = mono_domain_get();
+		////Check if there is a child domain first
+		//if (currentDomain && currentDomain != mono_get_root_domain()) {
+		//	if (!mono_domain_set(mono_get_root_domain(), false)) {
+		//		LOG_ERROR("Scripting: Unable to set domain");
+		//	}
+		//	mono_domain_unload(currentDomain);
+		//}
 	}
 
 

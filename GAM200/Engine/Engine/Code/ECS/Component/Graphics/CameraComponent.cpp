@@ -22,7 +22,7 @@ namespace Engine {
         IComponent{ _ID },//num{ ID },
         fov{ _fov }, ar{ _ar }, isActive{ _active } {}
 
-    Camera2D Camera2D::Deserialize(const DSerializer& _serializer) {
+    Camera2D& Camera2D::Deserialize(const DSerializer& _serializer) {
         fov = _serializer.GetValue<float>("FOV");
         ar = _serializer.GetValue<float>("AR");
         isActive = _serializer.GetValue<bool>("IsActive");

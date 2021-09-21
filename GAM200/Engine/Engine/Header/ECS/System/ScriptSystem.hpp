@@ -2,10 +2,9 @@
 /*
 @file    ScriptSystem.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
-@date    19/06/2021
+@date    26/08/2021
 \brief
-This file has the class to manage scripts: ScriptSystem
-includes declaration to static function for a singleton ScriptSystem
+This file contain the declaration of ScriptSystem
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -18,25 +17,84 @@ Technology is prohibited.
 #ifndef SCRIPT_SYSTEM_HPP
 #define SCRIPT_SYSTEM_HPP
 
-//#include "Engine/Header/pch.hpp"
-//#include "Engine/Header/ECS/System/System.hpp"
-//
-//namespace Engine {
-//	class ScriptSystem : public System {
-//	public:
-//		//static bool Create(const std::shared_ptr<ScriptSystem>& scriptSystem);
-//		virtual void Destroy() override;
-//		~ScriptSystem();
-//
-//		//Called when user press play
-//		static void Play();
-//		//Opposite of play
-//		static void Stop();
-//		static void Update(float dt);
-//
-//	private:
-//		static std::shared_ptr<ScriptSystem> SS;
-//	};
-//}
+//#include "Engine/Header/ECS/ECSGlobal.hpp"
+#include "Engine/Header/Script/ScriptClass.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+
+namespace Engine {
+	//map (entity id, map(classname, CSscript)
+	using CSEntityClassInstance = std::unordered_map<unsigned int, CSClassInstance>;
+
+
+	class ScriptSystem {
+	public:
+
+		/*-----------------------------------------------------
+		Start runtime
+		-----------------------------------------------------*/
+		static void PlayInit();
+		/*-----------------------------------------------------
+		Update runtime
+		-----------------------------------------------------*/
+		static void PlayRunTime();
+		/*-----------------------------------------------------
+		Pausing the runtime
+		-opposite of play
+		-----------------------------------------------------*/
+		static void Stop();
+		//Compile CS files together
+		static bool CompileCS();
+		/*-----------------------------------------------------
+		Update information by
+		-Reinstantiating Classes
+		-Adding/Removing public variable from map
+		Called when saving/playing
+		-----------------------------------------------------*/
+		static void UpdateMapData();
+		/*-----------------------------------------------------
+		Get enum CSType from MonoType
+		-----------------------------------------------------*/
+		static CSType GetCSType(MonoType* mt);
+		/*-----------------------------------------------------
+		Set up mono
+		-----------------------------------------------------*/
+		static void Create();
+		/*-----------------------------------------------------
+			Clean up mono
+		-----------------------------------------------------*/
+		static void Destroy();
+		/*-----------------------------------------------------
+		Called when play button is pressed
+		-Stop child domain
+		-Create child domain
+		-Load assemblies
+		-----------------------------------------------------*/
+		static void ReloadMono();
+
+		/*-----------------------------------------------------
+			Call a specific virtual function
+			E.g: Init, Update
+		-----------------------------------------------------*/
+		static void CallFunction(MonoObject*& object, MonoMethod*& method, void** param = nullptr);
+		/*-----------------------------------------------------
+		-To add/remove public variable from map
+		-Set their values
+		-----------------------------------------------------*/
+		static void InitPublicVariable();
+		/*-----------------------------------------------------
+		-To add/remove class from map
+		-Find the function from c#
+		-----------------------------------------------------*/
+		static void InitEntityClassInstance();
+
+		static CSEntityClassInstance csEntityClassInstance;
+
+
+		static void SerializeClass(const SSerializer& _serializer, const CSClassInstance& _classInstance);
+		static void SerializeVariable(const SSerializer& _serializer, const CSScriptInstance& _scriptInstance);
+		static void Deserialize(const DSerializer& _serializer, CSClassInstance& classInstance);
+	};
+}
 
 #endif

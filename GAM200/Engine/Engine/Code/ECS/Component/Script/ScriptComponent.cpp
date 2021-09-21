@@ -15,11 +15,36 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
-//#include <unordered_map>
 
 namespace Engine {
 	CSScript::CSScript(Entity _ID) :
 		IComponent{ _ID } {
+	}
+
+	CSScript::CSScript(CSScript&& rhs) noexcept {
+		klassInstance = std::move(rhs.klassInstance);
+		SetEntityId(rhs.GetEntityId());
+		rhs.SetEntityId(DEFAULT_ENTITY);
+	}
+
+	CSScript& CSScript::operator=(CSScript&& rhs) noexcept {
+		klassInstance = std::move(rhs.klassInstance);
+		SetEntityId(rhs.GetEntityId());
+		rhs.SetEntityId(DEFAULT_ENTITY);
+		return *this;
+	}
+
+	void CSScript::AddScript(const CSScript& comp) {
+		this->klassInstance;  comp.klassInstance;
+	}
+
+	bool CSScript::RemoveScript(const char* className) {
+		for (const auto& [className, scriptInstance] : klassInstance) {
+
+		}
+
+		if (klassInstance.size()) return false;
+		return true;
 	}
 
 	CSScript& CSScript::Deserialize(const DSerializer& _serializer) {
@@ -74,22 +99,11 @@ namespace Engine {
 			}
 			klassInstance.emplace(className, std::move(csScriptInstance));
 		}
-		/*position = _serializer.GetValue<Math::vec2>("Position");
-		scale = _serializer.GetValue<Math::vec2>("Scale");
-		angle = _serializer.GetValue<float>("Angle");
-		isActive = _serializer.GetValue<bool>("IsActive");*/
 		return *this;
 	}
 
 	void CSScript::Serialize(const SSerializer& _serializer) {
-		/*for (const auto& [className, scriptInstance] : klassInstance) {
-			for (const auto& [varName, publicVariable] : scriptInstance.csVariableMap) {
-
-			}
-		}*/
-
 		for (const auto& [className, scriptInstance] : klassInstance) {
-
 			rapidjson::Value classObj(rapidjson::kObjectType);
 			SSerializer cserializer(_serializer, classObj);
 

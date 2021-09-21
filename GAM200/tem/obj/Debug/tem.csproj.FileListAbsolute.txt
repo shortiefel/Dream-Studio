@@ -1,8 +1,0 @@
-C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Debug\tem.csproj.AssemblyReference.cache
-C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Debug\tem.csproj.CoreCompileInputs.cache
-C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\bin\Debug\tem.dll
-C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\bin\Debug\tem.pdb
-C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Debug\tem.dll
-C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\bin\Debug\tem.dll
-C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\bin\Debug\tem.pdb
-C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\tem\obj\Debug\tem.pdb

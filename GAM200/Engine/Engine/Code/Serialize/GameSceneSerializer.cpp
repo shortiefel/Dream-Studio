@@ -37,7 +37,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Entity/EntityManager.hpp"
 #include "Engine/Header/ECS/ECSWrapper.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
-#include "Engine/Header/Script/ScriptEngine.hpp"
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
 
 //Type and Store named must be same to use this
@@ -46,7 +45,7 @@ itr = obj.FindMember(#type);\
 if (itr != obj.MemberEnd()) {\
 	DSerializer serializer{ itr }; \
 		DreamECS::AddComponent(\
-			type{ ent }.Deserialize(serializer)\
+			std::move(type{ ent }.Deserialize(serializer))\
 		);\
 }
 
@@ -152,27 +151,29 @@ namespace Engine {
 				SERIALIZE(tex);
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
-#if 0
+#if 1
 
 			CSScript* csScript = DreamECS::GetComponentTest<CSScript>(ent);
 			if (csScript != nullptr) {
 				LOG_ASSERT(csScript);
-				//SERIALIZE(tex);
+				rapidjson::Value objType(rapidjson::kArrayType);
+				SSerializer serializer(doc, objType); 
+				csScript->Serialize(serializer);
 				entityObject.AddMember("CSScript", objType, doc.GetAllocator());
 			}
 
 
 
 #else
-			if (ScriptEngine::csEntityClassInstance.find(ent) != ScriptEngine::csEntityClassInstance.end()) {
+			if (ScriptSystem::csEntityClassInstance.find(ent) != ScriptSystem::csEntityClassInstance.end()) {
 #if 1
-				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
+				const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
 				rapidjson::Value classArray(rapidjson::kArrayType);
 
 				SSerializer serializer(doc, classArray);
-				ScriptEngine::SerializeClass(serializer, entityclassInstance);
+				ScriptSystem::SerializeClass(serializer, entityclassInstance);
 				{
-					//const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
+					//const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
 					//rapidjson::Value classArray(rapidjson::kArrayType);
 
 					//for (const auto& [className, scriptInstance] : entityclassInstance) {
@@ -195,7 +196,7 @@ namespace Engine {
 					//		rapidjson::Value variableArray(rapidjson::kArrayType);
 
 					//		SSerializer serializer(doc, variableArray);
-					//		ScriptEngine::SerializeVariable(serializer, scriptInstance);
+					//		ScriptSystem::SerializeVariable(serializer, scriptInstance);
 
 					//		//classObj.AddMember("Variable", variableArray, doc.GetAllocator());
 					//		cserializer.SetValueJSon("Variable", variableArray);
@@ -205,7 +206,7 @@ namespace Engine {
 					//}
 				}
 #else
-				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
+				const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
 				rapidjson::Value classArray(rapidjson::kArrayType);
 
 				for (const auto& [className, scriptInstance] : entityclassInstance) {
@@ -297,7 +298,8 @@ namespace Engine {
 
 			itr = obj.FindMember("CSScript");
 			if (itr != obj.MemberEnd()) {
-#if 0
+#if 1 
+				
 				DSerializer serializer{ itr };
 				DreamECS::AddComponent(
 					std::move(CSScript{ ent }.Deserialize(serializer))
@@ -307,7 +309,7 @@ namespace Engine {
 				CSClassInstance classInstance;
 
 
-				ScriptEngine::Deserialize(serializer, classInstance);
+				ScriptSystem::Deserialize(serializer, classInstance);
 				/*for (auto& classJSon : itr->value.GetArray()) {
 					const auto& className = classJSon["Class"].GetString();
 
@@ -360,7 +362,7 @@ namespace Engine {
 					classInstance.emplace(className, std::move(csScriptInstance));
 				}*/
 
-				ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
+				ScriptSystem::csEntityClassInstance.emplace(ent, std::move(classInstance));
 #endif
 			}
 		}

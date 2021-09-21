@@ -23,7 +23,6 @@ Technology is prohibited.
 #include "Engine/Header/Layer/LayerStack.hpp"
 //#include "Layer/GUILayer.hpp"
 
-#include "Engine/Header/Script/ScriptEngine.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
@@ -34,7 +33,7 @@ Technology is prohibited.
 //Systems
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
-#define RESET_SCENE ScriptEngine::Stop();\
+#define RESET_SCENE ScriptSystem::Stop();\
 CollisionSystem::Stop();\
 \
 DreamECS::ResetECS();
@@ -57,7 +56,7 @@ namespace Engine {
     Scene::Scene(std::string fullPath) : fullPathSceneName{ fullPath } {
         GameSceneSerializer::DeserializeScene(fullPathSceneName);
 
-        ScriptEngine::UpdateMapData();
+        ScriptSystem::UpdateMapData();
     }
 
     //When user click play to run their game
@@ -68,7 +67,7 @@ namespace Engine {
         //Init game
         //std::cout << "Playing \n";
         if (!SceneSave()) return false;
-        ScriptEngine::PlayInit();
+        ScriptSystem::PlayInit();
         return true;
     }
 
@@ -85,8 +84,10 @@ namespace Engine {
     defaultRender - whether to use default rendering or not
     */
     void Scene::Update(float dt, bool playing, bool defaultRender) {
+        //std::cout << DreamECS::GetComponentArraySize<CSScript>() << "   " << DreamECS::GetComponentArraySize<Transform>() << "\n";
+
         if (playing) {
-            ScriptEngine::PlayRunTime();
+            ScriptSystem::PlayRunTime();
             CollisionSystem::Update(dt);
         }
         if (Input::IsKeyPressed(Input_KeyCode::N))
@@ -108,16 +109,18 @@ namespace Engine {
 
         if (Input::IsKeyPressed(Input_KeyCode::B))
             std::cout << DreamECS::GetUsedEntitySet().size() << "\n";
+
+        
     }
 
     bool Scene::SceneSave() {
-        if (!ScriptEngine::CompileCS()) {
+        if (!ScriptSystem::CompileCS()) {
             std::cout << "Fail to compile \n";
             //Scene::SetPlaying(false);
             return false;
         }
 
-        ScriptEngine::UpdateMapData();
+        ScriptSystem::UpdateMapData();
         //Change to sceneName (might be fullName(path + name) instead)
         GameSceneSerializer::SerializeScene(fullPathSceneName);
 

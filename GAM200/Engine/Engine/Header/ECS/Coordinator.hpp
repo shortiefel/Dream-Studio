@@ -58,7 +58,7 @@ namespace Engine {
 		}
 
 		void DuplicateEntity(Entity entFrom, Entity entTo) {
-			compManager->DuplicateComponents(entFrom, entTo);
+			compManager->DuplicateEntity(entFrom, entTo);
 		}
 
 		void destroyEntity(Entity entity)
@@ -96,7 +96,7 @@ namespace Engine {
 			auto ptr = compManager->GetComTest<T>(com.GetEntityId());
 			LOG_ASSERT(!ptr && "Unable add the same component for one entity");
 			if (ptr) return;
-			compManager->AddComponent<T>(com);
+			compManager->AddComponent<T>(std::move(com));
 			//auto Signature = entityManager->GetSignature(entity); //unique signature key
 			//Signature.set(compManager->GetterComType<T>(), true); //setting the unique signature key
 			//entityManager->SetSignature(entity, Signature);
@@ -113,6 +113,12 @@ namespace Engine {
 
 			sysManager->EntitySignatureChanged(entity, Signature); //letting system manager know abt the change in signature on entity
 #endif
+		}
+
+		void AddScript(CSScript com) {
+			auto ptr = compManager->GetComTest<CSScript>(com.GetEntityId());
+			if (ptr) return;
+			compManager->AddScript(std::move(com));
 		}
 
 		template<typename T>
@@ -139,6 +145,12 @@ namespace Engine {
 
 			sysManager->EntitySignatureChanged(entity, Signature);
 #endif
+		}
+
+		void RemoveScript(Entity entity, const char* className) {
+			auto ptr = compManager->GetComTest<CSScript>(entity);
+			if (ptr) return;
+			compManager->RemoveScript(entity, className);
 		}
 
 		template<typename T>
@@ -177,6 +189,11 @@ namespace Engine {
 		template<typename T>
 		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
 			return compManager->GetComponentArrayData<T>();
+		}
+
+		template<typename T>
+		size_t GetComponentArraySize() {
+			return compManager->GetComponentArraySize<T>();
 		}
 
 		/**

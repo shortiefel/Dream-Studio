@@ -30,11 +30,14 @@ namespace Engine {
 		CSScript& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		CSScript(Entity _ID);
-		/*CSScript(CSScript&& rhs) noexcept {
-			klassInstance = std::move(rhs.klassInstance);
-		}
-		CSScript(const CSScript&) = delete;*/
+		void AddScript(const CSScript& comp);
+		//Return true if no more scripts left
+		bool RemoveScript(const char* className);
+
+		CSScript(Entity _ID = DEFAULT_ENTITY);
+		CSScript(CSScript&& rhs) noexcept;
+		CSScript& operator=(CSScript&& rhs) noexcept;
+		CSScript(const CSScript&) = delete;
 	};
 }
 

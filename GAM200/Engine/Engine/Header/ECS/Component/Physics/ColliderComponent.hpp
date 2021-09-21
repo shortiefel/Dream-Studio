@@ -51,7 +51,7 @@ namespace Engine {
 
 		bool isTrigger = false, isActive = true;
 
-		Collider Deserialize(const DSerializer& _serializer);
+		Collider& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
 		Collider() = default;

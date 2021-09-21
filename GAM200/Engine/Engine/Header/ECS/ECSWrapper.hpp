@@ -49,7 +49,12 @@ namespace Engine {
 
 		template<typename T>
 		static void AddComponent(T com) {
-			gCoordinator.AddComponent<T>(com);
+			gCoordinator.AddComponent<T>(std::move(com));
+		}
+
+		template<>
+		static void AddComponent(CSScript com) {
+			gCoordinator.AddScript(std::move(com));
 		}
 
 		template<typename T>
@@ -57,6 +62,12 @@ namespace Engine {
 		{
 			gCoordinator.RemoveComponent<T>(entity);
 		}
+
+		static void RemoveScript(Entity entity, const char* className)
+		{
+			gCoordinator.RemoveScript(entity, className);
+		}
+
 		template <typename T>
 		static T& GetComponent(Entity entity) {
 			return gCoordinator.GetCom<T>(entity);
@@ -86,6 +97,11 @@ namespace Engine {
 		template<typename T>
 		static std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
 			return gCoordinator.GetComponentArrayData<T>();
+		}
+
+		template<typename T>
+		static size_t GetComponentArraySize() {
+			return gCoordinator.GetComponentArraySize<T>();
 		}
 
 		/*--------------------------------------------------------------------------------------------------------------

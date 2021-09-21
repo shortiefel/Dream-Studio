@@ -22,7 +22,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/ECSWrapper.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
-#include "Engine/Header/Script/ScriptEngine.hpp"
+#include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
 
@@ -170,41 +170,41 @@ namespace Editor {
 
 
 				}
-				const auto& classScriptInstances = Engine::ScriptEngine::csEntityClassInstance.find(entity_selected);
-				if (classScriptInstances != Engine::ScriptEngine::csEntityClassInstance.end()) {
-					
-				//for (auto& [entityId, classScriptInstances] : Engine::ScriptEngine::csEntityClassInstance) {
-					for (auto& [className, csScriptInstance] : classScriptInstances->second) {
-						ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
-						for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
-							ImGui::Text(varName.c_str());
-							ImGui::SameLine();
-							switch (csPublicVariable.variableType) {
-							case Engine::CSType::CHAR:
-								//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
-								break;
-							case Engine::CSType::BOOL:
-								ImGui::Checkbox("B", &(csPublicVariable.GetVariableData<bool>()));
-								break;
-							case Engine::CSType::FLOAT:
-								ImGui::InputFloat("C", &(csPublicVariable.GetVariableData<float>()), 0);
-								break;
-							case Engine::CSType::INT:
-								ImGui::InputInt("D", &(csPublicVariable.GetVariableData<int>()), 0);
-								break;
-							case Engine::CSType::UINT:
-								//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
-								break;
-							case Engine::CSType::VEC2:
-								Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-								ImGui::InputFloat("F", &(tem.x), 0);
-								ImGui::InputFloat("G", &(tem.y), 0);
-								break;
-							}
-							
-						}
-					}
-				}
+				//const auto& classScriptInstances = Engine::ScriptSystem::csEntityClassInstance.find(entity_selected);
+				//if (classScriptInstances != Engine::ScriptSystem::csEntityClassInstance.end()) {
+				//	
+				////for (auto& [entityId, classScriptInstances] : Engine::ScriptSystem::csEntityClassInstance) {
+				//	for (auto& [className, csScriptInstance] : classScriptInstances->second) {
+				//		ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
+				//		for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
+				//			ImGui::Text(varName.c_str());
+				//			ImGui::SameLine();
+				//			switch (csPublicVariable.variableType) {
+				//			case Engine::CSType::CHAR:
+				//				//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
+				//				break;
+				//			case Engine::CSType::BOOL:
+				//				ImGui::Checkbox("B", &(csPublicVariable.GetVariableData<bool>()));
+				//				break;
+				//			case Engine::CSType::FLOAT:
+				//				ImGui::InputFloat("C", &(csPublicVariable.GetVariableData<float>()), 0);
+				//				break;
+				//			case Engine::CSType::INT:
+				//				ImGui::InputInt("D", &(csPublicVariable.GetVariableData<int>()), 0);
+				//				break;
+				//			case Engine::CSType::UINT:
+				//				//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
+				//				break;
+				//			case Engine::CSType::VEC2:
+				//				Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
+				//				ImGui::InputFloat("F", &(tem.x), 0);
+				//				ImGui::InputFloat("G", &(tem.y), 0);
+				//				break;
+				//			}
+				//			
+				//		}
+				//	}
+				//}
 
 
 

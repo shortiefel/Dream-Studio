@@ -78,7 +78,7 @@ mono_runtime_invoke(csScriptInstance.csClass.name, csScriptInstance.csClass.obje
 #define NEWSCRIPTING 1
 
 namespace Engine {
-	CSEntityClassInstance ScriptSystem::csEntityClassInstance;
+	//CSEntityClassInstance ScriptSystem::csEntityClassInstance;
 
 	MonoDomain* domain;
 	MonoAssembly* assem;
@@ -130,7 +130,7 @@ namespace Engine {
 	}
 
 	void ScriptSystem::Stop() {
-		csEntityClassInstance.clear();
+		//csEntityClassInstance.clear();
 	}
 
 	bool ScriptSystem::CompileCS() {
@@ -216,30 +216,29 @@ namespace Engine {
 	}
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
-		//std::cout << "calling overlap function \n";
-		if (ScriptSystem::csEntityClassInstance.find(e.self) != ScriptSystem::csEntityClassInstance.end()) {
-			for (auto& [className, csScriptInstance] : ScriptSystem::csEntityClassInstance[e.self]) {
-				switch (e.type) {
-				case OverlapType::OnCollisionEnter:
-					OverlapFunctionCalls(OnCollisionEnter);
-					break;
-				case OverlapType::OnCollisionStay:
-					OverlapFunctionCalls(OnCollisionStay);
-					break;
-				case OverlapType::OnCollisionExit:
-					OverlapFunctionCalls(OnCollisionExit);
-					break;
-				case OverlapType::OnTriggerEnter:
-					OverlapFunctionCalls(OnTriggerEnter);
-					break;
-				case OverlapType::OnTriggerStay:
-					OverlapFunctionCalls(OnTriggerStay);
-					break;
-				case OverlapType::OnTriggerExit:
-					OverlapFunctionCalls(OnTriggerExit);
-					break;
+		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(e.self);
+		if (!csScript) return false;
+		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
+			switch (e.type) {
+			case OverlapType::OnCollisionEnter:
+				OverlapFunctionCalls(OnCollisionEnter);
+				break;
+			case OverlapType::OnCollisionStay:
+				OverlapFunctionCalls(OnCollisionStay);
+				break;
+			case OverlapType::OnCollisionExit:
+				OverlapFunctionCalls(OnCollisionExit);
+				break;
+			case OverlapType::OnTriggerEnter:
+				OverlapFunctionCalls(OnTriggerEnter);
+				break;
+			case OverlapType::OnTriggerStay:
+				OverlapFunctionCalls(OnTriggerStay);
+				break;
+			case OverlapType::OnTriggerExit:
+				OverlapFunctionCalls(OnTriggerExit);
+				break;
 
-				}
 			}
 		}
 		return true;

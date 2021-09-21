@@ -178,7 +178,7 @@
     <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp" />
-    <ClCompile Include="Engine\Code\ECS\System\ScriptEngine.cpp" />
+    <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp" />
     <ClCompile Include="Engine\Code\EngineCore.cpp" />
     <ClCompile Include="Engine\Code\Event\EventDispatcher.cpp" />
     <ClCompile Include="Engine\Code\Event\KeyEvent.cpp" />

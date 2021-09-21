@@ -34,8 +34,11 @@ namespace Engine {
 		return *this;
 	}
 
-	void CSScript::AddScript(const CSScript& comp) {
-		this->klassInstance;  comp.klassInstance;
+	void CSScript::AddScript(CSScript& comp) {
+		for (auto& [className, csScriptInstance] : comp.klassInstance) {
+			if (klassInstance.find(className) == klassInstance.end())
+				klassInstance.emplace(className, std::move(csScriptInstance));
+		}
 	}
 
 	bool CSScript::RemoveScript(const char* className) {

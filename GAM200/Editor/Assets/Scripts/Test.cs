@@ -83,7 +83,7 @@ public class Test : MonoBehaviour
         }
     }
 
-    /*public override void OnCollisionEnter() {
+    public override void OnCollisionEnter() {
         Console.WriteLine("Test Collision Enter");
     }
 
@@ -100,7 +100,7 @@ public class Test : MonoBehaviour
     public override void OnTriggerExit()
     {
         Console.WriteLine("Test Trigger Exit");
-    }*/
+    }
 
 }
 

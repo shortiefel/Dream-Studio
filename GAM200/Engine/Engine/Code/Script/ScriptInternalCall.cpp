@@ -221,8 +221,9 @@ namespace Engine {
 	}
 
 	void Destroy_Script_Engine(unsigned int id, MonoString* str) {
-		auto& classes = ScriptSystem::csEntityClassInstance[id];
-		classes.erase(std::string{ mono_string_to_utf8(str) });
+		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(id);
+		if (!csScript) return;
+		csScript->klassInstance.erase(std::string{ mono_string_to_utf8(str) });
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -237,8 +238,9 @@ namespace Engine {
 	}
 
 	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {
-		auto& classes = ScriptSystem::csEntityClassInstance[id];
-		classes.find(std::string{ mono_string_to_utf8(str) })->second.isActive = boolean;
+		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(id);
+		if (!csScript) return;
+		csScript->klassInstance.find(std::string{ mono_string_to_utf8(str) })->second.isActive = boolean;
 	}
 
 

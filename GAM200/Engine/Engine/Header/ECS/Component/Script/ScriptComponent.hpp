@@ -30,7 +30,7 @@ namespace Engine {
 		CSScript& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		void AddScript(const CSScript& comp);
+		void AddScript(CSScript& comp);
 		//Return true if no more scripts left
 		bool RemoveScript(const char* className);
 

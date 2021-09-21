@@ -70,7 +70,8 @@ namespace Engine {
 			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) {
 				size_t newIndex = Size;
 				EntityToIndexMap[entity] = newIndex; //Entity -> Index
-				componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
+				//componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
+				componentArray[newIndex].AddScript(component); //Creating of the array and calls it component
 				Size++;
 			}
 			//Has at least one script

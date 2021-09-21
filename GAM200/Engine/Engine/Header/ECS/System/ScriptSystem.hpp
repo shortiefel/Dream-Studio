@@ -88,7 +88,7 @@ namespace Engine {
 		-----------------------------------------------------*/
 		static void InitEntityClassInstance();
 
-		static CSEntityClassInstance csEntityClassInstance;
+		//static CSEntityClassInstance csEntityClassInstance;
 
 
 		static void SerializeClass(const SSerializer& _serializer, const CSClassInstance& _classInstance);

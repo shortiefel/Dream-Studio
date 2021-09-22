@@ -35,12 +35,13 @@ namespace Engine {
 		bool RemoveScript(const char* _className);
 		void SetActive(const char* _className, bool _boolean);
 
-		CSScript(Entity _ID = DEFAULT_ENTITY);
+		CSScript(Entity _ID = DEFAULT_ENTITY, const char* _className = nullptr);
 		CSScript(CSScript&& rhs) noexcept;
 		CSScript& operator=(CSScript&& rhs) noexcept;
 		CSScript(const CSScript&) = delete;
 
-	//private:
+	private:
+		void AddSpecial();
 		//void InitVariable(const char* className);
 	};
 }

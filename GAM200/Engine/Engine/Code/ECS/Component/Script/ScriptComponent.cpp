@@ -18,8 +18,12 @@ Technology is prohibited.
 #include "Engine/Header/Script/Scripting.hpp"
 
 namespace Engine {
-	CSScript::CSScript(Entity _ID) :
+	CSScript::CSScript(Entity _ID, const char* _className) :
 		IComponent{ _ID } {
+		if (_className) {
+			CSScriptInstance csScriptInstance{ _className };
+			klassInstance.emplace(_className, std::move(csScriptInstance));
+		}
 	}
 
 	CSScript::CSScript(CSScript&& rhs) noexcept {
@@ -46,6 +50,10 @@ namespace Engine {
 				std::cout << "found class at " << klassInstance.at(className).csClass.className << "\n";
 			}
 		}
+	}
+
+	void CSScript::AddSpecial() {
+
 	}
 
 	bool CSScript::RemoveScript(const char* _className) {

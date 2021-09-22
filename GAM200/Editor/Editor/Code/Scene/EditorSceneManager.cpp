@@ -20,6 +20,11 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/GameState.hpp"
 
+/*temporary*/
+#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/Script/Scripting.hpp"
+
+
 namespace Editor {
 
     std::string EditorSceneManager::editorSceneName = "test2";
@@ -65,6 +70,12 @@ namespace Editor {
         }
         else if (e.GetKeyCode() == Engine::Input_KeyCode::H) {
             Engine::SceneManager::ChangeScene("test3");
+        }
+
+        else if (e.GetKeyCode() == Engine::Input_KeyCode::Y) {
+            printf("Add trailtest to 0\n");
+            Engine::CSScript csScript{ 0, "TrailTest3"};
+            Engine::DreamECS::AddComponent<Engine::CSScript>(std::move(csScript));
         }
 
         if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Control)) {

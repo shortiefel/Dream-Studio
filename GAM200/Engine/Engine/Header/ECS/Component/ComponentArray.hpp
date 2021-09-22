@@ -65,7 +65,6 @@ namespace Engine {
 		}
 
 		void AddScriptComponent(T component) {
-			printf("Come in here \n");
 			Entity entity = component.GetEntityId();
 			//No Script
 			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) {
@@ -79,7 +78,7 @@ namespace Engine {
 			else {
 				printf("Adding new scripts \n");
 				size_t index = EntityToIndexMap[entity];
-				//componentArray[index].AddScript(component);
+				componentArray[index].AddScript(component);
 			}
 		}
 

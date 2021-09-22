@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ScriptSystem.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/08/2021
 \brief
 This file contain the declaration of ScriptSystem
@@ -38,11 +38,9 @@ namespace Engine {
 		-----------------------------------------------------*/
 		static void PlayRunTime();
 		/*-----------------------------------------------------
-		Pausing the runtime
-		-opposite of play
+		static void Stop();
+		Compile CS files together
 		-----------------------------------------------------*/
-		//static void Stop();
-		//Compile CS files together
 		static bool CompileCS();
 		/*-----------------------------------------------------
 		Update information by
@@ -51,41 +49,14 @@ namespace Engine {
 		Called when saving/playing
 		-----------------------------------------------------*/
 		static void UpdateMapData();
-		
-		//static CSType GetCSType(MonoType* mt);
 		/*-----------------------------------------------------
-		Set up mono
+		Create ScriptSystem
 		-----------------------------------------------------*/
 		static void Create();
 		/*-----------------------------------------------------
-			Clean up mono
+		Destroy ScriptSystem
 		-----------------------------------------------------*/
 		static void Destroy();
-		/*-----------------------------------------------------
-		Called when play button is pressed
-		-Stop child domain
-		-Create child domain
-		-Load assemblies
-		-----------------------------------------------------*/
-		static void ReloadMono();
-
-		/*-----------------------------------------------------
-		-To add/remove public variable from map
-		-Set their values
-		-----------------------------------------------------*/
-		static void InitPublicVariable();
-		/*-----------------------------------------------------
-		-To add/remove class from map
-		-Find the function from c#
-		-----------------------------------------------------*/
-		static void InitEntityClassInstance();
-
-		//static CSEntityClassInstance csEntityClassInstance;
-
-
-		static void SerializeClass(const SSerializer& _serializer, const CSClassInstance& _classInstance);
-		static void SerializeVariable(const SSerializer& _serializer, const CSScriptInstance& _scriptInstance);
-		static void Deserialize(const DSerializer& _serializer, CSClassInstance& classInstance);
 	};
 }
 

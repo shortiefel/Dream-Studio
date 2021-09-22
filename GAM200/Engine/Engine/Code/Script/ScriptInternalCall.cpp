@@ -224,7 +224,6 @@ namespace Engine {
 		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(id);
 		if (!csScript) return;
 		csScript->RemoveScript(mono_string_to_utf8(str));
-		//csScript->klassInstance.erase(std::string{ mono_string_to_utf8(str) });
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -242,7 +241,6 @@ namespace Engine {
 		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(id);
 		if (!csScript) return;
 		csScript->SetActive( mono_string_to_utf8(str), boolean);
-		//csScript->klassInstance.find(std::string{ mono_string_to_utf8(str) })->second.isActive = boolean;
 	}
 
 

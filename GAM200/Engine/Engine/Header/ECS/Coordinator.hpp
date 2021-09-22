@@ -116,8 +116,6 @@ namespace Engine {
 		}
 
 		void AddScript(CSScript com) {
-			auto ptr = compManager->GetComTest<CSScript>(com.GetEntityId());
-			if (ptr) return;
 			compManager->AddScript(std::move(com));
 		}
 

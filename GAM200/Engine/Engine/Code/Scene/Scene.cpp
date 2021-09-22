@@ -34,20 +34,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
 namespace Engine {
-    //extern Coordinator gCoordinator;
-
-    //bool Scene::playing = false;
-    //std::string Scene::fullPathSceneName = std::string{};
-
-
-    
-
-    //Shortcut key for scene
-    //E.g: Ctrl p (play / stop), Ctrl s (save)
-    //bool SceneHotKey(const KeyPressedEvent& e);
-
-    //Entity temcam, temcam2, temcam3; int num = 1;//Temporary
-
     Scene::Scene(std::string fullPath) : fullPathSceneName{ fullPath } {
         GameSceneSerializer::DeserializeScene(fullPathSceneName);
 
@@ -55,23 +41,20 @@ namespace Engine {
     }
 
     //When user click play to run their game
-    bool Scene::Play() {
-        //Compile the script
-        //Serialize everything
-        //Restart Mono
-        //Init game
-        //std::cout << "Playing \n";
+    void Scene::Play() {
+         if (!ScriptSystem::CompileCS()) {
+            std::cout << "Fail to compile \n";
+            //Scene::SetPlaying(false);
+            return;
+        }
 
-        /*
-        if (!SceneSave()) return false;
+        ScriptSystem::UpdateMapData();
         ScriptSystem::PlayInit();
-        return true;
-        */
+        //Change to sceneName (might be fullName(path + name) instead)
+        GameSceneSerializer::SerializeScene(fullPathSceneName);
     }
 
-    void Scene::PlayInit() {
-        ScriptSystem::PlayInit();
-    }
+    
 
     void Scene::Stop() {
         CollisionSystem::Stop(); 
@@ -80,10 +63,18 @@ namespace Engine {
         //std::cout << "Stopping \n";
     }
 
-    /*
-    dt - delta time
-    defaultRender - whether to use default rendering or not
-    */
+    void Scene::Save() {
+        if (!ScriptSystem::CompileCS()) {
+            std::cout << "Fail to compile \n";
+            //Scene::SetPlaying(false);
+            return;
+        }
+
+        ScriptSystem::UpdateMapData();
+        //Change to sceneName (might be fullName(path + name) instead)
+        GameSceneSerializer::SerializeScene(fullPathSceneName);
+    }
+
     void Scene::Update(float dt, bool playing, bool defaultRender) {
         //std::cout << DreamECS::GetComponentArraySize<CSScript>() << "   " << DreamECS::GetComponentArraySize<Transform>() << "\n";
 

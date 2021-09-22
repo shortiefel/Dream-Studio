@@ -4,7 +4,7 @@
 @authors	Ow Jian Wen			jianwen123321@hotmail.com
 			Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    27/06/2021
-\brief
+@brief
 List of all component
 
 

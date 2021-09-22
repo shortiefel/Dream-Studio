@@ -3,7 +3,7 @@
 @file    RigidBodyComponent.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    19/06/2021
-\brief
+@brief
 This file contain the RigidBody struct to be used by the ECS and various system
 
 

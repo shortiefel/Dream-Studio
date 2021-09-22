@@ -3,7 +3,7 @@
 @file    CameraSystem.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    26/06/2021
-\brief
+@brief
 This file contain the CameraSystem declaration
 
 

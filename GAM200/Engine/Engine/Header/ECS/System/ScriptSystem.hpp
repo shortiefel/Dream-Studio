@@ -3,7 +3,7 @@
 @file    ScriptSystem.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    19/06/2021
-\brief
+@brief
 This file has the class to manage scripts: ScriptSystem
 includes declaration to static function for a singleton ScriptSystem
 

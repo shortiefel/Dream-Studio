@@ -1,12 +1,10 @@
 /* Start Header**********************************************************************************/
 /*!
-\file ComponentManager.hpp
-\team name
-\software name
-\authors	Ow Jian Wen			jianwen123321@hotmail.com
+@file ComponentManager.hpp
+@authors	Ow Jian Wen			jianwen123321@hotmail.com
 			Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
-\date 26/04/2021
-\brief
+@date 26/04/2021
+@brief
 
 A component manager acts as an in charge of handling the different Component Array whenever a
 component has tpo be added or removed. It contains Component Type, RegisterComponent. it also has
@@ -18,6 +16,7 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
+
 #pragma once
 
 #include "Engine/Header/Debug Tools/Logging.hpp"

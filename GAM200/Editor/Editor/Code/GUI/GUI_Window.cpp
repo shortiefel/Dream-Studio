@@ -142,12 +142,9 @@ namespace Editor {
 
 				Engine::Transform* comp;
 				Engine::Entity entity_selected = 0;
-				float width = 120;
+				float width = 160;
 				bool selectEntity = 0;
 
-
-
-				//if (check_selection = true) {
 				if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
 				{
 					//Updating of position

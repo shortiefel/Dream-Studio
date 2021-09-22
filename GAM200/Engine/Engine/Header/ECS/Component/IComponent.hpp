@@ -3,7 +3,7 @@
 @file    IComponent.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    08/09/2021
-\brief
+@brief
 This file is for component to inherit
 
 

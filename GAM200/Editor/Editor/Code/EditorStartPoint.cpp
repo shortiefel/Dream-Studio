@@ -3,7 +3,7 @@
 @file    EditorStartPoint.cpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    23/07/2021
-\brief
+@brief
 This file contain the EditorStartPoint definition
 EditorMain contains the editor side of function calls
 

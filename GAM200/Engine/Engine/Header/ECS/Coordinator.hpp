@@ -1,12 +1,10 @@
 /* Start Header**********************************************************************************/
 /*!
-\file Coordinator.hpp
-\team name
-\software name
-\authors	Ow Jian Wen			jianwen123321@hotmail.com
-			Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
-\date 26/04/2021
-\brief
+@file			Coordinator.hpp
+@authors		Ow Jian Wen			jianwen123321@hotmail.com
+				Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@date 26/04/2021
+@brief
 
 This file contain the coordinator where it coordinates with the Entity, Component, System and Event
 in a single space.

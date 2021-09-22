@@ -1,15 +1,14 @@
 /* Start Header**********************************************************************************/
 /*!
-\file EntityManager.hpp
-\team name
-\software name
-\authors	Ow Jian Wen			jianwen123321@hotmail.com
+@file EntityManager.hpp
+@authors	Ow Jian Wen			jianwen123321@hotmail.com
 			Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 
-\date 26/04/2021
-\brief
+@date 26/04/2021
+@brief
 Entity Manager is in charge of assigning entity IDs and keeping records of which IDs are in use
 and not.
+
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of

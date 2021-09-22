@@ -3,7 +3,7 @@
 @file    TextureComponent.hpp
 @author
 @date    02/07/2021
-\brief
+@brief
 This file contain the TextureComponent declaration
 
 //Serialize list

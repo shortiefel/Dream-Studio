@@ -1,9 +1,9 @@
 /* Start Header**********************************************************************************/
 /*
-@file    .hpp
-@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@file			SystemManager.hpp
+@author			Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    19/06/2021
-\brief
+@brief
 
 Maintining a record of registered systems and the signatures. Each system is to have a set of
 signature to allow the manager to add the correct entities to the system's list

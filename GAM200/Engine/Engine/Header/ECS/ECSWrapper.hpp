@@ -3,7 +3,7 @@
 @file    ECSWrapper.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    08/09/2021
-\brief
+@brief
 This file is the wrapper file for ECS
 -It is made such that in the future the ECS can be changed easily
 

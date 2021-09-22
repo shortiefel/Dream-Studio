@@ -3,7 +3,7 @@
 @file    Factory.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    23/06/2021
-\brief
+@brief
 This file contain declaraction of Factory class with it functions
 
 

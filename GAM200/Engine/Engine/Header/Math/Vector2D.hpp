@@ -1,10 +1,9 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Vector2D.hpp
-@author  Ow Jian Wen			jianwen123321@hotmail.com
-		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    16/06/2021
-\brief
+@brief
 
 This file contain the template implementation of Vector2D
 This file SHOULD NOT be included, instead use Vector.hpp

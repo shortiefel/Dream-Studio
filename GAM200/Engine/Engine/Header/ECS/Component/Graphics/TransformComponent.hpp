@@ -4,7 +4,7 @@
 @author  Ow Jian Wen			jianwen123321@hotmail.com
 		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    19/06/2021
-\brief
+@brief
 This file contain the transform struct to be used by the ECS and various system
 
 //Serialize list

@@ -41,7 +41,7 @@ namespace Engine {
 		void Bind(GLuint slot = 0) const;
 		void Unbind() const;
 
-		Texture Deserialize(const DSerializer& _serializer);
+		Texture& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
 		inline GLint getWidth() const { return width; }

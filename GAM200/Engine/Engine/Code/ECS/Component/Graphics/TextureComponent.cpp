@@ -57,7 +57,7 @@ namespace Engine {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	Texture Texture::Deserialize(const DSerializer& _serializer) {
+	Texture& Texture::Deserialize(const DSerializer& _serializer) {
 		filepath = _serializer.GetValue<std::string>("Filepath");
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 		//shd_ref = GraphicShader(serializer.GetValue<int>("Scale"));

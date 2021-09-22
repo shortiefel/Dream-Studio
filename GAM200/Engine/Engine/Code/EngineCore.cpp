@@ -22,7 +22,6 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
-#include "Engine/Header/Script/ScriptEngine.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
 
@@ -40,7 +39,6 @@ namespace Engine {
 
 		Factory::Create();
 		TextureManager::Create();
-		ScriptEngine::Create();
 
 		//KeyPressedEvent::RegisterFunction(SceneManager::GetSceneHotKey());
 
@@ -50,18 +48,19 @@ namespace Engine {
 	void EngineCore::Update(float dt, bool defaultRender) {
 		SceneManager::Update(dt, defaultRender);
 
-		if (Input::IsKeyPressed(Input_KeyCode::G))
+		/*if (Input::IsKeyPressed(Input_KeyCode::G))
 			SceneManager::ChangeScene("test2");
 		if (Input::IsKeyPressed(Input_KeyCode::H))
-			SceneManager::ChangeScene("test3");
+			SceneManager::ChangeScene("test3");*/
 		
 	}
 
 	void EngineCore::Destroy() {
 		SceneManager::Destroy();
 
-		ScriptEngine::Destroy();
 		TextureManager::Destroy();
+
+		Factory::Destroy();
 		//GUILayer::Destroy();
 		LayerStack::Destroy();
 	}

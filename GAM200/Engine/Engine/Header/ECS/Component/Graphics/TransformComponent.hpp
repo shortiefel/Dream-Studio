@@ -44,7 +44,7 @@ namespace Engine {
 
 		Math::mat3 GetTransform() const;
 
-		Transform Deserialize(const DSerializer& _serializer);
+		Transform& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
 		Transform() = default;

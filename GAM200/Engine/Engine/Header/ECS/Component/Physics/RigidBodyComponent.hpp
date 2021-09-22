@@ -28,7 +28,7 @@ namespace Engine {
 		//
 		bool isActive = true;
 
-		RigidBody Deserialize(const DSerializer& _serializer);
+		RigidBody& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
 		RigidBody() = default;

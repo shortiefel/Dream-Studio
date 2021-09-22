@@ -30,13 +30,6 @@ namespace Editor {
     bool SceneHotKey(const Engine::KeyPressedEvent& e);
 
     bool EditorSceneManager::SceneHotKeyCheck(Engine::Input_KeyCode keyCode) {
-        if (keyCode == Engine::Input_KeyCode::G) {
-            Engine::SceneManager::ChangeScene("test2");
-        }
-        else if (keyCode == Engine::Input_KeyCode::H) {
-            Engine::SceneManager::ChangeScene("test3");
-        }
-
         if (keyCode == Engine::Input_KeyCode::P) {
             if (Engine::GameState::GetPlaying()) {
                 //Destroy current scene and create new scene (default)
@@ -67,6 +60,13 @@ namespace Editor {
     }
 
     bool SceneHotKey(const Engine::KeyPressedEvent& e) {
+        if (e.GetKeyCode() == Engine::Input_KeyCode::G) {
+            Engine::SceneManager::ChangeScene("test2");
+        }
+        else if (e.GetKeyCode() == Engine::Input_KeyCode::H) {
+            Engine::SceneManager::ChangeScene("test3");
+        }
+
         if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Control)) {
             return EditorSceneManager::SceneHotKeyCheck(e.GetKeyCode());
         }

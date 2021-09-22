@@ -17,28 +17,32 @@ Technology is prohibited.
 
 #include "Engine/Header/Scene/SceneManager.hpp"
 #include "Engine/Header/Management/GameState.hpp"
+#include "Engine/Header/ECS/System/ScriptSystem.hpp"
+
+
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #define TO_FULL_PATH(name) ("Data/Scenes/" + name + ".json")
 
 namespace Engine {
     //SceneManager* SceneManager::sceneManager;
 
-    std::string SceneManager::currentSceneName;
+    std::string SceneManager::currentScenePath;
     std::string SceneManager::defaultSceneName;
     Scene* SceneManager::currentScene;
 
 	void SceneManager::StartScene() {
-        currentSceneName = defaultSceneName;
-        currentScene = new Scene{ TO_FULL_PATH(currentSceneName) };
+        currentScenePath = TO_FULL_PATH(defaultSceneName);
+        currentScene = new Scene{ currentScenePath };
 	}
 
 	void SceneManager::ChangeScene(std::string sceneName) {
         currentScene->Stop();
         delete currentScene;
 
-        currentSceneName = sceneName;
-        currentScene = new Scene{ TO_FULL_PATH(sceneName) };
-        if (GameState::GetPlaying()) currentScene->Play();
+        currentScenePath = TO_FULL_PATH(sceneName);
+        currentScene = new Scene{ currentScenePath };
+        if (GameState::GetPlaying()) currentScene->PlayInit();
 	}
 
 	void SceneManager::Update(float dt, bool defaultRender) {
@@ -54,14 +58,24 @@ namespace Engine {
     }
 
     void SceneManager::Play() {
-        if (currentSceneName != TO_FULL_PATH(defaultSceneName)) {
+        /*if (currentSceneName != TO_FULL_PATH(defaultSceneName)) {
             currentScene->Stop();
             delete currentScene;
 
             currentScene = new Scene{ TO_FULL_PATH(defaultSceneName) };
+        }*/
+
+        if (!ScriptSystem::CompileCS()) {
+            std::cout << "Fail to compile \n";
+            //Scene::SetPlaying(false);
+            return;
         }
 
-        currentScene->Play();
+        ScriptSystem::UpdateMapData();
+        //Change to sceneName (might be fullName(path + name) instead)
+        GameSceneSerializer::SerializeScene(currentScenePath);
+
+        //currentScene->Play();
     }
 
     /*void SceneManager::Stop() {
@@ -69,6 +83,6 @@ namespace Engine {
     }*/
 
     void SceneManager::Save() {
-        currentScene->SceneSave();
+        //currentScene->SceneSave();
     }
 }

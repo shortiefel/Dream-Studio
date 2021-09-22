@@ -36,7 +36,7 @@ namespace Engine {
         float ar = float{}, fov = float{};
         bool isActive = true;
 
-        Camera2D Deserialize(const DSerializer& _serializer);
+        Camera2D& Deserialize(const DSerializer& _serializer);
         void Serialize(const SSerializer& _serializer);
 
         Camera2D() = default;

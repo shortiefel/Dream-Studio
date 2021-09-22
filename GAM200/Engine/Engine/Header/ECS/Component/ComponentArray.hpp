@@ -26,6 +26,8 @@ Technology is prohibited.
 #include <cassert>
 #include <unordered_map>
 
+#include <iostream>
+
 namespace Engine {
 	class ComponentArrayInterface {
 	public:
@@ -44,10 +46,10 @@ namespace Engine {
 			Entity entity = component.GetEntityId();
 			//error checking
 			LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
-
+			
 			size_t newIndex = Size;
 			EntityToIndexMap[entity] = newIndex; //Entity -> Index
-			componentArray[newIndex] = component; //Creating of the array and calls it component
+			componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
 			Size++;
 #else
 			//error checking
@@ -62,6 +64,25 @@ namespace Engine {
 #endif
 		}
 
+		void AddScriptComponent(T component) {
+			printf("Come in here \n");
+			Entity entity = component.GetEntityId();
+			//No Script
+			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) {
+				size_t newIndex = Size;
+				EntityToIndexMap[entity] = newIndex; //Entity -> Index
+				componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
+				//componentArray[newIndex].AddScript(component); //Creating of the array and calls it component
+				Size++;
+			}
+			//Has at least one script
+			else {
+				printf("Adding new scripts \n");
+				size_t index = EntityToIndexMap[entity];
+				//componentArray[index].AddScript(component);
+			}
+		}
+
 
 		void RemoveComponent(Entity entity) {
 #if NEW_ECS
@@ -71,13 +92,14 @@ namespace Engine {
 			//Copies element at the end into deleted element's place 
 			size_t IndexRemoveEntity = EntityToIndexMap[entity];
 			size_t IndexLastElement = Size - 1;
-			componentArray[IndexRemoveEntity] = componentArray[IndexLastElement];
+			componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
 
 			//Updating the map when it's shifted
 			Entity EntityLastElement = componentArray[IndexLastElement].GetEntityId();
 			EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
-
-			componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+			
+			//componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+			componentArray[IndexLastElement] = T{};
 			EntityToIndexMap.erase(entity);
 
 			--Size;
@@ -108,6 +130,26 @@ namespace Engine {
 			--Size;
 #endif
 		}
+		//void RemoveScript(Entity entity, const char* className) {
+		//	//error checking
+		//	assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
+
+		//	size_t IndexRemoveEntity = EntityToIndexMap[entity];
+		//	componentArray[IndexLastElement].klassInstance;
+
+		//	//Copies element at the end into deleted element's place 
+		//	size_t IndexLastElement = Size - 1;
+		//	componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
+
+		//	//Updating the map when it's shifted
+		//	Entity EntityLastElement = componentArray[IndexLastElement].GetEntityId();
+		//	EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
+
+		//	componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+		//	EntityToIndexMap.erase(entity);
+
+		//	--Size;
+		//}
 
 		//referencing to the template to get the data
 		T& GetData(Entity entity) {
@@ -139,13 +181,18 @@ namespace Engine {
 			return true;
 		}
 
-		void EntityDestroyed(Entity entity) override {
-			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end())
+		void EntityDestroyed(Entity entity) override {			
+			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end()) {
 				RemoveComponent(entity);
+			}
 		}
 
 		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
 			return componentArray;
+		}
+
+		size_t GetComponentArraySize() {
+			return Size;
 		}
 
 	private:

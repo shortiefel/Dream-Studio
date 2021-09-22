@@ -19,7 +19,7 @@ Technology is prohibited.
 namespace Engine {
 	RigidBody::RigidBody(Entity _ID, bool _active) : IComponent{ _ID }, isActive{ _active } {}
 
-	RigidBody RigidBody::Deserialize(const DSerializer& _serializer) {
+	RigidBody& RigidBody::Deserialize(const DSerializer& _serializer) {
 		isActive = _serializer.GetValue<bool>("IsActive");
 		return *this;
 	}

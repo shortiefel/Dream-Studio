@@ -16,7 +16,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/ECS/ECSWrapper.hpp"
-#include "Engine/Header/Script/ScriptEngine.hpp"
+#include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
 
 namespace Engine {
@@ -37,13 +37,13 @@ namespace Engine {
 		Entity entTo = gCoordinator.createEntity();
 		gCoordinator.DuplicateEntity(entFrom, entTo);
 
-		const auto& listOfClassInstance = ScriptEngine::csEntityClassInstance.find(entFrom)->second;
+		/*const auto& listOfClassInstance = ScriptSystem::csEntityClassInstance.find(entFrom)->second;
 		CSClassInstance newClassInstance;
 		for (auto& [className, scriptInstance] : listOfClassInstance) {
 			newClassInstance.emplace(className, CSScriptInstance{ className });
 		}
 
-		ScriptEngine::csEntityClassInstance.emplace(entTo, std::move(newClassInstance));
+		ScriptSystem::csEntityClassInstance.emplace(entTo, std::move(newClassInstance));*/
 	}
 
 	void DreamECS::DestroyEntity(Entity entity)
@@ -62,7 +62,7 @@ namespace Engine {
 		while (num > 0) {
 			Entity& entity = destroyQueue.front();
 			gCoordinator.destroyEntity(entity);
-			ScriptEngine::csEntityClassInstance.erase(entity);
+			//ScriptSystem::csEntityClassInstance.erase(entity);
 			destroyQueue.pop();
 			--num;
 		}
@@ -72,7 +72,7 @@ namespace Engine {
 		std::unordered_set<Entity> listOfEntity = gCoordinator.GetUsedEntitySet();
 		for (auto& entity : listOfEntity) {
 			gCoordinator.destroyEntity(entity);
-			ScriptEngine::csEntityClassInstance.erase(entity);
+			//ScriptSystem::csEntityClassInstance.erase(entity);
 		}
 
 		gCoordinator.ResetECS();

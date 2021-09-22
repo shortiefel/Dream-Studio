@@ -37,7 +37,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Entity/EntityManager.hpp"
 #include "Engine/Header/ECS/ECSWrapper.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
-#include "Engine/Header/Script/ScriptEngine.hpp"
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
 
 //Type and Store named must be same to use this
@@ -46,7 +45,7 @@ itr = obj.FindMember(#type);\
 if (itr != obj.MemberEnd()) {\
 	DSerializer serializer{ itr }; \
 		DreamECS::AddComponent(\
-			type{ ent }.Deserialize(serializer)\
+			std::move(type{ ent }.Deserialize(serializer))\
 		);\
 }
 
@@ -152,16 +151,29 @@ namespace Engine {
 				SERIALIZE(tex);
 				entityObject.AddMember("Texture", objType, doc.GetAllocator());
 			}
-
-			if (ScriptEngine::csEntityClassInstance.find(ent) != ScriptEngine::csEntityClassInstance.end()) {
 #if 1
-				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
+
+			CSScript* csScript = DreamECS::GetComponentTest<CSScript>(ent);
+			if (csScript != nullptr) {
+				LOG_ASSERT(csScript);
+				rapidjson::Value objType(rapidjson::kArrayType);
+				SSerializer serializer(doc, objType); 
+				csScript->Serialize(serializer);
+				entityObject.AddMember("CSScript", objType, doc.GetAllocator());
+			}
+
+
+
+#else
+			if (ScriptSystem::csEntityClassInstance.find(ent) != ScriptSystem::csEntityClassInstance.end()) {
+#if 1
+				const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
 				rapidjson::Value classArray(rapidjson::kArrayType);
 
 				SSerializer serializer(doc, classArray);
-				ScriptEngine::SerializeClass(serializer, entityclassInstance);
+				ScriptSystem::SerializeClass(serializer, entityclassInstance);
 				{
-					//const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
+					//const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
 					//rapidjson::Value classArray(rapidjson::kArrayType);
 
 					//for (const auto& [className, scriptInstance] : entityclassInstance) {
@@ -184,7 +196,7 @@ namespace Engine {
 					//		rapidjson::Value variableArray(rapidjson::kArrayType);
 
 					//		SSerializer serializer(doc, variableArray);
-					//		ScriptEngine::SerializeVariable(serializer, scriptInstance);
+					//		ScriptSystem::SerializeVariable(serializer, scriptInstance);
 
 					//		//classObj.AddMember("Variable", variableArray, doc.GetAllocator());
 					//		cserializer.SetValueJSon("Variable", variableArray);
@@ -194,7 +206,7 @@ namespace Engine {
 					//}
 				}
 #else
-				const CSClassInstance& entityclassInstance = ScriptEngine::csEntityClassInstance.find(ent)->second;
+				const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
 				rapidjson::Value classArray(rapidjson::kArrayType);
 
 				for (const auto& [className, scriptInstance] : entityclassInstance) {
@@ -258,6 +270,7 @@ namespace Engine {
 
 				entityObject.AddMember("CSScript", classArray, doc.GetAllocator());
 			}
+#endif
 
 			doc.PushBack(entityObject, doc.GetAllocator());
 		}
@@ -285,63 +298,21 @@ namespace Engine {
 
 			itr = obj.FindMember("CSScript");
 			if (itr != obj.MemberEnd()) {
+#if 1 
+				
+				DSerializer serializer{ itr };
+				DreamECS::AddComponent(
+					std::move(CSScript{ ent }.Deserialize(serializer))
+			);
+#else
 				DSerializer serializer(itr);
 				CSClassInstance classInstance;
 
-				ScriptEngine::Deserialize(serializer, classInstance);
-				/*for (auto& classJSon : itr->value.GetArray()) {
-					const auto& className = classJSon["Class"].GetString();
 
-					CSScriptInstance csScriptInstance{
-						className,
-						classJSon["IsActive"].GetBool() };
+				ScriptSystem::Deserialize(serializer, classInstance);
 
-					rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
-					if (variableItr != classJSon.MemberEnd()) {
-						for (auto& variableData : variableItr->value.GetArray()) {
-							const auto& variableName = variableData["Name"].GetString();
-							const auto& variableType = CSType{ variableData["Type"].GetInt() };
-
-
-							CSPublicVariable csPublicvariable{ variableName, variableType };
-
-
-							if (variableType == CSType::CHAR) {
-								char charData = variableData["Data"].GetInt();
-								csPublicvariable.SetVariableData(&charData);
-							}
-
-							else if (variableType == CSType::BOOL) {
-								bool boolData = variableData["Data"].GetBool();
-								csPublicvariable.SetVariableData(&boolData);
-							}
-
-							else if (variableType == CSType::FLOAT) {
-								float floatData = variableData["Data"].GetFloat();
-								csPublicvariable.SetVariableData(&floatData);
-							}
-							else if (variableType == CSType::INT) {
-								int intData = variableData["Data"].GetInt();
-								csPublicvariable.SetVariableData(&intData);
-							}
-							else if (variableType == CSType::UINT) {
-								unsigned int uinData = variableData["Data"].GetUint();
-								csPublicvariable.SetVariableData(&uinData);
-							}
-
-							else if (variableType == CSType::VEC2) {
-								Math::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
-													variableData["Data"].GetArray()[1].GetFloat() };
-								csPublicvariable.SetVariableData(&vec2Data);
-							}
-
-							csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
-						}
-					}
-					classInstance.emplace(className, std::move(csScriptInstance));
-				}*/
-
-				ScriptEngine::csEntityClassInstance.emplace(ent, std::move(classInstance));
+				ScriptSystem::csEntityClassInstance.emplace(ent, std::move(classInstance));
+#endif
 			}
 		}
 	}

@@ -45,7 +45,7 @@ namespace Engine {
 						 Math::vec3(0, 0, 1.f) };
 	}
 
-	Transform Transform::Deserialize(const DSerializer& _serializer) {
+	Transform& Transform::Deserialize(const DSerializer& _serializer) {
 		position = _serializer.GetValue<Math::vec2>("Position");
 		scale = _serializer.GetValue<Math::vec2>("Scale");
 		angle = _serializer.GetValue<float>("Angle");

@@ -130,6 +130,9 @@
     <Filter Include="Source Files\ECS\Component\Physics">
       <UniqueIdentifier>{5d65f08b-4ac9-4b47-b8c7-324381a9b379}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ECS\Component\Script">
+      <UniqueIdentifier>{39dac5dd-bfec-43a6-9988-b9ebbf1eba4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -145,9 +148,6 @@
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Factory.cpp">
@@ -195,9 +195,6 @@
     <ClCompile Include="Engine\Code\Script\ScriptInternalCall.cpp">
       <Filter>Source Files\Script</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Script\ScriptEngine.cpp">
-      <Filter>Source Files\Script</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp">
       <Filter>Source Files\Script</Filter>
     </ClCompile>
@@ -243,6 +240,15 @@
     <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp">
       <Filter>Source Files\Serialize</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp">
+      <Filter>Source Files\ECS\Component\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Script\Scripting.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -278,9 +284,6 @@
     <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp">
-      <Filter>Header Files\ECS\Component</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp">
       <Filter>Header Files\ECS\Entity</Filter>
     </ClInclude>
@@ -291,9 +294,6 @@
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\System.hpp">
@@ -455,9 +455,6 @@
     <ClInclude Include="Engine\Header\Script\ScriptClass.hpp">
       <Filter>Header Files\Script</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Script\ScriptEngine.hpp">
-      <Filter>Header Files\Script</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp">
       <Filter>Header Files\Script</Filter>
     </ClInclude>
@@ -514,6 +511,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Serialize\SSerializer.hpp">
       <Filter>Header Files\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\Scripting.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp">
+      <Filter>Header Files\Script</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -43,7 +43,7 @@ namespace Engine {
 	private:
 		//static SceneManager* sceneManager;
 
-		static std::string currentSceneName;
+		static std::string currentScenePath;
 		static std::string defaultSceneName;
 		static Scene* currentScene;
 	};

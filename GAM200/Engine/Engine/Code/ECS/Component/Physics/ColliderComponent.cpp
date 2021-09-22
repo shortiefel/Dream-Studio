@@ -24,7 +24,7 @@ namespace Engine {
 	Collider::Collider(Entity _ID, ColliderType _c, Math::vec2 _pos, Math::vec2 _scale, float _rotation, bool _trigger, bool _active) :
 		IComponent{ _ID }, cType{ _c }, offset_position{ _pos }, offset_scale{ _scale }, angle{ _rotation }, isTrigger{ _trigger }, isActive{ _active } {}
 
-	Collider Collider::Deserialize(const DSerializer& _serializer) {
+	Collider& Collider::Deserialize(const DSerializer& _serializer) {
 		cType = ColliderType(_serializer.GetValue<int>("ColliderType"));
 		offset_position = _serializer.GetValue<Math::vec2>("Position");
 		offset_scale = _serializer.GetValue<Math::vec2>("Scale");

@@ -116,7 +116,8 @@ namespace Editor {
 				ImGui::MenuItem("Inspector", NULL, &inspector_bool);
 				ImGui::MenuItem("Game Window", NULL, &gameWin_bool);
 				ImGui::MenuItem("Scene Window", NULL, &sceneWin_bool);
-				ImGui::MenuItem("Assets", NULL, &asset_bool);
+				ImGui::MenuItem("Assets Manager", NULL, &asset_bool);
+				ImGui::MenuItem("Content Browser", NULL, &content_bool);
 
 				ImGui::EndMenu();
 			}
@@ -125,7 +126,7 @@ namespace Editor {
 		-------------------------------------------------------------------------------------------------*/
 
 		/*-------------------------------------------------------------------------------------------------
-		Windows creation: Hierarchy, Inspector, Game window, Scene window, Asset Panel
+		Windows creation: Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
 		void GUI_Hierarchy() {
 			if (hierarchy_bool) {
@@ -189,7 +190,21 @@ namespace Editor {
 		void GUI_AssetPanel()
 		{
 			if (asset_bool) {
-				ImGui::Begin("Assets", &asset_bool, window_flags);
+				ImGui::Begin("Assets Manager", &asset_bool, window_flags);
+				ImGui::Text("Asset Path: ");
+				ImGui::End();
+			}
+		}
+
+		void GUI_ContentBrowser()
+		{
+			if (content_bool) {
+				ImGui::Begin("Content Browser", &content_bool, window_flags);
+				ImGui::Text("Content");
+				ImGui::ArrowButton("down", ImGuiDir_Down);
+				ImGui::PushButtonRepeat(true);
+				ImGui::PopButtonRepeat();
+				ImGui::SameLine();
 				ImGui::End();
 			}
 		}

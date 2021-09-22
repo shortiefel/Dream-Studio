@@ -18,6 +18,9 @@ Technology is prohibited.
 
 #include "Engine/Header/pch.hpp"
 #include <filesystem>
+#include <string>
+#include <unordered_map>
+#include <memory>
 
 namespace Engine {
 
@@ -25,10 +28,10 @@ namespace Engine {
 	{
 	public:
 		// Constructor a new Asset Manager
-		AssetManager() {};
+		AssetManager() = default;
 
 		// Deconstructor for the Asset Manager
-		~AssetManager() { Shutdown(); }
+		~AssetManager() = default;
 
 		// Initialize any assets that should be created on start up
 		void Init();
@@ -36,7 +39,7 @@ namespace Engine {
 		// Clean up any assets
 		void Shutdown() {};
 
-		void loadTexture(std::string _name, std::string _fileName);
+		void Load(std::string _name, std::string _fileName);
 		//sf::Texture& GetTexture(std::string name);
 	private:
 

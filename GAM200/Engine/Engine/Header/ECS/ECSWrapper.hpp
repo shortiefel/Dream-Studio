@@ -23,7 +23,7 @@ Technology is prohibited.
 
 namespace Engine {
 	class Coordinator;
-
+	
 	class DreamECS {
 	public:
 		static void Init();
@@ -63,10 +63,10 @@ namespace Engine {
 			gCoordinator.RemoveComponent<T>(entity);
 		}
 
-		static void RemoveScript(Entity entity, const char* className)
+		/*static void RemoveScript(Entity entity, const char* className)
 		{
 			gCoordinator.RemoveScript(entity, className);
-		}
+		}*/
 
 		template <typename T>
 		static T& GetComponent(Entity entity) {

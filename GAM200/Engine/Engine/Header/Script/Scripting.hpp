@@ -28,8 +28,14 @@ namespace Engine {
 		Destroy child domain
 		-Check if child domain exist
 		-delete if it exist
-	-----------------------------------------------------*/
+		-----------------------------------------------------*/
 		void DestroyChildDomain();
+
+		void InitVariable(CSScriptInstance& _csScriptInstance);
+		/*-----------------------------------------------------
+		Get enum CSType from MonoType
+		-----------------------------------------------------*/
+		//CSType GetCSType(MonoType* mt);
 	}
 }
 

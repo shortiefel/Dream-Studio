@@ -310,57 +310,6 @@ namespace Engine {
 
 
 				ScriptSystem::Deserialize(serializer, classInstance);
-				/*for (auto& classJSon : itr->value.GetArray()) {
-					const auto& className = classJSon["Class"].GetString();
-
-					CSScriptInstance csScriptInstance{
-						className,
-						classJSon["IsActive"].GetBool() };
-
-					rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
-					if (variableItr != classJSon.MemberEnd()) {
-						for (auto& variableData : variableItr->value.GetArray()) {
-							const auto& variableName = variableData["Name"].GetString();
-							const auto& variableType = CSType{ variableData["Type"].GetInt() };
-
-
-							CSPublicVariable csPublicvariable{ variableName, variableType };
-
-
-							if (variableType == CSType::CHAR) {
-								char charData = variableData["Data"].GetInt();
-								csPublicvariable.SetVariableData(&charData);
-							}
-
-							else if (variableType == CSType::BOOL) {
-								bool boolData = variableData["Data"].GetBool();
-								csPublicvariable.SetVariableData(&boolData);
-							}
-
-							else if (variableType == CSType::FLOAT) {
-								float floatData = variableData["Data"].GetFloat();
-								csPublicvariable.SetVariableData(&floatData);
-							}
-							else if (variableType == CSType::INT) {
-								int intData = variableData["Data"].GetInt();
-								csPublicvariable.SetVariableData(&intData);
-							}
-							else if (variableType == CSType::UINT) {
-								unsigned int uinData = variableData["Data"].GetUint();
-								csPublicvariable.SetVariableData(&uinData);
-							}
-
-							else if (variableType == CSType::VEC2) {
-								Math::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
-													variableData["Data"].GetArray()[1].GetFloat() };
-								csPublicvariable.SetVariableData(&vec2Data);
-							}
-
-							csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
-						}
-					}
-					classInstance.emplace(className, std::move(csScriptInstance));
-				}*/
 
 				ScriptSystem::csEntityClassInstance.emplace(ent, std::move(classInstance));
 #endif

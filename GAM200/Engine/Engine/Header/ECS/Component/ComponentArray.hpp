@@ -64,21 +64,22 @@ namespace Engine {
 #endif
 		}
 
-		void AddScript(T component) {
+		void AddScriptComponent(T component) {
+			printf("Come in here \n");
 			Entity entity = component.GetEntityId();
 			//No Script
 			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) {
 				size_t newIndex = Size;
 				EntityToIndexMap[entity] = newIndex; //Entity -> Index
-				//componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
-				componentArray[newIndex].AddScript(component); //Creating of the array and calls it component
+				componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
+				//componentArray[newIndex].AddScript(component); //Creating of the array and calls it component
 				Size++;
 			}
 			//Has at least one script
 			else {
 				printf("Adding new scripts \n");
 				size_t index = EntityToIndexMap[entity];
-				componentArray[index].AddScript(component);
+				//componentArray[index].AddScript(component);
 			}
 		}
 
@@ -96,8 +97,9 @@ namespace Engine {
 			//Updating the map when it's shifted
 			Entity EntityLastElement = componentArray[IndexLastElement].GetEntityId();
 			EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
-
-			componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+			
+			//componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+			componentArray[IndexLastElement] = T{};
 			EntityToIndexMap.erase(entity);
 
 			--Size;
@@ -179,9 +181,10 @@ namespace Engine {
 			return true;
 		}
 
-		void EntityDestroyed(Entity entity) override {
-			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end())
+		void EntityDestroyed(Entity entity) override {			
+			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end()) {
 				RemoveComponent(entity);
+			}
 		}
 
 		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {

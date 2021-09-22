@@ -16,7 +16,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Script/ScriptInternalCall.hpp"
-#include "Engine/Header/ECS/System/ScriptSystem.hpp"
+//#include "Engine/Header/Script/Scripting.hpp"
 
 #include <mono/metadata/assembly.h>
 
@@ -223,7 +223,8 @@ namespace Engine {
 	void Destroy_Script_Engine(unsigned int id, MonoString* str) {
 		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(id);
 		if (!csScript) return;
-		csScript->klassInstance.erase(std::string{ mono_string_to_utf8(str) });
+		csScript->RemoveScript(mono_string_to_utf8(str));
+		//csScript->klassInstance.erase(std::string{ mono_string_to_utf8(str) });
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -240,7 +241,8 @@ namespace Engine {
 	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {
 		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(id);
 		if (!csScript) return;
-		csScript->klassInstance.find(std::string{ mono_string_to_utf8(str) })->second.isActive = boolean;
+		csScript->SetActive( mono_string_to_utf8(str), boolean);
+		//csScript->klassInstance.find(std::string{ mono_string_to_utf8(str) })->second.isActive = boolean;
 	}
 
 

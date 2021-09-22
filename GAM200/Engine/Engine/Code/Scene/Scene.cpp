@@ -61,9 +61,16 @@ namespace Engine {
         //Restart Mono
         //Init game
         //std::cout << "Playing \n";
+
+        /*
         if (!SceneSave()) return false;
         ScriptSystem::PlayInit();
         return true;
+        */
+    }
+
+    void Scene::PlayInit() {
+        ScriptSystem::PlayInit();
     }
 
     void Scene::Stop() {
@@ -107,17 +114,17 @@ namespace Engine {
         
     }
 
-    bool Scene::SceneSave() {
-        if (!ScriptSystem::CompileCS()) {
-            std::cout << "Fail to compile \n";
-            //Scene::SetPlaying(false);
-            return false;
-        }
+    //bool Scene::SceneSave() {
+    //    //if (!ScriptSystem::CompileCS()) {
+    //    //    std::cout << "Fail to compile \n";
+    //    //    //Scene::SetPlaying(false);
+    //    //    return false;
+    //    //}
 
-        ScriptSystem::UpdateMapData();
-        //Change to sceneName (might be fullName(path + name) instead)
-        GameSceneSerializer::SerializeScene(fullPathSceneName);
+    //    //ScriptSystem::UpdateMapData();
+    //    ////Change to sceneName (might be fullName(path + name) instead)
+    //    //GameSceneSerializer::SerializeScene(fullPathSceneName);
 
-        return true;
-    }
+    //    return true;
+    //}
 }

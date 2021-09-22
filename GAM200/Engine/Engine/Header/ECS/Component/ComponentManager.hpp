@@ -77,7 +77,8 @@ namespace Engine {
 		}
 
 		void AddScript(CSScript component) {
-			GetComArray<CSScript>()->AddScript(std::move(component));
+			printf("add script \n");
+			GetComArray<CSScript>()->AddScriptComponent(std::move(component));
 		}
 
 		template<typename T>

@@ -29,7 +29,6 @@ namespace Engine {
 
 	class ScriptSystem {
 	public:
-
 		/*-----------------------------------------------------
 		Start runtime
 		-----------------------------------------------------*/
@@ -52,10 +51,8 @@ namespace Engine {
 		Called when saving/playing
 		-----------------------------------------------------*/
 		static void UpdateMapData();
-		/*-----------------------------------------------------
-		Get enum CSType from MonoType
-		-----------------------------------------------------*/
-		static CSType GetCSType(MonoType* mt);
+		
+		//static CSType GetCSType(MonoType* mt);
 		/*-----------------------------------------------------
 		Set up mono
 		-----------------------------------------------------*/

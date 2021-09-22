@@ -48,10 +48,10 @@ namespace Engine {
 	void EngineCore::Update(float dt, bool defaultRender) {
 		SceneManager::Update(dt, defaultRender);
 
-		if (Input::IsKeyPressed(Input_KeyCode::G))
+		/*if (Input::IsKeyPressed(Input_KeyCode::G))
 			SceneManager::ChangeScene("test2");
 		if (Input::IsKeyPressed(Input_KeyCode::H))
-			SceneManager::ChangeScene("test3");
+			SceneManager::ChangeScene("test3");*/
 		
 	}
 

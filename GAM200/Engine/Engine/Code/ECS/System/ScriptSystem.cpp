@@ -84,15 +84,11 @@ namespace Engine {
 	bool CallOverlapFunc(const OverlapColliderEvent& e); //To be registered to Event
 
 	void ScriptSystem::PlayInit() {
-#if NEWSCRIPTING
 		const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
 		for (auto& csScript : entScriptArray) {
 			auto& classScriptInstances = csScript.klassInstance;
 			const auto& entityId = csScript.GetEntityId();
-#else
-		//Entity and map of classScript
-		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
-#endif
+
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
@@ -105,19 +101,14 @@ namespace Engine {
 	}
 
 	void ScriptSystem::PlayRunTime() {
-#if NEWSCRIPTING
+
 		const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
 		for (auto& csScript : entScriptArray) {
 			auto& classScriptInstances = csScript.klassInstance;
 			const auto& entityId = csScript.GetEntityId();
-#else
-		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
-#endif
-			//if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) continue;
+
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
-				//Run time check in case it is deleted 
-				//if (csEntityClassInstance.find(entityId) == csEntityClassInstance.end()) break;
 				if (csScriptInstance.isActive && csScriptInstance.csClass.UpdateFunc != nullptr)
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::UPDATE);
 			}
@@ -129,29 +120,29 @@ namespace Engine {
 	//}
 
 	bool ScriptSystem::CompileCS() {
-		destroy_child_domain();
+		Scripting::DestroyChildDomain();
 		int status = std::system("CompileCS.bat");
 		if (status > 0) return false;
 		return true;
 	}
 
-	CSType ScriptSystem::GetCSType(MonoType* mt) {
-		int type = mono_type_get_type(mt);
-		switch (type) {
-		case MONO_TYPE_CHAR: return CSType::CHAR;
-		case MONO_TYPE_BOOLEAN: return CSType::BOOL;
-		case MONO_TYPE_R4: return CSType::FLOAT;
-		case MONO_TYPE_I4: return CSType::INT;
-		case MONO_TYPE_U4: return CSType::UINT;
-			//case MONO_TYPE_STRING: return CSType::STRING;
-		case MONO_TYPE_VALUETYPE:
-		{
-			char* name = mono_type_get_name(mt);
-			if (strcmp(name, "Vec2") == 0) return CSType::VEC2;
-		}
-		}
-		return CSType::NONE;
-	}
+	//CSType ScriptSystem::GetCSType(MonoType* mt) {
+	//	int type = mono_type_get_type(mt);
+	//	switch (type) {
+	//	case MONO_TYPE_CHAR: return CSType::CHAR;
+	//	case MONO_TYPE_BOOLEAN: return CSType::BOOL;
+	//	case MONO_TYPE_R4: return CSType::FLOAT;
+	//	case MONO_TYPE_I4: return CSType::INT;
+	//	case MONO_TYPE_U4: return CSType::UINT;
+	//		//case MONO_TYPE_STRING: return CSType::STRING;
+	//	case MONO_TYPE_VALUETYPE:
+	//	{
+	//		char* name = mono_type_get_name(mt);
+	//		if (strcmp(name, "Vec2") == 0) return CSType::VEC2;
+	//	}
+	//	}
+	//	return CSType::NONE;
+	//}
 
 
 	void ScriptSystem::Create() {
@@ -169,13 +160,13 @@ namespace Engine {
 	}
 
 	void ScriptSystem::Destroy() {
-		destroy_child_domain();
+		Scripting::DestroyChildDomain();
 		//clean up root domain
 		mono_jit_cleanup(mono_domain_get());
 	}
 
 	void ScriptSystem::ReloadMono() {
-		destroy_child_domain();
+		Scripting::DestroyChildDomain();
 
 		domain = mono_domain_create_appdomain((char*)("Child_Domain"), NULL);
 		if (!domain) {
@@ -299,56 +290,54 @@ namespace Engine {
 	}
 
 	void ScriptSystem::InitPublicVariable() {
-#if NEWSCRIPTING
 		auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
 		for (auto& csScript : entScriptArray) {
 			auto& classScriptInstances = csScript.klassInstance;
 			const auto& entityId = csScript.GetEntityId();
-#else
-		for (auto& [entityId, classScriptInstances] : csEntityClassInstance) {
-#endif
+
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
-				if (csScriptInstance.csClass.klass == nullptr) continue;
+				//Scripting::
+				//if (csScriptInstance.csClass.klass == nullptr) continue;
 
-				auto& variableMap = csScriptInstance.csVariableMap;
+				//auto& variableMap = csScriptInstance.csVariableMap;
 
-				std::unordered_map<std::string, CSPublicVariable> oldVariable;
-				oldVariable.reserve(variableMap.size());
+				//std::unordered_map<std::string, CSPublicVariable> oldVariable;
+				//oldVariable.reserve(variableMap.size());
 
-				for (auto& [variableName, variableData] : variableMap) {
-					oldVariable.emplace(variableName, std::move(variableData));
-				}
+				//for (auto& [variableName, variableData] : variableMap) {
+				//	oldVariable.emplace(variableName, std::move(variableData));
+				//}
 
-				variableMap.clear();
+				//variableMap.clear();
 
-				MonoClassField* classField;
-				void* ptr = nullptr;
-				while ((classField = mono_class_get_fields(csScriptInstance.csClass.klass, &ptr)) != nullptr) {
-					const char* name = mono_field_get_name(classField);
-					unsigned int flags = mono_field_get_flags(classField);
+				//MonoClassField* classField;
+				//void* ptr = nullptr;
+				//while ((classField = mono_class_get_fields(csScriptInstance.csClass.klass, &ptr)) != nullptr) {
+				//	const char* name = mono_field_get_name(classField);
+				//	unsigned int flags = mono_field_get_flags(classField);
 
-					//Ignore private variables
-					if ((flags & MONO_FIELD_ATTR_PUBLIC) == 0)
-						continue;
+				//	//Ignore private variables
+				//	if ((flags & MONO_FIELD_ATTR_PUBLIC) == 0)
+				//		continue;
 
-					MonoType* variableType = mono_field_get_type(classField);
-					CSType csType = GetCSType(variableType);
+				//	MonoType* variableType = mono_field_get_type(classField);
+				//	CSType csType = GetCSType(variableType);
 
-					char* typeName = mono_type_get_name(variableType);
+				//	char* typeName = mono_type_get_name(variableType);
 
-					if (oldVariable.find(name) != oldVariable.end() && oldVariable.find(name)->second.variableType == csType) {
-						variableMap.emplace(name, std::move(oldVariable.at(name)));
-					}
-					else {
-						if (csType == CSType::NONE) {
-							LOG_WARNING("Type not found");
-							continue;
-						}
-						CSPublicVariable publicVariable = { name, csType };
-						variableMap.emplace(name, std::move(publicVariable));
-					}
+				//	if (oldVariable.find(name) != oldVariable.end() && oldVariable.find(name)->second.variableType == csType) {
+				//		variableMap.emplace(name, std::move(oldVariable.at(name)));
+				//	}
+				//	else {
+				//		if (csType == CSType::NONE) {
+				//			LOG_WARNING("Type not found");
+				//			continue;
+				//		}
+				//		CSPublicVariable publicVariable = { name, csType };
+				//		variableMap.emplace(name, std::move(publicVariable));
+				//	}
 
-				}
+				//}
 			}
 		}
 	}
@@ -507,16 +496,16 @@ namespace Engine {
 		-Check if child domain exist
 		-delete if it exist
 	-----------------------------------------------------*/
-	void destroy_child_domain() {
-		//MonoDomain* currentDomain = mono_domain_get();
-		////Check if there is a child domain first
-		//if (currentDomain && currentDomain != mono_get_root_domain()) {
-		//	if (!mono_domain_set(mono_get_root_domain(), false)) {
-		//		LOG_ERROR("Scripting: Unable to set domain");
-		//	}
-		//	mono_domain_unload(currentDomain);
-		//}
-	}
+	//void destroy_child_domain() {
+	//	//MonoDomain* currentDomain = mono_domain_get();
+	//	////Check if there is a child domain first
+	//	//if (currentDomain && currentDomain != mono_get_root_domain()) {
+	//	//	if (!mono_domain_set(mono_get_root_domain(), false)) {
+	//	//		LOG_ERROR("Scripting: Unable to set domain");
+	//	//	}
+	//	//	mono_domain_unload(currentDomain);
+	//	//}
+	//}
 
 
 }

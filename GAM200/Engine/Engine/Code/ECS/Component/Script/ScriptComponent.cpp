@@ -15,6 +15,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
+#include "Engine/Header/Script/Scripting.hpp"
 
 namespace Engine {
 	CSScript::CSScript(Entity _ID) :
@@ -36,19 +37,32 @@ namespace Engine {
 
 	void CSScript::AddScript(CSScript& comp) {
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
-			if (klassInstance.find(className) == klassInstance.end())
+			if (klassInstance.find(className) == klassInstance.end()) {
+				Scripting::InitVariable(csScriptInstance);
 				klassInstance.emplace(className, std::move(csScriptInstance));
+			}
+
+			else {
+				std::cout << "found class at " << klassInstance.at(className).csClass.className << "\n";
+			}
 		}
 	}
 
-	bool CSScript::RemoveScript(const char* className) {
-		for (const auto& [className, scriptInstance] : klassInstance) {
-
-		}
+	bool CSScript::RemoveScript(const char* _className) {
+		klassInstance.erase(_className);
 
 		if (klassInstance.size()) return false;
 		return true;
 	}
+
+	void CSScript::SetActive(const char* _className, bool _boolean) {
+		klassInstance.find(_className)->second.isActive = _boolean;
+	}
+
+	/*void CSScript::InitVariable(const char* className) {
+		auto& csScriptInstance = klassInstance.at(className);
+		Scripting::InitVariable(csScriptInstance);
+	}*/
 
 	CSScript& CSScript::Deserialize(const DSerializer& _serializer) {
 		for (auto& classJSon : _serializer.GetArray()) {
@@ -58,7 +72,7 @@ namespace Engine {
 				className,
 				classJSon["IsActive"].GetBool() };
 
-			rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
+			/*rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
 			if (variableItr != classJSon.MemberEnd()) {
 				for (auto& variableData : variableItr->value.GetArray()) {
 					const auto& variableName = variableData["Name"].GetString();
@@ -99,7 +113,7 @@ namespace Engine {
 
 					csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
 				}
-			}
+			}*/
 			klassInstance.emplace(className, std::move(csScriptInstance));
 		}
 		return *this;

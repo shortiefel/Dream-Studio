@@ -24,4 +24,9 @@ namespace Engine
 		std::string shadersPath = "./Assets/Shader";
 
 	}
+
+	//void AssetManager::Load()
+	//{
+
+	//}
 }

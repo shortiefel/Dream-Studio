@@ -192,6 +192,8 @@ namespace Editor {
 			if (asset_bool) {
 				ImGui::Begin("Assets Manager", &asset_bool, window_flags);
 				ImGui::Text("Asset Path: ");
+				ImGui::TreeNode("Camera");
+				
 				ImGui::End();
 			}
 		}
@@ -200,11 +202,37 @@ namespace Editor {
 		{
 			if (content_bool) {
 				ImGui::Begin("Content Browser", &content_bool, window_flags);
-				ImGui::Text("Content");
-				ImGui::ArrowButton("down", ImGuiDir_Down);
-				ImGui::PushButtonRepeat(true);
-				ImGui::PopButtonRepeat();
-				ImGui::SameLine();
+				//ImGui::TreeNode("Content");
+				if (_currentDirectory != std::filesystem::path("Assets"))
+				{
+					if (ImGui::Button("<--"))
+					{
+						_currentDirectory = _currentDirectory.parent_path();
+					}
+				}
+				for (auto& directory : std::filesystem::directory_iterator("Assets"))
+				{
+					const auto& path = directory.path();
+					auto relative_path = std::filesystem::relative(path, _currentDirectory);
+					std::string relative_pathstring = relative_path.string();
+					if (directory.is_directory())
+					{
+						if (ImGui::Button(relative_pathstring.c_str()))
+						{
+							_currentDirectory /= path.filename();
+						}
+					}
+					else
+					{
+						if (ImGui::Button(relative_pathstring.c_str()))
+						{
+
+						}
+					}
+
+				}
+				
+
 				ImGui::End();
 			}
 		}

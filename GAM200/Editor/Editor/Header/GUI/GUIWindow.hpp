@@ -18,6 +18,7 @@ Technology is prohibited.
 #define GUI_WINDOW_HPP
 
 #include <Imgui/imgui.h>
+#include <filesystem>
 
 namespace Editor {
     namespace GUI_Window {
@@ -50,6 +51,8 @@ namespace Editor {
         void	GUI_SceneWindow(unsigned int& sceneWinTex);
         void    GUI_AssetPanel();
         void    GUI_ContentBrowser();
+
+        static std::filesystem::path _currentDirectory = "Assets";
     }
 }
 

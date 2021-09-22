@@ -67,6 +67,8 @@ namespace Engine {
         ScriptSystem::PlayInit();
         return true;
         */
+
+        return true;
     }
 
     void Scene::PlayInit() {

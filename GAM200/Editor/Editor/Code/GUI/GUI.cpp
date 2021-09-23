@@ -50,6 +50,8 @@ namespace Editor {
         GUI_Window::GUI_SceneWindow(sceneWinTex);
         GUI_Window::GUI_Hierarchy();
         GUI_Window::GUI_Inspector();
+        GUI_Window::GUI_AssetPanel();
+        GUI_Window::GUI_ContentBrowser();
     }
 
     void GUI::Draw() {

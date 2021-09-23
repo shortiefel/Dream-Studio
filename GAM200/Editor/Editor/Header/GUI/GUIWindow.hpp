@@ -19,6 +19,7 @@ Technology is prohibited.
 #define GUI_WINDOW_HPP
 
 #include <Imgui/imgui.h>
+#include <filesystem>
 
 namespace Editor {
     namespace GUI_Window {
@@ -34,6 +35,8 @@ namespace Editor {
         static bool inspector_bool = true;
         static bool gameWin_bool = true;
         static bool sceneWin_bool = true;
+        static bool asset_bool = true;
+        static bool content_bool = true;
 
         /*-------------------------------------------------------------------------------------------------
         Windows creation: Hierarchy, Inspector, Game window, Scene window
@@ -47,6 +50,10 @@ namespace Editor {
         void	GUI_Inspector();
         void	GUI_GameWindow(unsigned int& gameWinTex);
         void	GUI_SceneWindow(unsigned int& sceneWinTex);
+        void    GUI_AssetPanel();
+        void    GUI_ContentBrowser();
+
+        static std::filesystem::path _currentDirectory = "Assets";
     }
 }
 

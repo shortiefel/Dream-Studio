@@ -248,6 +248,8 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Script\Scripting.cpp">
       <Filter>Source Files\Script</Filter>
+    <ClCompile Include="Engine\Code\Management\AssetManager.cpp">
+      <Filter>Source Files\Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -523,6 +525,8 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp">
       <Filter>Header Files\Script</Filter>
+    <ClInclude Include="Engine\Header\Management\AssetManager.hpp">
+      <Filter>Header Files\Management</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

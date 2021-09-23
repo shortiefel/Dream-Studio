@@ -202,6 +202,7 @@
     <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp" />
     <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp" />
     <ClCompile Include="Engine\Code\Window.cpp" />
+    <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\rapidjson\allocators.h" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\GraphicSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\System.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp" />

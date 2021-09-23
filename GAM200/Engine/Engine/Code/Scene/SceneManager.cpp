@@ -32,6 +32,7 @@ namespace Engine {
     Scene* SceneManager::currentScene;
 
 	void SceneManager::StartScene() {
+        defaultSceneName = "test2";
         currentScenePath = TO_FULL_PATH(defaultSceneName);
         currentScene = new Scene{ currentScenePath };
 	}

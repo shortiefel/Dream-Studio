@@ -38,7 +38,7 @@ namespace Engine {
 #endif
 
 		//virtual bool Create() = 0;
-		virtual void Destroy() = 0;
+		//virtual void Destroy() = 0;
 	};
 }
 

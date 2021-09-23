@@ -296,7 +296,8 @@ namespace Engine {
 		overlapMap.clear();
 	}
 
-	bool CollisionSystem::Create(const std::shared_ptr<CollisionSystem>& collisionSystem) {
+	//bool CollisionSystem::Create(const std::shared_ptr<CollisionSystem>& collisionSystem) {
+	bool CollisionSystem::Create() {
 #ifndef NEW_ECS
 		CS = collisionSystem;
 #endif

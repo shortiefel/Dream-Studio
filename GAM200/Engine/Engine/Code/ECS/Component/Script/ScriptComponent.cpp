@@ -43,6 +43,7 @@ namespace Engine {
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
 			if (klassInstance.find(className) == klassInstance.end()) {
 				Scripting::InitVariable(csScriptInstance);
+				Scripting::InitCSClass(csScriptInstance);
 				klassInstance.emplace(className, std::move(csScriptInstance));
 			}
 

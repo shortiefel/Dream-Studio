@@ -65,9 +65,6 @@ namespace Engine {
 		{
 			entityManager->DestroyEntity(entity);
 			compManager->DestroyEntity(entity);
-#ifndef NEW_ECS
-			sysManager->EntityDestroyed(entity);
-#endif
 		}
 
 		inline const std::unordered_set<Entity>& GetUsedEntitySet() const {

@@ -28,8 +28,9 @@ namespace Engine {
 	class GraphicSystem : public System {
 	public:
 
-		static bool Create(const std::shared_ptr<GraphicSystem>& graphicSystem);
-		virtual void Destroy() override;
+		//static bool Create(const std::shared_ptr<GraphicSystem>& graphicSystem);
+		static bool Create();
+		static void Destroy();
 		~GraphicSystem();
 		//void Destroy();
 

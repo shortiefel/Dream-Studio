@@ -249,6 +249,9 @@
     <ClCompile Include="Engine\Code\Script\Scripting.cpp">
       <Filter>Source Files\Script</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -523,6 +526,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp">
       <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

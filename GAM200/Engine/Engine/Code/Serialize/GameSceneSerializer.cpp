@@ -289,7 +289,7 @@ namespace Engine {
 		for (auto& obj : doc.GetArray()) {
 			Entity ent = DreamECS::CreateEntity();
 			rapidjson::Value::ConstMemberIterator itr;
-
+			
 			ADD_COMPONENT_WTIH_CHECK(Transform);
 			ADD_COMPONENT_WTIH_CHECK(Collider);
 			ADD_COMPONENT_WTIH_CHECK(RigidBody);

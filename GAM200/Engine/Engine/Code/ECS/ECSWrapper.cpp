@@ -72,7 +72,6 @@ namespace Engine {
 		std::unordered_set<Entity> listOfEntity = gCoordinator.GetUsedEntitySet();
 		for (auto& entity : listOfEntity) {
 			gCoordinator.destroyEntity(entity);
-			//ScriptSystem::csEntityClassInstance.erase(entity);
 		}
 
 		gCoordinator.ResetECS();

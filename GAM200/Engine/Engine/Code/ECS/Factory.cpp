@@ -37,10 +37,15 @@ namespace Engine {
         DreamECS::RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSharpScript>();
+        /*DreamECS::RegisterSystem<CameraSystem>();
+        DreamECS::RegisterSystem<GraphicSystem>();
+        DreamECS::RegisterSystem<CollisionSystem>();
+        DreamECS::RegisterSystem<PhysicsSystem>();*/
 
-        CameraSystem::Create(DreamECS::RegisterSystem<CameraSystem>());
-        GraphicSystem::Create(DreamECS::RegisterSystem<GraphicSystem>());
-        CollisionSystem::Create(DreamECS::RegisterSystem<CollisionSystem>());
+        CameraSystem::Create();
+        GraphicSystem::Create();
+        CollisionSystem::Create();
+        PhysicsSystem::Create();
         ScriptSystem::Create();
 
 #else
@@ -82,6 +87,10 @@ namespace Engine {
 
     void Factory::Destroy() {
         ScriptSystem::Destroy();
+        PhysicsSystem::Destroy();
+        CollisionSystem::Destroy();
+        GraphicSystem::Destroy();
+        CameraSystem::Destroy();
     }
 
     //Prefix options------------------------------------------------------------------------------

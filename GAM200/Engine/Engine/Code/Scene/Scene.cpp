@@ -49,6 +49,17 @@ namespace Engine {
         }
 
         ScriptSystem::UpdateMapData();
+        //const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+        //for (auto& csScript : entScriptArray) {
+        //    auto& classScriptInstances = csScript.klassInstance;
+        //    const auto& entityId = csScript.GetEntityId();
+
+        //    //Single class and (class and CS public variable)
+        //    for (auto& [className, csScriptInstance] : classScriptInstances) {
+        //        void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
+        //        std::cout << "class: " << className << " " << entityId << "\n";
+        //    }
+        //}
         ScriptSystem::PlayInit();
         //Change to sceneName (might be fullName(path + name) instead)
         GameSceneSerializer::SerializeScene(fullPathSceneName);
@@ -81,6 +92,7 @@ namespace Engine {
         if (playing) {
             ScriptSystem::PlayRunTime();
             CollisionSystem::Update(dt);
+            PhysicsSystem::Update(dt);
         }
         if (Input::IsKeyPressed(Input_KeyCode::N))
             DreamECS::DuplicateEntity(0);

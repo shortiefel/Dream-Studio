@@ -23,9 +23,10 @@ Technology is prohibited.
 
 namespace Engine {
 	struct RigidBody : public IComponent {
-		//	//object cannot be pushed by default
-		//	bool hasGravity = true, isMoveable = false;
-		//
+		
+		Math::vec2 velocity = Math::vec2{};
+		//Higher = stop faster
+		float friction = float{};
 		bool isActive = true;
 
 		RigidBody& Deserialize(const DSerializer& _serializer);

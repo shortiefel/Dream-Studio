@@ -97,7 +97,8 @@ namespace Engine {
         return world_to_ndc_xform;
     }
 
-    bool CameraSystem::Create(const std::shared_ptr<CameraSystem>& cameraSystem) {
+    //bool CameraSystem::Create(const std::shared_ptr<CameraSystem>& cameraSystem) {
+    bool CameraSystem::Create() {
 #ifndef NEW_ECS
         CS = cameraSystem;
 #endif

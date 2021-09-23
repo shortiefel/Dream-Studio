@@ -24,8 +24,9 @@ Technology is prohibited.
 namespace Engine {
 	class CameraSystem : public System {
 	public:
-		static bool Create(const std::shared_ptr<CameraSystem>& cameraSystem);
-		virtual void Destroy() override;
+		//static bool Create(const std::shared_ptr<CameraSystem>& cameraSystem);
+		static bool Create();
+		static void Destroy();
 		~CameraSystem();
 
 		static void Update(float dt);

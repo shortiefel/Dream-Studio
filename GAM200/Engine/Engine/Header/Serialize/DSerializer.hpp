@@ -17,12 +17,14 @@ Technology is prohibited.
 #ifndef DSERIALIZER_HPP
 #define DSERIALIZER_HPP
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 
 #include <string>
 #include <rapidjson/document.h>
 
 using JsonIter = rapidjson::Value::ConstMemberIterator;
+#define VARIABLE_CHECK if (!itr->value.HasMember(name)) throw "Variable doesn't exist";
 
 namespace Engine {
 	class DSerializer {
@@ -32,37 +34,46 @@ namespace Engine {
 		/*--------------------------------------------------------------------------------
 		* T GetValue (name)
 		--------------------------------------------------------------------------------*/
+		
+
 		template <typename T>
-		T GetValue(const char* name) const {
-			printf("Error Cant find\n");
+		T GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
+			LOG_WARNING("DSerializer: Unknowm type");
 		}
 		template <>
-		bool GetValue(const char* name) const {
+		bool GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
 			return itr->value[name].GetBool();
 		}
 
 		template <>
-		unsigned int GetValue(const char* name) const {
+		unsigned int GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
 			return itr->value[name].GetUint();
 		}
 		
 		template <>
-		int GetValue(const char* name) const {
+		int GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
 			return itr->value[name].GetInt();
 		}
 
 		template <>
-		float GetValue(const char* name) const {
+		float GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
 			return itr->value[name].GetFloat();
 		}
 
 		template <>
-		std::string GetValue(const char* name) const {
+		std::string GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
 			return itr->value[name].GetString();
 		}
 
 		template <>
-		Math::vec2 GetValue(const char* name) const {
+		Math::vec2 GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
 			return Math::vec2{
 				itr->value[name].GetArray()[0].GetFloat(),
 				itr->value[name].GetArray()[1].GetFloat() };
@@ -74,6 +85,22 @@ namespace Engine {
 
 		const rapidjson::GenericArray<true, rapidjson::Value> GetArray() const {
 			return (itr->value.GetArray());
+		}
+
+		/*
+		If it is a newly added variable it would be missing from the serialized file
+		This adds a default value
+		*/
+		template <typename T>
+		T GetValue(const char* name) const {
+			try{
+				return GetValueInternal<T>(name);
+			}
+			catch (const char* msg) {
+				std::cout << msg << "\n";
+				LOG_WARNING("DSerializer: ", msg);
+				return T{};
+			}
 		}
 
 

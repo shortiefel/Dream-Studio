@@ -186,7 +186,8 @@ namespace Engine {
 		GraphicImplementation::UnbindFramebuffer();
 	}
 
-	bool GraphicSystem::Create(const std::shared_ptr<GraphicSystem>& graphicSystem) {
+	//bool GraphicSystem::Create(const std::shared_ptr<GraphicSystem>& graphicSystem) {
+	bool GraphicSystem::Create() {
 		//GS = graphicSystem;
 
 		//Set up vao for box

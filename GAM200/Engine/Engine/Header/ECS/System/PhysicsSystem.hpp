@@ -1,11 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
-@file    CollisionSystem.hpp
+@file    PhysicsSystem.hpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu
-@date    19/06/2021
+@date    23/09/2021
 \brief
-This file has the class to manage physic: CollisionSystem
-includes declaration to static function for a singleton CollisionSystem
+This file has the class declaration for PhysicsSystem
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -15,21 +14,20 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef COLLISION_SYSTEM_H
-#define COLLISION_SYSTEM_H
+#ifndef PHYSICS_SYSTEM_H
+#define PHYSICS_SYSTEM_H
 
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/ECS/System/System.hpp"
 
 namespace Engine {
-	class CollisionSystem : public System {
+	class PhysicsSystem : public System {
 	public:
-		//static bool Create(const std::shared_ptr<CollisionSystem>& collisionSystem);
 		static bool Create();
 		static void Destroy();
-		~CollisionSystem();
+		//~PhysicsSystem();
 
-		static void Stop();
+		//static void Stop();
 		static void Update(float dt);
 
 	private:

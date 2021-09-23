@@ -130,53 +130,59 @@ namespace Engine {
 
 			// to draw debug lines
 			if (isDebugDraw == GL_TRUE) {
-				// Bind VAO
-				glBindVertexArray(collider.stencil_ref->second.vaoid);
 
-				// Load stencil shader program
-				glUseProgram(GraphicImplementation::shdrpgms["Stencil"].GetHandle());
+				// when object has collider, get collider matrix
+				Collider* col = nullptr;
+				if (gCoordinator.HasCom<Collider>(col, entity) && col != nullptr) {
+
+					// Bind VAO
+					glBindVertexArray(collider.stencil_ref->second.vaoid);
+
+					// Load stencil shader program
+					glUseProgram(GraphicImplementation::shdrpgms["Stencil"].GetHandle());
 
 
-				// increase scale
-				MathD::Mat3 scaledMatrix;
-				// p = position, s = scale
-				MathD::Vec2 p = MathD::Vec2{};
-				MathD::Vec2 s = MathD::Vec2{};
+					// increase scale
+					MathD::Mat3 colliderMat;
+					// p = position, s = scale
+					MathD::Vec2 p = MathD::Vec2{};
+					MathD::Vec2 s = MathD::Vec2{};
 
-				p = transform.pos;
-				s = transform.scale;
+					p = col->pos + transform.pos;
+					s = col->scale + transform.scale;
 
-				scaledMatrix = {
-					//Translate
-					MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
-								 MathD::Vec3(0, 1.f, 0),
-								 MathD::Vec3(p.x, p.y, 1.f) }
-					*
+					colliderMat = {
+						//Translate
+						MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
+										MathD::Vec3(0, 1.f, 0),
+										MathD::Vec3(p.x, p.y, 1.f) }
+						*
 
-					//Scale (+1 for outline)
-					MathD::Mat3{ MathD::Vec3(s.x + 1, 0, 0),
-								 MathD::Vec3(0, s.y + 1, 0),
-								 MathD::Vec3(0, 0, 1.f) }
-				};
+						//Scale
+						MathD::Mat3{ MathD::Vec3(s.x, 0, 0),
+										MathD::Vec3(0, s.y, 0),
+										MathD::Vec3(0, 0, 1.f) }
+					};
 
-				scaledMatrix = camMatrix * scaledMatrix;
+					colliderMat = camMatrix * colliderMat;
 
-				// set scaled matrix
-				GLint uniform_var_loc3 = glGetUniformLocation(GraphicImplementation::shdrpgms["Stencil"].GetHandle(), "uModel_to_NDC");
-				glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, MathD::value_ptr(scaledMatrix));
-				if (uniform_var_loc3 == -1) {
-					std::cout << "scaledMatrix variable doesn't exist!!!\n";
-					std::exit(EXIT_FAILURE);
+					// set scaled matrix
+					GLint uniform_var_loc3 = glGetUniformLocation(GraphicImplementation::shdrpgms["Stencil"].GetHandle(), "uModel_to_NDC");
+					glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, MathD::value_ptr(colliderMat));
+					if (uniform_var_loc3 == -1) {
+						std::cout << "scaledMatrix variable doesn't exist!!!\n";
+						std::exit(EXIT_FAILURE);
+					}
+
+					// Draw debug lines
+					glLineWidth(5.f);
+					glDrawArrays(collider.stencil_ref->second.primitive_type, 0, collider.stencil_ref->second.draw_cnt);
+					glLineWidth(1.f);
+
+					// unbind VAO and shader program
+					glBindVertexArray(0);
+					GraphicImplementation::shdrpgms["Stencil"].UnUse();
 				}
-
-				// Draw debug lines
-				glLineWidth(5.f);
-				glDrawArrays(collider.stencil_ref->second.primitive_type, 0, collider.stencil_ref->second.draw_cnt);
-				glLineWidth(1.f);
-
-				// unbind VAO and shader program
-				glBindVertexArray(0);
-				GraphicImplementation::shdrpgms["Stencil"].UnUse();
 			}
 		}
 		GraphicImplementation::UnbindFramebuffer();
@@ -234,70 +240,68 @@ namespace Engine {
 	//
 	//	// nothing more to do - return handle to texture object
 	//	return texobj_hdl;
-	//}
+	//
 
 
 
 
 
+	// utilises collider to draw outer lines
+	/*
 
+	// when debugDraw is on
+	if (isDebugDraw == GL_TRUE) {
+		// when object has collider, get collider matrix
+		Collider* col = nullptr;
+		if (gCoordinator.HasCom<Collider>(col, entity) && col != nullptr) {
+			// set uniform variable for Collider_Matrix matrix
+			MathD::Mat3 colliderMat;
 
-				// utilises collider to draw outer lines
-			/*
+			// p = position, s = scale
+			MathD::Vec2 p = MathD::Vec2{};
+			MathD::Vec2 s = MathD::Vec2{};
 
-			// when debugDraw is on
-			if (isDebugDraw == GL_TRUE) {
-				// when object has collider, get collider matrix
-				Collider* col = nullptr;
-				if (gCoordinator.HasCom<Collider>(col, entity) && col != nullptr) {
-					// set uniform variable for Collider_Matrix matrix
-					MathD::Mat3 colliderMat;
+			p = col->pos + transform.pos;
+			s = col->scale + transform.scale;
 
-					// p = position, s = scale
-					MathD::Vec2 p = MathD::Vec2{};
-					MathD::Vec2 s = MathD::Vec2{};
+			colliderMat = {
+				//Translate
+				MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
+								MathD::Vec3(0, 1.f, 0),
+								MathD::Vec3(p.x, p.y, 1.f) }
+				*
 
-					p = col->pos + transform.pos;
-					s = col->scale + transform.scale;
+				//Scale
+				MathD::Mat3{ MathD::Vec3(s.x + 1, 0, 0),
+								MathD::Vec3(0, s.y + 1, 0),
+								MathD::Vec3(0, 0, 1.f) }
+			};
 
-					colliderMat = {
-						//Translate
-						MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
-									 MathD::Vec3(0, 1.f, 0),
-									 MathD::Vec3(p.x, p.y, 1.f) }
-						*
+			colliderMat = camMatrix * colliderMat;
 
-						//Scale
-						MathD::Mat3{ MathD::Vec3(s.x + 1, 0, 0),
-									 MathD::Vec3(0, s.y + 1, 0),
-									 MathD::Vec3(0, 0, 1.f) }
-					};
-
-					colliderMat = camMatrix * colliderMat;
-
-					// set collider matrix to slot 1
-					GLint uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "Collider_Matrix");
-					glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, MathD::value_ptr(colliderMat));
-					if (uniform_var_loc3 == -1) {
-						std::cout << "Collider_Matrix variable doesn't exist!!!\n";
-						std::exit(EXIT_FAILURE);
-					}
-
-					// set uniform variable for uID
-					id = 1;
-					uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uID");
-					glUniform1i(uniform_var_loc3, id);
-					if (uniform_var_loc3 == -1) {
-						std::cout << "uID = 1 variable doesn't exist!!!\n";
-						std::exit(EXIT_FAILURE);
-					}
-
-					// draw outlines of object
-					//glLineWidth(3.f);
-					//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-					glDrawArrays(transform.mdl_ref->second.primitive_type, 0, transform.mdl_ref->second.draw_cnt);
-				}
+			// set collider matrix to slot 1
+			GLint uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "Collider_Matrix");
+			glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, MathD::value_ptr(colliderMat));
+			if (uniform_var_loc3 == -1) {
+				std::cout << "Collider_Matrix variable doesn't exist!!!\n";
+				std::exit(EXIT_FAILURE);
 			}
 
-			*/
+			// set uniform variable for uID
+			id = 1;
+			uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uID");
+			glUniform1i(uniform_var_loc3, id);
+			if (uniform_var_loc3 == -1) {
+				std::cout << "uID = 1 variable doesn't exist!!!\n";
+				std::exit(EXIT_FAILURE);
+			}
+
+			// draw outlines of object
+			//glLineWidth(3.f);
+			//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glDrawArrays(transform.mdl_ref->second.primitive_type, 0, transform.mdl_ref->second.draw_cnt);
+		}
+	}
+
+	*/
 }

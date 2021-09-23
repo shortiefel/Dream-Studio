@@ -34,7 +34,7 @@ namespace Engine {
 
         void setup_vao_square() {
             // container contains vertices of Position, Color and Texture Coordinates respectively
-            std::array<GLVertCont, 4> vtx = {
+            std::array<GLMesh, 4> vtx = {
                 MathD::Vec2(-1.f, -1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(0.f, 0.f),
                 MathD::Vec2(1.f, -1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(1.f, 0.f),
                 MathD::Vec2(1.f, 1.f), MathD::Vec3(1.f, 0.f, 0.f), MathD::Vec2(1.f, 1.f),
@@ -44,7 +44,7 @@ namespace Engine {
             // VAO handle definition
             GLuint vbo_hdl;
             glCreateBuffers(1, &vbo_hdl);
-            glNamedBufferStorage(vbo_hdl, sizeof(GLVertCont) * vtx.size(),
+            glNamedBufferStorage(vbo_hdl, sizeof(GLMesh) * vtx.size(),
                 vtx.data(), GL_DYNAMIC_STORAGE_BIT);
 
             GLuint vaoid;
@@ -86,7 +86,7 @@ namespace Engine {
             int const count{ 52 };
             float rad = MathD::radians(360.f / static_cast<float>(count - 2));
 
-            std::array<GLVertCont, count> vtx;
+            std::array<GLMesh, count> vtx;
             vtx[0] = { MathD::Vec2(0.f, 0.f), MathD::Vec3(0.f, 1.f, 0.f), MathD::Vec2(0.5f, 0.5f) };
 
             for (int col{ 1 }; col < count; ++col) {
@@ -101,7 +101,7 @@ namespace Engine {
             // VAO handle definition
             GLuint vbo_hdl;
             glCreateBuffers(1, &vbo_hdl);
-            glNamedBufferStorage(vbo_hdl, sizeof(GLVertCont) * vtx.size(),
+            glNamedBufferStorage(vbo_hdl, sizeof(GLMesh) * vtx.size(),
                 vtx.data(), GL_DYNAMIC_STORAGE_BIT);
 
             GLuint vaoid;

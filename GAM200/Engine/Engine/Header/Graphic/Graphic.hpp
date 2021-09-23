@@ -35,7 +35,7 @@ namespace Engine {
 
         // container that contains 3 different vectors of vertex coordinates
         // Object Position, Color and Texture Coordinates respectively
-        struct GLVertCont {
+        struct GLMesh {
             MathD::Vec2 ObjPos_vtx;
             MathD::Vec3 Clr_vtx;
             MathD::Vec2 TexPos_vtx;

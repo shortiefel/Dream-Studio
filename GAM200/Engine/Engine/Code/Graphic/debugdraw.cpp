@@ -4,7 +4,8 @@
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    23/09/2021
 \brief
-This file contains functions that allows users to draw debug lines for game objects
+This file contains the definition of functions that allows users to 
+draw debug lines for game objects
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

@@ -25,8 +25,9 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 
-#include "Engine/Header/Graphic/Graphic.hpp"
+#include "Engine/Header/Graphic/mesh.hpp"
 #include "Engine/Header/Graphic/debugdraw.hpp"
+#include "Engine/Header/Graphic/Graphic.hpp"
 
 //#include "Engine/Header/Math/Matrix.hpp"
 //#include "../../External Resources/include/stb_image/stb_image.h" //-----remove

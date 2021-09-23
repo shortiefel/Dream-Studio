@@ -33,14 +33,6 @@ namespace Engine {
             GLuint draw_cnt = GLuint{}; // how many elements of primitive of type
         };
 
-        // container that contains 3 different vectors of vertex coordinates
-        // Object Position, Color and Texture Coordinates respectively
-        struct GLMesh {
-            MathD::Vec2 ObjPos_vtx;
-            MathD::Vec3 Clr_vtx;
-            MathD::Vec2 TexPos_vtx;
-        };
-
         void CreateFramebuffer(unsigned int* framebuffer, unsigned int* texColorBuffer);
         //exist = false to remove framebuffer, to set buffer ignore exist
         void SetFramebuffer(unsigned int f, bool exist = true);
@@ -76,13 +68,9 @@ namespace Engine {
         //    void update(GLdouble delta_time);
         //};
 
-
-        extern std::map<std::string, GLModel> models;
         extern std::map<std::string, GLSLShader> shdrpgms;
-        
-        //static std::map<std::string, GLObject> objects;
+        extern std::map<std::string, GLModel> models;
 
-        void setup_vao();
         void setup_shdr();
         //void create_square_instance();
     }

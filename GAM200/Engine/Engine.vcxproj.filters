@@ -180,6 +180,9 @@
     <ClCompile Include="Engine\Code\Graphic\debugdraw.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\mesh.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -399,6 +402,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\mesh.hpp">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>

@@ -79,6 +79,7 @@ namespace Engine {
 
         extern std::map<std::string, GLModel> models;
         extern std::map<std::string, GLSLShader> shdrpgms;
+        
         //static std::map<std::string, GLObject> objects;
 
         void setup_vao();

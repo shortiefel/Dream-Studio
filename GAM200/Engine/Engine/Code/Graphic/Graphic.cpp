@@ -30,7 +30,7 @@ namespace Engine {
 
         std::map<std::string, GLModel> models;
         std::map<std::string, GLSLShader> shdrpgms;
-        GLuint setup_texobj(std::string, GLuint, GLuint);
+        GLuint Setup_Texobj(std::string, GLuint, GLuint);
 
         void setup_vao_square() {
             // container contains vertices of Position, Color and Texture Coordinates respectively
@@ -138,26 +138,113 @@ namespace Engine {
             models.insert(std::pair<std::string, GLModel>("Circle", mdl));
         }
 
+        void setup_vao_stencilBox() {
+            int slices = 1, stacks = 1;
+
+            // vertices positions
+            int const count{ 2 * (slices + 1) + 2 * (stacks + 1) };
+            std::vector<MathD::Vec2> pos_vtx(count);
+
+            float const u{ 2.f / static_cast<float>(slices) };
+            float const v{ 2.f / static_cast<float>(stacks) };
+
+            int index = 0;
+
+            for (int col{ 0 }; col <= slices; ++col) {
+                float x{ u * static_cast<float> (col) - 1.f };
+                pos_vtx[index++] = MathD::Vec2(x, -1.f);
+                pos_vtx[index++] = MathD::Vec2(x, 1.f);
+            }
+
+            for (int row{ 0 }; row <= stacks; ++row) {
+                float y{ v * static_cast<float> (row) - 1.f };
+                pos_vtx[index++] = MathD::Vec2(-1.f, y);
+                pos_vtx[index++] = MathD::Vec2(1.f, y);
+            }
+
+            // Color
+            std::vector<MathD::Vec3> clr_vtx(pos_vtx.size());
+            for (int i{ 0 }; i < pos_vtx.size(); ++i) {
+                clr_vtx[i] = MathD::Vec3(1.f, 0.f, 0.f);
+            }
+
+
+            //VAO handle definition
+            GLuint vbo_hdl;
+            glCreateBuffers(1, &vbo_hdl);
+            glNamedBufferStorage(vbo_hdl, sizeof(MathD::Vec2) * pos_vtx.size() +
+                sizeof(MathD::Vec3) * clr_vtx.size(),
+                nullptr, GL_DYNAMIC_STORAGE_BIT);
+
+            //pos_vtx
+            glNamedBufferSubData(vbo_hdl, 0,
+                sizeof(MathD::Vec2) * pos_vtx.size(), pos_vtx.data());
+            //clr_vtx
+            glNamedBufferSubData(vbo_hdl, sizeof(MathD::Vec2) * pos_vtx.size(),
+                sizeof(MathD::Vec3) * clr_vtx.size(), clr_vtx.data());
+
+            GLuint vaoid;
+            glCreateVertexArrays(1, &vaoid);
+
+            //pos_vtx
+            glEnableVertexArrayAttrib(vaoid, 0);
+            glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, sizeof(MathD::Vec2));
+            glVertexArrayAttribFormat(vaoid, 0, 2, GL_FLOAT, GL_FALSE, 0);
+            glVertexArrayAttribBinding(vaoid, 0, 0);
+            //clr_vtx
+            glEnableVertexArrayAttrib(vaoid, 1);
+            glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl,
+                sizeof(MathD::Vec2) * pos_vtx.size(), sizeof(MathD::Vec3));
+            glVertexArrayAttribFormat(vaoid, 1, 3, GL_FLOAT, GL_FALSE, 0);
+            glVertexArrayAttribBinding(vaoid, 1, 1);
+            glBindVertexArray(0);
+
+            GLModel mdl;
+            mdl.vaoid = vaoid;
+            mdl.primitive_type = GL_LINES;
+            mdl.draw_cnt = static_cast<GLuint>(pos_vtx.size()); // number of vertices
+            mdl.primitive_cnt = mdl.draw_cnt / 2; // number of primitives
+            models.insert(std::pair<std::string, GLModel>("stencilBox", mdl));
+        }
+
         void setup_vao() {
+            setup_vao_stencilBox();
             setup_vao_square();
             setup_vao_circle();
         }
 
         void setup_shdr() {
-            std::vector<std::pair<GLenum, std::string>> shdr_files{
+            // Default Shader for Objects
+            std::vector<std::pair<GLenum, std::string>> shdr_files1{ 
             std::make_pair(GL_VERTEX_SHADER, "Assets/Shaders/OpenGLEngine.vert"),
             std::make_pair(GL_FRAGMENT_SHADER, "Assets/Shaders/OpenGLEngine.frag") };
 
-            GLSLShader shdr_pgm;
-            shdr_pgm.CompileLinkValidate(shdr_files);
+            GLSLShader shdr_pgm1;
+            shdr_pgm1.CompileLinkValidate(shdr_files1);
 
-            if (GL_FALSE == shdr_pgm.IsLinked()) {
+            if (GL_FALSE == shdr_pgm1.IsLinked()) {
                 std::cout << "Unable to compile/link/validate shader programs\n";
-                std::cout << shdr_pgm.GetLog() << "\n";
+                std::cout << shdr_pgm1.GetLog() << "\n";
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<std::string, GLSLShader>("Default", shdr_pgm));
+            shdrpgms.insert(std::pair<std::string, GLSLShader>("Default", shdr_pgm1));
+
+            // Stencil Shader for debug draw
+            std::vector<std::pair<GLenum, std::string>> shdr_files2 { 
+            std::make_pair(GL_VERTEX_SHADER, "Assets/Shaders/OpenGLEngine.vert"),
+            std::make_pair(GL_FRAGMENT_SHADER, "Assets/Shaders/fStencilTesting.frag") };
+
+            GLSLShader shdr_pgm2;
+            shdr_pgm2.CompileLinkValidate(shdr_files2);
+
+            if (GL_FALSE == shdr_pgm2.IsLinked()) {
+                std::cout << "Unable to compile/link/validate shader programs\n";
+                std::cout << shdr_pgm2.GetLog() << "\n";
+                std::exit(EXIT_FAILURE);
+            }
+
+            shdrpgms.insert(std::pair<std::string, GLSLShader>("Stencil", shdr_pgm2));
         }
 
         void CreateFramebuffer(unsigned int* framebuffer, unsigned int* texColorBuffer) {
@@ -202,29 +289,5 @@ namespace Engine {
         void UnbindFramebuffer() {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
         }
-
-
-        /*
-        $(SolutionDir)images will be the default location for all image files.
-        Standardize image size to be 256 texels width and height with each texel
-        representing 32-bit RGBA value.
-        */
-
-
-        //void create_square_instance() {
-        //    /*GLObject tem_obj;
-        //    tem_obj.init();*/
-
-        //    /*tem_obj.mdl_ref = models.find("Square");
-        //    tem_obj.shd_ref = shdrpgms.find("Default");*/
-
-        //    //objects.insert(std::pair<std::string, GLObject>("Square 1", tem_obj));
-        //    std::cout << "third: " << shdrpgms.size() << "\n";
-        //}
-
-        //void GLObject::init() {
-        //    //color = MathD::Vec3(0.f, 0.f, 0.f);
-        //    // create a entity with transform
-        //}
     }
 }

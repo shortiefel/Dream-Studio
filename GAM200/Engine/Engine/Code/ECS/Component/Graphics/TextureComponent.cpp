@@ -75,4 +75,10 @@ namespace Engine {
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+
+	std::shared_ptr<Texture> Texture::CreateFromString(const std::string path) {
+		std::cout << "Texture::CreateFromString CALLED" << std::endl;
+
+		return std::make_shared<Texture>(path);
+	}
 }

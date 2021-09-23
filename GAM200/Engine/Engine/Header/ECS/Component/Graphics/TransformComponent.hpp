@@ -40,7 +40,7 @@ namespace Engine {
 		std::map<std::string, GLSLShader>::iterator shd_ref = GraphicImplementation::shdrpgms.begin();
 
 		Transform() = default;
-		Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, std::string shape = "Square", std::string shader = "Default", int tLayer = 0) :
+		Transform(MathD::Vec2 tPos, MathD::Vec2 tScale, std::string shape = "Square",  std::string shader = "Default", int tLayer = 0) :
 			pos{ tPos }, scale{ tScale },
 			mdl_ref{ GraphicImplementation::models.find(shape) },
 			shd_ref{ GraphicImplementation::shdrpgms.find(shader) },

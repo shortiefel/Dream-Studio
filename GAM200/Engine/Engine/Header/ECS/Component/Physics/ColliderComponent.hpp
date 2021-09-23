@@ -26,6 +26,8 @@ Technology is prohibited.
 
 
 #include "Engine/Header/Math/Vector.hpp" //vector 2d
+#include "Engine/Header/Graphic/Graphic.hpp"
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	enum class ColliderType {
@@ -49,6 +51,8 @@ namespace Engine {
 		//Will be pushed if moveable
 		bool isMoveable = false;
 
+		std::map<std::string, GraphicImplementation::GLModel>::iterator stencil_ref;
+
 		Collider() = default;
 
 		//offsetPosition -> how far away from the transform center
@@ -62,12 +66,12 @@ namespace Engine {
 		Collider (ColliderType c, float offsetxPos, float offsetyPos,  float offsetWidth, float offsetHeight, bool trigger = false) :
 			Collider{ c, MathD::Vec2 { offsetxPos, offsetyPos }, MathD::Vec2 { offsetWidth, offsetHeight }, trigger } {}*/
 
-		Collider(ColliderType c, bool moveable = false, bool trigger = false) :
-			cType{ c }, pos{ MathD::Vec2{ 0.f, 0.f } }, scale{ MathD::Vec2{ 0.f, 0.f } }, isMoveable{ moveable }, isTrigger{ trigger } {}
+		Collider(ColliderType c, bool moveable = false, bool trigger = false, std::string stencil = "stencilBox") :
+			cType{ c }, pos{ MathD::Vec2{ 0.f, 0.f } }, scale{ MathD::Vec2{ 0.f, 0.f } }, isMoveable{ moveable }, isTrigger{ trigger }, stencil_ref{ GraphicImplementation::models.find(stencil) }{}
 
 		//Change of type constructor: Copy an existing Collider but with a different type
-		Collider(ColliderType c, MathD::Vec2 tPos, MathD::Vec2 tScale, bool moveable, bool tTrigger) :
-			cType{ c }, pos{ tPos }, scale{ tScale }, isMoveable{ moveable }, isTrigger{ tTrigger } {}
+		Collider(ColliderType c, MathD::Vec2 tPos, MathD::Vec2 tScale, bool moveable, bool tTrigger, std::string stencil = "stencilBox") :
+			cType{ c }, pos{ tPos }, scale{ tScale }, isMoveable{ moveable }, isTrigger{ tTrigger }, stencil_ref{ GraphicImplementation::models.find(stencil) } {}
 
 		Collider(const Collider&) = default;
 		Collider& operator=(const Collider&) = default;

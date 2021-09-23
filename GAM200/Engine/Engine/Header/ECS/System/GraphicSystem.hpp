@@ -35,10 +35,13 @@ namespace Engine {
 
 		// for debug draw
 		static GLboolean isDebugDraw;
-		static GLint ID;
+		static GLint id;
 
 		static void Update(float dt, MathD::Mat3 camMatrix = CameraSystem::GetTransform());
 		static void Render(MathD::Mat3 camMatrix = CameraSystem::GetTransform());
+
+		//static void UseShader() { stencilShdr.Use(); }
+		//static void UnUseShader() { stencilShdr.UnUse(); }
 	private:
 		//static GraphicSystem* gs;
 		static std::shared_ptr<GraphicSystem> GS;

@@ -110,6 +110,12 @@ namespace Engine {
 				objType.AddMember("isMoveable", col->isMoveable, doc.GetAllocator());
 				objType.AddMember("isTrigger", col->isTrigger, doc.GetAllocator());
 
+				rapidjson::Value stencilFP;
+				char buffer[200];
+				int len = sprintf_s(buffer, "%s", trans->mdl_ref->first.c_str());
+				stencilFP.SetString(buffer, len, doc.GetAllocator());
+				objType.AddMember("Stencil", stencilFP, doc.GetAllocator());
+
 				entityObject.AddMember("Collider", objType, doc.GetAllocator());
 			}
 
@@ -183,7 +189,8 @@ namespace Engine {
 						Get2DFloatValue("Position"),
 						Get2DFloatValue("Scale"),
 						itr->value["isMoveable"].GetBool(),
-						itr->value["isTrigger"].GetBool()
+						itr->value["isTrigger"].GetBool(),
+						itr->value["Stencil"].GetString()
 					});
 			}
 

@@ -174,6 +174,7 @@
     <ClCompile Include="Engine\Code\Event\KeyEvent.cpp" />
     <ClCompile Include="Engine\Code\Event\MouseEvent.cpp" />
     <ClCompile Include="Engine\Code\Event\WindowEvent.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\debugdraw.cpp" />
     <ClCompile Include="Engine\Code\Graphic\glslshader.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Graphic.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="Engine\Header\Event\MouseEvent.hpp" />
     <ClInclude Include="Engine\Header\Event\WindowEvent.hpp" />
     <ClInclude Include="Engine\Header\framework.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp" />
     <ClInclude Include="Engine\Header\Graphic\glslshader.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Graphic.hpp" />
     <ClInclude Include="Engine\Header\Layer\Layer.hpp" />

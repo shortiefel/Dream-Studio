@@ -26,6 +26,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 
 #include "Engine/Header/Graphic/Graphic.hpp"
+#include "Engine/Header/Graphic/debugdraw.hpp"
 
 //#include "Engine/Header/Math/Matrix.hpp"
 //#include "../../External Resources/include/stb_image/stb_image.h" //-----remove
@@ -78,10 +79,9 @@ namespace Engine {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//For all entities in GraphicSystem
-		for (auto const& entity : GS->mEntities) {
+		for (auto& entity : GS->mEntities) {
 			auto& transform = gCoordinator.GetCom<Transform>(entity);
 			auto& texture = gCoordinator.GetCom<Texture>(entity);
-			auto& collider = gCoordinator.GetCom<Collider>(entity);
 
 			// Bind VAO
 			glBindVertexArray(transform.mdl_ref->second.vaoid);
@@ -130,59 +130,7 @@ namespace Engine {
 
 			// to draw debug lines
 			if (isDebugDraw == GL_TRUE) {
-
-				// when object has collider, get collider matrix
-				Collider* col = nullptr;
-				if (gCoordinator.HasCom<Collider>(col, entity) && col != nullptr) {
-
-					// Bind VAO
-					glBindVertexArray(collider.stencil_ref->second.vaoid);
-
-					// Load stencil shader program
-					glUseProgram(GraphicImplementation::shdrpgms["Stencil"].GetHandle());
-
-
-					// increase scale
-					MathD::Mat3 colliderMat;
-					// p = position, s = scale
-					MathD::Vec2 p = MathD::Vec2{};
-					MathD::Vec2 s = MathD::Vec2{};
-
-					p = col->pos + transform.pos;
-					s = col->scale + transform.scale;
-
-					colliderMat = {
-						//Translate
-						MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
-										MathD::Vec3(0, 1.f, 0),
-										MathD::Vec3(p.x, p.y, 1.f) }
-						*
-
-						//Scale
-						MathD::Mat3{ MathD::Vec3(s.x, 0, 0),
-										MathD::Vec3(0, s.y, 0),
-										MathD::Vec3(0, 0, 1.f) }
-					};
-
-					colliderMat = camMatrix * colliderMat;
-
-					// set scaled matrix
-					GLint uniform_var_loc3 = glGetUniformLocation(GraphicImplementation::shdrpgms["Stencil"].GetHandle(), "uModel_to_NDC");
-					glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, MathD::value_ptr(colliderMat));
-					if (uniform_var_loc3 == -1) {
-						std::cout << "scaledMatrix variable doesn't exist!!!\n";
-						std::exit(EXIT_FAILURE);
-					}
-
-					// Draw debug lines
-					glLineWidth(5.f);
-					glDrawArrays(collider.stencil_ref->second.primitive_type, 0, collider.stencil_ref->second.draw_cnt);
-					glLineWidth(1.f);
-
-					// unbind VAO and shader program
-					glBindVertexArray(0);
-					GraphicImplementation::shdrpgms["Stencil"].UnUse();
-				}
+				GraphicImplementation::DebugDrawCollider(gCoordinator, entity, transform, camMatrix);
 			}
 		}
 		GraphicImplementation::UnbindFramebuffer();

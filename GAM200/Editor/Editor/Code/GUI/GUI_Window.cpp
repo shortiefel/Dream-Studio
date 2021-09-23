@@ -115,12 +115,14 @@ namespace Editor {
 		void GUI_WindowsMenu() {
 			if (ImGui::BeginMenu("Windows")) {
 
+				ImGui::MenuItem("Header", NULL, &playStop_bool);
 				ImGui::MenuItem("Hierarchy", NULL, &hierarchy_bool);
 				ImGui::MenuItem("Inspector", NULL, &inspector_bool);
 				ImGui::MenuItem("Game Window", NULL, &gameWin_bool);
 				ImGui::MenuItem("Scene Window", NULL, &sceneWin_bool);
 				ImGui::MenuItem("Assets Manager", NULL, &asset_bool);
 				ImGui::MenuItem("Content Browser", NULL, &content_bool);
+				
 
 				ImGui::EndMenu();
 			}
@@ -129,8 +131,16 @@ namespace Editor {
 		-------------------------------------------------------------------------------------------------*/
 
 		/*-------------------------------------------------------------------------------------------------
-		Windows creation: Hierarchy, Inspector, Game window, Scene window, Asset Manager
+		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
+		void GUI_HeaderPanel() {
+			if (playStop_bool)
+			{
+				ImGui::Begin("Header", &playStop_bool, window_flags);
+				ImGui::End();
+			}
+		}
+
 		void GUI_Hierarchy() {
 			if (hierarchy_bool) {
 				ImGui::Begin("Hierarchy", &hierarchy_bool, window_flags);

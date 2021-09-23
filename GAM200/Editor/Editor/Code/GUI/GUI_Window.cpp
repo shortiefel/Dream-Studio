@@ -94,7 +94,9 @@ namespace Editor {
 				GUI_WindowsMenu();
 
 				ImGui::EndMenuBar();
+				
 			}
+			
 		}
 
 		//Menu for files
@@ -109,6 +111,8 @@ namespace Editor {
 
 				ImGui::EndMenu();
 			}
+
+			
 		}
 
 		//Menu to open windows
@@ -126,6 +130,8 @@ namespace Editor {
 
 				ImGui::EndMenu();
 			}
+
+			
 		}
 		/*-------------------------------------------------------------------------------------------------
 		-------------------------------------------------------------------------------------------------*/
@@ -134,9 +140,22 @@ namespace Editor {
 		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
 		void GUI_HeaderPanel() {
+
 			if (playStop_bool)
 			{
-				ImGui::Begin("Header", &playStop_bool, window_flags);
+				ImVec2 wSize = ImGui::GetWindowSize();
+				ImGui::Begin("##Header", &playStop_bool, window_flags);
+
+				static int clicked = 0;
+
+				ImGui::PushItemWidth(wSize.x / 2);
+				ImGui::Button("Play", (ImVec2{ 40, 30 }));
+					clicked++; //script to replace
+				ImGui::SameLine();
+				ImGui::PushItemWidth(wSize.x /2 + 20);
+				if (ImGui::Button("Stop", (ImVec2{ 40, 30 })))
+					clicked++; //script to replace
+
 				ImGui::End();
 			}
 		}
@@ -157,34 +176,69 @@ namespace Editor {
 				float width = 160;
 				bool selectEntity = 0;
 
-				if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
+				/**
+				*	Transform Properties
+				*/
+
+				if (ImGui::TreeNode("Transform"))
 				{
-					//Updating of position
-					ImGui::Text("Position");
-					ImGui::Text("X: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("##posX", &comp->position.x, 0.0f);
-					ImGui::Text("Y: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("##posY", &comp->position.y, 0.0f);
+					ImGui::Spacing();
+					if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
+					{
+						//Updating of position
+						ImGui::Text("Position");
+						ImGui::Spacing();
+						ImGui::Text("X: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##posX", &comp->position.x, 0.0f);
+						ImGui::Text("Y: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##posY", &comp->position.y, 0.0f);
 
 
-					//Updating of scaling
-					ImGui::Text("Scaling ");
-					ImGui::Text("X: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("##posXscale", &comp->scale.x, 0.0f);
-					ImGui::Text("Y: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("##posYscale", &comp->scale.y, 0.0f);
+						//Updating of scaling
+						ImGui::Text("Scaling ");
+						ImGui::Spacing();
+						ImGui::Text("X: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##posXscale", &comp->scale.x, 0.0f);
+						ImGui::Text("Y: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##posYscale", &comp->scale.y, 0.0f);
 
 
-					ImGui::Text("Rotation ");
-					ImGui::SameLine();
-					ImGui::SliderAngle("##posRotate", &comp->angle);
-						
+						ImGui::Text("Rotation ");
+						ImGui::Spacing();
+						ImGui::SliderAngle("##posRotate", &comp->angle);
+
+
+					}
+					ImGui::TreePop();
+	
+				}
+
+				/**
+				*	Scripts for each component
+				*/
+				if (ImGui::TreeNode("Script")) {
+
+					ImGui::Text("hello");
+				}
+
+				/**
+				*	Add New Components
+				*/
+				
+				if (ImGui::Button("Add Component", (ImVec2{ 100, 0 })))
+				{
 
 				}
+
+				
+
+
+
+
 				//const auto& classScriptInstances = Engine::ScriptSystem::csEntityClassInstance.find(entity_selected);
 				//if (classScriptInstances != Engine::ScriptSystem::csEntityClassInstance.end()) {
 				//	

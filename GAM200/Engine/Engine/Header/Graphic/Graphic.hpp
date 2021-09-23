@@ -21,8 +21,6 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
 #include "Engine/Header/pch.hpp"
-#include "Engine/Header/Math/MathLib.hpp"
-#include "Engine/Header/Math/Vector2D.hpp"
 
 namespace Engine {
     namespace GraphicImplementation {
@@ -71,7 +69,6 @@ namespace Engine {
         extern std::map<std::string, GLSLShader> shdrpgms;
         extern std::map<std::string, GLModel> models;
 
-        void setup_shdr();
         //void create_square_instance();
     }
 }

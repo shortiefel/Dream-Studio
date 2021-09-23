@@ -2,10 +2,9 @@
 /*
 @file    mesh.cpp
 @author  Chia Yi Da		chiayida98@gmail.com
-
 @date    16/06/2021
 \brief
-This file contains the definition of functions that sets up the vao of meshes
+This file contains the definition of function that sets up the vao of different meshes
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.

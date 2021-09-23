@@ -4,7 +4,7 @@
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 \brief
-This file contains the declaration of functions that sets up the vao of meshes
+This file contains the declaration of function that sets up the vao of different meshes
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -17,8 +17,6 @@ Technology is prohibited.
 #ifndef MESH_H
 #define MESH_H
 
-#include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
-#include "Engine/Header/pch.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Math/Vector2D.hpp"
 

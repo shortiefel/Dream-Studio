@@ -26,6 +26,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 
 #include "Engine/Header/Graphic/mesh.hpp"
+#include "Engine/Header/Graphic/shader.hpp"
 #include "Engine/Header/Graphic/debugdraw.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 

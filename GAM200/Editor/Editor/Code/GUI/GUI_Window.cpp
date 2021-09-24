@@ -214,7 +214,7 @@ namespace Editor {
 
 						ImGui::Text("Rotation ");
 						ImGui::Spacing();
-						ImGui::SliderAngle("##posRotate", &comp->angle);
+						ImGui::SliderFloat("##posRotate", &comp->angle, -360.f, 360.f);
 
 
 					}

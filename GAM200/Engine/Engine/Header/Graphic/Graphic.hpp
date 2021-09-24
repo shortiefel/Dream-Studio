@@ -2,6 +2,7 @@
 /*
 @file    Graphic.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
+		 Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 \brief
 This file has the functions declaration to be called by the graphic system
@@ -30,14 +31,6 @@ namespace Engine {
             GLuint primitive_cnt = GLuint{};
             GLuint vaoid = GLuint{}; // handle to VAO
             GLuint draw_cnt = GLuint{}; // how many elements of primitive of type
-        };
-
-        // container that contains 3 different vectors of vertex coordinates
-        // Object Position, Color and Texture Coordinates respectively
-        struct GLVertCont {
-            Math::vec2 ObjPos_vtx;
-            Math::vec3 Clr_vtx;
-            Math::vec2 TexPos_vtx;
         };
 
         void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer);
@@ -80,8 +73,6 @@ namespace Engine {
         extern std::map<GraphicShader, GLSLShader> shdrpgms;
         //static std::map<std::string, GLObject> objects;
 
-        void setup_vao();
-        void setup_shdr();
         //void create_square_instance();
     }
 }

@@ -252,6 +252,15 @@
     <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\debugdraw.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\mesh.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\shader.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -529,6 +538,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
+      </ClCompile>
+    <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\mesh.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\shader.hpp">
+      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

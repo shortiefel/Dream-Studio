@@ -1,14 +1,13 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TextureComponent.hpp
-@author
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    02/07/2021
 \brief
 This file contain the TextureComponent declaration
 
 //Serialize list
 -string: pathname
-
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -43,6 +42,7 @@ namespace Engine {
 
 		Texture& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
+		static std::shared_ptr<Texture> CreateFromString(const std::string path);
 
 		inline GLint getWidth() const { return width; }
 		inline GLint getHeight() const { return height; }

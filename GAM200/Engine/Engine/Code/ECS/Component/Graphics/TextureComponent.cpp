@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TextureComponent.cpp
-@author
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    02/07/2021
 \brief
 This file contain the TextureComponent definition
@@ -71,5 +71,11 @@ namespace Engine {
 		_serializer.SetValue("IsActive", isActive);
 
 		//_serializer.EndSerialize("Texture");
+	}
+	
+	std::shared_ptr<Texture> Texture::CreateFromString(const std::string path) {
+		std::cout << "Texture::CreateFromString CALLED" << std::endl;
+
+		return std::make_shared<Texture>(path);
 	}
 }

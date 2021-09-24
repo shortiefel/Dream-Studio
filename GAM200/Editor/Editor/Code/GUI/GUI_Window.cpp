@@ -2,6 +2,7 @@
 /*
 @file    GUIWindow.cpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
+		 Goh See Yong, Denise   g.seeyongdenise@digipen.edu
 @date    26/07/2021
 \brief
 This file contain the GUIWindow definition
@@ -21,7 +22,8 @@ Technology is prohibited.
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/ECS/ECSWrapper.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
-
+#include "Engine/Header/Scene/SceneManager.hpp"
+#include "Editor/Header/Scene/EditorSceneManager.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 
 //Create a window with an image
@@ -98,6 +100,10 @@ namespace Editor {
 		void GUI_FileMenu() {
 			if (ImGui::BeginMenu("File")) {
 				bool quit = false;
+				ImGui::MenuItem("New", "CTRL+N");
+				//if ()
+				ImGui::MenuItem("Open", "CTRL+O");
+				ImGui::MenuItem("Save as", "CTRL+S");
 				ImGui::MenuItem("Quit", NULL, &quit);
 				if (quit) {
 					Engine::WindowCloseEvent event;

@@ -2,6 +2,8 @@
 /*
 @file    GUIWindow.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
+         Goh See Yong, Denise   g.seeyongdenise@digipen.edu
+
 @date    26/07/2021
 \brief
 This file contain the GUIWindow declaration

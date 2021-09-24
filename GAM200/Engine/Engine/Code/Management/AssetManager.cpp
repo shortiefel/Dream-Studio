@@ -13,20 +13,31 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **********************************************************************************/
+
+#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Management/AssetManager.hpp"
+#include "Engine/Header/Management/TextureManager.hpp"
+#include <iostream>
+#include <fstream>
 
 namespace Engine
 {
 	void AssetManager::Init()
 	{
-		std::string audiosPath = "./Assets/Audio";
-		std::string fontsPath = "./Assets/Fonts";
-		std::string shadersPath = "./Assets/Shader";
+		LOG_INSTANCE("AssetManager created");
 
 	}
 
-	//void AssetManager::Load()
-	//{
+	void AssetManager::Shutdown()
+	{
+		LOG_INSTANCE("AssetManager destroyed");
+	}
 
-	//}
+	void AssetManager::LoadFont(std::string name, std::string fileName)
+	{
+		std::string fontsPath = "./Assets/Fonts";
+
+		//to add after fixing font system
+	}
+
 }

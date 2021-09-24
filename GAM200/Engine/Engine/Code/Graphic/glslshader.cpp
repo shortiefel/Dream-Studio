@@ -305,7 +305,7 @@ namespace Engine {
     //  }
     //}
 
-    //void GLSLShader::SetUniform(GLchar const *name, MathD::Mat3 const& val) {
+    //void GLSLShader::SetUniform(GLchar const *name, Math::mat3 const& val) {
     //  GLint loc = glGetUniformLocation(pgm_handle, name);
     //  if (loc >= 0) {
     //    glUniformMatrix3fv(loc, 1, GL_FALSE, &val[0][0]);

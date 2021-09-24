@@ -18,16 +18,16 @@ Technology is prohibited.
 #define MESH_H
 
 #include "Engine/Header/Math/MathLib.hpp"
-#include "Engine/Header/Math/Vector2D.hpp"
 
 namespace Engine {
     namespace GraphicImplementation {
         // container that contains 3 different vectors of vertex coordinates
-        // Object Position, Color and Texture Coordinates respectively
+        // Object Position, Color and 
+        //Coordinates respectively
         struct GLMesh {
-            MathD::Vec2 objPos_vtx;
-            MathD::Vec3 clr_vtx;
-            MathD::Vec2 texPos_vtx;
+            Math::vec2 objPos_vtx;
+            Math::vec3 clr_vtx;
+            Math::vec2 texPos_vtx;
         };        
         
         void setup_vao();

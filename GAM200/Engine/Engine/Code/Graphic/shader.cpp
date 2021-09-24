@@ -34,7 +34,7 @@ namespace Engine {
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<std::string, GLSLShader>("Default", shdr_pgm1));
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::DEFAULT, shdr_pgm1));
 
             // Stencil Shader for debug draw
             std::vector<std::pair<GLenum, std::string>> shdr_files2{
@@ -50,7 +50,7 @@ namespace Engine {
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<std::string, GLSLShader>("Stencil", shdr_pgm2));
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::STENCIL, shdr_pgm2));
         }
     }
 }

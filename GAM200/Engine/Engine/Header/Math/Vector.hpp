@@ -8,12 +8,12 @@
 This file SHOULD be included to use Vector2 and Vector3 and its functions
 Usage:
 	#include "Vector.hpp"
-	MathD::Vec2 testA(1, 2);
-	MathD::Vec2 testB(2, 3);
+	Math::vec2 testA(1, 2);
+	Math::vec2 testB(2, 3);
 	float a = MathD::crossProduct (testA, testB);
-	MathD::Vec3 testA(1, 2, 4);
-	MathD::Vec3 testB(2, 3, 5);
-	MathD::Vec3 ans = MathD::crossProduct (testA, testB);
+	Math::vec3 testA(1, 2, 4);
+	Math::vec3 testB(2, 3, 5);
+	Math::vec3 ans = MathD::crossProduct (testA, testB);
 	MathD namespace is to prevent name clash with other library
 	This file has other types of vector2d and vector3d in case it is needed
 	Do add more here if other types is needed

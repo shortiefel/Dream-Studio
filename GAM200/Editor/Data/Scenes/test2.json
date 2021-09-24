@@ -1,16 +1,15 @@
 [
-  
   {
     "Transform": {
       "Position": [ -20.0, 200.0 ],
       "Scale": [ 50.0, 80.0 ],
-      "Angle": 45.0,
+      "Angle": 0.0,
       "IsActive": true
     },
     "Collider": {
       "ColliderType": 1,
       "Position": [ 0.0, 0.0 ],
-      "Scale": [ 1.0, 1.0 ],
+      "Scale": [ 2.0, 2.0 ],
       "Angle": 0.0,
       "IsTrigger": false,
       "IsActive": true
@@ -21,7 +20,7 @@
       "IsActive": true
     },
     "Texture": {
-      "Filepath": "",
+      "Filepath": "Assets/Textures/test2.png",
       "Shape": 0,
       "IsActive": true
     }
@@ -47,7 +46,7 @@
       "IsActive": true
     },
     "Texture": {
-      "Filepath": "",
+      "Filepath": "Assets/Textures/test2.png",
       "Shape": 0,
       "IsActive": true
     },

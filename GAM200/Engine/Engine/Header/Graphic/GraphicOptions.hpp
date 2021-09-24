@@ -20,11 +20,13 @@ Technology is prohibited.
 namespace Engine {
 	enum class GraphicShape {
 		SQUARE = 0,
-		CIRCLE
+		CIRCLE,
+		STENCIL
 	};
 
 	enum class GraphicShader {
-		DEFAULT = 0
+		DEFAULT = 0,
+		STENCIL
 	};
 }
 

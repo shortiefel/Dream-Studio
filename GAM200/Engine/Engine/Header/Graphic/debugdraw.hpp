@@ -24,7 +24,7 @@ Technology is prohibited.
 namespace Engine {
 	namespace GraphicImplementation {
 		// Draw collision outlines of object, red color
-		void DebugDrawCollider(Coordinator& gCoordinator, Entity const& entity, Transform const& transform, const MathD::Mat3 camMatrix);
+		void DebugDrawCollider(Entity const& entity, Transform const& transform, const Math::mat3 camMatrix);
 
 		// draw outlines of object (Different color)
 	}

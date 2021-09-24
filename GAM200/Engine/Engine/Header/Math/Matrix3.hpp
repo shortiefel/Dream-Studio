@@ -10,8 +10,8 @@ Eg: To initialize a matrix
 3 4 5
 6 7 8
 
-MathD::Mat3 matrix3 (0, 3, 6, 1, 4, 7, 2, 5, 8);
-Note: MathD::Mat3 is a type name done in matrix.hpp
+Math::mat3 matrix3 (0, 3, 6, 1, 4, 7, 2, 5, 8);
+Note: Math::mat3 is a type name done in matrix.hpp
 namespace MathImplementation is to prevent accidental usage
 
 

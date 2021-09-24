@@ -56,21 +56,19 @@ namespace Engine {
 		void Serialize(const SSerializer& _serializer);
 		std::map<std::string, GraphicImplementation::GLModel>::iterator stencil_ref;
 
-		Collider() = default;
-
 		//offsetPosition -> how far away from the transform center
 		//offsetScale -> how much it changes the transform scale
-		/*Collider(ColliderType c, MathD::Vec2 offsetPosition, MathD::Vec2 offsetScale, bool trigger = false) :
+		/*Collider(ColliderType c, Math::vec2 offsetPosition, Math::vec2 offsetScale, bool trigger = false) :
 			cType{ c }, pos{ offsetPosition }, scale { offsetScale.x, offsetScale.y }, isTrigger{ trigger } {}
 
-		Collider(ColliderType c, float offsetxPos, float offsetyPos, MathD::Vec2 offsetScale, bool trigger = false) :
-			Collider{ c, MathD::Vec2 { offsetxPos, offsetyPos }, offsetScale, trigger } {}
+		Collider(ColliderType c, float offsetxPos, float offsetyPos, Math::vec2 offsetScale, bool trigger = false) :
+			Collider{ c, Math::vec2 { offsetxPos, offsetyPos }, offsetScale, trigger } {}
 
 		Collider (ColliderType c, float offsetxPos, float offsetyPos,  float offsetWidth, float offsetHeight, bool trigger = false) :
-			Collider{ c, MathD::Vec2 { offsetxPos, offsetyPos }, MathD::Vec2 { offsetWidth, offsetHeight }, trigger } {}*/
+			Collider{ c, Math::vec2 { offsetxPos, offsetyPos }, Math::vec2 { offsetWidth, offsetHeight }, trigger } {}*/
 
 		Collider(ColliderType c, bool moveable = false, bool trigger = false, std::string stencil = "stencilBox") :
-			cType{ c }, pos{ MathD::Vec2{ 0.f, 0.f } }, scale{ MathD::Vec2{ 0.f, 0.f } }, isMoveable{ moveable }, isTrigger{ trigger }, stencil_ref{ GraphicImplementation::models.find(stencil) }{}
+			cType{ c }, offset_position{ Math::vec2{ 0.f, 0.f } }, offset_scale{ Math::vec2{ 0.f, 0.f } }, isTrigger{ trigger } {}//, stencil_ref{ GraphicImplementation::models.find(stencil) }{}
 
 		Collider() = default;
 		//Change of type constructor: Copy an existing Collider but with a different type

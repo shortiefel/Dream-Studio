@@ -49,6 +49,7 @@ namespace Editor {
 
 		GUI::SetSceneFBO();
 		//Engine::GraphicSystem::Update(dt);
+		//Change this line to editor graphic system
 		Engine::GraphicSystem::Render(EditorSceneCamera::GetTransform());
 
 		GUI::Update();

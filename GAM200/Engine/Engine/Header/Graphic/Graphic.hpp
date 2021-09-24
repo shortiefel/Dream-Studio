@@ -42,19 +42,19 @@ namespace Engine {
         //struct GLSprite {
         //    GLuint spriteWidth, spriteHeight;
         //    GLuint spritesheetWidth, spritesheetHeight;
-        //    MathD::Vec2 position;
+        //    Math::vec2 position;
         //};
 
         //struct GLObject {
         //    // orientation.x and orientation.y will be angle_disp and angle_speed respectively
         //    // both values specified in degrees
-        //    MathD::Vec2 orientation = MathD::Vec2{};
+        //    Math::vec2 orientation = Math::vec2{};
 
-        //    MathD::Vec2 scaling = MathD::Vec2{}; // scaling parameters
-        //    MathD::Vec2 position = MathD::Vec2{}; // translatin vector coordinates
-        //    MathD::Vec3 color = MathD::Vec3{};
-        //    MathD::Mat3 mdl_to_ndc_xform = MathD::Mat3{}; // model (model-to-world) transform
-        //    MathD::Mat3 mdl_xform = MathD::Mat3{}; // model-to-ndc transformation
+        //    Math::vec2 scaling = Math::vec2{}; // scaling parameters
+        //    Math::vec2 position = Math::vec2{}; // translatin vector coordinates
+        //    Math::vec3 color = Math::vec3{};
+        //    Math::mat3 mdl_to_ndc_xform = Math::mat3{}; // model (model-to-world) transform
+        //    Math::mat3 mdl_xform = Math::mat3{}; // model-to-ndc transformation
 
         //    // function to initialize object's state
         //    void init();

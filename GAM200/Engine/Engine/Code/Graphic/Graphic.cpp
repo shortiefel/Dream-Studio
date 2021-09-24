@@ -30,8 +30,8 @@ namespace Engine {
         unsigned int fbo;
         bool fbo_exist = false;
 
-        std::map<std::string, GLModel> models;
-        std::map<std::string, GLSLShader> shdrpgms;
+        std::map<GraphicShape, GLModel> models;
+        std::map<GraphicShader, GLSLShader> shdrpgms;
         GLuint Setup_Texobj(std::string, GLuint, GLuint);
 
 

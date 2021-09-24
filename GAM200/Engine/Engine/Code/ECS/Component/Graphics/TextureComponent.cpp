@@ -26,8 +26,6 @@ namespace Engine {
 		mdl_ref{ _shape },
 		//shd_ref{ GraphicImplementation::shdrpgms.find(shader) },
 		isActive{ _active } {
-
-		texobj_hdl = TextureManager::LoadTexture(filepath, &width, &height, &BPP, 4);
 	}
 
 
@@ -59,6 +57,7 @@ namespace Engine {
 
 	Texture& Texture::Deserialize(const DSerializer& _serializer) {
 		filepath = _serializer.GetValue<std::string>("Filepath");
+		texobj_hdl = TextureManager::LoadTexture(filepath, &width, &height, &BPP, 4);
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 		//shd_ref = GraphicShader(serializer.GetValue<int>("Scale"));
 		isActive = _serializer.GetValue<bool>("IsActive");
@@ -73,9 +72,9 @@ namespace Engine {
 		//_serializer.EndSerialize("Texture");
 	}
 	
-	std::shared_ptr<Texture> Texture::CreateFromString(const std::string path) {
+	/*std::shared_ptr<Texture> Texture::CreateFromString(const std::string path) {
 		std::cout << "Texture::CreateFromString CALLED" << std::endl;
 
 		return std::make_shared<Texture>(path);
-	}
+	}*/
 }

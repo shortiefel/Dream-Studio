@@ -45,7 +45,7 @@ itr = obj.FindMember(#type);\
 if (itr != obj.MemberEnd()) {\
 	DSerializer serializer{ itr }; \
 		DreamECS::AddComponent(\
-			std::move(type{ ent }.Deserialize(serializer))\
+			type{ ent }.Deserialize(serializer)\
 		);\
 }
 
@@ -289,7 +289,7 @@ namespace Engine {
 		for (auto& obj : doc.GetArray()) {
 			Entity ent = DreamECS::CreateEntity();
 			rapidjson::Value::ConstMemberIterator itr;
-			
+			std::cout << "deserialize \n";
 			ADD_COMPONENT_WTIH_CHECK(Transform);
 			ADD_COMPONENT_WTIH_CHECK(Collider);
 			ADD_COMPONENT_WTIH_CHECK(RigidBody);

@@ -32,12 +32,15 @@ namespace Engine {
 		//static bool Create(const std::shared_ptr<GraphicSystem>& graphicSystem);
 		static bool Create();
 		static void Destroy();
-		~GraphicSystem();
+		//~GraphicSystem();
 		//void Destroy();
 
 		//static void Update(float dt);
 		static void Render(Math::mat3 camMatrix = CameraSystem::GetTransform());
+
 	private:
+		static GLboolean isDebugDraw;
+		static GLint id;
 		//static GraphicSystem* gs;
 		//static std::shared_ptr<GraphicSystem> GS;
 	};

@@ -52,9 +52,9 @@ namespace Engine {
 	//	//	//orientation.x += orientation.y * static_cast<GLfloat>(dt);
 	//	//	/*
 	//	//	GLfloat rad = MathD::radians(20.f);
-	//	//	MathD::Mat3 temMat3{ MathD::Vec3(cos(rad), sin(rad), 0),
-	//	//						 MathD::Vec3(-sin(rad), cos(rad), 0),
-	//	//						 MathD::Vec3(0, 0, 1.f) };
+	//	//	Math::mat3 temMat3{ Math::vec3(cos(rad), sin(rad), 0),
+	//	//						 Math::vec3(-sin(rad), cos(rad), 0),
+	//	//						 Math::vec3(0, 0, 1.f) };
 	//	//	*/
 
 	//	//	//mdl_to_ndc_xform =
@@ -75,7 +75,7 @@ namespace Engine {
 
 	GLSLShader shd_ref;
 
-	void GraphicSystem::Render(MathD::Mat3 camMatrix) {
+	void GraphicSystem::Render(Math::mat3 camMatrix) {
 		GraphicImplementation::BindFramebuffer();
 
 		// Set background to purple color
@@ -103,7 +103,7 @@ namespace Engine {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-			const auto& shd_ref_handle = shd_ref.GetHandle();
+			const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
 			glUseProgram(shd_ref_handle);
 
 			GLuint tex_loc = glGetUniformLocation(shd_ref_handle, "uTex2d");
@@ -134,7 +134,13 @@ namespace Engine {
 			glBindVertexArray(0);
 
 			shd_ref.UnUse();
+			
+			// to draw debug lines
+			if (isDebugDraw == GL_TRUE) {
+				GraphicImplementation::DebugDrawCollider(texture.GetEntityId(), *transform, camMatrix);
+			}
 		}
+		
 #else
 		//For all entities in GraphicSystem
 		for (auto const& entity : GS->mEntities) {
@@ -184,13 +190,12 @@ namespace Engine {
 
 			// Unbind default shaders
 			GraphicImplementation::shdrpgms["Default"].UnUse();
-			#endif
 
-			// to draw debug lines
-			if (isDebugDraw == GL_TRUE) {
-				GraphicImplementation::DebugDrawCollider(gCoordinator, entity, transform, camMatrix);
-			}
+
+
 		}
+#endif
+		
 		GraphicImplementation::UnbindFramebuffer();
 	}
 
@@ -212,7 +217,7 @@ namespace Engine {
 		LOG_INSTANCE("Graphic System destroyed");
 	}
 
-	GraphicSystem::~GraphicSystem() { Destroy(); }
+	//GraphicSystem::~GraphicSystem() { Destroy(); }
 
 
 	//
@@ -264,33 +269,33 @@ namespace Engine {
 		Collider* col = nullptr;
 		if (gCoordinator.HasCom<Collider>(col, entity) && col != nullptr) {
 			// set uniform variable for Collider_Matrix matrix
-			MathD::Mat3 colliderMat;
+			Math::mat3 colliderMat;
 
 			// p = position, s = scale
-			MathD::Vec2 p = MathD::Vec2{};
-			MathD::Vec2 s = MathD::Vec2{};
+			Math::vec2 p = Math::vec2{};
+			Math::vec2 s = Math::vec2{};
 
 			p = col->pos + transform.pos;
 			s = col->scale + transform.scale;
 
 			colliderMat = {
 				//Translate
-				MathD::Mat3{ MathD::Vec3(1.f, 0, 0),
-								MathD::Vec3(0, 1.f, 0),
-								MathD::Vec3(p.x, p.y, 1.f) }
+				Math::mat3{ Math::vec3(1.f, 0, 0),
+								Math::vec3(0, 1.f, 0),
+								Math::vec3(p.x, p.y, 1.f) }
 				*
 
 				//Scale
-				MathD::Mat3{ MathD::Vec3(s.x + 1, 0, 0),
-								MathD::Vec3(0, s.y + 1, 0),
-								MathD::Vec3(0, 0, 1.f) }
+				Math::mat3{ Math::vec3(s.x + 1, 0, 0),
+								Math::vec3(0, s.y + 1, 0),
+								Math::vec3(0, 0, 1.f) }
 			};
 
 			colliderMat = camMatrix * colliderMat;
 
 			// set collider matrix to slot 1
 			GLint uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "Collider_Matrix");
-			glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, MathD::value_ptr(colliderMat));
+			glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, Math::value_ptr(colliderMat));
 			if (uniform_var_loc3 == -1) {
 				std::cout << "Collider_Matrix variable doesn't exist!!!\n";
 				std::exit(EXIT_FAILURE);

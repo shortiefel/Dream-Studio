@@ -1,1 +1,74 @@
-[{"Transform":{"Position":[-20.0,200.0],"Scale":[50.0,50.0],"Angle":0.0,"IsActive":true},"Collider":{"ColliderType":1,"Position":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"IsTrigger":false,"IsActive":true},"RigidBody":{"Velocity":[0.0,0.0],"Friction":0.0,"IsActive":true},"Texture":{"Filepath":"","Shape":0,"IsActive":true}},{"Transform":{"Position":[120.0,300.0],"Scale":[20.0,50.0],"Angle":0.0,"IsActive":true},"Collider":{"ColliderType":1,"Position":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"IsTrigger":false,"IsActive":true},"RigidBody":{"Velocity":[0.0,0.0],"Friction":0.0,"IsActive":true},"Texture":{"Filepath":"","Shape":0,"IsActive":true},"CSScript":[{"Class":"TrailTest3","IsActive":true}]},{"Transform":{"Position":[0.0,0.0],"Scale":[0.0,0.0],"Angle":0.0,"IsActive":true},"Camera2D":{"FOV":1.0,"AR":1.7777777910232545,"IsActive":true}}]
+[
+  
+  {
+    "Transform": {
+      "Position": [ -20.0, 200.0 ],
+      "Scale": [ 50.0, 80.0 ],
+      "Angle": 45.0,
+      "IsActive": true
+    },
+    "Collider": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
+      "IsActive": true
+    },
+    "RigidBody": {
+      "Velocity": [ 0.0, 0.0 ],
+      "Friction": 0.0,
+      "IsActive": true
+    },
+    "Texture": {
+      "Filepath": "",
+      "Shape": 0,
+      "IsActive": true
+    }
+  },
+  {
+    "Transform": {
+      "Position": [ 120.0, 300.0 ],
+      "Scale": [ 20.0, 50.0 ],
+      "Angle": 90.0,
+      "IsActive": true
+    },
+    "Collider": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
+      "IsActive": true
+    },
+    "RigidBody": {
+      "Velocity": [ 0.0, 0.0 ],
+      "Friction": 0.0,
+      "IsActive": true
+    },
+    "Texture": {
+      "Filepath": "",
+      "Shape": 0,
+      "IsActive": true
+    },
+    "CSScript": [
+      {
+        "Class": "TrailTest3",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Transform": {
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 0.0, 0.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "Camera2D": {
+      "FOV": 1.0,
+      "AR": 1.7777777910232545,
+      "IsActive": true
+    }
+  }
+]

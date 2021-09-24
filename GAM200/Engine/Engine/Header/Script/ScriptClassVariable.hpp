@@ -19,7 +19,6 @@ Technology is prohibited.
 #ifndef SCRIPT_CLASS_VARIABLE
 #define SCRIPT_CLASS_VARIABLE
 
-
 #include <string>
 
 namespace Engine {
@@ -67,7 +66,6 @@ namespace Engine {
 			GetVariableDataVoid(&value);
 			return value;*/
 		}
-
 
 		~CSPublicVariable();
 

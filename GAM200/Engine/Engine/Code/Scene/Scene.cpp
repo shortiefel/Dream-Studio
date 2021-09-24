@@ -95,7 +95,7 @@ namespace Engine {
             PhysicsSystem::Update(dt);
         }
         if (Input::IsKeyPressed(Input_KeyCode::N))
-            DreamECS::DuplicateEntity(0);
+            DreamECS::DuplicateEntityAsInstance(0);
 
         CameraSystem::Update(dt);
 

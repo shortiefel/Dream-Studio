@@ -31,7 +31,7 @@ namespace Engine {
 		Entity related functions
 		--------------------------------------------------------------------------------------------------------------*/
 		static Entity CreateEntity();
-		static void DuplicateEntity(Entity ent);
+		static void DuplicateEntityAsInstance(Entity ent);
 		static void DestroyEntity(Entity entity);
 		static const std::unordered_set<Entity>& GetUsedEntitySet();
 		static void ClearDestroyQueue();

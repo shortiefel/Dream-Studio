@@ -92,15 +92,15 @@ namespace Engine {
 			size_t IndexRemoveEntity = EntityToIndexMap[entity];
 			size_t IndexLastElement = Size - 1;
 
-			if (Size != 1) 
+			//if (Size != 1) 
 			{
-				componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
 
 				//Updating the map when it's shifted
 				Entity EntityLastElement = componentArray[IndexLastElement].GetEntityId();
 				EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
 
-				componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+				componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
+				//componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
 			}
 			componentArray[IndexLastElement] = T{};
 			EntityToIndexMap.erase(entity);

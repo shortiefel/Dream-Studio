@@ -33,17 +33,9 @@ namespace Engine {
 		return gCoordinator.createEntity();
 	}
 
-	void DreamECS::DuplicateEntity(Entity entFrom) {
+	void DreamECS::DuplicateEntityAsInstance(Entity entFrom) {
 		Entity entTo = gCoordinator.createEntity();
-		gCoordinator.DuplicateEntity(entFrom, entTo);
-
-		/*const auto& listOfClassInstance = ScriptSystem::csEntityClassInstance.find(entFrom)->second;
-		CSClassInstance newClassInstance;
-		for (auto& [className, scriptInstance] : listOfClassInstance) {
-			newClassInstance.emplace(className, CSScriptInstance{ className });
-		}
-
-		ScriptSystem::csEntityClassInstance.emplace(entTo, std::move(newClassInstance));*/
+		gCoordinator.DuplicateEntityAsInstance(entFrom, entTo);
 	}
 
 	void DreamECS::DestroyEntity(Entity entity)

@@ -35,10 +35,15 @@ namespace Engine {
 		bool RemoveScript(const char* _className);
 		void SetActive(const char* _className, bool _boolean);
 
+		//Explict copy 
+		void CopyComponentAsInstance(const CSScript& target);
+		void CopyComponentAsPrefab(const CSScript& target);
+
 		CSScript(Entity _ID = DEFAULT_ENTITY, const char* _className = nullptr);
 		CSScript(CSScript&& rhs) noexcept;
 		CSScript& operator=(CSScript&& rhs) noexcept;
 		CSScript(const CSScript&) = delete;
+		CSScript& operator=(const CSScript& rhs) = delete;
 
 	private:
 		void AddSpecial();

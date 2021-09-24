@@ -35,8 +35,8 @@ namespace Engine {
 						  Math::vec3(0, 1.f, 0),
 						  Math::vec3(position.x, position.y, 1.f) }
 			*
-			Math::mat3{ Math::vec3(std::cos(Math::radians(angle)), std::sin(Math::radians(angle)), 0),
-						  Math::vec3(-std::sin(Math::radians(angle)), std::cos(Math::radians(angle)), 0),
+			Math::mat3{ Math::vec3(std::cos(Math::radians((float)angle)), std::sin(Math::radians((float)angle)), 0),
+						  Math::vec3(-std::sin(Math::radians((float)angle)), std::cos(Math::radians((float)angle)), 0),
 						  Math::vec3(0.f, 0.f, 1.f) }
 			*
 			//Scale

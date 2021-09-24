@@ -39,6 +39,41 @@ namespace Engine {
 		return *this;
 	}
 
+	void CSScript::CopyComponentAsInstance(const CSScript& target) {
+		for (const auto& [className, csScriptInstance] : target.klassInstance) {
+			if (klassInstance.find(className) != klassInstance.end()) continue;
+			CSScriptInstance newScriptInstance{ className };
+			for (const auto& [variableName, variableInstance] : csScriptInstance.csVariableMap) {
+				
+				CSPublicVariable csPublicvariable{ variableName, variableInstance.variableType };
+				switch (variableInstance.variableType) {
+				case CSType::CHAR:
+					variableInstance.GetVariableData<char>();
+					break;
+				case CSType::BOOL:
+					variableInstance.GetVariableData<bool>();
+					break;
+				case CSType::FLOAT:
+					variableInstance.GetVariableData<float>();
+					break;
+				case CSType::INT:
+					variableInstance.GetVariableData<int>();
+					break;
+				case CSType::UINT:
+					variableInstance.GetVariableData<unsigned int>();
+					break;
+				case CSType::VEC2:
+					variableInstance.GetVariableData<Math::vec2>();
+					break;
+				}
+				//auto data = variableMap.GetVariableData<>();
+				//csPublicvariable.SetVariableData(data);
+
+				//newScriptInstance.csVariableMap
+			}
+		}
+	}
+
 	void CSScript::AddScript(CSScript& comp) {
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
 			if (klassInstance.find(className) == klassInstance.end()) {
@@ -68,11 +103,6 @@ namespace Engine {
 		klassInstance.find(_className)->second.isActive = _boolean;
 	}
 
-	/*void CSScript::InitVariable(const char* className) {
-		auto& csScriptInstance = klassInstance.at(className);
-		Scripting::InitVariable(csScriptInstance);
-	}*/
-
 	CSScript& CSScript::Deserialize(const DSerializer& _serializer) {
 		for (auto& classJSon : _serializer.GetArray()) {
 			const auto& className = classJSon["Class"].GetString();
@@ -81,7 +111,7 @@ namespace Engine {
 				className,
 				classJSon["IsActive"].GetBool() };
 
-			/*rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
+			rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
 			if (variableItr != classJSon.MemberEnd()) {
 				for (auto& variableData : variableItr->value.GetArray()) {
 					const auto& variableName = variableData["Name"].GetString();
@@ -122,7 +152,7 @@ namespace Engine {
 
 					csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
 				}
-			}*/
+			}
 			klassInstance.emplace(className, std::move(csScriptInstance));
 		}
 		return *this;

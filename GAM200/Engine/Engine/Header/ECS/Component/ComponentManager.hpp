@@ -77,16 +77,15 @@ namespace Engine {
 		}
 
 		void AddScript(CSScript component) {
-			printf("add script \n");
 			GetComArray<CSScript>()->AddScriptComponent(std::move(component));
 		}
 
 		template<typename T>
-		void DuplicateComponent(T component) {
+		void DuplicateComponentAsInstance(T component) {
 			GetComArray<T>()->AddComponent(std::move(component));
 		}
 
-		void DuplicateEntity(Entity entFrom, Entity entTo) {
+		void DuplicateEntityAsInstance(Entity entFrom, Entity entTo) {
 			//variable name is same so its scoped
 			{ DUPLICATE_COMPONENT(Camera2D); }
 			{ DUPLICATE_COMPONENT(Texture); }

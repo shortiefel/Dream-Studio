@@ -57,14 +57,15 @@ namespace Engine {
 			return entityManager->CreateEntity();
 		}
 
-		void DuplicateEntity(Entity entFrom, Entity entTo) {
-			compManager->DuplicateEntity(entFrom, entTo);
+		void DuplicateEntityAsInstance(Entity entFrom, Entity entTo) {
+			compManager->DuplicateEntityAsInstance(entFrom, entTo);
 		}
 
 		void destroyEntity(Entity entity)
 		{
 			entityManager->DestroyEntity(entity);
 			compManager->DestroyEntity(entity);
+			//systemManager->EntityDestroyed(entity);
 		}
 
 		inline const std::unordered_set<Entity>& GetUsedEntitySet() const {

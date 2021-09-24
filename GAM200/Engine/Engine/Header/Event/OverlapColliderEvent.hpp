@@ -25,18 +25,10 @@ Technology is prohibited.
 #define OVERLAP_COLLIDER_EVENT_HPP
 
 #include "Engine/Header/Event/Event.hpp" //Event
+#include "Engine/Header/Script/MonoFunctionType.hpp" //MonoFunctionType
 #include "Engine/Header/pch.hpp"
 
 namespace Engine {
-
-	enum class OverlapType {
-		OnCollisionEnter = 0,
-		OnCollisionStay,
-		OnCollisionExit,
-		OnTriggerEnter,
-		OnTriggerStay,
-		OnTriggerExit
-	};
 
 	/*-------------------------------------------------------------------------------------------------
 	OverlapCollider event
@@ -52,10 +44,10 @@ namespace Engine {
 		virtual void CallRegisteredFunctions() override;
 		static void RegisterFunction(OverlapColliderEventFP func);
 
-		OverlapColliderEvent(unsigned int ent1, unsigned int ent2, OverlapType otype);
+		OverlapColliderEvent(unsigned int _ent1, unsigned int _ent2, MonoFunctionType _type);
 
 		unsigned int self, other;
-		OverlapType type;
+		MonoFunctionType type;
 	private:
 		static std::vector<OverlapColliderEventFP> registeredFunctions;
 	};

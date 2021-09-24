@@ -1,18 +1,12 @@
 /* Start Header**********************************************************************************/
 /*!
-\file Global.hpp
-\team name
-\software name
-\authors
-NAME							EMAIL									ROLE
-Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
-Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg
-Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
-Chia Yi Da						chiayida98@gmail.com
-Margaret Teo Boon See			Teo.b@digipen.edu
-Wang Ao							Ao.Wang@digipen.edu
-Ng Jia Yi						Jiayi.ng@digipen.edu
+\file				ECSGlobal.hpp
+\team name			Dream Studio
+\software name		Dream Express
+\authors			Ow Jian Wen			jianwen123321@hotmail.com
+					Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 \date 26/04/2021
+
 \brief
 
 Entity Manager is in charge of assigning entity IDs and keeping records of which IDs are in use

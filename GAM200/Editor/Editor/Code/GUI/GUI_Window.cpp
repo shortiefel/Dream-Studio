@@ -3,6 +3,7 @@
 @file    GUIWindow.cpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 		 Goh See Yong, Denise   g.seeyongdenise@digipen.edu
+		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    26/07/2021
 \brief
 This file contain the GUIWindow definition
@@ -22,8 +23,9 @@ Technology is prohibited.
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/ECS/ECSWrapper.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
-#include "Engine/Header/Scene/SceneManager.hpp"
-#include "Editor/Header/Scene/EditorSceneManager.hpp"
+
+#include "Engine/Header/ECS/System/ScriptSystem.hpp"
+
 #include "Engine/Header/Math/MathLib.hpp"
 
 //Create a window with an image
@@ -93,7 +95,9 @@ namespace Editor {
 				GUI_WindowsMenu();
 
 				ImGui::EndMenuBar();
+				
 			}
+			
 		}
 
 		//Menu for files
@@ -112,28 +116,55 @@ namespace Editor {
 
 				ImGui::EndMenu();
 			}
+
+			
 		}
 
 		//Menu to open windows
 		void GUI_WindowsMenu() {
 			if (ImGui::BeginMenu("Windows")) {
 
+				ImGui::MenuItem("Header", NULL, &playStop_bool);
 				ImGui::MenuItem("Hierarchy", NULL, &hierarchy_bool);
 				ImGui::MenuItem("Inspector", NULL, &inspector_bool);
 				ImGui::MenuItem("Game Window", NULL, &gameWin_bool);
 				ImGui::MenuItem("Scene Window", NULL, &sceneWin_bool);
 				ImGui::MenuItem("Assets Manager", NULL, &asset_bool);
 				ImGui::MenuItem("Content Browser", NULL, &content_bool);
+				
 
 				ImGui::EndMenu();
 			}
+
+			
 		}
 		/*-------------------------------------------------------------------------------------------------
 		-------------------------------------------------------------------------------------------------*/
 
 		/*-------------------------------------------------------------------------------------------------
-		Windows creation: Hierarchy, Inspector, Game window, Scene window, Asset Manager
+		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
+		void GUI_HeaderPanel() {
+
+			if (playStop_bool)
+			{
+				ImVec2 wSize = ImGui::GetWindowSize();
+				ImGui::Begin("##Header", &playStop_bool, window_flags);
+
+				static int clicked = 0;
+
+				ImGui::PushItemWidth(wSize.x / 2);
+				ImGui::Button("Play", (ImVec2{ 40, 30 }));
+					clicked++; //script to replace
+				ImGui::SameLine();
+				ImGui::PushItemWidth(wSize.x /2 + 20);
+				if (ImGui::Button("Stop", (ImVec2{ 40, 30 })))
+					clicked++; //script to replace
+
+				ImGui::End();
+			}
+		}
+
 		void GUI_Hierarchy() {
 			if (hierarchy_bool) {
 				ImGui::Begin("Hierarchy", &hierarchy_bool, window_flags);
@@ -147,35 +178,107 @@ namespace Editor {
 
 				Engine::Transform* comp;
 				Engine::Entity entity_selected = 0;
-				float width = 120;
+				float width = 160;
 				bool selectEntity = 0;
 
+				/**
+				*	Transform Properties
+				*/
 
-
-				//if (check_selection = true) {
-				if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
+				if (ImGui::TreeNode("Transform"))
 				{
-					ImGui::Checkbox("Transform", &(comp->isActive));
-					ImGui::Text("Position");
-					ImGui::Text("X: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->position.x, 0.0f);
-					ImGui::Text("Y: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->position.y, 0.0f);
+					ImGui::Spacing();
+					if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
+					{
+						//Updating of position
+						ImGui::Text("Position");
+						ImGui::Spacing();
+						ImGui::Text("X: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##posX", &comp->position.x, 0.0f);
+						ImGui::Text("Y: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##posY", &comp->position.y, 0.0f);
 
 
+						//Updating of scaling
+						ImGui::Text("Scaling ");
+						ImGui::Spacing();
+						ImGui::Text("X: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##posXscale", &comp->scale.x, 0.0f);
+						ImGui::Text("Y: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##posYscale", &comp->scale.y, 0.0f);
 
-					ImGui::Text("Scaling ");
-					ImGui::Text("X: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->scale.x, 0.0f);
-					ImGui::Text("Y: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->scale.y, 0.0f);
 
+						ImGui::Text("Rotation ");
+						ImGui::Spacing();
+						ImGui::SliderAngle("##posRotate", &comp->angle);
+
+
+					}
+					ImGui::TreePop();
+	
+				}
+
+				/**
+				*	Scripts for each component
+				*/
+				if (ImGui::TreeNode("Script")) {
+
+					ImGui::Text("hello");
+				}
+
+				/**
+				*	Add New Components
+				*/
+				
+				if (ImGui::Button("Add Component", (ImVec2{ 100, 0 })))
+				{
 
 				}
+
+				
+
+
+
+
+				//const auto& classScriptInstances = Engine::ScriptSystem::csEntityClassInstance.find(entity_selected);
+				//if (classScriptInstances != Engine::ScriptSystem::csEntityClassInstance.end()) {
+				//	
+				////for (auto& [entityId, classScriptInstances] : Engine::ScriptSystem::csEntityClassInstance) {
+				//	for (auto& [className, csScriptInstance] : classScriptInstances->second) {
+				//		ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
+				//		for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
+				//			ImGui::Text(varName.c_str());
+				//			ImGui::SameLine();
+				//			switch (csPublicVariable.variableType) {
+				//			case Engine::CSType::CHAR:
+				//				//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
+				//				break;
+				//			case Engine::CSType::BOOL:
+				//				ImGui::Checkbox("B", &(csPublicVariable.GetVariableData<bool>()));
+				//				break;
+				//			case Engine::CSType::FLOAT:
+				//				ImGui::InputFloat("C", &(csPublicVariable.GetVariableData<float>()), 0);
+				//				break;
+				//			case Engine::CSType::INT:
+				//				ImGui::InputInt("D", &(csPublicVariable.GetVariableData<int>()), 0);
+				//				break;
+				//			case Engine::CSType::UINT:
+				//				//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
+				//				break;
+				//			case Engine::CSType::VEC2:
+				//				Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
+				//				ImGui::InputFloat("F", &(tem.x), 0);
+				//				ImGui::InputFloat("G", &(tem.y), 0);
+				//				break;
+				//			}
+				//			
+				//		}
+				//	}
+				//}
 
 
 

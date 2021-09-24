@@ -34,12 +34,14 @@ namespace Engine {
         DreamECS::RegisterComponent<Collider>();
         DreamECS::RegisterComponent<Texture>();
         DreamECS::RegisterComponent<RigidBody>();
+        DreamECS::RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSharpScript>();
 
         CameraSystem::Create(DreamECS::RegisterSystem<CameraSystem>());
         GraphicSystem::Create(DreamECS::RegisterSystem<GraphicSystem>());
         CollisionSystem::Create(DreamECS::RegisterSystem<CollisionSystem>());
+        ScriptSystem::Create();
 
 #else
         DreamECS::Init();
@@ -76,6 +78,10 @@ namespace Engine {
         //signature.set(gCoordinator.GetComType<CSScript>());
         //gCoordinator.setSystemSignature<ScriptSystem>(signature);
 #endif
+    }
+
+    void Factory::Destroy() {
+        ScriptSystem::Destroy();
     }
 
     //Prefix options------------------------------------------------------------------------------

@@ -1,19 +1,10 @@
 /* Start Header**********************************************************************************/
 /*!
-\file Coordinator.hpp
-\team name
-\software name
-\authors
-NAME							EMAIL									ROLE
-Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
-Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg
-Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
-Chia Yi Da						chiayida98@gmail.com
-Margaret Teo Boon See			Teo.b@digipen.edu
-Wang Ao							Ao.Wang@digipen.edu
-Ng Jia Yi						Jiayi.ng@digipen.edu
-\date 26/04/2021
-\brief
+@file			Coordinator.hpp
+@authors		Ow Jian Wen			jianwen123321@hotmail.com
+				Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@date 26/04/2021
+@brief
 
 This file contain the coordinator where it coordinates with the Entity, Component, System and Event
 in a single space.
@@ -58,7 +49,7 @@ namespace Engine {
 		}
 
 		void DuplicateEntity(Entity entFrom, Entity entTo) {
-			compManager->DuplicateComponents(entFrom, entTo);
+			compManager->DuplicateEntity(entFrom, entTo);
 		}
 
 		void destroyEntity(Entity entity)
@@ -96,7 +87,7 @@ namespace Engine {
 			auto ptr = compManager->GetComTest<T>(com.GetEntityId());
 			LOG_ASSERT(!ptr && "Unable add the same component for one entity");
 			if (ptr) return;
-			compManager->AddComponent<T>(com);
+			compManager->AddComponent<T>(std::move(com));
 			//auto Signature = entityManager->GetSignature(entity); //unique signature key
 			//Signature.set(compManager->GetterComType<T>(), true); //setting the unique signature key
 			//entityManager->SetSignature(entity, Signature);
@@ -113,6 +104,12 @@ namespace Engine {
 
 			sysManager->EntitySignatureChanged(entity, Signature); //letting system manager know abt the change in signature on entity
 #endif
+		}
+
+		void AddScript(CSScript com) {
+			auto ptr = compManager->GetComTest<CSScript>(com.GetEntityId());
+			if (ptr) return;
+			compManager->AddScript(std::move(com));
 		}
 
 		template<typename T>
@@ -139,6 +136,12 @@ namespace Engine {
 
 			sysManager->EntitySignatureChanged(entity, Signature);
 #endif
+		}
+
+		void RemoveScript(Entity entity, const char* className) {
+			auto ptr = compManager->GetComTest<CSScript>(entity);
+			if (ptr) return;
+			compManager->RemoveScript(entity, className);
 		}
 
 		template<typename T>
@@ -177,6 +180,11 @@ namespace Engine {
 		template<typename T>
 		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
 			return compManager->GetComponentArrayData<T>();
+		}
+
+		template<typename T>
+		size_t GetComponentArraySize() {
+			return compManager->GetComponentArraySize<T>();
 		}
 
 		/**

@@ -3,7 +3,7 @@
 @file    CollisionSystem.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    19/06/2021
-\brief
+@brief
 This file has the class to manage physic: CollisionSystem
 includes declaration to static function for a singleton CollisionSystem
 

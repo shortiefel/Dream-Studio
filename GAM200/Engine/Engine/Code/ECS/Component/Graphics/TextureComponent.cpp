@@ -19,13 +19,13 @@ Technology is prohibited.
 //#include "../../External Resources/stb_image/stb_image.h"
 
 namespace Engine {
-	Texture::Texture(Entity ID, const std::string path, GraphicShape shape, //GraphicShader shader, 
-		bool active) :
-		IComponent{ ID },
-		texobj_hdl{ 0 }, filepath{ path }, width{ 0 }, height{ 0 }, BPP{ 0 },
-		mdl_ref{ shape },
+	Texture::Texture(Entity _ID, const std::string _path, GraphicShape _shape, //GraphicShader shader, 
+		bool _active) :
+		IComponent{ _ID },
+		texobj_hdl{ 0 }, filepath{ _path }, width{ 0 }, height{ 0 }, BPP{ 0 },
+		mdl_ref{ _shape },
 		//shd_ref{ GraphicImplementation::shdrpgms.find(shader) },
-		isActive{ active } {
+		isActive{ _active } {
 
 		texobj_hdl = TextureManager::LoadTexture(filepath, &width, &height, &BPP, 4);
 	}
@@ -39,9 +39,9 @@ namespace Engine {
 		//glDeleteTextures(1, &texobj_hdl);
 	}
 
-	void Texture::Bind(GLuint slot) const
+	void Texture::Bind(GLuint _slot) const
 	{
-		glBindTextureUnit(slot, texobj_hdl);
+		glBindTextureUnit(_slot, texobj_hdl);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -57,15 +57,19 @@ namespace Engine {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	Texture Texture::Deserialize(const Serializer& serializer) {
-		filepath = serializer.GetValue<std::string>("Filepath");
-		mdl_ref = GraphicShape(serializer.GetValue<int>("Shape"));
+	Texture& Texture::Deserialize(const DSerializer& _serializer) {
+		filepath = _serializer.GetValue<std::string>("Filepath");
+		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 		//shd_ref = GraphicShader(serializer.GetValue<int>("Scale"));
-		isActive = serializer.GetValue<bool>("IsActive");
+		isActive = _serializer.GetValue<bool>("IsActive");
 		return *this;
 	}
 
-	void Texture::Serialize(const Serializer& serializer) {
+	void Texture::Serialize(const SSerializer& _serializer) {
+		_serializer.SetValue("Filepath", filepath);
+		_serializer.SetValue("Shape", int(mdl_ref));
+		_serializer.SetValue("IsActive", isActive);
 
+		//_serializer.EndSerialize("Texture");
 	}
 }

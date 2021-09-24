@@ -21,20 +21,25 @@ namespace Engine {
 		IComponent{ ID }, cType{ c }, offset_position{ Math::vec2{ 0.f, 0.f } }, offset_scale{ Math::vec2{ 0.f, 0.f } }, angle{ 0.f }, isTrigger{ trigger } {}*/
 
 	//Change of type constructor: Copy an existing Collider but with a different type
-	Collider::Collider(Entity ID, ColliderType c, Math::vec2 tPos, Math::vec2 tScale, float rotation, bool tTrigger, bool active) :
-		IComponent{ ID }, cType{ c }, offset_position{ tPos }, offset_scale{ tScale }, angle{ rotation }, isTrigger{ tTrigger }, isActive{ active } {}
+	Collider::Collider(Entity _ID, ColliderType _c, Math::vec2 _pos, Math::vec2 _scale, float _rotation, bool _trigger, bool _active) :
+		IComponent{ _ID }, cType{ _c }, offset_position{ _pos }, offset_scale{ _scale }, angle{ _rotation }, isTrigger{ _trigger }, isActive{ _active } {}
 
-	Collider Collider::Deserialize(const Serializer& serializer) {
-		cType = ColliderType(serializer.GetValue<int>("ColliderType"));
-		offset_position = serializer.GetValue<Math::vec2>("Position");
-		offset_scale = serializer.GetValue<Math::vec2>("Scale");
-		angle = serializer.GetValue<float>("Angle");
-		isTrigger = serializer.GetValue<bool>("IsTrigger");
-		isActive = serializer.GetValue<bool>("IsActive");
+	Collider& Collider::Deserialize(const DSerializer& _serializer) {
+		cType = ColliderType(_serializer.GetValue<int>("ColliderType"));
+		offset_position = _serializer.GetValue<Math::vec2>("Position");
+		offset_scale = _serializer.GetValue<Math::vec2>("Scale");
+		angle = _serializer.GetValue<float>("Angle");
+		isTrigger = _serializer.GetValue<bool>("IsTrigger");
+		isActive = _serializer.GetValue<bool>("IsActive");
 		return *this;
 	}
 
-	void Collider::Serialize(const Serializer& serializer) {
-
+	void Collider::Serialize(const SSerializer& _serializer) {
+		_serializer.SetValue("ColliderType", (int)cType);
+		_serializer.SetValue("Position", offset_position);
+		_serializer.SetValue("Scale", offset_scale);
+		_serializer.SetValue("Angle", angle);
+		_serializer.SetValue("IsTrigger", isTrigger);
+		_serializer.SetValue("IsActive", isActive);
 	}
 }

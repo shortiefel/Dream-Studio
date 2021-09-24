@@ -3,7 +3,7 @@
 @file    RigidBodyComponent.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    19/06/2021
-\brief
+@brief
 This file contain the RigidBody struct to be used by the ECS and various system
 
 
@@ -18,7 +18,8 @@ Technology is prohibited.
 #define RIGIDBODY_H
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/Serializer.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
 	struct RigidBody : public IComponent {
@@ -27,11 +28,11 @@ namespace Engine {
 		//
 		bool isActive = true;
 
-		RigidBody Deserialize(const Serializer& serializer);
-		void Serialize(const Serializer& serializer);
+		RigidBody& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
 		RigidBody() = default;
-		RigidBody(Entity ID, bool active = true);
+		RigidBody(Entity _ID, bool _active = true);
 	};
 }
 

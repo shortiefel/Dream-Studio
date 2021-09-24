@@ -30,6 +30,13 @@ public struct Vec2
         return new Vec2(lhs.x * num, lhs.y * num);
     }
 
+    public static Vec2 operator-(Vec2 lhs)
+    {
+        lhs.x = -lhs.x;
+        lhs.y = -lhs.y;
+        return lhs;
+    }
+
     public override string ToString()
     {
         return "Vec2: " + x + " " + y;

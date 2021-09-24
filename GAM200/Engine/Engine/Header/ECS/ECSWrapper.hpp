@@ -3,7 +3,7 @@
 @file    ECSWrapper.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    08/09/2021
-\brief
+@brief
 This file is the wrapper file for ECS
 -It is made such that in the future the ECS can be changed easily
 
@@ -23,7 +23,7 @@ Technology is prohibited.
 
 namespace Engine {
 	class Coordinator;
-
+	
 	class DreamECS {
 	public:
 		static void Init();
@@ -49,7 +49,12 @@ namespace Engine {
 
 		template<typename T>
 		static void AddComponent(T com) {
-			gCoordinator.AddComponent<T>(com);
+			gCoordinator.AddComponent<T>(std::move(com));
+		}
+
+		template<>
+		static void AddComponent(CSScript com) {
+			gCoordinator.AddScript(std::move(com));
 		}
 
 		template<typename T>
@@ -57,6 +62,12 @@ namespace Engine {
 		{
 			gCoordinator.RemoveComponent<T>(entity);
 		}
+
+		/*static void RemoveScript(Entity entity, const char* className)
+		{
+			gCoordinator.RemoveScript(entity, className);
+		}*/
+
 		template <typename T>
 		static T& GetComponent(Entity entity) {
 			return gCoordinator.GetCom<T>(entity);
@@ -86,6 +97,11 @@ namespace Engine {
 		template<typename T>
 		static std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
 			return gCoordinator.GetComponentArrayData<T>();
+		}
+
+		template<typename T>
+		static size_t GetComponentArraySize() {
+			return gCoordinator.GetComponentArraySize<T>();
 		}
 
 		/*--------------------------------------------------------------------------------------------------------------

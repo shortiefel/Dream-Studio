@@ -45,45 +45,30 @@ namespace Engine {
 		//if self is collision and other is trigger, OnCollisionEnter is not called
 		if (!lhsTrigger && rhsTrigger) return;
 
-		//if map for Entity doesnt exist
-		//Vector should exist too so emplace back then end function
 		const auto& iter = overlapMap.find(lhs);
-		if (iter == overlapMap.end()) {
-			overlapMap.emplace(lhs, std::vector<Entity>{});
-			overlapMap[lhs].emplace_back(rhs);
+		if (iter != overlapMap.end()) {
+			//if map exist means that it already collided/triggered
+			for (const auto& ent : iter->second) {
+				if (ent == rhs) {
+					MonoFunctionType type;
+					if (lhsTrigger)
+						type = MonoFunctionType::TRIGGER_STAY;
+					else
+						type = MonoFunctionType::COLLISION_STAY;
 
-			OverlapType type;
-			if (lhsTrigger)
-				type = OverlapType::OnTriggerEnter;
-			else
-				type = OverlapType::OnCollisionEnter;
-
-			OverlapColliderEvent event(lhs, rhs, type);
-			EventDispatcher::SendEvent(event);
-			return;
-		}
-
-		//if map exist means that it already collided/triggered
-		for (const auto& ent : iter->second) {
-			if (ent == rhs) {
-				OverlapType type;
-				if (lhsTrigger)
-					type = OverlapType::OnTriggerStay;
-				else
-					type = OverlapType::OnCollisionStay;
-
-				OverlapColliderEvent event(lhs, rhs, type);
-				EventDispatcher::SendEvent(event);
-				return;
+					OverlapColliderEvent event(lhs, rhs, type);
+					EventDispatcher::SendEvent(event);
+					return;
+				}
 			}
 		}
 
 		overlapMap[lhs].emplace_back(rhs);
-		OverlapType type;
+		MonoFunctionType type;
 		if (lhsTrigger)
-			type = OverlapType::OnTriggerEnter;
+			type = MonoFunctionType::TRIGGER_ENTER;
 		else
-			type = OverlapType::OnCollisionEnter;
+			type = MonoFunctionType::COLLISION_ENTER;
 
 		OverlapColliderEvent event(lhs, rhs, type);
 		EventDispatcher::SendEvent(event);
@@ -161,11 +146,11 @@ namespace Engine {
 							if (iter1->second[i] == ent2Id) {
 								overlapMap[ent1Id].erase(iter1->second.begin() + i);
 
-								OverlapType type;
+								MonoFunctionType type;
 								if (collider1.isTrigger)
-									type = OverlapType::OnTriggerExit;
+									type = MonoFunctionType::TRIGGER_EXIT;
 								else
-									type = OverlapType::OnCollisionExit;
+									type = MonoFunctionType::COLLISION_EXIT;
 
 								OverlapColliderEvent event(ent1Id, ent2Id, type);
 								EventDispatcher::SendEvent(event);
@@ -180,11 +165,11 @@ namespace Engine {
 							if (iter2->second[i] == ent1Id) {
 								overlapMap[ent2Id].erase(iter2->second.begin() + i);
 
-								OverlapType type;
+								MonoFunctionType type;
 								if (collider2.isTrigger)
-									type = OverlapType::OnTriggerExit;
+									type = MonoFunctionType::TRIGGER_EXIT;
 								else
-									type = OverlapType::OnCollisionExit;
+									type = MonoFunctionType::COLLISION_EXIT;
 
 								OverlapColliderEvent event(ent2Id, ent1Id, type);
 								EventDispatcher::SendEvent(event);

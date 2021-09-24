@@ -18,18 +18,22 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/CameraComponent.hpp"
 
 namespace Engine {
-    Camera2D::Camera2D(Entity ID, float fieldOfView, float arRatio, bool active) :
-        IComponent{ ID },//num{ ID },
-        fov{ fieldOfView }, ar{ arRatio }, isActive{ active } {}
+    Camera2D::Camera2D(Entity _ID, float _fov, float _ar, bool _active) :
+        IComponent{ _ID },//num{ ID },
+        fov{ _fov }, ar{ _ar }, isActive{ _active } {}
 
-    Camera2D Camera2D::Deserialize(const Serializer& serializer) {
-        fov = serializer.GetValue<float>("FOV");
-        ar = serializer.GetValue<float>("AR");
-        isActive = serializer.GetValue<bool>("IsActive");
+    Camera2D& Camera2D::Deserialize(const DSerializer& _serializer) {
+        fov = _serializer.GetValue<float>("FOV");
+        ar = _serializer.GetValue<float>("AR");
+        isActive = _serializer.GetValue<bool>("IsActive");
         return *this;
     }
 
-    void Camera2D::Serialize(const Serializer& serializer) {
+    void Camera2D::Serialize(const SSerializer& _serializer) {
+        _serializer.SetValue("FOV", fov);
+        _serializer.SetValue("AR", ar);
+        _serializer.SetValue("IsActive", isActive);
 
+        //_serializer.EndSerialize("Camera2D");
     }
 }

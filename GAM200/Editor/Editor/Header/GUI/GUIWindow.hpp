@@ -3,7 +3,7 @@
 @file    GUIWindow.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
          Goh See Yong, Denise   g.seeyongdenise@digipen.edu
-
+         Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    26/07/2021
 \brief
 This file contain the GUIWindow declaration
@@ -38,6 +38,7 @@ namespace Editor {
         static bool sceneWin_bool = true;
         static bool asset_bool = true;
         static bool content_bool = true;
+        static bool playStop_bool = true;
 
         /*-------------------------------------------------------------------------------------------------
         Windows creation: Hierarchy, Inspector, Game window, Scene window
@@ -47,6 +48,7 @@ namespace Editor {
         //Note: This function should be called first
         //Create a docking space for future windows to be docked into it
         void	GUI_DockSpace();
+        void    GUI_HeaderPanel();
         void	GUI_Hierarchy();
         void	GUI_Inspector();
         void	GUI_GameWindow(unsigned int& gameWinTex);

@@ -3,7 +3,7 @@
 @file    Factory.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    23/06/2021
-\brief
+@brief
 This file contain declaraction of Factory class with it functions
 
 
@@ -23,6 +23,7 @@ namespace Engine {
 	class Factory {
 	public:
 		static void Create();
+		static void Destroy();
 		static void InstantiateSquare(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f }, bool isMoveable = false);
 		static void InstantiateCircle(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f }, bool isMoveable = false);
 	};

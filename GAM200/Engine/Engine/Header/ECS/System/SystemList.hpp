@@ -3,7 +3,7 @@
 @file    SystemList.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    27/06/2021
-\brief
+@brief
 List of all System
 
 
@@ -20,6 +20,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 #include "Engine/Header/ECS/System/CollisionSystem.hpp"
-//#include "Engine/Header/ECS/System/ScriptSystem.hpp"
+#include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
 #endif

@@ -27,8 +27,9 @@ namespace Engine {
 		bool Play();
 		void Stop();
 		void Update(float dt, bool playing, bool defaultRender);
+		void PlayInit();
 
-		bool SceneSave();
+		//bool SceneSave();
 	private:
 		//Path + scene name
 		std::string fullPathSceneName;

@@ -58,13 +58,14 @@ namespace Engine {
 
 		//Used for Editor to set the values
 		void SetVariableData(void* data);
-		void SetToCS();
+		//void SetToCS();
 
 		template<typename T>
-		T GetVariableData() const {
-			T value;
+		T& GetVariableData() const {
+			return *reinterpret_cast<T*>(variableData);
+			/*T value;
 			GetVariableDataVoid(&value);
-			return value;
+			return value;*/
 		}
 
 

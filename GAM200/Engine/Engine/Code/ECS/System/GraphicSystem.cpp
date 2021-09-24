@@ -85,6 +85,7 @@ namespace Engine {
 
 			const auto& mdl_ref = GraphicImplementation::models[texture.get_mdl_ref()];
 			//const auto& shd_ref = texture.get_shd_ref();
+
 			glBindVertexArray(mdl_ref.vaoid);
 			glBindTextureUnit(6, texture.getTexObj());
 

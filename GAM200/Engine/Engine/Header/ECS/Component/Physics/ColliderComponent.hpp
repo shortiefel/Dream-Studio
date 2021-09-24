@@ -3,7 +3,7 @@
 @file    ColliderComponent.hpp
 @author  Ow Jian Wen	jianwen123321@hotmail.com
 @date    19/06/2021
-\brief
+@brief
 This file contain the collider struct to be used by the ECS and various system
 
 //Serialize list
@@ -27,7 +27,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/Serializer.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
 	enum class ColliderType {
@@ -50,14 +51,14 @@ namespace Engine {
 
 		bool isTrigger = false, isActive = true;
 
-		Collider Deserialize(const Serializer& serializer);
-		void Serialize(const Serializer& serializer);
+		Collider& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
 		Collider() = default;
 		//Change of type constructor: Copy an existing Collider but with a different type
 		/*Collider(Entity ID, ColliderType c, bool trigger = false);*/
-		Collider(Entity ID, ColliderType c = ColliderType::SQUARE, Math::vec2 tPos = Math::vec2{},
-			Math::vec2 tScale = Math::vec2{}, float rotation = float{}, bool tTrigger = false, bool active = true);
+		Collider(Entity _ID, ColliderType _c = ColliderType::SQUARE, Math::vec2 _pos = Math::vec2{},
+			Math::vec2 _scale = Math::vec2{}, float _rotation = float{}, bool _trigger = false, bool _active = true);
 		Collider(const Collider&) = default;
 		Collider& operator=(const Collider&) = default;
 	};

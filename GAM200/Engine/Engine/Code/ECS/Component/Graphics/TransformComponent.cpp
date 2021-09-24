@@ -23,10 +23,10 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
 namespace Engine {
-	Transform::Transform(Entity ID, Math::vec2 tPos, Math::vec2 tScale, float rotationAngle, bool active, int tLayer) :
-		IComponent{ ID },
-		position{ tPos }, scale{ tScale }, angle{ rotationAngle },
-		isActive{ active }, layer{ tLayer } {}
+	Transform::Transform(Entity _ID, Math::vec2 _pos, Math::vec2 _scale, float _angle, bool _active, int _layer) :
+		IComponent{ _ID },
+		position{ _pos }, scale{ _scale }, angle{ _angle },
+		isActive{ _active }, layer{ _layer } {}
 
 	Math::mat3 Transform::GetTransform() const {
 		return
@@ -45,15 +45,20 @@ namespace Engine {
 						 Math::vec3(0, 0, 1.f) };
 	}
 
-	Transform Transform::Deserialize(const Serializer& serializer) {
-		position = serializer.GetValue<Math::vec2>("Position");
-		scale = serializer.GetValue<Math::vec2>("Scale");
-		angle = serializer.GetValue<float>("Angle");
-		isActive = serializer.GetValue<bool>("IsActive");
+	Transform& Transform::Deserialize(const DSerializer& _serializer) {
+		position = _serializer.GetValue<Math::vec2>("Position");
+		scale = _serializer.GetValue<Math::vec2>("Scale");
+		angle = _serializer.GetValue<float>("Angle");
+		isActive = _serializer.GetValue<bool>("IsActive");
 		return *this;
 	}
 
-	void Transform::Serialize(const Serializer& serializer) {
+	void Transform::Serialize(const SSerializer& _serializer) {
+		_serializer.SetValue("Position", position);
+		_serializer.SetValue("Scale", scale);
+		_serializer.SetValue("Angle", angle);
+		_serializer.SetValue("IsActive", isActive);
 
+		//_serializer.EndSerialize("Transform");
 	}
 }

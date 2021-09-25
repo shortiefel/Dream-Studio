@@ -19,11 +19,11 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/PhysicsSystem.hpp"
 #include "Engine/Header/ECS/Component/Physics/RigidBodyComponent.hpp"
 
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 namespace Engine {
 	void PhysicsSystem::Update(float dt) {
-		auto& rigidBodyArray = DreamECS::GetComponentArrayData<RigidBody>();
+		auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBody>();
 	}
 
 	bool PhysicsSystem::Create() {

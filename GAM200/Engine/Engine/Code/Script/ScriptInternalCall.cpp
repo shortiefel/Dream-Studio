@@ -1,6 +1,6 @@
 /*
 @file    ScriptInternalCall.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    25/08/2021
 \brief
 This file contain the definition of ScriptInternalCall
@@ -24,19 +24,19 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
 #include "Engine/Header/DeltaTime/DeltaTime.hpp" //To get deltaTime
 
 #define GetEngineType(ID, type, paramName, param)\
-type* ctype = DreamECS::GetComponentTest<type>(ID);\
+type* ctype = DreamECS::GetInstance().GetComponentTest<type>(ID);\
 if (!ctype) return;\
 param = ctype->paramName;
 
 #define SetEngineType(ID, type, paramName, param)\
-type* ctype = DreamECS::GetComponentTest<type>(ID);\
+type* ctype = DreamECS::GetInstance().GetComponentTest<type>(ID);\
 if (!ctype) return;\
 ctype->paramName = param;
 
@@ -141,7 +141,7 @@ namespace Engine {
 	}
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		//call hascomponent with entityid
-		Transform* transform = DreamECS::GetComponentTest<Transform>(id);
+		Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(id);
 		if (!transform) return;
 		transform->position += *inVec2;
 	}
@@ -164,14 +164,14 @@ namespace Engine {
 	}
 
 	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2) {
-		Transform* transform = DreamECS::GetComponentTest<Transform>(id);
+		Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle + 90.f);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
 	}
 
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2) {
-		Transform* transform = DreamECS::GetComponentTest<Transform>(id);
+		Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
@@ -202,26 +202,26 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool HasComponent_Transform_Engine(unsigned int id) {
 		Transform* tem = nullptr;
-		return DreamECS::HasComponent<Transform>(tem, id);
+		return DreamECS::GetInstance().HasComponent<Transform>(tem, id);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Destroy
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Destroy_Entity_Engine(unsigned int id) {
-		DreamECS::DestroyEntity(id);
+		DreamECS::GetInstance().DestroyEntity(id);
 	}
 
 	void Destroy_Transform_Engine(unsigned int id) {
-		DreamECS::RemoveComponent<Transform>(id);
+		DreamECS::GetInstance().RemoveComponent<Transform>(id);
 	}
 
 	void Destroy_Collider_Engine(unsigned int id) {
-		DreamECS::RemoveComponent<Collider>(id);
+		DreamECS::GetInstance().RemoveComponent<Collider>(id);
 	}
 
 	void Destroy_Script_Engine(unsigned int id, MonoString* str) {
-		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(id);
+		CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(id);
 		if (!csScript) return;
 		csScript->RemoveScript(mono_string_to_utf8(str));
 	}
@@ -238,7 +238,7 @@ namespace Engine {
 	}
 
 	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {
-		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(id);
+		CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(id);
 		if (!csScript) return;
 		csScript->SetActive( mono_string_to_utf8(str), boolean);
 	}

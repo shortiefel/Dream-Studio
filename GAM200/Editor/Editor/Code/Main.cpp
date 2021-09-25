@@ -7,7 +7,7 @@
 NAME							EMAIL									ROLE
 Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
 Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg
-Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
+Ow Jian Wen						jianwen.o@digipen.edu				TECHINCAL DIRECTOR
 Chia Yi Da						chiayida98@gmail.com
 Margaret Teo Boon See			Teo.b@digipen.edu
 Wang Ao							Ao.Wang@digipen.edu
@@ -34,16 +34,16 @@ Technology is prohibited.
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //For memory check
 	//use try and except (require logging)
-	Engine::Application::Create(); //Needed for game
+	Engine::Application::GetInstance().Create(); //Needed for game
 
-	Engine::Application::SetupCallbackFunction(
+	Engine::Application::GetInstance().SetupCallbackFunction(
 		&Editor::EditorStartPoint::Create,
 		&Editor::EditorStartPoint::Update,
 		&Editor::EditorStartPoint::Destroy);
 
-	Engine::Application::Update(false); //Needed for game
+	Engine::Application::GetInstance().Update(false); //Needed for game
 
-	Engine::Application::Destroy(); //Needed for game
+	Engine::Application::GetInstance().Destroy(); //Needed for game
 
 	return 1;
 }

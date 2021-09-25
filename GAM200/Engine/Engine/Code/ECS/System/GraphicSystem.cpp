@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GraphicSystem.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 		 Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 \brief
@@ -20,7 +20,7 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
@@ -38,8 +38,8 @@ namespace Engine {
 #endif
 
 	// change GL_TRUE to GL_FALSE to off debug draw, can set this to a key to turn it on and off
-	GLboolean GraphicSystem::isDebugDraw = GL_TRUE;
-	GLint GraphicSystem::id = 0;
+	//GLboolean GraphicSystem::isDebugDraw = GL_TRUE;
+	//GLint GraphicSystem::id = 0;
 
 	//GLuint setup_texobj(std::string);
 	//GLuint texobj_hdl; //-----remove
@@ -84,12 +84,12 @@ namespace Engine {
 
 #if NEW_ECS
 		//Check texture because less Texture component on entity than Transform
-		const auto& textureArray = DreamECS::GetComponentArrayData<Texture>();
+		const auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<Texture>();
 		for (const auto& texture : textureArray) {
 			if (Entity_Check(texture.GetEntityId())) break;
 			if (!texture.GetActive()) continue;
 
-			Transform* transform = DreamECS::GetComponentTest<Transform>(texture.GetEntityId());
+			Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(texture.GetEntityId());
 			if (!transform || !transform->isActive) continue;
 
 			const auto& mdl_ref = GraphicImplementation::models[texture.get_mdl_ref()];

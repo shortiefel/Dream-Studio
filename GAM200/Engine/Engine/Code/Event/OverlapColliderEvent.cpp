@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    OverlapColliderEvent.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    28/08/2021
 \brief
 This file contain the OverlapColliderEvent definition

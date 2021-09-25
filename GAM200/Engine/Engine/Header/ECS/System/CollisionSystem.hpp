@@ -19,22 +19,30 @@ Technology is prohibited.
 #define COLLISION_SYSTEM_H
 
 #include "Engine/Header/pch.hpp"
+
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 #include "Engine/Header/ECS/System/System.hpp"
 
+
 namespace Engine {
-	class CollisionSystem : public System {
+	class CollisionSystem : public Singleton<CollisionSystem> {
 	public:
 		//static bool Create(const std::shared_ptr<CollisionSystem>& collisionSystem);
-		static bool Create();
-		static void Destroy();
-		~CollisionSystem();
+		bool Create();
+		void Destroy();
 
-		static void Stop();
-		static void Update(float dt);
+		void Stop();
+		void Update(float dt);
 
 	private:
 		//float gravity = 10.f;
 		//static std::shared_ptr<CollisionSystem> CS;
+
+		CollisionSystem() {}
+		~CollisionSystem() {}
+
+		friend class Singleton<CollisionSystem>;
 	};
 }
 

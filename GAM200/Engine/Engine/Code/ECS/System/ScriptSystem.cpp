@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ScriptSystem.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/08/2021
 \brief
 This file contain the definition of ScriptSystem
@@ -57,7 +57,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
 
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/threads.h>
@@ -80,7 +80,7 @@ namespace Engine {
 	}
 
 	void ScriptSystem::PlayInit() {
-		const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
 		for (auto& csScript : entScriptArray) {
 			if (Entity_Check(csScript.GetEntityId())) break;
 
@@ -101,7 +101,7 @@ namespace Engine {
 
 	void ScriptSystem::PlayRunTime() {
 
-		const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
 		for (auto& csScript : entScriptArray) {
 			if (Entity_Check(csScript.GetEntityId())) break;
 
@@ -129,7 +129,7 @@ namespace Engine {
 	}
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
-		CSScript* csScript = DreamECS::GetComponentTest<CSScript>(e.self);
+		CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(e.self);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);

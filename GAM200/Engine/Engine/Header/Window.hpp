@@ -7,7 +7,7 @@
 NAME							EMAIL									ROLE
 Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
 Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg
-Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
+Ow Jian Wen						jianwen.o@digipen.edu				TECHINCAL DIRECTOR
 Chia Yi Da						chiayida98@gmail.com
 Margaret Teo Boon See			Teo.b@digipen.edu
 Wang Ao							Ao.Wang@digipen.edu
@@ -30,37 +30,39 @@ Technology is prohibited.
 #include "pch.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 //
 #define ASPECT_RATIO_FIX(size) \
-float temY = size.x * Engine::Window::aspectRatio; \
+float temY = size.x * Engine::Window::GetInstance().aspectRatio; \
 if (temY < size.y) { \
 	size.y = temY; \
 } \
 else { \
-	size.x = size.y * (1 / Engine::Window::aspectRatio); \
+	size.x = size.y * (1 / Engine::Window::GetInstance().aspectRatio); \
 }
 
 namespace Engine {
 	class Event; //Forward declaration
 
-	class Window {
+	class Window : public Singleton<Window> {
 	public:
-		static float aspectRatio;
+		float aspectRatio;
 
-		static bool Create(const std::string& ttitle = "untitled", unsigned int twidth = 1280, unsigned int theight = 720);
-		static void Destroy();
+		bool Create(const std::string& ttitle = "untitled", unsigned int twidth = 1280, unsigned int theight = 720);
+		void Destroy();
 
-		static inline const char* GetGLSLVersion() { return "#version 450"; }
-		static inline GLFWwindow* GetGLFWwindow() { return glfw_window; }
-		static inline unsigned int GetWidth() { return w_data.width; }
-		static inline unsigned int GetHeight() { return w_data.height; }
-		static inline void* GetNativewindow() { return (void*)glfw_window; }
+		inline const char* GetGLSLVersion() { return "#version 450"; }
+		inline GLFWwindow* GetGLFWwindow() { return glfw_window; }
+		inline unsigned int GetWidth() { return w_data.width; }
+		inline unsigned int GetHeight() { return w_data.height; }
+		inline void* GetNativewindow() { return (void*)glfw_window; }
 
-		static Math::vec2 GetWindowPosition();
+		Math::vec2 GetWindowPosition();
 
-		static void DisplayFPS(float fps);
+		void DisplayFPS(float fps);
 
-		static void Update();
+		void Update();
 
 		//static void SetEventCallBack(const std::function<void(Event&)> callback);
 
@@ -81,9 +83,14 @@ namespace Engine {
 			//std::function<void(Event&)> eventCallBack;
 		};
 
-		static WinData w_data;
-		static GLFWwindow* glfw_window;
+		WinData w_data { "", 0, 0 };
+		GLFWwindow* glfw_window = 0;
 		//static Window* s_instance;
+
+		Window() {}
+		~Window() {}
+
+		friend class Singleton<Window>;
 	};
 }
 

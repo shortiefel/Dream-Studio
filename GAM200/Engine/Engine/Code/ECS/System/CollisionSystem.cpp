@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    CollisionSystem.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    19/06/2021
 \brief
 This file has the function definition for class CollisionSystem
@@ -30,7 +30,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Physics/RigidBodyComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
 
@@ -76,7 +76,7 @@ namespace Engine {
 
 	void CollisionSystem::Update(float dt) {
 #if NEW_ECS
-		auto& colliderArray = DreamECS::GetComponentArrayData<Collider>();
+		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<Collider>();
 		auto colliderStart = colliderArray.begin(),
 			colliderEnd = colliderArray.end();
 		for (auto& col1 = colliderStart; col1 < colliderEnd; col1++) {
@@ -84,7 +84,7 @@ namespace Engine {
 			if (Entity_Check(ent1Id)) break;
 			if (!col1->isActive) continue;
 
-			auto& transform1 = DreamECS::GetComponent<Transform>(ent1Id);
+			auto& transform1 = DreamECS::GetInstance().GetComponent<Transform>(ent1Id);
 			if (!transform1.isActive) continue;
 
 			Collider collider1 = *col1;
@@ -97,11 +97,11 @@ namespace Engine {
 				if (Entity_Check(ent2Id)) break;
 				if (!col2->isActive || col1 == col2) continue;
 
-				bool ent1IsMoveable = DreamECS::HasComponentCheck<RigidBody>(ent1Id),
-					ent2IsMoveable = DreamECS::HasComponentCheck<RigidBody>(ent2Id);
+				bool ent1IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBody>(ent1Id),
+					ent2IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBody>(ent2Id);
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 
-				auto& transform2 = DreamECS::GetComponent<Transform>(ent2Id);
+				auto& transform2 = DreamECS::GetInstance().GetComponent<Transform>(ent2Id);
 				if (!transform2.isActive) continue;
 
 				Collider collider2 = *col2;
@@ -308,6 +308,4 @@ namespace Engine {
 		LOG_INSTANCE("Collision System destroyed");
 		//delete s_instance; 
 	}
-
-	CollisionSystem::~CollisionSystem() { Destroy(); }
 }

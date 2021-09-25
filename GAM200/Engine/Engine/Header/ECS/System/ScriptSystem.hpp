@@ -18,6 +18,8 @@ Technology is prohibited.
 #define SCRIPT_SYSTEM_HPP
 
 //#include "Engine/Header/ECS/ECSGlobal.hpp"
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 #include "Engine/Header/Script/ScriptClass.hpp"
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
@@ -27,36 +29,42 @@ namespace Engine {
 	using CSEntityClassInstance = std::unordered_map<unsigned int, CSClassInstance>;
 
 
-	class ScriptSystem {
+	class ScriptSystem : public Singleton<ScriptSystem> {
 	public:
 		/*-----------------------------------------------------
 		Start runtime
 		-----------------------------------------------------*/
-		static void PlayInit();
+		void PlayInit();
 		/*-----------------------------------------------------
 		Update runtime
 		-----------------------------------------------------*/
-		static void PlayRunTime();
+		void PlayRunTime();
 		/*-----------------------------------------------------
 		static void Stop();
 		Compile CS files together
 		-----------------------------------------------------*/
-		static bool CompileCS();
+		bool CompileCS();
 		/*-----------------------------------------------------
 		Update information by
 		-Reinstantiating Classes
 		-Adding/Removing public variable from map
 		Called when saving/playing
 		-----------------------------------------------------*/
-		static void UpdateMapData();
+		void UpdateMapData();
 		/*-----------------------------------------------------
 		Create ScriptSystem
 		-----------------------------------------------------*/
-		static void Create();
+		void Create();
 		/*-----------------------------------------------------
 		Destroy ScriptSystem
 		-----------------------------------------------------*/
-		static void Destroy();
+		void Destroy();
+
+	private:
+		ScriptSystem() {}
+		~ScriptSystem() {}
+
+		friend class Singleton<ScriptSystem>;
 	};
 }
 

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Profiler.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    18/08/2021
 \brief
 This file contain the Profiler definition

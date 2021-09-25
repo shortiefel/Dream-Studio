@@ -7,7 +7,7 @@
 NAME							EMAIL									ROLE
 Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
 Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg
-Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
+Ow Jian Wen						jianwen.o@digipen.edu				TECHINCAL DIRECTOR
 Chia Yi Da						chiayida98@gmail.com
 Margaret Teo Boon See			Teo.b@digipen.edu
 Wang Ao							Ao.Wang@digipen.edu

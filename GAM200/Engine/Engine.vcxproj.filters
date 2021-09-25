@@ -133,6 +133,9 @@
     <Filter Include="Source Files\ECS\Component\Script">
       <UniqueIdentifier>{39dac5dd-bfec-43a6-9988-b9ebbf1eba4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Singleton">
+      <UniqueIdentifier>{33da63d4-0227-4eb7-aa40-61da1099a43d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -204,7 +207,7 @@
     <ClCompile Include="Engine\Code\Input\Input.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\ECSWrapper.cpp">
+    <ClCompile Include="Engine\Code\ECS\DreamECS.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Management\Settings.cpp">
@@ -482,7 +485,7 @@
     <ClInclude Include="Engine\Header\ECS\temECSDescription.hpp">
       <Filter>Header Files\New ECS</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\ECSWrapper.hpp">
+    <ClInclude Include="Engine\Header\ECS\DreamECS.hpp">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp">
@@ -538,7 +541,7 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
-      </ClCompile>
+    </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
@@ -547,6 +550,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\shader.hpp">
       <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Singleton\Singleton.hpp">
+      <Filter>Header Files\Singleton</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

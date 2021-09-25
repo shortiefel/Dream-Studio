@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    IComponent.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    08/09/2021
 \brief
 This file is for component to inherit

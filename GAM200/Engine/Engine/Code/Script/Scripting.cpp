@@ -24,7 +24,7 @@ Technology is prohibited.
 #include <mono/metadata/debug-helpers.h> //MonoMethodDesc
 #include <mono/metadata/attrdefs.h> //Attribute
 
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 
 #define INVOKE_FUNCTION(name)\
@@ -207,7 +207,7 @@ namespace Engine {
 		}
 
 		void InitAllCSClass() {
-			auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
 
@@ -262,7 +262,7 @@ namespace Engine {
 		}
 
 		void InitAllPublicVariable() {
-			auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
 				

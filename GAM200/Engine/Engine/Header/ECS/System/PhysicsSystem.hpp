@@ -18,21 +18,27 @@ Technology is prohibited.
 #define PHYSICS_SYSTEM_H
 
 #include "Engine/Header/pch.hpp"
-#include "Engine/Header/ECS/System/System.hpp"
+
+#include "Engine/Header/Singleton/Singleton.hpp"
 
 namespace Engine {
-	class PhysicsSystem : public System {
+	class PhysicsSystem : public Singleton<PhysicsSystem> {
 	public:
-		static bool Create();
-		static void Destroy();
+		bool Create();
+		void Destroy();
 		//~PhysicsSystem();
 
 		//static void Stop();
-		static void Update(float dt);
+		void Update(float dt);
 
 	private:
 		//float gravity = 10.f;
 		//static std::shared_ptr<CollisionSystem> CS;
+
+		PhysicsSystem() {}
+		~PhysicsSystem() {}
+
+		friend class Singleton<PhysicsSystem>;
 	};
 }
 

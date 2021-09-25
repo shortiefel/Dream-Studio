@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUIWindow.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/07/2021
 \brief
 This file contain the GUIWindow definition
@@ -19,7 +19,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
@@ -69,10 +69,10 @@ namespace Editor {
 		}
 
 		void GUI_DockSpace() {
-			Math::vec2 winPos = Engine::Window::GetWindowPosition();
+			Math::vec2 winPos = Engine::Window::GetInstance().GetWindowPosition();
 			ImGui::SetNextWindowPos(ImVec2{ winPos.x, winPos.y });
-			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetWidth(),
-											 (float)Engine::Window::GetHeight() });
+			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetInstance().GetWidth(),
+											 (float)Engine::Window::GetInstance().GetHeight() });
 
 
 			ImGui::Begin("Dream Engine", &dockspace_bool, dockspace_window_flags);//, & showWindow, ImGuiWindowFlags_NoInputs);
@@ -147,7 +147,7 @@ namespace Editor {
 
 
 				//if (check_selection = true) {
-				if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
+				if (Engine::DreamECS::GetInstance().HasComponent<Engine::Transform>(comp, entity_selected))
 				{
 					ImGui::Checkbox("Transform", &(comp->isActive));
 					ImGui::Text("Position");
@@ -170,7 +170,7 @@ namespace Editor {
 				}
 
 				Engine::Collider* colComp;
-				if (Engine::DreamECS::HasComponent<Engine::Collider>(colComp, entity_selected))
+				if (Engine::DreamECS::GetInstance().HasComponent<Engine::Collider>(colComp, entity_selected))
 				{
 					ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
 				}

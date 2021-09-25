@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Matrix.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    16/06/2021
 \brief
 This file SHOULD be included to use Matrix3 and its functions

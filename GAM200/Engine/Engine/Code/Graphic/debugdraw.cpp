@@ -17,12 +17,12 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/debugdraw.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 namespace Engine {
 	namespace GraphicImplementation {
 		void DebugDrawCollider(Entity const& entity, Transform const& transform, Math::mat3 camMatrix) {
-			Collider* collider = DreamECS::GetComponentTest<Collider>(entity);
+			Collider* collider = DreamECS::GetInstance().GetComponentTest<Collider>(entity);
 			// when object has collider, get collider matrix
 			//Collider* col = nullptr;
 			if (collider != nullptr) {

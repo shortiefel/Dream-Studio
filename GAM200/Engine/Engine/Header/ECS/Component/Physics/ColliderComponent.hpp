@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ColliderComponent.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    19/06/2021
 \brief
 This file contain the collider struct to be used by the ECS and various system

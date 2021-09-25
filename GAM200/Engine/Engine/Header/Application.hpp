@@ -7,7 +7,7 @@
 NAME							EMAIL									ROLE
 Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
 Goh	See Yong Denise				2001220@sit.singaporetech.edu.sg
-Ow Jian Wen						jianwen123321@hotmail.com				TECHINCAL DIRECTOR
+Ow Jian Wen						jianwen.o@digipen.edu				TECHINCAL DIRECTOR
 Chia Yi Da						chiayida98@gmail.com
 Margaret Teo Boon See			Teo.b@digipen.edu
 Wang Ao							Ao.Wang@digipen.edu
@@ -27,6 +27,8 @@ Technology is prohibited.
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 typedef void (*FuncNoData)();
 typedef void (*Func1Param)(float);
 
@@ -37,36 +39,36 @@ namespace Engine {
 	class WindowCloseEvent;
 	class DeltaTime;
 
-	class Application {
+	class Application : public Singleton<Application> {
 	public:
-		static bool app_run_bool;
+		
 
-		static void Create();
+		void Create();
 		/*Main application loop is done here
 		defaultRender - whether to use default rendering or not (For scene update)*/
-		static void Update(bool defaultRender);
-		static void Destroy();
+		void Update(bool defaultRender);
+		void Destroy();
 
-		//Destroy other stuff when application is destroyed
-		~Application();
 
+		inline void SetAppRun(bool _bool) { app_run_bool = _bool; }
 		//void OnEvent(Event& event);
 		//Set event call back for events
 		//void SetEventCallBack();
 
 		//Set up function callback for editor function
-		static void SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3);
+		void SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3);
 	private:
-		static Application* s_app_instance;
+		Application* s_app_instance = 0;
 		//static GLFWwindow* s_glfw_window;
 
-		static float m_lastframeTime;
+		bool app_run_bool = true;
+		float m_lastframeTime = 0.f;
 
-		Application() = default;
+		SINGLETON_SETUP(Application);
 
-		static FuncNoData CreateFunc;
-		static Func1Param UpdateFunc;
-		static FuncNoData DestroyFunc;
+		FuncNoData CreateFunc = nullptr;
+		Func1Param UpdateFunc = nullptr;
+		FuncNoData DestroyFunc = nullptr;
 	};
 }
 

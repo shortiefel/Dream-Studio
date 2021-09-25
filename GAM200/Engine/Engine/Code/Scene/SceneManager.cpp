@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    SceneManager.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    14/09/2021
 \brief
 This file has the function definition of the SceneManager
@@ -43,7 +43,7 @@ namespace Engine {
 
         currentScenePath = TO_FULL_PATH(sceneName);
         currentScene = new Scene{ currentScenePath };
-        if (GameState::GetPlaying()) ScriptSystem::PlayInit();
+        if (GameState::GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
 
 	void SceneManager::Update(float dt, bool defaultRender) {

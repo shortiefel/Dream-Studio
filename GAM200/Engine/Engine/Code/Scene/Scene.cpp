@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Scene.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    23/06/2021
 \brief
 An application of the dream engine can have multiple game scene to be used
@@ -26,7 +26,7 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 //Components
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
@@ -37,18 +37,18 @@ namespace Engine {
     Scene::Scene(std::string fullPath) : fullPathSceneName{ fullPath } {
         GameSceneSerializer::DeserializeScene(fullPathSceneName);
 
-        ScriptSystem::UpdateMapData();
+        ScriptSystem::GetInstance().UpdateMapData();
     }
 
     //When user click play to run their game
     void Scene::Play() {
-         if (!ScriptSystem::CompileCS()) {
+         if (!ScriptSystem::GetInstance().CompileCS()) {
             std::cout << "Fail to compile \n";
             //Scene::SetPlaying(false);
             return;
         }
 
-        ScriptSystem::UpdateMapData();
+        ScriptSystem::GetInstance().UpdateMapData();
         //const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
         //for (auto& csScript : entScriptArray) {
         //    auto& classScriptInstances = csScript.klassInstance;
@@ -60,7 +60,7 @@ namespace Engine {
         //        std::cout << "class: " << className << " " << entityId << "\n";
         //    }
         //}
-        ScriptSystem::PlayInit();
+        ScriptSystem::GetInstance().PlayInit();
         //Change to sceneName (might be fullName(path + name) instead)
         GameSceneSerializer::SerializeScene(fullPathSceneName);
     }
@@ -68,20 +68,20 @@ namespace Engine {
     
 
     void Scene::Stop() {
-        CollisionSystem::Stop(); 
-        DreamECS::ResetECS();
+        CollisionSystem::GetInstance().Stop();
+        DreamECS::GetInstance().ResetECS();
         //GameSceneSerializer::DeserializeScene(fullPathSceneName);
-        //std::cout << "Stopping \n";
+        std::cout << "Stopping \n";
     }
 
     void Scene::Save() {
-        if (!ScriptSystem::CompileCS()) {
+        if (!ScriptSystem::GetInstance().CompileCS()) {
             std::cout << "Fail to compile \n";
             //Scene::SetPlaying(false);
             return;
         }
 
-        ScriptSystem::UpdateMapData();
+        ScriptSystem::GetInstance().UpdateMapData();
         //Change to sceneName (might be fullName(path + name) instead)
         GameSceneSerializer::SerializeScene(fullPathSceneName);
     }
@@ -90,29 +90,29 @@ namespace Engine {
         //std::cout << DreamECS::GetComponentArraySize<CSScript>() << "   " << DreamECS::GetComponentArraySize<Transform>() << "\n";
 
         if (playing) {
-            ScriptSystem::PlayRunTime();
-            CollisionSystem::Update(dt);
-            PhysicsSystem::Update(dt);
+            ScriptSystem::GetInstance().PlayRunTime();
+            CollisionSystem::GetInstance().Update(dt);
+            PhysicsSystem::GetInstance().Update(dt);
         }
         if (Input::IsKeyPressed(Input_KeyCode::N))
-            DreamECS::DuplicateEntityAsInstance(0);
+            DreamECS::GetInstance().DuplicateEntityAsInstance(0);
 
-        CameraSystem::Update(dt);
+        CameraSystem::GetInstance().Update(dt);
 
         if (defaultRender) {
             //GraphicSystem::Update(dt);
-            GraphicSystem::Render();
+            GraphicSystem::GetInstance().Render();
         }
 
 
-        DreamECS::ClearDestroyQueue();
+        DreamECS::GetInstance().ClearDestroyQueue();
 
         LayerStack::Update();
         LayerStack::Draw();
 
 
         if (Input::IsKeyPressed(Input_KeyCode::B))
-            std::cout << DreamECS::GetUsedEntitySet().size() << "\n";
+            std::cout << DreamECS::GetInstance().GetUsedEntitySet().size() << "\n";
 
         
     }

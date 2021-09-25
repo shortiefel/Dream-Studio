@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ScriptInternalCall.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    25/08/2021
 \brief
 This file contain the declaration of ScriptInternalCall

@@ -1,7 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Graphic.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
+		 Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 \brief
 This file has the functions declaration to be called by the graphic system
@@ -32,14 +33,6 @@ namespace Engine {
             GLuint draw_cnt = GLuint{}; // how many elements of primitive of type
         };
 
-        // container that contains 3 different vectors of vertex coordinates
-        // Object Position, Color and Texture Coordinates respectively
-        struct GLVertCont {
-            Math::vec2 ObjPos_vtx;
-            Math::vec3 Clr_vtx;
-            Math::vec2 TexPos_vtx;
-        };
-
         void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer);
         //exist = false to remove framebuffer, to set buffer ignore exist
         void SetFramebuffer(unsigned int f, bool exist = true);
@@ -49,19 +42,19 @@ namespace Engine {
         //struct GLSprite {
         //    GLuint spriteWidth, spriteHeight;
         //    GLuint spritesheetWidth, spritesheetHeight;
-        //    MathD::Vec2 position;
+        //    Math::vec2 position;
         //};
 
         //struct GLObject {
         //    // orientation.x and orientation.y will be angle_disp and angle_speed respectively
         //    // both values specified in degrees
-        //    MathD::Vec2 orientation = MathD::Vec2{};
+        //    Math::vec2 orientation = Math::vec2{};
 
-        //    MathD::Vec2 scaling = MathD::Vec2{}; // scaling parameters
-        //    MathD::Vec2 position = MathD::Vec2{}; // translatin vector coordinates
-        //    MathD::Vec3 color = MathD::Vec3{};
-        //    MathD::Mat3 mdl_to_ndc_xform = MathD::Mat3{}; // model (model-to-world) transform
-        //    MathD::Mat3 mdl_xform = MathD::Mat3{}; // model-to-ndc transformation
+        //    Math::vec2 scaling = Math::vec2{}; // scaling parameters
+        //    Math::vec2 position = Math::vec2{}; // translatin vector coordinates
+        //    Math::vec3 color = Math::vec3{};
+        //    Math::mat3 mdl_to_ndc_xform = Math::mat3{}; // model (model-to-world) transform
+        //    Math::mat3 mdl_xform = Math::mat3{}; // model-to-ndc transformation
 
         //    // function to initialize object's state
         //    void init();
@@ -80,8 +73,6 @@ namespace Engine {
         extern std::map<GraphicShader, GLSLShader> shdrpgms;
         //static std::map<std::string, GLObject> objects;
 
-        void setup_vao();
-        void setup_shdr();
         //void create_square_instance();
     }
 }

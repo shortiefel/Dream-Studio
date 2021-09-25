@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ScriptSystem.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/08/2021
 \brief
 This file contain the declaration of ScriptSystem
@@ -18,6 +18,8 @@ Technology is prohibited.
 #define SCRIPT_SYSTEM_HPP
 
 //#include "Engine/Header/ECS/ECSGlobal.hpp"
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 #include "Engine/Header/Script/ScriptClass.hpp"
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
@@ -27,65 +29,42 @@ namespace Engine {
 	using CSEntityClassInstance = std::unordered_map<unsigned int, CSClassInstance>;
 
 
-	class ScriptSystem {
+	class ScriptSystem : public Singleton<ScriptSystem> {
 	public:
 		/*-----------------------------------------------------
 		Start runtime
 		-----------------------------------------------------*/
-		static void PlayInit();
+		void PlayInit();
 		/*-----------------------------------------------------
 		Update runtime
 		-----------------------------------------------------*/
-		static void PlayRunTime();
+		void PlayRunTime();
 		/*-----------------------------------------------------
-		Pausing the runtime
-		-opposite of play
+		static void Stop();
+		Compile CS files together
 		-----------------------------------------------------*/
-		//static void Stop();
-		//Compile CS files together
-		static bool CompileCS();
+		bool CompileCS();
 		/*-----------------------------------------------------
 		Update information by
 		-Reinstantiating Classes
 		-Adding/Removing public variable from map
 		Called when saving/playing
 		-----------------------------------------------------*/
-		static void UpdateMapData();
-		
-		//static CSType GetCSType(MonoType* mt);
+		void UpdateMapData();
 		/*-----------------------------------------------------
-		Set up mono
+		Create ScriptSystem
 		-----------------------------------------------------*/
-		static void Create();
+		void Create();
 		/*-----------------------------------------------------
-			Clean up mono
+		Destroy ScriptSystem
 		-----------------------------------------------------*/
-		static void Destroy();
-		/*-----------------------------------------------------
-		Called when play button is pressed
-		-Stop child domain
-		-Create child domain
-		-Load assemblies
-		-----------------------------------------------------*/
-		static void ReloadMono();
+		void Destroy();
 
-		/*-----------------------------------------------------
-		-To add/remove public variable from map
-		-Set their values
-		-----------------------------------------------------*/
-		static void InitPublicVariable();
-		/*-----------------------------------------------------
-		-To add/remove class from map
-		-Find the function from c#
-		-----------------------------------------------------*/
-		static void InitEntityClassInstance();
+	private:
+		ScriptSystem() {}
+		~ScriptSystem() {}
 
-		//static CSEntityClassInstance csEntityClassInstance;
-
-
-		static void SerializeClass(const SSerializer& _serializer, const CSClassInstance& _classInstance);
-		static void SerializeVariable(const SSerializer& _serializer, const CSScriptInstance& _scriptInstance);
-		static void Deserialize(const DSerializer& _serializer, CSClassInstance& classInstance);
+		friend class Singleton<ScriptSystem>;
 	};
 }
 

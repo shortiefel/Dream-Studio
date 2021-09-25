@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GraphicOptions.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    16/09/2021
 \brief
 This file has the graphic options
@@ -20,11 +20,13 @@ Technology is prohibited.
 namespace Engine {
 	enum class GraphicShape {
 		SQUARE = 0,
-		CIRCLE
+		CIRCLE,
+		STENCIL
 	};
 
 	enum class GraphicShader {
-		DEFAULT = 0
+		DEFAULT = 0,
+		STENCIL
 	};
 }
 

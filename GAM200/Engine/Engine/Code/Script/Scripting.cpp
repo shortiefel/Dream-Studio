@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Scripting.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    21/09/2021
 \brief
 This file contain the definition of Scripting
@@ -23,6 +23,8 @@ Technology is prohibited.
 #include <mono/metadata/environment.h>
 #include <mono/metadata/debug-helpers.h> //MonoMethodDesc
 #include <mono/metadata/attrdefs.h> //Attribute
+
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 
 #define INVOKE_FUNCTION(name)\
@@ -73,6 +75,21 @@ namespace Engine {
 			}
 		}
 
+		void Setup() {
+			//Rlative path from exe
+			mono_set_dirs("Vendor/Mono/lib",
+				"Vendor/Mono/etc");
+
+			domain = mono_jit_init("Root Domain");
+
+			mono_thread_set_main(mono_thread_current());
+		}
+
+		void Cleanup() {
+			Scripting::DestroyChildDomain();
+			//clean up root domain
+			mono_jit_cleanup(mono_domain_get());
+		}
 
 		void DestroyChildDomain() {
 			MonoDomain* currentDomain = mono_domain_get();
@@ -82,6 +99,121 @@ namespace Engine {
 					LOG_ERROR("Scripting: Unable to set domain");
 				}
 				mono_domain_unload(currentDomain);
+			}
+		}
+
+		bool CompileCSInternal() {
+			Scripting::DestroyChildDomain();
+			int status = std::system("CompileCS.bat");
+			if (status > 0) return false;
+			return true;
+		}
+
+
+		void ReloadMono() {
+			Scripting::DestroyChildDomain();
+
+			domain = mono_domain_create_appdomain((char*)("Child_Domain"), NULL);
+			if (!domain) {
+				mono_environment_exitcode_set(-1);
+			}
+
+			else {
+				mono_domain_set(domain, false);
+			}
+
+			assem = mono_domain_assembly_open(domain, "Data/CSScript/CSScript.dll");
+			if (!assem) {
+				LOG_ERROR("Failed loading assembly");
+				return;
+			}
+
+			image = mono_assembly_get_image(assem);
+			if (!image) {
+				LOG_ERROR("Failed loading image");
+				return;
+			}
+
+			MonoAssembly* assemCore = mono_domain_assembly_open(domain, "Data/CSScript/EngineCS.dll");
+			if (!assemCore) {
+				LOG_ERROR("Failed loading assembly");
+				return;
+			}
+			imageCore = mono_assembly_get_image(assemCore);
+			if (!imageCore) {
+				LOG_ERROR("Failed loading image");
+				return;
+			}
+		}
+
+		void InitCSClass(CSScriptInstance& _csScriptInstance) {
+			auto& csClass = _csScriptInstance.csClass;
+			auto& className = csClass.className;
+
+			csClass.klass = mono_class_from_name(image, "", className.c_str());
+			if (!csClass.klass) {
+				LOG_ERROR("Failed loading class");
+				return;
+			}
+
+			csClass.object = (mono_object_new(mono_domain_get(), csClass.klass));
+			if (!(csClass.object)) {
+				LOG_ERROR("Failed loading obj");
+				return;
+			}
+
+
+			std::string methodDesc = "MonoBehaviour:.ctor(uint)";
+			MonoMethodDesc* description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.ConstructorFunc = mono_method_desc_search_in_image(description, imageCore);
+
+			methodDesc = className + ":OnInit()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.InitFunc = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = className + ":OnUpdate()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.UpdateFunc = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = className + ":OnDestroy()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
+
+
+			methodDesc = className + ":OnCollisionEnter()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnCollisionEnter = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = className + ":OnCollisionStay()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnCollisionStay = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = className + ":OnCollisionExit()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
+
+
+			methodDesc = className + ":OnTriggerEnter()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = className + ":OnTriggerStay()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnTriggerStay = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = className + ":OnTriggerExit()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
+		}
+
+		void InitAllCSClass() {
+			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
+			for (auto& csScript : entScriptArray) {
+				auto& classScriptInstances = csScript.klassInstance;
+
+				for (auto& [className, csScriptInstance] : classScriptInstances) {
+					InitCSClass(csScriptInstance);
+				}
 			}
 		}
 
@@ -129,6 +261,17 @@ namespace Engine {
 			}
 		}
 
+		void InitAllPublicVariable() {
+			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
+			for (auto& csScript : entScriptArray) {
+				auto& classScriptInstances = csScript.klassInstance;
+				
+				for (auto& [className, csScriptInstance] : classScriptInstances) {
+					InitVariable(csScriptInstance);
+				}
+			}
+		}
+
 		CSType GetCSType(MonoType* mt) {
 			int type = mono_type_get_type(mt);
 			switch (type) {
@@ -146,5 +289,11 @@ namespace Engine {
 			}
 			return CSType::NONE;
 		}
+
+		
+
+
+		
+
 	}
 }

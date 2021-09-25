@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ComponentList.hpp
-@authors	Ow Jian Wen			jianwen123321@hotmail.com
+@authors	Ow Jian Wen			jianwen.o@digipen.edu
 			Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    27/06/2021
 @brief

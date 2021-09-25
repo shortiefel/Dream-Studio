@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    IComponent.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    08/09/2021
 @brief
 This file is for component to inherit
@@ -24,6 +24,17 @@ namespace Engine {
 	public:
 		inline Entity GetEntityId() const { return entityId; }
 		inline void SetEntityId(Entity ent) { entityId = ent; }
+		/*
+		* List below must be added as functionality
+		T& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
+
+		//Explict copy 
+		void CopyComponentAsInstance(const T& target);
+		//Not needed if Prefab still uses unique T
+		//Example: Transform / CSScript
+		void CopyComponentAsPrefab(const T& target);
+		*/
 
 		IComponent() : entityId{ DEFAULT_ENTITY } {}
 		IComponent(Entity ent) : entityId{ ent } {}

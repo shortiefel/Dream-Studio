@@ -1,13 +1,18 @@
 /* Start Header**********************************************************************************/
 /*!
-\file			Main.cpp
-\team name		Dream Studio
-\software name	Dream Express
-\authors		Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu		
-				Ow Jian Wen				jianwen123321@hotmail.com
-
-\date			26/04/2021
-
+\file Main.cpp
+\team name
+\software name
+\authors
+NAME							EMAIL									ROLE
+Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
+Goh	See Yong Denise				g.seeyongdenise@digipen.edu
+Ow Jian Wen						jianwen.o@digipen.edu					TECHINCAL DIRECTOR
+Chia Yi Da						chiayida98@gmail.com
+Margaret Teo Boon See			Teo.b@digipen.edu
+Wang Ao							Ao.Wang@digipen.edu
+Ng Jia Yi						Jiayi.ng@digipen.edu
+\date 26/04/2021
 \brief
 
 This file contains the starting point of the application.
@@ -32,16 +37,16 @@ Technology is prohibited.
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //For memory check
 	//use try and except (require logging)
-	Engine::Application::Create(); //Needed for game
+	Engine::Application::GetInstance().Create(); //Needed for game
 
-	Engine::Application::SetupCallbackFunction(
+	Engine::Application::GetInstance().SetupCallbackFunction(
 		&Editor::EditorStartPoint::Create,
 		&Editor::EditorStartPoint::Update,
 		&Editor::EditorStartPoint::Destroy);
 
-	Engine::Application::Update(false); //Needed for game
+	Engine::Application::GetInstance().Update(false); //Needed for game
 
-	Engine::Application::Destroy(); //Needed for game
+	Engine::Application::GetInstance().Destroy(); //Needed for game
 
 	return 1;
 }

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    CameraSystem.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/06/2021
 @brief
 This file contain the CameraSystem declaration
@@ -18,23 +18,30 @@ Technology is prohibited.
 #define CAMERA_SYSTEM_HPP
 
 #include "Engine/Header/pch.hpp"
-#include "Engine/Header/ECS/System/System.hpp"
+
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 #include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
-	class CameraSystem : public System {
+	class CameraSystem : public Singleton<CameraSystem> {
 	public:
-		static bool Create(const std::shared_ptr<CameraSystem>& cameraSystem);
-		virtual void Destroy() override;
-		~CameraSystem();
+		//static bool Create(const std::shared_ptr<CameraSystem>& cameraSystem);
+		bool Create();
+		void Destroy();
 
-		static void Update(float dt);
+		void Update(float dt);
+		Math::mat3 GetTransform();
 
-		static Math::mat3 GetTransform();
 	private:
-		static Math::mat3 world_to_ndc_xform;
+		Math::mat3 world_to_ndc_xform{};
 		//static std::shared_ptr<CameraSystem> CS;
-		static GLFWwindow* pwindow;
+		GLFWwindow* pwindow{};
+
+		CameraSystem() {}
+		~CameraSystem() {}
+
+		friend class Singleton<CameraSystem>;
 	};
 }
 

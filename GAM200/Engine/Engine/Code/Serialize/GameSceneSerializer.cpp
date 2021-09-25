@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GameSceneSerializer.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    15/07/2021
 \brief
 This file contain the GameSceneSerializer definition
@@ -35,7 +35,7 @@ Technology is prohibited.
 #include <rapidjson/filewritestream.h>
 
 #include "Engine/Header/ECS/Entity/EntityManager.hpp"
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
 
@@ -44,8 +44,8 @@ Technology is prohibited.
 itr = obj.FindMember(#type);\
 if (itr != obj.MemberEnd()) {\
 	DSerializer serializer{ itr }; \
-		DreamECS::AddComponent(\
-			std::move(type{ ent }.Deserialize(serializer))\
+		DreamECS::GetInstance().AddComponent(\
+			type{ ent }.Deserialize(serializer)\
 		);\
 }
 
@@ -112,40 +112,40 @@ namespace Engine {
 
 		rapidjson::Document doc(rapidjson::kArrayType);
 
-		const std::unordered_set<Entity>& entList = DreamECS::GetUsedEntitySet();
+		const std::unordered_set<Entity>& entList = DreamECS::GetInstance().GetUsedEntitySet();
 		//size_t num = entList.size();
 		for (const auto& ent : entList) {
 			rapidjson::Value entityObject(rapidjson::kObjectType);
 
-			Transform* trans = DreamECS::GetComponentTest<Transform>(ent);
+			Transform* trans = DreamECS::GetInstance().GetComponentTest<Transform>(ent);
 			if (trans != nullptr) {
 				LOG_ASSERT(trans);
 				SERIALIZE(trans);
 				entityObject.AddMember("Transform", objType, doc.GetAllocator());
 			}
 
-			Collider* col = DreamECS::GetComponentTest<Collider>(ent);
+			Collider* col = DreamECS::GetInstance().GetComponentTest<Collider>(ent);
 			if (col != nullptr) {
 				LOG_ASSERT(col);
 				SERIALIZE(col);
 				entityObject.AddMember("Collider", objType, doc.GetAllocator());
 			}
 
-			RigidBody* rb = DreamECS::GetComponentTest<RigidBody>(ent);
+			RigidBody* rb = DreamECS::GetInstance().GetComponentTest<RigidBody>(ent);
 			if (rb != nullptr) {
 				LOG_ASSERT(rb);
 				SERIALIZE(rb);
 				entityObject.AddMember("RigidBody", objType, doc.GetAllocator());
 			}
 
-			Camera2D* cam = DreamECS::GetComponentTest<Camera2D>(ent);
+			Camera2D* cam = DreamECS::GetInstance().GetComponentTest<Camera2D>(ent);
 			if (cam != nullptr) {
 				LOG_ASSERT(cam);
 				SERIALIZE(cam);
 				entityObject.AddMember("Camera2D", objType, doc.GetAllocator());
 			}
 
-			Texture* tex = DreamECS::GetComponentTest<Texture>(ent);
+			Texture* tex = DreamECS::GetInstance().GetComponentTest<Texture>(ent);
 			if (tex != nullptr) {
 				LOG_ASSERT(tex);
 				SERIALIZE(tex);
@@ -153,7 +153,7 @@ namespace Engine {
 			}
 #if 1
 
-			CSScript* csScript = DreamECS::GetComponentTest<CSScript>(ent);
+			CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(ent);
 			if (csScript != nullptr) {
 				LOG_ASSERT(csScript);
 				rapidjson::Value objType(rapidjson::kArrayType);
@@ -287,9 +287,9 @@ namespace Engine {
 		READ_BUFFER;
 
 		for (auto& obj : doc.GetArray()) {
-			Entity ent = DreamECS::CreateEntity();
+			Entity ent = DreamECS::GetInstance().CreateEntity();
 			rapidjson::Value::ConstMemberIterator itr;
-
+			
 			ADD_COMPONENT_WTIH_CHECK(Transform);
 			ADD_COMPONENT_WTIH_CHECK(Collider);
 			ADD_COMPONENT_WTIH_CHECK(RigidBody);
@@ -301,7 +301,7 @@ namespace Engine {
 #if 1 
 				
 				DSerializer serializer{ itr };
-				DreamECS::AddComponent(
+				DreamECS::GetInstance().AddComponent(
 					std::move(CSScript{ ent }.Deserialize(serializer))
 			);
 #else

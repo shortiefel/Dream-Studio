@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Collision.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    19/06/2021
 \brief
 This file has the functions declaration to be called by the physic system

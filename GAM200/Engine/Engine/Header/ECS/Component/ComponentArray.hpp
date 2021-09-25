@@ -65,7 +65,6 @@ namespace Engine {
 		}
 
 		void AddScriptComponent(T component) {
-			printf("Come in here \n");
 			Entity entity = component.GetEntityId();
 			//No Script
 			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) {
@@ -79,7 +78,7 @@ namespace Engine {
 			else {
 				printf("Adding new scripts \n");
 				size_t index = EntityToIndexMap[entity];
-				//componentArray[index].AddScript(component);
+				componentArray[index].AddScript(component);
 			}
 		}
 
@@ -92,13 +91,17 @@ namespace Engine {
 			//Copies element at the end into deleted element's place 
 			size_t IndexRemoveEntity = EntityToIndexMap[entity];
 			size_t IndexLastElement = Size - 1;
-			componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
 
-			//Updating the map when it's shifted
-			Entity EntityLastElement = componentArray[IndexLastElement].GetEntityId();
-			EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
-			
-			//componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+			//if (Size != 1) 
+			{
+
+				//Updating the map when it's shifted
+				Entity EntityLastElement = componentArray[IndexLastElement].GetEntityId();
+				EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
+
+				componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
+				//componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+			}
 			componentArray[IndexLastElement] = T{};
 			EntityToIndexMap.erase(entity);
 

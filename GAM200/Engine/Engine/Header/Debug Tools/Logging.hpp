@@ -1,9 +1,13 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ScriptComponent.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/05/2021
 \brief
+
+Add this to use
+#include "Engine/Header/Debug Tools/Logging.hpp"
+
 This file allow text to be written to console and changing color of text to indicate type of message
 Allow user to track all the instructions that are supposed to be done
 

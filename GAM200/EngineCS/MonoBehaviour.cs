@@ -1,7 +1,7 @@
 ﻿/* Start Header**********************************************************************************/
 /*
 @file    Monobehaviour.cs
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    21/08/2021
 \brief
 This file has the function definition for MonoBehaviour
@@ -54,7 +54,7 @@ public class MonoBehaviour
     public MonoBehaviour(uint id)
     {
         entityId = id;
-        Console.WriteLine("Constructor ");
+        Console.WriteLine("Constructor new");
         //gameObject = new GameObject();
         //gameObject.entityId = id;
     }

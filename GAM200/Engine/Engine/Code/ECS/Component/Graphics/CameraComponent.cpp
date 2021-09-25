@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    CameraComponent.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    16/09/2021
 \brief
 This file contain the Camera component definition

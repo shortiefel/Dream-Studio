@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Application.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    19/06/2021
 \brief
 Create a window and other various required manager (e.g Physic / Graphic Manager)
@@ -32,6 +32,7 @@ Technology is prohibited.
 namespace Engine {
     //Static----------------------------------------------------------------------------------
 
+    /*
     Application* Application::s_app_instance = 0;
     bool Application::app_run_bool = true;
     float Application::m_lastframeTime = 0.f;
@@ -39,6 +40,7 @@ namespace Engine {
     FuncNoData Application::CreateFunc = nullptr;
     Func1Param Application::UpdateFunc = nullptr;
     FuncNoData Application::DestroyFunc = nullptr;
+    */
 
     bool OnWindowClose(const WindowCloseEvent& e);
 
@@ -49,12 +51,12 @@ namespace Engine {
 
         GameSceneSerializer::DeserializeSetting();
         ////Create window and instantiate managers
-        if (!Window::Create("Dream Engine", Settings::windowWidth, Settings::windowHeight)) LOG_ERROR("Window creation has failed");
+        if (!Window::GetInstance().Create("Dream Engine", Settings::windowWidth, Settings::windowHeight)) LOG_ERROR("Window creation has failed");
         //s_app_instance->SetEventCallBack();
 
         WindowCloseEvent::RegisterFunction(&OnWindowClose);
 
-        Engine::EngineCore::Create();
+        Engine::EngineCore::GetInstance().Create();
     }
 
     void Application::Update(bool defaultRender) {
@@ -70,30 +72,28 @@ namespace Engine {
             float current_time = static_cast<float>(glfwGetTime());
             Engine::DeltaTime::UpdateDeltaTime(current_time, m_lastframeTime);
             m_lastframeTime = current_time;
-            Engine::Window::DisplayFPS(DeltaTime::GetFPS());
+            Engine::Window::GetInstance().DisplayFPS(DeltaTime::GetFPS());
 
-            Engine::EngineCore::Update(DeltaTime::GetSec(), defaultRender);
+            Engine::EngineCore::GetInstance().Update(DeltaTime::GetSec(), defaultRender);
 
             if (UpdateFunc != nullptr) UpdateFunc(Engine::DeltaTime::GetSec());
 
-            Engine::Window::Update();
+            Engine::Window::GetInstance().Update();
 
             //FrameMark;
         }
     }
 
     void Application::Destroy() {
+        if (DestroyFunc != nullptr) DestroyFunc();
+        Engine::EngineCore::GetInstance().Destroy();
+        Engine::Window::GetInstance().Destroy();
+
         delete s_app_instance;
         LOG_INSTANCE("Application destroyed");
 
     }
     //------------------------------------------------------------------------------------------
-
-    Application::~Application() {
-        if (DestroyFunc != nullptr) DestroyFunc();
-        Engine::EngineCore::Destroy();
-        Engine::Window::Destroy();
-    }
 
 
     //void Application::OnEvent(Event& event) {
@@ -141,7 +141,7 @@ namespace Engine {
 
     //Local functions-----------------------------------------------------------------
     bool OnWindowClose(const WindowCloseEvent& e) {
-        Application::app_run_bool = false;
+        Application::GetInstance().SetAppRun(false);
         return true;
     }
 }

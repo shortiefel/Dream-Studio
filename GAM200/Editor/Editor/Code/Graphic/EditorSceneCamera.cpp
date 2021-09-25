@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EditorSceneCamera.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    22/07/2021
 \brief
 This file contain the EditorSceneCamera definition
@@ -52,7 +52,7 @@ namespace Editor {
         position = pos;
 
         GLsizei fb_width, fb_height;
-        glfwGetFramebufferSize(Engine::Window::GetGLFWwindow(), &fb_width, &fb_height);
+        glfwGetFramebufferSize(Engine::Window::GetInstance().GetGLFWwindow(), &fb_width, &fb_height);
         ar = static_cast<GLfloat>(fb_width) / fb_height;
 
         LOG_INSTANCE("Scene Camera created");

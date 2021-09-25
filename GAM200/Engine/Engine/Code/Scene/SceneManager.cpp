@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    SceneManager.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    14/09/2021
 \brief
 This file has the function definition of the SceneManager
@@ -32,6 +32,7 @@ namespace Engine {
     Scene* SceneManager::currentScene;
 
 	void SceneManager::StartScene() {
+        defaultSceneName = "test2";
         currentScenePath = TO_FULL_PATH(defaultSceneName);
         currentScene = new Scene{ currentScenePath };
 	}
@@ -42,7 +43,7 @@ namespace Engine {
 
         currentScenePath = TO_FULL_PATH(sceneName);
         currentScene = new Scene{ currentScenePath };
-        if (GameState::GetPlaying()) currentScene->PlayInit();
+        if (GameState::GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
 
 	void SceneManager::Update(float dt, bool defaultRender) {
@@ -65,17 +66,18 @@ namespace Engine {
             currentScene = new Scene{ TO_FULL_PATH(defaultSceneName) };
         }*/
 
-        if (!ScriptSystem::CompileCS()) {
-            std::cout << "Fail to compile \n";
-            //Scene::SetPlaying(false);
-            return;
-        }
+        //if (!ScriptSystem::CompileCS()) {
+        //    std::cout << "Fail to compile \n";
+        //    //Scene::SetPlaying(false);
+        //    return;
+        //}
 
-        ScriptSystem::UpdateMapData();
-        //Change to sceneName (might be fullName(path + name) instead)
-        GameSceneSerializer::SerializeScene(currentScenePath);
+        //ScriptSystem::UpdateMapData();
+        //ScriptSystem::PlayInit();
+        ////Change to sceneName (might be fullName(path + name) instead)
+        //GameSceneSerializer::SerializeScene(currentScenePath);
 
-        //currentScene->Play();
+        currentScene->Play();
     }
 
     /*void SceneManager::Stop() {
@@ -83,6 +85,15 @@ namespace Engine {
     }*/
 
     void SceneManager::Save() {
-        //currentScene->SceneSave();
+        currentScene->Save();
+        //if (!ScriptSystem::CompileCS()) {
+        //    std::cout << "Fail to compile \n";
+        //    //Scene::SetPlaying(false);
+        //    return;
+        //}
+
+        //ScriptSystem::UpdateMapData();
+        ////Change to sceneName (might be fullName(path + name) instead)
+        //GameSceneSerializer::SerializeScene(currentScenePath);
     }
 }

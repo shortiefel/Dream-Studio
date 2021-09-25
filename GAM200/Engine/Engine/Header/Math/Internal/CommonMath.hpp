@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    CommonMath.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    14/09/2021
 \brief
 

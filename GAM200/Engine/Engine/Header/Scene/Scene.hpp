@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Scene.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    23/06/2021
 \brief
 This contain the declaration of GameScene class with its function
@@ -23,13 +23,24 @@ namespace Engine {
 	class Scene {
 	public:
 		Scene(std::string fullPath);
-
-		bool Play();
+		/*--------------------------------------------------------------------
+		Start play mode
+		--------------------------------------------------------------------*/
+		void Play();
+		/*--------------------------------------------------------------------
+		Stop play mode
+		--------------------------------------------------------------------*/
 		void Stop();
+		/*--------------------------------------------------------------------
+		Save
+		--------------------------------------------------------------------*/
+		void Save();
+		/*--------------------------------------------------------------------
+		dt - delta time
+		defaultRender - whether to use default rendering or not
+		--------------------------------------------------------------------*/
 		void Update(float dt, bool playing, bool defaultRender);
-		void PlayInit();
 
-		//bool SceneSave();
 	private:
 		//Path + scene name
 		std::string fullPathSceneName;

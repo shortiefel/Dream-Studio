@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EngineCore.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    24/07/2021
 \brief
 This file has the function declaration for class EngineCore
@@ -17,13 +17,19 @@ Technology is prohibited.
 #ifndef ENGINE_CORE_HPP
 #define ENGINE_CORE_HPP
 
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 namespace Engine {
-	class EngineCore {
+	class EngineCore : public Singleton<EngineCore> {
 	public:
-		static void Create();
-		static void Update(float dt, bool defaultRender);
-		static void Destroy();
+		void Create();
+		void Update(float dt, bool defaultRender);
+		void Destroy();
 	private:
+		EngineCore() {}
+		~EngineCore() {}
+
+		friend class Singleton<EngineCore>;
 	};
 }
 

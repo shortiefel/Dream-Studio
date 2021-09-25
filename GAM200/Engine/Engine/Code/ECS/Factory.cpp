@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Factory.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    23/06/2021
 \brief
 This file allow user to create shapes easily with function: CreateSquare and CreateCircle
@@ -16,7 +16,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/ECS/Factory.hpp"
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 //Components
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
@@ -28,20 +28,25 @@ namespace Engine {
 
     void Factory::Create() {
 #if NEW_ECS
-        DreamECS::Init();
-        DreamECS::RegisterComponent<Camera2D>();
-        DreamECS::RegisterComponent<Transform>();
-        DreamECS::RegisterComponent<Collider>();
-        DreamECS::RegisterComponent<Texture>();
-        DreamECS::RegisterComponent<RigidBody>();
-        DreamECS::RegisterComponent<CSScript>();
+        DreamECS::GetInstance().Create();
+        DreamECS::GetInstance().RegisterComponent<Camera2D>();
+        DreamECS::GetInstance().RegisterComponent<Transform>();
+        DreamECS::GetInstance().RegisterComponent<Collider>();
+        DreamECS::GetInstance().RegisterComponent<Texture>();
+        DreamECS::GetInstance().RegisterComponent<RigidBody>();
+        DreamECS::GetInstance().RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSharpScript>();
+        /*DreamECS::RegisterSystem<CameraSystem>();
+        DreamECS::RegisterSystem<GraphicSystem>();
+        DreamECS::RegisterSystem<CollisionSystem>();
+        DreamECS::RegisterSystem<PhysicsSystem>();*/
 
-        CameraSystem::Create(DreamECS::RegisterSystem<CameraSystem>());
-        GraphicSystem::Create(DreamECS::RegisterSystem<GraphicSystem>());
-        CollisionSystem::Create(DreamECS::RegisterSystem<CollisionSystem>());
-        ScriptSystem::Create();
+        CameraSystem::GetInstance().Create();
+        GraphicSystem::GetInstance().Create();
+        CollisionSystem::GetInstance().Create();
+        PhysicsSystem::GetInstance().Create();
+        ScriptSystem::GetInstance().Create();
 
 #else
         DreamECS::Init();
@@ -81,7 +86,11 @@ namespace Engine {
     }
 
     void Factory::Destroy() {
-        ScriptSystem::Destroy();
+        ScriptSystem::GetInstance().Destroy();
+        PhysicsSystem::GetInstance().Destroy();
+        CollisionSystem::GetInstance().Destroy();
+        GraphicSystem::GetInstance().Destroy();
+        CameraSystem::GetInstance().Destroy();
     }
 
     //Prefix options------------------------------------------------------------------------------

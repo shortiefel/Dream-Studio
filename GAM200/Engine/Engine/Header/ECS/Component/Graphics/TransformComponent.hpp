@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TransformComponent.hpp
-@author  Ow Jian Wen			jianwen123321@hotmail.com
+@author  Ow Jian Wen			jianwen.o@digipen.edu
 		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    19/06/2021
 @brief
@@ -51,6 +51,16 @@ namespace Engine {
 		Transform(Entity _ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{}, float _angle = float{}, bool _active = true, int _layer = 0);
 		Transform(const Transform&) = default;
 		Transform& operator=(const Transform&) = default;
+
+		Transform(Transform&& rhs) noexcept {
+			position = std::move(rhs.position);
+			scale = std::move(rhs.scale);
+			angle = std::move(rhs.angle);
+			isActive = std::move(rhs.isActive);
+			layer = std::move(rhs.layer);
+			SetEntityId(rhs.GetEntityId());
+			rhs.SetEntityId(DEFAULT_ENTITY);
+		}
 	};
 }
 #endif

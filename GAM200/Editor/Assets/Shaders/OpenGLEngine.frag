@@ -10,12 +10,14 @@
 
 uniform sampler2D uTex2d;
 
-layout (location=0) in vec3 vInterpColor;
+layout (location=0) in vec3 vColor;
 layout (location=1) in vec2 vTexture;
 
 layout (location=0) out vec4 fFragColor;
 
+
 void main () {
+	// object - texture colour
 	vec4 texColor = texture(uTex2d, vTexture);
 	fFragColor = texColor;
 }

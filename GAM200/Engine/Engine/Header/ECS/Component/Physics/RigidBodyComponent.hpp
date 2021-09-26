@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    RigidBodyComponent.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    19/06/2021
 @brief
 This file contain the RigidBody struct to be used by the ECS and various system
@@ -23,9 +23,10 @@ Technology is prohibited.
 
 namespace Engine {
 	struct RigidBody : public IComponent {
-		//	//object cannot be pushed by default
-		//	bool hasGravity = true, isMoveable = false;
-		//
+		
+		Math::vec2 velocity = Math::vec2{};
+		//Higher = stop faster
+		float friction = float{};
 		bool isActive = true;
 
 		RigidBody& Deserialize(const DSerializer& _serializer);

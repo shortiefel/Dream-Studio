@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUIWindow.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
          Goh See Yong, Denise   g.seeyongdenise@digipen.edu
          Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    26/07/2021

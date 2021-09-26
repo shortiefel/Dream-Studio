@@ -1,13 +1,21 @@
 /* Start Header**********************************************************************************/
 /*!
-@file			System.hpp
-@authors		Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
-		
-@date 26/04/2021
+\file System.hpp
+\team name
+\software name
+\authors
+NAME							EMAIL									ROLE
+Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
+Goh	See Yong Denise				g.seeyongdenise@digipen.edu
+Ow Jian Wen						jianwen.o@digipen.edu					TECHINCAL DIRECTOR
+Chia Yi Da						chiayida98@gmail.com
+Margaret Teo Boon See			Teo.b@digipen.edu
+Wang Ao							Ao.Wang@digipen.edu
+Ng Jia Yi						Jiayi.ng@digipen.edu
+\date 26/04/2021
+\brief
 
-@brief
-
-
+This is to allow iteration in a list of entities with a certain signature of components
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -30,7 +38,7 @@ namespace Engine {
 #endif
 
 		//virtual bool Create() = 0;
-		virtual void Destroy() = 0;
+		//virtual void Destroy() = 0;
 	};
 }
 

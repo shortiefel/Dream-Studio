@@ -276,6 +276,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="..\External Resources\include\Imgui\imstb_truetype.h" />
     <ClInclude Include="Editor\Header\EditorStartPoint.hpp" />
     <ClInclude Include="Editor\Header\Graphic\EditorSceneCamera.hpp" />
+    <ClInclude Include="Editor\Header\GUI\ContentBroswerPanel.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUIWindow.hpp" />
     <ClInclude Include="Editor\Header\Management\EditorSceneSerializer.hpp" />

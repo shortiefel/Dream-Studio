@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUIWindow.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 		 Goh See Yong, Denise   g.seeyongdenise@digipen.edu
 		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    26/07/2021
@@ -21,7 +21,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
+#include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
@@ -71,10 +72,10 @@ namespace Editor {
 		}
 
 		void GUI_DockSpace() {
-			Math::vec2 winPos = Engine::Window::GetWindowPosition();
+			Math::vec2 winPos = Engine::Window::GetInstance().GetWindowPosition();
 			ImGui::SetNextWindowPos(ImVec2{ winPos.x, winPos.y });
-			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetWidth(),
-											 (float)Engine::Window::GetHeight() });
+			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetInstance().GetWidth(),
+											 (float)Engine::Window::GetInstance().GetHeight() });
 
 
 			ImGui::Begin("Dream Engine", &dockspace_bool, dockspace_window_flags);//, & showWindow, ImGuiWindowFlags_NoInputs);
@@ -188,7 +189,7 @@ namespace Editor {
 				if (ImGui::TreeNode("Transform"))
 				{
 					ImGui::Spacing();
-					if (Engine::DreamECS::HasComponent<Engine::Transform>(comp, entity_selected))
+					if (Engine::DreamECS::GetInstance().HasComponent<Engine::Transform>(comp, entity_selected))
 					{
 						//Updating of position
 						ImGui::Text("Position");
@@ -239,11 +240,23 @@ namespace Editor {
 
 				}
 
-				
+				//if (check_selection = true) {
+				if (Engine::DreamECS::GetInstance().HasComponent<Engine::Transform>(comp, entity_selected))
+				{
+					ImGui::Text("Scaling ");
+					ImGui::Text("X: ");
+					ImGui::SameLine();
+					ImGui::InputFloat("", &comp->scale.x, 0.0f);
+					ImGui::Text("Y: ");
+					ImGui::SameLine();
+					ImGui::InputFloat("", &comp->scale.y, 0.0f);
+				}
 
-
-
-
+				Engine::Collider* colComp;
+				if (Engine::DreamECS::GetInstance().HasComponent<Engine::Collider>(colComp, entity_selected))
+				{
+					ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
+				}
 				//const auto& classScriptInstances = Engine::ScriptSystem::csEntityClassInstance.find(entity_selected);
 				//if (classScriptInstances != Engine::ScriptSystem::csEntityClassInstance.end()) {
 				//	
@@ -311,36 +324,64 @@ namespace Editor {
 		{
 			if (content_bool) {
 				ImGui::Begin("Content Browser", &content_bool, window_flags);
-				//ImGui::TreeNode("Content");
 				if (_currentDirectory != std::filesystem::path("Assets"))
 				{
-					if (ImGui::Button("<--"))
+					if (ImGui::Button("<-"))
 					{
 						_currentDirectory = _currentDirectory.parent_path();
 					}
 				}
+
+				static float padding = 16.0f;
+				static float thumbnailSize = 128.0f;
+				float cellSize = thumbnailSize + padding;
+
+				float panelWidth = ImGui::GetContentRegionAvail().x;
+				int columnCount = (int)(panelWidth / cellSize);
+				if (columnCount < 1)
+					columnCount = 1;
+
+				ImGui::Columns(columnCount, 0, false);
+
 				for (auto& directory : std::filesystem::directory_iterator("Assets"))
 				{
 					const auto& path = directory.path();
 					auto relative_path = std::filesystem::relative(path, _currentDirectory);
-					std::string relative_pathstring = relative_path.string();
-					if (directory.is_directory())
-					{
-						if (ImGui::Button(relative_pathstring.c_str()))
-						{
-							_currentDirectory /= path.filename();
-						}
-					}
-					else
-					{
-						if (ImGui::Button(relative_pathstring.c_str()))
-						{
+					std::string filenameString = relative_path.string();
 
-						}
+					ImGui::PushID(filenameString.c_str());
+					//auto& texture = Engine::DreamECS::GetInstance().GetComponentType<Texture>();
+					//directory.is_directory() ? "Assets/Textures/DirectoryIcon.png" : "Assets/Texures/FileIcon.png";
+					//texture->getFilepath();
+					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+					ImGui::Button("Button Image");
+					//ImGui::ImageButton((ImTextureID)texture->GetEntityId(), {thumbnailSize, thumbnailSize}, {0, 1}, {1, 0});
+					if (ImGui::BeginDragDropSource())
+					{
+						const wchar_t* itemPath = relative_path.c_str();
+						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
+						ImGui::EndDragDropSource();
 					}
+					ImGui::PopStyleColor();
+					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					{
+						if (directory.is_directory())
+						{
+								_currentDirectory /= path.filename();
+						}
+
+					}
+					ImGui::TextWrapped(filenameString.c_str());
+
+					ImGui::NextColumn();
+
+					ImGui::PopID();
 
 				}
-				
+				ImGui::Columns(1);
+
+				ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 512);
+				ImGui::SliderFloat("Padding", &padding, 0, 32);
 
 				ImGui::End();
 			}

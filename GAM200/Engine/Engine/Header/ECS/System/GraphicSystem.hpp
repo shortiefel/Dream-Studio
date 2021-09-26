@@ -1,7 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GraphicSystem.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
+		 Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 @brief
 This file has the class to manage graphics: GraphicsSystem
@@ -19,25 +20,37 @@ Technology is prohibited.
 #define GRAPHIC_SYSTEM_H
 
 #include "Engine/Header/pch.hpp"
+
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 #include "Engine/Header/ECS/System/system.hpp"
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
-	class GraphicSystem : public System {
+	class GraphicSystem : public Singleton<GraphicSystem> {
 	public:
 
-		static bool Create(const std::shared_ptr<GraphicSystem>& graphicSystem);
-		virtual void Destroy() override;
-		~GraphicSystem();
+		//static bool Create(const std::shared_ptr<GraphicSystem>& graphicSystem);
+		bool Create();
+		void Destroy();
+		//~GraphicSystem();
 		//void Destroy();
 
 		//static void Update(float dt);
-		static void Render(Math::mat3 camMatrix = CameraSystem::GetTransform());
+		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform());
+
 	private:
+		GLboolean isDebugDraw = GL_TRUE;
+		GLint id = 0;
 		//static GraphicSystem* gs;
 		//static std::shared_ptr<GraphicSystem> GS;
+
+		GraphicSystem() {}
+		~GraphicSystem() {}
+
+		friend class Singleton<GraphicSystem>;
 	};
 }
 

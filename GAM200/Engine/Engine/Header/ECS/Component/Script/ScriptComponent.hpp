@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ScriptComponent.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/06/2021
 @brief
 This file contain the Script component
@@ -35,12 +35,18 @@ namespace Engine {
 		bool RemoveScript(const char* _className);
 		void SetActive(const char* _className, bool _boolean);
 
-		CSScript(Entity _ID = DEFAULT_ENTITY);
+		//Explict copy 
+		void CopyComponentAsInstance(const CSScript& target);
+		void CopyComponentAsPrefab(const CSScript& target);
+
+		CSScript(Entity _ID = DEFAULT_ENTITY, const char* _className = nullptr);
 		CSScript(CSScript&& rhs) noexcept;
 		CSScript& operator=(CSScript&& rhs) noexcept;
 		CSScript(const CSScript&) = delete;
+		CSScript& operator=(const CSScript& rhs) = delete;
 
-	//private:
+	private:
+		void AddSpecial();
 		//void InitVariable(const char* className);
 	};
 }

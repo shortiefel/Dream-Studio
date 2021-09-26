@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EditorStartPoint.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    23/07/2021
 @brief
 This file contain the EditorStartPoint definition
@@ -29,7 +29,7 @@ Technology is prohibited.
 
 namespace Editor {
 	void EditorStartPoint::Create() {
-		GUI::Create(Engine::Window::GetGLFWwindow(), Engine::Window::GetGLSLVersion());
+		GUI::Create(Engine::Window::GetInstance().GetGLFWwindow(), Engine::Window::GetInstance().GetGLSLVersion());
 
 		//Deserialize then put as position
 		EditorSceneCamera::Create({ 150.f,100.f });
@@ -43,13 +43,14 @@ namespace Editor {
 		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
 		GUI::SetGameFBO();
 		//Engine::GraphicSystem::Update(dt);
-		Engine::GraphicSystem::Render();
+		Engine::GraphicSystem::GetInstance().Render();
 
 		//EditorSceneCamera::Update(dt);
 
 		GUI::SetSceneFBO();
 		//Engine::GraphicSystem::Update(dt);
-		Engine::GraphicSystem::Render(EditorSceneCamera::GetTransform());
+		//Change this line to editor graphic system
+		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform());
 
 		GUI::Update();
 		GUI::Draw();

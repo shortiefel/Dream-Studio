@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EngineCore.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    24/07/2021
 \brief
 This file has the function definition for class EngineCore
@@ -40,19 +40,11 @@ namespace Engine {
 		Factory::Create();
 		TextureManager::Create();
 
-		//KeyPressedEvent::RegisterFunction(SceneManager::GetSceneHotKey());
-
 		SceneManager::StartScene();
 	}
 
 	void EngineCore::Update(float dt, bool defaultRender) {
 		SceneManager::Update(dt, defaultRender);
-
-		/*if (Input::IsKeyPressed(Input_KeyCode::G))
-			SceneManager::ChangeScene("test2");
-		if (Input::IsKeyPressed(Input_KeyCode::H))
-			SceneManager::ChangeScene("test3");*/
-		
 	}
 
 	void EngineCore::Destroy() {

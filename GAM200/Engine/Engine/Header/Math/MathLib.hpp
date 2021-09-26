@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    MathLib.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    12/09/2021
 \brief
 This file contains access/switch to either glm library and custom math library

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Settings.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    11/09/2021
 \brief
 

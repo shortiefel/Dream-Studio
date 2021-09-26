@@ -96,6 +96,9 @@
     <ClInclude Include="Editor\Header\Scene\EditorSceneManager.hpp">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\ContentBroswerPanel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">

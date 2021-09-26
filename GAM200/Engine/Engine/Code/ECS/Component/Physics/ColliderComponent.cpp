@@ -14,7 +14,11 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug tools/Logging.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
+
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
 	/*Collider::Collider(Entity ID, ColliderType c, bool trigger) :

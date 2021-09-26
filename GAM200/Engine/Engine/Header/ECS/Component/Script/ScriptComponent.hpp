@@ -19,10 +19,11 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 #include "Engine/Header/Script/ScriptClass.hpp"
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
+	class DSerializer;
+	class SSerializer;
+
 	struct CSScript : public IComponent {
 		CSClassInstance klassInstance;
 		//std::unordered_map<std::string, CSScriptInstance> tem;
@@ -46,7 +47,7 @@ namespace Engine {
 		CSScript& operator=(const CSScript& rhs) = delete;
 
 	private:
-		void AddSpecial();
+		//void AddSpecial();
 		//void InitVariable(const char* className);
 	};
 }

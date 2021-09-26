@@ -66,20 +66,25 @@ namespace Engine {
 
 		void AddScriptComponent(T component) {
 			Entity entity = component.GetEntityId();
+			size_t index{};
+			
 			//No Script
 			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) {
-				size_t newIndex = Size;
-				EntityToIndexMap[entity] = newIndex; //Entity -> Index
-				componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
-				//componentArray[newIndex].AddScript(component); //Creating of the array and calls it component
+				index = Size;
+				EntityToIndexMap[entity] = index; //Entity -> Index
+				//componentArray[index] = std::move(component);
+				componentArray[index] = std::move(T{ entity });
+				componentArray[index].AddScript(component);
 				Size++;
 			}
 			//Has at least one script
 			else {
-				printf("Adding new scripts \n");
-				size_t index = EntityToIndexMap[entity];
+				
+				index = EntityToIndexMap[entity];
 				componentArray[index].AddScript(component);
 			}
+
+			//componentArray[index].AddScript(component);
 		}
 
 

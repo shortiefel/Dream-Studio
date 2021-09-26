@@ -37,7 +37,6 @@ public class Test : MonoBehaviour
 
         go2.position += new Vec2(500, 500);
         Console.WriteLine(go2.position);*/
-
     }
 
 
@@ -76,10 +75,11 @@ public class Test : MonoBehaviour
 
         
 
-        if (Input.IsKeyPressed(KeyCode.X))
+        if (Input.IsKeyPressed(KeyCode.E) && entityId == 0)
         {
-            Console.WriteLine(health);
-            
+            Instantiate_Entity("Box");
+            //Console.WriteLine(Input.IsKeyPressed(KeyCode.E));
+            Disable(this);
         }
     }
 

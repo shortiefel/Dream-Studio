@@ -16,7 +16,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Script/ScriptInternalCall.hpp"
-//#include "Engine/Header/Script/Scripting.hpp"
+
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp" //Serialize Prefab
 
 #include <mono/metadata/assembly.h>
 
@@ -43,7 +44,6 @@ ctype->paramName = param;
 
 
 namespace Engine {
-
 	//extern Coordinator gCoordinator;
 	//Coordinator& gCoordinator = DreamECS::GetCoordinator();
 
@@ -75,7 +75,10 @@ namespace Engine {
 	void Active_Collider_Engine(unsigned int id, bool boolean);
 	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str);
 
+	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle);
+
 	void GetDeltaTime_Engine(float* dt);
+
 
 
 	void RegisterInternalCall() {
@@ -104,7 +107,10 @@ namespace Engine {
 		mono_add_internal_call("MonoBehaviour::Active_Collider_Engine", Active_Collider_Engine);
 		mono_add_internal_call("MonoBehaviour::Active_Script_Engine", Active_Script_Engine);
 
+		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab", Instantiate_Prefab);
+
 		mono_add_internal_call("Time::GetDeltaTime_Engine", GetDeltaTime_Engine);
+
 	}
 
 
@@ -241,6 +247,15 @@ namespace Engine {
 		CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(id);
 		if (!csScript) return;
 		csScript->SetActive( mono_string_to_utf8(str), boolean);
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Prefab
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle) {
+		//GameSceneSerializer::DeserializeScene(mono_string_to_utf8(prefabName));
+		GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), position, angle);
+		std::cout << "Calling instantiate\n";
 	}
 
 

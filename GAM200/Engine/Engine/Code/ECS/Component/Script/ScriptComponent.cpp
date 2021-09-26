@@ -17,13 +17,16 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
 #include "Engine/Header/Script/Scripting.hpp"
 
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+
 namespace Engine {
 	CSScript::CSScript(Entity _ID, const char* _className) :
 		IComponent{ _ID } {
-		if (_className) {
+		/*if (_className) {
 			CSScriptInstance csScriptInstance{ _className };
 			klassInstance.emplace(_className, std::move(csScriptInstance));
-		}
+		}*/
 	}
 
 	CSScript::CSScript(CSScript&& rhs) noexcept {
@@ -76,20 +79,22 @@ namespace Engine {
 
 	void CSScript::AddScript(CSScript& comp) {
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
+			//std::cout << "class in AddScript " << className << "\n";
 			if (klassInstance.find(className) == klassInstance.end()) {
-				Scripting::InitVariable(csScriptInstance);
-				Scripting::InitCSClass(csScriptInstance);
+				
 				klassInstance.emplace(className, std::move(csScriptInstance));
+				//CSScriptInstance& tem = klassInstance.find(className)->second;
+
+				//Scripting::InitVariable(tem);
+				//Scripting::InitCSClass(tem);
 			}
 
 			else {
 				std::cout << "found class at " << klassInstance.at(className).csClass.className << "\n";
 			}
 		}
-	}
 
-	void CSScript::AddSpecial() {
-
+		std::cout << "Add Script  " << GetEntityId() << "\n";
 	}
 
 	bool CSScript::RemoveScript(const char* _className) {
@@ -119,7 +124,6 @@ namespace Engine {
 
 
 					CSPublicVariable csPublicvariable{ variableName, variableType };
-
 
 					if (variableType == CSType::CHAR) {
 						char charData = variableData["Data"].GetInt();
@@ -152,9 +156,13 @@ namespace Engine {
 
 					csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
 				}
+
 			}
+			Scripting::InitCSClass(csScriptInstance);
 			klassInstance.emplace(className, std::move(csScriptInstance));
 		}
+
+		std::cout << "Deserializing -------------------------------------------------------------------\n";
 		return *this;
 	}
 

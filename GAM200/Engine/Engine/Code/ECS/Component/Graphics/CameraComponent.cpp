@@ -17,6 +17,9 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/Graphics/CameraComponent.hpp"
 
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+
 namespace Engine {
     Camera2D::Camera2D(Entity _ID, float _fov, float _ar, bool _active) :
         IComponent{ _ID },//num{ ID },

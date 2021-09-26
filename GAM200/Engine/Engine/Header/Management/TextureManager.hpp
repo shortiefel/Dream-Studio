@@ -19,14 +19,18 @@ Technology is prohibited.
 
 #include "Engine/Header/pch.hpp"
 
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 namespace Engine {
-	class TextureManager {
+	class TextureManager : public Singleton<TextureManager> {
 	public:
-		static void Create();
-		static void Destroy();
-		static GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+		void Create();
+		void Destroy();
+		GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
 	private:
-		static std::unordered_map<std::string, GLuint> textureList;
+		std::unordered_map<std::string, GLuint> textureList;
+
+		SINGLETON_SETUP(TextureManager);
 	};
 }
 

@@ -14,9 +14,13 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
 //#include "../../External Resources/stb_image/stb_image.h"
+
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
 	Texture::Texture(Entity _ID, const std::string _path, GraphicShape _shape, //GraphicShader shader, 
@@ -57,7 +61,7 @@ namespace Engine {
 
 	Texture& Texture::Deserialize(const DSerializer& _serializer) {
 		filepath = _serializer.GetValue<std::string>("Filepath");
-		texobj_hdl = TextureManager::LoadTexture(filepath, &width, &height, &BPP, 4);
+		texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 		//shd_ref = GraphicShader(serializer.GetValue<int>("Scale"));
 		isActive = _serializer.GetValue<bool>("IsActive");

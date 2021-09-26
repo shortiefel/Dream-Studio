@@ -23,14 +23,18 @@ Technology is prohibited.
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
+//#include "Engine/Header/Debug tools/Logging.hpp"
+
 #include "Engine/Header/Graphic/Graphic.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
+
 
 namespace Engine {
+	class DSerializer;
+	class SSerializer;
+
 	//Scale value for circle in both axis is same
 	struct Transform : public IComponent {
 		Math::vec2 position = Math::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
@@ -47,11 +51,13 @@ namespace Engine {
 		void Serialize(const SSerializer& _serializer);
 
 		Transform() = default;
-		Transform(Entity _ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{}, float _angle = float{}, bool _active = true, int _layer = 0);
+		Transform(Entity _ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{1,1}, float _angle = float{}, bool _active = true, int _layer = 0);
+		Transform& operator+= (const Transform& _rhs);
+
 		Transform(const Transform&) = default;
 		Transform& operator=(const Transform&) = default;
 
-		Transform(Transform&& rhs) noexcept {
+		/*Transform(Transform&& rhs) noexcept {
 			position = std::move(rhs.position);
 			scale = std::move(rhs.scale);
 			angle = std::move(rhs.angle);
@@ -59,7 +65,7 @@ namespace Engine {
 			layer = std::move(rhs.layer);
 			SetEntityId(rhs.GetEntityId());
 			rhs.SetEntityId(DEFAULT_ENTITY);
-		}
+		}*/
 	};
 }
 #endif

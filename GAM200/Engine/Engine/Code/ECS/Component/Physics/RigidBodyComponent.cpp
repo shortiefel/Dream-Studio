@@ -16,6 +16,9 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/Physics/RigidBodyComponent.hpp"
 
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+
 namespace Engine {
 	RigidBody::RigidBody(Entity _ID, bool _active) : IComponent{ _ID }, isActive{ _active } {}
 

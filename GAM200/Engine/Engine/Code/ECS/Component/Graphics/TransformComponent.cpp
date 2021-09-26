@@ -20,13 +20,25 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
+
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
 	Transform::Transform(Entity _ID, Math::vec2 _pos, Math::vec2 _scale, float _angle, bool _active, int _layer) :
 		IComponent{ _ID },
 		position{ _pos }, scale{ _scale }, angle{ _angle },
 		isActive{ _active }, layer{ _layer } {}
+
+	Transform& Transform::operator+= (const Transform& _rhs) {
+		position += _rhs.position;
+		scale *= _rhs.scale;
+		angle += _rhs.angle;
+
+		return *this;
+	}
 
 	Math::mat3 Transform::GetTransform() const {
 		return

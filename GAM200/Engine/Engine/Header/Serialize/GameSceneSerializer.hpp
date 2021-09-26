@@ -18,6 +18,7 @@ Technology is prohibited.
 #define GAMESCENE_SERIALIZER_HPP
 
 #include <string>
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	class GameSceneSerializer {
@@ -29,6 +30,12 @@ namespace Engine {
 		static void SerializeScene(std::string filename);
 		//From file to a scene
 		static void DeserializeScene(std::string filename);
+
+
+		//static void SerializePrefab(std::string filename, Math::vec2 position, float angle);
+		static void DeserializePrefab(std::string filename, Math::vec2 position, float angle);
+
+
 	};
 }
 #endif

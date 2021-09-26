@@ -12,7 +12,7 @@ public class TrailTest3 : MonoBehaviour
     public override void OnInit()
     {
         go2 = GetComponent<Transform>();
-       // objTrans1 = GetComponentWithID<Transform>(0); //DOesnt work for replay since number is hardcoded, entity value doesnt reset
+        // objTrans1 = GetComponentWithID<Transform>(0); //DOesnt work for replay since number is hardcoded, entity value doesnt reset
         //Transform tem = GetTransform();
         //Vec2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
@@ -25,7 +25,7 @@ public class TrailTest3 : MonoBehaviour
         go2.position += new Vec2(500, 500);
         Console.WriteLine(go2.position);*/
 
-        
+        Console.WriteLine("TrailTest3 fdfdfdf");
     }
 
 

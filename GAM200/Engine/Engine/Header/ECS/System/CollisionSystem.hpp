@@ -39,10 +39,7 @@ namespace Engine {
 		//float gravity = 10.f;
 		//static std::shared_ptr<CollisionSystem> CS;
 
-		CollisionSystem() {}
-		~CollisionSystem() {}
-
-		friend class Singleton<CollisionSystem>;
+		SINGLETON_SETUP(CollisionSystem);
 	};
 }
 

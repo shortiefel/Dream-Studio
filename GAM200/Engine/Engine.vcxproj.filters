@@ -264,6 +264,9 @@
     <ClCompile Include="Engine\Code\Graphic\shader.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Management\FileManager.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -553,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Singleton\Singleton.hpp">
       <Filter>Header Files\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Management\FileManager.hpp">
+      <Filter>Header Files\Management</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

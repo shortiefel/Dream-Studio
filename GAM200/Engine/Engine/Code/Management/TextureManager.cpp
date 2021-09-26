@@ -19,7 +19,7 @@ Technology is prohibited.
 #include "stb_image/stb_image.h"
 
 namespace Engine {
-	std::unordered_map<std::string, GLuint> TextureManager::textureList;
+	//std::unordered_map<std::string, GLuint> TextureManager::textureList;
 
 	void TextureManager::Create() {
 		// flips image in vertically

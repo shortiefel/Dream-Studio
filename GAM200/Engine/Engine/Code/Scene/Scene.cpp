@@ -103,18 +103,15 @@ namespace Engine {
             //GraphicSystem::Update(dt);
             GraphicSystem::GetInstance().Render();
         }
-
+        if (Input::IsKeyPressed(Input_KeyCode::X)) {
+            GameSceneSerializer::DeserializePrefab("Box", Math::vec2{ 0,0 }, 0);
+            ScriptSystem::GetInstance().PlayInit();
+        }
 
         DreamECS::GetInstance().ClearDestroyQueue();
 
         LayerStack::Update();
         LayerStack::Draw();
-
-
-        if (Input::IsKeyPressed(Input_KeyCode::B))
-            std::cout << DreamECS::GetInstance().GetUsedEntitySet().size() << "\n";
-
-        
     }
 
     //bool Scene::SceneSave() {

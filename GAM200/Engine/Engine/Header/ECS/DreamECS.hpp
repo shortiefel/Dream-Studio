@@ -193,10 +193,8 @@ namespace Engine {
 		//static Coordinator gCoordinator;
 		std::queue<Entity> destroyQueue{};
 
-		DreamECS() {}
-		~DreamECS() {}
 
-		friend class Singleton<DreamECS>;
+		SINGLETON_SETUP(DreamECS);
 	};
 }
 

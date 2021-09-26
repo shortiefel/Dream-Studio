@@ -25,10 +25,11 @@ Technology is prohibited.
 #define CAMERA_COMPONENT_HPP
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
+    class DSerializer;
+    class SSerializer;
+
     constexpr int CAMERA_HEIGHT = 1000;
 
     struct Camera2D : public IComponent {

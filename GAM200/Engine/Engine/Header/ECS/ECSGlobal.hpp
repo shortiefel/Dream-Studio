@@ -29,7 +29,7 @@ Technology is prohibited.
 #pragma once
 
 //#include <iostream>
-#include <bitset>
+//#include <bitset>
 #include <cstdint>
 
 //Check whether entity is in used
@@ -47,7 +47,7 @@ namespace Engine {
 	const Entity DEFAULT_ENTITY = MAX_ENTITIES + 1;
 	using ComponentType = std::uint8_t;
 	const ComponentType MAX_COMPONENTS = 48;
-	using Signature = std::bitset<MAX_COMPONENTS>;
+	//using Signature = std::bitset<MAX_COMPONENTS>;
 
 
 }

@@ -27,11 +27,12 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 
 namespace Engine {
+	class DSerializer;
+	class SSerializer;
+
 	enum class ColliderType {
 		CIRCLE = 0,
 		SQUARE

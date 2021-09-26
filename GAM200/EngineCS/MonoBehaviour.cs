@@ -134,13 +134,13 @@ public class MonoBehaviour
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool Destroy_Transform_Engine(uint entityID);
+    internal static extern void Destroy_Transform_Engine(uint entityID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool Destroy_Collider_Engine(uint entityID);
+    internal static extern void Destroy_Collider_Engine(uint entityID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool Destroy_Script_Engine(uint entityID, String className);
+    internal static extern void Destroy_Script_Engine(uint entityID, String className);
 
     //-----------------------------------------------------------------------------------------------------------------
     //Enable
@@ -156,10 +156,10 @@ public class MonoBehaviour
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
-                //Destroy_Transform_Engine(entityId);
+                Active_Transform_Engine(entityId, true);
                 break;
             case genTypes.Collider:
-                //Destroy_Collider_Engine(entityId);
+                Active_Collider_Engine(entityId, true);
                 break;
             default:
                 return;
@@ -183,10 +183,10 @@ public class MonoBehaviour
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
-                //Active_Transform_Engine(entityId, false);
+                Active_Transform_Engine(entityId, false);
                 break;
             case genTypes.Collider:
-                //Active_Collider_Engine(entityId, false);
+                Active_Collider_Engine(entityId, false);
                 break;
             default:
                 return;
@@ -194,16 +194,27 @@ public class MonoBehaviour
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool Active_Transform_Engine(uint entityID, bool active);
+    internal static extern void Active_Transform_Engine(uint entityID, bool active);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool Active_Collider_Engine(uint entityID, bool active);
+    internal static extern void Active_Collider_Engine(uint entityID, bool active);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool Active_Script_Engine(uint entityID, bool active, String className);
+    internal static extern void Active_Script_Engine(uint entityID, bool active, String className);
 
 
+    public void Instantiate(string prefabName, Vec2 position, float angle = 0)
+    {
+        Instantiate_Prefab(prefabName, position, angle);
+    }
 
+    public void Instantiate_Entity(string prefabName)
+    {
+        Instantiate_Prefab(prefabName, new Vec2(0,0), 0);
+    }
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void Instantiate_Prefab(String prefabName, Vec2 position, float angle);
 
     /*public virtual void OnEnable()
     {

@@ -86,7 +86,7 @@ namespace Engine {
 
 			auto& classScriptInstances = csScript.klassInstance;
 			const auto& entityId = csScript.GetEntityId();
-
+			
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework

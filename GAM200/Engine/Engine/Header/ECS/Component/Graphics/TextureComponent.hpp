@@ -20,15 +20,18 @@ Technology is prohibited.
 #define TEXTURE_COMPONENT_HPP
 
 //#include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
-#include "Engine/Header/Debug Tools/Logging.hpp"
-#include "Engine/Header/Graphic/GraphicOptions.hpp"
+//#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/pch.hpp"
+
+#include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
+
 
 namespace Engine {
+	class DSerializer;
+	class SSerializer;
+
 	class Texture : public IComponent {
 	public:
 		Texture(Entity _ID, const std::string _path = "", GraphicShape _shape = GraphicShape::SQUARE, //GraphicShader shader = "Default",

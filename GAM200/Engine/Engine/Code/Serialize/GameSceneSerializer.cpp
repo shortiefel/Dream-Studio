@@ -25,6 +25,9 @@ Technology is prohibited.
 
 #include "Engine/Header/Scene/SceneManager.hpp"
 
+#include "Engine/Header/Management/FileManager.hpp"
+//FILE* fp = FileManager::GetInstance().Open_File("Data/Config.json");
+
 //External Resources
 #include <sstream>
 
@@ -33,11 +36,15 @@ Technology is prohibited.
 #include <rapidjson/writer.h>
 #include <rapidjson/filereadstream.h>
 #include <rapidjson/filewritestream.h>
+#include <rapidjson/istreamwrapper.h>
+#include <rapidjson/ostreamwrapper.h>
 
 #include "Engine/Header/ECS/Entity/EntityManager.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
+
+#include <fstream>
 
 //Type and Store named must be same to use this
 #define ADD_COMPONENT_WTIH_CHECK(type) \
@@ -62,33 +69,53 @@ if (!fp) {\
 	return;\
 }
 
+#define TO_FULL_SCENE(name) ("Assets/Scenes/" + name + ".scene")
+#define TO_FULL_PREFAB(name) ("Assets/Prefab/" + name + ".prefab")
+
 #define READ_BUFFER \
 char readBuffer[1000];\
 rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));\
 rapidjson::Document doc;\
-doc.ParseStream(is);\
-fclose(fp);
+doc.ParseStream(is);
+//fclose(fp);
 
 
 namespace Engine {
 	void GameSceneSerializer::SerializeSetting() {
-		FILE_CREATION("Data/Config.json", "wb");
-
 		rapidjson::Document doc(rapidjson::kObjectType);
+
 
 		//doc.PushBack(entityObject, doc.GetAllocator());
 
-		char writeBuffer[1000];
+		/*char writeBuffer[1000];
 		rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+		doc.Accept(writer);*/
+
+		//FILE_CREATION("Data/Config.json", "wb");
+		//FILE* fp = FileManager::GetInstance().Open_File("Data/Config.json");
+
+		std::ofstream fileStream("Data/Config.json");
+		rapidjson::OStreamWrapper osw(fileStream);
+
+		rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
 		doc.Accept(writer);
 
-		fclose(fp);
+		fileStream.close();
+		//fclose(fp);
 	}
 
 	void GameSceneSerializer::DeserializeSetting() {
-		FILE_CREATION("Data/Config.json", "rb");
-		READ_BUFFER;
+		//FILE_CREATION("Data/Config.json", "rb");
+		//FILE* fp = FileManager::GetInstance().Open_File("Data/Config.json");
+		//READ_BUFFER;
+		std::ifstream fileStream;
+		rapidjson::Document doc;
+
+		fileStream.open("Data/Config.json");
+		rapidjson::IStreamWrapper isw(fileStream);
+
+		doc.ParseStream(isw);
 
 		rapidjson::Value::ConstMemberIterator itr = doc.FindMember("Window");
 		if (itr != doc.MemberEnd()) {
@@ -104,14 +131,16 @@ namespace Engine {
 			Settings::gameAR = static_cast<GLfloat>(Settings::gameWidth) / Settings::gameHeight;
 		}
 
-		SceneManager::SetDefaultScene("test3");
+		SceneManager::GetInstance().SetDefaultScene("test3");
+
+		fileStream.close();
 	}
 
 	void GameSceneSerializer::SerializeScene(std::string filename) {
-		FILE_CREATION(filename.c_str(), "wb");
-
+		filename = TO_FULL_SCENE(filename);
+	
 		rapidjson::Document doc(rapidjson::kArrayType);
-
+		
 		const std::unordered_set<Entity>& entList = DreamECS::GetInstance().GetUsedEntitySet();
 		//size_t num = entList.size();
 		for (const auto& ent : entList) {
@@ -162,50 +191,9 @@ namespace Engine {
 				entityObject.AddMember("CSScript", objType, doc.GetAllocator());
 			}
 
-
-
 #else
 			if (ScriptSystem::csEntityClassInstance.find(ent) != ScriptSystem::csEntityClassInstance.end()) {
-#if 1
-				const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
-				rapidjson::Value classArray(rapidjson::kArrayType);
 
-				SSerializer serializer(doc, classArray);
-				ScriptSystem::SerializeClass(serializer, entityclassInstance);
-				{
-					//const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
-					//rapidjson::Value classArray(rapidjson::kArrayType);
-
-					//for (const auto& [className, scriptInstance] : entityclassInstance) {
-
-					//	rapidjson::Value classObj(rapidjson::kObjectType);
-					//	SSerializer cserializer(doc, classObj);
-
-					//	rapidjson::Value classNameFP;
-					//	char buffer[200];
-					//	int len = sprintf_s(buffer, "%s", className.c_str());
-					//	classNameFP.SetString(buffer, len, doc.GetAllocator());
-
-					//	//classObj.AddMember("Class", classNameFP, doc.GetAllocator());
-
-					//	//classObj.AddMember("IsActive", scriptInstance.isActive, doc.GetAllocator());
-					//	cserializer.SetValue("Class", className);
-					//	cserializer.SetValue("IsActive", scriptInstance.isActive);
-
-					//	if (scriptInstance.csVariableMap.size()) {
-					//		rapidjson::Value variableArray(rapidjson::kArrayType);
-
-					//		SSerializer serializer(doc, variableArray);
-					//		ScriptSystem::SerializeVariable(serializer, scriptInstance);
-
-					//		//classObj.AddMember("Variable", variableArray, doc.GetAllocator());
-					//		cserializer.SetValueJSon("Variable", variableArray);
-					//	}
-
-					//	classArray.PushBack(classObj, doc.GetAllocator());
-					//}
-				}
-#else
 				const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
 				rapidjson::Value classArray(rapidjson::kArrayType);
 
@@ -266,7 +254,6 @@ namespace Engine {
 
 					classArray.PushBack(classObj, doc.GetAllocator());
 				}
-#endif
 
 				entityObject.AddMember("CSScript", classArray, doc.GetAllocator());
 			}
@@ -274,20 +261,43 @@ namespace Engine {
 
 			doc.PushBack(entityObject, doc.GetAllocator());
 		}
-		char writeBuffer[1000];
+		/*char writeBuffer[1000];
 		rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+		doc.Accept(writer);*/
+
+
+		//FILE_CREATION(filename.c_str(), "wb");
+		//FILE* fp = FileManager::GetInstance().Open_File(filename);
+
+		std::ofstream fileStream(filename);
+		rapidjson::OStreamWrapper osw(fileStream);
+
+		rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
 		doc.Accept(writer);
 
-		fclose(fp);
+		//fileStream.unsetf(std::ofstream::out | std::ofstream::trunc);
+		fileStream.close();
+		
+		//fclose(fp);
 	}
 
 	void GameSceneSerializer::DeserializeScene(std::string filename) {
-		FILE_CREATION(filename.c_str(), "rb");
-		READ_BUFFER;
+		filename = TO_FULL_SCENE(filename);
+
+		//FILE_CREATION(filename.c_str(), "rb");
+		//FILE* fp = FileManager::GetInstance().Open_File(filename);
+		std::ifstream fileStream;
+		rapidjson::Document doc;
+
+		fileStream.open(filename);
+		rapidjson::IStreamWrapper isw(fileStream);
+
+		doc.ParseStream(isw);
 
 		for (auto& obj : doc.GetArray()) {
 			Entity ent = DreamECS::GetInstance().CreateEntity();
+
 			rapidjson::Value::ConstMemberIterator itr;
 			
 			ADD_COMPONENT_WTIH_CHECK(Transform);
@@ -313,6 +323,51 @@ namespace Engine {
 
 				ScriptSystem::csEntityClassInstance.emplace(ent, std::move(classInstance));
 #endif
+			}
+		}
+		fileStream.close();
+	}
+
+	void GameSceneSerializer::DeserializePrefab(std::string filename, Math::vec2 position, float angle) {
+		filename = TO_FULL_PREFAB(filename);
+
+		//FILE* fp = FileManager::GetInstance().Open_File(filename);
+
+		//READ_BUFFER;
+		
+		std::ifstream fileStream;
+		rapidjson::Document doc;
+
+		fileStream.open(filename);
+		rapidjson::IStreamWrapper isw(fileStream);
+
+		doc.ParseStream(isw);
+
+		for (auto& obj : doc.GetArray()) {
+			Entity ent = DreamECS::GetInstance().CreateEntity();
+			rapidjson::Value::ConstMemberIterator itr;
+
+			//ADD_COMPONENT_WTIH_CHECK(Transform);
+
+			itr = obj.FindMember("Transform");
+			if (itr != obj.MemberEnd()) {
+					DSerializer serializer{ itr }; 
+					DreamECS::GetInstance().AddComponent(
+						Transform{ ent }.Deserialize(serializer) += Transform{ ent, position, Math::vec2{1,1}, angle }
+					); 
+			}
+
+			ADD_COMPONENT_WTIH_CHECK(Collider);
+			ADD_COMPONENT_WTIH_CHECK(RigidBody);
+			ADD_COMPONENT_WTIH_CHECK(Camera2D);
+			ADD_COMPONENT_WTIH_CHECK(Texture);
+
+			itr = obj.FindMember("CSScript");
+			if (itr != obj.MemberEnd()) {
+				DSerializer serializer{ itr };
+				DreamECS::GetInstance().AddComponent(
+					std::move(CSScript{ ent }.Deserialize(serializer))
+				);
 			}
 		}
 	}

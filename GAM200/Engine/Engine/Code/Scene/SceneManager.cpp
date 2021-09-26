@@ -22,27 +22,25 @@ Technology is prohibited.
 
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
-#define TO_FULL_PATH(name) ("Data/Scenes/" + name + ".json")
-
 namespace Engine {
     //SceneManager* SceneManager::sceneManager;
 
-    std::string SceneManager::currentScenePath;
-    std::string SceneManager::defaultSceneName;
-    Scene* SceneManager::currentScene;
+    //std::string SceneManager::currentSceneName;
+    /*std::string SceneManager::defaultSceneName;
+    Scene* SceneManager::currentScene;*/
 
 	void SceneManager::StartScene() {
         defaultSceneName = "test2";
-        currentScenePath = TO_FULL_PATH(defaultSceneName);
-        currentScene = new Scene{ currentScenePath };
+       // currentSceneName = defaultSceneName;
+        currentScene = new Scene{ defaultSceneName };
 	}
 
 	void SceneManager::ChangeScene(std::string sceneName) {
         currentScene->Stop();
         delete currentScene;
 
-        currentScenePath = TO_FULL_PATH(sceneName);
-        currentScene = new Scene{ currentScenePath };
+        //currentSceneName = sceneName;
+        currentScene = new Scene{ sceneName };
         if (GameState::GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
 

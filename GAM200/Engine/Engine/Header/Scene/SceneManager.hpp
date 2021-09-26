@@ -18,34 +18,39 @@ Technology is prohibited.
 #ifndef SCENE_MANAGER_HPP
 #define SCENE_MANAGER_HPP
 
+
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 #include "Engine/Header/Scene/Scene.hpp"
 #include <string>
 
 namespace Engine {
-	class SceneManager {
+	class SceneManager : public Singleton<SceneManager> {
 	public:
-		static void StartScene();
+		void StartScene();
 		/*
 		* Change to sceneName scene
 		*/
-		static void ChangeScene(std::string sceneName);
+		void ChangeScene(std::string sceneName);
 
-		static void Update(float dt, bool defaultRender);
-		static void Destroy();
+		void Update(float dt, bool defaultRender);
+		void Destroy();
 
-		static void Play();
-		//static void Stop();
-		static void Save();
+		void Play();
+		//void Stop();
+		void Save();
 
-		static void SetDefaultScene(std::string sceneName);
-		static bool GetPlaying();
-		static void SetPlaying(bool state);
+		void SetDefaultScene(std::string sceneName);
+		bool GetPlaying();
+		void SetPlaying(bool state);
 	private:
 		//static SceneManager* sceneManager;
 
-		static std::string currentScenePath;
-		static std::string defaultSceneName;
-		static Scene* currentScene;
+		//static std::string currentSceneName;
+		std::string defaultSceneName;
+		Scene* currentScene;
+
+		SINGLETON_SETUP(SceneManager);
 	};
 }
 

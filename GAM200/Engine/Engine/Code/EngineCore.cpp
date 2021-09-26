@@ -23,6 +23,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
 
+#include "Engine/Header/Management/FileManager.hpp"
+
 #include "Engine/Header/Input/Input.hpp"
 
 #include <iostream>
@@ -38,23 +40,25 @@ namespace Engine {
 		//LayerStack::AddOverlayLayer(GUILayer::Get());
 
 		Factory::Create();
-		TextureManager::Create();
+		TextureManager::GetInstance().Create();
 
-		SceneManager::StartScene();
+		SceneManager::GetInstance().StartScene();
 	}
 
 	void EngineCore::Update(float dt, bool defaultRender) {
-		SceneManager::Update(dt, defaultRender);
+		SceneManager::GetInstance().Update(dt, defaultRender);
 	}
 
 	void EngineCore::Destroy() {
-		SceneManager::Destroy();
+		SceneManager::GetInstance().Destroy();
 
-		TextureManager::Destroy();
+		TextureManager::GetInstance().Destroy();
 
 		Factory::Destroy();
 		//GUILayer::Destroy();
 		LayerStack::Destroy();
+
+		FileManager::GetInstance().Destroy();
 	}
 
 }

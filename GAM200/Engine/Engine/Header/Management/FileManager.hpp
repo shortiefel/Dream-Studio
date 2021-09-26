@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
-@file    PhysicsSystem.hpp
+@file    FileManager.hpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu
-@date    23/09/2021
+@date    26/09/2021
 \brief
-This file has the class declaration for PhysicsSystem
+This file contain the FileManager declaration
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -14,29 +14,27 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef PHYSICS_SYSTEM_H
-#define PHYSICS_SYSTEM_H
-
-#include "Engine/Header/pch.hpp"
+#ifndef FILE_MANAGER_HPP
+#define FILE_MANAGER_HPP
 
 #include "Engine/Header/Singleton/Singleton.hpp"
 
-namespace Engine {
-	class PhysicsSystem : public Singleton<PhysicsSystem> {
-	public:
-		bool Create();
-		void Destroy();
-		//~PhysicsSystem();
+#include <unordered_map>
 
-		//static void Stop();
-		void Update(float dt);
+namespace Engine {
+	class FileManager : public Singleton<FileManager> {
+	public:
+		FILE* Open_File(std::string _fullPathFileName);
+		//rapidjson::Document& Open_Doc(std::string _fullPathFileName);
+
+		void Destroy();
 
 	private:
-		//float gravity = 10.f;
-		//static std::shared_ptr<CollisionSystem> CS;
+		std::unordered_map<std::string, FILE*> fileMap{};
 
-		SINGLETON_SETUP(PhysicsSystem);
+		SINGLETON_SETUP(FileManager);
 	};
 }
+
 
 #endif

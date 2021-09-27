@@ -73,13 +73,14 @@ public class Test : MonoBehaviour
             go2.angle -= 250 * Time.dt;
         }
 
+
         
 
-        if (Input.IsKeyPressed(KeyCode.E) && entityId == 0)
+        if (Input.IsKeyPressed(KeyCode.C))
         {
             Instantiate_Entity("Box");
             //Console.WriteLine(Input.IsKeyPressed(KeyCode.E));
-            Disable(this);
+            //Disable(this);
         }
     }
 

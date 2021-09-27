@@ -25,7 +25,10 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
+#include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
+
+#include "Engine/Header/Management/GameState.hpp"
 
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
@@ -255,7 +258,7 @@ namespace Engine {
 	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle) {
 		//GameSceneSerializer::DeserializeScene(mono_string_to_utf8(prefabName));
 		GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), position, angle);
-		std::cout << "Calling instantiate\n";
+		if (GameState::GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
 
 

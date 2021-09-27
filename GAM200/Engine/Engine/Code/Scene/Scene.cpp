@@ -103,10 +103,6 @@ namespace Engine {
             //GraphicSystem::Update(dt);
             GraphicSystem::GetInstance().Render();
         }
-        if (Input::IsKeyPressed(Input_KeyCode::X)) {
-            GameSceneSerializer::DeserializePrefab("Box", Math::vec2{ 0,0 }, 0);
-            ScriptSystem::GetInstance().PlayInit();
-        }
 
         DreamECS::GetInstance().ClearDestroyQueue();
 

@@ -1,0 +1,21 @@
+[
+  {
+    "Transform": {
+      "Position": [ -20.0, 200.0 ],
+      "Scale": [ 50.0, 50.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "Texture": {
+      "Filepath": "Assets/Textures/test1.png",
+      "Shape": 0,
+      "IsActive": true
+    },
+    "CSScript": [
+      {
+        "Class": "Test",
+        "IsActive": true
+      }
+    ]
+  }
+]

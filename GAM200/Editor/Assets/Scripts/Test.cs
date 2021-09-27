@@ -78,13 +78,14 @@ public class Test : MonoBehaviour
 
         if (Input.IsKeyPressed(KeyCode.C))
         {
-            Instantiate_Entity("Box");
+            //Instantiate_Entity("Box");
             //Console.WriteLine(Input.IsKeyPressed(KeyCode.E));
             //Disable(this);
         }
     }
 
     public override void OnCollisionEnter() {
+        //Instantiate_Entity("Box");
         Console.WriteLine("Test Collision Enter");
     }
 

@@ -21,7 +21,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/System/CollisionSystem.hpp"
-#include "Engine/Header/Physic/Collision.hpp"
+#include "Engine/Header/Physics/Collision.hpp"
 
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
@@ -84,7 +84,7 @@ namespace Engine {
 			if (Entity_Check(ent1Id)) break;
 			if (!col1->isActive) continue;
 
-			auto& transform1 = DreamECS::GetInstance().GetComponent<Transform>(ent1Id);
+			auto& transform1 = DreamECS::GetInstance().GetComponent<TransformComponent>(ent1Id);
 			if (!transform1.isActive) continue;
 
 			Collider collider1 = *col1;
@@ -101,7 +101,7 @@ namespace Engine {
 					ent2IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBody>(ent2Id);
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 
-				auto& transform2 = DreamECS::GetInstance().GetComponent<Transform>(ent2Id);
+				auto& transform2 = DreamECS::GetInstance().GetComponent<TransformComponent>(ent2Id);
 				if (!transform2.isActive) continue;
 
 				Collider collider2 = *col2;

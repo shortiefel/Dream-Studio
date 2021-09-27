@@ -34,6 +34,17 @@ namespace Engine {
 
 	struct TextureComponent : public IComponent {
 	public:
+		GLuint texobj_hdl = GLuint{};
+
+		std::string filepath = "";
+
+		GraphicShape mdl_ref = GraphicShape{};
+		//GraphicShader shd_ref = GraphicShader{};
+
+		bool isActive = true;
+
+		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
+
 		TextureComponent(Entity _ID = DEFAULT_ENTITY, const std::string _path = "", GraphicShape _shape = GraphicShape::SQUARE, //GraphicShader shader = "Default",
 			bool _active = true);
 		TextureComponent(const TextureComponent&) = default;
@@ -56,19 +67,6 @@ namespace Engine {
 		inline GraphicShape get_mdl_ref() const { return mdl_ref; }
 		*/
 		//inline GraphicShader get_shd_ref() const { return shd_ref; }
-
-
-		GLuint texobj_hdl = GLuint{};
-
-		std::string filepath = "";
-
-		GraphicShape mdl_ref = GraphicShape{};
-		//GraphicShader shd_ref = GraphicShader{};
-
-		bool isActive = true;
-
-		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
-
 	};
 }
 

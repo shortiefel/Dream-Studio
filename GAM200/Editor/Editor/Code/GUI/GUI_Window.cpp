@@ -139,7 +139,7 @@ namespace Editor {
 			if (inspector_bool) {
 				ImGui::Begin("Inspector", &inspector_bool, window_flags);
 
-				Engine::Transform* comp;
+				Engine::TransformComponent* comp;
 				Engine::Entity entity_selected = 0;
 				float width = 120;
 				bool selectEntity = 0;
@@ -147,7 +147,7 @@ namespace Editor {
 
 
 				//if (check_selection = true) {
-				if (Engine::DreamECS::GetInstance().HasComponent<Engine::Transform>(comp, entity_selected))
+				if (Engine::DreamECS::GetInstance().HasComponent<Engine::TransformComponent>(comp, entity_selected))
 				{
 					ImGui::Checkbox("Transform", &(comp->isActive));
 					ImGui::Text("Position");

@@ -196,7 +196,8 @@
     <ClCompile Include="Engine\Code\Management\GameState.cpp" />
     <ClCompile Include="Engine\Code\Management\TextureManager.cpp" />
     <ClCompile Include="Engine\Code\Management\Settings.cpp" />
-    <ClCompile Include="Engine\Code\Physic\Collision.cpp" />
+    <ClCompile Include="Engine\Code\Physics\Collision.cpp" />
+    <ClCompile Include="Engine\Code\Physics\Physics.cpp" />
     <ClCompile Include="Engine\Code\Scene\Scene.cpp" />
     <ClCompile Include="Engine\Code\Scene\SceneManager.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp" />
@@ -291,7 +292,8 @@
     <ClInclude Include="Engine\Header\Math\Vector2D.hpp" />
     <ClInclude Include="Engine\Header\Math\Vector3D.hpp" />
     <ClInclude Include="Engine\Header\pch.hpp" />
-    <ClInclude Include="Engine\Header\Physic\Collision.hpp" />
+    <ClInclude Include="Engine\Header\Physics\Collision.hpp" />
+    <ClInclude Include="Engine\Header\Physics\Physics.hpp" />
     <ClInclude Include="Engine\Header\Resource.hpp" />
     <ClInclude Include="Engine\Header\Scene\Scene.hpp" />
     <ClInclude Include="Engine\Header\Scene\SceneManager.hpp" />

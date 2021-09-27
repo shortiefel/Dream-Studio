@@ -22,7 +22,7 @@ Technology is prohibited.
 
 namespace Engine {
 	struct Collider; //Forward declaration
-	struct Transform; //Forward declaration
+	struct TransformComponent; //Forward declaration
 
 	namespace CollisionImplementation {
 		//Collision physic----------------------------------------
@@ -36,12 +36,12 @@ namespace Engine {
 		bool isCollidingCIRCLEtoSQUARE(Math::vec2& dir, const Collider& obj1, const Collider& obj2);
 		bool isCollidingCIRCLEtoCIRCLE(Math::vec2& dir, const Collider& obj1, const Collider& obj2);
 
-		void CollisionResolution(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
-		void CollisionResolutionMain(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
+		void CollisionResolution(Math::vec2& dir, TransformComponent& trans1, const Collider& col1, TransformComponent& trans2, const Collider& col2);
+		void CollisionResolutionMain(Math::vec2& dir, TransformComponent& trans1, const Collider& col1, TransformComponent& trans2, const Collider& col2);
 		//void CollisionResolutionSQUAREtoSQUARE(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
 		//void CollisionResolutionSQUAREtoCIRCLE(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
 		//void CollisionResolutionCIRCLEtoSQUARE(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
-		void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2);
+		void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, TransformComponent& trans1, const Collider& col1, TransformComponent& trans2, const Collider& col2);
 		//--------------------------------------------------------
 
 		//void applyGravity(); //Vec2 position

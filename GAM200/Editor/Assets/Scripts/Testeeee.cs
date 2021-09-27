@@ -73,17 +73,17 @@ public class TrailTest3 : MonoBehaviour
 
         if (Input.IsKeyPressed(KeyCode.V))
         {
-            Instantiate_Entity("Box2");
+            //Instantiate_Entity("Box2");
             //Console.WriteLine(Input.IsKeyPressed(KeyCode.E));
             //Disable(this);
         }
     }
 
-   /* public override void OnCollisionEnter()
+    /*public override void OnCollisionEnter()
     {
-        Console.WriteLine("Test2222 Collision Enter");
-    }
-
+        Instantiate_Entity("Box2");
+    }*/
+    /*
     public override void OnCollisionExit()
     {
         Console.WriteLine("Test2222 Collision Exit");

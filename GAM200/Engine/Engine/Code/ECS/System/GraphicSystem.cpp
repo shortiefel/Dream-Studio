@@ -84,19 +84,19 @@ namespace Engine {
 
 #if NEW_ECS
 		//Check texture because less Texture component on entity than Transform
-		const auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<Texture>();
+		const auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<TextureComponent>();
 		for (const auto& texture : textureArray) {
 			if (Entity_Check(texture.GetEntityId())) break;
-			if (!texture.GetActive()) continue;
+			if (!texture.isActive) continue;
 
-			Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(texture.GetEntityId());
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(texture.GetEntityId());
 			if (!transform || !transform->isActive) continue;
 
-			const auto& mdl_ref = GraphicImplementation::models[texture.get_mdl_ref()];
+			const auto& mdl_ref = GraphicImplementation::models[texture.mdl_ref];
 			//const auto& shd_ref = texture.get_shd_ref();
 
 			glBindVertexArray(mdl_ref.vaoid);
-			glBindTextureUnit(6, texture.getTexObj());
+			glBindTextureUnit(6, texture.texobj_hdl);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

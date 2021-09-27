@@ -44,7 +44,7 @@ namespace Engine {
             if (Entity_Check(cam.GetEntityId())) break;
             if (!cam.isActive) continue;
 
-            Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(cam.GetEntityId());
+            TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(cam.GetEntityId());
             if (!transform || !transform->isActive) continue;
 
 

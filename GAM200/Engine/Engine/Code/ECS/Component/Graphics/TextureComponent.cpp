@@ -23,7 +23,7 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
-	Texture::Texture(Entity _ID, const std::string _path, GraphicShape _shape, //GraphicShader shader, 
+	TextureComponent::TextureComponent(Entity _ID, const std::string _path, GraphicShape _shape, //GraphicShader shader, 
 		bool _active) :
 		IComponent{ _ID },
 		texobj_hdl{ 0 }, filepath{ _path }, width{ 0 }, height{ 0 }, BPP{ 0 },
@@ -33,7 +33,7 @@ namespace Engine {
 	}
 
 
-	Texture::~Texture()
+	TextureComponent::~TextureComponent()
 	{
 		//Problem is caused by ECS data being copied when moved from one part to another
 		//Texture component gets copied and so destroyed afterwards which would cause the texture to be corrupted
@@ -41,7 +41,7 @@ namespace Engine {
 		//glDeleteTextures(1, &texobj_hdl);
 	}
 
-	void Texture::Bind(GLuint _slot) const
+	void TextureComponent::Bind(GLuint _slot) const
 	{
 		glBindTextureUnit(_slot, texobj_hdl);
 
@@ -54,12 +54,12 @@ namespace Engine {
 		//glBindTexture(GL_TEXTURE_2D, texobj_hdl);
 	}
 
-	void Texture::Unbind() const
+	void TextureComponent::Unbind() const
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	Texture& Texture::Deserialize(const DSerializer& _serializer) {
+	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer) {
 		filepath = _serializer.GetValue<std::string>("Filepath");
 		texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
@@ -68,7 +68,7 @@ namespace Engine {
 		return *this;
 	}
 
-	void Texture::Serialize(const SSerializer& _serializer) {
+	void TextureComponent::Serialize(const SSerializer& _serializer) {
 		_serializer.SetValue("Filepath", filepath);
 		_serializer.SetValue("Shape", int(mdl_ref));
 		_serializer.SetValue("IsActive", isActive);

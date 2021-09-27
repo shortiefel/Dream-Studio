@@ -142,45 +142,45 @@ namespace Engine {
 	Transform
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2) {
-		GetEngineType(id, Transform, position, *outVec2);
+		GetEngineType(id, TransformComponent, position, *outVec2);
 
 	}
 	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
-		SetEngineType(id, Transform, position, *inVec2);
+		SetEngineType(id, TransformComponent, position, *inVec2);
 	}
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		//call hascomponent with entityid
-		Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(id);
+		TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(id);
 		if (!transform) return;
 		transform->position += *inVec2;
 	}
 
 
 	void GetTransform_Scale_Engine(unsigned int id, Math::vec2* outVec2) {
-		GetEngineType(id, Transform, scale, *outVec2);
+		GetEngineType(id, TransformComponent, scale, *outVec2);
 	}
 	void SetTransform_Scale_Engine(unsigned int id, Math::vec2* inVec2) {
-		SetEngineType(id, Transform, scale, *inVec2);
+		SetEngineType(id, TransformComponent, scale, *inVec2);
 	}
 
 
 	void GetTransform_Angle_Engine(unsigned int id, float* outVec2) {
-		GetEngineType(id, Transform, angle, *outVec2);
+		GetEngineType(id, TransformComponent, angle, *outVec2);
 
 	}
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2) {
-		SetEngineType(id, Transform, angle, *inVec2);
+		SetEngineType(id, TransformComponent, angle, *inVec2);
 	}
 
 	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2) {
-		Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(id);
+		TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle + 90.f);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
 	}
 
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2) {
-		Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(id);
+		TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
@@ -210,8 +210,8 @@ namespace Engine {
 	Check if component exist
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool HasComponent_Transform_Engine(unsigned int id) {
-		Transform* tem = nullptr;
-		return DreamECS::GetInstance().HasComponent<Transform>(tem, id);
+		TransformComponent* tem = nullptr;
+		return DreamECS::GetInstance().HasComponent<TransformComponent>(tem, id);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -222,7 +222,7 @@ namespace Engine {
 	}
 
 	void Destroy_Transform_Engine(unsigned int id) {
-		DreamECS::GetInstance().RemoveComponent<Transform>(id);
+		DreamECS::GetInstance().RemoveComponent<TransformComponent>(id);
 	}
 
 	void Destroy_Collider_Engine(unsigned int id) {
@@ -239,7 +239,7 @@ namespace Engine {
 	Active
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Active_Transform_Engine(unsigned int id, bool boolean) {
-		SetEngineType(id, Transform, isActive, boolean);
+		SetEngineType(id, TransformComponent, isActive, boolean);
 	}
 
 	void Active_Collider_Engine(unsigned int id, bool boolean) {

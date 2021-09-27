@@ -30,9 +30,9 @@ namespace Engine {
 #if NEW_ECS
         DreamECS::GetInstance().Create();
         DreamECS::GetInstance().RegisterComponent<Camera2D>();
-        DreamECS::GetInstance().RegisterComponent<Transform>();
+        DreamECS::GetInstance().RegisterComponent<TransformComponent>();
         DreamECS::GetInstance().RegisterComponent<Collider>();
-        DreamECS::GetInstance().RegisterComponent<Texture>();
+        DreamECS::GetInstance().RegisterComponent<TextureComponent>();
         DreamECS::GetInstance().RegisterComponent<RigidBody>();
         DreamECS::GetInstance().RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSScript>();

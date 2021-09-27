@@ -88,8 +88,8 @@ namespace Engine {
 		void DuplicateEntityAsInstance(Entity entFrom, Entity entTo) {
 			//variable name is same so its scoped
 			{ DUPLICATE_COMPONENT(Camera2D); }
-			{ DUPLICATE_COMPONENT(Texture); }
-			{ DUPLICATE_COMPONENT(Transform); }
+			{ DUPLICATE_COMPONENT(TextureComponent); }
+			{ DUPLICATE_COMPONENT(TransformComponent); }
 			{ DUPLICATE_COMPONENT(Collider); }
 			{ DUPLICATE_COMPONENT(RigidBody); }
 		}

@@ -146,11 +146,11 @@ namespace Engine {
 		for (const auto& ent : entList) {
 			rapidjson::Value entityObject(rapidjson::kObjectType);
 
-			Transform* trans = DreamECS::GetInstance().GetComponentTest<Transform>(ent);
+			TransformComponent* trans = DreamECS::GetInstance().GetComponentTest<TransformComponent>(ent);
 			if (trans != nullptr) {
 				LOG_ASSERT(trans);
 				SERIALIZE(trans);
-				entityObject.AddMember("Transform", objType, doc.GetAllocator());
+				entityObject.AddMember("TransformComponent", objType, doc.GetAllocator());
 			}
 
 			Collider* col = DreamECS::GetInstance().GetComponentTest<Collider>(ent);
@@ -174,11 +174,11 @@ namespace Engine {
 				entityObject.AddMember("Camera2D", objType, doc.GetAllocator());
 			}
 
-			Texture* tex = DreamECS::GetInstance().GetComponentTest<Texture>(ent);
+			TextureComponent* tex = DreamECS::GetInstance().GetComponentTest<TextureComponent>(ent);
 			if (tex != nullptr) {
 				LOG_ASSERT(tex);
 				SERIALIZE(tex);
-				entityObject.AddMember("Texture", objType, doc.GetAllocator());
+				entityObject.AddMember("TextureComponent", objType, doc.GetAllocator());
 			}
 #if 1
 
@@ -300,11 +300,11 @@ namespace Engine {
 
 			rapidjson::Value::ConstMemberIterator itr;
 			
-			ADD_COMPONENT_WTIH_CHECK(Transform);
+			ADD_COMPONENT_WTIH_CHECK(TransformComponent);
 			ADD_COMPONENT_WTIH_CHECK(Collider);
 			ADD_COMPONENT_WTIH_CHECK(RigidBody);
 			ADD_COMPONENT_WTIH_CHECK(Camera2D);
-			ADD_COMPONENT_WTIH_CHECK(Texture);
+			ADD_COMPONENT_WTIH_CHECK(TextureComponent);
 
 			itr = obj.FindMember("CSScript");
 			if (itr != obj.MemberEnd()) {
@@ -349,18 +349,18 @@ namespace Engine {
 
 			//ADD_COMPONENT_WTIH_CHECK(Transform);
 
-			itr = obj.FindMember("Transform");
+			itr = obj.FindMember("TransformComponent");
 			if (itr != obj.MemberEnd()) {
 					DSerializer serializer{ itr }; 
 					DreamECS::GetInstance().AddComponent(
-						Transform{ ent }.Deserialize(serializer) += Transform{ ent, position, Math::vec2{1,1}, angle }
+						TransformComponent{ ent }.Deserialize(serializer) += TransformComponent{ ent, position, Math::vec2{1,1}, angle }
 					); 
 			}
 
 			ADD_COMPONENT_WTIH_CHECK(Collider);
 			ADD_COMPONENT_WTIH_CHECK(RigidBody);
 			ADD_COMPONENT_WTIH_CHECK(Camera2D);
-			ADD_COMPONENT_WTIH_CHECK(Texture);
+			ADD_COMPONENT_WTIH_CHECK(TextureComponent);
 
 			itr = obj.FindMember("CSScript");
 			if (itr != obj.MemberEnd()) {

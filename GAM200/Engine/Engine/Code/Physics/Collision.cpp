@@ -22,7 +22,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Debug Tools/Logging.hpp" // to be removed
-#include "Engine/Header/Physic/Collision.hpp"
+#include "Engine/Header/Physics/Collision.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include <glm/glm.hpp>
@@ -213,7 +213,7 @@ namespace Engine {
 
 
         //Collision resolution-------------------------------------------------------------------------------
-        void CollisionResolution(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        void CollisionResolution(Math::vec2& dir, TransformComponent& trans1, const Collider& col1, TransformComponent& trans2, const Collider& col2) {
             if (col1.cType == ColliderType::CIRCLE) {
                 if (col2.cType == ColliderType::CIRCLE) {
                     CollisionResolutionCIRCLEtoCIRCLE(dir, trans1, col1, trans2, col2);
@@ -227,7 +227,7 @@ namespace Engine {
             CollisionResolutionMain(dir, trans1, col1, trans2, col2);
         }
 
-        void CollisionResolutionMain(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        void CollisionResolutionMain(Math::vec2& dir, TransformComponent& trans1, const Collider& col1, TransformComponent& trans2, const Collider& col2) {
             if (ent1IsMoveable && ent2IsMoveable) {
                 trans1.position -= (dir * 0.5f);
                 trans2.position += (dir * 0.5f);
@@ -334,7 +334,7 @@ namespace Engine {
             CollisionResolutionSQUAREtoCIRCLE(dir, trans2, col2, trans1, col1);
         }*/
 
-        void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, Transform& trans1, const Collider& col1, Transform& trans2, const Collider& col2) {
+        void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, TransformComponent& trans1, const Collider& col1, TransformComponent& trans2, const Collider& col2) {
             Math::vec2 len = col1.offset_position - col2.offset_position;
             float length = Math::length(len);
 

@@ -23,8 +23,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
 
-#include "Engine/Header/Management/FileManager.hpp"
-
 #include "Engine/Header/Input/Input.hpp"
 
 #include <iostream>
@@ -57,8 +55,6 @@ namespace Engine {
 		Factory::Destroy();
 		//GUILayer::Destroy();
 		LayerStack::Destroy();
-
-		FileManager::GetInstance().Destroy();
 	}
 
 }

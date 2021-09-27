@@ -21,7 +21,7 @@ Technology is prohibited.
 
 namespace Engine {
 	namespace GraphicImplementation {
-		void DebugDrawCollider(Entity const& entity, Transform const& transform, Math::mat3 camMatrix) {
+		void DebugDrawCollider(Entity const& entity, TransformComponent const& transform, Math::mat3 camMatrix) {
 			Collider* collider = DreamECS::GetInstance().GetComponentTest<Collider>(entity);
 			// when object has collider, get collider matrix
 			//Collider* col = nullptr;

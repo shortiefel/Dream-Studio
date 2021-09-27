@@ -22,18 +22,18 @@ Technology is prohibited.
 #include <unordered_map>
 
 namespace Engine {
-	class FileManager : public Singleton<FileManager> {
-	public:
-		FILE* Open_File(std::string _fullPathFileName);
-		//rapidjson::Document& Open_Doc(std::string _fullPathFileName);
+	//class FileManager : public Singleton<FileManager> {
+	//public:
+	//	FILE* Open_File(std::string _fullPathFileName);
+	//	//rapidjson::Document& Open_Doc(std::string _fullPathFileName);
 
-		void Destroy();
+	//	void Destroy();
 
-	private:
-		std::unordered_map<std::string, FILE*> fileMap{};
+	//private:
+	//	std::unordered_map<std::string, FILE*> fileMap{};
 
-		SINGLETON_SETUP(FileManager);
-	};
+	//	SINGLETON_SETUP(FileManager);
+	//};
 }
 
 

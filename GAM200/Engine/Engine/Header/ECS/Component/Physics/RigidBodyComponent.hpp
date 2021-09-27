@@ -27,16 +27,15 @@ namespace Engine {
 	class SSerializer;
 
 	struct RigidBody : public IComponent {
-		Math::vec2 velocity = Math::vec2{};
+		float speed = float{};
 		//Higher = stop faster
-		float friction = float{};
+		//float friction = float{};
 		bool isActive = true;
 
 		RigidBody& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		RigidBody() = default;
-		RigidBody(Entity _ID, bool _active = true);
+		RigidBody(Entity _ID = DEFAULT_ENTITY, bool _active = true);
 	};
 }
 

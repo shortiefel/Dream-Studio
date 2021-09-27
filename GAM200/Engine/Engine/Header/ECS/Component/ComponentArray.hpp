@@ -74,17 +74,17 @@ namespace Engine {
 				EntityToIndexMap[entity] = index; //Entity -> Index
 				//componentArray[index] = std::move(component);
 				componentArray[index] = std::move(T{ entity });
-				componentArray[index].AddScript(component);
+				//componentArray[index].AddScript(component);
 				Size++;
 			}
 			//Has at least one script
 			else {
 				
 				index = EntityToIndexMap[entity];
-				componentArray[index].AddScript(component);
+				//componentArray[index].AddScript(component);
 			}
 
-			//componentArray[index].AddScript(component);
+			componentArray[index].AddScript(component);
 		}
 
 
@@ -124,7 +124,6 @@ namespace Engine {
 			componentArray[IndexRemoveEntity] = componentArray[IndexLastElement];
 			componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
 
-			printf("%d new %d at %s\n", componentArray[IndexRemoveEntity].GetEntityId(), componentArray[IndexLastElement].GetEntityId(), typeid(T).name());
 
 			//Updating the map when it's shifted
 			Entity EntityLastElement = IndexToEntityMap[IndexLastElement];

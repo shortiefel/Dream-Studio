@@ -16,6 +16,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 
+#include "Engine/Header/Physics/Physics.hpp"
+
 #include "Engine/Header/ECS/System/PhysicsSystem.hpp"
 #include "Engine/Header/ECS/Component/Physics/RigidBodyComponent.hpp"
 
@@ -23,7 +25,18 @@ Technology is prohibited.
 
 namespace Engine {
 	void PhysicsSystem::Update(float dt) {
-		auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBody>();
+		const auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBody>();
+		for (auto& rigidBody : rigidBodyArray) {
+			Entity currentEntity = rigidBody.GetEntityId();
+			if (Entity_Check(currentEntity)) break;
+			if (!rigidBody.isActive) continue;
+
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(currentEntity);
+			if (!transform || !transform->isActive) continue;
+
+			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);
+			//transform->position += Math::vec2{ std::cos(Math::radians((float)transform->angle)), std::sin(Math::radians((float)transform->angle)) } * dt;
+		}
 	}
 
 	bool PhysicsSystem::Create() {

@@ -32,32 +32,32 @@ namespace Engine {
 	class DSerializer;
 	class SSerializer;
 
-	class Texture : public IComponent {
+	struct TextureComponent : public IComponent {
 	public:
-		Texture(Entity _ID, const std::string _path = "", GraphicShape _shape = GraphicShape::SQUARE, //GraphicShader shader = "Default",
+		TextureComponent(Entity _ID = DEFAULT_ENTITY, const std::string _path = "", GraphicShape _shape = GraphicShape::SQUARE, //GraphicShader shader = "Default",
 			bool _active = true);
-		Texture() = default;
-		Texture(const Texture&) = default;
-		Texture& operator= (const Texture&) = default;
-		~Texture();
+		TextureComponent(const TextureComponent&) = default;
+		TextureComponent& operator= (const TextureComponent&) = default;
+		~TextureComponent();
 
 		void Bind(GLuint slot = 0) const;
 		void Unbind() const;
 
-		Texture& Deserialize(const DSerializer& _serializer);
+		TextureComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
-		//static std::shared_ptr<Texture> CreateFromString(const std::string path);
+		//static std::shared_ptr<TextureComponent> CreateFromString(const std::string path);
 
+		/*
 		inline GLint getWidth() const { return width; }
 		inline GLint getHeight() const { return height; }
 		inline GLuint getTexObj() const { return texobj_hdl; }
 		inline std::string getFilepath() const { return filepath; }
 		inline bool GetActive() const { return isActive; }
 		inline GraphicShape get_mdl_ref() const { return mdl_ref; }
+		*/
 		//inline GraphicShader get_shd_ref() const { return shd_ref; }
 
 
-	private:
 		GLuint texobj_hdl = GLuint{};
 
 		std::string filepath = "";
@@ -68,6 +68,7 @@ namespace Engine {
 		bool isActive = true;
 
 		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
+
 	};
 }
 

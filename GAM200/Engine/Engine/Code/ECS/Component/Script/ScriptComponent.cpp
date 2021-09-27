@@ -81,20 +81,13 @@ namespace Engine {
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
 			//std::cout << "class in AddScript " << className << "\n";
 			if (klassInstance.find(className) == klassInstance.end()) {
-				
 				klassInstance.emplace(className, std::move(csScriptInstance));
-				//CSScriptInstance& tem = klassInstance.find(className)->second;
-
-				//Scripting::InitVariable(tem);
-				//Scripting::InitCSClass(tem);
 			}
 
 			else {
 				std::cout << "found class at " << klassInstance.at(className).csClass.className << "\n";
 			}
 		}
-
-		std::cout << "Add Script  " << GetEntityId() << "\n";
 	}
 
 	bool CSScript::RemoveScript(const char* _className) {
@@ -161,8 +154,6 @@ namespace Engine {
 			Scripting::InitCSClass(csScriptInstance);
 			klassInstance.emplace(className, std::move(csScriptInstance));
 		}
-
-		std::cout << "Deserializing -------------------------------------------------------------------\n";
 		return *this;
 	}
 

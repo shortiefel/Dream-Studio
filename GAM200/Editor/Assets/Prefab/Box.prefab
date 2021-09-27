@@ -11,7 +11,7 @@
       "Shape": 0,
       "IsActive": true
     },
-    "CSScript": [
+    "ScriptComponent": [
       {
         "Class": "TrailTest3",
         "IsActive": true

@@ -7,7 +7,7 @@
       "Angle": 0.0,
       "IsActive": true
     },
-    "Collider": {
+    "ColliderComponent": {
       "ColliderType": 1,
       "Position": [ 0.0, 0.0 ],
       "Scale": [ 1.0, 1.0 ],
@@ -15,7 +15,7 @@
       "IsTrigger": false,
       "IsActive": true
     },
-    "RigidBody": {
+    "RigidBodyComponent": {
       "Speed": 0.0,
       "IsActive": true
     },
@@ -24,7 +24,7 @@
       "Shape": 0,
       "IsActive": true
     },
-    "CSScript": [
+    "ScriptComponent": [
       {
         "Class": "Test",
         "IsActive": true,
@@ -45,7 +45,7 @@
       "Angle": 0.0,
       "IsActive": true
     },
-    "Collider": {
+    "ColliderComponent": {
       "ColliderType": 1,
       "Position": [ 0.0, 0.0 ],
       "Scale": [ 1.0, 1.0 ],
@@ -53,7 +53,7 @@
       "IsTrigger": false,
       "IsActive": true
     },
-    "RigidBody": {
+    "RigidBodyComponent": {
       "Speed": 0.0,
       "IsActive": true
     },
@@ -62,7 +62,7 @@
       "Shape": 0,
       "IsActive": true
     },
-    "CSScript": [
+    "ScriptComponent": [
       {
         "Class": "TrailTest3",
         "IsActive": true
@@ -80,7 +80,7 @@
       "Angle": 0.0,
       "IsActive": true
     },
-    "Collider": {
+    "ColliderComponent": {
       "ColliderType": 1,
       "Position": [ 0.0, 0.0 ],
       "Scale": [ 1.0, 1.0 ],
@@ -101,7 +101,7 @@
       "Angle": 0.0,
       "IsActive": true
     },
-    "Collider": {
+    "ColliderComponent": {
       "ColliderType": 0,
       "Position": [ 0.0, 0.0 ],
       "Scale": [ 1.0, 1.0 ],
@@ -109,7 +109,7 @@
       "IsTrigger": false,
       "IsActive": true
     },
-    "RigidBody": {
+    "RigidBodyComponent": {
       "Speed": 0.0,
       "IsActive": true
     },
@@ -126,7 +126,7 @@
       "Angle": 0.0,
       "IsActive": true
     },
-    "Camera2D": {
+    "CameraComponent": {
       "FOV": 1.0,
       "AR": 1.7777777910232545,
       "IsActive": true
@@ -139,7 +139,7 @@
       "Angle": 0.0,
       "IsActive": true
     },
-    "Camera2D": {
+    "CameraComponent": {
       "FOV": 1.0,
       "AR": 0.0,
       "IsActive": false
@@ -152,7 +152,7 @@
       "Angle": 0.0,
       "IsActive": true
     },
-    "Camera2D": {
+    "CameraComponent": {
       "FOV": 1.0,
       "AR": 0.0,
       "IsActive": false

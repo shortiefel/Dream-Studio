@@ -153,25 +153,25 @@ namespace Engine {
 				entityObject.AddMember("TransformComponent", objType, doc.GetAllocator());
 			}
 
-			Collider* col = DreamECS::GetInstance().GetComponentTest<Collider>(ent);
+			ColliderComponent* col = DreamECS::GetInstance().GetComponentTest<ColliderComponent>(ent);
 			if (col != nullptr) {
 				LOG_ASSERT(col);
 				SERIALIZE(col);
-				entityObject.AddMember("Collider", objType, doc.GetAllocator());
+				entityObject.AddMember("ColliderComponent", objType, doc.GetAllocator());
 			}
 
-			RigidBody* rb = DreamECS::GetInstance().GetComponentTest<RigidBody>(ent);
+			RigidBodyComponent* rb = DreamECS::GetInstance().GetComponentTest<RigidBodyComponent>(ent);
 			if (rb != nullptr) {
 				LOG_ASSERT(rb);
 				SERIALIZE(rb);
-				entityObject.AddMember("RigidBody", objType, doc.GetAllocator());
+				entityObject.AddMember("RigidBodyComponent", objType, doc.GetAllocator());
 			}
 
-			Camera2D* cam = DreamECS::GetInstance().GetComponentTest<Camera2D>(ent);
+			CameraComponent* cam = DreamECS::GetInstance().GetComponentTest<CameraComponent>(ent);
 			if (cam != nullptr) {
 				LOG_ASSERT(cam);
 				SERIALIZE(cam);
-				entityObject.AddMember("Camera2D", objType, doc.GetAllocator());
+				entityObject.AddMember("CameraComponent", objType, doc.GetAllocator());
 			}
 
 			TextureComponent* tex = DreamECS::GetInstance().GetComponentTest<TextureComponent>(ent);
@@ -182,13 +182,13 @@ namespace Engine {
 			}
 #if 1
 
-			CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(ent);
+			ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(ent);
 			if (csScript != nullptr) {
 				LOG_ASSERT(csScript);
 				rapidjson::Value objType(rapidjson::kArrayType);
 				SSerializer serializer(doc, objType); 
 				csScript->Serialize(serializer);
-				entityObject.AddMember("CSScript", objType, doc.GetAllocator());
+				entityObject.AddMember("ScriptComponent", objType, doc.GetAllocator());
 			}
 
 #else
@@ -255,7 +255,7 @@ namespace Engine {
 					classArray.PushBack(classObj, doc.GetAllocator());
 				}
 
-				entityObject.AddMember("CSScript", classArray, doc.GetAllocator());
+				entityObject.AddMember("ScriptComponent", classArray, doc.GetAllocator());
 			}
 #endif
 
@@ -301,18 +301,18 @@ namespace Engine {
 			rapidjson::Value::ConstMemberIterator itr;
 			
 			ADD_COMPONENT_WTIH_CHECK(TransformComponent);
-			ADD_COMPONENT_WTIH_CHECK(Collider);
-			ADD_COMPONENT_WTIH_CHECK(RigidBody);
-			ADD_COMPONENT_WTIH_CHECK(Camera2D);
+			ADD_COMPONENT_WTIH_CHECK(ColliderComponent);
+			ADD_COMPONENT_WTIH_CHECK(RigidBodyComponent);
+			ADD_COMPONENT_WTIH_CHECK(CameraComponent);
 			ADD_COMPONENT_WTIH_CHECK(TextureComponent);
 
-			itr = obj.FindMember("CSScript");
+			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {
 #if 1 
 				
 				DSerializer serializer{ itr };
 				DreamECS::GetInstance().AddComponent(
-					std::move(CSScript{ ent }.Deserialize(serializer))
+					std::move(ScriptComponent{ ent }.Deserialize(serializer))
 			);
 #else
 				DSerializer serializer(itr);
@@ -357,16 +357,16 @@ namespace Engine {
 					); 
 			}
 
-			ADD_COMPONENT_WTIH_CHECK(Collider);
-			ADD_COMPONENT_WTIH_CHECK(RigidBody);
-			ADD_COMPONENT_WTIH_CHECK(Camera2D);
+			ADD_COMPONENT_WTIH_CHECK(ColliderComponent);
+			ADD_COMPONENT_WTIH_CHECK(RigidBodyComponent);
+			ADD_COMPONENT_WTIH_CHECK(CameraComponent);
 			ADD_COMPONENT_WTIH_CHECK(TextureComponent);
 
-			itr = obj.FindMember("CSScript");
+			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr };
 				DreamECS::GetInstance().AddComponent(
-					std::move(CSScript{ ent }.Deserialize(serializer))
+					std::move(ScriptComponent{ ent }.Deserialize(serializer))
 				);
 			}
 		}

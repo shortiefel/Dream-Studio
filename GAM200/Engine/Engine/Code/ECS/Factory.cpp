@@ -29,12 +29,12 @@ namespace Engine {
     void Factory::Create() {
 #if NEW_ECS
         DreamECS::GetInstance().Create();
-        DreamECS::GetInstance().RegisterComponent<Camera2D>();
+        DreamECS::GetInstance().RegisterComponent<CameraComponent>();
         DreamECS::GetInstance().RegisterComponent<TransformComponent>();
-        DreamECS::GetInstance().RegisterComponent<Collider>();
+        DreamECS::GetInstance().RegisterComponent<ColliderComponent>();
         DreamECS::GetInstance().RegisterComponent<TextureComponent>();
-        DreamECS::GetInstance().RegisterComponent<RigidBody>();
-        DreamECS::GetInstance().RegisterComponent<CSScript>();
+        DreamECS::GetInstance().RegisterComponent<RigidBodyComponent>();
+        DreamECS::GetInstance().RegisterComponent<ScriptComponent>();
         //gCoordinator.RegisterComponent<CSScript>();
         //gCoordinator.RegisterComponent<CSharpScript>();
         /*DreamECS::RegisterSystem<CameraSystem>();

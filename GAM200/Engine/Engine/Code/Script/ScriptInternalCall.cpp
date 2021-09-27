@@ -226,11 +226,11 @@ namespace Engine {
 	}
 
 	void Destroy_Collider_Engine(unsigned int id) {
-		DreamECS::GetInstance().RemoveComponent<Collider>(id);
+		DreamECS::GetInstance().RemoveComponent<ColliderComponent>(id);
 	}
 
 	void Destroy_Script_Engine(unsigned int id, MonoString* str) {
-		CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(id);
+		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(id);
 		if (!csScript) return;
 		csScript->RemoveScript(mono_string_to_utf8(str));
 	}
@@ -243,11 +243,11 @@ namespace Engine {
 	}
 
 	void Active_Collider_Engine(unsigned int id, bool boolean) {
-		SetEngineType(id, Collider, isActive, boolean);
+		SetEngineType(id, ColliderComponent, isActive, boolean);
 	}
 
 	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {
-		CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(id);
+		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(id);
 		if (!csScript) return;
 		csScript->SetActive( mono_string_to_utf8(str), boolean);
 	}

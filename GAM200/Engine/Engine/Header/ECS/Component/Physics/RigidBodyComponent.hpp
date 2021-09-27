@@ -26,16 +26,16 @@ namespace Engine {
 	class DSerializer;
 	class SSerializer;
 
-	struct RigidBody : public IComponent {
+	struct RigidBodyComponent : public IComponent {
 		float speed = float{};
 		//Higher = stop faster
 		//float friction = float{};
 		bool isActive = true;
 
-		RigidBody& Deserialize(const DSerializer& _serializer);
+		RigidBodyComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		RigidBody(Entity _ID = DEFAULT_ENTITY, bool _active = true);
+		RigidBodyComponent(Entity _ID = DEFAULT_ENTITY, bool _active = true);
 	};
 }
 

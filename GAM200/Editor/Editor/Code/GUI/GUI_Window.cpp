@@ -169,8 +169,8 @@ namespace Editor {
 					ImGui::InputFloat("", &comp->scale.y, 0.0f);
 				}
 
-				Engine::Collider* colComp;
-				if (Engine::DreamECS::GetInstance().HasComponent<Engine::Collider>(colComp, entity_selected))
+				Engine::ColliderComponent* colComp;
+				if (Engine::DreamECS::GetInstance().HasComponent<Engine::ColliderComponent>(colComp, entity_selected))
 				{
 					ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
 				}

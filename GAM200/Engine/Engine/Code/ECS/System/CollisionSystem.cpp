@@ -76,7 +76,7 @@ namespace Engine {
 
 	void CollisionSystem::Update(float dt) {
 #if NEW_ECS
-		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<Collider>();
+		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
 		auto colliderStart = colliderArray.begin(),
 			colliderEnd = colliderArray.end();
 		for (auto& col1 = colliderStart; col1 < colliderEnd; col1++) {
@@ -87,7 +87,7 @@ namespace Engine {
 			auto& transform1 = DreamECS::GetInstance().GetComponent<TransformComponent>(ent1Id);
 			if (!transform1.isActive) continue;
 
-			Collider collider1 = *col1;
+			ColliderComponent collider1 = *col1;
 			collider1.offset_position += Math::vec2{ transform1.position };
 			collider1.offset_scale *= transform1.scale;
 			collider1.angle += transform1.angle;
@@ -97,14 +97,14 @@ namespace Engine {
 				if (Entity_Check(ent2Id)) break;
 				if (!col2->isActive || col1 == col2) continue;
 
-				bool ent1IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBody>(ent1Id),
-					ent2IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBody>(ent2Id);
+				bool ent1IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBodyComponent>(ent1Id),
+					ent2IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBodyComponent>(ent2Id);
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 
 				auto& transform2 = DreamECS::GetInstance().GetComponent<TransformComponent>(ent2Id);
 				if (!transform2.isActive) continue;
 
-				Collider collider2 = *col2;
+				ColliderComponent collider2 = *col2;
 				collider2.offset_position += Math::vec2{ transform2.position };
 				collider2.offset_scale *= transform2.scale;
 				collider2.angle += transform2.angle;
@@ -199,8 +199,8 @@ namespace Engine {
 			for (std::set<Entity>::iterator entity2 = entity1; entity2 != CS->mEntities.end(); ++entity2) {
 				if (entity1 == entity2) continue;
 
-				bool ent1IsMoveable = DreamECS::HasComponentCheck<RigidBody>(*entity1),
-					ent2IsMoveable = DreamECS::HasComponentCheck<RigidBody>(*entity2);
+				bool ent1IsMoveable = DreamECS::HasComponentCheck<RigidBodyComponent>(*entity1),
+					ent2IsMoveable = DreamECS::HasComponentCheck<RigidBodyComponent>(*entity2);
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 
 

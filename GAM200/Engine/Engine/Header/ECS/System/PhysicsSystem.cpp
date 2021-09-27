@@ -25,7 +25,7 @@ Technology is prohibited.
 
 namespace Engine {
 	void PhysicsSystem::Update(float dt) {
-		const auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBody>();
+		const auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBodyComponent>();
 		for (auto& rigidBody : rigidBodyArray) {
 			Entity currentEntity = rigidBody.GetEntityId();
 			if (Entity_Check(currentEntity)) break;

@@ -80,7 +80,7 @@ namespace Engine {
 	}
 
 	void ScriptSystem::PlayInit() {
-		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
+		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			if (Entity_Check(csScript.GetEntityId())) break;
 
@@ -101,7 +101,7 @@ namespace Engine {
 
 	void ScriptSystem::PlayRunTime() {
 
-		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
+		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			if (Entity_Check(csScript.GetEntityId())) break;
 
@@ -129,7 +129,7 @@ namespace Engine {
 	}
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
-		CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(e.self);
+		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(e.self);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);

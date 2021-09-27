@@ -32,7 +32,7 @@ namespace Engine {
 
     namespace CollisionImplementation {
         //Collision checks-------------------------------------------------------------------------------
-        bool isColliding(Math::vec2& dir, const Collider& obj1, bool ent1Moveable, const Collider& obj2, bool ent2Moveable) {
+        bool isColliding(Math::vec2& dir, const ColliderComponent& obj1, bool ent1Moveable, const ColliderComponent& obj2, bool ent2Moveable) {
             ent1IsMoveable = ent1Moveable;
             ent2IsMoveable = ent2Moveable;
 
@@ -53,7 +53,7 @@ namespace Engine {
             return false;
         }
 
-        bool isCollidingSQUAREtoSQUARE(Math::vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingSQUAREtoSQUARE(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
             //SAT method
             std::vector<Math::vec2> obj1Corner(4);
             Math::vec2 xaxis1{ Math::cos(Math::radians(obj1.angle)), Math::sin(Math::radians(obj1.angle)) };
@@ -119,7 +119,7 @@ namespace Engine {
             return true;
         }
 
-        bool isCollidingSQUAREtoCIRCLE(Math::vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingSQUAREtoCIRCLE(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
             //SAT method
             std::vector<Math::vec2> obj1Corner(4);
             Math::vec2 xaxis1{ Math::cos(Math::radians(obj1.angle)), Math::sin(Math::radians(obj1.angle)) };
@@ -194,11 +194,11 @@ namespace Engine {
             return true;
         }
 
-        bool isCollidingCIRCLEtoSQUARE(Math::vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingCIRCLEtoSQUARE(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
             return isCollidingSQUAREtoCIRCLE(dir, obj2, obj1);
         }
 
-        bool isCollidingCIRCLEtoCIRCLE(Math::vec2& dir, const Collider& obj1, const Collider& obj2) {
+        bool isCollidingCIRCLEtoCIRCLE(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
             //if (obj1.scale.x == obj1.scale.y && obj2.scale.x == obj2.scale.y) {
             float rad = obj1.offset_scale.x + obj2.offset_scale.x;
             rad = (float)pow(rad, 2);
@@ -213,7 +213,7 @@ namespace Engine {
 
 
         //Collision resolution-------------------------------------------------------------------------------
-        void CollisionResolution(Math::vec2& dir, TransformComponent& trans1, const Collider& col1, TransformComponent& trans2, const Collider& col2) {
+        void CollisionResolution(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent& col1, TransformComponent& trans2, const ColliderComponent& col2) {
             if (col1.cType == ColliderType::CIRCLE) {
                 if (col2.cType == ColliderType::CIRCLE) {
                     CollisionResolutionCIRCLEtoCIRCLE(dir, trans1, col1, trans2, col2);
@@ -227,7 +227,7 @@ namespace Engine {
             CollisionResolutionMain(dir, trans1, col1, trans2, col2);
         }
 
-        void CollisionResolutionMain(Math::vec2& dir, TransformComponent& trans1, const Collider& col1, TransformComponent& trans2, const Collider& col2) {
+        void CollisionResolutionMain(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent& col1, TransformComponent& trans2, const ColliderComponent& col2) {
             if (ent1IsMoveable && ent2IsMoveable) {
                 trans1.position -= (dir * 0.5f);
                 trans2.position += (dir * 0.5f);
@@ -334,7 +334,7 @@ namespace Engine {
             CollisionResolutionSQUAREtoCIRCLE(dir, trans2, col2, trans1, col1);
         }*/
 
-        void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, TransformComponent& trans1, const Collider& col1, TransformComponent& trans2, const Collider& col2) {
+        void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent& col1, TransformComponent& trans2, const ColliderComponent& col2) {
             Math::vec2 len = col1.offset_position - col2.offset_position;
             float length = Math::length(len);
 

@@ -79,7 +79,7 @@ namespace Engine {
 		}
 
 		template<>
-		void AddComponent(CSScript com) {
+		void AddComponent(ScriptComponent com) {
 			//gCoordinator.AddScript(std::move(com));
 
 			compManager->AddScript(std::move(com));

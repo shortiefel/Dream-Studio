@@ -39,7 +39,7 @@ namespace Engine {
     //to create the graphics
     void CameraSystem::Update(float dt) {
 #if NEW_ECS
-        auto& camArray = DreamECS::GetInstance().GetComponentArrayData<Camera2D>();
+        auto& camArray = DreamECS::GetInstance().GetComponentArrayData<CameraComponent>();
         for (auto& cam : camArray) {
             if (Entity_Check(cam.GetEntityId())) break;
             if (!cam.isActive) continue;

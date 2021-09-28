@@ -71,7 +71,7 @@ namespace Engine {
         CollisionSystem::GetInstance().Stop();
         DreamECS::GetInstance().ResetECS();
         //GameSceneSerializer::DeserializeScene(fullPathSceneName);
-        std::cout << "Stopping \n";
+        //std::cout << "Stopping \n";
     }
 
     void Scene::Save() {
@@ -94,8 +94,8 @@ namespace Engine {
             CollisionSystem::GetInstance().Update(dt);
             PhysicsSystem::GetInstance().Update(dt);
         }
-        if (Input::IsKeyPressed(Input_KeyCode::N))
-            DreamECS::GetInstance().DuplicateEntityAsInstance(0);
+        /*if (Input::IsKeyPressed(Input_KeyCode::N))
+            DreamECS::GetInstance().DuplicateEntityAsInstance(0);*/
 
         CameraSystem::GetInstance().Update(dt);
 

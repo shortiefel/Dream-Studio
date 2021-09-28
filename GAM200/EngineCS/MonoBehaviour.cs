@@ -67,8 +67,11 @@ public class MonoBehaviour
             component.entityId = entityId;
             return component;
         }
-
-        return default(T);
+        
+        else
+        {
+            throw new NullReferenceException();
+        }
     }
 
     public T GetComponentWithID<T>(uint id) where T : Component, new()
@@ -90,6 +93,8 @@ public class MonoBehaviour
         {
             case genTypes.Transform:
                 return HasComponent_Transform_Engine(id);
+            case genTypes.Collider:
+                return HasComponent_Collider_Engine(id);
             default:
                 return false;
 
@@ -98,6 +103,8 @@ public class MonoBehaviour
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Transform_Engine(uint entityID);
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool HasComponent_Collider_Engine(uint entityID);
 
 
     public void DestroySelf()
@@ -144,63 +151,67 @@ public class MonoBehaviour
 
     //-----------------------------------------------------------------------------------------------------------------
     //Enable
+    /*
     public void Enable<T>(T type)
     {
         Console.WriteLine("Enable not yet done");
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
         {
-            Active_Script_Engine(entityId, true, typeof(T).ToString());
+            //Active_Script_Engine(entityId, true, typeof(T).ToString());
             return;
         }
 
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
-                Active_Transform_Engine(entityId, true);
+                //Active_Transform_Engine(entityId, true);
                 break;
             case genTypes.Collider:
-                Active_Collider_Engine(entityId, true);
+                //Active_Collider_Engine(entityId, true);
                 break;
             default:
                 return;
 
         }
     }
+    */
 
 
 
     //-----------------------------------------------------------------------------------------------------------------
     //Disable
+    /*
     public void Disable<T>(T type)
     {
         Console.WriteLine("Disable not yet done");
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
         {
-            Active_Script_Engine(entityId, false, typeof(T).ToString());
+            //Active_Script_Engine(entityId, false, typeof(T).ToString());
             return;
         }
 
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
-                Active_Transform_Engine(entityId, false);
+                //Active_Transform_Engine(entityId, false);
                 break;
             case genTypes.Collider:
-                Active_Collider_Engine(entityId, false);
+                //Active_Collider_Engine(entityId, false);
                 break;
             default:
                 return;
 
         }
     }
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    */
+    /*[MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Active_Transform_Engine(uint entityID, bool active);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Active_Collider_Engine(uint entityID, bool active);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Active_Script_Engine(uint entityID, bool active, String className);
+    internal static extern void Active_Script_Engine(uint entityID, bool active, String className);*/
 
 
     public void Instantiate(string prefabName, Vec2 position, float angle = 0)
@@ -225,32 +236,5 @@ public class MonoBehaviour
     {
         Console.WriteLine("OnDisable");
     }*/
-
-
-
-
-
-
-
-
-
-
-
-    /*public Transform GetTransform()
-    {
-        Console.WriteLine("Getting values");
-        GetTransform_Native(0, out Transform result);
-        return result;
-    }
-    public void SetTransform(Transform trans)
-    {
-        Console.WriteLine("Setting values");
-        SetTransform_Native(0, ref trans);
-    }
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_Native(uint entityID, out Transform outTransform);
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTransform_Native(uint entityID, ref Transform inTransform);*/
 }
 

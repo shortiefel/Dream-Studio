@@ -68,7 +68,7 @@ public class TrailTest3 : MonoBehaviour
 
         if (Input.IsKeyPressed(KeyCode.M))
         {
-            Enable(this);
+            
         }
 
         if (Input.IsKeyPressed(KeyCode.V))

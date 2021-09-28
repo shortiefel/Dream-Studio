@@ -68,15 +68,19 @@ namespace Engine {
 	void Input_GetMousePosition(Math::vec2* outPosition);
 
 	bool HasComponent_Transform_Engine(unsigned int id);
+	bool HasComponent_Collider_Engine(unsigned int id);
 
 	void Destroy_Entity_Engine(unsigned int id);
 	void Destroy_Transform_Engine(unsigned int id);
 	void Destroy_Collider_Engine(unsigned int id);
 	void Destroy_Script_Engine(unsigned int id, MonoString* str);
 
-	void Active_Transform_Engine(unsigned int id, bool boolean);
-	void Active_Collider_Engine(unsigned int id, bool boolean);
-	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str);
+	void SetTransform_Active_Engine(unsigned int id, bool boolean);
+	void GetTransform_Active_Engine(unsigned int id, bool* boolean);
+	void SetCollider_Active_Engine(unsigned int id, bool boolean);
+	void GetCollider_Active_Engine(unsigned int id, bool* boolean);
+	void SetScript_Active_Engine(unsigned int id, bool boolean, MonoString* str);
+	void GetScript_Active_Engine(unsigned int id, bool* boolean, MonoString* str);
 
 	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle);
 
@@ -100,15 +104,19 @@ namespace Engine {
 		mono_add_internal_call("Input::GetMousePosition_Engine", Input_GetMousePosition);
 
 		mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
+		mono_add_internal_call("MonoBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
 
 		mono_add_internal_call("MonoBehaviour::Destroy_Entity_Engine", Destroy_Entity_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Transform_Engine", Destroy_Transform_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Collider_Engine", Destroy_Collider_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Script_Engine", Destroy_Script_Engine);
 
-		mono_add_internal_call("MonoBehaviour::Active_Transform_Engine", Active_Transform_Engine);
-		mono_add_internal_call("MonoBehaviour::Active_Collider_Engine", Active_Collider_Engine);
-		mono_add_internal_call("MonoBehaviour::Active_Script_Engine", Active_Script_Engine);
+		mono_add_internal_call("Transform::SetTransform_Active_Engine", SetTransform_Active_Engine);
+		mono_add_internal_call("Transform::GetTransform_Active_Engine", GetTransform_Active_Engine);
+		mono_add_internal_call("Collider::SetCollider_Active_Engine", SetCollider_Active_Engine);
+		mono_add_internal_call("Collider::GetCollider_Active_Engine", GetCollider_Active_Engine);
+		mono_add_internal_call("MonoBehaviour::SetScript_Active_Engine", SetScript_Active_Engine);
+		mono_add_internal_call("MonoBehaviour::GetScript_Active_Engine", GetScript_Active_Engine);
 
 		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab", Instantiate_Prefab);
 
@@ -143,7 +151,6 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2) {
 		GetEngineType(id, TransformComponent, position, *outVec2);
-
 	}
 	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		SetEngineType(id, TransformComponent, position, *inVec2);
@@ -154,7 +161,6 @@ namespace Engine {
 		if (!transform) return;
 		transform->position += *inVec2;
 	}
-
 
 	void GetTransform_Scale_Engine(unsigned int id, Math::vec2* outVec2) {
 		GetEngineType(id, TransformComponent, scale, *outVec2);
@@ -186,7 +192,6 @@ namespace Engine {
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
 	}
 
-
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -214,6 +219,11 @@ namespace Engine {
 		return DreamECS::GetInstance().HasComponent<TransformComponent>(tem, id);
 	}
 
+	bool HasComponent_Collider_Engine(unsigned int id) {
+		ColliderComponent* tem = nullptr;
+		return DreamECS::GetInstance().HasComponent<ColliderComponent>(tem, id);
+	}
+
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Destroy
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -238,18 +248,28 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Active
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void Active_Transform_Engine(unsigned int id, bool boolean) {
+	void SetTransform_Active_Engine(unsigned int id, bool boolean) {
 		SetEngineType(id, TransformComponent, isActive, boolean);
 	}
 
-	void Active_Collider_Engine(unsigned int id, bool boolean) {
+	void GetTransform_Active_Engine(unsigned int id, bool* boolean) {
+		GetEngineType(id, TransformComponent, isActive, *boolean);
+	}
+
+	void SetCollider_Active_Engine(unsigned int id, bool boolean) {
 		SetEngineType(id, ColliderComponent, isActive, boolean);
 	}
 
-	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {
-		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(id);
-		if (!csScript) return;
-		csScript->SetActive( mono_string_to_utf8(str), boolean);
+	void GetCollider_Active_Engine(unsigned int id, bool* boolean) {
+		GetEngineType(id, ColliderComponent, isActive, *boolean);
+	}
+
+	void SetScript_Active_Engine(unsigned int id, bool boolean, MonoString* str) {
+		SetEngineType(id, ScriptComponent, klassInstance.find(mono_string_to_utf8(str))->second.isActive, boolean);
+	}
+
+	void GetScript_Active_Engine(unsigned int id, bool* boolean, MonoString* str) {
+		GetEngineType(id, ScriptComponent, klassInstance.find(mono_string_to_utf8(str))->second.isActive, *boolean);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

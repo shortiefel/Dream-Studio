@@ -37,6 +37,7 @@ namespace Editor {
                 //Destroy current scene and create new scene (default)
                 Engine::GameState::SetPlaying(false);
                 Engine::SceneManager::GetInstance().ChangeScene(editorSceneName);
+                std::cout << "Stopping \n";
             }
 
             else {

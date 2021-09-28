@@ -97,10 +97,6 @@ namespace Engine {
 		return true;
 	}
 
-	void ScriptComponent::SetActive(const char* _className, bool _boolean) {
-		klassInstance.find(_className)->second.isActive = _boolean;
-	}
-
 	ScriptComponent& ScriptComponent::Deserialize(const DSerializer& _serializer) {
 		for (auto& classJSon : _serializer.GetArray()) {
 			const auto& className = classJSon["Class"].GetString();

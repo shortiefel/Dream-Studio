@@ -34,11 +34,11 @@ namespace Engine {
 		void AddScript(ScriptComponent& comp);
 		//Return true if no more scripts left
 		bool RemoveScript(const char* _className);
-		void SetActive(const char* _className, bool _boolean);
+		//void SetActive(const char* _className, bool _boolean);
 
 		//Explict copy 
 		void CopyComponentAsInstance(const ScriptComponent& target);
-		void CopyComponentAsPrefab(const ScriptComponent& target);
+		//void CopyComponentAsPrefab(const ScriptComponent& target);
 
 		ScriptComponent(Entity _ID = DEFAULT_ENTITY, const char* _className = nullptr);
 		ScriptComponent(ScriptComponent&& rhs) noexcept;

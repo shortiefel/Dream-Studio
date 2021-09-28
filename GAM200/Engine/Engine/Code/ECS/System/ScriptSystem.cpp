@@ -68,6 +68,7 @@ Technology is prohibited.
 
 #include <cstdlib> //For file to be run by cmd (std::system)
 
+#include "Engine/Header/Management/GameState.hpp"
 
 #include <iostream>
 
@@ -90,11 +91,12 @@ namespace Engine {
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
-				std::cout << "class: " << className << " " << entityId << "\n";
+				//std::cout << "class: " << className << " " << entityId << "\n";
 				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr)
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
-				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr)
+				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
+				}
 			}
 		}
 	}

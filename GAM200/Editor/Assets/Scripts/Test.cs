@@ -20,10 +20,13 @@ public class Test : MonoBehaviour
     public char testChar;
     public Vec2 newvec2Test;*/
     Transform go2;
+    //Collider col1;
 
     public override void OnInit()
     {
         go2 = GetComponent<Transform>();
+        //col1 = GetComponent<Collider>();
+        //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
         //Vec2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
@@ -37,6 +40,7 @@ public class Test : MonoBehaviour
 
         go2.position += new Vec2(500, 500);
         Console.WriteLine(go2.position);*/
+        //Console.WriteLine(col1.entityId);
     }
 
 

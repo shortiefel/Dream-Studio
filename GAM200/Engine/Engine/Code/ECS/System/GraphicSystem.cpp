@@ -86,10 +86,11 @@ namespace Engine {
 		//Check texture because less Texture component on entity than Transform
 		const auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<TextureComponent>();
 		for (const auto& texture : textureArray) {
-			if (Entity_Check(texture.GetEntityId())) break;
+			const Entity& entity = texture.GetEntity();
+			if (Entity_Check(entity)) break;
 			if (!texture.isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(texture.GetEntityId());
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(entity);
 			if (!transform || !transform->isActive) continue;
 
 			const auto& mdl_ref = GraphicImplementation::models[texture.mdl_ref];
@@ -137,7 +138,7 @@ namespace Engine {
 			
 			// to draw debug lines
 			if (isDebugDraw == GL_TRUE) {
-				GraphicImplementation::DebugDrawCollider(texture.GetEntityId(), *transform, camMatrix);
+				GraphicImplementation::DebugDrawCollider(entity, *transform, camMatrix);
 			}
 		}
 		

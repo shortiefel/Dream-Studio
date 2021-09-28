@@ -140,7 +140,7 @@ namespace Editor {
 				ImGui::Begin("Inspector", &inspector_bool, window_flags);
 
 				Engine::TransformComponent* comp;
-				Engine::Entity entity_selected = 0;
+				Engine::Entity entity_selected = Engine::Entity{ 0 };
 				float width = 120;
 				bool selectEntity = 0;
 

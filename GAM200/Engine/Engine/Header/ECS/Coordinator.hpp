@@ -91,7 +91,7 @@ Technology is prohibited.
 //		template<typename T>
 //		void AddComponent(T com) {
 //#if NEW_ECS
-//			auto ptr = compManager->GetComTest<T>(com.GetEntityId());
+//			auto ptr = compManager->GetComTest<T>(com.GetEntity());
 //			LOG_ASSERT(!ptr && "Unable add the same component for one entity");
 //			if (ptr) return;
 //			compManager->AddComponent<T>(std::move(com));

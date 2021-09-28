@@ -51,29 +51,29 @@ namespace Engine {
 			//error checking
 			LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
 
-			Entity ID;
+			Entity entity;
 
 			if (AvailableEntities.size()) {
-				ID = AvailableEntities.front();
+				entity = AvailableEntities.front();
 				AvailableEntities.pop();
 			}
 
 			else {
-				ID = currentMaxId;
+				entity = currentMaxId;
 				++currentMaxId;
 			}
 
-			UsedEntities.insert(ID);
+			UsedEntities.insert(entity);
 			++AliveEntityCount;
 
-			return ID;
+			return entity;
 		}
 
 		void DestroyEntity(Entity entity)
 		{
 #if NEW_ECS
 			//error checking
-			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
+			LOG_ASSERT(entity.id < MAX_ENTITIES && "Entities out of range");
 			UsedEntities.erase(entity);
 			//mSignatures[entity].reset();
 			AvailableEntities.push(entity);

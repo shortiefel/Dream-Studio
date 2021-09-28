@@ -22,8 +22,8 @@ Technology is prohibited.
 namespace Engine {
 	struct IComponent {
 	public:
-		inline Entity GetEntityId() const { return entityId; }
-		inline void SetEntityId(Entity ent) { entityId = ent; }
+		inline Entity GetEntity() const { return entity; }
+		inline void SetEntity(Entity ent) { entity = ent; }
 		/*
 		* List below must be added as functionality
 		T& Deserialize(const DSerializer& _serializer);
@@ -36,10 +36,10 @@ namespace Engine {
 		void CopyComponentAsPrefab(const T& target);
 		*/
 
-		IComponent() : entityId{ DEFAULT_ENTITY } {}
-		IComponent(Entity ent) : entityId{ ent } {}
+		IComponent() : entity{ DEFAULT_ENTITY } {}
+		IComponent(Entity ent) : entity{ ent } {}
 	private:
-		Entity entityId = DEFAULT_ENTITY;
+		Entity entity = DEFAULT_ENTITY;
 	};
 }
 

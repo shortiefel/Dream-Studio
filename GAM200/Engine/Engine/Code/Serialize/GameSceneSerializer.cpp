@@ -137,195 +137,195 @@ namespace Engine {
 	}
 
 	void GameSceneSerializer::SerializeScene(std::string filename) {
-		filename = TO_FULL_SCENE(filename);
-	
-		rapidjson::Document doc(rapidjson::kArrayType);
-		
-		const std::unordered_set<Entity>& entList = DreamECS::GetInstance().GetUsedEntitySet();
-		//size_t num = entList.size();
-		for (const auto& ent : entList) {
-			rapidjson::Value entityObject(rapidjson::kObjectType);
-
-			TransformComponent* trans = DreamECS::GetInstance().GetComponentTest<TransformComponent>(ent);
-			if (trans != nullptr) {
-				LOG_ASSERT(trans);
-				SERIALIZE(trans);
-				entityObject.AddMember("TransformComponent", objType, doc.GetAllocator());
-			}
-
-			ColliderComponent* col = DreamECS::GetInstance().GetComponentTest<ColliderComponent>(ent);
-			if (col != nullptr) {
-				LOG_ASSERT(col);
-				SERIALIZE(col);
-				entityObject.AddMember("ColliderComponent", objType, doc.GetAllocator());
-			}
-
-			RigidBodyComponent* rb = DreamECS::GetInstance().GetComponentTest<RigidBodyComponent>(ent);
-			if (rb != nullptr) {
-				LOG_ASSERT(rb);
-				SERIALIZE(rb);
-				entityObject.AddMember("RigidBodyComponent", objType, doc.GetAllocator());
-			}
-
-			CameraComponent* cam = DreamECS::GetInstance().GetComponentTest<CameraComponent>(ent);
-			if (cam != nullptr) {
-				LOG_ASSERT(cam);
-				SERIALIZE(cam);
-				entityObject.AddMember("CameraComponent", objType, doc.GetAllocator());
-			}
-
-			TextureComponent* tex = DreamECS::GetInstance().GetComponentTest<TextureComponent>(ent);
-			if (tex != nullptr) {
-				LOG_ASSERT(tex);
-				SERIALIZE(tex);
-				entityObject.AddMember("TextureComponent", objType, doc.GetAllocator());
-			}
-#if 1
-
-			ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(ent);
-			if (csScript != nullptr) {
-				LOG_ASSERT(csScript);
-				rapidjson::Value objType(rapidjson::kArrayType);
-				SSerializer serializer(doc, objType); 
-				csScript->Serialize(serializer);
-				entityObject.AddMember("ScriptComponent", objType, doc.GetAllocator());
-			}
-
-#else
-			if (ScriptSystem::csEntityClassInstance.find(ent) != ScriptSystem::csEntityClassInstance.end()) {
-
-				const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
-				rapidjson::Value classArray(rapidjson::kArrayType);
-
-				for (const auto& [className, scriptInstance] : entityclassInstance) {
-
-					rapidjson::Value classObj(rapidjson::kObjectType);
-
-					rapidjson::Value classNameFP;
-					char buffer[200];
-					int len = sprintf_s(buffer, "%s", className.c_str());
-					classNameFP.SetString(buffer, len, doc.GetAllocator());
-
-					classObj.AddMember("Class", classNameFP, doc.GetAllocator());
-
-					classObj.AddMember("IsActive", scriptInstance.isActive, doc.GetAllocator());
-
-					if (scriptInstance.csVariableMap.size()) {
-						rapidjson::Value variableArray(rapidjson::kArrayType);
-
-						for (const auto& [variableName, variableInstance] : scriptInstance.csVariableMap) {
-							rapidjson::Value variableObject(rapidjson::kObjectType);
-
-							rapidjson::Value variableFP;
-							len = sprintf_s(buffer, "%s", variableName.c_str());
-							variableFP.SetString(buffer, len, doc.GetAllocator());
-							variableObject.AddMember("Name", variableFP, doc.GetAllocator());
-							variableObject.AddMember("Type", (int)variableInstance.variableType, doc.GetAllocator());
-
-							switch (variableInstance.variableType) {
-							case CSType::CHAR:
-								variableObject.AddMember("Data", variableInstance.GetVariableData<char>(), doc.GetAllocator());
-								break;
-							case CSType::BOOL:
-								variableObject.AddMember("Data", variableInstance.GetVariableData<bool>(), doc.GetAllocator());
-								break;
-							case CSType::FLOAT:
-								variableObject.AddMember("Data", variableInstance.GetVariableData<float>(), doc.GetAllocator());
-								break;
-							case CSType::INT:
-								variableObject.AddMember("Data", variableInstance.GetVariableData<int>(), doc.GetAllocator());
-								break;
-							case CSType::UINT:
-								variableObject.AddMember("Data", variableInstance.GetVariableData<unsigned int>(), doc.GetAllocator());
-								break;
-							case CSType::VEC2:
-								Math::vec2 tem = variableInstance.GetVariableData<Math::vec2>();
-								rapidjson::Value dataVec2(rapidjson::kArrayType);
-								dataVec2.PushBack(tem.x, doc.GetAllocator());
-								dataVec2.PushBack(tem.y, doc.GetAllocator());
-								variableObject.AddMember("Data", dataVec2, doc.GetAllocator());
-								break;
-							}
-
-							variableArray.PushBack(variableObject, doc.GetAllocator());
-						}
-						classObj.AddMember("Variable", variableArray, doc.GetAllocator());
-					}
-
-					classArray.PushBack(classObj, doc.GetAllocator());
-				}
-
-				entityObject.AddMember("ScriptComponent", classArray, doc.GetAllocator());
-			}
-#endif
-
-			doc.PushBack(entityObject, doc.GetAllocator());
-		}
-		/*char writeBuffer[1000];
-		rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
-		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
-		doc.Accept(writer);*/
-
-
-		//FILE_CREATION(filename.c_str(), "wb");
-		//FILE* fp = FileManager::GetInstance().Open_File(filename);
-
-		std::ofstream fileStream(filename);
-		rapidjson::OStreamWrapper osw(fileStream);
-
-		rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
-		doc.Accept(writer);
-
-		//fileStream.unsetf(std::ofstream::out | std::ofstream::trunc);
-		fileStream.close();
-		
-		//fclose(fp);
+//		filename = TO_FULL_SCENE(filename);
+//	
+//		rapidjson::Document doc(rapidjson::kArrayType);
+//		
+//		const std::unordered_set<Entity>& entList = DreamECS::GetInstance().GetUsedEntitySet();
+//		//size_t num = entList.size();
+//		for (const auto& ent : entList) {
+//			rapidjson::Value entityObject(rapidjson::kObjectType);
+//
+//			TransformComponent* trans = DreamECS::GetInstance().GetComponentTest<TransformComponent>(ent);
+//			if (trans != nullptr) {
+//				LOG_ASSERT(trans);
+//				SERIALIZE(trans);
+//				entityObject.AddMember("TransformComponent", objType, doc.GetAllocator());
+//			}
+//
+//			ColliderComponent* col = DreamECS::GetInstance().GetComponentTest<ColliderComponent>(ent);
+//			if (col != nullptr) {
+//				LOG_ASSERT(col);
+//				SERIALIZE(col);
+//				entityObject.AddMember("ColliderComponent", objType, doc.GetAllocator());
+//			}
+//
+//			RigidBodyComponent* rb = DreamECS::GetInstance().GetComponentTest<RigidBodyComponent>(ent);
+//			if (rb != nullptr) {
+//				LOG_ASSERT(rb);
+//				SERIALIZE(rb);
+//				entityObject.AddMember("RigidBodyComponent", objType, doc.GetAllocator());
+//			}
+//
+//			CameraComponent* cam = DreamECS::GetInstance().GetComponentTest<CameraComponent>(ent);
+//			if (cam != nullptr) {
+//				LOG_ASSERT(cam);
+//				SERIALIZE(cam);
+//				entityObject.AddMember("CameraComponent", objType, doc.GetAllocator());
+//			}
+//
+//			TextureComponent* tex = DreamECS::GetInstance().GetComponentTest<TextureComponent>(ent);
+//			if (tex != nullptr) {
+//				LOG_ASSERT(tex);
+//				SERIALIZE(tex);
+//				entityObject.AddMember("TextureComponent", objType, doc.GetAllocator());
+//			}
+//#if 1
+//
+//			ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(ent);
+//			if (csScript != nullptr) {
+//				LOG_ASSERT(csScript);
+//				rapidjson::Value objType(rapidjson::kArrayType);
+//				SSerializer serializer(doc, objType); 
+//				csScript->Serialize(serializer);
+//				entityObject.AddMember("ScriptComponent", objType, doc.GetAllocator());
+//			}
+//
+//#else
+//			if (ScriptSystem::csEntityClassInstance.find(ent) != ScriptSystem::csEntityClassInstance.end()) {
+//
+//				const CSClassInstance& entityclassInstance = ScriptSystem::csEntityClassInstance.find(ent)->second;
+//				rapidjson::Value classArray(rapidjson::kArrayType);
+//
+//				for (const auto& [className, scriptInstance] : entityclassInstance) {
+//
+//					rapidjson::Value classObj(rapidjson::kObjectType);
+//
+//					rapidjson::Value classNameFP;
+//					char buffer[200];
+//					int len = sprintf_s(buffer, "%s", className.c_str());
+//					classNameFP.SetString(buffer, len, doc.GetAllocator());
+//
+//					classObj.AddMember("Class", classNameFP, doc.GetAllocator());
+//
+//					classObj.AddMember("IsActive", scriptInstance.isActive, doc.GetAllocator());
+//
+//					if (scriptInstance.csVariableMap.size()) {
+//						rapidjson::Value variableArray(rapidjson::kArrayType);
+//
+//						for (const auto& [variableName, variableInstance] : scriptInstance.csVariableMap) {
+//							rapidjson::Value variableObject(rapidjson::kObjectType);
+//
+//							rapidjson::Value variableFP;
+//							len = sprintf_s(buffer, "%s", variableName.c_str());
+//							variableFP.SetString(buffer, len, doc.GetAllocator());
+//							variableObject.AddMember("Name", variableFP, doc.GetAllocator());
+//							variableObject.AddMember("Type", (int)variableInstance.variableType, doc.GetAllocator());
+//
+//							switch (variableInstance.variableType) {
+//							case CSType::CHAR:
+//								variableObject.AddMember("Data", variableInstance.GetVariableData<char>(), doc.GetAllocator());
+//								break;
+//							case CSType::BOOL:
+//								variableObject.AddMember("Data", variableInstance.GetVariableData<bool>(), doc.GetAllocator());
+//								break;
+//							case CSType::FLOAT:
+//								variableObject.AddMember("Data", variableInstance.GetVariableData<float>(), doc.GetAllocator());
+//								break;
+//							case CSType::INT:
+//								variableObject.AddMember("Data", variableInstance.GetVariableData<int>(), doc.GetAllocator());
+//								break;
+//							case CSType::UINT:
+//								variableObject.AddMember("Data", variableInstance.GetVariableData<unsigned int>(), doc.GetAllocator());
+//								break;
+//							case CSType::VEC2:
+//								Math::vec2 tem = variableInstance.GetVariableData<Math::vec2>();
+//								rapidjson::Value dataVec2(rapidjson::kArrayType);
+//								dataVec2.PushBack(tem.x, doc.GetAllocator());
+//								dataVec2.PushBack(tem.y, doc.GetAllocator());
+//								variableObject.AddMember("Data", dataVec2, doc.GetAllocator());
+//								break;
+//							}
+//
+//							variableArray.PushBack(variableObject, doc.GetAllocator());
+//						}
+//						classObj.AddMember("Variable", variableArray, doc.GetAllocator());
+//					}
+//
+//					classArray.PushBack(classObj, doc.GetAllocator());
+//				}
+//
+//				entityObject.AddMember("ScriptComponent", classArray, doc.GetAllocator());
+//			}
+//#endif
+//
+//			doc.PushBack(entityObject, doc.GetAllocator());
+//		}
+//		/*char writeBuffer[1000];
+//		rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+//		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+//		doc.Accept(writer);*/
+//
+//
+//		//FILE_CREATION(filename.c_str(), "wb");
+//		//FILE* fp = FileManager::GetInstance().Open_File(filename);
+//
+//		std::ofstream fileStream(filename);
+//		rapidjson::OStreamWrapper osw(fileStream);
+//
+//		rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+//		doc.Accept(writer);
+//
+//		//fileStream.unsetf(std::ofstream::out | std::ofstream::trunc);
+//		fileStream.close();
+//		
+//		//fclose(fp);
 	}
 
 	void GameSceneSerializer::DeserializeScene(std::string filename) {
-		filename = TO_FULL_SCENE(filename);
-
-		//FILE_CREATION(filename.c_str(), "rb");
-		//FILE* fp = FileManager::GetInstance().Open_File(filename);
-		std::ifstream fileStream;
-		rapidjson::Document doc;
-
-		fileStream.open(filename);
-		rapidjson::IStreamWrapper isw(fileStream);
-
-		doc.ParseStream(isw);
-
-		for (auto& obj : doc.GetArray()) {
-			Entity ent = DreamECS::GetInstance().CreateEntity();
-
-			rapidjson::Value::ConstMemberIterator itr;
-			
-			ADD_COMPONENT_WTIH_CHECK(TransformComponent);
-			ADD_COMPONENT_WTIH_CHECK(ColliderComponent);
-			ADD_COMPONENT_WTIH_CHECK(RigidBodyComponent);
-			ADD_COMPONENT_WTIH_CHECK(CameraComponent);
-			ADD_COMPONENT_WTIH_CHECK(TextureComponent);
-
-			itr = obj.FindMember("ScriptComponent");
-			if (itr != obj.MemberEnd()) {
-#if 1 
-				
-				DSerializer serializer{ itr };
-				DreamECS::GetInstance().AddComponent(
-					std::move(ScriptComponent{ ent }.Deserialize(serializer))
-			);
-#else
-				DSerializer serializer(itr);
-				CSClassInstance classInstance;
-
-
-				ScriptSystem::Deserialize(serializer, classInstance);
-
-				ScriptSystem::csEntityClassInstance.emplace(ent, std::move(classInstance));
-#endif
-			}
-		}
-		fileStream.close();
+//		filename = TO_FULL_SCENE(filename);
+//
+//		//FILE_CREATION(filename.c_str(), "rb");
+//		//FILE* fp = FileManager::GetInstance().Open_File(filename);
+//		std::ifstream fileStream;
+//		rapidjson::Document doc;
+//
+//		fileStream.open(filename);
+//		rapidjson::IStreamWrapper isw(fileStream);
+//
+//		doc.ParseStream(isw);
+//
+//		for (auto& obj : doc.GetArray()) {
+//			Entity ent = DreamECS::GetInstance().CreateEntity();
+//
+//			rapidjson::Value::ConstMemberIterator itr;
+//			
+//			ADD_COMPONENT_WTIH_CHECK(TransformComponent);
+//			ADD_COMPONENT_WTIH_CHECK(ColliderComponent);
+//			ADD_COMPONENT_WTIH_CHECK(RigidBodyComponent);
+//			ADD_COMPONENT_WTIH_CHECK(CameraComponent);
+//			ADD_COMPONENT_WTIH_CHECK(TextureComponent);
+//
+//			itr = obj.FindMember("ScriptComponent");
+//			if (itr != obj.MemberEnd()) {
+//#if 1 
+//				
+//				DSerializer serializer{ itr };
+//				DreamECS::GetInstance().AddComponent(
+//					std::move(ScriptComponent{ ent }.Deserialize(serializer))
+//			);
+//#else
+//				DSerializer serializer(itr);
+//				CSClassInstance classInstance;
+//
+//
+//				ScriptSystem::Deserialize(serializer, classInstance);
+//
+//				ScriptSystem::csEntityClassInstance.emplace(ent, std::move(classInstance));
+//#endif
+//			}
+//		}
+//		fileStream.close();
 	}
 
 	void GameSceneSerializer::DeserializePrefab(std::string filename, Math::vec2 position, float angle) {

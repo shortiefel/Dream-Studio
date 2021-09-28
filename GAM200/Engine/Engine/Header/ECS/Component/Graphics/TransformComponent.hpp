@@ -62,7 +62,7 @@ namespace Engine {
 			angle = std::move(rhs.angle);
 			isActive = std::move(rhs.isActive);
 			layer = std::move(rhs.layer);
-			SetEntityId(rhs.GetEntityId());
+			SetEntityId(rhs.GetEntity());
 			rhs.SetEntityId(DEFAULT_ENTITY);
 		}*/
 	};

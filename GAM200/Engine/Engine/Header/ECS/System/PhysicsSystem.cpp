@@ -27,11 +27,11 @@ namespace Engine {
 	void PhysicsSystem::Update(float dt) {
 		const auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBodyComponent>();
 		for (auto& rigidBody : rigidBodyArray) {
-			Entity currentEntity = rigidBody.GetEntityId();
-			if (Entity_Check(currentEntity)) break;
+			const Entity& entity = rigidBody.GetEntity();
+			if (Entity_Check(entity)) break;
 			if (!rigidBody.isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(currentEntity);
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(entity);
 			if (!transform || !transform->isActive) continue;
 
 			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);

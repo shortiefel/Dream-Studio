@@ -40,7 +40,7 @@ Technology is prohibited.
 type* tptr = GetComArray<type>()->GetDataTest(entFrom);\
 if (tptr) {\
 type t {*tptr};\
-t.SetEntityId(entTo);\
+t.SetEntity(entTo);\
 GetComArray<type>()->AddComponent(std::move(t));\
 }
 

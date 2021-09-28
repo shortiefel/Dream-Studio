@@ -43,7 +43,7 @@ namespace Engine {
 	public:
 		void AddComponent(T component) {
 #if NEW_ECS
-			Entity entity = component.GetEntityId();
+			Entity entity = component.GetEntity();
 			//error checking
 			LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
 			
@@ -65,7 +65,7 @@ namespace Engine {
 		}
 
 		void AddScriptComponent(T component) {
-			Entity entity = component.GetEntityId();
+			Entity entity = component.GetEntity();
 			size_t index{};
 			
 			//No Script
@@ -101,7 +101,7 @@ namespace Engine {
 			{
 
 				//Updating the map when it's shifted
-				Entity EntityLastElement = componentArray[IndexLastElement].GetEntityId();
+				Entity EntityLastElement = componentArray[IndexLastElement].GetEntity();
 				EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
 
 				componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
@@ -112,7 +112,7 @@ namespace Engine {
 
 			--Size;
 
-			//printf("%d with %zd at %d new %d at %s\n", entity, Size, componentArray[IndexRemoveEntity].GetEntityId(), componentArray[IndexLastElement].GetEntityId(), typeid(T).name());
+			//printf("%d with %zd at %d new %d at %s\n", entity, Size, componentArray[IndexRemoveEntity].GetEntity(), componentArray[IndexLastElement].GetEntity(), typeid(T).name());
 #else
 			//error checking
 			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
@@ -149,7 +149,7 @@ namespace Engine {
 		//	componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
 
 		//	//Updating the map when it's shifted
-		//	Entity EntityLastElement = componentArray[IndexLastElement].GetEntityId();
+		//	Entity EntityLastElement = componentArray[IndexLastElement].GetEntity();
 		//	EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
 
 		//	componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);

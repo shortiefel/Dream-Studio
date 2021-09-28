@@ -52,7 +52,7 @@ namespace Engine {
         //const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
         //for (auto& csScript : entScriptArray) {
         //    auto& classScriptInstances = csScript.klassInstance;
-        //    const auto& entityId = csScript.GetEntityId();
+        //    const auto& entityId = csScript.GetEntity();
 
         //    //Single class and (class and CS public variable)
         //    for (auto& [className, csScriptInstance] : classScriptInstances) {

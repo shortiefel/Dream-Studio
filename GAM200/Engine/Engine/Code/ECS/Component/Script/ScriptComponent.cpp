@@ -31,14 +31,14 @@ namespace Engine {
 
 	ScriptComponent::ScriptComponent(ScriptComponent&& rhs) noexcept {
 		klassInstance = std::move(rhs.klassInstance);
-		SetEntityId(rhs.GetEntityId());
-		rhs.SetEntityId(DEFAULT_ENTITY);
+		SetEntity(rhs.GetEntity());
+		rhs.SetEntity(DEFAULT_ENTITY);
 	}
 
 	ScriptComponent& ScriptComponent::operator=(ScriptComponent&& rhs) noexcept {
 		klassInstance = std::move(rhs.klassInstance);
-		SetEntityId(rhs.GetEntityId());
-		rhs.SetEntityId(DEFAULT_ENTITY);
+		SetEntity(rhs.GetEntity());
+		rhs.SetEntity(DEFAULT_ENTITY);
 		return *this;
 	}
 

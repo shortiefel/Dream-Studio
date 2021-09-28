@@ -83,14 +83,14 @@ namespace Engine {
 	void ScriptSystem::PlayInit() {
 		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
-			if (Entity_Check(csScript.GetEntityId())) break;
+			const Entity& entity = csScript.GetEntity();
+			if (Entity_Check(entity)) break;
 
 			auto& classScriptInstances = csScript.klassInstance;
-			const auto& entityId = csScript.GetEntityId();
 			
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
-				void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
+				void* param[] = { (void*)&entity }; //Change to entity.id after ECS rework
 				//std::cout << "class: " << className << " " << entityId << "\n";
 				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr)
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
@@ -105,10 +105,10 @@ namespace Engine {
 
 		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
-			if (Entity_Check(csScript.GetEntityId())) break;
+			if (Entity_Check(csScript.GetEntity())) break;
 
 			auto& classScriptInstances = csScript.klassInstance;
-			//const auto& entityId = csScript.GetEntityId();
+			//const auto& entityId = csScript.GetEntity();
 
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {

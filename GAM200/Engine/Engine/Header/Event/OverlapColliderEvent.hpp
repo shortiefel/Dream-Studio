@@ -44,9 +44,9 @@ namespace Engine {
 		virtual void CallRegisteredFunctions() override;
 		static void RegisterFunction(OverlapColliderEventFP func);
 
-		OverlapColliderEvent(unsigned int _ent1, unsigned int _ent2, MonoFunctionType _type);
+		OverlapColliderEvent(std::uint32_t _ent1, std::uint32_t _ent2, MonoFunctionType _type);
 
-		unsigned int self, other;
+		std::uint32_t self, other;
 		MonoFunctionType type;
 	private:
 		static std::vector<OverlapColliderEventFP> registeredFunctions;

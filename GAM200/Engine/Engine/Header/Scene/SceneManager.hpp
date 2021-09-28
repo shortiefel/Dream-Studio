@@ -41,8 +41,7 @@ namespace Engine {
 		void Save();
 
 		void SetDefaultScene(std::string sceneName);
-		bool GetPlaying();
-		void SetPlaying(bool state);
+
 	private:
 		//static SceneManager* sceneManager;
 

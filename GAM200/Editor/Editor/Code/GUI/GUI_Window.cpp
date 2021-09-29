@@ -169,6 +169,47 @@ namespace Editor {
 		void GUI_Hierarchy() {
 			if (hierarchy_bool) {
 				ImGui::Begin("Hierarchy", &hierarchy_bool, window_flags);
+
+				/**
+				* Game Objects 
+				*/
+				//if (ImGui::TreeNode("I am parent")) {
+
+					static ImGuiTreeNodeFlags base_Flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+					static bool alignmentPosition = false;
+					
+
+					ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnArrow", &base_Flags, ImGuiTreeNodeFlags_OpenOnArrow);
+					ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnDoubleClick", &base_Flags, ImGuiTreeNodeFlags_OpenOnDoubleClick);
+
+					if (alignmentPosition)
+						ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+					
+					
+					Engine::Entity entity_selected = 0;
+				std::unordered_set test	 =	Engine::DreamECS::GetInstance().GetUsedEntitySet();
+
+
+				for (int i = 0; i < test.size(); i++)
+				{
+					ImGui::Text("heello");
+				}
+
+
+
+					
+
+			
+
+					
+
+
+				
+
+				
+			
+
+
 				ImGui::End();
 			}
 		}
@@ -224,11 +265,25 @@ namespace Editor {
 				}
 
 				/**
+				*	Collider for each component
+				*/
+				if (ImGui::TreeNode("Collider")) {
+					Engine::Collider* colComp;
+					if (Engine::DreamECS::GetInstance().HasComponent<Engine::Collider>(colComp, entity_selected))
+					{
+						ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
+					}
+					ImGui::TreePop();
+				}
+				
+
+				/**
 				*	Scripts for each component
 				*/
 				if (ImGui::TreeNode("Script")) {
 
 					ImGui::Text("hello");
+
 				}
 
 				/**
@@ -240,23 +295,8 @@ namespace Editor {
 
 				}
 
-				//if (check_selection = true) {
-				if (Engine::DreamECS::GetInstance().HasComponent<Engine::Transform>(comp, entity_selected))
-				{
-					ImGui::Text("Scaling ");
-					ImGui::Text("X: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->scale.x, 0.0f);
-					ImGui::Text("Y: ");
-					ImGui::SameLine();
-					ImGui::InputFloat("", &comp->scale.y, 0.0f);
-				}
 
-				Engine::Collider* colComp;
-				if (Engine::DreamECS::GetInstance().HasComponent<Engine::Collider>(colComp, entity_selected))
-				{
-					ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
-				}
+				
 				//const auto& classScriptInstances = Engine::ScriptSystem::csEntityClassInstance.find(entity_selected);
 				//if (classScriptInstances != Engine::ScriptSystem::csEntityClassInstance.end()) {
 				//	

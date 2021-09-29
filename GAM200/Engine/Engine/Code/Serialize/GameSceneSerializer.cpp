@@ -141,10 +141,17 @@ namespace Engine {
 	
 		rapidjson::Document doc(rapidjson::kArrayType);
 		
-		const std::unordered_set<Entity_id>& entList = DreamECS::GetInstance().GetUsedEntitySet();
+		const std::vector<Entity_id>& entList = DreamECS::GetInstance().GetUsedEntitySet();
 		//size_t num = entList.size();
 		for (const auto& ent : entList) {
 			rapidjson::Value entityObject(rapidjson::kObjectType);
+
+			rapidjson::Value objType(rapidjson::kObjectType); 
+			SSerializer serializer(doc, objType);
+			serializer.SetValue("Entity", ent.name);
+			
+			entityObject.AddMember("Entity", objType, doc.GetAllocator());
+
 
 			TransformComponent* trans = DreamECS::GetInstance().GetComponentTest<TransformComponent>(ent);
 			if (trans != nullptr) {
@@ -300,6 +307,12 @@ namespace Engine {
 
 			rapidjson::Value::ConstMemberIterator itr;
 			
+			itr = obj.FindMember("Entity");
+			if (itr != obj.MemberEnd()) {
+				//DSerializer serializer{ itr };
+				//std::cout << "Namee: " << itr->value.GetString() << "\n";
+				ent.name = itr->value.GetString();
+			}
 			ADD_COMPONENT_WTIH_CHECK(TransformComponent);
 			ADD_COMPONENT_WTIH_CHECK(ColliderComponent);
 			ADD_COMPONENT_WTIH_CHECK(RigidBodyComponent);

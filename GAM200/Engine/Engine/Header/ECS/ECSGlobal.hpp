@@ -54,7 +54,7 @@ namespace Engine {
 		Entity_id id{};
 		std::string name{};
 
-		Entity(Entity_id _entityId = MAX_ENTITIES + 1, const char* _entityName = "Entity") : id{ _entityId }, name{ std::string {_entityName } + std::to_string(_entityId) } {}
+		Entity(Entity_id _entityId = MAX_ENTITIES + 1, const char* _entityName = "Entity_") : id{ _entityId }, name{ std::string { _entityName } + std::to_string(_entityId) } {}
 	};
 
 	//const Entity DEFAULT_ENTITY = MAX_ENTITIES + 1;

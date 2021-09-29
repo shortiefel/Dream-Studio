@@ -54,7 +54,7 @@ namespace Engine {
 		destroyQueue.emplace(entity);
 	}
 
-	const std::unordered_set<Entity_id>& DreamECS::GetUsedEntitySet() {
+	const std::vector<Entity>& DreamECS::GetUsedEntitySet() {
 		//return gCoordinator.GetUsedEntitySet();
 		return entityManager->GetUsedEntitySet();
 	}
@@ -75,7 +75,7 @@ namespace Engine {
 
 	void DreamECS::ResetECS() {
 		//std::unordered_set<Entity> listOfEntity = gCoordinator.GetUsedEntitySet();
-		std::unordered_set<Entity_id> listOfEntity = entityManager->GetUsedEntitySet();
+		std::vector<Entity> listOfEntity = entityManager->GetUsedEntitySet();
 		for (auto& entity : listOfEntity) {
 			//gCoordinator.destroyEntity(entity);
 

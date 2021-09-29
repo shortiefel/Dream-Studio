@@ -314,13 +314,7 @@ namespace Engine {
 			}
 
 			Entity ent = DreamECS::GetInstance().CreateEntity(entityName.c_str());
-			
-			itr = obj.FindMember("Entity");
-			if (itr != obj.MemberEnd()) {
-				//DSerializer serializer{ itr };
-				//std::cout << "Namee: " << itr->value.GetString() << "\n";
-				ent.name = itr->value.GetString();
-			}
+
 			ADD_COMPONENT_WTIH_CHECK(TransformComponent);
 			ADD_COMPONENT_WTIH_CHECK(ColliderComponent);
 			ADD_COMPONENT_WTIH_CHECK(RigidBodyComponent);

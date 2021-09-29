@@ -37,7 +37,7 @@ namespace Engine {
 		Entity CreateEntity();
 		void DuplicateEntityAsInstance(Entity ent);
 		void DestroyEntity(Entity entity);
-		const std::unordered_set<Entity>& GetUsedEntitySet();
+		const std::unordered_set<Entity_id>& GetUsedEntitySet();
 		void ClearDestroyQueue();
 		void ResetECS();
 

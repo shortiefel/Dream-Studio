@@ -45,10 +45,10 @@ namespace Engine {
 #if NEW_ECS
 			Entity entity = component.GetEntity();
 			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
+			LOG_ASSERT(EntityToIndexMap.find(entity.id) == EntityToIndexMap.end() && "Component is added again");
 			
 			size_t newIndex = Size;
-			EntityToIndexMap[entity] = newIndex; //Entity -> Index
+			EntityToIndexMap[entity.id] = newIndex; //Entity -> Index
 			componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
 			Size++;
 #else
@@ -69,9 +69,9 @@ namespace Engine {
 			size_t index{};
 			
 			//No Script
-			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) {
+			if (EntityToIndexMap.find(entity.id) == EntityToIndexMap.end()) {
 				index = Size;
-				EntityToIndexMap[entity] = index; //Entity -> Index
+				EntityToIndexMap[entity.id] = index; //Entity -> Index
 				//componentArray[index] = std::move(component);
 				componentArray[index] = std::move(T{ entity });
 				//componentArray[index].AddScript(component);
@@ -80,7 +80,7 @@ namespace Engine {
 			//Has at least one script
 			else {
 				
-				index = EntityToIndexMap[entity];
+				index = EntityToIndexMap[entity.id];
 				//componentArray[index].AddScript(component);
 			}
 
@@ -91,10 +91,10 @@ namespace Engine {
 		void RemoveComponent(Entity entity) {
 #if NEW_ECS
 			//error checking
-			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
+			assert(EntityToIndexMap.find(entity.id) != EntityToIndexMap.end() && "Removing non-existance component");
 
 			//Copies element at the end into deleted element's place 
-			size_t IndexRemoveEntity = EntityToIndexMap[entity];
+			size_t IndexRemoveEntity = EntityToIndexMap[entity.id];
 			size_t IndexLastElement = Size - 1;
 
 			//if (Size != 1) 
@@ -102,13 +102,13 @@ namespace Engine {
 
 				//Updating the map when it's shifted
 				Entity EntityLastElement = componentArray[IndexLastElement].GetEntity();
-				EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
+				EntityToIndexMap[EntityLastElement.id] = IndexRemoveEntity;
 
 				componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
 				//componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
 			}
 			componentArray[IndexLastElement] = T{};
-			EntityToIndexMap.erase(entity);
+			EntityToIndexMap.erase(entity.id);
 
 			--Size;
 
@@ -161,35 +161,35 @@ namespace Engine {
 		//referencing to the template to get the data
 		T& GetData(Entity entity) {
 			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
+			LOG_ASSERT(EntityToIndexMap.find(entity.id) != EntityToIndexMap.end() && "Does not exist");
 
 			//if exist, return data
-			return componentArray[EntityToIndexMap[entity]];
+			return componentArray[EntityToIndexMap[entity.id]];
 		}
 
 		//referencing to the template to get the data
 		T* GetDataTest(Entity entity) {
-			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) return nullptr;
+			if (EntityToIndexMap.find(entity.id) == EntityToIndexMap.end()) return nullptr;
 
 			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
+			LOG_ASSERT(EntityToIndexMap.find(entity.id) != EntityToIndexMap.end() && "Does not exist");
 
 			//if exist, return data
-			return &componentArray[EntityToIndexMap[entity]];
+			return &componentArray[EntityToIndexMap[entity.id]];
 		}
 
 		bool HasData(T*& com, Entity entity) {
-			if (EntityToIndexMap.find(entity) == EntityToIndexMap.end()) return false;
+			if (EntityToIndexMap.find(entity.id) == EntityToIndexMap.end()) return false;
 			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Does not exist");
+			LOG_ASSERT(EntityToIndexMap.find(entity.id) != EntityToIndexMap.end() && "Does not exist");
 
 			//if exist, return data
-			com = &componentArray[EntityToIndexMap[entity]];
+			com = &componentArray[EntityToIndexMap[entity.id]];
 			return true;
 		}
 
 		void EntityDestroyed(Entity entity) override {			
-			if (EntityToIndexMap.find(entity) != EntityToIndexMap.end()) {
+			if (EntityToIndexMap.find(entity.id) != EntityToIndexMap.end()) {
 				RemoveComponent(entity);
 			}
 		}
@@ -204,7 +204,7 @@ namespace Engine {
 
 	private:
 		std::array<T, MAX_ENTITIES> componentArray{};
-		std::unordered_map<Entity, size_t> EntityToIndexMap{}; //mapping for entity ID to array index
+		std::unordered_map<Entity_id, size_t> EntityToIndexMap{}; //mapping for entity ID to array index
 #ifndef NEW_ECS
 		std::unordered_map<size_t, Entity> IndexToEntityMap{}; //mappign array index to entity ID
 #endif

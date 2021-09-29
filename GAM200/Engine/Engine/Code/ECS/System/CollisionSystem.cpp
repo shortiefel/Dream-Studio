@@ -39,13 +39,13 @@ namespace Engine {
 #ifndef NEW_ECS
 	std::shared_ptr<CollisionSystem> CollisionSystem::CS;
 #endif
-	std::unordered_map<Entity, std::vector<Entity>> overlapMap;
+	std::unordered_map<Entity_id, std::vector<Entity>> overlapMap;
 
 	void AddOverlap(Entity lhs, bool lhsTrigger, Entity rhs, bool rhsTrigger) {
 		//if self is collision and other is trigger, OnCollisionEnter is not called
 		if (!lhsTrigger && rhsTrigger) return;
 
-		const auto& iter = overlapMap.find(lhs);
+		const auto& iter = overlapMap.find(lhs.id);
 		if (iter != overlapMap.end()) {
 			//if map exist means that it already collided/triggered
 			for (const auto& ent : iter->second) {
@@ -63,7 +63,7 @@ namespace Engine {
 			}
 		}
 
-		overlapMap[lhs].emplace_back(rhs);
+		overlapMap[lhs.id].emplace_back(rhs);
 		MonoFunctionType type;
 		if (lhsTrigger)
 			type = MonoFunctionType::TRIGGER_ENTER;
@@ -139,12 +139,12 @@ namespace Engine {
 				}
 
 				else {
-					const auto& iter1 = overlapMap.find(ent1);
+					const auto& iter1 = overlapMap.find(ent1.id);
 					if (iter1 != overlapMap.end()) {
 						size_t size1 = iter1->second.size();
 						for (size_t i = 0; i < size1; i++) {
 							if (iter1->second[i].id == ent2.id) {
-								overlapMap[ent1].erase(iter1->second.begin() + i);
+								overlapMap[ent1.id].erase(iter1->second.begin() + i);
 
 								MonoFunctionType type;
 								if (collider1.isTrigger)
@@ -158,12 +158,12 @@ namespace Engine {
 							}
 						}
 					}
-					const auto& iter2 = overlapMap.find(ent2);
+					const auto& iter2 = overlapMap.find(ent2.id);
 					if (iter2 != overlapMap.end()) {
 						size_t size2 = iter2->second.size();
 						for (size_t i = 0; i < size2; i++) {
 							if (iter2->second[i].id == ent1.id) {
-								overlapMap[ent2].erase(iter2->second.begin() + i);
+								overlapMap[ent2.id].erase(iter2->second.begin() + i);
 
 								MonoFunctionType type;
 								if (collider2.isTrigger)

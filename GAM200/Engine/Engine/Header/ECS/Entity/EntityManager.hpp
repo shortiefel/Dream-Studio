@@ -63,7 +63,7 @@ namespace Engine {
 				++currentMaxId;
 			}
 
-			UsedEntities.insert(entity);
+			UsedEntities.insert(entity.id);
 			++AliveEntityCount;
 
 			return entity;
@@ -74,7 +74,7 @@ namespace Engine {
 #if NEW_ECS
 			//error checking
 			LOG_ASSERT(entity.id < MAX_ENTITIES && "Entities out of range");
-			UsedEntities.erase(entity);
+			UsedEntities.erase(entity.id);
 			//mSignatures[entity].reset();
 			AvailableEntities.push(entity);
 			--AliveEntityCount;
@@ -104,7 +104,7 @@ namespace Engine {
 			return mSignatures[entity];
 		}
 #endif
-		inline const std::unordered_set<Entity>& GetUsedEntitySet() const {
+		inline const std::unordered_set<Entity_id>& GetUsedEntitySet() const {
 			return UsedEntities;
 		}
 
@@ -115,7 +115,7 @@ namespace Engine {
 		}
 
 
-		std::unordered_set<Entity> UsedEntities{};
+		std::unordered_set<Entity_id> UsedEntities{};
 		uint32_t AliveEntityCount{}; // Total living entities
 	private:
 		std::queue<Entity> AvailableEntities{}; // Queue of unused entity IDs

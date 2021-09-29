@@ -47,13 +47,14 @@ namespace Engine {
 	const std::uint32_t MAX_ENTITIES = 10000;
 	//Values is used to check whether entity is in used
 	//instead of bit comparision
-	std::uint32_t DEFAULT_ENTITY_ID = MAX_ENTITIES + 1;
+	//const std::uint32_t DEFAULT_ENTITY_ID = MAX_ENTITIES + 1;
+	using Entity_id = std::uint32_t;
 
 	struct Entity {
-		std::uint32_t id{};
+		Entity_id id{};
 		std::string name{};
 
-		Entity(std::uint32_t _entityId = DEFAULT_ENTITY_ID, const char* _entityName = "Entity") : id{ _entityId }, name{ std::string {_entityName } + std::to_string(_entityId) } {}
+		Entity(Entity_id _entityId = MAX_ENTITIES + 1, const char* _entityName = "Entity") : id{ _entityId }, name{ std::string {_entityName } + std::to_string(_entityId) } {}
 	};
 
 	//const Entity DEFAULT_ENTITY = MAX_ENTITIES + 1;

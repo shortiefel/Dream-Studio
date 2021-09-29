@@ -34,10 +34,10 @@ namespace Engine {
 		/*--------------------------------------------------------------------------------------------------------------
 		Entity related functions
 		--------------------------------------------------------------------------------------------------------------*/
-		Entity CreateEntity();
+		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, bool _appendEntityId = false);
 		void DuplicateEntityAsInstance(Entity ent);
 		void DestroyEntity(Entity entity);
-		const std::unordered_set<Entity_id>& GetUsedEntitySet();
+		const std::vector<Entity>& GetUsedEntitySet();
 		void ClearDestroyQueue();
 		void ResetECS();
 

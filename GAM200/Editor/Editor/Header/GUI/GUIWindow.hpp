@@ -37,7 +37,6 @@ namespace Editor {
         static bool gameWin_bool = true;
         static bool sceneWin_bool = true;
         static bool asset_bool = true;
-        static bool content_bool = true;
         static bool playStop_bool = true;
 
         /*-------------------------------------------------------------------------------------------------
@@ -53,8 +52,7 @@ namespace Editor {
         void	GUI_Inspector();
         void	GUI_GameWindow(unsigned int& gameWinTex);
         void	GUI_SceneWindow(unsigned int& sceneWinTex);
-        void    GUI_AssetPanel();
-        void    GUI_ContentBrowser();
+        void    GUI_ContentBrowserPanel();
 
         static std::filesystem::path _currentDirectory = "Assets";
     }

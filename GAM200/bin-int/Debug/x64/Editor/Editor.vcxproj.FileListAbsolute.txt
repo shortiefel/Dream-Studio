@@ -4,3 +4,5 @@ C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\bin-int\Debug\x64\Editor\Edit
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\bin-int\Debug\x64\Editor\Editor.vcxproj.CopyComplete
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\bin-int\Debug\x64\Editor\Editor.vcxproj.AssemblyReference.cache
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\bin-int\Debug\x64\Editor\Editor.vcxproj.CopyComplete
+C:\Users\dgsy5\Documents\GitHub\GAM200\GAM200\bin-int\Debug\x64\Editor\Editor.vcxproj.AssemblyReference.cache
+C:\Users\dgsy5\Documents\GitHub\GAM200\GAM200\bin-int\Debug\x64\Editor\Editor.vcxproj.CopyComplete

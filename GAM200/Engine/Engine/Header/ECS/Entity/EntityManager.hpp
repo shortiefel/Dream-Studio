@@ -46,7 +46,7 @@ namespace Engine {
 		//	}
 		//}
 
-		Entity CreateEntity()
+		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, bool _appendEntityId = false)
 		{
 			//error checking
 			LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
@@ -64,8 +64,8 @@ namespace Engine {
 			}
 
 			++AliveEntityCount;
-			
-			Entity entity(entityId);
+
+			Entity entity(entityId, _entityName, _appendEntityId);
 			UsedEntities.push_back(entity);
 			return entity;
 		}

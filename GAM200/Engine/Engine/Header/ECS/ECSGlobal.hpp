@@ -50,11 +50,15 @@ namespace Engine {
 	//const std::uint32_t DEFAULT_ENTITY_ID = MAX_ENTITIES + 1;
 	using Entity_id = std::uint32_t;
 
+#define DEFAULT_ENTITY_NAME "Entity_"
+
 	struct Entity {
 		Entity_id id{};
 		std::string name{};
 
-		Entity(Entity_id _entityId = MAX_ENTITIES + 1, const char* _entityName = "Entity_") : id{ _entityId }, name{ std::string { _entityName } + std::to_string(_entityId) } {}
+		Entity(Entity_id _entityId = MAX_ENTITIES + 1, const char* _entityName = "Entity", bool _appendEntityId = false) : 
+			id{ _entityId }, 
+			name{ (_appendEntityId ? (std::string {_entityName } + std::to_string(_entityId)) : std::string {_entityName }) } {}
 	};
 
 	//const Entity DEFAULT_ENTITY = MAX_ENTITIES + 1;

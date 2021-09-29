@@ -1,7 +1,7 @@
 [
-
+  
   {
-    "Entity" :  "Maing ",
+    "Entity": { "Name": "Entity20" },
     "TransformComponent": {
       "Position": [ -20.0, 200.0 ],
       "Scale": [ 20.0, 80.0 ],
@@ -28,6 +28,7 @@
     ]
   },
   {
+    "Entity": { "Name": "Entity1" },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
       "Scale": [ 0.0, 0.0 ],

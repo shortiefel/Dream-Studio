@@ -141,17 +141,17 @@ namespace Engine {
 	
 		rapidjson::Document doc(rapidjson::kArrayType);
 		
-		const std::vector<Entity_id>& entList = DreamECS::GetInstance().GetUsedEntitySet();
+		const std::vector<Entity>& entList = DreamECS::GetInstance().GetUsedEntitySet();
 		//size_t num = entList.size();
 		for (const auto& ent : entList) {
 			rapidjson::Value entityObject(rapidjson::kObjectType);
 
-			rapidjson::Value objType(rapidjson::kObjectType); 
-			SSerializer serializer(doc, objType);
-			serializer.SetValue("Entity", ent.name);
-			
-			entityObject.AddMember("Entity", objType, doc.GetAllocator());
+			std::cout << "Namee: " << ent.name << "\n";
 
+			rapidjson::Value objType(rapidjson::kObjectType);
+			SSerializer serializer(doc, objType);
+			serializer.SetValue("Name", ent.name);
+			entityObject.AddMember("Entity", objType, doc.GetAllocator());
 
 			TransformComponent* trans = DreamECS::GetInstance().GetComponentTest<TransformComponent>(ent);
 			if (trans != nullptr) {
@@ -303,9 +303,17 @@ namespace Engine {
 		doc.ParseStream(isw);
 
 		for (auto& obj : doc.GetArray()) {
-			Entity ent = DreamECS::GetInstance().CreateEntity();
-
 			rapidjson::Value::ConstMemberIterator itr;
+
+			std::string entityName;
+
+			itr = obj.FindMember("Entity");
+			if (itr != obj.MemberEnd()) {
+				DSerializer serializer{ itr };
+				entityName = serializer.GetValue<std::string>("Name");
+			}
+
+			Entity ent = DreamECS::GetInstance().CreateEntity(entityName.c_str());
 			
 			itr = obj.FindMember("Entity");
 			if (itr != obj.MemberEnd()) {
@@ -357,8 +365,17 @@ namespace Engine {
 		doc.ParseStream(isw);
 
 		for (auto& obj : doc.GetArray()) {
-			Entity ent = DreamECS::GetInstance().CreateEntity();
 			rapidjson::Value::ConstMemberIterator itr;
+
+			std::string entityName;
+
+			itr = obj.FindMember("Entity");
+			if (itr != obj.MemberEnd()) {
+				DSerializer serializer{ itr };
+				entityName = serializer.GetValue<std::string>("Name");
+			}
+
+			Entity ent = DreamECS::GetInstance().CreateEntity(entityName.c_str(), true);
 
 			//ADD_COMPONENT_WTIH_CHECK(Transform);
 

@@ -37,10 +37,10 @@ namespace Engine {
 		sysManager = std::make_unique<SystemManager>();
 	}
 
-	Entity DreamECS::CreateEntity()
+	Entity DreamECS::CreateEntity(const char* _entityName, bool _appendEntityId)
 	{
 		//return gCoordinator.createEntity();
-		return entityManager->CreateEntity();
+		return entityManager->CreateEntity(_entityName, _appendEntityId);
 	}
 
 	void DreamECS::DuplicateEntityAsInstance(Entity entFrom) {

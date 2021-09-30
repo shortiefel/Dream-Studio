@@ -69,6 +69,10 @@ namespace Editor {
             glfwMakeContextCurrent(backup_current_context);
         }
         //-----------------------------------
+
+        float font_size = 18.0f;
+        //io.Fonts->AddFontFromFileTTF("Assets/Fonts/Helvetica-Bold.tff", font_size);
+        //io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/Helvetica.tff", font_size);
     }
 
     bool GUI::Create(GLFWwindow* window, const char* glsl_version) {

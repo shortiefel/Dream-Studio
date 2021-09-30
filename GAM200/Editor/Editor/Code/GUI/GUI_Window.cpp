@@ -208,7 +208,7 @@ namespace Editor {
 				Engine::Entity entity_selected = Engine::Entity{ 0 };
 				float width = 120;
 				bool selectEntity = 0;
-
+				
 				/**
 				*	Transform Properties
 				*/
@@ -254,8 +254,13 @@ namespace Editor {
 				*	Collider for each component
 				*/
 				if (ImGui::TreeNode("Collider")) {
+		
 					Engine::ColliderComponent* colComp;
-						if (Engine::DreamECS::GetInstance().HasComponent<Engine::ColliderComponent>(colComp, entity_selected))
+					if (Engine::DreamECS::GetInstance().HasComponent<Engine::ColliderComponent>(colComp, entity_selected) == 0)
+					{
+						ImGui::Text("No collider in scene");
+					}
+					else
 					{
 						ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
 					}
@@ -268,8 +273,9 @@ namespace Editor {
 				*/
 				if (ImGui::TreeNode("Script")) {
 
-					ImGui::Text("hello");
+					ImGui::Text("add some scripts here");
 
+					ImGui::TreePop();
 				}
 
 				/**

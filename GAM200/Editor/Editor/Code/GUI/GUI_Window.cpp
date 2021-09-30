@@ -175,7 +175,7 @@ namespace Editor {
 				*/
 				//if (ImGui::TreeNode("I am parent")) {
 
-					static ImGuiTreeNodeFlags base_Flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+				/*	static ImGuiTreeNodeFlags base_Flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 					static bool alignmentPosition = false;
 					
 
@@ -193,7 +193,7 @@ namespace Editor {
 				for (int i = 0; i < test.size(); i++)
 				{
 					ImGui::Text("heello");
-				}
+				}*/
 
 
 

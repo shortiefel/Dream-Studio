@@ -22,17 +22,28 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Engine/Header/Application.hpp"
+//Memory check-----------------------------
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+//-----------------------------
 
+#include "Engine/Header/Application.hpp"
+#include "Editor/Header/EditorStartPoint.hpp"
 
 int main() {
-	
-	Engine::Application::Create(); //Needed for game
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //For memory check
+    //use try and except (require logging)
+    Engine::Application::GetInstance().Create(); //Needed for game
 
-	Engine::Application::Update(true); //Needed for game
+    Engine::Application::GetInstance().SetupCallbackFunction(
+        &Editor::EditorStartPoint::Create,
+        &Editor::EditorStartPoint::Update,
+        &Editor::EditorStartPoint::Destroy);
 
-	Engine::Application::Destroy(); //Needed for game
+    Engine::Application::GetInstance().Update(false); //Needed for game
 
-	return 1;
+    Engine::Application::GetInstance().Destroy(); //Needed for game
+
+    return 1;
 }
-

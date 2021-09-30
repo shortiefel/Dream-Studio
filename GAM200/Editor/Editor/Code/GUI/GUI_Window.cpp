@@ -150,7 +150,7 @@ namespace Editor {
 			if (playStop_bool)
 			{
 				ImVec2 wSize = ImGui::GetWindowSize();
-				ImGui::Begin("##Header", &playStop_bool, window_flags);
+				ImGui::Begin("Actions", &playStop_bool, window_flags);
 
 				static int clicked = 0;
 
@@ -173,42 +173,28 @@ namespace Editor {
 				/**
 				* Game Objects 
 				*/
-				//if (ImGui::TreeNode("I am parent")) {
 
-				/*	static ImGuiTreeNodeFlags base_Flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+				if (ImGui::TreeNode("Camera")) {
+
+					static ImGuiTreeNodeFlags base_Flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 					static bool alignmentPosition = false;
-					
 
-					ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnArrow", &base_Flags, ImGuiTreeNodeFlags_OpenOnArrow);
-					ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnDoubleClick", &base_Flags, ImGuiTreeNodeFlags_OpenOnDoubleClick);
+					/*ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnArrow", &base_Flags, ImGuiTreeNodeFlags_OpenOnArrow);
+					ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnDoubleClick", &base_Flags, ImGuiTreeNodeFlags_OpenOnDoubleClick);*/
 
 					if (alignmentPosition)
 						ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-					
-					
-					Engine::Entity entity_selected = 0;
-				std::unordered_set test	 =	Engine::DreamECS::GetInstance().GetUsedEntitySet();
 
+					Engine::Entity entity_selected = Engine::Entity{ 0 };
+					std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
 
-				for (int i = 0; i < test.size(); i++)
-				{
-					ImGui::Text("heello");
-				}*/
-
-
-
-					
-
-			
-
-					
-
-
-				
-
-				
-			
-
+					for (int i = 0; i < entity_set.size(); i++)
+					{
+						ImGui::Text(entity_set[i].name.c_str());
+						
+					}
+					ImGui::TreePop();
+				}
 
 				ImGui::End();
 			}
@@ -290,7 +276,7 @@ namespace Editor {
 				*	Add New Components
 				*/
 				
-				//if (ImGui::Button("Add Component", (ImVec2{ 100, 0 })))
+				ImGui::Button("Add Component", (ImVec2{ 100, 0 }));
 
 
 

@@ -187,7 +187,7 @@ namespace Editor {
 				if (ImGui::TreeNode("Transform"))
 				{
 					ImGui::Spacing();
-					if (Engine::DreamECS::HasComponent<Engine::TransformComponent>(comp, entity_selected))
+					if (Engine::DreamECS::GetInstance().HasComponent<Engine::TransformComponent>(comp, entity_selected))
 					{
 						//Updating of position
 						ImGui::Text("Position");

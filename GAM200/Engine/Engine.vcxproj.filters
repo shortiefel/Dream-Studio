@@ -1,574 +1,153 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\ECS">
-      <UniqueIdentifier>{694982dd-8adb-4315-9cb7-b81b15f4fd3a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Graphic">
-      <UniqueIdentifier>{90cd0000-6091-4e77-8f9d-bb0e17660e99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Layer">
-      <UniqueIdentifier>{1fd5cfba-4ec3-4ff9-9bdd-947f73e758bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Management">
-      <UniqueIdentifier>{b2987e44-4388-4574-9f1a-1ec44e9c1c13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Script">
-      <UniqueIdentifier>{9b9f8deb-72be-47cd-a369-fe0fadc7aa3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Scene">
-      <UniqueIdentifier>{55979778-d0ee-48a8-86ab-90b4e8b6ef2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ECS\Component">
-      <UniqueIdentifier>{f002ab8f-8e69-4a54-a0ba-614ba3c9ee08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ECS\System">
-      <UniqueIdentifier>{477c246d-46cc-4f71-8b0b-ed7e91e3f186}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS">
-      <UniqueIdentifier>{38484ae9-3121-45a0-abea-b1fc673760d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\Component">
-      <UniqueIdentifier>{93455636-adec-49a7-9448-b3e84d83313c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\System">
-      <UniqueIdentifier>{c466bcaa-2ed7-4e90-9b3f-ffb00add535e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\Entity">
-      <UniqueIdentifier>{33f523f1-a77d-49d3-91ea-f208b0ce4b37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\Component\Script">
-      <UniqueIdentifier>{89b27efc-c0ec-43ed-88c5-890b7914020d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{2c324679-896f-4828-b398-d29db448b296}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Event">
-      <UniqueIdentifier>{a40e8163-c32f-485f-8f89-d04e90157c25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Debug tools">
-      <UniqueIdentifier>{967eb37c-ba1b-4926-9892-0ae12898aab1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Graphic">
-      <UniqueIdentifier>{ea95df9b-ffaa-4e2d-a678-7dbdd6ee8e87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Layer">
-      <UniqueIdentifier>{67ed461d-94b3-4e15-9a95-1b844bddd92b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Management">
-      <UniqueIdentifier>{2d55c4e4-2a75-44e8-9b75-7171204c14ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Scene">
-      <UniqueIdentifier>{f6ab3394-9dd0-462f-84fb-026904b8e317}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Script">
-      <UniqueIdentifier>{586ac100-6351-458b-8cb4-92751512eff7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External Resources">
-      <UniqueIdentifier>{0a2d9f69-5915-4047-b1bd-cca7bc37067c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External Resources\Stb">
-      <UniqueIdentifier>{7fc0ac53-e215-4beb-99b6-3b02ddc75ec2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\DeltaTime">
-      <UniqueIdentifier>{12e76191-510e-48d8-8bb4-72fed4d781ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External Resources\Json">
-      <UniqueIdentifier>{33fc9dad-4f01-4208-9c69-030a239e58f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\DeltaTime">
-      <UniqueIdentifier>{32af4b01-18e5-4235-9c80-32f6e9608402}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Event">
-      <UniqueIdentifier>{818e1702-019a-4760-b11a-08a8efa47c26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Input">
-      <UniqueIdentifier>{96a88a28-9e0f-478f-aeeb-bd141b3a49f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Input">
-      <UniqueIdentifier>{4fb24a35-354d-4178-820e-052bad316c6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\New ECS">
-      <UniqueIdentifier>{820842ed-1b94-4476-88d4-29d15dae98c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Math\Internal">
-      <UniqueIdentifier>{7c7ec1c6-7fe1-4795-8f27-0bd612319b40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Serialize">
-      <UniqueIdentifier>{c29a221e-a1bc-4464-87c8-66a55455d734}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Serialize">
-      <UniqueIdentifier>{6b24fb56-6fee-40bd-a87a-cfab6b778e02}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\Component\Graphics">
-      <UniqueIdentifier>{8fb2487f-b91c-42d2-85f1-a9885228a4c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ECS\Component\Physics">
-      <UniqueIdentifier>{af952700-4ed5-4a9b-8589-d402e60aaab0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ECS\Component\Graphics">
-      <UniqueIdentifier>{db7e9021-e8d2-4f64-b1f5-766debc26ce1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ECS\Component\Physics">
-      <UniqueIdentifier>{5d65f08b-4ac9-4b47-b8c7-324381a9b379}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ECS\Component\Script">
-      <UniqueIdentifier>{39dac5dd-bfec-43a6-9988-b9ebbf1eba4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Singleton">
-      <UniqueIdentifier>{33da63d4-0227-4eb7-aa40-61da1099a43d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Physics">
-      <UniqueIdentifier>{565117d0-0c49-459e-9360-9b6b78311101}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Physics">
-      <UniqueIdentifier>{caa0de69-3b99-47cb-80e2-42ee504354e1}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp" />
+    <ClCompile Include="Engine\Code\Application.cpp" />
+    <ClCompile Include="Engine\Code\DeltaTime\DeltaTime.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\DreamECS.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Factory.cpp" />
+    <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp" />
+    <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp" />
+    <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp" />
+    <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp" />
+    <ClCompile Include="Engine\Code\EngineCore.cpp" />
+    <ClCompile Include="Engine\Code\Event\EventDispatcher.cpp" />
+    <ClCompile Include="Engine\Code\Event\KeyEvent.cpp" />
+    <ClCompile Include="Engine\Code\Event\MouseEvent.cpp" />
+    <ClCompile Include="Engine\Code\Event\OverlapColliderEvent.cpp" />
+    <ClCompile Include="Engine\Code\Event\WindowEvent.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\debugdraw.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\glslshader.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\Graphic.cpp" />
+    <ClCompile Include="Engine\Code\Input\Input.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\mesh.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\shader.cpp" />
+    <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
+    <ClCompile Include="Engine\Code\Management\AssetManager.cpp" />
+    <ClCompile Include="Engine\Code\Management\FileManager.cpp" />
+    <ClCompile Include="Engine\Code\Management\GameState.cpp" />
+    <ClCompile Include="Engine\Code\Management\TextureManager.cpp" />
+    <ClCompile Include="Engine\Code\Management\Settings.cpp" />
+    <ClCompile Include="Engine\Code\Physics\Collision.cpp" />
+    <ClCompile Include="Engine\Code\Physics\Physics.cpp" />
+    <ClCompile Include="Engine\Code\Scene\Scene.cpp" />
+    <ClCompile Include="Engine\Code\Scene\SceneManager.cpp" />
+    <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp" />
+    <ClCompile Include="Engine\Code\Script\Scripting.cpp" />
+    <ClCompile Include="Engine\Code\Script\ScriptInternalCall.cpp" />
+    <ClCompile Include="Engine\Code\Serialize\DSerializer.cpp" />
+    <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp" />
+    <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp" />
+    <ClCompile Include="Engine\Code\Window.cpp" />
+    <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\FontSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Code\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Factory.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\glslshader.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\Graphic.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Layer\LayerStack.cpp">
-      <Filter>Source Files\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Management\TextureManager.cpp">
-      <Filter>Source Files\Management</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Scene\Scene.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp">
-      <Filter>External Resources\Stb</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\DeltaTime\DeltaTime.cpp">
-      <Filter>Source Files\DeltaTime</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\EngineCore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Event\WindowEvent.cpp">
-      <Filter>Source Files\Event</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Event\KeyEvent.cpp">
-      <Filter>Source Files\Event</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Event\MouseEvent.cpp">
-      <Filter>Source Files\Event</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Event\EventDispatcher.cpp">
-      <Filter>Source Files\Event</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Script\ScriptInternalCall.cpp">
-      <Filter>Source Files\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp">
-      <Filter>Source Files\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Event\OverlapColliderEvent.cpp">
-      <Filter>Source Files\Event</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Input\Input.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\DreamECS.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Management\Settings.cpp">
-      <Filter>Source Files\Management</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Scene\SceneManager.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Management\GameState.cpp">
-      <Filter>Source Files\Management</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp">
-      <Filter>Source Files\Serialize</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp">
-      <Filter>Source Files\ECS\Component\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp">
-      <Filter>Source Files\ECS\Component\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp">
-      <Filter>Source Files\ECS\Component\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp">
-      <Filter>Source Files\ECS\Component\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp">
-      <Filter>Source Files\ECS\Component\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Serialize\DSerializer.cpp">
-      <Filter>Source Files\Serialize</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp">
-      <Filter>Source Files\Serialize</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp">
-      <Filter>Source Files\ECS\Component\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Script\Scripting.cpp">
-      <Filter>Source Files\Script</Filter>
-    <ClCompile Include="Engine\Code\Management\AssetManager.cpp">
-      <Filter>Source Files\Management</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\debugdraw.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\mesh.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\shader.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Management\FileManager.cpp">
-      <Filter>Source Files\Management</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Physics\Collision.cpp">
-      <Filter>Source Files\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Physics\Physics.cpp">
-      <Filter>Source Files\Physics</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
-      <Filter>Header Files\Debug tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Coordinator.hpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Factory.hpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp">
-      <Filter>Header Files\ECS\Component\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp">
-      <Filter>Header Files\ECS\Component\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp">
-      <Filter>Header Files\ECS\Component\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp">
-      <Filter>Header Files\ECS\Component\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp">
-      <Filter>Header Files\ECS\Component\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp">
-      <Filter>Header Files\ECS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp">
-      <Filter>Header Files\ECS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp">
-      <Filter>Header Files\ECS\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\GraphicSystem.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\System.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\SystemManager.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\Event.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\EventDispatcher.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\KeyEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\MouseEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\WindowEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\MathLib.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Matrix.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Matrix3.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector2D.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector3D.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\glslshader.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\Graphic.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Layer\Layer.hpp">
-      <Filter>Header Files\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Management\TextureManager.hpp">
-      <Filter>Header Files\Management</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Scene\Scene.hpp">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Application.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\framework.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Resource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\targetver.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Window.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\stb_image\stb_image.h">
-      <Filter>External Resources\Stb</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\pch.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
-      <Filter>Header Files\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\DeltaTime\DeltaTime.hpp">
-      <Filter>Header Files\DeltaTime</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\allocators.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\cursorstreamwrapper.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\document.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\encodedstream.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\encodings.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\filereadstream.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\filewritestream.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\fwd.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\istreamwrapper.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\memorybuffer.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\memorystream.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\ostreamwrapper.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\pointer.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\prettywriter.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\rapidjson.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\reader.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\schema.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\stream.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\stringbuffer.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\uri.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\External Resources\include\rapidjson\writer.h">
-      <Filter>External Resources\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\EngineCore.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\ScriptInternalCall.hpp">
-      <Filter>Header Files\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\ScriptClass.hpp">
-      <Filter>Header Files\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp">
-      <Filter>Header Files\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\OverlapColliderEvent.hpp">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Input\InputCode.hpp">
-      <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Input\Input.hpp">
-      <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\temECSDescription.hpp">
-      <Filter>Header Files\New ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\DreamECS.hpp">
-      <Filter>Header Files\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp">
-      <Filter>Header Files\ECS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Management\Settings.hpp">
-      <Filter>Header Files\Management</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\MathInternal.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Internal\MathConstants.hpp">
-      <Filter>Header Files\Math\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Internal\VectorMath.hpp">
-      <Filter>Header Files\Math\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Internal\CommonMath.hpp">
-      <Filter>Header Files\Math\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Scene\SceneManager.hpp">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Management\GameState.hpp">
-      <Filter>Header Files\Management</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp">
-      <Filter>Header Files\Serialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp">
-      <Filter>Header Files\ECS\Component\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Serialize\DSerializer.hpp">
-      <Filter>Header Files\Serialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Serialize\SSerializer.hpp">
-      <Filter>Header Files\Serialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp">
-      <Filter>Header Files\ECS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\Scripting.hpp">
-      <Filter>Header Files\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp">
-      <Filter>Header Files\Script</Filter>
-    <ClInclude Include="Engine\Header\Management\AssetManager.hpp">
-      <Filter>Header Files\Management</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\mesh.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\shader.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Singleton\Singleton.hpp">
-      <Filter>Header Files\Singleton</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Management\FileManager.hpp">
-      <Filter>Header Files\Management</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Physics\Collision.hpp">
-      <Filter>Header Files\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Physics\Physics.hpp">
-      <Filter>Header Files\Physics</Filter>
-    </ClInclude>
+    <ClInclude Include="..\External Resources\include\rapidjson\allocators.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\cursorstreamwrapper.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\document.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\encodedstream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\encodings.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\filereadstream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\filewritestream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\fwd.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\memorybuffer.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\memorystream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\pointer.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\prettywriter.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\rapidjson.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\reader.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\schema.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\stream.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\stringbuffer.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\uri.h" />
+    <ClInclude Include="..\External Resources\include\rapidjson\writer.h" />
+    <ClInclude Include="..\External Resources\include\stb_image\stb_image.h" />
+    <ClInclude Include="Engine\Header\Application.hpp" />
+    <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp" />
+    <ClInclude Include="Engine\Header\DeltaTime\DeltaTime.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Coordinator.hpp" />
+    <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp" />
+    <ClInclude Include="Engine\Header\ECS\DreamECS.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Factory.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\GraphicSystem.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\System.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\SystemManager.hpp" />
+    <ClInclude Include="Engine\Header\ECS\temECSDescription.hpp" />
+    <ClInclude Include="Engine\Header\EngineCore.hpp" />
+    <ClInclude Include="Engine\Header\Event\Event.hpp" />
+    <ClInclude Include="Engine\Header\Event\EventDispatcher.hpp" />
+    <ClInclude Include="Engine\Header\Event\KeyEvent.hpp" />
+    <ClInclude Include="Engine\Header\Event\MouseEvent.hpp" />
+    <ClInclude Include="Engine\Header\Event\OverlapColliderEvent.hpp" />
+    <ClInclude Include="Engine\Header\Event\WindowEvent.hpp" />
+    <ClInclude Include="Engine\Header\framework.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\glslshader.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\Graphic.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp" />
+    <ClInclude Include="Engine\Header\Input\Input.hpp" />
+    <ClInclude Include="Engine\Header\Input\InputCode.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\mesh.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\shader.hpp" />
+    <ClInclude Include="Engine\Header\Layer\Layer.hpp" />
+    <ClInclude Include="Engine\Header\Layer\LayerStack.hpp" />
+    <ClInclude Include="Engine\Header\Management\AssetManager.hpp" />
+    <ClInclude Include="Engine\Header\Management\FileManager.hpp" />
+    <ClInclude Include="Engine\Header\Management\GameState.hpp" />
+    <ClInclude Include="Engine\Header\Management\TextureManager.hpp" />
+    <ClInclude Include="Engine\Header\Management\Settings.hpp" />
+    <ClInclude Include="Engine\Header\Math\Internal\CommonMath.hpp" />
+    <ClInclude Include="Engine\Header\Math\Internal\MathConstants.hpp" />
+    <ClInclude Include="Engine\Header\Math\Internal\VectorMath.hpp" />
+    <ClInclude Include="Engine\Header\Math\MathInternal.hpp" />
+    <ClInclude Include="Engine\Header\Math\MathLib.hpp" />
+    <ClInclude Include="Engine\Header\Math\Matrix.hpp" />
+    <ClInclude Include="Engine\Header\Math\Matrix3.hpp" />
+    <ClInclude Include="Engine\Header\Math\Vector.hpp" />
+    <ClInclude Include="Engine\Header\Math\Vector2D.hpp" />
+    <ClInclude Include="Engine\Header\Math\Vector3D.hpp" />
+    <ClInclude Include="Engine\Header\pch.hpp" />
+    <ClInclude Include="Engine\Header\Physics\Collision.hpp" />
+    <ClInclude Include="Engine\Header\Physics\Physics.hpp" />
+    <ClInclude Include="Engine\Header\Resource.hpp" />
+    <ClInclude Include="Engine\Header\Scene\Scene.hpp" />
+    <ClInclude Include="Engine\Header\Scene\SceneManager.hpp" />
+    <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp" />
+    <ClInclude Include="Engine\Header\Script\ScriptClass.hpp" />
+    <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp" />
+    <ClInclude Include="Engine\Header\Script\Scripting.hpp" />
+    <ClInclude Include="Engine\Header\Script\ScriptInternalCall.hpp" />
+    <ClInclude Include="Engine\Header\Serialize\DSerializer.hpp" />
+    <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp" />
+    <ClInclude Include="Engine\Header\Serialize\SSerializer.hpp" />
+    <ClInclude Include="Engine\Header\Singleton\Singleton.hpp" />
+    <ClInclude Include="Engine\Header\targetver.hpp" />
+    <ClInclude Include="Engine\Header\Window.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\FontSystem.hpp" />
   </ItemGroup>
 </Project>

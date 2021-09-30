@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ScriptClassVariable.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/06/2021
 \brief
 This file contain
@@ -18,7 +18,6 @@ Technology is prohibited.
 
 #ifndef SCRIPT_CLASS_VARIABLE
 #define SCRIPT_CLASS_VARIABLE
-
 
 #include <string>
 
@@ -67,7 +66,6 @@ namespace Engine {
 			GetVariableDataVoid(&value);
 			return value;*/
 		}
-
 
 		~CSPublicVariable();
 

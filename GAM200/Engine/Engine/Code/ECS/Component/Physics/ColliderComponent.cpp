@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ColliderComponent.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    16/09/2021
 \brief
 This file contain the definition for ColliderComponent
@@ -14,17 +14,21 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug tools/Logging.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
+
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
 	/*Collider::Collider(Entity ID, ColliderType c, bool trigger) :
 		IComponent{ ID }, cType{ c }, offset_position{ Math::vec2{ 0.f, 0.f } }, offset_scale{ Math::vec2{ 0.f, 0.f } }, angle{ 0.f }, isTrigger{ trigger } {}*/
 
 	//Change of type constructor: Copy an existing Collider but with a different type
-	Collider::Collider(Entity _ID, ColliderType _c, Math::vec2 _pos, Math::vec2 _scale, float _rotation, bool _trigger, bool _active) :
+	ColliderComponent::ColliderComponent(Entity _ID, ColliderType _c, Math::vec2 _pos, Math::vec2 _scale, float _rotation, bool _trigger, bool _active) :
 		IComponent{ _ID }, cType{ _c }, offset_position{ _pos }, offset_scale{ _scale }, angle{ _rotation }, isTrigger{ _trigger }, isActive{ _active } {}
 
-	Collider& Collider::Deserialize(const DSerializer& _serializer) {
+	ColliderComponent& ColliderComponent::Deserialize(const DSerializer& _serializer) {
 		cType = ColliderType(_serializer.GetValue<int>("ColliderType"));
 		offset_position = _serializer.GetValue<Math::vec2>("Position");
 		offset_scale = _serializer.GetValue<Math::vec2>("Scale");
@@ -34,7 +38,7 @@ namespace Engine {
 		return *this;
 	}
 
-	void Collider::Serialize(const SSerializer& _serializer) {
+	void ColliderComponent::Serialize(const SSerializer& _serializer) {
 		_serializer.SetValue("ColliderType", (int)cType);
 		_serializer.SetValue("Position", offset_position);
 		_serializer.SetValue("Scale", offset_scale);

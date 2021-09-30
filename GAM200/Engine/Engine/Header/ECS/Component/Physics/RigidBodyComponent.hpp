@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    RigidBodyComponent.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    19/06/2021
 @brief
 This file contain the RigidBody struct to be used by the ECS and various system
@@ -18,21 +18,24 @@ Technology is prohibited.
 #define RIGIDBODY_H
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
+
+#include "Engine/Header/Math/MathLib.hpp"
+
 
 namespace Engine {
-	struct RigidBody : public IComponent {
-		//	//object cannot be pushed by default
-		//	bool hasGravity = true, isMoveable = false;
-		//
+	class DSerializer;
+	class SSerializer;
+
+	struct RigidBodyComponent : public IComponent {
+		float speed = float{};
+		//Higher = stop faster
+		//float friction = float{};
 		bool isActive = true;
 
-		RigidBody& Deserialize(const DSerializer& _serializer);
+		RigidBodyComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		RigidBody() = default;
-		RigidBody(Entity _ID, bool _active = true);
+		RigidBodyComponent(Entity _ID = DEFAULT_ENTITY, bool _active = true);
 	};
 }
 

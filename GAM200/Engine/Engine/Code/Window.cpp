@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Window.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    19/06/2021
 \brief
 Function definitions for creating and destroying a window using GLFW API
@@ -31,13 +31,13 @@ Technology is prohibited.
 #include "Engine/Header/EngineCore.hpp"
 
 namespace Engine {
-	GLFWwindow* Window::glfw_window = 0;
-	//Window* Window::s_instance = 0;
+	//GLFWwindow* Window::glfw_window = 0;
+	////Window* Window::s_instance = 0;
 
-	//Changed on Create
-	Window::WinData Window::w_data = { "", 0, 0 };
+	////Changed on Create
+	//Window::WinData Window::w_data = { "", 0, 0 };
 
-	float Window::aspectRatio;
+	//float Window::aspectRatio;
 
 	void Window::Update() {
 		glfwPollEvents();
@@ -167,8 +167,9 @@ namespace Engine {
 	*/
 
 	void Window::WindowSizeCallback(GLFWwindow* window, int width, int height) {
-		w_data.width = width;
-		w_data.height = height;
+		auto& win_data = Window::GetInstance().w_data;
+		win_data.width = width;
+		win_data.height = height;
 
 		WindowResizeEvent event(width, height);
 		EventDispatcher::SendEvent(event);

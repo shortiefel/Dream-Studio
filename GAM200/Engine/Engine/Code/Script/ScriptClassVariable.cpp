@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ScriptClassVariable.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/06/2021
 \brief
 This file contain definition for class PublicCSVariable
@@ -73,7 +73,7 @@ namespace Engine {
 		case CSType::VEC2:
 			return (4 * 2);
 		}
-
+		return 0;
 	}
 
 	CSPublicVariable::CSPublicVariable(CSPublicVariable&& rhs) noexcept {

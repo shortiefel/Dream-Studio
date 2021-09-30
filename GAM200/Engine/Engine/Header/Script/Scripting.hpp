@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Scripting.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    21/09/2021
 \brief
 This file contain the declaration of Scripting
@@ -22,20 +22,48 @@ Technology is prohibited.
 
 namespace Engine {
 	namespace Scripting {
+		/*-----------------------------------------------------
+		Invoke Mono functions in CSClass
+		-----------------------------------------------------*/
 		void Mono_Runtime_Invoke(const CSScriptInstance& _csScriptInstance, MonoFunctionType _type, void** _param = nullptr);
-
+		/*-----------------------------------------------------
+		Set up mono
+		-----------------------------------------------------*/
+		void Setup();
+		/*-----------------------------------------------------
+		Clean up mono
+		-----------------------------------------------------*/
+		void Cleanup();
 		/*-----------------------------------------------------
 		Destroy child domain
 		-Check if child domain exist
 		-delete if it exist
 		-----------------------------------------------------*/
 		void DestroyChildDomain();
-
-		void InitVariable(CSScriptInstance& _csScriptInstance);
 		/*-----------------------------------------------------
-		Get enum CSType from MonoType
+		static void Stop();
+		Compile CS files together
 		-----------------------------------------------------*/
-		//CSType GetCSType(MonoType* mt);
+		bool CompileCSInternal();
+		/*-----------------------------------------------------
+		Called when play button is pressed
+		-Stop child domain
+		-Create child domain
+		-Load assemblies
+		-----------------------------------------------------*/
+		void ReloadMono();
+		/*-----------------------------------------------------
+		-To add/remove class from map
+		-Find the function from c#
+		-----------------------------------------------------*/
+		void InitCSClass(CSScriptInstance& _csScriptInstance);
+		void InitAllCSClass();
+		/*-----------------------------------------------------
+		-To add/remove public variable from map
+		-Set their values
+		-----------------------------------------------------*/
+		void InitVariable(CSScriptInstance& _csScriptInstance);
+		void InitAllPublicVariable();
 	}
 }
 

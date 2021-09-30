@@ -105,6 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,6 +124,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,6 +140,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;TRACY_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,6 +158,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;TRACY_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,7 +177,7 @@
     <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp" />
-    <ClCompile Include="Engine\Code\ECS\ECSWrapper.cpp" />
+    <ClCompile Include="Engine\Code\ECS\DreamECS.cpp" />
     <ClCompile Include="Engine\Code\ECS\Factory.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp" />
@@ -185,15 +189,20 @@
     <ClCompile Include="Engine\Code\Event\MouseEvent.cpp" />
     <ClCompile Include="Engine\Code\Event\OverlapColliderEvent.cpp" />
     <ClCompile Include="Engine\Code\Event\WindowEvent.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\debugdraw.cpp" />
     <ClCompile Include="Engine\Code\Graphic\glslshader.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Graphic.cpp" />
     <ClCompile Include="Engine\Code\Input\Input.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\mesh.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\shader.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="Engine\Code\Management\AssetManager.cpp" />
+    <ClCompile Include="Engine\Code\Management\FileManager.cpp" />
     <ClCompile Include="Engine\Code\Management\GameState.cpp" />
     <ClCompile Include="Engine\Code\Management\TextureManager.cpp" />
     <ClCompile Include="Engine\Code\Management\Settings.cpp" />
-    <ClCompile Include="Engine\Code\Physic\Collision.cpp" />
+    <ClCompile Include="Engine\Code\Physics\Collision.cpp" />
+    <ClCompile Include="Engine\Code\Physics\Physics.cpp" />
     <ClCompile Include="Engine\Code\Scene\Scene.cpp" />
     <ClCompile Include="Engine\Code\Scene\SceneManager.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp" />
@@ -203,6 +212,7 @@
     <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp" />
     <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp" />
     <ClCompile Include="Engine\Code\Window.cpp" />
+    <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\rapidjson\allocators.h" />
@@ -242,12 +252,13 @@
     <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Coordinator.hpp" />
     <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp" />
-    <ClInclude Include="Engine\Header\ECS\ECSWrapper.hpp" />
+    <ClInclude Include="Engine\Header\ECS\DreamECS.hpp" />
     <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp" />
     <ClInclude Include="Engine\Header\ECS\Factory.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\GraphicSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\System.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp" />
@@ -261,14 +272,18 @@
     <ClInclude Include="Engine\Header\Event\OverlapColliderEvent.hpp" />
     <ClInclude Include="Engine\Header\Event\WindowEvent.hpp" />
     <ClInclude Include="Engine\Header\framework.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp" />
     <ClInclude Include="Engine\Header\Graphic\glslshader.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Graphic.hpp" />
     <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp" />
     <ClInclude Include="Engine\Header\Input\Input.hpp" />
     <ClInclude Include="Engine\Header\Input\InputCode.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\mesh.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\shader.hpp" />
     <ClInclude Include="Engine\Header\Layer\Layer.hpp" />
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp" />
     <ClInclude Include="Engine\Header\Management\AssetManager.hpp" />
+    <ClInclude Include="Engine\Header\Management\FileManager.hpp" />
     <ClInclude Include="Engine\Header\Management\GameState.hpp" />
     <ClInclude Include="Engine\Header\Management\TextureManager.hpp" />
     <ClInclude Include="Engine\Header\Management\Settings.hpp" />
@@ -283,7 +298,8 @@
     <ClInclude Include="Engine\Header\Math\Vector2D.hpp" />
     <ClInclude Include="Engine\Header\Math\Vector3D.hpp" />
     <ClInclude Include="Engine\Header\pch.hpp" />
-    <ClInclude Include="Engine\Header\Physic\Collision.hpp" />
+    <ClInclude Include="Engine\Header\Physics\Collision.hpp" />
+    <ClInclude Include="Engine\Header\Physics\Physics.hpp" />
     <ClInclude Include="Engine\Header\Resource.hpp" />
     <ClInclude Include="Engine\Header\Scene\Scene.hpp" />
     <ClInclude Include="Engine\Header\Scene\SceneManager.hpp" />
@@ -295,6 +311,7 @@
     <ClInclude Include="Engine\Header\Serialize\DSerializer.hpp" />
     <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp" />
     <ClInclude Include="Engine\Header\Serialize\SSerializer.hpp" />
+    <ClInclude Include="Engine\Header\Singleton\Singleton.hpp" />
     <ClInclude Include="Engine\Header\targetver.hpp" />
     <ClInclude Include="Engine\Header\Window.hpp" />
   </ItemGroup>

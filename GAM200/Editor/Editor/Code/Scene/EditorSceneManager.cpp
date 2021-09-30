@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    SceneManager.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    14/09/2021
 \brief
 This file has the function definition of the SceneManager
@@ -18,11 +18,13 @@ Technology is prohibited.
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
 
+
+
 #include "Engine/Header/Management/GameState.hpp"
 
 namespace Editor {
 
-    std::string EditorSceneManager::editorSceneName = "test2";
+   // std::string EditorSceneManager::editorSceneName = "test2";
 
     /*
     Return function pointer
@@ -34,12 +36,13 @@ namespace Editor {
             if (Engine::GameState::GetPlaying()) {
                 //Destroy current scene and create new scene (default)
                 Engine::GameState::SetPlaying(false);
-                Engine::SceneManager::ChangeScene(editorSceneName);
+                Engine::SceneManager::GetInstance().ChangeScene(editorSceneName);
+                std::cout << "Stopping \n";
             }
 
             else {
                 Engine::GameState::SetPlaying(true);
-                Engine::SceneManager::Play();
+                Engine::SceneManager::GetInstance().Play();
             }
             return true;
         }
@@ -47,7 +50,7 @@ namespace Editor {
         //Save
         else if (keyCode == Engine::Input_KeyCode::S) {
             if (!Engine::GameState::GetPlaying()) {
-                Engine::SceneManager::Save();
+                Engine::SceneManager::GetInstance().Save();
                 std::cout << "Saving... \n";
                 return true;
             }
@@ -61,14 +64,14 @@ namespace Editor {
 
     bool SceneHotKey(const Engine::KeyPressedEvent& e) {
         if (e.GetKeyCode() == Engine::Input_KeyCode::G) {
-            Engine::SceneManager::ChangeScene("test2");
+            Engine::SceneManager::GetInstance().ChangeScene("test2");
         }
         else if (e.GetKeyCode() == Engine::Input_KeyCode::H) {
-            Engine::SceneManager::ChangeScene("test3");
+            Engine::SceneManager::GetInstance().ChangeScene("test3");
         }
 
         if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Control)) {
-            return EditorSceneManager::SceneHotKeyCheck(e.GetKeyCode());
+            return EditorSceneManager::GetInstance().SceneHotKeyCheck(e.GetKeyCode());
         }
         return true;
     }

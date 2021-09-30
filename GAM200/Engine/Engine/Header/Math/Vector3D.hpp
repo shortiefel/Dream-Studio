@@ -2,6 +2,7 @@
 /*
 @file    Vector3D.hpp
 @author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+		 Ow Jian Wen	jianwen.o@digipen.edu
 @date    16/06/2021
 @brief
 

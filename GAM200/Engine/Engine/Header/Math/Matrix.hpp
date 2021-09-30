@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Matrix.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    16/06/2021
 \brief
 This file SHOULD be included to use Matrix3 and its functions
@@ -13,7 +13,7 @@ Usage:
 	3 4 5
 	6 7 8
 
-	MathD::Mat3 matrix3 (0, 3, 6, 1, 4, 7, 2, 5, 8);
+	Math::mat3 matrix3 (0, 3, 6, 1, 4, 7, 2, 5, 8);
 
 	MathD namespace is to prevent name clash with other library
 	This file has other types of Matrix3 in case it is needed

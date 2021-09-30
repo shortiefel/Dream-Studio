@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Event.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/05/2021
 \brief
 This file contain the Event declaration

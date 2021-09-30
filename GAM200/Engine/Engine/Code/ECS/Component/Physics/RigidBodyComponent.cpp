@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    RegidBodyComponent.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    16/09/2021
 \brief
 This file contain the definition for RegidBodyComponent
@@ -16,15 +16,23 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/Physics/RigidBodyComponent.hpp"
 
-namespace Engine {
-	RigidBody::RigidBody(Entity _ID, bool _active) : IComponent{ _ID }, isActive{ _active } {}
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
 
-	RigidBody& RigidBody::Deserialize(const DSerializer& _serializer) {
+namespace Engine {
+	RigidBodyComponent::RigidBodyComponent(Entity _ID, bool _active) : IComponent{ _ID }, isActive{ _active } {}
+
+	RigidBodyComponent& RigidBodyComponent::Deserialize(const DSerializer& _serializer) {
+
+		speed = _serializer.GetValue<float>("Speed");
+		//friction = _serializer.GetValue<float>("Friction");
 		isActive = _serializer.GetValue<bool>("IsActive");
 		return *this;
 	}
 
-	void RigidBody::Serialize(const SSerializer& _serializer) {
+	void RigidBodyComponent::Serialize(const SSerializer& _serializer) {
+		_serializer.SetValue("Speed", speed);
+		//_serializer.SetValue("Friction", friction);
 		_serializer.SetValue("IsActive", isActive);
 
 		//_serializer.EndSerialize("RigidBody");

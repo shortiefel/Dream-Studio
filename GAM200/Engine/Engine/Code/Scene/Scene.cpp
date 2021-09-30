@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Scene.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    23/06/2021
 \brief
 An application of the dream engine can have multiple game scene to be used
@@ -26,7 +26,7 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 //Components
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
@@ -34,86 +34,80 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
 namespace Engine {
-    //extern Coordinator gCoordinator;
-
-    //bool Scene::playing = false;
-    //std::string Scene::fullPathSceneName = std::string{};
-
-
-    
-
-    //Shortcut key for scene
-    //E.g: Ctrl p (play / stop), Ctrl s (save)
-    //bool SceneHotKey(const KeyPressedEvent& e);
-
-    //Entity temcam, temcam2, temcam3; int num = 1;//Temporary
-
     Scene::Scene(std::string fullPath) : fullPathSceneName{ fullPath } {
         GameSceneSerializer::DeserializeScene(fullPathSceneName);
 
-        ScriptSystem::UpdateMapData();
+        ScriptSystem::GetInstance().UpdateMapData();
     }
 
     //When user click play to run their game
-    bool Scene::Play() {
-        //Compile the script
-        //Serialize everything
-        //Restart Mono
-        //Init game
-        //std::cout << "Playing \n";
+    void Scene::Play() {
+         if (!ScriptSystem::GetInstance().CompileCS()) {
+            std::cout << "Fail to compile \n";
+            //Scene::SetPlaying(false);
+            return;
+        }
 
-        /*
-        if (!SceneSave()) return false;
-        ScriptSystem::PlayInit();
-        return true;
-        */
+        ScriptSystem::GetInstance().UpdateMapData();
+        //const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
+        //for (auto& csScript : entScriptArray) {
+        //    auto& classScriptInstances = csScript.klassInstance;
+        //    const auto& entityId = csScript.GetEntity();
 
-        return true;
+        //    //Single class and (class and CS public variable)
+        //    for (auto& [className, csScriptInstance] : classScriptInstances) {
+        //        void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
+        //        std::cout << "class: " << className << " " << entityId << "\n";
+        //    }
+        //}
+        ScriptSystem::GetInstance().PlayInit();
+        //Change to sceneName (might be fullName(path + name) instead)
+        GameSceneSerializer::SerializeScene(fullPathSceneName);
     }
 
-    void Scene::PlayInit() {
-        ScriptSystem::PlayInit();
-    }
+    
 
     void Scene::Stop() {
-        CollisionSystem::Stop(); 
-        DreamECS::ResetECS();
+        CollisionSystem::GetInstance().Stop();
+        DreamECS::GetInstance().ResetECS();
         //GameSceneSerializer::DeserializeScene(fullPathSceneName);
         //std::cout << "Stopping \n";
     }
 
-    /*
-    dt - delta time
-    defaultRender - whether to use default rendering or not
-    */
+    void Scene::Save() {
+        if (!ScriptSystem::GetInstance().CompileCS()) {
+            std::cout << "Fail to compile \n";
+            //Scene::SetPlaying(false);
+            return;
+        }
+
+        ScriptSystem::GetInstance().UpdateMapData();
+        //Change to sceneName (might be fullName(path + name) instead)
+        GameSceneSerializer::SerializeScene(fullPathSceneName);
+    }
+
     void Scene::Update(float dt, bool playing, bool defaultRender) {
         //std::cout << DreamECS::GetComponentArraySize<CSScript>() << "   " << DreamECS::GetComponentArraySize<Transform>() << "\n";
 
         if (playing) {
-            ScriptSystem::PlayRunTime();
-            CollisionSystem::Update(dt);
+            ScriptSystem::GetInstance().PlayRunTime();
+            CollisionSystem::GetInstance().Update(dt);
+            PhysicsSystem::GetInstance().Update(dt);
         }
-        if (Input::IsKeyPressed(Input_KeyCode::N))
-            DreamECS::DuplicateEntity(0);
+        /*if (Input::IsKeyPressed(Input_KeyCode::N))
+            DreamECS::GetInstance().DuplicateEntityAsInstance(0);*/
 
-        CameraSystem::Update(dt);
+        CameraSystem::GetInstance().Update(dt);
 
         if (defaultRender) {
             //GraphicSystem::Update(dt);
-            GraphicSystem::Render();
+            GraphicSystem::GetInstance().Render();
         }
 
-
-        DreamECS::ClearDestroyQueue();
+        DreamECS::GetInstance().ClearDestroyQueue();
 
         LayerStack::Update();
         LayerStack::Draw();
-
-
-        if (Input::IsKeyPressed(Input_KeyCode::B))
-            std::cout << DreamECS::GetUsedEntitySet().size() << "\n";
-
-        
     }
 
     //bool Scene::SceneSave() {

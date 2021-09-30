@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    CameraSystem.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    26/06/2021
 \brief
 This file contain the CameraSystem definition
@@ -25,26 +25,27 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/CameraComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
-#include "Engine/Header/ECS/ECSWrapper.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 namespace Engine {
     //extern Coordinator gCoordinator;
 #ifndef NEW_ECS
     std::shared_ptr<CameraSystem> CameraSystem::CS;
 #endif
-    Math::mat3 CameraSystem::world_to_ndc_xform;
-    GLFWwindow* CameraSystem::pwindow;
+    //Math::mat3 CameraSystem::world_to_ndc_xform;
+    //GLFWwindow* CameraSystem::pwindow;
 
     //Update function to change the world to NDC transform that will be used
     //to create the graphics
     void CameraSystem::Update(float dt) {
 #if NEW_ECS
-        auto& camArray = DreamECS::GetComponentArrayData<Camera2D>();
+        auto& camArray = DreamECS::GetInstance().GetComponentArrayData<CameraComponent>();
         for (auto& cam : camArray) {
-            if (Entity_Check(cam.GetEntityId())) break;
+            const Entity& entity = cam.GetEntity();
+            if (Entity_Check(entity)) break;
             if (!cam.isActive) continue;
 
-            Transform* transform = DreamECS::GetComponentTest<Transform>(cam.GetEntityId());
+            TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(entity);
             if (!transform || !transform->isActive) continue;
 
 
@@ -97,7 +98,8 @@ namespace Engine {
         return world_to_ndc_xform;
     }
 
-    bool CameraSystem::Create(const std::shared_ptr<CameraSystem>& cameraSystem) {
+    //bool CameraSystem::Create(const std::shared_ptr<CameraSystem>& cameraSystem) {
+    bool CameraSystem::Create() {
 #ifndef NEW_ECS
         CS = cameraSystem;
 #endif
@@ -112,7 +114,4 @@ namespace Engine {
     void CameraSystem::Destroy() {
         LOG_INSTANCE("Camera System destroyed");
     }
-
-    CameraSystem::~CameraSystem() { Destroy(); }
-
 }

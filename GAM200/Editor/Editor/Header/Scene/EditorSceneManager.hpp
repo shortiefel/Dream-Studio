@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EditorSceneManager.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    16/09/2021
 \brief
 This file has the function declaration of the EditorSceneManager
@@ -18,23 +18,27 @@ Technology is prohibited.
 #ifndef EDITOR_SCENE_MANAGER_HPP
 #define EDITOR_SCENE_MANAGER_HPP
 
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 #include "Engine/Header/Scene/Scene.hpp"
 #include <string>
 #include "Engine/Header/Event/KeyEvent.hpp"
 
 namespace Editor {
-	class EditorSceneManager {
+	class EditorSceneManager : public Engine::Singleton<EditorSceneManager> {
 	public:
 
 
-		static Engine::KeyPressedFP GetSceneHotKey();
+		Engine::KeyPressedFP GetSceneHotKey();
 		/*
 		Check whether pause or save is pressed and react accordingly
 		*/
-		static bool SceneHotKeyCheck(Engine::Input_KeyCode keyCode);
+		bool SceneHotKeyCheck(Engine::Input_KeyCode keyCode);
 
 	private:
-		static std::string editorSceneName;
+		std::string editorSceneName = "test2";;
+
+		SINGLETON_SETUP(EditorSceneManager);
 	};
 }
 

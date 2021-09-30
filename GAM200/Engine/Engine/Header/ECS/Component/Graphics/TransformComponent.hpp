@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TransformComponent.hpp
-@author  Ow Jian Wen			jianwen123321@hotmail.com
+@author  Ow Jian Wen			jianwen.o@digipen.edu
 		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    19/06/2021
 @brief
@@ -24,16 +24,20 @@ Technology is prohibited.
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
+//#include "Engine/Header/Debug tools/Logging.hpp"
+
 #include "Engine/Header/Graphic/Graphic.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
+
 
 namespace Engine {
+	class DSerializer;
+	class SSerializer;
+
 	//Scale value for circle in both axis is same
-	struct Transform : public IComponent {
+	struct TransformComponent : public IComponent {
 		Math::vec2 position = Math::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
 		Math::vec2 scale = Math::vec2{};
 		float angle = float{}; // in degree
@@ -44,13 +48,24 @@ namespace Engine {
 
 		Math::mat3 GetTransform() const;
 
-		Transform& Deserialize(const DSerializer& _serializer);
+		TransformComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		Transform() = default;
-		Transform(Entity _ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{}, float _angle = float{}, bool _active = true, int _layer = 0);
-		Transform(const Transform&) = default;
-		Transform& operator=(const Transform&) = default;
+		TransformComponent(Entity _ID = DEFAULT_ENTITY, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{1,1}, float _angle = float{}, bool _active = true, int _layer = 0);
+		TransformComponent& operator+= (const TransformComponent& _rhs);
+
+		TransformComponent(const TransformComponent&) = default;
+		TransformComponent& operator=(const TransformComponent&) = default;
+
+		/*Transform(Transform&& rhs) noexcept {
+			position = std::move(rhs.position);
+			scale = std::move(rhs.scale);
+			angle = std::move(rhs.angle);
+			isActive = std::move(rhs.isActive);
+			layer = std::move(rhs.layer);
+			SetEntityId(rhs.GetEntity());
+			rhs.SetEntityId(DEFAULT_ENTITY);
+		}*/
 	};
 }
 #endif

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GameSceneSerializer.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    15/07/2021
 \brief
 This file contain the GameSceneSerializer declaration
@@ -18,6 +18,7 @@ Technology is prohibited.
 #define GAMESCENE_SERIALIZER_HPP
 
 #include <string>
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	class GameSceneSerializer {
@@ -29,6 +30,12 @@ namespace Engine {
 		static void SerializeScene(std::string filename);
 		//From file to a scene
 		static void DeserializeScene(std::string filename);
+
+
+		//static void SerializePrefab(std::string filename, Math::vec2 position, float angle);
+		static void DeserializePrefab(std::string filename, Math::vec2 position, float angle);
+
+
 	};
 }
 #endif

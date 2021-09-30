@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    IComponent.hpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    08/09/2021
 @brief
 This file is for component to inherit
@@ -22,13 +22,24 @@ Technology is prohibited.
 namespace Engine {
 	struct IComponent {
 	public:
-		inline Entity GetEntityId() const { return entityId; }
-		inline void SetEntityId(Entity ent) { entityId = ent; }
+		inline Entity GetEntity() const { return entity; }
+		inline void SetEntity(Entity ent) { entity = ent; }
+		/*
+		* List below must be added as functionality
+		T& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
-		IComponent() : entityId{ DEFAULT_ENTITY } {}
-		IComponent(Entity ent) : entityId{ ent } {}
+		//Explict copy 
+		void CopyComponentAsInstance(const T& target);
+		//Not needed if Prefab still uses unique T
+		//Example: Transform / CSScript
+		void CopyComponentAsPrefab(const T& target);
+		*/
+
+		IComponent() : entity{ DEFAULT_ENTITY } {}
+		IComponent(Entity ent) : entity{ ent } {}
 	private:
-		Entity entityId = DEFAULT_ENTITY;
+		Entity entity = DEFAULT_ENTITY;
 	};
 }
 

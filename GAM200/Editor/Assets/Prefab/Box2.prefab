@@ -1,0 +1,22 @@
+[
+  {
+    "Entity": { "Name": "Box2Prefab" },
+    "TransformComponent": {
+      "Position": [ -20.0, 200.0 ],
+      "Scale": [ 50.0, 50.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets/Textures/test1.png",
+      "Shape": 0,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "Test",
+        "IsActive": true
+      }
+    ]
+  }
+]

@@ -1,10 +1,18 @@
 /* Start Header**********************************************************************************/
 /*!
-@file ComponentManager.hpp
-@authors	Ow Jian Wen			jianwen123321@hotmail.com
-			Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
-@date 26/04/2021
-@brief
+\file ComponentManager.hpp
+\team name
+\software name
+\authors
+NAME							EMAIL									ROLE
+Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
+Goh	See Yong Denise				g.seeyongdenise@digipen.edu
+Ow Jian Wen						jianwen.o@digipen.edu					TECHINCAL DIRECTOR
+Chia Yi Da						chiayida98@gmail.com
+Wang Ao							Ao.Wang@digipen.edu
+Ng Jia Yi						Jiayi.ng@digipen.edu
+\date 26/04/2021
+\brief
 
 A component manager acts as an in charge of handling the different Component Array whenever a
 component has tpo be added or removed. It contains Component Type, RegisterComponent. it also has
@@ -32,7 +40,7 @@ Technology is prohibited.
 type* tptr = GetComArray<type>()->GetDataTest(entFrom);\
 if (tptr) {\
 type t {*tptr};\
-t.SetEntityId(entTo);\
+t.SetEntity(entTo);\
 GetComArray<type>()->AddComponent(std::move(t));\
 }
 
@@ -68,23 +76,22 @@ namespace Engine {
 			GetComArray<T>()->AddComponent(std::move(component));
 		}
 
-		void AddScript(CSScript component) {
-			printf("add script \n");
-			GetComArray<CSScript>()->AddScriptComponent(std::move(component));
+		void AddScript(ScriptComponent component) {
+			GetComArray<ScriptComponent>()->AddScriptComponent(std::move(component));
 		}
 
 		template<typename T>
-		void DuplicateComponent(T component) {
+		void DuplicateComponentAsInstance(T component) {
 			GetComArray<T>()->AddComponent(std::move(component));
 		}
 
-		void DuplicateEntity(Entity entFrom, Entity entTo) {
+		void DuplicateEntityAsInstance(Entity entFrom, Entity entTo) {
 			//variable name is same so its scoped
-			{ DUPLICATE_COMPONENT(Camera2D); }
-			{ DUPLICATE_COMPONENT(Texture); }
-			{ DUPLICATE_COMPONENT(Transform); }
-			{ DUPLICATE_COMPONENT(Collider); }
-			{ DUPLICATE_COMPONENT(RigidBody); }
+			{ DUPLICATE_COMPONENT(CameraComponent); }
+			{ DUPLICATE_COMPONENT(TextureComponent); }
+			{ DUPLICATE_COMPONENT(TransformComponent); }
+			{ DUPLICATE_COMPONENT(ColliderComponent); }
+			{ DUPLICATE_COMPONENT(RigidBodyComponent); }
 		}
 
 		template<typename T>
@@ -93,9 +100,9 @@ namespace Engine {
 		}
 
 		void RemoveScript(Entity entity, const char* className) {
-			auto& csScript = GetComArray<CSScript>()->GetData(entity);
+			auto& csScript = GetComArray<ScriptComponent>()->GetData(entity);
 			if (csScript.RemoveScript(className)) {
-				GetComArray<CSScript>()->RemoveComponent(entity);
+				GetComArray<ScriptComponent>()->RemoveComponent(entity);
 			}
 		}
 
@@ -148,8 +155,5 @@ namespace Engine {
 
 			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayInter[TypeName]);
 		}
-
-
-
 	};
 }

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TextureManager.cpp
-@author  Ow Jian Wen	jianwen123321@hotmail.com
+@author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    03/07/2021
 \brief
 This file has the function definition for TextureManager
@@ -19,7 +19,7 @@ Technology is prohibited.
 #include "stb_image/stb_image.h"
 
 namespace Engine {
-	std::unordered_map<std::string, GLuint> TextureManager::textureList;
+	//std::unordered_map<std::string, GLuint> TextureManager::textureList;
 
 	void TextureManager::Create() {
 		// flips image in vertically

@@ -20,15 +20,27 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+
 namespace Engine {
-	Transform::Transform(Entity _ID, Math::vec2 _pos, Math::vec2 _scale, float _angle, bool _active, int _layer) :
+	TransformComponent::TransformComponent(Entity _ID, Math::vec2 _pos, Math::vec2 _scale, float _angle, bool _active, int _layer) :
 		IComponent{ _ID },
 		position{ _pos }, scale{ _scale }, angle{ _angle },
 		isActive{ _active }, layer{ _layer } {}
 
-	Math::mat3 Transform::GetTransform() const {
+	TransformComponent& TransformComponent::operator+= (const TransformComponent& _rhs) {
+		position += _rhs.position;
+		scale *= _rhs.scale;
+		angle += _rhs.angle;
+
+		return *this;
+	}
+
+	Math::mat3 TransformComponent::GetTransform() const {
 		return
 			//Translation
 			Math::mat3{ Math::vec3(1.f, 0, 0),
@@ -45,7 +57,7 @@ namespace Engine {
 						 Math::vec3(0, 0, 1.f) };
 	}
 
-	Transform& Transform::Deserialize(const DSerializer& _serializer) {
+	TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer) {
 		position = _serializer.GetValue<Math::vec2>("Position");
 		scale = _serializer.GetValue<Math::vec2>("Scale");
 		angle = _serializer.GetValue<float>("Angle");
@@ -53,7 +65,7 @@ namespace Engine {
 		return *this;
 	}
 
-	void Transform::Serialize(const SSerializer& _serializer) {
+	void TransformComponent::Serialize(const SSerializer& _serializer) {
 		_serializer.SetValue("Position", position);
 		_serializer.SetValue("Scale", scale);
 		_serializer.SetValue("Angle", angle);

@@ -30,25 +30,44 @@ Technology is prohibited.
 #pragma once
 
 //#include <iostream>
-#include <bitset>
+//#include <bitset>
 #include <cstdint>
+#include <string>
 
 //Check whether entity is in used
 #define Entity_Check(entity)\
-(entity > MAX_ENTITIES)
+(entity.id > MAX_ENTITIES)
 
 #define NEW_ECS 1
 
 namespace Engine {
 	//ECS Components 
-	using Entity = std::uint32_t;
-	const Entity MAX_ENTITIES = 10000;
+	//using Entity = std::uint32_t;
+	
+
+	const std::uint32_t MAX_ENTITIES = 10000;
 	//Values is used to check whether entity is in used
 	//instead of bit comparision
-	const Entity DEFAULT_ENTITY = MAX_ENTITIES + 1;
+	//const std::uint32_t DEFAULT_ENTITY_ID = MAX_ENTITIES + 1;
+	using Entity_id = std::uint32_t;
+
+#define DEFAULT_ENTITY_NAME "Entity_"
+
+	struct Entity {
+		Entity_id id{};
+		std::string name{};
+
+		Entity(Entity_id _entityId = MAX_ENTITIES + 1, const char* _entityName = "Entity", bool _appendEntityId = false) : 
+			id{ _entityId }, 
+			name{ (_appendEntityId ? (std::string {_entityName } + std::to_string(_entityId)) : std::string {_entityName }) } {}
+	};
+
+	//const Entity DEFAULT_ENTITY = MAX_ENTITIES + 1;
+	#define DEFAULT_ENTITY Entity{}
+
 	using ComponentType = std::uint8_t;
 	const ComponentType MAX_COMPONENTS = 48;
-	using Signature = std::bitset<MAX_COMPONENTS>;
+	//using Signature = std::bitset<MAX_COMPONENTS>;
 
 
 }

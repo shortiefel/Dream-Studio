@@ -24,7 +24,7 @@ namespace Engine {
 	-------------------------------------------------------------------------------------------------*/
 	std::vector<OverlapColliderEventFP> OverlapColliderEvent::registeredFunctions;
 
-	OverlapColliderEvent::OverlapColliderEvent(unsigned int _ent1, unsigned int _ent2, MonoFunctionType _type)
+	OverlapColliderEvent::OverlapColliderEvent(std::uint32_t _ent1, std::uint32_t _ent2, MonoFunctionType _type)
 		: self{ _ent1 }, other{ _ent2 }, type{ _type } {}
 
 	EventType OverlapColliderEvent::GetEventType() const {

@@ -73,7 +73,7 @@ namespace Engine {
 		case CSType::VEC2:
 			return (4 * 2);
 		}
-
+		return 0;
 	}
 
 	CSPublicVariable::CSPublicVariable(CSPublicVariable&& rhs) noexcept {

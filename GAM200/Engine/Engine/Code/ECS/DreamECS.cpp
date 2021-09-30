@@ -37,10 +37,10 @@ namespace Engine {
 		sysManager = std::make_unique<SystemManager>();
 	}
 
-	Entity DreamECS::CreateEntity()
+	Entity DreamECS::CreateEntity(const char* _entityName, bool _appendEntityId)
 	{
 		//return gCoordinator.createEntity();
-		return entityManager->CreateEntity();
+		return entityManager->CreateEntity(_entityName, _appendEntityId);
 	}
 
 	void DreamECS::DuplicateEntityAsInstance(Entity entFrom) {
@@ -54,7 +54,7 @@ namespace Engine {
 		destroyQueue.emplace(entity);
 	}
 
-	const std::unordered_set<Entity>& DreamECS::GetUsedEntitySet() {
+	const std::vector<Entity>& DreamECS::GetUsedEntitySet() {
 		//return gCoordinator.GetUsedEntitySet();
 		return entityManager->GetUsedEntitySet();
 	}
@@ -75,7 +75,7 @@ namespace Engine {
 
 	void DreamECS::ResetECS() {
 		//std::unordered_set<Entity> listOfEntity = gCoordinator.GetUsedEntitySet();
-		std::unordered_set<Entity> listOfEntity = entityManager->GetUsedEntitySet();
+		std::vector<Entity> listOfEntity = entityManager->GetUsedEntitySet();
 		for (auto& entity : listOfEntity) {
 			//gCoordinator.destroyEntity(entity);
 

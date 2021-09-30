@@ -38,19 +38,19 @@ namespace Engine {
 		//LayerStack::AddOverlayLayer(GUILayer::Get());
 
 		Factory::Create();
-		TextureManager::Create();
+		TextureManager::GetInstance().Create();
 
-		SceneManager::StartScene();
+		SceneManager::GetInstance().StartScene();
 	}
 
 	void EngineCore::Update(float dt, bool defaultRender) {
-		SceneManager::Update(dt, defaultRender);
+		SceneManager::GetInstance().Update(dt, defaultRender);
 	}
 
 	void EngineCore::Destroy() {
-		SceneManager::Destroy();
+		SceneManager::GetInstance().Destroy();
 
-		TextureManager::Destroy();
+		TextureManager::GetInstance().Destroy();
 
 		Factory::Destroy();
 		//GUILayer::Destroy();

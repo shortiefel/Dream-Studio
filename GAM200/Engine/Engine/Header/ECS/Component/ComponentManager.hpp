@@ -41,7 +41,7 @@ Technology is prohibited.
 type* tptr = GetComArray<type>()->GetDataTest(entFrom);\
 if (tptr) {\
 type t {*tptr};\
-t.SetEntityId(entTo);\
+t.SetEntity(entTo);\
 GetComArray<type>()->AddComponent(std::move(t));\
 }
 
@@ -77,8 +77,8 @@ namespace Engine {
 			GetComArray<T>()->AddComponent(std::move(component));
 		}
 
-		void AddScript(CSScript component) {
-			GetComArray<CSScript>()->AddScriptComponent(std::move(component));
+		void AddScript(ScriptComponent component) {
+			GetComArray<ScriptComponent>()->AddScriptComponent(std::move(component));
 		}
 
 		template<typename T>
@@ -88,11 +88,11 @@ namespace Engine {
 
 		void DuplicateEntityAsInstance(Entity entFrom, Entity entTo) {
 			//variable name is same so its scoped
-			{ DUPLICATE_COMPONENT(Camera2D); }
-			{ DUPLICATE_COMPONENT(Texture); }
-			{ DUPLICATE_COMPONENT(Transform); }
-			{ DUPLICATE_COMPONENT(Collider); }
-			{ DUPLICATE_COMPONENT(RigidBody); }
+			{ DUPLICATE_COMPONENT(CameraComponent); }
+			{ DUPLICATE_COMPONENT(TextureComponent); }
+			{ DUPLICATE_COMPONENT(TransformComponent); }
+			{ DUPLICATE_COMPONENT(ColliderComponent); }
+			{ DUPLICATE_COMPONENT(RigidBodyComponent); }
 		}
 
 		template<typename T>
@@ -101,9 +101,9 @@ namespace Engine {
 		}
 
 		void RemoveScript(Entity entity, const char* className) {
-			auto& csScript = GetComArray<CSScript>()->GetData(entity);
+			auto& csScript = GetComArray<ScriptComponent>()->GetData(entity);
 			if (csScript.RemoveScript(className)) {
-				GetComArray<CSScript>()->RemoveComponent(entity);
+				GetComArray<ScriptComponent>()->RemoveComponent(entity);
 			}
 		}
 

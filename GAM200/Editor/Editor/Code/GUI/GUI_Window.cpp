@@ -218,9 +218,9 @@ namespace Editor {
 			if (inspector_bool) {
 				ImGui::Begin("Inspector", &inspector_bool, window_flags);
 
-				Engine::Transform* comp;
-				Engine::Entity entity_selected = 0;
-				float width = 160;
+				Engine::TransformComponent* comp;
+				Engine::Entity entity_selected = Engine::Entity{ 0 };
+				float width = 120;
 				bool selectEntity = 0;
 
 				/**
@@ -230,7 +230,7 @@ namespace Editor {
 				if (ImGui::TreeNode("Transform"))
 				{
 					ImGui::Spacing();
-					if (Engine::DreamECS::GetInstance().HasComponent<Engine::Transform>(comp, entity_selected))
+					if (Engine::DreamECS::GetInstance().HasComponent<Engine::TransformComponent>(comp, entity_selected))
 					{
 						//Updating of position
 						ImGui::Text("Position");
@@ -268,8 +268,8 @@ namespace Editor {
 				*	Collider for each component
 				*/
 				if (ImGui::TreeNode("Collider")) {
-					Engine::Collider* colComp;
-					if (Engine::DreamECS::GetInstance().HasComponent<Engine::Collider>(colComp, entity_selected))
+					Engine::ColliderComponent* colComp;
+						if (Engine::DreamECS::GetInstance().HasComponent<Engine::ColliderComponent>(colComp, entity_selected))
 					{
 						ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
 					}
@@ -290,10 +290,8 @@ namespace Editor {
 				*	Add New Components
 				*/
 				
-				if (ImGui::Button("Add Component", (ImVec2{ 100, 0 })))
-				{
+				//if (ImGui::Button("Add Component", (ImVec2{ 100, 0 })))
 
-				}
 
 
 				

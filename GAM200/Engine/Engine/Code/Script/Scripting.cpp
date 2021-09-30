@@ -26,10 +26,20 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 
+#include "Engine/Header/Management/GameState.hpp"
+
 
 #define INVOKE_FUNCTION(name)\
-if (_csScriptInstance.csClass.name != nullptr) \
-mono_runtime_invoke(_csScriptInstance.csClass.name, _csScriptInstance.csClass.object, _param, nullptr);
+if (_csScriptInstance.csClass.name != nullptr) {\
+	mono_runtime_invoke(_csScriptInstance.csClass.name, _csScriptInstance.csClass.object, _param, &exception);\
+	if (exception != nullptr) {\
+	std::cout << mono_string_to_utf8(mono_object_to_string(exception, nullptr)) << "\n";\
+	GameState::SetPlaying(false);\
+	Scripting::DestroyChildDomain();\
+	}\
+}
+//std::cout << mono_object_to_string(exception, nullptr) << "\n";\
+//}
 
 namespace Engine {
 	namespace Scripting {
@@ -41,6 +51,7 @@ namespace Engine {
 		CSType GetCSType(MonoType* mt);
 
 		void Mono_Runtime_Invoke(const CSScriptInstance& _csScriptInstance, MonoFunctionType _type, void** _param) {
+			MonoObject* exception = nullptr;
 			switch (_type) {
 			case MonoFunctionType::CONSTRUCTOR:
 				INVOKE_FUNCTION(ConstructorFunc);
@@ -147,6 +158,9 @@ namespace Engine {
 		}
 
 		void InitCSClass(CSScriptInstance& _csScriptInstance) {
+			//If no child domain dont klass doesnt exist
+			if (!GameState::GetPlaying()) return;
+
 			auto& csClass = _csScriptInstance.csClass;
 			auto& className = csClass.className;
 
@@ -207,7 +221,7 @@ namespace Engine {
 		}
 
 		void InitAllCSClass() {
-			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
+			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
 
@@ -262,7 +276,7 @@ namespace Engine {
 		}
 
 		void InitAllPublicVariable() {
-			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<CSScript>();
+			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
 				

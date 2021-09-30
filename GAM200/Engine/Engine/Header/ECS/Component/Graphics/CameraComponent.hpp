@@ -25,24 +25,25 @@ Technology is prohibited.
 #define CAMERA_COMPONENT_HPP
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
+    class DSerializer;
+    class SSerializer;
+
     constexpr int CAMERA_HEIGHT = 1000;
 
-    struct Camera2D : public IComponent {
+    struct CameraComponent : public IComponent {
         // window parameters
         float ar = float{}, fov = float{};
         bool isActive = true;
 
-        Camera2D& Deserialize(const DSerializer& _serializer);
+        CameraComponent& Deserialize(const DSerializer& _serializer);
         void Serialize(const SSerializer& _serializer);
 
-        Camera2D() = default;
-        Camera2D(Entity _ID, float _fov = 1.f, float _ar = 0.f, bool _active = false);
-        Camera2D(const Camera2D&) = default;
-        Camera2D& operator=(const Camera2D&) = default;
+        CameraComponent() = default;
+        CameraComponent(Entity _ID, float _fov = 1.f, float _ar = 0.f, bool _active = false);
+        CameraComponent(const CameraComponent&) = default;
+        CameraComponent& operator=(const CameraComponent&) = default;
     };
 }
 

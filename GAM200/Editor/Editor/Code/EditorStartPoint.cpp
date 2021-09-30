@@ -34,7 +34,7 @@ namespace Editor {
 		//Deserialize then put as position
 		EditorSceneCamera::Create({ 150.f,100.f });
 
-		Engine::KeyPressedEvent::RegisterFunction(EditorSceneManager::GetSceneHotKey());
+		Engine::KeyPressedEvent::RegisterFunction(EditorSceneManager::GetInstance().GetSceneHotKey());
 
 		//Profiler::Profiler_Setup();
 	}

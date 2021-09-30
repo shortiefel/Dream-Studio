@@ -16,7 +16,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Script/ScriptInternalCall.hpp"
-//#include "Engine/Header/Script/Scripting.hpp"
+
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp" //Serialize Prefab
 
 #include <mono/metadata/assembly.h>
 
@@ -24,7 +25,10 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
+#include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
+
+#include "Engine/Header/Management/GameState.hpp"
 
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
@@ -43,7 +47,6 @@ ctype->paramName = param;
 
 
 namespace Engine {
-
 	//extern Coordinator gCoordinator;
 	//Coordinator& gCoordinator = DreamECS::GetCoordinator();
 
@@ -65,17 +68,24 @@ namespace Engine {
 	void Input_GetMousePosition(Math::vec2* outPosition);
 
 	bool HasComponent_Transform_Engine(unsigned int id);
+	bool HasComponent_Collider_Engine(unsigned int id);
 
 	void Destroy_Entity_Engine(unsigned int id);
 	void Destroy_Transform_Engine(unsigned int id);
 	void Destroy_Collider_Engine(unsigned int id);
 	void Destroy_Script_Engine(unsigned int id, MonoString* str);
 
-	void Active_Transform_Engine(unsigned int id, bool boolean);
-	void Active_Collider_Engine(unsigned int id, bool boolean);
-	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str);
+	void SetTransform_Active_Engine(unsigned int id, bool boolean);
+	void GetTransform_Active_Engine(unsigned int id, bool* boolean);
+	void SetCollider_Active_Engine(unsigned int id, bool boolean);
+	void GetCollider_Active_Engine(unsigned int id, bool* boolean);
+	void SetScript_Active_Engine(unsigned int id, bool boolean, MonoString* str);
+	void GetScript_Active_Engine(unsigned int id, bool* boolean, MonoString* str);
+
+	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle);
 
 	void GetDeltaTime_Engine(float* dt);
+
 
 
 	void RegisterInternalCall() {
@@ -94,17 +104,24 @@ namespace Engine {
 		mono_add_internal_call("Input::GetMousePosition_Engine", Input_GetMousePosition);
 
 		mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
+		mono_add_internal_call("MonoBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
 
 		mono_add_internal_call("MonoBehaviour::Destroy_Entity_Engine", Destroy_Entity_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Transform_Engine", Destroy_Transform_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Collider_Engine", Destroy_Collider_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Script_Engine", Destroy_Script_Engine);
 
-		mono_add_internal_call("MonoBehaviour::Active_Transform_Engine", Active_Transform_Engine);
-		mono_add_internal_call("MonoBehaviour::Active_Collider_Engine", Active_Collider_Engine);
-		mono_add_internal_call("MonoBehaviour::Active_Script_Engine", Active_Script_Engine);
+		mono_add_internal_call("Transform::SetTransform_Active_Engine", SetTransform_Active_Engine);
+		mono_add_internal_call("Transform::GetTransform_Active_Engine", GetTransform_Active_Engine);
+		mono_add_internal_call("Collider::SetCollider_Active_Engine", SetCollider_Active_Engine);
+		mono_add_internal_call("Collider::GetCollider_Active_Engine", GetCollider_Active_Engine);
+		mono_add_internal_call("MonoBehaviour::SetScript_Active_Engine", SetScript_Active_Engine);
+		mono_add_internal_call("MonoBehaviour::GetScript_Active_Engine", GetScript_Active_Engine);
+
+		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab", Instantiate_Prefab);
 
 		mono_add_internal_call("Time::GetDeltaTime_Engine", GetDeltaTime_Engine);
+
 	}
 
 
@@ -133,50 +150,47 @@ namespace Engine {
 	Transform
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2) {
-		GetEngineType(id, Transform, position, *outVec2);
-
+		GetEngineType(id, TransformComponent, position, *outVec2);
 	}
 	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
-		SetEngineType(id, Transform, position, *inVec2);
+		SetEngineType(id, TransformComponent, position, *inVec2);
 	}
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		//call hascomponent with entityid
-		Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(id);
+		TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(id);
 		if (!transform) return;
 		transform->position += *inVec2;
 	}
 
-
 	void GetTransform_Scale_Engine(unsigned int id, Math::vec2* outVec2) {
-		GetEngineType(id, Transform, scale, *outVec2);
+		GetEngineType(id, TransformComponent, scale, *outVec2);
 	}
 	void SetTransform_Scale_Engine(unsigned int id, Math::vec2* inVec2) {
-		SetEngineType(id, Transform, scale, *inVec2);
+		SetEngineType(id, TransformComponent, scale, *inVec2);
 	}
 
 
 	void GetTransform_Angle_Engine(unsigned int id, float* outVec2) {
-		GetEngineType(id, Transform, angle, *outVec2);
+		GetEngineType(id, TransformComponent, angle, *outVec2);
 
 	}
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2) {
-		SetEngineType(id, Transform, angle, *inVec2);
+		SetEngineType(id, TransformComponent, angle, *inVec2);
 	}
 
 	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2) {
-		Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(id);
+		TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle + 90.f);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
 	}
 
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2) {
-		Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(id);
+		TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
 	}
-
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
@@ -201,8 +215,13 @@ namespace Engine {
 	Check if component exist
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool HasComponent_Transform_Engine(unsigned int id) {
-		Transform* tem = nullptr;
-		return DreamECS::GetInstance().HasComponent<Transform>(tem, id);
+		TransformComponent* tem = nullptr;
+		return DreamECS::GetInstance().HasComponent<TransformComponent>(tem, id);
+	}
+
+	bool HasComponent_Collider_Engine(unsigned int id) {
+		ColliderComponent* tem = nullptr;
+		return DreamECS::GetInstance().HasComponent<ColliderComponent>(tem, id);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -213,15 +232,15 @@ namespace Engine {
 	}
 
 	void Destroy_Transform_Engine(unsigned int id) {
-		DreamECS::GetInstance().RemoveComponent<Transform>(id);
+		DreamECS::GetInstance().RemoveComponent<TransformComponent>(id);
 	}
 
 	void Destroy_Collider_Engine(unsigned int id) {
-		DreamECS::GetInstance().RemoveComponent<Collider>(id);
+		DreamECS::GetInstance().RemoveComponent<ColliderComponent>(id);
 	}
 
 	void Destroy_Script_Engine(unsigned int id, MonoString* str) {
-		CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(id);
+		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(id);
 		if (!csScript) return;
 		csScript->RemoveScript(mono_string_to_utf8(str));
 	}
@@ -229,18 +248,37 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Active
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void Active_Transform_Engine(unsigned int id, bool boolean) {
-		SetEngineType(id, Transform, isActive, boolean);
+	void SetTransform_Active_Engine(unsigned int id, bool boolean) {
+		SetEngineType(id, TransformComponent, isActive, boolean);
 	}
 
-	void Active_Collider_Engine(unsigned int id, bool boolean) {
-		SetEngineType(id, Collider, isActive, boolean);
+	void GetTransform_Active_Engine(unsigned int id, bool* boolean) {
+		GetEngineType(id, TransformComponent, isActive, *boolean);
 	}
 
-	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {
-		CSScript* csScript = DreamECS::GetInstance().GetComponentTest<CSScript>(id);
-		if (!csScript) return;
-		csScript->SetActive( mono_string_to_utf8(str), boolean);
+	void SetCollider_Active_Engine(unsigned int id, bool boolean) {
+		SetEngineType(id, ColliderComponent, isActive, boolean);
+	}
+
+	void GetCollider_Active_Engine(unsigned int id, bool* boolean) {
+		GetEngineType(id, ColliderComponent, isActive, *boolean);
+	}
+
+	void SetScript_Active_Engine(unsigned int id, bool boolean, MonoString* str) {
+		SetEngineType(id, ScriptComponent, klassInstance.find(mono_string_to_utf8(str))->second.isActive, boolean);
+	}
+
+	void GetScript_Active_Engine(unsigned int id, bool* boolean, MonoString* str) {
+		GetEngineType(id, ScriptComponent, klassInstance.find(mono_string_to_utf8(str))->second.isActive, *boolean);
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Prefab
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle) {
+		//GameSceneSerializer::DeserializeScene(mono_string_to_utf8(prefabName));
+		GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), position, angle);
+		if (GameState::GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
 
 

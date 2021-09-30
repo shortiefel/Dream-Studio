@@ -47,37 +47,44 @@ namespace Engine {
 		//	}
 		//}
 
-		Entity CreateEntity()
+		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, bool _appendEntityId = false)
 		{
 			//error checking
 			LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
 
-			Entity ID;
+			Entity_id entityId;
 
 			if (AvailableEntities.size()) {
-				ID = AvailableEntities.front();
+				entityId = AvailableEntities.front();
 				AvailableEntities.pop();
 			}
 
 			else {
-				ID = currentMaxId;
+				entityId = currentMaxId;
 				++currentMaxId;
 			}
 
-			UsedEntities.insert(ID);
 			++AliveEntityCount;
 
-			return ID;
+			Entity entity(entityId, _entityName, _appendEntityId);
+			UsedEntities.push_back(entity);
+			return entity;
 		}
 
 		void DestroyEntity(Entity entity)
 		{
 #if NEW_ECS
 			//error checking
-			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
-			UsedEntities.erase(entity);
+			LOG_ASSERT(entity.id < MAX_ENTITIES && "Entities out of range");
+			int index = 0;
+			for (index = 0; index < UsedEntities.size(); index++) {
+				if (UsedEntities[index].id == entity.id) {
+					break;
+				}
+			}
+			UsedEntities.erase(UsedEntities.begin() + index);
 			//mSignatures[entity].reset();
-			AvailableEntities.push(entity);
+			AvailableEntities.push(entity.id);
 			--AliveEntityCount;
 #else
 			//error checking
@@ -105,21 +112,21 @@ namespace Engine {
 			return mSignatures[entity];
 		}
 #endif
-		inline const std::unordered_set<Entity>& GetUsedEntitySet() const {
+		inline const std::vector<Entity>& GetUsedEntitySet() const {
 			return UsedEntities;
 		}
 
 		inline void ResetEntityManager() {
 			UsedEntities.clear();
 			currentMaxId = 0;
-			AvailableEntities = std::queue<Entity>();
+			AvailableEntities = std::queue<Entity_id>();
 		}
 
 
-		std::unordered_set<Entity> UsedEntities{};
+		std::vector<Entity> UsedEntities{};
 		uint32_t AliveEntityCount{}; // Total living entities
 	private:
-		std::queue<Entity> AvailableEntities{}; // Queue of unused entity IDs
+		std::queue<Entity_id> AvailableEntities{}; // Queue of unused entity IDs
 #ifndef NEW_ECS
 		std::array<Signature, MAX_ENTITIES> mSignatures{}; // Array of signatures for index to correspond to ID
 #endif

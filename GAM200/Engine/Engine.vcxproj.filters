@@ -28,9 +28,6 @@
     <Filter Include="Source Files\Script">
       <UniqueIdentifier>{9b9f8deb-72be-47cd-a369-fe0fadc7aa3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Physic">
-      <UniqueIdentifier>{caa0de69-3b99-47cb-80e2-42ee504354e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{55979778-d0ee-48a8-86ab-90b4e8b6ef2c}</UniqueIdentifier>
     </Filter>
@@ -78,9 +75,6 @@
     </Filter>
     <Filter Include="Header Files\Script">
       <UniqueIdentifier>{586ac100-6351-458b-8cb4-92751512eff7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Physic">
-      <UniqueIdentifier>{565117d0-0c49-459e-9360-9b6b78311101}</UniqueIdentifier>
     </Filter>
     <Filter Include="External Resources">
       <UniqueIdentifier>{0a2d9f69-5915-4047-b1bd-cca7bc37067c}</UniqueIdentifier>
@@ -136,6 +130,12 @@
     <Filter Include="Header Files\Singleton">
       <UniqueIdentifier>{33da63d4-0227-4eb7-aa40-61da1099a43d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Physics">
+      <UniqueIdentifier>{565117d0-0c49-459e-9360-9b6b78311101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{caa0de69-3b99-47cb-80e2-42ee504354e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Code\Application.cpp">
@@ -170,9 +170,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Scene\Scene.cpp">
       <Filter>Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Physic\Collision.cpp">
-      <Filter>Source Files\Physic</Filter>
     </ClCompile>
     <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp">
       <Filter>External Resources\Stb</Filter>
@@ -265,6 +262,15 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\shader.cpp">
       <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Management\FileManager.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Physics\Collision.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Physics\Physics.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -366,9 +372,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Management\TextureManager.hpp">
       <Filter>Header Files\Management</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Physic\Collision.hpp">
-      <Filter>Header Files\Physic</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Scene\Scene.hpp">
       <Filter>Header Files\Scene</Filter>
@@ -557,6 +560,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Singleton\Singleton.hpp">
       <Filter>Header Files\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Management\FileManager.hpp">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Physics\Collision.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Physics\Physics.hpp">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

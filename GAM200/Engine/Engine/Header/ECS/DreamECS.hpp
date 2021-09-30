@@ -34,10 +34,10 @@ namespace Engine {
 		/*--------------------------------------------------------------------------------------------------------------
 		Entity related functions
 		--------------------------------------------------------------------------------------------------------------*/
-		Entity CreateEntity();
+		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, bool _appendEntityId = false);
 		void DuplicateEntityAsInstance(Entity ent);
 		void DestroyEntity(Entity entity);
-		const std::unordered_set<Entity>& GetUsedEntitySet();
+		const std::vector<Entity>& GetUsedEntitySet();
 		void ClearDestroyQueue();
 		void ResetECS();
 
@@ -56,7 +56,7 @@ namespace Engine {
 			//gCoordinator.AddComponent<T>(std::move(com));
 
 #if NEW_ECS
-			auto ptr = compManager->GetComTest<T>(com.GetEntityId());
+			auto ptr = compManager->GetComTest<T>(com.GetEntity());
 			LOG_ASSERT(!ptr && "Unable add the same component for one entity");
 			if (ptr) return;
 			compManager->AddComponent<T>(std::move(com));
@@ -79,7 +79,7 @@ namespace Engine {
 		}
 
 		template<>
-		void AddComponent(CSScript com) {
+		void AddComponent(ScriptComponent com) {
 			//gCoordinator.AddScript(std::move(com));
 
 			compManager->AddScript(std::move(com));
@@ -193,10 +193,8 @@ namespace Engine {
 		//static Coordinator gCoordinator;
 		std::queue<Entity> destroyQueue{};
 
-		DreamECS() {}
-		~DreamECS() {}
 
-		friend class Singleton<DreamECS>;
+		SINGLETON_SETUP(DreamECS);
 	};
 }
 

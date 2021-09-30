@@ -38,10 +38,7 @@ namespace Engine {
 		//static std::shared_ptr<CameraSystem> CS;
 		GLFWwindow* pwindow{};
 
-		CameraSystem() {}
-		~CameraSystem() {}
-
-		friend class Singleton<CameraSystem>;
+		SINGLETON_SETUP(CameraSystem);
 	};
 }
 

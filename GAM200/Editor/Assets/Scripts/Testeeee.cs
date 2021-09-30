@@ -12,7 +12,7 @@ public class TrailTest3 : MonoBehaviour
     public override void OnInit()
     {
         go2 = GetComponent<Transform>();
-       // objTrans1 = GetComponentWithID<Transform>(0); //DOesnt work for replay since number is hardcoded, entity value doesnt reset
+        // objTrans1 = GetComponentWithID<Transform>(0); //DOesnt work for replay since number is hardcoded, entity value doesnt reset
         //Transform tem = GetTransform();
         //Vec2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
@@ -25,7 +25,7 @@ public class TrailTest3 : MonoBehaviour
         go2.position += new Vec2(500, 500);
         Console.WriteLine(go2.position);*/
 
-        
+        Console.WriteLine("TrailTest3 fdfdfdf");
     }
 
 
@@ -68,15 +68,22 @@ public class TrailTest3 : MonoBehaviour
 
         if (Input.IsKeyPressed(KeyCode.M))
         {
-            Enable(this);
+            
+        }
+
+        if (Input.IsKeyPressed(KeyCode.V))
+        {
+            //Instantiate_Entity("Box2");
+            //Console.WriteLine(Input.IsKeyPressed(KeyCode.E));
+            //Disable(this);
         }
     }
 
-   /* public override void OnCollisionEnter()
+    /*public override void OnCollisionEnter()
     {
-        Console.WriteLine("Test2222 Collision Enter");
-    }
-
+        Instantiate_Entity("Box2");
+    }*/
+    /*
     public override void OnCollisionExit()
     {
         Console.WriteLine("Test2222 Collision Exit");

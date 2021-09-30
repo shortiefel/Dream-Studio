@@ -52,7 +52,7 @@ namespace Engine {
         //const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
         //for (auto& csScript : entScriptArray) {
         //    auto& classScriptInstances = csScript.klassInstance;
-        //    const auto& entityId = csScript.GetEntityId();
+        //    const auto& entityId = csScript.GetEntity();
 
         //    //Single class and (class and CS public variable)
         //    for (auto& [className, csScriptInstance] : classScriptInstances) {
@@ -71,7 +71,7 @@ namespace Engine {
         CollisionSystem::GetInstance().Stop();
         DreamECS::GetInstance().ResetECS();
         //GameSceneSerializer::DeserializeScene(fullPathSceneName);
-        std::cout << "Stopping \n";
+        //std::cout << "Stopping \n";
     }
 
     void Scene::Save() {
@@ -94,8 +94,8 @@ namespace Engine {
             CollisionSystem::GetInstance().Update(dt);
             PhysicsSystem::GetInstance().Update(dt);
         }
-        if (Input::IsKeyPressed(Input_KeyCode::N))
-            DreamECS::GetInstance().DuplicateEntityAsInstance(0);
+        /*if (Input::IsKeyPressed(Input_KeyCode::N))
+            DreamECS::GetInstance().DuplicateEntityAsInstance(0);*/
 
         CameraSystem::GetInstance().Update(dt);
 
@@ -104,17 +104,10 @@ namespace Engine {
             GraphicSystem::GetInstance().Render();
         }
 
-
         DreamECS::GetInstance().ClearDestroyQueue();
 
         LayerStack::Update();
         LayerStack::Draw();
-
-
-        if (Input::IsKeyPressed(Input_KeyCode::B))
-            std::cout << DreamECS::GetInstance().GetUsedEntitySet().size() << "\n";
-
-        
     }
 
     //bool Scene::SceneSave() {

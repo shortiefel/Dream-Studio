@@ -64,11 +64,11 @@ namespace Engine {
 		bool app_run_bool = true;
 		float m_lastframeTime = 0.f;
 
-		SINGLETON_SETUP(Application);
-
 		FuncNoData CreateFunc = nullptr;
 		Func1Param UpdateFunc = nullptr;
 		FuncNoData DestroyFunc = nullptr;
+
+		SINGLETON_SETUP(Application);
 	};
 }
 

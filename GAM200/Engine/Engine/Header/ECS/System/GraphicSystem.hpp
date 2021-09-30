@@ -47,10 +47,7 @@ namespace Engine {
 		//static GraphicSystem* gs;
 		//static std::shared_ptr<GraphicSystem> GS;
 
-		GraphicSystem() {}
-		~GraphicSystem() {}
-
-		friend class Singleton<GraphicSystem>;
+		SINGLETON_SETUP(GraphicSystem);
 	};
 }
 

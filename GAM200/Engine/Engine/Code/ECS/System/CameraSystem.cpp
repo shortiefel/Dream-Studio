@@ -39,12 +39,13 @@ namespace Engine {
     //to create the graphics
     void CameraSystem::Update(float dt) {
 #if NEW_ECS
-        auto& camArray = DreamECS::GetInstance().GetComponentArrayData<Camera2D>();
+        auto& camArray = DreamECS::GetInstance().GetComponentArrayData<CameraComponent>();
         for (auto& cam : camArray) {
-            if (Entity_Check(cam.GetEntityId())) break;
+            const Entity& entity = cam.GetEntity();
+            if (Entity_Check(entity)) break;
             if (!cam.isActive) continue;
 
-            Transform* transform = DreamECS::GetInstance().GetComponentTest<Transform>(cam.GetEntityId());
+            TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(entity);
             if (!transform || !transform->isActive) continue;
 
 

@@ -18,22 +18,24 @@ Technology is prohibited.
 #define RIGIDBODY_H
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
+
+#include "Engine/Header/Math/MathLib.hpp"
+
 
 namespace Engine {
-	struct RigidBody : public IComponent {
-		
-		Math::vec2 velocity = Math::vec2{};
+	class DSerializer;
+	class SSerializer;
+
+	struct RigidBodyComponent : public IComponent {
+		float speed = float{};
 		//Higher = stop faster
-		float friction = float{};
+		//float friction = float{};
 		bool isActive = true;
 
-		RigidBody& Deserialize(const DSerializer& _serializer);
+		RigidBodyComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		RigidBody() = default;
-		RigidBody(Entity _ID, bool _active = true);
+		RigidBodyComponent(Entity _ID = DEFAULT_ENTITY, bool _active = true);
 	};
 }
 

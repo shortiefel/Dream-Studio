@@ -28,7 +28,6 @@ namespace Engine {
 	//map (entity id, map(classname, CSscript)
 	using CSEntityClassInstance = std::unordered_map<unsigned int, CSClassInstance>;
 
-
 	class ScriptSystem : public Singleton<ScriptSystem> {
 	public:
 		/*-----------------------------------------------------
@@ -61,10 +60,7 @@ namespace Engine {
 		void Destroy();
 
 	private:
-		ScriptSystem() {}
-		~ScriptSystem() {}
-
-		friend class Singleton<ScriptSystem>;
+		SINGLETON_SETUP(ScriptSystem);
 	};
 }
 

@@ -17,29 +17,32 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
 #include "Engine/Header/Script/Scripting.hpp"
 
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+
 namespace Engine {
-	CSScript::CSScript(Entity _ID, const char* _className) :
+	ScriptComponent::ScriptComponent(Entity _ID, const char* _className) :
 		IComponent{ _ID } {
-		if (_className) {
+		/*if (_className) {
 			CSScriptInstance csScriptInstance{ _className };
 			klassInstance.emplace(_className, std::move(csScriptInstance));
-		}
+		}*/
 	}
 
-	CSScript::CSScript(CSScript&& rhs) noexcept {
+	ScriptComponent::ScriptComponent(ScriptComponent&& rhs) noexcept {
 		klassInstance = std::move(rhs.klassInstance);
-		SetEntityId(rhs.GetEntityId());
-		rhs.SetEntityId(DEFAULT_ENTITY);
+		SetEntity(rhs.GetEntity());
+		rhs.SetEntity(DEFAULT_ENTITY);
 	}
 
-	CSScript& CSScript::operator=(CSScript&& rhs) noexcept {
+	ScriptComponent& ScriptComponent::operator=(ScriptComponent&& rhs) noexcept {
 		klassInstance = std::move(rhs.klassInstance);
-		SetEntityId(rhs.GetEntityId());
-		rhs.SetEntityId(DEFAULT_ENTITY);
+		SetEntity(rhs.GetEntity());
+		rhs.SetEntity(DEFAULT_ENTITY);
 		return *this;
 	}
 
-	void CSScript::CopyComponentAsInstance(const CSScript& target) {
+	void ScriptComponent::CopyComponentAsInstance(const ScriptComponent& target) {
 		for (const auto& [className, csScriptInstance] : target.klassInstance) {
 			if (klassInstance.find(className) != klassInstance.end()) continue;
 			CSScriptInstance newScriptInstance{ className };
@@ -74,11 +77,10 @@ namespace Engine {
 		}
 	}
 
-	void CSScript::AddScript(CSScript& comp) {
+	void ScriptComponent::AddScript(ScriptComponent& comp) {
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
+			//std::cout << "class in AddScript " << className << "\n";
 			if (klassInstance.find(className) == klassInstance.end()) {
-				Scripting::InitVariable(csScriptInstance);
-				Scripting::InitCSClass(csScriptInstance);
 				klassInstance.emplace(className, std::move(csScriptInstance));
 			}
 
@@ -88,22 +90,14 @@ namespace Engine {
 		}
 	}
 
-	void CSScript::AddSpecial() {
-
-	}
-
-	bool CSScript::RemoveScript(const char* _className) {
+	bool ScriptComponent::RemoveScript(const char* _className) {
 		klassInstance.erase(_className);
 
 		if (klassInstance.size()) return false;
 		return true;
 	}
 
-	void CSScript::SetActive(const char* _className, bool _boolean) {
-		klassInstance.find(_className)->second.isActive = _boolean;
-	}
-
-	CSScript& CSScript::Deserialize(const DSerializer& _serializer) {
+	ScriptComponent& ScriptComponent::Deserialize(const DSerializer& _serializer) {
 		for (auto& classJSon : _serializer.GetArray()) {
 			const auto& className = classJSon["Class"].GetString();
 
@@ -119,7 +113,6 @@ namespace Engine {
 
 
 					CSPublicVariable csPublicvariable{ variableName, variableType };
-
 
 					if (variableType == CSType::CHAR) {
 						char charData = variableData["Data"].GetInt();
@@ -152,13 +145,15 @@ namespace Engine {
 
 					csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
 				}
+
 			}
+			Scripting::InitCSClass(csScriptInstance);
 			klassInstance.emplace(className, std::move(csScriptInstance));
 		}
 		return *this;
 	}
 
-	void CSScript::Serialize(const SSerializer& _serializer) {
+	void ScriptComponent::Serialize(const SSerializer& _serializer) {
 		for (const auto& [className, scriptInstance] : klassInstance) {
 			rapidjson::Value classObj(rapidjson::kObjectType);
 			SSerializer cserializer(_serializer, classObj);

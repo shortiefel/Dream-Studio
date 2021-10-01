@@ -2,7 +2,7 @@
 /*
 @file    Graphic.cpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu
-		 Chia Yi Da		chiayida98@gmail.com
+         Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 \brief
 This file has the function definition for Graphic
@@ -77,6 +77,14 @@ namespace Engine {
 
         void UnbindFramebuffer() {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        }
+
+        void UseShaderHandle(unsigned int prgm_handle) {
+            glUseProgram(prgm_handle);
+        }
+
+        void UnUseShaderHandle() {
+            glUseProgram(0);
         }
     }
 }

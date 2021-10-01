@@ -1,39 +1,25 @@
 /* !
 @file    glslshader.cpp
-@author  pghali@digipen.edu
-@date    06/13/2016
-
-Note: The contents of this file must not be updated by students. Otherwise,
-something that works for you will not work for me. If you want something to be
-modified, updated, or altered and it is useful for the entire class, please
-speak to me.
+@author  chiayida98@gmail.com
+@date    01/10/2021
 
 This file contains definitions of member functions of class GLShader.
-Please see the class declaration for information about these functions.
 
 *//*__________________________________________________________________________*/
 #include "Engine/Header/Graphic/glslshader.hpp"
 
 namespace Engine {
-    GLint
-        GLSLShader::GetUniformLocation(GLchar const* name) {
-        return glGetUniformLocation(pgm_handle, name);
-    }
-
-    GLboolean
-        GLSLShader::FileExists(std::string const& file_name) {
+    GLboolean GLSLShader::FileExists(std::string const& file_name) {
         std::ifstream infile(file_name); return infile.good();
     }
 
-    void
-        GLSLShader::DeleteShaderProgram() {
+    void GLSLShader::DeleteShaderProgram() {
         if (pgm_handle > 0) {
             glDeleteProgram(pgm_handle);
         }
     }
 
-    GLboolean
-        GLSLShader::CompileLinkValidate(std::vector<std::pair<GLenum, std::string>> vec) {
+    GLboolean GLSLShader::CompileLinkValidate(std::vector<std::pair<ShaderType, std::string>> vec) {
         for (auto& elem : vec) {
             if (GL_FALSE == CompileShaderFromFile(elem.first, elem.second.c_str())) {
                 return GL_FALSE;
@@ -45,14 +31,11 @@ namespace Engine {
         if (GL_FALSE == Validate()) {
             return GL_FALSE;
         }
-        PrintActiveAttribs();
-        PrintActiveUniforms();
 
         return GL_TRUE;
     }
 
-    GLboolean
-        GLSLShader::CompileShaderFromFile(GLenum shader_type, const std::string& file_name) {
+    GLboolean GLSLShader::CompileShaderFromFile(ShaderType shader_type, const std::string& file_name) {
         if (GL_FALSE == FileExists(file_name)) {
             log_string = "File not found";
             return GL_FALSE;
@@ -76,9 +59,7 @@ namespace Engine {
         return CompileShaderFromString(shader_type, buffer.str());
     }
 
-    GLboolean
-        GLSLShader::CompileShaderFromString(GLenum shader_type,
-            const std::string& shader_src) {
+    GLboolean GLSLShader::CompileShaderFromString(ShaderType shader_type, const std::string& shader_src) {
         if (pgm_handle <= 0) {
             pgm_handle = glCreateProgram();
             if (0 == pgm_handle) {
@@ -89,12 +70,8 @@ namespace Engine {
 
         GLuint shader_handle = 0;
         switch (shader_type) {
-        case VERTEX_SHADER: shader_handle = glCreateShader(GL_VERTEX_SHADER); break;
-        case FRAGMENT_SHADER: shader_handle = glCreateShader(GL_FRAGMENT_SHADER); break;
-        case GEOMETRY_SHADER: shader_handle = glCreateShader(GL_GEOMETRY_SHADER); break;
-        case TESS_CONTROL_SHADER: shader_handle = glCreateShader(GL_TESS_CONTROL_SHADER); break;
-        case TESS_EVALUATION_SHADER: shader_handle = glCreateShader(GL_TESS_EVALUATION_SHADER); break;
-            //case COMPUTE_SHADER: shader_handle = glCreateShader(GL_COMPUTE_SHADER); break;
+        case ShaderType::VERTEX_SHADER: shader_handle = glCreateShader(GL_VERTEX_SHADER); break;
+        case ShaderType::FRAGMENT_SHADER: shader_handle = glCreateShader(GL_FRAGMENT_SHADER); break;
         default:
             log_string = "Incorrect shader type";
             return GL_FALSE;
@@ -206,16 +183,8 @@ namespace Engine {
         return log_string;
     }
 
-    void GLSLShader::BindAttribLocation(GLuint index, GLchar const* name) {
-        glBindAttribLocation(pgm_handle, index, name);
-    }
-
-    void GLSLShader::BindFragDataLocation(GLuint color_number, GLchar const* name) {
-        glBindFragDataLocation(pgm_handle, color_number, name);
-    }
-
-    void GLSLShader::SetUniform(GLchar const* name, GLboolean val) {
-        GLint loc = glGetUniformLocation(pgm_handle, name);
+    void GLSLShader::SetUniform(GLchar const* name, GLboolean val, GLuint prgm_handle) {
+        GLint loc = glGetUniformLocation(prgm_handle, name);
         if (loc >= 0) {
             glUniform1i(loc, val);
         }
@@ -224,8 +193,8 @@ namespace Engine {
         }
     }
 
-    void GLSLShader::SetUniform(GLchar const* name, GLint val) {
-        GLint loc = glGetUniformLocation(pgm_handle, name);
+    void GLSLShader::SetUniform(GLchar const* name, GLint val, GLuint prgm_handle) {
+        GLint loc = glGetUniformLocation(prgm_handle, name);
         if (loc >= 0) {
             glUniform1i(loc, val);
         }
@@ -234,8 +203,8 @@ namespace Engine {
         }
     }
 
-    void GLSLShader::SetUniform(GLchar const* name, GLfloat val) {
-        GLint loc = glGetUniformLocation(pgm_handle, name);
+    void GLSLShader::SetUniform(GLchar const* name, GLfloat val, GLuint prgm_handle) {
+        GLint loc = glGetUniformLocation(prgm_handle, name);
         if (loc >= 0) {
             glUniform1f(loc, val);
         }
@@ -244,8 +213,8 @@ namespace Engine {
         }
     }
 
-    void GLSLShader::SetUniform(GLchar const* name, GLfloat x, GLfloat y) {
-        GLint loc = glGetUniformLocation(pgm_handle, name);
+    void GLSLShader::SetUniform(GLchar const* name, GLfloat x, GLfloat y, GLuint prgm_handle) {
+        GLint loc = glGetUniformLocation(prgm_handle, name);
         if (loc >= 0) {
             glUniform2f(loc, x, y);
         }
@@ -254,8 +223,8 @@ namespace Engine {
         }
     }
 
-    void GLSLShader::SetUniform(GLchar const* name, GLfloat x, GLfloat y, GLfloat z) {
-        GLint loc = glGetUniformLocation(pgm_handle, name);
+    void GLSLShader::SetUniform(GLchar const* name, GLfloat x, GLfloat y, GLfloat z, GLuint prgm_handle) {
+        GLint loc = glGetUniformLocation(prgm_handle, name);
         if (loc >= 0) {
             glUniform3f(loc, x, y, z);
         }
@@ -264,9 +233,8 @@ namespace Engine {
         }
     }
 
-    void
-        GLSLShader::SetUniform(GLchar const* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
-        GLint loc = glGetUniformLocation(pgm_handle, name);
+    void GLSLShader::SetUniform(GLchar const* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLuint prgm_handle) {
+        GLint loc = glGetUniformLocation(prgm_handle, name);
         if (loc >= 0) {
             glUniform4f(loc, x, y, z, w);
         }
@@ -275,8 +243,8 @@ namespace Engine {
         }
     }
 
-    void GLSLShader::SetUniform(GLchar const* name, Math::vec2 const& val) {
-        GLint loc = glGetUniformLocation(pgm_handle, name);
+    void GLSLShader::SetUniform(GLchar const* name, Math::vec2 const& val, GLuint prgm_handle) {
+        GLint loc = glGetUniformLocation(prgm_handle, name);
         if (loc >= 0) {
             glUniform2f(loc, val.x, val.y);
         }
@@ -285,8 +253,8 @@ namespace Engine {
         }
     }
 
-    void GLSLShader::SetUniform(GLchar const* name, Math::vec3 const& val) {
-        GLint loc = glGetUniformLocation(pgm_handle, name);
+    void GLSLShader::SetUniform(GLchar const* name, Math::vec3 const& val, GLuint prgm_handle) {
+        GLint loc = glGetUniformLocation(prgm_handle, name);
         if (loc >= 0) {
             glUniform3f(loc, val.x, val.y, val.z);
         }
@@ -295,91 +263,57 @@ namespace Engine {
         }
     }
 
-    //void GLSLShader::SetUniform(GLchar const *name, Math::vec4 const& val) {
-    //  GLint loc = glGetUniformLocation(pgm_handle, name);
-    //  if (loc >= 0) {
-    //    glUniform4f(loc, val.x, val.y, val.z, val.w);
-    //  }
-    //  else {
-    //    std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
-    //  }
-    //}
-
-    //void GLSLShader::SetUniform(GLchar const *name, Math::mat3 const& val) {
-    //  GLint loc = glGetUniformLocation(pgm_handle, name);
-    //  if (loc >= 0) {
-    //    glUniformMatrix3fv(loc, 1, GL_FALSE, &val[0][0]);
-    //  }
-    //  else {
-    //    std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
-    //  }
-    //}
-
-    /*oid GLSLShader::SetUniform(GLchar const *name, Math::mat4 const& val) {
-      GLint loc = glGetUniformLocation(pgm_handle, name);
+    // no vec4 currently
+    /*
+    void GLSLShader::SetUniform(GLchar const *name, Math::vec4 const& val, GLuint prgm_handle) {
+      GLint loc = glGetUniformLocation(prgm_handle, name);
       if (loc >= 0) {
-        glUniformMatrix4fv(loc, 1, GL_FALSE, &val[0][0]);
+        glUniform4f(loc, val.x, val.y, val.z, val.w);
       }
       else {
         std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
       }
-    }*/
+    }
+    */
 
-    void GLSLShader::PrintActiveAttribs() const {
-#if 1
-        GLint max_length, num_attribs;
-        glGetProgramiv(pgm_handle, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &max_length);
-        glGetProgramiv(pgm_handle, GL_ACTIVE_ATTRIBUTES, &num_attribs);
-        GLchar* pname = new GLchar[max_length];
-        std::cout << "Index\t|\tName\n";
-        std::cout << "----------------------------------------------------------------------\n";
-        for (GLint i = 0; i < num_attribs; ++i) {
-            GLsizei written;
-            GLint size;
-            GLenum type;
-            glGetActiveAttrib(pgm_handle, i, max_length, &written, &size, &type, pname);
-            GLint loc = glGetAttribLocation(pgm_handle, pname);
-            std::cout << loc << "\t\t" << pname << std::endl;
+    void GLSLShader::SetUniform(GLchar const* name, Math::mat3 const& val, GLuint prgm_handle) {
+        GLint loc = glGetUniformLocation(prgm_handle, name);
+        if (loc >= 0) {
+            glUniformMatrix3fv(loc, 1, GL_FALSE, Math::value_ptr(val));
         }
-        std::cout << "----------------------------------------------------------------------\n";
-        delete[] pname;
-
-#else
-        GLint numAttribs;
-        glGetProgramInterfaceiv(pgm_handle, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, &numAttribs);
-        GLenum properties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION };
-        std::cout << "Active attributes:" << std::endl;
-        for (GLint i = 0; i < numAttribs; ++i) {
-            GLint results[3];
-            glGetProgramResourceiv(pgm_handle, GL_PROGRAM_INPUT, i, 3, properties, 3, NULL, results);
-
-            GLint nameBufSize = results[0] + 1;
-            GLchar* pname = new GLchar[nameBufSize];
-            glGetProgramResourceName(pgm_handle, GL_PROGRAM_INPUT, i, nameBufSize, NULL, pname);
-            //   std::cout << results[2] << " " << pname << " " << getTypeString(results[1]) << std::endl;
-            std::cout << results[2] << " " << pname << " " << results[1] << std::endl;
-            delete[] pname;
+        else {
+            std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
         }
-#endif
     }
 
-    void GLSLShader::PrintActiveUniforms() const {
-        GLint max_length;
-        glGetProgramiv(pgm_handle, GL_ACTIVE_UNIFORM_MAX_LENGTH, &max_length);
-        GLchar* pname = new GLchar[max_length];
-        GLint num_uniforms;
-        glGetProgramiv(pgm_handle, GL_ACTIVE_UNIFORMS, &num_uniforms);
-        std::cout << "Location\t|\tName\n";
-        std::cout << "----------------------------------------------------------------------\n";
-        for (GLint i = 0; i < num_uniforms; ++i) {
-            GLsizei written;
-            GLint size;
-            GLenum type;
-            glGetActiveUniform(pgm_handle, i, max_length, &written, &size, &type, pname);
-            GLint loc = glGetUniformLocation(pgm_handle, pname);
-            std::cout << loc << "\t\t" << pname << std::endl;
-        }
-        std::cout << "----------------------------------------------------------------------\n";
-        delete[] pname;
+    // no mat4 currently
+    /*
+    void GLSLShader::SetUniform(GLchar const *name, Math::mat4 const& val, GLuint prgm_handle) {
+      GLint loc = glGetUniformLocation(prgm_handle, name);
+      if (loc >= 0) {
+        glUniformMatrix3fv(loc, 1, GL_FALSE, Math::value_ptr(val));
+      }
+      else {
+        std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+      }
     }
+    */
+
+
+
+
+
+    /*
+
+    GLint GLSLShader::GetUniformLocation(GLchar const* name) {
+        return glGetUniformLocation(pgm_handle, name);
+    }
+    void GLSLShader::BindAttribLocation(GLuint index, GLchar const* name) {
+        glBindAttribLocation(pgm_handle, index, name);
+    }
+
+    void GLSLShader::BindFragDataLocation(GLuint color_number, GLchar const* name) {
+        glBindFragDataLocation(pgm_handle, color_number, name);
+    }
+    */
 }

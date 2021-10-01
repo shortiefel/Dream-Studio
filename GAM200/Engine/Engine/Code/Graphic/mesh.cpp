@@ -20,6 +20,68 @@ Technology is prohibited.
 namespace Engine {
     namespace GraphicImplementation {
         void setup_vao_square() {
+
+            /*
+            for batch rendering, not using for engine proof.
+
+            float vertices[] = {
+                -1.5f, -0.5f, 1.f, 0.f, 0.f, 0.0f, 0.0f, 0.0f,
+                -0.5f, -0.5f, 1.f, 0.f, 0.f, 1.0f, 0.0f, 0.0f,
+                -0.5f,  0.5f, 1.f, 0.f, 0.f, 1.0f, 1.0f, 0.0f,
+                -1.5f,  0.5f, 1.f, 0.f, 0.f, 0.0f, 1.0f, 0.0f,
+
+                 0.5f, -0.5f, 1.f, 0.f, 0.f, 0.0f, 0.0f, 1.0f,
+                 1.5f, -0.5f, 1.f, 0.f, 0.f, 1.0f, 0.0f, 1.0f,
+                 1.5f,  0.5f, 1.f, 0.f, 0.f, 1.0f, 1.0f, 1.0f,
+                 0.5f,  0.5f, 1.f, 0.f, 0.f, 0.0f, 1.0f, 1.0f
+            };
+
+            // VAO handle definition
+            GLuint vaoid;
+            glCreateVertexArrays(1, &vaoid);
+            glBindVertexArray(vaoid);
+
+            glCreateBuffers(1, &vaoid);
+            glBindBuffer(GL_ARRAY_BUFFER, vaoid);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+            glEnableVertexArrayAttrib(vaoid, 0);
+            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
+
+            glEnableVertexArrayAttrib(vaoid, 1);
+            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (const void*) 8);
+
+            glEnableVertexArrayAttrib(vaoid, 2);
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (const void*) 20);
+
+            glEnableVertexArrayAttrib(vaoid, 3);
+            glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (const void*) 28 );
+
+            unsigned int indices[] = {
+                0, 1, 2, 2, 3, 0,
+
+                4, 5, 6, 6, 7, 4
+            };
+
+            // EBO Definition
+            GLuint ebo_hdl;
+            glCreateBuffers(1, &ebo_hdl);
+
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_hdl);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+            GLModel mdl;
+            mdl.vaoid = vaoid;
+            mdl.primitive_type = GL_TRIANGLE_STRIP;
+            mdl.draw_cnt = sizeof(indices); // number of vertices
+            mdl.primitive_cnt = mdl.draw_cnt - 2; // number of primitives
+            models.insert(std::pair<GraphicShape, GLModel>(GraphicShape::SQUARE, mdl));
+
+            */
+
+
+
+
             // container contains vertices of Position, Color and Texture Coordinates respectively
             std::array<GLMesh, 4> vtx = {
                 Math::vec2(-1.f, -1.f), Math::vec3(1.f, 0.f, 0.f), Math::vec2(0.f, 0.f),
@@ -61,11 +123,11 @@ namespace Engine {
 
             GLModel mdl;
             mdl.vaoid = vaoid;
-            //mdl.setup_shdrpgm(vtx_shdr, frg_shdr);
             mdl.primitive_type = GL_TRIANGLE_FAN;
             mdl.draw_cnt = 4; // number of vertices
             mdl.primitive_cnt = 2; // number of primitives
             models.insert(std::pair<GraphicShape, GLModel>(GraphicShape::SQUARE, mdl));
+
         }
 
         void setup_vao_circle() {

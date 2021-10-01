@@ -28,9 +28,11 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/mesh.hpp"
 #include "Engine/Header/Graphic/shader.hpp"
-#include "Engine/Header/Graphic/debugdraw.hpp"
+#include "Engine/Header/Graphic/glslshader.hpp"
+
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
+#include "Engine/Header/Graphic/debugdraw.hpp"
 
 namespace Engine {
 #ifndef NEW_ECS
@@ -73,8 +75,6 @@ namespace Engine {
 	//	//}
 	//}
 
-	GLSLShader shd_ref;
-
 	void GraphicSystem::Render(Math::mat3 camMatrix) {
 		GraphicImplementation::BindFramebuffer();
 
@@ -94,7 +94,6 @@ namespace Engine {
 			if (!transform || !transform->isActive) continue;
 
 			const auto& mdl_ref = GraphicImplementation::models[texture.mdl_ref];
-			//const auto& shd_ref = texture.get_shd_ref();
 
 			glBindVertexArray(mdl_ref.vaoid);
 			glBindTextureUnit(6, texture.texobj_hdl);
@@ -104,44 +103,33 @@ namespace Engine {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
+			// Load shader program
 			const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
-			glUseProgram(shd_ref_handle);
+			GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
-			GLuint tex_loc = glGetUniformLocation(shd_ref_handle, "uTex2d");
-			glUniform1i(tex_loc, 6);
-			if (tex_loc == -1) {
-				std::cout << "uTex2d variable doesn't exist!!!\n";
-				std::exit(EXIT_FAILURE);
-			}
+			GLSLShader::SetUniform("uTex2d", 6, shd_ref_handle);
 
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			// bind VAO of this object's model
-			//glBindVertexArray(renderer.mdl_ref->second.vaoid);
+			GLSLShader::SetUniform("uModel_to_NDC", camMatrix * transform->GetTransform(), shd_ref_handle);
 
-			GLint uniform_var_loc1 = glGetUniformLocation(shd_ref_handle, "uModel_to_NDC");
-			glUniformMatrix3fv(uniform_var_loc1, 1, GL_FALSE, Math::value_ptr(camMatrix * transform->GetTransform()));
-			if (uniform_var_loc1 == -1) {
-				std::cout << "uModel_to_NDC variable doesn't exist!!!\n";
-				std::exit(EXIT_FAILURE);
-			}
-
-			//glDrawElements(mdl_ref->second.primitive_type, mdl_ref->second.draw_cnt, GL_UNSIGNED_SHORT, NULL);
+			//glDrawElements(mdl_ref.primitive_type, mdl_ref.draw_cnt, GL_UNSIGNED_SHORT, NULL);
 			glDrawArrays(mdl_ref.primitive_type, 0, mdl_ref.draw_cnt);
 
 			// unbind VAO and unload shader program
 			texture.Unbind();
 			glBindVertexArray(0);
 
-			shd_ref.UnUse();
-			
+			// unload shader program
+			GraphicImplementation::UnUseShaderHandle();
+
 			// to draw debug lines
 			if (isDebugDraw == GL_TRUE) {
 				GraphicImplementation::DebugDrawCollider(entity, *transform, camMatrix);
 			}
 		}
-		
+
 #else
 		//For all entities in GraphicSystem
 		for (auto const& entity : GS->mEntities) {
@@ -196,7 +184,7 @@ namespace Engine {
 
 		}
 #endif
-		
+
 		GraphicImplementation::UnbindFramebuffer();
 	}
 
@@ -207,8 +195,6 @@ namespace Engine {
 		//Set up vao for box
 		GraphicImplementation::setup_vao();
 		GraphicImplementation::setup_shdr();
-
-		shd_ref = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT];
 
 		LOG_INSTANCE("Graphic System created");
 		return true;

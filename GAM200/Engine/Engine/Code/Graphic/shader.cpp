@@ -21,28 +21,30 @@ namespace Engine {
     namespace GraphicImplementation {
         void setup_shdr() {
             // Default Shader for Objects
-            std::vector<std::pair<GLenum, std::string>> shdr_files1{
-            std::make_pair(GL_VERTEX_SHADER, "Assets/Shaders/OpenGLEngine.vert"),
-            std::make_pair(GL_FRAGMENT_SHADER, "Assets/Shaders/OpenGLEngine.frag") };
+            std::vector<std::pair<GLSLShader::ShaderType, std::string>> shdr_files{
+                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/OpenGLEngine.vert"),
+                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/OpenGLEngine.frag") 
+            };
 
-            GLSLShader shdr_pgm1;
-            shdr_pgm1.CompileLinkValidate(shdr_files1);
+            GLSLShader shdr_pgm;
+            shdr_pgm.CompileLinkValidate(shdr_files);
 
-            if (GL_FALSE == shdr_pgm1.IsLinked()) {
+            if (GL_FALSE == shdr_pgm.IsLinked()) {
                 std::cout << "Unable to compile/link/validate shader programs\n";
-                std::cout << shdr_pgm1.GetLog() << "\n";
+                std::cout << shdr_pgm.GetLog() << "\n";
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::DEFAULT, shdr_pgm1));
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::DEFAULT, shdr_pgm));
 
             // Stencil Shader for debug draw
-            std::vector<std::pair<GLenum, std::string>> shdr_files2{
-            std::make_pair(GL_VERTEX_SHADER, "Assets/Shaders/OpenGLEngine.vert"),
-            std::make_pair(GL_FRAGMENT_SHADER, "Assets/Shaders/fStencilTesting.frag") };
+            shdr_files = {
+                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/OpenGLEngine.vert"),
+                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/fStencilTesting.frag") 
+            };
 
             GLSLShader shdr_pgm2;
-            shdr_pgm2.CompileLinkValidate(shdr_files2);
+            shdr_pgm2.CompileLinkValidate(shdr_files);
 
             if (GL_FALSE == shdr_pgm2.IsLinked()) {
                 std::cout << "Unable to compile/link/validate shader programs\n";

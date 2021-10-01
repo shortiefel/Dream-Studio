@@ -15,10 +15,10 @@ public class Test : MonoBehaviour
 {
     //Transform transform;
     public int health;
-   /* public Vec2 vec2Test;
-    public TEST testEnum;
-    public char testChar;
-    public Vec2 newvec2Test;*/
+    /* public Vec2 vec2Test;
+        public TEST testEnum;
+        public char testChar;
+        public Vec2 newvec2Test;*/
     Transform go2;
     //Collider col1;
 
@@ -50,7 +50,8 @@ public class Test : MonoBehaviour
     {
         //Console.WriteLine("new Update");
         //Console.WriteLine(Input::GetMouse);
-        if (Input.IsKeyPressed(KeyCode.A)) {
+        if (Input.IsKeyPressed(KeyCode.A))
+        {
             go2.position += -go2.right * Time.dt * 250;
         }
 
@@ -80,7 +81,7 @@ public class Test : MonoBehaviour
         }
 
 
-        
+
 
         if (Input.IsKeyPressed(KeyCode.C))
         {
@@ -90,8 +91,10 @@ public class Test : MonoBehaviour
         }
     }
 
-    public override void OnCollisionEnter() {
+    public override void OnCollisionEnter()
+    {
         //Instantiate_Entity("Box");
+        SceneManager.LoadScene("Test3");
         Console.WriteLine("Test Collision Enter");
     }
 
@@ -111,4 +114,5 @@ public class Test : MonoBehaviour
     }
 
 }
+
 

@@ -23,6 +23,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
+#include "Engine/Header/Scene/SceneManager.hpp"
+
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
@@ -86,6 +88,7 @@ namespace Engine {
 
 	void GetDeltaTime_Engine(float* dt);
 
+	void LoadScene_Engine(MonoString* sceneName);
 
 
 	void RegisterInternalCall() {
@@ -121,6 +124,8 @@ namespace Engine {
 		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab", Instantiate_Prefab);
 
 		mono_add_internal_call("Time::GetDeltaTime_Engine", GetDeltaTime_Engine);
+
+		mono_add_internal_call("SceneManager::LoadScene_Engine", LoadScene_Engine);
 
 	}
 
@@ -287,5 +292,16 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetDeltaTime_Engine(float* dt) {
 		*dt = DeltaTime::GetSec();
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Scene
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void LoadScene_Engine(MonoString* sceneName) {
+		//SceneManager::GetInstance().ChangeScene("test2");
+
+		printf("Changing scene in scripting (Not Done)\n");
+		//SceneManager::GetInstance().Stop();
+		//SceneManager::GetInstance().ChangeScene("Test3");
 	}
 }

@@ -1,1 +1,168 @@
-[{"Entity":{"Name":"Entity10"},"TransformComponent":{"Position":[-20.0,200.0],"Scale":[50.0,50.0],"Angle":0.0,"IsActive":true},"ColliderComponent":{"ColliderType":1,"Position":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"IsTrigger":false,"IsActive":true},"RigidBodyComponent":{"Speed":0.0,"IsActive":true},"TextureComponent":{"Filepath":"Assets/Textures/test1.png","Shape":0,"IsActive":true},"ScriptComponent":[{"Class":"Test","IsActive":true,"Variable":[{"Name":"health","Type":4,"Data":10}]}]},{"Entity":{"Name":"Entity1"},"TransformComponent":{"Position":[650.0,-30.0],"Scale":[120.0,120.0],"Angle":0.0,"IsActive":true},"ColliderComponent":{"ColliderType":1,"Position":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"IsTrigger":false,"IsActive":true},"RigidBodyComponent":{"Speed":0.0,"IsActive":true},"TextureComponent":{"Filepath":"Assets/Textures/test2.png","Shape":0,"IsActive":true},"ScriptComponent":[{"Class":"TrailTest3","IsActive":true},{"Class":"Test38","IsActive":true}]},{"Entity":{"Name":"Entity2"},"TransformComponent":{"Position":[-350.0,-30.0],"Scale":[120.0,120.0],"Angle":0.0,"IsActive":true},"ColliderComponent":{"ColliderType":1,"Position":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"IsTrigger":false,"IsActive":true},"TextureComponent":{"Filepath":"","Shape":0,"IsActive":true}},{"Entity":{"Name":"Entity3"},"TransformComponent":{"Position":[-140.0,60.0],"Scale":[50.0,50.0],"Angle":0.0,"IsActive":true},"ColliderComponent":{"ColliderType":0,"Position":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"IsTrigger":false,"IsActive":true},"RigidBodyComponent":{"Speed":0.0,"IsActive":true},"TextureComponent":{"Filepath":"","Shape":1,"IsActive":true}},{"Entity":{"Name":"Entity4"},"TransformComponent":{"Position":[0.0,0.0],"Scale":[0.0,0.0],"Angle":0.0,"IsActive":true},"CameraComponent":{"FOV":1.0,"AR":1.7777777910232545,"IsActive":true}},{"Entity":{"Name":"Entity5"},"TransformComponent":{"Position":[240.0,100.0],"Scale":[0.0,0.0],"Angle":0.0,"IsActive":true},"CameraComponent":{"FOV":1.0,"AR":0.0,"IsActive":false}},{"Entity":{"Name":"Entity6"},"TransformComponent":{"Position":[-40.0,-240.0],"Scale":[0.0,0.0],"Angle":0.0,"IsActive":true},"CameraComponent":{"FOV":1.0,"AR":0.0,"IsActive":false}}]
+[
+  
+  {
+    "Entity": { "Name": "Entity10" },
+    "TransformComponent": {
+      "Position": [ -20.0, 200.0 ],
+      "Scale": [ 50.0, 50.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
+      "IsActive": true
+    },
+    "RigidBodyComponent": {
+      "Speed": 0.0,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets/Textures/test1.png",
+      "Shape": 0,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "Test",
+        "IsActive": true,
+        "Variable": [
+          {
+            "Name": "health",
+            "Type": 4,
+            "Data": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Entity": { "Name": "Entity1" },
+    "TransformComponent": {
+      "Position": [ 650.0, -30.0 ],
+      "Scale": [ 120.0, 120.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
+      "IsActive": true
+    },
+    "RigidBodyComponent": {
+      "Speed": 0.0,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets/Textures/test2.png",
+      "Shape": 0,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "TrailTest3",
+        "IsActive": true
+      },
+      {
+        "Class": "Test38",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": { "Name": "Entity2" },
+    "TransformComponent": {
+      "Position": [ -350.0, -30.0 ],
+      "Scale": [ 120.0, 120.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "",
+      "Shape": 0,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": { "Name": "Entity3" },
+    "TransformComponent": {
+      "Position": [ -140.0, 60.0 ],
+      "Scale": [ 50.0, 50.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "ColliderComponent": {
+      "ColliderType": 0,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
+      "IsActive": true
+    },
+    "RigidBodyComponent": {
+      "Speed": 0.0,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "",
+      "Shape": 1,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": { "Name": "Entity4" },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 0.0, 0.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "CameraComponent": {
+      "FOV": 1.0,
+      "AR": 1.7777777910232545,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": { "Name": "Entity5" },
+    "TransformComponent": {
+      "Position": [ 240.0, 100.0 ],
+      "Scale": [ 0.0, 0.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "CameraComponent": {
+      "FOV": 1.0,
+      "AR": 0.0,
+      "IsActive": false
+    }
+  },
+  {
+    "Entity": { "Name": "Entity6" },
+    "TransformComponent": {
+      "Position": [ -40.0, -240.0 ],
+      "Scale": [ 0.0, 0.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "CameraComponent": {
+      "FOV": 1.0,
+      "AR": 0.0,
+      "IsActive": false
+    }
+  }
+]

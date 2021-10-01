@@ -27,10 +27,20 @@ namespace Engine {
 	Script classes
 	-----------------------------------------------------------------------------------------------------------------------------------*/
 	struct CSClass {
+		std::string fullName = std::string{};
+		std::string namespaceName = std::string{};
 		std::string className = std::string{};
 
 		CSClass() = default;
-		CSClass(std::string cn) : className{ cn } {}
+		CSClass(std::string cn) : fullName{ cn } {
+			if (fullName.find('.') != std::string::npos) {
+				namespaceName = fullName.substr(0, fullName.find_last_of('.'));
+				className = fullName.substr(fullName.find_last_of('.') + 1);
+			}
+			else {
+				className = fullName;
+			}
+		}
 
 		MonoObject* object = nullptr;
 		MonoClass* klass = nullptr;

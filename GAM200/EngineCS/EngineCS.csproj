@@ -47,6 +47,7 @@
     <Compile Include="InputCode.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SceneManager.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vec2.cs" />
   </ItemGroup>

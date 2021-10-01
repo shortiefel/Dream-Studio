@@ -99,10 +99,10 @@ namespace Engine {
 
 	ScriptComponent& ScriptComponent::Deserialize(const DSerializer& _serializer) {
 		for (auto& classJSon : _serializer.GetArray()) {
-			const auto& className = classJSon["Class"].GetString();
+			const auto& fullName = classJSon["Class"].GetString();
 
 			CSScriptInstance csScriptInstance{
-				className,
+				fullName,
 				classJSon["IsActive"].GetBool() };
 
 			rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
@@ -148,7 +148,7 @@ namespace Engine {
 
 			}
 			Scripting::InitCSClass(csScriptInstance);
-			klassInstance.emplace(className, std::move(csScriptInstance));
+			klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 		}
 		return *this;
 	}
@@ -158,7 +158,7 @@ namespace Engine {
 			rapidjson::Value classObj(rapidjson::kObjectType);
 			SSerializer cserializer(_serializer, classObj);
 
-			cserializer.SetValue("Class", className);
+			cserializer.SetValue("Class", scriptInstance.csClass.fullName);
 			cserializer.SetValue("IsActive", scriptInstance.isActive);
 
 			if (scriptInstance.csVariableMap.size()) {

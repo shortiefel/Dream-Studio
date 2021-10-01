@@ -71,7 +71,7 @@ namespace Engine {
         CollisionSystem::GetInstance().Stop();
         DreamECS::GetInstance().ResetECS();
         //GameSceneSerializer::DeserializeScene(fullPathSceneName);
-        //std::cout << "Stopping \n";
+        std::cout << "Stopping \n";
     }
 
     void Scene::Save() {

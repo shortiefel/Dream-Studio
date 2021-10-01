@@ -279,7 +279,6 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="Editor\Header\GUI\ContentBroswerPanel.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUIWindow.hpp" />
-    <ClInclude Include="Editor\Header\Management\EditorSceneSerializer.hpp" />
     <ClInclude Include="Editor\Header\Scene\EditorSceneManager.hpp" />
     <ClInclude Include="Editor\Header\Tools\Profiler.hpp" />
   </ItemGroup>
@@ -296,7 +295,6 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClCompile Include="Editor\Code\GUI\GUI.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Window.cpp" />
     <ClCompile Include="Editor\Code\Main.cpp" />
-    <ClCompile Include="Editor\Code\Management\EditorSceneSerializer.cpp" />
     <ClCompile Include="Editor\Code\Scene\EditorSceneManager.cpp" />
     <ClCompile Include="Editor\Header\Tools\Profiler.cpp" />
   </ItemGroup>

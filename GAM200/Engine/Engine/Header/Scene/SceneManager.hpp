@@ -37,7 +37,7 @@ namespace Engine {
 		void Destroy();
 
 		void Play();
-		//void Stop();
+		void Stop();
 		void Save();
 
 		void SetDefaultScene(std::string sceneName);

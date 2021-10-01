@@ -35,6 +35,9 @@ namespace Editor {
 		*/
 		bool SceneHotKeyCheck(Engine::Input_KeyCode keyCode);
 
+		void Play();
+		void Stop();
+
 	private:
 		std::string editorSceneName = "test2";;
 

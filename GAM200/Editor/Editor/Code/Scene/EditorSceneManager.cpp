@@ -31,18 +31,26 @@ namespace Editor {
     */
     bool SceneHotKey(const Engine::KeyPressedEvent& e);
 
+    void EditorSceneManager::Play() {
+        Engine::GameState::SetPlaying(true);
+        Engine::SceneManager::GetInstance().Play();
+    }
+
+    void EditorSceneManager::Stop() {
+        Engine::GameState::SetPlaying(false);
+        Engine::SceneManager::GetInstance().ChangeScene(editorSceneName);
+    }
+
     bool EditorSceneManager::SceneHotKeyCheck(Engine::Input_KeyCode keyCode) {
         if (keyCode == Engine::Input_KeyCode::P) {
             if (Engine::GameState::GetPlaying()) {
                 //Destroy current scene and create new scene (default)
-                Engine::GameState::SetPlaying(false);
-                Engine::SceneManager::GetInstance().ChangeScene(editorSceneName);
+                Stop();
                 std::cout << "Stopping \n";
             }
 
             else {
-                Engine::GameState::SetPlaying(true);
-                Engine::SceneManager::GetInstance().Play();
+                Play();
             }
             return true;
         }

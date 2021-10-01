@@ -78,6 +78,10 @@ namespace Engine {
         currentScene->Play();
     }
 
+    void SceneManager::Stop() {
+        currentScene->Stop();
+    }
+
     /*void SceneManager::Stop() {
         currentScene->Stop();
     }*/

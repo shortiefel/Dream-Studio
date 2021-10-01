@@ -18,7 +18,11 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Editor/Header/GUI/GUIWindow.hpp"
+#include "Editor/Header/Scene/EditorSceneManager.hpp"
 
+#include <Imgui/imgui_internal.h>
+
+#include "Engine/Header/Management/GameState.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
@@ -151,15 +155,20 @@ namespace Editor {
 				ImVec2 wSize = ImGui::GetWindowSize();
 				ImGui::Begin("Actions", &playStop_bool, window_flags);
 
-				static int clicked = 0;
-
+				ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetPlaying());
 				ImGui::PushItemWidth(wSize.x / 2);
-				ImGui::Button("Play", (ImVec2{ 40, 30 }));
-					clicked++; //script to replace
+				if (ImGui::Button("Play", (ImVec2{ 40, 30 }))) {
+					EditorSceneManager::GetInstance().Play();
+				}
+				ImGui::PopItemFlag();
+
 				ImGui::SameLine();
 				ImGui::PushItemWidth(wSize.x /2 + 20);
-				if (ImGui::Button("Stop", (ImVec2{ 40, 30 })))
-					clicked++; //script to replace
+				ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetPlaying()));
+				if (ImGui::Button("Stop", (ImVec2{ 40, 30 }))) {
+					EditorSceneManager::GetInstance().Stop();
+				}
+				ImGui::PopItemFlag();
 
 				ImGui::End();
 			}

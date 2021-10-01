@@ -25,12 +25,6 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{8b96502a-323e-4e9b-a985-8ed6d66d6d69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Management">
-      <UniqueIdentifier>{28ae1df5-c522-4258-93b9-c0117f28a627}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Management">
-      <UniqueIdentifier>{981e98f7-af32-4050-aed9-56fcdf33d02c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Graphic">
       <UniqueIdentifier>{c0409082-060d-4ae7-a6dc-b26c019f2b90}</UniqueIdentifier>
     </Filter>
@@ -74,9 +68,6 @@
     </ClInclude>
     <ClInclude Include="..\External Resources\include\Imgui\imstb_truetype.h">
       <Filter>External Resources\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\Header\Management\EditorSceneSerializer.hpp">
-      <Filter>Header Files\Management</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Header\EditorStartPoint.hpp">
       <Filter>Header Files</Filter>
@@ -124,9 +115,6 @@
     </ClCompile>
     <ClCompile Include="Editor\Code\Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Code\Management\EditorSceneSerializer.cpp">
-      <Filter>Source Files\Management</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Code\EditorStartPoint.cpp">
       <Filter>Source Files</Filter>

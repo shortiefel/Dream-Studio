@@ -41,6 +41,8 @@ public class Test : MonoBehaviour
         go2.position += new Vec2(500, 500);
         Console.WriteLine(go2.position);*/
         //Console.WriteLine(col1.entityId);
+        Console.WriteLine("Has Component Collider? ");
+        Console.WriteLine(HasComponent<Collider>(entityId));
     }
 
 

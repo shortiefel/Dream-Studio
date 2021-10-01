@@ -131,7 +131,7 @@ namespace Engine {
 	}
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
-		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(e.self);
+		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(e.self);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);

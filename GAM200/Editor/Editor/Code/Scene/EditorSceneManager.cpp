@@ -18,8 +18,6 @@ Technology is prohibited.
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
 
-
-
 #include "Engine/Header/Management/GameState.hpp"
 
 namespace Editor {
@@ -46,7 +44,6 @@ namespace Editor {
             if (Engine::GameState::GetPlaying()) {
                 //Destroy current scene and create new scene (default)
                 Stop();
-                std::cout << "Stopping \n";
             }
 
             else {

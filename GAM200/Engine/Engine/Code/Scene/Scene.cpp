@@ -21,7 +21,8 @@ Technology is prohibited.
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Layer/LayerStack.hpp"
-//#include "Layer/GUILayer.hpp"
+
+#include "Engine/Header/Management/GameState.hpp"
 
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
@@ -44,6 +45,7 @@ namespace Engine {
     void Scene::Play() {
          if (!ScriptSystem::GetInstance().CompileCS()) {
             std::cout << "Fail to compile \n";
+            GameState::SetPlaying(false);
             //Scene::SetPlaying(false);
             return;
         }
@@ -65,13 +67,10 @@ namespace Engine {
         GameSceneSerializer::SerializeScene(fullPathSceneName);
     }
 
-    
-
     void Scene::Stop() {
         CollisionSystem::GetInstance().Stop();
         DreamECS::GetInstance().ResetECS();
         //GameSceneSerializer::DeserializeScene(fullPathSceneName);
-        std::cout << "Stopping \n";
     }
 
     void Scene::Save() {

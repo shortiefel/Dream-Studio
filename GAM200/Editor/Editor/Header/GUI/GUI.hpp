@@ -33,9 +33,7 @@ namespace Editor {
 
 	private:
 		static GUI* m_instance;
-		static unsigned int
-			gameWinFBO, gameWinTex,
-			sceneWinFBO, sceneWinTex;
+		static unsigned int gameWinFBO, sceneWinFBO;
 	};
 }
 

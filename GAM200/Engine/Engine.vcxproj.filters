@@ -124,25 +124,22 @@
     <ClCompile Include="Engine\Code\Graphic\shader.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Management\FileManager.cpp">
-      <Filter>Source Files\Management</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Physics\Collision.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Physics\Physics.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Management\AssetManager.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\FontSystem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
       <Filter>Header Files\Debug tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Coordinator.hpp">
-      <Filter>Header Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp">
       <Filter>Header Files\ECS</Filter>
@@ -423,17 +420,17 @@
     <ClInclude Include="Engine\Header\Singleton\Singleton.hpp">
       <Filter>Header Files\Singleton</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Management\FileManager.hpp">
-      <Filter>Header Files\Management</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Physics\Collision.hpp">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Physics\Physics.hpp">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\Management\AssetManager.hpp">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\FontSystem.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

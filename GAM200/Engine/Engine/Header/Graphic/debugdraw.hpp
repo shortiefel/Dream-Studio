@@ -17,7 +17,6 @@ Technology is prohibited.
 #ifndef DEBUG_DRAW_H
 #define DEBUG_DRAW_H
 
-#include "Engine/Header/ECS/Coordinator.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 

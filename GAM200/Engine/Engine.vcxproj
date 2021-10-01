@@ -197,7 +197,7 @@
     <ClCompile Include="Engine\Code\Graphic\mesh.cpp" />
     <ClCompile Include="Engine\Code\Graphic\shader.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
-    <ClCompile Include="Engine\Code\Management\FileManager.cpp" />
+    <ClCompile Include="Engine\Code\Management\AssetManager.cpp" />
     <ClCompile Include="Engine\Code\Management\GameState.cpp" />
     <ClCompile Include="Engine\Code\Management\TextureManager.cpp" />
     <ClCompile Include="Engine\Code\Management\Settings.cpp" />
@@ -250,7 +250,6 @@
     <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp" />
-    <ClInclude Include="Engine\Header\ECS\Coordinator.hpp" />
     <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp" />
     <ClInclude Include="Engine\Header\ECS\DreamECS.hpp" />
     <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp" />
@@ -273,6 +272,7 @@
     <ClInclude Include="Engine\Header\Event\WindowEvent.hpp" />
     <ClInclude Include="Engine\Header\framework.hpp" />
     <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\FontSystem.hpp" />
     <ClInclude Include="Engine\Header\Graphic\glslshader.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Graphic.hpp" />
     <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp" />
@@ -282,7 +282,7 @@
     <ClInclude Include="Engine\Header\Graphic\shader.hpp" />
     <ClInclude Include="Engine\Header\Layer\Layer.hpp" />
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp" />
-    <ClInclude Include="Engine\Header\Management\FileManager.hpp" />
+    <ClInclude Include="Engine\Header\Management\AssetManager.hpp" />
     <ClInclude Include="Engine\Header\Management\GameState.hpp" />
     <ClInclude Include="Engine\Header\Management\TextureManager.hpp" />
     <ClInclude Include="Engine\Header\Management\Settings.hpp" />

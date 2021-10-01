@@ -25,9 +25,6 @@ Technology is prohibited.
 
 #include "Engine/Header/Scene/SceneManager.hpp"
 
-#include "Engine/Header/Management/FileManager.hpp"
-//FILE* fp = FileManager::GetInstance().Open_File("Data/Config.json");
-
 //External Resources
 #include <sstream>
 
@@ -153,35 +150,35 @@ namespace Engine {
 			serializer.SetValue("Name", ent.name);
 			entityObject.AddMember("Entity", objType, doc.GetAllocator());
 
-			TransformComponent* trans = DreamECS::GetInstance().GetComponentTest<TransformComponent>(ent);
+			TransformComponent* trans = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(ent);
 			if (trans != nullptr) {
 				LOG_ASSERT(trans);
 				SERIALIZE(trans);
 				entityObject.AddMember("TransformComponent", objType, doc.GetAllocator());
 			}
 
-			ColliderComponent* col = DreamECS::GetInstance().GetComponentTest<ColliderComponent>(ent);
+			ColliderComponent* col = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(ent);
 			if (col != nullptr) {
 				LOG_ASSERT(col);
 				SERIALIZE(col);
 				entityObject.AddMember("ColliderComponent", objType, doc.GetAllocator());
 			}
 
-			RigidBodyComponent* rb = DreamECS::GetInstance().GetComponentTest<RigidBodyComponent>(ent);
+			RigidBodyComponent* rb = DreamECS::GetInstance().GetComponentPTR<RigidBodyComponent>(ent);
 			if (rb != nullptr) {
 				LOG_ASSERT(rb);
 				SERIALIZE(rb);
 				entityObject.AddMember("RigidBodyComponent", objType, doc.GetAllocator());
 			}
 
-			CameraComponent* cam = DreamECS::GetInstance().GetComponentTest<CameraComponent>(ent);
+			CameraComponent* cam = DreamECS::GetInstance().GetComponentPTR<CameraComponent>(ent);
 			if (cam != nullptr) {
 				LOG_ASSERT(cam);
 				SERIALIZE(cam);
 				entityObject.AddMember("CameraComponent", objType, doc.GetAllocator());
 			}
 
-			TextureComponent* tex = DreamECS::GetInstance().GetComponentTest<TextureComponent>(ent);
+			TextureComponent* tex = DreamECS::GetInstance().GetComponentPTR<TextureComponent>(ent);
 			if (tex != nullptr) {
 				LOG_ASSERT(tex);
 				SERIALIZE(tex);
@@ -189,7 +186,7 @@ namespace Engine {
 			}
 #if 1
 
-			ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(ent);
+			ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(ent);
 			if (csScript != nullptr) {
 				LOG_ASSERT(csScript);
 				rapidjson::Value objType(rapidjson::kArrayType);

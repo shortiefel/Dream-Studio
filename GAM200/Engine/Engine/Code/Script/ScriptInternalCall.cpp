@@ -35,12 +35,12 @@ Technology is prohibited.
 #include "Engine/Header/DeltaTime/DeltaTime.hpp" //To get deltaTime
 
 #define GetEngineType(ID, type, paramName, param)\
-type* ctype = DreamECS::GetInstance().GetComponentTest<type>(ID);\
+type* ctype = DreamECS::GetInstance().GetComponentPTR<type>(ID);\
 if (!ctype) return;\
 param = ctype->paramName;
 
 #define SetEngineType(ID, type, paramName, param)\
-type* ctype = DreamECS::GetInstance().GetComponentTest<type>(ID);\
+type* ctype = DreamECS::GetInstance().GetComponentPTR<type>(ID);\
 if (!ctype) return;\
 ctype->paramName = param;
 
@@ -157,7 +157,7 @@ namespace Engine {
 	}
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		//call hascomponent with entityid
-		TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(id);
+		TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(id);
 		if (!transform) return;
 		transform->position += *inVec2;
 	}
@@ -179,14 +179,14 @@ namespace Engine {
 	}
 
 	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2) {
-		TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(id);
+		TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle + 90.f);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
 	}
 
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2) {
-		TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(id);
+		TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
@@ -215,13 +215,13 @@ namespace Engine {
 	Check if component exist
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool HasComponent_Transform_Engine(unsigned int id) {
-		TransformComponent* tem = nullptr;
-		return DreamECS::GetInstance().HasComponent<TransformComponent>(tem, id);
+		TransformComponent* tem = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(id);
+		return !(tem == nullptr);
 	}
 
 	bool HasComponent_Collider_Engine(unsigned int id) {
-		ColliderComponent* tem = nullptr;
-		return DreamECS::GetInstance().HasComponent<ColliderComponent>(tem, id);
+		ColliderComponent* tem = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(id);
+		return !(tem == nullptr);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -240,7 +240,7 @@ namespace Engine {
 	}
 
 	void Destroy_Script_Engine(unsigned int id, MonoString* str) {
-		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentTest<ScriptComponent>(id);
+		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(id);
 		if (!csScript) return;
 		csScript->RemoveScript(mono_string_to_utf8(str));
 	}

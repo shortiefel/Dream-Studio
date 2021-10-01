@@ -32,8 +32,8 @@ Technology is prohibited.
 
 namespace Editor {
     GUI* GUI::m_instance;
-    unsigned int GUI::gameWinFBO, GUI::gameWinTex,
-        GUI::sceneWinFBO, GUI::sceneWinTex;
+    unsigned int GUI::gameWinFBO, GUI::sceneWinFBO;
+    ImTextureID gameWinTex, sceneWinTex;
 
 
     void GUI::Update() {
@@ -99,8 +99,8 @@ namespace Editor {
 
         GUI_Window::GUI_Settings_Setup();
 
-        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight, &gameWinFBO, &gameWinTex);
-        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight, &sceneWinFBO, &sceneWinTex);
+        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight, &gameWinFBO, reinterpret_cast<unsigned int*>(&gameWinTex));
+        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight, &sceneWinFBO, reinterpret_cast<unsigned int*>(&sceneWinTex));
 
         return true;
     }

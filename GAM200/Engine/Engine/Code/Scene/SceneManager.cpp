@@ -78,7 +78,9 @@ namespace Engine {
         currentScene->Play();
     }
 
+    //Not in use....
     void SceneManager::Stop() {
+        
         currentScene->Stop();
     }
 

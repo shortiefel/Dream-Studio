@@ -90,7 +90,7 @@ namespace Engine {
 			if (Entity_Check(entity)) break;
 			if (!texture.isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(entity);
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity);
 			if (!transform || !transform->isActive) continue;
 
 			const auto& mdl_ref = GraphicImplementation::models[texture.mdl_ref];

@@ -50,8 +50,8 @@ namespace Editor {
         void    GUI_HeaderPanel();
         void	GUI_Hierarchy();
         void	GUI_Inspector();
-        void	GUI_GameWindow(unsigned int& gameWinTex);
-        void	GUI_SceneWindow(unsigned int& sceneWinTex);
+        void	GUI_GameWindow(ImTextureID& gameWinTex);
+        void	GUI_SceneWindow(ImTextureID& sceneWinTex);
         void    GUI_ContentBrowserPanel();
 
         static std::filesystem::path _currentDirectory = "Assets";

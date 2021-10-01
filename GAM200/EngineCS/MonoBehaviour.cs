@@ -61,7 +61,7 @@ public class MonoBehaviour
 
     public T GetComponent<T>() where T : Component, new()
     {
-        if (HasComponent(entityId, typeof(T)))
+        if (HasComponent<T>(entityId))
         {
             T component = new T();
             component.entityId = entityId;
@@ -76,7 +76,7 @@ public class MonoBehaviour
 
     public T GetComponentWithID<T>(uint id) where T : Component, new()
     {
-        if (HasComponent(id, typeof(T)))
+        if (HasComponent<T>(id))
         {
             T component = new T();
             component.entityId = id;
@@ -86,10 +86,10 @@ public class MonoBehaviour
         return default(T);
     }
 
-    public bool HasComponent(uint id, Type type)
+    public bool HasComponent<T>(uint id)
     {
 
-        switch (GenericTypeFinder.dictonary[type])
+        switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
                 return HasComponent_Transform_Engine(id);

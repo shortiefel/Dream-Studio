@@ -31,7 +31,7 @@ namespace Engine {
 			if (Entity_Check(entity)) break;
 			if (!rigidBody.isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentTest<TransformComponent>(entity);
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity);
 			if (!transform || !transform->isActive) continue;
 
 			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);

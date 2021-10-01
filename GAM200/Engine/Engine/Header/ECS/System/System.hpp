@@ -9,7 +9,6 @@ Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
 Goh	See Yong Denise				g.seeyongdenise@digipen.edu
 Ow Jian Wen						jianwen.o@digipen.edu					TECHINCAL DIRECTOR
 Chia Yi Da						chiayida98@gmail.com
-Margaret Teo Boon See			Teo.b@digipen.edu
 Wang Ao							Ao.Wang@digipen.edu
 Ng Jia Yi						Jiayi.ng@digipen.edu
 \date 26/04/2021

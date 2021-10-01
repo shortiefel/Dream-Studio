@@ -1,9 +1,10 @@
 /* Start Header**********************************************************************************/
 /*!
-\file Main.cpp
-\team name
-\software name
-\authors	Ow Jian Wen						jianwen.o@digipen.edu					
+\file 			Main.cpp
+\team name		Dream Studio
+\software name	Dream Express
+\authors		Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			
+				Ow Jian Wen						jianwen.o@digipen.edu					
 \date 26/04/2021
 \brief
 

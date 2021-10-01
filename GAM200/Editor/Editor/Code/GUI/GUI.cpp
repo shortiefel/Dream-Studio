@@ -50,8 +50,7 @@ namespace Editor {
         GUI_Window::GUI_SceneWindow(sceneWinTex);
         GUI_Window::GUI_Hierarchy();
         GUI_Window::GUI_Inspector();
-        GUI_Window::GUI_AssetPanel();
-        GUI_Window::GUI_ContentBrowser();
+        GUI_Window::GUI_ContentBrowserPanel();
         GUI_Window::GUI_HeaderPanel();
     }
 
@@ -70,6 +69,10 @@ namespace Editor {
             glfwMakeContextCurrent(backup_current_context);
         }
         //-----------------------------------
+
+        float font_size = 18.0f;
+        //io.Fonts->AddFontFromFileTTF("Assets/Fonts/Helvetica-Bold.tff", font_size);
+        //io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/Helvetica.tff", font_size);
     }
 
     bool GUI::Create(GLFWwindow* window, const char* glsl_version) {

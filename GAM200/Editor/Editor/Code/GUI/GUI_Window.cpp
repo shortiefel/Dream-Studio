@@ -130,8 +130,7 @@ namespace Editor {
 				ImGui::MenuItem("Inspector", NULL, &inspector_bool);
 				ImGui::MenuItem("Game Window", NULL, &gameWin_bool);
 				ImGui::MenuItem("Scene Window", NULL, &sceneWin_bool);
-				ImGui::MenuItem("Assets Manager", NULL, &asset_bool);
-				ImGui::MenuItem("Content Browser", NULL, &content_bool);
+				ImGui::MenuItem("Content Browser", NULL, &asset_bool);
 				
 
 				ImGui::EndMenu();
@@ -339,21 +338,10 @@ namespace Editor {
 			CreateImageWindow("Scene Window", sceneWinTex, sceneWin_bool);
 		}
 
-		void GUI_AssetPanel()
+		void GUI_ContentBrowserPanel()
 		{
 			if (asset_bool) {
-				ImGui::Begin("Assets Manager", &asset_bool, window_flags);
-				ImGui::Text("Asset Path: ");
-				ImGui::TreeNode("Camera");
-				
-				ImGui::End();
-			}
-		}
-
-		void GUI_ContentBrowser()
-		{
-			if (content_bool) {
-				ImGui::Begin("Content Browser", &content_bool, window_flags);
+				ImGui::Begin("Content Browser", &asset_bool, window_flags);
 				if (_currentDirectory != std::filesystem::path("Assets"))
 				{
 					if (ImGui::Button("<-"))
@@ -397,7 +385,7 @@ namespace Editor {
 					{
 						if (directory.is_directory())
 						{
-								_currentDirectory /= path.filename();
+							_currentDirectory /= path.filename();
 						}
 
 					}

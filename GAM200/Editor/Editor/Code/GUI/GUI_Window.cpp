@@ -340,69 +340,69 @@ namespace Editor {
 
 		void GUI_ContentBrowserPanel()
 		{
-			if (asset_bool) {
-				ImGui::Begin("Content Browser", &asset_bool, window_flags);
-				if (_currentDirectory != std::filesystem::path("Assets"))
-				{
-					if (ImGui::Button("<-"))
-					{
-						_currentDirectory = _currentDirectory.parent_path();
-					}
-				}
+			//if (asset_bool) {
+			//	ImGui::Begin("Content Browser", &asset_bool, window_flags);
+			//	if (_currentDirectory != std::filesystem::path("Assets"))
+			//	{
+			//		if (ImGui::Button("<-"))
+			//		{
+			//			_currentDirectory = _currentDirectory.parent_path();
+			//		}
+			//	}
 
-				static float padding = 16.0f;
-				static float thumbnailSize = 128.0f;
-				float cellSize = thumbnailSize + padding;
+			//	static float padding = 16.0f;
+			//	static float thumbnailSize = 128.0f;
+			//	float cellSize = thumbnailSize + padding;
 
-				float panelWidth = ImGui::GetContentRegionAvail().x;
-				int columnCount = (int)(panelWidth / cellSize);
-				if (columnCount < 1)
-					columnCount = 1;
+			//	float panelWidth = ImGui::GetContentRegionAvail().x;
+			//	int columnCount = (int)(panelWidth / cellSize);
+			//	if (columnCount < 1)
+			//		columnCount = 1;
 
-				ImGui::Columns(columnCount, 0, false);
+			//	ImGui::Columns(columnCount, 0, false);
 
-				for (auto& directory : std::filesystem::directory_iterator("Assets"))
-				{
-					const auto& path = directory.path();
-					auto relative_path = std::filesystem::relative(path, _currentDirectory);
-					std::string filenameString = relative_path.string();
+			//	for (auto& directory : std::filesystem::directory_iterator("Assets"))
+			//	{
+			//		const auto& path = directory.path();
+			//		auto relative_path = std::filesystem::relative(path, _currentDirectory);
+			//		std::string filenameString = relative_path.string();
 
-					ImGui::PushID(filenameString.c_str());
-					//auto& texture = Engine::DreamECS::GetInstance().GetComponentType<Texture>();
-					//directory.is_directory() ? "Assets/Textures/DirectoryIcon.png" : "Assets/Texures/FileIcon.png";
-					//texture->getFilepath();
-					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-					ImGui::Button("Button Image");
-					//ImGui::ImageButton((ImTextureID)texture->GetEntityId(), {thumbnailSize, thumbnailSize}, {0, 1}, {1, 0});
-					if (ImGui::BeginDragDropSource())
-					{
-						const wchar_t* itemPath = relative_path.c_str();
-						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
-						ImGui::EndDragDropSource();
-					}
-					ImGui::PopStyleColor();
-					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-					{
-						if (directory.is_directory())
-						{
-							_currentDirectory /= path.filename();
-						}
+			//		ImGui::PushID(filenameString.c_str());
+			//		//auto& texture = Engine::DreamECS::GetInstance().GetComponentType<Texture>();
+			//		//directory.is_directory() ? "Assets/Textures/DirectoryIcon.png" : "Assets/Texures/FileIcon.png";
+			//		//texture->getFilepath();
+			//		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+			//		ImGui::Button("Button Image");
+			//		//ImGui::ImageButton((ImTextureID)texture->GetEntityId(), {thumbnailSize, thumbnailSize}, {0, 1}, {1, 0});
+			//		if (ImGui::BeginDragDropSource())
+			//		{
+			//			const wchar_t* itemPath = relative_path.c_str();
+			//			ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
+			//			ImGui::EndDragDropSource();
+			//		}
+			//		ImGui::PopStyleColor();
+			//		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+			//		{
+			//			if (directory.is_directory())
+			//			{
+			//				_currentDirectory /= path.filename();
+			//			}
 
-					}
-					ImGui::TextWrapped(filenameString.c_str());
+			//		}
+			//		ImGui::TextWrapped(filenameString.c_str());
 
-					ImGui::NextColumn();
+			//		ImGui::NextColumn();
 
-					ImGui::PopID();
+			//		ImGui::PopID();
 
-				}
-				ImGui::Columns(1);
+			//	}
+			//	ImGui::Columns(1);
 
-				ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 512);
-				ImGui::SliderFloat("Padding", &padding, 0, 32);
+			//	ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 512);
+			//	ImGui::SliderFloat("Padding", &padding, 0, 32);
 
-				ImGui::End();
-			}
+			//	ImGui::End();
+			//}
 		}
 		/*-------------------------------------------------------------------------------------------------
 		-------------------------------------------------------------------------------------------------*/

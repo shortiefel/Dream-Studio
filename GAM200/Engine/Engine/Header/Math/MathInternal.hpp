@@ -18,8 +18,9 @@ Technology is prohibited.
 #define MATH_INTERNAL_HPP
 
 #include "Engine/Header/Math/Internal/VectorMath.hpp"
+#include "Engine/Header/Math/Internal/MatrixMath.hpp"
 #include "Engine/Header/Math/Internal/CommonMath.hpp"
-#include "Engine/Header/Math/Internal/MathConstants.hpp"
+#include "Engine/Header/Math/Internal/ConstantsMath.hpp"
 
 
 #endif

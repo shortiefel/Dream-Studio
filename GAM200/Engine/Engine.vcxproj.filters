@@ -180,13 +180,7 @@
     <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\System.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp">
-      <Filter>Header Files\ECS\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\SystemManager.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Event\Event.hpp">
@@ -207,21 +201,6 @@
     <ClInclude Include="Engine\Header\Math\MathLib.hpp">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Matrix.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Matrix3.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector2D.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector3D.hpp">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\glslshader.hpp">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
@@ -235,15 +214,6 @@
       <Filter>Header Files\Management</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Application.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\framework.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Resource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\targetver.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Window.hpp">
@@ -360,7 +330,7 @@
     <ClInclude Include="Engine\Header\Math\MathInternal.hpp">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Internal\MathConstants.hpp">
+    <ClInclude Include="Engine\Header\Math\Internal\ConstantsMath.hpp">
       <Filter>Header Files\Math\Internal</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Math\Internal\VectorMath.hpp">
@@ -431,6 +401,30 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\FontSystem.hpp">
       <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector\Vector.hpp">
+      <Filter>Header Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector\Vector2D.hpp">
+      <Filter>Header Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector\Vector3D.hpp">
+      <Filter>Header Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Matrix\Matrix.hpp">
+      <Filter>Header Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Matrix\Matrix3.hpp">
+      <Filter>Header Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Matrix\Matrix4.hpp">
+      <Filter>Header Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector\Vector4D.hpp">
+      <Filter>Header Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Internal\MatrixMath.hpp">
+      <Filter>Header Files\Math\Internal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +562,12 @@
     </Filter>
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{caa0de69-3b99-47cb-80e2-42ee504354e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math\Vector">
+      <UniqueIdentifier>{f36e1cb1-03e8-4b83-bb61-63ec7018f671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math\Matrix">
+      <UniqueIdentifier>{cf5292c4-b1a5-4738-ac97-e44c85054251}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

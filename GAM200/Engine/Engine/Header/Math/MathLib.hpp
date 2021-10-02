@@ -22,8 +22,8 @@ Technology is prohibited.
 #define CUSTOM_MATH
 
 #ifdef CUSTOM_MATH
-#include "Engine/Header/Math/Matrix.hpp"
-#include "Engine/Header/Math/Vector.hpp"
+#include "Engine/Header/Math/Matrix/Matrix.hpp"
+#include "Engine/Header/Math/Vector/Vector.hpp"
 #include "Engine/Header/Math/MathInternal.hpp"
 namespace Math = Engine::DreamMath;
 #else

@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*
-@file    MathConstants.hpp
+@file    ConstantsMath.hpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    14/09/2021
 \brief
@@ -14,8 +14,8 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef MATH_CONSTANTS_HPP
-#define MATH_CONSTANTS_HPP
+#ifndef CONSTANTS_MATH_HPP
+#define CONSTANTS_MATH_HPP
 
 
 namespace Engine {

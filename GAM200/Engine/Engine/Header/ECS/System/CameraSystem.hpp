@@ -26,7 +26,6 @@ Technology is prohibited.
 namespace Engine {
 	class CameraSystem : public Singleton<CameraSystem> {
 	public:
-		//static bool Create(const std::shared_ptr<CameraSystem>& cameraSystem);
 		bool Create();
 		void Destroy();
 
@@ -35,7 +34,6 @@ namespace Engine {
 
 	private:
 		Math::mat3 world_to_ndc_xform{};
-		//static std::shared_ptr<CameraSystem> CS;
 		GLFWwindow* pwindow{};
 
 		SINGLETON_SETUP(CameraSystem);

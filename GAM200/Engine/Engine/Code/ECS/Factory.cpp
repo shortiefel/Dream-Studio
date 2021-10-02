@@ -27,7 +27,6 @@ namespace Engine {
     //Coordinator gCoordinator;
 
     void Factory::Create() {
-#if NEW_ECS
         DreamECS::GetInstance().Create();
         DreamECS::GetInstance().RegisterComponent<CameraComponent>();
         DreamECS::GetInstance().RegisterComponent<TransformComponent>();
@@ -35,12 +34,6 @@ namespace Engine {
         DreamECS::GetInstance().RegisterComponent<TextureComponent>();
         DreamECS::GetInstance().RegisterComponent<RigidBodyComponent>();
         DreamECS::GetInstance().RegisterComponent<ScriptComponent>();
-        //gCoordinator.RegisterComponent<CSScript>();
-        //gCoordinator.RegisterComponent<CSharpScript>();
-        /*DreamECS::RegisterSystem<CameraSystem>();
-        DreamECS::RegisterSystem<GraphicSystem>();
-        DreamECS::RegisterSystem<CollisionSystem>();
-        DreamECS::RegisterSystem<PhysicsSystem>();*/
 
         CameraSystem::GetInstance().Create();
         GraphicSystem::GetInstance().Create();
@@ -48,41 +41,6 @@ namespace Engine {
         PhysicsSystem::GetInstance().Create();
         ScriptSystem::GetInstance().Create();
 
-#else
-        DreamECS::Init();
-        DreamECS::RegisterComponent<Camera2D>();
-        DreamECS::RegisterComponent<Transform>();
-        DreamECS::RegisterComponent<Collider>();
-        DreamECS::RegisterComponent<Texture>();
-        DreamECS::RegisterComponent<RigidBody>();
-        //gCoordinator.RegisterComponent<CSScript>();
-        //gCoordinator.RegisterComponent<CSharpScript>();
-
-        CameraSystem::Create(DreamECS::RegisterSystem<CameraSystem>());
-        GraphicSystem::Create(DreamECS::RegisterSystem<GraphicSystem>());
-        CollisionSystem::Create(DreamECS::RegisterSystem<CollisionSystem>());
-        //ScriptSystem::Create(gCoordinator.RegSystem<ScriptSystem>());
-
-        Signature signature;
-        signature.set(DreamECS::GetComponentType<Transform>());
-        signature.set(DreamECS::GetComponentType<Texture>());
-        DreamECS::setSystemSignature<GraphicSystem>(signature);
-
-        signature.reset();
-        signature.set(DreamECS::GetComponentType<Transform>());
-        signature.set(DreamECS::GetComponentType<Camera2D>());
-        DreamECS::setSystemSignature<CameraSystem>(signature);
-
-
-        signature.reset();
-        signature.set(DreamECS::GetComponentType<Transform>());
-        signature.set(DreamECS::GetComponentType<Collider>());
-        DreamECS::setSystemSignature<CollisionSystem>(signature);
-
-        //signature.reset();
-        //signature.set(gCoordinator.GetComType<CSScript>());
-        //gCoordinator.setSystemSignature<ScriptSystem>(signature);
-#endif
     }
 
     void Factory::Destroy() {
@@ -93,30 +51,24 @@ namespace Engine {
         CameraSystem::GetInstance().Destroy();
     }
 
-    //Prefix options------------------------------------------------------------------------------
-
     //Create blank transform
 
     //Function will be called when GUI inspector request a Square entity
     void Factory::InstantiateSquare(Math::vec2 pos, Math::vec2 scale, bool isMoveable) {
-        printf("%s\n", "Doesnt work");
-        /*Entity ent = DreamECS::CreateEntity();
-        DreamECS::AddComponent(
-            ent,
-            Transform{ ent, pos, scale, 0 });
-        DreamECS::AddComponent(ent,
-            Collider{ ent, ColliderType::SQUARE, isMoveable });*/
+        Entity ent = DreamECS::GetInstance().CreateEntity();
+        DreamECS::GetInstance().AddComponent(
+            TransformComponent{ ent, pos, scale, 0 });
+        DreamECS::GetInstance().AddComponent(
+            ColliderComponent{ ent, ColliderType::SQUARE });
     }
 
     //Function will be called when GUI inspector request a Circle entity
     void Factory::InstantiateCircle(Math::vec2 pos, Math::vec2 scale, bool isMoveable) {
-        printf("%s\n", "Doesnt work");
-        /*Entity ent = DreamECS::CreateEntity();
-        DreamECS::AddComponent(
-            ent,
-            Transform{ ent, pos, scale, 0 });
-        DreamECS::AddComponent(ent,
-            Collider{ ent, ColliderType::CIRCLE, isMoveable });*/
+        Entity ent = DreamECS::GetInstance().CreateEntity();
+        DreamECS::GetInstance().AddComponent(
+            TransformComponent{ ent, pos, scale, 0 });
+        DreamECS::GetInstance().AddComponent(
+            ColliderComponent{ ent, ColliderType::CIRCLE });
     }
     //------------------------------------------------------------------------------
 

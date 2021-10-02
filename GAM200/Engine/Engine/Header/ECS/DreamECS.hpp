@@ -23,7 +23,6 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/ComponentManager.hpp"
 #include "Engine/Header/ECS/Entity/EntityManager.hpp"
-#include "Engine/Header/ECS/System/SystemManager.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include <memory>
 

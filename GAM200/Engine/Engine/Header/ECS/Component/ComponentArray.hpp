@@ -42,7 +42,6 @@ namespace Engine {
 	class ComponentArray : public ComponentArrayInterface {
 	public:
 		void AddComponent(T component) {
-#if NEW_ECS
 			Entity entity = component.GetEntity();
 			//error checking
 			LOG_ASSERT(EntityToIndexMap.find(entity.id) == EntityToIndexMap.end() && "Component is added again");
@@ -51,17 +50,6 @@ namespace Engine {
 			EntityToIndexMap[entity.id] = newIndex; //Entity -> Index
 			componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
 			Size++;
-#else
-			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity) == EntityToIndexMap.end() && "Component is added again");
-
-			size_t newIndex = Size;
-			EntityToIndexMap[entity] = newIndex; //Entity -> Index
-			IndexToEntityMap[newIndex] = entity; //Index -> Entity
-			componentArray[newIndex] = component; //Creating of the array and calls it component
-			componentArray[newIndex].SetEntityId(entity);
-			Size++;
-#endif
 		}
 
 		void AddScriptComponent(T component) {
@@ -89,7 +77,6 @@ namespace Engine {
 
 
 		void RemoveComponent(Entity entity) {
-#if NEW_ECS
 			//error checking
 			assert(EntityToIndexMap.find(entity.id) != EntityToIndexMap.end() && "Removing non-existance component");
 
@@ -97,66 +84,18 @@ namespace Engine {
 			size_t IndexRemoveEntity = EntityToIndexMap[entity.id];
 			size_t IndexLastElement = Size - 1;
 
-			//if (Size != 1) 
-			{
+			//Updating the map when it's shifted
+			Entity EntityLastElement = componentArray[IndexLastElement].GetEntity();
+			EntityToIndexMap[EntityLastElement.id] = IndexRemoveEntity;
 
-				//Updating the map when it's shifted
-				Entity EntityLastElement = componentArray[IndexLastElement].GetEntity();
-				EntityToIndexMap[EntityLastElement.id] = IndexRemoveEntity;
-
-				componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
-				//componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
-			}
+			componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
+			//componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
+			
 			componentArray[IndexLastElement] = T{};
 			EntityToIndexMap.erase(entity.id);
 
 			--Size;
-
-			//printf("%d with %zd at %d new %d at %s\n", entity, Size, componentArray[IndexRemoveEntity].GetEntity(), componentArray[IndexLastElement].GetEntity(), typeid(T).name());
-#else
-			//error checking
-			assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
-
-			//Copies element at the end into deleted element's place 
-			size_t IndexRemoveEntity = EntityToIndexMap[entity];
-			size_t IndexLastElement = Size - 1;
-
-			componentArray[IndexRemoveEntity] = componentArray[IndexLastElement];
-			componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
-
-
-			//Updating the map when it's shifted
-			Entity EntityLastElement = IndexToEntityMap[IndexLastElement];
-
-			EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
-			IndexToEntityMap[IndexRemoveEntity] = EntityLastElement;
-
-			EntityToIndexMap.erase(entity);
-			IndexToEntityMap.erase(IndexLastElement);
-
-			--Size;
-#endif
 		}
-		//void RemoveScript(Entity entity, const char* className) {
-		//	//error checking
-		//	assert(EntityToIndexMap.find(entity) != EntityToIndexMap.end() && "Removing non-existance component");
-
-		//	size_t IndexRemoveEntity = EntityToIndexMap[entity];
-		//	componentArray[IndexLastElement].klassInstance;
-
-		//	//Copies element at the end into deleted element's place 
-		//	size_t IndexLastElement = Size - 1;
-		//	componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
-
-		//	//Updating the map when it's shifted
-		//	Entity EntityLastElement = componentArray[IndexLastElement].GetEntity();
-		//	EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
-
-		//	componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
-		//	EntityToIndexMap.erase(entity);
-
-		//	--Size;
-		//}
 
 		//referencing to the template to get the data
 		T& GetData(Entity entity) {
@@ -205,9 +144,7 @@ namespace Engine {
 	private:
 		std::array<T, MAX_ENTITIES> componentArray{};
 		std::unordered_map<Entity_id, size_t> EntityToIndexMap{}; //mapping for entity ID to array index
-#ifndef NEW_ECS
-		std::unordered_map<size_t, Entity> IndexToEntityMap{}; //mappign array index to entity ID
-#endif
+
 		size_t Size = size_t{}; //total size of valid enteries in array
 	};
 }

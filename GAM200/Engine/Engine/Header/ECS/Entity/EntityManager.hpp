@@ -36,15 +36,6 @@ namespace Engine {
 	class EntityManager
 	{
 	public:
-		//EntityManager() //ctor
-		//{
-		//	Entity entity;
-
-		//	for (entity = 0; entity < MAX_ENTITIES; ++entity)
-		//	{
-		//		EntityManager::AvailableEntities.push(entity); //adding entity
-		//	}
-		//}
 
 		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, bool _appendEntityId = false)
 		{
@@ -72,7 +63,6 @@ namespace Engine {
 
 		void DestroyEntity(Entity entity)
 		{
-#if NEW_ECS
 			//error checking
 			LOG_ASSERT(entity.id < MAX_ENTITIES && "Entities out of range");
 			int index = 0;
@@ -85,32 +75,9 @@ namespace Engine {
 			//mSignatures[entity].reset();
 			AvailableEntities.push(entity.id);
 			--AliveEntityCount;
-#else
-			//error checking
-			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
-			UsedEntities.erase(entity);
-			mSignatures[entity].reset();
-			AvailableEntities.push(entity);
-			--AliveEntityCount;
-#endif
-		}
-#ifndef NEW_ECS
-		void SetSignature(Entity entity, Signature signature)
-		{
-			//error checking
-			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
 
-			mSignatures[entity] = signature;
 		}
 
-		Signature GetSignature(Entity entity)
-		{
-			//error checking
-			LOG_ASSERT(entity < MAX_ENTITIES && "Entities out of range");
-
-			return mSignatures[entity];
-		}
-#endif
 		inline const std::vector<Entity>& GetUsedEntitySet() const {
 			return UsedEntities;
 		}
@@ -126,9 +93,6 @@ namespace Engine {
 		uint32_t AliveEntityCount{}; // Total living entities
 	private:
 		std::queue<Entity_id> AvailableEntities{}; // Queue of unused entity IDs
-#ifndef NEW_ECS
-		std::array<Signature, MAX_ENTITIES> mSignatures{}; // Array of signatures for index to correspond to ID
-#endif
 
 		uint32_t currentMaxId = 0;
 	};

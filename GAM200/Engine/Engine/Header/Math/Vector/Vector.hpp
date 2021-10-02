@@ -28,8 +28,8 @@ Technology is prohibited.
 #ifndef VECTOR_ALL_HPP
 #define VECTOR_ALL_HPP
 
-#include "Vector2D.hpp"
-#include "Vector3D.hpp"
+#include "Engine/Header/Math/Vector/Vector2D.hpp"
+#include "Engine/Header/Math/Vector/Vector3D.hpp"
 
 namespace Engine {
 	namespace DreamMath {

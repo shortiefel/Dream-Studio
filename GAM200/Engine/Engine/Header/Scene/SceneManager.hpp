@@ -28,8 +28,9 @@ namespace Engine {
 	class SceneManager : public Singleton<SceneManager> {
 	public:
 		void StartScene();
+		
 		/*
-		* Change to sceneName scene
+		* Add next scene to be changed at the end of the game loop
 		*/
 		void ChangeScene(std::string sceneName);
 
@@ -46,8 +47,15 @@ namespace Engine {
 		//static SceneManager* sceneManager;
 
 		//static std::string currentSceneName;
-		std::string defaultSceneName;
-		Scene* currentScene;
+		std::string defaultSceneName = std::string{};
+		std::string nextScene = std::string{};
+		Scene* currentScene = nullptr;
+
+		/*
+		* Actually changing to nextScene scene
+		* Requires all scripting stuff to be completed before deleting it
+		*/
+		void ChangeSceneInternal();
 
 		SINGLETON_SETUP(SceneManager);
 	};

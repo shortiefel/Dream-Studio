@@ -259,9 +259,7 @@
     <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp" />
-    <ClInclude Include="Engine\Header\ECS\System\System.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp" />
-    <ClInclude Include="Engine\Header\ECS\System\SystemManager.hpp" />
     <ClInclude Include="Engine\Header\ECS\temECSDescription.hpp" />
     <ClInclude Include="Engine\Header\EngineCore.hpp" />
     <ClInclude Include="Engine\Header\Event\Event.hpp" />
@@ -270,7 +268,6 @@
     <ClInclude Include="Engine\Header\Event\MouseEvent.hpp" />
     <ClInclude Include="Engine\Header\Event\OverlapColliderEvent.hpp" />
     <ClInclude Include="Engine\Header\Event\WindowEvent.hpp" />
-    <ClInclude Include="Engine\Header\framework.hpp" />
     <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp" />
     <ClInclude Include="Engine\Header\Graphic\FontSystem.hpp" />
     <ClInclude Include="Engine\Header\Graphic\glslshader.hpp" />
@@ -287,19 +284,21 @@
     <ClInclude Include="Engine\Header\Management\TextureManager.hpp" />
     <ClInclude Include="Engine\Header\Management\Settings.hpp" />
     <ClInclude Include="Engine\Header\Math\Internal\CommonMath.hpp" />
-    <ClInclude Include="Engine\Header\Math\Internal\MathConstants.hpp" />
+    <ClInclude Include="Engine\Header\Math\Internal\ConstantsMath.hpp" />
+    <ClInclude Include="Engine\Header\Math\Internal\MatrixMath.hpp" />
     <ClInclude Include="Engine\Header\Math\Internal\VectorMath.hpp" />
     <ClInclude Include="Engine\Header\Math\MathInternal.hpp" />
     <ClInclude Include="Engine\Header\Math\MathLib.hpp" />
-    <ClInclude Include="Engine\Header\Math\Matrix.hpp" />
-    <ClInclude Include="Engine\Header\Math\Matrix3.hpp" />
-    <ClInclude Include="Engine\Header\Math\Vector.hpp" />
-    <ClInclude Include="Engine\Header\Math\Vector2D.hpp" />
-    <ClInclude Include="Engine\Header\Math\Vector3D.hpp" />
+    <ClInclude Include="Engine\Header\Math\Matrix\Matrix.hpp" />
+    <ClInclude Include="Engine\Header\Math\Matrix\Matrix3.hpp" />
+    <ClInclude Include="Engine\Header\Math\Matrix\Matrix4.hpp" />
+    <ClInclude Include="Engine\Header\Math\Vector\Vector.hpp" />
+    <ClInclude Include="Engine\Header\Math\Vector\Vector2D.hpp" />
+    <ClInclude Include="Engine\Header\Math\Vector\Vector3D.hpp" />
+    <ClInclude Include="Engine\Header\Math\Vector\Vector4D.hpp" />
     <ClInclude Include="Engine\Header\pch.hpp" />
     <ClInclude Include="Engine\Header\Physics\Collision.hpp" />
     <ClInclude Include="Engine\Header\Physics\Physics.hpp" />
-    <ClInclude Include="Engine\Header\Resource.hpp" />
     <ClInclude Include="Engine\Header\Scene\Scene.hpp" />
     <ClInclude Include="Engine\Header\Scene\SceneManager.hpp" />
     <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp" />
@@ -311,7 +310,6 @@
     <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp" />
     <ClInclude Include="Engine\Header\Serialize\SSerializer.hpp" />
     <ClInclude Include="Engine\Header\Singleton\Singleton.hpp" />
-    <ClInclude Include="Engine\Header\targetver.hpp" />
     <ClInclude Include="Engine\Header\Window.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

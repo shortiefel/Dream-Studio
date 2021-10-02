@@ -1,5 +1,18 @@
 [
-  
+  {
+    "Entity": { "Name": "Background" },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1300.0, 1300.0 ],
+      "Angle": 0.0,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets/Textures/House.png",
+      "Shape": 0,
+      "IsActive": true
+    }
+  },
   {
     "Entity": { "Name": "Entity10" },
     "TransformComponent": {
@@ -21,7 +34,7 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets/Textures/test1.png",
+      "Filepath": "Assets/Textures/HouseYellow.png",
       "Shape": 0,
       "IsActive": true
     },
@@ -60,7 +73,7 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets/Textures/test2.png",
+      "Filepath": "Assets/Textures/OneWayRoad.png",
       "Shape": 0,
       "IsActive": true
     },
@@ -124,7 +137,7 @@
     }
   },
   {
-    "Entity": { "Name": "Entity4" },
+    "Entity": { "Name": "Camera" },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
       "Scale": [ 0.0, 0.0 ],
@@ -138,7 +151,7 @@
     }
   },
   {
-    "Entity": { "Name": "Entity5" },
+    "Entity": { "Name": "Camera2" },
     "TransformComponent": {
       "Position": [ 240.0, 100.0 ],
       "Scale": [ 0.0, 0.0 ],
@@ -152,7 +165,7 @@
     }
   },
   {
-    "Entity": { "Name": "Entity6" },
+    "Entity": { "Name": "Camera3" },
     "TransformComponent": {
       "Position": [ -40.0, -240.0 ],
       "Scale": [ 0.0, 0.0 ],

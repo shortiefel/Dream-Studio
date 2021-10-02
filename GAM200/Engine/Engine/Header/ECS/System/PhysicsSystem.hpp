@@ -26,14 +26,10 @@ namespace Engine {
 	public:
 		bool Create();
 		void Destroy();
-		//~PhysicsSystem();
-
-		//static void Stop();
+		
 		void Update(float dt);
 
 	private:
-		//float gravity = 10.f;
-		//static std::shared_ptr<CollisionSystem> CS;
 
 		SINGLETON_SETUP(PhysicsSystem);
 	};

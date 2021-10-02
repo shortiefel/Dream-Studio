@@ -35,17 +35,26 @@ namespace Engine {
         currentScene = new Scene{ defaultSceneName };
 	}
 
-	void SceneManager::ChangeScene(std::string sceneName) {
-        currentScene->Stop();
-        delete currentScene;
+    void SceneManager::ChangeScene(std::string sceneName) {
+        nextScene = sceneName;
+    }
 
-        //currentSceneName = sceneName;
-        currentScene = new Scene{ sceneName };
-        if (GameState::GetPlaying()) ScriptSystem::GetInstance().PlayInit();
+	void SceneManager::ChangeSceneInternal() {
+        if (nextScene.length()) {
+            currentScene->Stop();
+            delete currentScene;
+
+            //currentSceneName = sceneName;
+            currentScene = new Scene{ nextScene };
+            nextScene = std::string{};
+            if (GameState::GetPlaying()) ScriptSystem::GetInstance().PlayInit();
+        }
 	}
 
 	void SceneManager::Update(float dt, bool defaultRender) {
         currentScene->Update(dt, GameState::GetPlaying(), defaultRender);
+
+        ChangeSceneInternal();
 	}
 
 	void SceneManager::Destroy() {

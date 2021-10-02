@@ -18,7 +18,7 @@ Technology is prohibited.
 #define WINDOW_EVENT_H
 
 #include "Engine/Header/Event/Event.hpp" //Event
-#include "Engine/Header/Math/Vector.hpp" //Vec2
+#include "Engine/Header/Math/Vector/Vector.hpp" //Vec2
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 

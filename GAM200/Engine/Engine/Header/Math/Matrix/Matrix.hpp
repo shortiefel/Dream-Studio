@@ -29,7 +29,8 @@ Technology is prohibited.
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
 
-#include "Engine/Header/Math/Matrix3.hpp"
+#include "Engine/Header/Math/Matrix/Matrix3.hpp"
+#include "Engine/Header/Math/Matrix/Matrix4.hpp"
 
 namespace Engine {
 	namespace DreamMath {
@@ -37,6 +38,15 @@ namespace Engine {
 		using mat3 = MathImplementation::Matrix3<float>;
 		//int matrix3
 		using imat3 = MathImplementation::Matrix3<int>;
+		//unsigned int matrix3
+		using umat3 = MathImplementation::Matrix3<unsigned int>;
+
+		//float matrix4
+		using mat4 = MathImplementation::Matrix4<float>;
+		//int matrix4
+		using imat4 = MathImplementation::Matrix4<int>;
+		//unsigned int matrix4
+		using umat4 = MathImplementation::Matrix4<unsigned int>;
 	}
 }
 

@@ -37,8 +37,6 @@ Technology is prohibited.
 #define Entity_Check(entity)\
 (entity.id > MAX_ENTITIES)
 
-#define NEW_ECS 1
-
 namespace Engine {
 	//ECS Components 
 	//using Entity = std::uint32_t;

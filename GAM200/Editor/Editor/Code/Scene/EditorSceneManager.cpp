@@ -35,6 +35,7 @@ namespace Editor {
     }
 
     void EditorSceneManager::Stop() {
+        std::cout << "Stopping\n";
         Engine::GameState::SetPlaying(false);
         Engine::SceneManager::GetInstance().ChangeScene(editorSceneName);
     }

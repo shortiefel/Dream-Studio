@@ -85,7 +85,7 @@ public class Test : MonoBehaviour
 
         if (Input.IsKeyPressed(KeyCode.C))
         {
-            //Instantiate_Entity("Box");
+            Instantiate_Entity("Box");
             //Console.WriteLine(Input.IsKeyPressed(KeyCode.E));
             //Disable(this);
         }

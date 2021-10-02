@@ -23,7 +23,6 @@ Technology is prohibited.
 
 #include "Engine/Header/Singleton/Singleton.hpp"
 
-#include "Engine/Header/ECS/System/system.hpp"
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
@@ -32,20 +31,14 @@ namespace Engine {
 	class GraphicSystem : public Singleton<GraphicSystem> {
 	public:
 
-		//static bool Create(const std::shared_ptr<GraphicSystem>& graphicSystem);
 		bool Create();
 		void Destroy();
-		//~GraphicSystem();
-		//void Destroy();
 
-		//static void Update(float dt);
 		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform());
 
 	private:
 		GLboolean isDebugDraw = GL_TRUE;
 		GLint id = 0;
-		//static GraphicSystem* gs;
-		//static std::shared_ptr<GraphicSystem> GS;
 
 		SINGLETON_SETUP(GraphicSystem);
 	};

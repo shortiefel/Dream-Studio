@@ -7,6 +7,18 @@
       "Angle": 0.0,
       "IsActive": true
     },
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
+      "IsActive": true
+    },
+    "RigidBodyComponent": {
+      "Speed": 0.0,
+      "IsActive": true
+    },
     "TextureComponent": {
       "Filepath": "Assets/Textures/test1.png",
       "Shape": 0,

@@ -18,8 +18,9 @@ Technology is prohibited.
 #ifndef VECTOR_MATH_H
 #define VECTOR_MATH_H
 
-#include "Engine/Header/Math/Vector3D.hpp"
-#include "Engine/Header/Math/Vector2D.hpp"
+#include "Engine/Header/Math/Vector/Vector2D.hpp"
+#include "Engine/Header/Math/Vector/Vector3D.hpp"
+#include "Engine/Header/Math/Vector/Vector4D.hpp"
 
 namespace Engine {
 	namespace DreamMath {
@@ -39,6 +40,11 @@ namespace Engine {
 		}
 
 		template <typename T>
+		T length(const MI::Vector4D<T>& pVec0) {
+			return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z) + (pVec0.w * pVec0.w)));
+		}
+
+		template <typename T>
 		T lengthSq(const MI::Vector2D<T>& pVec0) {
 			return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y));
 		}
@@ -46,6 +52,11 @@ namespace Engine {
 		template <typename T>
 		T lengthSq(const MI::Vector3D<T>& pVec0) {
 			return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z));
+		}
+
+		template <typename T>
+		T lengthSq(const MI::Vector4D<T>& pVec0) {
+			return T((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z) + (pVec0.w * pVec0.w));
 		}
 
 		/*-------------------------------------------------------------------------------------------------------------------
@@ -62,12 +73,22 @@ namespace Engine {
 		}
 
 		template <typename T>
+		T distance(const MI::Vector4D<T>& pVec0, const MI::Vector4D<T>& pVec1) {
+			return length(pVec0 - pVec1);
+		}
+
+		template <typename T>
 		T distanceSq(const MI::Vector2D<T>& pVec0, const MI::Vector2D<T>& pVec1) {
 			return lengthSq(pVec0 - pVec1);
 		}
 
 		template <typename T>
 		T distanceSq(const MI::Vector3D<T>& pVec0, const MI::Vector3D<T>& pVec1) {
+			return lengthSq(pVec0 - pVec1);
+		}
+
+		template <typename T>
+		T distanceSq(const MI::Vector4D<T>& pVec0, const MI::Vector4D<T>& pVec1) {
 			return lengthSq(pVec0 - pVec1);
 		}
 		/*-------------------------------------------------------------------------------------------------------------------
@@ -80,6 +101,11 @@ namespace Engine {
 
 		template <typename T>
 		MI::Vector3D<T> normalize(MI::Vector3D<T>& pResult) {
+			return (pResult / length(pResult));
+		}
+
+		template <typename T>
+		MI::Vector4D<T> normalize(MI::Vector4D<T>& pResult) {
 			return (pResult / length(pResult));
 		}
 		/*-------------------------------------------------------------------------------------------------------------------
@@ -102,6 +128,16 @@ namespace Engine {
 		}
 		//The type of the first parameter is used
 		template <typename T, typename U>
+		T dot(const MI::Vector4D<T>& pVec0, const MI::Vector4D<U>& pVec1) {
+			return T(
+				(pVec0.x * static_cast<T>(pVec1.x)) +
+				(pVec0.y * static_cast<T>(pVec1.y)) +
+				(pVec0.z * static_cast<T>(pVec1.z)) +
+				(pVec0.w * static_cast<T>(pVec1.w)));
+		}
+
+		//The type of the first parameter is used
+		template <typename T, typename U>
 		T cross(const MI::Vector2D<T>& pVec0, const MI::Vector2D<U>& pVec1) {
 			return T(
 				(pVec0.x * static_cast<T>(pVec1.y)) -
@@ -114,7 +150,7 @@ namespace Engine {
 				(pVec0.y * static_cast<T>(pVec1.z)) - (pVec0.z * static_cast<T>(pVec1.y)),
 				(pVec0.z * static_cast<T>(pVec1.x)) - (pVec0.x * static_cast<T>(pVec1.z)),
 				(pVec0.x * static_cast<T>(pVec1.y)) - (pVec0.y * static_cast<T>(pVec1.x)));
-		}		
+		}
 	}			
 }
 #endif

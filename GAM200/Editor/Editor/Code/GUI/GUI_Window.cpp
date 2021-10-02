@@ -182,27 +182,27 @@ namespace Editor {
 				* Game Objects 
 				*/
 
-				if (ImGui::TreeNode("Camera")) {
+				//if (ImGui::TreeNode("Camera")) {
 
-					static ImGuiTreeNodeFlags base_Flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-					static bool alignmentPosition = false;
+				//	static ImGuiTreeNodeFlags base_Flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+				//	static bool alignmentPosition = false;
 
-					/*ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnArrow", &base_Flags, ImGuiTreeNodeFlags_OpenOnArrow);
-					ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnDoubleClick", &base_Flags, ImGuiTreeNodeFlags_OpenOnDoubleClick);*/
+				//	/*ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnArrow", &base_Flags, ImGuiTreeNodeFlags_OpenOnArrow);
+				//	ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnDoubleClick", &base_Flags, ImGuiTreeNodeFlags_OpenOnDoubleClick);*/
 
-					if (alignmentPosition)
-						ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+				//	if (alignmentPosition)
+				//		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 
-					/*Engine::Entity entity_selected = Engine::Entity{ 0 };
-					std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
+				//	/*Engine::Entity entity_selected = Engine::Entity{ 0 };
+				//	std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
 
-					for (int i = 0; i < entity_set.size(); i++)
-					{
-						ImGui::Text(entity_set[i].name.c_str());
-						
-					}*/
-					ImGui::TreePop();
-				}
+				//	for (int i = 0; i < entity_set.size(); i++)
+				//	{
+				//		ImGui::Text(entity_set[i].name.c_str());
+				//		
+				//	}*/
+				//	ImGui::TreePop();
+				//}
 
 				Engine::Entity entity_selected = Engine::Entity{ 0 };
 				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();

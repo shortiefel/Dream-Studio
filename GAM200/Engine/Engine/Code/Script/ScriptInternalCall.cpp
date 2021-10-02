@@ -298,10 +298,6 @@ namespace Engine {
 	Scene
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void LoadScene_Engine(MonoString* sceneName) {
-		//SceneManager::GetInstance().ChangeScene("test2");
-
-		printf("Changing scene in scripting (Not Done)\n");
-		//SceneManager::GetInstance().Stop();
-		//SceneManager::GetInstance().ChangeScene("Test3");
+		SceneManager::GetInstance().ChangeScene(mono_string_to_utf8(sceneName));
 	}
 }

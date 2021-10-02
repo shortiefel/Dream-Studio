@@ -17,7 +17,6 @@ Technology is prohibited.
 #ifndef SCRIPT_SYSTEM_HPP
 #define SCRIPT_SYSTEM_HPP
 
-//#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"
 
 #include "Engine/Header/Script/ScriptClass.hpp"

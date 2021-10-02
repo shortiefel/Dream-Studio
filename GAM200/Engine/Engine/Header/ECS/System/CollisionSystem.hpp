@@ -22,13 +22,10 @@ Technology is prohibited.
 
 #include "Engine/Header/Singleton/Singleton.hpp"
 
-#include "Engine/Header/ECS/System/System.hpp"
-
 
 namespace Engine {
 	class CollisionSystem : public Singleton<CollisionSystem> {
 	public:
-		//static bool Create(const std::shared_ptr<CollisionSystem>& collisionSystem);
 		bool Create();
 		void Destroy();
 
@@ -36,9 +33,6 @@ namespace Engine {
 		void Update(float dt);
 
 	private:
-		//float gravity = 10.f;
-		//static std::shared_ptr<CollisionSystem> CS;
-
 		SINGLETON_SETUP(CollisionSystem);
 	};
 }

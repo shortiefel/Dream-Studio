@@ -221,7 +221,7 @@ namespace Editor {
 			if (inspector_bool) {
 				ImGui::Begin("Inspector", &inspector_bool, window_flags);
 
-				Engine::Entity entity_selected = Engine::Entity{ 0 };
+				Engine::Entity entity_selected = Engine::Entity{ 1 };
 				float width = 120;
 				bool selectEntity = 0;
 				

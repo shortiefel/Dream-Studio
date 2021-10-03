@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EditorStartPoint.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
 @date    23/07/2021
 @brief
 This file contain the EditorStartPoint definition

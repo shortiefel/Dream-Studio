@@ -1,8 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Vector3D.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
-		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    16/06/2021
 @brief
 

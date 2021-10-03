@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Matrix3.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  tan wei ling felicia	weilingfelicia.tan@digipen.edu
 @date    16/06/2021
 \brief
 This matrix implementation is column major

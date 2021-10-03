@@ -2,7 +2,6 @@
 /*
 @file    ComponentArray.hpp
 @author  Tan Wei Ling Felicia	 weilingfelicia.tan@digipen.edu
-		 Ow Jian Wen			 jianwen.o@digipen.edu
 @date    26/04/2021
 @brief
 To create a data structure that is a simple array with no holes. It contains the mapping from

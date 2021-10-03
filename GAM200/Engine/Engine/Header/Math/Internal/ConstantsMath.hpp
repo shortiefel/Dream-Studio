@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ConstantsMath.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
 @date    14/09/2021
 \brief
 This file contains epsilon and pi constants

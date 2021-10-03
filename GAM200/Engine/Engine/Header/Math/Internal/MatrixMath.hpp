@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    MatrixMath.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  tan wei ling felicia	weilingfelicia.tan@digipen.edu
 @date    02/10/2021
 \brief
 

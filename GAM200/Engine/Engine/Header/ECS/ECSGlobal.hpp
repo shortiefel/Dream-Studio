@@ -1,22 +1,12 @@
 /* Start Header**********************************************************************************/
 /*!
-\file Global.hpp
-\team name
-\software name
-\authors
-NAME							EMAIL									ROLE
-Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			PRODUCER
-Goh	See Yong Denise				g.seeyongdenise@digipen.edu
-Ow Jian Wen						jianwen.o@digipen.edu					TECHINCAL DIRECTOR
-Chia Yi Da						chiayida98@gmail.com
-Wang Ao							Ao.Wang@digipen.edu
-Ng Jia Yi						Jiayi.ng@digipen.edu
-\date 26/04/2021
+@file ECSGlobal.hpp
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@date 26/04/2021
 
-\brief
+@brief
 
-Entity Manager is in charge of assigning entity IDs and keeping records of which IDs are in use
-and not.
+Function calls for entity and setting of max enitites
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.

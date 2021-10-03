@@ -26,3 +26,4 @@ C:\Users\chiay\OneDrive\Documents\GitHub\GAM200\GAM200\EngineCS\obj\Debug\Engine
 C:\Users\chiay\OneDrive\Documents\GitHub\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.csproj.CoreCompileInputs.cache
 C:\Users\chiay\OneDrive\Documents\GitHub\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.dll
 C:\Users\chiay\OneDrive\Documents\GitHub\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.pdb
+C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.csproj.AssemblyReference.cache

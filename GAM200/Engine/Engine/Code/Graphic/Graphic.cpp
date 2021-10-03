@@ -23,20 +23,19 @@ Technology is prohibited.
 #include <iostream>
 #include <fstream>
 
-namespace Engine {
-    namespace GraphicImplementation {
+namespace Engine 
+{
+    namespace GraphicImplementation 
+    {
         //Frame buffer index
         unsigned int fbo;
         bool fbo_exist = false;
 
         std::map<GraphicShape, GLModel> models;
         std::map<GraphicShader, GLSLShader> shdrpgms;
-        GLuint Setup_Texobj(std::string, GLuint, GLuint);
 
-
-
-        void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer) {
-
+        void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer) 
+        {
             glGenFramebuffers(1, framebuffer);
             glBindFramebuffer(GL_FRAMEBUFFER, *framebuffer);
 
@@ -51,15 +50,19 @@ namespace Engine {
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *texColorBuffer, 0);
 
             if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+            {
                 LOG_ERROR("Error: Framebuffer is not complete");
+            }
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
         }
 
-        void DeleteFramebuffer(unsigned int f) {
+        void DeleteFramebuffer(unsigned int f) 
+        {
             glDeleteFramebuffers(1, &f);
         }
 
-        void SetFramebuffer(unsigned int f, bool exist) {
+        void SetFramebuffer(unsigned int f, bool exist) 
+        {
             if (!exist) {
                 fbo_exist = false;
                 return;
@@ -69,7 +72,8 @@ namespace Engine {
             fbo = f;
         }
 
-        void BindFramebuffer() {
+        void BindFramebuffer() 
+        {
             if (fbo_exist)
                 glBindFramebuffer(GL_FRAMEBUFFER, fbo);
         }
@@ -78,11 +82,13 @@ namespace Engine {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
         }
 
-        void UseShaderHandle(unsigned int prgm_handle) {
+        void UseShaderHandle(unsigned int prgm_handle) 
+        {
             glUseProgram(prgm_handle);
         }
 
-        void UnUseShaderHandle() {
+        void UnUseShaderHandle() 
+        {
             glUseProgram(0);
         }
     }

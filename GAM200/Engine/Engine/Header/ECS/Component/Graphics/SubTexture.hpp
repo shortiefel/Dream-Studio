@@ -6,6 +6,7 @@
 \brief
 This file contain the SubTexture declaration
 
+
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of
@@ -21,7 +22,8 @@ Technology is prohibited.
 
 
 namespace Engine {
-	class SubTexture {
+	class SubTexture 
+	{
 	public:
 		SubTexture(const std::shared_ptr<Texture>& texture, const MathD::Vec2& min, const MathD::Vec2& max, const std::string name);
 

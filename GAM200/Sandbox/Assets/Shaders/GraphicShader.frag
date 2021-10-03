@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*
-@file    OpenGLEngine.frag
+@file    GraphicShader.frag
 @author  Chia Yi da		c.yida@digipen.edu
 @date    07/06/2021
 */
@@ -17,7 +17,8 @@ layout (location=1) in vec2 vTexture;
 layout (location=0) out vec4 fColor;
 
 
-void main () {
+void main () 
+{
 	// object - texture colour
 	vec4 texColor = texture(uTex2d, vTexture);
 	fColor = texColor;

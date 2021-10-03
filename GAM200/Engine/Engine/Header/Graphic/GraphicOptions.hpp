@@ -17,16 +17,20 @@ Technology is prohibited.
 #ifndef GRAPHIC_OPTIONS
 #define GRAPHIC_OPTIONS
 
-namespace Engine {
-	enum class GraphicShape {
+namespace Engine 
+{
+	enum class GraphicShape 
+	{
 		SQUARE = 0,
 		CIRCLE,
-		STENCIL
+		DEBUG_BOX,
+		DEBUG_CIRCLE
 	};
 
-	enum class GraphicShader {
+	enum class GraphicShader 
+	{
 		DEFAULT = 0,
-		STENCIL
+		DEBUG_DRAW
 	};
 }
 

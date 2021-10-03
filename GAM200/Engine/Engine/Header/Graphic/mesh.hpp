@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*
-@file    mesh.hpp
+@file    Mesh.hpp
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 \brief
@@ -19,12 +19,15 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine {
-    namespace GraphicImplementation {
+namespace Engine 
+{
+    namespace GraphicImplementation 
+    {
         // container that contains 3 different vectors of vertex coordinates
         // Object position, color and 
         // Texture coordinates respectively
-        struct GLMesh {
+        struct GLMesh 
+        {
             Math::vec2 objPos_vtx;
             Math::vec3 clr_vtx;
             Math::vec2 texPos_vtx;

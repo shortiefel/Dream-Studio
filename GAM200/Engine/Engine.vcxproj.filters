@@ -19,9 +19,6 @@
     <ClCompile Include="Engine\Code\ECS\Factory.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\glslshader.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\Graphic.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
@@ -115,15 +112,6 @@
     <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\debugdraw.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\mesh.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\shader.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Physics\Collision.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
@@ -134,6 +122,18 @@
       <Filter>Source Files\Management</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\FontSystem.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\Mesh.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\Shader.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\DebugDraw.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\GLSLShader.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -200,9 +200,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Math\MathLib.hpp">
       <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\glslshader.hpp">
-      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\Graphic.hpp">
       <Filter>Header Files\Graphic</Filter>
@@ -378,15 +375,6 @@
     <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\debugdraw.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\mesh.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\shader.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Singleton\Singleton.hpp">
       <Filter>Header Files\Singleton</Filter>
     </ClInclude>
@@ -425,6 +413,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Math\Internal\MatrixMath.hpp">
       <Filter>Header Files\Math\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\Mesh.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\Shader.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\DebugDraw.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\GLSLShader.hpp">
+      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

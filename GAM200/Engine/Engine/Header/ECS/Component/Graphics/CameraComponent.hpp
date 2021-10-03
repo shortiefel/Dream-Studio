@@ -4,7 +4,7 @@
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    26/06/2021
 @brief
-This file contain the Camera component
+This file contains the Camera component
 
 
 //Serialize list
@@ -26,13 +26,15 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 
-namespace Engine {
+namespace Engine 
+{
     class DSerializer;
     class SSerializer;
 
     constexpr int CAMERA_HEIGHT = 1000;
 
-    struct CameraComponent : public IComponent {
+    struct CameraComponent : public IComponent 
+    {
         // window parameters
         float ar = float{}, fov = float{};
         bool isActive = true;

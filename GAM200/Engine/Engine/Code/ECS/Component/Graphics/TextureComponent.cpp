@@ -17,21 +17,17 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
-//#include "../../External Resources/stb_image/stb_image.h"
 
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
-namespace Engine {
-	TextureComponent::TextureComponent(Entity _ID, const std::string _path, GraphicShape _shape, //GraphicShader shader, 
-		bool _active) :
+namespace Engine 
+{
+	TextureComponent::TextureComponent(Entity _ID, const std::string _path, GraphicShape _shape, bool _active) :
 		IComponent{ _ID },
 		texobj_hdl{ 0 }, filepath{ _path }, width{ 0 }, height{ 0 }, BPP{ 0 },
 		mdl_ref{ _shape },
-		//shd_ref{ GraphicImplementation::shdrpgms.find(shader) },
-		isActive{ _active } {
-	}
-
+		isActive{ _active } {}
 
 	TextureComponent::~TextureComponent()
 	{
@@ -59,7 +55,8 @@ namespace Engine {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer) {
+	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer) 
+	{
 		filepath = _serializer.GetValue<std::string>("Filepath");
 		texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
@@ -68,17 +65,12 @@ namespace Engine {
 		return *this;
 	}
 
-	void TextureComponent::Serialize(const SSerializer& _serializer) {
+	void TextureComponent::Serialize(const SSerializer& _serializer) 
+	{
 		_serializer.SetValue("Filepath", filepath);
 		_serializer.SetValue("Shape", int(mdl_ref));
 		_serializer.SetValue("IsActive", isActive);
 
 		//_serializer.EndSerialize("Texture");
 	}
-	
-	/*std::shared_ptr<Texture> Texture::CreateFromString(const std::string path) {
-		std::cout << "Texture::CreateFromString CALLED" << std::endl;
-
-		return std::make_shared<Texture>(path);
-	}*/
 }

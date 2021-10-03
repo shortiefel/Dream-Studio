@@ -16,7 +16,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/Settings.hpp"
 
-namespace Engine {
+namespace Engine 
+{
 	unsigned int Settings::windowWidth;
 	unsigned int Settings::windowHeight;
 

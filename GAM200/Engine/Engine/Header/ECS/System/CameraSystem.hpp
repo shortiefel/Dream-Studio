@@ -23,8 +23,10 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine {
-	class CameraSystem : public Singleton<CameraSystem> {
+namespace Engine 
+{
+	class CameraSystem : public Singleton<CameraSystem> 
+	{
 	public:
 		bool Create();
 		void Destroy();

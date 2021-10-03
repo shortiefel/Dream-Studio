@@ -26,12 +26,15 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 
-namespace Engine {
+namespace Engine 
+{
     //Update function to change the world to NDC transform that will be used
     //to create the graphics
-    void CameraSystem::Update(float dt) {
+    void CameraSystem::Update(float dt) 
+    {
         auto& camArray = DreamECS::GetInstance().GetComponentArrayData<CameraComponent>();
-        for (auto& cam : camArray) {
+        for (auto& cam : camArray) 
+        {
             const Entity& entity = cam.GetEntity();
             if (Entity_Check(entity)) break;
             if (!cam.isActive) continue;
@@ -39,37 +42,36 @@ namespace Engine {
             TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity);
             if (!transform || !transform->isActive) continue;
 
-
             //GLsizei fb_width, fb_height;
             //glfwGetFramebufferSize(pwindow, &fb_width, &fb_height);
             cam.ar = Settings::gameAR;
 
-
             // compute world-to-NDC transformation matrix
             world_to_ndc_xform =
-                Math::mat3(
-                    2.f / (cam.ar * CAMERA_HEIGHT * cam.fov), 0.f, 0.f,
-                    0.f, 2.f / CAMERA_HEIGHT * cam.fov, 0.f,
-                    0.f, 0.f, 1.f)
+                Math::mat3(2.f / (cam.ar * CAMERA_HEIGHT * cam.fov), 0.f, 0.f,
+                           0.f, 2.f / CAMERA_HEIGHT * cam.fov, 0.f,
+                           0.f, 0.f, 1.f)
                 *
-                Math::mat3(
-                    1.f, 0.f, 0.f,
-                    0.f, 1.f, 0.f,
-                    -transform->position.x, -transform->position.y, 1.f);
+                Math::mat3(1.f, 0.f, 0.f,
+                           0.f, 1.f, 0.f,
+                          -transform->position.x, -transform->position.y, 1.f);
             break; //Just need one transform
         }
     }
 
-    Math::mat3 CameraSystem::GetTransform() {
+    Math::mat3 CameraSystem::GetTransform() 
+    {
         return world_to_ndc_xform;
     }
 
-    bool CameraSystem::Create() {
+    bool CameraSystem::Create() 
+    {
         LOG_INSTANCE("Camera System created");
         return true;
     }
 
-    void CameraSystem::Destroy() {
+    void CameraSystem::Destroy() 
+    {
         LOG_INSTANCE("Camera System destroyed");
     }
 }

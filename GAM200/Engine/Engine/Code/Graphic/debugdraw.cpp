@@ -1,11 +1,12 @@
 /* Start Header**********************************************************************************/
 /*
-@file    debugdraw.cpp
+@file    DebugDraw.cpp
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    23/09/2021
 \brief
 This file contains the definition of functions that allows users to
 draw debug lines for game objects
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -16,7 +17,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 
-#include "Engine/Header/Graphic/debugdraw.hpp"
+#include "Engine/Header/Graphic/DebugDraw.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 
@@ -26,18 +27,26 @@ Technology is prohibited.
 #define vec3(a, b, c) \
 	Math::vec3(a, b, c)
 
-namespace Engine {
-	namespace GraphicImplementation {
-		void DebugDrawCollider(Entity const& entity, TransformComponent const& transform, Math::mat3 camMatrix) {
+namespace Engine 
+{
+	namespace GraphicImplementation 
+	{
+		void DebugDrawCollider(Entity const& entity, TransformComponent const& transform, Math::mat3 camMatrix) 
+		{
 			ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity);
-			// when object has collider, get collider matrix
-			if (collider != nullptr) {
-				// Bind VAO
-				const auto colliderStencil = models[GraphicShape::STENCIL];
-				glBindVertexArray(colliderStencil.vaoid);
 
-				// Load stencil shader program
-				const auto& shd_ref_handle = shdrpgms[GraphicShader::STENCIL].GetHandle();
+			// when object has collider, get collider matrix
+			if (collider != nullptr) 
+			{
+				GraphicShape debugShape = (collider->cType == ColliderType::CIRCLE) ? 
+										GraphicShape::DEBUG_CIRCLE : GraphicShape::DEBUG_BOX;
+
+				// Bind VAO
+				const auto colliderDebug = models[debugShape];
+				glBindVertexArray(colliderDebug.vaoid);
+
+				// Load DEBUG_DRAW shader program
+				const auto& shd_ref_handle = shdrpgms[GraphicShader::DEBUG_DRAW].GetHandle();
 				UseShaderHandle(shd_ref_handle);
 
 				// p = position, s = scale
@@ -69,7 +78,7 @@ namespace Engine {
 
 				// Draw debug lines
 				glLineWidth(5.f);
-				glDrawArrays(colliderStencil.primitive_type, 0, colliderStencil.draw_cnt);
+				glDrawArrays(colliderDebug.primitive_type, 0, colliderDebug.draw_cnt);
 				glLineWidth(1.f);
 
 				// unbind VAO and shader program

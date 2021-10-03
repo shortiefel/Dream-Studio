@@ -17,14 +17,17 @@ Technology is prohibited.
 #ifndef GRAPHIC_H
 #define GRAPHIC_H
 
-#include "Engine/Header/Graphic/glslshader.hpp" // for GLSLShader
+#include "Engine/Header/Graphic/GLSLShader.hpp" // for GLSLShader
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine {
-    namespace GraphicImplementation {
-        struct GLModel {
+namespace Engine 
+{
+    namespace GraphicImplementation 
+    {
+        struct GLModel 
+        {
             GLenum primitive_type = GLenum{};
             GLuint primitive_cnt = GLuint{};
             GLuint vaoid = GLuint{}; // handle to VAO
@@ -46,14 +49,6 @@ namespace Engine {
 
         extern std::map<GraphicShape, GLModel> models;
         extern std::map<GraphicShader, GLSLShader> shdrpgms;
-
-        /*
-        struct GLSprite {
-            GLuint spriteWidth, spriteHeight;
-            GLuint spritesheetWidth, spritesheetHeight;
-            Math::vec2 position;
-        };
-        */
     }
 }
 

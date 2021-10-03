@@ -25,17 +25,18 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 
-#include "Engine/Header/Graphic/mesh.hpp"
-#include "Engine/Header/Graphic/shader.hpp"
-#include "Engine/Header/Graphic/glslshader.hpp"
+#include "Engine/Header/Graphic/Mesh.hpp"
+#include "Engine/Header/Graphic/Shader.hpp"
+#include "Engine/Header/Graphic/GLSLShader.hpp"
 
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
-#include "Engine/Header/Graphic/debugdraw.hpp"
+#include "Engine/Header/Graphic/DebugDraw.hpp"
 
-namespace Engine {
-
-	void GraphicSystem::Render(Math::mat3 camMatrix) {
+namespace Engine 
+{
+	void GraphicSystem::Render(Math::mat3 camMatrix) 
+	{
 		GraphicImplementation::BindFramebuffer();
 
 		// Set background to purple color
@@ -44,7 +45,8 @@ namespace Engine {
 
 		//Check texture because less Texture component on entity than Transform
 		const auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<TextureComponent>();
-		for (const auto& texture : textureArray) {
+		for (const auto& texture : textureArray) 
+		{
 			const Entity& entity = texture.GetEntity();
 			if (Entity_Check(entity)) break;
 			if (!texture.isActive) continue;
@@ -84,7 +86,8 @@ namespace Engine {
 			GraphicImplementation::UnUseShaderHandle();
 
 			// to draw debug lines
-			if (isDebugDraw == GL_TRUE) {
+			if (isDebugDraw == GL_TRUE) 
+			{
 				GraphicImplementation::DebugDrawCollider(entity, *transform, camMatrix);
 			}
 		}
@@ -92,10 +95,8 @@ namespace Engine {
 		GraphicImplementation::UnbindFramebuffer();
 	}
 
-	//bool GraphicSystem::Create(const std::shared_ptr<GraphicSystem>& graphicSystem) {
-	bool GraphicSystem::Create() {
-		//GS = graphicSystem;
-
+	bool GraphicSystem::Create() 
+	{
 		//Set up vao for box
 		GraphicImplementation::setup_vao();
 		GraphicImplementation::setup_shdr();
@@ -104,12 +105,10 @@ namespace Engine {
 		return true;
 	}
 
-	void GraphicSystem::Destroy() {
+	void GraphicSystem::Destroy() 
+	{
 		LOG_INSTANCE("Graphic System destroyed");
 	}
-
-	//GraphicSystem::~GraphicSystem() { Destroy(); }
-
 
 	//
 	//// function that sets up the texture object
@@ -146,67 +145,4 @@ namespace Engine {
 	//	// nothing more to do - return handle to texture object
 	//	return texobj_hdl;
 	//
-
-
-
-
-
-	// utilises collider to draw outer lines
-	/*
-
-	// when debugDraw is on
-	if (isDebugDraw == GL_TRUE) {
-		// when object has collider, get collider matrix
-		Collider* col = nullptr;
-		if (gCoordinator.HasCom<Collider>(col, entity) && col != nullptr) {
-			// set uniform variable for Collider_Matrix matrix
-			Math::mat3 colliderMat;
-
-			// p = position, s = scale
-			Math::vec2 p = Math::vec2{};
-			Math::vec2 s = Math::vec2{};
-
-			p = col->pos + transform.pos;
-			s = col->scale + transform.scale;
-
-			colliderMat = {
-				//Translate
-				Math::mat3{ Math::vec3(1.f, 0, 0),
-								Math::vec3(0, 1.f, 0),
-								Math::vec3(p.x, p.y, 1.f) }
-				*
-
-				//Scale
-				Math::mat3{ Math::vec3(s.x + 1, 0, 0),
-								Math::vec3(0, s.y + 1, 0),
-								Math::vec3(0, 0, 1.f) }
-			};
-
-			colliderMat = camMatrix * colliderMat;
-
-			// set collider matrix to slot 1
-			GLint uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "Collider_Matrix");
-			glUniformMatrix3fv(uniform_var_loc3, 1, GL_FALSE, Math::value_ptr(colliderMat));
-			if (uniform_var_loc3 == -1) {
-				std::cout << "Collider_Matrix variable doesn't exist!!!\n";
-				std::exit(EXIT_FAILURE);
-			}
-
-			// set uniform variable for uID
-			id = 1;
-			uniform_var_loc3 = glGetUniformLocation(transform.shd_ref->second.GetHandle(), "uID");
-			glUniform1i(uniform_var_loc3, id);
-			if (uniform_var_loc3 == -1) {
-				std::cout << "uID = 1 variable doesn't exist!!!\n";
-				std::exit(EXIT_FAILURE);
-			}
-
-			// draw outlines of object
-			//glLineWidth(3.f);
-			//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glDrawArrays(transform.mdl_ref->second.primitive_type, 0, transform.mdl_ref->second.draw_cnt);
-		}
-	}
-
-	*/
 }

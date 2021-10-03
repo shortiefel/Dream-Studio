@@ -23,31 +23,34 @@ Technology is prohibited.
 typedef void (*FuncNoData)();
 typedef void (*Func1Param)(float);
 
-namespace Engine {
+namespace Engine 
+{
 	//Forward declaration
 	struct GLFWwindow;
 	class Event;
 	class WindowCloseEvent;
 	class DeltaTime;
 
-	class Application : public Singleton<Application> {
+	class Application : public Singleton<Application> 
+	{
 	public:
-		
-
 		void Create();
-		/*Main application loop is done here
-		defaultRender - whether to use default rendering or not (For scene update)*/
+
+		/*
+		Main application loop is done here
+		defaultRender - whether to use default rendering or not (For scene update)
+		*/
 		void Update(bool defaultRender);
 		void Destroy();
 
-
 		inline void SetAppRun(bool _bool) { app_run_bool = _bool; }
-		//void OnEvent(Event& event);
 		//Set event call back for events
+		//void OnEvent(Event& event);
 		//void SetEventCallBack();
 
 		//Set up function callback for editor function
 		void SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3);
+
 	private:
 		Application* s_app_instance = 0;
 		//static GLFWwindow* s_glfw_window;

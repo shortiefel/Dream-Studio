@@ -20,13 +20,16 @@ Technology is prohibited.
 
 //Components
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
+
 //Systems
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
-namespace Engine {
-    //Coordinator gCoordinator;
+namespace Engine 
+{
+    //Coordinator gCoordinator;=
 
-    void Factory::Create() {
+    void Factory::Create() 
+    {
         DreamECS::GetInstance().Create();
         DreamECS::GetInstance().RegisterComponent<CameraComponent>();
         DreamECS::GetInstance().RegisterComponent<TransformComponent>();
@@ -43,7 +46,8 @@ namespace Engine {
 
     }
 
-    void Factory::Destroy() {
+    void Factory::Destroy() 
+    {
         ScriptSystem::GetInstance().Destroy();
         PhysicsSystem::GetInstance().Destroy();
         CollisionSystem::GetInstance().Destroy();
@@ -54,7 +58,8 @@ namespace Engine {
     //Create blank transform
 
     //Function will be called when GUI inspector request a Square entity
-    void Factory::InstantiateSquare(Math::vec2 pos, Math::vec2 scale, bool isMoveable) {
+    void Factory::InstantiateSquare(Math::vec2 pos, Math::vec2 scale, bool isMoveable) 
+    {
         Entity ent = DreamECS::GetInstance().CreateEntity();
         DreamECS::GetInstance().AddComponent(
             TransformComponent{ ent, pos, scale, 0 });
@@ -63,13 +68,12 @@ namespace Engine {
     }
 
     //Function will be called when GUI inspector request a Circle entity
-    void Factory::InstantiateCircle(Math::vec2 pos, Math::vec2 scale, bool isMoveable) {
+    void Factory::InstantiateCircle(Math::vec2 pos, Math::vec2 scale, bool isMoveable) 
+    {
         Entity ent = DreamECS::GetInstance().CreateEntity();
         DreamECS::GetInstance().AddComponent(
             TransformComponent{ ent, pos, scale, 0 });
         DreamECS::GetInstance().AddComponent(
             ColliderComponent{ ent, ColliderType::CIRCLE });
     }
-    //------------------------------------------------------------------------------
-
 }

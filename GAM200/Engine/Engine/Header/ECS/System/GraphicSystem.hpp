@@ -26,10 +26,11 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine {
-	class GraphicSystem : public Singleton<GraphicSystem> {
+namespace Engine 
+{
+	class GraphicSystem : public Singleton<GraphicSystem> 
+	{
 	public:
-
 		bool Create();
 		void Destroy();
 

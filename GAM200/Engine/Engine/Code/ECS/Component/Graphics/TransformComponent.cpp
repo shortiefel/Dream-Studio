@@ -26,13 +26,18 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
-namespace Engine {
+#define rad(ang) \
+	Math::radians((float)ang)
+
+namespace Engine 
+{
 	TransformComponent::TransformComponent(Entity _ID, Math::vec2 _pos, Math::vec2 _scale, float _angle, bool _active, int _layer) :
 		IComponent{ _ID },
 		position{ _pos }, scale{ _scale }, angle{ _angle },
 		isActive{ _active }, layer{ _layer } {}
 
-	TransformComponent& TransformComponent::operator+= (const TransformComponent& _rhs) {
+	TransformComponent& TransformComponent::operator+= (const TransformComponent& _rhs)
+	{
 		position += _rhs.position;
 		scale *= _rhs.scale;
 		angle += _rhs.angle;
@@ -40,21 +45,22 @@ namespace Engine {
 		return *this;
 	}
 
-	Math::mat3 TransformComponent::GetTransform() const {
+	Math::mat3 TransformComponent::GetTransform() const 
+	{
 		return
 			//Translation
 			Math::mat3{ Math::vec3(1.f, 0, 0),
-						  Math::vec3(0, 1.f, 0),
-						  Math::vec3(position.x, position.y, 1.f) }
+						Math::vec3(0, 1.f, 0),
+						Math::vec3(position.x, position.y, 1.f) }
 			*
-			Math::mat3{ Math::vec3(std::cos(Math::radians((float)angle)), std::sin(Math::radians((float)angle)), 0),
-						  Math::vec3(-std::sin(Math::radians((float)angle)), std::cos(Math::radians((float)angle)), 0),
-						  Math::vec3(0.f, 0.f, 1.f) }
+			Math::mat3{ Math::vec3(std::cos(rad((float)angle)), std::sin(rad((float)angle)), 0),
+						Math::vec3(-std::sin(rad((float)angle)), std::cos(rad((float)angle)), 0),
+						Math::vec3(0.f, 0.f, 1.f) }
 			*
 			//Scale
 			Math::mat3{ Math::vec3(scale.x, 0, 0),
-						 Math::vec3(0, scale.y, 0),
-						 Math::vec3(0, 0, 1.f) };
+						Math::vec3(0, scale.y, 0),
+						Math::vec3(0, 0, 1.f) };
 	}
 
 	TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer) {

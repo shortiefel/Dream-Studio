@@ -6,6 +6,7 @@
 \brief
 This file contain the EditorSceneCamera declaration
 
+
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of
@@ -18,13 +19,13 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
-namespace Editor {
-	class EditorSceneCamera {
+namespace Editor 
+{
+	class EditorSceneCamera 
+	{
 	public:
 		static void Create(Math::vec2 pos);
 		static void Destroy();
-
-		//static void Update(float dt);
 
 		static Math::mat3 GetTransform();
 	private:

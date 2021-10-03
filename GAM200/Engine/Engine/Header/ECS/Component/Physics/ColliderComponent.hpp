@@ -55,7 +55,6 @@ namespace Engine {
 
 		ColliderComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
-		std::map<std::string, GraphicImplementation::GLModel>::iterator stencil_ref;
 
 		//offsetPosition -> how far away from the transform center
 		//offsetScale -> how much it changes the transform scale
@@ -68,8 +67,8 @@ namespace Engine {
 		Collider (ColliderType c, float offsetxPos, float offsetyPos,  float offsetWidth, float offsetHeight, bool trigger = false) :
 			Collider{ c, Math::vec2 { offsetxPos, offsetyPos }, Math::vec2 { offsetWidth, offsetHeight }, trigger } {}*/
 
-		ColliderComponent(ColliderType c, bool moveable = false, bool trigger = false, std::string stencil = "stencilBox") :
-			cType{ c }, offset_position{ Math::vec2{ 0.f, 0.f } }, offset_scale{ Math::vec2{ 0.f, 0.f } }, isTrigger{ trigger } {}//, stencil_ref{ GraphicImplementation::models.find(stencil) }{}
+		ColliderComponent(ColliderType c, bool moveable = false, bool trigger = false) :
+			cType{ c }, offset_position{ Math::vec2{ 0.f, 0.f } }, offset_scale{ Math::vec2{ 0.f, 0.f } }, isTrigger{ trigger } {}
 
 		//Change of type constructor: Copy an existing Collider but with a different type
 		/*Collider(Entity ID, ColliderType c, bool trigger = false);*/

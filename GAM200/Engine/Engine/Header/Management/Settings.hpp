@@ -18,8 +18,10 @@ Technology is prohibited.
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-namespace Engine {
-	struct Settings {
+namespace Engine 
+{
+	struct Settings 
+	{
 		static unsigned int windowWidth;
 		static unsigned int windowHeight;
 

@@ -18,11 +18,12 @@ Technology is prohibited.
 #define TEXTURE_MANAGER_HPP
 
 #include "Engine/Header/pch.hpp"
-
 #include "Engine/Header/Singleton/Singleton.hpp"
 
-namespace Engine {
-	class TextureManager : public Singleton<TextureManager> {
+namespace Engine 
+{
+	class TextureManager : public Singleton<TextureManager> 
+	{
 	public:
 		void Create();
 		void Destroy();

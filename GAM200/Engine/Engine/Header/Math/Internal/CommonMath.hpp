@@ -52,6 +52,11 @@ namespace Engine {
         }
 
         template <typename T>
+        inline const T* value_ptr(const MathImplementation::Matrix4<T>& rhs) {
+            return &(rhs.m[0]);
+
+        }
+        template <typename T>
         inline T getLength(T n1, T n2) {
             return sqrt(pow(n1, 2) + pow(n2, 2));
         }

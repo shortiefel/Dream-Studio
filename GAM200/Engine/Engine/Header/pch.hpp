@@ -6,7 +6,6 @@
 \brief
 This file contains include files
 
-
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of
@@ -17,7 +16,6 @@ Technology is prohibited.
 #ifndef PCH_H
 #define PCH_H
 
-//#include "Debug Tools/Logging.hpp"
 #include <cassert>
 
 #include <string>
@@ -35,6 +33,5 @@ Technology is prohibited.
 //External Resources
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
 
 #endif

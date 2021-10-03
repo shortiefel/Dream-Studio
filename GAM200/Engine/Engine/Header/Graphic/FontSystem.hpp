@@ -16,7 +16,7 @@ Technology is prohibited.
 #ifndef FONTSYSTEM_H
 #define FONTSYSTEM_H
 
-#include "Engine/Header/Graphic/shader.hpp"
+#include "Engine/Header/Graphic/Shader.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp" 
 #include <glm/glm.hpp>
 #include <map>

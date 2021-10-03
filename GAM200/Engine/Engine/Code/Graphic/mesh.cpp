@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*
-@file    mesh.cpp
+@file    Mesh.cpp
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 \brief
@@ -14,13 +14,15 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Engine/Header/Graphic/mesh.hpp"
+#include "Engine/Header/Graphic/Mesh.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 
-namespace Engine {
-    namespace GraphicImplementation {
-        void setup_vao_square() {
-
+namespace Engine 
+{
+    namespace GraphicImplementation 
+    {
+        void setup_vao_square() 
+        {
             /*
             for batch rendering, not using for engine proof.
 
@@ -80,8 +82,6 @@ namespace Engine {
             */
 
 
-
-
             // container contains vertices of Position, Color and Texture Coordinates respectively
             std::array<GLMesh, 4> vtx = {
                 Math::vec2(-1.f, -1.f), Math::vec3(1.f, 0.f, 0.f), Math::vec2(0.f, 0.f),
@@ -130,7 +130,8 @@ namespace Engine {
 
         }
 
-        void setup_vao_circle() {
+        void setup_vao_circle() 
+        {
             // Number of vertices
             int const count{ 52 };
             float rad = Math::radians(360.f / static_cast<float>(count - 2));
@@ -138,14 +139,12 @@ namespace Engine {
             std::array<GLMesh, count> vtx;
             vtx[0] = { Math::vec2(0.f, 0.f), Math::vec3(0.f, 1.f, 0.f), Math::vec2(0.5f, 0.5f) };
 
-            for (int col{ 1 }; col < count; ++col) {
+            for (int col{ 1 }; col < count; ++col) 
+            {
                 vtx[col] = { Math::vec2(cos(rad * col), sin(rad * col)),
                 Math::vec3(0.f, 1.f, 0.f),
                 Math::vec2(0.5f + cos(rad * col), 0.5f + sin(rad * col)) };
             }
-
-            // Generate a VAO handle to encapsulate the VBO(s) and
-            // state of this triangle mesh
 
             // VAO handle definition
             GLuint vbo_hdl;
@@ -187,7 +186,8 @@ namespace Engine {
             models.insert(std::pair<GraphicShape, GLModel>(GraphicShape::CIRCLE, mdl));
         }
 
-        void setup_vao_stencilBox() {
+        void setup_vao_debugBox() 
+        {
             int slices = 1, stacks = 1;
 
             // vertices positions
@@ -199,13 +199,15 @@ namespace Engine {
 
             int index = 0;
 
-            for (int col{ 0 }; col <= slices; ++col) {
+            for (int col{ 0 }; col <= slices; ++col) 
+            {
                 float x{ u * static_cast<float> (col) - 1.f };
                 pos_vtx[index++] = Math::vec2(x, -1.f);
                 pos_vtx[index++] = Math::vec2(x, 1.f);
             }
 
-            for (int row{ 0 }; row <= stacks; ++row) {
+            for (int row{ 0 }; row <= stacks; ++row) 
+            {
                 float y{ v * static_cast<float> (row) - 1.f };
                 pos_vtx[index++] = Math::vec2(-1.f, y);
                 pos_vtx[index++] = Math::vec2(1.f, y);
@@ -213,7 +215,8 @@ namespace Engine {
 
             // Color
             std::vector<Math::vec3> clr_vtx(pos_vtx.size());
-            for (int i{ 0 }; i < pos_vtx.size(); ++i) {
+            for (int i{ 0 }; i < pos_vtx.size(); ++i) 
+            {
                 clr_vtx[i] = Math::vec3(1.f, 0.f, 0.f);
             }
 
@@ -253,13 +256,82 @@ namespace Engine {
             mdl.primitive_type = GL_LINES;
             mdl.draw_cnt = static_cast<GLuint>(pos_vtx.size()); // number of vertices
             mdl.primitive_cnt = mdl.draw_cnt / 2; // number of primitives
-            models.insert(std::pair<GraphicShape, GLModel>(GraphicShape::STENCIL, mdl));
+            models.insert(std::pair<GraphicShape, GLModel>(GraphicShape::DEBUG_BOX, mdl));
         }
 
-        void setup_vao() {
-            setup_vao_stencilBox();
+        void setup_vao_debugCircle()
+        {
+            // Number of position vertices
+            int const posVert{ 52 };
+            int const totalVertices{ 104 };
+            float rad = Math::radians(360.f / (static_cast<float>(posVert)));
+
+            std::array<Math::vec2, totalVertices> pos_vtx;
+
+            pos_vtx[0] = Math::vec2(cos(rad * 1), sin(rad * 1));
+            pos_vtx[totalVertices - 1] = Math::vec2(cos(rad * 1), sin(rad * 1));
+
+            for (int i{ 1 }, j{ 2 }; i < (totalVertices - 2); i += 2, ++j)
+            {
+                pos_vtx[i] = Math::vec2(cos(rad * j), sin(rad * j));
+                pos_vtx[i + 1] = Math::vec2(cos(rad * j), sin(rad * j));
+            }
+
+            // Color
+            std::vector<Math::vec3> clr_vtx(pos_vtx.size());
+            for (int i{ 0 }; i < pos_vtx.size(); ++i)
+            {
+                clr_vtx[i] = Math::vec3(1.f, 0.f, 0.f);
+            }
+
+            //VAO handle definition
+            GLuint vbo_hdl;
+            glCreateBuffers(1, &vbo_hdl);
+            glNamedBufferStorage(vbo_hdl, sizeof(Math::vec2) * pos_vtx.size() +
+                sizeof(Math::vec3) * clr_vtx.size(),
+                nullptr, GL_DYNAMIC_STORAGE_BIT);
+
+            //pos_vtx
+            glNamedBufferSubData(vbo_hdl, 0,
+                sizeof(Math::vec2) * pos_vtx.size(), pos_vtx.data());
+            //clr_vtx
+            glNamedBufferSubData(vbo_hdl, sizeof(Math::vec2) * pos_vtx.size(),
+                sizeof(Math::vec3) * clr_vtx.size(), clr_vtx.data());
+
+            GLuint vaoid;
+            glCreateVertexArrays(1, &vaoid);
+
+            //pos_vtx
+            glEnableVertexArrayAttrib(vaoid, 0);
+            glVertexArrayVertexBuffer(vaoid, 0, vbo_hdl, 0, sizeof(Math::vec2));
+            glVertexArrayAttribFormat(vaoid, 0, 2, GL_FLOAT, GL_FALSE, 0);
+            glVertexArrayAttribBinding(vaoid, 0, 0);
+
+            //clr_vtx
+            glEnableVertexArrayAttrib(vaoid, 1);
+            glVertexArrayVertexBuffer(vaoid, 1, vbo_hdl,
+                sizeof(Math::vec2) * pos_vtx.size(), sizeof(Math::vec3));
+            glVertexArrayAttribFormat(vaoid, 1, 3, GL_FLOAT, GL_FALSE, 0);
+            glVertexArrayAttribBinding(vaoid, 1, 1);
+
+            glBindVertexArray(0);
+
+            // Step 4: Return appropriately initialized instance of GLApp::GLModel
+            GLModel mdl;
+            mdl.vaoid = vaoid;
+            mdl.primitive_type = GL_LINES;
+            mdl.draw_cnt = static_cast<GLuint>(pos_vtx.size()); // number of vertices
+            mdl.primitive_cnt = mdl.draw_cnt / 2; // number of primitives
+            models.insert(std::pair<GraphicShape, GLModel>(GraphicShape::DEBUG_CIRCLE, mdl));
+        }
+
+        void setup_vao()
+        {
             setup_vao_square();
             setup_vao_circle();
+
+            setup_vao_debugBox();
+            setup_vao_debugCircle();
         }
     }
 }

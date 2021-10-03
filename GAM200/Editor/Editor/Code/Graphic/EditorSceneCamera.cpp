@@ -21,11 +21,12 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Window.hpp"
 
-#include "Editor/Header/Graphic/EditorSceneCamera.hpp"
+#include "../Editor/Editor/Header/Graphic/EditorSceneCamera.hpp"
 
 #define SCENE_CAMERA_HEIGHT 500
 
-namespace Editor {
+namespace Editor 
+{
     Math::vec2 EditorSceneCamera::position;
     float EditorSceneCamera::ar;
     //Math::mat3 EditorSceneCamera::world_to_ndc_xform;
@@ -34,21 +35,22 @@ namespace Editor {
         return;
     }*/
 
-    Math::mat3 EditorSceneCamera::GetTransform() {
+    Math::mat3 EditorSceneCamera::GetTransform() 
+    {
         return
+
             // compute world-to-NDC transformation matrix
-            Math::mat3(
-                2.f / (ar * SCENE_CAMERA_HEIGHT), 0.f, 0.f,
-                0.f, 2.f / SCENE_CAMERA_HEIGHT, 0.f,
-                0.f, 0.f, 1.f)
+            Math::mat3(2.f / (ar * SCENE_CAMERA_HEIGHT), 0.f, 0.f,
+                       0.f, 2.f / SCENE_CAMERA_HEIGHT, 0.f,
+                       0.f, 0.f, 1.f)
             *
-            Math::mat3(
-                1.f, 0.f, 0.f,
-                0.f, 1.f, 0.f,
-                -position.x, -position.y, 1.f);
+            Math::mat3(1.f, 0.f, 0.f,
+                       0.f, 1.f, 0.f,
+                      -position.x, -position.y, 1.f);
     }
 
-    void EditorSceneCamera::Create(Math::vec2 pos) {
+    void EditorSceneCamera::Create(Math::vec2 pos) 
+    {
         position = pos;
 
         GLsizei fb_width, fb_height;
@@ -58,9 +60,8 @@ namespace Editor {
         LOG_INSTANCE("Scene Camera created");
     }
 
-    void EditorSceneCamera::Destroy() {
+    void EditorSceneCamera::Destroy() 
+    {
         LOG_INSTANCE("Scene Camera destroyed");
     }
-
-
 }

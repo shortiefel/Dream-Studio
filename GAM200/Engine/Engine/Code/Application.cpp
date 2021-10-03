@@ -29,62 +29,58 @@ Technology is prohibited.
 
 #include "Engine/Header/EngineCore.hpp"
 
-namespace Engine {
-    //Static----------------------------------------------------------------------------------
-
-    /*
-    Application* Application::s_app_instance = 0;
-    bool Application::app_run_bool = true;
-    float Application::m_lastframeTime = 0.f;
-
-    FuncNoData Application::CreateFunc = nullptr;
-    Func1Param Application::UpdateFunc = nullptr;
-    FuncNoData Application::DestroyFunc = nullptr;
-    */
-
+namespace Engine 
+{
     bool OnWindowClose(const WindowCloseEvent& e);
 
-    void Application::Create() {
+    void Application::Create() 
+    {
         if (s_app_instance) LOG_WARNING("An instance of application already exist!");
         s_app_instance = new Application();
         LOG_INSTANCE("Application created");
 
         GameSceneSerializer::DeserializeSetting();
-        ////Create window and instantiate managers
-        if (!Window::GetInstance().Create("Dream Engine", Settings::windowWidth, Settings::windowHeight)) LOG_ERROR("Window creation has failed");
-        //s_app_instance->SetEventCallBack();
+
+        //Create window and instantiate managers
+        if (!Window::GetInstance().Create("Dream Engine", Settings::windowWidth, Settings::windowHeight)) 
+            LOG_ERROR("Window creation has failed");
 
         WindowCloseEvent::RegisterFunction(&OnWindowClose);
-
         Engine::EngineCore::GetInstance().Create();
     }
 
     void Application::Update(bool defaultRender) {
         //Called here since Application have 
         //to be created before callback is added
-        if (CreateFunc != nullptr) CreateFunc();
+        if (CreateFunc != nullptr) 
+        { 
+            CreateFunc(); 
+        }
 
-        while (app_run_bool) {
+        while (app_run_bool) 
+        {
             glClearColor(0, 0, 0, 1);
             glClear(GL_COLOR_BUFFER_BIT);
-
 
             float current_time = static_cast<float>(glfwGetTime());
             Engine::DeltaTime::UpdateDeltaTime(current_time, m_lastframeTime);
             m_lastframeTime = current_time;
+
             Engine::Window::GetInstance().DisplayFPS(DeltaTime::GetFPS());
 
             Engine::EngineCore::GetInstance().Update(DeltaTime::GetSec(), defaultRender);
 
-            if (UpdateFunc != nullptr) UpdateFunc(Engine::DeltaTime::GetSec());
+            if (UpdateFunc != nullptr) 
+            {
+                UpdateFunc(Engine::DeltaTime::GetSec());
+            }
 
             Engine::Window::GetInstance().Update();
-
-            //FrameMark;
         }
     }
 
-    void Application::Destroy() {
+    void Application::Destroy() 
+    {
         if (DestroyFunc != nullptr) DestroyFunc();
         Engine::EngineCore::GetInstance().Destroy();
         Engine::Window::GetInstance().Destroy();
@@ -93,55 +89,58 @@ namespace Engine {
         LOG_INSTANCE("Application destroyed");
 
     }
-    //------------------------------------------------------------------------------------------
 
-
-    //void Application::OnEvent(Event& event) {
-
-    //    //LOG_EVENT(event);
-
-    //    //Send event down the layers
-    //    //EventDispatcher dispatcher(event);
-    //    //event.CallRegisteredFunctions();
-
-    //    //switch (event.GetEventType()) {
-    //    //case EventType::WINDOW_CLOSE:
-    //    //    //dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-    //    //    //event.CallRegisteredFunctions();
-    //    //    break;
-    //    //    /*case EventType::KEY_PRESSED:
-
-    //    //        break;
-    //    //    case EventType::KEY_RELEASED:
-
-    //    //        break;*/
-    //    //        //case EventType::MOUSE_BUTTON_PRESSED:
-    //    //        //    LOG_WARNING(event);
-    //    //        //    break;
-    //    //        //case EventType::MOUSE_BUTTON_RELEASED:
-    //    //        //    LOG_DEBUG(event);
-    //    //        //    break;
-    //    //        //case EventType::MOUSE_MOVE:
-    //    //        //    //LOG_ERROR(event);
-    //    //        //    break;
-    //    //}
-
-    //}
-
-    /*void Application::SetEventCallBack() {
-        Window::SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
-    }*/
-
-    void Application::SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3) {
+    void Application::SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3) 
+    {
         CreateFunc = func1;
         UpdateFunc = func2;
         DestroyFunc = func3;
     }
 
-
     //Local functions-----------------------------------------------------------------
-    bool OnWindowClose(const WindowCloseEvent& e) {
+    bool OnWindowClose(const WindowCloseEvent& e) 
+    {
         Application::GetInstance().SetAppRun(false);
         return true;
     }
 }
+
+
+//------------------------------------------------------------------------------------------
+
+
+//void Application::OnEvent(Event& event) {
+
+//    //LOG_EVENT(event);
+
+//    //Send event down the layers
+//    //EventDispatcher dispatcher(event);
+//    //event.CallRegisteredFunctions();
+
+//    //switch (event.GetEventType()) {
+//    //case EventType::WINDOW_CLOSE:
+//    //    //dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+//    //    //event.CallRegisteredFunctions();
+//    //    break;
+//    //    /*case EventType::KEY_PRESSED:
+
+//    //        break;
+//    //    case EventType::KEY_RELEASED:
+
+//    //        break;*/
+//    //        //case EventType::MOUSE_BUTTON_PRESSED:
+//    //        //    LOG_WARNING(event);
+//    //        //    break;
+//    //        //case EventType::MOUSE_BUTTON_RELEASED:
+//    //        //    LOG_DEBUG(event);
+//    //        //    break;
+//    //        //case EventType::MOUSE_MOVE:
+//    //        //    //LOG_ERROR(event);
+//    //        //    break;
+//    //}
+
+//}
+
+/*void Application::SetEventCallBack() {
+    Window::SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+}*/

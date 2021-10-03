@@ -20,7 +20,8 @@ layout (location=1) out vec2 vTexture;
 //layout (location=2) out float vTextureIndex;
 
 
-void main() {
+void main() 
+{
 	// object position
 	gl_Position = vec4(vec2(uModel_to_NDC * vec3(aVertexPosition, 1.f)), 0.0, 1.0);
 

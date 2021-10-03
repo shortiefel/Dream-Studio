@@ -23,15 +23,14 @@ Technology is prohibited.
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
-//#include "Engine/Header/Debug tools/Logging.hpp"
-
 #include "Engine/Header/Graphic/Graphic.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 
 
-namespace Engine {
+namespace Engine 
+{
 	class DSerializer;
 	class SSerializer;
 
@@ -43,14 +42,13 @@ namespace Engine {
 		bool isActive = true;
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
-		//Math::mat3 mdl_to_ndc_xform = Math::mat3{};
-
 		Math::mat3 GetTransform() const;
 
 		TransformComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		TransformComponent(Entity _ID = DEFAULT_ENTITY, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{1,1}, float _angle = float{}, bool _active = true, int _layer = 0);
+		TransformComponent(Entity _ID = DEFAULT_ENTITY, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{1,1}, 
+			float _angle = float{}, bool _active = true, int _layer = 0);
 		TransformComponent& operator+= (const TransformComponent& _rhs);
 
 		TransformComponent(const TransformComponent&) = default;

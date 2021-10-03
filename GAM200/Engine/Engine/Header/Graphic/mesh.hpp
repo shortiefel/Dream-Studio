@@ -22,8 +22,8 @@ Technology is prohibited.
 namespace Engine {
     namespace GraphicImplementation {
         // container that contains 3 different vectors of vertex coordinates
-        // Object Position, Color and 
-        //Coordinates respectively
+        // Object position, color and 
+        // Texture coordinates respectively
         struct GLMesh {
             Math::vec2 objPos_vtx;
             Math::vec3 clr_vtx;
@@ -33,7 +33,5 @@ namespace Engine {
         void setup_vao();
     }
 }
-
-
 
 #endif // MESH_H

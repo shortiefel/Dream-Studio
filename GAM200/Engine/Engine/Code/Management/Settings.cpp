@@ -4,7 +4,7 @@
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    11/09/2021
 \brief
-
+Stores Window settings
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.

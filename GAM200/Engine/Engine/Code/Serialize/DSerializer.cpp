@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Serializer.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
 @date    16/09/2021
 \brief
 This file has the function definition of DSerializer

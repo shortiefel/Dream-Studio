@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    MathInternal.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    16/06/2021
 \brief
 This file contains math internal include

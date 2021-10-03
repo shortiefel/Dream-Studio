@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EventDispatcher.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
 @date    26/05/2021
 \brief
 This file contain the Event dispatcher declaration

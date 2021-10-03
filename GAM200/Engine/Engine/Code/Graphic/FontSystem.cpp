@@ -1,12 +1,8 @@
 /* Start Header**********************************************************************************/
 /*!
-\file FontSystem.cpp
-\team name
-\software name
-\authors
-NAME							EMAIL									ROLE
-Goh	See Yong Denise				g.seeyongdenise@digipen.edu
-\date 29/06/2021
+@file FontSystem.cpp
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
+@date 29/06/2021
 \brief
 
 This file contain the font system.

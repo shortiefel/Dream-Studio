@@ -1,14 +1,11 @@
 /* Start Header**********************************************************************************/
 /*!
-\file FontSystem.hpp
-\team name
-\software name
-\authors
-NAME							EMAIL									ROLE
-Goh	See Yong Denise				g.seeyongdenise@digipen.edu
-\date 29/06/2021
-\brief
+@file FontSystem.hpp
+@authors	Goh See Yong Denise				g.seeyongdenise@digipen.edu
+@date 29/06/2021
+@brief
 FontSystem.hpp: This file contains all the structure and class related to the font systems
+
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of

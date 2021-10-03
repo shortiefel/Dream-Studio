@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Application.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    19/06/2021
 \brief
 Create a window and other various required manager (e.g Physic / Graphic Manager)

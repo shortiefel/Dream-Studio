@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    SystemList.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    27/06/2021
 @brief
 List of all System

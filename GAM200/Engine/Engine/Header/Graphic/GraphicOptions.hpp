@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GraphicOptions.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    16/09/2021
 \brief
 This file has the graphic options

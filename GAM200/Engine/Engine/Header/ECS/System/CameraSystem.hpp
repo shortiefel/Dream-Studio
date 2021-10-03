@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    CameraSystem.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    26/06/2021
 @brief
 This file contain the CameraSystem declaration

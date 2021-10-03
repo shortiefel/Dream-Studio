@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TextureManager.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    03/07/2021
 \brief
 This file has the function declaration for TextureManager

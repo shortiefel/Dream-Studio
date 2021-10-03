@@ -1,11 +1,18 @@
-/* !
-@file    glslshader.cpp
-@author  chiayida98@gmail.com
-@date    01/10/2021
-
+/* Start Header**********************************************************************************/
+/*
+@file    debugdraw.cpp
+@author  Chia Yi Da		chiayida98@gmail.com
+@date    23/09/2021
+\brief
 This file contains definitions of member functions of class GLShader.
 
-*//*__________________________________________________________________________*/
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
+
 #include "Engine/Header/Graphic/glslshader.hpp"
 
 namespace Engine {

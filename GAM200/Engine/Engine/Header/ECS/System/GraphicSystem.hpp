@@ -1,8 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GraphicSystem.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
-		 Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 @brief
 This file has the class to manage graphics: GraphicsSystem

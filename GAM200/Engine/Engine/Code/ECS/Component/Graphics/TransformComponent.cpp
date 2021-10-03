@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TransformComponent.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    16/09/2021
 \brief
 This file contain the transform struct to be used by the ECS and various system

@@ -1,16 +1,17 @@
-/* !
-@file    glslshader.h
-@author  chiayida98@gmail.com
+/* Start Header**********************************************************************************/
+/*
+@file    glslshader.hpp
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    01/10/2021
+\brief
+This file contains declaration of member functions of class GLShader.
 
-This file contains the declaration of class GLSLShader that encapsulates the
-functionality required to load shader source; compile shader source; link
-shader objects into a program object, validate program object; log msesages
-from compiling linking, and validation steps; install program object in
-appropriate shaders; and pass uniform variables from the client to the
-program object.
-
-*//*__________________________________________________________________________*/
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
 
 /*                                                                      guard
 ----------------------------------------------------------------------------- */

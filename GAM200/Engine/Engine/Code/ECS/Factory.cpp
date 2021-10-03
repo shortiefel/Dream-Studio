@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Factory.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Chia Yi Da		chiayida98@gmail.com
 @date    23/06/2021
 \brief
 This file allow user to create shapes easily with function: CreateSquare and CreateCircle

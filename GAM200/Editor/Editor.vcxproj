@@ -125,9 +125,9 @@ if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y
+copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
 
 
 
@@ -165,9 +165,9 @@ if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y
+copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
 
 
 
@@ -209,9 +209,9 @@ if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y
+copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
 
 
 
@@ -253,9 +253,9 @@ if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
 
-copy "$(ProjectDir)Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y
+copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
 
 
 

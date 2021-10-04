@@ -73,26 +73,26 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
-    <IncludePath>$(SolutionDir)/External Resources/include/Imgui;$(ProjectDir)/Editor/Header;$(SolutionDir)/Engine;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/Imgui;$(ProjectDir)/Editor/Header;$(SolutionDir)/Engine;$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/Imgui;$(ProjectDir)/Editor/Header;$(SolutionDir)/Engine;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/Imgui;$(ProjectDir)/Editor/Header;$(SolutionDir)/Engine;$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/Imgui;$(ProjectDir)/Editor/Header;$(SolutionDir)/Engine;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/Imgui;$(ProjectDir)/Editor/Header;$(SolutionDir)/Engine;$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/Imgui;$(ProjectDir)/Editor/Header;$(SolutionDir)/Engine;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/Imgui;$(ProjectDir)/Editor/Header;$(SolutionDir)/Engine;$(SolutionDir)/Editor;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
@@ -116,8 +116,8 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
-copy "$(SolutionDir)\Editor\Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
-copy "$(SolutionDir)\Editor\Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
+copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
+copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -139,8 +139,8 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
-copy "$(SolutionDir)\Editor\Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
-copy "$(SolutionDir)\Editor\Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
+copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
+copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,8 +166,8 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
-copy "$(SolutionDir)\Editor\Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
-copy "$(SolutionDir)\Editor\Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
+copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
+copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -193,8 +193,8 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
-copy "$(SolutionDir)\Editor\Assets\Shaders\OpenGLEngine.frag" "$(TargetDir)Assets\Shaders\OpenGLEngine.frag" /Y
-copy "$(SolutionDir)\Editor\Assets\Shaders\OpenGLEngine.vert" "$(TargetDir)Assets\Shaders\OpenGLEngine.vert" /Y</Command>
+copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
+copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

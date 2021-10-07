@@ -34,7 +34,7 @@ if (_csScriptInstance.csClass.name != nullptr) {\
 	mono_runtime_invoke(_csScriptInstance.csClass.name, _csScriptInstance.csClass.object, _param, &exception);\
 	if (exception != nullptr) {\
 	std::cout << mono_string_to_utf8(mono_object_to_string(exception, nullptr)) << "\n";\
-	GameState::SetPlaying(false);\
+	GameState::GetInstance().SetPlaying(false);\
 	Scripting::DestroyChildDomain();\
 	}\
 }
@@ -159,7 +159,7 @@ namespace Engine {
 
 		void InitCSClass(CSScriptInstance& _csScriptInstance) {
 			//If no child domain dont klass doesnt exist
-			if (!GameState::GetPlaying()) return;
+			if (!GameState::GetInstance().GetPlaying()) return;
 
 			auto& csClass = _csScriptInstance.csClass;
 			auto& className = csClass.className;

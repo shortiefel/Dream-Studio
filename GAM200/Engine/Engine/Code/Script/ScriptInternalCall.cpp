@@ -283,7 +283,7 @@ namespace Engine {
 	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle) {
 		//GameSceneSerializer::DeserializeScene(mono_string_to_utf8(prefabName));
 		GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), position, angle);
-		if (GameState::GetPlaying()) ScriptSystem::GetInstance().PlayInit();
+		if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
 
 

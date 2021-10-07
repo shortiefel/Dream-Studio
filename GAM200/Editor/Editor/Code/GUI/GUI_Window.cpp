@@ -33,6 +33,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
+//#include <string>
+
 //Create a window with an image
 //E.g Game window 
 #define CreateImageWindow(windowName, texid, windowBool) \
@@ -100,9 +102,9 @@ namespace Editor {
 				GUI_WindowsMenu();
 
 				ImGui::EndMenuBar();
-				
+
 			}
-			
+
 		}
 
 		//Menu for files
@@ -122,7 +124,7 @@ namespace Editor {
 				ImGui::EndMenu();
 			}
 
-			
+
 		}
 
 		//Menu to open windows
@@ -135,12 +137,13 @@ namespace Editor {
 				ImGui::MenuItem("Game Window", NULL, &gameWin_bool);
 				ImGui::MenuItem("Scene Window", NULL, &sceneWin_bool);
 				ImGui::MenuItem("Content Browser", NULL, &asset_bool);
-				
+				ImGui::MenuItem("Engine Stats", NULL, &stats_bool);
+
 
 				ImGui::EndMenu();
 			}
 
-			
+
 		}
 		/*-------------------------------------------------------------------------------------------------
 		-------------------------------------------------------------------------------------------------*/
@@ -155,7 +158,7 @@ namespace Editor {
 				ImVec2 wSize = ImGui::GetWindowSize();
 				ImGui::Begin("Actions", &playStop_bool, window_flags);
 
-				ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetPlaying());
+				ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
 				ImGui::PushItemWidth(wSize.x / 2);
 				if (ImGui::Button("Play", (ImVec2{ 40, 30 }))) {
 					EditorSceneManager::GetInstance().Play();
@@ -163,8 +166,8 @@ namespace Editor {
 				ImGui::PopItemFlag();
 
 				ImGui::SameLine();
-				ImGui::PushItemWidth(wSize.x /2 + 20);
-				ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetPlaying()));
+				ImGui::PushItemWidth(wSize.x / 2 + 20);
+				ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
 				if (ImGui::Button("Stop", (ImVec2{ 40, 30 }))) {
 					EditorSceneManager::GetInstance().Stop();
 				}
@@ -179,7 +182,7 @@ namespace Editor {
 				ImGui::Begin("Hierarchy", &hierarchy_bool, window_flags);
 
 				/**
-				* Game Objects 
+				* Game Objects
 				*/
 
 				//if (ImGui::TreeNode("Camera")) {
@@ -224,7 +227,7 @@ namespace Editor {
 				Engine::Entity entity_selected = Engine::Entity{ 1 };
 				float width = 120;
 				bool selectEntity = 0;
-				
+
 				/**
 				*	Transform Properties
 				*/
@@ -289,7 +292,7 @@ namespace Editor {
 					}
 					ImGui::TreePop();
 				}*/
-				
+
 
 				/**
 				*	Scripts for each component
@@ -326,10 +329,10 @@ namespace Editor {
 									ImGui::InputFloat("G", &(tem.y), 0);
 									break;
 								}
-									
+
 							}
 						}
-						
+
 
 						ImGui::TreePop();
 					}
@@ -339,10 +342,31 @@ namespace Editor {
 				/**
 				*	Add New Components
 				*/
-				
+
 				ImGui::Button("Add Component", (ImVec2{ 100, 0 }));
 
 
+
+
+
+				ImGui::End();
+			}
+		}
+
+		void GUI_Stats() {
+			if (stats_bool) {
+				ImGui::Begin("Engine Stats", &stats_bool);
+				std::stringstream outputSS;
+				outputSS << "FPS: ";
+				outputSS.precision(2);
+				outputSS << std::fixed << Engine::GameState::GetInstance().GetFPS();
+				
+				ImGui::Text(outputSS.str().c_str());
+				outputSS.str(std::string());
+
+				outputSS << "Entity Count: ";
+				outputSS << Engine::DreamECS::GetInstance().GetComponentArraySize<Engine::TransformComponent>();
+				ImGui::Text(outputSS.str().c_str());
 
 
 

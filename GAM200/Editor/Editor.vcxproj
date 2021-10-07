@@ -73,12 +73,12 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
@@ -87,12 +87,12 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/Tracy/</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
@@ -279,6 +279,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="Editor\Header\GUI\ContentBroswerPanel.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUIWindow.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\ProfilerWindow.hpp" />
     <ClInclude Include="Editor\Header\Scene\EditorSceneManager.hpp" />
     <ClInclude Include="Editor\Header\Tools\Profiler.hpp" />
   </ItemGroup>
@@ -294,6 +295,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClCompile Include="Editor\Code\Graphic\EditorSceneCamera.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Window.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\ProfilerWindow.cpp" />
     <ClCompile Include="Editor\Code\Main.cpp" />
     <ClCompile Include="Editor\Code\Scene\EditorSceneManager.cpp" />
     <ClCompile Include="Editor\Header\Tools\Profiler.cpp" />

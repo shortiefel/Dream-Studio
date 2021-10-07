@@ -29,6 +29,11 @@ Technology is prohibited.
 
 #include "Engine/Header/EngineCore.hpp"
 
+#include "Engine/Header/Time/Timer.hpp"
+#include "Engine/Header/Debug Tools/Profiler.hpp"
+#include "Engine/Header/Management/GameState.hpp"
+#include <iostream>
+
 namespace Engine 
 {
     bool OnWindowClose(const WindowCloseEvent& e);
@@ -57,22 +62,32 @@ namespace Engine
             CreateFunc(); 
         }
 
-        while (app_run_bool) 
-        {
+        while (app_run_bool) {
+            Timer time("Application", [&](ProfilerResult result) {
+                float sec = result.time * 0.001f;
+                GameState::GetInstance().SetDeltaTime(sec);
+                static float wait_time = 0;
+                wait_time += sec;
+
+                if (wait_time > FPS_Interval) {
+                    GameState::GetInstance().SetFPS(1/sec);
+                    std::cout << result.name << ": " << GameState::GetInstance().GetFPS() << " fps" << std::endl;
+                    wait_time = 0;
+                }
+                });
+
             glClearColor(0, 0, 0, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            float current_time = static_cast<float>(glfwGetTime());
+            /*float current_time = static_cast<float>(glfwGetTime());
             Engine::DeltaTime::UpdateDeltaTime(current_time, m_lastframeTime);
-            m_lastframeTime = current_time;
+            m_lastframeTime = current_time;*/
 
-            Engine::Window::GetInstance().DisplayFPS(DeltaTime::GetFPS());
+            //Engine::Window::GetInstance().DisplayFPS(DeltaTime::GetFPS());
+            Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
 
-            Engine::EngineCore::GetInstance().Update(DeltaTime::GetSec(), defaultRender);
-
-            if (UpdateFunc != nullptr) 
-            {
-                UpdateFunc(Engine::DeltaTime::GetSec());
+            if (UpdateFunc != nullptr) {
+                UpdateFunc(GameState::GetInstance().GetDeltaTime());
             }
 
             Engine::Window::GetInstance().Update();

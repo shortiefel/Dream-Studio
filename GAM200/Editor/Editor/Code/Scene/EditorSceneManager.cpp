@@ -30,19 +30,19 @@ namespace Editor {
     bool SceneHotKey(const Engine::KeyPressedEvent& e);
 
     void EditorSceneManager::Play() {
-        Engine::GameState::SetPlaying(true);
+        Engine::GameState::GetInstance().SetPlaying(true);
         Engine::SceneManager::GetInstance().Play();
     }
 
     void EditorSceneManager::Stop() {
         std::cout << "Stopping\n";
-        Engine::GameState::SetPlaying(false);
+        Engine::GameState::GetInstance().SetPlaying(false);
         Engine::SceneManager::GetInstance().ChangeScene(editorSceneName);
     }
 
     bool EditorSceneManager::SceneHotKeyCheck(Engine::Input_KeyCode keyCode) {
         if (keyCode == Engine::Input_KeyCode::P) {
-            if (Engine::GameState::GetPlaying()) {
+            if (Engine::GameState::GetInstance().GetPlaying()) {
                 //Destroy current scene and create new scene (default)
                 Stop();
             }
@@ -55,7 +55,7 @@ namespace Editor {
 
         //Save
         else if (keyCode == Engine::Input_KeyCode::S) {
-            if (!Engine::GameState::GetPlaying()) {
+            if (!Engine::GameState::GetInstance().GetPlaying()) {
                 Engine::SceneManager::GetInstance().Save();
                 std::cout << "Saving... \n";
                 return true;

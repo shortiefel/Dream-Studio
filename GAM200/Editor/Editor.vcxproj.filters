@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{a437fec9-aaa1-4007-b747-011b9e4fd9cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GUI\GUI_Windows">
+      <UniqueIdentifier>{41c48be7-3a1a-43cb-afcf-7573afe6f23a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\GUI_Windows">
+      <UniqueIdentifier>{1b973a22-67e8-4522-b947-62a87ddaf9f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\Imgui\imconfig.h">
@@ -90,6 +96,9 @@
     <ClInclude Include="Editor\Header\GUI\ContentBroswerPanel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\ProfilerWindow.hpp">
+      <Filter>Header Files\GUI\GUI_Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -133,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="Editor\Code\Scene\EditorSceneManager.cpp">
       <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\ProfilerWindow.cpp">
+      <Filter>Source Files\GUI\GUI_Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

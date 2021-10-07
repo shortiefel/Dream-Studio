@@ -34,6 +34,7 @@ namespace Editor {
 
         static bool hierarchy_bool = true;
         static bool inspector_bool = true;
+        static bool stats_bool = true;
         static bool gameWin_bool = true;
         static bool sceneWin_bool = true;
         static bool asset_bool = true;
@@ -50,6 +51,10 @@ namespace Editor {
         void    GUI_HeaderPanel();
         void	GUI_Hierarchy();
         void	GUI_Inspector();
+        /*
+        * Show stats like fps and Number of game object
+        */
+        void	GUI_Stats();
         void	GUI_GameWindow(ImTextureID& gameWinTex);
         void	GUI_SceneWindow(ImTextureID& sceneWinTex);
         void    GUI_ContentBrowserPanel();

@@ -47,12 +47,12 @@ namespace Engine {
             //currentSceneName = sceneName;
             currentScene = new Scene{ nextScene };
             nextScene = std::string{};
-            if (GameState::GetPlaying()) ScriptSystem::GetInstance().PlayInit();
+            if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
         }
 	}
 
 	void SceneManager::Update(float dt, bool defaultRender) {
-        currentScene->Update(dt, GameState::GetPlaying(), defaultRender);
+        currentScene->Update(dt, GameState::GetInstance().GetPlaying(), defaultRender);
 
         ChangeSceneInternal();
 	}

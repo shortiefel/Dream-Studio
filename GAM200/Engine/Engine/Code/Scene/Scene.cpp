@@ -45,7 +45,7 @@ namespace Engine {
     void Scene::Play() {
          if (!ScriptSystem::GetInstance().CompileCS()) {
             std::cout << "Fail to compile \n";
-            GameState::SetPlaying(false);
+            GameState::GetInstance().SetPlaying(false);
             //Scene::SetPlaying(false);
             return;
         }

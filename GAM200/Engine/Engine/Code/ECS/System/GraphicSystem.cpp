@@ -33,10 +33,14 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/Graphic/DebugDraw.hpp"
 
+#include "Engine/Header/Debug Tools/Profiler.hpp"
+
 namespace Engine 
 {
 	void GraphicSystem::Render(Math::mat3 camMatrix) 
 	{
+		PROFILER_START("Graphic System");
+
 		GraphicImplementation::BindFramebuffer();
 
 		// Set background to purple color

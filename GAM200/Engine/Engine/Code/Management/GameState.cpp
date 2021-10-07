@@ -17,8 +17,10 @@ Technology is prohibited.
 #include "Engine/Header/Management/GameState.hpp"
 
 namespace Engine {
-	bool GameState::playing = false;
-
-	bool GameState::GetPlaying() { return playing; }
+	bool GameState::GetPlaying() const  { return playing; }
 	void GameState::SetPlaying(bool playState) { playing = playState; }
+	float GameState::GetFPS() const { return fps; }
+	void GameState::SetFPS(float _fps) { fps = _fps; }
+	float GameState::GetDeltaTime() const { return dt; }
+	void GameState::SetDeltaTime(float _dt) { dt = _dt; }
 }

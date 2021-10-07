@@ -15,20 +15,16 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Time/Timer.hpp"
-#include <iostream>
 
 namespace Engine {
-    Timer::Timer(const char* _name) :
-    name {_name}, stopped {false} {
-        startTime = std::chrono::high_resolution_clock::now();
-    }
-
-    Timer:: ~Timer() {
+    /*template <typename FnCallBack>
+    Timer<FnCallBack>:: ~Timer() {
         if (!stopped)
             Stop();
-    }
+    }*/
 
-    Timer::Stop() {
+    /*template <typename FnCallBack>
+    void Timer<FnCallBack>::Stop() {
         auto endTime = std::chrono::high_resolution_clock::now();
 
         long long start = std::chrono::time_point_cast<std::chrono::milliseconds>(startTime).time_since_epoch().count();
@@ -38,6 +34,6 @@ namespace Engine {
 
         stopped = true;
 
-        std::cout << name << ": " << duration << " ms" << std::end;
-   }
+        std::cout << name << ": " << duration << " ms" << std::endl;
+   }*/
 }

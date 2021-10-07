@@ -18,13 +18,23 @@ Technology is prohibited.
 #ifndef GAME_STATE_HPP
 #define GAME_STATE_HPP
 
+#include "Engine/Header/Singleton/Singleton.hpp"
+
 namespace Engine {
-	class GameState {
+	class GameState : public Singleton<GameState> {
 	public:
-		static bool GetPlaying();
-		static void SetPlaying(bool playState);
+		bool GetPlaying() const;
+		void SetPlaying(bool playState);
+		float GetFPS() const;
+		void SetFPS(float _fps);
+		float GetDeltaTime() const;
+		void SetDeltaTime(float _dt);
 	private:
-		static bool playing;
+		bool playing = false;
+		float dt = 1/60.0f;
+		float fps = 60.f;
+
+		SINGLETON_SETUP(GameState);
 	};
 };
 

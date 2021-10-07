@@ -18,7 +18,7 @@ Technology is prohibited.
 #define DELTA_TIME_HPP
 
 namespace Engine {
-#define FPS_Interval .5f
+//#define FPS_Interval .5f
 
 	class DeltaTime {
 	public:

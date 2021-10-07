@@ -8,7 +8,7 @@ namespace Engine {
 		m_time = current_time - last_time;
 
 		//Update fps by FPS_Interval
-		if (current_time - new_wait_time > FPS_Interval) {
+		if (current_time - new_wait_time > 0.5f) {
 			new_wait_time = current_time;
 			fps = 1 / m_time;
 		}

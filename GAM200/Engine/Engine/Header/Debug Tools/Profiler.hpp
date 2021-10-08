@@ -25,7 +25,7 @@ Technology is prohibited.
 namespace Engine {
 	struct ProfilerResult {
 		const char* name;
-		float time;
+		double time;
 	};
 
 	class Profiler : public Singleton<Profiler> {
@@ -39,7 +39,9 @@ namespace Engine {
 	};
 }
 
-#define PROFILER_START(name) Engine::Timer timer##__LINE__(name, [&](Engine::ProfilerResult result) {\
-Engine::Profiler::GetInstance().profilerResult.emplace_back(result); });
+//#define PROFILER_START(name) Engine::Timer timer(name, std::move([&](Engine::ProfilerResult&& result) {\
+//Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result)); }));
+#define PROFILER_START(name) Engine::Timer timer(name, std::move([&](Engine::ProfilerResult&& result) {\
+ }));
 
 #endif

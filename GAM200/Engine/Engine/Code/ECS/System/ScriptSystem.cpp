@@ -103,7 +103,7 @@ namespace Engine {
 	}
 
 	void ScriptSystem::PlayRunTime() {
-		PROFILER_START("Scripting System");
+		PROFILER_START("Scripting");
 
 		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {

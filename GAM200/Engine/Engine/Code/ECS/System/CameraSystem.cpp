@@ -33,7 +33,7 @@ namespace Engine
     //Update function to change the world to NDC transform that will be used
     //to create the graphics
     void CameraSystem::Update(float dt) {
-        PROFILER_START("Camera System");
+        PROFILER_START("Rendering Camera");
 
         auto& camArray = DreamECS::GetInstance().GetComponentArrayData<CameraComponent>();
         for (auto& cam : camArray) {

@@ -43,28 +43,33 @@ namespace Editor {
 
 	void EditorStartPoint::Update(float dt) {
 		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
-		GUI::SetGameFBO();
-		//Engine::GraphicSystem::Update(dt);
+		PROFILER_START("Rendering Update");
+
 		{
-			PROFILER_START("Game Graphic System");
+			PROFILER_START("Rendering Game Graphic");
+			GUI::SetGameFBO();
+			//Engine::GraphicSystem::Update(dt);
+		
+			
 			Engine::GraphicSystem::GetInstance().Render();
 		}
 
 		//EditorSceneCamera::Update(dt);
-
-		GUI::SetSceneFBO();
-		//Engine::GraphicSystem::Update(dt);
-		//Change this line to editor graphic system
 		{
-			PROFILER_START("Editor Graphic System");
+			PROFILER_START("Rendering Editor Graphic");
+
+			GUI::SetSceneFBO();
+			//Engine::GraphicSystem::Update(dt);
+			//Change this line to editor graphic system
+		
 			Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform());
 		}
 		{
-			PROFILER_START("GUI Update");
+			PROFILER_START("Rendering GUI Update");
 			GUI::Update();
 		}
 		{
-			PROFILER_START("GUI Draw");
+			PROFILER_START("Rendering GUI Draw");
 			GUI::Draw();
 		}
 		//Profiler::Profiler_Draw();

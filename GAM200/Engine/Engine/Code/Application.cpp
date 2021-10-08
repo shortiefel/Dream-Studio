@@ -63,8 +63,8 @@ namespace Engine
         }
 
         while (app_run_bool) {
-            Timer timer("Application", [&](ProfilerResult result) {
-                float sec = result.time * 0.001f;
+            Timer timer("Application", std::move([&](ProfilerResult&& result) {
+                float sec = static_cast<float>(result.time) * 0.001f;
                 GameState::GetInstance().SetDeltaTime(sec);
 
                 static float wait_time = 0;
@@ -74,16 +74,23 @@ namespace Engine
                     wait_time = 0;
                 }
 
-                Engine::Profiler::GetInstance().profilerResult.emplace_back(result);
-                });
+                //Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result));
+                }));
 
-            Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
+            {
+                //PROFILER_START("Main 1");
+                Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
+            }
 
             if (UpdateFunc != nullptr) {
+                //PROFILER_START("Main 2");
                 UpdateFunc(GameState::GetInstance().GetDeltaTime());
             }
 
-            Engine::Window::GetInstance().Update();
+            {
+                //PROFILER_START("Main 3");
+                Engine::Window::GetInstance().Update();
+            }
 
             Profiler::GetInstance().DisplayProfilerResult();
         }

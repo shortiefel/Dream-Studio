@@ -73,7 +73,7 @@ namespace Engine {
 	}
 
 	void CollisionSystem::Update(float dt) {
-		PROFILER_START("Collision System");
+		PROFILER_START("Collision");
 
 		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
 		auto colliderStart = colliderArray.begin(),

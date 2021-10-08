@@ -36,11 +36,6 @@ int main() {
     //use try and except (require logging)
     Engine::Application::GetInstance().Create(); //Needed for game
 
-    Engine::Application::GetInstance().SetupCallbackFunction(
-        &Editor::EditorStartPoint::Create,
-        &Editor::EditorStartPoint::Update,
-        &Editor::EditorStartPoint::Destroy);
-
     Engine::Application::GetInstance().Update(false); //Needed for game
 
     Engine::Application::GetInstance().Destroy(); //Needed for game

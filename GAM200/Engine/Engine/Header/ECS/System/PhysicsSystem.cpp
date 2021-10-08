@@ -27,7 +27,7 @@ Technology is prohibited.
 
 namespace Engine {
 	void PhysicsSystem::Update(float dt) {
-		PROFILER_START("Physics System");
+		PROFILER_START("Physics");
 
 		const auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBodyComponent>();
 		for (auto& rigidBody : rigidBodyArray) {

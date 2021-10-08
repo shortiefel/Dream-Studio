@@ -17,11 +17,11 @@ Technology is prohibited.
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
-#include <chrono>
+//#include <chrono>
 #include <iostream>
+#include "Engine/Header/pch.hpp"
 
 #define FPS_Interval .5f
-//#define START_TIME(name, func) Timer timer##__LINE__(name, func);
 
 namespace Engine {
     template <typename FnCallBack>
@@ -29,9 +29,9 @@ namespace Engine {
     public:
         Timer(const char* _name, FnCallBack&& _fnCallBack) :
             name{ _name }, fnCallBack{ _fnCallBack }, stopped{ false } {
-            //std::cout << "stuff created \n";
-            startTime = std::chrono::high_resolution_clock::now();
+            startTime = glfwGetTime();
         }
+
         ~Timer() {
             if (!stopped)
                 Stop();
@@ -41,19 +41,14 @@ namespace Engine {
         const char* name;
         bool stopped;
         FnCallBack fnCallBack;
-        std::chrono::time_point<std::chrono::steady_clock> startTime;
-
+        double startTime;
         void Stop() {
-            auto endTime = std::chrono::high_resolution_clock::now();
-
-            long long start = std::chrono::time_point_cast<std::chrono::microseconds>(startTime).time_since_epoch().count();
-            long long end = std::chrono::time_point_cast<std::chrono::microseconds>(endTime).time_since_epoch().count();
-
+            double time = (glfwGetTime() - startTime) * 1000;
+            
             stopped = true;
 
-            float time = (end - start) * 0.001f;
+            std::cout << name << ": " << time << "\n";
             fnCallBack({ name, time });
-            //std::cout << name << ": " << time << " ms" << std::endl;
         }
     };
 }

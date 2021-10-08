@@ -19,14 +19,18 @@ Technology is prohibited.
 
 namespace Engine {
 	void Profiler::DisplayProfilerResult() {
-		for (const auto& result : profilerResult) {
-			std::cout << result.name << ": " << result.time << std::endl;
+		for (auto& result : profilerResult) {
+			char label[50];
+			strcpy_s(label, result.name);
+			//strcat_s(label, " %0.3fms");
+			//ImGui::Text(label, result.time);
+			printf("%s %0.3fms\n", label, result.time);
+			
+
+			//std::cout << "dfs " << label << result.time << "\n";
+			//std::cout << result.name << ": " << result.time << std::endl;
 		}
 
-		/*
-		std::cout << "Profiler states \n";
-		std::cout << profilerResult.size() << "\n";
-		*/
 		profilerResult.clear();
 	}
 }

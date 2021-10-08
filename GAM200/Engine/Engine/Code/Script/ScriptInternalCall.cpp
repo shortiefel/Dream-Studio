@@ -34,8 +34,6 @@ Technology is prohibited.
 
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
-#include "Engine/Header/DeltaTime/DeltaTime.hpp" //To get deltaTime
-
 #define GetEngineType(ID, type, paramName, param)\
 type* ctype = DreamECS::GetInstance().GetComponentPTR<type>(ID);\
 if (!ctype) return;\
@@ -291,7 +289,7 @@ namespace Engine {
 	Deltatime
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetDeltaTime_Engine(float* dt) {
-		*dt = DeltaTime::GetSec();
+		*dt = GameState::GetInstance().GetDeltaTime();
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

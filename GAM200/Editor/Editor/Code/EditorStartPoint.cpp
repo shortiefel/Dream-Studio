@@ -27,6 +27,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 #include "Engine/Header/Window.hpp"
 
+#include "Engine/Header/Debug Tools/Profiler.hpp"
+
 namespace Editor {
 	void EditorStartPoint::Create() {
 		GUI::Create(Engine::Window::GetInstance().GetGLFWwindow(), Engine::Window::GetInstance().GetGLSLVersion());
@@ -43,18 +45,29 @@ namespace Editor {
 		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
 		GUI::SetGameFBO();
 		//Engine::GraphicSystem::Update(dt);
-		Engine::GraphicSystem::GetInstance().Render();
+		{
+			PROFILER_START("Game Graphic System");
+			Engine::GraphicSystem::GetInstance().Render();
+		}
 
 		//EditorSceneCamera::Update(dt);
 
 		GUI::SetSceneFBO();
 		//Engine::GraphicSystem::Update(dt);
 		//Change this line to editor graphic system
-		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform());
-
-		GUI::Update();
-		GUI::Draw();
-		Profiler::Profiler_Draw();
+		{
+			PROFILER_START("Editor Graphic System");
+			Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform());
+		}
+		{
+			PROFILER_START("GUI Update");
+			GUI::Update();
+		}
+		{
+			PROFILER_START("GUI Draw");
+			GUI::Draw();
+		}
+		//Profiler::Profiler_Draw();
 
 	}
 	void EditorStartPoint::Destroy() {

@@ -23,8 +23,12 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 
+#include "Engine/Header/Debug Tools/Profiler.hpp"
+
 namespace Engine {
 	void PhysicsSystem::Update(float dt) {
+		PROFILER_START("Physics System");
+
 		const auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBodyComponent>();
 		for (auto& rigidBody : rigidBodyArray) {
 			const Entity& entity = rigidBody.GetEntity();

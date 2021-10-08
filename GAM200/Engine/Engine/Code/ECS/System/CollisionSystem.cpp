@@ -34,6 +34,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
+#include "Engine/Header/Debug Tools/Profiler.hpp"
+
 namespace Engine {
 	std::unordered_map<Entity_id, std::vector<Entity>> overlapMap;
 
@@ -71,6 +73,8 @@ namespace Engine {
 	}
 
 	void CollisionSystem::Update(float dt) {
+		PROFILER_START("Collision System");
+
 		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
 		auto colliderStart = colliderArray.begin(),
 			colliderEnd = colliderArray.end();

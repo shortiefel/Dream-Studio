@@ -23,6 +23,10 @@ namespace Engine {
 			std::cout << result.name << ": " << result.time << std::endl;
 		}
 
+		/*
+		std::cout << "Profiler states \n";
+		std::cout << profilerResult.size() << "\n";
+		*/
 		profilerResult.clear();
 	}
 }

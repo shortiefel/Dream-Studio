@@ -63,27 +63,20 @@ namespace Engine
         }
 
         while (app_run_bool) {
-            Timer time("Application", [&](ProfilerResult result) {
+            Timer timer("Application", [&](ProfilerResult result) {
                 float sec = result.time * 0.001f;
                 GameState::GetInstance().SetDeltaTime(sec);
+
                 static float wait_time = 0;
                 wait_time += sec;
-
                 if (wait_time > FPS_Interval) {
                     GameState::GetInstance().SetFPS(1/sec);
-                    std::cout << result.name << ": " << GameState::GetInstance().GetFPS() << " fps" << std::endl;
                     wait_time = 0;
                 }
+
+                Engine::Profiler::GetInstance().profilerResult.emplace_back(result);
                 });
 
-            glClearColor(0, 0, 0, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            /*float current_time = static_cast<float>(glfwGetTime());
-            Engine::DeltaTime::UpdateDeltaTime(current_time, m_lastframeTime);
-            m_lastframeTime = current_time;*/
-
-            //Engine::Window::GetInstance().DisplayFPS(DeltaTime::GetFPS());
             Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
 
             if (UpdateFunc != nullptr) {
@@ -91,6 +84,8 @@ namespace Engine
             }
 
             Engine::Window::GetInstance().Update();
+
+            Profiler::GetInstance().DisplayProfilerResult();
         }
     }
 

@@ -14,14 +14,14 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef PROFILER_HPP
-#define PROFILER_HPP
-
-namespace Editor {
-	namespace Profiler {
-		void Profiler_Setup();
-		void Profiler_Draw();
-	}
-}
-
-#endif
+//#ifndef PROFILER_HPP
+//#define PROFILER_HPP
+//
+//namespace Editor {
+//	namespace Profiler {
+//		void Profiler_Setup();
+//		void Profiler_Draw();
+//	}
+//}
+//
+//#endif

@@ -69,6 +69,7 @@ Technology is prohibited.
 #include <cstdlib> //For file to be run by cmd (std::system)
 
 #include "Engine/Header/Management/GameState.hpp"
+#include "Engine/Header/Debug Tools/Profiler.hpp"
 
 #include <iostream>
 
@@ -102,6 +103,7 @@ namespace Engine {
 	}
 
 	void ScriptSystem::PlayRunTime() {
+		PROFILER_START("Scripting System");
 
 		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {

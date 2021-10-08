@@ -29,6 +29,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 
+#include "Engine/Header/Debug Tools/Profiler.hpp"
+
 //Components
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 //Systems
@@ -87,6 +89,7 @@ namespace Engine {
 
     void Scene::Update(float dt, bool playing, bool defaultRender) {
         //std::cout << DreamECS::GetComponentArraySize<CSScript>() << "   " << DreamECS::GetComponentArraySize<Transform>() << "\n";
+        //PROFILER_START("Scene Update");
 
         if (playing) {
             ScriptSystem::GetInstance().PlayRunTime();

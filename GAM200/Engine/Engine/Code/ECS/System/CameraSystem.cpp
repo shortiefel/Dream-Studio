@@ -26,15 +26,17 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 
+#include "Engine/Header/Debug Tools/Profiler.hpp"
+
 namespace Engine 
 {
     //Update function to change the world to NDC transform that will be used
     //to create the graphics
-    void CameraSystem::Update(float dt) 
-    {
+    void CameraSystem::Update(float dt) {
+        PROFILER_START("Camera System");
+
         auto& camArray = DreamECS::GetInstance().GetComponentArrayData<CameraComponent>();
-        for (auto& cam : camArray) 
-        {
+        for (auto& cam : camArray) {
             const Entity& entity = cam.GetEntity();
             if (Entity_Check(entity)) break;
             if (!cam.isActive) continue;

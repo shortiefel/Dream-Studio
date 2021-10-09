@@ -38,8 +38,9 @@ namespace Engine
 {
     bool OnWindowClose(const WindowCloseEvent& e);
 
-    void Application::Create() 
-    {
+    void Application::Create() {
+        PROFILER_START("Total");
+
         if (s_app_instance) LOG_WARNING("An instance of application already exist!");
         s_app_instance = new Application();
         LOG_INSTANCE("Application created");
@@ -63,7 +64,7 @@ namespace Engine
         }
 
         while (app_run_bool) {
-            Timer timer("Application", std::move([&](ProfilerResult&& result) {
+            Timer timer("Total", std::move([&](ProfilerResult&& result) {
                 float sec = static_cast<float>(result.time) * 0.001f;
                 GameState::GetInstance().SetDeltaTime(sec);
 
@@ -74,21 +75,21 @@ namespace Engine
                     wait_time = 0;
                 }
 
-                //Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result));
+                Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result));
                 }));
 
             {
-                //PROFILER_START("Main 1");
+                //PROFILER_TEST("Main 1");
                 Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
             }
 
             if (UpdateFunc != nullptr) {
-                //PROFILER_START("Main 2");
+                //PROFILER_TEST("Main 2");
                 UpdateFunc(GameState::GetInstance().GetDeltaTime());
             }
 
             {
-                //PROFILER_START("Main 3");
+                //PROFILER_TEST("Main 3");
                 Engine::Window::GetInstance().Update();
             }
 
@@ -96,8 +97,7 @@ namespace Engine
         }
     }
 
-    void Application::Destroy() 
-    {
+    void Application::Destroy() {
         if (DestroyFunc != nullptr) DestroyFunc();
         Engine::EngineCore::GetInstance().Destroy();
         Engine::Window::GetInstance().Destroy();
@@ -107,16 +107,18 @@ namespace Engine
 
     }
 
-    void Application::SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3) 
-    {
+    void Application::SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3) {
+        PROFILER_START("Total");
+
         CreateFunc = func1;
         UpdateFunc = func2;
         DestroyFunc = func3;
     }
 
     //Local functions-----------------------------------------------------------------
-    bool OnWindowClose(const WindowCloseEvent& e) 
-    {
+    bool OnWindowClose(const WindowCloseEvent& e) {
+        PROFILER_START("Event");
+
         Application::GetInstance().SetAppRun(false);
         return true;
     }

@@ -39,9 +39,9 @@ namespace Engine {
 	};
 }
 
-//#define PROFILER_START(name) Engine::Timer timer(name, std::move([&](Engine::ProfilerResult&& result) {\
-//Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result)); }));
 #define PROFILER_START(name) Engine::Timer timer(name, std::move([&](Engine::ProfilerResult&& result) {\
- }));
+Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result)); }));
+//#define PROFILER_START(name) Engine::Timer timer(name, std::move([&](Engine::ProfilerResult&& result) {\
+// }));
 
 #endif

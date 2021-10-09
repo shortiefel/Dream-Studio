@@ -15,6 +15,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Event/KeyEvent.hpp"
+#include "Engine/Header/Debug Tools/Profiler.hpp"
 
 namespace Engine {
 	std::vector<KeyPressedFP> KeyPressedEvent::registeredFunctions;
@@ -23,20 +24,30 @@ namespace Engine {
 	/*-------------------------------------------------------------------------------------------------
 	Key event
 	-------------------------------------------------------------------------------------------------*/
-	Input_KeyCode KeyEvent::GetKeyCode() const { return keyCode; }
-	KeyEvent::KeyEvent(Input_KeyCode keycode) : keyCode{ keycode } {}
+	Input_KeyCode KeyEvent::GetKeyCode() const { 
+		PROFILER_START("Event");
+		return keyCode; 
+	}
+
+	KeyEvent::KeyEvent(Input_KeyCode keycode) : keyCode{ keycode } {
+		PROFILER_START("Event");
+	}
 
 
 	/*-------------------------------------------------------------------------------------------------
 	Key pressed event
 	-------------------------------------------------------------------------------------------------*/
 	KeyPressedEvent::KeyPressedEvent(Input_KeyCode keycode, bool repeat) :
-		KeyEvent(keycode), keyRepeat{ repeat } {}
+		KeyEvent(keycode), keyRepeat{ repeat } {
+		PROFILER_START("Event");
+	}
 
 	EventType KeyPressedEvent::GetEventType() const {
+		PROFILER_START("Event");
 		return EventType::KEY_PRESSED;
 	}
 	std::string KeyPressedEvent::Details() const {
+		PROFILER_START("Event");
 		std::string tem{ "Key Pressed " };
 		tem += keyRepeat ? "(Hold)" : "(Press)";
 		return tem;
@@ -49,13 +60,17 @@ namespace Engine {
 	Key released event
 	-------------------------------------------------------------------------------------------------*/
 	KeyReleasedEvent::KeyReleasedEvent(Input_KeyCode keycode) :
-		KeyEvent(keycode) {}
+		KeyEvent(keycode) {
+		PROFILER_START("Event");
+	}
 
 	EventType KeyReleasedEvent::GetEventType() const {
+		PROFILER_START("Event");
 		return EventType::KEY_RELEASED;
 	}
 
 	std::string KeyReleasedEvent::Details() const {
+		PROFILER_START("Event");
 		return std::string{ "Key Released" };
 	}
 

@@ -31,6 +31,8 @@ Technology is prohibited.
 
 namespace Editor {
 	void EditorStartPoint::Create() {
+		PROFILER_START("Rendering");
+
 		GUI::Create(Engine::Window::GetInstance().GetGLFWwindow(), Engine::Window::GetInstance().GetGLSLVersion());
 
 		//Deserialize then put as position
@@ -43,10 +45,10 @@ namespace Editor {
 
 	void EditorStartPoint::Update(float dt) {
 		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
-		PROFILER_START("Rendering Update");
+		PROFILER_START("Rendering");
 
 		{
-			PROFILER_START("Rendering Game Graphic");
+			//PROFILER_START("Rendering");
 			GUI::SetGameFBO();
 			//Engine::GraphicSystem::Update(dt);
 		
@@ -56,7 +58,7 @@ namespace Editor {
 
 		//EditorSceneCamera::Update(dt);
 		{
-			PROFILER_START("Rendering Editor Graphic");
+			//PROFILER_START("Rendering");
 
 			GUI::SetSceneFBO();
 			//Engine::GraphicSystem::Update(dt);
@@ -65,11 +67,11 @@ namespace Editor {
 			Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform());
 		}
 		{
-			PROFILER_START("Rendering GUI Update");
+			//PROFILER_START("Rendering");
 			GUI::Update();
 		}
 		{
-			PROFILER_START("Rendering GUI Draw");
+			//PROFILER_START("Rendering");
 			GUI::Draw();
 		}
 		//Profiler::Profiler_Draw();

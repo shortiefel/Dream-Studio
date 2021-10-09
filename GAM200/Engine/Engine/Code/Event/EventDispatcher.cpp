@@ -19,6 +19,8 @@ Technology is prohibited.
 
 namespace Engine {
 	void EventDispatcher::SendEvent(Event& event) {
+		PROFILER_START("Event");
+
 		LOG_EVENT(event);
 		event.CallRegisteredFunctions();
 	}

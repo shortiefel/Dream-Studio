@@ -108,8 +108,8 @@ namespace Engine {
 
         DreamECS::GetInstance().ClearDestroyQueue();
 
-        LayerStack::Update();
-        LayerStack::Draw();
+        //LayerStack::Update();
+        //LayerStack::Draw();
     }
 
     //bool Scene::SceneSave() {

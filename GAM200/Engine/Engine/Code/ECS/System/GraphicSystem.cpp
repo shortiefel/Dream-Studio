@@ -35,10 +35,8 @@ Technology is prohibited.
 
 
 
-namespace Engine 
-{
-	void GraphicSystem::Render(Math::mat3 camMatrix) 
-	{
+namespace Engine {
+	void GraphicSystem::Render(Math::mat3 camMatrix) {
 		GraphicImplementation::BindFramebuffer();
 
 		// Set background to purple color

@@ -18,6 +18,7 @@ Technology is prohibited.
 #define EVENT_H
 
 #include <iostream> //operator<< overload
+#include "Engine/Header/Debug Tools/Profiler.hpp"
 
 //#define EventType_To_String(x) #x
 
@@ -28,6 +29,7 @@ Technology is prohibited.
 //Note: Can be found in Event.hpp
 #define Call_and_Register_Definition(xType, fp) \
 	void xType::CallRegisteredFunctions() {\
+		PROFILER_START("Event");\
 		for (auto& func : registeredFunctions) {\
 			if (func(*this)) {\
 				this->handled = true;\
@@ -37,6 +39,7 @@ Technology is prohibited.
 	}\
 \
 	void xType::RegisterFunction(fp func) {\
+		PROFILER_START("Event");\
 		registeredFunctions.emplace_back(func);\
 	}
 
@@ -60,6 +63,7 @@ namespace Engine {
 		virtual void CallRegisteredFunctions() = 0;
 
 		friend std::ostream& operator<<(std::ostream& os, const Event& event) {
+			PROFILER_START("Event");
 			os << event.Details();
 			return os;
 		}

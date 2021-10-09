@@ -78,10 +78,14 @@ namespace Engine {
 	bool CallOverlapFunc(const OverlapColliderEvent& e); //To be registered to Event
 
 	bool ScriptSystem::CompileCS() {
+		PROFILER_START("Scripting");
+
 		return Scripting::CompileCSInternal();
 	}
 
 	void ScriptSystem::PlayInit() {
+		PROFILER_START("Scripting");
+
 		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			const Entity& entity = csScript.GetEntity();
@@ -121,6 +125,8 @@ namespace Engine {
 	}
 
 	void ScriptSystem::Create() {
+		PROFILER_START("Scripting");
+
 		Scripting::Setup();
 		RegisterInternalCall();
 		OverlapColliderEvent::RegisterFunction(CallOverlapFunc);
@@ -133,6 +139,8 @@ namespace Engine {
 	}
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
+		PROFILER_START("Scripting");
+
 		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(e.self);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
@@ -142,6 +150,8 @@ namespace Engine {
 	}
 
 	void ScriptSystem::UpdateMapData() {
+		PROFILER_START("Scripting");
+
 		Scripting::ReloadMono();
 		Scripting::InitAllCSClass();
 		Scripting::InitAllPublicVariable();

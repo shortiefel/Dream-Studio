@@ -40,6 +40,8 @@ namespace Engine {
 	std::unordered_map<Entity_id, std::vector<Entity>> overlapMap;
 
 	void AddOverlap(Entity lhs, bool lhsTrigger, Entity rhs, bool rhsTrigger) {
+		PROFILER_START("Collision");
+
 		//if self is collision and other is trigger, OnCollisionEnter is not called
 		if (!lhsTrigger && rhsTrigger) return;
 
@@ -184,10 +186,14 @@ namespace Engine {
 	}
 
 	void CollisionSystem::Stop() {
+		PROFILER_START("Collision");
+
 		overlapMap.clear();
 	}
 
 	bool CollisionSystem::Create() {
+		PROFILER_START("Collision");
+
 		LOG_INSTANCE("Collision System created");
 		return true;
 	}

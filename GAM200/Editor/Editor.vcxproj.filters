@@ -96,7 +96,7 @@
     <ClInclude Include="Editor\Header\GUI\ContentBroswerPanel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Header\GUI\GUI_Windows\ProfilerWindow.hpp">
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_ProfilerWindow.hpp">
       <Filter>Header Files\GUI\GUI_Windows</Filter>
     </ClInclude>
   </ItemGroup>
@@ -143,7 +143,7 @@
     <ClCompile Include="Editor\Code\Scene\EditorSceneManager.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Code\GUI\GUI_Windows\ProfilerWindow.cpp">
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_ProfilerWindow.cpp">
       <Filter>Source Files\GUI\GUI_Windows</Filter>
     </ClCompile>
   </ItemGroup>

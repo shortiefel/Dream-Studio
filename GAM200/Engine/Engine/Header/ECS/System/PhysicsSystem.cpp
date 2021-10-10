@@ -44,8 +44,6 @@ namespace Engine {
 	}
 
 	bool PhysicsSystem::Create() {
-		PROFILER_START("Physics");
-
 		LOG_INSTANCE("Physics System created");
 		return true;
 	}

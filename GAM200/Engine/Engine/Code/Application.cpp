@@ -39,8 +39,6 @@ namespace Engine
     bool OnWindowClose(const WindowCloseEvent& e);
 
     void Application::Create() {
-        PROFILER_START("Total");
-
         if (s_app_instance) LOG_WARNING("An instance of application already exist!");
         s_app_instance = new Application();
         LOG_INSTANCE("Application created");
@@ -64,36 +62,39 @@ namespace Engine
         }
 
         while (app_run_bool) {
-            Timer timer("Total", std::move([&](ProfilerResult&& result) {
-                float sec = static_cast<float>(result.time) * 0.001f;
-                GameState::GetInstance().SetDeltaTime(sec);
+            //double cTime = glfwGetTime();
+            {
+                Timer timer("Total", std::move([&](ProfilerResult&& result) {
+                    float sec = static_cast<float>(result.time) * 0.001f;
+                    GameState::GetInstance().SetDeltaTime(sec);
 
-                static float wait_time = 0;
-                wait_time += sec;
-                if (wait_time > FPS_Interval) {
-                    GameState::GetInstance().SetFPS(1/sec);
-                    wait_time = 0;
+                    static float wait_time = 0;
+                    wait_time += sec;
+                    if (wait_time > FPS_Interval) {
+                        GameState::GetInstance().SetFPS(1 / sec);
+                        wait_time = 0;
+                    }
+
+                    Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result));
+                    }));
+
+                {
+                    //PROFILER_TEST("Main 1");
+                    Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
                 }
 
-                Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result));
-                }));
+                if (UpdateFunc != nullptr) {
+                    //PROFILER_TEST("Main 2");
+                    UpdateFunc(GameState::GetInstance().GetDeltaTime());
+                }
 
-            {
-                //PROFILER_TEST("Main 1");
-                Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
+                {
+                    //PROFILER_TEST("Main 3");
+                    Engine::Window::GetInstance().Update();
+                }
             }
-
-            if (UpdateFunc != nullptr) {
-                //PROFILER_TEST("Main 2");
-                UpdateFunc(GameState::GetInstance().GetDeltaTime());
-            }
-
-            {
-                //PROFILER_TEST("Main 3");
-                Engine::Window::GetInstance().Update();
-            }
-
             Profiler::GetInstance().DisplayProfilerResult();
+            //std::cout << "New total: " << (glfwGetTime() - cTime) * 1000.f << "\n";
         }
     }
 

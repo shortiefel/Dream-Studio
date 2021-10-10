@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*
-@file    ProfilerWindow.hpp
+@file    GUI_ProfilerWindow.hpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    18/08/2021
 \brief
@@ -18,9 +18,9 @@ Technology is prohibited.
 #define PROFILER_WINDOW_HPP
 
 namespace Editor {
-	namespace Profiler {
-		/*void Profiler_Setup();
-		void Profiler_Draw();*/
+	namespace GUI_Window {
+		//Profiler window in ProfilerWindow.hpp
+		void GUI_Profiler(bool* profiler_bool);
 	}
 }
 

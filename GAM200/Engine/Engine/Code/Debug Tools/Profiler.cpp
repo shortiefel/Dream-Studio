@@ -19,12 +19,12 @@ Technology is prohibited.
 
 namespace Engine {
 	void Profiler::DisplayProfilerResult() {
-		double renderingTime = 0.f;
-		double physicsTime = 0.f;
-		double collisionTime = 0.f;
-		double scriptingTime = 0.f;
-		double eventTime = 0.f;
-		double totalTime = 0.f;
+		renderingTime = 0.f;
+		physicsTime = 0.f;
+		collisionTime = 0.f;
+		scriptingTime = 0.f;
+		eventTime = 0.f;
+		totalTime = 0.f;
 
 		for (auto& result : profilerResult) {
 			char label[50];
@@ -50,14 +50,40 @@ namespace Engine {
 			//std::cout << result.name << ": " << result.time << std::endl;
 		}
 
+		miscellaneousTime = totalTime - renderingTime - physicsTime - collisionTime - scriptingTime - eventTime;
 		std::cout << "Total Time: " << totalTime << std::endl;
-		std::cout << "Rendering: " << renderingTime << std::endl;
+		//std::cout << "Rendering %: " << GetRenderingTime() << "\n";
+		/*std::cout << "Rendering: " << renderingTime << std::endl;
 		std::cout << "Physics: " << physicsTime << std::endl;
 		std::cout << "Collision: " << collisionTime << std::endl;
 		std::cout << "Scripting: " << scriptingTime << std::endl;
 		std::cout << "Event: " << eventTime << std::endl;
-		std::cout << "Miscellaneous: " << (totalTime - renderingTime - physicsTime - collisionTime - scriptingTime - eventTime) << std::endl;
+		std::cout << "Miscellaneous: " << (totalTime - renderingTime - physicsTime - collisionTime - scriptingTime - eventTime) << std::endl;*/
 
 		profilerResult.clear();
+	}
+
+	const float Profiler::GetRenderingTime() const {
+		return 100.f * static_cast<float>(renderingTime/totalTime);
+	}
+
+	const float Profiler::GetPhysicsTime() const {
+		return 100.f * static_cast<float>(physicsTime / totalTime);
+	}
+
+	const float Profiler::GetCollisionTime() const {
+		return 100.f * static_cast<float>(collisionTime / totalTime);
+	}
+
+	const float Profiler::GetScriptingTime() const {
+		return 100.f * static_cast<float>(scriptingTime / totalTime);
+	}
+
+	const float Profiler::GetEventTime() const {
+		return 100.f * static_cast<float>(eventTime / totalTime);
+	}
+
+	const float Profiler::GetMiscellaneousTime() const {
+		return 100.f * static_cast<float>(miscellaneousTime / totalTime);
 	}
 }

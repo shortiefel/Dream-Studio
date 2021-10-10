@@ -34,7 +34,22 @@ namespace Engine {
 
 		void DisplayProfilerResult();
 
+		const float GetRenderingTime() const;
+		const float GetPhysicsTime() const;
+		const float GetCollisionTime() const;
+		const float GetScriptingTime() const;
+		const float GetEventTime() const;
+		const float GetMiscellaneousTime() const;
+
 	private:
+		double renderingTime = 0.f;
+		double physicsTime = 0.f;
+		double collisionTime = 0.f;
+		double scriptingTime = 0.f;
+		double eventTime = 0.f;
+		double miscellaneousTime = 0.f;
+		double totalTime = 0.f;
+
 		SINGLETON_SETUP(Profiler);
 	};
 }

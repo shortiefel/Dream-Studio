@@ -46,13 +46,9 @@ namespace Editor {
 
         GUI_Window::GUI_DockSpace();
 
-        GUI_Window::GUI_GameWindow(gameWinTex);
-        GUI_Window::GUI_SceneWindow(sceneWinTex);
-        GUI_Window::GUI_Hierarchy();
-        GUI_Window::GUI_Inspector();
-        GUI_Window::GUI_Stats();
-        GUI_Window::GUI_ContentBrowserPanel();
-        GUI_Window::GUI_HeaderPanel();
+        GUI_Window::All_Windows(gameWinTex, sceneWinTex);
+
+        
     }
 
     void GUI::Draw() {

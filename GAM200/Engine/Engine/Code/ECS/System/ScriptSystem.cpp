@@ -125,8 +125,6 @@ namespace Engine {
 	}
 
 	void ScriptSystem::Create() {
-		PROFILER_START("Scripting");
-
 		Scripting::Setup();
 		RegisterInternalCall();
 		OverlapColliderEvent::RegisterFunction(CallOverlapFunc);

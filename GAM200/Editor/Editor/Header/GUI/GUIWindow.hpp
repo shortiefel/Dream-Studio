@@ -24,40 +24,13 @@ Technology is prohibited.
 
 namespace Editor {
     namespace GUI_Window {
-        //bool for dockspace (will always be true)
-        static bool dockspace_bool = true;
-        //Flags for the background window for windows to dock to
-        static ImGuiWindowFlags dockspace_window_flags = 0;
-        static ImGuiDockNodeFlags dockspace_dock_flags = 0;
+        void    All_Windows(ImTextureID& gameWinTex, ImTextureID& sceneWinTex);
 
-        static ImGuiWindowFlags window_flags = 0;
-
-        static bool hierarchy_bool = true;
-        static bool inspector_bool = true;
-        static bool stats_bool = true;
-        static bool gameWin_bool = true;
-        static bool sceneWin_bool = true;
-        static bool asset_bool = true;
-        static bool playStop_bool = true;
-
-        /*-------------------------------------------------------------------------------------------------
-        Windows creation: Hierarchy, Inspector, Game window, Scene window
-        -------------------------------------------------------------------------------------------------*/
         //Set up all variable for GUI_Window
         void    GUI_Settings_Setup();
         //Note: This function should be called first
         //Create a docking space for future windows to be docked into it
         void	GUI_DockSpace();
-        void    GUI_HeaderPanel();
-        void	GUI_Hierarchy();
-        void	GUI_Inspector();
-        /*
-        * Show stats like fps and Number of game object
-        */
-        void	GUI_Stats();
-        void	GUI_GameWindow(ImTextureID& gameWinTex);
-        void	GUI_SceneWindow(ImTextureID& sceneWinTex);
-        void    GUI_ContentBrowserPanel();
 
         static std::filesystem::path _currentDirectory = "Assets";
     }

@@ -27,13 +27,13 @@ namespace Engine {
 	unsigned int LayerStack::layerCount = 0;
 
 	void LayerStack::AddOverlayLayer(Layer* layer) {
-		PROFILER_START("Rendering");
+		//PROFILER_START("Rendering");
 
 		layerStack.emplace_back(layer);
 	}
 
 	void LayerStack::Update() {
-		PROFILER_START("Rendering");
+		//PROFILER_START("Rendering");
 
 		for (Layer* layer : layerStack) {
 			layer->Update();
@@ -41,7 +41,7 @@ namespace Engine {
 	}
 
 	void LayerStack::Draw() {
-		PROFILER_START("Rendering");
+		//PROFILER_START("Rendering");
 
 		for (Layer* layer : layerStack) {
 			layer->Draw();
@@ -49,8 +49,6 @@ namespace Engine {
 	}
 
 	bool LayerStack::Create() {
-		PROFILER_START("Rendering");
-
 		if (m_instance) LOG_WARNING("An instance of layerstack already exist!");
 
 		m_instance = new LayerStack;

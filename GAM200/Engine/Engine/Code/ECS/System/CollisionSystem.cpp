@@ -192,8 +192,6 @@ namespace Engine {
 	}
 
 	bool CollisionSystem::Create() {
-		PROFILER_START("Collision");
-
 		LOG_INSTANCE("Collision System created");
 		return true;
 	}

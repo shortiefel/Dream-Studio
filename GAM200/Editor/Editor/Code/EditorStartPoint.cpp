@@ -31,8 +31,6 @@ Technology is prohibited.
 
 namespace Editor {
 	void EditorStartPoint::Create() {
-		PROFILER_START("Rendering");
-
 		GUI::Create(Engine::Window::GetInstance().GetGLFWwindow(), Engine::Window::GetInstance().GetGLSLVersion());
 
 		//Deserialize then put as position

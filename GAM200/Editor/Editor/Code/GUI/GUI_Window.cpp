@@ -20,6 +20,8 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUIWindow.hpp"
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 
+#include "Editor/Header/GUI/GUI_Windows/GUI_ProfilerWindow.hpp"
+
 #include <Imgui/imgui_internal.h>
 
 #include "Engine/Header/Management/GameState.hpp"
@@ -55,6 +57,23 @@ Technology is prohibited.
 
 namespace Editor {
 	namespace GUI_Window {
+		//bool for dockspace (will always be true)
+		bool dockspace_bool = true;
+		//Flags for the background window for windows to dock to
+		ImGuiWindowFlags dockspace_window_flags = 0;
+		ImGuiDockNodeFlags dockspace_dock_flags = 0;
+
+		ImGuiWindowFlags window_flags = 0;
+
+		bool hierarchy_bool = true;
+		bool inspector_bool = true;
+		bool stats_bool = true;
+		bool profiler_bool = true;
+		bool gameWin_bool = true;
+		bool sceneWin_bool = true;
+		bool asset_bool = true;
+		bool playStop_bool = true;
+
 		/*-------------------------------------------------------------------------------------------------
 		Forward declaration (Menus to be used inside dockspace function)
 		Menus: Windows
@@ -65,6 +84,19 @@ namespace Editor {
 		void	GUI_FileMenu();
 		//Menu to open windows
 		void    GUI_WindowsMenu();
+
+		/*-------------------------------------------------------------------------------------------------
+		Windows creation: Hierarchy, Inspector, Game window, Scene window
+		-------------------------------------------------------------------------------------------------*/
+		void    GUI_HeaderPanel();
+		void	GUI_Hierarchy();
+		void	GUI_Inspector();
+		//Show stats like fps and Number of game object
+		void	GUI_Stats();
+		//Profiler window
+		void	GUI_GameWindow(ImTextureID& gameWinTex);
+		void	GUI_SceneWindow(ImTextureID& sceneWinTex);
+		void    GUI_ContentBrowserPanel();
 
 
 		void GUI_Settings_Setup() {
@@ -151,6 +183,17 @@ namespace Editor {
 		/*-------------------------------------------------------------------------------------------------
 		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
+		void All_Windows(ImTextureID& gameWinTex, ImTextureID& sceneWinTex) {
+			GUI_GameWindow(gameWinTex);
+			GUI_SceneWindow(sceneWinTex);
+			GUI_Hierarchy();
+			GUI_Inspector();
+			GUI_Stats();
+			GUI_Profiler(&profiler_bool);
+			GUI_ContentBrowserPanel();
+			GUI_HeaderPanel();
+		}
+
 		void GUI_HeaderPanel() {
 
 			if (playStop_bool)
@@ -344,9 +387,6 @@ namespace Editor {
 				*/
 
 				ImGui::Button("Add Component", (ImVec2{ 100, 0 }));
-
-
-
 
 
 				ImGui::End();

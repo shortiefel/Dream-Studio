@@ -62,7 +62,6 @@ namespace Engine
         }
 
         while (app_run_bool) {
-            //double cTime = glfwGetTime();
             {
                 Timer timer("Total", std::move([&](ProfilerResult&& result) {
                     float sec = static_cast<float>(result.time) * 0.001f;
@@ -70,31 +69,25 @@ namespace Engine
 
                     static float wait_time = 0;
                     wait_time += sec;
+                    float fps = 1 / sec;
                     if (wait_time > FPS_Interval) {
-                        GameState::GetInstance().SetFPS(1 / sec);
+                        GameState::GetInstance().SetFPS(fps);
                         wait_time = 0;
                     }
 
+                    Engine::Profiler::GetInstance().profilerResult.emplace_back(ProfilerResult{"FPS", fps});
                     Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result));
                     }));
 
-                {
-                    //PROFILER_TEST("Main 1");
-                    Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
-                }
+                Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
 
                 if (UpdateFunc != nullptr) {
-                    //PROFILER_TEST("Main 2");
                     UpdateFunc(GameState::GetInstance().GetDeltaTime());
                 }
 
-                {
-                    //PROFILER_TEST("Main 3");
-                    Engine::Window::GetInstance().Update();
-                }
+                Engine::Window::GetInstance().Update();
             }
             Profiler::GetInstance().DisplayProfilerResult();
-            //std::cout << "New total: " << (glfwGetTime() - cTime) * 1000.f << "\n";
         }
     }
 
@@ -109,8 +102,6 @@ namespace Engine
     }
 
     void Application::SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3) {
-        PROFILER_START("Total");
-
         CreateFunc = func1;
         UpdateFunc = func2;
         DestroyFunc = func3;

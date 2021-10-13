@@ -33,7 +33,8 @@ namespace Engine {
 		std::vector<ProfilerResult> profilerResult;
 
 		void DisplayProfilerResult();
-
+		
+		const float GetApplicationTime() const;
 		const float GetRenderingTime() const;
 		const float GetPhysicsTime() const;
 		const float GetCollisionTime() const;
@@ -42,13 +43,14 @@ namespace Engine {
 		const float GetMiscellaneousTime() const;
 
 	private:
-		double renderingTime = 0.f;
-		double physicsTime = 0.f;
-		double collisionTime = 0.f;
-		double scriptingTime = 0.f;
-		double eventTime = 0.f;
-		double miscellaneousTime = 0.f;
-		double totalTime = 0.f;
+		double applicationTime = double{};
+		double renderingTime = double{};
+		double physicsTime = double{};
+		double collisionTime = double{};
+		double scriptingTime = double{};
+		double eventTime = double{};
+		double miscellaneousTime = double{};
+		double totalTime = double{};
 
 		SINGLETON_SETUP(Profiler);
 	};

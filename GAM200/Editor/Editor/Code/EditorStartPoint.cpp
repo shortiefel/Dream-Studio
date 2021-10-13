@@ -19,7 +19,6 @@ Technology is prohibited.
 
 #include "Editor/Header/GUI/GUI.hpp"
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
-#include "Editor/Header/Tools/Profiler.hpp"
 
 #include "Engine/Header/Event/KeyEvent.hpp" //Register function
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
@@ -37,42 +36,24 @@ namespace Editor {
 		EditorSceneCamera::Create({ 150.f,100.f });
 
 		Engine::KeyPressedEvent::RegisterFunction(EditorSceneManager::GetInstance().GetSceneHotKey());
-
-		//Profiler::Profiler_Setup();
 	}
 
 	void EditorStartPoint::Update(float dt) {
 		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
 		PROFILER_START("Rendering");
 
-		{
-			//PROFILER_START("Rendering");
-			GUI::SetGameFBO();
-			//Engine::GraphicSystem::Update(dt);
+		GUI::SetGameFBO();
+		//Engine::GraphicSystem::Update(dt);
+		Engine::GraphicSystem::GetInstance().Render();
 		
-			
-			Engine::GraphicSystem::GetInstance().Render();
-		}
-
-		//EditorSceneCamera::Update(dt);
-		{
-			//PROFILER_START("Rendering");
-
-			GUI::SetSceneFBO();
-			//Engine::GraphicSystem::Update(dt);
-			//Change this line to editor graphic system
+		GUI::SetSceneFBO();
+		//Engine::GraphicSystem::Update(dt);
+		//Change this line to editor graphic system
+		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform());
 		
-			Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform());
-		}
-		{
-			//PROFILER_START("Rendering");
-			GUI::Update();
-		}
-		{
-			//PROFILER_START("Rendering");
-			GUI::Draw();
-		}
-		//Profiler::Profiler_Draw();
+		GUI::Update();
+		
+		GUI::Draw();
 
 	}
 	void EditorStartPoint::Destroy() {

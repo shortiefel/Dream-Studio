@@ -30,6 +30,8 @@ Technology is prohibited.
 #include <iomanip> //Set precision
 #include "Engine/Header/EngineCore.hpp"
 
+#include "Engine/Header/Debug Tools/Profiler.hpp"
+
 namespace Engine {
 	//GLFWwindow* Window::glfw_window = 0;
 	////Window* Window::s_instance = 0;
@@ -40,6 +42,8 @@ namespace Engine {
 	//float Window::aspectRatio;
 
 	void Window::Update() {
+		PROFILER_START("Application");
+
 		glfwPollEvents();
 		glfwSwapBuffers(glfw_window);
 	}
@@ -107,6 +111,7 @@ namespace Engine {
 		}
 
 		glfwMakeContextCurrent(glfw_window);
+		glfwSwapInterval(0); //Disable vsync
 
 		//Set GLFW callback
 		glfwSetWindowSizeCallback(glfw_window, WindowSizeCallback);

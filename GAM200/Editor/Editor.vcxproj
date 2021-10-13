@@ -281,7 +281,6 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="Editor\Header\GUI\GUIWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_ProfilerWindow.hpp" />
     <ClInclude Include="Editor\Header\Scene\EditorSceneManager.hpp" />
-    <ClInclude Include="Editor\Header\Tools\Profiler.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp" />
@@ -298,7 +297,6 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_ProfilerWindow.cpp" />
     <ClCompile Include="Editor\Code\Main.cpp" />
     <ClCompile Include="Editor\Code\Scene\EditorSceneManager.cpp" />
-    <ClCompile Include="Editor\Header\Tools\Profiler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EngineCS\EngineCS.csproj">

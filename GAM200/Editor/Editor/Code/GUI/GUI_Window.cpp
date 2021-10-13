@@ -170,6 +170,7 @@ namespace Editor {
 				ImGui::MenuItem("Scene Window", NULL, &sceneWin_bool);
 				ImGui::MenuItem("Content Browser", NULL, &asset_bool);
 				ImGui::MenuItem("Engine Stats", NULL, &stats_bool);
+				ImGui::MenuItem("Profiler", NULL, &profiler_bool);
 
 
 				ImGui::EndMenu();

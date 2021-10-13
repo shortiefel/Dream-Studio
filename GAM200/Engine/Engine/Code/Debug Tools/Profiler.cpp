@@ -19,6 +19,7 @@ Technology is prohibited.
 
 namespace Engine {
 	void Profiler::DisplayProfilerResult() {
+		applicationTime = 0.f;
 		renderingTime = 0.f;
 		physicsTime = 0.f;
 		collisionTime = 0.f;
@@ -32,8 +33,9 @@ namespace Engine {
 			//strcat_s(label, " %0.3fms");
 			//ImGui::Text(label, result.time);
 			//printf("%s %0.3fms\n", label, result.time);
-			
-			if (result.name == "Rendering")
+			if (result.name == "Application")
+				applicationTime += result.time;
+			else if (result.name == "Rendering")
 				renderingTime += result.time;
 			else if (result.name == "Physics")
 				physicsTime += result.time;
@@ -45,22 +47,23 @@ namespace Engine {
 				eventTime += result.time;
 			else if (result.name == "Total")
 				totalTime += result.time;
-
-			//std::cout << "dfs " << label << result.time << "\n";
-			//std::cout << result.name << ": " << result.time << std::endl;
 		}
 
-		miscellaneousTime = totalTime - renderingTime - physicsTime - collisionTime - scriptingTime - eventTime;
-		std::cout << "Total Time: " << totalTime << std::endl;
-		//std::cout << "Rendering %: " << GetRenderingTime() << "\n";
-		/*std::cout << "Rendering: " << renderingTime << std::endl;
-		std::cout << "Physics: " << physicsTime << std::endl;
-		std::cout << "Collision: " << collisionTime << std::endl;
-		std::cout << "Scripting: " << scriptingTime << std::endl;
-		std::cout << "Event: " << eventTime << std::endl;
-		std::cout << "Miscellaneous: " << (totalTime - renderingTime - physicsTime - collisionTime - scriptingTime - eventTime) << std::endl;*/
+		miscellaneousTime = totalTime - applicationTime - renderingTime - physicsTime - collisionTime - scriptingTime - eventTime;
+		//std::cout << "Total Time: " << totalTime << std::endl;
+		//std::cout << "Application : " << applicationTime << "\n";
+		//std::cout << "Rendering: " << renderingTime << std::endl;
+		//std::cout << "Physics: " << physicsTime << std::endl;
+		//std::cout << "Collision: " << collisionTime << std::endl;
+		//std::cout << "Scripting: " << scriptingTime << std::endl;
+		//std::cout << "Event: " << eventTime << std::endl;
+		//std::cout << "Miscellaneous: " << miscellaneousTime << std::endl;
 
 		profilerResult.clear();
+	}
+
+	const float Profiler::GetApplicationTime() const {
+		return 100.f * static_cast<float>(applicationTime / totalTime);
 	}
 
 	const float Profiler::GetRenderingTime() const {

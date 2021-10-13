@@ -56,7 +56,7 @@ Technology is prohibited.
 	ImGui::PlotLines(miscSS.str().c_str(), miscellaneousLines, lineIndex, PLOT_LINE_PARAMETER);
 
 namespace Editor {
-	namespace GUI_Window {
+	namespace GUI_Windows {
 		void GUI_Profiler(bool* profiler_bool) {
 			static float updateTimer = 0.f;
 			updateTimer -= COUNTDOWN_TIMER;

@@ -23,7 +23,7 @@ Technology is prohibited.
 #include <filesystem>
 
 namespace Editor {
-    namespace GUI_Window {
+    namespace GUI_Windows {
         void    All_Windows(ImTextureID& gameWinTex, ImTextureID& sceneWinTex);
 
         //Set up all variable for GUI_Window

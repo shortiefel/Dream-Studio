@@ -18,7 +18,7 @@ Technology is prohibited.
 #define PROFILER_WINDOW_HPP
 
 namespace Editor {
-	namespace GUI_Window {
+	namespace GUI_Windows {
 		//Profiler window in ProfilerWindow.hpp
 		void GUI_Profiler(bool* profiler_bool);
 	}

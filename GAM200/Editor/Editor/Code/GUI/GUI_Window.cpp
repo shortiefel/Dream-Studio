@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_ProfilerWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
 
 #include <Imgui/imgui_internal.h>
 
@@ -56,7 +57,7 @@ Technology is prohibited.
 
 
 namespace Editor {
-	namespace GUI_Window {
+	namespace GUI_Windows {
 		//bool for dockspace (will always be true)
 		bool dockspace_bool = true;
 		//Flags for the background window for windows to dock to
@@ -68,7 +69,7 @@ namespace Editor {
 		bool hierarchy_bool = true;
 		bool inspector_bool = true;
 		bool stats_bool = true;
-		bool profiler_bool = true;
+		bool profiler_bool = false;
 		bool gameWin_bool = true;
 		bool sceneWin_bool = true;
 		bool asset_bool = true;
@@ -193,6 +194,10 @@ namespace Editor {
 			GUI_Profiler(&profiler_bool);
 			GUI_ContentBrowserPanel();
 			GUI_HeaderPanel();
+
+			bool trueBool = true;
+			ShowExampleAppConsole(&trueBool);
+			GUI_Console(&trueBool);
 		}
 
 		void GUI_HeaderPanel() {

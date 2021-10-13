@@ -44,9 +44,9 @@ namespace Editor {
         /*bool show_demo_window = true;
         ImGui::ShowDemoWindow(&show_demo_window);*/
 
-        GUI_Window::GUI_DockSpace();
+        GUI_Windows::GUI_DockSpace();
 
-        GUI_Window::All_Windows(gameWinTex, sceneWinTex);
+        GUI_Windows::All_Windows(gameWinTex, sceneWinTex);
 
         
     }
@@ -94,7 +94,7 @@ namespace Editor {
         }
         ImGui_ImplOpenGL3_Init(glsl_version);
 
-        GUI_Window::GUI_Settings_Setup();
+        GUI_Windows::GUI_Settings_Setup();
 
         Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight, &gameWinFBO, reinterpret_cast<unsigned int*>(&gameWinTex));
         Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight, &sceneWinFBO, reinterpret_cast<unsigned int*>(&sceneWinTex));

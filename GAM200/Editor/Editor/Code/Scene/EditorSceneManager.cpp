@@ -20,6 +20,11 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/GameState.hpp"
 
+#include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
+
+#include <fstream>
+#include <sstream>
+
 namespace Editor {
 
    // std::string EditorSceneManager::editorSceneName = "test2";
@@ -30,8 +35,21 @@ namespace Editor {
     bool SceneHotKey(const Engine::KeyPressedEvent& e);
 
     void EditorSceneManager::Play() {
+        GUI_Windows::GUI_Console_Clear();
+
         Engine::GameState::GetInstance().SetPlaying(true);
         Engine::SceneManager::GetInstance().Play();
+
+        std::ifstream fs{ "Data/msbuild.log" };
+        if (fs.is_open()) {
+            std::ostringstream buffer;
+            buffer << fs.rdbuf();
+
+            GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
+            //GUI_Windows::Add_To_Console("lots of text");
+        }
+
+        fs.close();
     }
 
     void EditorSceneManager::Stop() {

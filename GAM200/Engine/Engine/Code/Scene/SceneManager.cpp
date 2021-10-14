@@ -54,6 +54,7 @@ namespace Engine {
 	void SceneManager::Update(float dt, bool defaultRender) {
         currentScene->Update(dt, GameState::GetInstance().GetPlaying(), defaultRender);
 
+        //Scene change at end of update to not disturb entity that is currently being updated
         ChangeSceneInternal();
 	}
 
@@ -66,47 +67,14 @@ namespace Engine {
     }
 
     void SceneManager::Play() {
-        /*if (currentSceneName != TO_FULL_PATH(defaultSceneName)) {
-            currentScene->Stop();
-            delete currentScene;
-
-            currentScene = new Scene{ TO_FULL_PATH(defaultSceneName) };
-        }*/
-
-        //if (!ScriptSystem::CompileCS()) {
-        //    std::cout << "Fail to compile \n";
-        //    //Scene::SetPlaying(false);
-        //    return;
-        //}
-
-        //ScriptSystem::UpdateMapData();
-        //ScriptSystem::PlayInit();
-        ////Change to sceneName (might be fullName(path + name) instead)
-        //GameSceneSerializer::SerializeScene(currentScenePath);
-
         currentScene->Play();
     }
 
-    //Not in use....
     void SceneManager::Stop() {
-        
         currentScene->Stop();
     }
 
-    /*void SceneManager::Stop() {
-        currentScene->Stop();
-    }*/
-
     void SceneManager::Save() {
         currentScene->Save();
-        //if (!ScriptSystem::CompileCS()) {
-        //    std::cout << "Fail to compile \n";
-        //    //Scene::SetPlaying(false);
-        //    return;
-        //}
-
-        //ScriptSystem::UpdateMapData();
-        ////Change to sceneName (might be fullName(path + name) instead)
-        //GameSceneSerializer::SerializeScene(currentScenePath);
     }
 }

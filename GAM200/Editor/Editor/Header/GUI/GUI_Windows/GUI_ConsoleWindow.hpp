@@ -20,11 +20,43 @@ Technology is prohibited.
 #include <memory>
 #include <Imgui/imgui.h>
 #include <ctype.h> //toupper
+#include <string>
 
 namespace Editor {
     namespace GUI_Windows {
+
+        const char* StrDuplicate(const char* s);
+
+        enum class ConsoleStringType {
+            DEFAULT_STRING = 0,
+            ERROR_STRING
+        };
+
+        struct ConsoleString {
+            const char* consoleText;
+            ConsoleStringType stringType;
+
+            ConsoleString(ConsoleString&& _rhs) noexcept;
+            ConsoleString(const char* _consoleText, ConsoleStringType _stringType = ConsoleStringType::DEFAULT_STRING);
+            ~ConsoleString();
+        };
+
+        class GUI_ConsoleWindow {
+        public:
+            void ClearLog();
+            void GUI_Console(bool* console_bool);
+            void Add_To_Console(ConsoleString&& text);
+
+            GUI_ConsoleWindow() = default;
+            ~GUI_ConsoleWindow();
+        private:
+            ImVector<ConsoleString>  Items;
+        };
+
+        //Access to the GUI_ConsoleWindow
+        void GUI_Console_Add(ConsoleString&& text);
+        void GUI_Console_Clear();
         void GUI_Console(bool* console_bool);
-        void Add_To_Console(const char* text);
     
         //-----------------------------------------------------------------------------
         // [SECTION] Example App: Debug Console / ShowExampleAppConsole()

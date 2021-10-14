@@ -23,7 +23,7 @@ Technology is prohibited.
 #define SINGLETON_SETUP(type)\
 type() {}\
 ~type() {}\
-friend class Singleton<type>;
+friend class Engine::Singleton<type>;
 
 namespace Engine {
 	template <typename T>

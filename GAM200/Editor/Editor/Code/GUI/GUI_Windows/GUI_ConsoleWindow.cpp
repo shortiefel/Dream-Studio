@@ -2,7 +2,30 @@
 
 namespace Editor {
 	namespace GUI_Windows {
-        void GUI_Console(bool* console_bool) {
+        GUI_ConsoleWindow gui_ConsoleWindow;
+
+        const char* StrDuplicate(const char* s) {
+            size_t len = strlen(s) + 1;
+            if (len <= 0) return "";
+            char* buf = new char[len];
+
+            return (const char*)memcpy(buf, s, len);
+        }
+
+        ConsoleString::ConsoleString(ConsoleString&& _rhs) noexcept : 
+            consoleText{ _rhs.consoleText }, stringType{ _rhs.stringType } {
+            _rhs.consoleText = nullptr; _rhs.stringType = ConsoleStringType::DEFAULT_STRING;
+        }
+
+        ConsoleString::ConsoleString(const char* _consoleText, ConsoleStringType _stringType) :
+            consoleText{ StrDuplicate(_consoleText) }, stringType{ _stringType } { }
+
+        ConsoleString::~ConsoleString() { 
+            printf(" deleting stuff \n"); 
+            //delete[] consoleText;
+        }
+
+        void GUI_ConsoleWindow::GUI_Console(bool* console_bool) {
             if (*console_bool) {
                 ImGui::Begin("Console", console_bool);
 
@@ -13,22 +36,72 @@ namespace Editor {
                 //loop through list of strings to display
                 const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
                 ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar);
-                if (ImGui::BeginPopupContextWindow())
+                
+                /*if (ImGui::BeginPopupContextWindow())
                 {
                     if (ImGui::Selectable("Clear")) {
                         printf("press2\n");
                     }
                     ImGui::EndPopup();
+                }*/
+
+                for (auto& item : Items) {
+                    //const char* item = Items[i];
+                    /*if (!Filter.PassFilter(item))
+                        continue;*/
+
+                    // Normally you would store more information in your item than just a string.
+                    // (e.g. make Items[] an array of structure, store color/type etc.)
+                    /*ImVec4 color;
+                    bool has_color = false;
+                    if (strstr(item, "[Error]")) { color = ImVec4(1.0f, 0.4f, 0.4f, 1.0f); has_color = true; }
+                    if (has_color)
+                        ImGui::PushStyleColor(ImGuiCol_Text, color);*/
+                    ImGui::TextUnformatted(item.consoleText);
+                    /*if (has_color)
+                        ImGui::PopStyleColor();*/
                 }
+
+
+                ImGui::EndChild();
 
                 ImGui::End();
             }
             
         }
 
-        void Add_To_Console(const char* text) {
+        /*void Add_To_Console(const char* text) {
+            Items.push_back(std::move(text));
+        }*/
 
+        void GUI_ConsoleWindow::Add_To_Console(ConsoleString&& _consoleString) {
+            Items.push_back(std::move(_consoleString));
         }
+
+        void GUI_ConsoleWindow::ClearLog() {
+            for (auto& item : Items)
+                delete[] item.consoleText;
+            Items.clear();
+        }
+
+        GUI_ConsoleWindow::~GUI_ConsoleWindow() {
+            ClearLog();
+        }
+
+
+        void GUI_Console_Add(ConsoleString&& text) {
+            gui_ConsoleWindow.Add_To_Console(std::move(text));
+        }
+
+        void GUI_Console_Clear() {
+            gui_ConsoleWindow.ClearLog();
+        }
+
+        void GUI_Console(bool* console_bool) {
+            gui_ConsoleWindow.GUI_Console(console_bool);
+        }
+
+        
 
         ExampleAppConsole::ExampleAppConsole()
         {
@@ -164,9 +237,9 @@ namespace Editor {
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
             if (copy_to_clipboard)
                 ImGui::LogToClipboard();
-            for (int i = 0; i < Items.Size; i++)
+            for (const char* item : Items)
             {
-                const char* item = Items[i];
+                //const char* item = Items[i];
                 if (!Filter.PassFilter(item))
                     continue;
 

@@ -303,18 +303,18 @@ namespace Editor {
 						ImGui::Text("Scaling ");
 						ImGui::Spacing();
 						ImGui::Text("X: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##TransformXscale", &transComp->scale.x, 0.0f);
-						ImGui::Text("Y: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.0f);
+ImGui::SameLine();
+ImGui::InputFloat("##TransformXscale", &transComp->scale.x, 0.0f);
+ImGui::Text("Y: ");
+ImGui::SameLine();
+ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.0f);
 
 
-						ImGui::Text("Rotation ");
-						ImGui::Spacing();
-						ImGui::SliderFloat("##TransformRotate", &transComp->angle, -360.f, 360.f);
+ImGui::Text("Rotation ");
+ImGui::Spacing();
+ImGui::SliderFloat("##TransformRotate", &transComp->angle, -360.f, 360.f);
 
-						ImGui::TreePop();
+ImGui::TreePop();
 					}
 				}
 
@@ -392,8 +392,40 @@ namespace Editor {
 				*	Add New Components
 				*/
 
-				ImGui::Button("Add Component", (ImVec2{ 100, 0 }));
+				
+				const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIIIIII", "JJJJ", "KKKKKKK" };
+				static int item_current = 1;
+				ImGui::Combo("Combo", &item_current, items, IM_ARRAYSIZE(items));
 
+				//if (ImGui::Button("Add Component", (ImVec2{ 100, 0 }))) {
+				//	//addComponentBool = true;
+				//}
+
+
+				static bool addComponentBool = false;
+				if (ImGui::CollapsingHeader("Add Component", &addComponentBool)) {
+					if (ImGui::Button("Transform")) {
+						printf("Add Transform\n");
+					}
+
+					else if (ImGui::Button("Texture")) {
+						printf("Add Texture\n");
+					}
+
+					else if (ImGui::Button("Camera")) {
+						printf("Add Camera\n");
+					}
+
+					else if (ImGui::Button("Rigidbody")) {
+						printf("Add Rigidbody\n");
+					}
+
+					else if (ImGui::Button("Collider")) {
+						printf("Add Collider\n");
+					}
+
+					ImGui::EndMenu();
+				}
 
 				ImGui::End();
 			}

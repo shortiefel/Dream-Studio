@@ -70,10 +70,12 @@ namespace Editor {
 		bool inspector_bool = true;
 		bool stats_bool = true;
 		bool profiler_bool = false;
+		bool console_bool = true;
 		bool gameWin_bool = true;
 		bool sceneWin_bool = true;
 		bool asset_bool = true;
-		bool playStop_bool = true;
+		//Will always be on
+		bool playStop_bool = true; //Play and stop button
 
 		/*-------------------------------------------------------------------------------------------------
 		Forward declaration (Menus to be used inside dockspace function)
@@ -163,8 +165,6 @@ namespace Editor {
 		//Menu to open windows
 		void GUI_WindowsMenu() {
 			if (ImGui::BeginMenu("Windows")) {
-
-				ImGui::MenuItem("Header", NULL, &playStop_bool);
 				ImGui::MenuItem("Hierarchy", NULL, &hierarchy_bool);
 				ImGui::MenuItem("Inspector", NULL, &inspector_bool);
 				ImGui::MenuItem("Game Window", NULL, &gameWin_bool);
@@ -172,7 +172,7 @@ namespace Editor {
 				ImGui::MenuItem("Content Browser", NULL, &asset_bool);
 				ImGui::MenuItem("Engine Stats", NULL, &stats_bool);
 				ImGui::MenuItem("Profiler", NULL, &profiler_bool);
-
+				ImGui::MenuItem("Console", NULL, &console_bool);
 
 				ImGui::EndMenu();
 			}
@@ -194,36 +194,32 @@ namespace Editor {
 			GUI_Profiler(&profiler_bool);
 			GUI_ContentBrowserPanel();
 			GUI_HeaderPanel();
-
-			bool trueBool = true;
-			ShowExampleAppConsole(&trueBool);
-			GUI_Console(&trueBool);
+			GUI_Console(&console_bool);
 		}
 
 		void GUI_HeaderPanel() {
+			//Will always be on so dont need check
 
-			if (playStop_bool)
-			{
-				ImVec2 wSize = ImGui::GetWindowSize();
-				ImGui::Begin("Actions", &playStop_bool, window_flags);
+			ImVec2 wSize = ImGui::GetWindowSize();
+			ImGui::Begin("Actions", &playStop_bool, window_flags);
 
-				ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
-				ImGui::PushItemWidth(wSize.x / 2);
-				if (ImGui::Button("Play", (ImVec2{ 40, 30 }))) {
-					EditorSceneManager::GetInstance().Play();
-				}
-				ImGui::PopItemFlag();
-
-				ImGui::SameLine();
-				ImGui::PushItemWidth(wSize.x / 2 + 20);
-				ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
-				if (ImGui::Button("Stop", (ImVec2{ 40, 30 }))) {
-					EditorSceneManager::GetInstance().Stop();
-				}
-				ImGui::PopItemFlag();
-
-				ImGui::End();
+			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
+			ImGui::PushItemWidth(wSize.x / 2);
+			if (ImGui::Button("Play", (ImVec2{ 40, 30 }))) {
+				EditorSceneManager::GetInstance().Play();
 			}
+			ImGui::PopItemFlag();
+
+			ImGui::SameLine();
+			ImGui::PushItemWidth(wSize.x / 2 + 20);
+			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
+			if (ImGui::Button("Stop", (ImVec2{ 40, 30 }))) {
+				EditorSceneManager::GetInstance().Stop();
+			}
+			ImGui::PopItemFlag();
+
+			ImGui::End();
+			
 		}
 
 		void GUI_Hierarchy() {
@@ -303,22 +299,22 @@ namespace Editor {
 						ImGui::Text("Scaling ");
 						ImGui::Spacing();
 						ImGui::Text("X: ");
-ImGui::SameLine();
-ImGui::InputFloat("##TransformXscale", &transComp->scale.x, 0.0f);
-ImGui::Text("Y: ");
-ImGui::SameLine();
-ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.0f);
+						ImGui::SameLine();
+						ImGui::InputFloat("##TransformXscale", &transComp->scale.x, 0.0f);
+						ImGui::Text("Y: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.0f);
 
 
-ImGui::Text("Rotation ");
-ImGui::Spacing();
-ImGui::SliderFloat("##TransformRotate", &transComp->angle, -360.f, 360.f);
+						ImGui::Text("Rotation ");
+						ImGui::Spacing();
+						ImGui::SliderFloat("##TransformRotate", &transComp->angle, -360.f, 360.f);
 
-ImGui::TreePop();
+						ImGui::TreePop();
 					}
 				}
 
-				/**
+				/*
 				*	Collider for each component
 				*/
 				Engine::ColliderComponent* colComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::ColliderComponent>(entity_selected);

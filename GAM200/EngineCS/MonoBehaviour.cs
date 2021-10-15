@@ -54,7 +54,7 @@ public class MonoBehaviour
     public MonoBehaviour(uint id)
     {
         entityId = id;
-        Console.WriteLine("Constructor new");
+        //Console.WriteLine("Constructor new");
         //gameObject = new GameObject();
         //gameObject.entityId = id;
     }

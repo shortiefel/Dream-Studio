@@ -108,8 +108,8 @@ namespace Engine {
                     for (int p = 0; p < shape1->size(); p++)
                     {
                         float q = ((*shape1)[p].x * axisProj.x + (*shape1)[p].y * axisProj.y);
-                        min_r1 = std::min(min_r1, q);
-                        max_r1 = std::max(max_r1, q);
+                        min_r1 = Math::Min(min_r1, q);
+                        max_r1 = Math::Max(max_r1, q);
                     }
 
                     // Work out min and max 1D points for r2
@@ -117,11 +117,11 @@ namespace Engine {
                     for (int p = 0; p < shape2->size(); p++)
                     {
                         float q = ((*shape2)[p].x * axisProj.x + (*shape2)[p].y * axisProj.y);
-                        min_r2 = std::min(min_r2, q);
-                        max_r2 = std::max(max_r2, q);
+                        min_r2 = Math::Min(min_r2, q);
+                        max_r2 = Math::Max(max_r2, q);
                     }
 
-                    overlap = std::min(std::min(max_r1, max_r2) - std::max(min_r1, min_r2), overlap);
+                    overlap = Math::Min(Math::Min(max_r1, max_r2) - Math::Max(min_r1, min_r2), overlap);
 
                     if (!(max_r2 >= min_r1 && max_r1 >= min_r2))
                         return false;
@@ -162,17 +162,17 @@ namespace Engine {
             for (int p = 0; p < obj1Corner.size(); p++)
             {
                 float q = (obj1Corner[p].x * axisProj.x + obj1Corner[p].y * axisProj.y);
-                min_r1 = std::min(min_r1, q);
-                max_r1 = std::max(max_r1, q);
+                min_r1 = Math::Min(min_r1, q);
+                max_r1 = Math::Max(max_r1, q);
             }
 
             //Circle min and max is the same for a single axis (no need for loop)
             float min_r2 = INFINITY, max_r2 = -INFINITY;
             float q = (obj2.offset_position.x * axisProj.x + obj2.offset_position.y * axisProj.y);
-            min_r2 = std::min(min_r2, q - obj2.offset_scale.x);
-            max_r2 = std::max(max_r2, q + obj2.offset_scale.x);
+            min_r2 = Math::Min(min_r2, q - obj2.offset_scale.x);
+            max_r2 = Math::Max(max_r2, q + obj2.offset_scale.x);
 
-            overlap = std::min(std::min(max_r1, max_r2) - std::max(min_r1, min_r2), overlap);
+            overlap = Math::Min(Math::Min(max_r1, max_r2) - Math::Max(min_r1, min_r2), overlap);
 
             if (!(max_r2 >= min_r1 && max_r1 >= min_r2))
                 return false;
@@ -187,17 +187,17 @@ namespace Engine {
                 for (int p = 0; p < obj1Corner.size(); p++)
                 {
                     float q = (obj1Corner[p].x * axisProj.x + obj1Corner[p].y * axisProj.y);
-                    min_r1 = std::min(min_r1, q);
-                    max_r1 = std::max(max_r1, q);
+                    min_r1 = Math::Min(min_r1, q);
+                    max_r1 = Math::Max(max_r1, q);
                 }
 
                 //Circle min and max is the same for a single axis (no need for loop)
                 float min_r2 = INFINITY, max_r2 = -INFINITY;
                 float q = (obj2.offset_position.x * axisProj.x + obj2.offset_position.y * axisProj.y);
-                min_r2 = std::min(min_r2, q - obj2.offset_scale.x);
-                max_r2 = std::max(max_r2, q + obj2.offset_scale.x);
+                min_r2 = Math::Min(min_r2, q - obj2.offset_scale.x);
+                max_r2 = Math::Max(max_r2, q + obj2.offset_scale.x);
 
-                overlap = std::min(std::min(max_r1, max_r2) - std::max(min_r1, min_r2), overlap);
+                overlap = Math::Min(Math::Min(max_r1, max_r2) - Math::Max(min_r1, min_r2), overlap);
 
                 if (!(max_r2 >= min_r1 && max_r1 >= min_r2))
                     return false;

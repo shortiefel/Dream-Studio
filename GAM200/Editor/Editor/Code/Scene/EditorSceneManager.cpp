@@ -40,20 +40,21 @@ namespace Editor {
         Engine::GameState::GetInstance().SetPlaying(true);
         Engine::SceneManager::GetInstance().Play();
 
+        //Read compile result
         std::ifstream fs{ "Data/msbuild.log" };
         if (fs.is_open()) {
             std::ostringstream buffer;
             buffer << fs.rdbuf();
 
             GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
-            //GUI_Windows::Add_To_Console("lots of text");
         }
 
         fs.close();
     }
 
     void EditorSceneManager::Stop() {
-        std::cout << "Stopping\n";
+        GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Game Stopped\n" });
+
         Engine::GameState::GetInstance().SetPlaying(false);
         Engine::SceneManager::GetInstance().ChangeScene(editorSceneName);
     }

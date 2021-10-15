@@ -4,7 +4,7 @@
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    18/08/2021
 \brief
-This file contain the Profiler declaration
+This file contain the Console window declaration
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -27,18 +27,19 @@ namespace Editor {
 
         const char* StrDuplicate(const char* s);
 
-        enum class ConsoleStringType {
+        /*enum class ConsoleStringType {
             DEFAULT_STRING = 0,
             ERROR_STRING
-        };
+        };*/
 
         struct ConsoleString {
             const char* consoleText;
-            ConsoleStringType stringType;
+            //ConsoleStringType stringType;
 
             ConsoleString(ConsoleString&& _rhs) noexcept;
-            ConsoleString(const char* _consoleText, ConsoleStringType _stringType = ConsoleStringType::DEFAULT_STRING);
-            ~ConsoleString();
+            //ConsoleString(const char* _consoleText, ConsoleStringType _stringType = ConsoleStringType::DEFAULT_STRING);
+            ConsoleString(const char* _consoleText);
+            //~ConsoleString();
         };
 
         class GUI_ConsoleWindow {
@@ -50,14 +51,16 @@ namespace Editor {
             GUI_ConsoleWindow() = default;
             ~GUI_ConsoleWindow();
         private:
-            ImVector<ConsoleString>  Items;
+            ImVector<ConsoleString> Items;
+            ImGuiTextFilter filter;
         };
 
         //Access to the GUI_ConsoleWindow
         void GUI_Console_Add(ConsoleString&& text);
         void GUI_Console_Clear();
         void GUI_Console(bool* console_bool);
-    
+
+#if 0
         //-----------------------------------------------------------------------------
         // [SECTION] Example App: Debug Console / ShowExampleAppConsole()
         //-----------------------------------------------------------------------------
@@ -95,6 +98,8 @@ namespace Editor {
         };
 
         void ShowExampleAppConsole(bool* p_open);
+#endif
+
     }
 }
 

@@ -24,8 +24,6 @@ public class TrailTest3 : MonoBehaviour
 
         go2.position += new Vec2(500, 500);
         Console.WriteLine(go2.position);*/
-
-        Console.WriteLine("TrailTest3 fdfdfdf");
     }
 
 

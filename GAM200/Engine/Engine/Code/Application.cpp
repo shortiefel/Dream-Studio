@@ -79,6 +79,9 @@ namespace Engine
                     Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result));
                     }));
 
+                glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
                 Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
 
                 if (UpdateFunc != nullptr) {

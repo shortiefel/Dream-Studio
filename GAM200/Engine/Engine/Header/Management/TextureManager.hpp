@@ -20,9 +20,9 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"
 
-namespace Engine 
+namespace Engine
 {
-	class TextureManager : public Singleton<TextureManager> 
+	class TextureManager : public Singleton<TextureManager>
 	{
 	public:
 		void Create();

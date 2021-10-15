@@ -12,21 +12,46 @@ class Test38 : MonoBehaviour
     public override void OnInit()
     {
         go2 = GetComponent<Transform>();
-        //Transform tem = GetTransform();
-        //Vec2 pos = go2.GetPosition();
-        //Console.WriteLine(pos);
-        //go2.position = new Vec2(0, 0);
-        Console.WriteLine(go2.position);
-        Console.WriteLine(go2.position);
-        //Console.WriteLine(go2);
+    }
 
-        //go2.scale = new Vec2(30, 100);
-        /*Console.WriteLine(go2.position + new Vec2(10,10));
+    public override void OnUpdate()
+    {
+        //Console.WriteLine("new Update");
+        //Console.WriteLine(Input::GetMouse);
+        if (Input.IsKeyPressed(KeyCode.J))
+        {
+            go2.position += -go2.right * Time.dt * 250;
+        }
 
-        go2.position += new Vec2(500, 500);
-        Console.WriteLine(go2.position);*/
+        if (Input.IsKeyPressed(KeyCode.L))
+        {
+            go2.position += go2.right * Time.dt * 250;
+        }
 
+        if (Input.IsKeyPressed(KeyCode.I))
+        {
+            go2.position += go2.forward * Time.dt * 250;
+        }
 
+        if (Input.IsKeyPressed(KeyCode.K))
+        {
+            go2.position += -go2.forward * Time.dt * 250;
+        }
+
+        if (Input.IsKeyPressed(KeyCode.U))
+        {
+            go2.angle += 250 * Time.dt;
+        }
+
+        if (Input.IsKeyPressed(KeyCode.O))
+        {
+            go2.angle -= 250 * Time.dt;
+        }
+
+        if (Input.IsKeyPressed(KeyCode.M))
+        {
+            Console.WriteLine("Clear");
+        }
     }
 }
 

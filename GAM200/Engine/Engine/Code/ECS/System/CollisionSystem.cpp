@@ -93,6 +93,9 @@ namespace Engine {
 			collider1.offset_scale *= transform1.scale;
 			collider1.angle += transform1.angle;
 
+			/*
+			* Start of collision checks
+			*/
 			for (auto col2 = col1; col2 < colliderEnd; col2++) {
 				const Entity& ent2 = col2->GetEntity();
 				if (Entity_Check(ent2)) break;

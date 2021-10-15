@@ -8,11 +8,12 @@
 
 #version 450 core
 
-uniform sampler2D uTex2d;
+uniform sampler2D u_Textures[32];
+
 
 layout (location=0) in vec3 vColor;
 layout (location=1) in vec2 vTexture;
-//layout (location=2) in float vTextureIndex;
+layout (location=2) in float vTextureIndex;
 
 layout (location=0) out vec4 fColor;
 
@@ -20,8 +21,7 @@ layout (location=0) out vec4 fColor;
 void main () 
 {
 	// object - texture colour
-	vec4 texColor = texture(uTex2d, vTexture);
+	int index = int(vTextureIndex);
+	vec4 texColor = texture(u_Textures[index], vTexture) * vec4(vColor, 1.0);
 	fColor = texColor;
-	
-	//fColor = vec4(vTextureIndex, vTextureIndex, vTextureIndex, 1.0);
 }

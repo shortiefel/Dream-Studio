@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
-@file    Physics.hpp
+@file    Ray.hpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu
-@date    26/06/2021
+@date    15/10/2021
 \brief
-This file contain the Physics declaration
+This file contain the Ray declaration
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -14,22 +14,18 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef PHYSICS_HPP
-#define PHYSICS_HPP
+#ifndef RAY_HPP
+#define RAY_HPP
 
 #include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
-	namespace Physics {
-		/*
-		Moves entity in a constant speed in the direction of the entity up direction
-		_position is the transform position to move
-		_angle is the angle of transform (in degrees)
-		_speed is value after dt is applied
-		*/
-		void ApplyLinearVelocity(Math::vec2& _position, float _angle, float _speed);
-	}
-	
+	struct Ray {
+		Math::vec2 pos;
+		Math::vec2 dir;
+
+		Ray(Math::vec2 _pos = Math::vec2{}, Math::vec2 _dir = Math::vec2{}) : pos{ _pos }, dir{ _dir } {}
+	};
 }
 
 #endif

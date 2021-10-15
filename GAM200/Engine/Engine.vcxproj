@@ -191,7 +191,6 @@
     <ClCompile Include="Engine\Code\Event\MouseEvent.cpp" />
     <ClCompile Include="Engine\Code\Event\OverlapColliderEvent.cpp" />
     <ClCompile Include="Engine\Code\Event\WindowEvent.cpp" />
-    <ClCompile Include="Engine\Code\Graphic\DebugDraw.cpp" />
     <ClCompile Include="Engine\Code\Graphic\FontSystem.cpp" />
     <ClCompile Include="Engine\Code\Graphic\GLSLShader.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Graphic.cpp" />
@@ -272,7 +271,6 @@
     <ClInclude Include="Engine\Header\Event\MouseEvent.hpp" />
     <ClInclude Include="Engine\Header\Event\OverlapColliderEvent.hpp" />
     <ClInclude Include="Engine\Header\Event\WindowEvent.hpp" />
-    <ClInclude Include="Engine\Header\Graphic\DebugDraw.hpp" />
     <ClInclude Include="Engine\Header\Graphic\FontSystem.hpp" />
     <ClInclude Include="Engine\Header\Graphic\GLSLShader.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Graphic.hpp" />
@@ -303,6 +301,7 @@
     <ClInclude Include="Engine\Header\pch.hpp" />
     <ClInclude Include="Engine\Header\Physics\Collision.hpp" />
     <ClInclude Include="Engine\Header\Physics\Physics.hpp" />
+    <ClInclude Include="Engine\Header\Physics\Ray.hpp" />
     <ClInclude Include="Engine\Header\Scene\Scene.hpp" />
     <ClInclude Include="Engine\Header\Scene\SceneManager.hpp" />
     <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp" />

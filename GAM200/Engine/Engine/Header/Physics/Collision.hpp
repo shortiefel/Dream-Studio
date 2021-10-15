@@ -20,10 +20,13 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
+#include "Engine/Header/Physics/Ray.hpp"
+
 namespace Engine {
 	struct ColliderComponent; //Forward declaration
 	struct TransformComponent; //Forward declaration
 
+	//REMEMBER TO CHANGE to Collision
 	namespace CollisionImplementation {
 		//Collision physic----------------------------------------
 		bool isColliding(Math::vec2& dir, const ColliderComponent& obj1, bool ent1Moveable, const ColliderComponent& obj2, bool ent2Moveable);
@@ -44,7 +47,7 @@ namespace Engine {
 		void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent& col1, TransformComponent& trans2, const ColliderComponent& col2);
 		//--------------------------------------------------------
 
-		//void applyGravity(); //Vec2 position
+		bool RayCast(const Engine::Ray& ray, const ColliderComponent& collider);
 	}
 }
 

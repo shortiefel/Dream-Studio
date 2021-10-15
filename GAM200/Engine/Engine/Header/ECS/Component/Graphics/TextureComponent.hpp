@@ -24,12 +24,12 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 
 
-namespace Engine 
+namespace Engine
 {
 	class DSerializer;
 	class SSerializer;
 
-	struct TextureComponent : public IComponent 
+	struct TextureComponent : public IComponent
 	{
 	public:
 		GLuint texobj_hdl = GLuint{};
@@ -45,13 +45,10 @@ namespace Engine
 		TextureComponent(const TextureComponent&) = default;
 		~TextureComponent();
 
-		TextureComponent(Entity _ID = DEFAULT_ENTITY, const std::string _path = "", 
-					GraphicShape _shape = GraphicShape::SQUARE, bool _active = true);
+		TextureComponent(Entity _ID = DEFAULT_ENTITY, const std::string _path = "",
+			GraphicShape _shape = GraphicShape::SQUARE, bool _active = true);
 
 		TextureComponent& operator= (const TextureComponent&) = default;
-
-		void Bind(GLuint slot = 0) const;
-		void Unbind() const;
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);

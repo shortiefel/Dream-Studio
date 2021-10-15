@@ -95,17 +95,17 @@ namespace Engine {
 		Normalize
 		-------------------------------------------------------------------------------------------------------------------*/
 		template <typename T>
-		MI::Vector2D<T> normalize(MI::Vector2D<T>& pResult) {
+		MI::Vector2D<T> normalize(const MI::Vector2D<T>& pResult) {
 			return (pResult / length(pResult));
 		}
 
 		template <typename T>
-		MI::Vector3D<T> normalize(MI::Vector3D<T>& pResult) {
+		MI::Vector3D<T> normalize(const MI::Vector3D<T>& pResult) {
 			return (pResult / length(pResult));
 		}
 
 		template <typename T>
-		MI::Vector4D<T> normalize(MI::Vector4D<T>& pResult) {
+		MI::Vector4D<T> normalize(const MI::Vector4D<T>& pResult) {
 			return (pResult / length(pResult));
 		}
 		/*-------------------------------------------------------------------------------------------------------------------

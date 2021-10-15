@@ -25,7 +25,22 @@ Technology is prohibited.
 #include "Engine/Header/Physics/Collision.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
-#include <glm/glm.hpp>
+
+#include "Engine/Header/Physics/Ray.hpp"
+
+#define RAY_LENGTH 1000.f
+
+//https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
+#define GET_T(det, v1, v2, v3, v4)\
+((v1.x - v3.x) * (v3.y - v4.y) - (v1.y - v3.y) * (v3.x - v4.x)) / det
+
+#define GET_U(det, v1, v2, v3, v4)\
+-((v1.x - v2.x) * (v1.y - v3.y) - (v1.y - v2.y) * (v1.x - v3.x)) / det
+
+#define GET_DET(v1, v2, v3, v4)\
+(v1.x - v2.x) * (v3.y - v4.y) - (v1.y - v2.y) * (v3.x - v4.x)
+
+
 namespace Engine {
     //Check if entity have rigidbody (movable)
     bool ent1IsMoveable, ent2IsMoveable;
@@ -360,6 +375,34 @@ namespace Engine {
             else if (ent2IsMoveable) {
                 trans2.position += length * -dir; //for col2
             }
+        }
+
+        bool RayCast(const Engine::Ray& ray, const ColliderComponent& transform) {
+            const Math::vec2 rayEnd = ray.pos + (ray.dir * RAY_LENGTH);
+
+            std::vector<Math::vec2> obj1Corner(4);
+            Math::vec2 xaxis1{ Math::cos(Math::radians(transform.angle)), Math::sin(Math::radians(transform.angle)) };
+            Math::vec2 yaxis1{ Math::cos(Math::radians(90.f + transform.angle)), Math::sin(Math::radians(90.f + transform.angle)) };
+
+            obj1Corner[0] = transform.offset_position + transform.offset_scale.x * xaxis1 + transform.offset_scale.y * yaxis1; //top right
+            obj1Corner[1] = transform.offset_position - transform.offset_scale.x * xaxis1 + transform.offset_scale.y * yaxis1; //top left
+            obj1Corner[2] = transform.offset_position - transform.offset_scale.x * xaxis1 - transform.offset_scale.y * yaxis1; //bot left
+            obj1Corner[3] = transform.offset_position + transform.offset_scale.x * xaxis1 - transform.offset_scale.y * yaxis1; //bot right
+
+            //Intersection
+            //Ray = p + uv : 0 <= u
+            //Line = q + tv : 0 <= t <= 1
+            for (int i = 0; i < 4; i++) {
+                const float det1 = GET_DET(obj1Corner[i], obj1Corner[(i + 1) < 4 ? i + 1 : 0], ray.pos, rayEnd);
+
+                if (Math::EpsilonCheck(det1)) return false;
+
+                const float t1 = GET_T(det1, obj1Corner[i], obj1Corner[(i + 1) < 4 ? i + 1 : 0], ray.pos, rayEnd);
+                const float u1 = GET_U(det1, obj1Corner[i], obj1Corner[(i + 1) < 4 ? i + 1 : 0], ray.pos, rayEnd);
+                if (t1 > 0 && t1 < 1 && u1 > 0) return true;
+            }
+
+            return false;
         }
     }
 }

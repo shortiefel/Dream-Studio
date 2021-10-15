@@ -18,23 +18,23 @@ Technology is prohibited.
 #include "Engine/Header/Management/TextureManager.hpp"
 #include "stb_image/stb_image.h"
 
-namespace Engine 
+namespace Engine
 {
 	//std::unordered_map<std::string, GLuint> TextureManager::textureList;
 
-	void TextureManager::Create() 
+	void TextureManager::Create()
 	{
 		// flips image in vertically
 		// OpenGL - Cartesian coordinate system
 		// PNG - top left
-		stbi_set_flip_vertically_on_load(1);
 
+		stbi_set_flip_vertically_on_load(1);
 		LOG_INSTANCE("TextureManager created");
 	}
 
-	void TextureManager::Destroy() 
+	void TextureManager::Destroy()
 	{
-		for (auto& a : textureList) 
+		for (auto& a : textureList)
 		{
 			glDeleteTextures(1, &a.second);
 		}
@@ -42,7 +42,7 @@ namespace Engine
 		LOG_INSTANCE("TextureManager destroyed");
 	}
 
-	GLuint TextureManager::LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel) 
+	GLuint TextureManager::LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel)
 	{
 		//Check if it exist first before loading
 		if (textureList.find(filename) != textureList.end()) return textureList[filename];

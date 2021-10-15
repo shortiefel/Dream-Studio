@@ -22,5 +22,24 @@ Technology is prohibited.
 #include "Engine/Header/Math/Internal/CommonMath.hpp"
 #include "Engine/Header/Math/Internal/ConstantsMath.hpp"
 
+namespace Engine {
+    namespace DreamMath {
+        template <typename T>
+        bool EpsilonCheck(DreamMath::MathImplementation::Vector2D<T> target) {
+            if (target.x >= -epsilon<T>() && target.x <= -epsilon<T>() &&
+                target.y >= -epsilon<T>() && target.y <= -epsilon<T>())
+                return true;
+            return false;
+        }
+
+        template <typename T>
+        bool EpsilonCheck(T target) {
+            if (target >= -epsilon<T>() && target <= -epsilon<T>())
+                return true;
+            return false;
+        }
+    }
+}
+
 
 #endif

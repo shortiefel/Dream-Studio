@@ -130,9 +130,6 @@
     <ClCompile Include="Engine\Code\Graphic\Shader.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\DebugDraw.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\GLSLShader.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
@@ -426,9 +423,6 @@
     <ClInclude Include="Engine\Header\Graphic\Shader.hpp">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\DebugDraw.hpp">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\GLSLShader.hpp">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
@@ -440,6 +434,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\UI\TextComponent.hpp">
       <Filter>Header Files\ECS\Component\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Physics\Ray.hpp">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,16 +19,13 @@ Technology is prohibited.
 #define GRAPHIC_SYSTEM_H
 
 #include "Engine/Header/pch.hpp"
-
 #include "Engine/Header/Singleton/Singleton.hpp"
-
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
-
 #include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine 
+namespace Engine
 {
-	class GraphicSystem : public Singleton<GraphicSystem> 
+	class GraphicSystem : public Singleton<GraphicSystem>
 	{
 	public:
 		bool Create();
@@ -38,7 +35,6 @@ namespace Engine
 
 	private:
 		GLboolean isDebugDraw = GL_TRUE;
-		GLint id = 0;
 
 		SINGLETON_SETUP(GraphicSystem);
 	};

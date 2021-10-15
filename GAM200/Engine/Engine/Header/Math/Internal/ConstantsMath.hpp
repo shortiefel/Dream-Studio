@@ -24,6 +24,7 @@ namespace Engine {
             constexpr double EPSILON = 0.0001;
             constexpr double PI = 3.14159265358;
         }
+
         template <typename T>
         inline T epsilon() {
             return static_cast<T>(MathImplementation::EPSILON);

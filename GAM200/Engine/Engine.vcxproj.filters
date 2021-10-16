@@ -438,6 +438,9 @@
     <ClInclude Include="Engine\Header\Physics\Ray.hpp">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\BuildType.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

@@ -85,10 +85,13 @@ public class Test : MonoBehaviour
 
         if (Input.IsKeyPressed(KeyCode.C))
         {
-            for (int i = 0; i < 100; i++)
+            /*for (int i = 0; i < 100; i++)
             {
                 Instantiate_Entity("Box");
-            }
+            }*/
+            float hitDis = 0f;
+            Debug.Log(Physics.RayCast(go2.position, go2.forward, out hitDis, 200f));
+            Debug.Log(hitDis);
             
             //Console.WriteLine(Input.IsKeyPressed(KeyCode.E));
             //Disable(this);

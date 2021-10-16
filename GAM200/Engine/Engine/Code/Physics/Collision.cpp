@@ -27,8 +27,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
 #include "Engine/Header/Physics/Ray.hpp"
-
-#define RAY_LENGTH 1000.f
+#include <iostream>
 
 //https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
 #define GET_T(det, v1, v2, v3, v4)\
@@ -377,8 +376,8 @@ namespace Engine {
             }
         }
 
-        bool RayCast(const Engine::Ray& ray, const ColliderComponent& transform) {
-            const Math::vec2 rayEnd = ray.pos + (ray.dir * RAY_LENGTH);
+        bool RayCast_Internal(const Engine::Ray& ray, const ColliderComponent& transform, float* hitDistance) {
+            const Math::vec2 rayEnd = ray.pos + (ray.dir * ray.length);
 
             std::vector<Math::vec2> obj1Corner(4);
             Math::vec2 xaxis1{ Math::cos(Math::radians(transform.angle)), Math::sin(Math::radians(transform.angle)) };
@@ -390,8 +389,8 @@ namespace Engine {
             obj1Corner[3] = transform.offset_position + transform.offset_scale.x * xaxis1 - transform.offset_scale.y * yaxis1; //bot right
 
             //Intersection
-            //Ray = p + uv : 0 <= u
-            //Line = q + tv : 0 <= t <= 1
+            //Ray = p + uv : 0 < u
+            //Line = q + tv : 0 < t < 1
             for (int i = 0; i < 4; i++) {
                 const float det1 = GET_DET(obj1Corner[i], obj1Corner[(i + 1) < 4 ? i + 1 : 0], ray.pos, rayEnd);
 
@@ -399,7 +398,10 @@ namespace Engine {
 
                 const float t1 = GET_T(det1, obj1Corner[i], obj1Corner[(i + 1) < 4 ? i + 1 : 0], ray.pos, rayEnd);
                 const float u1 = GET_U(det1, obj1Corner[i], obj1Corner[(i + 1) < 4 ? i + 1 : 0], ray.pos, rayEnd);
-                if (t1 > 0 && t1 < 1 && u1 > 0) return true;
+                if (t1 > 0 && t1 < 1 && u1 > 0 && u1 < 1) {
+                    *hitDistance = Math::distance(ray.pos, ray.pos + (u1 * (rayEnd - ray.pos)));
+                    return true;
+                }
             }
 
             return false;

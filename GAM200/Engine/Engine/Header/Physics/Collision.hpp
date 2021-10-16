@@ -47,7 +47,7 @@ namespace Engine {
 		void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent& col1, TransformComponent& trans2, const ColliderComponent& col2);
 		//--------------------------------------------------------
 
-		bool RayCast(const Engine::Ray& ray, const ColliderComponent& collider);
+		bool RayCast_Internal(const Engine::Ray& ray, const ColliderComponent& collider, float* hitDistance);
 	}
 }
 

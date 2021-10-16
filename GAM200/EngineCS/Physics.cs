@@ -1,10 +1,10 @@
 ﻿/* Start Header**********************************************************************************/
 /*
-@file    SceneManager.cs
+@file    Physics.cs
 @author  Ow Jian Wen	jianwen.o@digipen.edu
-@date    21/08/2021
+@date    15/10/2021
 \brief
-This file has the function definition for SceneManager
+This file has the function definition for Physics
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -16,12 +16,14 @@ Technology is prohibited.
 
 using System.Runtime.CompilerServices; //For internal calls
 
-public class SceneManager
+public class Physics
 {
-    public static void LoadScene(string sceneName)
+    //Leave distance parameter blank to have "infinite" length
+    public static bool RayCast(Vec2 pos, Vec2 dir, out float hit, float distance = -1f)
     {
-        LoadScene_Engine(sceneName);
+        return RayCast_Engine(pos, dir, out hit, distance);
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void LoadScene_Engine(string sceneName);
+    internal static extern bool RayCast_Engine(Vec2 pos, Vec2 dir, out float hit, float distance);
 }
+

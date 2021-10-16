@@ -47,10 +47,12 @@ namespace Editor {
             void ClearLog();
             void GUI_Console(bool* console_bool);
             void Add_To_Console(ConsoleString&& text);
+            void Create();
 
             GUI_ConsoleWindow() = default;
             ~GUI_ConsoleWindow();
         private:
+            bool ScrollToBottom;
             ImVector<ConsoleString> Items;
             ImGuiTextFilter filter;
         };
@@ -59,6 +61,7 @@ namespace Editor {
         void GUI_Console_Add(ConsoleString&& text);
         void GUI_Console_Clear();
         void GUI_Console(bool* console_bool);
+        void GUI_Console_Create();
 
 #if 0
         //-----------------------------------------------------------------------------

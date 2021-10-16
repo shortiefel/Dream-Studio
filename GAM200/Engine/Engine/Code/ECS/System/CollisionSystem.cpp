@@ -36,6 +36,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 
+#include "Engine/Header/Physics/Ray.hpp" //Ray
+
 namespace Engine {
 	std::unordered_map<Entity_id, std::vector<Entity>> overlapMap;
 
@@ -186,6 +188,31 @@ namespace Engine {
 
 			}
 		}
+	}
+
+	bool CollisionSystem::RayCast(const Ray& ray, float* hitDistance) {
+		PROFILER_START("Collision");
+
+		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
+		for (const auto& col : colliderArray) {
+			const Entity& ent = col.GetEntity();
+			if (Entity_Check(ent)) break;
+			if (!col.isActive) continue;
+
+			auto& transform = DreamECS::GetInstance().GetComponent<TransformComponent>(ent);
+			if (!transform.isActive) continue;
+
+			/*ColliderComponent collider{ col.GetEntity(), col.cType, 
+				col.offset_position + transform.position, col.offset_scale * transform.scale, col.angle + transform.angle };*/
+			ColliderComponent collider = col;
+			collider.offset_position += Math::vec2{ transform.position };
+			collider.offset_scale *= transform.scale;
+			collider.angle += transform.angle;
+			
+			if (CollisionImplementation::RayCast_Internal(ray, collider, hitDistance)) return true;
+		}
+
+		return false;
 	}
 
 	void CollisionSystem::Stop() {

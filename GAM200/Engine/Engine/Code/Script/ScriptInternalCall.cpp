@@ -34,6 +34,9 @@ Technology is prohibited.
 
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
+#include "Engine/Header/ECS/System/CollisionSystem.hpp" //For raycast
+#include "Engine/Header/Physics/Ray.hpp" //For raycast
+
 #define GetEngineType(ID, type, paramName, param)\
 type* ctype = DreamECS::GetInstance().GetComponentPTR<type>(ID);\
 if (!ctype) return;\
@@ -47,11 +50,8 @@ ctype->paramName = param;
 
 
 namespace Engine {
-	//extern Coordinator gCoordinator;
-	//Coordinator& gCoordinator = DreamECS::GetCoordinator();
-
-	/*void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform);
-	void SetComponentInScriptEmbeded(unsigned int id, Transform* inTransform);*/
+	//Function to call when writing to console (With editor function ptr is overwritten)
+	void(*ConsoleFuncPtr)(std::string) = [](std::string) { printf("Not set"); };
 
 	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2);
 	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2);
@@ -87,6 +87,10 @@ namespace Engine {
 	void GetDeltaTime_Engine(float* dt);
 
 	void LoadScene_Engine(MonoString* sceneName);
+
+	bool RayCast_Engine(Math::vec2 pos, Math::vec2 dir, float* hit, float distance);
+
+	void ConsoleWrite_Engine(MonoString* message);
 
 
 	void RegisterInternalCall() {
@@ -125,6 +129,9 @@ namespace Engine {
 
 		mono_add_internal_call("SceneManager::LoadScene_Engine", LoadScene_Engine);
 
+		mono_add_internal_call("Physics::RayCast_Engine", RayCast_Engine);
+
+		mono_add_internal_call("Debug::ConsoleWrite_Engine", ConsoleWrite_Engine);
 	}
 
 
@@ -297,5 +304,24 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void LoadScene_Engine(MonoString* sceneName) {
 		SceneManager::GetInstance().ChangeScene(mono_string_to_utf8(sceneName));
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Physics
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	bool RayCast_Engine(Math::vec2 pos, Math::vec2 dir, float* hit, float distance) {
+		if (distance < 0) distance = RAY_LENGTH;
+		return CollisionSystem::GetInstance().RayCast(Engine::Ray{ pos, dir, distance }, hit);
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Console Write
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void SetConsoleWriteFunc(void(*fp)(std::string)) {
+		ConsoleFuncPtr = fp;
+	}
+	
+	void ConsoleWrite_Engine(MonoString* message) {
+		ConsoleFuncPtr(mono_string_to_utf8(message));
 	}
 }

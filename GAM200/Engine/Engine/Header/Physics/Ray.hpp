@@ -19,12 +19,15 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
+#define RAY_LENGTH 10000.f
+
 namespace Engine {
 	struct Ray {
 		Math::vec2 pos;
 		Math::vec2 dir;
+		float length;
 
-		Ray(Math::vec2 _pos = Math::vec2{}, Math::vec2 _dir = Math::vec2{}) : pos{ _pos }, dir{ _dir } {}
+		Ray(Math::vec2 _pos = Math::vec2{}, Math::vec2 _dir = Math::vec2{}, float _length = RAY_LENGTH) : pos{ _pos }, dir{ _dir }, length{ _length } {}
 	};
 }
 

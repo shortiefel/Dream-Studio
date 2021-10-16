@@ -110,6 +110,8 @@ namespace Editor {
 			dockspace_window_flags |= ImGuiWindowFlags_MenuBar;
 
 			dockspace_dock_flags |= ImGuiDockNodeFlags_PassthruCentralNode;
+
+			GUI_Windows::GUI_Console_Create();
 		}
 
 		void GUI_DockSpace() {

@@ -15,6 +15,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
+#include "Engine/Header/Script/ScriptInternalCall.hpp"
 
 namespace Editor {
     namespace GUI_Windows {
@@ -57,11 +58,15 @@ namespace Editor {
 
 
                 for (auto& item : Items) {
-                    ImGui::Dummy(ImVec2(0.0f, 5.f)); //Add Space
+                    //ImGui::Dummy(ImVec2(0.0f, 5.f)); //Add Space
                     ImGui::TextUnformatted(item.consoleText);
-                    ImGui::Dummy(ImVec2(0.0f, 15.f)); //Add Space
+                    //ImGui::Dummy(ImVec2(0.0f, 15.f)); //Add Space
                     ImGui::Separator();
                 }
+
+                if (ScrollToBottom)
+                    ImGui::SetScrollHereY(1.0f);
+                ScrollToBottom = false;
 
                 ImGui::EndChild();
 
@@ -71,7 +76,16 @@ namespace Editor {
         }
 
         void GUI_ConsoleWindow::Add_To_Console(ConsoleString&& _consoleString) {
+            ScrollToBottom = true;
             Items.push_back(std::move(_consoleString));
+        }
+
+        void GUI_ConsoleWindow::Create() {
+            Engine::SetConsoleWriteFunc(
+                [](std::string message) {
+                    GUI_Console_Add(ConsoleString{ message.c_str() });
+                }
+                );
         }
 
         void GUI_ConsoleWindow::ClearLog() {
@@ -97,7 +111,9 @@ namespace Editor {
             gui_ConsoleWindow.GUI_Console(console_bool);
         }
 
-
+        void GUI_Console_Create() {
+            gui_ConsoleWindow.Create();
+        }
 
 
 

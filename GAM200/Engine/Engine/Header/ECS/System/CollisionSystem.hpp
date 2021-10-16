@@ -24,10 +24,14 @@ Technology is prohibited.
 
 
 namespace Engine {
+	struct Ray;
+
 	class CollisionSystem : public Singleton<CollisionSystem> {
 	public:
 		bool Create();
 		void Destroy();
+
+		bool RayCast(const Ray& ray, float* hitDistance);
 
 		void Stop();
 		void Update(float dt);

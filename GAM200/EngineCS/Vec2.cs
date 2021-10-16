@@ -1,8 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/* Start Header**********************************************************************************/
+/*
+@file    Vec2.cs
+@author  Ow Jian Wen	jianwen.o@digipen.edu
+@date    21/08/2021
+\brief
+This file has the function definition for Vec2
+
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
 
 public struct Vec2
 {

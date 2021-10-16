@@ -1,10 +1,11 @@
 /* Start Header**********************************************************************************/
 /*
-@file    ScriptInternalCall.hpp
+@file    Collision.hpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu
-@date    25/08/2021
+@date    19/06/2021
 \brief
-This file contain the declaration of ScriptInternalCall
+This file has Build type define
+A duplicated file will be created for the game build
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -14,18 +15,9 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef SCRIPT_INTERNAL_CALL
-#define SCRIPT_INTERNAL_CALL
+#ifndef BUILD_TYPE
+#define BUILD_TYPE
 
-#include <string>
 
-namespace Engine {
-	//Register Internal call for C# side to use
-	//Found in ScriptInternalCall.hpp
-	void RegisterInternalCall();
-
-	//Set the function that will be called when Debug.Log is called in c#
-	void SetConsoleWriteFunc(void(*fp)(std::string));
-}
 
 #endif

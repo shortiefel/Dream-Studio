@@ -1,8 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/* Start Header**********************************************************************************/
+/*
+@file    EngineTypes.cs
+@author  Ow Jian Wen	jianwen.o@digipen.edu
+@date    21/08/2021
+\brief
+This file has the function definition for EngineTypes
+
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
+
 using System.Runtime.CompilerServices; //For internal calls
 
 

@@ -1,10 +1,10 @@
 ﻿/* Start Header**********************************************************************************/
 /*
-@file    SceneManager.cs
+@file    Debug.cs
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    21/08/2021
 \brief
-This file has the function definition for SceneManager
+This file has the function definition for Debug
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -16,12 +16,17 @@ Technology is prohibited.
 
 using System.Runtime.CompilerServices; //For internal calls
 
-public class SceneManager
+public class Debug
 {
-    public static void LoadScene(string sceneName)
+    public static void Log<T>(T message)
     {
-        LoadScene_Engine(sceneName);
+        ConsoleWrite_Engine(message.ToString());
+    }
+    public static void Log(string message)
+    {
+        ConsoleWrite_Engine(message);
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void LoadScene_Engine(string sceneName);
+    internal static extern void ConsoleWrite_Engine(string message);
 }
+

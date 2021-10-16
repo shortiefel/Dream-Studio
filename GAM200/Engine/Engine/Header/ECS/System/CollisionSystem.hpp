@@ -31,7 +31,7 @@ namespace Engine {
 		bool Create();
 		void Destroy();
 
-		bool RayCast(const Ray& ray, float* hitDistance);
+		bool RayCast(const Ray& ray, float* hitDistance, std::uint32_t ignoreTarget);
 
 		void Stop();
 		void Update(float dt);

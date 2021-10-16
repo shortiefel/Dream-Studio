@@ -22,14 +22,15 @@ Technology is prohibited.
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Layer/LayerStack.hpp"
 
-#include "Engine/Header/Management/GameState.hpp"
+#include "Engine/Header/Time/DeltaTime.hpp"
+//#include "Engine/Header/Management/GameState.hpp"
 
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 
-#include "Engine/Header/Debug Tools/Profiler.hpp"
+//#include "Engine/Header/Debug Tools/Profiler.hpp"
 
 //Components
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
@@ -44,12 +45,12 @@ namespace Engine {
     }
 
     //When user click play to run their game
-    void Scene::Play() {
+    bool Scene::Play() {
          if (!ScriptSystem::GetInstance().CompileCS()) {
             std::cout << "Fail to compile \n";
-            GameState::GetInstance().SetPlaying(false);
+            //GameState::GetInstance().SetPlaying(false);
             //Scene::SetPlaying(false);
-            return;
+            return false;
         }
 
         ScriptSystem::GetInstance().UpdateMapData();
@@ -67,6 +68,8 @@ namespace Engine {
         ScriptSystem::GetInstance().PlayInit();
         //Change to sceneName (might be fullName(path + name) instead)
         GameSceneSerializer::SerializeScene(fullPathSceneName);
+
+        return true;
     }
 
     void Scene::Stop() {
@@ -94,7 +97,7 @@ namespace Engine {
         if (playing) {
             ScriptSystem::GetInstance().PlayRunTime();
             CollisionSystem::GetInstance().Update(dt);
-            PhysicsSystem::GetInstance().Update(dt);
+            PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
         }
         /*if (Input::IsKeyPressed(Input_KeyCode::N))
             DreamECS::GetInstance().DuplicateEntityAsInstance(0);*/

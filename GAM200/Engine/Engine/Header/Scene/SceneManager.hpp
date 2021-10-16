@@ -37,7 +37,7 @@ namespace Engine {
 		void Update(float dt, bool defaultRender);
 		void Destroy();
 
-		void Play();
+		bool Play();
 		void Stop();
 		void Save();
 

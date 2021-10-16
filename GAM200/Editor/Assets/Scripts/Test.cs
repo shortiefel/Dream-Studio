@@ -85,16 +85,22 @@ public class Test : MonoBehaviour
 
         if (Input.IsKeyPressed(KeyCode.C))
         {
+            //Instantiate Prefab
             /*for (int i = 0; i < 100; i++)
             {
                 Instantiate_Entity("Box");
             }*/
-            float hitDis = 0f;
-            Debug.Log(Physics.RayCast(go2.position, go2.forward, out hitDis, 200f));
-            Debug.Log(hitDis);
-            
-            //Console.WriteLine(Input.IsKeyPressed(KeyCode.E));
-            //Disable(this);
+
+            //Physics Ray cast and Debug.log
+            //{
+            //float hitDis = 0f;
+            //Debug.Log(Physics.RayCast(go2.position, go2.forward, out hitDis, go2.entityId, 200f));
+            //Debug.Log(hitDis);
+            //}
+
+            //Disable
+            Disable(go2);
+            //go2.SetActive(false);
         }
     }
 

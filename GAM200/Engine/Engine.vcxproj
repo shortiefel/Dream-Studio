@@ -171,7 +171,6 @@
     <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp" />
     <ClCompile Include="Engine\Code\Application.cpp" />
     <ClCompile Include="Engine\Code\Debug Tools\Profiler.cpp" />
-    <ClCompile Include="Engine\Code\DeltaTime\DeltaTime.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp" />
@@ -212,7 +211,7 @@
     <ClCompile Include="Engine\Code\Serialize\DSerializer.cpp" />
     <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp" />
     <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp" />
-    <ClCompile Include="Engine\Code\Time\Timer.cpp" />
+    <ClCompile Include="Engine\Code\Time\DeltaTime.cpp" />
     <ClCompile Include="Engine\Code\Window.cpp" />
     <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp" />
   </ItemGroup>
@@ -243,7 +242,6 @@
     <ClInclude Include="Engine\Header\BuildType.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Profiler.hpp" />
-    <ClInclude Include="Engine\Header\DeltaTime\DeltaTime.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp" />
@@ -314,6 +312,7 @@
     <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp" />
     <ClInclude Include="Engine\Header\Serialize\SSerializer.hpp" />
     <ClInclude Include="Engine\Header\Singleton\Singleton.hpp" />
+    <ClInclude Include="Engine\Header\Time\DeltaTime.hpp" />
     <ClInclude Include="Engine\Header\Time\Timer.hpp" />
     <ClInclude Include="Engine\Header\Window.hpp" />
   </ItemGroup>

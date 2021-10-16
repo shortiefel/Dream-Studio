@@ -66,8 +66,8 @@ namespace Engine {
         defaultSceneName = sn;
     }
 
-    void SceneManager::Play() {
-        currentScene->Play();
+    bool SceneManager::Play() {
+        return currentScene->Play();
     }
 
     void SceneManager::Stop() {

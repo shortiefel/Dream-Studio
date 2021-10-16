@@ -190,12 +190,13 @@ namespace Engine {
 		}
 	}
 
-	bool CollisionSystem::RayCast(const Ray& ray, float* hitDistance) {
+	bool CollisionSystem::RayCast(const Ray& ray, float* hitDistance, std::uint32_t ignoreTarget) {
 		PROFILER_START("Collision");
 
 		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
 		for (const auto& col : colliderArray) {
 			const Entity& ent = col.GetEntity();
+			if (ent.id == ignoreTarget) continue;
 			if (Entity_Check(ent)) break;
 			if (!col.isActive) continue;
 

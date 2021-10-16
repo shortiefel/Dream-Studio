@@ -27,30 +27,39 @@ namespace Engine {
     template <typename FnCallBack>
     class Timer {
     public:
-        Timer(const char* _name, FnCallBack&& _fnCallBack) :
-            name{ _name }, fnCallBack{ _fnCallBack }, stopped{ false } {
-            startTime = glfwGetTime();
-        }
-
-        ~Timer() {
-            if (!stopped)
-                Stop();
-        }
+        Timer(const char* _name, FnCallBack&& _fnCallBack);
+        ~Timer();
 
     private:
         const char* name;
         bool stopped;
         FnCallBack fnCallBack;
         double startTime;
-        void Stop() {
-            double time = (glfwGetTime() - startTime) * 1000;
-            
-            stopped = true;
 
-            //std::cout << name << ": " << time << "\n";
-            fnCallBack({ name, time });
-        }
+        void Stop();
     };
+
+    template <typename FnCallBack>
+    Timer<FnCallBack>::Timer(const char* _name, FnCallBack&& _fnCallBack) :
+        name{ _name }, fnCallBack{ _fnCallBack }, stopped{ false } {
+        startTime = glfwGetTime();
+    }
+
+    template <typename FnCallBack>
+    Timer<FnCallBack>::~Timer() {
+        if (!stopped)
+            Stop();
+    }
+
+    template <typename FnCallBack>
+    void Timer<FnCallBack>::Stop() {
+        double time = (glfwGetTime() - startTime) * 1000;
+
+        stopped = true;
+
+        //std::cout << name << ": " << time << "\n";
+        fnCallBack({ name, time });
+    }
 }
 
 #endif

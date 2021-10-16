@@ -25,14 +25,9 @@ namespace Engine {
 	public:
 		bool GetPlaying() const;
 		void SetPlaying(bool playState);
-		float GetFPS() const;
-		void SetFPS(float _fps);
-		float GetDeltaTime() const;
-		void SetDeltaTime(float _dt);
+		
 	private:
 		bool playing = false;
-		float dt = 1/60.0f;
-		float fps = 60.f;
 
 		SINGLETON_SETUP(GameState);
 	};

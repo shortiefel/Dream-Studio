@@ -15,15 +15,17 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 using System.Runtime.CompilerServices; //For internal calls
+using System;
 
 public class Physics
 {
     //Leave distance parameter blank to have "infinite" length
-    public static bool RayCast(Vec2 pos, Vec2 dir, out float hit, float distance = -1f)
+    public static bool RayCast(Vec2 pos, Vec2 dir, out float hit, uint ignoreTarget, float distance = -1f)
     {
-        return RayCast_Engine(pos, dir, out hit, distance);
+        //Console.WriteLine();
+        return RayCast_Engine(pos, dir, out hit, ignoreTarget, distance);
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern bool RayCast_Engine(Vec2 pos, Vec2 dir, out float hit, float distance);
+    internal static extern bool RayCast_Engine(Vec2 pos, Vec2 dir, out float hit, uint ignoreTarget, float distance);
 }
 

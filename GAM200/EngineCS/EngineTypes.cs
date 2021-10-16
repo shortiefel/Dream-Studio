@@ -117,7 +117,7 @@ public struct Transform : Component
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void GetTransform_right_Engine(uint entityID, out Vec2 outVec2);
 
-    public bool GetActive()
+   /* public bool GetActive()
     {
         GetTransform_Active_Engine(entityId, out bool _isActive);
         return _isActive;
@@ -130,7 +130,7 @@ public struct Transform : Component
         SetTransform_Active_Engine(entityId, _bool);
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTransform_Active_Engine(uint entityID, bool _isActive);
+    internal static extern void SetTransform_Active_Engine(uint entityID, bool _isActive);*/
 
 }
 
@@ -150,7 +150,7 @@ public struct Collider : Component
     public uint entityId { get; set; }
 
 
-    public bool GetActive()
+    /*public bool GetActive()
     {
         GetCollider_Active_Engine(entityId, out bool _isActive);
         return _isActive;
@@ -163,7 +163,7 @@ public struct Collider : Component
         SetCollider_Active_Engine(entityId, _bool);
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetCollider_Active_Engine(uint entityID, bool _isActive);
+    internal static extern void SetCollider_Active_Engine(uint entityID, bool _isActive);*/
 
 }
 

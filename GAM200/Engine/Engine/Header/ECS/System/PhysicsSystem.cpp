@@ -39,7 +39,6 @@ namespace Engine {
 			if (!transform || !transform->isActive) continue;
 
 			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);
-			//transform->position += Math::vec2{ std::cos(Math::radians((float)transform->angle)), std::sin(Math::radians((float)transform->angle)) } * dt;
 		}
 	}
 

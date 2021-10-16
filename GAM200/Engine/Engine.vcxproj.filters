@@ -34,9 +34,6 @@
     <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp">
       <Filter>External Resources\Stb</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\DeltaTime\DeltaTime.cpp">
-      <Filter>Source Files\DeltaTime</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\EngineCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -133,14 +130,14 @@
     <ClCompile Include="Engine\Code\Graphic\GLSLShader.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Time\Timer.cpp">
-      <Filter>Source Files\Time</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Debug Tools\Profiler.cpp">
       <Filter>Source Files\Debug Tools</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\UI\TextComponent.cpp">
       <Filter>Source Files\ECS\Component\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Time\DeltaTime.cpp">
+      <Filter>Source Files\Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,9 +227,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
       <Filter>Header Files\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\DeltaTime\DeltaTime.hpp">
-      <Filter>Header Files\DeltaTime</Filter>
     </ClInclude>
     <ClInclude Include="..\External Resources\include\rapidjson\allocators.h">
       <Filter>External Resources\Json</Filter>
@@ -441,6 +435,9 @@
     <ClInclude Include="Engine\Header\BuildType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\Time\DeltaTime.hpp">
+      <Filter>Header Files\Time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -521,14 +518,8 @@
     <Filter Include="External Resources\Stb">
       <UniqueIdentifier>{7fc0ac53-e215-4beb-99b6-3b02ddc75ec2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\DeltaTime">
-      <UniqueIdentifier>{12e76191-510e-48d8-8bb4-72fed4d781ca}</UniqueIdentifier>
-    </Filter>
     <Filter Include="External Resources\Json">
       <UniqueIdentifier>{33fc9dad-4f01-4208-9c69-030a239e58f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\DeltaTime">
-      <UniqueIdentifier>{32af4b01-18e5-4235-9c80-32f6e9608402}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Event">
       <UniqueIdentifier>{818e1702-019a-4760-b11a-08a8efa47c26}</UniqueIdentifier>

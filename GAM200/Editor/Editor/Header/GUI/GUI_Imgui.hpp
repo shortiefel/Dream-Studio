@@ -1,10 +1,12 @@
 /* Start Header**********************************************************************************/
 /*
-@file    GameState.cpp
-@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
-@date    16/09/2021
-\brief
-This file has the function definition of GameState
+@file    GUI_Imgui.hpp
+@author  Ow Jian Wen	jianwen.o@digipen.edu
+@date    16/10/2021
+@brief
+#include "Editor/Header/GUI/GUI_Imgui.hpp"
+This file has the GUI_Imgui declaration
+The file contains functions that uses ImGui to create a version of UI that fits the Dream Engine
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -14,9 +16,11 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Engine/Header/Management/GameState.hpp"
+#ifndef GUI_IMGUI
+#define GUI_IMGUI
 
-namespace Engine {
-	bool GameState::GetPlaying() const  { return playing; }
-	void GameState::SetPlaying(bool playState) { playing = playState; }
+namespace ImGui {
+	void CheckBox_Dream(const char* _text, bool* _boolean);
 }
+
+#endif

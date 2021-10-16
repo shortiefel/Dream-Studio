@@ -35,7 +35,7 @@ namespace Editor {
 		*/
 		bool SceneHotKeyCheck(Engine::Input_KeyCode keyCode);
 
-		void Play();
+		bool Play();
 		void Stop();
 
 	private:

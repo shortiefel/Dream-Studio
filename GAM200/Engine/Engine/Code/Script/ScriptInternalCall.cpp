@@ -30,6 +30,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 
+#include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Management/GameState.hpp"
 
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
@@ -75,12 +76,16 @@ namespace Engine {
 	void Destroy_Collider_Engine(unsigned int id);
 	void Destroy_Script_Engine(unsigned int id, MonoString* str);
 
-	void SetTransform_Active_Engine(unsigned int id, bool boolean);
+	/*void SetTransform_Active_Engine(unsigned int id, bool boolean);
 	void GetTransform_Active_Engine(unsigned int id, bool* boolean);
 	void SetCollider_Active_Engine(unsigned int id, bool boolean);
 	void GetCollider_Active_Engine(unsigned int id, bool* boolean);
 	void SetScript_Active_Engine(unsigned int id, bool boolean, MonoString* str);
-	void GetScript_Active_Engine(unsigned int id, bool* boolean, MonoString* str);
+	void GetScript_Active_Engine(unsigned int id, bool* boolean, MonoString* str);*/
+
+	void Active_Transform_Engine(unsigned int id, bool boolean);
+	void Active_Collider_Engine(unsigned int id, bool boolean);
+	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str);
 
 	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle);
 
@@ -88,7 +93,7 @@ namespace Engine {
 
 	void LoadScene_Engine(MonoString* sceneName);
 
-	bool RayCast_Engine(Math::vec2 pos, Math::vec2 dir, float* hit, float distance);
+	bool RayCast_Engine(Math::vec2 pos, Math::vec2 dir, float* hit, std::uint32_t ignoreTarget, float distance);
 
 	void ConsoleWrite_Engine(MonoString* message);
 
@@ -116,12 +121,16 @@ namespace Engine {
 		mono_add_internal_call("MonoBehaviour::Destroy_Collider_Engine", Destroy_Collider_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Script_Engine", Destroy_Script_Engine);
 
-		mono_add_internal_call("Transform::SetTransform_Active_Engine", SetTransform_Active_Engine);
+		/*mono_add_internal_call("Transform::SetTransform_Active_Engine", SetTransform_Active_Engine);
 		mono_add_internal_call("Transform::GetTransform_Active_Engine", GetTransform_Active_Engine);
 		mono_add_internal_call("Collider::SetCollider_Active_Engine", SetCollider_Active_Engine);
 		mono_add_internal_call("Collider::GetCollider_Active_Engine", GetCollider_Active_Engine);
 		mono_add_internal_call("MonoBehaviour::SetScript_Active_Engine", SetScript_Active_Engine);
-		mono_add_internal_call("MonoBehaviour::GetScript_Active_Engine", GetScript_Active_Engine);
+		mono_add_internal_call("MonoBehaviour::GetScript_Active_Engine", GetScript_Active_Engine);*/
+
+		mono_add_internal_call("MonoBehaviour::Active_Transform_Engine", Active_Transform_Engine);
+		mono_add_internal_call("MonoBehaviour::Active_Collider_Engine", Active_Collider_Engine);
+		mono_add_internal_call("MonoBehaviour::Active_Script_Engine", Active_Script_Engine);
 
 		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab", Instantiate_Prefab);
 
@@ -258,7 +267,7 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Active
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void SetTransform_Active_Engine(unsigned int id, bool boolean) {
+	/*void SetTransform_Active_Engine(unsigned int id, bool boolean) {
 		SetEngineType(id, TransformComponent, isActive, boolean);
 	}
 
@@ -280,7 +289,20 @@ namespace Engine {
 
 	void GetScript_Active_Engine(unsigned int id, bool* boolean, MonoString* str) {
 		GetEngineType(id, ScriptComponent, klassInstance.find(mono_string_to_utf8(str))->second.isActive, *boolean);
+	}*/
+
+	void Active_Transform_Engine(unsigned int id, bool boolean) {
+		SetEngineType(id, TransformComponent, isActive, boolean);
 	}
+
+	void Active_Collider_Engine(unsigned int id, bool boolean) {
+		SetEngineType(id, ColliderComponent, isActive, boolean);
+	}
+
+	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {
+		SetEngineType(id, ScriptComponent, klassInstance.find(mono_string_to_utf8(str))->second.isActive, boolean);
+	}
+
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Prefab
@@ -296,7 +318,7 @@ namespace Engine {
 	Deltatime
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetDeltaTime_Engine(float* dt) {
-		*dt = GameState::GetInstance().GetDeltaTime();
+		*dt = DeltaTime::GetInstance().GetDeltaTime();
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -309,9 +331,9 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Physics
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	bool RayCast_Engine(Math::vec2 pos, Math::vec2 dir, float* hit, float distance) {
+	bool RayCast_Engine(Math::vec2 pos, Math::vec2 dir, float* hit, std::uint32_t ignoreTarget, float distance) {
 		if (distance < 0) distance = RAY_LENGTH;
-		return CollisionSystem::GetInstance().RayCast(Engine::Ray{ pos, dir, distance }, hit);
+		return CollisionSystem::GetInstance().RayCast(Engine::Ray{ pos, dir, distance }, hit, ignoreTarget);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

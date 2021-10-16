@@ -25,11 +25,11 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 #include "Engine/Header/Management/Settings.hpp"
 
-#include "Engine/Header/DeltaTime/DeltaTime.hpp"
-
 #include "Engine/Header/EngineCore.hpp"
 
 #include "Engine/Header/Time/Timer.hpp"
+#include "Engine/Header/Time/DeltaTime.hpp"
+
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 #include "Engine/Header/Management/GameState.hpp"
 #include <iostream>
@@ -65,13 +65,13 @@ namespace Engine
             {
                 Timer timer("Total", std::move([&](ProfilerResult&& result) {
                     float sec = static_cast<float>(result.time) * 0.001f;
-                    GameState::GetInstance().SetDeltaTime(sec);
+                    DeltaTime::GetInstance().SetDeltaTime(sec);
 
                     static float wait_time = 0;
                     wait_time += sec;
                     float fps = 1 / sec;
                     if (wait_time > FPS_Interval) {
-                        GameState::GetInstance().SetFPS(fps);
+                        DeltaTime::GetInstance().SetFPS(fps);
                         wait_time = 0;
                     }
 
@@ -82,10 +82,10 @@ namespace Engine
                 glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-                Engine::EngineCore::GetInstance().Update(GameState::GetInstance().GetDeltaTime(), defaultRender);
+                Engine::EngineCore::GetInstance().Update(DeltaTime::GetInstance().GetDeltaTime(), defaultRender);
 
                 if (UpdateFunc != nullptr) {
-                    UpdateFunc(GameState::GetInstance().GetDeltaTime());
+                    UpdateFunc(DeltaTime::GetInstance().GetDeltaTime());
                 }
 
                 Engine::Window::GetInstance().Update();

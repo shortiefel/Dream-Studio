@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Debug Tools/Profiler.hpp"
+#include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Management/GameState.hpp"
 
 #include <sstream>      // std::stringstream
@@ -82,7 +83,7 @@ namespace Editor {
 				if (updateTimer <= 0.f) {
 					
 
-					fps = Engine::GameState::GetInstance().GetFPS();
+					fps = Engine::DeltaTime::GetInstance().GetFPS();
 					maxfps = fps > maxfps ? fps : maxfps;
 					minfps = fps < minfps ? fps : minfps;
 

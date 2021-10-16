@@ -17,15 +17,16 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
-#include "Editor/Header/GUI/GUIWindow.hpp"
-#include "Editor/Header/Scene/EditorSceneManager.hpp"
-
+#include "Editor/Header/GUI/GUI_Window.hpp"
+#include "Editor/Header/GUI/GUI_Imgui.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ProfilerWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
+#include "Editor/Header/Scene/EditorSceneManager.hpp"
 
 #include <Imgui/imgui_internal.h>
 
 #include "Engine/Header/Management/GameState.hpp"
+#include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
@@ -208,7 +209,7 @@ namespace Editor {
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
 			ImGui::PushItemWidth(wSize.x / 2);
 			if (ImGui::Button("Play", (ImVec2{ 40, 30 }))) {
-				EditorSceneManager::GetInstance().Play();
+				if (!EditorSceneManager::GetInstance().Play()) Engine::GameState::GetInstance().SetPlaying(false);
 			}
 			ImGui::PopItemFlag();
 
@@ -280,11 +281,11 @@ namespace Editor {
 				*/
 				Engine::TransformComponent* transComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TransformComponent>(entity_selected);
 				if (transComp != nullptr) {
-					ImGui::Checkbox("##TransformActive", &(transComp->isActive));
-					if (ImGui::TreeNode("Transform")) {
-						//ImGui::SameLine();
-						//ImGui::Checkbox("##TransformActive", &(transComp->isActive));
 
+					ImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
+					ImGui::SameLine();
+
+					if (ImGui::TreeNode("Transform")) {
 						ImGui::Spacing();
 						//Updating of position
 						ImGui::Text("Position");
@@ -321,6 +322,10 @@ namespace Editor {
 				*/
 				Engine::ColliderComponent* colComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::ColliderComponent>(entity_selected);
 				if (colComp != nullptr) {
+
+					ImGui::CheckBox_Dream("##ColliderActive", &(colComp->isActive));
+					ImGui::SameLine();
+
 					if (ImGui::TreeNode("Collider")) {
 						ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
 						ImGui::TreePop();
@@ -346,43 +351,49 @@ namespace Editor {
 				*/
 				Engine::ScriptComponent* scriptComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::ScriptComponent>(entity_selected);
 				if (scriptComp != nullptr) {
-					if (ImGui::TreeNode("Script")) {
+					//if (ImGui::TreeNode("Script")) {
 						auto& scriptsList = scriptComp->klassInstance;
 
 						for (auto& [className, csScriptInstance] : scriptsList) {
-							ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
-							for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
-								ImGui::Text(varName.c_str());
-								ImGui::SameLine();
-								switch (csPublicVariable.variableType) {
-								case Engine::CSType::CHAR:
-									//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
-									break;
-								case Engine::CSType::BOOL:
-									ImGui::Checkbox("B", &(csPublicVariable.GetVariableData<bool>()));
-									break;
-								case Engine::CSType::FLOAT:
-									ImGui::InputFloat("C", &(csPublicVariable.GetVariableData<float>()), 0);
-									break;
-								case Engine::CSType::INT:
-									ImGui::InputInt("D", &(csPublicVariable.GetVariableData<int>()), 0);
-									break;
-								case Engine::CSType::UINT:
-									//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
-									break;
-								case Engine::CSType::VEC2:
-									Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-									ImGui::InputFloat("F", &(tem.x), 0);
-									ImGui::InputFloat("G", &(tem.y), 0);
-									break;
+							//ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
+							ImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
+							ImGui::SameLine();
+
+							if (ImGui::TreeNode(className.c_str())) {
+								for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
+									ImGui::Text(varName.c_str());
+									ImGui::SameLine();
+									switch (csPublicVariable.variableType) {
+									case Engine::CSType::CHAR:
+										//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
+										break;
+									case Engine::CSType::BOOL:
+										ImGui::Checkbox("B", &(csPublicVariable.GetVariableData<bool>()));
+										break;
+									case Engine::CSType::FLOAT:
+										ImGui::InputFloat("C", &(csPublicVariable.GetVariableData<float>()), 0);
+										break;
+									case Engine::CSType::INT:
+										ImGui::InputInt("D", &(csPublicVariable.GetVariableData<int>()), 0);
+										break;
+									case Engine::CSType::UINT:
+										//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
+										break;
+									case Engine::CSType::VEC2:
+										Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
+										ImGui::InputFloat("F", &(tem.x), 0);
+										ImGui::InputFloat("G", &(tem.y), 0);
+										break;
+									}
 								}
 
+								ImGui::TreePop();
 							}
 						}
 
 
-						ImGui::TreePop();
-					}
+						//ImGui::TreePop();
+					//}
 				}
 
 
@@ -435,7 +446,7 @@ namespace Editor {
 				std::stringstream outputSS;
 				outputSS << "FPS: ";
 				outputSS.precision(2);
-				outputSS << std::fixed << Engine::GameState::GetInstance().GetFPS();
+				outputSS << std::fixed << Engine::DeltaTime::GetInstance().GetFPS();
 				
 				ImGui::Text(outputSS.str().c_str());
 				outputSS.str(std::string());

@@ -34,11 +34,12 @@ namespace Editor {
     */
     bool SceneHotKey(const Engine::KeyPressedEvent& e);
 
-    void EditorSceneManager::Play() {
+    bool EditorSceneManager::Play() {
         GUI_Windows::GUI_Console_Clear();
 
         Engine::GameState::GetInstance().SetPlaying(true);
-        Engine::SceneManager::GetInstance().Play();
+        bool playState = true;
+        if (!Engine::SceneManager::GetInstance().Play()) playState = false;
 
         //Read compile result
         std::ifstream fs{ "Data/msbuild.log" };
@@ -50,6 +51,9 @@ namespace Editor {
         }
 
         fs.close();
+
+        if (!playState) return false;
+        return true;
     }
 
     void EditorSceneManager::Stop() {

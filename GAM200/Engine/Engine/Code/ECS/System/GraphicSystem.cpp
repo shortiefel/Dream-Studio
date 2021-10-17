@@ -35,9 +35,19 @@ Technology is prohibited.
 
 namespace Engine
 {
-	void GraphicSystem::Render(Math::mat3 camMatrix)
+	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo)
 	{
-		GraphicImplementation::BindFramebuffer();
+		GLboolean isDebugDraw;
+		if (!_fbo)
+			isDebugDraw = GL_FALSE;
+		else
+			isDebugDraw = GL_TRUE;
+
+		//GraphicImplementation::BindFramebuffer();
+		if (!isDebugDraw)
+			fbo.Bind();
+		else
+			_fbo->Bind();
 
 		// Set background to purple color
 		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
@@ -98,7 +108,16 @@ namespace Engine
 		// unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-		GraphicImplementation::UnbindFramebuffer();
+		//GraphicImplementation::UnbindFramebuffer();
+		if (!isDebugDraw)
+			fbo.Unbind();
+		else
+			_fbo->Unbind();
+		
+	}
+
+	const Graphic::FrameBuffer& GraphicSystem::GetFrameBuffer() const {
+		return fbo;
 	}
 
 	bool GraphicSystem::Create()
@@ -120,6 +139,7 @@ namespace Engine
 
 		GraphicImplementation::Renderer::Init();
 
+		fbo.Create(1280, 720);
 
 		LOG_INSTANCE("Graphic System created");
 		return true;

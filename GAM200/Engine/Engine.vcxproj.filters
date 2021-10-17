@@ -139,6 +139,9 @@
     <ClCompile Include="Engine\Code\Time\DeltaTime.cpp">
       <Filter>Source Files\Time</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\FrameBuffer.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -437,6 +440,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Time\DeltaTime.hpp">
       <Filter>Header Files\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\FrameBuffer.hpp">
+      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

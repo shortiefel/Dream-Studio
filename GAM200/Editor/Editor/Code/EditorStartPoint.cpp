@@ -42,14 +42,15 @@ namespace Editor {
 		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
 		PROFILER_START("Rendering");
 
-		GUI::SetGameFBO();
-		//Engine::GraphicSystem::Update(dt);
-		Engine::GraphicSystem::GetInstance().Render();
+		//GUI::SetGameFBO();
+		////Engine::GraphicSystem::Update(dt);
+		//Engine::GraphicSystem::GetInstance().Render();
 		
-		GUI::SetSceneFBO();
-		//Engine::GraphicSystem::Update(dt);
-		//Change this line to editor graphic system
-		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform());
+		//GUI::SetSceneFBO();
+		////Engine::GraphicSystem::Update(dt);
+		////Change this line to editor graphic system
+		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
+
 		
 		GUI::Update();
 		

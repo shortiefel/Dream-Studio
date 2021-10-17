@@ -15,12 +15,14 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Editor/Header/GUI/GUI.hpp"
-#include "Editor/Header/GUI/GUIWindow.hpp"
+#include "Editor/Header/GUI/GUI_Window.hpp"
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
-#include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Management/Settings.hpp"
+
+//#include "Engine/Header/Graphic/Graphic.hpp"
+#include "Engine/Header/ECS/System/GraphicSystem.hpp"
 
 //External Resources
 #include <Imgui/imgui.h>
@@ -32,8 +34,10 @@ Technology is prohibited.
 
 namespace Editor {
     GUI* GUI::m_instance;
-    unsigned int GUI::gameWinFBO, GUI::sceneWinFBO;
+    //unsigned int GUI::gameWinFBO, GUI::sceneWinFBO;
     ImTextureID gameWinTex, sceneWinTex;
+
+    Engine::Graphic::FrameBuffer editor_fbo;
 
 
     void GUI::Update() {
@@ -45,10 +49,8 @@ namespace Editor {
         ImGui::ShowDemoWindow(&show_demo_window);*/
 
         GUI_Windows::GUI_DockSpace();
-
-        GUI_Windows::All_Windows(gameWinTex, sceneWinTex);
-
         
+        GUI_Windows::All_Windows(Engine::GraphicSystem::GetInstance().GetFrameBuffer().GetTexture(), editor_fbo.GetTexture());
     }
 
     void GUI::Draw() {
@@ -96,8 +98,9 @@ namespace Editor {
 
         GUI_Windows::GUI_Settings_Setup();
 
-        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight, &gameWinFBO, reinterpret_cast<unsigned int*>(&gameWinTex));
-        Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight, &sceneWinFBO, reinterpret_cast<unsigned int*>(&sceneWinTex));
+        //Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight, &gameWinFBO, reinterpret_cast<unsigned int*>(&gameWinTex));
+        //Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight, &sceneWinFBO, reinterpret_cast<unsigned int*>(&sceneWinTex));
+        editor_fbo.Create(Engine::Settings::windowWidth, Engine::Settings::windowHeight);
 
         return true;
     }
@@ -111,11 +114,15 @@ namespace Editor {
         LOG_INSTANCE("GUI destroyed");
     }
 
-    void GUI::SetGameFBO() {
+    /*void GUI::SetGameFBO() {
         Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
     }
 
     void GUI::SetSceneFBO() {
         Engine::GraphicImplementation::SetFramebuffer(sceneWinFBO);
+    }*/
+
+    Engine::Graphic::FrameBuffer* GUI::GetFboPtr() {
+        return &editor_fbo;
     }
 }

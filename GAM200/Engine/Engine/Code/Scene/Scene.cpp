@@ -99,15 +99,9 @@ namespace Engine {
             CollisionSystem::GetInstance().Update(dt);
             PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
         }
-        /*if (Input::IsKeyPressed(Input_KeyCode::N))
-            DreamECS::GetInstance().DuplicateEntityAsInstance(0);*/
 
         CameraSystem::GetInstance().Update(dt);
-
-        if (defaultRender) {
-            //GraphicSystem::Update(dt);
-            GraphicSystem::GetInstance().Render();
-        }
+        GraphicSystem::GetInstance().Render();
 
         DreamECS::GetInstance().ClearDestroyQueue();
 

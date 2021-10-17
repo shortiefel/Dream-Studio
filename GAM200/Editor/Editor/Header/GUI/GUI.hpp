@@ -18,8 +18,10 @@ Technology is prohibited.
 #define GUI_H
 
 struct GLFWwindow;
+#include "Engine/Header/Graphic/FrameBuffer.hpp"
 
 namespace Editor {
+
 	class GUI {
 	public:
 		static bool Create(GLFWwindow* window, const char* glsl_version);
@@ -28,12 +30,13 @@ namespace Editor {
 		static void Update();
 		static void Draw();
 
-		static void SetGameFBO();
-		static void SetSceneFBO();
+		/*static void SetGameFBO();
+		static void SetSceneFBO();*/
+		static Engine::Graphic::FrameBuffer* GetFboPtr();
 
 	private:
 		static GUI* m_instance;
-		static unsigned int gameWinFBO, sceneWinFBO;
+		//static unsigned int gameWinFBO, sceneWinFBO;
 	};
 }
 

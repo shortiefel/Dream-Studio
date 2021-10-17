@@ -4,6 +4,7 @@
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    16/06/2021
 @brief
+#include "Engine/Header/ECS/System/GraphicSystem.hpp"
 This file has the class to manage graphics: GraphicsSystem
 includes declaration to static function for a singleton GraphicsSystem
 
@@ -22,6 +23,7 @@ Technology is prohibited.
 #include "Engine/Header/Singleton/Singleton.hpp"
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/Graphic/FrameBuffer.hpp"
 
 namespace Engine
 {
@@ -31,10 +33,13 @@ namespace Engine
 		bool Create();
 		void Destroy();
 
-		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform());
+		//If _fbo is nullptr = default draw (game scene draw) otherwise it means for editor scene
+		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), Graphic::FrameBuffer* _fbo = nullptr);
+
+		const Graphic::FrameBuffer& GetFrameBuffer() const;
 
 	private:
-		GLboolean isDebugDraw = GL_TRUE;
+		Graphic::FrameBuffer fbo;
 
 		SINGLETON_SETUP(GraphicSystem);
 	};

@@ -37,7 +37,7 @@ int main() {
 		&Editor::EditorStartPoint::Update,
 		&Editor::EditorStartPoint::Destroy);
 
-	Engine::Application::GetInstance().Update(false); //Needed for game
+	Engine::Application::GetInstance().Update(true); //Needed for game
 
 	Engine::Application::GetInstance().Destroy(); //Needed for game
 

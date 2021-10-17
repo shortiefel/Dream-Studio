@@ -24,7 +24,7 @@ Technology is prohibited.
 
 namespace Editor {
     namespace GUI_Windows {
-        void    All_Windows(ImTextureID& gameWinTex, ImTextureID& sceneWinTex);
+        void    All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex);
 
         //Set up all variable for GUI_Window
         void    GUI_Settings_Setup();

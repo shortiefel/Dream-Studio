@@ -98,8 +98,8 @@ namespace Editor {
 		//Show stats like fps and Number of game object
 		void	GUI_Stats();
 		//Profiler window
-		void	GUI_GameWindow(ImTextureID& gameWinTex);
-		void	GUI_SceneWindow(ImTextureID& sceneWinTex);
+		void	GUI_GameWindow(const ImTextureID& gameWinTex);
+		void	GUI_SceneWindow(const ImTextureID& sceneWinTex);
 		void    GUI_ContentBrowserPanel();
 
 
@@ -188,7 +188,7 @@ namespace Editor {
 		/*-------------------------------------------------------------------------------------------------
 		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
-		void All_Windows(ImTextureID& gameWinTex, ImTextureID& sceneWinTex) {
+		void All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex) {
 			GUI_GameWindow(gameWinTex);
 			GUI_SceneWindow(sceneWinTex);
 			GUI_Hierarchy();
@@ -461,11 +461,11 @@ namespace Editor {
 			}
 		}
 
-		void GUI_GameWindow(ImTextureID& gameWinTex) {
+		void GUI_GameWindow(const ImTextureID& gameWinTex) {
 			CreateImageWindow("Game Window", gameWinTex, gameWin_bool);
 		}
 
-		void GUI_SceneWindow(ImTextureID& sceneWinTex) {
+		void GUI_SceneWindow(const ImTextureID& sceneWinTex) {
 			CreateImageWindow("Scene Window", sceneWinTex, sceneWin_bool);
 		}
 

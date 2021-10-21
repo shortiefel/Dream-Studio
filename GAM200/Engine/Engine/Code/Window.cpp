@@ -238,7 +238,7 @@ namespace Engine {
 	void Window::CursorCallBack(GLFWwindow* window, double xpos, double ypos) {
 		MouseMoveEvent event((float)xpos, (float)ypos);
 		EventDispatcher::SendEvent(event);
-		Input::SetMousePosition(xpos, ypos);
+		//Input::mousePosition = Math::vec2{ static_cast<float>(xpos),static_cast<float>(ypos) };
 		//w_data.eventCallBack(event);
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

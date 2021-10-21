@@ -112,11 +112,17 @@ namespace Engine
 			fbo.Unbind();
 		else
 			_fbo->Unbind();
-		
+
+		//Check for picking after graphic is done
+		//pickingFP();
 	}
 
 	const Graphic::FrameBuffer& GraphicSystem::GetFrameBuffer() const {
 		return fbo;
+	}
+
+	void GraphicSystem::SetPickingFunction(void(*fp)()) {
+		pickingFP = fp;
 	}
 
 	bool GraphicSystem::Create()

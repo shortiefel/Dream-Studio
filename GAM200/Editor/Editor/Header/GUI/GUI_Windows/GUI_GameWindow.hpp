@@ -21,10 +21,11 @@ Technology is prohibited.
 
 #include <Imgui/imgui.h>
 #include "Engine/Header/Graphic/FrameBuffer.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 namespace Editor {
 	namespace GUI_Windows {
-		//void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO);
+		void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO, Engine::Entity& entity_selected);
 		/*int GUI_GetSceneWindowSizeX();
 		int GUI_GetSceneWindowSizeY();*/
 	}

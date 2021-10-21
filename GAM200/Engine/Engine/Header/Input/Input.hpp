@@ -26,20 +26,18 @@ namespace Engine {
 	public:
 		static bool IsKeyPressed(Input_KeyCode keyCode);
 		static bool IsMousePressed(Input_MouseCode button);
-		static Math::vec2 GetMousePosition();
 
 		static void SetKeyStatus(int key, bool status);
 		static void SetMouseStatus(int button, bool status);
-		static void SetMousePosition(double xPos, double yPos);
 
 		//Get Input key code with GLFW code
 		static Input_KeyCode GetKeyCode(int key);
 		//Get Input Mouse code with GLFW code
 		static Input_MouseCode GetMouseCode(int button);
 
+		//static Math::vec2 mousePosition;
 
 	private:
-		static Math::vec2 mousePosition;
 		static std::unordered_map<int, Input_KeyCode> GLFWtoInputKey;
 		static std::unordered_map<Input_KeyCode, bool> InputKeyStatus;
 

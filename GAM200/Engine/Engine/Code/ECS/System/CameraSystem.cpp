@@ -63,6 +63,10 @@ namespace Engine
         return world_to_ndc_xform;
     }
 
+    float CameraSystem::GetAR() const {
+        return Settings::gameAR;
+    }
+
     bool CameraSystem::Create() {
         LOG_INSTANCE("Camera System created");
         return true;

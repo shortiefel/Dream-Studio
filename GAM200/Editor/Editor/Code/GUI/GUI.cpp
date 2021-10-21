@@ -50,7 +50,7 @@ namespace Editor {
 
         GUI_Windows::GUI_DockSpace();
         //editor_fbo.Resize(GUI_Windows::GetSceneSizeX(), GUI_Windows::GetSceneSizeY());
-        GUI_Windows::All_Windows(Engine::GraphicSystem::GetInstance().GetFrameBuffer().GetTexture(), editor_fbo);
+        GUI_Windows::All_Windows(Engine::GraphicSystem::GetInstance().GetFrameBuffer(), editor_fbo);
     }
 
     void GUI::Draw() {

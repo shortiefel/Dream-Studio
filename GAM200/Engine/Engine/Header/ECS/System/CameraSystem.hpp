@@ -35,6 +35,8 @@ namespace Engine
 		void Update(float dt);
 		Math::mat3 GetTransform();
 
+		float GetAR() const;
+
 	private:
 		Math::mat3 world_to_ndc_xform{};
 		GLFWwindow* pwindow{};

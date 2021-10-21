@@ -18,7 +18,7 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 
 namespace Engine {
-	Math::vec2 Input::mousePosition;
+	//Math::vec2 Input::mousePosition;
 
 	/*------------------------------------------------------------------------------------------------------------------------------
 	GLFW to input key code map
@@ -316,8 +316,6 @@ namespace Engine {
 		{ Input_MouseCode::Mouse_LeftSide_Back, false }
 	};
 
-
-
 	bool Input::IsKeyPressed(Input_KeyCode keyCode) {
 		return InputKeyStatus[keyCode];
 	}
@@ -326,20 +324,12 @@ namespace Engine {
 		return InputMouseStatus[button];
 	}
 
-	Math::vec2 Input::GetMousePosition() {
-		return mousePosition;
-	}
-
 	void Input::SetKeyStatus(int key, bool status) {
 		InputKeyStatus[GLFWtoInputKey[key]] = status;
 	}
 
 	void Input::SetMouseStatus(int button, bool status) {
 		InputMouseStatus[GLFWtoInputMouse[button]] = status;
-	}
-
-	void Input::SetMousePosition(double xPos, double yPos) {
-		mousePosition = Math::vec2{ static_cast<float>(xPos), static_cast<float>(yPos) };
 	}
 
 	Input_KeyCode Input::GetKeyCode(int key) {

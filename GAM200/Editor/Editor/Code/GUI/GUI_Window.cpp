@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_ProfilerWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_GameWindow.hpp"
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 
 #include <Imgui/imgui_internal.h>
@@ -38,23 +39,22 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
-//#include <string>
 
 //Create a window with an image
 //E.g Game window 
-#define CreateImageWindow(windowName, texid, windowBool) \
-	if (windowBool) {\
-		ImGui::Begin(windowName, &windowBool, window_flags);\
-		ImGui::BeginChild("Render");\
-		ImVec2 wSize = ImGui::GetWindowSize();\
-		\
-		ImGui::PushItemWidth(wSize.x);\
-		ASPECT_RATIO_FIX(wSize);\
-		\
-		ImGui::Image((ImTextureID)texid, wSize, ImVec2(0, 1), ImVec2(1, 0));\
-		ImGui::EndChild();\
-		ImGui::End();\
-	}\
+//#define CreateImageWindow(windowName, texid, windowBool) \
+//	if (windowBool) {\
+//		ImGui::Begin(windowName, &windowBool, window_flags);\
+//		ImGui::BeginChild("Render");\
+//		ImVec2 wSize = ImGui::GetWindowSize();\
+//		\
+//		ImGui::PushItemWidth(wSize.x);\
+//		ASPECT_RATIO_FIX(wSize);\
+//		\
+//		ImGui::Image((ImTextureID)texid, wSize, ImVec2(0, 1), ImVec2(1, 0));\
+//		ImGui::EndChild();\
+//		ImGui::End();\
+//	}\
 
 
 
@@ -184,12 +184,12 @@ namespace Editor {
 			}
 		}
 
-		int GetSceneSizeX() {
+		/*int GetSceneSizeX() {
 			return GUI_GetSceneWindowSizeX();
 		}   
 		int GetSceneSizeY() {
 			return GUI_GetSceneWindowSizeY();
-		}
+		}*/
 		/*-------------------------------------------------------------------------------------------------
 		-------------------------------------------------------------------------------------------------*/
 
@@ -197,9 +197,8 @@ namespace Editor {
 		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
 		//void All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex) {
-		void All_Windows(const ImTextureID& gameWinTex, const Engine::Graphic::FrameBuffer& sceneWinFBO) {
-			GUI_GameWindow(gameWinTex);
-			//GUI_SceneWindow(&sceneWin_bool, sceneWinTex);
+		void All_Windows(const Engine::Graphic::FrameBuffer& gameWinFBO, const Engine::Graphic::FrameBuffer& sceneWinFBO) {
+			GUI_GameWindow(&gameWin_bool, gameWinFBO, entity_selected);
 			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO, entity_selected);
 			GUI_Hierarchy();
 			GUI_Inspector();
@@ -471,9 +470,9 @@ namespace Editor {
 			}
 		}
 
-		void GUI_GameWindow(const ImTextureID& gameWinTex) {
+		/*void GUI_GameWindow(const ImTextureID& gameWinTex) {
 			CreateImageWindow("Game Window", gameWinTex, gameWin_bool);
-		}
+		}*/
 
 		//void GUI_SceneWindow(const ImTextureID& sceneWinTex) {
 		//	//CreateImageWindow("Scene Window", sceneWinTex, sceneWin_bool);

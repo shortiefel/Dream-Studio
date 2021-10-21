@@ -38,8 +38,12 @@ namespace Engine
 
 		const Graphic::FrameBuffer& GetFrameBuffer() const;
 
+		void SetPickingFunction(void(*fp)());
+
 	private:
 		Graphic::FrameBuffer fbo;
+
+		void(*pickingFP)() = []() {};
 
 		SINGLETON_SETUP(GraphicSystem);
 	};

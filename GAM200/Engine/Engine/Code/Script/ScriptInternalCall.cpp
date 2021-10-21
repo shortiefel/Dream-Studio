@@ -226,8 +226,9 @@ namespace Engine {
 
 	void Input_GetMousePosition(Math::vec2* outPosition)
 	{
-		Math::vec2 result = Input::GetMousePosition();
-		*outPosition = result;
+		std::cout << "Currently GetMousePosition not working \n";
+		/*Math::vec2 result = Input::mousePosition;
+		*outPosition = result;*/
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

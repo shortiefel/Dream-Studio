@@ -4,6 +4,7 @@
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    31/08/2021
 \brief
+#include "Engine/Header/Input/Input.hpp"
 This file has the declaration for Input
 
 Copyright (C) 2021 DigiPen Institute of Technology.

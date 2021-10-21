@@ -23,7 +23,7 @@ Technology is prohibited.
 
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 
-#define SCENE_CAMERA_HEIGHT 500
+#define SCENE_CAMERA_HEIGHT 1000
 
 namespace Editor 
 {
@@ -34,6 +34,9 @@ namespace Editor
     /*void EditorSceneCamera::Update(float dt) {
         return;
     }*/
+    float EditorSceneCamera::GetAR() {
+        return ar;
+    }
 
     Math::mat3 EditorSceneCamera::GetTransform() 
     {

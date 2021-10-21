@@ -376,6 +376,39 @@ namespace Engine {
             }
         }
 
+        bool PointToSquareAABB(const Math::vec2& pt, const ColliderComponent& obj) {
+            std::vector<Math::vec2> obj1Corner(4);
+            obj1Corner[0] = obj.offset_position + obj.offset_scale.x * Math::vec2{ 1.f, 0.f } + obj.offset_scale.y * Math::vec2{ 0.f, 1.f }; //top right
+            obj1Corner[1] = obj.offset_position - obj.offset_scale.x * Math::vec2{ 1.f, 0.f } + obj.offset_scale.y * Math::vec2{ 0.f, 1.f }; //top left
+            obj1Corner[2] = obj.offset_position - obj.offset_scale.x * Math::vec2{ 1.f, 0.f } - obj.offset_scale.y * Math::vec2{ 0.f, 1.f }; //bot left
+            obj1Corner[3] = obj.offset_position + obj.offset_scale.x * Math::vec2{ 1.f, 0.f } - obj.offset_scale.y * Math::vec2{ 0.f, 1.f }; //bot right
+
+            float 
+                left = obj.offset_position.x - obj.offset_scale.x,
+                right = obj.offset_position.x + obj.offset_scale.x,
+                top = obj.offset_position.y + obj.offset_scale.y,
+                bot = obj.offset_position.y - obj.offset_scale.y;
+
+            return (pt.x > left && pt.x < right&& pt.y > bot && pt.y < top);
+        }
+
+        bool PointToSquareSAT(const Math::vec2& pt, const ColliderComponent& obj) {
+            std::vector<Math::vec2> objCorner(4);
+            Math::vec2 xaxis{ Math::cos(Math::radians(obj.angle)), Math::sin(Math::radians(obj.angle)) };
+            Math::vec2 yaxis{ Math::cos(Math::radians(90.f + obj.angle)), Math::sin(Math::radians(90.f + obj.angle)) };
+
+            objCorner[0] = obj.offset_position + obj.offset_scale.x * xaxis + obj.offset_scale.y * yaxis; //top right
+            objCorner[1] = obj.offset_position - obj.offset_scale.x * xaxis + obj.offset_scale.y * yaxis; //top left
+            objCorner[2] = obj.offset_position - obj.offset_scale.x * xaxis - obj.offset_scale.y * yaxis; //bot left
+            objCorner[3] = obj.offset_position + obj.offset_scale.x * xaxis - obj.offset_scale.y * yaxis; //bot right
+
+            return
+                (Math::dot(pt - objCorner[0], objCorner[1] - objCorner[0]) >= 0.f) &&
+                (Math::dot(pt - objCorner[1], objCorner[2] - objCorner[1]) >= 0.f) &&
+                (Math::dot(pt - objCorner[2], objCorner[3] - objCorner[2]) >= 0.f) &&
+                (Math::dot(pt - objCorner[3], objCorner[0] - objCorner[3]) >= 0.f);
+        }
+
         bool RayCast_Internal(const Engine::Ray& ray, const ColliderComponent& transform, float* hitDistance) {
             const Math::vec2 rayEnd = ray.pos + (ray.dir * ray.length);
 

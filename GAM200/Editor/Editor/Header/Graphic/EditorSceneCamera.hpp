@@ -29,6 +29,7 @@ namespace Editor
 		static void Destroy();
 
 		static Math::mat3 GetTransform();
+		static float GetAR();
 	private:
 		static Math::vec2 position;
 		static float ar;

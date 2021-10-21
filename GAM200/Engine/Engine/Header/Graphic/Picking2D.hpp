@@ -18,9 +18,12 @@ Technology is prohibited.
 #ifndef PICKING_2D_H
 #define PICKING_2D_H
 
+#include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
+
 namespace Engine {
 	namespace Graphic {
-		
+		void PickingCheck(Engine::Entity& entity_selected, Math::vec3& mousePos, const Math::vec2& viewportSize, const Math::mat3& inverseCamMatrix);
 	}
 }
 

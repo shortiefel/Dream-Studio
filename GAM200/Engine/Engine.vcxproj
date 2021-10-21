@@ -241,7 +241,6 @@
     <ClInclude Include="..\External Resources\include\rapidjson\writer.h" />
     <ClInclude Include="..\External Resources\include\stb_image\stb_image.h" />
     <ClInclude Include="Engine\Header\Application.hpp" />
-    <ClInclude Include="Engine\Header\BuildType.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Profiler.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp" />

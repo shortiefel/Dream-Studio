@@ -68,6 +68,8 @@ namespace Editor {
 
 		ImGuiWindowFlags window_flags = 0;
 
+		Engine::Entity entity_selected = Engine::Entity{ 1 };
+
 		bool hierarchy_bool = true;
 		bool inspector_bool = true;
 		bool stats_bool = true;
@@ -198,7 +200,7 @@ namespace Editor {
 		void All_Windows(const ImTextureID& gameWinTex, const Engine::Graphic::FrameBuffer& sceneWinFBO) {
 			GUI_GameWindow(gameWinTex);
 			//GUI_SceneWindow(&sceneWin_bool, sceneWinTex);
-			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO);
+			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO, entity_selected);
 			GUI_Hierarchy();
 			GUI_Inspector();
 			GUI_Stats();
@@ -263,7 +265,7 @@ namespace Editor {
 				//	ImGui::TreePop();
 				//}
 
-				Engine::Entity entity_selected = Engine::Entity{ 0 };
+				//Engine::Entity entity_selected = Engine::Entity{ 0 };
 				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
 
 				for (int i = 0; i < entity_set.size(); i++)
@@ -280,7 +282,7 @@ namespace Editor {
 			if (inspector_bool) {
 				ImGui::Begin("Inspector", &inspector_bool, window_flags);
 
-				Engine::Entity entity_selected = Engine::Entity{ 1 };
+				
 				float width = 120;
 				bool selectEntity = 0;
 

@@ -25,7 +25,7 @@ Technology is prohibited.
 
 //Check whether entity is in used
 #define Entity_Check(entity)\
-(entity.id > MAX_ENTITIES)
+(entity.id > Engine::MAX_ENTITIES)
 
 namespace Engine {
 	//ECS Components 

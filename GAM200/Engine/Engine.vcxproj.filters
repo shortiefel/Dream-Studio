@@ -142,6 +142,9 @@
     <ClCompile Include="Engine\Code\Graphic\FrameBuffer.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\Picking2D.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -442,6 +445,9 @@
       <Filter>Header Files\Time</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\FrameBuffer.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\Picking2D.hpp">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>

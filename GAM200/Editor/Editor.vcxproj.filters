@@ -96,6 +96,12 @@
     <ClInclude Include="Editor\Header\GUI\GUI_Imgui.hpp">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_SceneWindow.hpp">
+      <Filter>Header Files\GUI\GUI_Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_GameWindow.hpp">
+      <Filter>Header Files\GUI\GUI_Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -145,6 +151,12 @@
     </ClCompile>
     <ClCompile Include="Editor\Code\GUI\GUI_Imgui.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_SceneWindow.cpp">
+      <Filter>Source Files\GUI\GUI_Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_GameWindow.cpp">
+      <Filter>Source Files\GUI\GUI_Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -38,12 +38,12 @@ namespace Engine {
 
         template <typename T>
         inline T radians(T deg) {
-            return deg * static_cast<T>(MathImplementation::PI) / 180;
+            return deg * pi<T>() / 180;
         }
 
         template <typename T>
         inline T degrees(T rad) {
-            return rad * 180 / static_cast<T>(MathImplementation::PI);
+            return rad * 180 / pi<T>();
         }
 
         template <typename T>

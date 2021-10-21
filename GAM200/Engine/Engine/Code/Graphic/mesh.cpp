@@ -64,6 +64,8 @@ namespace Engine
             Math::vec2 tposition;
             Math::vec2 tscale;
             float trotation{};
+
+            int entityId;
         };
 
         struct RendererData
@@ -167,7 +169,8 @@ namespace Engine
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             uint32_t color = 0xffffffff; // white color
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_R32I, 1, 1, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, &color);
 
             // set all texture slots to 0
             s_QuadData.arrTextureSlots[0] = s_QuadData.whitetexture;

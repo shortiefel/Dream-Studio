@@ -4,10 +4,8 @@
 @author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 \date 26/04/2021
 \brief
-
-
+#include "Engine/Header/Window.hpp"
 This file contains the starting point of the application. 
-This is provided by Elie in CSD1130.
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.

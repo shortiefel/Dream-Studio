@@ -4,6 +4,7 @@
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    22/07/2021
 \brief
+#include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 This file contain the EditorSceneCamera declaration
 
 

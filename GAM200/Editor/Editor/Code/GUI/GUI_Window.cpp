@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Imgui.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ProfilerWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 
 #include <Imgui/imgui_internal.h>
@@ -99,7 +100,7 @@ namespace Editor {
 		void	GUI_Stats();
 		//Profiler window
 		void	GUI_GameWindow(const ImTextureID& gameWinTex);
-		void	GUI_SceneWindow(const ImTextureID& sceneWinTex);
+		//void	GUI_SceneWindow(const ImTextureID& sceneWinTex);
 		void    GUI_ContentBrowserPanel();
 
 
@@ -179,8 +180,13 @@ namespace Editor {
 
 				ImGui::EndMenu();
 			}
+		}
 
-
+		int GetSceneSizeX() {
+			return GUI_GetSceneWindowSizeX();
+		}   
+		int GetSceneSizeY() {
+			return GUI_GetSceneWindowSizeY();
 		}
 		/*-------------------------------------------------------------------------------------------------
 		-------------------------------------------------------------------------------------------------*/
@@ -188,9 +194,11 @@ namespace Editor {
 		/*-------------------------------------------------------------------------------------------------
 		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
-		void All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex) {
+		//void All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex) {
+		void All_Windows(const ImTextureID& gameWinTex, const Engine::Graphic::FrameBuffer& sceneWinFBO) {
 			GUI_GameWindow(gameWinTex);
-			GUI_SceneWindow(sceneWinTex);
+			//GUI_SceneWindow(&sceneWin_bool, sceneWinTex);
+			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO);
 			GUI_Hierarchy();
 			GUI_Inspector();
 			GUI_Stats();
@@ -359,7 +367,7 @@ namespace Editor {
 							ImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
 							ImGui::SameLine();
 
-							if (ImGui::TreeNode(className.c_str())) {
+							if (ImGui::TreeNode(std::string{className + " (Script)"}.c_str())) {
 								for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
 									ImGui::Text(varName.c_str());
 									ImGui::SameLine();
@@ -368,21 +376,21 @@ namespace Editor {
 										//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
 										break;
 									case Engine::CSType::BOOL:
-										ImGui::Checkbox("B", &(csPublicVariable.GetVariableData<bool>()));
+										ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
 										break;
 									case Engine::CSType::FLOAT:
-										ImGui::InputFloat("C", &(csPublicVariable.GetVariableData<float>()), 0);
+										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
 										break;
 									case Engine::CSType::INT:
-										ImGui::InputInt("D", &(csPublicVariable.GetVariableData<int>()), 0);
+										ImGui::InputInt(std::string{"##" + varName}.c_str(), & (csPublicVariable.GetVariableData<int>()), 0);
 										break;
 									case Engine::CSType::UINT:
 										//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
 										break;
 									case Engine::CSType::VEC2:
 										Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-										ImGui::InputFloat("F", &(tem.x), 0);
-										ImGui::InputFloat("G", &(tem.y), 0);
+										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
+										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
 										break;
 									}
 								}
@@ -465,9 +473,13 @@ namespace Editor {
 			CreateImageWindow("Game Window", gameWinTex, gameWin_bool);
 		}
 
-		void GUI_SceneWindow(const ImTextureID& sceneWinTex) {
-			CreateImageWindow("Scene Window", sceneWinTex, sceneWin_bool);
-		}
+		//void GUI_SceneWindow(const ImTextureID& sceneWinTex) {
+		//	//CreateImageWindow("Scene Window", sceneWinTex, sceneWin_bool);
+
+		//	
+
+		//	
+		//}
 
 		void GUI_ContentBrowserPanel()
 		{

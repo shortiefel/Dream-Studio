@@ -17,22 +17,18 @@ Technology is prohibited.
 #ifndef CONSTANTS_MATH_HPP
 #define CONSTANTS_MATH_HPP
 
+#include <limits>
 
 namespace Engine {
     namespace DreamMath {
-        namespace MathImplementation {
-            constexpr double EPSILON = 0.0001;
-            constexpr double PI = 3.14159265358;
-        }
-
         template <typename T>
         inline T epsilon() {
-            return static_cast<T>(MathImplementation::EPSILON);
+            return static_cast<T>(std::numeric_limits<T>::epsilon());
         }
 
         template <typename T>
         inline T pi() {
-            return static_cast<T>(MathImplementation::PI);
+            return static_cast<T>(3.141592653589793238462643383279502884197169399375105820974944);
         }
     }
 }

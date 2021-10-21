@@ -34,53 +34,53 @@ namespace Engine
         std::map<GraphicShape, GLModel> models;
         std::map<GraphicShader, GLSLShader> shdrpgms;
 
-        void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer) 
-        {
-            glGenFramebuffers(1, framebuffer);
-            glBindFramebuffer(GL_FRAMEBUFFER, *framebuffer);
+        //void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer) 
+        //{
+        //    glGenFramebuffers(1, framebuffer);
+        //    glBindFramebuffer(GL_FRAMEBUFFER, *framebuffer);
 
-            glGenTextures(1, texColorBuffer);
-            glBindTexture(GL_TEXTURE_2D, *texColorBuffer);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glBindTexture(GL_TEXTURE_2D, 0);
+        //    glGenTextures(1, texColorBuffer);
+        //    glBindTexture(GL_TEXTURE_2D, *texColorBuffer);
+        //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        //    glBindTexture(GL_TEXTURE_2D, 0);
 
-            //Attach texture to framebuffer object
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *texColorBuffer, 0);
+        //    //Attach texture to framebuffer object
+        //    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *texColorBuffer, 0);
 
-            if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-            {
-                LOG_ERROR("Error: Framebuffer is not complete");
-            }
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        }
+        //    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        //    {
+        //        LOG_ERROR("Error: Framebuffer is not complete");
+        //    }
+        //    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        //}
 
-        void DeleteFramebuffer(unsigned int f) 
-        {
-            glDeleteFramebuffers(1, &f);
-        }
+        //void DeleteFramebuffer(unsigned int f) 
+        //{
+        //    glDeleteFramebuffers(1, &f);
+        //}
 
-        void SetFramebuffer(unsigned int f, bool exist) 
-        {
-            if (!exist) {
-                fbo_exist = false;
-                return;
-            }
+        //void SetFramebuffer(unsigned int f, bool exist) 
+        //{
+        //    if (!exist) {
+        //        fbo_exist = false;
+        //        return;
+        //    }
 
-            fbo_exist = true;
-            fbo = f;
-        }
+        //    fbo_exist = true;
+        //    fbo = f;
+        //}
 
-        void BindFramebuffer() 
-        {
-            if (fbo_exist)
-                glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-        }
+        //void BindFramebuffer() 
+        //{
+        //    if (fbo_exist)
+        //        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+        //}
 
-        void UnbindFramebuffer() {
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        }
+        //void UnbindFramebuffer() {
+        //    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        //}
 
         void UseShaderHandle(unsigned int prgm_handle) 
         {

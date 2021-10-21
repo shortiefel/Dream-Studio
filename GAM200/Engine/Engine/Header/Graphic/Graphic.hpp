@@ -34,12 +34,12 @@ namespace Engine
             GLuint draw_cnt = GLuint{}; // how many elements of primitive of type
         };
 
-        void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer);
+        //void CreateFramebuffer(GLsizei width, GLsizei height, unsigned int* framebuffer, unsigned int* texColorBuffer);
 
         //exist = false to remove framebuffer, to set buffer ignore exist
-        void SetFramebuffer(unsigned int f, bool exist = true);
+        /*void SetFramebuffer(unsigned int f, bool exist = true);
         void BindFramebuffer();
-        void UnbindFramebuffer();
+        void UnbindFramebuffer();*/
 
         // Install the shader program with object handle
         void UseShaderHandle(unsigned int prgm_handle);

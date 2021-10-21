@@ -38,7 +38,10 @@ namespace Engine {
 			template <typename T>
 			class Matrix3 {
 			public:
-				T m[9];
+				union {
+					T m[9];
+					T mat[3][3];
+				};
 
 				//identity matrix as default
 				Matrix3() : m{ T(1), T{}, T{}, T{}, T(1), T{}, T{}, T{}, T(1) } {}

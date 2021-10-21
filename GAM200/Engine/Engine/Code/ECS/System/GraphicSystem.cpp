@@ -74,8 +74,7 @@ namespace Engine
 			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, texture.texobj_hdl);
 
 			// to draw debug lines
-			if (isDebugDraw == GL_TRUE)
-			{
+			if (isDebugDraw == GL_TRUE) {
 				ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity);
 
 				// when object has collider, get collider matrix

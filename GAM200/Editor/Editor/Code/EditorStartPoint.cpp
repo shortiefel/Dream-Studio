@@ -33,7 +33,7 @@ namespace Editor {
 		GUI::Create(Engine::Window::GetInstance().GetGLFWwindow(), Engine::Window::GetInstance().GetGLSLVersion());
 
 		//Deserialize then put as position
-		EditorSceneCamera::Create({ 150.f,100.f });
+		EditorSceneCamera::Create({ 0.f,0.f });
 
 		Engine::KeyPressedEvent::RegisterFunction(EditorSceneManager::GetInstance().GetSceneHotKey());
 	}
@@ -49,10 +49,11 @@ namespace Editor {
 		//GUI::SetSceneFBO();
 		////Engine::GraphicSystem::Update(dt);
 		////Change this line to editor graphic system
+
 		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 
-		
 		GUI::Update();
+		
 		
 		GUI::Draw();
 

@@ -222,7 +222,7 @@ namespace Engine {
 		template <typename T>
 		void RotDeg(MI::Matrix3<T>& pResult, float angle) {
 			Identity(pResult);
-			RotRad(pResult, static_cast<float>(MI::PI) / 180.f * angle);
+			RotRad(pResult, pi<T>() / 180.f * angle);
 		}
 
 		/**************************************************************************/
@@ -235,7 +235,7 @@ namespace Engine {
 		template <typename T>
 		void RotDegX(MI::Matrix4<T>& pResult, float angle) {
 			Identity(pResult);
-			RotRadX(pResult, static_cast<float>(MI::PI) / 180.f * angle);
+			RotRadX(pResult, pi<T>() / 180.f * angle);
 		}
 
 		/**************************************************************************/
@@ -248,7 +248,7 @@ namespace Engine {
 		template <typename T>
 		void RotDegY(MI::Matrix4<T>& pResult, float angle) {
 			Identity(pResult);
-			RotRadY(pResult, static_cast<float>(MI::PI) / 180.f * angle);
+			RotRadY(pResult, pi<T>() / 180.f * angle);
 		}
 
 		/**************************************************************************/
@@ -261,7 +261,7 @@ namespace Engine {
 		template <typename T>
 		void RotDegZ(MI::Matrix4<T>& pResult, float angle) {
 			Identity(pResult);
-			RotRadZ(pResult, static_cast<float>(MI::PI) / 180.f * angle);
+			RotRadZ(pResult, pi<T>() / 180.f * angle);
 		}
 
 		
@@ -320,29 +320,36 @@ namespace Engine {
 			This function calculates the inverse matrix of pMtx and saves the
 			result in pResult. If the matrix inversion fails, pResult
 			would be set to identity matrix.
+			0 3 6
+			1 4 7
+			2 5 8
 		*/
 		/**************************************************************************/
 		template <typename T>
-		void Inverse(MI::Matrix3<T>& pResult, float& determinant, const MI::Matrix3<T>& pMtx) {
-			determinant = pMtx.m[0] * (pMtx.m[4] * pMtx.m[8] - pMtx.m[5] * pMtx.m[7])
-				- pMtx.m[1] * (pMtx.m[3] * pMtx.m[8] - pMtx.m[5] * pMtx.m[6])
-				+ pMtx.m[2] * (pMtx.m[3] * pMtx.m[7] - pMtx.m[4] * pMtx.m[6]);
+		MI::Matrix3<T> Inverse(const MI::Matrix3<T>& pMtx) {
+			float determinant =
+				pMtx.m[0] * (pMtx.m[4] * pMtx.m[8] - pMtx.m[7] * pMtx.m[5])
+				- pMtx.m[3] * (pMtx.m[1] * pMtx.m[8] - pMtx.m[7] * pMtx.m[2])
+				+ pMtx.m[6] * (pMtx.m[1] * pMtx.m[5] - pMtx.m[4] * pMtx.m[2]);
 
-			if (determinant > static_cast<float>(-MI::EPSILON) && determinant < static_cast<float>(MI::EPSILON)) { Identity(pResult); return; }
+			MI::Matrix3<T> pResult;
+			if (determinant > -epsilon<T>() && determinant < epsilon<T>()) { Identity(pResult); return pResult; }
 
-			determinant = 1 / determinant;
+			determinant = 1.f / determinant;
+			
+			pResult.m[0] = +(pMtx.m[4] * pMtx.m[8] - pMtx.m[7] * pMtx.m[5]) * determinant;
+			pResult.m[1] = -(pMtx.m[1] * pMtx.m[8] - pMtx.m[7] * pMtx.m[2]) * determinant;
+			pResult.m[2] = +(pMtx.m[1] * pMtx.m[5] - pMtx.m[4] * pMtx.m[2]) * determinant;
 
-			pResult.m[0] = +(pMtx.m[4] * pMtx.m[8] - pMtx.m[5] * pMtx.m[7]) * determinant;
-			pResult.m[1] = -(pMtx.m[1] * pMtx.m[8] - pMtx.m[2] * pMtx.m[7]) * determinant;
-			pResult.m[2] = +(pMtx.m[1] * pMtx.m[5] - pMtx.m[2] * pMtx.m[4]) * determinant;
+			pResult.m[3] = -(pMtx.m[3] * pMtx.m[8] - pMtx.m[6] * pMtx.m[5]) * determinant;
+			pResult.m[4] = +(pMtx.m[0] * pMtx.m[8] - pMtx.m[6] * pMtx.m[2]) * determinant;
+			pResult.m[5] = -(pMtx.m[0] * pMtx.m[5] - pMtx.m[3] * pMtx.m[2]) * determinant;
 
-			pResult.m[3] = -(pMtx.m[3] * pMtx.m[8] - pMtx.m[5] * pMtx.m[6]) * determinant;
-			pResult.m[4] = +(pMtx.m[0] * pMtx.m[8] - pMtx.m[2] * pMtx.m[6]) * determinant;
-			pResult.m[5] = -(pMtx.m[0] * pMtx.m[5] - pMtx.m[2] * pMtx.m[3]) * determinant;
+			pResult.m[6] = +(pMtx.m[3] * pMtx.m[7] - pMtx.m[6] * pMtx.m[4]) * determinant;
+			pResult.m[7] = -(pMtx.m[0] * pMtx.m[7] - pMtx.m[6] * pMtx.m[1]) * determinant;
+			pResult.m[8] = +(pMtx.m[0] * pMtx.m[4] - pMtx.m[3] * pMtx.m[1]) * determinant;
 
-			pResult.m[6] = +(pMtx.m[3] * pMtx.m[7] - pMtx.m[4] * pMtx.m[6]) * determinant;
-			pResult.m[7] = -(pMtx.m[0] * pMtx.m[7] - pMtx.m[1] * pMtx.m[6]) * determinant;
-			pResult.m[8] = +(pMtx.m[0] * pMtx.m[4] - pMtx.m[1] * pMtx.m[3]) * determinant;
+			return pResult;
 		}
 
 		/**************************************************************************/
@@ -385,7 +392,7 @@ namespace Engine {
 
 			determinant = pMtx.m[0] * pResult.m[0] + pMtx.m[1] * pResult.m[4] + pMtx.m[2] * pResult.m[8] + pMtx.m[3] * pResult.m[12];
 
-			if (determinant > static_cast<float>(-MI::EPSILON) && determinant < static_cast<float>(MI::EPSILON)) { Identity(pResult); return; }
+			if (determinant > -epsilon<T>() && determinant < epsilon<T>()) { Identity(pResult); return; }
 
 			determinant = 1 / determinant;
 

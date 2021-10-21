@@ -53,13 +53,33 @@ namespace Engine
 
 		// define and initialize a handle to texture object that will
 		// encapsulate two-dimensional textures
+#if 1
 		glCreateTextures(GL_TEXTURE_2D, 1, &texobj_hdl);
+
 
 		// allocate GPU storage for texture image data loaded from file
 		glTextureStorage2D(texobj_hdl, 1, GL_RGBA8, *x, *y);
 
 		// copy image data from client memory to GPU texture buffer memory
 		glTextureSubImage2D(texobj_hdl, 0, 0, 0, *x, *y, GL_RGBA, GL_UNSIGNED_BYTE, temBuff);
+
+#else
+		//glCreateTextures(GL_TEXTURE_2D, 1, &texobj_hdl);
+		glGenTextures(1, &texobj_hdl);
+		glBindTexture(GL_TEXTURE_2D, texobj_hdl);
+
+		// allocate GPU storage for texture image data loaded from file
+		//glTextureStorage2D(texobj_hdl, 1, GL_RGBA8, *x, *y);
+		//glTextureStorage2D(texobj_hdl, 1, GL_R32I, *x, *y);
+		//glTexImage2D(GL_TEXTURE_2D, 1, GL_RGBA8, *x, *y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, *x, *y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+
+		// copy image data from client memory to GPU texture buffer memory
+		//glTextureSubImage2D(texobj_hdl, 0, 0, 0, *x, *y, GL_RGBA, GL_UNSIGNED_BYTE, temBuff);
+		//glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, *x, *y, GL_RGB, GL_UNSIGNED_BYTE, temBuff);
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+#endif
 
 		if (temBuff)
 		{

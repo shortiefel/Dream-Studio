@@ -21,7 +21,7 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Window.hpp"
 
-#include "../Editor/Editor/Header/Graphic/EditorSceneCamera.hpp"
+#include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 
 #define SCENE_CAMERA_HEIGHT 500
 

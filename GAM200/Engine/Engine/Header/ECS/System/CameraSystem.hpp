@@ -4,6 +4,7 @@
 @author  Chia Yi Da		chiayida98@gmail.com
 @date    26/06/2021
 @brief
+#include "Engine/Header/ECS/System/CameraSystem.hpp"
 This file contain the CameraSystem declaration
 
 

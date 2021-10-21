@@ -14,6 +14,7 @@ uniform sampler2D u_Textures[32];
 layout (location=0) in vec3 vColor;
 layout (location=1) in vec2 vTexture;
 layout (location=2) in float vTextureIndex;
+layout (location=3) in float vEntityId;
 
 layout (location=0) out vec4 fColor;
 

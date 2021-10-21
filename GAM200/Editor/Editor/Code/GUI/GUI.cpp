@@ -49,8 +49,8 @@ namespace Editor {
         ImGui::ShowDemoWindow(&show_demo_window);*/
 
         GUI_Windows::GUI_DockSpace();
-        
-        GUI_Windows::All_Windows(Engine::GraphicSystem::GetInstance().GetFrameBuffer().GetTexture(), editor_fbo.GetTexture());
+        //editor_fbo.Resize(GUI_Windows::GetSceneSizeX(), GUI_Windows::GetSceneSizeY());
+        GUI_Windows::All_Windows(Engine::GraphicSystem::GetInstance().GetFrameBuffer().GetTexture(), editor_fbo);
     }
 
     void GUI::Draw() {

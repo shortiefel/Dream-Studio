@@ -27,8 +27,12 @@ namespace Engine {
 		class FrameBuffer {
 		public:
 			FrameBuffer() = default;
-			void Create(GLsizei width, GLsizei height);
+			void Create(GLsizei _width, GLsizei _height);
 			~FrameBuffer();
+
+			//Resize based on aspect ratio
+			void Resize(GLsizei _width, GLsizei _height);
+			int ReadPixel(int x, int y) const;
 
 			void Bind();
 			void Unbind();
@@ -40,6 +44,8 @@ namespace Engine {
 		private:
 			unsigned int fbo_index;
 			ImTextureID fbo_texture;
+			GLsizei width; 
+			GLsizei height;
 		};
 	}
 }

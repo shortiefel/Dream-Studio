@@ -195,6 +195,7 @@
     <ClCompile Include="Engine\Code\Graphic\GLSLShader.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Graphic.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Mesh.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\Picking2D.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Shader.cpp" />
     <ClCompile Include="Engine\Code\Input\Input.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
@@ -277,6 +278,7 @@
     <ClInclude Include="Engine\Header\Graphic\Graphic.hpp" />
     <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Mesh.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\Picking2D.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Shader.hpp" />
     <ClInclude Include="Engine\Header\Input\Input.hpp" />
     <ClInclude Include="Engine\Header\Input\InputCode.hpp" />

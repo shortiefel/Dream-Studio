@@ -16,10 +16,12 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug tools/Logging.hpp" 
 #include "Engine/Header/Graphic/FrameBuffer.hpp"
-
+#include <iostream>
 namespace Engine {
 	namespace Graphic {
-        void FrameBuffer::Create(GLsizei width, GLsizei height) {
+        void FrameBuffer::Create(GLsizei _width, GLsizei _height) {
+            width = _width;
+            height = _height;
 
             glGenFramebuffers(1, &fbo_index);
             glBindFramebuffer(GL_FRAMEBUFFER, fbo_index);
@@ -27,9 +29,12 @@ namespace Engine {
             unsigned int* tex_ptr = reinterpret_cast<unsigned int*>(&fbo_texture);
             glGenTextures(1, tex_ptr);
             glBindTexture(GL_TEXTURE_2D, *tex_ptr);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+            //glTexImage2D(GL_TEXTURE_2D, 0, GL_R32I, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, NULL);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             glBindTexture(GL_TEXTURE_2D, 0);
 
             //Attach texture to framebuffer object
@@ -44,6 +49,27 @@ namespace Engine {
 
         FrameBuffer::~FrameBuffer() {
             glDeleteFramebuffers(1, &fbo_index);
+        }
+
+        void FrameBuffer::Resize(GLsizei _width, GLsizei _height) {
+            if (width == _width && height == _height) return;
+
+            /*float ar = static_cast<float>(_width) / _height;
+            height = static_cast<GLsizei>(width / ar);*/
+
+            unsigned int* tex_ptr = reinterpret_cast<unsigned int*>(&fbo_texture);
+            glBindTexture(GL_TEXTURE_2D, *tex_ptr);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+            //glTexImage2D(GL_TEXTURE_2D, 0, GL_R32I, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, NULL);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+
+        int FrameBuffer::ReadPixel(int x, int y) const {
+            glReadBuffer(fbo_index);
+
+            int pixel;
+            glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixel);
+            return pixel;
         }
 
         void FrameBuffer::Bind() {

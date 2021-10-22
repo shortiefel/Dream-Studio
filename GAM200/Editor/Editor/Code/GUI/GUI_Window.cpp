@@ -103,11 +103,11 @@ namespace Editor {
 		static AssetView _currentView = AssetView::SceneBrowser;
 		static ImVec2	 buttonSize{ 128, 128 };
 		// Forward declarations
-		static void ShowMenuBar();
-		//static void ShowTextureBrowser();
+		//static void ShowMenuBar();
+		////static void ShowTextureBrowser();
 		static void ShowSceneBrowser();
-		//static void ShowFontBrowser();
-		static bool IconButton(const char* icon, const char* label, const ImVec2& size);
+		////static void ShowFontBrowser();
+		//static bool IconButton(const char* icon, const char* label, const ImVec2& size);
 
 		/*-------------------------------------------------------------------------------------------------
 		Windows creation: Hierarchy, Inspector, Game window, Scene window
@@ -497,29 +497,29 @@ namespace Editor {
 		//	
 		//}
 
-		static void ShowMenuBar()
-		{
-			ImGui::BeginGroup();
+		//static void ShowMenuBar()
+		//{
+		//	ImGui::BeginGroup();
 
-			std::array<const char*, 128> assetViews = { "Texture Browser", "Scene Browser", "Script Browser", "Font Browser" };
-			//ImGui::UndoableCombo<AssetView>(m_CurrentView, "Asset View", assetViews.data(), (int)AssetView::Length);
-			ImGui::EndGroup();
-			ImGui::Separator();
-		}
+		//	std::array<const char*, 128> assetViews = { "Texture Browser", "Scene Browser", "Script Browser", "Font Browser" };
+		//	//ImGui::UndoableCombo<AssetView>(m_CurrentView, "Asset View", assetViews.data(), (int)AssetView::Length);
+		//	ImGui::EndGroup();
+		//	ImGui::Separator();
+		//}
 
-		static bool IconButton(const char* icon, const char* label, const ImVec2& size)
-		{
-			ImGui::BeginGroup();
-			//ImGui::PushFont(Settings::EditorStyle::s_LargeIconFont);
-			bool res = ImGui::Button(icon, ImVec2(size.x, size.y));
-			ImGui::PopFont();
+		//static bool IconButton(const char* icon, const char* label, const ImVec2& size)
+		//{
+		//	ImGui::BeginGroup();
+		//	//ImGui::PushFont(Settings::EditorStyle::s_LargeIconFont);
+		//	bool res = ImGui::Button(icon, ImVec2(size.x, size.y));
+		//	ImGui::PopFont();
 
-			ImVec2 textSize = ImGui::CalcTextSize(label);
-			ImGui::SetCursorPos(ImGui::GetCursorPos());
-			ImGui::Text(label);
-			ImGui::EndGroup();
-			return res;
-		}
+		//	ImVec2 textSize = ImGui::CalcTextSize(label);
+		//	ImGui::SetCursorPos(ImGui::GetCursorPos());
+		//	ImGui::Text(label);
+		//	ImGui::EndGroup();
+		//	return res;
+		//}
 
 		static void ShowSceneBrowser()
 		{
@@ -591,7 +591,7 @@ namespace Editor {
 					ImGui::TreePop();
 				}
 
-				ShowMenuBar();
+				//ShowMenuBar();
 				ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgActive));
 				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgHovered));
 				ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyleColorVec4(ImGuiCol_Text));

@@ -145,12 +145,6 @@
     <ClCompile Include="Engine\Code\Graphic\Picking2D.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\File\FileDialog.cpp">
-      <Filter>Source Files\File</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Command\CommandHistory.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -453,12 +447,6 @@
     <ClInclude Include="Engine\Header\Graphic\Picking2D.hpp">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\File\FileDialog.hpp">
-      <Filter>Header Files\File</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Command\CommandHistory.hpp">
-      <Filter>Header Files\Command</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -607,18 +595,6 @@
     </Filter>
     <Filter Include="Source Files\ECS\Component\UI">
       <UniqueIdentifier>{fa85ddca-7dee-415d-ac75-cdc27df38389}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Command">
-      <UniqueIdentifier>{cf201122-efe3-441c-9d2f-e9a06eb222a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\File">
-      <UniqueIdentifier>{471d0e4f-7a7c-4944-9015-34ec79e87e94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\File">
-      <UniqueIdentifier>{5e1b1f8b-30aa-43e3-88fa-af384bf763b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Command">
-      <UniqueIdentifier>{254f630d-bc91-49b4-b590-59e7e6bf5c25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

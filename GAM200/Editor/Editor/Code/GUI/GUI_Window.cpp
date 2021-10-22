@@ -322,6 +322,10 @@ namespace Editor {
 						ImGui::Spacing();
 						ImGui::SliderFloat("##TransformRotate", &transComp->angle, -360.f, 360.f);
 
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteTransform", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TransformComponent>(entity_selected);
+
 						ImGui::TreePop();
 					}
 				}
@@ -337,23 +341,14 @@ namespace Editor {
 
 					if (ImGui::TreeNode("Collider")) {
 						ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
+
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteCollider", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::ColliderComponent>(entity_selected);
+
 						ImGui::TreePop();
 					}
 				}
-
-				/*if (ImGui::TreeNode("Collider")) {
-					Engine::ColliderComponent* colComp;
-					if (Engine::DreamECS::GetInstance().HasComponent<Engine::ColliderComponent>(colComp, entity_selected) == 0)
-					{
-						ImGui::Text("No collider in scene");
-					}
-					else
-					{
-						ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
-					}
-					ImGui::TreePop();
-				}*/
-
 
 				/**
 				*	Scripts for each component
@@ -368,7 +363,7 @@ namespace Editor {
 							ImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
 							ImGui::SameLine();
 
-							if (ImGui::TreeNode(std::string{className + " (Script)"}.c_str())) {
+							if (ImGui::TreeNode(std::string{ className + " (Script)" }.c_str())) {
 								for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
 									ImGui::Text(varName.c_str());
 									ImGui::SameLine();
@@ -383,7 +378,7 @@ namespace Editor {
 										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
 										break;
 									case Engine::CSType::INT:
-										ImGui::InputInt(std::string{"##" + varName}.c_str(), & (csPublicVariable.GetVariableData<int>()), 0);
+										ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
 										break;
 									case Engine::CSType::UINT:
 										//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
@@ -396,13 +391,13 @@ namespace Editor {
 									}
 								}
 
+								//deleteComponent
+								if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
+									Engine::DreamECS::GetInstance().RemoveComponent<Engine::ScriptComponent>(entity_selected);
+
 								ImGui::TreePop();
 							}
 						}
-
-
-						//ImGui::TreePop();
-					//}
 				}
 
 
@@ -410,40 +405,27 @@ namespace Editor {
 				*	Add New Components
 				*/
 
-				
-				const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIIIIII", "JJJJ", "KKKKKKK" };
-				static int item_current = 1;
-				ImGui::Combo("Combo", &item_current, items, IM_ARRAYSIZE(items));
-
-				//if (ImGui::Button("Add Component", (ImVec2{ 100, 0 }))) {
-				//	//addComponentBool = true;
-				//}
-
-
-				static bool addComponentBool = false;
-				if (ImGui::CollapsingHeader("Add Component", &addComponentBool)) {
-					if (ImGui::Button("Transform")) {
-						printf("Add Transform\n");
-					}
-
-					else if (ImGui::Button("Texture")) {
-						printf("Add Texture\n");
-					}
-
-					else if (ImGui::Button("Camera")) {
-						printf("Add Camera\n");
-					}
-
-					else if (ImGui::Button("Rigidbody")) {
-						printf("Add Rigidbody\n");
-					}
-
-					else if (ImGui::Button("Collider")) {
-						printf("Add Collider\n");
-					}
-
-					ImGui::EndMenu();
+				if (ImGui::Button("Add Component##addcomponentbtn", { ImGui::GetContentRegionAvail().x, 0 }))
+				{
+					ImGui::OpenPopup("##addcomponentpopup");
 				}
+				if (ImGui::BeginPopup("##addcomponentpopup"))
+				{
+					float AvailWidth = ImGui::GetContentRegionAvail().x;
+					ImGui::PushItemWidth(AvailWidth);
+
+					if (ImGui::Selectable("Transform##addTransformcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
+					if (ImGui::Selectable("Collider##addTCollidercom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
+					if (ImGui::Selectable("Script##addScriptcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
+					if (ImGui::Selectable("Camera##addCameracom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+
+					ImGui::EndPopup();
+				}
+				
 
 				ImGui::End();
 			}

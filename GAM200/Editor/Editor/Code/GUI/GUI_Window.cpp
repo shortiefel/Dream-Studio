@@ -619,9 +619,9 @@ namespace Editor {
 				ImGui::PopStyleColor(4);
 
 				//all assets
-				if (_currentDirectory != std::filesystem::path("Assets"))
+				if (_currentDirectory != std::filesystem::path(_assetPath))
 				{
-					if (ImGui::Button("<-"))
+					if (ImGui::Button("Assets"))
 					{
 						_currentDirectory = _currentDirectory.parent_path();
 					}
@@ -638,10 +638,10 @@ namespace Editor {
 
 				ImGui::Columns(columnCount, 0, false);
 
-				for (auto& directory : std::filesystem::directory_iterator("Assets"))
+				for (auto& directory : std::filesystem::directory_iterator(_currentDirectory))
 				{
 					const auto& path = directory.path();
-					auto relative_path = std::filesystem::relative(path, _currentDirectory);
+					auto relative_path = std::filesystem::relative(path, _assetPath);
 					std::string filenameString = relative_path.string();
 
 					ImGui::PushID(filenameString.c_str());

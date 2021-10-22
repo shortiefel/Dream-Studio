@@ -17,7 +17,7 @@ Technology is prohibited.
 
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
-
+#include "Engine/Header/Command/CommandHistory.hpp"
 #include "Engine/Header/Management/GameState.hpp"
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
@@ -103,13 +103,13 @@ namespace Editor {
             Engine::SceneManager::GetInstance().ChangeScene("test1");
         }
 
-        //else if (e.GetKeyCode() == Engine::Input_KeyCode::Z) {
-        //    Engine::CommandHistory::Undo();
-        //}
+        else if (e.GetKeyCode() == Engine::Input_KeyCode::Z) {
+            Engine::CommandHistory::Undo();
+        }
 
-        //else if (e.GetKeyCode() == Engine::Input_KeyCode::Y) {
-        //    Engine::CommandHistory::Redo();
-        //}
+        else if (e.GetKeyCode() == Engine::Input_KeyCode::Y) {
+            Engine::CommandHistory::Redo();
+        }
 
         if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Control)) {
             return EditorSceneManager::GetInstance().SceneHotKeyCheck(e.GetKeyCode());

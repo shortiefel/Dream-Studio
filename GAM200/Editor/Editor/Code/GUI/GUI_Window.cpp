@@ -24,6 +24,8 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_GameWindow.hpp"
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
+#include "Engine/Header/Scene/SceneManager.hpp"
+#include "Engine/Header/Management/AssetManager.hpp"
 
 #include <Imgui/imgui_internal.h>
 
@@ -59,6 +61,9 @@ Technology is prohibited.
 
 
 namespace Editor {
+
+	extern const std::filesystem::path _assetPath = "Assets";
+
 	namespace GUI_Windows {
 		//bool for dockspace (will always be true)
 		bool dockspace_bool = true;
@@ -91,6 +96,18 @@ namespace Editor {
 		void	GUI_FileMenu();
 		//Menu to open windows
 		void    GUI_WindowsMenu();
+		//Menu to undo and redo scene
+		void    GUI_EditMenu();
+
+		//Internal Variables
+		static AssetView _currentView = AssetView::SceneBrowser;
+		static ImVec2	 buttonSize{ 128, 128 };
+		// Forward declarations
+		static void ShowMenuBar();
+		//static void ShowTextureBrowser();
+		static void ShowSceneBrowser();
+		//static void ShowFontBrowser();
+		static bool IconButton(const char* icon, const char* label, const ImVec2& size);
 
 		/*-------------------------------------------------------------------------------------------------
 		Windows creation: Hierarchy, Inspector, Game window, Scene window
@@ -140,6 +157,7 @@ namespace Editor {
 		void GUI_Menus() {
 			if (ImGui::BeginMenuBar()) {
 				GUI_FileMenu();
+				GUI_EditMenu();
 				GUI_WindowsMenu();
 
 				ImGui::EndMenuBar();
@@ -152,8 +170,10 @@ namespace Editor {
 		void GUI_FileMenu() {
 			if (ImGui::BeginMenu("File")) {
 				bool quit = false;
-				ImGui::MenuItem("New", "CTRL+N");
-				//if ()
+				if (ImGui::MenuItem("New Scene", "CTRL+N"))
+				{
+					Engine::SceneManager::GetInstance().ChangeScene("test1");
+				}
 				ImGui::MenuItem("Open", "CTRL+O");
 				ImGui::MenuItem("Save as", "CTRL+S");
 				ImGui::MenuItem("Quit", NULL, &quit);
@@ -182,6 +202,19 @@ namespace Editor {
 
 				ImGui::EndMenu();
 			}
+		}
+
+		//Menu to undo and redo scene
+		void GUI_EditMenu() {
+			if (ImGui::BeginMenu("Edit")) {
+
+				ImGui::MenuItem("Undo", "CTRL+Z");
+				ImGui::MenuItem("Redo", "CTRL+Y");
+
+
+				ImGui::EndMenu();
+			}
+
 		}
 
 		/*int GetSceneSizeX() {
@@ -464,10 +497,128 @@ namespace Editor {
 		//	
 		//}
 
+		static void ShowMenuBar()
+		{
+			ImGui::BeginGroup();
+
+			std::array<const char*, 128> assetViews = { "Texture Browser", "Scene Browser", "Script Browser", "Font Browser" };
+			//ImGui::UndoableCombo<AssetView>(m_CurrentView, "Asset View", assetViews.data(), (int)AssetView::Length);
+			ImGui::EndGroup();
+			ImGui::Separator();
+		}
+
+		static bool IconButton(const char* icon, const char* label, const ImVec2& size)
+		{
+			ImGui::BeginGroup();
+			//ImGui::PushFont(Settings::EditorStyle::s_LargeIconFont);
+			bool res = ImGui::Button(icon, ImVec2(size.x, size.y));
+			ImGui::PopFont();
+
+			ImVec2 textSize = ImGui::CalcTextSize(label);
+			ImGui::SetCursorPos(ImGui::GetCursorPos());
+			ImGui::Text(label);
+			ImGui::EndGroup();
+			return res;
+		}
+
+		static void ShowSceneBrowser()
+		{
+			if (_currentDirectory != std::filesystem::path(_assetPath))
+			{
+				if (ImGui::Button("Assets"))
+				{
+					_currentDirectory = _currentDirectory.parent_path();
+				}
+			}
+			//int sceneCount = 0;
+			for (auto& directory : std::filesystem::directory_iterator("Assets/Scenes"))
+			{
+				const auto& path = directory.path();
+				auto relative_path = std::filesystem::relative(path, "Assets/Scenes");
+				std::string filenameString = relative_path.string();
+
+				ImGui::PushID(filenameString.c_str());
+				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+				ImGui::ImageButton((ImTextureID)directory.is_character_file(), { 128, 128 }, { 0, 1 }, { 1, 0 });
+				ImGui::PopStyleColor();
+				//ImGui::PushID(sceneCount++);
+				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+				{
+					if (relative_path == "Scenes\test2.scene")
+					{
+						Engine::SceneManager::GetInstance().ChangeScene("test2");
+					}
+
+					else if (relative_path.string() == "Scenes\test3.scene")
+					{
+						Engine::SceneManager::GetInstance().ChangeScene("test3");
+					}
+
+					else
+					{
+						Engine::SceneManager::GetInstance().ChangeScene("test1");
+					}
+
+				}
+				ImGui::TextWrapped(filenameString.c_str());
+
+				ImGui::NextColumn();
+
+				ImGui::PopID();
+
+			}
+			ImGui::Columns(1);
+		}
+
 		void GUI_ContentBrowserPanel()
 		{
 			if (asset_bool) {
-				ImGui::Begin("Content Browser", &asset_bool, window_flags);
+				ImGui::Begin("Project", &asset_bool, window_flags);
+				if (ImGui::TreeNode("Create")) {
+					ImGui::Spacing();
+					if (ImGui::Button("Folder", (ImVec2{ 100, 30 })))
+					{
+						//ImGui::SameLine();
+						ImGui::Text("Folder created.");
+					}
+
+					ImGui::SameLine();
+					if (ImGui::Button("New Scene", (ImVec2{ 100, 30 }))) {
+
+						//add new scene
+						Engine::SceneManager::GetInstance().ChangeScene("test1");
+					}
+					ImGui::TreePop();
+				}
+
+				ShowMenuBar();
+				ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgActive));
+				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgHovered));
+				ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyleColorVec4(ImGuiCol_Text));
+				ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
+
+				switch (_currentView)
+				{
+					//case AssetView::TextureBrowser:
+					//	ShowTextureBrowser();
+					//	break;
+				case AssetView::SceneBrowser:
+					ShowSceneBrowser();
+					break;
+					//case AssetView::ScriptBrowser:
+					//	ShowScriptBrowser();
+					//	break;
+					//case AssetView::FontBrowser:
+					//	ShowFontBrowser();
+					//	break;
+				default:
+					//Log::Warning("Unkown asset view: %d", (int)m_CurrentView);
+					break;
+				}
+
+				ImGui::PopStyleColor(4);
+
+				//all assets
 				if (_currentDirectory != std::filesystem::path("Assets"))
 				{
 					if (ImGui::Button("<-"))
@@ -494,12 +645,8 @@ namespace Editor {
 					std::string filenameString = relative_path.string();
 
 					ImGui::PushID(filenameString.c_str());
-					//auto& texture = Engine::DreamECS::GetInstance().GetComponentType<Texture>();
-					//directory.is_directory() ? "Assets/Textures/DirectoryIcon.png" : "Assets/Texures/FileIcon.png";
-					//texture->getFilepath();
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-					ImGui::Button("Button Image");
-					//ImGui::ImageButton((ImTextureID)texture->GetEntityId(), {thumbnailSize, thumbnailSize}, {0, 1}, {1, 0});
+					ImGui::ImageButton((ImTextureID)directory.is_directory(), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
 					if (ImGui::BeginDragDropSource())
 					{
 						const wchar_t* itemPath = relative_path.c_str();

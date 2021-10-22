@@ -99,6 +99,18 @@ namespace Editor {
             Engine::SceneManager::GetInstance().ChangeScene("test3");
         }
 
+        else if (e.GetKeyCode() == Engine::Input_KeyCode::N) {
+            Engine::SceneManager::GetInstance().ChangeScene("test1");
+        }
+
+        //else if (e.GetKeyCode() == Engine::Input_KeyCode::Z) {
+        //    Engine::CommandHistory::Undo();
+        //}
+
+        //else if (e.GetKeyCode() == Engine::Input_KeyCode::Y) {
+        //    Engine::CommandHistory::Redo();
+        //}
+
         if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Control)) {
             return EditorSceneManager::GetInstance().SceneHotKeyCheck(e.GetKeyCode());
         }

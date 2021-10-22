@@ -383,6 +383,22 @@ namespace Editor {
 					}
 				}
 
+				/*
+				*	Camera component
+				*/
+				/*Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
+				{
+
+					if (camComp != nullptr) {
+						ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
+						ImGui::SameLine();
+
+						ImGui::Text("CAMERA");
+					}
+
+				}*/
+
+
 				/**
 				*	Scripts for each component
 				*/

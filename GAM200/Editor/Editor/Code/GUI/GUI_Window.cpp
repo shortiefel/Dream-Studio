@@ -101,7 +101,7 @@ namespace Editor {
 		//Show stats like fps and Number of game object
 		void	GUI_Stats();
 		//Profiler window
-		void	GUI_GameWindow(const ImTextureID& gameWinTex);
+		//void	GUI_GameWindow(const ImTextureID& gameWinTex);
 		//void	GUI_SceneWindow(const ImTextureID& sceneWinTex);
 		void    GUI_ContentBrowserPanel();
 

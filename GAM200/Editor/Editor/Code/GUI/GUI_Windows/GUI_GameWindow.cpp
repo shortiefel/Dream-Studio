@@ -82,7 +82,7 @@ namespace Editor {
 					mouseY >= 0 && mouseY < (int)game_viewportSize.y) {
 					if (Engine::Input::IsMousePressed(Engine::Input_MouseCode::Mouse_Left)) {
 						
-						Engine::Graphic::PickingCheck(entity_selected, mousePos, game_viewportSize, inverseCamMatrix, [&](const Engine::Entity& entity) {  std::cout << "something \n"; });
+						Engine::Graphic::PickingCheck(entity_selected, mousePos, game_viewportSize, inverseCamMatrix, [&](const Engine::Entity& entity) {   });
 					}
 				}
 

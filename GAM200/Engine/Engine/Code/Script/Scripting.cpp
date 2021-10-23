@@ -171,9 +171,9 @@ namespace Engine {
 			if (!GameState::GetInstance().GetPlaying()) return;
 
 			auto& csClass = _csScriptInstance.csClass;
-			auto& className = csClass.className;
-
-			csClass.klass = mono_class_from_name(image, "", className.c_str());
+			auto& fullName = csClass.fullName;
+			
+			csClass.klass = mono_class_from_name(image, csClass.namespaceName.c_str(), csClass.className.c_str());
 			if (!csClass.klass) {
 				LOG_ERROR("Failed loading class");
 				return;
@@ -185,58 +185,57 @@ namespace Engine {
 				return;
 			}
 
-
 			std::string methodDesc = "MonoBehaviour:.ctor(uint)";
 			MonoMethodDesc* description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.ConstructorFunc = mono_method_desc_search_in_image(description, imageCore);
 
-			methodDesc = className + ":OnInit()";
+			methodDesc = fullName + ":OnInit()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.InitFunc = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = className + ":OnUpdate()";
+			methodDesc = fullName + ":OnUpdate()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.UpdateFunc = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = className + ":OnDestroy()";
+			methodDesc = fullName + ":OnDestroy()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
 
 
-			methodDesc = className + ":OnCollisionEnter()";
+			methodDesc = fullName + ":OnCollisionEnter()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnCollisionEnter = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = className + ":OnCollisionStay()";
+			methodDesc = fullName + ":OnCollisionStay()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnCollisionStay = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = className + ":OnCollisionExit()";
+			methodDesc = fullName + ":OnCollisionExit()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
 
 
-			methodDesc = className + ":OnTriggerEnter()";
+			methodDesc = fullName + ":OnTriggerEnter()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = className + ":OnTriggerStay()";
+			methodDesc = fullName + ":OnTriggerStay()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerStay = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = className + ":OnTriggerExit()";
+			methodDesc = fullName + ":OnTriggerExit()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = className + ":OnMouseEnter()";
+			methodDesc = fullName + ":OnMouseEnter()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnMouseEnter = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = className + ":OnMouseOver()";
+			methodDesc = fullName + ":OnMouseOver()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnMouseOver = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = className + ":OnMouseExit()";
+			methodDesc = fullName + ":OnMouseExit()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnMouseExit = mono_method_desc_search_in_image(description, image);
 		}

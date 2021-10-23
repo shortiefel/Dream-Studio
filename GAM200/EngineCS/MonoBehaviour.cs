@@ -35,6 +35,7 @@ using System.Text;
 using System.Threading.Tasks;*/
 using System.Runtime.CompilerServices; //For internal calls
 
+namespace DreamEngine { }
 public class MonoBehaviour
 {
     //public GameObject gameObject;

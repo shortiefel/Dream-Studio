@@ -15,6 +15,10 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+
+//Do note that while the picking may work in the Editor it may not work when the game is created
+//as picking is done with mouse position and window position so it would require testing in the future
+
 #ifndef PICKING_2D_H
 #define PICKING_2D_H
 

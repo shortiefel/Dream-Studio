@@ -55,6 +55,9 @@ namespace Engine {
 		MonoMethod* OnTriggerEnter = nullptr;
 		MonoMethod* OnTriggerStay = nullptr;
 		MonoMethod* OnTriggerExit = nullptr;
+		MonoMethod* OnMouseEnter = nullptr;
+		MonoMethod* OnMouseOver = nullptr;
+		MonoMethod* OnMouseExit = nullptr;
 	};
 
 

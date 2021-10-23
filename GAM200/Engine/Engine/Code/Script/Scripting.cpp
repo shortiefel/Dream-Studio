@@ -83,6 +83,15 @@ namespace Engine {
 			case MonoFunctionType::TRIGGER_EXIT:
 				INVOKE_FUNCTION(OnTriggerExit);
 				break;
+			case MonoFunctionType::MOUSE_ENTER:
+				INVOKE_FUNCTION(OnMouseEnter);
+				break;
+			case MonoFunctionType::MOUSE_OVER:
+				INVOKE_FUNCTION(OnMouseOver);
+				break;
+			case MonoFunctionType::MOUSE_EXIT:
+				INVOKE_FUNCTION(OnMouseExit);
+				break;
 			}
 		}
 
@@ -218,6 +227,18 @@ namespace Engine {
 			methodDesc = className + ":OnTriggerExit()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = className + ":OnMouseEnter()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnMouseEnter = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = className + ":OnMouseOver()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnMouseOver = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = className + ":OnMouseExit()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnMouseExit = mono_method_desc_search_in_image(description, image);
 		}
 
 		void InitAllCSClass() {

@@ -88,7 +88,7 @@ namespace Editor {
 							mousePos = inverseCamMatrix * mousePos;
 							Entity_PickingCheck(entity_selected);*/
 						//Engine::Graphic::PickingCheck(entity_selected, mousePos, scene_viewportSize, inverseCamMatrix);
-						Engine::Graphic::PickingCheck(entity_selected, mousePos, scene_viewportSize, inverseCamMatrix, [&](const Engine::Entity& entity) { entity_selected = entity; });
+						Engine::Graphic::PickingCheck(mousePos, scene_viewportSize, inverseCamMatrix, [&](const Engine::Entity& entity) { entity_selected = entity; }, [&](const Engine::Entity& entity) {  });
 					}
 				}
 

@@ -15,42 +15,36 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-//#include "Engine/Header/Graphic/Picking2D.hpp"
+#include "Engine/Header/Graphic/Picking2D.hpp"
+
+#include "Engine/Header/Event/OverlapColliderEvent.hpp"
+#include "Engine/Header/Event/EventDispatcher.hpp"
 
 namespace Engine {
 	namespace Graphic {
-		//void PickingCheck(Engine::Entity& entity_selected, Math::vec3& mousePos, const Math::vec2& viewportSize, const Math::mat3& inverseCamMatrix) {
-		//	mousePos = Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
-		//		0.f, 2.f / viewportSize.y, 0.f,
-		//		-1.f, -1.f, 1.f) * mousePos;
-		//	mousePos = inverseCamMatrix * mousePos;
+		std::set<Entity_id> overlapMap;
 
-		//	const auto& transformArray = Engine::DreamECS::GetInstance().GetComponentArrayData<Engine::TransformComponent>();
-		//	for (const auto& transform : transformArray) {
-		//		const Engine::Entity& entity = transform.GetEntity();
-		//		if (Entity_Check(entity)) break;
-		//		if (!transform.isActive) continue;
-
-		//		Engine::ColliderComponent collider;
-		//		collider.offset_position = Math::vec2{ transform.position };
-		//		collider.offset_scale = transform.scale;
-		//		collider.angle = transform.angle;
-		//		if (Math::epsilonCheck(transform.angle)) {
-		//			if (Engine::CollisionImplementation::PointToSquareAABB(Math::vec2{ mousePos.x, mousePos.y }, collider)) {
-		//				entity_selected = entity;
-		//				//Callback(entity);
-		//				std::cout << "calling \n";
-		//			}
-		//		}
-
-		//		else {
-		//			if (Engine::CollisionImplementation::PointToSquareSAT(Math::vec2{ mousePos.x, mousePos.y }, collider)) {
-		//				entity_selected = entity;
-		//				//Callback(entity);
-		//				std::cout << "calling \n";
-		//			}
-		//		}
-		//	}
-		//}
+		void RecordMouseOverlap(Entity_id entity_id, bool type) {
+			if (type) {
+				const auto& iter = overlapMap.find(entity_id);
+				if (iter != overlapMap.end()) {
+					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::MOUSE_OVER);
+					EventDispatcher::SendEvent(event);
+				}
+				else {
+					overlapMap.insert(entity_id);
+					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::MOUSE_ENTER);
+					EventDispatcher::SendEvent(event);
+				}
+			}
+			else {
+				const auto& iter = overlapMap.find(entity_id);
+				if (iter != overlapMap.end()) {
+					overlapMap.erase(iter);
+					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::MOUSE_EXIT);
+					EventDispatcher::SendEvent(event);
+				}
+			}
+		}
 	}
 }

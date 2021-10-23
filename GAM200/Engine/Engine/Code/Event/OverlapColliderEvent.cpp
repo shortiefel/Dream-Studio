@@ -41,4 +41,26 @@ namespace Engine {
 
 	Call_and_Register_Definition(OverlapColliderEvent, OverlapColliderEventFP);
 
+
+	/*-------------------------------------------------------------------------------------------------
+	MouseOverlapCollider event
+	-------------------------------------------------------------------------------------------------*/
+	std::vector<MouseOverlapColliderEventFP> MouseOverlapColliderEvent::registeredFunctions;
+
+	MouseOverlapColliderEvent::MouseOverlapColliderEvent(std::uint32_t _ent1, MonoFunctionType _type)
+		: other{ _ent1 }, type{ _type } {
+		PROFILER_START("Event");
+	}
+
+	EventType MouseOverlapColliderEvent::GetEventType() const {
+		PROFILER_START("Event");
+		return EventType::MOUSE_OVERLAP_COLLIDER;
+	}
+	std::string MouseOverlapColliderEvent::Details() const {
+		PROFILER_START("Event");
+		return "Mouse Overlapping collider Detected";
+	}
+
+	Call_and_Register_Definition(MouseOverlapColliderEvent, MouseOverlapColliderEventFP);
+
 }

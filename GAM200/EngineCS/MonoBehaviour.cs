@@ -49,6 +49,9 @@ public class MonoBehaviour
     public virtual void OnTriggerEnter() { }
     public virtual void OnTriggerStay() { }
     public virtual void OnTriggerExit() { }
+    public virtual void OnMouseEnter() { }
+    public virtual void OnMouseOver() { }
+    public virtual void OnMouseExit() { }
 
     public MonoBehaviour() { }
     public MonoBehaviour(uint id)

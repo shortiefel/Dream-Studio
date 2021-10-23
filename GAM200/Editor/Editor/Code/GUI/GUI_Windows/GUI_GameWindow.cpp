@@ -38,7 +38,7 @@ namespace Editor {
 			return static_cast<int>(game_viewportSize.y);
 		}
 
-		void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO, Engine::Entity& entity_selected) {
+		void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO) {
 			if (*gameWin_bool) {
 
 				//ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
@@ -80,10 +80,10 @@ namespace Editor {
 				
 				if (mouseX >= 0 && mouseX < (int)game_viewportSize.x &&
 					mouseY >= 0 && mouseY < (int)game_viewportSize.y) {
-					if (Engine::Input::IsMousePressed(Engine::Input_MouseCode::Mouse_Left)) {
-						
-						Engine::Graphic::PickingCheck(entity_selected, mousePos, game_viewportSize, inverseCamMatrix, [&](const Engine::Entity& entity) {   });
-					}
+
+					Engine::Graphic::PickingCheck(mousePos, game_viewportSize, inverseCamMatrix, 
+						[&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, true);  }, 
+						[&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); });
 				}
 
 				ImGui::EndChild();

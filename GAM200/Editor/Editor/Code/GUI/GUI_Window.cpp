@@ -231,7 +231,7 @@ namespace Editor {
 		-------------------------------------------------------------------------------------------------*/
 		//void All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex) {
 		void All_Windows(const Engine::Graphic::FrameBuffer& gameWinFBO, const Engine::Graphic::FrameBuffer& sceneWinFBO) {
-			GUI_GameWindow(&gameWin_bool, gameWinFBO, entity_selected);
+			GUI_GameWindow(&gameWin_bool, gameWinFBO);
 			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO, entity_selected);
 			GUI_Hierarchy();
 			GUI_Inspector();

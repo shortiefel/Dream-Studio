@@ -31,7 +31,7 @@ public class Test : MonoBehaviour
         //Vec2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
         //go2.position = new Vec2(0, 0);
-        Console.WriteLine("init");
+        Debug.Log("init");
 
         //Console.WriteLine(go2);
 
@@ -41,8 +41,8 @@ public class Test : MonoBehaviour
         go2.position += new Vec2(500, 500);
         Console.WriteLine(go2.position);*/
         //Console.WriteLine(col1.entityId);
-        Console.WriteLine("Has Component Collider? ");
-        Console.WriteLine(HasComponent<Collider>(entityId));
+        Debug.Log("Has Component Collider? ");
+        Debug.Log(HasComponent<Collider>(entityId));
     }
 
 
@@ -104,26 +104,36 @@ public class Test : MonoBehaviour
         }
     }
 
+    public override void OnMouseEnter()
+    {
+        Debug.Log("Mouse Enter");
+    }
+
+    public override void OnMouseExit()
+    {
+        Debug.Log("Mouse Exit");
+    }
+
     public override void OnCollisionEnter()
     {
         //Instantiate_Entity("Box");
         SceneManager.LoadScene("Test3");
-        Console.WriteLine("Test Collision Enter");
+        Debug.Log("Test Collision Enter");
     }
 
     public override void OnCollisionExit()
     {
-        Console.WriteLine("Test Collision Exit");
+        Debug.Log("Test Collision Exit");
     }
 
     public override void OnTriggerEnter()
     {
-        Console.WriteLine("Test Trigger Enter");
+        Debug.Log("Test Trigger Enter");
     }
 
     public override void OnTriggerExit()
     {
-        Console.WriteLine("Test Trigger Exit");
+        Debug.Log("Test Trigger Exit");
     }
 
 }

@@ -76,6 +76,7 @@ Technology is prohibited.
 namespace Engine {
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e); //To be registered to Event
+	bool CallMouseOverlapFunc(const MouseOverlapColliderEvent& e);
 
 	bool ScriptSystem::CompileCS() {
 		PROFILER_START("Scripting");
@@ -128,6 +129,7 @@ namespace Engine {
 		Scripting::Setup();
 		RegisterInternalCall();
 		OverlapColliderEvent::RegisterFunction(CallOverlapFunc);
+		MouseOverlapColliderEvent::RegisterFunction(CallMouseOverlapFunc);
 		LOG_INSTANCE("Script System created");
 	}
 
@@ -140,6 +142,17 @@ namespace Engine {
 		PROFILER_START("Scripting");
 
 		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(e.self);
+		if (!csScript) return false;
+		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
+			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
+		}
+		return true;
+	}
+
+	bool CallMouseOverlapFunc(const MouseOverlapColliderEvent& e) {
+		PROFILER_START("Scripting");
+
+		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(e.other);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);

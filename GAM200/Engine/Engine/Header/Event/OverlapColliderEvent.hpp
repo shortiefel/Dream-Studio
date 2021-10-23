@@ -13,6 +13,10 @@ OnTriggerEnter
 OnTriggerStay
 OnTriggerExit
 
+OnMouseEnter
+OnMouseOver
+OnMouseExit
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -50,6 +54,28 @@ namespace Engine {
 		MonoFunctionType type;
 	private:
 		static std::vector<OverlapColliderEventFP> registeredFunctions;
+	};
+
+	/*-------------------------------------------------------------------------------------------------
+	MouseOverlapCollider event
+	-------------------------------------------------------------------------------------------------*/
+	class MouseOverlapColliderEvent;
+	typedef bool (*MouseOverlapColliderEventFP)(const MouseOverlapColliderEvent&);
+
+	class MouseOverlapColliderEvent : public Event {
+	public:
+		virtual EventType GetEventType() const override;
+		virtual std::string Details() const override;
+
+		virtual void CallRegisteredFunctions() override;
+		static void RegisterFunction(MouseOverlapColliderEventFP func);
+
+		MouseOverlapColliderEvent(std::uint32_t _ent1, MonoFunctionType _type);
+
+		std::uint32_t other;
+		MonoFunctionType type;
+	private:
+		static std::vector<MouseOverlapColliderEventFP> registeredFunctions;
 	};
 
 }

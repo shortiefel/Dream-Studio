@@ -373,7 +373,9 @@ namespace Editor {
 					ImGui::SameLine();
 
 					if (ImGui::TreeNode("Collider")) {
-						ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
+						ImGui::Text("Scale");
+						ImGui::SameLine();
+						ImGui::DragFloat3("##colliderScale", &colComp->offset_scale.x, 0.0f);
 
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteCollider", { ImGui::GetContentRegionAvail().x, 0 }))
@@ -386,17 +388,41 @@ namespace Editor {
 				/*
 				*	Camera component
 				*/
-				/*Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
+				Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
 				{
 
 					if (camComp != nullptr) {
 						ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
 						ImGui::SameLine();
 
-						ImGui::Text("CAMERA");
+						if (ImGui::TreeNode("Camera"))
+						{
+							ImGui::Text("FOV");
+							ImGui::SameLine();
+							ImGui::InputFloat("##camFOV", &camComp->fov, 0.0f);
+
+							//deleteComponent
+							if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
+								Engine::DreamECS::GetInstance().RemoveComponent<Engine::CameraComponent>(entity_selected);
+
+							ImGui::TreePop();
+						}
+						
 					}
 
-				}*/
+				}
+
+
+				/*
+				*	Text component
+				*/
+
+
+
+				/*
+				*	Color component
+				*/
+
 
 
 				/**

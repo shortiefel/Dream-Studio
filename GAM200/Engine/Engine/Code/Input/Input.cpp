@@ -19,6 +19,7 @@ Technology is prohibited.
 
 namespace Engine {
 	//Math::vec2 Input::mousePosition;
+	//Math::vec2 Input::mouseScroll;
 
 	/*------------------------------------------------------------------------------------------------------------------------------
 	GLFW to input key code map
@@ -331,6 +332,14 @@ namespace Engine {
 	void Input::SetMouseStatus(int button, bool status) {
 		InputMouseStatus[GLFWtoInputMouse[button]] = status;
 	}
+
+	/*void Input::SetMouseScroll(float xScroll, float yScroll) {
+		mouseScroll = Math::vec2 { xScroll, yScroll };
+	}
+
+	Math::vec2 Input::GetMouseScroll() {
+		return mouseScroll;
+	}*/
 
 	Input_KeyCode Input::GetKeyCode(int key) {
 		return GLFWtoInputKey[key];

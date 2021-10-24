@@ -174,6 +174,7 @@
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\UIComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp" />
+    <ClCompile Include="Engine\Code\ECS\System\UISystem.cpp" />
     <ClCompile Include="Engine\Code\EngineCore.cpp" />
     <ClCompile Include="Engine\Code\Event\EventDispatcher.cpp" />
     <ClCompile Include="Engine\Code\Event\KeyEvent.cpp" />
@@ -249,6 +251,7 @@
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\UIComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp" />
@@ -264,6 +267,7 @@
     <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\UISystem.hpp" />
     <ClInclude Include="Engine\Header\EngineCore.hpp" />
     <ClInclude Include="Engine\Header\Event\Event.hpp" />
     <ClInclude Include="Engine\Header\Event\EventDispatcher.hpp" />

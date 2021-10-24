@@ -227,6 +227,8 @@ namespace Engine {
 			break;
 		}
 		}
+		std::cout << button <<  " " << Input::IsMousePressed(Engine::Input_MouseCode::Mouse_Middle) <<"\n";
+
 	}
 
 	void Window::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
@@ -236,8 +238,13 @@ namespace Engine {
 	}
 
 	void Window::CursorCallBack(GLFWwindow* window, double xpos, double ypos) {
-		MouseMoveEvent event((float)xpos, (float)ypos);
+		static Math::vec2 previousPos{};
+
+		MouseMoveEvent event((float)xpos, (float)ypos, 
+			(previousPos.x > xpos), (previousPos.x < xpos), (previousPos.y > ypos), (previousPos.y < ypos));
 		EventDispatcher::SendEvent(event);
+
+		previousPos = Math::vec2{ (float)xpos, (float)ypos };
 		//Input::mousePosition = Math::vec2{ static_cast<float>(xpos),static_cast<float>(ypos) };
 		//w_data.eventCallBack(event);
 	}

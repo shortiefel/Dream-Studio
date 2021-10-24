@@ -24,6 +24,7 @@ Technology is prohibited.
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
+#include "Engine/Header/ECS/System/UISystem.hpp"
 #include "Engine/Header/Window.hpp"
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
@@ -51,6 +52,7 @@ namespace Editor {
 		////Change this line to editor graphic system
 
 		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
+		Engine::UISystem::GetInstance().Render(GUI::GetFboPtr());
 
 		GUI::Update();
 		

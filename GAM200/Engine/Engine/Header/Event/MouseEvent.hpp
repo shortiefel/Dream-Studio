@@ -4,6 +4,7 @@
 @authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
 @date    26/05/2021
 \brief
+#include "Engine/Header/Event/MouseEvent.hpp"
 This file contain the MouseEvent declaration
 Refer to Event.hpp for more information
 
@@ -77,9 +78,13 @@ namespace Engine {
 
 	class MouseMoveEvent : public Event {
 	public:
-		MouseMoveEvent(float xp, float yp);
+		MouseMoveEvent(float xp, float yp, bool l, bool r, bool u, bool d);
 		//Get mouse position when moved
 		Math::vec2 GetPos() const;
+		bool GetLeft() const;
+		bool GetRight() const;
+		bool GetUp() const;
+		bool GetDown() const;
 		virtual EventType GetEventType() const override;
 		virtual std::string Details() const override;
 
@@ -88,6 +93,7 @@ namespace Engine {
 
 	private:
 		Math::vec2 pos;
+		bool left, right, up, down;
 		static std::vector<MouseMoveFP> registeredFunctions;
 	};
 

@@ -26,8 +26,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 
-namespace Engine 
-{
+namespace Engine {
     class DSerializer;
     class SSerializer;
 

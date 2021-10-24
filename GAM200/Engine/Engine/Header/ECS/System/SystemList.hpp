@@ -22,5 +22,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/CollisionSystem.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/System/PhysicsSystem.hpp"
+#include "Engine/Header/ECS/System/UISystem.hpp"
 
 #endif

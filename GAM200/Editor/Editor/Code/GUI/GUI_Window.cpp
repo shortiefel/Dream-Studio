@@ -133,6 +133,8 @@ namespace Editor {
 			dockspace_dock_flags |= ImGuiDockNodeFlags_PassthruCentralNode;
 
 			GUI_Windows::GUI_Console_Create();
+
+			GUI_Windows::GUI_SceneSetup();
 		}
 
 		void GUI_DockSpace() {

@@ -29,9 +29,9 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Shader.hpp"
 #include "Engine/Header/Graphic/GLSLShader.hpp"
 
-#include "Engine/Header/Graphic/Graphic.hpp"
-#include "Engine/Header/Graphic/GraphicOptions.hpp"
-#include "Engine/Header/Management/TextureManager.hpp"
+//#include "Engine/Header/Graphic/Graphic.hpp"
+//#include "Engine/Header/Graphic/GraphicOptions.hpp"
+//#include "Engine/Header/Management/TextureManager.hpp"
 
 namespace Engine
 {
@@ -121,9 +121,9 @@ namespace Engine
 		return fbo;
 	}
 
-	void GraphicSystem::SetPickingFunction(void(*fp)()) {
+	/*void GraphicSystem::SetPickingFunction(void(*fp)()) {
 		pickingFP = fp;
-	}
+	}*/
 
 	bool GraphicSystem::Create()
 	{

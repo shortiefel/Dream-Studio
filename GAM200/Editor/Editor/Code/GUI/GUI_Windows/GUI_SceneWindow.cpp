@@ -23,24 +23,59 @@ Technology is prohibited.
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/Picking2D.hpp"
 
+#include "Engine/Header/Event/MouseEvent.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
+
+#define HEIGHT_CHANGE_SPEED 30.f
+#define POS_CHANGE_SPEED 30.f
 
 namespace Editor {
 	namespace GUI_Windows {
 		Math::vec2 scene_viewportBounds[2];
 		Math::vec2 scene_viewportSize;
 
-		int GUI_GetSceneWindowSizeX() {
-			return static_cast<int>(scene_viewportSize.x);
+		bool inside = false;
+
+		bool moving(const Engine::MouseMoveEvent& e) {
+			if (!inside || !Engine::Input::IsMousePressed(Engine::Input_MouseCode::Mouse_Middle)) return false;
+
+			if (e.GetLeft()) {
+				EditorSceneCamera::changePosition(Math::vec2{ -POS_CHANGE_SPEED, 0.f });
+			}
+			else if (e.GetRight()) {
+				EditorSceneCamera::changePosition(Math::vec2{ POS_CHANGE_SPEED, 0.f });
+			}
+			if (e.GetUp()) {
+				EditorSceneCamera::changePosition(Math::vec2{ 0.f, POS_CHANGE_SPEED });
+			}
+			else if (e.GetDown()) {
+				EditorSceneCamera::changePosition(Math::vec2{ 0.f, -POS_CHANGE_SPEED } );
+			}
+
+			return true;
 		}
 
-		int GUI_GetSceneWindowSizeY() {
-			return static_cast<int>(scene_viewportSize.y);
+		bool scrolling(const Engine::MouseScrolledEvent& e) {
+			if (!inside) return false;
+
+			Math::vec2 mouseScroll = e.GetScroll();
+
+			if (mouseScroll.y > 0)  EditorSceneCamera::changeHeight(-HEIGHT_CHANGE_SPEED);
+			else if (mouseScroll.y < 0) EditorSceneCamera::changeHeight(HEIGHT_CHANGE_SPEED);
+
+			return true;
+		}
+
+		void GUI_SceneSetup() {
+			Engine::MouseScrolledEvent::RegisterFunction(scrolling);
+			Engine::MouseMoveEvent::RegisterFunction(moving);
 		}
 
 		//void GUI_SceneWindow(bool* sceneWin_bool, const ImTextureID& sceneWinTex) {
 		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, Engine::Entity& entity_selected) {
+			inside = false;
+
 			if (*sceneWin_bool) {
 
 				//ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
@@ -81,6 +116,8 @@ namespace Editor {
 
 				if (mouseX >= 0 && mouseX < (int)scene_viewportSize.x &&
 					mouseY >= 0 && mouseY < (int)scene_viewportSize.y) {
+					inside = true;
+
 					if (Engine::Input::IsMousePressed(Engine::Input_MouseCode::Mouse_Left)) {
 						/*mousePos = Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
 							0.f, 2.f / viewportSize.y, 0.f,

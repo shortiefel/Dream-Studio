@@ -81,14 +81,34 @@ namespace Engine {
 	/*-------------------------------------------------------------------------------------------------
 	Mouse move event
 	-------------------------------------------------------------------------------------------------*/
-	MouseMoveEvent::MouseMoveEvent(float xp, float yp) :
-		pos{ xp, yp } {
+	MouseMoveEvent::MouseMoveEvent(float xp, float yp, bool l, bool r, bool u, bool d) :
+		pos{ xp, yp }, left{ l }, right{ r }, up{ u }, down{ d } {
 		PROFILER_START("Event");
 	}
 
 	Math::vec2 MouseMoveEvent::GetPos() const { 
 		PROFILER_START("Event");
 		return pos; 
+	}
+
+	bool MouseMoveEvent::GetLeft() const {
+		PROFILER_START("Event");
+		return left;
+	}
+
+	bool MouseMoveEvent::GetRight() const {
+		PROFILER_START("Event");
+		return right;
+	}
+
+	bool MouseMoveEvent::GetUp() const {
+		PROFILER_START("Event");
+		return up;
+	}
+
+	bool MouseMoveEvent::GetDown() const {
+		PROFILER_START("Event");
+		return down;
 	}
 
 	EventType MouseMoveEvent::GetEventType() const {

@@ -45,23 +45,23 @@ namespace Engine
 		return *this;
 	}
 
-	Math::mat3 TransformComponent::GetTransform() const 
-	{
-		return
-			//Translation
-			Math::mat3{ Math::vec3(1.f, 0, 0),
-						Math::vec3(0, 1.f, 0),
-						Math::vec3(position.x, position.y, 1.f) }
-			*
-			Math::mat3{ Math::vec3(std::cos(rad((float)angle)), std::sin(rad((float)angle)), 0),
-						Math::vec3(-std::sin(rad((float)angle)), std::cos(rad((float)angle)), 0),
-						Math::vec3(0.f, 0.f, 1.f) }
-			*
-			//Scale
-			Math::mat3{ Math::vec3(scale.x, 0, 0),
-						Math::vec3(0, scale.y, 0),
-						Math::vec3(0, 0, 1.f) };
-	}
+	//Math::mat3 TransformComponent::GetTransform() const 
+	//{
+	//	return
+	//		//Translation
+	//		Math::mat3{ Math::vec3(1.f, 0, 0),
+	//					Math::vec3(0, 1.f, 0),
+	//					Math::vec3(position.x, position.y, 1.f) }
+	//		*
+	//		Math::mat3{ Math::vec3(std::cos(rad((float)angle)), std::sin(rad((float)angle)), 0),
+	//					Math::vec3(-std::sin(rad((float)angle)), std::cos(rad((float)angle)), 0),
+	//					Math::vec3(0.f, 0.f, 1.f) }
+	//		*
+	//		//Scale
+	//		Math::mat3{ Math::vec3(scale.x, 0, 0),
+	//					Math::vec3(0, scale.y, 0),
+	//					Math::vec3(0, 0, 1.f) };
+	//}
 
 	TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer) {
 		position = _serializer.GetValue<Math::vec2>("Position");

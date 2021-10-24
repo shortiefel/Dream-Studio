@@ -42,7 +42,7 @@ namespace Engine
 		bool isActive = true;
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
-		Math::mat3 GetTransform() const;
+		//Math::mat3 GetTransform() const;
 
 		TransformComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);

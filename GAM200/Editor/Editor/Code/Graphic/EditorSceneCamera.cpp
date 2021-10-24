@@ -23,10 +23,12 @@ Technology is prohibited.
 
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 
-#define SCENE_CAMERA_HEIGHT 1000
+#define MIN_SCENE_CAMERA_HEIGHT 100
+#define MAX_SCENE_CAMERA_HEIGHT 2000
 
 namespace Editor 
 {
+    float SCENE_CAMERA_HEIGHT = 1000.f;
     Math::vec2 EditorSceneCamera::position;
     float EditorSceneCamera::ar;
     //Math::mat3 EditorSceneCamera::world_to_ndc_xform;
@@ -51,6 +53,18 @@ namespace Editor
                        0.f, 1.f, 0.f,
                       -position.x, -position.y, 1.f);
     }
+
+    void EditorSceneCamera::changeHeight(float val) {
+        SCENE_CAMERA_HEIGHT += val;
+        if (SCENE_CAMERA_HEIGHT < MIN_SCENE_CAMERA_HEIGHT) SCENE_CAMERA_HEIGHT = MIN_SCENE_CAMERA_HEIGHT;
+        else if (SCENE_CAMERA_HEIGHT > MAX_SCENE_CAMERA_HEIGHT) SCENE_CAMERA_HEIGHT = MAX_SCENE_CAMERA_HEIGHT;
+    }
+
+    void EditorSceneCamera::changePosition(Math::vec2 val) {
+        position += val;
+    }
+
+
 
     void EditorSceneCamera::Create(Math::vec2 pos) 
     {

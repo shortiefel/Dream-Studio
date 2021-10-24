@@ -30,6 +30,10 @@ namespace Editor
 
 		static Math::mat3 GetTransform();
 		static float GetAR();
+
+		static void changeHeight(float val);
+		static void changePosition(Math::vec2 val);
+
 	private:
 		static Math::vec2 position;
 		static float ar;

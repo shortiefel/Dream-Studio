@@ -47,20 +47,42 @@ namespace Engine
             cam.ar = Settings::gameAR;
 
             // compute world-to-NDC transformation matrix
-            world_to_ndc_xform =
+            camPosition = transform->position;
+            camFov = cam.fov;
+            /*world_to_ndc_xform =
                 Math::mat3(2.f / (cam.ar * CAMERA_HEIGHT * cam.fov), 0.f, 0.f,
                            0.f, 2.f / CAMERA_HEIGHT * cam.fov, 0.f,
                            0.f, 0.f, 1.f)
                 *
                 Math::mat3(1.f, 0.f, 0.f,
                            0.f, 1.f, 0.f,
-                          -transform->position.x, -transform->position.y, 1.f);
+                          -transform->position.x, -transform->position.y, 1.f);*/
             break; //Just need one transform
         }
     }
 
     Math::mat3 CameraSystem::GetTransform() {
-        return world_to_ndc_xform;
+        return 
+            Math::mat3(2.f / (Settings::gameAR * CAMERA_HEIGHT * camFov), 0.f, 0.f,
+                0.f, 2.f / CAMERA_HEIGHT * camFov, 0.f,
+                0.f, 0.f, 1.f)
+            *
+            Math::mat3(1.f, 0.f, 0.f,
+                0.f, 1.f, 0.f,
+                -camPosition.x, -camPosition.y, 1.f);
+    }
+
+    Math::mat3 CameraSystem::GetTransformSpecial()
+    {
+        return
+            Math::mat3(2.f / (Settings::gameAR * camFov), 0.f, 0.f,
+                0.f, 2.f / camFov, 0.f,
+                0.f, 0.f, 1.f)
+            *
+            Math::mat3(1.f, 0.f, 0.f,
+                0.f, 1.f, 0.f,
+                -camPosition.x, -camPosition.y, 1.f);
+
     }
 
     float CameraSystem::GetAR() const {

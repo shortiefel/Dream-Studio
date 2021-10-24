@@ -44,7 +44,7 @@ Technology is prohibited.
 #include <fstream>
 
 //Type and Store named must be same to use this
-#define ADD_COMPONENT_WTIH_CHECK(type) \
+#define DESERIALIZE(type) \
 itr = obj.FindMember(#type);\
 if (itr != obj.MemberEnd()) {\
 	DSerializer serializer{ itr }; \
@@ -53,10 +53,20 @@ if (itr != obj.MemberEnd()) {\
 		);\
 }
 
-#define SERIALIZE(target)\
-	rapidjson::Value objType(rapidjson::kObjectType);\
-	SSerializer serializer(doc, objType);\
-	target->Serialize(serializer);
+//#define SERIALIZE(target)\
+//	rapidjson::Value objType(rapidjson::kObjectType);\
+//	SSerializer serializer(doc, objType);\
+//	target->Serialize(serializer);
+
+#define SERIALIZE(type) { type* tem = DreamECS::GetInstance().GetComponentPTR<type>(ent); \
+						  if (tem != nullptr) {\
+						  	  LOG_ASSERT(tex); \
+						  	  rapidjson::Value objType(rapidjson::kObjectType); \
+						  	  SSerializer serializer(doc, objType); \
+						  	  tem->Serialize(serializer); \
+						  	  entityObject.AddMember(#type, objType, doc.GetAllocator()); \
+						  }\
+						  }
 
 #define FILE_CREATION(path, type)\
 FILE* fp;\
@@ -150,40 +160,57 @@ namespace Engine {
 			serializer.SetValue("Name", ent.name);
 			entityObject.AddMember("Entity", objType, doc.GetAllocator());
 
-			TransformComponent* trans = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(ent);
+			/*TransformComponent* trans = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(ent);
 			if (trans != nullptr) {
 				LOG_ASSERT(trans);
 				SERIALIZE(trans);
 				entityObject.AddMember("TransformComponent", objType, doc.GetAllocator());
-			}
+			}*/
+			SERIALIZE(TransformComponent);
 
-			ColliderComponent* col = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(ent);
+			/*ColliderComponent* col = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(ent);
 			if (col != nullptr) {
 				LOG_ASSERT(col);
 				SERIALIZE(col);
 				entityObject.AddMember("ColliderComponent", objType, doc.GetAllocator());
-			}
+			}*/
+			SERIALIZE(ColliderComponent);
 
-			RigidBodyComponent* rb = DreamECS::GetInstance().GetComponentPTR<RigidBodyComponent>(ent);
+			/*RigidBodyComponent* rb = DreamECS::GetInstance().GetComponentPTR<RigidBodyComponent>(ent);
 			if (rb != nullptr) {
 				LOG_ASSERT(rb);
 				SERIALIZE(rb);
 				entityObject.AddMember("RigidBodyComponent", objType, doc.GetAllocator());
-			}
+			}*/
+			SERIALIZE(RigidBodyComponent);
 
-			CameraComponent* cam = DreamECS::GetInstance().GetComponentPTR<CameraComponent>(ent);
+			/*CameraComponent* cam = DreamECS::GetInstance().GetComponentPTR<CameraComponent>(ent);
 			if (cam != nullptr) {
 				LOG_ASSERT(cam);
 				SERIALIZE(cam);
 				entityObject.AddMember("CameraComponent", objType, doc.GetAllocator());
-			}
+			}*/
+			SERIALIZE(CameraComponent);
 
-			TextureComponent* tex = DreamECS::GetInstance().GetComponentPTR<TextureComponent>(ent);
-			if (tex != nullptr) {
-				LOG_ASSERT(tex);
-				SERIALIZE(tex);
-				entityObject.AddMember("TextureComponent", objType, doc.GetAllocator());
-			}
+			//TextureComponent* tex = DreamECS::GetInstance().GetComponentPTR<TextureComponent>(ent);
+			//if (tex != nullptr) {
+			//	LOG_ASSERT(tex);
+			//	//SERIALIZE(tex);
+			//	rapidjson::Value objType(rapidjson::kObjectType); 
+			//	SSerializer serializer(doc, objType); 
+			//	tex->Serialize(serializer);
+			//	entityObject.AddMember("TextureComponent", objType, doc.GetAllocator());
+			//}
+			SERIALIZE(TextureComponent);
+
+			/*UIComponent* ui = DreamECS::GetInstance().GetComponentPTR<UIComponent>(ent);
+			if (ui != nullptr) {
+				LOG_ASSERT(ui);
+				SERIALIZE(ui);
+
+				entityObject.AddMember("UIComponent", objType, doc.GetAllocator());
+			}*/
+			SERIALIZE(UIComponent);
 #if 1
 
 			ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(ent);
@@ -312,11 +339,12 @@ namespace Engine {
 
 			Entity ent = DreamECS::GetInstance().CreateEntity(entityName.c_str());
 
-			ADD_COMPONENT_WTIH_CHECK(TransformComponent);
-			ADD_COMPONENT_WTIH_CHECK(ColliderComponent);
-			ADD_COMPONENT_WTIH_CHECK(RigidBodyComponent);
-			ADD_COMPONENT_WTIH_CHECK(CameraComponent);
-			ADD_COMPONENT_WTIH_CHECK(TextureComponent);
+			DESERIALIZE(TransformComponent);
+			DESERIALIZE(ColliderComponent);
+			DESERIALIZE(RigidBodyComponent);
+			DESERIALIZE(CameraComponent);
+			DESERIALIZE(TextureComponent);
+			DESERIALIZE(UIComponent);
 
 			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {
@@ -378,10 +406,11 @@ namespace Engine {
 					); 
 			}
 
-			ADD_COMPONENT_WTIH_CHECK(ColliderComponent);
-			ADD_COMPONENT_WTIH_CHECK(RigidBodyComponent);
-			ADD_COMPONENT_WTIH_CHECK(CameraComponent);
-			ADD_COMPONENT_WTIH_CHECK(TextureComponent);
+			DESERIALIZE(ColliderComponent);
+			DESERIALIZE(RigidBodyComponent);
+			DESERIALIZE(CameraComponent);
+			DESERIALIZE(TextureComponent);
+			DESERIALIZE(UIComponent);
 
 			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {

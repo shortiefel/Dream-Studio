@@ -26,10 +26,8 @@ namespace Engine
 	public:
 		static void Create();
 		static void Destroy();
-		static void InstantiateSquare(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f },
-			bool isMoveable = false);
-		static void InstantiateCircle(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f }, 
-			bool isMoveable = false);
+		static void InstantiateSquare(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f });
+		static void InstantiateCircle(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f });
 	};
 }
 

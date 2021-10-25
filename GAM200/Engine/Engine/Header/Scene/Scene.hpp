@@ -39,7 +39,7 @@ namespace Engine {
 		dt - delta time
 		defaultRender - whether to use default rendering or not
 		--------------------------------------------------------------------*/
-		void Update(float dt, bool playing, bool defaultRender);
+		void Update(float dt, bool playing);
 
 	private:
 		//Path + scene name

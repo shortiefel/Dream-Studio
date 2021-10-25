@@ -43,8 +43,8 @@ namespace Engine {
 		SceneManager::GetInstance().StartScene();
 	}
 
-	void EngineCore::Update(float dt, bool defaultRender) {
-		SceneManager::GetInstance().Update(dt, defaultRender);
+	void EngineCore::Update(float dt) {
+		SceneManager::GetInstance().Update(dt);
 	}
 
 	void EngineCore::Destroy() {

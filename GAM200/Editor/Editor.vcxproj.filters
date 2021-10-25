@@ -107,9 +107,6 @@
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
       <Filter>External Resources\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\External Resources\include\Imgui\imgui_demo.cpp">
-      <Filter>External Resources\Imgui</Filter>
-    </ClCompile>
     <ClCompile Include="..\External Resources\include\Imgui\imgui_draw.cpp">
       <Filter>External Resources\Imgui</Filter>
     </ClCompile>

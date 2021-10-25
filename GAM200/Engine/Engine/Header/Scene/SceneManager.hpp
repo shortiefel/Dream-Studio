@@ -34,7 +34,7 @@ namespace Engine {
 		*/
 		void ChangeScene(std::string sceneName);
 
-		void Update(float dt, bool defaultRender);
+		void Update(float dt);
 		void Destroy();
 
 		bool Play();

@@ -53,7 +53,7 @@ namespace Engine
         Engine::EngineCore::GetInstance().Create();
     }
 
-    void Application::Update(bool defaultRender) {
+    void Application::Update() {
         //Called here since Application have 
         //to be created before callback is added
         if (CreateFunc != nullptr) 
@@ -82,7 +82,7 @@ namespace Engine
                 glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-                Engine::EngineCore::GetInstance().Update(DeltaTime::GetInstance().GetDeltaTime(), defaultRender);
+                Engine::EngineCore::GetInstance().Update(DeltaTime::GetInstance().GetDeltaTime());
 
                 if (UpdateFunc != nullptr) {
                     UpdateFunc(DeltaTime::GetInstance().GetDeltaTime());
@@ -111,7 +111,7 @@ namespace Engine
     }
 
     //Local functions-----------------------------------------------------------------
-    bool OnWindowClose(const WindowCloseEvent& e) {
+    bool OnWindowClose(const WindowCloseEvent&) {
         PROFILER_START("Event");
 
         Application::GetInstance().SetAppRun(false);

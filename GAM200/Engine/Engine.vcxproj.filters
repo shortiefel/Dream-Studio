@@ -459,6 +459,9 @@
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\UIComponent.hpp">
       <Filter>Header Files\ECS\Component\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Entity\Entity.hpp">
+      <Filter>Header Files\ECS\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

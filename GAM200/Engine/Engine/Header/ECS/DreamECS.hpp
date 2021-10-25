@@ -33,12 +33,15 @@ namespace Engine {
 		/*--------------------------------------------------------------------------------------------------------------
 		Entity related functions
 		--------------------------------------------------------------------------------------------------------------*/
-		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, bool _appendEntityId = false);
+		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, Entity_id _parent = DEFAULT_ENTITY_ID);
 		void DuplicateEntityAsInstance(Entity ent);
 		void DestroyEntity(Entity entity);
 		const std::vector<Entity>& GetUsedEntitySet();
 		void ClearDestroyQueue();
 		void ResetECS();
+
+		void Parent(Entity _parent, Entity _child);
+		void Unparent(Entity _child);
 
 		/*--------------------------------------------------------------------------------------------------------------
 		Component related functions

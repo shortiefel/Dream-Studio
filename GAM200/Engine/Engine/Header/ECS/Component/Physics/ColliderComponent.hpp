@@ -67,7 +67,7 @@ namespace Engine {
 		Collider (ColliderType c, float offsetxPos, float offsetyPos,  float offsetWidth, float offsetHeight, bool trigger = false) :
 			Collider{ c, Math::vec2 { offsetxPos, offsetyPos }, Math::vec2 { offsetWidth, offsetHeight }, trigger } {}*/
 
-		ColliderComponent(ColliderType c, bool moveable = false, bool trigger = false) :
+		ColliderComponent(ColliderType c, bool trigger = false) :
 			cType{ c }, offset_position{ Math::vec2{ 0.f, 0.f } }, offset_scale{ Math::vec2{ 0.f, 0.f } }, isTrigger{ trigger } {}
 
 		//Change of type constructor: Copy an existing Collider but with a different type

@@ -28,7 +28,7 @@ int main() {
     //use try and except (require logging)
     Engine::Application::GetInstance().Create(); //Needed for game
 
-    Engine::Application::GetInstance().Update(false); //Needed for game
+    Engine::Application::GetInstance().Update(); //Needed for game
 
     Engine::Application::GetInstance().Destroy(); //Needed for game
 

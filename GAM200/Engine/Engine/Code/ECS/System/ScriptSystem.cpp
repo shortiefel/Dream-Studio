@@ -99,11 +99,9 @@ namespace Engine {
 				void* param[] = { (void*)&entity }; //Change to entity.id after ECS rework
 				//std::cout << "class: " << className << "\n";
 				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
-					std::cout << "class: " << className << "\n";
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
 				}
 				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
-					std::cout << "class: " << className << "\n";
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
 				}
 			}

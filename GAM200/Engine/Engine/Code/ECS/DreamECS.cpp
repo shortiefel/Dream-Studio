@@ -29,6 +29,8 @@ namespace Engine {
 	//Coordinator DreamECS::gCoordinator;
 	//std::queue<Entity> DreamECS::destroyQueue;
 
+	std::unordered_map <std::string, int> nameCount;
+
 	void DreamECS::Create()
 	{
 		//gCoordinator.Init();
@@ -37,10 +39,18 @@ namespace Engine {
 		//sysManager = std::make_unique<SystemManager>();
 	}
 
-	Entity DreamECS::CreateEntity(const char* _entityName, bool _appendEntityId)
-	{
-		//return gCoordinator.createEntity();
-		return entityManager->CreateEntity(_entityName, _appendEntityId);
+	Entity DreamECS::CreateEntity(const char* _entityName, Entity_id _parent) {
+		std::string entityName{ _entityName };
+		if (nameCount.find(entityName) != nameCount.end()) {
+			entityName += std::to_string(nameCount[_entityName]);
+			nameCount[_entityName]++;
+		}
+
+		else {
+			nameCount.insert({ entityName, 1 });
+		}
+
+		return entityManager->CreateEntity(entityName.c_str(), _parent);
 	}
 
 	void DreamECS::DuplicateEntityAsInstance(Entity entFrom) {
@@ -70,6 +80,7 @@ namespace Engine {
 	}
 
 	void DreamECS::ResetECS() {
+		nameCount.clear();
 		std::vector<Entity> listOfEntity = entityManager->GetUsedEntitySet();
 		for (auto& entity : listOfEntity) {
 			DESTROY_ENTITY(entity);
@@ -77,6 +88,32 @@ namespace Engine {
 
 		//gCoordinator.ResetECS();
 		entityManager->ResetEntityManager();
+	}
+
+	void DreamECS::Parent(Entity _parent, Entity _child) {
+
+		_child.parent = _parent.id;
+		auto& transChild = GetComponent<TransformComponent>(_child);
+
+
+	}
+
+	void DreamECS::Unparent(Entity _child) {
+		Entity tem = _child;
+		_child.parent = DEFAULT_ENTITY_ID;
+		auto& transChild = GetComponent<TransformComponent>(_child);
+
+		auto size = entityManager->AliveEntityCount;
+		auto& vec = entityManager->GetUsedEntitySet();
+
+		while (tem.parent != DEFAULT_ENTITY_ID) {
+			for (unsigned int i = 0; i < size; i++) {
+				if (tem.parent == vec[i].id) {
+					transChild += GetComponent<TransformComponent>(vec[i]);
+					tem = vec[i];
+				}
+			}
+		}
 	}
 
 }

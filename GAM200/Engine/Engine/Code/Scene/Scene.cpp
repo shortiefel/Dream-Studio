@@ -90,7 +90,7 @@ namespace Engine {
         GameSceneSerializer::SerializeScene(fullPathSceneName);
     }
 
-    void Scene::Update(float dt, bool playing, bool defaultRender) {
+    void Scene::Update(float dt, bool playing) {
         //std::cout << DreamECS::GetComponentArraySize<CSScript>() << "   " << DreamECS::GetComponentArraySize<Transform>() << "\n";
         //PROFILER_START("Scene Update");
 

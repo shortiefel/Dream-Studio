@@ -151,7 +151,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -259,6 +259,7 @@
     <ClInclude Include="Engine\Header\ECS\Component\UI\TextComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp" />
     <ClInclude Include="Engine\Header\ECS\DreamECS.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Entity\Entity.hpp" />
     <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp" />
     <ClInclude Include="Engine\Header\ECS\Factory.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp" />

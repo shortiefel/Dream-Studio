@@ -38,7 +38,7 @@ namespace Engine {
 
 	class Window : public Singleton<Window> {
 	public:
-		float aspectRatio;
+		float aspectRatio = 1.f;
 
 		bool Create(const std::string& ttitle = "untitled", unsigned int twidth = 1280, unsigned int theight = 720);
 		void Destroy();

@@ -45,6 +45,12 @@ namespace Engine
 		return *this;
 	}
 
+	/*Math::vec2 TransformComponent::GetTruePosition() {
+		if (
+		
+	}*/
+
+
 	//Math::mat3 TransformComponent::GetTransform() const 
 	//{
 	//	return

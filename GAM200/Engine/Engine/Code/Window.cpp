@@ -170,7 +170,7 @@ namespace Engine {
 	glfwSetCursorPosCallback
 	*/
 
-	void Window::WindowSizeCallback(GLFWwindow* window, int width, int height) {
+	void Window::WindowSizeCallback(GLFWwindow*, int width, int height) {
 		auto& win_data = Window::GetInstance().w_data;
 		win_data.width = width;
 		win_data.height = height;
@@ -180,13 +180,13 @@ namespace Engine {
 		//w_data.eventCallBack(event);
 	}
 
-	void Window::WindowCloseCallback(GLFWwindow* window) {
+	void Window::WindowCloseCallback(GLFWwindow*) {
 		WindowCloseEvent event;
 		EventDispatcher::SendEvent(event);
 		//w_data.eventCallBack(event);
 	}
 
-	void Window::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	void Window::KeyCallback(GLFWwindow*, int key, int, int action, int) {
 		switch (action) {
 		case GLFW_PRESS: {
 			KeyPressedEvent event(Input::GetKeyCode(key), false);
@@ -210,7 +210,7 @@ namespace Engine {
 		}
 	}
 
-	void Window::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+	void Window::MouseButtonCallback(GLFWwindow*, int button, int action, int mods) {
 		switch (action) {
 		case GLFW_PRESS: {
 			MousePressedEvent event(button);
@@ -229,13 +229,13 @@ namespace Engine {
 		}
 	}
 
-	void Window::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+	void Window::ScrollCallback(GLFWwindow*, double xoffset, double yoffset) {
 		MouseScrolledEvent event((float)xoffset, (float)yoffset);
 		EventDispatcher::SendEvent(event);
 		//w_data.eventCallBack(event);
 	}
 
-	void Window::CursorCallBack(GLFWwindow* window, double xpos, double ypos) {
+	void Window::CursorCallBack(GLFWwindow*, double xpos, double ypos) {
 		static Math::vec2 previousPos{};
 
 		MouseMoveEvent event((float)xpos, (float)ypos, 

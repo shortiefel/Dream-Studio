@@ -40,7 +40,7 @@ namespace Engine
 		Main application loop is done here
 		defaultRender - whether to use default rendering or not (For scene update)
 		*/
-		void Update(bool defaultRender);
+		void Update();
 		void Destroy();
 
 		inline void SetAppRun(bool _bool) { app_run_bool = _bool; }

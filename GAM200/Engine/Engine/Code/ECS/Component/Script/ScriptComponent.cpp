@@ -21,7 +21,7 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
-	ScriptComponent::ScriptComponent(Entity _ID, const char* _className) :
+	ScriptComponent::ScriptComponent(Entity _ID, const char*) :
 		IComponent{ _ID } {
 		/*if (_className) {
 			CSScriptInstance csScriptInstance{ _className };
@@ -115,7 +115,7 @@ namespace Engine {
 					CSPublicVariable csPublicvariable{ variableName, variableType };
 
 					if (variableType == CSType::CHAR) {
-						char charData = variableData["Data"].GetInt();
+						char charData = static_cast<char>(variableData["Data"].GetInt());
 						csPublicvariable.SetVariableData(&charData);
 					}
 

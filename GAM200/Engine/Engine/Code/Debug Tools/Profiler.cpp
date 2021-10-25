@@ -33,19 +33,19 @@ namespace Engine {
 			//strcat_s(label, " %0.3fms");
 			//ImGui::Text(label, result.time);
 			//printf("%s %0.3fms\n", label, result.time);
-			if (result.name == "Application")
+			if (strcmp(result.name, "Application"))
 				applicationTime += result.time;
-			else if (result.name == "Rendering")
+			else if (strcmp(result.name, "Rendering"))
 				renderingTime += result.time;
-			else if (result.name == "Physics")
+			else if (strcmp(result.name, "Physics"))
 				physicsTime += result.time;
-			else if (result.name == "Collision")
+			else if (strcmp(result.name, "Collision"))
 				collisionTime += result.time;
-			else if (result.name == "Scripting")
+			else if (strcmp(result.name, "Scripting"))
 				scriptingTime += result.time;
-			else if (result.name == "Event")
+			else if (strcmp(result.name, "Event"))
 				eventTime += result.time;
-			else if (result.name == "Total")
+			else if (strcmp(result.name, "Total"))
 				totalTime += result.time;
 		}
 

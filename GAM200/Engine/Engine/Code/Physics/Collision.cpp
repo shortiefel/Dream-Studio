@@ -98,7 +98,7 @@ namespace Engine {
                     shape2 = &obj1Corner;
                 }
                 for (int a = 0; a < shape1->size(); a++) {
-                    int b = (a + 1) % shape1->size();
+                    int b = (a + (int)1) % shape1->size();
                     Math::vec2 axisProj = { -((*shape1)[b].y - (*shape1)[a].y), (*shape1)[b].x - (*shape1)[a].x };
                     axisProj = Math::normalize(axisProj);
 
@@ -177,28 +177,28 @@ namespace Engine {
                 return false;
 
             for (int a = 0; a < obj1Corner.size(); a++) {
-                int b = (a + 1) % obj1Corner.size();
-                Math::vec2 axisProj = { -(obj1Corner[b].y - obj1Corner[a].y), obj1Corner[b].x - obj1Corner[a].x };
-                axisProj = Math::normalize(axisProj);
+                int b = (a + (int)1) % obj1Corner.size();
+                Math::vec2 axisProj2 = { -(obj1Corner[b].y - obj1Corner[a].y), obj1Corner[b].x - obj1Corner[a].x };
+                axisProj2 = Math::normalize(axisProj2);
 
                 // Work out min and max 1D points for r1
-                float min_r1 = INFINITY, max_r1 = -INFINITY;
+                float min2_r1 = INFINITY, max2_r1 = -INFINITY;
                 for (int p = 0; p < obj1Corner.size(); p++)
                 {
-                    float q = (obj1Corner[p].x * axisProj.x + obj1Corner[p].y * axisProj.y);
-                    min_r1 = Math::Min(min_r1, q);
-                    max_r1 = Math::Max(max_r1, q);
+                    float q1 = (obj1Corner[p].x * axisProj2.x + obj1Corner[p].y * axisProj2.y);
+                    min2_r1 = Math::Min(min2_r1, q1);
+                    max2_r1 = Math::Max(max2_r1, q1);
                 }
 
                 //Circle min and max is the same for a single axis (no need for loop)
-                float min_r2 = INFINITY, max_r2 = -INFINITY;
-                float q = (obj2.offset_position.x * axisProj.x + obj2.offset_position.y * axisProj.y);
-                min_r2 = Math::Min(min_r2, q - obj2.offset_scale.x);
-                max_r2 = Math::Max(max_r2, q + obj2.offset_scale.x);
+                float min2_r2 = INFINITY, max2_r2 = -INFINITY;
+                float q1 = (obj2.offset_position.x * axisProj2.x + obj2.offset_position.y * axisProj2.y);
+                min2_r2 = Math::Min(min2_r2, q1 - obj2.offset_scale.x);
+                max2_r2 = Math::Max(max2_r2, q1 + obj2.offset_scale.x);
 
-                overlap = Math::Min(Math::Min(max_r1, max_r2) - Math::Max(min_r1, min_r2), overlap);
+                overlap = Math::Min(Math::Min(max2_r1, max2_r2) - Math::Max(min2_r1, min2_r2), overlap);
 
-                if (!(max_r2 >= min_r1 && max_r1 >= min_r2))
+                if (!(max2_r2 >= min2_r1 && max2_r1 >= min2_r2))
                     return false;
             }
 
@@ -241,7 +241,7 @@ namespace Engine {
             CollisionResolutionMain(dir, trans1, col1, trans2, col2);
         }
 
-        void CollisionResolutionMain(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent& col1, TransformComponent& trans2, const ColliderComponent& col2) {
+        void CollisionResolutionMain(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent&, TransformComponent& trans2, const ColliderComponent&) {
             if (ent1IsMoveable && ent2IsMoveable) {
                 trans1.position -= (dir * 0.5f);
                 trans2.position += (dir * 0.5f);

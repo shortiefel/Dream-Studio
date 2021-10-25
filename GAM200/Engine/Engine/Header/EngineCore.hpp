@@ -23,7 +23,7 @@ namespace Engine {
 	class EngineCore : public Singleton<EngineCore> {
 	public:
 		void Create();
-		void Update(float dt, bool defaultRender);
+		void Update(float dt);
 		void Destroy();
 	private:
 		EngineCore() {}

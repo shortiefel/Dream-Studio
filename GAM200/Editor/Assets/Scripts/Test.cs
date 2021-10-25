@@ -91,7 +91,7 @@ public class Test : MonoBehaviour
             {
                 Instantiate_Entity("Box");
             }*/
-
+            Instantiate_Entity("Box");
             //Physics Ray cast and Debug.log
             //{
             //float hitDis = 0f;
@@ -100,8 +100,10 @@ public class Test : MonoBehaviour
             //}
 
             //Disable
-            Disable(go2);
+            //Disable(go2);
             //go2.SetActive(false);
+
+
         }
     }
 

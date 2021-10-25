@@ -223,7 +223,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -288,7 +288,6 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp" />
-    <ClCompile Include="..\External Resources\include\Imgui\imgui_demo.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_draw.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_impl_opengl3.cpp" />

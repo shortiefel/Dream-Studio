@@ -51,8 +51,8 @@ namespace Engine {
         }
 	}
 
-	void SceneManager::Update(float dt, bool defaultRender) {
-        currentScene->Update(dt, GameState::GetInstance().GetPlaying(), defaultRender);
+	void SceneManager::Update(float dt) {
+        currentScene->Update(dt, GameState::GetInstance().GetPlaying());
 
         //Scene change at end of update to not disturb entity that is currently being updated
         ChangeSceneInternal();

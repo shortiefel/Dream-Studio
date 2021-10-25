@@ -61,7 +61,7 @@ namespace Engine
     //Create blank transform
 
     //Function will be called when GUI inspector request a Square entity
-    void Factory::InstantiateSquare(Math::vec2 pos, Math::vec2 scale, bool isMoveable) 
+    void Factory::InstantiateSquare(Math::vec2 pos, Math::vec2 scale) 
     {
         Entity ent = DreamECS::GetInstance().CreateEntity();
         DreamECS::GetInstance().AddComponent(
@@ -71,7 +71,7 @@ namespace Engine
     }
 
     //Function will be called when GUI inspector request a Circle entity
-    void Factory::InstantiateCircle(Math::vec2 pos, Math::vec2 scale, bool isMoveable) 
+    void Factory::InstantiateCircle(Math::vec2 pos, Math::vec2 scale) 
     {
         Entity ent = DreamECS::GetInstance().CreateEntity();
         DreamECS::GetInstance().AddComponent(

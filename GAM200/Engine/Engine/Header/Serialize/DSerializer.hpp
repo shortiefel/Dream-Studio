@@ -24,7 +24,7 @@ Technology is prohibited.
 #include <rapidjson/document.h>
 
 using JsonIter = rapidjson::Value::ConstMemberIterator;
-#define VARIABLE_CHECK if (!itr->value.HasMember(name)) throw "Variable doesn't exist";
+#define VARIABLE_CHECK if (!itr->value.HasMember(name)) { printf("variable: %s \n", name); throw "Variable doesn't exist"; }
 
 namespace Engine {
 	class DSerializer {

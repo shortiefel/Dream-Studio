@@ -39,7 +39,7 @@ namespace Engine {
 		* SetValue (name, T)
 		--------------------------------------------------------------------------------*/
 		template <typename T>
-		void SetValue(const char* _name, const T& _val) const {
+		void SetValue(const char*, const T&) const {
 			//ADD_MEMBER(_name, _val);
 			printf("Error Cant find\n");
 		}

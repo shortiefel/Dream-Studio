@@ -29,7 +29,7 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
-	UIComponent::UIComponent(Entity _ID, const std::string _path, bool _active, int _layer) :
+	UIComponent::UIComponent(Entity_id _ID, const std::string _path, bool _active, int _layer) :
 		IComponent{ _ID },
 		filepath{ _path }, isActive{ _active }, layer{ _layer }, texobj_hdl{ 0 } {}
 

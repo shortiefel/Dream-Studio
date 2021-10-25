@@ -41,53 +41,53 @@ Technology is prohibited.
 namespace Engine {
 	std::unordered_map<Entity_id, std::vector<Entity>> overlapMap;
 
-	void AddOverlap(Entity lhs, bool lhsTrigger, Entity rhs, bool rhsTrigger) {
+	void AddOverlap(Entity_id lhs, bool lhsTrigger, Entity_id rhs, bool rhsTrigger) {
 		PROFILER_START("Collision");
 
 		//if self is collision and other is trigger, OnCollisionEnter is not called
 		if (!lhsTrigger && rhsTrigger) return;
 
-		const auto& iter = overlapMap.find(lhs.id);
+		const auto& iter = overlapMap.find(lhs);
 		if (iter != overlapMap.end()) {
 			//if map exist means that it already collided/triggered
 			for (const auto& ent : iter->second) {
-				if (ent.id == rhs.id) {
+				if (ent.id == rhs) {
 					MonoFunctionType type;
 					if (lhsTrigger)
 						type = MonoFunctionType::TRIGGER_STAY;
 					else
 						type = MonoFunctionType::COLLISION_STAY;
 
-					OverlapColliderEvent event(lhs.id, rhs.id, type);
+					OverlapColliderEvent event(lhs, rhs, type);
 					EventDispatcher::SendEvent(event);
 					return;
 				}
 			}
 		}
 
-		overlapMap[lhs.id].emplace_back(rhs);
+		overlapMap[lhs].emplace_back(rhs);
 		MonoFunctionType type;
 		if (lhsTrigger)
 			type = MonoFunctionType::TRIGGER_ENTER;
 		else
 			type = MonoFunctionType::COLLISION_ENTER;
 
-		OverlapColliderEvent event(lhs.id, rhs.id, type);
+		OverlapColliderEvent event(lhs, rhs, type);
 		EventDispatcher::SendEvent(event);
 	}
 
-	void CollisionSystem::Update(float dt) {
+	void CollisionSystem::Update(float) {
 		PROFILER_START("Collision");
 
 		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
 		auto colliderStart = colliderArray.begin(),
 			colliderEnd = colliderArray.end();
 		for (auto& col1 = colliderStart; col1 < colliderEnd; col1++) {
-			const Entity& ent1 = col1->GetEntity();
-			if (Entity_Check(ent1)) break;
+			const Entity_id& entity_id1 = col1->GetEntityId();
+			if (EntityId_Check(entity_id1)) break;
 			if (!col1->isActive) continue;
 
-			auto& transform1 = DreamECS::GetInstance().GetComponent<TransformComponent>(ent1);
+			auto& transform1 = DreamECS::GetInstance().GetComponent<TransformComponent>(entity_id1);
 			if (!transform1.isActive) continue;
 
 			ColliderComponent collider1 = *col1;
@@ -99,15 +99,15 @@ namespace Engine {
 			* Start of collision checks
 			*/
 			for (auto col2 = col1; col2 < colliderEnd; col2++) {
-				const Entity& ent2 = col2->GetEntity();
-				if (Entity_Check(ent2)) break;
+				const Entity_id& entity_id2 = col2->GetEntityId();
+				if (EntityId_Check(entity_id2)) break;
 				if (!col2->isActive || col1 == col2) continue;
 
-				bool ent1IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBodyComponent>(ent1),
-					ent2IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBodyComponent>(ent2);
+				bool ent1IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBodyComponent>(entity_id1),
+					ent2IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBodyComponent>(entity_id2);
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 
-				auto& transform2 = DreamECS::GetInstance().GetComponent<TransformComponent>(ent2);
+				auto& transform2 = DreamECS::GetInstance().GetComponent<TransformComponent>(entity_id2);
 				if (!transform2.isActive) continue;
 
 				ColliderComponent collider2 = *col2;
@@ -121,8 +121,8 @@ namespace Engine {
 				if (CollisionImplementation::isColliding(dir, collider1, ent1IsMoveable,
 					collider2, ent2IsMoveable)) {
 
-					AddOverlap(ent1, collider1.isTrigger, ent2, collider2.isTrigger);
-					AddOverlap(ent2, collider2.isTrigger, ent1, collider1.isTrigger);
+					AddOverlap(entity_id1, collider1.isTrigger, entity_id2, collider2.isTrigger);
+					AddOverlap(entity_id2, collider2.isTrigger, entity_id1, collider1.isTrigger);
 
 					if (collider1.isTrigger || collider2.isTrigger) {
 						LOG_INFO("Trigger");
@@ -145,12 +145,12 @@ namespace Engine {
 				}
 
 				else {
-					const auto& iter1 = overlapMap.find(ent1.id);
+					const auto& iter1 = overlapMap.find(entity_id1);
 					if (iter1 != overlapMap.end()) {
 						size_t size1 = iter1->second.size();
 						for (size_t i = 0; i < size1; i++) {
-							if (iter1->second[i].id == ent2.id) {
-								overlapMap[ent1.id].erase(iter1->second.begin() + i);
+							if (iter1->second[i].id == entity_id2) {
+								overlapMap[entity_id1].erase(iter1->second.begin() + i);
 
 								MonoFunctionType type;
 								if (collider1.isTrigger)
@@ -158,18 +158,18 @@ namespace Engine {
 								else
 									type = MonoFunctionType::COLLISION_EXIT;
 
-								OverlapColliderEvent event(ent1.id, ent2.id, type);
+								OverlapColliderEvent event(entity_id1, entity_id2, type);
 								EventDispatcher::SendEvent(event);
 								break;
 							}
 						}
 					}
-					const auto& iter2 = overlapMap.find(ent2.id);
+					const auto& iter2 = overlapMap.find(entity_id2);
 					if (iter2 != overlapMap.end()) {
 						size_t size2 = iter2->second.size();
 						for (size_t i = 0; i < size2; i++) {
-							if (iter2->second[i].id == ent1.id) {
-								overlapMap[ent2.id].erase(iter2->second.begin() + i);
+							if (iter2->second[i].id == entity_id1) {
+								overlapMap[entity_id2].erase(iter2->second.begin() + i);
 
 								MonoFunctionType type;
 								if (collider2.isTrigger)
@@ -177,7 +177,7 @@ namespace Engine {
 								else
 									type = MonoFunctionType::COLLISION_EXIT;
 
-								OverlapColliderEvent event(ent2.id, ent1.id, type);
+								OverlapColliderEvent event(entity_id2, entity_id1, type);
 								EventDispatcher::SendEvent(event);
 								break;
 							}
@@ -195,12 +195,12 @@ namespace Engine {
 
 		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
 		for (const auto& col : colliderArray) {
-			const Entity& ent = col.GetEntity();
-			if (ent.id == ignoreTarget) continue;
-			if (Entity_Check(ent)) break;
+			const Entity_id& entity_id = col.GetEntityId();
+			if (entity_id == ignoreTarget) continue;
+			if (EntityId_Check(entity_id)) break;
 			if (!col.isActive) continue;
 
-			auto& transform = DreamECS::GetInstance().GetComponent<TransformComponent>(ent);
+			auto& transform = DreamECS::GetInstance().GetComponent<TransformComponent>(entity_id);
 			if (!transform.isActive) continue;
 
 			/*ColliderComponent collider{ col.GetEntity(), col.cType, 

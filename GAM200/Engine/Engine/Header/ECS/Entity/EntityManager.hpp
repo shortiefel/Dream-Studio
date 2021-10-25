@@ -21,7 +21,7 @@ Technology is prohibited.
 #include <queue>
 #include <array>
 
-#include <unordered_set>
+#include <unordered_map>
 
 namespace Engine {
 	class EntityManager
@@ -48,41 +48,62 @@ namespace Engine {
 			++AliveEntityCount;
 
 			Entity entity(entityId, _entityName, _parent);
-			UsedEntities.push_back(entity);
+			UsedEntities2.push_back(entity);
+			usedEntities.emplace(entityId, entity);
 			return entity;
 		}
 
-		void DestroyEntity(Entity entity)
+		void DestroyEntity(Entity_id entity_id)
 		{
 			//error checking
-			LOG_ASSERT(entity.id < MAX_ENTITIES && "Entities out of range");
-			int index = 0;
-			for (index = 0; index < UsedEntities.size(); index++) {
-				if (UsedEntities[index].id == entity.id) {
+			LOG_ASSERT(entity_id < MAX_ENTITIES && "Entities out of range");
+
+
+			/*int index = 0;
+			for (index = 0; index < UsedEntities2.size(); index++) {
+				if (UsedEntities2[index].id == entity_id) {
 					break;
 				}
 			}
-			UsedEntities.erase(UsedEntities.begin() + index);
+			UsedEntities2.erase(UsedEntities2.begin() + index);*/
+
+
+			const auto& itr = usedEntities.find(entity_id);
+			if (itr != usedEntities.end()) {
+				usedEntities.erase(entity_id);
+			}
+		
 			//mSignatures[entity].reset();
-			AvailableEntities.push(entity.id);
+			AvailableEntities.push(entity_id);
 			--AliveEntityCount;
 
 		}
 
 		inline const std::vector<Entity>& GetUsedEntitySet() const {
-			return UsedEntities;
+			return UsedEntities2;
+		}
+
+		inline const std::unordered_map<Entity_id, Entity>& GetUsedEntityMap() const {
+			return usedEntities;
 		}
 
 		inline void ResetEntityManager() {
-			UsedEntities.clear();
+			UsedEntities2.clear();
+			usedEntities.clear();
 			currentMaxId = 0;
 			AvailableEntities = std::queue<Entity_id>();
 		}
 
+		inline uint32_t GetUsedEntitySize() const {
+			return AliveEntityCount;
+		}
 
-		std::vector<Entity> UsedEntities{};
-		uint32_t AliveEntityCount{}; // Total living entities
+
 	private:
+		std::vector<Entity> UsedEntities2{};
+		std::unordered_map<Entity_id, Entity> usedEntities{};
+
+		uint32_t AliveEntityCount{}; // Total living entities
 		std::queue<Entity_id> AvailableEntities{}; // Queue of unused entity IDs
 
 		uint32_t currentMaxId = 0;

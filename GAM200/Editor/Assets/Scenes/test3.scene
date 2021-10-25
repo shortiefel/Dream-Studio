@@ -1,7 +1,10 @@
 [
   
   {
-    "Entity": { "Name": "Background" },
+    "Entity": {
+      "Name": "Background",
+      "Parent": 10001
+    },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
       "Scale": [ 2600.0, 2600.0 ],
@@ -15,7 +18,10 @@
     }
   },
   {
-    "Entity": { "Name": "Entity10" },
+    "Entity": {
+      "Name": "Entity10",
+      "Parent": 10001
+    },
     "TransformComponent": {
       "Position": [ -20.0, 200.0 ],
       "Scale": [ 50.0, 50.0 ],
@@ -54,7 +60,10 @@
     ]
   },
   {
-    "Entity": { "Name": "Entity1" },
+    "Entity": {
+      "Name": "Entity1",
+      "Parent": 10001
+    },
     "TransformComponent": {
       "Position": [ 650.0, -30.0 ],
       "Scale": [ 120.0, 120.0 ],
@@ -90,7 +99,10 @@
     ]
   },
   {
-    "Entity": { "Name": "Entity2" },
+    "Entity": {
+      "Name": "Entity2",
+      "Parent": 10001
+    },
     "TransformComponent": {
       "Position": [ -350.0, -30.0 ],
       "Scale": [ 120.0, 120.0 ],
@@ -112,7 +124,10 @@
     }
   },
   {
-    "Entity": { "Name": "Entity3" },
+    "Entity": {
+      "Name": "Entity3",
+      "Parent": 10001
+    },
     "TransformComponent": {
       "Position": [ -140.0, 60.0 ],
       "Scale": [ 50.0, 50.0 ],
@@ -138,7 +153,10 @@
     }
   },
   {
-    "Entity": { "Name": "Camera" },
+    "Entity": {
+      "Name": "Camera",
+      "Parent": 10001
+    },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
       "Scale": [ 0.0, 0.0 ],
@@ -152,7 +170,10 @@
     }
   },
   {
-    "Entity": { "Name": "Camera2" },
+    "Entity": {
+      "Name": "Camera2",
+      "Parent": 10001
+    },
     "TransformComponent": {
       "Position": [ 240.0, 100.0 ],
       "Scale": [ 0.0, 0.0 ],
@@ -166,7 +187,10 @@
     }
   },
   {
-    "Entity": { "Name": "Camera3" },
+    "Entity": {
+      "Name": "Camera3",
+      "Parent": 10001
+    },
     "TransformComponent": {
       "Position": [ -40.0, -240.0 ],
       "Scale": [ 0.0, 0.0 ],

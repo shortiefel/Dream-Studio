@@ -22,24 +22,25 @@ Technology is prohibited.
 namespace Engine {
 	struct IComponent {
 	public:
-		inline Entity GetEntity() const { return entity; }
-		inline void SetEntity(Entity ent) { entity = ent; }
+		inline Entity_id GetEntityId() const { return entity_id; }
+		//inline void SetEntity(Entity ent) { entity = ent; }
+		inline void SetEntityId(Entity_id _entity_id) { entity_id = _entity_id; }
 		/*
 		* List below must be added as functionality
 		T& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		//Explict copy 
+		//Explict copy
 		void CopyComponentAsInstance(const T& target);
 		//Not needed if Prefab still uses unique T
 		//Example: Transform / CSScript
 		void CopyComponentAsPrefab(const T& target);
 		*/
 
-		IComponent() : entity{ DEFAULT_ENTITY } {}
-		IComponent(Entity ent) : entity{ ent } {}
+		IComponent() : entity_id{ DEFAULT_ENTITY_ID } {}
+		IComponent(Entity_id _entity_id) : entity_id{ _entity_id } {}
 	private:
-		Entity entity = DEFAULT_ENTITY;
+		Entity_id entity_id = DEFAULT_ENTITY_ID;
 	};
 }
 

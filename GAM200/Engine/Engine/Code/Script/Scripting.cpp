@@ -166,9 +166,9 @@ namespace Engine {
 			}
 		}
 
-		void InitCSClass(CSScriptInstance& _csScriptInstance) {
+		bool InitCSClass(CSScriptInstance& _csScriptInstance) {
 			//If no child domain dont klass doesnt exist
-			if (!GameState::GetInstance().GetPlaying()) return;
+			if (!GameState::GetInstance().GetPlaying()) return true;
 
 			auto& csClass = _csScriptInstance.csClass;
 			auto& fullName = csClass.fullName;
@@ -176,13 +176,13 @@ namespace Engine {
 			csClass.klass = mono_class_from_name(image, csClass.namespaceName.c_str(), csClass.className.c_str());
 			if (!csClass.klass) {
 				LOG_ERROR("Failed loading class");
-				return;
+				return false;
 			}
 
 			csClass.object = (mono_object_new(mono_domain_get(), csClass.klass));
 			if (!(csClass.object)) {
 				LOG_ERROR("Failed loading obj");
-				return;
+				return false;
 			}
 
 			std::string methodDesc = "MonoBehaviour:.ctor(uint)";
@@ -238,6 +238,8 @@ namespace Engine {
 			methodDesc = fullName + ":OnMouseExit()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnMouseExit = mono_method_desc_search_in_image(description, image);
+
+			return true;
 		}
 
 		void InitAllCSClass() {
@@ -245,8 +247,15 @@ namespace Engine {
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
 
+				std::set<std::string> classToDelete;
 				for (auto& [className, csScriptInstance] : classScriptInstances) {
-					InitCSClass(csScriptInstance);
+					if (!InitCSClass(csScriptInstance)) {
+						classToDelete.emplace(className);
+					}
+				}
+
+				for (auto& className : classToDelete) {
+					classScriptInstances.erase(className);
 				}
 			}
 		}
@@ -278,7 +287,7 @@ namespace Engine {
 				MonoType* variableType = mono_field_get_type(classField);
 				CSType csType = GetCSType(variableType);
 
-				char* typeName = mono_type_get_name(variableType);
+				//char* typeName = mono_type_get_name(variableType);
 
 				if (oldVariable.find(name) != oldVariable.end() && oldVariable.find(name)->second.variableType == csType) {
 					variableMap.emplace(name, std::move(oldVariable.at(name)));

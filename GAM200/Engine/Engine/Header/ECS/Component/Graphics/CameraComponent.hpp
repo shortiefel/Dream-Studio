@@ -41,8 +41,7 @@ namespace Engine {
         CameraComponent& Deserialize(const DSerializer& _serializer);
         void Serialize(const SSerializer& _serializer);
 
-        CameraComponent() = default;
-        CameraComponent(Entity _ID, float _fov = 1.f, float _ar = 0.f, bool _active = false);
+        CameraComponent(Entity_id _ID = DEFAULT_ENTITY_ID, float _fov = 1.f, float _ar = 0.f, bool _active = false);
         CameraComponent(const CameraComponent&) = default;
         CameraComponent& operator=(const CameraComponent&) = default;
     };

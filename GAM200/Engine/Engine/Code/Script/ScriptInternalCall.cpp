@@ -224,7 +224,7 @@ namespace Engine {
 		return Input::IsMousePressed(button);
 	}
 
-	void Input_GetMousePosition(Math::vec2* outPosition)
+	void Input_GetMousePosition(Math::vec2*)
 	{
 		std::cout << "Currently GetMousePosition not working \n";
 		/*Math::vec2 result = Input::mousePosition;

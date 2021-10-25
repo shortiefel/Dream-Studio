@@ -20,7 +20,7 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
-	RigidBodyComponent::RigidBodyComponent(Entity _ID, bool _active) : IComponent{ _ID }, isActive{ _active } {}
+	RigidBodyComponent::RigidBodyComponent(Entity_id _ID, bool _active) : IComponent{ _ID }, isActive{ _active } {}
 
 	RigidBodyComponent& RigidBodyComponent::Deserialize(const DSerializer& _serializer) {
 

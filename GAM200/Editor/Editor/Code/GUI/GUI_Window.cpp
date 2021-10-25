@@ -73,7 +73,7 @@ namespace Editor {
 
 		ImGuiWindowFlags window_flags = 0;
 
-		Engine::Entity entity_selected = Engine::Entity{ 1 };
+		Engine::Entity_id entity_selected = Engine::Entity_id{ 1 };
 
 		bool hierarchy_bool = true;
 		bool inspector_bool = true;
@@ -300,11 +300,19 @@ namespace Editor {
 				//}
 
 				//Engine::Entity entity_selected = Engine::Entity{ 0 };
-				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
+				/*std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
+				
 
 				for (int i = 0; i < entity_set.size(); i++)
 				{
 					ImGui::Text(entity_set[i].name.c_str());
+
+				}*/
+
+				auto& entity_map = Engine::DreamECS::GetInstance().GetUsedEntityMap();
+				for (auto& [id, entity] : entity_map)
+				{
+					ImGui::Text(entity.name.c_str());
 
 				}
 
@@ -317,8 +325,8 @@ namespace Editor {
 				ImGui::Begin("Inspector", &inspector_bool, window_flags);
 
 				
-				float width = 120;
-				bool selectEntity = 0;
+				//float width = 120;
+				//bool selectEntity = 0;
 
 				/**
 				*	Transform Properties

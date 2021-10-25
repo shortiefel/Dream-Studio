@@ -63,20 +63,20 @@ namespace Engine
     //Function will be called when GUI inspector request a Square entity
     void Factory::InstantiateSquare(Math::vec2 pos, Math::vec2 scale) 
     {
-        Entity ent = DreamECS::GetInstance().CreateEntity();
+        Entity entity = DreamECS::GetInstance().CreateEntity();
         DreamECS::GetInstance().AddComponent(
-            TransformComponent{ ent, pos, scale, 0 });
+            TransformComponent{ entity.id, pos, scale, 0 });
         DreamECS::GetInstance().AddComponent(
-            ColliderComponent{ ent, ColliderType::SQUARE });
+            ColliderComponent{ entity.id, ColliderType::SQUARE });
     }
 
     //Function will be called when GUI inspector request a Circle entity
     void Factory::InstantiateCircle(Math::vec2 pos, Math::vec2 scale) 
     {
-        Entity ent = DreamECS::GetInstance().CreateEntity();
+        Entity entity = DreamECS::GetInstance().CreateEntity();
         DreamECS::GetInstance().AddComponent(
-            TransformComponent{ ent, pos, scale, 0 });
+            TransformComponent{ entity.id, pos, scale, 0 });
         DreamECS::GetInstance().AddComponent(
-            ColliderComponent{ ent, ColliderType::CIRCLE });
+            ColliderComponent{ entity.id, ColliderType::CIRCLE });
     }
 }

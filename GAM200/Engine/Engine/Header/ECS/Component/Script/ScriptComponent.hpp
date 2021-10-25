@@ -40,7 +40,7 @@ namespace Engine {
 		void CopyComponentAsInstance(const ScriptComponent& target);
 		//void CopyComponentAsPrefab(const ScriptComponent& target);
 
-		ScriptComponent(Entity _ID = DEFAULT_ENTITY, const char* _className = nullptr);
+		ScriptComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const char* _className = nullptr);
 		ScriptComponent(ScriptComponent&& rhs) noexcept;
 		ScriptComponent& operator=(ScriptComponent&& rhs) noexcept;
 		ScriptComponent(const ScriptComponent&) = delete;

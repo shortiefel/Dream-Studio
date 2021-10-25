@@ -64,18 +64,18 @@ namespace Engine
 		const auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<TextureComponent>();
 		for (const auto& texture : textureArray)
 		{
-			const Entity& entity = texture.GetEntity();
-			if (Entity_Check(entity)) break;
+			const Entity_id& entity_id = texture.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
 			if (!texture.isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity);
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
 			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, texture.texobj_hdl);
 
 			// to draw debug lines
 			if (isDebugDraw == GL_TRUE) {
-				ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity);
+				ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity_id);
 
 				// when object has collider, get collider matrix
 				if (collider != nullptr)

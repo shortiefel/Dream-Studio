@@ -31,11 +31,11 @@ namespace Engine {
 
 		const auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBodyComponent>();
 		for (auto& rigidBody : rigidBodyArray) {
-			const Entity& entity = rigidBody.GetEntity();
-			if (Entity_Check(entity)) break;
+			const Entity_id& entity_id = rigidBody.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
 			if (!rigidBody.isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity);
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
 			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);

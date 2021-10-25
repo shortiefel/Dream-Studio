@@ -49,7 +49,7 @@ itr = obj.FindMember(#type);\
 if (itr != obj.MemberEnd()) {\
 	DSerializer serializer{ itr }; \
 		DreamECS::GetInstance().AddComponent(\
-			type{ ent }.Deserialize(serializer)\
+			type{ entity.id }.Deserialize(serializer)\
 		);\
 }
 
@@ -58,9 +58,9 @@ if (itr != obj.MemberEnd()) {\
 //	SSerializer serializer(doc, objType);\
 //	target->Serialize(serializer);
 
-#define SERIALIZE(type) { type* tem = DreamECS::GetInstance().GetComponentPTR<type>(ent); \
+#define SERIALIZE(type) { type* tem = DreamECS::GetInstance().GetComponentPTR<type>(entity.id); \
 						  if (tem != nullptr) {\
-						  	  LOG_ASSERT(tex); \
+						  	  LOG_ASSERT(tem); \
 						  	  rapidjson::Value objType##type(rapidjson::kObjectType); \
 						  	  SSerializer serializer##type(doc, objType##type); \
 						  	  tem->Serialize(serializer##type); \
@@ -148,15 +148,17 @@ namespace Engine {
 	
 		rapidjson::Document doc(rapidjson::kArrayType);
 		
-		const std::vector<Entity>& entList = DreamECS::GetInstance().GetUsedEntitySet();
+		//const std::vector<Entity>& entList = DreamECS::GetInstance().GetUsedEntitySet();
+		auto& entityMap = DreamECS::GetInstance().GetUsedEntityMap();
 		
-		for (const auto& ent : entList) {
+		for (const auto& [entityId, entity] : entityMap) {
 			rapidjson::Value entityObject(rapidjson::kObjectType);
 
 			rapidjson::Value objTypeEntity(rapidjson::kObjectType);
 			SSerializer serializerEntity(doc, objTypeEntity);
-			serializerEntity.SetValue("Name", ent.name);
-			serializerEntity.SetValue("Parent", ent.parent);
+			serializerEntity.SetValue("Name", entity.name);
+			
+			serializerEntity.SetValue("Parent", entity.parent);
 			entityObject.AddMember("Entity", objTypeEntity, doc.GetAllocator());
 
 			SERIALIZE(TransformComponent);
@@ -166,7 +168,7 @@ namespace Engine {
 			SERIALIZE(TextureComponent);
 			SERIALIZE(UIComponent);
 
-			ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(ent);
+			ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(entityId);
 			if (csScript != nullptr) {
 				LOG_ASSERT(csScript);
 				rapidjson::Value objTypeScriptComponent(rapidjson::kArrayType);
@@ -224,7 +226,7 @@ namespace Engine {
 				parent = serializer.GetValue<unsigned int>("Parent");
 			}
 
-			Entity ent = DreamECS::GetInstance().CreateEntity(entityName.c_str(), parent);
+			Entity entity = DreamECS::GetInstance().CreateEntity(entityName.c_str(), parent);
 
 			DESERIALIZE(TransformComponent);
 			DESERIALIZE(ColliderComponent);
@@ -238,7 +240,7 @@ namespace Engine {
 #if 1
 				DSerializer serializer{ itr };
 				DreamECS::GetInstance().AddComponent(
-					std::move(ScriptComponent{ ent }.Deserialize(serializer))
+					std::move(ScriptComponent{ entity.id }.Deserialize(serializer))
 			);
 #else
 				DSerializer serializer(itr);
@@ -282,7 +284,7 @@ namespace Engine {
 				parent = serializer.GetValue<unsigned int>("Parent");
 			}
 
-			Entity ent = DreamECS::GetInstance().CreateEntity(entityName.c_str(), parent);
+			Entity entity = DreamECS::GetInstance().CreateEntity(entityName.c_str(), parent);
 
 			//ADD_COMPONENT_WTIH_CHECK(Transform);
 
@@ -290,7 +292,7 @@ namespace Engine {
 			if (itr != obj.MemberEnd()) {
 					DSerializer serializer{ itr }; 
 					DreamECS::GetInstance().AddComponent(
-						TransformComponent{ ent }.Deserialize(serializer) += TransformComponent{ ent, position, Math::vec2{1,1}, angle }
+						TransformComponent{ entity.id }.Deserialize(serializer) += TransformComponent{ entity.id, position, Math::vec2{1,1}, angle }
 					); 
 			}
 
@@ -304,7 +306,7 @@ namespace Engine {
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr };
 				DreamECS::GetInstance().AddComponent(
-					std::move(ScriptComponent{ ent }.Deserialize(serializer))
+					std::move(ScriptComponent{ entity.id }.Deserialize(serializer))
 				);
 			}
 		}

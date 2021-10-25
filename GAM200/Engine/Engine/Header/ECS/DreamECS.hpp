@@ -24,7 +24,9 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentManager.hpp"
 #include "Engine/Header/ECS/Entity/EntityManager.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
+
 #include <memory>
+#include <unordered_set>
 
 namespace Engine {
 	class DreamECS : public Singleton<DreamECS> {
@@ -35,8 +37,9 @@ namespace Engine {
 		--------------------------------------------------------------------------------------------------------------*/
 		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, Entity_id _parent = DEFAULT_ENTITY_ID);
 		void DuplicateEntityAsInstance(Entity ent);
-		void DestroyEntity(Entity entity);
-		const std::vector<Entity>& GetUsedEntitySet();
+		void DestroyEntity(Entity_id entity_id);
+		//const std::vector<Entity>& GetUsedEntitySet();
+		const std::unordered_map<Entity_id, Entity>& GetUsedEntityMap();
 		void ClearDestroyQueue();
 		void ResetECS();
 
@@ -53,7 +56,7 @@ namespace Engine {
 
 		template<typename T>
 		void AddComponent(T com) {
-			auto ptr = compManager->GetComTest<T>(com.GetEntity());
+			auto ptr = compManager->GetComTest<T>(com.GetEntityId());
 			LOG_ASSERT(!ptr && "Unable add the same component for one entity");
 			if (ptr) return;
 			compManager->AddComponent<T>(std::move(com));
@@ -70,11 +73,11 @@ namespace Engine {
 		}
 
 		template<typename T>
-		void RemoveComponent(Entity entity) {
-			auto ptr = compManager->GetComTest<T>(entity);
+		void RemoveComponent(Entity_id entity_id) {
+			auto ptr = compManager->GetComTest<T>(entity_id);
 			LOG_ASSERT(ptr && "Unable remove an entity that does not exist");
 			if (!ptr) return;
-			compManager->RemoveCom<T>(entity);
+			compManager->RemoveCom<T>(entity_id);
 			/*auto Signature = entityManager->GetSignature(entity);
 			Signature.set(compManager->GetterComType<T>(), false);
 			entityManager->SetSignature(entity, Signature);
@@ -91,24 +94,24 @@ namespace Engine {
 		* Get component by reference
 		*/
 		template <typename T>
-		T& GetComponent(Entity entity) {
-			return compManager->GetCom<T>(entity);
+		T& GetComponent(Entity_id entity_id) {
+			return compManager->GetCom<T>(entity_id);
 		}
 		/*
 		* Get component by pointer
 		* For nullptr checks
 		*/
 		template <typename T>
-		T* GetComponentPTR(Entity entity) {
-			return compManager->GetComTest<T>(entity);
+		T* GetComponentPTR(Entity_id entity_id) {
+			return compManager->GetComTest<T>(entity_id);
 		}
 		/*
 		* Check only (data is not given)
 		*/
 		template<typename T>
-		bool HasComponentCheck(Entity entity) {
+		bool HasComponentCheck(Entity_id entity_id) {
 			T* com;
-			return compManager->HasCom<T>(com, entity);
+			return compManager->HasCom<T>(com, entity_id);
 		}
 
 		template<typename T>
@@ -146,7 +149,7 @@ namespace Engine {
 		//std::unique_ptr<SystemManager>sysManager;
 
 		//static Coordinator gCoordinator;
-		std::queue<Entity> destroyQueue{};
+		std::unordered_set<Entity_id> destroySet{};
 
 
 		SINGLETON_SETUP(DreamECS);

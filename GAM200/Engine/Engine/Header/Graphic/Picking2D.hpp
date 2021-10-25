@@ -46,8 +46,8 @@ namespace Engine {
 
 			const auto& transformArray = Engine::DreamECS::GetInstance().GetComponentArrayData<Engine::TransformComponent>();
 			for (const auto& transform : transformArray) {
-				const Engine::Entity& entity = transform.GetEntity();
-				if (Entity_Check(entity)) break;
+				const Engine::Entity_id& entity_id = transform.GetEntityId();
+				if (EntityId_Check(entity_id)) break;
 				if (!transform.isActive) continue;
 
 				Engine::ColliderComponent collider;
@@ -56,19 +56,19 @@ namespace Engine {
 				collider.angle = transform.angle;
 				if (Math::epsilonCheck(transform.angle)) {
 					if (Engine::CollisionImplementation::PointToSquareAABB(Math::vec2{ mousePos.x, mousePos.y }, collider)) {
-						Callback(entity);
+						Callback(entity_id);
 					}
 					else {
-						CallbackFail(entity);
+						CallbackFail(entity_id);
 					}
 				}
 
 				else {
 					if (Engine::CollisionImplementation::PointToSquareSAT(Math::vec2{ mousePos.x, mousePos.y }, collider)) {
-						Callback(entity);
+						Callback(entity_id);
 					}
 					else {
-						CallbackFail(entity);
+						CallbackFail(entity_id);
 					}
 				}
 			}

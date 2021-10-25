@@ -25,7 +25,7 @@ namespace Engine {
 		IComponent{ ID }, cType{ c }, offset_position{ Math::vec2{ 0.f, 0.f } }, offset_scale{ Math::vec2{ 0.f, 0.f } }, angle{ 0.f }, isTrigger{ trigger } {}*/
 
 	//Change of type constructor: Copy an existing Collider but with a different type
-	ColliderComponent::ColliderComponent(Entity _ID, ColliderType _c, Math::vec2 _pos, Math::vec2 _scale, float _rotation, bool _trigger, bool _active) :
+	ColliderComponent::ColliderComponent(Entity_id _ID, ColliderType _c, Math::vec2 _pos, Math::vec2 _scale, float _rotation, bool _trigger, bool _active) :
 		IComponent{ _ID }, cType{ _c }, offset_position{ _pos }, offset_scale{ _scale }, angle{ _rotation }, isTrigger{ _trigger }, isActive{ _active } {}
 
 	ColliderComponent& ColliderComponent::Deserialize(const DSerializer& _serializer) {

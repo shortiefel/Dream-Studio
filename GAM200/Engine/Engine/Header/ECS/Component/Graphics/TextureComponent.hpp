@@ -45,7 +45,7 @@ namespace Engine
 		TextureComponent(const TextureComponent&) = default;
 		~TextureComponent();
 
-		TextureComponent(Entity _ID = DEFAULT_ENTITY, const std::string _path = "",
+		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
 			GraphicShape _shape = GraphicShape::SQUARE, bool _active = true);
 
 		TextureComponent& operator= (const TextureComponent&) = default;

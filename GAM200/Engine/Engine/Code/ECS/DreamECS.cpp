@@ -19,16 +19,17 @@ Technology is prohibited.
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
-#define DESTROY_ENTITY(entity)\
-entityManager->DestroyEntity(entity);\
-compManager->DestroyEntity(entity);
+#define DESTROY_ENTITY(entity_id)\
+entityManager->DestroyEntity(entity_id);\
+compManager->DestroyEntity(entity_id);
 //systemManager->EntityDestroyed(entity);
 
 
 namespace Engine {
 	//Coordinator DreamECS::gCoordinator;
 	//std::queue<Entity> DreamECS::destroyQueue;
-
+	// 
+	//Track the number of the same name and give index to them
 	std::unordered_map <std::string, int> nameCount;
 
 	void DreamECS::Create()
@@ -55,35 +56,51 @@ namespace Engine {
 
 	void DreamECS::DuplicateEntityAsInstance(Entity entFrom) {
 		Entity entTo = entityManager->CreateEntity();
-		compManager->DuplicateEntityAsInstance(entFrom, entTo);
+		compManager->DuplicateEntityAsInstance(entFrom.id, entTo.id);
 	}
 
-	void DreamECS::DestroyEntity(Entity entity)
+	void DreamECS::DestroyEntity(Entity_id entity_id)
 	{
-		destroyQueue.emplace(entity);
+		//destroyQueue.emplace(entity);
+		destroySet.insert(entity_id);
 	}
 
-	const std::vector<Entity>& DreamECS::GetUsedEntitySet() {
+	/*const std::vector<Entity>& DreamECS::GetUsedEntitySet() {
 		return entityManager->GetUsedEntitySet();
+	}*/
+
+	const std::unordered_map<Entity_id, Entity>& DreamECS::GetUsedEntityMap() {
+		return entityManager->GetUsedEntityMap();
 	}
 
 	void DreamECS::ClearDestroyQueue() {
-		size_t num = destroyQueue.size();
+		
+		/*size_t num = destroyQueue.size();
 		while (num > 0) {
 			Entity& entity = destroyQueue.front();
 
-			DESTROY_ENTITY(entity);
+			DESTROY_ENTITY(entity.id);
 			
 			destroyQueue.pop();
 			--num;
+		}*/
+		for (auto& entity_id : destroySet) {
+			DESTROY_ENTITY(entity_id);
 		}
+
+		destroySet.clear();
 	}
 
 	void DreamECS::ResetECS() {
 		nameCount.clear();
-		std::vector<Entity> listOfEntity = entityManager->GetUsedEntitySet();
+		/*std::vector<Entity> listOfEntity = entityManager->GetUsedEntitySet();
 		for (auto& entity : listOfEntity) {
-			DESTROY_ENTITY(entity);
+			DESTROY_ENTITY(entity.id);
+		}*/
+
+		auto& entityMap = entityManager->GetUsedEntityMap();
+		for (auto& [entity_id, entity] : entityMap) {
+			DESTROY_ENTITY(entity_id);
 		}
 
 		//gCoordinator.ResetECS();
@@ -93,7 +110,7 @@ namespace Engine {
 	void DreamECS::Parent(Entity _parent, Entity _child) {
 
 		_child.parent = _parent.id;
-		auto& transChild = GetComponent<TransformComponent>(_child);
+		//auto& transChild = GetComponent<TransformComponent>(_child);
 
 
 	}
@@ -101,15 +118,15 @@ namespace Engine {
 	void DreamECS::Unparent(Entity _child) {
 		Entity tem = _child;
 		_child.parent = DEFAULT_ENTITY_ID;
-		auto& transChild = GetComponent<TransformComponent>(_child);
+		auto& transChild = GetComponent<TransformComponent>(_child.id);
 
-		auto size = entityManager->AliveEntityCount;
+		auto size = entityManager->GetUsedEntitySize();
 		auto& vec = entityManager->GetUsedEntitySet();
 
 		while (tem.parent != DEFAULT_ENTITY_ID) {
 			for (unsigned int i = 0; i < size; i++) {
 				if (tem.parent == vec[i].id) {
-					transChild += GetComponent<TransformComponent>(vec[i]);
+					transChild += GetComponent<TransformComponent>(vec[i].id);
 					tem = vec[i];
 				}
 			}

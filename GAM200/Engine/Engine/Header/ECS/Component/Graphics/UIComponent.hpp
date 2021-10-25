@@ -45,7 +45,7 @@ namespace Engine
 		UIComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		UIComponent(Entity _ID = DEFAULT_ENTITY, const std::string _path = "", bool _active = true, int _layer = 0);
+		UIComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "", bool _active = true, int _layer = 0);
 
 		UIComponent(const UIComponent&) = default;
 		UIComponent& operator=(const UIComponent&) = default;

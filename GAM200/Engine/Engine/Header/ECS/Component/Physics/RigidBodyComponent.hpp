@@ -35,7 +35,7 @@ namespace Engine {
 		RigidBodyComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		RigidBodyComponent(Entity _ID = DEFAULT_ENTITY, bool _active = true);
+		RigidBodyComponent(Entity_id _ID = DEFAULT_ENTITY_ID, bool _active = true);
 	};
 }
 

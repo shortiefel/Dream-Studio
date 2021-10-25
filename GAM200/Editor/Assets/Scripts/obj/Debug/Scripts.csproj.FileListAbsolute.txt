@@ -3,3 +3,11 @@ C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Data\CSScript.pdb
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csprojResolveAssemblyReference.cache
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.dll
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.pdb
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\EngineCS.dll
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.AssemblyReference.cache
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CoreCompileInputs.cache
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CopyComplete
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb

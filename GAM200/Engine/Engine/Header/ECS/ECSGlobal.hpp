@@ -27,8 +27,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Entity/Entity.hpp"
 
 //Check whether entity is in used
-#define Entity_Check(entity)\
-(entity.id > Engine::MAX_ENTITIES)
+#define EntityId_Check(entity_id)\
+(entity_id > Engine::MAX_ENTITIES)
 
 namespace Engine {
 	//ECS Components 

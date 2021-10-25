@@ -29,10 +29,10 @@ Technology is prohibited.
 #include <unordered_map>
 
 #define DUPLICATE_COMPONENT(type)\
-type* tptr = GetComArray<type>()->GetDataTest(entFrom);\
+type* tptr = GetComArray<type>()->GetDataTest(entIdFrom);\
 if (tptr) {\
 type t {*tptr};\
-t.SetEntity(entTo);\
+t.SetEntityId(entIdTo);\
 GetComArray<type>()->AddComponent(std::move(t));\
 }
 
@@ -77,7 +77,7 @@ namespace Engine {
 			GetComArray<T>()->AddComponent(std::move(component));
 		}
 
-		void DuplicateEntityAsInstance(Entity entFrom, Entity entTo) {
+		void DuplicateEntityAsInstance(Entity_id entIdFrom, Entity_id entIdTo) {
 			//variable name is same so its scoped
 			{ DUPLICATE_COMPONENT(CameraComponent); }
 			{ DUPLICATE_COMPONENT(TextureComponent); }
@@ -87,27 +87,27 @@ namespace Engine {
 		}
 
 		template<typename T>
-		void RemoveCom(Entity entity) {
-			GetComArray<T>()->RemoveComponent(entity);
+		void RemoveCom(Entity_id entity_id) {
+			GetComArray<T>()->RemoveComponent(entity_id);
 		}
 
-		void RemoveScript(Entity entity, const char* className) {
-			auto& csScript = GetComArray<ScriptComponent>()->GetData(entity);
+		void RemoveScript(Entity_id entity_id, const char* className) {
+			auto& csScript = GetComArray<ScriptComponent>()->GetData(entity_id);
 			if (csScript.RemoveScript(className)) {
-				GetComArray<ScriptComponent>()->RemoveComponent(entity);
+				GetComArray<ScriptComponent>()->RemoveComponent(entity_id);
 			}
 		}
 
 		template<typename T>
-		T& GetCom(Entity entity) {
+		T& GetCom(Entity_id entity_id) {
 			//a reference to component from array for entity
-			return GetComArray<T>()->GetData(entity);
+			return GetComArray<T>()->GetData(entity_id);
 		}
 
 		template<typename T>
-		T* GetComTest(Entity entity) {
+		T* GetComTest(Entity_id entity_id) {
 			//a reference to component from array for entity
-			return GetComArray<T>()->GetDataTest(entity);
+			return GetComArray<T>()->GetDataTest(entity_id);
 		}
 
 		template<typename T>
@@ -121,15 +121,15 @@ namespace Engine {
 		}
 
 		template<typename T>
-		bool HasCom(T*& com, Entity entity) {
+		bool HasCom(T*& com, Entity_id entity_id) {
 			//a reference to component from array for entity
-			return GetComArray<T>()->HasData(com, entity);
+			return GetComArray<T>()->HasData(com, entity_id);
 		}
 
-		void DestroyEntity(Entity entity) {
+		void DestroyEntity(Entity_id entity_id) {
 			//tell com arry that entity is destroyed, if exist remove
 			for (auto const& [name, compArray] : mComponentArrayInter) {
-				compArray->EntityDestroyed(entity);
+				compArray->EntityDestroyed(entity_id);
 			}
 		}
 

@@ -56,7 +56,7 @@ namespace Engine {
 		-To add/remove class from map
 		-Find the function from c#
 		-----------------------------------------------------*/
-		void InitCSClass(CSScriptInstance& _csScriptInstance);
+		bool InitCSClass(CSScriptInstance& _csScriptInstance); //Return whether class exist
 		void InitAllCSClass();
 		/*-----------------------------------------------------
 		-To add/remove public variable from map

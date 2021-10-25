@@ -21,7 +21,7 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
-	ScriptComponent::ScriptComponent(Entity _ID, const char*) :
+	ScriptComponent::ScriptComponent(Entity_id _ID, const char*) :
 		IComponent{ _ID } {
 		/*if (_className) {
 			CSScriptInstance csScriptInstance{ _className };
@@ -31,14 +31,14 @@ namespace Engine {
 
 	ScriptComponent::ScriptComponent(ScriptComponent&& rhs) noexcept {
 		klassInstance = std::move(rhs.klassInstance);
-		SetEntity(rhs.GetEntity());
-		rhs.SetEntity(DEFAULT_ENTITY);
+		SetEntityId(rhs.GetEntityId());
+		rhs.SetEntityId(DEFAULT_ENTITY_ID);
 	}
 
 	ScriptComponent& ScriptComponent::operator=(ScriptComponent&& rhs) noexcept {
 		klassInstance = std::move(rhs.klassInstance);
-		SetEntity(rhs.GetEntity());
-		rhs.SetEntity(DEFAULT_ENTITY);
+		SetEntityId(rhs.GetEntityId());
+		rhs.SetEntityId(DEFAULT_ENTITY_ID);
 		return *this;
 	}
 
@@ -106,6 +106,7 @@ namespace Engine {
 				classJSon["IsActive"].GetBool() };
 
 			rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
+			if (!Scripting::InitCSClass(csScriptInstance)) { std::cout << fullName << " caught \n"; continue; }
 			if (variableItr != classJSon.MemberEnd()) {
 				for (auto& variableData : variableItr->value.GetArray()) {
 					const auto& variableName = variableData["Name"].GetString();
@@ -147,7 +148,6 @@ namespace Engine {
 				}
 
 			}
-			Scripting::InitCSClass(csScriptInstance);
 			klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 		}
 		return *this;

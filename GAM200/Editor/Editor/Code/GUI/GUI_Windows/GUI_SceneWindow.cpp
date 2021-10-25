@@ -75,7 +75,7 @@ namespace Editor {
 		}
 
 		//void GUI_SceneWindow(bool* sceneWin_bool, const ImTextureID& sceneWinTex) {
-		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, Engine::Entity& entity_selected) {
+		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, Engine::Entity_id& entity_selected) {
 			inside = false;
 
 			if (*sceneWin_bool) {
@@ -127,7 +127,7 @@ namespace Editor {
 							mousePos = inverseCamMatrix * mousePos;
 							Entity_PickingCheck(entity_selected);*/
 						//Engine::Graphic::PickingCheck(entity_selected, mousePos, scene_viewportSize, inverseCamMatrix);
-						Engine::Graphic::PickingCheck(mousePos, scene_viewportSize, inverseCamMatrix, [&](const Engine::Entity& entity) { entity_selected = entity; }, [&](const Engine::Entity& entity) {  });
+						Engine::Graphic::PickingCheck(mousePos, scene_viewportSize, inverseCamMatrix, [&](const Engine::Entity_id& entity_id) { entity_selected = entity_id; }, [&](const Engine::Entity_id&) {  });
 					}
 				}
 

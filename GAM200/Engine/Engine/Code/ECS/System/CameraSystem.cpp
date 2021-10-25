@@ -32,14 +32,14 @@ namespace Engine
 {
     //Update function to change the world to NDC transform that will be used
     //to create the graphics
-    void CameraSystem::Update(float dt) {
+    void CameraSystem::Update(float) {
         auto& camArray = DreamECS::GetInstance().GetComponentArrayData<CameraComponent>();
         for (auto& cam : camArray) {
-            const Entity& entity = cam.GetEntity();
-            if (Entity_Check(entity)) break;
+            const Entity_id& entity_id = cam.GetEntityId();
+            if (EntityId_Check(entity_id)) break;
             if (!cam.isActive) continue;
 
-            TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity);
+            TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
             if (!transform || !transform->isActive) continue;
 
             //GLsizei fb_width, fb_height;

@@ -50,7 +50,6 @@
     <Compile Include="Test2.cs" />
     <Compile Include="Test3.cs" />
     <Compile Include="Test8.cs" />
-    <Compile Include="Testeeee.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

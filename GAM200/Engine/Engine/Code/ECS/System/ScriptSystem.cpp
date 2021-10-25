@@ -89,14 +89,14 @@ namespace Engine {
 
 		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
-			const Entity& entity = csScript.GetEntity();
-			if (Entity_Check(entity)) break;
+			const Entity_id& entity_id = csScript.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
 
 			auto& classScriptInstances = csScript.klassInstance;
 			
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
-				void* param[] = { (void*)&entity }; //Change to entity.id after ECS rework
+				void* param[] = { (void*)&entity_id };
 				//std::cout << "class: " << className << "\n";
 				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
@@ -113,7 +113,7 @@ namespace Engine {
 
 		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
-			if (Entity_Check(csScript.GetEntity())) break;
+			if (EntityId_Check(csScript.GetEntityId())) break;
 
 			auto& classScriptInstances = csScript.klassInstance;
 			//const auto& entityId = csScript.GetEntity();

@@ -22,7 +22,7 @@ Technology is prohibited.
 
 namespace Engine 
 {
-    CameraComponent::CameraComponent(Entity _ID, float _fov, float _ar, bool _active) :
+    CameraComponent::CameraComponent(Entity_id _ID, float _fov, float _ar, bool _active) :
         IComponent{ _ID }, fov{ _fov }, ar{ _ar }, isActive{ _active } {}
 
     CameraComponent& CameraComponent::Deserialize(const DSerializer& _serializer) 

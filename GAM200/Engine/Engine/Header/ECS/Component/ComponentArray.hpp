@@ -31,7 +31,7 @@ namespace Engine {
 	class ComponentArrayInterface {
 	public:
 		virtual ~ComponentArrayInterface() = default;
-		virtual void EntityDestroyed(Entity entity) = 0;
+		virtual void EntityDestroyed(Entity_id entity_id) = 0;
 	};
 
 
@@ -41,33 +41,33 @@ namespace Engine {
 	class ComponentArray : public ComponentArrayInterface {
 	public:
 		void AddComponent(T component) {
-			Entity entity = component.GetEntity();
+			Entity_id entity_id = component.GetEntityId();
 			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity.id) == EntityToIndexMap.end() && "Component is added again");
+			LOG_ASSERT(EntityToIndexMap.find(entity_id) == EntityToIndexMap.end() && "Component is added again");
 			
 			size_t newIndex = Size;
-			EntityToIndexMap[entity.id] = newIndex; //Entity -> Index
+			EntityToIndexMap[entity_id] = newIndex; //Entity -> Index
 			componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
 			Size++;
 		}
 
 		void AddScriptComponent(T component) {
-			Entity entity = component.GetEntity();
+			Entity_id entity_id = component.GetEntityId();
 			size_t index{};
 			
 			//No Script
-			if (EntityToIndexMap.find(entity.id) == EntityToIndexMap.end()) {
+			if (EntityToIndexMap.find(entity_id) == EntityToIndexMap.end()) {
 				index = Size;
-				EntityToIndexMap[entity.id] = index; //Entity -> Index
+				EntityToIndexMap[entity_id] = index; //Entity -> Index
 				//componentArray[index] = std::move(component);
-				componentArray[index] = std::move(T{ entity });
+				componentArray[index] = std::move(T{ entity_id });
 				//componentArray[index].AddScript(component);
 				Size++;
 			}
 			//Has at least one script
 			else {
 				
-				index = EntityToIndexMap[entity.id];
+				index = EntityToIndexMap[entity_id];
 				//componentArray[index].AddScript(component);
 			}
 
@@ -75,60 +75,60 @@ namespace Engine {
 		}
 
 
-		void RemoveComponent(Entity entity) {
+		void RemoveComponent(Entity_id entity_id) {
 			//error checking
-			assert(EntityToIndexMap.find(entity.id) != EntityToIndexMap.end() && "Removing non-existance component");
+			assert(EntityToIndexMap.find(entity_id) != EntityToIndexMap.end() && "Removing non-existance component");
 
 			//Copies element at the end into deleted element's place 
-			size_t IndexRemoveEntity = EntityToIndexMap[entity.id];
+			size_t IndexRemoveEntity = EntityToIndexMap[entity_id];
 			size_t IndexLastElement = Size - 1;
 
 			//Updating the map when it's shifted
-			Entity EntityLastElement = componentArray[IndexLastElement].GetEntity();
-			EntityToIndexMap[EntityLastElement.id] = IndexRemoveEntity;
+			Entity_id EntityLastElement = componentArray[IndexLastElement].GetEntityId();
+			EntityToIndexMap[EntityLastElement] = IndexRemoveEntity;
 
 			componentArray[IndexRemoveEntity] = std::move(componentArray[IndexLastElement]);
 			//componentArray[IndexLastElement].SetEntityId(DEFAULT_ENTITY);
 			
 			componentArray[IndexLastElement] = T{};
-			EntityToIndexMap.erase(entity.id);
+			EntityToIndexMap.erase(entity_id);
 
 			--Size;
 		}
 
 		//referencing to the template to get the data
-		T& GetData(Entity entity) {
+		T& GetData(Entity_id entity_id) {
 			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity.id) != EntityToIndexMap.end() && "Does not exist");
+			LOG_ASSERT(EntityToIndexMap.find(entity_id) != EntityToIndexMap.end() && "Does not exist");
 
 			//if exist, return data
-			return componentArray[EntityToIndexMap[entity.id]];
+			return componentArray[EntityToIndexMap[entity_id]];
 		}
 
 		//referencing to the template to get the data
-		T* GetDataTest(Entity entity) {
-			if (EntityToIndexMap.find(entity.id) == EntityToIndexMap.end()) return nullptr;
+		T* GetDataTest(Entity_id entity_id) {
+			if (EntityToIndexMap.find(entity_id) == EntityToIndexMap.end()) return nullptr;
 
 			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity.id) != EntityToIndexMap.end() && "Does not exist");
+			LOG_ASSERT(EntityToIndexMap.find(entity_id) != EntityToIndexMap.end() && "Does not exist");
 
 			//if exist, return data
-			return &componentArray[EntityToIndexMap[entity.id]];
+			return &componentArray[EntityToIndexMap[entity_id]];
 		}
 
-		bool HasData(T*& com, Entity entity) {
-			if (EntityToIndexMap.find(entity.id) == EntityToIndexMap.end()) return false;
+		bool HasData(T*& com, Entity_id entity_id) {
+			if (EntityToIndexMap.find(entity_id) == EntityToIndexMap.end()) return false;
 			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity.id) != EntityToIndexMap.end() && "Does not exist");
+			LOG_ASSERT(EntityToIndexMap.find(entity_id) != EntityToIndexMap.end() && "Does not exist");
 
 			//if exist, return data
-			com = &componentArray[EntityToIndexMap[entity.id]];
+			com = &componentArray[EntityToIndexMap[entity_id]];
 			return true;
 		}
 
-		void EntityDestroyed(Entity entity) override {			
-			if (EntityToIndexMap.find(entity.id) != EntityToIndexMap.end()) {
-				RemoveComponent(entity);
+		void EntityDestroyed(Entity_id entity_id) override {
+			if (EntityToIndexMap.find(entity_id) != EntityToIndexMap.end()) {
+				RemoveComponent(entity_id);
 			}
 		}
 

@@ -31,7 +31,7 @@ Technology is prohibited.
 
 namespace Engine 
 {
-	TransformComponent::TransformComponent(Entity _ID, Math::vec2 _pos, Math::vec2 _scale, float _angle, bool _active, int _layer) :
+	TransformComponent::TransformComponent(Entity_id _ID, Math::vec2 _pos, Math::vec2 _scale, float _angle, bool _active, int _layer) :
 		IComponent{ _ID },
 		position{ _pos }, scale{ _scale }, angle{ _angle },
 		isActive{ _active }, layer{ _layer } {}
@@ -45,10 +45,11 @@ namespace Engine
 		return *this;
 	}
 
-	/*Math::vec2 TransformComponent::GetTruePosition() {
-		if (
+	Math::vec2 TransformComponent::GetTruePosition() {
+		GetEntityId();
+		//if (
 		
-	}*/
+	}
 
 
 	//Math::mat3 TransformComponent::GetTransform() const 

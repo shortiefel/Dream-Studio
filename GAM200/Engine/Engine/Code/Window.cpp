@@ -227,8 +227,6 @@ namespace Engine {
 			break;
 		}
 		}
-		std::cout << button <<  " " << Input::IsMousePressed(Engine::Input_MouseCode::Mouse_Middle) <<"\n";
-
 	}
 
 	void Window::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {

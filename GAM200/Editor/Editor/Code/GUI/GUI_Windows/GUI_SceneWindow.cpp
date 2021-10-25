@@ -40,17 +40,19 @@ namespace Editor {
 		bool moving(const Engine::MouseMoveEvent& e) {
 			if (!inside || !Engine::Input::IsMousePressed(Engine::Input_MouseCode::Mouse_Middle)) return false;
 
+			//Movement is flipped
+			//mouse move left, camera move right
 			if (e.GetLeft()) {
-				EditorSceneCamera::changePosition(Math::vec2{ -POS_CHANGE_SPEED, 0.f });
-			}
-			else if (e.GetRight()) {
 				EditorSceneCamera::changePosition(Math::vec2{ POS_CHANGE_SPEED, 0.f });
 			}
+			else if (e.GetRight()) {
+				EditorSceneCamera::changePosition(Math::vec2{ -POS_CHANGE_SPEED, 0.f });
+			}
 			if (e.GetUp()) {
-				EditorSceneCamera::changePosition(Math::vec2{ 0.f, POS_CHANGE_SPEED });
+				EditorSceneCamera::changePosition(Math::vec2{ 0.f, -POS_CHANGE_SPEED });
 			}
 			else if (e.GetDown()) {
-				EditorSceneCamera::changePosition(Math::vec2{ 0.f, -POS_CHANGE_SPEED } );
+				EditorSceneCamera::changePosition(Math::vec2{ 0.f, POS_CHANGE_SPEED } );
 			}
 
 			return true;

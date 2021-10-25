@@ -42,23 +42,6 @@ Technology is prohibited.
 #include "Engine/Header/Math/MathLib.hpp"
 
 
-//Create a window with an image
-//E.g Game window 
-//#define CreateImageWindow(windowName, texid, windowBool) \
-//	if (windowBool) {\
-//		ImGui::Begin(windowName, &windowBool, window_flags);\
-//		ImGui::BeginChild("Render");\
-//		ImVec2 wSize = ImGui::GetWindowSize();\
-//		\
-//		ImGui::PushItemWidth(wSize.x);\
-//		ASPECT_RATIO_FIX(wSize);\
-//		\
-//		ImGui::Image((ImTextureID)texid, wSize, ImVec2(0, 1), ImVec2(1, 0));\
-//		ImGui::EndChild();\
-//		ImGui::End();\
-//	}\
-
-
 
 namespace Editor {
 
@@ -298,13 +281,24 @@ namespace Editor {
 				//}
 
 				//Engine::Entity entity_selected = Engine::Entity{ 0 };
+
+				
 				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
+
+				//highlight when object is currently selected
+				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
+					| ImGuiTreeNodeFlags_OpenOnDoubleClick
+					| ImGuiTreeNodeFlags_SpanAvailWidth;
 
 				for (int i = 0; i < entity_set.size(); i++)
 				{
-					ImGui::Text(entity_set[i].name.c_str());
-
+					ImGui::Selectable(entity_set[i].name.c_str());
 				}
+
+
+				
+				
+				
 
 				ImGui::End();
 			}

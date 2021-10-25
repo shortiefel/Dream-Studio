@@ -290,11 +290,19 @@ namespace Editor {
 					| ImGuiTreeNodeFlags_OpenOnDoubleClick
 					| ImGuiTreeNodeFlags_SpanAvailWidth;
 
+			
+
 				for (int i = 0; i < entity_set.size(); i++)
 				{
-					ImGui::Selectable(entity_set[i].name.c_str());
+					if (ImGui::Selectable(entity_set[i].name.c_str()))
+					{
+						entity_selected = entity_set[i];
+					}
+
+
 				}
 
+				
 
 				
 				

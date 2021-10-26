@@ -41,6 +41,8 @@ namespace Engine {
 		--------------------------------------------------------------------*/
 		void Update(float dt, bool playing);
 
+		unsigned int EntityCount();
+
 	private:
 		//Path + scene name
 		std::string fullPathSceneName;

@@ -40,7 +40,7 @@ Technology is prohibited.
 namespace Engine {
     Scene::Scene(std::string fullPath) : fullPathSceneName{ fullPath } {
         GameSceneSerializer::DeserializeScene(fullPathSceneName);
-
+        std::cout << "Deserialize scene \n";
         ScriptSystem::GetInstance().UpdateMapData();
     }
 
@@ -108,6 +108,10 @@ namespace Engine {
 
         //LayerStack::Update();
         //LayerStack::Draw();
+    }
+
+    unsigned int Scene::EntityCount() {
+        return DreamECS::GetInstance().GetUsedEntitySize();
     }
 
     //bool Scene::SceneSave() {

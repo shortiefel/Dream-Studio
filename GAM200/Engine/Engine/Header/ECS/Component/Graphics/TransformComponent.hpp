@@ -47,7 +47,7 @@ namespace Engine
 		TransformComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		Math::vec2 GetTruePosition();
+		Math::vec2 GetTruePosition() const;
 
 		TransformComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{1,1},
 			float _angle = float{}, bool _active = true, int _layer = 0);

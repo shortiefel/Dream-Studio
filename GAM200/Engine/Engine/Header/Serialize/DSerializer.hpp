@@ -29,7 +29,7 @@ using JsonIter = rapidjson::Value::ConstMemberIterator;
 namespace Engine {
 	class DSerializer {
 	public:
-		DSerializer(const JsonIter& i);
+		DSerializer(const JsonIter& i = JsonIter{});
 
 		/*--------------------------------------------------------------------------------
 		* T GetValue (name)

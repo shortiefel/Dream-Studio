@@ -21,12 +21,14 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
 namespace Engine {
-	ScriptComponent::ScriptComponent(Entity_id _ID, const char*) :
+	ScriptComponent::ScriptComponent(Entity_id _ID, const char* _className) :
 		IComponent{ _ID } {
-		/*if (_className) {
+		if (_className) {
 			CSScriptInstance csScriptInstance{ _className };
 			klassInstance.emplace(_className, std::move(csScriptInstance));
-		}*/
+		}
+		//CSScriptInstance csScriptInstance{ _className };
+		//klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 	}
 
 	ScriptComponent::ScriptComponent(ScriptComponent&& rhs) noexcept {
@@ -78,10 +80,12 @@ namespace Engine {
 	}
 
 	void ScriptComponent::AddScript(ScriptComponent& comp) {
+		//std::cout << "Adding \n";
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
-			//std::cout << "class in AddScript " << className << "\n";
+			
 			if (klassInstance.find(className) == klassInstance.end()) {
 				klassInstance.emplace(className, std::move(csScriptInstance));
+				//std::cout << "class in AddScript " << className << "\n";
 			}
 
 			else {
@@ -148,6 +152,7 @@ namespace Engine {
 				}
 
 			}
+			//klassInstance[csScriptInstance.csClass.className] = std::move(csScriptInstance);
 			klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 		}
 		return *this;

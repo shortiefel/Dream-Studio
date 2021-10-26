@@ -210,7 +210,7 @@ namespace Engine {
 		}
 	}
 
-	void Window::MouseButtonCallback(GLFWwindow*, int button, int action, int mods) {
+	void Window::MouseButtonCallback(GLFWwindow*, int button, int action, int) {
 		switch (action) {
 		case GLFW_PRESS: {
 			MousePressedEvent event(button);

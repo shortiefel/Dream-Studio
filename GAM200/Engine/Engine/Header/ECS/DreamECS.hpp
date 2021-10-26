@@ -39,7 +39,8 @@ namespace Engine {
 		void DuplicateEntityAsInstance(Entity ent);
 		void DestroyEntity(Entity_id entity_id);
 		//const std::vector<Entity>& GetUsedEntitySet();
-		const std::unordered_map<Entity_id, Entity>& GetUsedEntityMap();
+		const EntityMapType& GetUsedEntityMap();
+		uint32_t GetUsedEntitySize() const;
 		void ClearDestroyQueue();
 		void ResetECS();
 
@@ -85,10 +86,7 @@ namespace Engine {
 			sysManager->EntitySignatureChanged(entity, Signature);*/
 		}
 
-		/*static void RemoveScript(Entity entity, const char* className)
-		{
-			gCoordinator.RemoveScript(entity, className);
-		}*/
+		void RemoveScript(Entity_id entity_id, const char* className);
 
 		/*
 		* Get component by reference

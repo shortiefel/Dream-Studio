@@ -91,18 +91,8 @@ namespace Editor {
     }
 
     bool SceneHotKey(const Engine::KeyPressedEvent& e) {
-        if (e.GetKeyCode() == Engine::Input_KeyCode::G) {
-            Engine::SceneManager::GetInstance().ChangeScene("test2");
-        }
-        else if (e.GetKeyCode() == Engine::Input_KeyCode::H) {
-            Engine::SceneManager::GetInstance().ChangeScene("test3");
-        }
 
-        else if (e.GetKeyCode() == Engine::Input_KeyCode::N) {
-            Engine::SceneManager::GetInstance().ChangeScene("test1");
-        }
-
-        //else if (e.GetKeyCode() == Engine::Input_KeyCode::Z) {
+        //if (e.GetKeyCode() == Engine::Input_KeyCode::Z) {
         //    Engine::CommandHistory::Undo();
         //}
 

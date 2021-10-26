@@ -69,8 +69,12 @@ namespace Engine {
 		return entityManager->GetUsedEntitySet();
 	}*/
 
-	const std::unordered_map<Entity_id, Entity>& DreamECS::GetUsedEntityMap() {
+	const EntityMapType& DreamECS::GetUsedEntityMap() {
 		return entityManager->GetUsedEntityMap();
+	}
+
+	uint32_t DreamECS::GetUsedEntitySize() const {
+		return entityManager->GetUsedEntitySize();
 	}
 
 	void DreamECS::ClearDestroyQueue() {
@@ -93,17 +97,13 @@ namespace Engine {
 
 	void DreamECS::ResetECS() {
 		nameCount.clear();
-		/*std::vector<Entity> listOfEntity = entityManager->GetUsedEntitySet();
-		for (auto& entity : listOfEntity) {
-			DESTROY_ENTITY(entity.id);
-		}*/
 
 		auto& entityMap = entityManager->GetUsedEntityMap();
 		for (auto& [entity_id, entity] : entityMap) {
-			DESTROY_ENTITY(entity_id);
+				//entityManager->DestroyEntity(entity_id);
+				compManager->DestroyEntity(entity_id);
 		}
 
-		//gCoordinator.ResetECS();
 		entityManager->ResetEntityManager();
 	}
 
@@ -121,16 +121,21 @@ namespace Engine {
 		auto& transChild = GetComponent<TransformComponent>(_child.id);
 
 		auto size = entityManager->GetUsedEntitySize();
-		auto& vec = entityManager->GetUsedEntitySet();
+		//auto& vec = entityManager->GetUsedEntitySet();
 
-		while (tem.parent != DEFAULT_ENTITY_ID) {
+		/*while (tem.parent != DEFAULT_ENTITY_ID) {
 			for (unsigned int i = 0; i < size; i++) {
 				if (tem.parent == vec[i].id) {
 					transChild += GetComponent<TransformComponent>(vec[i].id);
 					tem = vec[i];
 				}
 			}
-		}
+		}*/
+	}
+
+
+	void DreamECS::RemoveScript(Entity_id entity_id, const char* className) {
+		compManager->RemoveScript(entity_id, className);
 	}
 
 }

@@ -24,6 +24,7 @@ Technology is prohibited.
 #include <unordered_map>
 
 namespace Engine {
+	using EntityMapType = std::unordered_map<Entity_id, Entity>;
 	class EntityManager
 	{
 	public:
@@ -48,7 +49,7 @@ namespace Engine {
 			++AliveEntityCount;
 
 			Entity entity(entityId, _entityName, _parent);
-			UsedEntities2.push_back(entity);
+			//UsedEntities2.push_back(entity);
 			usedEntities.emplace(entityId, entity);
 			return entity;
 		}
@@ -76,34 +77,36 @@ namespace Engine {
 			//mSignatures[entity].reset();
 			AvailableEntities.push(entity_id);
 			--AliveEntityCount;
-
 		}
 
-		inline const std::vector<Entity>& GetUsedEntitySet() const {
+		/*inline const std::vector<Entity>& GetUsedEntitySet() const {
 			return UsedEntities2;
-		}
+		}*/
 
-		inline const std::unordered_map<Entity_id, Entity>& GetUsedEntityMap() const {
+		inline const EntityMapType& GetUsedEntityMap() const {
 			return usedEntities;
 		}
 
 		inline void ResetEntityManager() {
-			UsedEntities2.clear();
-			usedEntities.clear();
+			//UsedEntities2.clear();
+			usedEntities = EntityMapType{};
 			currentMaxId = 0;
+			AliveEntityCount = 0;
 			AvailableEntities = std::queue<Entity_id>();
+			std::cout << "Cleared \n";
 		}
 
-		inline uint32_t GetUsedEntitySize() const {
+		inline unsigned int GetUsedEntitySize() const {
+			//std::cout << "Map Size: " << AliveEntityCount << "\n";
 			return AliveEntityCount;
 		}
 
 
 	private:
-		std::vector<Entity> UsedEntities2{};
-		std::unordered_map<Entity_id, Entity> usedEntities{};
+		//std::vector<Entity> UsedEntities2{};
+		EntityMapType usedEntities{};
 
-		uint32_t AliveEntityCount{}; // Total living entities
+		unsigned int AliveEntityCount{}; // Total living entities
 		std::queue<Entity_id> AvailableEntities{}; // Queue of unused entity IDs
 
 		uint32_t currentMaxId = 0;

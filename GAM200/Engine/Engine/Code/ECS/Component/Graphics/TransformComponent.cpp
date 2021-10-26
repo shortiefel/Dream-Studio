@@ -22,6 +22,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
@@ -45,10 +46,19 @@ namespace Engine
 		return *this;
 	}
 
-	Math::vec2 TransformComponent::GetTruePosition() {
-		GetEntityId();
-		//if (
+	Math::vec2 TransformComponent::GetTruePosition() const {
+		auto& tem = DreamECS::GetInstance().GetUsedEntityMap();
 		
+		Entity_id _parent = DEFAULT_ENTITY_ID;
+		const auto & itr = tem.find(GetEntityId());
+		if (itr != tem.end()) {
+			_parent = itr->second.parent;
+		}
+
+		if (_parent != DEFAULT_ENTITY_ID) {
+			return position + DreamECS::GetInstance().GetComponent<TransformComponent>(_parent).GetTruePosition();
+		}
+		return position;
 	}
 
 

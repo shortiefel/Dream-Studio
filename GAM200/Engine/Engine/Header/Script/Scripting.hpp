@@ -64,6 +64,11 @@ namespace Engine {
 		-----------------------------------------------------*/
 		void InitVariable(CSScriptInstance& _csScriptInstance);
 		void InitAllPublicVariable();
+
+		/*-----------------------------------------------------
+		-Open Visual Studio file
+		-----------------------------------------------------*/
+		void OpenVS(std::string fileName);
 	}
 }
 

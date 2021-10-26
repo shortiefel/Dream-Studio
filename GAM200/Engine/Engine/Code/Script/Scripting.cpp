@@ -124,7 +124,7 @@ namespace Engine {
 
 		bool CompileCSInternal() {
 			Scripting::DestroyChildDomain();
-			int status = std::system("CompileCS.bat");
+			int status = std::system("Data\\CompileCS.bat");
 			if (status > 0) return false;
 			return true;
 		}
@@ -333,10 +333,10 @@ namespace Engine {
 			return CSType::NONE;
 		}
 
-		
+		void OpenVS(std::string fileName) {
 
-
-		
+			//std::system("Data\\OpenVS.bat");
+		}
 
 	}
 }

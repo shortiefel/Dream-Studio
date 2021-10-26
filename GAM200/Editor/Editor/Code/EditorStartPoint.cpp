@@ -39,7 +39,7 @@ namespace Editor {
 		Engine::KeyPressedEvent::RegisterFunction(EditorSceneManager::GetInstance().GetSceneHotKey());
 	}
 
-	void EditorStartPoint::Update(float dt) {
+	void EditorStartPoint::Update(float) {
 		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
 		PROFILER_START("Rendering");
 

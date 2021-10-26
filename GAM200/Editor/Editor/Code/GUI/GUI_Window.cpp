@@ -24,15 +24,20 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_GameWindow.hpp"
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
-#include "Engine/Header/Scene/SceneManager.hpp"
-#include "Engine/Header/Management/AssetManager.hpp"
+
+
 
 #include <Imgui/imgui_internal.h>
 
+#include "Engine/Header/Scene/SceneManager.hpp"
+#include "Engine/Header/Management/AssetManager.hpp"
+#include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/Management/GameState.hpp"
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 #include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
+#include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
@@ -58,7 +63,7 @@ Technology is prohibited.
 //		ImGui::End();\
 //	}\
 
-
+#define TEXT_BOX_SIZE 70
 
 namespace Editor {
 
@@ -109,19 +114,93 @@ namespace Editor {
 		////static void ShowFontBrowser();
 		//static bool IconButton(const char* icon, const char* label, const ImVec2& size);
 
-		/*-------------------------------------------------------------------------------------------------
-		Windows creation: Hierarchy, Inspector, Game window, Scene window
-		-------------------------------------------------------------------------------------------------*/
 		void    GUI_HeaderPanel();
 		void	GUI_Hierarchy();
 		void	GUI_Inspector();
 		//Show stats like fps and Number of game object
 		void	GUI_Stats();
-		//Profiler window
-		//void	GUI_GameWindow(const ImTextureID& gameWinTex);
-		//void	GUI_SceneWindow(const ImTextureID& sceneWinTex);
 		void    GUI_ContentBrowserPanel();
 
+		void	NewFileUtil();
+		void	OpenFileUtil();
+		void	SaveFileUtil();
+		void	SaveAsFileUtil();
+		bool	OnKeyEvent(Engine::KeyPressedEvent& e);
+
+		/*-------------------------------------------------------------------------------------------------
+		Utilities
+		-------------------------------------------------------------------------------------------------*/
+		void NewFileUtil() {
+			Engine::SceneManager::GetInstance().ChangeScene("NULLSCENEDOESNTEXIST");
+			SaveAsFileUtil();
+		}
+		
+		void OpenFileUtil() {
+			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+			if (!filePath.empty()) {
+				size_t pos = filePath.find_last_of("\\");
+				filePath = filePath.substr(pos + 1);
+				pos = filePath.find_last_of(".");
+				filePath = filePath.substr(0, pos);
+
+				Engine::SceneManager::GetInstance().ChangeScene(filePath);
+			}
+		}
+
+		void SaveFileUtil() {
+
+		}
+
+		void SaveAsFileUtil() {
+			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Scene (*.scene)\0*.scene\0");
+
+			if (!filePath.empty()) {
+				size_t pos = filePath.find_last_of("\\");
+				filePath = filePath.substr(pos + 1);
+				pos = filePath.find_last_of(".");
+				filePath = filePath.substr(0, pos);
+
+				Engine::GameSceneSerializer::SerializeScene(filePath);
+				Engine::SceneManager::GetInstance().ChangeScene(filePath);
+			}
+		}
+
+		bool OnKeyEvent(const Engine::KeyPressedEvent& e) {
+			bool ctrl = Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Control);
+			bool shift = Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Shift);
+
+			switch (e.GetKeyCode()) {
+			case Engine::Input_KeyCode::N: {
+				if (ctrl) {
+					NewFileUtil();
+				}
+				break;
+			}
+			case Engine::Input_KeyCode::O: {
+				if (ctrl) {
+					OpenFileUtil();
+				}
+				break;
+			}
+			/*case Engine::Input_KeyCode::S: {
+				if (ctrl && shift) {
+					SaveAsFileUtil();
+				}
+
+				else if (ctrl) {
+
+				}
+				break;
+			}*/
+			}
+
+			return true;
+		}
+
+		/*-------------------------------------------------------------------------------------------------
+		Windows creation: Hierarchy, Inspector, Game window, Scene window
+		-------------------------------------------------------------------------------------------------*/
 
 		void GUI_Settings_Setup() {
 			dockspace_window_flags |= ImGuiWindowFlags_NoTitleBar;
@@ -135,6 +214,8 @@ namespace Editor {
 			GUI_Windows::GUI_Console_Create();
 
 			GUI_Windows::GUI_SceneSetup();
+
+			Engine::KeyPressedEvent::RegisterFunction(OnKeyEvent);
 		}
 
 		void GUI_DockSpace() {
@@ -171,15 +252,19 @@ namespace Editor {
 		//Menu for files
 		void GUI_FileMenu() {
 			if (ImGui::BeginMenu("File")) {
-				bool quit = false;
-				if (ImGui::MenuItem("New Scene", "CTRL+N"))
-				{
-					Engine::SceneManager::GetInstance().ChangeScene("test1");
+				if (ImGui::MenuItem("New Scene", "CTRL+N")) {
+					NewFileUtil();
 				}
-				ImGui::MenuItem("Open", "CTRL+O");
-				ImGui::MenuItem("Save as", "CTRL+S");
-				ImGui::MenuItem("Quit", NULL, &quit);
-				if (quit) {
+
+				if (ImGui::MenuItem("Open...", "CTRL+O")) {
+					OpenFileUtil();
+				}
+
+				else if (ImGui::MenuItem("Save as...", "CTRL+SHIFT+S")) {
+					SaveAsFileUtil();
+				}
+
+				if (ImGui::MenuItem("Quit", NULL)) {
 					Engine::WindowCloseEvent event;
 					Engine::EventDispatcher::SendEvent(event);
 				}
@@ -452,7 +537,7 @@ namespace Editor {
 
 								//deleteComponent
 								if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
-									Engine::DreamECS::GetInstance().RemoveComponent<Engine::ScriptComponent>(entity_selected);
+									Engine::DreamECS::GetInstance().RemoveScript(entity_selected, className.c_str());
 
 								ImGui::TreePop();
 							}
@@ -481,6 +566,20 @@ namespace Editor {
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
 					if (ImGui::Selectable("Camera##addCameracom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+
+					char text[100];
+					ImGui::PushItemWidth(TEXT_BOX_SIZE);
+					ImGui::Text("Script: ");
+					if (ImGui::InputText("##addcomponenttype", text, 100)) {
+						if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
+							std::string textStr{ text };
+							Engine::DreamECS::GetInstance().AddComponent(
+								//std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() }.Deserialize())
+								std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() })
+							);
+						}
+					}
+					ImGui::PopItemWidth();
 
 					ImGui::EndPopup();
 				}

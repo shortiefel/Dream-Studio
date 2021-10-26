@@ -17,14 +17,17 @@ Technology is prohibited.
 #ifndef BUTTON_COMPONENT_HPP
 #define BUTTON_COMPONENT_HPP
 
-#include "Engine/Header/ECS/ECSGlobal.hpp"
+#include "Engine/Header/ECS/Component/IComponent.hpp"
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Graphic/FontSystem.hpp"
 #include "Engine/Header/Graphic/mesh.hpp"
 
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+
 
 namespace Engine {
-	struct ButtonComponent {
+	struct ButtonComponent : public IComponent {
 		public:
 
 			//making use of std::function to store, copy, and invoke any CopyConstructible Callable target 
@@ -45,6 +48,9 @@ namespace Engine {
 
 			virtual void OnAction();
 			virtual void OnUpdate();
+
+			ButtonComponent& Deserialize(const DSerializer& _serializer);
+			void Serialize(const SSerializer& _serializer);
 
 		private:
 			enum ButtonState

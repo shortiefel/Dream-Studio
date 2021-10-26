@@ -16,8 +16,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/UI/Button.hpp"
 
-#include "Engine/Header/Serialize/DSerializer.hpp"
-#include "Engine/Header/Serialize/SSerializer.hpp"
+
 
 namespace Engine {
 
@@ -44,11 +43,17 @@ namespace Engine {
 	bool ButtonComponent::OnMove(const Engine::MouseMoveEvent& e)
 	{
 		//need ask jw how do mouse check
+		return true;
 	}
 
 	void ButtonComponent::OnAction()
 	{
 		AHandler();
+	}
+
+	void ButtonComponent::OnUpdate()
+	{
+
 	}
 
 }

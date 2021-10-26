@@ -158,7 +158,11 @@ namespace Editor {
 					Engine::SceneManager::GetInstance().ChangeScene("test1");
 				}
 				ImGui::MenuItem("Open", "CTRL+O");
-				ImGui::MenuItem("Save as", "CTRL+S");
+				if (ImGui::MenuItem("Save", "CTRL+S"))
+				{
+					Engine::SceneManager::GetInstance().Save();
+				}
+				//ImGui::MenuItem("Save as", "CTRL+SHIFT+S");
 				ImGui::MenuItem("Quit", NULL, &quit);
 				if (quit) {
 					Engine::WindowCloseEvent event;
@@ -243,6 +247,14 @@ namespace Editor {
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
 			if (ImGui::Button("Stop", (ImVec2{ 40, 30 }))) {
 				EditorSceneManager::GetInstance().Stop();
+			}
+			ImGui::PopItemFlag();
+
+			ImGui::SameLine();
+			ImGui::PushItemWidth(wSize.x / 2 + 20);
+			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
+			if (ImGui::Button("Save", (ImVec2{ 40, 30 }))) {
+				Engine::SceneManager::GetInstance().Save();
 			}
 			ImGui::PopItemFlag();
 

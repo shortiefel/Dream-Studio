@@ -38,3 +38,5 @@ C:\Users\chiay\OneDrive\Documents\GitHub\GAM200\GAM200\Editor\Data\CSScript\CSSc
 C:\Users\chiay\OneDrive\Documents\GitHub\GAM200\GAM200\Editor\Assets\Scripts\obj\Release\Scripts.csprojResolveAssemblyReference.cache
 C:\Users\chiay\OneDrive\Documents\GitHub\GAM200\GAM200\Editor\Assets\Scripts\obj\Release\CSScript.dll
 C:\Users\chiay\OneDrive\Documents\GitHub\GAM200\GAM200\Editor\Assets\Scripts\obj\Release\CSScript.pdb
+C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\Scripts.csprojResolveAssemblyReference.cache
+C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\CSScript.dll

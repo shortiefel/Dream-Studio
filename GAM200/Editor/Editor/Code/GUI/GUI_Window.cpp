@@ -65,6 +65,11 @@ Technology is prohibited.
 
 #define TEXT_BOX_SIZE 70
 
+#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
+							 filePath = filePath.substr(pos + 1);\
+							 pos = filePath.find_last_of(".");\
+							 filePath = filePath.substr(0, pos);
+
 namespace Editor {
 
 	extern const std::filesystem::path _assetPath = "Assets";
@@ -78,7 +83,7 @@ namespace Editor {
 
 		ImGuiWindowFlags window_flags = 0;
 
-		Engine::Entity_id entity_selected = Engine::Entity_id{ 1 };
+		Engine::Entity_id entity_selected = DEFAULT_ENTITY_ID;
 
 		bool hierarchy_bool = true;
 		bool inspector_bool = true;
@@ -131,18 +136,22 @@ namespace Editor {
 		Utilities
 		-------------------------------------------------------------------------------------------------*/
 		void NewFileUtil() {
-			Engine::SceneManager::GetInstance().ChangeScene("NULLSCENEDOESNTEXIST");
-			SaveAsFileUtil();
+			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Scene (*.scene)\0*.scene\0");
+
+			if (!filePath.empty()) {
+				REMOVE_FROM_FILEPATH;
+
+				Engine::DreamECS::GetInstance().ResetECS();
+				Engine::GameSceneSerializer::SerializeScene(filePath);
+				Engine::SceneManager::GetInstance().ChangeScene(filePath);
+			}
 		}
 		
 		void OpenFileUtil() {
 			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
 
 			if (!filePath.empty()) {
-				size_t pos = filePath.find_last_of("\\");
-				filePath = filePath.substr(pos + 1);
-				pos = filePath.find_last_of(".");
-				filePath = filePath.substr(0, pos);
+				REMOVE_FROM_FILEPATH;
 
 				Engine::SceneManager::GetInstance().ChangeScene(filePath);
 			}
@@ -156,10 +165,7 @@ namespace Editor {
 			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Scene (*.scene)\0*.scene\0");
 
 			if (!filePath.empty()) {
-				size_t pos = filePath.find_last_of("\\");
-				filePath = filePath.substr(pos + 1);
-				pos = filePath.find_last_of(".");
-				filePath = filePath.substr(0, pos);
+				REMOVE_FROM_FILEPATH;
 
 				Engine::GameSceneSerializer::SerializeScene(filePath);
 				Engine::SceneManager::GetInstance().ChangeScene(filePath);
@@ -183,16 +189,22 @@ namespace Editor {
 				}
 				break;
 			}
-			/*case Engine::Input_KeyCode::S: {
+			case Engine::Input_KeyCode::S: {
 				if (ctrl && shift) {
 					SaveAsFileUtil();
 				}
 
 				else if (ctrl) {
-
+					EditorSceneManager::GetInstance().EditorSceneSave();
 				}
 				break;
-			}*/
+			}
+			case Engine::Input_KeyCode::P: {
+				if (ctrl) {
+					EditorSceneManager::GetInstance().EditorScenePlay();
+				}
+				break;
+			}
 			}
 
 			return true;
@@ -409,7 +421,14 @@ namespace Editor {
 			if (inspector_bool) {
 				ImGui::Begin("Inspector", &inspector_bool, window_flags);
 
-				
+				if (EntityId_Check(entity_selected)) return;
+				auto& entityMap = Engine::DreamECS::GetInstance().GetUsedEntityMap();
+				//Remove if entity is deleted
+				const auto& itr = entityMap.find(entity_selected);
+				if (itr == entityMap.end()) {
+					entity_selected = DEFAULT_ENTITY_ID;
+					return;
+				}
 				//float width = 120;
 				//bool selectEntity = 0;
 

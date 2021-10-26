@@ -109,18 +109,18 @@ namespace Engine {
 
 	void DreamECS::Parent(Entity _parent, Entity _child) {
 
-		_child.parent = _parent.id;
+		//_child.parent = _parent.id;
 		//auto& transChild = GetComponent<TransformComponent>(_child);
 
 
 	}
 
 	void DreamECS::Unparent(Entity _child) {
-		Entity tem = _child;
+		/*Entity tem = _child;
 		_child.parent = DEFAULT_ENTITY_ID;
 		auto& transChild = GetComponent<TransformComponent>(_child.id);
 
-		auto size = entityManager->GetUsedEntitySize();
+		auto size = entityManager->GetUsedEntitySize();*/
 		//auto& vec = entityManager->GetUsedEntitySet();
 
 		/*while (tem.parent != DEFAULT_ENTITY_ID) {

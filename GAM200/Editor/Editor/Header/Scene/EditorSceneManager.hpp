@@ -29,11 +29,13 @@ namespace Editor {
 	public:
 
 
-		Engine::KeyPressedFP GetSceneHotKey();
+		//Engine::KeyPressedFP GetSceneHotKey();
+		void EditorScenePlay();
+		void EditorSceneSave();
 		/*
 		Check whether pause or save is pressed and react accordingly
 		*/
-		bool SceneHotKeyCheck(Engine::Input_KeyCode keyCode);
+		//bool SceneHotKeyCheck(Engine::Input_KeyCode keyCode);
 
 		bool Play();
 		void Stop();

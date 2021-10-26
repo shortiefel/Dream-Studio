@@ -33,7 +33,7 @@ Technology is prohibited.
 		for (auto& func : registeredFunctions) {\
 			if (func(*this)) {\
 				this->handled = true;\
-				break;\
+				continue;\
 			}\
 		}\
 	}\

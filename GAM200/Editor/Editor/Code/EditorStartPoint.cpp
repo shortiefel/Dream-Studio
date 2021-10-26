@@ -21,7 +21,6 @@ Technology is prohibited.
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 
 #include "Engine/Header/Event/KeyEvent.hpp" //Register function
-#include "Editor/Header/Scene/EditorSceneManager.hpp"
 
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 #include "Engine/Header/ECS/System/UISystem.hpp"
@@ -35,8 +34,6 @@ namespace Editor {
 
 		//Deserialize then put as position
 		EditorSceneCamera::Create({ 0.f,0.f });
-
-		Engine::KeyPressedEvent::RegisterFunction(EditorSceneManager::GetInstance().GetSceneHotKey());
 	}
 
 	void EditorStartPoint::Update(float) {

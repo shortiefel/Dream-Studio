@@ -62,52 +62,73 @@ namespace Editor {
         Engine::SceneManager::GetInstance().ChangeScene(editorSceneName);
     }
 
-    bool EditorSceneManager::SceneHotKeyCheck(Engine::Input_KeyCode keyCode) {
-        if (keyCode == Engine::Input_KeyCode::P) {
-            if (Engine::GameState::GetInstance().GetPlaying()) {
-                //Destroy current scene and create new scene (default)
-                Stop();
-            }
-
-            else {
-                Play();
-            }
-            return true;
+    void EditorSceneManager::EditorScenePlay() {
+        if (Engine::GameState::GetInstance().GetPlaying()) {
+            //Destroy current scene and create new scene (default)
+            Stop();
         }
 
-        //Save
-        else if (keyCode == Engine::Input_KeyCode::S) {
-            if (!Engine::GameState::GetInstance().GetPlaying()) {
-                Engine::SceneManager::GetInstance().Save();
-                std::cout << "Saving... \n";
-                return true;
-            }
-
-            std::cout << "Scene is Playing. unable to Save... \n";
-            return false;
+        else {
+            Play();
         }
-
-        return true;
     }
 
-    bool SceneHotKey(const Engine::KeyPressedEvent& e) {
-
-        //if (e.GetKeyCode() == Engine::Input_KeyCode::Z) {
-        //    Engine::CommandHistory::Undo();
-        //}
-
-        //else if (e.GetKeyCode() == Engine::Input_KeyCode::Y) {
-        //    Engine::CommandHistory::Redo();
-        //}
-
-        if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Control)) {
-            return EditorSceneManager::GetInstance().SceneHotKeyCheck(e.GetKeyCode());
+    void EditorSceneManager::EditorSceneSave() {
+        if (!Engine::GameState::GetInstance().GetPlaying()) {
+            Engine::SceneManager::GetInstance().Save();
+            GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Saving..." });
+            return;
         }
-        return true;
+
+        GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Scene is Playing. unable to Save..." });
     }
 
-    Engine::KeyPressedFP EditorSceneManager::GetSceneHotKey() {
+    //bool EditorSceneManager::SceneHotKeyCheck(Engine::Input_KeyCode keyCode) {
+    //    //if (keyCode == Engine::Input_KeyCode::P) {
+    //    //    if (Engine::GameState::GetInstance().GetPlaying()) {
+    //    //        //Destroy current scene and create new scene (default)
+    //    //        Stop();
+    //    //    }
+
+    //    //    else {
+    //    //        Play();
+    //    //    }
+    //    //    return true;
+    //    //}
+
+    //    //Save
+    //    /*else if (keyCode == Engine::Input_KeyCode::S) {
+    //        if (!Engine::GameState::GetInstance().GetPlaying()) {
+    //            Engine::SceneManager::GetInstance().Save();
+    //            std::cout << "Saving... \n";
+    //            return true;
+    //        }
+
+    //        std::cout << "Scene is Playing. unable to Save... \n";
+    //        return false;
+    //    }*/
+
+    //    return true;
+    //}
+
+    //bool SceneHotKey(const Engine::KeyPressedEvent& e) {
+
+    //    //if (e.GetKeyCode() == Engine::Input_KeyCode::Z) {
+    //    //    Engine::CommandHistory::Undo();
+    //    //}
+
+    //    //else if (e.GetKeyCode() == Engine::Input_KeyCode::Y) {
+    //    //    Engine::CommandHistory::Redo();
+    //    //}
+
+    //    if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Control)) {
+    //        return EditorSceneManager::GetInstance().SceneHotKeyCheck(e.GetKeyCode());
+    //    }
+    //    return true;
+    //}
+
+    /*Engine::KeyPressedFP EditorSceneManager::GetSceneHotKey() {
         return SceneHotKey;
-    }
+    }*/
 
 }

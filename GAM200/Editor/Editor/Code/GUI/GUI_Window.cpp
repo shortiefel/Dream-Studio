@@ -274,12 +274,6 @@ namespace Editor {
 
 				}
 
-				
-
-				
-				
-				
-
 				ImGui::End();
 			}
 		}
@@ -426,6 +420,10 @@ namespace Editor {
 				*/
 
 
+				/*
+				*	UI component
+				*/
+				
 			
 
 
@@ -496,15 +494,34 @@ namespace Editor {
 					ImGui::PushItemWidth(AvailWidth);
 
 					if (ImGui::Selectable("Transform##addTransformcom"))
+					{
 						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
+						
+					}
+						
 					if (ImGui::Selectable("Collider##addTCollidercom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
-					if (ImGui::Selectable("Script##addScriptcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
 					if (ImGui::Selectable("Camera##addCameracom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
 					if (ImGui::Selectable("Rigid Body##addRigidcom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
+					if (ImGui::Selectable("Script##addScriptcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
+
+					/*if (ImGui::Button("C# Script##addcsdsdscriptbtn", { AvailWidth , 0.f }))
+					{
+						ImGui::OpenPopup("##addScriptPopUp");
+					}
+					ImGui::PushItemWidth(AvailWidth * 2.f);
+					if (ImGui::BeginPopup("##addScriptPopUp"))
+					{
+						auto& scriptsList = scriptComp->klassInstance;
+
+						for (auto& [className, csScriptInstance] : scriptsList) 
+						{
+							scriptsList = scriptsList
+						}
+					}*/
 
 					ImGui::EndPopup();
 				}

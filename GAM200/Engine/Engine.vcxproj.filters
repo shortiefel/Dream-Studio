@@ -145,6 +145,9 @@
     <ClCompile Include="Engine\Code\Graphic\Picking2D.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\UI\Button.cpp">
+      <Filter>Source Files\ECS\Component\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -446,6 +449,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\Picking2D.hpp">
       <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\UI\Button.hpp">
+      <Filter>Header Files\ECS\Component\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -256,41 +256,13 @@ namespace Editor {
 
 				/**
 				* Game Objects
-				*/
+				*/		
 
-				//if (ImGui::TreeNode("Camera")) {
-
-				//	static ImGuiTreeNodeFlags base_Flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-				//	static bool alignmentPosition = false;
-
-				//	/*ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnArrow", &base_Flags, ImGuiTreeNodeFlags_OpenOnArrow);
-				//	ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnDoubleClick", &base_Flags, ImGuiTreeNodeFlags_OpenOnDoubleClick);*/
-
-				//	if (alignmentPosition)
-				//		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-
-				//	/*Engine::Entity entity_selected = Engine::Entity{ 0 };
-				//	std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
-
-				//	for (int i = 0; i < entity_set.size(); i++)
-				//	{
-				//		ImGui::Text(entity_set[i].name.c_str());
-				//		
-				//	}*/
-				//	ImGui::TreePop();
-				//}
-
-				//Engine::Entity entity_selected = Engine::Entity{ 0 };
-
-				
 				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
-
 				//highlight when object is currently selected
 				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
 					| ImGuiTreeNodeFlags_OpenOnDoubleClick
 					| ImGuiTreeNodeFlags_SpanAvailWidth;
-
-			
 
 				for (int i = 0; i < entity_set.size(); i++)
 				{
@@ -389,30 +361,58 @@ namespace Editor {
 
 				/*
 				*	Camera component
+				* 
+				*	--> missing zooming
 				*/
 				Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
-				{
+				if (camComp != nullptr) {
+					ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
+					ImGui::SameLine();
 
-					if (camComp != nullptr) {
-						ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
+					if (ImGui::TreeNode("Camera"))
+					{
+						ImGui::Text("FOV");
+						ImGui::SameLine();
+						ImGui::InputFloat("##camFOV", &camComp->fov, 0.0f);
+
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::CameraComponent>(entity_selected);
+
+						ImGui::TreePop();
+					}
+						
+				}
+
+
+				/*
+				*	RigidBody component
+				*/
+				Engine::RigidBodyComponent* rigidComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::RigidBodyComponent>(entity_selected);
+				{
+					if (rigidComp != nullptr)
+					{
+						ImGui::CheckBox_Dream("##RidgidActive", &(rigidComp->isActive));
 						ImGui::SameLine();
 
-						if (ImGui::TreeNode("Camera"))
+						if (ImGui::TreeNode("Rigid Body"))
 						{
-							ImGui::Text("FOV");
+							ImGui::Text("Speed");
 							ImGui::SameLine();
-							ImGui::InputFloat("##camFOV", &camComp->fov, 0.0f);
+							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.0f);
 
 							//deleteComponent
-							if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
-								Engine::DreamECS::GetInstance().RemoveComponent<Engine::CameraComponent>(entity_selected);
+							if (ImGui::Button("Delete Component##DeleteRigid", { ImGui::GetContentRegionAvail().x, 0 }))
+								Engine::DreamECS::GetInstance().RemoveComponent<Engine::RigidBodyComponent>(entity_selected);
 
 							ImGui::TreePop();
 						}
-						
 					}
-
 				}
+
+				/*
+				*	Texture component
+				*/
 
 
 				/*
@@ -424,6 +424,10 @@ namespace Editor {
 				/*
 				*	Color component
 				*/
+
+
+			
+
 
 
 
@@ -499,6 +503,8 @@ namespace Editor {
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
 					if (ImGui::Selectable("Camera##addCameracom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+					if (ImGui::Selectable("Rigid Body##addRigidcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
 
 					ImGui::EndPopup();
 				}

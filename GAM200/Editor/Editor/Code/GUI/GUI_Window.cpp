@@ -408,6 +408,24 @@ namespace Editor {
 				/*
 				*	Texture component
 				*/
+				Engine::TextureComponent* textureComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextureComponent>(entity_selected);
+				if (textureComp != nullptr)
+				{
+					ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
+					ImGui::SameLine();
+
+					if (ImGui::TreeNode("Texture"))
+					{
+						ImGui::Text("im texture test");
+
+
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteTexture", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextureComponent>(entity_selected);
+
+						ImGui::TreePop();
+					}
+				}
 
 
 				/*
@@ -508,6 +526,8 @@ namespace Editor {
 						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
 					if (ImGui::Selectable("Script##addScriptcom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
+					if (ImGui::Selectable("Texture##addTexturecom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TextureComponent>(entity_selected);
 
 					/*if (ImGui::Button("C# Script##addcsdsdscriptbtn", { AvailWidth , 0.f }))
 					{

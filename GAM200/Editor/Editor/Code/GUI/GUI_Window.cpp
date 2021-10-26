@@ -606,12 +606,12 @@ namespace Editor {
 				//ImGui::PushID(sceneCount++);
 				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 				{
-					if (relative_path == "Scenes\test2.scene")
+					if (filenameString == "Assets/Scenes/test2.scene")
 					{
 						Engine::SceneManager::GetInstance().ChangeScene("test2");
 					}
 
-					else if (relative_path.string() == "Scenes\test3.scene")
+					else if (relative_path.string() == "Scenes/test3.scene")
 					{
 						Engine::SceneManager::GetInstance().ChangeScene("test3");
 					}

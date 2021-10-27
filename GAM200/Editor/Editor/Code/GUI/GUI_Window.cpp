@@ -122,7 +122,6 @@ namespace Editor {
 
 		void	NewFileUtil();
 		void	OpenFileUtil();
-		void	SaveFileUtil();
 		void	SaveAsFileUtil();
 		bool	OnKeyEvent(Engine::KeyPressedEvent& e);
 
@@ -149,10 +148,6 @@ namespace Editor {
 
 				Engine::SceneManager::GetInstance().ChangeScene(filePath);
 			}
-		}
-
-		void SaveFileUtil() {
-
 		}
 
 		void SaveAsFileUtil() {
@@ -356,14 +351,6 @@ namespace Editor {
 			}
 			ImGui::PopItemFlag();
 
-			ImGui::SameLine();
-			ImGui::PushItemWidth(wSize.x / 2 + 20);
-			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
-			if (ImGui::Button("Save", (ImVec2{ 40, 30 }))) {
-				Engine::SceneManager::GetInstance().Save();
-			}
-			ImGui::PopItemFlag();
-
 			ImGui::End();
 			
 		}
@@ -411,12 +398,16 @@ namespace Editor {
 			if (inspector_bool) {
 				ImGui::Begin("Inspector", &inspector_bool, window_flags);
 
-				if (EntityId_Check(entity_selected)) return;
+				if (EntityId_Check(entity_selected)) {
+					ImGui::End();
+					return;
+				}
 				auto& entityMap = Engine::DreamECS::GetInstance().GetUsedEntityMap();
 				//Remove if entity is deleted
 				const auto& itr = entityMap.find(entity_selected);
 				if (itr == entityMap.end()) {
 					entity_selected = DEFAULT_ENTITY_ID;
+					ImGui::End();
 					return;
 				}
 				//float width = 120;

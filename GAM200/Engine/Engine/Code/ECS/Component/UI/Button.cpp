@@ -16,8 +16,6 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/UI/Button.hpp"
 
-
-
 namespace Engine {
 
 	ButtonComponent::ButtonComponent(const std::string& label) : ButtonLabel{label}, BState{ButtonState::RELEASED}
@@ -54,6 +52,22 @@ namespace Engine {
 	void ButtonComponent::OnUpdate()
 	{
 
+	}
+
+	void ButtonComponent::OnRender()
+	{
+		//need jw to draw
+	}
+
+	//ButtonComponent& ButtonComponent::Deserialize(const DSerializer& _serializer) 
+	//{
+	//	//jw help is needed
+	//}
+
+	void ButtonComponent::Serialize(const SSerializer& _serializer)
+	{
+		_serializer.SetValue("ButtonLabel", ButtonLabel);
+		_serializer.SetValue("BState", BState);
 	}
 
 }

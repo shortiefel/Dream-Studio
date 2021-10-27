@@ -46,8 +46,9 @@ namespace Engine {
 
 			inline void SetAction(const Action& action) { AHandler = action; }
 
-			virtual void OnAction();
-			virtual void OnUpdate();
+			void OnAction();
+			void OnUpdate();
+			void OnRender(); 
 
 			ButtonComponent& Deserialize(const DSerializer& _serializer);
 			void Serialize(const SSerializer& _serializer);

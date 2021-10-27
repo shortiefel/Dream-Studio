@@ -255,24 +255,35 @@ namespace Editor {
 			if (hierarchy_bool) {
 				ImGui::Begin("Hierarchy", &hierarchy_bool, window_flags);
 
-				if (ImGui::CollapsingHeader("Game Objects"))
+				/**
+				*	Game Object Create
+				*/
+				if (ImGui::Button("Create Game Object##CreateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 				{
-					/**
-					*	Game Object Create
-					*/
-					if (ImGui::Button("Create Game Object##CreateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
-					{
-						Engine::DreamECS::GetInstance().CreateEntity();
-					}
+					Engine::DreamECS::GetInstance().CreateEntity();
+				}
+
+				if (ImGui::BeginPopupContextWindow())
+				{
+					
 
 					/**
 					*	Game Object Delete
 					*/
-					if (ImGui::Button("Delete Game Object##DeleteGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					if (ImGui::Button("Delete##DeleteGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
 						Engine::DreamECS::GetInstance().DestroyEntity(entity_selected);
 					}
 
+					/**
+					*	Game Object Duplicate
+					*/
+					if (ImGui::Button("Duplicate##DuplicateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					{
+						Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(entity_selected);
+					}
+
+					ImGui::EndPopup();
 				}
 
 

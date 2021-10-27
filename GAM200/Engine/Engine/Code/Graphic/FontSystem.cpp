@@ -40,8 +40,6 @@ namespace Engine
 
     void FontSystem::RenderText(GLSLShader &shader, std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation)
     {
-        // activate corresponding render state	
-        shader.Use();
         //Backup state to add in more for texture
         GLenum last_active_texture;
         glGetIntegerv(GL_ACTIVE_TEXTURE, (GLint*)&last_active_texture);
@@ -82,8 +80,9 @@ namespace Engine
         GLboolean last_enable_scissor_test = glIsEnabled(GL_SCISSOR_TEST);
 
         glEnable(GL_CULL_FACE);
-        //Activate corresponding render state in application
-        //font_shader.Draw_begin();
+        // activate corresponding render state	
+        shader.Use();
+        glUniform3f(glGetUniformLocation(shader.GetHandle(), "textColor"), colour.x, colour.y, colour.z);
         glm::mat4 mat(1.0f);
         mat = glm::rotate(mat, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
 
@@ -92,8 +91,8 @@ namespace Engine
 
         glm::mat4 projection = glm::ortho(0.0f, (float)v_screen_width, 0.0f, (float)v_screen_height);
         mat = projection * mat;
-        //font_shader.SetMat4f("projection", mat);
-        //font_shader.SetVec3f("textColour", colour);
+        //shader.SetMat4f("projection", mat);
+        //shader.SetVec3f("textColour", colour);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(vao);
 
@@ -261,6 +260,28 @@ namespace Engine
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, NULL);
 
             glDisable(GL_CULL_FACE);
+        }
+    }
+
+    bool FontSystem::Load(std::string path)
+    {
+        std::string temp = "DefaultFont";
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glm::mat4 projection = glm::ortho(-640.0f, 640.0f, -512.0f, 512.0f, -150.0f, 150.0f);
+
+        //Freetype Settings
+        FT_Library ft;
+        if (FT_Init_FreeType(&ft) != 0) {
+            std::cout << "Couldn't initialize FreeType library\n";
+            return false;
+        }
+
+        FT_Face face;
+        if (FT_New_Face(ft, path.c_str(), 0, &face) != 0) {
+            std::cout << "ERROR::FREETYPE: Failed to load font\n";
+            return false;
         }
     }
 };

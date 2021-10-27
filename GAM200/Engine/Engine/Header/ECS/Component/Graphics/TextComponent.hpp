@@ -4,7 +4,7 @@
 @author  Goh See Yong Denise	g.seeyongdenise@digipen.edu
 @date    27/10/2021
 @brief
-This file contain the FontComponent declaration
+This file contain the TextComponent declaration
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.

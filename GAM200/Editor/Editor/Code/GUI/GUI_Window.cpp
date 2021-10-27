@@ -539,8 +539,8 @@ namespace Editor {
 				/*
 				*	Text component
 				*/
-
-
+				//Engine::TextureComponent* textComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextureComponent>(entity_selected);
+				
 
 				/*
 				*	Color component

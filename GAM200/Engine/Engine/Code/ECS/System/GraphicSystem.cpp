@@ -24,6 +24,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
+#include "Engine/Header/ECS/Component/Graphics/TextComponent.hpp"
 
 #include "Engine/Header/Graphic/Mesh.hpp"
 #include "Engine/Header/Graphic/Shader.hpp"
@@ -89,6 +90,38 @@ namespace Engine
 					else if (texture.mdl_ref == GraphicShape::CIRCLE)
 					{
 						GraphicImplementation::Renderer::DrawCircleDebug(collider->offset_position + transform->position,
+							collider->offset_scale * transform->scale,
+							transform->angle);
+					}
+				}
+			}
+		}
+
+		//load text render
+		const auto& textArray = DreamECS::GetInstance().GetComponentArrayData<TextComponent>();
+		for (const auto& font : textArray)
+		{
+			const Entity_id& font_entity_id = font.GetEntityId();
+			if (EntityId_Check(font_entity_id)) break;
+			if (!font.isActive) continue;
+
+			//get the transform component
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(font_entity_id);
+			TextComponent* fontComp = DreamECS::GetInstance().GetComponentPTR<TextComponent>(font_entity_id);
+			if (!transform || !transform->isActive) continue;
+
+			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, font.texobj_hdl);
+
+			// to draw debug lines
+			if (isDebugDraw == GL_TRUE) {
+				ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(font_entity_id);
+
+				// when object has collider, get collider matrix
+				if (collider != nullptr)
+				{
+					if (font.mdl_ref == GraphicShape::SQUARE)
+					{
+						GraphicImplementation::Renderer::DrawQuadDebug(collider->offset_position + transform->position,
 							collider->offset_scale * transform->scale,
 							transform->angle);
 					}

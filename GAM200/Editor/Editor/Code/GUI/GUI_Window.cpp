@@ -255,8 +255,33 @@ namespace Editor {
 			if (hierarchy_bool) {
 				ImGui::Begin("Hierarchy", &hierarchy_bool, window_flags);
 
+				if (ImGui::CollapsingHeader("Game Objects"))
+				{
+					/**
+					*	Game Object Create
+					*/
+					if (ImGui::Button("Create Game Object##CreateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					{
+						Engine::DreamECS::GetInstance().CreateEntity();
+					}
+
+					/**
+					*	Game Object Delete
+					*/
+					if (ImGui::Button("Delete Game Object##DeleteGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					{
+						Engine::DreamECS::GetInstance().DestroyEntity(entity_selected);
+					}
+
+				}
+
+
+				
+					
+
+
 				/**
-				* Game Objects
+				*	Game Objects Listing
 				*/		
 
 				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
@@ -291,12 +316,16 @@ namespace Editor {
 				*	Transform Properties
 				*/
 				Engine::TransformComponent* transComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TransformComponent>(entity_selected);
-				if (transComp != nullptr) {
+				if (transComp != nullptr) 
+				{
 
-					ImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
-					ImGui::SameLine();
-
-					if (ImGui::TreeNode("Transform")) {
+					if (ImGui::CollapsingHeader("Transform")) 
+					{
+						ImGui::Spacing();
+						ImGui::Text("Is Active");
+						ImGui::SameLine();
+						ImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
+						
 						ImGui::Spacing();
 						//Updating of position
 						ImGui::Text("Position");
@@ -328,7 +357,7 @@ namespace Editor {
 						if (ImGui::Button("Delete Component##DeleteTransform", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TransformComponent>(entity_selected);
 
-						ImGui::TreePop();
+
 					}
 				}
 
@@ -336,12 +365,17 @@ namespace Editor {
 				*	Collider for each component
 				*/
 				Engine::ColliderComponent* colComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::ColliderComponent>(entity_selected);
-				if (colComp != nullptr) {
+				if (colComp != nullptr) 
+				{
 
-					ImGui::CheckBox_Dream("##ColliderActive", &(colComp->isActive));
-					ImGui::SameLine();
+					if (ImGui::CollapsingHeader("Collider")) 
+					{
+						ImGui::Spacing();
+						ImGui::Text("Is Active");
+						ImGui::SameLine();
+						ImGui::CheckBox_Dream("##ColliderActive", &(colComp->isActive));
 
-					if (ImGui::TreeNode("Collider")) {
+						ImGui::Spacing();
 						ImGui::Text("Scale");
 						ImGui::SameLine();
 						ImGui::DragFloat3("##colliderScale", &colComp->offset_scale.x, 0.0f);
@@ -349,8 +383,6 @@ namespace Editor {
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteCollider", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::ColliderComponent>(entity_selected);
-
-						ImGui::TreePop();
 					}
 				}
 
@@ -361,11 +393,15 @@ namespace Editor {
 				*/
 				Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
 				if (camComp != nullptr) {
-					ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
-					ImGui::SameLine();
 
-					if (ImGui::TreeNode("Camera"))
+					if (ImGui::CollapsingHeader("Camera"))
 					{
+						ImGui::Spacing();
+						ImGui::Text("Is Active");
+						ImGui::SameLine();
+						ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
+
+						ImGui::Spacing();
 						ImGui::Text("FOV");
 						ImGui::SameLine();
 						ImGui::InputFloat("##camFOV", &camComp->fov, 0.0f);
@@ -374,7 +410,6 @@ namespace Editor {
 						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::CameraComponent>(entity_selected);
 
-						ImGui::TreePop();
 					}
 						
 				}
@@ -387,11 +422,15 @@ namespace Editor {
 				{
 					if (rigidComp != nullptr)
 					{
-						ImGui::CheckBox_Dream("##RidgidActive", &(rigidComp->isActive));
-						ImGui::SameLine();
 
-						if (ImGui::TreeNode("Rigid Body"))
+						if (ImGui::CollapsingHeader("Rigid Body"))
 						{
+							ImGui::Spacing();
+							ImGui::Text("Is Active");
+							ImGui::SameLine();
+							ImGui::CheckBox_Dream("##RidgidActive", &(rigidComp->isActive));
+							ImGui::Spacing();
+
 							ImGui::Text("Speed");
 							ImGui::SameLine();
 							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.0f);
@@ -400,7 +439,6 @@ namespace Editor {
 							if (ImGui::Button("Delete Component##DeleteRigid", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::DreamECS::GetInstance().RemoveComponent<Engine::RigidBodyComponent>(entity_selected);
 
-							ImGui::TreePop();
 						}
 					}
 				}
@@ -411,19 +449,20 @@ namespace Editor {
 				Engine::TextureComponent* textureComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextureComponent>(entity_selected);
 				if (textureComp != nullptr)
 				{
-					ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
-					ImGui::SameLine();
 
-					if (ImGui::TreeNode("Texture"))
+					if (ImGui::CollapsingHeader("Texture"))
 					{
-						ImGui::Text("im texture test");
+						ImGui::Spacing();
+						ImGui::Text("Is Active");
+						ImGui::SameLine();
+						ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
+						ImGui::Spacing();
 
 
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteTexture", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextureComponent>(entity_selected);
 
-						ImGui::TreePop();
 					}
 				}
 
@@ -458,42 +497,48 @@ namespace Editor {
 
 						for (auto& [className, csScriptInstance] : scriptsList) {
 							//ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
-							ImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
-							ImGui::SameLine();
+							
+							if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str())) 
+							{
 
-							if (ImGui::TreeNode(std::string{ className + " (Script)" }.c_str())) {
-								for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
+								ImGui::Spacing();
+								ImGui::Text("Is Active");
+								ImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), & (csScriptInstance.isActive));
+								ImGui::SameLine();
+								ImGui::Spacing();
+
+								for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) 
+								{
 									ImGui::Text(varName.c_str());
 									ImGui::SameLine();
-									switch (csPublicVariable.variableType) {
-									case Engine::CSType::CHAR:
-										//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
-										break;
-									case Engine::CSType::BOOL:
-										ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
-										break;
-									case Engine::CSType::FLOAT:
-										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
-										break;
-									case Engine::CSType::INT:
-										ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
-										break;
-									case Engine::CSType::UINT:
-										//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
-										break;
-									case Engine::CSType::VEC2:
-										Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
-										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
-										break;
+									switch (csPublicVariable.variableType) 
+									{
+										case Engine::CSType::CHAR:
+											//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
+											break;
+										case Engine::CSType::BOOL:
+											ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
+											break;
+										case Engine::CSType::FLOAT:
+											ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
+											break;
+										case Engine::CSType::INT:
+											ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
+											break;
+										case Engine::CSType::UINT:
+											//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
+											break;
+										case Engine::CSType::VEC2:
+											Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
+											ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
+											ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
+											break;
 									}
 								}
 
 								//deleteComponent
 								if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
 									Engine::DreamECS::GetInstance().RemoveComponent<Engine::ScriptComponent>(entity_selected);
-
-								ImGui::TreePop();
 							}
 						}
 				}

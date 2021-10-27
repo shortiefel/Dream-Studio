@@ -45,3 +45,5 @@ C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\Editor\Data\Data\CSScript
 C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\Editor\Data\Data\CSScript\CSScript.dll
 C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\Editor\Data\Data\CSScript\CSScript.pdb
 C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\CSScript.pdb
+C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.dll
+C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.pdb

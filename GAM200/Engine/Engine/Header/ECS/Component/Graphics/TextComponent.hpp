@@ -36,8 +36,6 @@ namespace Engine
 
 		std::string filepath = "";
 
-		//GraphicShape mdl_ref = GraphicShape{};
-
 		std::string fontstring = "";
 
 		bool isActive = true;

@@ -46,7 +46,7 @@ namespace Engine
 
 		//void(*pickingFP)() = []() {};
 
-		FontSystem* font_system;
+		FontSystem font_system;
 		SINGLETON_SETUP(GraphicSystem);
 	};
 }

@@ -247,7 +247,7 @@ namespace Engine
     glEnable(GL_CULL_FACE);
     // activate corresponding render state	
     glBindVertexArray(vao);
-    shader.GetHandle();
+    //shader.GetHandle();
     glUniform3f(glGetUniformLocation(shader.GetHandle(), "textColor"), colour.x, colour.y, colour.z);
     glm::mat4 mat(1.0f);
     mat = glm::rotate(mat, rotation, glm::vec3(0.0f, 0.0f, 1.0f));

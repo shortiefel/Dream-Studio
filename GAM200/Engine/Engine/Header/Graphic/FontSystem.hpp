@@ -37,7 +37,7 @@ namespace Engine
 	{
 	public:
 		FontSystem() = default;
-		~FontSystem();
+		//~FontSystem();
 		void RenderText(GLSLShader &shader, std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation);
 		void Init();
 		void Draw();

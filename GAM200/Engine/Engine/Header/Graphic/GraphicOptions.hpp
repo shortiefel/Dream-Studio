@@ -22,15 +22,23 @@ namespace Engine
 	enum class GraphicShape 
 	{
 		SQUARE = 0,
-		CIRCLE,
-		DEBUG_BOX,
-		DEBUG_CIRCLE
+		CIRCLE
 	};
 
 	enum class GraphicShader 
 	{
 		DEFAULT = 0,
 		DEBUG_DRAW
+	};
+
+	enum class GraphicLayer
+	{
+		BG = 0,		//BACKGROUND
+		BG_TO_GO,
+		GO,			//GAME OBJECT
+		GO_TO_UI,
+		UI,			//USER INTERFACE
+		COUNT = 5
 	};
 }
 

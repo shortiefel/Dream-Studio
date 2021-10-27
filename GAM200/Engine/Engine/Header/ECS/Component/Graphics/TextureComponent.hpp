@@ -31,22 +31,21 @@ namespace Engine
 
 	struct TextureComponent : public IComponent
 	{
-	public:
-		GLuint texobj_hdl = GLuint{};
+		GraphicShape mdl_ref = GraphicShape{};
+		GraphicLayer layerIndex = GraphicLayer{};
 
 		std::string filepath = "";
-
-		GraphicShape mdl_ref = GraphicShape{};
-
-		bool isActive = true;
+		GLuint texobj_hdl = GLuint{};
 
 		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
+
+		bool isActive = true;
 
 		TextureComponent(const TextureComponent&) = default;
 		~TextureComponent();
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
-			GraphicShape _shape = GraphicShape::SQUARE, bool _active = true);
+			GraphicShape _shape = GraphicShape::SQUARE, bool _active = true, GraphicLayer _layer = GraphicLayer::GO);
 
 		TextureComponent& operator= (const TextureComponent&) = default;
 

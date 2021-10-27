@@ -29,25 +29,26 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Shader.hpp"
 #include "Engine/Header/Graphic/GLSLShader.hpp"
 
-//#include "Engine/Header/Graphic/Graphic.hpp"
-//#include "Engine/Header/Graphic/GraphicOptions.hpp"
-//#include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Graphic/Graphic.hpp"
+#include "Engine/Header/Graphic/GraphicOptions.hpp"
+#include "Engine/Header/Management/TextureManager.hpp"
+
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 
 namespace Engine
 {
+	// forward declaration
+	void TextureLayer(const std::array<TextureComponent, MAX_ENTITIES>& arr, bool debugdrawCheck, int layer);
+
 	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo)
 	{
 		GLboolean isDebugDraw;
-		if (!_fbo)
-			isDebugDraw = GL_FALSE;
-		else
-			isDebugDraw = GL_TRUE;
 
-		//GraphicImplementation::BindFramebuffer();
-		if (!isDebugDraw)
-			fbo.Bind();
-		else
-			_fbo->Bind();
+		if (!_fbo) isDebugDraw = GL_FALSE;
+		else isDebugDraw = GL_TRUE;
+
+		if (!isDebugDraw) fbo.Bind();
+		else _fbo->Bind();
 
 		// Set background to purple color
 		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
@@ -62,38 +63,11 @@ namespace Engine
 
 		//Check texture because less Texture component on entity than Transform
 		const auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<TextureComponent>();
-		for (const auto& texture : textureArray)
+
+		// looping through all layers
+		for (int i = 0; i < static_cast<int>(GraphicLayer::COUNT); i++)
 		{
-			const Entity_id& entity_id = texture.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
-			if (!texture.isActive) continue;
-
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
-			if (!transform || !transform->isActive) continue;
-
-			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, texture.texobj_hdl);
-
-			// to draw debug lines
-			if (isDebugDraw == GL_TRUE) {
-				ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity_id);
-
-				// when object has collider, get collider matrix
-				if (collider != nullptr)
-				{
-					if (texture.mdl_ref == GraphicShape::SQUARE)
-					{
-						GraphicImplementation::Renderer::DrawQuadDebug(collider->offset_position + transform->position,
-							collider->offset_scale * transform->scale,
-							transform->angle);
-					}
-					else if (texture.mdl_ref == GraphicShape::CIRCLE)
-					{
-						GraphicImplementation::Renderer::DrawCircleDebug(collider->offset_position + transform->position,
-							collider->offset_scale * transform->scale,
-							transform->angle);
-					}
-				}
-			}
+			TextureLayer(textureArray, isDebugDraw, i);
 		}
 
 		glEnable(GL_BLEND);
@@ -104,24 +78,20 @@ namespace Engine
 		GraphicImplementation::Renderer::EndBatch(isDebugDraw);
 		GraphicImplementation::Renderer::Flush(isDebugDraw);
 
-		// unload shader program
+		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-		//GraphicImplementation::UnbindFramebuffer();
-		if (!isDebugDraw)
-			fbo.Unbind();
-		else
-			_fbo->Unbind();
-
-		//Check for picking after graphic is done
-		//pickingFP();
+		if (!isDebugDraw) fbo.Unbind();
+		else _fbo->Unbind();
 	}
 
-	const Graphic::FrameBuffer& GraphicSystem::GetFrameBuffer() const {
+	const Graphic::FrameBuffer& GraphicSystem::GetFrameBuffer() const
+	{
 		return fbo;
 	}
 
-	/*void GraphicSystem::SetPickingFunction(void(*fp)()) {
+	/*void GraphicSystem::SetPickingFunction(void(*fp)())
+	{
 		pickingFP = fp;
 	}*/
 
@@ -155,7 +125,84 @@ namespace Engine
 		GraphicImplementation::Renderer::Shutdown();
 		LOG_INSTANCE("Graphic System destroyed");
 	}
+
+	// Loop through array and render objects based on layer, which is then pass to batch render.
+	void TextureLayer(const std::array<TextureComponent, MAX_ENTITIES>& arr, bool _isDebugDraw, int layer)
+	{
+		for (const auto& texture : arr)
+		{
+			if (texture.layerIndex == static_cast<GraphicLayer>(layer))
+			{
+				const Entity_id& entity_id = texture.GetEntityId();
+				if (EntityId_Check(entity_id)) break;
+				if (!texture.isActive) continue;
+
+				TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
+				if (!transform || !transform->isActive) continue;
+
+				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, texture.texobj_hdl);
+
+				// to draw debug lines
+				if (_isDebugDraw == GL_TRUE) {
+					ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity_id);
+
+					// when object has collider, get collider matrix
+					if (collider != nullptr)
+					{
+						if (texture.mdl_ref == GraphicShape::SQUARE)
+						{
+							GraphicImplementation::Renderer::DrawQuadDebug(collider->offset_position + transform->position,
+								collider->offset_scale * transform->scale,
+								transform->angle);
+						}
+						else if (texture.mdl_ref == GraphicShape::CIRCLE)
+						{
+							GraphicImplementation::Renderer::DrawCircleDebug(collider->offset_position + transform->position,
+								collider->offset_scale * transform->scale,
+								transform->angle);
+						}
+					}
+				}
+			}
+		}
+	}
 }
+
+/*
+for (const auto& texture : textureArray)
+{
+	const Entity& entity = texture.GetEntity();
+	if (Entity_Check(entity)) break;
+	if (!texture.isActive) continue;
+
+	TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity);
+	if (!transform || !transform->isActive) continue;
+
+	GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, texture.texobj_hdl);
+
+	// to draw debug lines
+	if (isDebugDraw == GL_TRUE) {
+		ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity);
+
+		// when object has collider, get collider matrix
+		if (collider != nullptr)
+		{
+			if (texture.mdl_ref == GraphicShape::SQUARE)
+			{
+				GraphicImplementation::Renderer::DrawQuadDebug(collider->offset_position + transform->position,
+					collider->offset_scale * transform->scale,
+					transform->angle);
+			}
+			else if (texture.mdl_ref == GraphicShape::CIRCLE)
+			{
+				GraphicImplementation::Renderer::DrawCircleDebug(collider->offset_position + transform->position,
+					collider->offset_scale * transform->scale,
+					transform->angle);
+			}
+		}
+	}
+}
+*/
 
 /*
 //Check texture because less Texture component on entity than Transform

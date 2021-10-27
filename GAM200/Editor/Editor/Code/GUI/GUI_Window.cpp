@@ -39,6 +39,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
+#include "Engine/Header/ECS/Component/UI/Button.hpp"
 
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
@@ -360,33 +361,62 @@ namespace Editor {
 				ImGui::Begin("Hierarchy", &hierarchy_bool, window_flags);
 
 				/**
-				* Game Objects
+				*	Game Object Create
+				*/
+				if (ImGui::Button("Create Game Object##CreateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+				{
+					Engine::DreamECS::GetInstance().CreateEntity();
+				}
+
+				if (ImGui::BeginPopupContextWindow())
+				{
+					
+
+					/**
+					*	Game Object Delete
+					*/
+					if (ImGui::Button("Delete##DeleteGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					{
+						Engine::DreamECS::GetInstance().DestroyEntity(entity_selected);
+					}
+
+					/**
+					*	Game Object Duplicate
+					*/
+					if (ImGui::Button("Duplicate##DuplicateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					{
+						Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(entity_selected);
+					}
+
+					ImGui::EndPopup();
+				}
+
+
+				
+					
+
+
+				/**
+				*	Game Objects Listing
 				*/		
 
 				//Engine::Entity entity_selected = Engine::Entity{ 0 };
 				/*std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
 				
-				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
+				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();*/
+
 				//highlight when object is currently selected
 				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
 					| ImGuiTreeNodeFlags_OpenOnDoubleClick
 					| ImGuiTreeNodeFlags_SpanAvailWidth;
 
-				for (int i = 0; i < entity_set.size(); i++)
-				{
-					if (ImGui::Selectable(entity_set[i].name.c_str()))
-					{
-						entity_selected = entity_set[i];
-					}
-
-
-				}*/
-
 				auto& entity_map = Engine::DreamECS::GetInstance().GetUsedEntityMap();
 				for (auto& [id, entity] : entity_map)
 				{
-					ImGui::Text(entity.name.c_str());
-
+					if (ImGui::Selectable(entity.name.c_str()))
+					{
+						entity_selected = entity_set[i];
+					}
 				}
 				
 
@@ -417,12 +447,13 @@ namespace Editor {
 				*	Transform Properties
 				*/
 				Engine::TransformComponent* transComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TransformComponent>(entity_selected);
-				if (transComp != nullptr) {
-
+				if (transComp != nullptr) 
+				{
 					ImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
 					ImGui::SameLine();
 
-					if (ImGui::TreeNode("Transform")) {
+					if (ImGui::CollapsingHeader("Transform")) 
+					{
 						ImGui::Spacing();
 						//Updating of position
 						ImGui::Text("Position");
@@ -454,7 +485,7 @@ namespace Editor {
 						if (ImGui::Button("Delete Component##DeleteTransform", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TransformComponent>(entity_selected);
 
-						ImGui::TreePop();
+
 					}
 				}
 
@@ -462,12 +493,15 @@ namespace Editor {
 				*	Collider for each component
 				*/
 				Engine::ColliderComponent* colComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::ColliderComponent>(entity_selected);
-				if (colComp != nullptr) {
+				if (colComp != nullptr) 
+				{
 
 					ImGui::CheckBox_Dream("##ColliderActive", &(colComp->isActive));
 					ImGui::SameLine();
 
-					if (ImGui::TreeNode("Collider")) {
+					if (ImGui::CollapsingHeader("Collider")) 
+					{
+						ImGui::Spacing();
 						ImGui::Text("Scale");
 						ImGui::SameLine();
 						ImGui::DragFloat3("##colliderScale", &colComp->offset_scale.x, 0.0f);
@@ -475,8 +509,6 @@ namespace Editor {
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteCollider", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::ColliderComponent>(entity_selected);
-
-						ImGui::TreePop();
 					}
 				}
 
@@ -487,11 +519,13 @@ namespace Editor {
 				*/
 				Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
 				if (camComp != nullptr) {
+
 					ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
 					ImGui::SameLine();
 
-					if (ImGui::TreeNode("Camera"))
+					if (ImGui::CollapsingHeader("Camera"))
 					{
+						ImGui::Spacing();
 						ImGui::Text("FOV");
 						ImGui::SameLine();
 						ImGui::InputFloat("##camFOV", &camComp->fov, 0.0f);
@@ -500,7 +534,6 @@ namespace Editor {
 						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::CameraComponent>(entity_selected);
 
-						ImGui::TreePop();
 					}
 						
 				}
@@ -516,8 +549,9 @@ namespace Editor {
 						ImGui::CheckBox_Dream("##RidgidActive", &(rigidComp->isActive));
 						ImGui::SameLine();
 
-						if (ImGui::TreeNode("Rigid Body"))
+						if (ImGui::CollapsingHeader("Rigid Body"))
 						{
+							ImGui::Spacing();
 							ImGui::Text("Speed");
 							ImGui::SameLine();
 							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.0f);
@@ -526,7 +560,6 @@ namespace Editor {
 							if (ImGui::Button("Delete Component##DeleteRigid", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::DreamECS::GetInstance().RemoveComponent<Engine::RigidBodyComponent>(entity_selected);
 
-							ImGui::TreePop();
 						}
 					}
 				}
@@ -534,6 +567,25 @@ namespace Editor {
 				/*
 				*	Texture component
 				*/
+				Engine::TextureComponent* textureComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextureComponent>(entity_selected);
+				if (textureComp != nullptr)
+				{
+					ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
+					ImGui::SameLine();
+
+					if (ImGui::CollapsingHeader("Texture"))
+					{
+						ImGui::Spacing();
+						ImGui::Text("Is Active");
+						
+						
+				
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteTexture", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextureComponent>(entity_selected);
+
+					}
+				}
 
 
 				/*
@@ -546,6 +598,10 @@ namespace Editor {
 				*	Color component
 				*/
 
+
+				/*
+				*	UI component
+				*/
 
 			
 
@@ -564,32 +620,36 @@ namespace Editor {
 							//ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
 							ImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
 							ImGui::SameLine();
+							if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str())) 
+							{
+								ImGui::Spacing();
 
-							if (ImGui::TreeNode(std::string{ className + " (Script)" }.c_str())) {
-								for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
+								for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) 
+								{
 									ImGui::Text(varName.c_str());
 									ImGui::SameLine();
-									switch (csPublicVariable.variableType) {
-									case Engine::CSType::CHAR:
-										//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
-										break;
-									case Engine::CSType::BOOL:
-										ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
-										break;
-									case Engine::CSType::FLOAT:
-										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
-										break;
-									case Engine::CSType::INT:
-										ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
-										break;
-									case Engine::CSType::UINT:
-										//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
-										break;
-									case Engine::CSType::VEC2:
-										Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
-										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
-										break;
+									switch (csPublicVariable.variableType) 
+									{
+										case Engine::CSType::CHAR:
+											//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
+											break;
+										case Engine::CSType::BOOL:
+											ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
+											break;
+										case Engine::CSType::FLOAT:
+											ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
+											break;
+										case Engine::CSType::INT:
+											ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
+											break;
+										case Engine::CSType::UINT:
+											//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
+											break;
+										case Engine::CSType::VEC2:
+											Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
+											ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
+											ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
+											break;
 									}
 								}
 
@@ -617,15 +677,36 @@ namespace Editor {
 					ImGui::PushItemWidth(AvailWidth);
 
 					if (ImGui::Selectable("Transform##addTransformcom"))
+					{
 						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
+						
+					}
+						
 					if (ImGui::Selectable("Collider##addTCollidercom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
-					if (ImGui::Selectable("Script##addScriptcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
 					if (ImGui::Selectable("Camera##addCameracom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
 					if (ImGui::Selectable("Rigid Body##addRigidcom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
+					if (ImGui::Selectable("Script##addScriptcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
+					if (ImGui::Selectable("Texture##addTexturecom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TextureComponent>(entity_selected);
+
+					/*if (ImGui::Button("C# Script##addcsdsdscriptbtn", { AvailWidth , 0.f }))
+					{
+						ImGui::OpenPopup("##addScriptPopUp");
+					}
+					ImGui::PushItemWidth(AvailWidth * 2.f);
+					if (ImGui::BeginPopup("##addScriptPopUp"))
+					{
+						auto& scriptsList = scriptComp->klassInstance;
+
+						for (auto& [className, csScriptInstance] : scriptsList) 
+						{
+							scriptsList = scriptsList
+						}
+					}*/
 
 					char text[100];
 					ImGui::PushItemWidth(TEXT_BOX_SIZE);

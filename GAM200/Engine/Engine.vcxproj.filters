@@ -154,6 +154,9 @@
     <ClCompile Include="Engine\Code\Management\FileWindowDialog.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\UI\Button.cpp">
+      <Filter>Source Files\ECS\Component\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -467,6 +470,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Management\FileWindowDialog.hpp">
       <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\UI\Button.hpp">
+      <Filter>Header Files\ECS\Component\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

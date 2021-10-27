@@ -258,7 +258,6 @@ copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shader
 copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
 
 
-
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 

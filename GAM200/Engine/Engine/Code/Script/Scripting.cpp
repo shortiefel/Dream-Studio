@@ -124,7 +124,7 @@ namespace Engine {
 
 		bool CompileCSInternal() {
 			Scripting::DestroyChildDomain();
-			int status = std::system("Data\\CompileCS.bat");
+			int status = std::system("CompileCS.bat");
 			if (status > 0) return false;
 			return true;
 		}

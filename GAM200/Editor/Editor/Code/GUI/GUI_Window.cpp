@@ -272,6 +272,10 @@ namespace Editor {
 					OpenFileUtil();
 				}
 
+				else if (ImGui::MenuItem("Save", "CTRL+S")) {
+					
+				}
+
 				else if (ImGui::MenuItem("Save as...", "CTRL+SHIFT+S")) {
 					SaveAsFileUtil();
 				}
@@ -362,6 +366,14 @@ namespace Editor {
 			}
 			ImGui::PopItemFlag();
 
+			ImGui::SameLine();
+			ImGui::PushItemWidth(wSize.x / 2 + 20);
+			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
+			if (ImGui::Button("Save", (ImVec2{ 40, 30 }))) {
+				Engine::SceneManager::GetInstance().Save();
+			}
+			ImGui::PopItemFlag();
+
 			ImGui::End();
 			
 		}
@@ -372,37 +384,24 @@ namespace Editor {
 
 				/**
 				* Game Objects
-				*/
-
-				//if (ImGui::TreeNode("Camera")) {
-
-				//	static ImGuiTreeNodeFlags base_Flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-				//	static bool alignmentPosition = false;
-
-				//	/*ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnArrow", &base_Flags, ImGuiTreeNodeFlags_OpenOnArrow);
-				//	ImGui::CheckboxFlags("ImGuiTreeNodeFlags_OpenOnDoubleClick", &base_Flags, ImGuiTreeNodeFlags_OpenOnDoubleClick);*/
-
-				//	if (alignmentPosition)
-				//		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-
-				//	/*Engine::Entity entity_selected = Engine::Entity{ 0 };
-				//	std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
-
-				//	for (int i = 0; i < entity_set.size(); i++)
-				//	{
-				//		ImGui::Text(entity_set[i].name.c_str());
-				//		
-				//	}*/
-				//	ImGui::TreePop();
-				//}
+				*/		
 
 				//Engine::Entity entity_selected = Engine::Entity{ 0 };
 				/*std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
 				
+				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
+				//highlight when object is currently selected
+				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
+					| ImGuiTreeNodeFlags_OpenOnDoubleClick
+					| ImGuiTreeNodeFlags_SpanAvailWidth;
 
 				for (int i = 0; i < entity_set.size(); i++)
 				{
-					ImGui::Text(entity_set[i].name.c_str());
+					if (ImGui::Selectable(entity_set[i].name.c_str()))
+					{
+						entity_selected = entity_set[i];
+					}
+
 
 				}*/
 
@@ -412,6 +411,7 @@ namespace Editor {
 					ImGui::Text(entity.name.c_str());
 
 				}
+				
 
 				ImGui::End();
 			}
@@ -487,7 +487,9 @@ namespace Editor {
 					ImGui::SameLine();
 
 					if (ImGui::TreeNode("Collider")) {
-						ImGui::DragFloat3("float", &colComp->offset_scale.x, 0.0f);
+						ImGui::Text("Scale");
+						ImGui::SameLine();
+						ImGui::DragFloat3("##colliderScale", &colComp->offset_scale.x, 0.0f);
 
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteCollider", { ImGui::GetContentRegionAvail().x, 0 }))
@@ -499,18 +501,74 @@ namespace Editor {
 
 				/*
 				*	Camera component
+				* 
+				*	--> missing zooming
 				*/
-				/*Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
-				{
+				Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
+				if (camComp != nullptr) {
+					ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
+					ImGui::SameLine();
 
-					if (camComp != nullptr) {
-						ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
+					if (ImGui::TreeNode("Camera"))
+					{
+						ImGui::Text("FOV");
+						ImGui::SameLine();
+						ImGui::InputFloat("##camFOV", &camComp->fov, 0.0f);
+
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::CameraComponent>(entity_selected);
+
+						ImGui::TreePop();
+					}
+						
+				}
+
+
+				/*
+				*	RigidBody component
+				*/
+				Engine::RigidBodyComponent* rigidComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::RigidBodyComponent>(entity_selected);
+				{
+					if (rigidComp != nullptr)
+					{
+						ImGui::CheckBox_Dream("##RidgidActive", &(rigidComp->isActive));
 						ImGui::SameLine();
 
-						ImGui::Text("CAMERA");
-					}
+						if (ImGui::TreeNode("Rigid Body"))
+						{
+							ImGui::Text("Speed");
+							ImGui::SameLine();
+							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.0f);
 
-				}*/
+							//deleteComponent
+							if (ImGui::Button("Delete Component##DeleteRigid", { ImGui::GetContentRegionAvail().x, 0 }))
+								Engine::DreamECS::GetInstance().RemoveComponent<Engine::RigidBodyComponent>(entity_selected);
+
+							ImGui::TreePop();
+						}
+					}
+				}
+
+				/*
+				*	Texture component
+				*/
+
+
+				/*
+				*	Text component
+				*/
+
+
+
+				/*
+				*	Color component
+				*/
+
+
+			
+
+
 
 
 				/**
@@ -585,6 +643,8 @@ namespace Editor {
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
 					if (ImGui::Selectable("Camera##addCameracom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+					if (ImGui::Selectable("Rigid Body##addRigidcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
 
 					char text[100];
 					ImGui::PushItemWidth(TEXT_BOX_SIZE);
@@ -688,12 +748,12 @@ namespace Editor {
 				//ImGui::PushID(sceneCount++);
 				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 				{
-					if (relative_path == "Scenes\test2.scene")
+					if (filenameString == "Assets/Scenes/test2.scene")
 					{
 						Engine::SceneManager::GetInstance().ChangeScene("test2");
 					}
 
-					else if (relative_path.string() == "Scenes\test3.scene")
+					else if (relative_path.string() == "Scenes/test3.scene")
 					{
 						Engine::SceneManager::GetInstance().ChangeScene("test3");
 					}

@@ -35,6 +35,7 @@ namespace Engine
         DreamECS::GetInstance().RegisterComponent<TransformComponent>();
         DreamECS::GetInstance().RegisterComponent<ColliderComponent>();
         DreamECS::GetInstance().RegisterComponent<TextureComponent>();
+       // DreamECS::GetInstance().RegisterComponent<TextComponent>();
         DreamECS::GetInstance().RegisterComponent<RigidBodyComponent>();
         DreamECS::GetInstance().RegisterComponent<ScriptComponent>();
         DreamECS::GetInstance().RegisterComponent<UIComponent>();

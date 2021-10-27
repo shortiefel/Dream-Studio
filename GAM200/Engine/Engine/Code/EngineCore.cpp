@@ -19,7 +19,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Layer/LayerStack.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
-
+#include "Engine/Header/Management/AssetManager.hpp"
 #include "Engine/Header/ECS/Factory.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
 
@@ -39,7 +39,7 @@ namespace Engine {
 
 		Factory::Create();
 		TextureManager::GetInstance().Create();
-
+		AssetManager::GetInstance().Create();
 		SceneManager::GetInstance().StartScene();
 	}
 
@@ -49,7 +49,7 @@ namespace Engine {
 
 	void EngineCore::Destroy() {
 		SceneManager::GetInstance().Destroy();
-
+		AssetManager::GetInstance().Destroy();
 		TextureManager::GetInstance().Destroy();
 
 		Factory::Destroy();

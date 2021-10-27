@@ -22,32 +22,63 @@ Technology is prohibited.
 #include <string>
 #include <unordered_map>
 #include <memory>
-//#include <SFML/Graphics.hpp> //not sure to add sfml lib
 
 namespace Engine {
 
-	class AssetManager
+	//class Resource
+	//{
+	//public:
+	//	Resource();
+	//	virtual ~Resource();
+
+	//	virtual void loadResource() = 0;
+	//	virtual void unloadResource() = 0;
+
+	//	void setResourceId(unsigned id);
+	//	unsigned getResourceId() const;
+
+	//	void setResourcePath(const std::string& path);
+	//	std::string getResourcePath() const;
+
+	//protected:
+	//	unsigned resourceId;
+	//	std::string resourcePath;
+
+	//};
+
+	class AssetManager : public Singleton<AssetManager>
 	{
 	public:
-		// Constructor a new Asset Manager
-		AssetManager() = default;
-
-		// Deconstructor for the Asset Manager
-		~AssetManager() = default;
-
 		// Initialize any assets that should be created on start up
 		void Init();
 
-		// Clean up any assets
-		void Shutdown();
-
-		//void LoadTexture(std::string _name, std::string _fileName); from texturemanager
-		void LoadFont(std::string name, std::string fileName);
 		
-	private:
-		//std::map<std::string,> texture;
-		//std::map<std::string,> font;
+		void Create();
 
+		// Clean up any assets
+		void Destroy();
+
+		GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+
+		GLuint LoadFont(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+
+		//void addResource(Resource* resource, const std::string& name, const std::string& path);
+
+		//template <typename T>
+		//T* getResource(const std::string& name)
+		//{
+		//	return dynamic_cast<T * resources.find(name)->second);
+		//}
+
+		//static const std::vector<Texture>& GetAllTextures() { return textureList; }
+	private:
+		std::unordered_map<std::string, GLuint> textureList;
+
+		std::unordered_map<std::string, GLuint> fontList;
+
+		//std::map<std::string, Resource*> resources;
+
+		SINGLETON_SETUP(AssetManager);
 	};
 }
 

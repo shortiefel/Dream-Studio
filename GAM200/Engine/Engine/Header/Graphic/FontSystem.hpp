@@ -13,8 +13,8 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef FONTSYSTEM_H
-#define FONTSYSTEM_H
+#ifndef FONTSYSTEM_HPP
+#define FONTSYSTEM_HPP
 
 #include "Engine/Header/Graphic/Shader.hpp"
 #include "Engine/Header/Graphic/GLSLShader.hpp"

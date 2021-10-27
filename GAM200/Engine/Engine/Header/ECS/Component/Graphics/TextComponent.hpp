@@ -36,28 +36,48 @@ namespace Engine
 
 		std::string filepath = "";
 
-		GraphicShape mdl_ref = GraphicShape{};
+		//GraphicShape mdl_ref = GraphicShape{};
+
+		std::string fontstring = "";
 
 		bool isActive = true;
 
 		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
 
+		//void SetTextColour(const glm::vec3& colour)
+		//{
+		//	_colour[0] = colour.r;
+		//	_colour[1] = colour.g;
+		//	_colour[2] = colour.b;
+		//}
+		//glm::vec3 GetTextColour() const
+		//{
+		//	return glm::vec3{ _colour[0], _colour[1], _colour[2] };
+		//}
+
+		const std::string& GetFontType()
+		{
+			return font_type;
+		}
 		TextComponent(const TextComponent&) = default;
 		~TextComponent();
 
 		TextComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
-			GraphicShape _shape = GraphicShape::SQUARE, bool _active = true);
+			const std::string _string = "", bool _active = true);
 
 		TextComponent& operator= (const TextComponent&) = default;
 
 		TextComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
+		std::string ComponentName() const;
+
+		std::string& GetFontString();
+
 	private:
-		std::string font_string;
 		std::string font_type;
-		//color of font
-		float color[4] = { 1.0f,1.0f,1.0f,1.0f }; 
+		//colour of font
+		float _colour[4] = { 1.0f,1.0f,1.0f,1.0f }; 
 	};
 }
 

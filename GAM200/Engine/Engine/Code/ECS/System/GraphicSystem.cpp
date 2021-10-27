@@ -98,36 +98,26 @@ namespace Engine
 		}
 
 		//load text render
-		const auto& textArray = DreamECS::GetInstance().GetComponentArrayData<TextComponent>();
-		for (const auto& font : textArray)
-		{
-			const Entity_id& font_entity_id = font.GetEntityId();
-			if (EntityId_Check(font_entity_id)) break;
-			if (!font.isActive) continue;
+		//font_system->Draw();
+		//const auto& textArray = DreamECS::GetInstance().GetComponentArrayData<TextComponent>();
+		//for (const auto& font : textArray)
+		//{
+		//	const Entity_id& font_entity_id = font.GetEntityId();
+		//	if (EntityId_Check(font_entity_id)) break;
+		//	if (!font.isActive) continue;
 
-			//get the transform component
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(font_entity_id);
-			TextComponent* fontComp = DreamECS::GetInstance().GetComponentPTR<TextComponent>(font_entity_id);
-			if (!transform || !transform->isActive) continue;
+		//	//get the transform component
+		//	TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(font_entity_id);
+		//	TextComponent* fontComp = DreamECS::GetInstance().GetComponentPTR<TextComponent>(font_entity_id);
+		//	if (!transform || !transform->isActive) continue;
 
-			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, font.texobj_hdl);
-
-			// to draw debug lines
-			if (isDebugDraw == GL_TRUE) {
-				ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(font_entity_id);
-
-				// when object has collider, get collider matrix
-				if (collider != nullptr)
-				{
-					if (font.mdl_ref == GraphicShape::SQUARE)
-					{
-						GraphicImplementation::Renderer::DrawQuadDebug(collider->offset_position + transform->position,
-							collider->offset_scale * transform->scale,
-							transform->angle);
-					}
-				}
-			}
-		}
+		//	//GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, font.texobj_hdl);
+		//	font_system->Draw();
+		//	// to draw debug lines
+		//	if (isDebugDraw == GL_TRUE) {
+		//		ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(font_entity_id);
+		//	}
+		//}
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

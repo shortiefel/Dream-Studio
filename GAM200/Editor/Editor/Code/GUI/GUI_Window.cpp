@@ -318,14 +318,11 @@ namespace Editor {
 				Engine::TransformComponent* transComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TransformComponent>(entity_selected);
 				if (transComp != nullptr) 
 				{
+					ImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
+					ImGui::SameLine();
 
 					if (ImGui::CollapsingHeader("Transform")) 
 					{
-						ImGui::Spacing();
-						ImGui::Text("Is Active");
-						ImGui::SameLine();
-						ImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
-						
 						ImGui::Spacing();
 						//Updating of position
 						ImGui::Text("Position");
@@ -368,13 +365,11 @@ namespace Editor {
 				if (colComp != nullptr) 
 				{
 
+					ImGui::CheckBox_Dream("##ColliderActive", &(colComp->isActive));
+					ImGui::SameLine();
+
 					if (ImGui::CollapsingHeader("Collider")) 
 					{
-						ImGui::Spacing();
-						ImGui::Text("Is Active");
-						ImGui::SameLine();
-						ImGui::CheckBox_Dream("##ColliderActive", &(colComp->isActive));
-
 						ImGui::Spacing();
 						ImGui::Text("Scale");
 						ImGui::SameLine();
@@ -394,13 +389,11 @@ namespace Editor {
 				Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
 				if (camComp != nullptr) {
 
+					ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
+					ImGui::SameLine();
+
 					if (ImGui::CollapsingHeader("Camera"))
 					{
-						ImGui::Spacing();
-						ImGui::Text("Is Active");
-						ImGui::SameLine();
-						ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
-
 						ImGui::Spacing();
 						ImGui::Text("FOV");
 						ImGui::SameLine();
@@ -422,15 +415,12 @@ namespace Editor {
 				{
 					if (rigidComp != nullptr)
 					{
+						ImGui::CheckBox_Dream("##RidgidActive", &(rigidComp->isActive));
+						ImGui::SameLine();
 
 						if (ImGui::CollapsingHeader("Rigid Body"))
 						{
 							ImGui::Spacing();
-							ImGui::Text("Is Active");
-							ImGui::SameLine();
-							ImGui::CheckBox_Dream("##RidgidActive", &(rigidComp->isActive));
-							ImGui::Spacing();
-
 							ImGui::Text("Speed");
 							ImGui::SameLine();
 							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.0f);
@@ -449,16 +439,16 @@ namespace Editor {
 				Engine::TextureComponent* textureComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextureComponent>(entity_selected);
 				if (textureComp != nullptr)
 				{
+					ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
+					ImGui::SameLine();
 
 					if (ImGui::CollapsingHeader("Texture"))
 					{
 						ImGui::Spacing();
 						ImGui::Text("Is Active");
-						ImGui::SameLine();
-						ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
-						ImGui::Spacing();
-
-
+						
+						
+				
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteTexture", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextureComponent>(entity_selected);
@@ -497,14 +487,10 @@ namespace Editor {
 
 						for (auto& [className, csScriptInstance] : scriptsList) {
 							//ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
-							
+							ImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
+							ImGui::SameLine();
 							if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str())) 
 							{
-
-								ImGui::Spacing();
-								ImGui::Text("Is Active");
-								ImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), & (csScriptInstance.isActive));
-								ImGui::SameLine();
 								ImGui::Spacing();
 
 								for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) 

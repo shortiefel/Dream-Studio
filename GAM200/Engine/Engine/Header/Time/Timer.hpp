@@ -57,7 +57,6 @@ namespace Engine {
 
         stopped = true;
 
-        //std::cout << name << ": " << time << "\n";
         fnCallBack({ name, time });
     }
 }

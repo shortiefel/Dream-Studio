@@ -324,7 +324,7 @@ namespace Editor {
 			GUI_Hierarchy();
 			GUI_Inspector();
 			GUI_Stats();
-			GUI_Profiler(&profiler_bool, window_flags);
+			GUI_Profiler(&profiler_bool);
 			GUI_AssetBrowser(&asset_bool, window_flags);
 			GUI_HeaderPanel();
 			GUI_Console(&console_bool, window_flags);

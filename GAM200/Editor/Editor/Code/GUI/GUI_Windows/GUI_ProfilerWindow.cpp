@@ -5,8 +5,6 @@
 @date    18/08/2021
 \brief
 This file contain the ProfilerWindow definition
-
-
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of
@@ -58,11 +56,13 @@ Technology is prohibited.
 
 namespace Editor {
 	namespace GUI_Windows {
-		void GUI_Profiler(bool* profiler_bool, ImGuiWindowFlags window_flags) {
+		void GUI_Profiler(bool* profiler_bool) {
+			Engine::Profiler::GetInstance().DisplayProfilerResult();
+
 			static float updateTimer = 0.f;
 			updateTimer -= COUNTDOWN_TIMER;
 			if (*profiler_bool) {
-				ImGui::Begin("Profiler", profiler_bool, window_flags);
+				ImGui::Begin("Profiler", profiler_bool);
 				//-1 due to the nature of the algorithm
 				//if current loop is lineIndex = PROFILER_COUNT - 1
 				//then previous loop should have set that index hence needing to lineIndex++ before set
@@ -75,20 +75,20 @@ namespace Editor {
 				static float scriptingLines[PROFILER_COUNT]{};
 				static float eventLines[PROFILER_COUNT]{};
 				static float miscellaneousLines[PROFILER_COUNT]{};
-				 
+
 				static float fps = float{};
 				static float maxfps = std::numeric_limits<float>::min();
 				static float minfps = std::numeric_limits<float>::max();
 
 				if (updateTimer <= 0.f) {
-					
+
 
 					fps = Engine::DeltaTime::GetInstance().GetFPS();
 					maxfps = fps > maxfps ? fps : maxfps;
 					minfps = fps < minfps ? fps : minfps;
 
 					updateTimer = WAIT_TIME;
-					
+
 					if (lineIndex >= PROFILER_COUNT - 1) {
 						for (int i = 0; i < PROFILER_COUNT - 1; i++) {
 							fpsLines[i] = fpsLines[i + 1];
@@ -117,7 +117,7 @@ namespace Editor {
 				std::stringstream scriptSS; scriptSS << "Scripting: " << std::fixed << std::setprecision(2) << scriptingLines[lineIndex] << "%";
 				std::stringstream eventSS; eventSS << "Event: " << std::fixed << std::setprecision(2) << eventLines[lineIndex] << "%";
 				std::stringstream miscSS; miscSS << "Miscellaneous: " << std::fixed << std::setprecision(2) << miscellaneousLines[lineIndex] << "%";
-				
+
 				PLOT_LINES;
 				ImGui::End();
 			}

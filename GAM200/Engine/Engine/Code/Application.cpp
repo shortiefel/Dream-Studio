@@ -90,7 +90,7 @@ namespace Engine
 
                 Engine::Window::GetInstance().Update();
             }
-            Profiler::GetInstance().DisplayProfilerResult();
+            //Profiler::GetInstance().DisplayProfilerResult();
         }
     }
 

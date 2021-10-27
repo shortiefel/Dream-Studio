@@ -15,6 +15,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
+#include <string>
 #include <iostream>
 
 namespace Engine {
@@ -33,19 +34,20 @@ namespace Engine {
 			//strcat_s(label, " %0.3fms");
 			//ImGui::Text(label, result.time);
 			//printf("%s %0.3fms\n", label, result.time);
-			if (strcmp(result.name, "Application"))
+
+			if (!std::string{ result.name }.compare("Application"))
 				applicationTime += result.time;
-			else if (strcmp(result.name, "Rendering"))
+			else if (!std::string{ result.name }.compare("Rendering"))
 				renderingTime += result.time;
-			else if (strcmp(result.name, "Physics"))
+			else if (!std::string{ result.name }.compare("Physics"))
 				physicsTime += result.time;
-			else if (strcmp(result.name, "Collision"))
+			else if (!std::string{ result.name }.compare("Collision"))
 				collisionTime += result.time;
-			else if (strcmp(result.name, "Scripting"))
+			else if (!std::string{ result.name }.compare("Scripting"))
 				scriptingTime += result.time;
-			else if (strcmp(result.name, "Event"))
+			else if (!std::string{ result.name }.compare("Event"))
 				eventTime += result.time;
-			else if (strcmp(result.name, "Total"))
+			else if (!std::string{ result.name }.compare("Total"))
 				totalTime += result.time;
 		}
 

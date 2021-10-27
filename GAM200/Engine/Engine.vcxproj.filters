@@ -468,6 +468,9 @@
     <ClInclude Include="Engine\Header\Management\FileWindowDialog.hpp">
       <Filter>Header Files\Management</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\FontComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

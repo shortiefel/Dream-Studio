@@ -250,6 +250,7 @@
     <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\FontComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\UIComponent.hpp" />

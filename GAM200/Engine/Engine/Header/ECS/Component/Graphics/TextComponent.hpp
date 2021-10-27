@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*
-@file    FontComponent.hpp
+@file    TextComponent.hpp
 @author  Goh See Yong Denise	g.seeyongdenise@digipen.edu
 @date    27/10/2021
 @brief
@@ -14,8 +14,8 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef FONT_COMPONENT_HPP
-#define FONT_COMPONENT_HPP
+#ifndef TEXT_COMPONENT_HPP
+#define TEXT_COMPONENT_HPP
 
 #include "Engine/Header/pch.hpp"
 
@@ -29,7 +29,7 @@ namespace Engine
 	class DSerializer;
 	class SSerializer;
 
-	struct FontComponent : public IComponent
+	struct TextComponent : public IComponent
 	{
 	public:
 		GLuint texobj_hdl = GLuint{};
@@ -42,16 +42,17 @@ namespace Engine
 
 		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
 
-		FontComponent(const FontComponent&) = default;
-		~FontComponent();
+		TextComponent(const TextComponent&) = default;
+		~TextComponent();
 
-		FontComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
+		TextComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
 			GraphicShape _shape = GraphicShape::SQUARE, bool _active = true);
 
-		FontComponent& operator= (const FontComponent&) = default;
+		TextComponent& operator= (const TextComponent&) = default;
 
-		FontComponent& Deserialize(const DSerializer& _serializer);
+		TextComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
+
 	private:
 		std::string font_string;
 		std::string font_type;

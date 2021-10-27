@@ -35,161 +35,142 @@ namespace Editor {
 		};
 
 		static AssetView _currentView = AssetView::SceneBrowser;
-		static void ShowSceneBrowser()
-		{
-			if (_currentDirectory != std::filesystem::path(_assetPath))
-			{
-				if (ImGui::Button("Assets"))
-				{
-					_currentDirectory = _currentDirectory.parent_path();
-				}
-			}
-			//int sceneCount = 0;
-			for (auto& directory : std::filesystem::directory_iterator("Assets/Scenes"))
-			{
-				const auto& path = directory.path();
-				auto relative_path = std::filesystem::relative(path, "Assets/Scenes");
-				std::string filenameString = relative_path.string();
+		//static void ShowSceneBrowser()
+		//{
+		//	if (_currentDirectory != std::filesystem::path(_assetPath))
+		//	{
+		//		if (ImGui::Button("Assets"))
+		//		{
+		//			_currentDirectory = _currentDirectory.parent_path();
+		//		}
+		//	}
+		//	//int sceneCount = 0;
+		//	for (auto& directory : std::filesystem::directory_iterator("Assets/Scenes"))
+		//	{
+		//		const auto& path = directory.path();
+		//		auto relative_path = std::filesystem::relative(path, "Assets/Scenes");
+		//		std::string filenameString = relative_path.string();
 
-				ImGui::PushID(filenameString.c_str());
-				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-				ImGui::ImageButton((ImTextureID)directory.is_character_file(), { 128, 128 }, { 0, 1 }, { 1, 0 });
-				ImGui::PopStyleColor();
-				//ImGui::PushID(sceneCount++);
-				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-				{
-					if (filenameString == "Assets/Scenes/test2.scene")
-					{
-						Engine::SceneManager::GetInstance().ChangeScene("test2");
-					}
+		//		ImGui::PushID(filenameString.c_str());
+		//		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+		//		ImGui::ImageButton((ImTextureID)directory.is_character_file(), { 128, 128 }, { 0, 1 }, { 1, 0 });
+		//		ImGui::PopStyleColor();
+		//		//ImGui::PushID(sceneCount++);
+		//		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+		//		{
+		//			if (filenameString == "Assets/Scenes/test2.scene")
+		//			{
+		//				Engine::SceneManager::GetInstance().ChangeScene("test2");
+		//			}
 
-					else if (relative_path.string() == "Scenes/test3.scene")
-					{
-						Engine::SceneManager::GetInstance().ChangeScene("test3");
-					}
+		//			else if (relative_path.string() == "Scenes/test3.scene")
+		//			{
+		//				Engine::SceneManager::GetInstance().ChangeScene("test3");
+		//			}
 
-					else
-					{
-						Engine::SceneManager::GetInstance().ChangeScene("test1");
-					}
+		//			else
+		//			{
+		//				Engine::SceneManager::GetInstance().ChangeScene("test1");
+		//			}
 
-				}
-				ImGui::TextWrapped(filenameString.c_str());
+		//		}
+		//		ImGui::TextWrapped(filenameString.c_str());
 
-				ImGui::NextColumn();
+		//		ImGui::NextColumn();
 
-				ImGui::PopID();
+		//		ImGui::PopID();
 
-			}
-			ImGui::Columns(1);
-		}
+		//	}
+		//	ImGui::Columns(1);
+		//}
 
 		void GUI_AssetBrowser(bool* asset_bool, ImGuiWindowFlags window_flags)
 		{
-			//if (asset_bool) {
-			//	ImGui::Begin("Project", asset_bool, window_flags);
-			//	if (ImGui::TreeNode("Create")) {
-			//		ImGui::Spacing();
-			//		if (ImGui::Button("Folder", (ImVec2{ 100, 30 })))
-			//		{
-			//			//ImGui::SameLine();
-			//			ImGui::Text("Folder created.");
-			//		}
+			if (asset_bool) {
+				ImGui::Begin("Project", asset_bool, window_flags);
 
-			//		ImGui::SameLine();
-			//		if (ImGui::Button("New Scene", (ImVec2{ 100, 30 }))) {
+				//ShowMenuBar();
+				ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgActive));
+				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgHovered));
+				ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyleColorVec4(ImGuiCol_Text));
+				ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
 
-			//			//add new scene
-			//			Engine::SceneManager::GetInstance().ChangeScene("test1");
-			//		}
-			//		ImGui::TreePop();
-			//	}
+				//switch (_currentView)
+				//{
+				//	case AssetView::TextureBrowser:
+				//		ShowTextureBrowser();
+				//		break;
+				//case AssetView::SceneBrowser:
+				//	ShowSceneBrowser();
+				//	break;
+				//	case AssetView::ScriptBrowser:
+				//		ShowScriptBrowser();
+				//		break;
+				//	case AssetView::FontBrowser:
+				//		ShowFontBrowser();
+				//		break;
+				//default:
+				//	Log::Warning("Unkown asset view: %d", (int)m_CurrentView);
+				//	break;
+				//}
 
-			//	//ShowMenuBar();
-			//	ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgActive));
-			//	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgHovered));
-			//	ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyleColorVec4(ImGuiCol_Text));
-			//	ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
+				ImGui::PopStyleColor(4);
 
-			//	switch (_currentView)
-			//	{
-			//		//case AssetView::TextureBrowser:
-			//		//	ShowTextureBrowser();
-			//		//	break;
-			//	case AssetView::SceneBrowser:
-			//		ShowSceneBrowser();
-			//		break;
-			//		//case AssetView::ScriptBrowser:
-			//		//	ShowScriptBrowser();
-			//		//	break;
-			//		//case AssetView::FontBrowser:
-			//		//	ShowFontBrowser();
-			//		//	break;
-			//	default:
-			//		//Log::Warning("Unkown asset view: %d", (int)m_CurrentView);
-			//		break;
-			//	}
+				//all assets
+				if (_currentDirectory != std::filesystem::path(_assetPath))
+				{
+					if (ImGui::Button("Assets"))
+					{
+						_currentDirectory = _currentDirectory.parent_path();
+					}
+				}
 
-			//	ImGui::PopStyleColor(4);
+				static float padding = 16.0f;
+				static float thumbnailSize = 128.0f;
+				float cellSize = thumbnailSize + padding;
 
-			//	//all assets
-			//	if (_currentDirectory != std::filesystem::path(_assetPath))
-			//	{
-			//		if (ImGui::Button("Assets"))
-			//		{
-			//			_currentDirectory = _currentDirectory.parent_path();
-			//		}
-			//	}
+				float panelWidth = ImGui::GetContentRegionAvail().x;
+				int columnCount = (int)(panelWidth / cellSize);
+				if (columnCount < 1)
+					columnCount = 1;
 
-			//	static float padding = 16.0f;
-			//	static float thumbnailSize = 128.0f;
-			//	float cellSize = thumbnailSize + padding;
+				ImGui::Columns(columnCount, 0, false);
 
-			//	float panelWidth = ImGui::GetContentRegionAvail().x;
-			//	int columnCount = (int)(panelWidth / cellSize);
-			//	if (columnCount < 1)
-			//		columnCount = 1;
+				for (auto& directory : std::filesystem::directory_iterator(_currentDirectory))
+				{
+					const auto& path = directory.path();
+					auto relative_path = std::filesystem::relative(path, _assetPath);
+					std::string filenameString = relative_path.string();
 
-			//	ImGui::Columns(columnCount, 0, false);
+					ImGui::PushID(filenameString.c_str());
+					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+					ImGui::ImageButton((ImTextureID)directory.is_directory(), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
+					if (ImGui::BeginDragDropSource())
+					{
+						const wchar_t* itemPath = relative_path.c_str();
+						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
+						ImGui::EndDragDropSource();
+					}
+					ImGui::PopStyleColor();
+					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					{
+						if (directory.is_directory())
+						{
+							_currentDirectory /= path.filename();
+						}
 
-			//	for (auto& directory : std::filesystem::directory_iterator(_currentDirectory))
-			//	{
-			//		const auto& path = directory.path();
-			//		auto relative_path = std::filesystem::relative(path, _assetPath);
-			//		std::string filenameString = relative_path.string();
+					}
+					ImGui::TextWrapped(filenameString.c_str());
 
-			//		ImGui::PushID(filenameString.c_str());
-			//		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-			//		ImGui::ImageButton((ImTextureID)directory.is_directory(), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
-			//		if (ImGui::BeginDragDropSource())
-			//		{
-			//			const wchar_t* itemPath = relative_path.c_str();
-			//			ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
-			//			ImGui::EndDragDropSource();
-			//		}
-			//		ImGui::PopStyleColor();
-			//		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-			//		{
-			//			if (directory.is_directory())
-			//			{
-			//				_currentDirectory /= path.filename();
-			//			}
+					ImGui::NextColumn();
 
-			//		}
-			//		ImGui::TextWrapped(filenameString.c_str());
+					ImGui::PopID();
 
-			//		ImGui::NextColumn();
+				}
+				ImGui::Columns(1);
 
-			//		ImGui::PopID();
-
-			//	}
-			//	ImGui::Columns(1);
-
-			//	ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 512);
-			//	ImGui::SliderFloat("Padding", &padding, 0, 32);
-
-			//	ImGui::End();
-			//}
+				ImGui::End();
+			}
 		}
 	}
 }

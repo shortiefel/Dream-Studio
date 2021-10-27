@@ -17,6 +17,7 @@ Technology is prohibited.
 #define FONTSYSTEM_H
 
 #include "Engine/Header/Graphic/Shader.hpp"
+#include "Engine/Header/Graphic/GLSLShader.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp" 
 #include <glm/glm.hpp>
 #include <map>
@@ -35,14 +36,14 @@ namespace Engine
 	class FontSystem
 	{
 	public:
-		void RenderText(std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation);
+		void RenderText(GLSLShader &shader, std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation);
 		void Init();
 		void Draw();
 
 	private:
 		std::map<char, Character> characters;
 		unsigned int vao, vbo;
-		GraphicShader font_shader;
+		GLSLShader font_shader;
 	};
 };
 

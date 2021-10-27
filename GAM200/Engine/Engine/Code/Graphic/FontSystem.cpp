@@ -31,15 +31,17 @@ namespace Engine
 {
     void FontSystem::Draw()
     {
-        RenderText("Hello!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f, 0.8f, 1.0f), 0.0f);
+        RenderText(font_shader, "Hello!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f, 0.8f, 1.0f), 0.0f);
 
         //RenderText("Option", -75.0f, 0.0f, 1.0f, glm::vec3(0.2f, 0.8f, 0.2f), 0.0f);
 
         //RenderText("Quit", -300.0f, -250.0f, 1.0f, glm::vec3(0.2f, 0.8f, 0.2f), 0.0f);
     }
 
-    void FontSystem::RenderText(std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation)
+    void FontSystem::RenderText(GLSLShader &shader, std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation)
     {
+        // activate corresponding render state	
+        shader.Use();
         //Backup state to add in more for texture
         GLenum last_active_texture;
         glGetIntegerv(GL_ACTIVE_TEXTURE, (GLint*)&last_active_texture);

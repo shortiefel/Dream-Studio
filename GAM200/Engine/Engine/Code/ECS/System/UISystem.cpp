@@ -34,10 +34,8 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 
-#define CONSTANT_SIZE 0.2
-
 namespace Engine {
-	void UISystem::Render(Graphic::FrameBuffer* _fbo) {
+	void UISystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
 		GLboolean gameDraw;
 		if (!_fbo)
 			gameDraw = GL_TRUE;
@@ -65,15 +63,15 @@ namespace Engine {
 
 			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
-
-			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl);
+			Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+			GraphicImplementation::Renderer::DrawQuad(transform->position + camPos, transform->scale, transform->angle, ui.texobj_hdl);
 		}
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//GLSLShader::SetUniform("uCamMatrix", Math::mat3{}, shd_ref_handle);
-		GLSLShader::SetUniform("uCamMatrix", CameraSystem::GetInstance().GetTransformSpecial(), shd_ref_handle);
+		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
 
 		GraphicImplementation::Renderer::EndBatch(!gameDraw);
 		GraphicImplementation::Renderer::Flush(!gameDraw);

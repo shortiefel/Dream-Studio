@@ -28,11 +28,16 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 
+#define FIXED_UI_HEIGHT 1000.f
+
 namespace Engine 
 {
     //Update function to change the world to NDC transform that will be used
     //to create the graphics
     void CameraSystem::Update(float) {
+        camFov = 0.f;
+        camHeight = 0;
+
         auto& camArray = DreamECS::GetInstance().GetComponentArrayData<CameraComponent>();
         for (auto& cam : camArray) {
             const Entity_id& entity_id = cam.GetEntityId();
@@ -49,6 +54,7 @@ namespace Engine
             // compute world-to-NDC transformation matrix
             camPosition = transform->position;
             camFov = cam.fov;
+            camHeight = cam.height;
             /*world_to_ndc_xform =
                 Math::mat3(2.f / (cam.ar * CAMERA_HEIGHT * cam.fov), 0.f, 0.f,
                            0.f, 2.f / CAMERA_HEIGHT * cam.fov, 0.f,
@@ -63,8 +69,8 @@ namespace Engine
 
     Math::mat3 CameraSystem::GetTransform() {
         return 
-            Math::mat3(2.f / (Settings::gameAR * CAMERA_HEIGHT * camFov), 0.f, 0.f,
-                0.f, 2.f / CAMERA_HEIGHT * camFov, 0.f,
+            Math::mat3(2.f / (Settings::gameAR * camHeight * camFov), 0.f, 0.f,
+                0.f, 2.f / (camHeight * camFov), 0.f,
                 0.f, 0.f, 1.f)
             *
             Math::mat3(1.f, 0.f, 0.f,
@@ -72,17 +78,21 @@ namespace Engine
                 -camPosition.x, -camPosition.y, 1.f);
     }
 
-    Math::mat3 CameraSystem::GetTransformSpecial()
+    Math::mat3 CameraSystem::GetTransformUI()
     {
         return
-            Math::mat3(2.f / (Settings::gameAR * camFov), 0.f, 0.f,
-                0.f, 2.f / camFov, 0.f,
+            Math::mat3(2.f / (Settings::gameAR * FIXED_UI_HEIGHT * camFov), 0.f, 0.f,
+                0.f, 2.f / (FIXED_UI_HEIGHT * camFov), 0.f,
                 0.f, 0.f, 1.f)
             *
             Math::mat3(1.f, 0.f, 0.f,
                 0.f, 1.f, 0.f,
                 -camPosition.x, -camPosition.y, 1.f);
 
+    }
+
+    Math::vec2 CameraSystem::GetPosition() {
+        return camPosition;
     }
 
     float CameraSystem::GetAR() const {

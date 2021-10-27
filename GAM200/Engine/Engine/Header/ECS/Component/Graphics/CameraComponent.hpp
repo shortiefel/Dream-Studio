@@ -30,18 +30,17 @@ namespace Engine {
     class DSerializer;
     class SSerializer;
 
-    constexpr int CAMERA_HEIGHT = 1000;
-
     struct CameraComponent : public IComponent 
     {
         // window parameters
         float ar = float{}, fov = float{};
+        int height = int{};
         bool isActive = true;
 
         CameraComponent& Deserialize(const DSerializer& _serializer);
         void Serialize(const SSerializer& _serializer);
 
-        CameraComponent(Entity_id _ID = DEFAULT_ENTITY_ID, float _fov = 1.f, float _ar = 0.f, bool _active = false);
+        CameraComponent(Entity_id _ID = DEFAULT_ENTITY_ID, int _height = 1000, float _fov = 1.f, float _ar = 0.f, bool _active = false);
         CameraComponent(const CameraComponent&) = default;
         CameraComponent& operator=(const CameraComponent&) = default;
     };

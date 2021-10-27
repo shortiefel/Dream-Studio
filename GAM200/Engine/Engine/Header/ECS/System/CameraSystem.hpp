@@ -34,13 +34,15 @@ namespace Engine
 
 		void Update(float dt);
 		Math::mat3 GetTransform();
-		Math::mat3 GetTransformSpecial();
+		Math::mat3 GetTransformUI();
+		Math::vec2 GetPosition();
 
 		float GetAR() const;
 
 	private:
 		Math::vec2 camPosition;
 		float camFov;
+		int camHeight;
 		//Math::mat3 world_to_ndc_xform{};
 		GLFWwindow* pwindow{};
 

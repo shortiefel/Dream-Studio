@@ -26,7 +26,7 @@ namespace Engine {
 	const std::uint32_t MAX_ENTITIES = 10000;
 	using Entity_id = std::uint32_t;
 
-	#define DEFAULT_ENTITY_NAME "Entity_"
+	#define DEFAULT_ENTITY_NAME "Entity"
 	#define DEFAULT_ENTITY_ID (Engine::MAX_ENTITIES + 1)
 
 	struct Entity {

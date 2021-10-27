@@ -21,6 +21,7 @@ Technology is prohibited.
 
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"
+#include "Engine/Header/ECS/System/CameraSystem.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/FrameBuffer.hpp"
 
@@ -32,7 +33,7 @@ namespace Engine
 		bool Create();
 		void Destroy();
 
-		void Render(Graphic::FrameBuffer* _fbo = nullptr);
+		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI(), Graphic::FrameBuffer* _fbo = nullptr);
 
 	private:
 

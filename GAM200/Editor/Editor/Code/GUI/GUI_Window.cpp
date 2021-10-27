@@ -66,10 +66,8 @@ Technology is prohibited.
 
 #define TEXT_BOX_SIZE 70
 
-#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
-							 filePath = filePath.substr(pos + 1);\
-							 pos = filePath.find_last_of(".");\
-							 filePath = filePath.substr(0, pos);
+#define REMOVE_FROM_FILEPATH filePath = filePath.substr(filePath.find_last_of("\\") + 1);\
+							 filePath = filePath.substr(0, filePath.find_last_of("."));
 
 namespace Editor {
 	namespace GUI_Windows {
@@ -135,7 +133,7 @@ namespace Editor {
 
 				Engine::DreamECS::GetInstance().ResetECS();
 				Engine::GameSceneSerializer::SerializeScene(filePath);
-				Engine::SceneManager::GetInstance().ChangeScene(filePath);
+				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
 			}
 		}
 		
@@ -145,7 +143,7 @@ namespace Editor {
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
 
-				Engine::SceneManager::GetInstance().ChangeScene(filePath);
+				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
 			}
 		}
 
@@ -156,7 +154,7 @@ namespace Editor {
 				REMOVE_FROM_FILEPATH;
 
 				Engine::GameSceneSerializer::SerializeScene(filePath);
-				Engine::SceneManager::GetInstance().ChangeScene(filePath);
+				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
 			}
 		}
 

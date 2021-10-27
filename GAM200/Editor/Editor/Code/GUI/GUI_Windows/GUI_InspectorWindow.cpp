@@ -2,6 +2,7 @@
 #include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
 #include "Editor/Header/GUI/GUI_Imgui.hpp"
 
+#include "Engine/Header/Management/FileWindowDialog.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
 
@@ -99,8 +100,6 @@ namespace Editor {
 
 				/*
 				*	Camera component
-				*
-				*	--> missing zooming
 				*/
 				Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
 				if (camComp != nullptr) {
@@ -114,6 +113,9 @@ namespace Editor {
 						ImGui::Text("FOV");
 						ImGui::SameLine();
 						ImGui::InputFloat("##camFOV", &camComp->fov, 0.0f);
+						ImGui::Text("Height");
+						ImGui::SameLine();
+						ImGui::InputInt("##camheight", &camComp->height, 0);
 
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
@@ -131,10 +133,10 @@ namespace Editor {
 				{
 					if (rigidComp != nullptr)
 					{
-						ImGui::CheckBox_Dream("##RidgidActive", &(rigidComp->isActive));
+						ImGui::CheckBox_Dream("##RidgidisActive", &(rigidComp->isActive));
 						ImGui::SameLine();
 
-						if (ImGui::CollapsingHeader("Rigid Body"))
+						if (ImGui::CollapsingHeader("Rigidbody"))
 						{
 							ImGui::Spacing();
 							ImGui::Text("Speed");
@@ -144,7 +146,7 @@ namespace Editor {
 							//deleteComponent
 							if (ImGui::Button("Delete Component##DeleteRigid", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::DreamECS::GetInstance().RemoveComponent<Engine::RigidBodyComponent>(entity_selected);
-
+							
 						}
 					}
 				}
@@ -161,8 +163,16 @@ namespace Editor {
 					if (ImGui::CollapsingHeader("Texture"))
 					{
 						ImGui::Spacing();
-						ImGui::Text("Is Active");
+						ImGui::Text("Texture: %s", textureComp->textureName.c_str());
 
+						if (ImGui::Button("Change Texture##ChangeTexture")) {
+							//std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
+
+							if (!filePath.empty()) {
+								textureComp->SetTexture(filePath);
+							}
+						}
 
 
 						//deleteComponent
@@ -187,7 +197,27 @@ namespace Editor {
 				/*
 				*	UI component
 				*/
+				Engine::UIComponent* uiComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::UIComponent>(entity_selected);
+				{
+					if (uiComp != nullptr)
+					{
+						ImGui::CheckBox_Dream("##UIActive", &(uiComp->isActive));
+						ImGui::SameLine();
 
+						if (ImGui::CollapsingHeader("UI"))
+						{
+							/*ImGui::Spacing();
+							ImGui::Text("Speed");
+							ImGui::SameLine();
+							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.0f);*/
+
+							//deleteComponent
+							if (ImGui::Button("Delete Component##DeletUI", { ImGui::GetContentRegionAvail().x, 0 }))
+								Engine::DreamECS::GetInstance().RemoveComponent<Engine::UIComponent>(entity_selected);
+
+						}
+					}
+				}
 
 
 
@@ -265,10 +295,14 @@ namespace Editor {
 						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
 					if (ImGui::Selectable("Collider##addTCollidercom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
+					if (ImGui::Selectable("Rigidbody##addRigidbodycom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
 					if (ImGui::Selectable("Script##addScriptcom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
 					if (ImGui::Selectable("Camera##addCameracom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+					if (ImGui::Selectable("UI##addUIcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::UIComponent>(entity_selected);
 
 					char text[100]{};
 					ImGui::PushItemWidth(textSize);

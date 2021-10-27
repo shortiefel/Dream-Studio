@@ -26,6 +26,8 @@ Technology is prohibited.
 #define MIN_SCENE_CAMERA_HEIGHT 100
 #define MAX_SCENE_CAMERA_HEIGHT 2000
 
+#define FIXED_UI_MULTIPLIER 0.4f
+
 namespace Editor 
 {
     float SCENE_CAMERA_HEIGHT = 1000.f;
@@ -43,7 +45,6 @@ namespace Editor
     Math::mat3 EditorSceneCamera::GetTransform() 
     {
         return
-
             // compute world-to-NDC transformation matrix
             Math::mat3(2.f / (ar * SCENE_CAMERA_HEIGHT), 0.f, 0.f,
                        0.f, 2.f / SCENE_CAMERA_HEIGHT, 0.f,
@@ -52,6 +53,19 @@ namespace Editor
             Math::mat3(1.f, 0.f, 0.f,
                        0.f, 1.f, 0.f,
                       -position.x, -position.y, 1.f);
+    }
+
+    Math::mat3 EditorSceneCamera::GetTransformUI()
+    {
+        return
+            // compute world-to-NDC transformation matrix
+            Math::mat3(2.f / (ar * SCENE_CAMERA_HEIGHT * FIXED_UI_MULTIPLIER), 0.f, 0.f,
+                0.f, 2.f / (SCENE_CAMERA_HEIGHT * FIXED_UI_MULTIPLIER), 0.f,
+                0.f, 0.f, 1.f)
+            *
+            Math::mat3(1.f, 0.f, 0.f,
+                0.f, 1.f, 0.f,
+                -position.x, -position.y, 1.f);
     }
 
     void EditorSceneCamera::changeHeight(float val) {

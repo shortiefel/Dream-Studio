@@ -120,7 +120,7 @@ public class Test : MonoBehaviour
     public override void OnCollisionEnter()
     {
         //Instantiate_Entity("Box");
-        SceneManager.LoadScene("Test3");
+        //SceneManager.LoadScene("Test3");
         Debug.Log("Test Collision Enter");
     }
 

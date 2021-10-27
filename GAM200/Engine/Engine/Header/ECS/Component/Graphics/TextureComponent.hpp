@@ -35,9 +35,10 @@ namespace Engine
 		GraphicLayer layerIndex = GraphicLayer{};
 
 		std::string filepath = "";
+		std::string textureName = "";
 		GLuint texobj_hdl = GLuint{};
 
-		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
+		
 
 		bool isActive = true;
 
@@ -48,6 +49,8 @@ namespace Engine
 			GraphicShape _shape = GraphicShape::SQUARE, bool _active = true, GraphicLayer _layer = GraphicLayer::GO);
 
 		TextureComponent& operator= (const TextureComponent&) = default;
+
+		void SetTexture(std::string _filepath);
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);

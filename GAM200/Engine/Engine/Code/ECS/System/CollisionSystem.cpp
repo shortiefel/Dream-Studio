@@ -102,9 +102,10 @@ namespace Engine {
 				const Entity_id& entity_id2 = col2->GetEntityId();
 				if (EntityId_Check(entity_id2)) break;
 				if (!col2->isActive || col1 == col2) continue;
-
-				bool ent1IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBodyComponent>(entity_id1),
-					ent2IsMoveable = DreamECS::GetInstance().HasComponentCheck<RigidBodyComponent>(entity_id2);
+				const RigidBodyComponent* rb1 = DreamECS::GetInstance().GetComponentPTR<RigidBodyComponent>(entity_id1);
+				const RigidBodyComponent* rb2 = DreamECS::GetInstance().GetComponentPTR<RigidBodyComponent>(entity_id2);
+				bool ent1IsMoveable = (rb1 != nullptr) && rb1->isActive,
+					ent2IsMoveable = (rb2 != nullptr) && rb2->isActive;
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 
 				auto& transform2 = DreamECS::GetInstance().GetComponent<TransformComponent>(entity_id2);

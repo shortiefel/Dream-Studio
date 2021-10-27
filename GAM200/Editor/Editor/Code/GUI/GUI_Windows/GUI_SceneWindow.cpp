@@ -38,7 +38,7 @@ namespace Editor {
 		bool inside = false;
 
 		bool moving(const Engine::MouseMoveEvent& e) {
-			if (!inside || !Engine::Input::IsMousePressed(Engine::Input_MouseCode::Mouse_Middle)) return false;
+			if (!inside || !Engine::Input::IsMouseHold(Engine::Input_MouseCode::Mouse_Middle)) return false;
 
 			//Movement is flipped
 			//mouse move left, camera move right

@@ -22,10 +22,29 @@ Technology is prohibited.
 
 namespace Engine
 {
+	void AssetManager::Init()
+	{
+		//std::string audiosPath = "./Assets/Audio";
+		std::string fontsPath = "./Assets/Fonts";
+		std::string shadersPath = "./Assets/Shaders";
+		std::string scenesPath = "./Assets/Scenes/Scenes";
+
+		typedef std::map<std::string, std::string> namePath;
+
+		namePath resourselist;
+
+		typedef std::unordered_map<std::string, std::string> name_path_unordered;
+
+		name_path_unordered resourseList;
+
+		//to add audio file directory
+		std::vector<std::string> texturesPath;
+
+		texturesPath.push_back("./Assets/Textures");
+	}
 	void AssetManager::Create()
 	{
 		LOG_INSTANCE("AssetManager created");
-
 	}
 
 	void AssetManager::Destroy()

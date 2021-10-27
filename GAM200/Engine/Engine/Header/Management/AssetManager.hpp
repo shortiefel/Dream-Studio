@@ -50,6 +50,9 @@ namespace Engine {
 	{
 	public:
 		// Initialize any assets that should be created on start up
+		void Init();
+
+		
 		void Create();
 
 		// Clean up any assets

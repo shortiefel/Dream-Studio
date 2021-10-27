@@ -86,7 +86,7 @@ namespace Editor {
 
 		void GUI_AssetBrowser(bool* asset_bool, ImGuiWindowFlags window_flags)
 		{
-			if (asset_bool) {
+			if (*asset_bool) {
 				ImGui::Begin("Project", asset_bool, window_flags);
 				if (ImGui::TreeNode("Create")) {
 					ImGui::Spacing();

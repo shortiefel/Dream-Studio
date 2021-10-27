@@ -102,6 +102,15 @@
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_AssetBrowserWindow.hpp">
       <Filter>Header Files\GUI\GUI_Windows</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_InspectorWindow.hpp">
+      <Filter>Header Files\GUI\GUI_Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_HierarchyWindow.hpp">
+      <Filter>Header Files\GUI\GUI_Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_StatsWindow.hpp">
+      <Filter>Header Files\GUI\GUI_Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -156,6 +165,15 @@
       <Filter>Source Files\GUI\GUI_Windows</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_AssetBrowserWindow.cpp">
+      <Filter>Source Files\GUI\GUI_Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_InspectorWindow.cpp">
+      <Filter>Source Files\GUI\GUI_Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_HierarchyWindow.cpp">
+      <Filter>Source Files\GUI\GUI_Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_StatsWindow.cpp">
       <Filter>Source Files\GUI\GUI_Windows</Filter>
     </ClCompile>
   </ItemGroup>

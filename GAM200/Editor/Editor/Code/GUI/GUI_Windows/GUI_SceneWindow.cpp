@@ -75,13 +75,13 @@ namespace Editor {
 		}
 
 		//void GUI_SceneWindow(bool* sceneWin_bool, const ImTextureID& sceneWinTex) {
-		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, Engine::Entity_id& entity_selected) {
+		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			inside = false;
 
 			if (*sceneWin_bool) {
 
 				//ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
-				ImGui::Begin("Scene Window", sceneWin_bool);
+				ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
 				ImGui::BeginChild("Render");
 				ImVec2 wSize = ImGui::GetWindowSize();
 

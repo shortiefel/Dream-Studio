@@ -44,9 +44,9 @@ namespace Editor {
         //    //delete[] consoleText;
         //}
 
-        void GUI_ConsoleWindow::GUI_Console(bool* console_bool) {
+        void GUI_ConsoleWindow::GUI_Console(bool* console_bool, ImGuiWindowFlags window_flags) {
             if (*console_bool) {
-                ImGui::Begin("Console", console_bool);
+                ImGui::Begin("Console", console_bool, window_flags);
 
                 if (ImGui::SmallButton("Clear")) { ClearLog(); }
 
@@ -107,8 +107,8 @@ namespace Editor {
             gui_ConsoleWindow.ClearLog();
         }
 
-        void GUI_Console(bool* console_bool) {
-            gui_ConsoleWindow.GUI_Console(console_bool);
+        void GUI_Console(bool* console_bool, ImGuiWindowFlags window_flags) {
+            gui_ConsoleWindow.GUI_Console(console_bool, window_flags);
         }
 
         void GUI_Console_Create() {

@@ -43,6 +43,12 @@ namespace Engine {
 
 	void Window::Update() {
 		PROFILER_START("Application");
+		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_1, InputType::RELEASE);
+		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_2, InputType::RELEASE);
+		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_3, InputType::RELEASE);
+		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_5, InputType::RELEASE);
+		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_4, InputType::RELEASE);
+
 
 		glfwPollEvents();
 		glfwSwapBuffers(glfw_window);
@@ -191,20 +197,21 @@ namespace Engine {
 		case GLFW_PRESS: {
 			KeyPressedEvent event(Input::GetKeyCode(key), false);
 			EventDispatcher::SendEvent(event);
-			Input::SetKeyStatus(key, true);
+			Input::SetKeyStatus(key, InputType::PRESS);
 			break;
 		}
 		case GLFW_RELEASE: {
 			KeyReleasedEvent event(Input::GetKeyCode(key));
 			EventDispatcher::SendEvent(event);
 			//w_data.eventCallBack(event);
-			Input::SetKeyStatus(key, false);
+			Input::SetKeyStatus(key, InputType::RELEASE);
 			break;
 		}
 		case GLFW_REPEAT: {
 			KeyPressedEvent event(Input::GetKeyCode(key), true);
 			EventDispatcher::SendEvent(event);
 			//w_data.eventCallBack(event);
+			Input::SetKeyStatus(key, InputType::REPEAT);
 			break;
 		}
 		}
@@ -215,14 +222,14 @@ namespace Engine {
 		case GLFW_PRESS: {
 			MousePressedEvent event(button);
 			EventDispatcher::SendEvent(event);
-			Input::SetMouseStatus(button, true);
+			Input::SetMouseStatus(button, InputType::PRESS);
 			//w_data.eventCallBack(event);
 			break;
 		}
 		case GLFW_RELEASE: {
 			MouseReleasedEvent event(button);
 			EventDispatcher::SendEvent(event);
-			Input::SetMouseStatus(button, false);
+			Input::SetMouseStatus(button, InputType::RELEASE);
 			//w_data.eventCallBack(event);
 			break;
 		}

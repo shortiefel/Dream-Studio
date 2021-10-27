@@ -162,136 +162,136 @@ namespace Engine {
 	/*------------------------------------------------------------------------------------------------------------------------------
 	Input key to bool map
 	------------------------------------------------------------------------------------------------------------------------------*/
-	std::unordered_map<Input_KeyCode, bool> Input::InputKeyStatus{
-		{ Input_KeyCode::T0, false },
-		{ Input_KeyCode::T1, false },
-		{ Input_KeyCode::T2, false },
-		{ Input_KeyCode::T3, false },
-		{ Input_KeyCode::T4, false },
-		{ Input_KeyCode::T5, false },
-		{ Input_KeyCode::T6, false },
-		{ Input_KeyCode::T7, false },
-		{ Input_KeyCode::T8, false },
-		{ Input_KeyCode::T9, false },
+	std::unordered_map<Input_KeyCode, InputType> Input::InputKeyStatus{
+		{ Input_KeyCode::T0, InputType::RELEASE },
+		{ Input_KeyCode::T1, InputType::RELEASE },
+		{ Input_KeyCode::T2, InputType::RELEASE },
+		{ Input_KeyCode::T3, InputType::RELEASE },
+		{ Input_KeyCode::T4, InputType::RELEASE },
+		{ Input_KeyCode::T5, InputType::RELEASE },
+		{ Input_KeyCode::T6, InputType::RELEASE },
+		{ Input_KeyCode::T7, InputType::RELEASE },
+		{ Input_KeyCode::T8, InputType::RELEASE },
+		{ Input_KeyCode::T9, InputType::RELEASE },
 
-		{ Input_KeyCode::A, false },
-		{ Input_KeyCode::B, false },
-		{ Input_KeyCode::C, false },
-		{ Input_KeyCode::D, false },
-		{ Input_KeyCode::E, false },
-		{ Input_KeyCode::F, false },
-		{ Input_KeyCode::G, false },
-		{ Input_KeyCode::H, false },
-		{ Input_KeyCode::I, false },
-		{ Input_KeyCode::J, false },
-		{ Input_KeyCode::K, false },
-		{ Input_KeyCode::L, false },
-		{ Input_KeyCode::M, false },
-		{ Input_KeyCode::N, false },
-		{ Input_KeyCode::O, false },
-		{ Input_KeyCode::P, false },
-		{ Input_KeyCode::Q, false },
-		{ Input_KeyCode::R, false },
-		{ Input_KeyCode::S, false },
-		{ Input_KeyCode::T, false },
-		{ Input_KeyCode::U, false },
-		{ Input_KeyCode::V, false },
-		{ Input_KeyCode::W, false },
-		{ Input_KeyCode::X, false },
-		{ Input_KeyCode::Y, false },
-		{ Input_KeyCode::Z, false },
+		{ Input_KeyCode::A, InputType::RELEASE },
+		{ Input_KeyCode::B, InputType::RELEASE },
+		{ Input_KeyCode::C, InputType::RELEASE },
+		{ Input_KeyCode::D, InputType::RELEASE },
+		{ Input_KeyCode::E, InputType::RELEASE },
+		{ Input_KeyCode::F, InputType::RELEASE },
+		{ Input_KeyCode::G, InputType::RELEASE },
+		{ Input_KeyCode::H, InputType::RELEASE },
+		{ Input_KeyCode::I, InputType::RELEASE },
+		{ Input_KeyCode::J, InputType::RELEASE },
+		{ Input_KeyCode::K, InputType::RELEASE },
+		{ Input_KeyCode::L, InputType::RELEASE },
+		{ Input_KeyCode::M, InputType::RELEASE },
+		{ Input_KeyCode::N, InputType::RELEASE },
+		{ Input_KeyCode::O, InputType::RELEASE },
+		{ Input_KeyCode::P, InputType::RELEASE },
+		{ Input_KeyCode::Q, InputType::RELEASE },
+		{ Input_KeyCode::R, InputType::RELEASE },
+		{ Input_KeyCode::S, InputType::RELEASE },
+		{ Input_KeyCode::T, InputType::RELEASE },
+		{ Input_KeyCode::U, InputType::RELEASE },
+		{ Input_KeyCode::V, InputType::RELEASE },
+		{ Input_KeyCode::W, InputType::RELEASE },
+		{ Input_KeyCode::X, InputType::RELEASE },
+		{ Input_KeyCode::Y, InputType::RELEASE },
+		{ Input_KeyCode::Z, InputType::RELEASE },
 
 		//Function keys
-		{ Input_KeyCode::F1, false },
-		{ Input_KeyCode::F2, false },
-		{ Input_KeyCode::F3, false },
-		{ Input_KeyCode::F4, false },
-		{ Input_KeyCode::F5, false },
-		{ Input_KeyCode::F6, false },
-		{ Input_KeyCode::F7, false },
-		{ Input_KeyCode::F8, false },
-		{ Input_KeyCode::F9, false },
-		{ Input_KeyCode::F10, false },
-		{ Input_KeyCode::F11, false },
-		{ Input_KeyCode::F12, false },
-		{ Input_KeyCode::F13, false },
-		{ Input_KeyCode::F14, false },
-		{ Input_KeyCode::F15, false },
-		{ Input_KeyCode::F16, false },
-		{ Input_KeyCode::F17, false },
-		{ Input_KeyCode::F18, false },
-		{ Input_KeyCode::F19, false },
-		{ Input_KeyCode::F20, false },
-		{ Input_KeyCode::F21, false },
-		{ Input_KeyCode::F22, false },
-		{ Input_KeyCode::F23, false },
-		{ Input_KeyCode::F24, false },
+		{ Input_KeyCode::F1, InputType::RELEASE },
+		{ Input_KeyCode::F2, InputType::RELEASE },
+		{ Input_KeyCode::F3, InputType::RELEASE },
+		{ Input_KeyCode::F4, InputType::RELEASE },
+		{ Input_KeyCode::F5, InputType::RELEASE },
+		{ Input_KeyCode::F6, InputType::RELEASE },
+		{ Input_KeyCode::F7, InputType::RELEASE },
+		{ Input_KeyCode::F8, InputType::RELEASE },
+		{ Input_KeyCode::F9, InputType::RELEASE },
+		{ Input_KeyCode::F10, InputType::RELEASE },
+		{ Input_KeyCode::F11, InputType::RELEASE },
+		{ Input_KeyCode::F12, InputType::RELEASE },
+		{ Input_KeyCode::F13, InputType::RELEASE },
+		{ Input_KeyCode::F14, InputType::RELEASE },
+		{ Input_KeyCode::F15, InputType::RELEASE },
+		{ Input_KeyCode::F16, InputType::RELEASE },
+		{ Input_KeyCode::F17, InputType::RELEASE },
+		{ Input_KeyCode::F18, InputType::RELEASE },
+		{ Input_KeyCode::F19, InputType::RELEASE },
+		{ Input_KeyCode::F20, InputType::RELEASE },
+		{ Input_KeyCode::F21, InputType::RELEASE },
+		{ Input_KeyCode::F22, InputType::RELEASE },
+		{ Input_KeyCode::F23, InputType::RELEASE },
+		{ Input_KeyCode::F24, InputType::RELEASE },
 
 		//Left side
-		{ Input_KeyCode::Escape, false },
-		{ Input_KeyCode::GraveAccent, false }, //` and ~ (Tilde)
-		{ Input_KeyCode::Tab, false },
-		{ Input_KeyCode::CapsLock, false },
+		{ Input_KeyCode::Escape, InputType::RELEASE },
+		{ Input_KeyCode::GraveAccent, InputType::RELEASE }, //` and ~ (Tilde)
+		{ Input_KeyCode::Tab, InputType::RELEASE },
+		{ Input_KeyCode::CapsLock, InputType::RELEASE },
 
-		{ Input_KeyCode::Shift, false },
-		{ Input_KeyCode::Control, false },
-		{ Input_KeyCode::Alt, false },
+		{ Input_KeyCode::Shift, InputType::RELEASE },
+		{ Input_KeyCode::Control, InputType::RELEASE },
+		{ Input_KeyCode::Alt, InputType::RELEASE },
 
-		{ Input_KeyCode::Space, false },
+		{ Input_KeyCode::Space, InputType::RELEASE },
 
 		//Right side
-		{ Input_KeyCode::Minus, false },
-		{ Input_KeyCode::Equal, false },
-		{ Input_KeyCode::Backspace, false },
+		{ Input_KeyCode::Minus, InputType::RELEASE },
+		{ Input_KeyCode::Equal, InputType::RELEASE },
+		{ Input_KeyCode::Backspace, InputType::RELEASE },
 
-		{ Input_KeyCode::LeftBracket, false },
-		{ Input_KeyCode::RightBracket, false },
-		{ Input_KeyCode::BackSlash, false }, // \
+		{ Input_KeyCode::LeftBracket, InputType::RELEASE },
+		{ Input_KeyCode::RightBracket, InputType::RELEASE },
+		{ Input_KeyCode::BackSlash, InputType::RELEASE }, // \
 
-		{ Input_KeyCode::Semicolon, false },
-		{ Input_KeyCode::Apostrophe, false },
-		{ Input_KeyCode::Enter, false },
+		{ Input_KeyCode::Semicolon, InputType::RELEASE },
+		{ Input_KeyCode::Apostrophe, InputType::RELEASE },
+		{ Input_KeyCode::Enter, InputType::RELEASE },
 
-		{ Input_KeyCode::Comma, false },
-		{ Input_KeyCode::Period, false },
-		{ Input_KeyCode::FrontSlash, false }, /* / */
+		{ Input_KeyCode::Comma, InputType::RELEASE },
+		{ Input_KeyCode::Period, InputType::RELEASE },
+		{ Input_KeyCode::FrontSlash, InputType::RELEASE }, /* / */
 
 
-		{ Input_KeyCode::PrintScreen, false },
-		{ Input_KeyCode::ScrollLock, false },
-		{ Input_KeyCode::Pause, false },
+		{ Input_KeyCode::PrintScreen, InputType::RELEASE },
+		{ Input_KeyCode::ScrollLock, InputType::RELEASE },
+		{ Input_KeyCode::Pause, InputType::RELEASE },
 
-		{ Input_KeyCode::Insert, false },
-		{ Input_KeyCode::Delete, false },
-		{ Input_KeyCode::Home, false },
-		{ Input_KeyCode::End, false },
-		{ Input_KeyCode::PageUp, false },
-		{ Input_KeyCode::PageDown, false },
+		{ Input_KeyCode::Insert, InputType::RELEASE },
+		{ Input_KeyCode::Delete, InputType::RELEASE },
+		{ Input_KeyCode::Home, InputType::RELEASE },
+		{ Input_KeyCode::End, InputType::RELEASE },
+		{ Input_KeyCode::PageUp, InputType::RELEASE },
+		{ Input_KeyCode::PageDown, InputType::RELEASE },
 
 		//Arrow Keys
-		{ Input_KeyCode::Left, false },
-		{ Input_KeyCode::Right, false },
-		{ Input_KeyCode::Up, false },
-		{ Input_KeyCode::Down, false },
+		{ Input_KeyCode::Left, InputType::RELEASE },
+		{ Input_KeyCode::Right, InputType::RELEASE },
+		{ Input_KeyCode::Up, InputType::RELEASE },
+		{ Input_KeyCode::Down, InputType::RELEASE },
 
 		//Keypad
-		{ Input_KeyCode::NumLock, false },
-		{ Input_KeyCode::KP0, false },
-		{ Input_KeyCode::KP1, false },
-		{ Input_KeyCode::KP2, false },
-		{ Input_KeyCode::KP3, false },
-		{ Input_KeyCode::KP4, false },
-		{ Input_KeyCode::KP5, false },
-		{ Input_KeyCode::KP6, false },
-		{ Input_KeyCode::KP7, false },
-		{ Input_KeyCode::KP8, false },
-		{ Input_KeyCode::KP9, false },
-		{ Input_KeyCode::KPDecimal, false },
-		{ Input_KeyCode::KPDivide, false },
-		{ Input_KeyCode::KPMultiply, false },
-		{ Input_KeyCode::KPSubtract, false },
-		{ Input_KeyCode::KPAdd, false },
-		{ Input_KeyCode::KPEnter, false }
+		{ Input_KeyCode::NumLock, InputType::RELEASE },
+		{ Input_KeyCode::KP0, InputType::RELEASE },
+		{ Input_KeyCode::KP1, InputType::RELEASE },
+		{ Input_KeyCode::KP2, InputType::RELEASE },
+		{ Input_KeyCode::KP3, InputType::RELEASE },
+		{ Input_KeyCode::KP4, InputType::RELEASE },
+		{ Input_KeyCode::KP5, InputType::RELEASE },
+		{ Input_KeyCode::KP6, InputType::RELEASE },
+		{ Input_KeyCode::KP7, InputType::RELEASE },
+		{ Input_KeyCode::KP8, InputType::RELEASE },
+		{ Input_KeyCode::KP9, InputType::RELEASE },
+		{ Input_KeyCode::KPDecimal, InputType::RELEASE },
+		{ Input_KeyCode::KPDivide, InputType::RELEASE },
+		{ Input_KeyCode::KPMultiply, InputType::RELEASE },
+		{ Input_KeyCode::KPSubtract, InputType::RELEASE },
+		{ Input_KeyCode::KPAdd, InputType::RELEASE },
+		{ Input_KeyCode::KPEnter, InputType::RELEASE }
 	};
 
 
@@ -309,27 +309,37 @@ namespace Engine {
 	/*------------------------------------------------------------------------------------------------------------------------------
 	Input mouse to bool map
 	------------------------------------------------------------------------------------------------------------------------------*/
-	std::unordered_map<Input_MouseCode, bool> Input::InputMouseStatus{
-		{ Input_MouseCode::Mouse_Left, false },
-		{ Input_MouseCode::Mouse_Right, false },
-		{ Input_MouseCode::Mouse_Middle, false },
-		{ Input_MouseCode::Mouse_LeftSide_Front, false },
-		{ Input_MouseCode::Mouse_LeftSide_Back, false }
+	std::unordered_map<Input_MouseCode, InputType> Input::InputMouseStatus{
+		{ Input_MouseCode::Mouse_Left, InputType::RELEASE },
+		{ Input_MouseCode::Mouse_Right, InputType::RELEASE },
+		{ Input_MouseCode::Mouse_Middle, InputType::RELEASE },
+		{ Input_MouseCode::Mouse_LeftSide_Front, InputType::RELEASE },
+		{ Input_MouseCode::Mouse_LeftSide_Back, InputType::RELEASE }
 	};
 
 	bool Input::IsKeyPressed(Input_KeyCode keyCode) {
-		return InputKeyStatus[keyCode];
+		return (InputKeyStatus[keyCode] == InputType::PRESS);
 	}
+
+	bool Input::IsKeyHold(Input_KeyCode keyCode) {
+		InputType tt = InputKeyStatus[keyCode];
+		return (tt == InputType::PRESS) || (tt == InputType::REPEAT);
+	}		
 
 	bool Input::IsMousePressed(Input_MouseCode button) {
-		return InputMouseStatus[button];
+		return (InputMouseStatus[button] == InputType::PRESS);
 	}
 
-	void Input::SetKeyStatus(int key, bool status) {
+	bool Input::IsMouseHold(Input_MouseCode button) {
+		InputType tt = InputMouseStatus[button];
+		return (tt == InputType::PRESS) || (tt == InputType::REPEAT);
+	}
+
+	void Input::SetKeyStatus(int key, InputType status) {
 		InputKeyStatus[GLFWtoInputKey[key]] = status;
 	}
 
-	void Input::SetMouseStatus(int button, bool status) {
+	void Input::SetMouseStatus(int button, InputType status) {
 		InputMouseStatus[GLFWtoInputMouse[button]] = status;
 	}
 

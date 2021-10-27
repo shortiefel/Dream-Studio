@@ -76,7 +76,7 @@ namespace Editor {
     void EditorSceneManager::EditorSceneSave() {
         if (!Engine::GameState::GetInstance().GetPlaying()) {
             Engine::SceneManager::GetInstance().Save();
-            GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Saving..." });
+            GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Scene saved" });
             return;
         }
 

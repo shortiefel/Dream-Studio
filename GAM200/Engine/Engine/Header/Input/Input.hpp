@@ -22,13 +22,21 @@ Technology is prohibited.
 #include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
+	enum class InputType {
+		PRESS = 0,
+		REPEAT,
+		RELEASE
+	};
+
 	class Input {
 	public:
 		static bool IsKeyPressed(Input_KeyCode keyCode);
+		static bool IsKeyHold(Input_KeyCode keyCode);
 		static bool IsMousePressed(Input_MouseCode button);
+		static bool IsMouseHold(Input_MouseCode button);
 
-		static void SetKeyStatus(int key, bool status);
-		static void SetMouseStatus(int button, bool status);
+		static void SetKeyStatus(int key, InputType status);
+		static void SetMouseStatus(int button, InputType status);
 		//static void SetMouseScroll(float xScroll, float yScroll);
 
 		//static Math::vec2 GetMouseScroll();
@@ -45,10 +53,10 @@ namespace Engine {
 		//static Math::vec2 mouseScroll;
 
 		static std::unordered_map<int, Input_KeyCode> GLFWtoInputKey;
-		static std::unordered_map<Input_KeyCode, bool> InputKeyStatus;
+		static std::unordered_map<Input_KeyCode, InputType> InputKeyStatus;
 
 		static std::unordered_map<int, Input_MouseCode> GLFWtoInputMouse;
-		static std::unordered_map<Input_MouseCode, bool> InputMouseStatus;
+		static std::unordered_map<Input_MouseCode, InputType> InputMouseStatus;
 	};
 }
 

@@ -40,7 +40,6 @@ Technology is prohibited.
 namespace Engine {
     Scene::Scene(std::string fullPath) : fullPathSceneName{ fullPath } {
         GameSceneSerializer::DeserializeScene(fullPathSceneName);
-        std::cout << "Deserialize scene \n";
         ScriptSystem::GetInstance().UpdateMapData();
     }
 

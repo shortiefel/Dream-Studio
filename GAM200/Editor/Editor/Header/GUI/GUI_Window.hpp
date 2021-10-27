@@ -25,16 +25,6 @@ Technology is prohibited.
 
 namespace Editor {
     namespace GUI_Windows {
-
-        enum class AssetView
-        {
-            TextureBrowser,
-            SceneBrowser,
-            ScriptBrowser,
-            FontBrowser,
-            Length
-        };
-
         //void    All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex);
         void    All_Windows(const Engine::Graphic::FrameBuffer& gameWinFBO, const Engine::Graphic::FrameBuffer& sceneWinFBO);
         /*int     GetSceneSizeX();
@@ -45,8 +35,6 @@ namespace Editor {
         //Note: This function should be called first
         //Create a docking space for future windows to be docked into it
         void	GUI_DockSpace();
-
-        static std::filesystem::path _currentDirectory = "Assets";
     }
 }
 

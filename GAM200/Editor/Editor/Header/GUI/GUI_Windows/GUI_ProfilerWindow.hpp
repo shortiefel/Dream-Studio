@@ -17,10 +17,12 @@ Technology is prohibited.
 #ifndef PROFILER_WINDOW_HPP
 #define PROFILER_WINDOW_HPP
 
+#include <Imgui/imgui.h>
+
 namespace Editor {
 	namespace GUI_Windows {
 		//Profiler window in ProfilerWindow.hpp
-		void GUI_Profiler(bool* profiler_bool);
+		void GUI_Profiler(bool* profiler_bool, ImGuiWindowFlags window_flags);
 	}
 }
 

@@ -93,7 +93,6 @@ namespace Engine {
 			currentMaxId = 0;
 			AliveEntityCount = 0;
 			AvailableEntities = std::queue<Entity_id>();
-			std::cout << "Cleared \n";
 		}
 
 		inline unsigned int GetUsedEntitySize() const {

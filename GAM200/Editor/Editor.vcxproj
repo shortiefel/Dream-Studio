@@ -276,10 +276,10 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="..\External Resources\include\Imgui\imstb_truetype.h" />
     <ClInclude Include="Editor\Header\EditorStartPoint.hpp" />
     <ClInclude Include="Editor\Header\Graphic\EditorSceneCamera.hpp" />
-    <ClInclude Include="Editor\Header\GUI\ContentBroswerPanel.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Window.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Imgui.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_AssetBrowserWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_ConsoleWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_GameWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_ProfilerWindow.hpp" />
@@ -298,6 +298,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClCompile Include="Editor\Code\GUI\GUI.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Imgui.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Window.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_AssetBrowserWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_ConsoleWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_GameWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_ProfilerWindow.cpp" />

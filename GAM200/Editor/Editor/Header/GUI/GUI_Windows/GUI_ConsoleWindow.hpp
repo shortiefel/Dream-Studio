@@ -45,7 +45,7 @@ namespace Editor {
         class GUI_ConsoleWindow {
         public:
             void ClearLog();
-            void GUI_Console(bool* console_bool);
+            void GUI_Console(bool* console_bool, ImGuiWindowFlags window_flags);
             void Add_To_Console(ConsoleString&& text);
             void Create();
 
@@ -60,7 +60,7 @@ namespace Editor {
         //Access to the GUI_ConsoleWindow
         void GUI_Console_Add(ConsoleString&& text);
         void GUI_Console_Clear();
-        void GUI_Console(bool* console_bool);
+        void GUI_Console(bool* console_bool, ImGuiWindowFlags window_flags);
         void GUI_Console_Create();
 
     }

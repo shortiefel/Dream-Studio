@@ -58,11 +58,11 @@ Technology is prohibited.
 
 namespace Editor {
 	namespace GUI_Windows {
-		void GUI_Profiler(bool* profiler_bool) {
+		void GUI_Profiler(bool* profiler_bool, ImGuiWindowFlags window_flags) {
 			static float updateTimer = 0.f;
 			updateTimer -= COUNTDOWN_TIMER;
 			if (*profiler_bool) {
-				ImGui::Begin("Profiler", profiler_bool);
+				ImGui::Begin("Profiler", profiler_bool, window_flags);
 				//-1 due to the nature of the algorithm
 				//if current loop is lineIndex = PROFILER_COUNT - 1
 				//then previous loop should have set that index hence needing to lineIndex++ before set

@@ -38,11 +38,11 @@ namespace Editor {
 			return static_cast<int>(game_viewportSize.y);
 		}
 
-		void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO) {
+		void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO, ImGuiWindowFlags window_flags) {
 			if (*gameWin_bool) {
 
 				//ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
-				ImGui::Begin("Game Window", gameWin_bool);
+				ImGui::Begin("Game Window", gameWin_bool, window_flags);
 				ImGui::BeginChild("Render");
 				ImVec2 wSize = ImGui::GetWindowSize();
 

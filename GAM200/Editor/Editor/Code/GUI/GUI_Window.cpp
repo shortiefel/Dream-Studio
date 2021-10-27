@@ -23,14 +23,12 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_GameWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_AssetBrowserWindow.hpp"
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
-
-
 
 #include <Imgui/imgui_internal.h>
 
 #include "Engine/Header/Scene/SceneManager.hpp"
-#include "Engine/Header/Management/AssetManager.hpp"
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/Management/GameState.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
@@ -71,9 +69,6 @@ Technology is prohibited.
 							 filePath = filePath.substr(0, pos);
 
 namespace Editor {
-
-	extern const std::filesystem::path _assetPath = "Assets";
-
 	namespace GUI_Windows {
 		//bool for dockspace (will always be true)
 		bool dockspace_bool = true;
@@ -110,12 +105,12 @@ namespace Editor {
 		void    GUI_EditMenu();
 
 		//Internal Variables
-		static AssetView _currentView = AssetView::SceneBrowser;
+		
 		static ImVec2	 buttonSize{ 128, 128 };
 		// Forward declarations
 		//static void ShowMenuBar();
 		////static void ShowTextureBrowser();
-		static void ShowSceneBrowser();
+		//static void ShowSceneBrowser();
 		////static void ShowFontBrowser();
 		//static bool IconButton(const char* icon, const char* label, const ImVec2& size);
 
@@ -124,7 +119,6 @@ namespace Editor {
 		void	GUI_Inspector();
 		//Show stats like fps and Number of game object
 		void	GUI_Stats();
-		void    GUI_ContentBrowserPanel();
 
 		void	NewFileUtil();
 		void	OpenFileUtil();
@@ -236,7 +230,6 @@ namespace Editor {
 			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetInstance().GetWidth(),
 											 (float)Engine::Window::GetInstance().GetHeight() });
 
-
 			ImGui::Begin("Dream Engine", &dockspace_bool, dockspace_window_flags);//, & showWindow, ImGuiWindowFlags_NoInputs);
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_dock_flags);
@@ -258,7 +251,6 @@ namespace Editor {
 				ImGui::EndMenuBar();
 
 			}
-
 		}
 
 		//Menu for files
@@ -273,7 +265,7 @@ namespace Editor {
 				}
 
 				else if (ImGui::MenuItem("Save", "CTRL+S")) {
-					
+					EditorSceneManager::GetInstance().EditorSceneSave();
 				}
 
 				else if (ImGui::MenuItem("Save as...", "CTRL+SHIFT+S")) {
@@ -287,8 +279,6 @@ namespace Editor {
 
 				ImGui::EndMenu();
 			}
-
-
 		}
 
 		//Menu to open windows
@@ -298,7 +288,7 @@ namespace Editor {
 				ImGui::MenuItem("Inspector", NULL, &inspector_bool);
 				ImGui::MenuItem("Game Window", NULL, &gameWin_bool);
 				ImGui::MenuItem("Scene Window", NULL, &sceneWin_bool);
-				ImGui::MenuItem("Content Browser", NULL, &asset_bool);
+				ImGui::MenuItem("Asset Browser", NULL, &asset_bool);
 				ImGui::MenuItem("Engine Stats", NULL, &stats_bool);
 				ImGui::MenuItem("Profiler", NULL, &profiler_bool);
 				ImGui::MenuItem("Console", NULL, &console_bool);
@@ -334,15 +324,15 @@ namespace Editor {
 		-------------------------------------------------------------------------------------------------*/
 		//void All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex) {
 		void All_Windows(const Engine::Graphic::FrameBuffer& gameWinFBO, const Engine::Graphic::FrameBuffer& sceneWinFBO) {
-			GUI_GameWindow(&gameWin_bool, gameWinFBO);
-			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO, entity_selected);
+			GUI_GameWindow(&gameWin_bool, gameWinFBO, window_flags);
+			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO, entity_selected, window_flags);
 			GUI_Hierarchy();
 			GUI_Inspector();
 			GUI_Stats();
-			GUI_Profiler(&profiler_bool);
-			GUI_ContentBrowserPanel();
+			GUI_Profiler(&profiler_bool, window_flags);
+			GUI_AssetBrowser(&asset_bool, window_flags);
 			GUI_HeaderPanel();
-			GUI_Console(&console_bool);
+			GUI_Console(&console_bool, window_flags);
 		}
 
 		void GUI_HeaderPanel() {
@@ -724,163 +714,8 @@ namespace Editor {
 		//	ImGui::EndGroup();
 		//	return res;
 		//}
+		
 
-		static void ShowSceneBrowser()
-		{
-			if (_currentDirectory != std::filesystem::path(_assetPath))
-			{
-				if (ImGui::Button("Assets"))
-				{
-					_currentDirectory = _currentDirectory.parent_path();
-				}
-			}
-			//int sceneCount = 0;
-			for (auto& directory : std::filesystem::directory_iterator("Assets/Scenes"))
-			{
-				const auto& path = directory.path();
-				auto relative_path = std::filesystem::relative(path, "Assets/Scenes");
-				std::string filenameString = relative_path.string();
-
-				ImGui::PushID(filenameString.c_str());
-				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-				ImGui::ImageButton((ImTextureID)directory.is_character_file(), { 128, 128 }, { 0, 1 }, { 1, 0 });
-				ImGui::PopStyleColor();
-				//ImGui::PushID(sceneCount++);
-				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-				{
-					if (filenameString == "Assets/Scenes/test2.scene")
-					{
-						Engine::SceneManager::GetInstance().ChangeScene("test2");
-					}
-
-					else if (relative_path.string() == "Scenes/test3.scene")
-					{
-						Engine::SceneManager::GetInstance().ChangeScene("test3");
-					}
-
-					else
-					{
-						Engine::SceneManager::GetInstance().ChangeScene("test1");
-					}
-
-				}
-				ImGui::TextWrapped(filenameString.c_str());
-
-				ImGui::NextColumn();
-
-				ImGui::PopID();
-
-			}
-			ImGui::Columns(1);
-		}
-
-		void GUI_ContentBrowserPanel()
-		{
-			if (asset_bool) {
-				ImGui::Begin("Project", &asset_bool, window_flags);
-				if (ImGui::TreeNode("Create")) {
-					ImGui::Spacing();
-					if (ImGui::Button("Folder", (ImVec2{ 100, 30 })))
-					{
-						//ImGui::SameLine();
-						ImGui::Text("Folder created.");
-					}
-
-					ImGui::SameLine();
-					if (ImGui::Button("New Scene", (ImVec2{ 100, 30 }))) {
-
-						//add new scene
-						Engine::SceneManager::GetInstance().ChangeScene("test1");
-					}
-					ImGui::TreePop();
-				}
-
-				//ShowMenuBar();
-				ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgActive));
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgHovered));
-				ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyleColorVec4(ImGuiCol_Text));
-				ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
-
-				switch (_currentView)
-				{
-					//case AssetView::TextureBrowser:
-					//	ShowTextureBrowser();
-					//	break;
-				case AssetView::SceneBrowser:
-					ShowSceneBrowser();
-					break;
-					//case AssetView::ScriptBrowser:
-					//	ShowScriptBrowser();
-					//	break;
-					//case AssetView::FontBrowser:
-					//	ShowFontBrowser();
-					//	break;
-				default:
-					//Log::Warning("Unkown asset view: %d", (int)m_CurrentView);
-					break;
-				}
-
-				ImGui::PopStyleColor(4);
-
-				//all assets
-				if (_currentDirectory != std::filesystem::path(_assetPath))
-				{
-					if (ImGui::Button("Assets"))
-					{
-						_currentDirectory = _currentDirectory.parent_path();
-					}
-				}
-
-				static float padding = 16.0f;
-				static float thumbnailSize = 128.0f;
-				float cellSize = thumbnailSize + padding;
-
-				float panelWidth = ImGui::GetContentRegionAvail().x;
-				int columnCount = (int)(panelWidth / cellSize);
-				if (columnCount < 1)
-					columnCount = 1;
-
-				ImGui::Columns(columnCount, 0, false);
-
-				for (auto& directory : std::filesystem::directory_iterator(_currentDirectory))
-				{
-					const auto& path = directory.path();
-					auto relative_path = std::filesystem::relative(path, _assetPath);
-					std::string filenameString = relative_path.string();
-
-					ImGui::PushID(filenameString.c_str());
-					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-					ImGui::ImageButton((ImTextureID)directory.is_directory(), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
-					if (ImGui::BeginDragDropSource())
-					{
-						const wchar_t* itemPath = relative_path.c_str();
-						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
-						ImGui::EndDragDropSource();
-					}
-					ImGui::PopStyleColor();
-					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-					{
-						if (directory.is_directory())
-						{
-							_currentDirectory /= path.filename();
-						}
-
-					}
-					ImGui::TextWrapped(filenameString.c_str());
-
-					ImGui::NextColumn();
-
-					ImGui::PopID();
-
-				}
-				ImGui::Columns(1);
-
-				ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 512);
-				ImGui::SliderFloat("Padding", &padding, 0, 32);
-
-				ImGui::End();
-			}
-		}
 		/*-------------------------------------------------------------------------------------------------
 		-------------------------------------------------------------------------------------------------*/
 

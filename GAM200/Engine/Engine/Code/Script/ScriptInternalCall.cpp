@@ -64,8 +64,9 @@ namespace Engine {
 	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2);
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2);
 
-	bool Input_IsKeyPressed(Input_KeyCode key);
-	bool Input_IsMouseButtonPressed(Input_MouseCode button);
+	bool GetKey_Engine(Input_KeyCode key);
+	bool GetKeyDown_Engine(Input_KeyCode key);
+	bool GetMouseDown_Engine(Input_MouseCode button);
 	void Input_GetMousePosition(Math::vec2* outPosition);
 
 	bool HasComponent_Transform_Engine(unsigned int id);
@@ -109,8 +110,10 @@ namespace Engine {
 		mono_add_internal_call("Transform::GetTransform_forward_Engine", GetTransform_forward_Engine);
 		mono_add_internal_call("Transform::GetTransform_right_Engine", GetTransform_right_Engine);
 
-		mono_add_internal_call("Input::IsKeyPressed_Engine", Input_IsKeyPressed);
-		mono_add_internal_call("Input::IsMousePressed_Engine", Input_IsMouseButtonPressed);
+		mono_add_internal_call("Input::GetKey_Engine", GetKey_Engine);
+		mono_add_internal_call("Input::GetKeyDown_Engine", GetKeyDown_Engine);
+
+		mono_add_internal_call("Input::GetMouseDown_Engine", GetMouseDown_Engine);
 		mono_add_internal_call("Input::GetMousePosition_Engine", Input_GetMousePosition);
 
 		mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
@@ -214,22 +217,28 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	bool Input_IsKeyPressed(Input_KeyCode key)
-	{
-		return Input::IsKeyPressed(key);
-	}
+	
+	bool GetKey_Engine(Input_KeyCode key)
+    {
+        return Input::IsKeyHold(key);
+    }
 
-	bool Input_IsMouseButtonPressed(Input_MouseCode button)
-	{
-		return Input::IsMousePressed(button);
-	}
+    bool GetKeyDown_Engine(Input_KeyCode key)
+    {
+        return Input::IsKeyPressed(key);
+    }
 
-	void Input_GetMousePosition(Math::vec2*)
-	{
-		std::cout << "Currently GetMousePosition not working \n";
-		/*Math::vec2 result = Input::mousePosition;
+    bool GetMouseDown_Engine(Input_MouseCode button)
+    {
+        return Input::IsMousePressed(button);
+    }
+
+    void Input_GetMousePosition(Math::vec2*)
+    {
+        std::cout << "Currently GetMousePosition not working \n";
+        /*Math::vec2 result = Input::mousePosition;
 		*outPosition = result;*/
-	}
+    }
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Check if component exist

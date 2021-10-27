@@ -258,7 +258,6 @@ copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shader
 copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
 
 
-
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
@@ -282,8 +281,11 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_AssetBrowserWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_ConsoleWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_GameWindow.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_HierarchyWindow.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_InspectorWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_ProfilerWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_SceneWindow.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_StatsWindow.hpp" />
     <ClInclude Include="Editor\Header\Scene\EditorSceneManager.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -301,8 +303,11 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_AssetBrowserWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_ConsoleWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_GameWindow.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_HierarchyWindow.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_InspectorWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_ProfilerWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_SceneWindow.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_StatsWindow.cpp" />
     <ClCompile Include="Editor\Code\Main.cpp" />
     <ClCompile Include="Editor\Code\Scene\EditorSceneManager.cpp" />
   </ItemGroup>

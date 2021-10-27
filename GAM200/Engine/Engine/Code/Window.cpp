@@ -43,12 +43,21 @@ namespace Engine {
 
 	void Window::Update() {
 		PROFILER_START("Application");
-		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_1, InputType::RELEASE);
-		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_2, InputType::RELEASE);
-		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_3, InputType::RELEASE);
-		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_5, InputType::RELEASE);
-		Input::SetMouseStatus(GLFW_MOUSE_BUTTON_4, InputType::RELEASE);
-
+		if (Input::IsMousePressed(Input_MouseCode::Mouse_Left)) {
+			Input::SetMouseStatus(GLFW_MOUSE_BUTTON_1, InputType::REPEAT);
+		}
+		if (Input::IsMousePressed(Input_MouseCode::Mouse_Right)) {
+			Input::SetMouseStatus(GLFW_MOUSE_BUTTON_2, InputType::REPEAT);
+		}
+		if (Input::IsMousePressed(Input_MouseCode::Mouse_Middle)) {
+			Input::SetMouseStatus(GLFW_MOUSE_BUTTON_3, InputType::REPEAT);
+		}
+		if (Input::IsMousePressed(Input_MouseCode::Mouse_LeftSide_Front)) {
+			Input::SetMouseStatus(GLFW_MOUSE_BUTTON_5, InputType::REPEAT);
+		}
+		if (Input::IsMousePressed(Input_MouseCode::Mouse_LeftSide_Back)) {
+			Input::SetMouseStatus(GLFW_MOUSE_BUTTON_4, InputType::REPEAT);
+		}
 
 		glfwPollEvents();
 		glfwSwapBuffers(glfw_window);

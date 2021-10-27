@@ -51,32 +51,32 @@ public class Test : MonoBehaviour
     {
         //Console.WriteLine("new Update");
         //Console.WriteLine(Input::GetMouse);
-        if (Input.IsKeyPressed(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             go2.position += -go2.right * Time.dt * 250;
         }
 
-        if (Input.IsKeyPressed(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             go2.position += go2.right * Time.dt * 250;
         }
 
-        if (Input.IsKeyPressed(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             go2.position += go2.forward * Time.dt * 250;
         }
 
-        if (Input.IsKeyPressed(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             go2.position += -go2.forward * Time.dt * 250;
         }
 
-        if (Input.IsKeyPressed(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q))
         {
             go2.angle += 250 * Time.dt;
         }
 
-        if (Input.IsKeyPressed(KeyCode.E))
+        if (Input.GetKey(KeyCode.E))
         {
             go2.angle -= 250 * Time.dt;
         }
@@ -84,7 +84,7 @@ public class Test : MonoBehaviour
 
 
 
-        if (Input.IsKeyPressed(KeyCode.C))
+        if (Input.GetKey(KeyCode.C))
         {
             //Instantiate Prefab
             /*for (int i = 0; i < 100; i++)

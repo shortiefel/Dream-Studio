@@ -18,21 +18,33 @@ using System.Runtime.CompilerServices; //For internal calls
 
 public class Input
 {
-    public static bool IsKeyPressed(KeyCode keyCode)
+    public static bool GetKey(KeyCode keyCode)
     {
-        return IsKeyPressed_Engine(keyCode);
+        return GetKey_Engine(keyCode);
     }
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern bool IsKeyPressed_Engine(KeyCode key);
+    internal static extern bool GetKey_Engine(KeyCode key);
 
-    public static bool IsMousePressed(MouseCode button)
+    public static bool GetKeyDown(KeyCode keyCode)
     {
-        return IsMousePressed_Engine(button);
+        return GetKeyDown_Engine(keyCode);
     }
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern bool IsMousePressed_Engine(MouseCode button);
+    internal static extern bool GetKeyDown_Engine(KeyCode key);
+
+
+
+    public static bool GetMouseDown(MouseCode button)
+    {
+        return GetMouseDown_Engine(button);
+    }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern bool GetMouseDown_Engine(MouseCode button);
+
+
 
     public static Vec2 GetMousePosition()
     {
@@ -42,5 +54,4 @@ public class Input
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern bool GetMousePosition_Engine(out Vec2 pos);
-
 }

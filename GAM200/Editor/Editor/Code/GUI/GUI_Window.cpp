@@ -17,13 +17,17 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
+
 #include "Editor/Header/GUI/GUI_Window.hpp"
-#include "Editor/Header/GUI/GUI_Imgui.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ProfilerWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_GameWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_AssetBrowserWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_HierarchyWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_StatsWindow.hpp"
+
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 
 #include <Imgui/imgui_internal.h>
@@ -32,13 +36,12 @@ Technology is prohibited.
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/Management/GameState.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
-#include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Event/KeyEvent.hpp"
-#include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
+#include "Engine/Header/ECS/Component/UI/Button.hpp"
 
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
@@ -115,10 +118,6 @@ namespace Editor {
 		//static bool IconButton(const char* icon, const char* label, const ImVec2& size);
 
 		void    GUI_HeaderPanel();
-		void	GUI_Hierarchy();
-		void	GUI_Inspector();
-		//Show stats like fps and Number of game object
-		void	GUI_Stats();
 
 		void	NewFileUtil();
 		void	OpenFileUtil();
@@ -321,9 +320,9 @@ namespace Editor {
 		void All_Windows(const Engine::Graphic::FrameBuffer& gameWinFBO, const Engine::Graphic::FrameBuffer& sceneWinFBO) {
 			GUI_GameWindow(&gameWin_bool, gameWinFBO, window_flags);
 			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO, entity_selected, window_flags);
-			GUI_Hierarchy();
-			GUI_Inspector();
-			GUI_Stats();
+			GUI_Hierarchy(&hierarchy_bool, entity_selected, window_flags);
+			GUI_Inspector(&inspector_bool, TEXT_BOX_SIZE, entity_selected, window_flags);
+			GUI_Stats(&stats_bool);
 			GUI_Profiler(&profiler_bool);
 			GUI_AssetBrowser(&asset_bool, window_flags);
 			GUI_HeaderPanel();
@@ -355,332 +354,6 @@ namespace Editor {
 			
 		}
 
-		void GUI_Hierarchy() {
-			if (hierarchy_bool) {
-				ImGui::Begin("Hierarchy", &hierarchy_bool, window_flags);
-
-				/**
-				* Game Objects
-				*/		
-
-				//Engine::Entity entity_selected = Engine::Entity{ 0 };
-				/*std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
-				
-				std::vector entity_set = Engine::DreamECS::GetInstance().GetUsedEntitySet();
-				//highlight when object is currently selected
-				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
-					| ImGuiTreeNodeFlags_OpenOnDoubleClick
-					| ImGuiTreeNodeFlags_SpanAvailWidth;
-
-				for (int i = 0; i < entity_set.size(); i++)
-				{
-					if (ImGui::Selectable(entity_set[i].name.c_str()))
-					{
-						entity_selected = entity_set[i];
-					}
-
-
-				}*/
-
-				auto& entity_map = Engine::DreamECS::GetInstance().GetUsedEntityMap();
-				for (auto& [id, entity] : entity_map)
-				{
-					ImGui::Text(entity.name.c_str());
-
-				}
-				
-
-				ImGui::End();
-			}
-		}
-
-		void GUI_Inspector() {
-			if (inspector_bool) {
-				ImGui::Begin("Inspector", &inspector_bool, window_flags);
-
-				if (EntityId_Check(entity_selected)) {
-					ImGui::End();
-					return;
-				}
-				auto& entityMap = Engine::DreamECS::GetInstance().GetUsedEntityMap();
-				//Remove if entity is deleted
-				const auto& itr = entityMap.find(entity_selected);
-				if (itr == entityMap.end()) {
-					entity_selected = DEFAULT_ENTITY_ID;
-					ImGui::End();
-					return;
-				}
-				//float width = 120;
-				//bool selectEntity = 0;
-
-				/**
-				*	Transform Properties
-				*/
-				Engine::TransformComponent* transComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TransformComponent>(entity_selected);
-				if (transComp != nullptr) {
-
-					ImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
-					ImGui::SameLine();
-
-					if (ImGui::TreeNode("Transform")) {
-						ImGui::Spacing();
-						//Updating of position
-						ImGui::Text("Position");
-						ImGui::Spacing();
-						ImGui::Text("X: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##TransformXPos", &transComp->position.x, 0.0f);
-						ImGui::Text("Y: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##TransformYPos", &transComp->position.y, 0.0f);
-
-
-						//Updating of scaling
-						ImGui::Text("Scaling ");
-						ImGui::Spacing();
-						ImGui::Text("X: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##TransformXscale", &transComp->scale.x, 0.0f);
-						ImGui::Text("Y: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.0f);
-
-
-						ImGui::Text("Rotation ");
-						ImGui::Spacing();
-						ImGui::SliderFloat("##TransformRotate", &transComp->angle, -360.f, 360.f);
-
-						//deleteComponent
-						if (ImGui::Button("Delete Component##DeleteTransform", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TransformComponent>(entity_selected);
-
-						ImGui::TreePop();
-					}
-				}
-
-				/*
-				*	Collider for each component
-				*/
-				Engine::ColliderComponent* colComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::ColliderComponent>(entity_selected);
-				if (colComp != nullptr) {
-
-					ImGui::CheckBox_Dream("##ColliderActive", &(colComp->isActive));
-					ImGui::SameLine();
-
-					if (ImGui::TreeNode("Collider")) {
-						ImGui::Text("Scale");
-						ImGui::SameLine();
-						ImGui::DragFloat3("##colliderScale", &colComp->offset_scale.x, 0.0f);
-
-						//deleteComponent
-						if (ImGui::Button("Delete Component##DeleteCollider", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::DreamECS::GetInstance().RemoveComponent<Engine::ColliderComponent>(entity_selected);
-
-						ImGui::TreePop();
-					}
-				}
-
-				/*
-				*	Camera component
-				* 
-				*	--> missing zooming
-				*/
-				Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
-				if (camComp != nullptr) {
-					ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
-					ImGui::SameLine();
-
-					if (ImGui::TreeNode("Camera"))
-					{
-						ImGui::Text("FOV");
-						ImGui::SameLine();
-						ImGui::InputFloat("##camFOV", &camComp->fov, 0.0f);
-
-						//deleteComponent
-						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::DreamECS::GetInstance().RemoveComponent<Engine::CameraComponent>(entity_selected);
-
-						ImGui::TreePop();
-					}
-						
-				}
-
-
-				/*
-				*	RigidBody component
-				*/
-				Engine::RigidBodyComponent* rigidComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::RigidBodyComponent>(entity_selected);
-				{
-					if (rigidComp != nullptr)
-					{
-						ImGui::CheckBox_Dream("##RidgidActive", &(rigidComp->isActive));
-						ImGui::SameLine();
-
-						if (ImGui::TreeNode("Rigid Body"))
-						{
-							ImGui::Text("Speed");
-							ImGui::SameLine();
-							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.0f);
-
-							//deleteComponent
-							if (ImGui::Button("Delete Component##DeleteRigid", { ImGui::GetContentRegionAvail().x, 0 }))
-								Engine::DreamECS::GetInstance().RemoveComponent<Engine::RigidBodyComponent>(entity_selected);
-
-							ImGui::TreePop();
-						}
-					}
-				}
-
-				/*
-				*	Texture component
-				*/
-
-
-				/*
-				*	Text component
-				*/
-				//Engine::TextureComponent* textComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextureComponent>(entity_selected);
-				
-
-				/*
-				*	Color component
-				*/
-
-
-			
-
-
-
-
-				/**
-				*	Scripts for each component
-				*/
-				Engine::ScriptComponent* scriptComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::ScriptComponent>(entity_selected);
-				if (scriptComp != nullptr) {
-					//if (ImGui::TreeNode("Script")) {
-						auto& scriptsList = scriptComp->klassInstance;
-
-						for (auto& [className, csScriptInstance] : scriptsList) {
-							//ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
-							ImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
-							ImGui::SameLine();
-
-							if (ImGui::TreeNode(std::string{ className + " (Script)" }.c_str())) {
-								for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap) {
-									ImGui::Text(varName.c_str());
-									ImGui::SameLine();
-									switch (csPublicVariable.variableType) {
-									case Engine::CSType::CHAR:
-										//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
-										break;
-									case Engine::CSType::BOOL:
-										ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
-										break;
-									case Engine::CSType::FLOAT:
-										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
-										break;
-									case Engine::CSType::INT:
-										ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
-										break;
-									case Engine::CSType::UINT:
-										//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
-										break;
-									case Engine::CSType::VEC2:
-										Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
-										ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
-										break;
-									}
-								}
-
-								//deleteComponent
-								if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
-									Engine::DreamECS::GetInstance().RemoveScript(entity_selected, className.c_str());
-
-								ImGui::TreePop();
-							}
-						}
-				}
-
-
-				/**
-				*	Add New Components
-				*/
-
-				if (ImGui::Button("Add Component##addcomponentbtn", { ImGui::GetContentRegionAvail().x, 0 }))
-				{
-					ImGui::OpenPopup("##addcomponentpopup");
-				}
-				if (ImGui::BeginPopup("##addcomponentpopup"))
-				{
-					float AvailWidth = ImGui::GetContentRegionAvail().x;
-					ImGui::PushItemWidth(AvailWidth);
-
-					if (ImGui::Selectable("Transform##addTransformcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
-					if (ImGui::Selectable("Collider##addTCollidercom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
-					if (ImGui::Selectable("Script##addScriptcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
-					if (ImGui::Selectable("Camera##addCameracom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
-					if (ImGui::Selectable("Rigid Body##addRigidcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
-
-					char text[100];
-					ImGui::PushItemWidth(TEXT_BOX_SIZE);
-					ImGui::Text("Script: ");
-					if (ImGui::InputText("##addcomponenttype", text, 100)) {
-						if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
-							std::string textStr{ text };
-							Engine::DreamECS::GetInstance().AddComponent(
-								//std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() }.Deserialize())
-								std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() })
-							);
-						}
-					}
-					ImGui::PopItemWidth();
-
-					ImGui::EndPopup();
-				}
-				
-
-				ImGui::End();
-			}
-		}
-
-		void GUI_Stats() {
-			if (stats_bool) {
-				ImGui::Begin("Engine Stats", &stats_bool);
-				std::stringstream outputSS;
-				outputSS << "FPS: ";
-				outputSS.precision(2);
-				outputSS << std::fixed << Engine::DeltaTime::GetInstance().GetFPS();
-				
-				ImGui::Text(outputSS.str().c_str());
-				outputSS.str(std::string());
-
-				outputSS << "Entity Count: ";
-				outputSS << Engine::DreamECS::GetInstance().GetComponentArraySize<Engine::TransformComponent>();
-				ImGui::Text(outputSS.str().c_str());
-
-
-
-				ImGui::End();
-			}
-		}
-
-		/*void GUI_GameWindow(const ImTextureID& gameWinTex) {
-			CreateImageWindow("Game Window", gameWinTex, gameWin_bool);
-		}*/
-
-		//void GUI_SceneWindow(const ImTextureID& sceneWinTex) {
-		//	//CreateImageWindow("Scene Window", sceneWinTex, sceneWin_bool);
-
-		//	
-
-		//	
-		//}
 
 		//static void ShowMenuBar()
 		//{

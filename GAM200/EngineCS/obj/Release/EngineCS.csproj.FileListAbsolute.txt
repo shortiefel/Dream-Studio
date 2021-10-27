@@ -12,7 +12,6 @@ C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\EngineCS\obj\Release\EngineCS.dll
 C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\EngineCS\obj\Release\EngineCS.pdb
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.dll
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.pdb
-C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.AssemblyReference.cache
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.CoreCompileInputs.cache
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.dll
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.pdb
@@ -22,9 +21,4 @@ C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.dll
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.pdb
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.AssemblyReference.cache
-C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.dll
-C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.pdb
-C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.AssemblyReference.cache
-C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.CoreCompileInputs.cache
-C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.dll
-C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.pdb
+C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.AssemblyReference.cache

@@ -41,6 +41,7 @@ namespace Engine
 		void RenderText(GLSLShader &shader, std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation);
 		void Init();
 		void Draw();
+		void DrawFont(std::string _text, float xpos, float ypos, const glm::ivec3& colour);
 		bool Load(std::string path);
 		void Unload();
 
@@ -48,6 +49,7 @@ namespace Engine
 		std::map<char, Character> characters;
 		unsigned int vao, vbo;
 		GLSLShader* font_shader;
+		GLSLShader shader;
 	};
 };
 

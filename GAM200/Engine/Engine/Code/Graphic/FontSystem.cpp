@@ -31,11 +31,16 @@ namespace Engine
 {
     void FontSystem::Draw()
     {
-        RenderText(font_shader, "Hello!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f, 0.8f, 1.0f), 0.0f);
+        RenderText(shader, "Hello!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f, 0.8f, 1.0f), 0.0f);
 
         //RenderText("Option", -75.0f, 0.0f, 1.0f, glm::vec3(0.2f, 0.8f, 0.2f), 0.0f);
 
         //RenderText("Quit", -300.0f, -250.0f, 1.0f, glm::vec3(0.2f, 0.8f, 0.2f), 0.0f);
+    }
+
+    void FontSystem::DrawFont(std::string _text, float xpos, float ypos, const glm::ivec3& color)
+    {
+        RenderText(shader, "Hello!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f, 0.8f, 1.0f), 0.0f);
     }
 
     //void FontSystem::RenderText(GLSLShader& shader, std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation)

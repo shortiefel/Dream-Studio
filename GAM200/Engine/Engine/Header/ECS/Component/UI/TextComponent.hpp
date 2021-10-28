@@ -52,9 +52,10 @@ namespace Engine
 		//	_colour[1] = colour.g;
 		//	_colour[2] = colour.b;
 		//}
+
 		//glm::vec3 GetTextColour() const
 		//{
-		//	return glm::vec3{ _colour[0], _colour[1], _colour[2] };
+		//	return glm::ivec3{ _colour[0], _colour[1], _colour[2] };
 		//}
 
 		const std::string& GetFontType()
@@ -74,7 +75,10 @@ namespace Engine
 
 		std::string ComponentName() const;
 
-		std::string& GetFontString();
+		std::string GetFontString()
+		{
+			return fontstring;
+		}
 
 	private:
 		std::string font_type;

@@ -191,8 +191,8 @@ namespace Editor {
 						if (ImGui::InputText("##addcomponenttype", text, 100)) {
 							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 								std::string textStr{ text };
-								//Engine::DreamECS::GetInstance().AddComponent(
-								//	std::move(Engine::TextComponent{}));
+								Engine::DreamECS::GetInstance().AddComponent(
+									std::move(Engine::TextComponent{}));
 							}
 						}
 

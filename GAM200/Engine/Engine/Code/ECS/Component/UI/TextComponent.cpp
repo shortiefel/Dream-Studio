@@ -62,9 +62,14 @@ namespace Engine
 		return "TextComponent";
 	}
 
-	std::string& TextComponent::GetFontString()
-	{
-		return fontstring;
-	}
+	//std::string TextComponent::GetFontString()
+	//{
+	//	return fontstring;
+	//}
+
+	//glm::vec3 TextComponent::GetTextColour() const
+	//{
+	//	return glm::vec3{ _colour[0], _colour[1], _colour[2] };
+	//}
 
 }

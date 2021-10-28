@@ -47,7 +47,7 @@ namespace Engine
 	private:
 		std::map<char, Character> characters;
 		unsigned int vao, vbo;
-		GLSLShader font_shader;
+		GLSLShader* font_shader;
 	};
 };
 

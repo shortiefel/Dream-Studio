@@ -104,7 +104,8 @@ namespace Engine
 
         //to include font shader 
         //font_shader.Init("Assets/Shaders/font_vs.glsl", "Assets/Shaders/font-fs.glsl");
-        font_shader.Use();
+       // GLSLShader* fontShader = new GLSLShader{ "Assets/Shaders/FontShader.vert", "Assets/Shaders/FontShader.frag" };
+        font_shader->Use();
         //Freetype Settings
         FT_Library ft;
         if (FT_Init_FreeType(&ft))
@@ -178,6 +179,7 @@ namespace Engine
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, NULL);
 
             glDisable(GL_CULL_FACE);
+            
         }
     }
 

@@ -46,7 +46,7 @@ namespace Engine
 
 		//void(*pickingFP)() = []() {};
 		GLSLShader font_shader;
-		FontSystem font_system;
+		FontSystem _fontRenderer;
 		SINGLETON_SETUP(GraphicSystem);
 	};
 }

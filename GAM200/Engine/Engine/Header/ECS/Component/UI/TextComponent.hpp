@@ -64,7 +64,7 @@ namespace Engine
 		TextComponent(const TextComponent&) = default;
 		~TextComponent();
 
-		TextComponent(Entity_id _ID = DEFAULT_ENTITY_ID,
+		TextComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
 			GraphicShape _shape = GraphicShape::SQUARE, const std::string _string = "", bool _active = true, GraphicLayer _layer = GraphicLayer::GO);
 
 		TextComponent& operator= (const TextComponent&) = default;

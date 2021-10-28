@@ -90,6 +90,8 @@ namespace Engine
 		GraphicImplementation::Renderer::EndBatch(isDebugDraw);
 		GraphicImplementation::Renderer::Flush(isDebugDraw);
 
+		_fontRenderer.Draw();
+
 
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
@@ -195,28 +197,8 @@ namespace Engine
 				if (!transform || !transform->isActive) continue;
 
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, font.texobj_hdl);
-
-				// to draw debug lines
-				//if (_isDebugDraw == GL_TRUE) {
-				//	ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity_id);
-
-				//	// when object has collider, get collider matrix
-				//	if (collider != nullptr)
-				//	{
-				//		if (font.mdl_ref == GraphicShape::SQUARE)
-				//		{
-				//			GraphicImplementation::Renderer::DrawQuadDebug(collider->offset_position + transform->position,
-				//				collider->offset_scale * transform->scale,
-				//				transform->angle);
-				//		}
-				//		else if (font.mdl_ref == GraphicShape::CIRCLE)
-				//		{
-				//			GraphicImplementation::Renderer::DrawCircleDebug(collider->offset_position + transform->position,
-				//				collider->offset_scale * transform->scale,
-				//				transform->angle);
-				//		}
-				//	}
-				//}
+				
+				//_fontRenderer
 			}
 		}
 	}

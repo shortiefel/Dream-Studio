@@ -45,7 +45,7 @@ namespace Engine
 		Graphic::FrameBuffer fbo;
 
 		//void(*pickingFP)() = []() {};
-
+		GLSLShader font_shader;
 		FontSystem font_system;
 		SINGLETON_SETUP(GraphicSystem);
 	};

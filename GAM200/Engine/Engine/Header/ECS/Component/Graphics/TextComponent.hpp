@@ -34,6 +34,10 @@ namespace Engine
 	public:
 		GLuint texobj_hdl = GLuint{};
 
+		GraphicShape mdl_ref = GraphicShape{};
+
+		GraphicLayer layerIndex = GraphicLayer{};
+
 		std::string filepath = "";
 
 		std::string fontstring = "";
@@ -61,7 +65,7 @@ namespace Engine
 		~TextComponent();
 
 		TextComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
-			const std::string _string = "", bool _active = true);
+			GraphicShape _shape = GraphicShape::SQUARE, const std::string _string = "", bool _active = true, GraphicLayer _layer = GraphicLayer::GO);
 
 		TextComponent& operator= (const TextComponent&) = default;
 

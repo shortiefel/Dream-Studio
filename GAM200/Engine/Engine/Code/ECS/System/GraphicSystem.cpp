@@ -33,6 +33,7 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Management/AssetManager.hpp"
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 
@@ -40,6 +41,7 @@ namespace Engine
 {
 	// forward declaration
 	void TextureLayer(const std::array<TextureComponent, MAX_ENTITIES>& arr, bool debugdrawCheck, int layer);
+	void FontLayer(const std::array<TextComponent, MAX_ENTITIES>& arr, bool debugdrawCheck, int layer);
 
 	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo)
 	{
@@ -69,10 +71,17 @@ namespace Engine
 		for (int i = 0; i < static_cast<int>(GraphicLayer::COUNT); i++)
 		{
 			TextureLayer(textureArray, isDebugDraw, i);
+			
 		}
 
-		//load text render
-		font_system.Draw();
+		// loop through every font component
+		const auto& fontArray = DreamECS::GetInstance().GetComponentArrayData<TextComponent>();
+		for (int i = 0; i < static_cast<int>(GraphicLayer::COUNT); i++)
+		{
+			FontLayer(fontArray, isDebugDraw, i);
+			font_system.Draw();
+
+		}
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -171,6 +180,47 @@ namespace Engine
 			}
 		}
 	}
+
+	void FontLayer(const std::array<TextComponent, MAX_ENTITIES>& arr, bool debugdrawCheck, int layer)
+	{
+		for (const auto& font : arr)
+		{
+			if (font.layerIndex == static_cast<GraphicLayer>(layer))
+			{
+				const Entity_id& entity_id = font.GetEntityId();
+				if (EntityId_Check(entity_id)) break;
+				if (!font.isActive) continue;
+
+				TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
+				if (!transform || !transform->isActive) continue;
+
+				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, font.texobj_hdl);
+
+				// to draw debug lines
+				//if (_isDebugDraw == GL_TRUE) {
+				//	ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity_id);
+
+				//	// when object has collider, get collider matrix
+				//	if (collider != nullptr)
+				//	{
+				//		if (font.mdl_ref == GraphicShape::SQUARE)
+				//		{
+				//			GraphicImplementation::Renderer::DrawQuadDebug(collider->offset_position + transform->position,
+				//				collider->offset_scale * transform->scale,
+				//				transform->angle);
+				//		}
+				//		else if (font.mdl_ref == GraphicShape::CIRCLE)
+				//		{
+				//			GraphicImplementation::Renderer::DrawCircleDebug(collider->offset_position + transform->position,
+				//				collider->offset_scale * transform->scale,
+				//				transform->angle);
+				//		}
+				//	}
+				//}
+			}
+		}
+	}
+
 }
 
 /*

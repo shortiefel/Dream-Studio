@@ -176,7 +176,25 @@ namespace Editor {
 				/*
 				*	Text component
 				*/
+				Engine::TextComponent* textComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextComponent>(entity_selected);
+				if (textComp != nullptr)
+				{
+					ImGui::CheckBox_Dream("##TextActive", &(textureComp->isActive));
+					ImGui::SameLine();
 
+					if (ImGui::CollapsingHeader("Text"))
+					{
+						ImGui::Spacing();
+						ImGui::Text("Is Active");
+
+
+
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextComponent>(entity_selected);
+
+					}
+				}
 
 
 				/*
@@ -269,6 +287,8 @@ namespace Editor {
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
 					if (ImGui::Selectable("Camera##addCameracom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+					if (ImGui::Selectable("Text##addTextcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TextComponent>(entity_selected);
 
 					char text[100]{};
 					ImGui::PushItemWidth(textSize);

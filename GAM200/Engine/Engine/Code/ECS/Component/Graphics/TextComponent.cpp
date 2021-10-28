@@ -24,11 +24,13 @@ Technology is prohibited.
 namespace Engine
 {
 
-	TextComponent::TextComponent(Entity_id _ID, const std::string _path,  std::string _string, bool _active) :
+	TextComponent::TextComponent(Entity_id _ID, const std::string _path, GraphicShape _shape,
+		const std::string _string, bool _active, GraphicLayer _layer) :
 		IComponent{ _ID },
 		texobj_hdl{ 0 }, filepath{ _path }, width{ 0 }, height{ 0 }, BPP{ 0 },
 		fontstring{ _string },
-		isActive{ _active } {}
+		isActive{ _active },
+		layerIndex{ _layer }  {}
 
 	TextComponent::~TextComponent()
 	{
@@ -39,16 +41,20 @@ namespace Engine
 	{
 		filepath = _serializer.GetValue<std::string>("Filepath");
 		texobj_hdl = AssetManager::GetInstance().LoadFont(filepath, &width, &height, &BPP, 4);
+		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 		fontstring = _serializer.GetValue<std::string>("FontString");
 		isActive = _serializer.GetValue<bool>("IsActive");
+		layerIndex = GraphicLayer(_serializer.GetValue<int>("Layer"));
 		return *this;
 	}
 
 	void TextComponent::Serialize(const SSerializer& _serializer)
 	{
 		_serializer.SetValue("Filepath", filepath);
+		_serializer.SetValue("Shape", int(mdl_ref));
 		_serializer.SetValue("FontString", fontstring);
 		_serializer.SetValue("IsActive", isActive);
+		_serializer.SetValue("Layer", int(layerIndex));
 
 		//_serializer.EndSerialize("Texture");
 	}

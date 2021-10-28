@@ -157,6 +157,9 @@
     <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp">
       <Filter>Source Files\ECS\Component\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\PhysicsSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">

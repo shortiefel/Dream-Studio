@@ -14,7 +14,7 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Engine/Header/ECS/Component/UI/Button.hpp"
+#include "Engine/Header/ECS/Component/UI/ButtonComponent.hpp"
 
 namespace Engine {
 

@@ -24,7 +24,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
-#include "Engine/Header/ECS/Component/Graphics/TextComponent.hpp"
+#include "Engine/Header/ECS/Component/UI/TextComponent.hpp"
 
 #include "Engine/Header/Graphic/Mesh.hpp"
 #include "Engine/Header/Graphic/Shader.hpp"
@@ -79,7 +79,6 @@ namespace Engine
 		for (int i = 0; i < static_cast<int>(GraphicLayer::COUNT); i++)
 		{
 			FontLayer(fontArray, isDebugDraw, i);
-			font_system.Draw();
 
 		}
 
@@ -155,6 +154,7 @@ namespace Engine
 				if (!transform || !transform->isActive) continue;
 
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, texture.texobj_hdl);
+				
 
 				// to draw debug lines
 				if (_isDebugDraw == GL_TRUE) {

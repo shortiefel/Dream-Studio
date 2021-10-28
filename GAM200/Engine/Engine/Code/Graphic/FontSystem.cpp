@@ -104,7 +104,7 @@ namespace Engine
 
         //to include font shader 
         //font_shader.Init("Assets/Shaders/font_vs.glsl", "Assets/Shaders/font-fs.glsl");
-
+        font_shader.Use();
         //Freetype Settings
         FT_Library ft;
         if (FT_Init_FreeType(&ft))

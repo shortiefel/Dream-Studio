@@ -185,13 +185,24 @@ namespace Editor {
 					if (ImGui::CollapsingHeader("Text"))
 					{
 						ImGui::Spacing();
-						ImGui::Text("Is Active");
-
-
+						char text[100]{};
+						ImGui::PushItemWidth(textSize);
+						ImGui::Text("Text Input: ");
+						if (ImGui::InputText("##addcomponenttype", text, 100)) {
+							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
+								std::string textStr{ text };
+								//Engine::DreamECS::GetInstance().AddComponent(
+								//	std::move(Engine::TextComponent{}));
+							}
+						}
 
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextComponent>(entity_selected);
+
+						ImGui::PopItemWidth();
+
+						ImGui::EndPopup();
 
 					}
 				}

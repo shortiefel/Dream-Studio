@@ -35,17 +35,18 @@ namespace Engine {
 		/*--------------------------------------------------------------------------------------------------------------
 		Entity related functions
 		--------------------------------------------------------------------------------------------------------------*/
-		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, Entity_id _parent = DEFAULT_ENTITY_ID);
+		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, std::unordered_set<Entity_id> _child = std::unordered_set<Entity_id>{}, Entity_id _parent = DEFAULT_ENTITY_ID);
 		void DuplicateEntityAsInstance(Entity ent);
 		void DestroyEntity(Entity_id entity_id);
 		//const std::vector<Entity>& GetUsedEntitySet();
-		const EntityMapType& GetUsedEntityMap();
+		const EntityMapType& GetUsedConstEntityMap();
+		EntityMapType& GetUsedEntityMap();
 		uint32_t GetUsedEntitySize() const;
 		void ClearDestroyQueue();
 		void ResetECS();
 
-		void Parent(Entity _parent, Entity _child);
-		void Unparent(Entity _child);
+		void Parent(Entity_id _parent, Entity_id _child);
+		void Unparent(Entity_id _target);
 
 		/*--------------------------------------------------------------------------------------------------------------
 		Component related functions

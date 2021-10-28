@@ -18,6 +18,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
+#include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 
 #define DESTROY_ENTITY(entity_id)\
 entityManager->DestroyEntity(entity_id);\
@@ -40,7 +41,7 @@ namespace Engine {
 		//sysManager = std::make_unique<SystemManager>();
 	}
 
-	Entity DreamECS::CreateEntity(const char* _entityName, Entity_id _parent) {
+	Entity DreamECS::CreateEntity(const char* _entityName, std::unordered_set<Entity_id> _child, Entity_id _parent) {
 		std::string entityName{ _entityName };
 		if (nameCount.find(entityName) != nameCount.end()) {
 			entityName += std::to_string(nameCount[_entityName]);
@@ -69,7 +70,11 @@ namespace Engine {
 		return entityManager->GetUsedEntitySet();
 	}*/
 
-	const EntityMapType& DreamECS::GetUsedEntityMap() {
+	const EntityMapType& DreamECS::GetUsedConstEntityMap() {
+		return entityManager->GetUsedConstEntityMap();
+	}
+
+	EntityMapType& DreamECS::GetUsedEntityMap() {
 		return entityManager->GetUsedEntityMap();
 	}
 
@@ -98,7 +103,7 @@ namespace Engine {
 	void DreamECS::ResetECS() {
 		nameCount.clear();
 
-		auto& entityMap = entityManager->GetUsedEntityMap();
+		auto& entityMap = entityManager->GetUsedConstEntityMap();
 		for (auto& [entity_id, entity] : entityMap) {
 				//entityManager->DestroyEntity(entity_id);
 				compManager->DestroyEntity(entity_id);
@@ -107,32 +112,17 @@ namespace Engine {
 		entityManager->ResetEntityManager();
 	}
 
-	void DreamECS::Parent(Entity _parent, Entity _child) {
-
-		//_child.parent = _parent.id;
-		//auto& transChild = GetComponent<TransformComponent>(_child);
-
-
+	void DreamECS::Parent(Entity_id _parent, Entity_id _child) {
+		if (_parent == _child) return;
+		if (_parent == DEFAULT_ENTITY_ID) return;
+		if (_child == DEFAULT_ENTITY_ID) return;
+		TransformCalculationSystem::GetInstance().Parent(_parent, _child);
 	}
 
-	void DreamECS::Unparent(Entity _child) {
-		/*Entity tem = _child;
-		_child.parent = DEFAULT_ENTITY_ID;
-		auto& transChild = GetComponent<TransformComponent>(_child.id);
-
-		auto size = entityManager->GetUsedEntitySize();*/
-		//auto& vec = entityManager->GetUsedEntitySet();
-
-		/*while (tem.parent != DEFAULT_ENTITY_ID) {
-			for (unsigned int i = 0; i < size; i++) {
-				if (tem.parent == vec[i].id) {
-					transChild += GetComponent<TransformComponent>(vec[i].id);
-					tem = vec[i];
-				}
-			}
-		}*/
+	void DreamECS::Unparent(Entity_id _target) {
+		if (_target == DEFAULT_ENTITY_ID) return;
+		TransformCalculationSystem::GetInstance().Unparent(_target);
 	}
-
 
 	void DreamECS::RemoveScript(Entity_id entity_id, const char* className) {
 		compManager->RemoveScript(entity_id, className);

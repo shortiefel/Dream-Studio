@@ -20,6 +20,8 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 
+#include <unordered_set>
+
 #include <string>
 #include <rapidjson/document.h>
 
@@ -102,7 +104,22 @@ namespace Engine {
 				return T{};
 			}
 		}
+		
+		//If the number of element is unknown, use this
+		template <typename T>
+		std::unordered_set<T> GetUSet(const char* name) const {
+			printf("trying this\n");
+			VARIABLE_CHECK;
+			std::unordered_set<T> holder;
+			const auto& src = itr->value[name].GetArray();
+			unsigned int sz = src.Size();
+			for (unsigned int i = 0; i < sz; i++) {
+				holder.emplace(src[i].GetUint());
+			}
+			return holder;
+		}
 
+		
 
 
 	private:

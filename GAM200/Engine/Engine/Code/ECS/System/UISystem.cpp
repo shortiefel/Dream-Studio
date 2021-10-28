@@ -28,14 +28,14 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Shader.hpp"
 #include "Engine/Header/Graphic/GLSLShader.hpp"
 
-//#include "Engine/Header/Graphic/Graphic.hpp"
-//#include "Engine/Header/Graphic/GraphicOptions.hpp"
-//#include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Debug Tools/Profiler.hpp"
 
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 namespace Engine {
 	void UISystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
+		PROFILER_START("Rendering");
+
 		GLboolean gameDraw;
 		if (!_fbo)
 			gameDraw = GL_TRUE;

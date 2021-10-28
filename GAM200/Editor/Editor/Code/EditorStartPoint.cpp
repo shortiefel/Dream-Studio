@@ -38,7 +38,7 @@ namespace Editor {
 
 	void EditorStartPoint::Update(float) {
 		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
-		PROFILER_START("Rendering");
+		
 
 		//GUI::SetGameFBO();
 		////Engine::GraphicSystem::Update(dt);
@@ -51,6 +51,8 @@ namespace Editor {
 		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 		Engine::UISystem::GetInstance().Render(EditorSceneCamera::GetTransformUI(), GUI::GetFboPtr());
 
+		//The system already added the time taken
+		PROFILER_START("Rendering");
 		GUI::Update();
 		
 		

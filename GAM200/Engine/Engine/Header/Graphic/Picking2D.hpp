@@ -36,7 +36,7 @@ namespace Engine {
 		//false = no hover, true = hover
 		void RecordMouseOverlap(Entity_id entity_id, bool type);
 
-		//Callback is called when mouse is over entity while CallbackFail is called when there is no hover for the entity
+		//Callback is called when mouse is over entity while CallbackFail is called when there is not over entity (Calls when callback is not called)
 		template<typename Func, typename Func2>
 		void PickingCheck(Math::vec3& mousePos, const Math::vec2& viewportSize, const Math::mat3& inverseCamMatrix, Func Callback, Func2 CallbackFail) {
 			mousePos = Math::mat3(2.f / viewportSize.x, 0.f, 0.f,

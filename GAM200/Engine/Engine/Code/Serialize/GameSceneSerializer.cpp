@@ -43,6 +43,21 @@ Technology is prohibited.
 
 #include <fstream>
 
+#define DESERIALIZE_ENTITY std::string entityName = DEFAULT_ENTITY_NAME;\
+							Entity_id parent = DEFAULT_ENTITY_ID;\
+							std::unordered_set<Entity_id> child{};\
+							\
+							itr = obj.FindMember("Entity");\
+							if (itr != obj.MemberEnd()) {\
+								DSerializer serializer{ itr };\
+								entityName = serializer.GetValue<std::string>("Name");\
+								parent = serializer.GetValue<unsigned int>("Parent");\
+								\
+							}\
+							Entity entity = DreamECS::GetInstance().CreateEntity(entityName.c_str(), child, parent);
+
+//child = serializer.GetUSet<unsigned int>("Child");\
+
 //Type and Store named must be same to use this
 #define DESERIALIZE(type) \
 itr = obj.FindMember(#type);\
@@ -149,7 +164,7 @@ namespace Engine {
 		rapidjson::Document doc(rapidjson::kArrayType);
 		
 		//const std::vector<Entity>& entList = DreamECS::GetInstance().GetUsedEntitySet();
-		auto& entityMap = DreamECS::GetInstance().GetUsedEntityMap();
+		auto& entityMap = DreamECS::GetInstance().GetUsedConstEntityMap();
 		
 		for (const auto& [entityId, entity] : entityMap) {
 			rapidjson::Value entityObject(rapidjson::kObjectType);
@@ -159,6 +174,7 @@ namespace Engine {
 			serializerEntity.SetValue("Name", entity.name);
 			
 			serializerEntity.SetValue("Parent", entity.parent);
+			serializerEntity.SetValueUSet("Child", entity.child);
 			entityObject.AddMember("Entity", objTypeEntity, doc.GetAllocator());
 
 			SERIALIZE(TransformComponent);
@@ -216,17 +232,7 @@ namespace Engine {
 		for (auto& obj : doc.GetArray()) {
 			rapidjson::Value::ConstMemberIterator itr;
 
-			std::string entityName = DEFAULT_ENTITY_NAME;
-			Entity_id parent = DEFAULT_ENTITY_ID;
-
-			itr = obj.FindMember("Entity");
-			if (itr != obj.MemberEnd()) {
-				DSerializer serializer{ itr };
-				entityName = serializer.GetValue<std::string>("Name");
-				parent = serializer.GetValue<unsigned int>("Parent");
-			}
-
-			Entity entity = DreamECS::GetInstance().CreateEntity(entityName.c_str(), parent);
+			DESERIALIZE_ENTITY;
 
 			DESERIALIZE(TransformComponent);
 			DESERIALIZE(ColliderComponent);
@@ -274,17 +280,7 @@ namespace Engine {
 		for (auto& obj : doc.GetArray()) {
 			rapidjson::Value::ConstMemberIterator itr;
 
-			std::string entityName = DEFAULT_ENTITY_NAME;
-			Entity_id parent = DEFAULT_ENTITY_ID;
-
-			itr = obj.FindMember("Entity");
-			if (itr != obj.MemberEnd()) {
-				DSerializer serializer{ itr };
-				entityName = serializer.GetValue<std::string>("Name");
-				parent = serializer.GetValue<unsigned int>("Parent");
-			}
-
-			Entity entity = DreamECS::GetInstance().CreateEntity(entityName.c_str(), parent);
+			DESERIALIZE_ENTITY;
 
 			//ADD_COMPONENT_WTIH_CHECK(Transform);
 

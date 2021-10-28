@@ -28,7 +28,6 @@ Technology is prohibited.
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 
-
 namespace Engine 
 {
 	class DSerializer;
@@ -36,7 +35,8 @@ namespace Engine
 
 	//Scale value for circle in both axis is same
 	struct TransformComponent : public IComponent {
-		Math::vec2 position = Math::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
+		Math::vec2 position = Math::vec2{}; //True position 
+		Math::vec2 localPosition = Math::vec2{}; //Local  position(to be displayed and can be same as true position)
 		Math::vec2 scale = Math::vec2{};
 		float angle = float{}; // in degree
 		bool isActive = true;
@@ -47,7 +47,7 @@ namespace Engine
 		TransformComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		Math::vec2 GetTruePosition() const;
+		//Math::vec2 GetTruePosition() const;
 
 		TransformComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{1,1},
 			float _angle = float{}, bool _active = true, int _layer = 0);

@@ -22,6 +22,8 @@ Technology is prohibited.
 #include <string>
 #include <rapidjson/document.h>
 
+#include <unordered_set>
+
 #define ADD_MEMBER(name, data)\
 rapidjson::Value vName(name, doc.GetAllocator());\
 objType.AddMember(vName, data, doc.GetAllocator());
@@ -79,6 +81,19 @@ namespace Engine {
 			rapidjson::Value pos(rapidjson::kArrayType);
 			pos.PushBack(_val.x, doc.GetAllocator());
 			pos.PushBack(_val.y, doc.GetAllocator());
+
+			ADD_MEMBER(_name, pos);
+		}
+
+		template <typename T>
+		void SetValueUSet(const char* _name, const std::unordered_set<T>& _val) const {
+			rapidjson::Value pos(rapidjson::kArrayType);
+
+			for (const auto& id : _val) {
+				pos.PushBack(id, doc.GetAllocator());
+			}
+			
+			//pos.PushBack(_val.y, doc.GetAllocator());
 
 			ADD_MEMBER(_name, pos);
 		}

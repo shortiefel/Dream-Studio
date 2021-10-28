@@ -83,7 +83,11 @@ namespace Engine {
 			return UsedEntities2;
 		}*/
 
-		inline const EntityMapType& GetUsedEntityMap() const {
+		inline const EntityMapType& GetUsedConstEntityMap() const {
+			return usedEntities;
+		}
+
+		inline EntityMapType& GetUsedEntityMap() {
 			return usedEntities;
 		}
 

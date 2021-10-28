@@ -46,8 +46,8 @@ namespace Engine
 		return *this;
 	}
 
-	Math::vec2 TransformComponent::GetTruePosition() const {
-		auto& tem = DreamECS::GetInstance().GetUsedEntityMap();
+	/*Math::vec2 TransformComponent::GetTruePosition() const {
+		auto& tem = DreamECS::GetInstance().GetUsedConstEntityMap();
 		
 		Entity_id _parent = DEFAULT_ENTITY_ID;
 		const auto & itr = tem.find(GetEntityId());
@@ -59,7 +59,7 @@ namespace Engine
 			return position + DreamECS::GetInstance().GetComponent<TransformComponent>(_parent).GetTruePosition();
 		}
 		return position;
-	}
+	}*/
 
 
 	//Math::mat3 TransformComponent::GetTransform() const 
@@ -82,6 +82,7 @@ namespace Engine
 
 	TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer) {
 		position = _serializer.GetValue<Math::vec2>("Position");
+		localPosition = _serializer.GetValue<Math::vec2>("LocalPosition");
 		scale = _serializer.GetValue<Math::vec2>("Scale");
 		angle = _serializer.GetValue<float>("Angle");
 		isActive = _serializer.GetValue<bool>("IsActive");
@@ -90,6 +91,7 @@ namespace Engine
 
 	void TransformComponent::Serialize(const SSerializer& _serializer) {
 		_serializer.SetValue("Position", position);
+		_serializer.SetValue("LocalPosition", localPosition);
 		_serializer.SetValue("Scale", scale);
 		_serializer.SetValue("Angle", angle);
 		_serializer.SetValue("IsActive", isActive);

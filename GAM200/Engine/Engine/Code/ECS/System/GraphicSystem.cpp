@@ -32,6 +32,7 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Debug Tools/Profiler.hpp"
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 
@@ -42,6 +43,8 @@ namespace Engine
 
 	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo)
 	{
+		PROFILER_START("Rendering");
+
 		GLboolean isDebugDraw;
 
 		if (!_fbo) isDebugDraw = GL_FALSE;
@@ -147,19 +150,19 @@ namespace Engine
 					ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity_id);
 
 					// when object has collider, get collider matrix
-					if (collider != nullptr)
+					if (collider != nullptr && collider->isActive)
 					{
 						if (texture.mdl_ref == GraphicShape::SQUARE)
 						{
 							GraphicImplementation::Renderer::DrawQuadDebug(collider->offset_position + transform->position,
 								collider->offset_scale * transform->scale,
-								transform->angle);
+								collider->angle + transform->angle);
 						}
 						else if (texture.mdl_ref == GraphicShape::CIRCLE)
 						{
 							GraphicImplementation::Renderer::DrawCircleDebug(collider->offset_position + transform->position,
 								collider->offset_scale * transform->scale,
-								transform->angle);
+								0);
 						}
 					}
 				}

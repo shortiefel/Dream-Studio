@@ -27,10 +27,12 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_HierarchyWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_StatsWindow.hpp"
+#include "Editor/Header/GUI/GUI_ClickCheck.hpp"
 
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 
 #include <Imgui/imgui_internal.h>
+#include <map>
 
 #include "Engine/Header/Scene/SceneManager.hpp"
 #include "Engine/Header/Management/FileWindowDialog.hpp"
@@ -79,7 +81,7 @@ namespace Editor {
 
 		ImGuiWindowFlags window_flags = 0;
 
-		Engine::Entity_id entity_selected = DEFAULT_ENTITY_ID;
+		std::map<int, Engine::Entity_id> entity_selected{};
 
 		bool hierarchy_bool = true;
 		bool inspector_bool = true;
@@ -314,17 +316,18 @@ namespace Editor {
 		/*-------------------------------------------------------------------------------------------------
 		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
-		//void All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex) {
 		void All_Windows(const Engine::Graphic::FrameBuffer& gameWinFBO, const Engine::Graphic::FrameBuffer& sceneWinFBO) {
+			GUI_HeaderPanel();
 			GUI_GameWindow(&gameWin_bool, gameWinFBO, window_flags);
 			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO, entity_selected, window_flags);
 			GUI_Hierarchy(&hierarchy_bool, entity_selected, window_flags);
-			GUI_Inspector(&inspector_bool, TEXT_BOX_SIZE, entity_selected, window_flags);
+			GUI_Inspector(&inspector_bool, TEXT_BOX_SIZE, GetTarget(entity_selected), window_flags);
 			GUI_Stats(&stats_bool);
 			GUI_Profiler(&profiler_bool);
 			GUI_AssetBrowser(&asset_bool, window_flags);
-			GUI_HeaderPanel();
 			GUI_Console(&console_bool, window_flags);
+
+			SelectedEntityCheck(entity_selected);
 		}
 
 		void GUI_HeaderPanel() {

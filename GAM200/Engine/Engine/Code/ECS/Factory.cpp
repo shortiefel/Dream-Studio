@@ -41,21 +41,23 @@ namespace Engine
         DreamECS::GetInstance().RegisterComponent<UIComponent>();
 
         CameraSystem::GetInstance().Create();
-        GraphicSystem::GetInstance().Create();
         CollisionSystem::GetInstance().Create();
         PhysicsSystem::GetInstance().Create();
         ScriptSystem::GetInstance().Create();
         UISystem::GetInstance().Create();
+        TransformCalculationSystem::GetInstance().Create();
+        GraphicSystem::GetInstance().Create();
 
     }
 
     void Factory::Destroy() 
     {
+        GraphicSystem::GetInstance().Destroy();
+        TransformCalculationSystem::GetInstance().Destroy();
         UISystem::GetInstance().Destroy();
         ScriptSystem::GetInstance().Destroy();
         PhysicsSystem::GetInstance().Destroy();
         CollisionSystem::GetInstance().Destroy();
-        GraphicSystem::GetInstance().Destroy();
         CameraSystem::GetInstance().Destroy();
     }
 

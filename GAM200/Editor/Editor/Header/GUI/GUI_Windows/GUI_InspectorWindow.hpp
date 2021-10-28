@@ -7,6 +7,6 @@
 
 namespace Editor {
 	namespace GUI_Windows {
-		void GUI_Inspector(bool* inspector_bool, float textSize, Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags);
+		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags);
 	}
 }

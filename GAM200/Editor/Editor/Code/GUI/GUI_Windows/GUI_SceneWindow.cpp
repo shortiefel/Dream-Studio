@@ -18,13 +18,13 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"
 
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
+#include "Editor/Header/GUI/GUI_ClickCheck.hpp"
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/Picking2D.hpp"
 
 #include "Engine/Header/Event/MouseEvent.hpp"
-
 #include "Engine/Header/Input/Input.hpp"
 
 #define HEIGHT_CHANGE_SPEED 30.f
@@ -75,7 +75,7 @@ namespace Editor {
 		}
 
 		//void GUI_SceneWindow(bool* sceneWin_bool, const ImTextureID& sceneWinTex) {
-		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
+		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, std::map<int, Engine::Entity_id>& entity_selected, ImGuiWindowFlags window_flags) {
 			inside = false;
 
 			if (*sceneWin_bool) {
@@ -127,7 +127,7 @@ namespace Editor {
 							mousePos = inverseCamMatrix * mousePos;
 							Entity_PickingCheck(entity_selected);*/
 						//Engine::Graphic::PickingCheck(entity_selected, mousePos, scene_viewportSize, inverseCamMatrix);
-						Engine::Graphic::PickingCheck(mousePos, scene_viewportSize, inverseCamMatrix, [&](const Engine::Entity_id& entity_id) { entity_selected = entity_id; }, [&](const Engine::Entity_id&) {  });
+						Engine::Graphic::PickingCheck(mousePos, scene_viewportSize, inverseCamMatrix, [&](const Engine::Entity_id& entity_id) { ClickCheck(entity_selected, entity_id); }, [&](const Engine::Entity_id&) {  });
 					}
 				}
 

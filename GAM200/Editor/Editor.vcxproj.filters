@@ -111,6 +111,9 @@
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_StatsWindow.hpp">
       <Filter>Header Files\GUI\GUI_Windows</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_ClickCheck.hpp">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -175,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_StatsWindow.cpp">
       <Filter>Source Files\GUI\GUI_Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_ClickCheck.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

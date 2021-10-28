@@ -3,6 +3,7 @@
 #include "Editor/Header/GUI/GUI_Imgui.hpp"
 
 #include "Engine/Header/Management/FileWindowDialog.hpp"
+#include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
 
@@ -10,7 +11,7 @@
 
 namespace Editor {
 	namespace GUI_Windows {
-		void GUI_Inspector(bool* inspector_bool, float textSize, Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
+		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
 				ImGui::Begin("Inspector", inspector_bool, window_flags);
 
@@ -19,15 +20,25 @@ namespace Editor {
 					return;
 				}
 				auto& entityMap = Engine::DreamECS::GetInstance().GetUsedEntityMap();
-				//Remove if entity is deleted
-				const auto& itr = entityMap.find(entity_selected);
-				if (itr == entityMap.end()) {
-					entity_selected = DEFAULT_ENTITY_ID;
-					ImGui::End();
-					return;
-				}
+				////Remove if entity is deleted
+				//const auto& itr = entityMap.find(entity_selected);
+				//if (itr == entityMap.end()) {
+				//	entity_selected = DEFAULT_ENTITY_ID;
+				//	ImGui::End();
+				//	return;
+				//}
 				//float width = 120;
 				//bool selectEntity = 0;
+				char eName[100];
+				std::string& entityName = entityMap[entity_selected].name;
+				strcpy(eName, entityName.c_str());
+				ImGui::PushItemWidth(textSize);
+				ImGui::Text("Entity Name: ");
+				ImGui::SameLine();
+				if (ImGui::InputText("##EntityName", eName, 100)) {
+					entityName = std::string{ eName };
+				}
+				ImGui::PopItemWidth();
 
 				/**
 				*	Transform Properties
@@ -46,10 +57,12 @@ namespace Editor {
 						ImGui::Spacing();
 						ImGui::Text("X: ");
 						ImGui::SameLine();
-						ImGui::InputFloat("##TransformXPos", &transComp->position.x, 0.0f);
+						if (ImGui::InputFloat("##TransformXPos", &transComp->localPosition.x, 0.0f))
+							Engine::TransformCalculationSystem::GetInstance().Update();
 						ImGui::Text("Y: ");
 						ImGui::SameLine();
-						ImGui::InputFloat("##TransformYPos", &transComp->position.y, 0.0f);
+						if (ImGui::InputFloat("##TransformYPos", &transComp->localPosition.y, 0.0f))
+							Engine::TransformCalculationSystem::GetInstance().Update();
 
 
 						//Updating of scaling
@@ -57,15 +70,18 @@ namespace Editor {
 						ImGui::Spacing();
 						ImGui::Text("X: ");
 						ImGui::SameLine();
-						ImGui::InputFloat("##TransformXscale", &transComp->scale.x, 0.0f);
+						if (ImGui::InputFloat("##TransformXscale", &transComp->scale.x, 0.0f))
+							Engine::TransformCalculationSystem::GetInstance().Update();
 						ImGui::Text("Y: ");
 						ImGui::SameLine();
-						ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.0f);
+						if (ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.0f))
+							Engine::TransformCalculationSystem::GetInstance().Update();
 
 
 						ImGui::Text("Rotation ");
 						ImGui::Spacing();
-						ImGui::SliderFloat("##TransformRotate", &transComp->angle, -360.f, 360.f);
+						if (ImGui::SliderFloat("##TransformRotate", &transComp->angle, -360.f, 360.f))
+							Engine::TransformCalculationSystem::GetInstance().Update();
 
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteTransform", { ImGui::GetContentRegionAvail().x, 0 }))
@@ -87,10 +103,34 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Collider"))
 					{
+
 						ImGui::Spacing();
-						ImGui::Text("Scale");
+						//Updating of position
+						ImGui::Text("Position");
+						ImGui::Spacing();
+						ImGui::Text("X: ");
 						ImGui::SameLine();
-						ImGui::DragFloat3("##colliderScale", &colComp->offset_scale.x, 0.0f);
+						ImGui::InputFloat("##TransformXPos", &colComp->offset_position.x, 0.0f);
+						ImGui::Text("Y: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##TransformYPos", &colComp->offset_position.y, 0.0f);
+
+
+						//Updating of scaling
+						ImGui::Text("Scaling ");
+						ImGui::Spacing();
+						ImGui::Text("X: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##TransformXscale", &colComp->offset_scale.x, 0.0f);
+						ImGui::Text("Y: ");
+						ImGui::SameLine();
+						ImGui::InputFloat("##TransformYscale", &colComp->offset_scale.y, 0.0f);
+
+
+						ImGui::Text("Rotation ");
+						ImGui::Spacing();
+						ImGui::SliderFloat("##TransformRotate", &colComp->angle, -360.f, 360.f);
+
 
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteCollider", { ImGui::GetContentRegionAvail().x, 0 }))

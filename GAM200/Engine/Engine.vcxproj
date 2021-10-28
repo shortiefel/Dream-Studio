@@ -220,7 +220,6 @@
     <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp" />
     <ClCompile Include="Engine\Code\Time\DeltaTime.cpp" />
     <ClCompile Include="Engine\Code\Window.cpp" />
-    <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\rapidjson\allocators.h" />

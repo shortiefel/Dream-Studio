@@ -1,6 +1,7 @@
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
 #include "Editor/Header/GUI/GUI_Imgui.hpp"
+#include "Engine/Header/Layer/LayerStack.hpp"
 
 
 #include "Engine/Header/Input/Input.hpp"
@@ -157,11 +158,46 @@ namespace Editor {
 				{
 					ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
 					ImGui::SameLine();
+					
 
 					if (ImGui::CollapsingHeader("Texture"))
 					{
-						ImGui::Spacing();
-						ImGui::Text("Is Active");
+					
+
+						/*
+						*	Layer 
+						*/
+						/*ImGui::Spacing();
+						ImGui::Text("Layer");
+						ImGui::SameLine();
+
+						std::string noOfLayer = std::to_string((int)textureComp->layerIndex);
+						const char* Layer = ((char*)textureComp->layerIndex);
+						int ttlLayer = ((int)textureComp->layerIndex);
+
+						
+				
+						if (ImGui::BeginCombo("test", Layer, 0))
+						{
+							for (int i{ 0 }; i < ttlLayer; i++)
+							{
+								if (ImGui::Selectable(Layer))
+								{
+									std::cout << noOfLayer << "\n";
+								}
+							}
+
+							ImGui::EndCombo;
+						}*/
+
+					
+						
+
+
+
+						/*
+						*	Texture files
+						*/
 
 
 
@@ -171,6 +207,8 @@ namespace Editor {
 
 					}
 				}
+
+
 
 
 				/*

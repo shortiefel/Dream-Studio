@@ -106,9 +106,6 @@
     <ClCompile Include="Engine\Code\Script\Scripting.cpp">
       <Filter>Source Files\Script</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Physics\Collision.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>

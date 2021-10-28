@@ -28,8 +28,7 @@ namespace Engine
 	enum class GraphicShader 
 	{
 		DEFAULT = 0,
-		DEBUG_DRAW,
-		FONT
+		DEBUG_DRAW
 	};
 
 	enum class GraphicLayer

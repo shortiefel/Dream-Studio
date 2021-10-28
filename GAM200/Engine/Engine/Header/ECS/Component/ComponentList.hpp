@@ -24,6 +24,5 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/UIComponent.hpp"
-#include "Engine/Header/ECS/Component/UI/TextComponent.hpp"
 
 #endif

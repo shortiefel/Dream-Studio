@@ -61,24 +61,6 @@ namespace Engine
             }
 
             shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::DEBUG_DRAW, shdr_pgm2));
-
-            // Font Shader
-            shdr_files = {
-                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/FontShader.vert"),
-                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/FontShader.frag")
-            };
-
-            GLSLShader shdr_pgm3;
-            shdr_pgm3.CompileLinkValidate(shdr_files);
-
-            if (GL_FALSE == shdr_pgm3.IsLinked())
-            {
-                std::cout << "Unable to compile/link/validate shader programs\n";
-                std::cout << shdr_pgm3.GetLog() << "\n";
-                std::exit(EXIT_FAILURE);
-            }
-
-            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::FONT, shdr_pgm3));
         }
     }
 }

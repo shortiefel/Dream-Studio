@@ -214,7 +214,36 @@ namespace Editor {
 				/*
 				*	Text component
 				*/
+				Engine::TextComponent* textComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextComponent>(entity_selected);
+				if (textComp != nullptr)
+				{
+					ImGui::CheckBox_Dream("##TextActive", &(textureComp->isActive));
+					ImGui::SameLine();
 
+					if (ImGui::CollapsingHeader("Text"))
+					{
+						ImGui::Spacing();
+						char text[100]{};
+						ImGui::PushItemWidth(textSize);
+						ImGui::Text("Text Input: ");
+						if (ImGui::InputText("##addcomponenttype", text, 100)) {
+							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
+								std::string textStr{ text };
+								Engine::DreamECS::GetInstance().AddComponent(
+									std::move(Engine::TextComponent{}));
+							}
+						}
+
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextComponent>(entity_selected);
+
+						ImGui::PopItemWidth();
+
+						ImGui::EndPopup();
+
+					}
+				}
 
 
 				/*
@@ -307,6 +336,8 @@ namespace Editor {
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
 					if (ImGui::Selectable("Camera##addCameracom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+					if (ImGui::Selectable("Text##addTextcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TextComponent>(entity_selected);
 
 					char text[100]{};
 					ImGui::PushItemWidth(textSize);

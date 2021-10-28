@@ -24,6 +24,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/FrameBuffer.hpp"
+#include "Engine/Header/Graphic/FontSystem.hpp"
 
 namespace Engine
 {
@@ -44,7 +45,8 @@ namespace Engine
 		Graphic::FrameBuffer fbo;
 
 		//void(*pickingFP)() = []() {};
-
+		GLSLShader font_shader;
+		FontSystem _fontRenderer;
 		SINGLETON_SETUP(GraphicSystem);
 	};
 }

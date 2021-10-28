@@ -24,6 +24,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
+#include "Engine/Header/ECS/Component/UI/TextComponent.hpp"
 
 #include "Engine/Header/Graphic/Mesh.hpp"
 #include "Engine/Header/Graphic/Shader.hpp"
@@ -32,6 +33,7 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Management/AssetManager.hpp"
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 
@@ -39,6 +41,7 @@ namespace Engine
 {
 	// forward declaration
 	void TextureLayer(const std::array<TextureComponent, MAX_ENTITIES>& arr, bool debugdrawCheck, int layer);
+	void FontLayer(const std::array<TextComponent, MAX_ENTITIES>& arr, bool debugdrawCheck, int layer);
 
 	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo)
 	{
@@ -68,6 +71,15 @@ namespace Engine
 		for (int i = 0; i < static_cast<int>(GraphicLayer::COUNT); i++)
 		{
 			TextureLayer(textureArray, isDebugDraw, i);
+			
+		}
+
+		// loop through every font component
+		const auto& fontArray = DreamECS::GetInstance().GetComponentArrayData<TextComponent>();
+		for (int i = 0; i < static_cast<int>(GraphicLayer::COUNT); i++)
+		{
+			FontLayer(fontArray, isDebugDraw, i);
+
 		}
 
 		glEnable(GL_BLEND);
@@ -77,6 +89,9 @@ namespace Engine
 
 		GraphicImplementation::Renderer::EndBatch(isDebugDraw);
 		GraphicImplementation::Renderer::Flush(isDebugDraw);
+
+		_fontRenderer.Draw();
+
 
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
@@ -141,6 +156,7 @@ namespace Engine
 				if (!transform || !transform->isActive) continue;
 
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, texture.texobj_hdl);
+				
 
 				// to draw debug lines
 				if (_isDebugDraw == GL_TRUE) {
@@ -166,6 +182,48 @@ namespace Engine
 			}
 		}
 	}
+
+	void FontLayer(const std::array<TextComponent, MAX_ENTITIES>& arr, bool _isDebugDraw, int layer)
+	{
+		for (const auto& font : arr)
+		{
+			if (font.layerIndex == static_cast<GraphicLayer>(layer))
+			{
+				const Entity_id& entity_id = font.GetEntityId();
+				if (EntityId_Check(entity_id)) break;
+				if (!font.isActive) continue;
+
+				TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
+				if (!transform || !transform->isActive) continue;
+				
+				FontSystem fontRenderer;
+				fontRenderer.DrawFont(font.fontstring, transform->position.x, transform->position.y, glm::vec3(0.0f, 0.8f, 1.0f));
+
+				// to draw debug lines
+				if (_isDebugDraw == GL_TRUE) {
+					ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity_id);
+
+					// when object has collider, get collider matrix
+					if (collider != nullptr)
+					{
+						if (font.mdl_ref == GraphicShape::SQUARE)
+						{
+							GraphicImplementation::Renderer::DrawQuadDebug(collider->offset_position + transform->position,
+								collider->offset_scale * transform->scale,
+								transform->angle);
+						}
+						else if (font.mdl_ref == GraphicShape::CIRCLE)
+						{
+							GraphicImplementation::Renderer::DrawCircleDebug(collider->offset_position + transform->position,
+								collider->offset_scale * transform->scale,
+								transform->angle);
+						}
+					}
+				}
+			}
+		}
+	}
+
 }
 
 /*

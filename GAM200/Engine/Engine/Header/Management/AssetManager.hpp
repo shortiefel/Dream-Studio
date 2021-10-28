@@ -18,6 +18,7 @@ Technology is prohibited.
 
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Graphic/FontSystem.hpp"
 #include <filesystem>
 #include <string>
 #include <unordered_map>
@@ -62,6 +63,7 @@ namespace Engine {
 
 		GLuint LoadFont(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
 
+		FontSystem* GetFontResources(const std::string& name);
 		//void addResource(Resource* resource, const std::string& name, const std::string& path);
 
 		//template <typename T>

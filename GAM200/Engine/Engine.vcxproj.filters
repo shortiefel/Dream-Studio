@@ -474,6 +474,9 @@
     <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp">
       <Filter>Header Files\ECS\Component\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\FontComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

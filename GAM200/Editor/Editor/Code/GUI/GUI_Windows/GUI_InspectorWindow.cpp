@@ -86,7 +86,7 @@ namespace Editor {
 						/*
 						*	Texture files
 						*/
-
+						///files
 
 
 						//deleteComponent

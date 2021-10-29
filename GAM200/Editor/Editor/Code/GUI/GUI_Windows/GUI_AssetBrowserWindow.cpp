@@ -34,20 +34,10 @@ namespace Editor {
 			Length
 		};
 
-		static AssetView _currentView = AssetView::SceneBrowser;
-
 		void GUI_AssetBrowser(bool* asset_bool, ImGuiWindowFlags window_flags)
 		{
 			if (asset_bool) {
 				ImGui::Begin("Project", asset_bool, window_flags);
-
-				//ShowMenuBar();
-				ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgActive));
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgHovered));
-				ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyleColorVec4(ImGuiCol_Text));
-				ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
-
-				ImGui::PopStyleColor(4);
 
 				//all assets
 				if (_currentDirectory != std::filesystem::path(_assetPath))
@@ -61,6 +51,8 @@ namespace Editor {
 				static float padding = 16.0f;
 				static float thumbnailSize = 128.0f;
 				float cellSize = thumbnailSize + padding;
+				int height = 128;
+				int width = 10;
 
 				float panelWidth = ImGui::GetContentRegionAvail().x;
 				int columnCount = (int)(panelWidth / cellSize);
@@ -76,8 +68,9 @@ namespace Editor {
 					std::string filenameString = relative_path.string();
 
 					ImGui::PushID(filenameString.c_str());
+					auto directory_icon = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/DirectoryIcon.png", &height, &width, 0, 4);
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-					ImGui::ImageButton((ImTextureID)directory.is_directory(), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
+					ImGui::ImageButton((ImTextureID)directory_icon, { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
 					if (ImGui::BeginDragDropSource())
 					{
 						const wchar_t* itemPath = relative_path.c_str();

@@ -63,13 +63,19 @@ namespace Engine
             shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::DEBUG_DRAW, shdr_pgm2));
 
             // Font Shader
-            shdr_files = {
+            std::vector<std::pair<GLSLShader::ShaderType, std::string>> font_shdr_files
+            {
+                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/GraphicShader.vert"),
+                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/GraphicShader.frag")
+            };
+
+            font_shdr_files = {
                 std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/FontShader.vert"),
                 std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/FontShader.frag")
             };
 
             GLSLShader shdr_pgm3;
-            shdr_pgm3.CompileLinkValidate(shdr_files);
+            shdr_pgm3.CompileLinkValidate(font_shdr_files);
 
             if (GL_FALSE == shdr_pgm3.IsLinked())
             {

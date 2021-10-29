@@ -179,16 +179,16 @@ namespace Editor {
 				Engine::TextComponent* textComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextComponent>(entity_selected);
 				if (textComp != nullptr)
 				{
-					ImGui::CheckBox_Dream("##TextActive", &(textureComp->isActive));
+					ImGui::CheckBox_Dream("##TextActive", &(textComp->isActive));
 					ImGui::SameLine();
 
 					if (ImGui::CollapsingHeader("Text"))
 					{
 						ImGui::Spacing();
-						char text[100]{};
+						char text[200]{};
 						ImGui::PushItemWidth(textSize);
-						ImGui::Text("Text Input: ");
-						if (ImGui::InputText("##addcomponenttype", text, 100)) {
+						ImGui::Text("Text To Input: ");
+						if (ImGui::InputText("##addcomponenttype", text, 200)) {
 							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 								std::string textStr{ text };
 								Engine::DreamECS::GetInstance().AddComponent(

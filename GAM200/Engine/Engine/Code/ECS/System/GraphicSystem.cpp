@@ -57,6 +57,7 @@ namespace Engine
 		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		
 		// Load shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
@@ -74,6 +75,7 @@ namespace Engine
 			
 		}
 
+		//RenderText();
 		// loop through every font component
 		const auto& fontArray = DreamECS::GetInstance().GetComponentArrayData<TextComponent>();
 		for (int i = 0; i < static_cast<int>(GraphicLayer::COUNT); i++)
@@ -90,13 +92,55 @@ namespace Engine
 		GraphicImplementation::Renderer::EndBatch(isDebugDraw);
 		GraphicImplementation::Renderer::Flush(isDebugDraw);
 
-		_fontRenderer.Draw();
-
 
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
 		if (!isDebugDraw) fbo.Unbind();
+		else _fbo->Unbind();
+
+	}
+
+	void GraphicSystem::RenderText(Math::mat4 projectionMatrix, Graphic::FrameBuffer* _fbo)
+	{
+		GLboolean textDraw;
+
+		if (!_fbo) textDraw = GL_FALSE;
+		else textDraw = GL_TRUE;
+
+		if (!textDraw) fbo.Bind();
+		else _fbo->Bind();
+
+		// Set background to purple color
+		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		const auto& shd_ref_handle2 = GraphicImplementation::shdrpgms[GraphicShader::FONT].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle2);
+
+		GraphicImplementation::Renderer::ResetStats();
+		GraphicImplementation::Renderer::BeginBatch(textDraw);
+
+		// loop through every font component
+		const auto& fontArray = DreamECS::GetInstance().GetComponentArrayData<TextComponent>();
+		for (int i = 0; i < static_cast<int>(GraphicLayer::COUNT); i++)
+		{
+			FontLayer(fontArray, textDraw, i);
+
+		}
+
+		//_fontRenderer.Draw();
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		GLSLShader::SetUniform("projection", projectionMatrix, shd_ref_handle2);
+
+		GraphicImplementation::Renderer::EndBatch(textDraw);
+		GraphicImplementation::Renderer::Flush(textDraw);
+		// Unload shader program
+		GraphicImplementation::UnUseShaderHandle();
+
+		if (!textDraw) fbo.Unbind();
 		else _fbo->Unbind();
 	}
 
@@ -196,8 +240,9 @@ namespace Engine
 				TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
 				if (!transform || !transform->isActive) continue;
 				
-				FontSystem fontRenderer;
-				fontRenderer.DrawFont(font.fontstring, transform->position.x, transform->position.y, glm::vec3(0.0f, 0.8f, 1.0f));
+				//GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, font.texobj_hdl);
+				//FontSystem fontRenderer;
+				//fontRenderer.DrawFont(font.fontstring, transform->position.x, transform->position.y, glm::vec3(0.0f, 0.8f, 1.0f));
 
 				// to draw debug lines
 				if (_isDebugDraw == GL_TRUE) {

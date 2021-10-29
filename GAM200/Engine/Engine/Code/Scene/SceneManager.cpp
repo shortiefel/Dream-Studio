@@ -42,6 +42,10 @@ namespace Engine {
 	void SceneManager::ChangeSceneInternal() {
         if (nextScene.length()) {
             currentScene->Stop();
+            if (!nextScene.compare(currentScene->GetName())) {
+                nextScene = std::string{};
+                return;
+            }
             delete currentScene;
 
             //currentSceneName = sceneName;

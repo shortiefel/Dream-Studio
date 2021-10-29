@@ -38,35 +38,20 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
 namespace Engine {
-    Scene::Scene(std::string fullPath) : fullPathSceneName{ fullPath } {
-        GameSceneSerializer::DeserializeScene(fullPathSceneName);
+    Scene::Scene(std::string _sceneName) : sceneName{ _sceneName } {
+        GameSceneSerializer::DeserializeScene(sceneName);
         ScriptSystem::GetInstance().UpdateMapData();
     }
 
     //When user click play to run their game
     bool Scene::Play() {
          if (!ScriptSystem::GetInstance().CompileCS()) {
-            std::cout << "Fail to compile \n";
-            //GameState::GetInstance().SetPlaying(false);
-            //Scene::SetPlaying(false);
             return false;
         }
 
         ScriptSystem::GetInstance().UpdateMapData();
-        //const auto& entScriptArray = DreamECS::GetComponentArrayData<CSScript>();
-        //for (auto& csScript : entScriptArray) {
-        //    auto& classScriptInstances = csScript.klassInstance;
-        //    const auto& entityId = csScript.GetEntity();
-
-        //    //Single class and (class and CS public variable)
-        //    for (auto& [className, csScriptInstance] : classScriptInstances) {
-        //        void* param[] = { (void*)&entityId }; //Change to entity.id after ECS rework
-        //        std::cout << "class: " << className << " " << entityId << "\n";
-        //    }
-        //}
         ScriptSystem::GetInstance().PlayInit();
-        //Change to sceneName (might be fullName(path + name) instead)
-        GameSceneSerializer::SerializeScene(fullPathSceneName);
+        GameSceneSerializer::SerializeScene("temporary");
 
         return true;
     }
@@ -74,25 +59,16 @@ namespace Engine {
     void Scene::Stop() {
         CollisionSystem::GetInstance().Stop();
         DreamECS::GetInstance().ResetECS();
-        //GameSceneSerializer::DeserializeScene(fullPathSceneName);
+        GameSceneSerializer::DeserializeScene("temporary");
     }
 
     void Scene::Save() {
-        if (!ScriptSystem::GetInstance().CompileCS()) {
-            std::cout << "Fail to compile \n";
-            //Scene::SetPlaying(false);
-            return;
-        }
-
+        ScriptSystem::GetInstance().CompileCS();
         ScriptSystem::GetInstance().UpdateMapData();
-        //Change to sceneName (might be fullName(path + name) instead)
-        GameSceneSerializer::SerializeScene(fullPathSceneName);
+        GameSceneSerializer::SerializeScene(sceneName);
     }
 
     void Scene::Update(float dt, bool playing) {
-        //std::cout << DreamECS::GetComponentArraySize<CSScript>() << "   " << DreamECS::GetComponentArraySize<Transform>() << "\n";
-        //PROFILER_START("Scene Update");
-
         if (playing) {
             ScriptSystem::GetInstance().PlayRunTime();
             TransformCalculationSystem::GetInstance().ChildUpdate();
@@ -117,17 +93,7 @@ namespace Engine {
         return DreamECS::GetInstance().GetUsedEntitySize();
     }
 
-    //bool Scene::SceneSave() {
-    //    //if (!ScriptSystem::CompileCS()) {
-    //    //    std::cout << "Fail to compile \n";
-    //    //    //Scene::SetPlaying(false);
-    //    //    return false;
-    //    //}
-
-    //    //ScriptSystem::UpdateMapData();
-    //    ////Change to sceneName (might be fullName(path + name) instead)
-    //    //GameSceneSerializer::SerializeScene(fullPathSceneName);
-
-    //    return true;
-    //}
+    std::string Scene::GetName() {
+        return sceneName;
+    }
 }

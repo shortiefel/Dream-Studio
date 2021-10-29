@@ -214,18 +214,18 @@ public class MonoBehaviour
     internal static extern void Active_Script_Engine(uint entityID, bool active, String className);
 
 
-    public void Instantiate(string prefabName, Vec2 position, float angle = 0)
+    public void Instantiate(string prefabName, Vector2 position, float angle = 0)
     {
         Instantiate_Prefab(prefabName, position, angle);
     }
 
     public void Instantiate_Entity(string prefabName)
     {
-        Instantiate_Prefab(prefabName, new Vec2(0,0), 0);
+        Instantiate_Prefab(prefabName, new Vector2(0,0), 0);
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Instantiate_Prefab(String prefabName, Vec2 position, float angle);
+    internal static extern void Instantiate_Prefab(String prefabName, Vector2 position, float angle);
 
     /*public virtual void OnEnable()
     {

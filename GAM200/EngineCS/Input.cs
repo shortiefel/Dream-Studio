@@ -46,12 +46,12 @@ public class Input
 
 
 
-    public static Vec2 GetMousePosition()
+    public static Vector2 GetMousePosition()
     {
-        GetMousePosition_Engine(out Vec2 position);
+        GetMousePosition_Engine(out Vector2 position);
         return position;
     }
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern bool GetMousePosition_Engine(out Vec2 pos);
+    internal static extern bool GetMousePosition_Engine(out Vector2 pos);
 }

@@ -36,34 +36,34 @@ public struct Transform : Component
     public uint entityId { get; set; }
     //-----------------------------------------------------------------------------------------------------------------
     //Position
-    public Vec2 position
+    public Vector2 position
     {
         get
         {
-            GetTransform_Position_Engine(entityId, out Vec2 result);
+            GetTransform_Position_Engine(entityId, out Vector2 result);
             return result;
         }
         set { SetTransform_Position_Engine(entityId, ref value); }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_Position_Engine(uint entityID, out Vec2 outVec2);
+    internal static extern void GetTransform_Position_Engine(uint entityID, out Vector2 outVec2);
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTransform_Position_Engine(uint entityID, ref Vec2 inVec2);
+    internal static extern void SetTransform_Position_Engine(uint entityID, ref Vector2 inVec2);
     //-----------------------------------------------------------------------------------------------------------------
     //Scale
-    public Vec2 scale
+    public Vector2 scale
     {
         get
         {
-            GetTransform_Scale_Engine(entityId, out Vec2 result);
+            GetTransform_Scale_Engine(entityId, out Vector2 result);
             return result;
         }
         set { SetTransform_Scale_Engine(entityId, ref value); }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_Scale_Engine(uint entityID, out Vec2 outVec2);
+    internal static extern void GetTransform_Scale_Engine(uint entityID, out Vector2 outVec2);
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTransform_Scale_Engine(uint entityID, ref Vec2 inVec2);
+    internal static extern void SetTransform_Scale_Engine(uint entityID, ref Vector2 inVec2);
     //-----------------------------------------------------------------------------------------------------------------
     //Angle
     public float angle
@@ -82,40 +82,40 @@ public struct Transform : Component
 
     //public override string ToString() { return "Pos: " + position + " scale: " + scale; }
 
-    public void Move(Vec2 dir)
+    public void Move(Vector2 dir)
     {
         MoveTransform_Position_Engine(entityId, ref dir);
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void MoveTransform_Position_Engine(uint entityID, ref Vec2 inVec2);
+    internal static extern void MoveTransform_Position_Engine(uint entityID, ref Vector2 inVec2);
 
     //-----------------------------------------------------------------------------------------------------------------
     //Forward
-    public Vec2 forward
+    public Vector2 forward
     {
         get
         {
-            GetTransform_forward_Engine(entityId, out Vec2 result);
+            GetTransform_forward_Engine(entityId, out Vector2 result);
             return result;
         }
         set {}
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_forward_Engine(uint entityID, out Vec2 outVec2);
+    internal static extern void GetTransform_forward_Engine(uint entityID, out Vector2 outVec2);
 
     //-----------------------------------------------------------------------------------------------------------------
     //Right
-    public Vec2 right
+    public Vector2 right
     {
         get
         {
-            GetTransform_right_Engine(entityId, out Vec2 result);
+            GetTransform_right_Engine(entityId, out Vector2 result);
             return result;
         }
         set {}
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_right_Engine(uint entityID, out Vec2 outVec2);
+    internal static extern void GetTransform_right_Engine(uint entityID, out Vector2 outVec2);
 
    /* public bool GetActive()
     {

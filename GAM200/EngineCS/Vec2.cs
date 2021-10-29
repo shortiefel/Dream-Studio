@@ -14,41 +14,45 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-public struct Vec2
+public struct Vector2
 {
     public float x, y;
 
-    public Vec2(float n1, float n2)
+    public Vector2(float n1, float n2)
     {
         x = n1;
         y = n2;
     }
 
-    public Vec2(Vec2 n)
+    public Vector2(Vector2 n)
     {
         x = n.x;
         y = n.y;
     }
 
-    public static Vec2 operator +(Vec2 lhs, Vec2 rhs)
+    public static Vector2 operator +(Vector2 lhs, Vector2 rhs)
     {
-        return new Vec2(lhs.x + rhs.x, lhs.y + rhs.y);
+        return new Vector2(lhs.x + rhs.x, lhs.y + rhs.y);
     }
 
-    public static Vec2 operator *(Vec2 lhs, float num)
+    public static Vector2 operator *(Vector2 lhs, float num)
     {
-        return new Vec2(lhs.x * num, lhs.y * num);
+        return new Vector2(lhs.x * num, lhs.y * num);
     }
 
-    public static Vec2 operator-(Vec2 lhs)
+    public static Vector2 operator -(Vector2 lhs)
     {
         lhs.x = -lhs.x;
         lhs.y = -lhs.y;
         return lhs;
     }
 
+    public static Vector2 zero()
+    {
+        return new Vector2(0, 0);
+    }
     public override string ToString()
     {
-        return "Vec2: " + x + " " + y;
+        return "Vector2: " + x + " " + y;
     }
 }

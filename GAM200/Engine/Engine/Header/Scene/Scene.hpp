@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Engine {
 	class Scene {
 	public:
-		Scene(std::string fullPath);
+		Scene(std::string _sceneName);
 		/*--------------------------------------------------------------------
 		Start play mode
 		--------------------------------------------------------------------*/
@@ -42,10 +42,11 @@ namespace Engine {
 		void Update(float dt, bool playing);
 
 		unsigned int EntityCount();
+		std::string GetName();
 
 	private:
 		//Path + scene name
-		std::string fullPathSceneName;
+		std::string sceneName;
 	};
 }
 

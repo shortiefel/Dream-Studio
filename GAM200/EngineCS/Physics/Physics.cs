@@ -20,12 +20,12 @@ using System;
 public class Physics
 {
     //Leave distance parameter blank to have "infinite" length
-    public static bool RayCast(Vec2 pos, Vec2 dir, out float hit, uint ignoreTarget, float distance = -1f)
+    public static bool RayCast(Vector2 pos, Vector2 dir, out float hit, uint ignoreTarget, float distance = -1f)
     {
         //Console.WriteLine();
         return RayCast_Engine(pos, dir, out hit, ignoreTarget, distance);
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern bool RayCast_Engine(Vec2 pos, Vec2 dir, out float hit, uint ignoreTarget, float distance);
+    internal static extern bool RayCast_Engine(Vector2 pos, Vector2 dir, out float hit, uint ignoreTarget, float distance);
 }
 

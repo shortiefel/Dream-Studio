@@ -106,9 +106,6 @@
     <ClCompile Include="Engine\Code\Script\Scripting.cpp">
       <Filter>Source Files\Script</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Header\ECS\System\PhysicsSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Physics\Collision.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
@@ -154,10 +151,10 @@
     <ClCompile Include="Engine\Code\Management\FileWindowDialog.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\UI\Button.cpp">
+    <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp">
       <Filter>Source Files\ECS\Component\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\TransformCalculationSystem.cpp">
+    <ClCompile Include="Engine\Code\ECS\System\PhysicsSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -474,11 +471,11 @@
     <ClInclude Include="Engine\Header\Management\FileWindowDialog.hpp">
       <Filter>Header Files\Management</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\UI\Button.hpp">
+    <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp">
       <Filter>Header Files\ECS\Component\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\TransformCalculationSystem.hpp">
-      <Filter>Header Files\ECS\System</Filter>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\FontComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

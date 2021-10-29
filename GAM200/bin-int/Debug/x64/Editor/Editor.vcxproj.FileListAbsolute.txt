@@ -1,0 +1,2 @@
+C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\bin-int\Debug\x64\Editor\Editor.vcxproj.AssemblyReference.cache
+C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\bin-int\Debug\x64\Editor\Editor.vcxproj.CopyComplete

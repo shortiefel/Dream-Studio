@@ -37,10 +37,16 @@ Technology is prohibited.
 //Systems
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
+
+#include "Engine/Header/AI/AISystem.hpp"
+
 namespace Engine {
     Scene::Scene(std::string _sceneName) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
         ScriptSystem::GetInstance().UpdateMapData();
+
+        AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 20 }, Math::ivec2{ 15, 15 });
+        AI::AISystem::GetInstance().SetRender();
     }
 
     //When user click play to run their game
@@ -82,6 +88,8 @@ namespace Engine {
        
         GraphicSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
+
+        AI::AISystem::GetInstance().Render();
 
         DreamECS::GetInstance().ClearDestroyQueue();
 

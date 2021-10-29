@@ -169,6 +169,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\stb_image\stb_image.cpp" />
+    <ClCompile Include="Engine\Code\AI\AISystem.cpp" />
+    <ClCompile Include="Engine\Code\AI\Grid.cpp" />
+    <ClCompile Include="Engine\Code\AI\Node.cpp" />
     <ClCompile Include="Engine\Code\Application.cpp" />
     <ClCompile Include="Engine\Code\Debug Tools\Profiler.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp" />
@@ -246,6 +249,9 @@
     <ClInclude Include="..\External Resources\include\rapidjson\uri.h" />
     <ClInclude Include="..\External Resources\include\rapidjson\writer.h" />
     <ClInclude Include="..\External Resources\include\stb_image\stb_image.h" />
+    <ClInclude Include="Engine\Header\AI\AISystem.hpp" />
+    <ClInclude Include="Engine\Header\AI\Grid.hpp" />
+    <ClInclude Include="Engine\Header\AI\Node.hpp" />
     <ClInclude Include="Engine\Header\Application.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Profiler.hpp" />

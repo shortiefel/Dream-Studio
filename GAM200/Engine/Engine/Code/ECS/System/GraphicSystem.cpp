@@ -41,8 +41,7 @@ namespace Engine
 	// forward declaration
 	void TextureLayer(const std::array<TextureComponent, MAX_ENTITIES>& arr, bool debugdrawCheck, int layer);
 
-	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo)
-	{
+	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
 		PROFILER_START("Rendering");
 
 		GLboolean isDebugDraw;

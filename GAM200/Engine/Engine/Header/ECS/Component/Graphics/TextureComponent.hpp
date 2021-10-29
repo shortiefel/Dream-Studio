@@ -38,8 +38,6 @@ namespace Engine
 		std::string textureName = "";
 		GLuint texobj_hdl = GLuint{};
 
-		
-
 		bool isActive = true;
 
 		TextureComponent(const TextureComponent&) = default;

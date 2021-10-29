@@ -5,6 +5,7 @@
 
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
+#include "Engine/Header/Graphic/TextureSet.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
 
@@ -251,12 +252,11 @@ namespace Editor {
 						ImGui::Spacing();
 						ImGui::Text("Texture: %s", textureComp->textureName.c_str());
 
-						if (ImGui::Button("Change Texture##ChangeTexture")) {
-							//std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+						if (ImGui::Button("Change Texture##ChangeTextureTexture")) {
 							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
 
 							if (!filePath.empty()) {
-								textureComp->SetTexture(filePath);
+								Engine::GraphicImplementation::SetTexture(textureComp, filePath);
 							}
 						}
 
@@ -292,10 +292,15 @@ namespace Editor {
 
 						if (ImGui::CollapsingHeader("UI"))
 						{
-							/*ImGui::Spacing();
-							ImGui::Text("Speed");
-							ImGui::SameLine();
-							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.0f);*/
+							ImGui::Text("Texture: %s", uiComp->textureName.c_str());
+
+							if (ImGui::Button("Change Texture##ChangeUITexture")) {
+								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
+
+								if (!filePath.empty()) {
+									Engine::GraphicImplementation::SetTexture(uiComp, filePath);
+								}
+							}
 
 							//deleteComponent
 							if (ImGui::Button("Delete Component##DeletUI", { ImGui::GetContentRegionAvail().x, 0 }))

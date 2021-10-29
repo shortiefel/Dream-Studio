@@ -86,6 +86,9 @@ namespace Engine {
 			case MonoFunctionType::MOUSE_ENTER:
 				INVOKE_FUNCTION(OnMouseEnter);
 				break;
+			case MonoFunctionType::MOUSE_CLICK:
+				INVOKE_FUNCTION(OnMouseClick);
+				break;
 			case MonoFunctionType::MOUSE_OVER:
 				INVOKE_FUNCTION(OnMouseOver);
 				break;
@@ -230,6 +233,10 @@ namespace Engine {
 			methodDesc = fullName + ":OnMouseEnter()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnMouseEnter = mono_method_desc_search_in_image(description, image);
+			
+			methodDesc = fullName + ":OnMouseClick()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnMouseClick = mono_method_desc_search_in_image(description, image);
 
 			methodDesc = fullName + ":OnMouseOver()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);

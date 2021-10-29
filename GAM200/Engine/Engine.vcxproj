@@ -174,12 +174,12 @@
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp" />
-    <ClCompile Include="Engine\Code\ECS\Component\Graphics\UIComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\TextComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\DreamECS.cpp" />
     <ClCompile Include="Engine\Code\ECS\Factory.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp" />
@@ -202,6 +202,7 @@
     <ClCompile Include="Engine\Code\Graphic\Mesh.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Picking2D.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Shader.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\TextureSet.cpp" />
     <ClCompile Include="Engine\Code\Input\Input.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="Engine\Code\Management\AssetManager.cpp" />
@@ -255,13 +256,13 @@
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\FontComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp" />
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\UIComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\TextComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\UI\UIComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp" />
     <ClInclude Include="Engine\Header\ECS\DreamECS.hpp" />
     <ClInclude Include="Engine\Header\ECS\Entity\Entity.hpp" />
@@ -290,6 +291,7 @@
     <ClInclude Include="Engine\Header\Graphic\Mesh.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Picking2D.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Shader.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\TextureSet.hpp" />
     <ClInclude Include="Engine\Header\Input\Input.hpp" />
     <ClInclude Include="Engine\Header\Input\InputCode.hpp" />
     <ClInclude Include="Engine\Header\Layer\Layer.hpp" />

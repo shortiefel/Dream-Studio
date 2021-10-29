@@ -81,9 +81,6 @@ public class Test : MonoBehaviour
             go2.angle -= 250 * Time.dt;
         }
 
-
-
-
         if (Input.GetKey(KeyCode.C))
         {
             //Instantiate Prefab
@@ -110,6 +107,11 @@ public class Test : MonoBehaviour
     public override void OnMouseEnter()
     {
         Debug.Log("Mouse Enter");
+    }
+
+    public override void OnMouseClick()
+    {
+        Debug.Log("Mouse Enter click");
     }
 
     public override void OnMouseExit()

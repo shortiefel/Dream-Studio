@@ -17,9 +17,11 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Graphic/TextureSet.hpp"
 
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
+
 
 namespace Engine
 {
@@ -37,21 +39,9 @@ namespace Engine
 		//now done by TextureManager destroy function
 	}
 
-	void TextureComponent::SetTexture(std::string _filepath) {
-		if (_filepath.empty()) return;
-
-		filepath = _filepath.substr(_filepath.rfind("Assets"));
-
-		textureName = filepath.substr(filepath.find_last_of("\\") + 1);
-		textureName = textureName.substr(0, textureName.find_last_of("."));
-		
-		GLint width = GLint{}, height = GLint{}, BPP = GLint{}; //BPP - bits per pixel
-		texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
-	}
-
 	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer)
 	{
-		SetTexture(std::move(_serializer.GetValue<std::string>("Filepath")));
+		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
 
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 		isActive = _serializer.GetValue<bool>("IsActive");

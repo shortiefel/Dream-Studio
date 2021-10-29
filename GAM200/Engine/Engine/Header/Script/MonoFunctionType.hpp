@@ -30,6 +30,7 @@ namespace Engine {
 		TRIGGER_STAY,
 		TRIGGER_EXIT,
 		MOUSE_ENTER,
+		MOUSE_CLICK,
 		MOUSE_OVER,
 		MOUSE_EXIT
 	};

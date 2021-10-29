@@ -15,11 +15,11 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 public enum MouseCode
 {
-	Mouse_Left = 0,
-	Mouse_Right = 1,
-	Mouse_Middle = 2,
-	Mouse_LeftSide_Front = 4,
-	Mouse_LeftSide_Back = 3
+	Left = 0,
+	Right = 1,
+	Middle = 2,
+	LeftSide_Front = 4,
+	LeftSide_Back = 3
 }
 
 public enum KeyCode

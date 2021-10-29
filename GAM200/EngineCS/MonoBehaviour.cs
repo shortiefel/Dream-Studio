@@ -51,6 +51,7 @@ public class MonoBehaviour
     public virtual void OnTriggerStay() { }
     public virtual void OnTriggerExit() { }
     public virtual void OnMouseEnter() { }
+    public virtual void OnMouseClick() { }
     public virtual void OnMouseOver() { }
     public virtual void OnMouseExit() { }
 
@@ -58,9 +59,6 @@ public class MonoBehaviour
     public MonoBehaviour(uint id)
     {
         entityId = id;
-        //Console.WriteLine("Constructor new");
-        //gameObject = new GameObject();
-        //gameObject.entityId = id;
     }
 
     public T GetComponent<T>() where T : Component, new()

@@ -145,9 +145,6 @@
     <ClCompile Include="Engine\Code\ECS\System\UISystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Graphics\UIComponent.cpp">
-      <Filter>Source Files\ECS\Component\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Management\FileWindowDialog.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
@@ -159,6 +156,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\System\TransformCalculationSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\TextureSet.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp">
+      <Filter>Source Files\ECS\Component\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,9 +468,6 @@
     <ClInclude Include="Engine\Header\ECS\System\UISystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\UIComponent.hpp">
-      <Filter>Header Files\ECS\Component\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Entity\Entity.hpp">
       <Filter>Header Files\ECS\Entity</Filter>
     </ClInclude>
@@ -482,6 +482,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\TransformCalculationSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\TextureSet.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\UI\UIComponent.hpp">
+      <Filter>Header Files\ECS\Component\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

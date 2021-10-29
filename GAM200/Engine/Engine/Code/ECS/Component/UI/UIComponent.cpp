@@ -21,9 +21,10 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
-#include "Engine/Header/ECS/Component/Graphics/UIComponent.hpp"
+#include "Engine/Header/ECS/Component/UI/UIComponent.hpp"
 
 #include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Graphic/TextureSet.hpp"
 
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
@@ -34,11 +35,10 @@ namespace Engine {
 		filepath{ _path }, isActive{ _active }, layer{ _layer }, texobj_hdl{ 0 } {}
 
 	UIComponent& UIComponent::Deserialize(const DSerializer& _serializer) {
-		filepath = _serializer.GetValue<std::string>("Filepath");
+		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
+		
 		isActive = _serializer.GetValue<bool>("IsActive");
 
-		GLint width = GLint{}, height = GLint{}, BPP = GLint{};
-		texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
 		return *this;
 	}
 

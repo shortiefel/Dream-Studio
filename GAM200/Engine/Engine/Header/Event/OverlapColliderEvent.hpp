@@ -14,6 +14,7 @@ OnTriggerStay
 OnTriggerExit
 
 OnMouseEnter
+OnMouseClick
 OnMouseOver
 OnMouseExit
 

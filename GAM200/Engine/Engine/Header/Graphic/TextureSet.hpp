@@ -1,10 +1,11 @@
 /* Start Header**********************************************************************************/
 /*
-@file    ComponentList.hpp
-@authors	Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
-@date    27/06/2021
+@file    TextureSet.hpp
+@author  Chia Yi Da		chiayida98@gmail.com
+@date    29/10/2021
 @brief
-List of all component
+#include "Engine/Header/Graphic/TextureSet.hpp"
+This file contain a texture setter 
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -14,15 +15,18 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef COMPONENT_LIST_HPP
-#define COMPONENT_LIST_HPP
+#ifndef TEXTURE_SET_HPP
+#define TEXTURE_SET_HPP
 
-#include "Engine/Header/ECS/Component/Graphics/CameraComponent.hpp"
-#include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
-#include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
-#include "Engine/Header/ECS/Component/Physics/RigidBodyComponent.hpp"
-#include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/ECS/Component/UI/UIComponent.hpp"
 
+#include <string>
+
+namespace Engine {
+	namespace GraphicImplementation {
+		void SetTexture(TextureComponent* _texptr, std::string _filepath);
+		void SetTexture(UIComponent* _texptr, std::string _filepath);
+	}
+}
 #endif

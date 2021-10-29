@@ -39,8 +39,9 @@ namespace Engine
 		bool isActive = true;
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 
-		GLuint texobj_hdl = GLuint{};
 		std::string filepath = "";
+		std::string textureName = "";
+		GLuint texobj_hdl = GLuint{};
 
 		UIComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);

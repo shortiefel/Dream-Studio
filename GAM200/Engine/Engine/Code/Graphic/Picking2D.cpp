@@ -36,6 +36,11 @@ namespace Engine {
 					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::MOUSE_ENTER);
 					EventDispatcher::SendEvent(event);
 				}
+
+				if (Input::IsMousePressed(Input_MouseCode::Mouse_Left)) {
+					MouseOverlapColliderEvent event2(entity_id, MonoFunctionType::MOUSE_CLICK);
+					EventDispatcher::SendEvent(event2);
+				}
 			}
 			else {
 				const auto& iter = overlapMap.find(entity_id);

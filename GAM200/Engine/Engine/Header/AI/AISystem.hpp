@@ -30,8 +30,8 @@ namespace Engine {
 		class AISystem : public Singleton<AISystem> {
 		public:
 			void CreateGrid(Math::ivec2 _mapSize, Math::ivec2 _tileSize);
-			void AStar_Algorithm();
-			void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), Graphic::FrameBuffer* _fbo = nullptr);
+			void AStar_Algorithm(Node* nodeStart, Node* nodeEnd);
+			void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI(), Graphic::FrameBuffer* _fbo = nullptr);
 			void SetRender();
 			void Reset();
 

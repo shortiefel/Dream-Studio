@@ -45,7 +45,7 @@ namespace Engine {
         GameSceneSerializer::DeserializeScene(sceneName);
         ScriptSystem::GetInstance().UpdateMapData();
 
-        AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 20 }, Math::ivec2{ 15, 15 });
+        AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });
         AI::AISystem::GetInstance().SetRender();
     }
 

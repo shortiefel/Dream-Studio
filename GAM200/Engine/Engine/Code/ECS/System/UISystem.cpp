@@ -52,7 +52,6 @@ namespace Engine {
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
-		GraphicImplementation::Renderer::ResetStats();
 		GraphicImplementation::Renderer::BeginBatch(!gameDraw);
 
 		const auto& uiArray = DreamECS::GetInstance().GetComponentArrayData<UIComponent>();

@@ -110,7 +110,8 @@ namespace Engine
         //to include font shader 
         //font_shader.Init("Assets/Shaders/font_vs.glsl", "Assets/Shaders/font-fs.glsl");
        // GLSLShader* fontShader = new GLSLShader{ "Assets/Shaders/FontShader.vert", "Assets/Shaders/FontShader.frag" };
-        font_shader->Use();
+       //font_shader->Use();
+        
         //Freetype Settings
         FT_Library ft;
         if (FT_Init_FreeType(&ft))
@@ -254,7 +255,7 @@ namespace Engine
     glEnable(GL_CULL_FACE);
     // activate corresponding render state	
     glBindVertexArray(vao);
-    //shader.GetHandle();
+    shader.Use();
     glUniform3f(glGetUniformLocation(shader.GetHandle(), "textColor"), colour.x, colour.y, colour.z);
     glm::mat4 mat(1.0f);
     mat = glm::rotate(mat, rotation, glm::vec3(0.0f, 0.0f, 1.0f));

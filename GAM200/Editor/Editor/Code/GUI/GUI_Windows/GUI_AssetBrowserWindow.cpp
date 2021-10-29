@@ -133,14 +133,11 @@ namespace Editor {
 					{
 						ShowTextureBrowser();
 					}
-					else
+					if (_currentDirectory != std::filesystem::path(_texturePath))
 					{
 						ShowSceneBrowser();
 					}
 				
-	
-					
-					//ShowTextureBrowser();
 					//for scene
 					//if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 					//{

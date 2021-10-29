@@ -200,10 +200,6 @@ namespace Editor {
 						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextComponent>(entity_selected);
 
-						ImGui::PopItemWidth();
-
-						ImGui::EndPopup();
-
 					}
 				}
 

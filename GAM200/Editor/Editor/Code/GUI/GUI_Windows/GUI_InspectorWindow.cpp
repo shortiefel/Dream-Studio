@@ -46,75 +46,6 @@ namespace Editor {
 				}
 				ImGui::PopItemWidth();
 
-
-				/*
-				*	Texture component
-				*/
-				Engine::TextureComponent* textureComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextureComponent>(entity_selected);
-				if (textureComp != nullptr)
-				{
-					ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
-					ImGui::SameLine();
-
-
-					if (ImGui::CollapsingHeader("Texture"))
-					{
-
-						/*
-						*	Layer
-						*/
-						ImGui::Spacing();
-						ImGui::Text("Layer");
-						ImGui::SameLine();
-
-						//selection
-						static ImGuiComboFlags flags = 0;
-						static int currentSelection = 0;
-					
-
-						//arrays
-						const int sz = 4;
-						const char* layerName[sz] = { "Background", "UI Layer", "Manager", "Game Object"};
-						const char* previewLayer = layerName[currentSelection];
-
-						
-						if (ImGui::BeginCombo("##Layering", previewLayer, flags))
-						{
-							for (int i{ 0 }; i < sz; i++)
-							{
-								const bool isSelected = (currentSelection == i);
-								if (ImGui::Selectable(layerName[i], isSelected))
-								{
-									currentSelection = i;
-									textureComp->layerIndex = static_cast<Engine::GraphicLayer>(i);
-									std::cout << "casted \n";
-								}
-
-								// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-								if (isSelected)
-									ImGui::SetItemDefaultFocus();
-								
-							}
-						
-							ImGui::EndCombo();
-						}
-
-
-						/*
-						*	Texture files
-						*/
-						///files
-
-
-						//deleteComponent
-						if (ImGui::Button("Delete Component##DeleteTexture", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextureComponent>(entity_selected);
-
-					}
-				}
-
-
-
 				/**
 				*	Transform Properties
 				*/
@@ -275,8 +206,54 @@ namespace Editor {
 					ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
 					ImGui::SameLine();
 
+
 					if (ImGui::CollapsingHeader("Texture"))
 					{
+
+						/*
+						*	Layer
+						*/
+						ImGui::Spacing();
+						ImGui::Text("Layer");
+						ImGui::SameLine();
+
+						//selection
+						static ImGuiComboFlags flags = 0;
+						static int currentSelection = 0;
+
+
+						//arrays
+						const int sz = 4;
+						const char* layerName[sz] = { "Background", "UI Layer", "Manager", "Game Object" };
+						const char* previewLayer = layerName[currentSelection];
+
+
+						if (ImGui::BeginCombo("##Layering", previewLayer, flags))
+						{
+							for (int i{ 0 }; i < sz; i++)
+							{
+								const bool isSelected = (currentSelection == i);
+								if (ImGui::Selectable(layerName[i], isSelected))
+								{
+									currentSelection = i;
+									textureComp->layerIndex = static_cast<Engine::GraphicLayer>(i);
+									std::cout << "casted \n";
+								}
+
+								// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+								if (isSelected)
+									ImGui::SetItemDefaultFocus();
+
+							}
+
+							ImGui::EndCombo();
+						}
+
+
+						/*
+						*	Texture files
+						*/
+						///files
 						ImGui::Spacing();
 						ImGui::Text("Texture: %s", textureComp->textureName.c_str());
 
@@ -288,6 +265,12 @@ namespace Editor {
 								textureComp->SetTexture(filePath);
 							}
 						}
+
+
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteTexture", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextureComponent>(entity_selected);
+
 					}
 				}
 

@@ -73,7 +73,7 @@ namespace Engine {
 		//Change of type constructor: Copy an existing Collider but with a different type
 		/*Collider(Entity ID, ColliderType c, bool trigger = false);*/
 		ColliderComponent(Entity_id _ID = DEFAULT_ENTITY_ID, ColliderType _c = ColliderType::SQUARE, Math::vec2 _pos = Math::vec2{},
-			Math::vec2 _scale = Math::vec2{}, float _rotation = float{}, bool _trigger = false, bool _active = true);
+			Math::vec2 _scale = Math::vec2{1.f, 1.f}, float _rotation = float{}, bool _trigger = false, bool _active = true);
 		ColliderComponent(const ColliderComponent&) = default;
 		ColliderComponent& operator=(const ColliderComponent&) = default;
 	};

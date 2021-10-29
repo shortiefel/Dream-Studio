@@ -116,10 +116,10 @@ namespace Editor {
 						ImGui::Spacing();
 						ImGui::Text("X: ");
 						ImGui::SameLine();
-						ImGui::InputFloat("##TransformXPos", &colComp->offset_position.x, 0.0f);
+						ImGui::InputFloat("##ColliderXPos", &colComp->offset_position.x, 0.0f);
 						ImGui::Text("Y: ");
 						ImGui::SameLine();
-						ImGui::InputFloat("##TransformYPos", &colComp->offset_position.y, 0.0f);
+						ImGui::InputFloat("##ColliderYPos", &colComp->offset_position.y, 0.0f);
 
 
 						//Updating of scaling
@@ -127,15 +127,15 @@ namespace Editor {
 						ImGui::Spacing();
 						ImGui::Text("X: ");
 						ImGui::SameLine();
-						ImGui::InputFloat("##TransformXscale", &colComp->offset_scale.x, 0.0f);
+						ImGui::InputFloat("##ColliderXscale", &colComp->offset_scale.x, 0.0f);
 						ImGui::Text("Y: ");
 						ImGui::SameLine();
-						ImGui::InputFloat("##TransformYscale", &colComp->offset_scale.y, 0.0f);
+						ImGui::InputFloat("##ColliderYscale", &colComp->offset_scale.y, 0.0f);
 
 
 						ImGui::Text("Rotation ");
 						ImGui::Spacing();
-						ImGui::SliderFloat("##TransformRotate", &colComp->angle, -360.f, 360.f);
+						ImGui::SliderFloat("##ColliderRotate", &colComp->angle, -360.f, 360.f);
 
 
 						//deleteComponent
@@ -219,25 +219,19 @@ namespace Editor {
 
 						//selection
 						static ImGuiComboFlags flags = 0;
-						static int currentSelection = 0;
-
-
+						int index = static_cast<int>(textureComp->layerIndex);
 						//arrays
 						const int sz = 4;
 						const char* layerName[sz] = { "Background", "UI Layer", "Manager", "Game Object" };
-						const char* previewLayer = layerName[currentSelection];
+						const char* previewLayer = layerName[index];
 
 
 						if (ImGui::BeginCombo("##Layering", previewLayer, flags))
 						{
-							for (int i{ 0 }; i < sz; i++)
-							{
-								const bool isSelected = (currentSelection == i);
-								if (ImGui::Selectable(layerName[i], isSelected))
-								{
-									currentSelection = i;
+							for (int i{ 0 }; i < sz; i++) {
+								const bool isSelected = (index == i);
+								if (ImGui::Selectable(layerName[i], isSelected)) {
 									textureComp->layerIndex = static_cast<Engine::GraphicLayer>(i);
-									std::cout << "casted \n";
 								}
 
 								// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
@@ -387,6 +381,8 @@ namespace Editor {
 						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
 					if (ImGui::Selectable("Collider##addTCollidercom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
+					if (ImGui::Selectable("Texture##addTTexturecom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TextureComponent>(entity_selected);
 					if (ImGui::Selectable("Rigidbody##addRigidbodycom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
 					if (ImGui::Selectable("Script##addScriptcom"))

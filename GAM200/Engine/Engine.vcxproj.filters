@@ -157,6 +157,9 @@
     <ClCompile Include="Engine\Code\ECS\System\PhysicsSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\TransformCalculationSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -476,6 +479,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\FontComponent.hpp">
       <Filter>Header Files\ECS\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\TransformCalculationSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

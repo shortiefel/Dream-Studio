@@ -16,8 +16,16 @@ Technology is prohibited.
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_AssetBrowserWindow.hpp"
 #include "Engine/Header/Management/AssetManager.hpp"
-
+#include "Engine/Header/Management/FileWindowDialog.hpp"
+#include "Engine/Header/Window.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
+
+#define TEXT_BOX_SIZE 70
+
+#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
+							 filePath = filePath.substr(pos + 1);\
+							 pos = filePath.find_last_of(".");\
+							 filePath = filePath.substr(0, pos);
 
 namespace Editor {
 
@@ -79,6 +87,30 @@ namespace Editor {
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
+					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					{
+						std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+						if (!filePath.empty()) {
+							REMOVE_FROM_FILEPATH;
+
+							Engine::SceneManager::GetInstance().ChangeScene(filePath);
+						}
+					}
+					//for (auto& scene_directory : std::filesystem::directory_iterator("Assets/Scenes/"))
+					//{
+					//	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					//	{
+					//		std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+					//		if (!filePath.empty()) {
+					//			REMOVE_FROM_FILEPATH;
+
+					//			Engine::SceneManager::GetInstance().ChangeScene(filePath);
+					//		}
+					//	}
+					//}
+
 					ImGui::PopStyleColor();
 					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 					{
@@ -94,6 +126,20 @@ namespace Editor {
 
 					ImGui::PopID();
 
+				}
+
+				for (auto& scene_directory : std::filesystem::directory_iterator("Assets/Scenes"))
+				{
+					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					{
+						std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+						if (!filePath.empty()) {
+							REMOVE_FROM_FILEPATH;
+
+							Engine::SceneManager::GetInstance().ChangeScene(filePath);
+						}
+					}
 				}
 				ImGui::Columns(1);
 

@@ -92,14 +92,6 @@ namespace Engine {
     void Scene::Update(float dt, bool playing) {
         //std::cout << DreamECS::GetComponentArraySize<CSScript>() << "   " << DreamECS::GetComponentArraySize<Transform>() << "\n";
         //PROFILER_START("Scene Update");
-        if (Input::IsKeyPressed(Input_KeyCode::T)) {
-            std::cout << "set parent\n";
-            DreamECS::GetInstance().Parent(2, 1);
-        }
-        if (Input::IsKeyPressed(Input_KeyCode::Y)) {
-            std::cout << "Unparent\n";
-            DreamECS::GetInstance().Unparent(1);
-        }
 
         if (playing) {
             ScriptSystem::GetInstance().PlayRunTime();

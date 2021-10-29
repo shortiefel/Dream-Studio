@@ -36,7 +36,12 @@ namespace Editor {
 				ImGui::Text("Entity Name: ");
 				ImGui::SameLine();
 				if (ImGui::InputText("##EntityName", eName, 100)) {
-					entityName = std::string{ eName };
+					if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
+						std::string newName = std::string{ eName };
+						Engine::DreamECS::GetInstance().DuplicateNameCheck(newName);
+						Engine::DreamECS::GetInstance().ChangeName(entityName, newName);
+						entityName = newName;
+					}
 				}
 				ImGui::PopItemWidth();
 

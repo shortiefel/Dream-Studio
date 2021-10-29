@@ -18,7 +18,7 @@ namespace Editor {
 				outputSS.str(std::string());
 
 				outputSS << "Entity Count: ";
-				outputSS << Engine::DreamECS::GetInstance().GetComponentArraySize<Engine::TransformComponent>();
+				outputSS << Engine::DreamECS::GetInstance().GetUsedEntitySize();
 				ImGui::Text(outputSS.str().c_str());
 
 

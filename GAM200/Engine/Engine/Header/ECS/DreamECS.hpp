@@ -44,6 +44,8 @@ namespace Engine {
 		uint32_t GetUsedEntitySize() const;
 		void ClearDestroyQueue();
 		void ResetECS();
+		void DuplicateNameCheck(std::string& name);
+		void ChangeName(std::string _oldname, std::string _newname);
 
 		void Parent(Entity_id _parent, Entity_id _child);
 		void Unparent(Entity_id _target);

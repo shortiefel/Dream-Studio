@@ -18,7 +18,7 @@ namespace Editor {
 				*/
 				if (ImGui::Button("Create Game Object##CreateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 				{
-					//Engine::DreamECS::GetInstance().CreateEntity();
+					Engine::DreamECS::GetInstance().CreateEntity();
 				}
 
 				if (ImGui::BeginPopupContextWindow())
@@ -74,16 +74,19 @@ namespace Editor {
 					| ImGuiTreeNodeFlags_OpenOnDoubleClick
 					| ImGuiTreeNodeFlags_SpanAvailWidth;
 
+				std::set<Engine::Entity_id> setOfUI;
+
 				auto& entity_map = Engine::DreamECS::GetInstance().GetUsedConstEntityMap();
 				for (auto& [id, entity] : entity_map)
 				{
-					if (entity.parent != DEFAULT_ENTITY_ID) continue;
+					//if (entity.parent != DEFAULT_ENTITY_ID) continue;
 					bool selected = CheckIfExist(entity_selected, id);
-					if (entity.child.empty()) {
+
+					if (Engine::DreamECS::GetInstance().GetComponentPTR<Engine::UIComponent>(id) == nullptr) {
+						//if (entity.child.empty()) {
 						if (selected)
 							ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-						if (ImGui::Selectable(entity.name.c_str()))
-						{
+						if (ImGui::Selectable(entity.name.c_str())) {
 							ClickCheck(entity_selected, id);
 						}
 						if (selected)
@@ -91,14 +94,14 @@ namespace Editor {
 					}
 
 					else {
-						if (selected)
+						/*if (selected)
 							ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
 						if (ImGui::CollapsingHeader(entity.name.c_str())) {
 							if (selected)
 								ImGui::PopStyleColor();
 							for (const auto& entityChild : entity.child) {
 								const auto& itr = entity_map.find(entityChild);
-								if (itr == entity_map.end()) continue; 
+								if (itr == entity_map.end()) continue;
 
 								selected = CheckIfExist(entity_selected, entityChild);
 								if (selected)
@@ -109,11 +112,30 @@ namespace Editor {
 								if (selected)
 									ImGui::PopStyleColor();
 							}
-						}
+						}*/
+						setOfUI.emplace(id);
 					}
 				}
 
+				if (ImGui::CollapsingHeader("Canvas")) {
+					for (auto& id : setOfUI) {
+						bool selected = CheckIfExist(entity_selected, id);
 
+						if (selected)
+							ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+
+						const auto& itr = entity_map.find(id);
+						if (itr == entity_map.end()) continue;
+						if (ImGui::Selectable(itr->second.name.c_str())) {
+							ClickCheck(entity_selected, id);
+						}
+
+						if (selected)
+							ImGui::PopStyleColor();
+
+					}
+				}
+			
 
 				ImGui::End();
 			}

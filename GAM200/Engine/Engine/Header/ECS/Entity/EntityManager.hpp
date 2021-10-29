@@ -59,7 +59,6 @@ namespace Engine {
 			//error checking
 			LOG_ASSERT(entity_id < MAX_ENTITIES && "Entities out of range");
 
-
 			/*int index = 0;
 			for (index = 0; index < UsedEntities2.size(); index++) {
 				if (UsedEntities2[index].id == entity_id) {

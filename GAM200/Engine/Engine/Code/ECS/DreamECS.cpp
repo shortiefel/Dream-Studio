@@ -25,6 +25,19 @@ entityManager->DestroyEntity(entity_id);\
 compManager->DestroyEntity(entity_id);
 //systemManager->EntityDestroyed(entity);
 
+#define DUPLICATE_NAME_CHECK(name) std::string entityName{ name };\
+								   if (nameCount.find(entityName) != nameCount.end()) {\
+								   		while (nameCount.find(entityName) != nameCount.end()) {\
+								   			entityName += std::to_string(nameCount[name]);\
+								   			nameCount[name]++;\
+								   		}\
+								   \
+								   		nameCount.insert({ entityName, 1 });\
+								   }\
+								   \
+								   else {\
+								   		nameCount.insert({ entityName, 1 });\
+								   }
 
 namespace Engine {
 	//Coordinator DreamECS::gCoordinator;
@@ -42,21 +55,14 @@ namespace Engine {
 	}
 
 	Entity DreamECS::CreateEntity(const char* _entityName, std::unordered_set<Entity_id> _child, Entity_id _parent) {
-		std::string entityName{ _entityName };
-		if (nameCount.find(entityName) != nameCount.end()) {
-			entityName += std::to_string(nameCount[_entityName]);
-			nameCount[_entityName]++;
-		}
-
-		else {
-			nameCount.insert({ entityName, 1 });
-		}
+		DUPLICATE_NAME_CHECK(_entityName);
 
 		return entityManager->CreateEntity(entityName.c_str(), _parent);
 	}
 
 	void DreamECS::DuplicateEntityAsInstance(Entity entFrom) {
-		Entity entTo = entityManager->CreateEntity();
+		DUPLICATE_NAME_CHECK(entFrom.name);
+		Entity entTo = entityManager->CreateEntity(entityName.c_str());
 		compManager->DuplicateEntityAsInstance(entFrom.id, entTo.id);
 	}
 
@@ -64,6 +70,16 @@ namespace Engine {
 	{
 		//destroyQueue.emplace(entity);
 		destroySet.insert(entity_id);
+	}
+
+	void DreamECS::DuplicateNameCheck(std::string& name) {
+		DUPLICATE_NAME_CHECK(name);
+		name = entityName;
+	}
+
+	void DreamECS::ChangeName(std::string _oldname, std::string _newname) {
+		nameCount.erase(_oldname);
+		nameCount.insert({ _newname, 1 });
 	}
 
 	/*const std::vector<Entity>& DreamECS::GetUsedEntitySet() {

@@ -30,10 +30,12 @@ Technology is prohibited.
 namespace Editor {
 
 	extern const std::filesystem::path _assetPath = "Assets";
+	extern const std::filesystem::path _scenePath = "Assets/Scenes";
+	extern const std::filesystem::path _texturePath = "Assets/Textures";
 
 	namespace GUI_Windows {
 		static std::filesystem::path _currentDirectory = "Assets";
-
+		
 		enum class AssetView {
 			TextureBrowser,
 			SceneBrowser,
@@ -42,11 +44,51 @@ namespace Editor {
 			Length
 		};
 
+		static AssetView _currentView = AssetView::TextureBrowser;
+
+		static void ShowSceneBrowser()
+		{
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+			{
+				std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+				if (!filePath.empty()) {
+					REMOVE_FROM_FILEPATH;
+
+					Engine::SceneManager::GetInstance().ChangeScene(filePath);
+				}
+			}
+		}
+
+		static void ShowTextureBrowser()
+		{
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+			{
+				std::string filePath = Engine::FileWindowDialog::OpenFile("Texture (*.png)\0*.png\0");
+
+				if (!filePath.empty()) {
+					REMOVE_FROM_FILEPATH;
+
+					//Engine::SceneManager::GetInstance().ChangeScene(filePath);
+				}
+			}
+		}
 		void GUI_AssetBrowser(bool* asset_bool, ImGuiWindowFlags window_flags)
 		{
 			if (asset_bool) {
 				ImGui::Begin("Project", asset_bool, window_flags);
-
+				
+				switch (_currentView)
+				{
+				case AssetView::TextureBrowser:
+					ShowTextureBrowser();
+					break;
+				case AssetView::SceneBrowser:
+					ShowSceneBrowser();
+					break;
+				default:
+					break;
+				}
 				//all assets
 				if (_currentDirectory != std::filesystem::path(_assetPath))
 				{
@@ -87,16 +129,29 @@ namespace Editor {
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
-					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					if (_currentDirectory != std::filesystem::path(_scenePath))
 					{
-						std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
-
-						if (!filePath.empty()) {
-							REMOVE_FROM_FILEPATH;
-
-							Engine::SceneManager::GetInstance().ChangeScene(filePath);
-						}
+						ShowTextureBrowser();
 					}
+					else
+					{
+						ShowSceneBrowser();
+					}
+				
+	
+					
+					//ShowTextureBrowser();
+					//for scene
+					//if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					//{
+					//	std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+					//	if (!filePath.empty()) {
+					//		REMOVE_FROM_FILEPATH;
+
+					//		Engine::SceneManager::GetInstance().ChangeScene(filePath);
+					//	}
+					//}
 					//for (auto& scene_directory : std::filesystem::directory_iterator("Assets/Scenes/"))
 					//{
 					//	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
@@ -128,19 +183,6 @@ namespace Editor {
 
 				}
 
-				for (auto& scene_directory : std::filesystem::directory_iterator("Assets/Scenes"))
-				{
-					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-					{
-						std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
-
-						if (!filePath.empty()) {
-							REMOVE_FROM_FILEPATH;
-
-							Engine::SceneManager::GetInstance().ChangeScene(filePath);
-						}
-					}
-				}
 				ImGui::Columns(1);
 
 				ImGui::End();

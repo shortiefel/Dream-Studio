@@ -102,6 +102,7 @@ namespace Engine {
         CameraSystem::GetInstance().Update(dt);
         GraphicSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
+        FontGraphicSystem::GetInstance().Render();
 
         DreamECS::GetInstance().ClearDestroyQueue();
 

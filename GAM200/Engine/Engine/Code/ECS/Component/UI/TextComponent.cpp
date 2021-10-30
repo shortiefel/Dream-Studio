@@ -40,7 +40,7 @@ namespace Engine
 	TextComponent& TextComponent::Deserialize(const DSerializer& _serializer)
 	{
 		filepath = _serializer.GetValue<std::string>("Filepath");
-		texobj_hdl = AssetManager::GetInstance().LoadFont(fontstring, &width, &height, &BPP, 4);
+		texobj_hdl = AssetManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 		fontstring = _serializer.GetValue<std::string>("FontString");
 		isActive = _serializer.GetValue<bool>("IsActive");

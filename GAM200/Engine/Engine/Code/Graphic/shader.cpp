@@ -84,7 +84,7 @@ namespace Engine
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::FONT, shdr_pgm3));
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::FONT_DRAW, shdr_pgm3));
         }
     }
 }

@@ -42,7 +42,6 @@ namespace Engine {
 
 		GLuint LoadFont(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
 
-		FontSystem* GetFontResources(const std::string& name);
 		//void addResource(Resource* resource, const std::string& name, const std::string& path);
 
 		//template <typename T>
@@ -52,6 +51,10 @@ namespace Engine {
 		//}
 
 		//static const std::vector<Texture>& GetAllTextures() { return textureList; }
+		bool AddNewFontAssets(const std::string _fontlist);
+
+		FontSystem* GetFontAssets(const std::string& _name);
+		void ClearAllAssets();
 	private:
 		std::unordered_map<std::string, GLuint> textureList;
 

@@ -29,7 +29,7 @@ namespace Engine
 	{
 		DEFAULT = 0,
 		DEBUG_DRAW,
-		FONT
+		FONT_DRAW
 	};
 
 	enum class GraphicLayer

@@ -31,7 +31,7 @@ namespace Engine
 {
     void FontSystem::Draw()
     {
-        RenderText(shader, "Hello!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f, 0.8f, 1.0f), 0.0f);
+        RenderText(shader, "Hello!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f, 0.8f, 1.0f));
 
         //RenderText("Option", -75.0f, 0.0f, 1.0f, glm::vec3(0.2f, 0.8f, 0.2f), 0.0f);
 
@@ -40,15 +40,15 @@ namespace Engine
 
     void FontSystem::DrawFont(std::string _text, float xpos, float ypos, const glm::ivec3& color)
     {
-        RenderText(shader, "Hello!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f, 0.8f, 1.0f), 0.0f);
+        RenderText(shader, "Hello!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f, 0.8f, 1.0f));
     }
 
-    void FontSystem::RenderText(GLSLShader& shader, std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation)
+    void FontSystem::RenderText(GLSLShader& shader, std::string text, float x, float y, float scale, const glm::ivec3& colour)
     {
         // Activate corresponding render state	
         glBindVertexArray(vao);
         shader.Use();
-        glUniform3f(glGetUniformLocation(shader.GetHandle(), "textColor"), colour.x, colour.y, colour.z);
+        glUniform3f(glGetUniformLocation(shader.id, "textColor"), colour.x, colour.y, colour.z);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(vao);
 
@@ -56,33 +56,33 @@ namespace Engine
 
 
             //Iterate through all characters
-            for (auto iter = text.begin(); iter != text.end(); iter++)
+        for (auto iter = text.begin(); iter != text.end(); iter++)
+        {
+            Character ch = characters[*iter];
+
+            //x position
+            GLfloat xpos = x + ch.bearing.x * scale;
+
+            //y position
+            GLfloat ypos = y - (ch.size.y - ch.bearing.y) * scale;
+
+            //width
+            GLfloat width = ch.size.x * scale;
+
+            //height 
+            GLfloat height = ch.size.y * scale;
+
+            //update VBO for each character based on real-time
+            GLfloat vertices[6][4] =
             {
-                Character ch = characters[*iter];
-
-                //x position
-                GLfloat xpos = x + ch.bearing.x * scale;
-
-                //y position
-                GLfloat ypos = y - (ch.size.y - ch.bearing.y) * scale;
-
-                //width
-                GLfloat width = ch.size.x * scale;
-
-                //height 
-                GLfloat height = ch.size.y * scale;
-
-                //update VBO for each character based on real-time
-                GLfloat vertices[6][4] =
-                {
-                    //position( , ) , text_coordinate( , )
-                    {xpos, (ypos + height) , 0.0, 0.0},
-                    {xpos, ypos, 0.0, 1.0},
-                    {(xpos + width), ypos, 1.0, 1.0},
-                    {xpos, (ypos + height), 0.0, 0.0},
-                    {xpos + width, ypos, 1.0, 1.0},
-                    {xpos + width, ypos + height, 1.0, 0.0}
-                };
+                //position( , ) , text_coordinate( , )
+                {xpos, (ypos + height) , 0.0, 0.0},
+                {xpos, ypos, 0.0, 1.0},
+                {(xpos + width), ypos, 1.0, 1.0},
+                {xpos, (ypos + height), 0.0, 0.0},
+                {xpos + width, ypos, 1.0, 1.0},
+                {xpos + width, ypos + height, 1.0, 0.0}
+            };
             // Render glyph texture over quad
             glBindTexture(GL_TEXTURE_2D, ch.texture_ID);
             // Update content of VBO memory
@@ -100,29 +100,27 @@ namespace Engine
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    void FontSystem::Init()
+    bool FontSystem::Load(std::string path)
     {
-        //Configure global openGL state
+        std::string temp = "DefaultFont";
         glEnable(GL_CULL_FACE);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glm::mat4 projection = glm::ortho(-640.0f, 640.0f, -512.0f, 512.0f, -150.0f, 150.0f);
 
-        //to include font shader 
-        //font_shader.Init("Assets/Shaders/font_vs.glsl", "Assets/Shaders/font-fs.glsl");
-       // GLSLShader* fontShader = new GLSLShader{ "Assets/Shaders/FontShader.vert", "Assets/Shaders/FontShader.frag" };
-        font_shader->Use();
-       
+        shader.Select();
         //Freetype Settings
         FT_Library ft;
         if (FT_Init_FreeType(&ft))
         {
             std::cerr << "ERROR::FREETYPE: Could not init FreeType Lib\n";
-            return;
+            return false;
         }
         FT_Face face;
         if (FT_New_Face(ft, "Assets/Fonts/arial.ttf", 0, &face))
         {
             std::cerr << "ERROR::FREETYPE: Failed to load font.\n";
+            return false;
         }
 
         FT_Set_Pixel_Sizes(face, 0, 48);
@@ -185,31 +183,9 @@ namespace Engine
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, NULL);
 
             glDisable(GL_CULL_FACE);
-            
         }
     }
 
-    bool FontSystem::Load(std::string path)
-    {
-        std::string temp = "DefaultFont";
-        glEnable(GL_CULL_FACE);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glm::mat4 projection = glm::ortho(-640.0f, 640.0f, -512.0f, 512.0f, -150.0f, 150.0f);
-
-        //Freetype Settings
-        FT_Library ft;
-        if (FT_Init_FreeType(&ft) != 0) {
-            std::cout << "Couldn't initialize FreeType library\n";
-            return false;
-        }
-
-        FT_Face face;
-        if (FT_New_Face(ft, path.c_str(), 0, &face) != 0) {
-            std::cout << "ERROR::FREETYPE: Failed to load font\n";
-            return false;
-        }
-    }
 
 //    void FontSystem::RenderText(GLSLShader &shader, std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation)
 //{

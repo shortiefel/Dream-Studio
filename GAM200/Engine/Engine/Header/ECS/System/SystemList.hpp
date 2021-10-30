@@ -23,5 +23,5 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/System/PhysicsSystem.hpp"
 #include "Engine/Header/ECS/System/UISystem.hpp"
-
+#include "Engine/Header/ECS/System/FontGraphicSystem.hpp"
 #endif

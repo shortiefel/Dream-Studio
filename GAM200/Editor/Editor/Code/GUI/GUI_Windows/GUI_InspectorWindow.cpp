@@ -185,10 +185,10 @@ namespace Editor {
 					if (ImGui::CollapsingHeader("Text"))
 					{
 						ImGui::Spacing();
-						char text[200]{};
+						char text[300]{};
 						ImGui::PushItemWidth(textSize);
 						ImGui::Text("Text To Input: ");
-						if (ImGui::InputText("##addcomponenttype", text, 200)) {
+						if (ImGui::InputText("##addcomponenttype", text, 300)) {
 							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 								std::string textStr{ text };
 								Engine::DreamECS::GetInstance().AddComponent(

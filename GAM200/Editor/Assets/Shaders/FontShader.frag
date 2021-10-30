@@ -6,16 +6,18 @@
 */
 /* End Header **********************************************************************************/
 
-#version 330 core
-in vec2 TexCoords;
-layout (location=0) out vec4 color;
+#version 450 core
 
 uniform sampler2D text;
 uniform vec3 textColor;
 
+layout (location=0) in vec2 TexCoords;
+
+layout (location=0) out vec4 color;
+
 void main()
 {    
-    vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);	 
-    // red colour
-    color = vec4(1.0, 0.0, 0.0, 1.0);
+    	vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);	 
+   	//colour
+    	color = vec4(textColor, 1.0) * sampled;
 }  

@@ -36,6 +36,7 @@ namespace Engine
             FRAGMENT_SHADER = GL_FRAGMENT_SHADER
         };
 
+        GLuint id;
 
         // default ctor required to initialize GLSLShader object to safe state
         GLSLShader() : pgm_handle(0), is_linked(GL_FALSE) {}
@@ -69,6 +70,8 @@ namespace Engine
         GLuint GetHandle() const;
         GLboolean IsLinked() const;
         std::string GetLog() const;
+
+        void Select() const;
 
         void DeleteShaderProgram();
 

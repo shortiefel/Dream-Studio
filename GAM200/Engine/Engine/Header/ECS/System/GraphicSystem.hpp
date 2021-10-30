@@ -24,7 +24,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/FrameBuffer.hpp"
-#include "Engine/Header/Graphic/FontSystem.hpp"
 
 namespace Engine
 {
@@ -36,8 +35,6 @@ namespace Engine
 
 		//If _fbo is nullptr = default draw (game scene draw) otherwise it means for editor scene
 		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), Graphic::FrameBuffer* _fbo = nullptr);
-
-		void RenderText(Math::mat4 projectionMatrix, Graphic::FrameBuffer* _fbo = nullptr);
 		
 		const Graphic::FrameBuffer& GetFrameBuffer() const;
 
@@ -47,8 +44,6 @@ namespace Engine
 		Graphic::FrameBuffer fbo;
 
 		//void(*pickingFP)() = []() {};
-		GLSLShader font_shader;
-		FontSystem _fontRenderer;
 		SINGLETON_SETUP(GraphicSystem);
 	};
 }

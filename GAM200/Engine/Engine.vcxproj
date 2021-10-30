@@ -183,6 +183,7 @@
     <ClCompile Include="Engine\Code\ECS\DreamECS.cpp" />
     <ClCompile Include="Engine\Code\ECS\Factory.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp" />
+    <ClCompile Include="Engine\Code\ECS\System\FontGraphicSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp" />
@@ -266,6 +267,7 @@
     <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp" />
     <ClInclude Include="Engine\Header\ECS\Factory.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\FontGraphicSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\GraphicSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp" />

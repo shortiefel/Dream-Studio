@@ -49,6 +49,7 @@ namespace Editor {
 		////Change this line to editor graphic system
 
 		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
+		//Engine::GraphicSystem::GetInstance().RenderText(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 		Engine::UISystem::GetInstance().Render(GUI::GetFboPtr());
 
 		GUI::Update();

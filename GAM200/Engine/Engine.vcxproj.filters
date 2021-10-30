@@ -157,6 +157,9 @@
     <ClCompile Include="Engine\Code\ECS\Component\UI\Button.cpp">
       <Filter>Source Files\ECS\Component\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\FontGraphicSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -473,6 +476,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\UI\Button.hpp">
       <Filter>Header Files\ECS\Component\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\FontGraphicSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

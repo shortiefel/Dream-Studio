@@ -86,7 +86,7 @@ namespace Engine {
 
 	void ScriptSystem::PlayInit() {
 		PROFILER_START("Scripting");
-
+		std::cout << "running \n";
 		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();

@@ -31,6 +31,7 @@ namespace Engine {
 		
 		/*
 		* Add next scene to be changed at the end of the game loop
+		* if empty, scene is the scene which was last played
 		*/
 		void ChangeScene(std::string sceneName);
 
@@ -48,6 +49,8 @@ namespace Engine {
 
 		//static std::string currentSceneName;
 		std::string defaultSceneName = std::string{};
+		//The scene when the play was clicked
+		std::string playScene = std::string{};
 		std::string nextScene = std::string{};
 		Scene* currentScene = nullptr;
 

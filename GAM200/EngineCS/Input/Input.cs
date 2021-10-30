@@ -46,10 +46,10 @@ public class Input
 
 
 
-    public static Vector2 GetMousePosition()
+    public static Vector3 GetMousePosition()
     {
         GetMousePosition_Engine(out Vector2 position);
-        return position;
+        return new Vector3 (position.x, position.y, 1f);
     }
 
     [MethodImpl(MethodImplOptions.InternalCall)]

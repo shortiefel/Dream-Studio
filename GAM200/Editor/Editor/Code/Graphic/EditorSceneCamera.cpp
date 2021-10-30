@@ -54,6 +54,19 @@ namespace Editor
                        0.f, 1.f, 0.f,
                       -position.x, -position.y, 1.f);
     }
+    
+    Math::mat3 EditorSceneCamera::GetInverseTransform()
+    {
+        return
+            Math::mat3(1.f, 0.f, 0.f,
+                0.f, 1.f, 0.f,
+                position.x, position.y, 1.f)
+            *
+            Math::mat3((ar * SCENE_CAMERA_HEIGHT) / 2.f, 0.f, 0.f,
+                0.f, SCENE_CAMERA_HEIGHT / 2.f, 0.f,
+                0.f, 0.f, 1.f);
+            
+    }
 
     Math::mat3 EditorSceneCamera::GetTransformUI()
     {

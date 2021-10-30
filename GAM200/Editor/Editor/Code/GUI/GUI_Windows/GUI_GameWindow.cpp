@@ -29,6 +29,7 @@ namespace Editor {
 	namespace GUI_Windows {
 		Math::vec2 game_viewportBounds[2];
 		Math::vec2 game_viewportSize;
+		Math::vec3 mousePos;
 
 		int GUI_GetGameWindowSizeX() {
 			return static_cast<int>(game_viewportSize.x);
@@ -36,6 +37,16 @@ namespace Editor {
 
 		int GUI_GetGameWindowSizeY() {
 			return static_cast<int>(game_viewportSize.y);
+		}
+
+		Math::mat3 GetViewport() {
+			return Math::mat3(2.f / game_viewportSize.x, 0.f, 0.f,
+							  0.f, 2.f / game_viewportSize.y, 0.f,
+							  -1.f, -1.f, 1.f);
+		}
+
+		Math::vec2 GetMousePosition() {
+			return Math::vec2{ mousePos.x, mousePos.y };
 		}
 
 		void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO, ImGuiWindowFlags window_flags) {
@@ -66,7 +77,7 @@ namespace Editor {
 				game_viewportSize = Math::vec2{ windowSize.x, windowSize.y };
 
 				ImVec2 imousePos = ImGui::GetMousePos();
-				Math::vec3 mousePos = Math::vec3{ imousePos.x, imousePos.y, 1.f }; //1.f because it is a point
+				mousePos = Math::vec3{ imousePos.x, imousePos.y, 1.f }; //1.f because it is a point
 				mousePos.x -= game_viewportBounds[0].x;
 				mousePos.y -= game_viewportBounds[0].y;
 				mousePos.y = game_viewportSize.y - mousePos.y;

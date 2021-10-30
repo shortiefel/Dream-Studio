@@ -21,14 +21,13 @@ Technology is prohibited.
 
 #include <mono/metadata/assembly.h>
 
-#include "Engine/Header/Math/MathLib.hpp"
-
 #include "Engine/Header/Scene/SceneManager.hpp"
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
+#include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 #include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Management/GameState.hpp"
@@ -37,6 +36,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/System/CollisionSystem.hpp" //For raycast
 #include "Engine/Header/Physics/Ray.hpp" //For raycast
+#include "Engine/Header/Graphic/SpaceTransform.hpp"
 
 #define GetEngineType(ID, type, paramName, param)\
 type* ctype = DreamECS::GetInstance().GetComponentPTR<type>(ID);\
@@ -48,12 +48,20 @@ type* ctype = DreamECS::GetInstance().GetComponentPTR<type>(ID);\
 if (!ctype) return;\
 ctype->paramName = param;
 
+#define GET_COMPONENT_PTR(type) type* tem = DreamECS::GetInstance().GetComponentPTR<type>(id);\
+								return !(tem == nullptr);
 
 
 namespace Engine {
 	//Function to call when writing to console (With editor function ptr is overwritten)
-	void(*ConsoleFuncPtr)(std::string) = [](std::string) { printf("Not set"); };
+	//Function does nothing in actual game
+	void(*ConsoleFuncPtr)(std::string) = [](std::string) { };
+	Math::mat3(*GetViewportFuncPtr)() = []() { printf("not working \n");  return Math::mat3{}; };
+	Math::vec2(*GetMousePositionFuncPtr)() = []() {  printf("not working \n");  return Input::GetMousePosition(); };
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Transform
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2);
 	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2);
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2);
@@ -64,19 +72,37 @@ namespace Engine {
 	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2);
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Camera
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void ScreenToWorldPoint_Engine(unsigned int id, Math::vec3* outPosition, Math::vec3 inPosition);
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Input
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool GetKey_Engine(Input_KeyCode key);
 	bool GetKeyDown_Engine(Input_KeyCode key);
 	bool GetMouseDown_Engine(Input_MouseCode button);
 	void Input_GetMousePosition(Math::vec2* outPosition);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Check if component exist
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool HasComponent_Transform_Engine(unsigned int id);
 	bool HasComponent_Collider_Engine(unsigned int id);
+	bool HasComponent_Camera_Engine(unsigned int id);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Destroy
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Destroy_Entity_Engine(unsigned int id);
 	void Destroy_Transform_Engine(unsigned int id);
 	void Destroy_Collider_Engine(unsigned int id);
 	void Destroy_Script_Engine(unsigned int id, MonoString* str);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Active
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	/*void SetTransform_Active_Engine(unsigned int id, bool boolean);
 	void GetTransform_Active_Engine(unsigned int id, bool* boolean);
 	void SetCollider_Active_Engine(unsigned int id, bool boolean);
@@ -88,18 +114,36 @@ namespace Engine {
 	void Active_Collider_Engine(unsigned int id, bool boolean);
 	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Prefab
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Deltatime
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetDeltaTime_Engine(float* dt);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Scene
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void LoadScene_Engine(MonoString* sceneName);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Physics
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool RayCast_Engine(Math::vec2 pos, Math::vec2 dir, float* hit, std::uint32_t ignoreTarget, float distance);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Console Write
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void ConsoleWrite_Engine(MonoString* message);
 
 
 	void RegisterInternalCall() {
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Transform
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Transform::GetTransform_Position_Engine", GetTransform_Position_Engine);
 		mono_add_internal_call("Transform::SetTransform_Position_Engine", SetTransform_Position_Engine);
 		mono_add_internal_call("Transform::MoveTransform_Position_Engine", MoveTransform_Position_Engine);
@@ -110,20 +154,38 @@ namespace Engine {
 		mono_add_internal_call("Transform::GetTransform_forward_Engine", GetTransform_forward_Engine);
 		mono_add_internal_call("Transform::GetTransform_right_Engine", GetTransform_right_Engine);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Camera
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		mono_add_internal_call("Camera::ScreenToWorldPoint_Engine", ScreenToWorldPoint_Engine);
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Input
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Input::GetKey_Engine", GetKey_Engine);
 		mono_add_internal_call("Input::GetKeyDown_Engine", GetKeyDown_Engine);
 
 		mono_add_internal_call("Input::GetMouseDown_Engine", GetMouseDown_Engine);
 		mono_add_internal_call("Input::GetMousePosition_Engine", Input_GetMousePosition);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Check if component exist
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
 		mono_add_internal_call("MonoBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
+		mono_add_internal_call("MonoBehaviour::HasComponent_Camera_Engine", HasComponent_Camera_Engine);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Destroy
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("MonoBehaviour::Destroy_Entity_Engine", Destroy_Entity_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Transform_Engine", Destroy_Transform_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Collider_Engine", Destroy_Collider_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Script_Engine", Destroy_Script_Engine);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Active
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		/*mono_add_internal_call("Transform::SetTransform_Active_Engine", SetTransform_Active_Engine);
 		mono_add_internal_call("Transform::GetTransform_Active_Engine", GetTransform_Active_Engine);
 		mono_add_internal_call("Collider::SetCollider_Active_Engine", SetCollider_Active_Engine);
@@ -135,14 +197,29 @@ namespace Engine {
 		mono_add_internal_call("MonoBehaviour::Active_Collider_Engine", Active_Collider_Engine);
 		mono_add_internal_call("MonoBehaviour::Active_Script_Engine", Active_Script_Engine);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Prefab
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab", Instantiate_Prefab);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Deltatime
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Time::GetDeltaTime_Engine", GetDeltaTime_Engine);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Scene
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("SceneManager::LoadScene_Engine", LoadScene_Engine);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Physics
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Physics::RayCast_Engine", RayCast_Engine);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Console Write
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Debug::ConsoleWrite_Engine", ConsoleWrite_Engine);
 	}
 
@@ -215,42 +292,54 @@ namespace Engine {
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Camera
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void ScreenToWorldPoint_Engine(unsigned int id, Math::vec3* outPosition, Math::vec3 inPosition) {
+		*outPosition = ScreenToWorldPoint(inPosition, CameraSystem::GetInstance().GetInverseTransform(&id), GetViewportFuncPtr());
+	}
+
+	void SetGetViewportFunc(Math::mat3(*fp)()) {
+		GetViewportFuncPtr = fp;
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	
-	bool GetKey_Engine(Input_KeyCode key)
-    {
+	bool GetKey_Engine(Input_KeyCode key) {
         return Input::IsKeyHold(key);
     }
 
-    bool GetKeyDown_Engine(Input_KeyCode key)
-    {
+    bool GetKeyDown_Engine(Input_KeyCode key) {
         return Input::IsKeyPressed(key);
     }
 
-    bool GetMouseDown_Engine(Input_MouseCode button)
-    {
+    bool GetMouseDown_Engine(Input_MouseCode button) {
         return Input::IsMousePressed(button);
     }
 
-    void Input_GetMousePosition(Math::vec2*)
-    {
-        std::cout << "Currently GetMousePosition not working \n";
-        /*Math::vec2 result = Input::mousePosition;
-		*outPosition = result;*/
+    void Input_GetMousePosition(Math::vec2* outPosition) {
+		Math::vec2 result = GetMousePositionFuncPtr();
+		*outPosition = result;
     }
+
+	void SetGetMousePositionFunc(Math::vec2(*fp)()) {
+		GetMousePositionFuncPtr = fp;
+	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Check if component exist
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool HasComponent_Transform_Engine(unsigned int id) {
-		TransformComponent* tem = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(id);
-		return !(tem == nullptr);
+		GET_COMPONENT_PTR(TransformComponent);
 	}
 
 	bool HasComponent_Collider_Engine(unsigned int id) {
-		ColliderComponent* tem = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(id);
-		return !(tem == nullptr);
+		GET_COMPONENT_PTR(ColliderComponent);
+	}
+
+	bool HasComponent_Camera_Engine(unsigned int id) {
+		GET_COMPONENT_PTR(CameraComponent);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

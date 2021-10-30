@@ -172,6 +172,9 @@
     <ClCompile Include="Engine\Code\AI\AISystem.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Graphic\SpaceTransform.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -506,6 +509,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\AI\AISystem.hpp">
       <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\SpaceTransform.hpp">
+      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

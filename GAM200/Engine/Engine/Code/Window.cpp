@@ -259,7 +259,7 @@ namespace Engine {
 		EventDispatcher::SendEvent(event);
 
 		previousPos = Math::vec2{ (float)xpos, (float)ypos };
-		//Input::mousePosition = Math::vec2{ static_cast<float>(xpos),static_cast<float>(ypos) };
+		Input::SetMousePosition(Math::vec2{ static_cast<float>(xpos),static_cast<float>(ypos) });
 		//w_data.eventCallBack(event);
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

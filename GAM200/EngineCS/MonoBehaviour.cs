@@ -76,7 +76,7 @@ public class MonoBehaviour
         }
     }
 
-    public T GetComponentWithID<T>(uint id) where T : Component, new()
+    public T GetComponentWithID<T>(uint id) where T : class, Component, new()
     {
         if (HasComponent<T>(id))
         {
@@ -85,7 +85,7 @@ public class MonoBehaviour
             return component;
         }
 
-        return default(T);
+        return null;
     }
 
     public bool HasComponent<T>(uint id)
@@ -97,6 +97,8 @@ public class MonoBehaviour
                 return HasComponent_Transform_Engine(id);
             case genTypes.Collider:
                 return HasComponent_Collider_Engine(id);
+            case genTypes.Camera:
+                return HasComponent_Camera_Engine(id);
             default:
                 return false;
 
@@ -107,6 +109,8 @@ public class MonoBehaviour
     internal static extern bool HasComponent_Transform_Engine(uint entityID);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Collider_Engine(uint entityID);
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool HasComponent_Camera_Engine(uint entityID);
 
 
     public void DestroySelf()

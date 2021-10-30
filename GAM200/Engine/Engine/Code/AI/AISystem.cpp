@@ -128,6 +128,7 @@ namespace Engine {
 
 		void AISystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
 			PROFILER_START("Rendering");
+			return;
 
 			GLboolean gameDraw;
 			if (!_fbo)

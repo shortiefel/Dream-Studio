@@ -41,7 +41,7 @@ namespace Editor {
 		void Stop();
 
 	private:
-		std::string editorSceneName = "test2";;
+		//std::string editorSceneName = "test2";
 
 		SINGLETON_SETUP(EditorSceneManager);
 	};

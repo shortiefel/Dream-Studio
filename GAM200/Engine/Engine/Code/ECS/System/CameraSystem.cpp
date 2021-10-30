@@ -67,15 +67,50 @@ namespace Engine
         }
     }
 
-    Math::mat3 CameraSystem::GetTransform() {
-        return 
-            Math::mat3(2.f / (Settings::gameAR * camHeight * camFov), 0.f, 0.f,
-                0.f, 2.f / (camHeight * camFov), 0.f,
+    Math::mat3 CameraSystem::GetTransform(unsigned int* id) {
+        if (id == nullptr) {
+            return
+                Math::mat3(2.f / (Settings::gameAR * camHeight * camFov), 0.f, 0.f,
+                    0.f, 2.f / (camHeight * camFov), 0.f,
+                    0.f, 0.f, 1.f)
+                *
+                Math::mat3(1.f, 0.f, 0.f,
+                    0.f, 1.f, 0.f,
+                    -camPosition.x, -camPosition.y, 1.f);
+        }
+        const auto& cam = DreamECS::GetInstance().GetComponent<CameraComponent>(*id);
+        const auto& trans = DreamECS::GetInstance().GetComponent<TransformComponent>(*id);
+        return
+            Math::mat3(2.f / (Settings::gameAR * cam.height * cam.fov), 0.f, 0.f,
+                0.f, 2.f / (cam.height * cam.fov), 0.f,
                 0.f, 0.f, 1.f)
             *
             Math::mat3(1.f, 0.f, 0.f,
                 0.f, 1.f, 0.f,
-                -camPosition.x, -camPosition.y, 1.f);
+                -trans.position.x, -trans.position.y, 1.f);
+    }
+    
+    Math::mat3 CameraSystem::GetInverseTransform(unsigned int* id) {
+        if (id == nullptr) {
+            return
+                Math::mat3(1.f, 0.f, 0.f,
+                    0.f, 1.f, 0.f,
+                    camPosition.x, camPosition.y, 1.f)
+                *
+                Math::mat3((Settings::gameAR * camHeight * camFov) / 2.f, 0.f, 0.f,
+                    0.f, (camHeight * camFov) / 2.f, 0.f,
+                    0.f, 0.f, 1.f);
+        }
+        const auto& cam = DreamECS::GetInstance().GetComponent<CameraComponent>(*id);
+        const auto& trans = DreamECS::GetInstance().GetComponent<TransformComponent>(*id);
+        return
+            Math::mat3(1.f, 0.f, 0.f,
+                0.f, 1.f, 0.f,
+                trans.position.x, trans.position.y, 1.f)
+            *
+            Math::mat3((Settings::gameAR * cam.height * cam.fov) / 2.f, 0.f, 0.f,
+                0.f, (cam.height * cam.fov) / 2.f, 0.f,
+                0.f, 0.f, 1.f);
     }
 
     Math::mat3 CameraSystem::GetTransformUI()

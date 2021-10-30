@@ -23,13 +23,13 @@ namespace Engine {
 		//need fonts
 	}
 
-	bool ButtonComponent::OnClick(const Engine::MousePressedEvent& e) 
+	bool ButtonComponent::OnClick(const Engine::MousePressedEvent&) 
 	{
 		BState = ButtonState::PRESSED;
 		return true;
 	}
 
-	bool ButtonComponent::OnRelease(const Engine::MouseReleasedEvent& e)
+	bool ButtonComponent::OnRelease(const Engine::MouseReleasedEvent&)
 	{
 		if (BState == ButtonState::RELEASED)
 			OnAction();
@@ -38,7 +38,7 @@ namespace Engine {
 		return true;
 	}
 
-	bool ButtonComponent::OnMove(const Engine::MouseMoveEvent& e)
+	bool ButtonComponent::OnMove(const Engine::MouseMoveEvent&)
 	{
 		//need ask jw how do mouse check
 		return true;

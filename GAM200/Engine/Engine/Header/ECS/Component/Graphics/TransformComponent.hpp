@@ -36,9 +36,9 @@ namespace Engine
 	//Scale value for circle in both axis is same
 	struct TransformComponent : public IComponent {
 		Math::vec2 position = Math::vec2{}; //True position 
-		Math::vec2 localPosition = Math::vec2{}; //Local  position(to be displayed and can be same as true position)
 		Math::vec2 scale = Math::vec2{};
 		float angle = float{}; // in degree
+		Math::vec2 localPosition = Math::vec2{}; //Local  position(to be displayed and can be same as true position)
 		bool isActive = true;
 		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
 

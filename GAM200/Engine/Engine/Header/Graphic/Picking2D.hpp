@@ -31,6 +31,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 #include "Engine/Header/Physics/Collision.hpp"
 
+#include "Engine/Header/Graphic/SpaceTransform.hpp"
+
 namespace Engine {
 	namespace Graphic {
 		//false = no hover, true = hover
@@ -39,10 +41,16 @@ namespace Engine {
 		//Callback is called when mouse is over entity while CallbackFail is called when there is not over entity (Calls when callback is not called)
 		template<typename Func, typename Func2>
 		void PickingCheck(Math::vec3& mousePos, const Math::vec2& viewportSize, const Math::mat3& inverseCamMatrix, Func Callback, Func2 CallbackFail) {
-			mousePos = Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
+			/*mousePos = inverseCamMatrix * Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
 				0.f, 2.f / viewportSize.y, 0.f,
-				-1.f, -1.f, 1.f) * mousePos;
-			mousePos = inverseCamMatrix * mousePos;
+				-1.f, -1.f, 1.f) * mousePos;*/
+			//mousePos = inverseCamMatrix * mousePos;
+
+
+			mousePos = ScreenToWorldPoint(mousePos, inverseCamMatrix, Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
+																				 0.f, 2.f / viewportSize.y, 0.f,
+																				 -1.f, -1.f, 1.f));
+
 
 			const auto& transformArray = Engine::DreamECS::GetInstance().GetComponentArrayData<Engine::TransformComponent>();
 			for (const auto& transform : transformArray) {

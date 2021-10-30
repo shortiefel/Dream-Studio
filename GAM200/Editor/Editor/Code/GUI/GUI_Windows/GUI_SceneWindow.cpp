@@ -110,8 +110,7 @@ namespace Editor {
 				mousePos.y -= scene_viewportBounds[0].y;
 				mousePos.y = scene_viewportSize.y - mousePos.y;
 
-				Math::mat3 camMatrix = EditorSceneCamera::GetTransform();
-				Math::mat3 inverseCamMatrix = Math::Inverse(camMatrix);
+				Math::mat3 inverseCamMatrix = EditorSceneCamera::GetInverseTransform();
 
 				int mouseX = (int)mousePos.x;
 				int mouseY = (int)mousePos.y;

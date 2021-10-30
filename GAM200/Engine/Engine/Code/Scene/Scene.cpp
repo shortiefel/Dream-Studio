@@ -62,10 +62,13 @@ namespace Engine {
         return true;
     }
 
-    void Scene::Stop() {
+    void Scene::Stop(bool deserialize) {
         CollisionSystem::GetInstance().Stop();
         DreamECS::GetInstance().ResetECS();
-        GameSceneSerializer::DeserializeScene("temporary");
+
+        if (deserialize) 
+            GameSceneSerializer::DeserializeScene("temporary");
+        
     }
 
     void Scene::Save() {

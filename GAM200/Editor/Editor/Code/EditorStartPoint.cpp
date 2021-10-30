@@ -51,8 +51,8 @@ namespace Editor {
 		////Change this line to editor graphic system
 
 		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
-		Engine::UISystem::GetInstance().Render(EditorSceneCamera::GetTransformUI(), GUI::GetFboPtr());
-		Engine::AI::AISystem::GetInstance().Render(EditorSceneCamera::GetTransformUI(), GUI::GetFboPtr());
+		Engine::UISystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
+		Engine::AI::AISystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 
 		//The system already added the time taken
 		PROFILER_START("Rendering");

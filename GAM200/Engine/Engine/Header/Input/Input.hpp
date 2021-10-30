@@ -45,12 +45,15 @@ namespace Engine {
 		//Get Input Mouse code with GLFW code
 		static Input_MouseCode GetMouseCode(int button);
 
+		static void SetMousePosition(Math::vec2 pos);
+		static Math::vec2 GetMousePosition();
+
 		
 
-		//static Math::vec2 mousePosition;
 
 	private:
 		//static Math::vec2 mouseScroll;
+		static Math::vec2 mousePosition;
 
 		static std::unordered_map<int, Input_KeyCode> GLFWtoInputKey;
 		static std::unordered_map<Input_KeyCode, InputType> InputKeyStatus;

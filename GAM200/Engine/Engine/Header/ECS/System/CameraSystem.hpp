@@ -33,7 +33,8 @@ namespace Engine
 		void Destroy();
 
 		void Update(float dt);
-		Math::mat3 GetTransform();
+		Math::mat3 GetTransform(unsigned int* id = nullptr);
+		Math::mat3 GetInverseTransform(unsigned int* id = nullptr);
 		Math::mat3 GetTransformUI();
 		Math::vec2 GetPosition();
 

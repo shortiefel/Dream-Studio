@@ -18,7 +18,7 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 
 namespace Engine {
-	//Math::vec2 Input::mousePosition;
+	Math::vec2 Input::mousePosition;
 	//Math::vec2 Input::mouseScroll;
 
 	/*------------------------------------------------------------------------------------------------------------------------------
@@ -357,6 +357,13 @@ namespace Engine {
 
 	Input_MouseCode Input::GetMouseCode(int button) {
 		return GLFWtoInputMouse[button];
+	}
+
+	void Input::SetMousePosition(Math::vec2 pos) {
+		mousePosition = pos;
+	}
+	Math::vec2 Input::GetMousePosition() {
+		return mousePosition;
 	}
 
 }

@@ -21,11 +21,13 @@ public class Test : MonoBehaviour
         public char testChar;
         public Vector2 newvec2Test;*/
     Transform go2;
+    Camera cam;
     //Collider col1;
 
     public override void OnInit()
     {
         go2 = GetComponent<Transform>();
+        //cam = GetComponent<Camera>();
         //col1 = GetComponent<Collider>();
         //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
@@ -88,7 +90,7 @@ public class Test : MonoBehaviour
             {
                 Instantiate_Entity("Box");
             }*/
-            Instantiate_Entity("Box");
+            //Instantiate_Entity("Box");
             //Physics Ray cast and Debug.log
             //{
             //float hitDis = 0f;
@@ -100,7 +102,7 @@ public class Test : MonoBehaviour
             //Disable(go2);
             //go2.SetActive(false);
 
-
+            //cam.ScreenToWorldPoint(Input.GetMousePosition());
         }
     }
 

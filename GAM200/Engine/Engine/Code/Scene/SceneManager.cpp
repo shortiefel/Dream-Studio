@@ -36,16 +36,23 @@ namespace Engine {
 	}
 
     void SceneManager::ChangeScene(std::string sceneName) {
+        if (sceneName.empty()) {
+            nextScene = playScene;
+            return;
+        }
         nextScene = sceneName;
     }
 
 	void SceneManager::ChangeSceneInternal() {
         if (nextScene.length()) {
-            currentScene->Stop();
             if (!nextScene.compare(currentScene->GetName())) {
+                currentScene->Stop(true);
                 nextScene = std::string{};
+                if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
                 return;
             }
+
+            currentScene->Stop(false);
             delete currentScene;
 
             //currentSceneName = sceneName;
@@ -71,11 +78,12 @@ namespace Engine {
     }
 
     bool SceneManager::Play() {
+        playScene = currentScene->GetName();
         return currentScene->Play();
     }
 
     void SceneManager::Stop() {
-        currentScene->Stop();
+        currentScene->Stop(true);
     }
 
     void SceneManager::Save() {

@@ -44,7 +44,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
-
+#include "Engine/Header/Script/ScriptInternalCall.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
@@ -128,6 +128,11 @@ namespace Editor {
 		Utilities
 		-------------------------------------------------------------------------------------------------*/
 		void NewFileUtil() {
+			if (Engine::GameState::GetInstance().GetPlaying()) {
+				GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Scene is Playing. unable to create new file..." });
+				return;
+			}
+
 			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Scene (*.scene)\0*.scene\0");
 
 			if (!filePath.empty()) {
@@ -150,6 +155,11 @@ namespace Editor {
 		}
 
 		void SaveAsFileUtil() {
+			if (Engine::GameState::GetInstance().GetPlaying()) {
+				GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Scene is Playing. unable to save as..." });
+				return;
+			}
+
 			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Scene (*.scene)\0*.scene\0");
 
 			if (!filePath.empty()) {
@@ -216,6 +226,8 @@ namespace Editor {
 			GUI_Windows::GUI_SceneSetup();
 
 			Engine::KeyPressedEvent::RegisterFunction(OnKeyEvent);
+			Engine::SetGetViewportFunc(GetViewport);
+			Engine::SetGetMousePositionFunc(GetMousePosition);
 		}
 
 		void GUI_DockSpace() {
@@ -251,7 +263,7 @@ namespace Editor {
 		void GUI_FileMenu() {
 			if (ImGui::BeginMenu("File")) {
 				if (ImGui::MenuItem("New Scene", "CTRL+N")) {
-					NewFileUtil();
+						NewFileUtil();
 				}
 
 				if (ImGui::MenuItem("Open...", "CTRL+O")) {

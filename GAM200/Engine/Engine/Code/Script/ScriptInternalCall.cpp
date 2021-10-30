@@ -60,6 +60,11 @@ namespace Engine {
 	Math::vec2(*GetMousePositionFuncPtr)() = []() {  printf("not working \n");  return Input::GetMousePosition(); };
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Entity
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void CreateEntity_Engine(unsigned int* entityID, MonoString* str);
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Transform
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2);
@@ -92,6 +97,7 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Check if component exist
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	bool HasComponent_Scripts_Engine(unsigned int id, MonoString* str);
 	bool HasComponent_Transform_Engine(unsigned int id);
 	bool HasComponent_Collider_Engine(unsigned int id);
 	bool HasComponent_Camera_Engine(unsigned int id);
@@ -146,6 +152,12 @@ namespace Engine {
 
 
 	void RegisterInternalCall() {
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Entity
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		mono_add_internal_call("GameObject::CreateEntity_Engine", CreateEntity_Engine);
+
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Transform
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -178,6 +190,7 @@ namespace Engine {
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Check if component exist
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		mono_add_internal_call("MonoBehaviour::HasComponent_Scripts_Engine", HasComponent_Scripts_Engine);
 		mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
 		mono_add_internal_call("MonoBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
 		mono_add_internal_call("MonoBehaviour::HasComponent_Camera_Engine", HasComponent_Camera_Engine);
@@ -251,7 +264,15 @@ namespace Engine {
 	//	Transform& transform = DreamECS::GetComponent<Transform>(id);
 	//	transform = *inTransform;
 	//}
-
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Entity
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void CreateEntity_Engine(unsigned int* entityID, MonoString* str) {
+		std::string entityName = mono_string_to_utf8(str);
+		if (entityName.empty()) entityName = "Entity";
+		const Entity& entity = DreamECS::GetInstance().CreateEntity(entityName.c_str());
+		*entityID = entity.id;
+	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Transform
@@ -332,6 +353,17 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Check if component exist
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	bool HasComponent_Scripts_Engine(unsigned int id, MonoString* str) {
+		ScriptComponent* tem = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(id);
+		if (tem == nullptr) return false;
+		const auto& scriptComponent = *tem;
+		std::string strName = mono_string_to_utf8(str);
+		for (const auto& [name, klass] : scriptComponent.klassInstance) {
+			if (strName.compare(name) == 0) return true;
+		}
+		return false;
+	}
+
 	bool HasComponent_Transform_Engine(unsigned int id) {
 		GET_COMPONENT_PTR(TransformComponent);
 	}
@@ -440,11 +472,11 @@ namespace Engine {
 		RaycastHit hitCast;
 		//if (distance < 0) distance = RAY_LENGTH;
 		std::uint32_t ignored = ignoreTarget < 0 ? DEFAULT_ENTITY_ID : ignoreTarget;
-		CollisionSystem::GetInstance().RayCast(Engine::Ray{ Math::vec2 {pos.x, pos.y}, dir, distance }, &hitCast, ignoreTarget);
+		CollisionSystem::GetInstance().RayCast(Engine::Ray{ Math::vec2 {pos.x, pos.y}, dir, distance }, &hitCast, ignored);
 		*hitDistance = hitCast.distance;
 		*hitPoint = hitCast.point;
 		*entity_id = hitCast.entity_id;
-		std::cout << *entity_id << "\n";
+
 		if (hitCast.entity_id < 0) return false;
 		return true;
 	}

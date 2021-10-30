@@ -4,6 +4,7 @@
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    21/09/2021
 \brief
+#include "Engine/Header/Script/Scripting.hpp"
 This file contain the declaration of Scripting
 
 
@@ -44,7 +45,7 @@ namespace Engine {
 		static void Stop();
 		Compile CS files together
 		-----------------------------------------------------*/
-		bool CompileCSInternal();
+		bool CompileCSInternal(bool play);
 		/*-----------------------------------------------------
 		Called when play button is pressed
 		-Stop child domain
@@ -69,6 +70,14 @@ namespace Engine {
 		-Open Visual Studio file
 		-----------------------------------------------------*/
 		void OpenVS(std::string fileName);
+		/*-----------------------------------------------------
+		-Set function ptr that will be overwritten in editor to display exception
+		-----------------------------------------------------*/
+		void SetDisplayFuncPtr(void(*fp)(std::string));
+		/*-----------------------------------------------------
+		-Set function ptr that will be overwritten in editor to display compile data
+		-----------------------------------------------------*/
+		void SetCompileFuncPtr(void(*fp)());
 	}
 }
 

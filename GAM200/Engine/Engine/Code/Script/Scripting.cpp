@@ -33,7 +33,7 @@ Technology is prohibited.
 if (_csScriptInstance.csClass.name != nullptr) {\
 	mono_runtime_invoke(_csScriptInstance.csClass.name, _csScriptInstance.csClass.object, _param, &exception);\
 	if (exception != nullptr) {\
-	std::cout << mono_string_to_utf8(mono_object_to_string(exception, nullptr)) << "\n";\
+	displayFuncPtr(mono_string_to_utf8(mono_object_to_string(exception, nullptr)));\
 	GameState::GetInstance().SetPlaying(false);\
 	Scripting::DestroyChildDomain();\
 	}\
@@ -47,6 +47,9 @@ namespace Engine {
 		MonoAssembly* assem;
 		MonoImage* image;
 		MonoImage* imageCore;
+		//Does nothing is base game
+		void(*displayFuncPtr)(std::string) = [](std::string) {};
+		void(*compileFuncPtr)() = []() {};
 
 		CSType GetCSType(MonoType* mt);
 
@@ -125,9 +128,11 @@ namespace Engine {
 			}
 		}
 
-		bool CompileCSInternal() {
+		bool CompileCSInternal(bool play) {
 			Scripting::DestroyChildDomain();
 			int status = std::system("CompileCS.bat");
+			if (play)
+				compileFuncPtr();
 			if (status > 0) return false;
 			return true;
 		}
@@ -179,14 +184,12 @@ namespace Engine {
 			csClass.klass = mono_class_from_name(image, csClass.namespaceName.c_str(), csClass.className.c_str());
 			if (!csClass.klass) {
 				LOG_ERROR("Failed loading class");
-				std::cout << "Cant find \n";
 				return false;
 			}
 
 			csClass.object = (mono_object_new(mono_domain_get(), csClass.klass));
 			if (!(csClass.object)) {
 				LOG_ERROR("Failed loading obj");
-				std::cout << "Cant find \n";
 				return false;
 			}
 
@@ -194,11 +197,11 @@ namespace Engine {
 			MonoMethodDesc* description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.ConstructorFunc = mono_method_desc_search_in_image(description, imageCore);
 
-			methodDesc = fullName + ":OnInit()";
+			methodDesc = fullName + ":Start()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.InitFunc = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = fullName + ":OnUpdate()";
+			methodDesc = fullName + ":Update()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.UpdateFunc = mono_method_desc_search_in_image(description, image);
 
@@ -346,6 +349,15 @@ namespace Engine {
 		void OpenVS(std::string fileName) {
 
 			//std::system("Data\\OpenVS.bat");
+			printf("Does nothing for now\n");
+		}
+
+		void SetDisplayFuncPtr(void(*fp)(std::string)) {
+			displayFuncPtr = fp;
+		}
+
+		void SetCompileFuncPtr(void(*fp)()) {
+			compileFuncPtr = fp;
 		}
 
 	}

@@ -54,8 +54,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="Time.cs" />
-    <Compile Include="Types\EngineTypes.cs" />
+    <Compile Include="Types\Camera.cs" />
+    <Compile Include="Types\Collider.cs" />
+    <Compile Include="Types\IComponent.cs" />
+    <Compile Include="Types\GameObject.cs" />
     <Compile Include="Types\GenericTypesDictonary.cs" />
+    <Compile Include="Types\Transform.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

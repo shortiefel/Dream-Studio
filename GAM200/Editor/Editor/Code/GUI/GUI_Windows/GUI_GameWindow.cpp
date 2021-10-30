@@ -45,7 +45,7 @@ namespace Editor {
 							  -1.f, -1.f, 1.f);
 		}
 
-		Math::vec2 GetMousePosition() {
+		Math::vec2 GetMousePositionGameWindow() {
 			return Math::vec2{ mousePos.x, mousePos.y };
 		}
 

@@ -51,7 +51,7 @@ namespace Engine {
 
     //When user click play to run their game
     bool Scene::Play() {
-         if (!ScriptSystem::GetInstance().CompileCS()) {
+        if (!ScriptSystem::GetInstance().CompileCS(true)) {
             return false;
         }
 
@@ -72,7 +72,7 @@ namespace Engine {
     }
 
     void Scene::Save() {
-        ScriptSystem::GetInstance().CompileCS();
+        ScriptSystem::GetInstance().CompileCS(false);
         ScriptSystem::GetInstance().UpdateMapData();
         GameSceneSerializer::SerializeScene(sceneName);
     }

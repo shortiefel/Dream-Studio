@@ -21,8 +21,7 @@ Technology is prohibited.
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
 
-#include <fstream>
-#include <sstream>
+//#include <sstream>
 
 namespace Editor {
 
@@ -37,21 +36,8 @@ namespace Editor {
         GUI_Windows::GUI_Console_Clear();
 
         Engine::GameState::GetInstance().SetPlaying(true);
-        bool playState = true;
-        if (!Engine::SceneManager::GetInstance().Play()) playState = false;
-
-        //Read compile result
-        std::ifstream fs{ "Data/msbuild.log" };
-        if (fs.is_open()) {
-            std::ostringstream buffer;
-            buffer << fs.rdbuf();
-
-            GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
-        }
-
-        fs.close();
-
-        if (!playState) return false;
+        
+        if (!Engine::SceneManager::GetInstance().Play()) return false;
         return true;
     }
 

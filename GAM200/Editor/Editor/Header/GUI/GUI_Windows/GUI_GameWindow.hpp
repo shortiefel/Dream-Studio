@@ -26,7 +26,7 @@ Technology is prohibited.
 namespace Editor {
 	namespace GUI_Windows {
 		Math::mat3 GetViewport();
-		Math::vec2 GetMousePosition();
+		Math::vec2 GetMousePositionGameWindow();
 		void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO, ImGuiWindowFlags window_flags);
 		/*int GUI_GetSceneWindowSizeX();
 		int GUI_GetSceneWindowSizeY();*/

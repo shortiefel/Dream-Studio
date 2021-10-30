@@ -204,10 +204,9 @@ namespace Engine {
 			auto& transform = DreamECS::GetInstance().GetComponent<TransformComponent>(entity_id);
 			if (!transform.isActive) continue;
 
-			/*ColliderComponent collider{ col.GetEntity(), col.cType, 
-				col.offset_position + transform.position, col.offset_scale * transform.scale, col.angle + transform.angle };*/
-			
-			if (CollisionImplementation::RayCast_Internal(ray, transform, col, hit)) {
+			RaycastHit hitTarget;
+			if (CollisionImplementation::RayCast_Internal(ray, transform, col, &hitTarget)) {
+				*hit = hitTarget;
 				hit->entity_id = entity_id;
 				return true;
 			}

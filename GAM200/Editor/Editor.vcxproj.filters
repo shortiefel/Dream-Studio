@@ -114,6 +114,9 @@
     <ClInclude Include="Editor\Header\GUI\GUI_ClickCheck.hpp">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\FunctionOverride.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -181,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="Editor\Code\GUI\GUI_ClickCheck.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\FunctionOverride.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

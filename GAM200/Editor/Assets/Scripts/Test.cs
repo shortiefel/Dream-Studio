@@ -22,12 +22,15 @@ public class Test : MonoBehaviour
         public Vector2 newvec2Test;*/
     Transform go2;
     Camera cam;
+    Test2 tssl;
+    Test2 ts2;
     //Collider col1;
 
-    public override void OnInit()
+    public override void Start()
     {
         go2 = GetComponent<Transform>();
         cam = GetComponent<Camera>();
+        tssl = GetComponent<Test2>();
         //col1 = GetComponent<Collider>();
         //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
@@ -37,7 +40,7 @@ public class Test : MonoBehaviour
         Debug.Log("init");
 
         //Console.WriteLine(go2);
-
+        ts2 = new Test2();
         //go2.scale = new Vector2(30, 100);
         /*Console.WriteLine(go2.position + new Vector2(10,10));
 
@@ -48,8 +51,7 @@ public class Test : MonoBehaviour
         Debug.Log(HasComponent<Collider>(entityId));
     }
 
-
-    public override void OnUpdate()
+    public override void Update()
     {
         //Console.WriteLine("new Update");
         //Console.WriteLine(Input::GetMouse);
@@ -83,16 +85,34 @@ public class Test : MonoBehaviour
             go2.angle -= 250 * Time.dt;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             //Instantiate("Box",go2);
-            RaycastHit2D hit = Physics2D.RayCast(new Vector3(go2.position.x, go2.position.y, 1), Vector2.zero);
-            Debug.Log(hit.distance);
-            Debug.Log(hit.point);
+            *//*RaycastHit2D hit = Physics2D.RayCast(new Vector3(go2.position.x, go2.position.y, 1), Vector2.zero);
 
             if (hit.collider != null)
             {
+                Debug.Log(hit.distance);
+                Debug.Log(hit.point);
                 Debug.Log("First " + hit.transform.position);
+            }*//*
+
+            GameObject gameObject = new GameObject();
+            Debug.Log("Creating Entity");
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            GameObject gameObject = new GameObject("Game Object");
+            Debug.Log("Creating Entity with name");
+        }*/
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("In Click");
+            if (tssl != null) {
+                Debug.Log("not null");
+                tssl.TestFunction();
+                ts2.TestFunction();
             }
         }
 

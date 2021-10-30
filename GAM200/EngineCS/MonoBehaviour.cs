@@ -29,19 +29,15 @@ Technology is prohibited.
 
 
 using System;
-//using System.Collections.Generic;
-/*using System.Linq;
-using System.Text;
-using System.Threading.Tasks;*/
 using System.Runtime.CompilerServices; //For internal calls
 
-public class MonoBehaviour
+public class MonoBehaviour : IComponent
 {
     //public GameObject gameObject;
-    public uint entityId;
+    public uint entityId { get; set; }
 
-    public virtual void OnInit() { }
-    public virtual void OnUpdate() { }
+    public virtual void Start() { }
+    public virtual void Update() { }
     public virtual void OnDestroy() { }
     public virtual void OnCollisionEnter() { }
     public virtual void OnCollisionStay() { }
@@ -60,7 +56,7 @@ public class MonoBehaviour
         entityId = id;
     }
 
-    public T GetComponent<T>() where T : class, Component, new()
+    public T GetComponent<T>() where T : class, IComponent, new()
     {
         if (HasComponent<T>(entityId))
         {
@@ -72,7 +68,7 @@ public class MonoBehaviour
         return null;
     }
 
-    public T GetComponentWithID<T>(uint id) where T : class, Component, new()
+    /*public T GetComponentWithID<T>(uint id) where T : class, Component, new()
     {
         if (HasComponent<T>(id))
         {
@@ -82,10 +78,14 @@ public class MonoBehaviour
         }
 
         return null;
-    }
+    }*/
 
     public bool HasComponent<T>(uint id)
     {
+        if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+        {
+            return HasComponent_Scripts_Engine(id, typeof(T).ToString());
+        }
 
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
@@ -100,6 +100,8 @@ public class MonoBehaviour
 
         }
     }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool HasComponent_Scripts_Engine(uint entityID, string name);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Transform_Engine(uint entityID);

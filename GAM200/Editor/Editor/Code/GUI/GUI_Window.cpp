@@ -29,6 +29,7 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_StatsWindow.hpp"
 #include "Editor/Header/GUI/GUI_ClickCheck.hpp"
 
+#include "Editor/Header/FunctionOverride.hpp"
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
 
 #include <Imgui/imgui_internal.h>
@@ -44,7 +45,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
-#include "Engine/Header/Script/ScriptInternalCall.hpp"
+//#include "Engine/Header/Script/Scripting.hpp"
+//#include "Engine/Header/Script/ScriptInternalCall.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
@@ -226,8 +228,24 @@ namespace Editor {
 			GUI_Windows::GUI_SceneSetup();
 
 			Engine::KeyPressedEvent::RegisterFunction(OnKeyEvent);
-			Engine::SetGetViewportFunc(GetViewport);
-			Engine::SetGetMousePositionFunc(GetMousePosition);
+
+			Override_Function();
+			//Engine::SetGetViewportFunc(GetViewport);
+			//Engine::SetGetMousePositionFunc(GetMousePosition);
+			//Engine::Scripting::SetDisplayFuncPtr([](std::string str) { GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ str.c_str() }); });
+			//Engine::Scripting::SetCompileFuncPtr([]() { 
+			////Read compile result
+			//	std::cout << "Calling \n";
+			//std::ifstream fs{ "Data/msbuild.log" };
+			//if (fs.is_open()) {
+			//	std::ostringstream buffer;
+			//	buffer << fs.rdbuf();
+
+			//	GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
+			//}
+
+			//fs.close();
+			//	});
 		}
 
 		void GUI_DockSpace() {

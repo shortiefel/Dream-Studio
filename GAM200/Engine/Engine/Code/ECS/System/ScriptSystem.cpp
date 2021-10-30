@@ -78,10 +78,10 @@ namespace Engine {
 	bool CallOverlapFunc(const OverlapColliderEvent& e); //To be registered to Event
 	bool CallMouseOverlapFunc(const MouseOverlapColliderEvent& e);
 
-	bool ScriptSystem::CompileCS() {
+	bool ScriptSystem::CompileCS(bool play) {
 		PROFILER_START("Scripting");
 
-		return Scripting::CompileCSInternal();
+		return Scripting::CompileCSInternal(play);
 	}
 
 	void ScriptSystem::PlayInit() {

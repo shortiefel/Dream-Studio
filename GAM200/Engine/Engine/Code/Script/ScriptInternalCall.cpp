@@ -18,9 +18,6 @@ Technology is prohibited.
 #include "Engine/Header/Script/ScriptInternalCall.hpp"
 
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp" //Serialize Prefab
-
-#include <mono/metadata/assembly.h>
-
 #include "Engine/Header/Scene/SceneManager.hpp"
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
@@ -35,8 +32,11 @@ Technology is prohibited.
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
 #include "Engine/Header/ECS/System/CollisionSystem.hpp" //For raycast
+#include "Engine/Header/Physics/Collision.hpp"
 #include "Engine/Header/Physics/Ray.hpp" //For raycast
 #include "Engine/Header/Graphic/SpaceTransform.hpp"
+
+#include <mono/metadata/assembly.h>
 
 #define GetEngineType(ID, type, paramName, param)\
 type* ctype = DreamECS::GetInstance().GetComponentPTR<type>(ID);\
@@ -82,8 +82,12 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool GetKey_Engine(Input_KeyCode key);
 	bool GetKeyDown_Engine(Input_KeyCode key);
+
+	bool GetMouse_Engine(Input_MouseCode button);
 	bool GetMouseDown_Engine(Input_MouseCode button);
-	void Input_GetMousePosition(Math::vec2* outPosition);
+	bool GetMouseUp_Engine(Input_MouseCode button);
+
+	void GetMousePosition_Engine(Math::vec2* outPosition);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Check if component exist
@@ -117,7 +121,8 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Prefab
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle);
+	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, unsigned int id);
+	void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Deltatime
@@ -132,7 +137,7 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Physics
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	bool RayCast_Engine(Math::vec2 pos, Math::vec2 dir, float* hit, std::uint32_t ignoreTarget, float distance);
+	bool RayCast_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, unsigned int* entity_id, float* hitDistance, Math::vec2* hitPoint);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Console Write
@@ -165,8 +170,10 @@ namespace Engine {
 		mono_add_internal_call("Input::GetKey_Engine", GetKey_Engine);
 		mono_add_internal_call("Input::GetKeyDown_Engine", GetKeyDown_Engine);
 
+		mono_add_internal_call("Input::GetMouse_Engine", GetMouse_Engine);
 		mono_add_internal_call("Input::GetMouseDown_Engine", GetMouseDown_Engine);
-		mono_add_internal_call("Input::GetMousePosition_Engine", Input_GetMousePosition);
+		mono_add_internal_call("Input::GetMouseUp_Engine", GetMouseUp_Engine);
+		mono_add_internal_call("Input::GetMousePosition_Engine", GetMousePosition_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Check if component exist
@@ -200,7 +207,8 @@ namespace Engine {
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Prefab
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab", Instantiate_Prefab);
+		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Transform_Engine", Instantiate_Prefab_Transform_Engine);
+		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Engine", Instantiate_Prefab_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Deltatime
@@ -215,7 +223,7 @@ namespace Engine {
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Physics
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		mono_add_internal_call("Physics::RayCast_Engine", RayCast_Engine);
+		mono_add_internal_call("Physics2D::RayCast_Engine", RayCast_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Console Write
@@ -306,21 +314,15 @@ namespace Engine {
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	
-	bool GetKey_Engine(Input_KeyCode key) {
-        return Input::IsKeyHold(key);
-    }
+	bool GetKey_Engine(Input_KeyCode key) { return Input::IsKeyHold(key); }
+    bool GetKeyDown_Engine(Input_KeyCode key) { return Input::IsKeyPressed(key); }
 
-    bool GetKeyDown_Engine(Input_KeyCode key) {
-        return Input::IsKeyPressed(key);
-    }
+    bool GetMouse_Engine(Input_MouseCode button) { return Input::IsMouseHold(button); }
+	bool GetMouseDown_Engine(Input_MouseCode button) { return Input::IsMousePressed(button); }
+	bool GetMouseUp_Engine(Input_MouseCode button) { return Input::IsMouseReleased(button); }
 
-    bool GetMouseDown_Engine(Input_MouseCode button) {
-        return Input::IsMousePressed(button);
-    }
-
-    void Input_GetMousePosition(Math::vec2* outPosition) {
-		Math::vec2 result = GetMousePositionFuncPtr();
-		*outPosition = result;
+    void GetMousePosition_Engine(Math::vec2* outPosition) {
+		*outPosition = GetMousePositionFuncPtr();
     }
 
 	void SetGetMousePositionFunc(Math::vec2(*fp)()) {
@@ -406,7 +408,12 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Prefab
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void Instantiate_Prefab(MonoString* prefabName, Math::vec2 position, float angle) {
+	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, unsigned int id) {
+		const auto& transform = DreamECS::GetInstance().GetComponent<TransformComponent>(id);
+		Instantiate_Prefab_Engine(prefabName, transform.position, transform.angle);
+	}
+
+	void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle) {
 		GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), position, angle);
 		if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
@@ -429,9 +436,17 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Physics
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	bool RayCast_Engine(Math::vec2 pos, Math::vec2 dir, float* hit, std::uint32_t ignoreTarget, float distance) {
-		if (distance < 0) distance = RAY_LENGTH;
-		return CollisionSystem::GetInstance().RayCast(Engine::Ray{ pos, dir, distance }, hit, ignoreTarget);
+	bool RayCast_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, unsigned int* entity_id, float* hitDistance, Math::vec2* hitPoint) {
+		RaycastHit hitCast;
+		//if (distance < 0) distance = RAY_LENGTH;
+		std::uint32_t ignored = ignoreTarget < 0 ? DEFAULT_ENTITY_ID : ignoreTarget;
+		CollisionSystem::GetInstance().RayCast(Engine::Ray{ Math::vec2 {pos.x, pos.y}, dir, distance }, &hitCast, ignoreTarget);
+		*hitDistance = hitCast.distance;
+		*hitPoint = hitCast.point;
+		*entity_id = hitCast.entity_id;
+		std::cout << *entity_id << "\n";
+		if (hitCast.entity_id < 0) return false;
+		return true;
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -404,9 +404,7 @@ namespace Editor {
 						if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 							std::string textStr{ text };
 							Engine::DreamECS::GetInstance().AddComponent(
-								//std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() }.Deserialize())
-								std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() })
-							);
+								std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() }));
 						}
 					}
 					ImGui::PopItemWidth();

@@ -4,6 +4,7 @@
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    19/06/2021
 \brief
+#include "Engine/Header/Physics/Collision.hpp"
 This file has the functions declaration to be called by the physic system
 
 
@@ -19,12 +20,20 @@ Technology is prohibited.
 #define COLLISION_H
 
 #include "Engine/Header/Math/MathLib.hpp"
-
 #include "Engine/Header/Physics/Ray.hpp"
+
+#include <limits>
 
 namespace Engine {
 	struct ColliderComponent; //Forward declaration
 	struct TransformComponent; //Forward declaration
+
+	struct RaycastHit {
+		float distance = std::numeric_limits<float>::max();
+		Math::vec2 point;
+		//Negative for no hit
+		int entity_id = -1;
+	};
 
 	//REMEMBER TO CHANGE to Collision
 	namespace CollisionImplementation {
@@ -50,7 +59,7 @@ namespace Engine {
 		bool PointToSquareAABB(const Math::vec2& pt, const ColliderComponent& obj);
 		bool PointToSquareSAT(const Math::vec2& pt, const ColliderComponent& obj);
 
-		bool RayCast_Internal(const Engine::Ray& ray, const ColliderComponent& collider, float* hitDistance);
+		bool RayCast_Internal(const Engine::Ray& ray, const TransformComponent& transform, const ColliderComponent& collider, RaycastHit* hit);
 	}
 }
 

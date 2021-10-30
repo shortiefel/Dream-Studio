@@ -1,6 +1,6 @@
 ﻿/* Start Header**********************************************************************************/
 /*
-@file    Physics.cs
+@file    Physics2D.cs
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    15/10/2021
 \brief
@@ -15,17 +15,26 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 using System.Runtime.CompilerServices; //For internal calls
-using System;
 
-public class Physics
+public class Physics2D
 {
     //Leave distance parameter blank to have "infinite" length
-    public static bool RayCast(Vector2 pos, Vector2 dir, out float hit, uint ignoreTarget, float distance = -1f)
+    public static RaycastHit2D RayCast(Vector3 pos, Vector2 dir, float distance = Mathf.Infinity, int ignoreTarget = -1)
     {
-        //Console.WriteLine();
-        return RayCast_Engine(pos, dir, out hit, ignoreTarget, distance);
+        RaycastHit2D hit = new RaycastHit2D();
+        if (!RayCast_Engine(pos, dir, ignoreTarget, distance, out uint entity_id, out hit.distance, out hit.point))
+        {
+            hit.collider = null;
+            hit.transform = null;
+        }
+        else
+        {
+            hit.collider = new Collider(entity_id);
+            hit.transform = new Transform(entity_id);
+        }
+        return hit;
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern bool RayCast_Engine(Vector2 pos, Vector2 dir, out float hit, uint ignoreTarget, float distance);
+    internal static extern bool RayCast_Engine(Vector3 pos, Vector2 dir, int ignoreTarget, float distance, out uint entity_id, out float hitDistance, out Vector2 hitPoint);
 }
 

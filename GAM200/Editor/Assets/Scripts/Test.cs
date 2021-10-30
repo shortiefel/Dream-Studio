@@ -27,7 +27,7 @@ public class Test : MonoBehaviour
     public override void OnInit()
     {
         go2 = GetComponent<Transform>();
-        //cam = GetComponent<Camera>();
+        cam = GetComponent<Camera>();
         //col1 = GetComponent<Collider>();
         //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
@@ -83,27 +83,51 @@ public class Test : MonoBehaviour
             go2.angle -= 250 * Time.dt;
         }
 
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetMouseButtonDown(0))
         {
-            //Instantiate Prefab
-            /*for (int i = 0; i < 100; i++)
+            //Instantiate("Box",go2);
+            RaycastHit2D hit = Physics2D.RayCast(new Vector3(go2.position.x, go2.position.y, 1), Vector2.zero);
+            Debug.Log(hit.distance);
+            Debug.Log(hit.point);
+
+            if (hit.collider != null)
             {
-                Instantiate_Entity("Box");
-            }*/
-            //Instantiate_Entity("Box");
-            //Physics Ray cast and Debug.log
-            //{
-            //float hitDis = 0f;
-            //Debug.Log(Physics.RayCast(go2.position, go2.forward, out hitDis, go2.entityId, 200f));
-            //Debug.Log(hitDis);
-            //}
-
-            //Disable
-            //Disable(go2);
-            //go2.SetActive(false);
-
-            //cam.ScreenToWorldPoint(Input.GetMousePosition());
+                Debug.Log("First " + hit.transform.position);
+            }
         }
+
+        /*if (Input.GetMouseButtonDown(0))
+         {
+            //Instantiate("Box",go2);
+            float hitDis = 0f;
+            Debug.Log(Physics2D.RayCast(go2.position, go2.forward, out hitDis, go2.entityId, 200f));
+        }*/
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //Instantiate Prefab
+        /*for (int i = 0; i < 100; i++)
+        {
+            Instantiate_Entity("Box");
+        }*/
+        //Instantiate("Box");
+        //Physics Ray cast and Debug.log
+        //{
+        //float hitDis = 0f;
+        //Debug.Log(Physics2D.RayCast(go2.position, go2.forward, out hitDis, go2.entityId, 200f));
+        //Debug.Log(hitDis);
+        //}
+
+        //Disable
+        //Disable(go2);
+        //go2.SetActive(false);
+        /*if (cam != null)
+        {
+            Vector3 tem = cam.ScreenToWorldPoint(Input.GetMousePosition());
+            Debug.Log(tem);
+        }*/
+        //}
+
+
     }
 
     public override void OnMouseEnter()

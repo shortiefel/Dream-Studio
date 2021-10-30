@@ -409,34 +409,61 @@ namespace Engine {
                 (Math::dot(pt - objCorner[3], objCorner[0] - objCorner[3]) >= 0.f);
         }
 
-        bool RayCast_Internal(const Engine::Ray& ray, const ColliderComponent& transform, float* hitDistance) {
+        bool RayCast_Internal(const Engine::Ray& ray, const TransformComponent& transform, const ColliderComponent& collider, RaycastHit* hit) {
+            ColliderComponent combined = collider;
+            combined.offset_position += Math::vec2{ transform.position };
+            combined.offset_scale *= transform.scale;
+            combined.angle += transform.angle;
+
             const Math::vec2 rayEnd = ray.pos + (ray.dir * ray.length);
 
             std::vector<Math::vec2> obj1Corner(4);
-            Math::vec2 xaxis1{ Math::cos(Math::radians(transform.angle)), Math::sin(Math::radians(transform.angle)) };
-            Math::vec2 yaxis1{ Math::cos(Math::radians(90.f + transform.angle)), Math::sin(Math::radians(90.f + transform.angle)) };
+            Math::vec2 xaxis1{ Math::cos(Math::radians(combined.angle)), Math::sin(Math::radians(combined.angle)) };
+            Math::vec2 yaxis1{ Math::cos(Math::radians(90.f + combined.angle)), Math::sin(Math::radians(90.f + combined.angle)) };
 
-            obj1Corner[0] = transform.offset_position + transform.offset_scale.x * xaxis1 + transform.offset_scale.y * yaxis1; //top right
-            obj1Corner[1] = transform.offset_position - transform.offset_scale.x * xaxis1 + transform.offset_scale.y * yaxis1; //top left
-            obj1Corner[2] = transform.offset_position - transform.offset_scale.x * xaxis1 - transform.offset_scale.y * yaxis1; //bot left
-            obj1Corner[3] = transform.offset_position + transform.offset_scale.x * xaxis1 - transform.offset_scale.y * yaxis1; //bot right
+            obj1Corner[0] = combined.offset_position + combined.offset_scale.x * xaxis1 + combined.offset_scale.y * yaxis1; //top right
+            obj1Corner[1] = combined.offset_position - combined.offset_scale.x * xaxis1 + combined.offset_scale.y * yaxis1; //top left
+            obj1Corner[2] = combined.offset_position - combined.offset_scale.x * xaxis1 - combined.offset_scale.y * yaxis1; //bot left
+            obj1Corner[3] = combined.offset_position + combined.offset_scale.x * xaxis1 - combined.offset_scale.y * yaxis1; //bot right
+           
+            auto& ht = *hit;
+            //Point in square check
+            if (Math::EpsilonCheck(ray.pos, rayEnd)) {
+                
+                for (int i = 0; i < 4; i++) {
+                    Math::vec2 nl = obj1Corner[(i + 1) < 4 ? i + 1 : 0] - obj1Corner[i];
+                    Math::vec2 normal{ -nl.y, nl.x };
+                    normal = Math::normalize(normal);
+
+                    float tem = Math::dot(rayEnd - obj1Corner[i], normal);
+                    if (tem < ht.distance) {
+                        ht.distance = tem;
+                        ht.point = rayEnd + -normal * tem;
+                    }
+                    if (tem < 0) return false;
+                }
+
+                return true;
+            }
 
             //Intersection
             //Ray = p + uv : 0 < u
             //Line = q + tv : 0 < t < 1
             for (int i = 0; i < 4; i++) {
                 const float det1 = GET_DET(obj1Corner[i], obj1Corner[(i + 1) < 4 ? i + 1 : 0], ray.pos, rayEnd);
-
-                if (Math::EpsilonCheck(det1)) return false;
+                if (Math::EpsilonCheck(det1)) {
+                    continue;
+                }
 
                 const float t1 = GET_T(det1, obj1Corner[i], obj1Corner[(i + 1) < 4 ? i + 1 : 0], ray.pos, rayEnd);
                 const float u1 = GET_U(det1, obj1Corner[i], obj1Corner[(i + 1) < 4 ? i + 1 : 0], ray.pos, rayEnd);
                 if (t1 > 0 && t1 < 1 && u1 > 0 && u1 < 1) {
-                    *hitDistance = Math::distance(ray.pos, ray.pos + (u1 * (rayEnd - ray.pos)));
+                    ht.point = ray.pos + (u1 * (rayEnd - ray.pos));
+                    ht.distance = Math::distance(ray.pos, ht.point);
                     return true;
                 }
             }
-
+            
             return false;
         }
     }

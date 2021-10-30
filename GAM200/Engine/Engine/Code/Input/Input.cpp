@@ -17,6 +17,13 @@ Technology is prohibited.
 #include "Engine/Header/Input/Input.hpp"
 #include "Engine/Header/pch.hpp"
 
+#define MOUSE_CHECK_UPDATE(mouse)	if (InputMouseStatus[mouse]== InputType::PRESS) {\
+										InputMouseStatus[mouse] = InputType::REPEAT;\
+									}\
+									else  if (InputMouseStatus[mouse] == InputType::RELEASE) {\
+										InputMouseStatus[mouse] = InputType::NONE;\
+									}
+
 namespace Engine {
 	Math::vec2 Input::mousePosition;
 	//Math::vec2 Input::mouseScroll;
@@ -326,6 +333,14 @@ namespace Engine {
 		return (tt == InputType::PRESS) || (tt == InputType::REPEAT);
 	}		
 
+	void Input::UpdateMouseStatus() {
+		MOUSE_CHECK_UPDATE(Input_MouseCode::Mouse_Left);
+		MOUSE_CHECK_UPDATE(Input_MouseCode::Mouse_Right);
+		MOUSE_CHECK_UPDATE(Input_MouseCode::Mouse_Middle);
+		MOUSE_CHECK_UPDATE(Input_MouseCode::Mouse_LeftSide_Front);
+		MOUSE_CHECK_UPDATE(Input_MouseCode::Mouse_LeftSide_Back);
+	}
+
 	bool Input::IsMousePressed(Input_MouseCode button) {
 		return (InputMouseStatus[button] == InputType::PRESS);
 	}
@@ -333,6 +348,10 @@ namespace Engine {
 	bool Input::IsMouseHold(Input_MouseCode button) {
 		InputType tt = InputMouseStatus[button];
 		return (tt == InputType::PRESS) || (tt == InputType::REPEAT);
+	}
+
+	bool Input::IsMouseReleased(Input_MouseCode button) {
+		return InputMouseStatus[button] == InputType::RELEASE;
 	}
 
 	void Input::SetKeyStatus(int key, InputType status) {

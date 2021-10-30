@@ -35,7 +35,6 @@ using System.Text;
 using System.Threading.Tasks;*/
 using System.Runtime.CompilerServices; //For internal calls
 
-namespace DreamEngine { }
 public class MonoBehaviour
 {
     //public GameObject gameObject;
@@ -61,7 +60,7 @@ public class MonoBehaviour
         entityId = id;
     }
 
-    public T GetComponent<T>() where T : Component, new()
+    public T GetComponent<T>() where T : class, Component, new()
     {
         if (HasComponent<T>(entityId))
         {
@@ -69,11 +68,8 @@ public class MonoBehaviour
             component.entityId = entityId;
             return component;
         }
-        
-        else
-        {
-            throw new NullReferenceException();
-        }
+
+        return null;
     }
 
     public T GetComponentWithID<T>(uint id) where T : class, Component, new()
@@ -218,18 +214,27 @@ public class MonoBehaviour
     internal static extern void Active_Script_Engine(uint entityID, bool active, String className);
 
 
+    //-----------------------------------------------------------------------------------------------------------------
+    //Instantiate
+    public void Instantiate(string prefabName, Transform transform)
+    {
+        Instantiate_Prefab_Transform_Engine(prefabName, transform.entityId);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void Instantiate_Prefab_Transform_Engine(String prefabName, uint entityID);
+
     public void Instantiate(string prefabName, Vector2 position, float angle = 0)
     {
-        Instantiate_Prefab(prefabName, position, angle);
+        Instantiate_Prefab_Engine(prefabName, position, angle);
     }
 
-    public void Instantiate_Entity(string prefabName)
+    public void Instantiate(string prefabName)
     {
-        Instantiate_Prefab(prefabName, new Vector2(0,0), 0);
+        Instantiate_Prefab_Engine(prefabName, new Vector2(0,0), 0);
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Instantiate_Prefab(String prefabName, Vector2 position, float angle);
+    internal static extern void Instantiate_Prefab_Engine(String prefabName, Vector2 position, float angle);
 
     /*public virtual void OnEnable()
     {

@@ -77,21 +77,22 @@ namespace Editor {
 				game_viewportSize = Math::vec2{ windowSize.x, windowSize.y };
 
 				ImVec2 imousePos = ImGui::GetMousePos();
-				mousePos = Math::vec3{ imousePos.x, imousePos.y, 1.f }; //1.f because it is a point
-				mousePos.x -= game_viewportBounds[0].x;
-				mousePos.y -= game_viewportBounds[0].y;
-				mousePos.y = game_viewportSize.y - mousePos.y;
+				Math::vec3 _mousePos = Math::vec3{ imousePos.x, imousePos.y, 1.f }; //1.f because it is a point
+				_mousePos.x -= game_viewportBounds[0].x;
+				_mousePos.y -= game_viewportBounds[0].y;
+				_mousePos.y = game_viewportSize.y - _mousePos.y;
+				mousePos = _mousePos;
 
 				Math::mat3 camMatrix = Engine::CameraSystem::GetInstance().GetTransform();
 
 				Math::mat3 inverseCamMatrix = Math::Inverse(camMatrix);
 
-				int mouseX = (int)mousePos.x;
-				int mouseY = (int)mousePos.y;
+				int mouseX = (int)_mousePos.x;
+				int mouseY = (int)_mousePos.y;
 				
 				if (mouseX >= 0 && mouseX < (int)game_viewportSize.x &&
 					mouseY >= 0 && mouseY < (int)game_viewportSize.y) {
-
+					
 					Engine::Graphic::PickingCheck(mousePos, game_viewportSize, inverseCamMatrix, 
 						[&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, true);  }, 
 						[&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); });

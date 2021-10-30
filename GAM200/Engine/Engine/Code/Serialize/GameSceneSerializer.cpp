@@ -287,8 +287,9 @@ namespace Engine {
 			itr = obj.FindMember("TransformComponent");
 			if (itr != obj.MemberEnd()) {
 					DSerializer serializer{ itr }; 
+					const auto& transform = TransformComponent{ entity.id }.Deserialize(serializer);
 					DreamECS::GetInstance().AddComponent(
-						TransformComponent{ entity.id }.Deserialize(serializer) += TransformComponent{ entity.id, position, Math::vec2{1,1}, angle }
+						 TransformComponent{ entity.id, transform.position + position, transform.scale, transform.angle + angle }
 					); 
 			}
 

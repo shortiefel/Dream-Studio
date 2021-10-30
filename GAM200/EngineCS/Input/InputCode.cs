@@ -131,10 +131,10 @@ public enum KeyCode
 	PageDown = 267,
 
 	//Arrow Keys
-	Left = 263,
-	Right = 262,
-	Up = 265,
-	Down = 264,
+	LeftArrow = 263,
+	RightArrow = 262,
+	UpArrow = 265,
+	DownArrow = 264,
 
 	//Keypad
 	NumLock = 282,

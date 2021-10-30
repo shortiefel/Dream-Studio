@@ -17,7 +17,7 @@ Technology is prohibited.
 public struct Vector3
 {
     public float x, y, z;
-
+    public static Vector3 zero = new Vector3(0, 0, 0);
     public Vector3(float _x, float _y, float _z)
     {
         x = _x;
@@ -48,11 +48,6 @@ public struct Vector3
         lhs.y = -lhs.y;
         lhs.z = -lhs.z;
         return lhs;
-    }
-
-    public static Vector3 zero()
-    {
-        return new Vector3(0, 0, 0);
     }
     public override string ToString()
     {

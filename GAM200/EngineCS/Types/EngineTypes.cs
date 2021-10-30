@@ -34,6 +34,8 @@ Transform
 public class Transform : Component
 {
     public uint entityId { get; set; }
+    public Transform()  { }
+    public Transform(uint entity_id)  { entityId = entity_id; }
     //-----------------------------------------------------------------------------------------------------------------
     //Position
     public Vector2 position
@@ -148,6 +150,8 @@ Collider
 public class Collider : Component
 {
     public uint entityId { get; set; }
+    public Collider() { }
+    public Collider(uint entity_id) { entityId = entity_id; }
 
 
     /*public bool GetActive()

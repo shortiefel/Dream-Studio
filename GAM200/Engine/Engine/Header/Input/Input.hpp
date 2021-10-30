@@ -25,15 +25,19 @@ namespace Engine {
 	enum class InputType {
 		PRESS = 0,
 		REPEAT,
-		RELEASE
+		RELEASE,
+		NONE
 	};
 
 	class Input {
 	public:
 		static bool IsKeyPressed(Input_KeyCode keyCode);
 		static bool IsKeyHold(Input_KeyCode keyCode);
+
+		static void UpdateMouseStatus();
 		static bool IsMousePressed(Input_MouseCode button);
 		static bool IsMouseHold(Input_MouseCode button);
+		static bool IsMouseReleased(Input_MouseCode button);
 
 		static void SetKeyStatus(int key, InputType status);
 		static void SetMouseStatus(int button, InputType status);

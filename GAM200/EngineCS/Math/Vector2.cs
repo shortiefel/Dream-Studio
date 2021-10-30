@@ -1,6 +1,6 @@
 ﻿/* Start Header**********************************************************************************/
 /*
-@file    Vec2.cs
+@file    Vector2.cs
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    21/08/2021
 \brief
@@ -17,6 +17,7 @@ Technology is prohibited.
 public struct Vector2
 {
     public float x, y;
+    public static Vector2 zero = new Vector2(0, 0);
 
     public Vector2(float n1, float n2)
     {
@@ -45,11 +46,6 @@ public struct Vector2
         lhs.x = -lhs.x;
         lhs.y = -lhs.y;
         return lhs;
-    }
-
-    public static Vector2 zero()
-    {
-        return new Vector2(0, 0);
     }
     public override string ToString()
     {

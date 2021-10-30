@@ -170,7 +170,7 @@ namespace Engine {
 		}
 
 		bool InitCSClass(CSScriptInstance& _csScriptInstance) {
-			//If no child domain dont klass doesnt exist
+			//If no child domain the klass doesnt exist
 			if (!GameState::GetInstance().GetPlaying()) return true;
 
 			auto& csClass = _csScriptInstance.csClass;
@@ -179,12 +179,14 @@ namespace Engine {
 			csClass.klass = mono_class_from_name(image, csClass.namespaceName.c_str(), csClass.className.c_str());
 			if (!csClass.klass) {
 				LOG_ERROR("Failed loading class");
+				std::cout << "Cant find \n";
 				return false;
 			}
 
 			csClass.object = (mono_object_new(mono_domain_get(), csClass.klass));
 			if (!(csClass.object)) {
 				LOG_ERROR("Failed loading obj");
+				std::cout << "Cant find \n";
 				return false;
 			}
 
@@ -262,6 +264,7 @@ namespace Engine {
 				}
 
 				for (auto& className : classToDelete) {
+					std::cout << className << "\n";
 					classScriptInstances.erase(className);
 				}
 			}

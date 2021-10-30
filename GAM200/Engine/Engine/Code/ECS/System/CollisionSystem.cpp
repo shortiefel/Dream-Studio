@@ -191,7 +191,7 @@ namespace Engine {
 		}
 	}
 
-	bool CollisionSystem::RayCast(const Ray& ray, float* hitDistance, std::uint32_t ignoreTarget) {
+	bool CollisionSystem::RayCast(const Ray& ray, RaycastHit* hit, std::uint32_t ignoreTarget) {
 		PROFILER_START("Collision");
 
 		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
@@ -206,12 +206,11 @@ namespace Engine {
 
 			/*ColliderComponent collider{ col.GetEntity(), col.cType, 
 				col.offset_position + transform.position, col.offset_scale * transform.scale, col.angle + transform.angle };*/
-			ColliderComponent collider = col;
-			collider.offset_position += Math::vec2{ transform.position };
-			collider.offset_scale *= transform.scale;
-			collider.angle += transform.angle;
 			
-			if (CollisionImplementation::RayCast_Internal(ray, collider, hitDistance)) return true;
+			if (CollisionImplementation::RayCast_Internal(ray, transform, col, hit)) {
+				hit->entity_id = entity_id;
+				return true;
+			}
 		}
 
 		return false;

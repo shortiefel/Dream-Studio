@@ -26,15 +26,25 @@ namespace Engine {
     namespace DreamMath {
         template <typename T>
         bool EpsilonCheck(DreamMath::MathImplementation::Vector2D<T> target) {
-            if (target.x >= -epsilon<T>() && target.x <= -epsilon<T>() &&
-                target.y >= -epsilon<T>() && target.y <= -epsilon<T>())
+            if (target.x >= -epsilon<T>() && target.x <= epsilon<T>() &&
+                target.y >= -epsilon<T>() && target.y <= epsilon<T>())
                 return true;
             return false;
         }
 
         template <typename T>
         bool EpsilonCheck(T target) {
-            if (target >= -epsilon<T>() && target <= -epsilon<T>())
+            if (target >= -epsilon<T>() && target <= epsilon<T>())
+                return true;
+            return false;
+        }
+
+        template <typename T>
+        bool EpsilonCheck(DreamMath::MathImplementation::Vector2D<T> target, DreamMath::MathImplementation::Vector2D<T> target2) {
+            const auto& xPos = target.x - target2.x;
+            const auto& yPos = target.y - target2.y;
+            if (xPos >= -epsilon<T>() && xPos <= epsilon<T>() &&
+                yPos >= -epsilon<T>() && yPos <= epsilon<T>())
                 return true;
             return false;
         }

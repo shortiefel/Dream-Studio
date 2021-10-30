@@ -35,14 +35,21 @@ public class Input
     internal static extern bool GetKeyDown_Engine(KeyCode key);
 
 
+    public static bool GetMouseButton(MouseCode button) { return GetMouse_Engine(button); }
+    public static bool GetMouseButton(int button) { return GetMouse_Engine((MouseCode)button); }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern bool GetMouse_Engine(MouseCode button);
 
-    public static bool GetMouseDown(MouseCode button)
-    {
-        return GetMouseDown_Engine(button);
-    }
 
+    public static bool GetMouseButtonDown(MouseCode button) { return GetMouseDown_Engine(button); }
+    public static bool GetMouseButtonDown(int button) { return GetMouseDown_Engine((MouseCode)button); }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern bool GetMouseDown_Engine(MouseCode button);
+
+    public static bool GetMouseButtonUp(MouseCode button) {  return GetMouseUp_Engine(button); }
+    public static bool GetMouseButtonUp(int button) { return GetMouseUp_Engine((MouseCode)button); }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern bool GetMouseUp_Engine(MouseCode button);
 
 
 

@@ -40,14 +40,9 @@ namespace Engine {
 
 		//Callback is called when mouse is over entity while CallbackFail is called when there is not over entity (Calls when callback is not called)
 		template<typename Func, typename Func2>
-		void PickingCheck(Math::vec3& mousePos, const Math::vec2& viewportSize, const Math::mat3& inverseCamMatrix, Func Callback, Func2 CallbackFail) {
-			/*mousePos = inverseCamMatrix * Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
-				0.f, 2.f / viewportSize.y, 0.f,
-				-1.f, -1.f, 1.f) * mousePos;*/
-			//mousePos = inverseCamMatrix * mousePos;
-
-
-			mousePos = ScreenToWorldPoint(mousePos, inverseCamMatrix, Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
+		void PickingCheck(const Math::vec3& mousePos, const Math::vec2& viewportSize, const Math::mat3& inverseCamMatrix, Func Callback, Func2 CallbackFail) {
+			Math::vec3 screenPos = mousePos;
+			screenPos = ScreenToWorldPoint(screenPos, inverseCamMatrix, Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
 																				 0.f, 2.f / viewportSize.y, 0.f,
 																				 -1.f, -1.f, 1.f));
 
@@ -63,7 +58,7 @@ namespace Engine {
 				collider.offset_scale = transform.scale;
 				collider.angle = transform.angle;
 				if (Math::epsilonCheck(transform.angle)) {
-					if (Engine::CollisionImplementation::PointToSquareAABB(Math::vec2{ mousePos.x, mousePos.y }, collider)) {
+					if (Engine::CollisionImplementation::PointToSquareAABB(Math::vec2{ screenPos.x, screenPos.y }, collider)) {
 						Callback(entity_id);
 					}
 					else {
@@ -72,7 +67,7 @@ namespace Engine {
 				}
 
 				else {
-					if (Engine::CollisionImplementation::PointToSquareSAT(Math::vec2{ mousePos.x, mousePos.y }, collider)) {
+					if (Engine::CollisionImplementation::PointToSquareSAT(Math::vec2{ screenPos.x, screenPos.y }, collider)) {
 						Callback(entity_id);
 					}
 					else {

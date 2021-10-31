@@ -37,7 +37,7 @@ namespace Engine {
 		//void SetActive(const char* _className, bool _boolean);
 
 		//Explict copy 
-		void CopyComponentAsInstance(const ScriptComponent& target);
+		//void CopyComponentAsInstance(const ScriptComponent& target);
 		//void CopyComponentAsPrefab(const ScriptComponent& target);
 
 		ScriptComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const char* _className = nullptr);

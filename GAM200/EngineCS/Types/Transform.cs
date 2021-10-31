@@ -30,26 +30,26 @@ public class Transform : IComponent
     {
         get
         {
-            GetTransform_Position_Engine(entityId, out Vector2 result);
+            GetTransform_Position_Engine(entityId, out Vector2 result, false);
             return result;
         }
-        set { SetTransform_Position_Engine(entityId, ref value); }
+        set { SetTransform_Position_Engine(entityId, ref value, false); }
     }
 
 
-    /* public Vector2 localPosition
+     public Vector2 localPosition
      {
          get
-         {
-             GetTransform_Position_Engine(entityId, out Vector2 result);
-             return result;
-         }
-         set { SetTransform_Position_Engine(entityId, ref value); }
-     }*/
+        {
+            GetTransform_Position_Engine(entityId, out Vector2 result, true);
+            return result;
+        }
+        set { SetTransform_Position_Engine(entityId, ref value, true); }
+     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_Position_Engine(uint entityID, out Vector2 outVec2);
+    internal static extern void GetTransform_Position_Engine(uint entityID, out Vector2 outVec2, bool local);
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTransform_Position_Engine(uint entityID, ref Vector2 inVec2);
+    internal static extern void SetTransform_Position_Engine(uint entityID, ref Vector2 inVec2, bool local);
 
     //-----------------------------------------------------------------------------------------------------------------
     //Scale

@@ -38,8 +38,7 @@ if (_csScriptInstance.csClass.name != nullptr) {\
 	Scripting::DestroyChildDomain();\
 	}\
 }
-//std::cout << mono_object_to_string(exception, nullptr) << "\n";\
-//}
+
 
 namespace Engine {
 	namespace Scripting {
@@ -47,7 +46,7 @@ namespace Engine {
 		MonoAssembly* assem;
 		MonoImage* image;
 		MonoImage* imageCore;
-		//Does nothing is base game
+		//Does nothing in base game
 		void(*displayFuncPtr)(std::string) = [](std::string) {};
 		void(*compileFuncPtr)() = []() {};
 
@@ -176,7 +175,9 @@ namespace Engine {
 
 		bool InitCSClass(CSScriptInstance& _csScriptInstance) {
 			//If no child domain the klass doesnt exist
-			if (!GameState::GetInstance().GetPlaying()) return true;
+			MonoDomain* currentDomain = mono_domain_get();
+			if (!currentDomain || currentDomain == mono_get_root_domain()) return true;
+			//if (!GameState::GetInstance().GetPlaying()) return true;
 
 			auto& csClass = _csScriptInstance.csClass;
 			auto& fullName = csClass.fullName;
@@ -267,7 +268,6 @@ namespace Engine {
 				}
 
 				for (auto& className : classToDelete) {
-					std::cout << className << "\n";
 					classScriptInstances.erase(className);
 				}
 			}
@@ -284,7 +284,7 @@ namespace Engine {
 			for (auto& [variableName, variableData] : variableMap) {
 				oldVariable.emplace(variableName, std::move(variableData));
 			}
-
+			
 			variableMap.clear();
 
 			MonoClassField* classField;
@@ -296,7 +296,6 @@ namespace Engine {
 				//Ignore private variables
 				if ((flags & MONO_FIELD_ATTR_PUBLIC) == 0)
 					continue;
-
 				MonoType* variableType = mono_field_get_type(classField);
 				CSType csType = GetCSType(variableType);
 
@@ -340,8 +339,16 @@ namespace Engine {
 			case MONO_TYPE_VALUETYPE:
 			{
 				char* name = mono_type_get_name(mt);
-				if (strcmp(name, "Vec2") == 0) return CSType::VEC2;
+				if (strcmp(name, "Vector2") == 0) return CSType::VEC2;
+				break;
 			}
+			/*case MONO_TYPE_CLASS: {
+				char* name = mono_type_get_name(mt);
+				if (strcmp(name, "GameObject") == 0) {
+					printf("GameObject \n");
+					return CSType::GAMEOBJECT;
+				}
+			}*/
 			}
 			return CSType::NONE;
 		}

@@ -47,7 +47,6 @@ namespace Engine {
 			}
 
 			++AliveEntityCount;
-			std::cout << "call create\n";
 			Entity entity(entityId, _entityName, _parent);
 			//UsedEntities2.push_back(entity);
 			usedEntities.emplace(entityId, entity);
@@ -93,8 +92,6 @@ namespace Engine {
 		inline void ResetEntityManager() {
 			//UsedEntities2.clear();
 			usedEntities = EntityMapType{};
-			std::cout << usedEntities.size() << " clearing \n";
-
 			currentMaxId = 0;
 			AliveEntityCount = 0;
 			AvailableEntities = std::queue<Entity_id>();

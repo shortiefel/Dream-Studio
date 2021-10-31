@@ -32,7 +32,8 @@ namespace Engine {
 		FLOAT,
 		INT,
 		UINT,
-		VEC2
+		VEC2,
+		GAMEOBJECT
 	};
 
 	class CSPublicVariable {

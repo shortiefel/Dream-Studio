@@ -20,23 +20,24 @@ public class Test : MonoBehaviour
         public TEST testEnum;
         public char testChar;
         public Vector2 newvec2Test;*/
-    Transform trans;
-    GameObject go1;
-    Camera cam;
+    public Transform trans;
+    public GameObject go1;
+
+ 
     //Collider col1;
 
     public override void Start()
     {
         trans = GetComponent<Transform>();
-        cam = GetComponent<Camera>();
 
-        go1 = GameObject.Find("TestEnt");
+        
         //col1 = GetComponent<Collider>();
         //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
         //Vector2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
         //go2.position = new Vector2(0, 0);
+        //Debug.Log(go1.transform.entityId);
     }
 
     public override void Update()
@@ -74,13 +75,23 @@ public class Test : MonoBehaviour
         }
 
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            go1.AddComponent<Transform>();
+            //go1 = Instantiate("Box", trans);
         }
         if (Input.GetMouseButtonDown(2))
         {
-            go1.AddComponent<Camera>();
+            
+        }
+        if (Input.GetMouseButtonDown(3))
+        {
+            //if (test2 != null)
+     
+            //else Debug.Log("Is null now");
+        }
+        if (Input.GetMouseButtonDown(4))
+        {
+  
         }
 
         /*if (Input.GetMouseButtonDown(2))

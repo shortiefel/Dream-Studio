@@ -33,7 +33,7 @@ namespace Engine {
 
 
 		//static void SerializePrefab(std::string filename, Math::vec2 position, float angle);
-		static void DeserializePrefab(std::string filename, Math::vec2 position, float angle);
+		static void DeserializePrefab(std::string filename, Math::vec2 position, float angle, unsigned int& id);
 
 
 	};

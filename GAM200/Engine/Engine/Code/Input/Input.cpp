@@ -28,6 +28,8 @@ namespace Engine {
 	Math::vec2 Input::mousePosition;
 	//Math::vec2 Input::mouseScroll;
 
+	bool keyChange = false;
+
 	/*------------------------------------------------------------------------------------------------------------------------------
 	GLFW to input key code map
 	------------------------------------------------------------------------------------------------------------------------------*/
@@ -339,6 +341,14 @@ namespace Engine {
 		MOUSE_CHECK_UPDATE(Input_MouseCode::Mouse_Middle);
 		MOUSE_CHECK_UPDATE(Input_MouseCode::Mouse_LeftSide_Front);
 		MOUSE_CHECK_UPDATE(Input_MouseCode::Mouse_LeftSide_Back);
+
+		if (keyChange) {
+			keyChange = false;
+
+			for (auto& [name, stat] : InputKeyStatus) {
+				if (stat == InputType::PRESS) stat = InputType::REPEAT;
+			}
+		}
 	}
 
 	bool Input::IsMousePressed(Input_MouseCode button) {
@@ -355,10 +365,12 @@ namespace Engine {
 	}
 
 	void Input::SetKeyStatus(int key, InputType status) {
+		if (status == InputType::PRESS) keyChange = true;
 		InputKeyStatus[GLFWtoInputKey[key]] = status;
 	}
 
 	void Input::SetMouseStatus(int button, InputType status) {
+
 		InputMouseStatus[GLFWtoInputMouse[button]] = status;
 	}
 

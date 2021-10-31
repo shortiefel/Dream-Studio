@@ -73,8 +73,8 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Transform
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2);
-	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2);
+	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2, bool local);
+	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2, bool local);
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2);
 	void GetTransform_Scale_Engine(unsigned int id, Math::vec2* outVec2);
 	void SetTransform_Scale_Engine(unsigned int id, Math::vec2* inVec2);
@@ -134,8 +134,8 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Prefab
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, unsigned int id);
-	void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle);
+	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, int entityId, unsigned int* newId);
+	//void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Deltatime
@@ -235,7 +235,7 @@ namespace Engine {
 		Prefab
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Transform_Engine", Instantiate_Prefab_Transform_Engine);
-		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Engine", Instantiate_Prefab_Engine);
+		//mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Engine", Instantiate_Prefab_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Deltatime
@@ -307,8 +307,8 @@ namespace Engine {
 
 	bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name) {
 		std::cout << mono_string_to_utf8(name) << "\n";
-		return false;
-		//return DreamECS::GetInstance().AddComponent<ScriptComponent>(ScriptComponent{ entityId, mono_string_to_utf8(name) });
+		//return false;
+		return DreamECS::GetInstance().AddComponent<ScriptComponent>(ScriptComponent{ entityId, mono_string_to_utf8(name) });
 	}
 
 	bool AddComponent_Transform_Engine(unsigned int entityId) {
@@ -326,11 +326,22 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Transform
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2) {
-		GetEngineType(id, TransformComponent, position, *outVec2);
+	void GetTransform_Position_Engine(unsigned int id, Math::vec2* outVec2, bool local) {
+		if (!local) {
+			GetEngineType(id, TransformComponent, position, *outVec2);
+		}
+		else {
+			GetEngineType(id, TransformComponent, localPosition, *outVec2);
+		}
 	}
-	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
-		SetEngineType(id, TransformComponent, position, *inVec2);
+	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2, bool local) {
+		if (!local) {
+			SetEngineType(id, TransformComponent, position, *inVec2);
+		}
+		else {
+			SetEngineType(id, TransformComponent, localPosition, *inVec2);
+		}
+		
 	}
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		//call hascomponent with entityid
@@ -494,15 +505,22 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Prefab
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, unsigned int id) {
-		const auto& transform = DreamECS::GetInstance().GetComponent<TransformComponent>(id);
-		Instantiate_Prefab_Engine(prefabName, transform.position, transform.angle);
+	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, int entityId, unsigned int* newId) {
+		if (entityId < 0) {
+			GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), Math::vec2{ 0.f,0.f }, 0.f, *newId);
+		}
+		else {
+			const auto& transform = DreamECS::GetInstance().GetComponent<TransformComponent>(static_cast<unsigned int>(entityId));
+			GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), transform.position, transform.angle, *newId);
+		}
+		//if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
 
-	void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle) {
-		GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), position, angle);
-		if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
-	}
+	//void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle) {
+	//	unsigned int id;
+	//	GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), position, angle, id);
+	//	//if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
+	//}
 
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

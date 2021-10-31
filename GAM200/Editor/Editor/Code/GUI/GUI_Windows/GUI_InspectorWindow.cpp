@@ -356,11 +356,18 @@ namespace Editor {
 								case Engine::CSType::UINT:
 									//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
 									break;
+								/*case Engine::CSType::GAMEOBJECT:
+									ImGui::Text("%s", csPublicVariable.GetVariableData<char*>());
+									if (ImGui::Button("Change GameObject##ChangeGO", { ImGui::GetContentRegionAvail().x, 0 })) {
+
+									}
+									break;*/
 								case Engine::CSType::VEC2:
 									Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
 									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
 									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
 									break;
+								
 								}
 							}
 

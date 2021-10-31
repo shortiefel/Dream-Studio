@@ -56,6 +56,11 @@ namespace Engine {
 			v = &tem;
 		}
 
+		else if (variableType == CSType::GAMEOBJECT) {
+			char tem{};
+			v = &tem;
+		}
+
 		SetVariableData(v);
 	}
 
@@ -72,6 +77,8 @@ namespace Engine {
 			break;
 		case CSType::VEC2:
 			return (4 * 2);
+		/*case CSType::GAMEOBJECT:
+			return (100);*/
 		}
 		return 0;
 	}

@@ -262,7 +262,7 @@ namespace Engine {
 		fileStream.close();
 	}
 
-	void GameSceneSerializer::DeserializePrefab(std::string filename, Math::vec2 position, float angle) {
+	void GameSceneSerializer::DeserializePrefab(std::string filename, Math::vec2 position, float angle, unsigned int& id) {
 		filename = TO_FULL_PREFAB(filename);
 
 		//FILE* fp = FileManager::GetInstance().Open_File(filename);
@@ -281,7 +281,7 @@ namespace Engine {
 			rapidjson::Value::ConstMemberIterator itr;
 
 			DESERIALIZE_ENTITY;
-
+			id = entity.id;
 			//ADD_COMPONENT_WTIH_CHECK(Transform);
 
 			itr = obj.FindMember("TransformComponent");

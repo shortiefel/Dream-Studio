@@ -44,54 +44,53 @@ namespace Engine {
 		return *this;
 	}
 
-	void ScriptComponent::CopyComponentAsInstance(const ScriptComponent& target) {
-		for (const auto& [className, csScriptInstance] : target.klassInstance) {
-			if (klassInstance.find(className) != klassInstance.end()) continue;
-			CSScriptInstance newScriptInstance{ className };
-			for (const auto& [variableName, variableInstance] : csScriptInstance.csVariableMap) {
-				
-				CSPublicVariable csPublicvariable{ variableName, variableInstance.variableType };
-				switch (variableInstance.variableType) {
-				case CSType::CHAR:
-					variableInstance.GetVariableData<char>();
-					break;
-				case CSType::BOOL:
-					variableInstance.GetVariableData<bool>();
-					break;
-				case CSType::FLOAT:
-					variableInstance.GetVariableData<float>();
-					break;
-				case CSType::INT:
-					variableInstance.GetVariableData<int>();
-					break;
-				case CSType::UINT:
-					variableInstance.GetVariableData<unsigned int>();
-					break;
-				case CSType::VEC2:
-					variableInstance.GetVariableData<Math::vec2>();
-					break;
-				}
-				//auto data = variableMap.GetVariableData<>();
-				//csPublicvariable.SetVariableData(data);
+	//void ScriptComponent::CopyComponentAsInstance(const ScriptComponent& target) {
+	//	for (const auto& [className, csScriptInstance] : target.klassInstance) {
+	//		if (klassInstance.find(className) != klassInstance.end()) continue;
+	//		CSScriptInstance newScriptInstance{ className };
+	//		for (const auto& [variableName, variableInstance] : csScriptInstance.csVariableMap) {
+	//			
+	//			CSPublicVariable csPublicvariable{ variableName, variableInstance.variableType };
+	//			switch (variableInstance.variableType) {
+	//			case CSType::CHAR:
+	//				variableInstance.GetVariableData<char>();
+	//				break;
+	//			case CSType::BOOL:
+	//				variableInstance.GetVariableData<bool>();
+	//				break;
+	//			case CSType::FLOAT:
+	//				variableInstance.GetVariableData<float>();
+	//				break;
+	//			case CSType::INT:
+	//				variableInstance.GetVariableData<int>();
+	//				break;
+	//			case CSType::UINT:
+	//				variableInstance.GetVariableData<unsigned int>();
+	//				break;
+	//			case CSType::VEC2:
+	//				variableInstance.GetVariableData<Math::vec2>();
+	//				break;
+	//			}
+	//			//auto data = variableMap.GetVariableData<>();
+	//			//csPublicvariable.SetVariableData(data);
 
-				//newScriptInstance.csVariableMap
-			}
-		}
-	}
+	//			//newScriptInstance.csVariableMap
+	//		}
+	//	}
+	//}
 
 	bool ScriptComponent::AddScript(ScriptComponent& comp) {
-		//std::cout << "Adding \n";
-		bool same = false;
+		bool same = true;
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
 			
 			if (klassInstance.find(className) == klassInstance.end()) {
 				klassInstance.emplace(className, std::move(csScriptInstance));
-				//std::cout << "class in AddScript " << className << "\n";
+				Scripting::InitCSClass(klassInstance[className]);
+				Scripting::InitVariable(klassInstance[className]);
 			}
 
 			else {
-				std::cout << "found class at " << klassInstance.at(className).csClass.className << "\n";
-				same = true;
+				same = false;
 			}
 		}
 
@@ -114,7 +113,7 @@ namespace Engine {
 				classJSon["IsActive"].GetBool() };
 
 			rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
-			if (!Scripting::InitCSClass(csScriptInstance)) { std::cout << fullName << " caught \n"; continue; }
+			if (!Scripting::InitCSClass(csScriptInstance)) { continue; }
 			if (variableItr != classJSon.MemberEnd()) {
 				for (auto& variableData : variableItr->value.GetArray()) {
 					const auto& variableName = variableData["Name"].GetString();
@@ -151,14 +150,20 @@ namespace Engine {
 											variableData["Data"].GetArray()[1].GetFloat() };
 						csPublicvariable.SetVariableData(&vec2Data);
 					}
+					/*else if (variableType == CSType::GAMEOBJECT) {
+						const char* tem = variableData["Data"].GetString();
+						csPublicvariable.SetVariableData(const_cast<char*>(tem));
+					}*/
 
 					csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
 				}
 
 			}
 			//klassInstance[csScriptInstance.csClass.className] = std::move(csScriptInstance);
+			Scripting::InitVariable(csScriptInstance);
 			klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 		}
+
 		return *this;
 	}
 
@@ -200,6 +205,9 @@ namespace Engine {
 					case CSType::VEC2:
 						vserializer.SetValue("Data", variableInstance.GetVariableData<Math::vec2>());
 						break;
+					/*case CSType::GAMEOBJECT:
+						vserializer.SetValue("Data", variableInstance.GetVariableData<char*>());
+						break;*/
 					}
 
 					serializer.SetValueJSonArray(variableObject);

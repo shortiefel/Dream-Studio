@@ -79,6 +79,7 @@ namespace Engine {
     void Scene::Save() {
         ScriptSystem::GetInstance().CompileCS(false);
         ScriptSystem::GetInstance().UpdateMapData();
+
         GameSceneSerializer::SerializeScene(sceneName);
     }
 

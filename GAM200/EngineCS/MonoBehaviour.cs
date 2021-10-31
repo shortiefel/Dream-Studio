@@ -218,25 +218,33 @@ public class MonoBehaviour : IComponent
 
     //-----------------------------------------------------------------------------------------------------------------
     //Instantiate
-    public void Instantiate(string prefabName, Transform transform)
+    public GameObject Instantiate(string prefabName, Transform transform = null)
     {
-        Instantiate_Prefab_Transform_Engine(prefabName, transform.entityId);
+        int newEntityId = -1;
+        if (transform != null) newEntityId = (int)transform.entityId;
+        Instantiate_Prefab_Transform_Engine(prefabName, newEntityId, out uint newId);
+        return new GameObject(false, newId);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Instantiate_Prefab_Transform_Engine(String prefabName, uint entityID);
+    internal static extern void Instantiate_Prefab_Transform_Engine(String prefabName, int entityID, out uint id);
+    
+     
+     
 
-    public void Instantiate(string prefabName, Vector2 position, float angle = 0)
+
+
+    /*public void Instantiate(string prefabName, Vector2 position, float angle = 0)
     {
         Instantiate_Prefab_Engine(prefabName, position, angle);
-    }
+    }*/
 
-    public void Instantiate(string prefabName)
+    /*public void Instantiate(string prefabName)
     {
         Instantiate_Prefab_Engine(prefabName, new Vector2(0,0), 0);
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Instantiate_Prefab_Engine(String prefabName, Vector2 position, float angle);
+    internal static extern void Instantiate_Prefab_Engine(String prefabName, Vector2 position, float angle);*/
 
     /*public virtual void OnEnable()
     {

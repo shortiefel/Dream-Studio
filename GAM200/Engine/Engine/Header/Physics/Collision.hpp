@@ -29,7 +29,7 @@ namespace Engine {
 	struct TransformComponent; //Forward declaration
 
 	struct RaycastHit {
-		float distance = std::numeric_limits<float>::max();
+		float distance = (std::numeric_limits<float>::max)();
 		Math::vec2 point;
 		//Negative for no hit
 		int entity_id = -1;

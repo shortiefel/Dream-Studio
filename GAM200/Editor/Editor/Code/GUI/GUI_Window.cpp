@@ -173,8 +173,8 @@ namespace Editor {
 		}
 
 		bool OnKeyEvent(const Engine::KeyPressedEvent& e) {
-			bool ctrl = Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Control);
-			bool shift = Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Shift);
+			bool ctrl = Engine::Input::IsKeyHold(Engine::Input_KeyCode::Control);
+			bool shift = Engine::Input::IsKeyHold(Engine::Input_KeyCode::Shift);
 
 			switch (e.GetKeyCode()) {
 			case Engine::Input_KeyCode::N: {

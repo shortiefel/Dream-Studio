@@ -13,24 +13,29 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-using System; //Convert.ChangeType
 using System.Runtime.CompilerServices; //For internal calls
 
 public class GameObject : MonoBehaviour
 {
     public Transform transform;
     //Creating New GameObject
-    public GameObject()
+    public GameObject(bool create = true, uint entity_id = 0)
     {
-        Debug.Log("New GO");
-        CreateEntity_Engine(out uint entId, "");
-        entityId = entId;
-        transform = new Transform(entityId);
+        if (create)
+        {
+            CreateEntity_Engine(out uint entId, "");
+            entityId = entId;
+            transform = new Transform(entityId);
+        }
+        else
+        {
+            entityId = entity_id;
+            transform = GetComponent<Transform>();
+        }
     }
 
     public GameObject(string name)
     {
-        Debug.Log("New GO");
         CreateEntity_Engine(out uint entId, name);
         entityId = entId;
         transform = new Transform(entityId);
@@ -51,7 +56,7 @@ public class GameObject : MonoBehaviour
         FindEntity_Engine(out int entityId, name);
         if (entityId < 0)
         {
-            Debug.Log("GameObject with name(" + name + ") cannot be found");
+            Debug.Log("Warning: GameObject with name(" + name + ") cannot be found");
             return null;
         }
         return new GameObject((uint)entityId);
@@ -59,51 +64,45 @@ public class GameObject : MonoBehaviour
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void FindEntity_Engine(out int entityID, string name);
 
+    
     public T AddComponent<T>() where T : class, IComponent, new()
+    {
+        if (AddComponentInternal<T>())
+        {
+            T component = new T();
+            component.entityId = entityId;
+            return component;
+        }
+        return null;
+    }
+
+    private bool AddComponentInternal<T>() where T : class, IComponent, new()
     {
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
         {
             bool bl = AddComponent_Scripts_Engine(entityId, typeof(T).ToString());
-            if (!bl) {
-                Debug.Log("Script already exist!");
-                return null;
-            }
-            T component = new T();
-            component.entityId = entityId;
-            return component;
+            if (!bl) Debug.Log("Script already exist!");
+            return bl;
         }
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
                 bool bl = AddComponent_Transform_Engine(entityId);
-                if (!bl)
-                {
-                    Debug.Log("Transform already exist!");
-                    return null;
-                }
-                return (T)Convert.ChangeType(new Transform(entityId), typeof(T));
+                if (!bl) Debug.Log("Transform already exist!");
+                return bl;
 
             case genTypes.Collider:
                 bool b2 = AddComponent_Collider_Engine(entityId);
-                if (!b2)
-                {
-                    Debug.Log("Collider already exist!");
-                    return null;
-                }
-                return null;
-                //return (T)Convert.ChangeType(new Collider(entityId), typeof(T));
+                if (!b2) Debug.Log("Collider already exist!");
+                return b2;
 
             case genTypes.Camera:
                 bool b3 = AddComponent_Camera_Engine(entityId);
-                if (!b3)
-                {
-                    Debug.Log("Camera already exist!");
-                    return null;
-                }
-                return (T)Convert.ChangeType(new Camera(entityId), typeof(T));
+                if (!b3) Debug.Log("Camera already exist!");
+                return b3;
 
             default:
-                return null;
+                return false;
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -115,54 +114,3 @@ public class GameObject : MonoBehaviour
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool AddComponent_Camera_Engine(uint entityId);
 }
-
-/*
- * GameObject structure = new GameObject(type.ToString());
-structure.transform.SetParent(transform);
-structure.transform.localPosition = new Vec2(position.x, position.y);
-var structureModel = structure.AddComponent<StructureModel>();
-structureModel.CreateModel(structurePrefab);
-return structureModel;
-*/
-
-
-/*public T AddComponent<T>() where T : class, IComponent, new()
-{
-    if (AddComponentInternal<T>())
-    {
-        T component = new T();
-        component.entityId = entityId;
-        return component;
-    }
-    return null;
-}
-
-private bool AddComponentInternal<T>() where T : class, IComponent, new()
-{
-    if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
-    {
-        bool bl = AddComponent_Scripts_Engine(entityId, typeof(T).ToString());
-        if (!bl) Debug.Log("Script already exist!");
-        return bl;
-    }
-    switch (GenericTypeFinder.dictonary[typeof(T)])
-    {
-        case genTypes.Transform:
-            bool bl = AddComponent_Transform_Engine(entityId);
-            if (!bl) Debug.Log("Transform already exist!");
-            return bl;
-
-        case genTypes.Collider:
-            bool b2 = AddComponent_Collider_Engine(entityId);
-            if (!b2) Debug.Log("Collider already exist!");
-            return b2;
-
-        case genTypes.Camera:
-            bool b3 = AddComponent_Camera_Engine(entityId);
-            if (!b3) Debug.Log("Camera already exist!");
-            return b3;
-
-        default:
-            return false;
-    }
-}*/

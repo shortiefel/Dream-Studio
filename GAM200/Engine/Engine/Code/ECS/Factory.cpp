@@ -46,6 +46,7 @@ namespace Engine
         PhysicsSystem::GetInstance().Create();
         ScriptSystem::GetInstance().Create();
         UISystem::GetInstance().Create();
+        FontSystem::GetInstance().Create();
 
     }
 

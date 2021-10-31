@@ -16,9 +16,12 @@ Technology is prohibited.
 #ifndef FONTSYSTEM_HPP
 #define FONTSYSTEM_HPP
 
-#include "Engine/Header/Graphic/Shader.hpp"
-#include "Engine/Header/Graphic/GLSLShader.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp" 
+#include "Engine/Header/ECS/System/GraphicSystem.hpp"
+#include "Engine/Header/Singleton/Singleton.hpp"
+#include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/Graphic/FrameBuffer.hpp"
+#include "Engine/Header/ECS/System/CameraSystem.hpp"
 #include <glm/glm.hpp>
 #include <map>
 #include <string>
@@ -33,22 +36,24 @@ namespace Engine
 		long advance;					//Horizontal offset to advance to next glyph
 	};
 
-	class FontSystem
+	class FontSystem : public Singleton<FontSystem>
 	{
 	public:
-		FontSystem() = default;
-		//~FontSystem();
-		void RenderText(GLSLShader &shader, std::string text, float x, float y, float scale, const glm::ivec3& colour);
-		void Draw();
-		void DrawFont(std::string _text, float xpos, float ypos, const glm::ivec3& colour);
-		bool Load(std::string path);
-		//void Unload();
+
+		void RenderText(GLuint shader, std::string text, float x, float y, float scale, const glm::vec3& colour);
+
+		bool Create();
+		void Destroy();
+
+		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), Graphic::FrameBuffer* _fbo = nullptr);
 
 	private:
 		std::map<char, Character> characters;
 		unsigned int vao, vbo;
 		GLSLShader* font_shader;
 		GLSLShader shader;
+
+		SINGLETON_SETUP(FontSystem);
 	};
 };
 

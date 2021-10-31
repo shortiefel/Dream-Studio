@@ -118,9 +118,6 @@
     <ClCompile Include="Engine\Code\Management\AssetManager.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\FontSystem.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\Mesh.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>

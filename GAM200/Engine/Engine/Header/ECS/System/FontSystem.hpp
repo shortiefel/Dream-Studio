@@ -40,7 +40,7 @@ namespace Engine
 	{
 	public:
 
-		void RenderText(GLuint shader, std::string text, float x, float y, float scale, const glm::vec3& colour);
+		void RenderText(std::string text, float x, float y, float scale, const glm::vec3& colour);
 
 		bool Create();
 		void Destroy();

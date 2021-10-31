@@ -58,6 +58,7 @@ namespace Engine
         CollisionSystem::GetInstance().Destroy();
         GraphicSystem::GetInstance().Destroy();
         CameraSystem::GetInstance().Destroy();
+        FontSystem::GetInstance().Destroy();
     }
 
     //Create blank transform

@@ -334,10 +334,14 @@ namespace Editor {
 
 			ImVec2 wSize = ImGui::GetWindowSize();
 			ImGui::Begin("Actions", &playStop_bool, window_flags);
+			int height = 128;
+			int width = 10;
 
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
 			ImGui::PushItemWidth(wSize.x / 2);
-			if (ImGui::Button("Play", (ImVec2{ 40, 30 }))) {
+			auto playIcon = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/PlayButton.png", &height, &width, 0, 4);
+			auto stopIcon = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/StopButton.png", &height, &width, 0, 4);
+			if (ImGui::ImageButton((ImTextureID)playIcon, { 20, 20 }, { 0, 1 }, { 1, 0 })) {
 				if (!EditorSceneManager::GetInstance().Play()) Engine::GameState::GetInstance().SetPlaying(false);
 			}
 			ImGui::PopItemFlag();
@@ -345,7 +349,7 @@ namespace Editor {
 			ImGui::SameLine();
 			ImGui::PushItemWidth(wSize.x / 2 + 20);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
-			if (ImGui::Button("Stop", (ImVec2{ 40, 30 }))) {
+			if (ImGui::ImageButton((ImTextureID)stopIcon, { 20, 20 }, { 0, 1 }, { 1, 0 })) {
 				EditorSceneManager::GetInstance().Stop();
 			}
 			ImGui::PopItemFlag();

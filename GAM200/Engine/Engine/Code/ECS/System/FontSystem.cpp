@@ -74,7 +74,7 @@ namespace Engine
 
             GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, text.texobj_hdl);
             //font renderer
-            RenderText(shd_ref_handle, "Hello World!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f,0.8f,1.0f));
+            RenderText("Hello World!", 100.0f, 10.0f, 50.0f, glm::vec3(0.0f,0.8f,1.0f));
             // 
             // to draw debug lines
             //if (fontDraw == GL_TRUE) {
@@ -104,7 +104,7 @@ namespace Engine
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         //GLSLShader::SetUniform("uCamMatrix", Math::mat3{}, shd_ref_handle);
-        GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
+        GLSLShader::SetUniform("projection", camMatrix, shd_ref_handle);
 
         GraphicImplementation::Renderer::EndBatch(!fontDraw);
         GraphicImplementation::Renderer::Flush(!fontDraw);
@@ -127,12 +127,12 @@ namespace Engine
         LOG_INSTANCE("Font System destroyed");
     }
 
-    void FontSystem::RenderText(GLuint shader, std::string text, float x, float y, float scale, const glm::vec3& colour)
+    void FontSystem::RenderText(std::string text, float x, float y, float scale, const glm::vec3& colour)
     {
         // Activate corresponding render state	
         glBindVertexArray(vao);
         //shader.Use();
-        //glUniform3f(glGetUniformLocation(shader.id, "textColor"), colour.x, colour.y, colour.z);
+        glUniform3f(glGetUniformLocation(shader.id, "textColor"), colour.x, colour.y, colour.z);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(vao);
 

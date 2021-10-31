@@ -22,7 +22,11 @@ Technology is prohibited.
 namespace Engine {
 	class Scene {
 	public:
-		Scene(std::string _sceneName);
+		/*--------------------------------------------------------------------
+		bool tem true = load temporary file
+		temporary file is saved before going into play mode
+		--------------------------------------------------------------------*/
+		Scene(std::string _sceneName, bool tem = false);
 		/*--------------------------------------------------------------------
 		Start play mode
 		--------------------------------------------------------------------*/

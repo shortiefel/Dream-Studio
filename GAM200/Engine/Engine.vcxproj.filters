@@ -668,5 +668,11 @@
     <Filter Include="Source Files\AI">
       <UniqueIdentifier>{aafea276-4404-4403-8915-7a9317681827}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Script\InternalCall">
+      <UniqueIdentifier>{b0d80982-6212-4963-a217-140eee7faa51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Script\InternalCall">
+      <UniqueIdentifier>{f6c80cf0-7104-4cc7-8309-4679e9ac5a47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

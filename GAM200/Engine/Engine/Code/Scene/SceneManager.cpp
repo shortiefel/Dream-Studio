@@ -45,12 +45,14 @@ namespace Engine {
 
 	void SceneManager::ChangeSceneInternal() {
         if (nextScene.length()) {
-            if (!nextScene.compare(currentScene->GetName())) {
-                currentScene->Stop(true);
-                nextScene = std::string{};
-                if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
-                return;
-            }
+            //bool tem = false;
+
+            //if (!nextScene.compare(currentScene->GetName())) {
+            //    /*currentScene->Stop(true);
+            //    nextScene = std::string{};
+            //    if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();*/
+            //    tem = true;
+            //}
 
             currentScene->Stop(false);
             delete currentScene;

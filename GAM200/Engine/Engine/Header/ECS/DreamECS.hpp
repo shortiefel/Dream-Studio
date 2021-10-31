@@ -59,11 +59,11 @@ namespace Engine {
 		}
 
 		template<typename T>
-		void AddComponent(T com) {
+		bool AddComponent(T com) {
 			auto ptr = compManager->GetComTest<T>(com.GetEntityId());
 			LOG_ASSERT(!ptr && "Unable add the same component for one entity");
-			if (ptr) return;
-			compManager->AddComponent<T>(std::move(com));
+			if (ptr) return false;
+			return compManager->AddComponent<T>(std::move(com));
 			//auto Signature = entityManager->GetSignature(entity); //unique signature key
 			//Signature.set(compManager->GetterComType<T>(), true); //setting the unique signature key
 			//entityManager->SetSignature(entity, Signature);
@@ -72,8 +72,8 @@ namespace Engine {
 		}
 
 		template<>
-		void AddComponent(ScriptComponent com) {
-			compManager->AddScript(std::move(com));
+		bool AddComponent(ScriptComponent com) {
+			return compManager->AddScript(std::move(com));
 		}
 
 		template<typename T>

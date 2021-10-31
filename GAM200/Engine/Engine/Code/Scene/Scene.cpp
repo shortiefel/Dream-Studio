@@ -41,12 +41,15 @@ Technology is prohibited.
 #include "Engine/Header/AI/AISystem.hpp"
 
 namespace Engine {
-    Scene::Scene(std::string _sceneName) : sceneName{ _sceneName } {
-        GameSceneSerializer::DeserializeScene(sceneName);
-        ScriptSystem::GetInstance().UpdateMapData();
+    Scene::Scene(std::string _sceneName, bool tem) : sceneName{ _sceneName } {
+        if (!tem)
+            GameSceneSerializer::DeserializeScene(sceneName);
+        else
+            GameSceneSerializer::DeserializeScene("temporary");
 
-        AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });
-        AI::AISystem::GetInstance().SetRender();
+        ScriptSystem::GetInstance().UpdateMapData();
+        //AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });
+        //AI::AISystem::GetInstance().SetRender();
     }
 
     //When user click play to run their game
@@ -55,9 +58,9 @@ namespace Engine {
             return false;
         }
 
+        GameSceneSerializer::SerializeScene("temporary");
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
-        GameSceneSerializer::SerializeScene("temporary");
 
         return true;
     }
@@ -66,8 +69,10 @@ namespace Engine {
         CollisionSystem::GetInstance().Stop();
         DreamECS::GetInstance().ResetECS();
 
-        if (deserialize) 
+        if (deserialize) {
+            //std::cout << "deserialize\n";
             GameSceneSerializer::DeserializeScene("temporary");
+        }
         
     }
 

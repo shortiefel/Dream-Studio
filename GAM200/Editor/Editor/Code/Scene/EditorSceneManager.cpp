@@ -45,8 +45,8 @@ namespace Editor {
         GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Game Stopped\n" });
 
         Engine::GameState::GetInstance().SetPlaying(false);
-        Engine::SceneManager::GetInstance().ChangeScene("");
-        //Engine::SceneManager::GetInstance().Stop();
+        //Engine::SceneManager::GetInstance().ChangeScene("");
+        Engine::SceneManager::GetInstance().Stop();
     }
 
     void EditorSceneManager::EditorScenePlay() {

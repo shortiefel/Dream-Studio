@@ -62,7 +62,13 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Entity
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void CreateEntity_Engine(unsigned int* entityID, MonoString* str);
+	void CreateEntity_Engine(unsigned int* entityId, MonoString* str);
+	void FindEntity_Engine(int* entityId, MonoString* str);
+
+	bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name);
+	bool AddComponent_Transform_Engine(unsigned int entityId);
+	bool AddComponent_Collider_Engine(unsigned int entityId);
+	bool AddComponent_Camera_Engine(unsigned int entityId);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Transform
@@ -76,6 +82,7 @@ namespace Engine {
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2);
 	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2);
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2);
+	void SetParent_Engine(int parentId, unsigned int child);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Camera
@@ -157,6 +164,12 @@ namespace Engine {
 		Entity
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("GameObject::CreateEntity_Engine", CreateEntity_Engine);
+		mono_add_internal_call("GameObject::FindEntity_Engine", FindEntity_Engine);
+
+		mono_add_internal_call("GameObject::AddComponent_Scripts_Engine", AddComponent_Scripts_Engine);
+		mono_add_internal_call("GameObject::AddComponent_Transform_Engine", AddComponent_Transform_Engine);
+		mono_add_internal_call("GameObject::AddComponent_Collider_Engine", AddComponent_Collider_Engine);
+		mono_add_internal_call("GameObject::AddComponent_Camera_Engine", AddComponent_Camera_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Transform
@@ -170,6 +183,7 @@ namespace Engine {
 		mono_add_internal_call("Transform::SetTransform_Angle_Engine", SetTransform_Angle_Engine);
 		mono_add_internal_call("Transform::GetTransform_forward_Engine", GetTransform_forward_Engine);
 		mono_add_internal_call("Transform::GetTransform_right_Engine", GetTransform_right_Engine);
+		mono_add_internal_call("Transform::SetParent_Engine", SetParent_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Camera
@@ -267,11 +281,46 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Entity
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void CreateEntity_Engine(unsigned int* entityID, MonoString* str) {
+	void CreateEntity_Engine(unsigned int* entityId, MonoString* str) {
 		std::string entityName = mono_string_to_utf8(str);
 		if (entityName.empty()) entityName = "Entity";
 		const Entity& entity = DreamECS::GetInstance().CreateEntity(entityName.c_str());
-		*entityID = entity.id;
+		*entityId = entity.id;
+	}
+
+	void FindEntity_Engine(int* entityId, MonoString* str) {
+		const auto& entityMap = DreamECS::GetInstance().GetUsedEntityMap();
+		std::string entityName = mono_string_to_utf8(str);
+		if (entityName.empty()) {
+			*entityId = -1;
+			return;
+		}
+		for (const auto& [entId, entity] : entityMap) {
+			if (entityName.compare(entity.name) == 0) {
+				*entityId = entId;
+				return;
+			}
+		}
+		//Cant find
+		*entityId = -1;
+	}
+
+	bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name) {
+		std::cout << mono_string_to_utf8(name) << "\n";
+		return false;
+		//return DreamECS::GetInstance().AddComponent<ScriptComponent>(ScriptComponent{ entityId, mono_string_to_utf8(name) });
+	}
+
+	bool AddComponent_Transform_Engine(unsigned int entityId) {
+		return DreamECS::GetInstance().AddComponent<TransformComponent>(TransformComponent{ entityId });
+	}
+
+	bool AddComponent_Collider_Engine(unsigned int entityId) {
+		return DreamECS::GetInstance().AddComponent<ColliderComponent>(ColliderComponent{ entityId });
+	}
+
+	bool AddComponent_Camera_Engine(unsigned int entityId) {
+		return DreamECS::GetInstance().AddComponent<CameraComponent>(CameraComponent{ entityId });
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -318,6 +367,11 @@ namespace Engine {
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
+	}
+
+	void SetParent_Engine(int parentId, unsigned int child) {
+		if (parentId < 0) DreamECS::GetInstance().Unparent(child);
+		else DreamECS::GetInstance().Parent(parentId, child);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

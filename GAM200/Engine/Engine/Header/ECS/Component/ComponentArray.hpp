@@ -40,22 +40,24 @@ namespace Engine {
 	template<typename T>
 	class ComponentArray : public ComponentArrayInterface {
 	public:
-		void AddComponent(T component) {
+		bool AddComponent(T component) {
 			Entity_id entity_id = component.GetEntityId();
 			//error checking
-			LOG_ASSERT(EntityToIndexMap.find(entity_id) == EntityToIndexMap.end() && "Component is added again");
+			if (EntityToIndexMap.find(entity_id) != EntityToIndexMap.end()) return false;
+			//LOG_ASSERT(EntityToIndexMap.find(entity_id) == EntityToIndexMap.end() && "Component is added again");
 			
 			size_t newIndex = Size;
 			EntityToIndexMap[entity_id] = newIndex; //Entity -> Index
 			componentArray[newIndex] = std::move(component); //Creating of the array and calls it component
 			Size++;
+			return true;
 		}
 
-		void AddScriptComponent(T component) {
+		bool AddScriptComponent(T component) {
 			Entity_id entity_id = component.GetEntityId();
 			size_t index{};
 			
-			//No Script
+			//No ScriptComponent
 			if (EntityToIndexMap.find(entity_id) == EntityToIndexMap.end()) {
 				index = Size;
 				EntityToIndexMap[entity_id] = index; //Entity -> Index
@@ -64,14 +66,14 @@ namespace Engine {
 				//componentArray[index].AddScript(component);
 				Size++;
 			}
-			//Has at least one script
+			//Has at least one ScriptComponent
 			else {
 				
 				index = EntityToIndexMap[entity_id];
 				//componentArray[index].AddScript(component);
 			}
 
-			componentArray[index].AddScript(component);
+			return componentArray[index].AddScript(component);
 		}
 
 

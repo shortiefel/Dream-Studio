@@ -134,4 +134,18 @@ public class Transform : IComponent
      [MethodImpl(MethodImplOptions.InternalCall)]
      internal static extern void SetTransform_Active_Engine(uint entityID, bool _isActive);*/
 
+
+    public void SetParent(Transform trans)
+    {
+        if (trans == null)
+        {
+            //Unparent
+            SetParent_Engine(-1, entityId);
+            return;
+        }
+        //parent
+        SetParent_Engine((int)trans.entityId, entityId);
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetParent_Engine(int parentId, uint child);
 }

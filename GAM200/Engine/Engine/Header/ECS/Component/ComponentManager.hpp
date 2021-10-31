@@ -64,18 +64,18 @@ namespace Engine {
 		}
 
 		template<typename T>
-		void AddComponent(T component) {
-			GetComArray<T>()->AddComponent(std::move(component));
+		bool AddComponent(T component) {
+			return GetComArray<T>()->AddComponent(std::move(component));
 		}
 
-		void AddScript(ScriptComponent component) {
-			GetComArray<ScriptComponent>()->AddScriptComponent(std::move(component));
+		bool AddScript(ScriptComponent component) {
+			return GetComArray<ScriptComponent>()->AddScriptComponent(std::move(component));
 		}
 
-		template<typename T>
+		/*template<typename T>
 		void DuplicateComponentAsInstance(T component) {
 			GetComArray<T>()->AddComponent(std::move(component));
-		}
+		}*/
 
 		void DuplicateEntityAsInstance(Entity_id entIdFrom, Entity_id entIdTo) {
 			//variable name is same so its scoped

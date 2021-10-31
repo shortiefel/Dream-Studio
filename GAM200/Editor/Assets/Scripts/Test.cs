@@ -20,35 +20,23 @@ public class Test : MonoBehaviour
         public TEST testEnum;
         public char testChar;
         public Vector2 newvec2Test;*/
-    Transform go2;
+    Transform trans;
+    GameObject go1;
     Camera cam;
-    Test2 tssl;
-    Test2 ts2;
     //Collider col1;
 
     public override void Start()
     {
-        go2 = GetComponent<Transform>();
+        trans = GetComponent<Transform>();
         cam = GetComponent<Camera>();
-        tssl = GetComponent<Test2>();
+
+        go1 = GameObject.Find("TestEnt");
         //col1 = GetComponent<Collider>();
         //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
         //Vector2 pos = go2.GetPosition();
         //Console.WriteLine(pos);
         //go2.position = new Vector2(0, 0);
-        Debug.Log("init");
-
-        //Console.WriteLine(go2);
-        ts2 = new Test2();
-        //go2.scale = new Vector2(30, 100);
-        /*Console.WriteLine(go2.position + new Vector2(10,10));
-
-        go2.position += new Vector2(500, 500);
-        Console.WriteLine(go2.position);*/
-        //Console.WriteLine(col1.entityId);
-        Debug.Log("Has Component Collider? ");
-        Debug.Log(HasComponent<Collider>(entityId));
     }
 
     public override void Update()
@@ -57,95 +45,49 @@ public class Test : MonoBehaviour
         //Console.WriteLine(Input::GetMouse);
         if (Input.GetKey(KeyCode.A))
         {
-            go2.position += -go2.right * Time.dt * 250;
+            trans.position += -trans.right * Time.dt * 250;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            go2.position += go2.right * Time.dt * 250;
+            trans.position += trans.right * Time.dt * 250;
         }
 
         if (Input.GetKey(KeyCode.W))
         {
-            go2.position += go2.forward * Time.dt * 250;
+            trans.position += trans.forward * Time.dt * 250;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            go2.position += -go2.forward * Time.dt * 250;
+            trans.position += -trans.forward * Time.dt * 250;
         }
 
         if (Input.GetKey(KeyCode.Q))
         {
-            go2.angle += 250 * Time.dt;
+            trans.angle += 250 * Time.dt;
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-            go2.angle -= 250 * Time.dt;
+            trans.angle -= 250 * Time.dt;
         }
 
-        /*if (Input.GetMouseButtonDown(0))
-        {
-            //Instantiate("Box",go2);
-            *//*RaycastHit2D hit = Physics2D.RayCast(new Vector3(go2.position.x, go2.position.y, 1), Vector2.zero);
-
-            if (hit.collider != null)
-            {
-                Debug.Log(hit.distance);
-                Debug.Log(hit.point);
-                Debug.Log("First " + hit.transform.position);
-            }*//*
-
-            GameObject gameObject = new GameObject();
-            Debug.Log("Creating Entity");
-        }
 
         if (Input.GetMouseButtonDown(1))
         {
-            GameObject gameObject = new GameObject("Game Object");
-            Debug.Log("Creating Entity with name");
-        }*/
-        if (Input.GetMouseButtonDown(1))
+            go1.AddComponent<Transform>();
+        }
+        if (Input.GetMouseButtonDown(2))
         {
-            Debug.Log("In Click");
-            if (tssl != null) {
-                Debug.Log("not null");
-                tssl.TestFunction();
-                ts2.TestFunction();
-            }
+            go1.AddComponent<Camera>();
         }
 
-        /*if (Input.GetMouseButtonDown(0))
-         {
-            //Instantiate("Box",go2);
-            float hitDis = 0f;
-            Debug.Log(Physics2D.RayCast(go2.position, go2.forward, out hitDis, go2.entityId, 200f));
-        }*/
-        //if (Input.GetMouseButtonDown(1))
-        //{
-        //Instantiate Prefab
-        /*for (int i = 0; i < 100; i++)
+        /*if (Input.GetMouseButtonDown(2))
         {
-            Instantiate_Entity("Box");
+            var tem = go1.AddComponent<Test2>();
+            //tem.TestFunction();
         }*/
-        //Instantiate("Box");
-        //Physics Ray cast and Debug.log
-        //{
-        //float hitDis = 0f;
-        //Debug.Log(Physics2D.RayCast(go2.position, go2.forward, out hitDis, go2.entityId, 200f));
-        //Debug.Log(hitDis);
-        //}
-
-        //Disable
-        //Disable(go2);
-        //go2.SetActive(false);
-        /*if (cam != null)
-        {
-            Vector3 tem = cam.ScreenToWorldPoint(Input.GetMousePosition());
-            Debug.Log(tem);
-        }*/
-        //}
 
 
     }

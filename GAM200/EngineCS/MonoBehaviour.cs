@@ -68,7 +68,7 @@ public class MonoBehaviour : IComponent
         return null;
     }
 
-    /*public T GetComponentWithID<T>(uint id) where T : class, Component, new()
+    /*public T GetComponentWithID<T>(uint id) where T : class, IComponent, new()
     {
         if (HasComponent<T>(id))
         {
@@ -101,14 +101,14 @@ public class MonoBehaviour : IComponent
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Scripts_Engine(uint entityID, string name);
+    internal static extern bool HasComponent_Scripts_Engine(uint entityId, string name);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Transform_Engine(uint entityID);
+    internal static extern bool HasComponent_Transform_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Collider_Engine(uint entityID);
+    internal static extern bool HasComponent_Collider_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Camera_Engine(uint entityID);
+    internal static extern bool HasComponent_Camera_Engine(uint entityId);
 
 
     public void DestroySelf()

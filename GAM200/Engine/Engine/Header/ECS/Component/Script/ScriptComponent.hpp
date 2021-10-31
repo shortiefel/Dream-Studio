@@ -31,7 +31,7 @@ namespace Engine {
 		ScriptComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		void AddScript(ScriptComponent& comp);
+		bool AddScript(ScriptComponent& comp);
 		//Return true if no more scripts left
 		bool RemoveScript(const char* _className);
 		//void SetActive(const char* _className, bool _boolean);

@@ -79,8 +79,9 @@ namespace Engine {
 		}
 	}
 
-	void ScriptComponent::AddScript(ScriptComponent& comp) {
+	bool ScriptComponent::AddScript(ScriptComponent& comp) {
 		//std::cout << "Adding \n";
+		bool same = false;
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
 			
 			if (klassInstance.find(className) == klassInstance.end()) {
@@ -90,8 +91,11 @@ namespace Engine {
 
 			else {
 				std::cout << "found class at " << klassInstance.at(className).csClass.className << "\n";
+				same = true;
 			}
 		}
+
+		return same;
 	}
 
 	bool ScriptComponent::RemoveScript(const char* _className) {

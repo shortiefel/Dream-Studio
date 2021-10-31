@@ -5,9 +5,9 @@ public class Test2 : MonoBehaviour
     {
         Debug.Log("Test2 instantiation");
     } 
-    public void TestFunction()
+    public void Test2Function()
     {
-        Debug.Log("Get Component of another class is successful");
+        Debug.Log("Get Component of another script (test2) is successful");
     }
 }
 

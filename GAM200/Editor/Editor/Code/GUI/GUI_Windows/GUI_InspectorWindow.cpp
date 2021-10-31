@@ -31,8 +31,13 @@ namespace Editor {
 				//}
 				//float width = 120;
 				//bool selectEntity = 0;
+				if (entityMap.empty()) return;
+				const auto& itr = entityMap.find(entity_selected);
+				if (itr == entityMap.end()) {
+					return;
+				}
+				std::string& entityName = itr->second.name;
 				char eName[100];
-				std::string& entityName = entityMap[entity_selected].name;
 				strcpy(eName, entityName.c_str());
 				ImGui::PushItemWidth(textSize);
 				ImGui::Text("Entity Name: ");

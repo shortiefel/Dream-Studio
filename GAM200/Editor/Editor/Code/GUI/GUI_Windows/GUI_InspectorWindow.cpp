@@ -1,3 +1,18 @@
+/* Start Header**********************************************************************************/
+/*
+@file    GUIWindow.cpp
+@author  Ow Jian Wen	jianwen.o@digipen.edu
+		 Goh See Yong, Denise   g.seeyongdenise@digipen.edu
+		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@date    26/07/2021
+\brief
+This file contain the GUIWindow definition
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
 #include "Editor/Header/GUI/GUI_Imgui.hpp"
@@ -9,39 +24,40 @@
 
 #include "Engine/Header/Input/Input.hpp"
 
-//#include <Imgui/imgui_internal.h>
+#include <Imgui/imgui_internal.h>
 
 namespace Editor {
 	namespace GUI_Windows {
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
 				ImGui::Begin("Inspector", inspector_bool, window_flags);
+				float halfWidth = ImGui::GetContentRegionAvail().x / 2.f;
+				float quadWidth = ImGui::GetContentRegionAvail().x / 2.5f;
+
+				ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth;
 
 				if (EntityId_Check(entity_selected)) {
 					ImGui::End();
 					return;
 				}
 				auto& entityMap = Engine::DreamECS::GetInstance().GetUsedEntityMap();
-				////Remove if entity is deleted
-				//const auto& itr = entityMap.find(entity_selected);
-				//if (itr == entityMap.end()) {
-				//	entity_selected = DEFAULT_ENTITY_ID;
-				//	ImGui::End();
-				//	return;
-				//}
-				//float width = 120;
-				//bool selectEntity = 0;
-				if (entityMap.empty()) return;
+				if (entityMap.empty()) {
+					ImGui::End();
+					return;
+				}
 				const auto& itr = entityMap.find(entity_selected);
 				if (itr == entityMap.end()) {
+					ImGui::End();
 					return;
 				}
 				std::string& entityName = itr->second.name;
 				char eName[100];
 				strcpy(eName, entityName.c_str());
 				ImGui::PushItemWidth(textSize);
+				ImGui::AlignTextToFramePadding();
 				ImGui::Text("Entity Name: ");
-				ImGui::SameLine();
+				ImGui::SameLine(halfWidth);
+				ImGui::SetNextItemWidth(halfWidth * 1.5f);
 				if (ImGui::InputText("##EntityName", eName, 100)) {
 					if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 						std::string newName = std::string{ eName };
@@ -63,39 +79,95 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Transform"))
 					{
-						ImGui::Spacing();
-						//Updating of position
+						/**
+						*	Position
+						*/
+						ImGui::AlignTextToFramePadding();
+
 						ImGui::Text("Position");
+						ImGui::SameLine(halfWidth);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						if (ImGui::InputFloat("##TransformXPos", &transComp->localPosition.x, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+						ImGui::SameLine(halfWidth * 1.5f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.620f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						if (ImGui::InputFloat("##TransformYPos", &transComp->localPosition.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+
+						/**
+						*	Scale
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Scale");
+						ImGui::SameLine(halfWidth);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.125f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						if (ImGui::InputFloat("##TransformXscale", &transComp->scale.x, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+						ImGui::SameLine(halfWidth * 1.5f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.625f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						if (ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+
+						/**
+						*	Rotation
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Rotation");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						if (ImGui::InputFloat("##TransformRotate", &transComp->angle, ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+
+						/*
+						*	Layer
+						*/
 						ImGui::Spacing();
-						ImGui::Text("X: ");
-						ImGui::SameLine();
-						if (ImGui::InputFloat("##TransformXPos", &transComp->localPosition.x, 0.0f))
-							Engine::TransformCalculationSystem::GetInstance().Update();
-						ImGui::Text("Y: ");
-						ImGui::SameLine();
-						if (ImGui::InputFloat("##TransformYPos", &transComp->localPosition.y, 0.0f))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+						ImGui::Text("Layer");
+						ImGui::SameLine(halfWidth);
+
+						//selection
+						static ImGuiComboFlags flags = 0;
+						int index = static_cast<int>(transComp->layer);
+						//arrays
+						const int sz = 4;
+						const char* layerName[sz] = { "Background", "UI Layer", "Manager", "Game Object" };
+						const char* previewLayer = layerName[index];
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::SetNextItemWidth(halfWidth);
+						if (ImGui::BeginCombo("##Layering", previewLayer, flags))
+						{
+							for (int i{ 0 }; i < sz; i++) {
+								const bool isSelected = (index == i);
+								if (ImGui::Selectable(layerName[i], isSelected)) {
+									transComp->layer = i;
+								}
+
+								// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+								if (isSelected)
+									ImGui::SetItemDefaultFocus();
+
+							}
+
+							ImGui::EndCombo();
+						}
 
 
-						//Updating of scaling
-						ImGui::Text("Scaling ");
 						ImGui::Spacing();
-						ImGui::Text("X: ");
-						ImGui::SameLine();
-						if (ImGui::InputFloat("##TransformXscale", &transComp->scale.x, 0.0f))
-							Engine::TransformCalculationSystem::GetInstance().Update();
-						ImGui::Text("Y: ");
-						ImGui::SameLine();
-						if (ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.0f))
-							Engine::TransformCalculationSystem::GetInstance().Update();
 
-
-						ImGui::Text("Rotation ");
-						ImGui::Spacing();
-						if (ImGui::SliderFloat("##TransformRotate", &transComp->angle, -360.f, 360.f))
-							Engine::TransformCalculationSystem::GetInstance().Update();
-
-						//deleteComponent
+						/**
+						*	DELETE
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteTransform", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TransformComponent>(entity_selected);
 
@@ -110,41 +182,67 @@ namespace Editor {
 				if (colComp != nullptr)
 				{
 
+
 					ImGui::CheckBox_Dream("##ColliderActive", &(colComp->isActive));
 					ImGui::SameLine();
 
 					if (ImGui::CollapsingHeader("Collider"))
 					{
 
-						ImGui::Spacing();
-						//Updating of position
+						/**
+						*	Position
+						*/
+						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Position");
+						ImGui::SameLine(halfWidth);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						if (ImGui::InputFloat("##ColliderXPos", &colComp->offset_position.x, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+						ImGui::SameLine(halfWidth * 1.5f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.620f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						if (ImGui::InputFloat("##ColliderYPos", &colComp->offset_position.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+
+						/**
+						*	Scale
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Scale");
+						ImGui::SameLine(halfWidth);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.125f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						if (ImGui::InputFloat("##ColliderXscale", &colComp->offset_scale.x, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+						ImGui::SameLine(halfWidth * 1.5f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.625f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						if (ImGui::InputFloat("##ColliderYscale", &colComp->offset_scale.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+
+						/**
+						*	Rotation
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Rotation");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						if (ImGui::InputFloat("##ColliderRotate", &colComp->angle, ImGuiInputTextFlags_EnterReturnsTrue))
+							Engine::TransformCalculationSystem::GetInstance().Update();
+
+
 						ImGui::Spacing();
-						ImGui::Text("X: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##ColliderXPos", &colComp->offset_position.x, 0.0f);
-						ImGui::Text("Y: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##ColliderYPos", &colComp->offset_position.y, 0.0f);
 
-
-						//Updating of scaling
-						ImGui::Text("Scaling ");
-						ImGui::Spacing();
-						ImGui::Text("X: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##ColliderXscale", &colComp->offset_scale.x, 0.0f);
-						ImGui::Text("Y: ");
-						ImGui::SameLine();
-						ImGui::InputFloat("##ColliderYscale", &colComp->offset_scale.y, 0.0f);
-
-
-						ImGui::Text("Rotation ");
-						ImGui::Spacing();
-						ImGui::SliderFloat("##ColliderRotate", &colComp->angle, -360.f, 360.f);
-
-
-						//deleteComponent
+						/**
+						*	DELETE
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteCollider", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::ColliderComponent>(entity_selected);
 					}
@@ -161,15 +259,33 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Camera"))
 					{
-						ImGui::Spacing();
+						/**
+						*	FOV
+						*/
+						ImGui::AlignTextToFramePadding();
 						ImGui::Text("FOV");
-						ImGui::SameLine();
-						ImGui::InputFloat("##camFOV", &camComp->fov, 0.0f);
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::InputFloat("##camFOV", &camComp->fov, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+
+
+						/**
+						*	Height
+						*/
+						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Height");
-						ImGui::SameLine();
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::InputInt("##camheight", &camComp->height, 0);
 
-						//deleteComponent
+
+						ImGui::Spacing();
+
+						/**
+						*	DELETE
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::CameraComponent>(entity_selected);
 
@@ -190,15 +306,27 @@ namespace Editor {
 
 						if (ImGui::CollapsingHeader("Rigidbody"))
 						{
-							ImGui::Spacing();
+							/**
+							*	Speed
+							*/
+							ImGui::AlignTextToFramePadding();
 							ImGui::Text("Speed");
-							ImGui::SameLine();
-							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.0f);
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
 
-							//deleteComponent
+
+							ImGui::Spacing();
+
+							/**
+							*	DELETE
+							*/
+							ImGui::AlignTextToFramePadding();
+							ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Delete Component##DeleteRigid", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::DreamECS::GetInstance().RemoveComponent<Engine::RigidBodyComponent>(entity_selected);
-							
+
+
 						}
 					}
 				}
@@ -215,47 +343,20 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Texture"))
 					{
-
-						/*
-						*	Layer
-						*/
-						ImGui::Spacing();
-						ImGui::Text("Layer");
-						ImGui::SameLine();
-
-						//selection
-						static ImGuiComboFlags flags = 0;
-						int index = static_cast<int>(textureComp->layerIndex);
-						//arrays
-						const int sz = 4;
-						const char* layerName[sz] = { "Background", "UI Layer", "Manager", "Game Object" };
-						const char* previewLayer = layerName[index];
-
-
-						if (ImGui::BeginCombo("##Layering", previewLayer, flags))
-						{
-							for (int i{ 0 }; i < sz; i++) {
-								const bool isSelected = (index == i);
-								if (ImGui::Selectable(layerName[i], isSelected)) {
-									textureComp->layerIndex = static_cast<Engine::GraphicLayer>(i);
-								}
-
-								// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-								if (isSelected)
-									ImGui::SetItemDefaultFocus();
-
-							}
-
-							ImGui::EndCombo();
-						}
-
-
 						/*
 						*	Texture files
 						*/
-						///files
 						ImGui::Spacing();
-						ImGui::Text("Texture: %s", textureComp->textureName.c_str());
+						ImGui::AlignTextToFramePadding();
+
+						ImGui::Text("Texture");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::Text(textureComp->textureName.c_str());
+
+						ImGui::Spacing();
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth * 1.2f);
 
 						if (ImGui::Button("Change Texture##ChangeTextureTexture")) {
 							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
@@ -265,8 +366,13 @@ namespace Editor {
 							}
 						}
 
+						ImGui::Spacing();
 
-						//deleteComponent
+						/**
+						*	DELETE
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteTexture", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextureComponent>(entity_selected);
 
@@ -297,8 +403,16 @@ namespace Editor {
 
 						if (ImGui::CollapsingHeader("UI"))
 						{
-							ImGui::Text("Texture: %s", uiComp->textureName.c_str());
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Texture");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::Text(uiComp->textureName.c_str());
 
+
+							ImGui::Spacing();
+							ImGui::AlignTextToFramePadding();
+							ImGui::SameLine(halfWidth * 1.2f);
 							if (ImGui::Button("Change Texture##ChangeUITexture")) {
 								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
 
@@ -307,7 +421,13 @@ namespace Editor {
 								}
 							}
 
-							//deleteComponent
+							ImGui::Spacing();
+
+							/**
+							*	DELETE
+							*/
+							ImGui::AlignTextToFramePadding();
+							ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Delete Component##DeletUI", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::DreamECS::GetInstance().RemoveComponent<Engine::UIComponent>(entity_selected);
 
@@ -356,22 +476,19 @@ namespace Editor {
 								case Engine::CSType::UINT:
 									//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
 									break;
-								/*case Engine::CSType::GAMEOBJECT:
-									ImGui::Text("%s", csPublicVariable.GetVariableData<char*>());
-									if (ImGui::Button("Change GameObject##ChangeGO", { ImGui::GetContentRegionAvail().x, 0 })) {
-
-									}
-									break;*/
 								case Engine::CSType::VEC2:
 									Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
 									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
 									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
 									break;
-								
 								}
 							}
 
-							//deleteComponent
+							/**
+							*	DELETE
+							*/
+							ImGui::AlignTextToFramePadding();
+							ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::DreamECS::GetInstance().RemoveScript(entity_selected, className.c_str());
 
@@ -385,33 +502,43 @@ namespace Editor {
 				*	Add New Components
 				*/
 
+				ImGui::Spacing();
+				ImGui::AlignTextToFramePadding();
+				ImGui::SameLine(quadWidth);
 				if (ImGui::Button("Add Component##addcomponentbtn", { ImGui::GetContentRegionAvail().x, 0 }))
 				{
 					ImGui::OpenPopup("##addcomponentpopup");
 				}
+
 				if (ImGui::BeginPopup("##addcomponentpopup"))
 				{
-					float AvailWidth = ImGui::GetContentRegionAvail().x;
-					ImGui::PushItemWidth(AvailWidth);
+					//ImGui::AlignTextToFramePadding();
+					/*float AvailWidth = ImGui::GetContentRegionAvail().x * 1.5f;
+					ImGui::PushItemWidth(AvailWidth);*/
 
-					if (ImGui::Selectable("Transform##addTransformcom"))
+					ImGui::AlignTextToFramePadding();
+					//ImGui::SameLine(halfWidth);
+					if (ImGui::Selectable(" + Transform##addTransformcom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
-					if (ImGui::Selectable("Collider##addTCollidercom"))
+					if (ImGui::Selectable(" + Collider##addTCollidercom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
-					if (ImGui::Selectable("Texture##addTTexturecom"))
+					if (ImGui::Selectable(" + Texture##addTTexturecom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::TextureComponent>(entity_selected);
-					if (ImGui::Selectable("Rigidbody##addRigidbodycom"))
+					if (ImGui::Selectable(" + Rigidbody##addRigidbodycom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
-					if (ImGui::Selectable("Script##addScriptcom"))
+					if (ImGui::Selectable(" + Script##addScriptcom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
-					if (ImGui::Selectable("Camera##addCameracom"))
+					if (ImGui::Selectable(" + Camera##addCameracom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
-					if (ImGui::Selectable("UI##addUIcom"))
+					if (ImGui::Selectable(" + UI##addUIcom"))
 						Engine::DreamECS::GetInstance().AddComponent<Engine::UIComponent>(entity_selected);
 
 					char text[100]{};
-					ImGui::PushItemWidth(textSize);
-					ImGui::Text("Script: ");
+
+					ImGui::PushItemWidth(textSize * 1.5f);
+					ImGui::SetNextItemWidth(halfWidth);
+					ImGui::Text(" + Script");
+					ImGui::SameLine(quadWidth);
 					if (ImGui::InputText("##addcomponenttype", text, 100)) {
 						if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 							std::string textStr{ text };

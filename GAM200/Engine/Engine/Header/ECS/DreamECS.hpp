@@ -61,14 +61,9 @@ namespace Engine {
 		template<typename T>
 		bool AddComponent(T com) {
 			auto ptr = compManager->GetComTest<T>(com.GetEntityId());
-			LOG_ASSERT(!ptr && "Unable add the same component for one entity");
+			//LOG_ASSERT(!ptr && "Unable add the same component for one entity");
 			if (ptr) return false;
 			return compManager->AddComponent<T>(std::move(com));
-			//auto Signature = entityManager->GetSignature(entity); //unique signature key
-			//Signature.set(compManager->GetterComType<T>(), true); //setting the unique signature key
-			//entityManager->SetSignature(entity, Signature);
-
-			//sysManager->EntitySignatureChanged(entity, Signature); //letting system manager know abt the change in signature on entity
 		}
 
 		template<>
@@ -79,14 +74,9 @@ namespace Engine {
 		template<typename T>
 		void RemoveComponent(Entity_id entity_id) {
 			auto ptr = compManager->GetComTest<T>(entity_id);
-			LOG_ASSERT(ptr && "Unable remove an entity that does not exist");
+			//LOG_ASSERT(ptr && "Unable remove an entity that does not exist");
 			if (!ptr) return;
 			compManager->RemoveCom<T>(entity_id);
-			/*auto Signature = entityManager->GetSignature(entity);
-			Signature.set(compManager->GetterComType<T>(), false);
-			entityManager->SetSignature(entity, Signature);
-
-			sysManager->EntitySignatureChanged(entity, Signature);*/
 		}
 
 		void RemoveScript(Entity_id entity_id, const char* className);

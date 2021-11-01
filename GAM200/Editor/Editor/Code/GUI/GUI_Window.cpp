@@ -44,6 +44,7 @@ Technology is prohibited.
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
+#include "Engine/Header/Management/TextureManager.hpp"
 
 //#include "Engine/Header/Script/Scripting.hpp"
 //#include "Engine/Header/Script/ScriptInternalCall.hpp"
@@ -366,9 +367,19 @@ namespace Editor {
 			ImVec2 wSize = ImGui::GetWindowSize();
 			ImGui::Begin("Actions", &playStop_bool, window_flags);
 
+
+			int heightIcon = 25;
+			int widthIcon = 25;
+
+			auto iconPlay = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/PlayButton.png", &heightIcon, &widthIcon, 0, 4);
+			auto iconStop = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/StopButton.png", &heightIcon, &widthIcon, 0, 4);
+
+			ImGui::PushItemWidth(wSize.x);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
-			ImGui::PushItemWidth(wSize.x / 2);
-			if (ImGui::Button("Play", (ImVec2{ 40, 30 }))) {
+
+
+			if (ImGui::ImageButton(ImTextureID(iconPlay), { 25, 25 }, { 0,1 }, { 1, 0 })) {
+
 				if (!EditorSceneManager::GetInstance().Play()) Engine::GameState::GetInstance().SetPlaying(false);
 			}
 			ImGui::PopItemFlag();
@@ -376,13 +387,15 @@ namespace Editor {
 			ImGui::SameLine();
 			ImGui::PushItemWidth(wSize.x / 2 + 20);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
-			if (ImGui::Button("Stop", (ImVec2{ 40, 30 }))) {
+			if (ImGui::ImageButton(ImTextureID(iconStop), { 25, 25 }, { 0,1 }, { 1, 0 })) {
 				EditorSceneManager::GetInstance().Stop();
 			}
 			ImGui::PopItemFlag();
 
+
+
 			ImGui::End();
-			
+
 		}
 
 

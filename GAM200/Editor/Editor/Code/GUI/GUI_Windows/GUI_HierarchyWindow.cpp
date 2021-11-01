@@ -16,7 +16,7 @@ namespace Editor {
 				/**
 				*	Game Object Create
 				*/
-				if (ImGui::Button("Create Game Object##CreateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+				if (ImGui::Button("+ Create Game Object##CreateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 				{
 					Engine::DreamECS::GetInstance().CreateEntity();
 				}

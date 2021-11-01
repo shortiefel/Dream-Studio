@@ -29,8 +29,8 @@ public class Test : MonoBehaviour
     public override void Start()
     {
         trans = GetComponent<Transform>();
+        go1 = new GameObject("EntityTest");
 
-        
         //col1 = GetComponent<Collider>();
         //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
@@ -81,10 +81,11 @@ public class Test : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(2))
         {
-            
+            go1.AddComponent<Transform>();
         }
-        if (Input.GetMouseButtonDown(3))
+        if (Input.GetMouseButtonDown(1))
         {
+            go1.AddComponent<Collider>();
             //if (test2 != null)
      
             //else Debug.Log("Is null now");

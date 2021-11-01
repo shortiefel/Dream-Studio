@@ -69,7 +69,7 @@ namespace Engine
 
 	void TextureComponent::SetUV()
 	{
-		float cellWidth = width / endFrame;
+		float cellWidth = static_cast<float>(width) / endFrame;
 		
 		//std::cout << "WIDTH: " << width << std::endl;
 		min = { static_cast<float>((currFrame - 1) * cellWidth) / width,
@@ -81,9 +81,9 @@ namespace Engine
 
 	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer)
 	{
-		//GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
-		filepath = _serializer.GetValue<std::string>("Filepath");
-		texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
+		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
+		/*filepath = _serializer.GetValue<std::string>("Filepath");
+		texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);*/
 
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 

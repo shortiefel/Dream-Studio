@@ -22,7 +22,6 @@ Technology is prohibited.
 														filepath = _filepath.substr(_filepath.rfind("Assets"));\
 														textureName = filepath.substr(filepath.find_last_of("\\") + 1);\
 														textureName = textureName.substr(0, textureName.find_last_of("."));\
-														GLint width = GLint{}, height = GLint{}, BPP = GLint{};\
 														texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
 
 namespace Engine {
@@ -30,7 +29,10 @@ namespace Engine {
 		void SetTexture(TextureComponent* _texptr, std::string _filepath) {
 			std::string& filepath = _texptr->filepath;
 			std::string& textureName = _texptr->textureName;
-			auto& texobj_hdl = _texptr->texobj_hdl;
+			GLuint& texobj_hdl = _texptr->texobj_hdl;
+			GLint& width = _texptr->width;
+			GLint& height = _texptr->height;
+			GLint& BPP = _texptr->BPP;
 
 			SET_TEXTURE(filepath, textureName, texobj_hdl);
 		}
@@ -38,7 +40,10 @@ namespace Engine {
 		void SetTexture(UIComponent* _texptr, std::string _filepath) {
 			std::string& filepath = _texptr->filepath;
 			std::string& textureName = _texptr->textureName;
-			auto& texobj_hdl = _texptr->texobj_hdl;
+			GLuint& texobj_hdl = _texptr->texobj_hdl;
+			GLint width;
+			GLint height;
+			GLint BPP;
 
 			SET_TEXTURE(filepath, textureName, texobj_hdl);
 		}

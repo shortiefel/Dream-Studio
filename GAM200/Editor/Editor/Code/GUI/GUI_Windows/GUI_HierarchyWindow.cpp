@@ -2,6 +2,7 @@
 #include "Editor/Header/GUI/GUI_Windows/GUI_HierarchyWindow.hpp"
 
 #include "Editor/Header/GUI/GUI_ClickCheck.hpp"
+#include "Engine/Header/ECS/Factory.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
 
@@ -60,6 +61,16 @@ namespace Editor {
 						for (const auto& [index, entity_id] : entity_selected) {
 							Engine::DreamECS::GetInstance().Unparent(entity_id);
 						}
+					}
+
+					if (ImGui::Button("Create Placeholder Square##PlaceholderSquare", { ImGui::GetContentRegionAvail().x, 0 }))
+					{
+						Engine::Factory::InstantiateSquare();
+					}
+
+					if (ImGui::Button("Create Placeholder Circle##PlaceholderCircle", { ImGui::GetContentRegionAvail().x, 0 }))
+					{
+						Engine::Factory::InstantiateCircle();
 					}
 
 					ImGui::EndPopup();

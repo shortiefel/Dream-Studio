@@ -367,7 +367,31 @@ namespace Editor {
 							}
 						}
 
+						
+
+						/*
+						*	Animation
+						*/
+						
+						ImGui::AlignTextToFramePadding();
+
+						ImGui::Text("Animation");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::Checkbox("##isAnimation",&(textureComp->isAnimation));
+						if (textureComp->isAnimation == true)
+						{
+							ImGui::Spacing();
+							ImGui::Text("test 1");
+						}
+
+
+
+
+
+
 						ImGui::Spacing();
+
 
 						/**
 						*	DELETE

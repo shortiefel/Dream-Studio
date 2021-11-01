@@ -44,7 +44,7 @@ namespace Engine
 	// forward declaration
 	void TextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, bool _isDebugDraw, int layer);
 
-#define LAYER_COUNT 5;
+#define LAYER_COUNT 5
 
 	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
 		PROFILER_START("Rendering");
@@ -73,7 +73,7 @@ namespace Engine
 		auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<TextureComponent>();
 
 		// Looping through all layers; batch rendering
-		int layerCount = LAYER_COUNT
+		int layerCount = LAYER_COUNT;
 		for (int i = 0; i < layerCount; i++)
 		{
 			TextureLayer(textureArray, isDebugDraw, i);

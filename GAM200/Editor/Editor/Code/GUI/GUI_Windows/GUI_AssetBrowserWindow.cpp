@@ -16,16 +16,26 @@ Technology is prohibited.
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_AssetBrowserWindow.hpp"
 #include "Engine/Header/Management/AssetManager.hpp"
-
+#include "Engine/Header/Management/FileWindowDialog.hpp"
+#include "Engine/Header/Window.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
+
+#define TEXT_BOX_SIZE 70
+
+#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
+							 filePath = filePath.substr(pos + 1);\
+							 pos = filePath.find_last_of(".");\
+							 filePath = filePath.substr(0, pos);
 
 namespace Editor {
 
 	extern const std::filesystem::path _assetPath = "Assets";
+	extern const std::filesystem::path _scenePath = "Assets/Scenes";
+	extern const std::filesystem::path _texturePath = "Assets/Textures";
 
 	namespace GUI_Windows {
 		static std::filesystem::path _currentDirectory = "Assets";
-
+		
 		enum class AssetView {
 			TextureBrowser,
 			SceneBrowser,
@@ -34,104 +44,51 @@ namespace Editor {
 			Length
 		};
 
-		static AssetView _currentView = AssetView::SceneBrowser;
+		static AssetView _currentView = AssetView::TextureBrowser;
+
 		static void ShowSceneBrowser()
 		{
-			if (_currentDirectory != std::filesystem::path(_assetPath))
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 			{
-				if (ImGui::Button("Assets"))
-				{
-					_currentDirectory = _currentDirectory.parent_path();
+				std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+				if (!filePath.empty()) {
+					REMOVE_FROM_FILEPATH;
+
+					Engine::SceneManager::GetInstance().ChangeScene(filePath);
 				}
 			}
-			//int sceneCount = 0;
-			for (auto& directory : std::filesystem::directory_iterator("Assets/Scenes"))
-			{
-				const auto& path = directory.path();
-				auto relative_path = std::filesystem::relative(path, "Assets/Scenes");
-				std::string filenameString = relative_path.string();
-
-				ImGui::PushID(filenameString.c_str());
-				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-				ImGui::ImageButton((ImTextureID)directory.is_character_file(), { 128, 128 }, { 0, 1 }, { 1, 0 });
-				ImGui::PopStyleColor();
-				//ImGui::PushID(sceneCount++);
-				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-				{
-					if (filenameString == "Assets/Scenes/test2.scene")
-					{
-						Engine::SceneManager::GetInstance().ChangeScene("test2");
-					}
-
-					else if (relative_path.string() == "Scenes/test3.scene")
-					{
-						Engine::SceneManager::GetInstance().ChangeScene("test3");
-					}
-
-					else
-					{
-						Engine::SceneManager::GetInstance().ChangeScene("test1");
-					}
-
-				}
-				ImGui::TextWrapped(filenameString.c_str());
-
-				ImGui::NextColumn();
-
-				ImGui::PopID();
-
-			}
-			ImGui::Columns(1);
 		}
 
+		static void ShowTextureBrowser()
+		{
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+			{
+				std::string filePath = Engine::FileWindowDialog::OpenFile("Texture (*.png)\0*.png\0");
+
+				if (!filePath.empty()) {
+					REMOVE_FROM_FILEPATH;
+
+					//Engine::SceneManager::GetInstance().ChangeScene(filePath);
+				}
+			}
+		}
 		void GUI_AssetBrowser(bool* asset_bool, ImGuiWindowFlags window_flags)
 		{
 			if (*asset_bool) {
 				ImGui::Begin("Project", asset_bool, window_flags);
-				if (ImGui::TreeNode("Create")) {
-					ImGui::Spacing();
-					if (ImGui::Button("Folder", (ImVec2{ 100, 30 })))
-					{
-						//ImGui::SameLine();
-						ImGui::Text("Folder created.");
-					}
-
-					ImGui::SameLine();
-					if (ImGui::Button("New Scene", (ImVec2{ 100, 30 }))) {
-
-						//add new scene
-						Engine::SceneManager::GetInstance().ChangeScene("test1");
-					}
-					ImGui::TreePop();
-				}
-
-				//ShowMenuBar();
-				ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgActive));
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_FrameBgHovered));
-				ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyleColorVec4(ImGuiCol_Text));
-				ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
-
+				
 				switch (_currentView)
 				{
-					//case AssetView::TextureBrowser:
-					//	ShowTextureBrowser();
-					//	break;
+				case AssetView::TextureBrowser:
+					ShowTextureBrowser();
+					break;
 				case AssetView::SceneBrowser:
 					ShowSceneBrowser();
 					break;
-					//case AssetView::ScriptBrowser:
-					//	ShowScriptBrowser();
-					//	break;
-					//case AssetView::FontBrowser:
-					//	ShowFontBrowser();
-					//	break;
 				default:
-					//Log::Warning("Unkown asset view: %d", (int)m_CurrentView);
 					break;
 				}
-
-				ImGui::PopStyleColor(4);
-
 				//all assets
 				if (_currentDirectory != std::filesystem::path(_assetPath))
 				{
@@ -144,6 +101,8 @@ namespace Editor {
 				static float padding = 16.0f;
 				static float thumbnailSize = 128.0f;
 				float cellSize = thumbnailSize + padding;
+				int height = 128;
+				int width = 10;
 
 				float panelWidth = ImGui::GetContentRegionAvail().x;
 				int columnCount = (int)(panelWidth / cellSize);
@@ -159,14 +118,51 @@ namespace Editor {
 					std::string filenameString = relative_path.string();
 
 					ImGui::PushID(filenameString.c_str());
+					auto directory_icon = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/DirectoryIcon.png", &height, &width, 0, 4);
+					auto file_icon = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/FileIcon.png", &height, &width, 0, 4);
+					auto asset_icon = directory.is_directory() ? directory_icon : file_icon;
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-					ImGui::ImageButton((ImTextureID)directory.is_directory(), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
+					ImGui::ImageButton((ImTextureID)asset_icon, { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
 					if (ImGui::BeginDragDropSource())
 					{
 						const wchar_t* itemPath = relative_path.c_str();
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
+					if (_currentDirectory != std::filesystem::path(_scenePath))
+					{
+						ShowTextureBrowser();
+					}
+					if (_currentDirectory != std::filesystem::path(_texturePath))
+					{
+						ShowSceneBrowser();
+					}
+				
+					//for scene
+					//if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					//{
+					//	std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+					//	if (!filePath.empty()) {
+					//		REMOVE_FROM_FILEPATH;
+
+					//		Engine::SceneManager::GetInstance().ChangeScene(filePath);
+					//	}
+					//}
+					//for (auto& scene_directory : std::filesystem::directory_iterator("Assets/Scenes/"))
+					//{
+					//	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					//	{
+					//		std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+					//		if (!filePath.empty()) {
+					//			REMOVE_FROM_FILEPATH;
+
+					//			Engine::SceneManager::GetInstance().ChangeScene(filePath);
+					//		}
+					//	}
+					//}
+
 					ImGui::PopStyleColor();
 					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 					{
@@ -183,6 +179,7 @@ namespace Editor {
 					ImGui::PopID();
 
 				}
+
 				ImGui::Columns(1);
 
 				ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 512);

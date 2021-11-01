@@ -61,6 +61,7 @@ namespace Engine
 		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		
 		// Load shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
@@ -92,6 +93,7 @@ namespace Engine
 
 		if (!isDebugDraw) fbo.Unbind();
 		else _fbo->Unbind();
+
 	}
 
 	const Graphic::FrameBuffer& GraphicSystem::GetFrameBuffer() const

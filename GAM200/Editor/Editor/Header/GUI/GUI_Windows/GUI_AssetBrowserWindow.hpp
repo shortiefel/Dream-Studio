@@ -17,6 +17,8 @@ Technology is prohibited.
 #pragma once
 
 #include <Imgui/imgui.h>
+#include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
+#include "Engine/Header/Management/TextureManager.hpp"
 
 namespace Editor {
 	namespace GUI_Windows {

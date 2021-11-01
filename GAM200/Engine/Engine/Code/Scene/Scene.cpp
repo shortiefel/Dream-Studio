@@ -96,6 +96,7 @@ namespace Engine {
         CameraSystem::GetInstance().Update(dt);
        
         GraphicSystem::GetInstance().Render();
+        FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
 
         AI::AISystem::GetInstance().Render();

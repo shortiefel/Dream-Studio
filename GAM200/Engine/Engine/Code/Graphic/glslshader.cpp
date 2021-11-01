@@ -187,6 +187,11 @@ namespace Engine
         glUseProgram(0);
     }
 
+    void GLSLShader::Select() const
+    {
+        glUseProgram(id);
+    }
+
     GLboolean GLSLShader::Validate() 
     {
         if (pgm_handle <= 0 || is_linked == GL_FALSE) 

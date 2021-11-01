@@ -115,9 +115,6 @@
     <ClCompile Include="Engine\Code\Management\AssetManager.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\FontSystem.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\Mesh.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
@@ -174,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\SpaceTransform.cpp">
       <Filter>Source Files\Graphic</Filter>
+     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\FontSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -419,9 +419,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Management\AssetManager.hpp">
       <Filter>Header Files\Management</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\FontSystem.hpp">
-      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Math\Vector\Vector.hpp">
       <Filter>Header Files\Math\Vector</Filter>

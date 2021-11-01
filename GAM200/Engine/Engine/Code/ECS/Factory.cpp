@@ -46,6 +46,7 @@ namespace Engine
         UISystem::GetInstance().Create();
         TransformCalculationSystem::GetInstance().Create();
         GraphicSystem::GetInstance().Create();
+        FontSystem::GetInstance().Create();
 
     }
 
@@ -58,6 +59,7 @@ namespace Engine
         PhysicsSystem::GetInstance().Destroy();
         CollisionSystem::GetInstance().Destroy();
         CameraSystem::GetInstance().Destroy();
+        FontSystem::GetInstance().Destroy();
     }
 
     //Create blank transform

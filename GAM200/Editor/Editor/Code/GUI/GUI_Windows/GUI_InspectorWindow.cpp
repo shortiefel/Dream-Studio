@@ -383,7 +383,32 @@ namespace Editor {
 				/*
 				*	Text component
 				*/
+				Engine::TextComponent* textComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextComponent>(entity_selected);
+				if (textComp != nullptr)
+				{
+					ImGui::CheckBox_Dream("##TextActive", &(textComp->isActive));
+					ImGui::SameLine();
 
+					if (ImGui::CollapsingHeader("Text"))
+					{
+						ImGui::Spacing();
+						char text[300]{};
+						ImGui::PushItemWidth(textSize);
+						ImGui::Text("Text To Input: ");
+						if (ImGui::InputText("##addcomponenttype", text, 300)) {
+							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
+								std::string textStr{ text };
+								Engine::DreamECS::GetInstance().AddComponent(
+									std::move(Engine::TextComponent{}));
+							}
+						}
+
+						//deleteComponent
+						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextComponent>(entity_selected);
+
+					}
+				}
 
 
 				/*

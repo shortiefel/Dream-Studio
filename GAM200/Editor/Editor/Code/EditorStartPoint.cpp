@@ -26,6 +26,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/UISystem.hpp"
 #include "Engine/Header/AI/AISystem.hpp"
 
+#include "Engine/Header/ECS/System/FontSystem.hpp"
 #include "Engine/Header/Window.hpp"
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
@@ -53,6 +54,7 @@ namespace Editor {
 		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 		Engine::UISystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 		Engine::AI::AISystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
+		Engine::FontSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 
 		//The system already added the time taken
 		PROFILER_START("Rendering");

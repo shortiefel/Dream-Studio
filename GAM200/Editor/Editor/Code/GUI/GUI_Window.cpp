@@ -366,6 +366,8 @@ namespace Editor {
 
 			ImVec2 wSize = ImGui::GetWindowSize();
 			ImGui::Begin("Actions", &playStop_bool, window_flags);
+			int height = 128;
+			int width = 10;
 
 
 			int heightIcon = 25;

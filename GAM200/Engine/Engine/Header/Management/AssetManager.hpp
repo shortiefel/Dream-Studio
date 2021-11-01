@@ -18,33 +18,13 @@ Technology is prohibited.
 
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/ECS/System/FontSystem.hpp"
 #include <filesystem>
 #include <string>
 #include <unordered_map>
 #include <memory>
 
 namespace Engine {
-
-	//class Resource
-	//{
-	//public:
-	//	Resource();
-	//	virtual ~Resource();
-
-	//	virtual void loadResource() = 0;
-	//	virtual void unloadResource() = 0;
-
-	//	void setResourceId(unsigned id);
-	//	unsigned getResourceId() const;
-
-	//	void setResourcePath(const std::string& path);
-	//	std::string getResourcePath() const;
-
-	//protected:
-	//	unsigned resourceId;
-	//	std::string resourcePath;
-
-	//};
 
 	class AssetManager : public Singleton<AssetManager>
 	{
@@ -71,6 +51,10 @@ namespace Engine {
 		//}
 
 		//static const std::vector<Texture>& GetAllTextures() { return textureList; }
+		bool AddNewFontAssets(const std::string _fontlist);
+
+		FontSystem* GetFontAssets(const std::string& _name);
+		void ClearAllAssets();
 	private:
 		std::unordered_map<std::string, GLuint> textureList;
 

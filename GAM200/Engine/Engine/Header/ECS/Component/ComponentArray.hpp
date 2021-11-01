@@ -108,7 +108,7 @@ namespace Engine {
 		}
 
 		//referencing to the template to get the data
-		T* GetDataTest(Entity_id entity_id) {
+		T* GetDataPtr(Entity_id entity_id) {
 			if (EntityToIndexMap.find(entity_id) == EntityToIndexMap.end()) return nullptr;
 
 			//error checking

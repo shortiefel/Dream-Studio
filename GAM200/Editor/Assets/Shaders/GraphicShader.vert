@@ -17,12 +17,10 @@ layout (location=3) in float aTextureIndex;
 layout (location=4) in vec2 aTPosition;
 layout (location=5) in vec2 aTScale;
 layout (location=6) in float aTRotation;
-layout (location=7) in int aEntityId;
 
 layout (location=0) out vec3 vColor;
 layout (location=1) out vec2 vTexture;
 layout (location=2) out float vTextureIndex;
-layout (location=3) out int vEntityId;
 
 
 void main() 
@@ -51,5 +49,4 @@ void main()
 	vColor = aVertexColor;
 	vTexture = aVertexTexture;
 	vTextureIndex = aTextureIndex;
-	vEntityId = 50;
 }

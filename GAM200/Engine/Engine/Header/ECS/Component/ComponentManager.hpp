@@ -29,7 +29,7 @@ Technology is prohibited.
 #include <unordered_map>
 
 #define DUPLICATE_COMPONENT(type)\
-type* tptr = GetComArray<type>()->GetDataTest(entIdFrom);\
+type* tptr = GetComArray<type>()->GetDataPtr(entIdFrom);\
 if (tptr) {\
 type t {*tptr};\
 t.SetEntityId(entIdTo);\
@@ -105,9 +105,9 @@ namespace Engine {
 		}
 
 		template<typename T>
-		T* GetComTest(Entity_id entity_id) {
+		T* GetComPtr(Entity_id entity_id) {
 			//a reference to component from array for entity
-			return GetComArray<T>()->GetDataTest(entity_id);
+			return GetComArray<T>()->GetDataPtr(entity_id);
 		}
 
 		template<typename T>

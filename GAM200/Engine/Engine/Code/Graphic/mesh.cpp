@@ -64,8 +64,6 @@ namespace Engine
             Math::vec2 tposition;
             Math::vec2 tscale;
             float trotation{};
-
-            int entityId{};
         };
 
         struct RendererData

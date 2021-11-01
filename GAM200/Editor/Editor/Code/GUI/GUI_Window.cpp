@@ -86,6 +86,9 @@ namespace Editor {
 
 		std::map<int, Engine::Entity_id> entity_selected{};
 
+		ImTextureID iconPlay;
+		ImTextureID iconStop;
+
 		bool hierarchy_bool = true;
 		bool inspector_bool = true;
 		bool stats_bool = true;
@@ -231,22 +234,13 @@ namespace Editor {
 			Engine::KeyPressedEvent::RegisterFunction(OnKeyEvent);
 
 			Override_Function();
-			//Engine::SetGetViewportFunc(GetViewport);
-			//Engine::SetGetMousePositionFunc(GetMousePosition);
-			//Engine::Scripting::SetDisplayFuncPtr([](std::string str) { GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ str.c_str() }); });
-			//Engine::Scripting::SetCompileFuncPtr([]() { 
-			////Read compile result
-			//	std::cout << "Calling \n";
-			//std::ifstream fs{ "Data/msbuild.log" };
-			//if (fs.is_open()) {
-			//	std::ostringstream buffer;
-			//	buffer << fs.rdbuf();
 
-			//	GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
-			//}
-
-			//fs.close();
-			//	});
+			int heightIcon = 25;
+			int widthIcon = 25;
+			unsigned int* tex_ptr = reinterpret_cast<unsigned int*>(&iconPlay);
+			*tex_ptr = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/PlayButton.png", &heightIcon, &widthIcon, 0, 4);
+			unsigned int* tex2_ptr = reinterpret_cast<unsigned int*>(&iconStop);
+			*tex2_ptr = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/StopButton.png", &heightIcon, &widthIcon, 0, 4);
 		}
 
 		void GUI_DockSpace() {
@@ -366,21 +360,12 @@ namespace Editor {
 
 			ImVec2 wSize = ImGui::GetWindowSize();
 			ImGui::Begin("Actions", &playStop_bool, window_flags);
-			int height = 128;
-			int width = 10;
-
-
-			int heightIcon = 25;
-			int widthIcon = 25;
-
-			auto iconPlay = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/PlayButton.png", &heightIcon, &widthIcon, 0, 4);
-			auto iconStop = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/StopButton.png", &heightIcon, &widthIcon, 0, 4);
 
 			ImGui::PushItemWidth(wSize.x);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
 
 
-			if (ImGui::ImageButton(ImTextureID(iconPlay), { 25, 25 }, { 0,1 }, { 1, 0 })) {
+			if (ImGui::ImageButton(iconPlay, { 25, 25 }, { 0,1 }, { 1, 0 })) {
 
 				if (!EditorSceneManager::GetInstance().Play()) Engine::GameState::GetInstance().SetPlaying(false);
 			}
@@ -389,7 +374,7 @@ namespace Editor {
 			ImGui::SameLine();
 			ImGui::PushItemWidth(wSize.x / 2 + 20);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
-			if (ImGui::ImageButton(ImTextureID(iconStop), { 25, 25 }, { 0,1 }, { 1, 0 })) {
+			if (ImGui::ImageButton(iconStop, { 25, 25 }, { 0,1 }, { 1, 0 })) {
 				EditorSceneManager::GetInstance().Stop();
 			}
 			ImGui::PopItemFlag();

@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
+#include "Engine/Header/ECS/Factory.hpp"
 
 #define DESTROY_ENTITY(entity_id)\
 entityManager->DestroyEntity(entity_id);\
@@ -142,6 +143,15 @@ namespace Engine {
 
 	void DreamECS::RemoveScript(Entity_id entity_id, const char* className) {
 		compManager->RemoveScript(entity_id, className);
+	}
+
+
+	void DreamECS::CreateSquare(Math::vec2 pos, Math::vec2 scale) {
+		Factory::InstantiateSquare(pos, scale);
+	}
+
+	void DreamECS::CreateCircle(Math::vec2 pos, Math::vec2 scale) {
+		Factory::InstantiateCircle(pos, scale);
 	}
 
 }

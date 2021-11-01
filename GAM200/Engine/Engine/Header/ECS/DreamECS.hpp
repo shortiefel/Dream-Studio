@@ -47,6 +47,9 @@ namespace Engine {
 		void DuplicateNameCheck(std::string& name);
 		void ChangeName(std::string _oldname, std::string _newname);
 
+		void CreateSquare(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f });
+		void CreateCircle(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f });
+
 		void Parent(Entity_id _parent, Entity_id _child);
 		void Unparent(Entity_id _target);
 
@@ -60,7 +63,7 @@ namespace Engine {
 
 		template<typename T>
 		bool AddComponent(T com) {
-			auto ptr = compManager->GetComTest<T>(com.GetEntityId());
+			auto ptr = compManager->GetComPtr<T>(com.GetEntityId());
 			//LOG_ASSERT(!ptr && "Unable add the same component for one entity");
 			if (ptr) return false;
 			return compManager->AddComponent<T>(std::move(com));
@@ -73,7 +76,7 @@ namespace Engine {
 
 		template<typename T>
 		void RemoveComponent(Entity_id entity_id) {
-			auto ptr = compManager->GetComTest<T>(entity_id);
+			auto ptr = compManager->GetComPtr<T>(entity_id);
 			//LOG_ASSERT(ptr && "Unable remove an entity that does not exist");
 			if (!ptr) return;
 			compManager->RemoveCom<T>(entity_id);
@@ -94,7 +97,7 @@ namespace Engine {
 		*/
 		template <typename T>
 		T* GetComponentPTR(Entity_id entity_id) {
-			return compManager->GetComTest<T>(entity_id);
+			return compManager->GetComPtr<T>(entity_id);
 		}
 		/*
 		* Check only (data is not given)

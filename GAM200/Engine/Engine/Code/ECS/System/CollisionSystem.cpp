@@ -111,6 +111,8 @@ namespace Engine {
 				auto& transform2 = DreamECS::GetInstance().GetComponent<TransformComponent>(entity_id2);
 				if (!transform2.isActive) continue;
 
+				if (transform1.layer != transform2.layer) continue; //collision layer
+
 				ColliderComponent collider2 = *col2;
 				collider2.offset_position += Math::vec2{ transform2.position };
 				collider2.offset_scale *= transform2.scale;

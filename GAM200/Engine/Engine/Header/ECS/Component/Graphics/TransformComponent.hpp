@@ -36,13 +36,11 @@ namespace Engine
 
 	//Scale value for circle in both axis is same
 	struct TransformComponent : public IComponent {
-		Math::vec2 position = Math::vec2{}; //x and y for 2d position and z for the layering (whether it appear on top or below)
+		Math::vec2 position = Math::vec2{};
 		Math::vec2 scale = Math::vec2{};
-		float angle = float{}; // in degree
+		float angle = float{}; // degrees
 		bool isActive = true;
-		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
-
-		//Math::mat3 GetTransform() const;
+		int layer = 2; // higher number = on top
 
 		TransformComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
@@ -50,21 +48,26 @@ namespace Engine
 		Math::vec2 GetTruePosition() const;
 
 		TransformComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{1,1},
-			float _angle = float{}, bool _active = true, int _layer = 0);
+			float _angle = float{}, bool _active = true, int _layer = 2);
 		TransformComponent& operator+= (const TransformComponent& _rhs);
 
 		TransformComponent(const TransformComponent&) = default;
 		TransformComponent& operator=(const TransformComponent&) = default;
-
-		/*Transform(Transform&& rhs) noexcept {
-			position = std::move(rhs.position);
-			scale = std::move(rhs.scale);
-			angle = std::move(rhs.angle);
-			isActive = std::move(rhs.isActive);
-			layer = std::move(rhs.layer);
-			SetEntityId(rhs.GetEntity());
-			rhs.SetEntityId(DEFAULT_ENTITY);
-		}*/
 	};
 }
 #endif
+
+
+
+
+//Math::mat3 GetTransform() const;
+
+/*Transform(Transform&& rhs) noexcept {
+	position = std::move(rhs.position);
+	scale = std::move(rhs.scale);
+	angle = std::move(rhs.angle);
+	isActive = std::move(rhs.isActive);
+	layer = std::move(rhs.layer);
+	SetEntityId(rhs.GetEntity());
+	rhs.SetEntityId(DEFAULT_ENTITY);
+}*/

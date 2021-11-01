@@ -32,7 +32,8 @@ Technology is prohibited.
 
 namespace Engine 
 {
-	TransformComponent::TransformComponent(Entity_id _ID, Math::vec2 _pos, Math::vec2 _scale, float _angle, bool _active, int _layer) :
+	TransformComponent::TransformComponent(Entity_id _ID, Math::vec2 _pos, Math::vec2 _scale, 
+		float _angle, bool _active, int _layer) :
 		IComponent{ _ID },
 		position{ _pos }, scale{ _scale }, angle{ _angle },
 		isActive{ _active }, layer{ _layer } {}
@@ -61,29 +62,12 @@ namespace Engine
 		return position;
 	}
 
-
-	//Math::mat3 TransformComponent::GetTransform() const 
-	//{
-	//	return
-	//		//Translation
-	//		Math::mat3{ Math::vec3(1.f, 0, 0),
-	//					Math::vec3(0, 1.f, 0),
-	//					Math::vec3(position.x, position.y, 1.f) }
-	//		*
-	//		Math::mat3{ Math::vec3(std::cos(rad((float)angle)), std::sin(rad((float)angle)), 0),
-	//					Math::vec3(-std::sin(rad((float)angle)), std::cos(rad((float)angle)), 0),
-	//					Math::vec3(0.f, 0.f, 1.f) }
-	//		*
-	//		//Scale
-	//		Math::mat3{ Math::vec3(scale.x, 0, 0),
-	//					Math::vec3(0, scale.y, 0),
-	//					Math::vec3(0, 0, 1.f) };
-	//}
-
 	TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer) {
 		position = _serializer.GetValue<Math::vec2>("Position");
 		scale = _serializer.GetValue<Math::vec2>("Scale");
 		angle = _serializer.GetValue<float>("Angle");
+
+		layer = _serializer.GetValue<int>("Layer");
 		isActive = _serializer.GetValue<bool>("IsActive");
 		return *this;
 	}
@@ -92,8 +76,31 @@ namespace Engine
 		_serializer.SetValue("Position", position);
 		_serializer.SetValue("Scale", scale);
 		_serializer.SetValue("Angle", angle);
+
+		_serializer.SetValue("Layer", layer);
 		_serializer.SetValue("IsActive", isActive);
 
 		//_serializer.EndSerialize("Transform");
 	}
 }
+
+
+/*
+Math::mat3 TransformComponent::GetTransform() const 
+{
+	return
+		//Translation
+		Math::mat3{ Math::vec3(1.f, 0, 0),
+					Math::vec3(0, 1.f, 0),
+					Math::vec3(position.x, position.y, 1.f) }
+		*
+		Math::mat3{ Math::vec3(std::cos(rad((float)angle)), std::sin(rad((float)angle)), 0),
+					Math::vec3(-std::sin(rad((float)angle)), std::cos(rad((float)angle)), 0),
+					Math::vec3(0.f, 0.f, 1.f) }
+		*
+		//Scale
+		Math::mat3{ Math::vec3(scale.x, 0, 0),
+					Math::vec3(0, scale.y, 0),
+					Math::vec3(0, 0, 1.f) };
+}
+*/

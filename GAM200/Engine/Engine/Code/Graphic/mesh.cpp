@@ -30,7 +30,7 @@ namespace Engine
         // Change to what is best suited
 #define MAXQUADCOUNT 500 // how many quads per buffer
 #define MAXCIRCLECOUNT 50 // how many circles per buffer
-#define CIRCLESLICES 20 // how circular the shape will be, larger = more circlular.
+#define CIRCLESLICES 20 // how circular the shape will be, higher number = more circlular.
 
 // Initialise variables
         static const size_t stMaxQuadCount = MAXQUADCOUNT;
@@ -65,7 +65,7 @@ namespace Engine
             Math::vec2 tscale;
             float trotation{};
 
-            int entityId;
+            int entityId{};
         };
 
         struct RendererData
@@ -141,7 +141,7 @@ namespace Engine
                 and so forth...
             */
 
-            uint32_t indices[stMaxQuadIndexCount];
+            uint32_t indices[stMaxQuadIndexCount]{};
             uint32_t offset = 0;
 
             for (int i = 0; i < stMaxQuadIndexCount; i += stOneQuadIndex)
@@ -232,7 +232,7 @@ namespace Engine
                 and so forth...
             */
 
-            uint32_t indices[stMaxQuadDebugIndexCount];
+            uint32_t indices[stMaxQuadDebugIndexCount]{};
             uint32_t offset = 0;
 
             for (int i = 0; i < stMaxQuadDebugIndexCount; i += stOneQuadDebugIndex)
@@ -311,7 +311,7 @@ namespace Engine
             glEnableVertexArrayAttrib(s_CircleDebugData.va, 6);
             glVertexAttribPointer(6, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
 
-            uint32_t indices[stMaxCircleDebugIndexCount];
+            uint32_t indices[stMaxCircleDebugIndexCount]{};
             uint32_t offset = 0;
 
             /*
@@ -516,7 +516,7 @@ namespace Engine
         }
 
         void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation,
-            const Math::vec3 color)
+            const Math::vec3 color, Math::vec2 _min, Math::vec2 _max)
         {
             if (s_QuadData.indexcount >= stMaxQuadIndexCount)
             {
@@ -531,7 +531,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
+            s_QuadData.vertexbufferptr->texCoords = { _min.x, _min.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -540,7 +540,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { 1.0f, 0.0f };
+            s_QuadData.vertexbufferptr->texCoords = { _max.x, _min.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -549,7 +549,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { 1.0f, 1.0f };
+            s_QuadData.vertexbufferptr->texCoords = { _max.x, _max.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -558,7 +558,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { 0.0f, 1.0f };
+            s_QuadData.vertexbufferptr->texCoords = { _min.x, _max.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -570,7 +570,7 @@ namespace Engine
         }
 
         void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation,
-            const uint32_t textureID)
+            const uint32_t textureID, Math::vec2 _min, Math::vec2 _max)
         {
             if (s_QuadData.indexcount >= stMaxQuadIndexCount || s_QuadData.uiTextureSlotIndex > 31)
             {
@@ -602,7 +602,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
+            s_QuadData.vertexbufferptr->texCoords = { _min.x, _min.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -611,7 +611,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { 1.0f, 0.0f };
+            s_QuadData.vertexbufferptr->texCoords = { _max.x, _min.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -620,7 +620,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { 1.0f, 1.0f };
+            s_QuadData.vertexbufferptr->texCoords = { _max.x, _max.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -629,7 +629,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { 0.0f, 1.0f };
+            s_QuadData.vertexbufferptr->texCoords = { _min.x, _max.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;

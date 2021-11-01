@@ -40,12 +40,8 @@ namespace Engine
 	class FontSystem : public Singleton<FontSystem>
 	{
 	public:
-		void RenderText(std::string text, float x, float y, float scale, const glm::ivec3& colour, float rotation);
-		void Init();
-		void Draw();
 
 		void RenderText(std::string text, float x, float y, float scale, const glm::vec3& colour);
-
 		bool Create();
 		void Destroy();
 
@@ -54,7 +50,7 @@ namespace Engine
 	private:
 		std::map<char, Character> characters;
 		unsigned int vao, vbo;
-		//GraphicShader font_shader;
+		
 		GLSLShader* font_shader;
 		GLSLShader shader;
 

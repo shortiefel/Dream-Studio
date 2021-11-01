@@ -21,7 +21,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
-#include "engine/Header/ECS/Component/UI/TextComponent.hpp"
+#include "Engine/Header/ECS/Component/UI/TextComponent.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 
 #include "Engine/Header/Graphic/Mesh.hpp"

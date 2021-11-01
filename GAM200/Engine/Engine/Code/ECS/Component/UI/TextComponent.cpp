@@ -25,7 +25,7 @@ namespace Engine
 {
 
 	TextComponent::TextComponent(Entity_id _ID, const std::string _path, GraphicShape _shape,
-		const std::string _string, bool _active, GraphicLayer _layer) :
+		const std::string _string, bool _active, int _layer) :
 		IComponent{ _ID },
 		texobj_hdl{ 0 }, filepath{ _path }, width{ 0 }, height{ 0 }, BPP{ 0 },
 		fontstring{ _string },
@@ -44,7 +44,7 @@ namespace Engine
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 		fontstring = _serializer.GetValue<std::string>("FontString");
 		isActive = _serializer.GetValue<bool>("IsActive");
-		layerIndex = GraphicLayer(_serializer.GetValue<int>("Layer"));
+		layerIndex = _serializer.GetValue<int>("Layer");
 		return *this;
 	}
 
@@ -54,7 +54,7 @@ namespace Engine
 		_serializer.SetValue("Shape", int(mdl_ref));
 		_serializer.SetValue("FontString", fontstring);
 		_serializer.SetValue("IsActive", isActive);
-		_serializer.SetValue("Layer", int(layerIndex));
+		_serializer.SetValue("Layer", layerIndex);
 	}
 
 	std::string TextComponent::ComponentName() const

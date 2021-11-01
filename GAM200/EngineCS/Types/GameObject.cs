@@ -26,6 +26,7 @@ public class GameObject : MonoBehaviour
             CreateEntity_Engine(out uint entId, "");
             entityId = entId;
             transform = new Transform(entityId);
+            AddComponent_Transform_Engine(entityId);
         }
         else
         {
@@ -39,6 +40,7 @@ public class GameObject : MonoBehaviour
         CreateEntity_Engine(out uint entId, name);
         entityId = entId;
         transform = new Transform(entityId);
+        AddComponent_Transform_Engine(entityId);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void CreateEntity_Engine(out uint entityID, string name);

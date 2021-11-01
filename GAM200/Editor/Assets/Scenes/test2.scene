@@ -14,7 +14,7 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets/Textures/DreamStudio_East(1).png",
+      "Filepath": "Assets\\Textures\\DreamStudio_East(1).png",
       "Shape": 0,
       "IsAnimation": false,
       "IsLoop": false,
@@ -46,7 +46,7 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets/Textures/OneWayRoad.png",
+      "Filepath": "Assets\\Textures\\OneWayRoad.png",
       "Shape": 0,
       "IsAnimation": false,
       "IsLoop": false,
@@ -83,7 +83,7 @@
       "IsActive": true
     },
     "UIComponent": {
-      "Filepath": "Assets/Textures/OneWayRoad.png",
+      "Filepath": "Assets\\Textures\\OneWayRoad.png",
       "IsActive": true
     }
   },
@@ -114,7 +114,7 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets/Textures/HouseYellow.png",
+      "Filepath": "Assets\\Textures\\HouseYellow.png",
       "Shape": 0,
       "IsAnimation": false,
       "IsLoop": false,
@@ -150,7 +150,7 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets/Textures/SpriteTest.png",
+      "Filepath": "Assets\\Textures\\SpriteTest.png",
       "Shape": 0,
       "IsAnimation": true,
       "IsLoop": true,

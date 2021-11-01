@@ -171,7 +171,7 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\SpaceTransform.cpp">
       <Filter>Source Files\Graphic</Filter>
-     </ClCompile>
+    </ClCompile>
     <ClCompile Include="Engine\Code\ECS\System\FontSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
@@ -509,6 +509,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Graphic\SpaceTransform.hpp">
       <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\FontSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

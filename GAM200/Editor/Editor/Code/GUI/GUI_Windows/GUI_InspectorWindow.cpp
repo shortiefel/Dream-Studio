@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 #include "Engine/Header/Graphic/TextureSet.hpp"
+#include "Engine/Header/ECS/Component/UI/TextComponent.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
 

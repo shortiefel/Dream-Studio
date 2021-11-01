@@ -38,6 +38,7 @@ namespace Engine
         DreamECS::GetInstance().RegisterComponent<RigidBodyComponent>();
         DreamECS::GetInstance().RegisterComponent<ScriptComponent>();
         DreamECS::GetInstance().RegisterComponent<UIComponent>();
+        DreamECS::GetInstance().RegisterComponent<TextComponent>();
 
         CameraSystem::GetInstance().Create();
         CollisionSystem::GetInstance().Create();

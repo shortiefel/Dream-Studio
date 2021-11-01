@@ -1,5 +1,4 @@
 [
-  
   {
     "Entity": {
       "Name": "Background",
@@ -10,13 +9,17 @@
       "LocalPosition": [ 0.0, 0.0 ],
       "Scale": [ 2600.0, 2600.0 ],
       "Angle": 0.0,
+      "Layer": 0,
       "IsActive": true
     },
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\DreamStudio_East(1).png",
       "Shape": 0,
-      "IsActive": true,
-      "Layer": 0
+      "IsAnimation": false,
+      "IsLoop": false,
+      "EndFrame": 0,
+      "TimePerFrame": 0.0,
+      "IsActive": true
     }
   },
   {
@@ -29,6 +32,7 @@
       "LocalPosition": [ -20.0, 200.0 ],
       "Scale": [ 50.0, 50.0 ],
       "Angle": 0.0,
+      "Layer": 2,
       "IsActive": true
     },
     "ColliderComponent": {
@@ -46,8 +50,11 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\HouseYellow.png",
       "Shape": 0,
-      "IsActive": true,
-      "Layer": 2
+      "IsAnimation": false,
+      "IsLoop": false,
+      "EndFrame": 0,
+      "TimePerFrame": 0.0,
+      "IsActive": true
     },
     "ScriptComponent": [
       {
@@ -73,6 +80,7 @@
       "LocalPosition": [ 650.0, -30.0 ],
       "Scale": [ 120.0, 120.0 ],
       "Angle": 0.0,
+      "Layer": 2,
       "IsActive": true
     },
     "ColliderComponent": {
@@ -90,8 +98,11 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\OneWayRoad.png",
       "Shape": 0,
-      "IsActive": true,
-      "Layer": 2
+      "IsAnimation": false,
+      "IsLoop": false,
+      "EndFrame": 0,
+      "TimePerFrame": 0.0,
+      "IsActive": true
     },
     "ScriptComponent": []
   },
@@ -105,6 +116,7 @@
       "LocalPosition": [ -350.0, -30.0 ],
       "Scale": [ 120.0, 120.0 ],
       "Angle": 0.0,
+      "Layer": 2,
       "IsActive": true
     },
     "ColliderComponent": {
@@ -118,8 +130,11 @@
     "TextureComponent": {
       "Filepath": "",
       "Shape": 0,
-      "IsActive": true,
-      "Layer": 2
+      "IsAnimation": false,
+      "IsLoop": false,
+      "EndFrame": 0,
+      "TimePerFrame": 0.0,
+      "IsActive": true
     }
   },
   {
@@ -132,6 +147,7 @@
       "LocalPosition": [ -140.0, 60.0 ],
       "Scale": [ 50.0, 50.0 ],
       "Angle": 0.0,
+      "Layer": 2,
       "IsActive": true
     },
     "ColliderComponent": {
@@ -149,8 +165,11 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\HouseYellow.png",
       "Shape": 1,
-      "IsActive": true,
-      "Layer": 2
+      "IsAnimation": false,
+      "IsLoop": false,
+      "EndFrame": 0,
+      "TimePerFrame": 0.0,
+      "IsActive": true
     }
   },
   {
@@ -163,6 +182,7 @@
       "LocalPosition": [ 0.0, 0.0 ],
       "Scale": [ 0.0, 0.0 ],
       "Angle": 0.0,
+      "Layer": 0,
       "IsActive": true
     },
     "CameraComponent": {
@@ -182,6 +202,7 @@
       "LocalPosition": [ 240.0, 100.0 ],
       "Scale": [ 0.0, 0.0 ],
       "Angle": 0.0,
+      "Layer": 0,
       "IsActive": true
     },
     "CameraComponent": {
@@ -201,6 +222,7 @@
       "LocalPosition": [ -40.0, -240.0 ],
       "Scale": [ 0.0, 0.0 ],
       "Angle": 0.0,
+      "Layer": 0,
       "IsActive": true
     },
     "CameraComponent": {

@@ -21,6 +21,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
+#include "Engine/Header/Management/TextureManager.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
@@ -33,13 +34,17 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
 #include "Engine/Header/Debug Tools/Profiler.hpp"
+#include "Engine/Header/Management/GameState.hpp"
 
+#include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 
 namespace Engine
 {
 	// forward declaration
-	void TextureLayer(const std::array<TextureComponent, MAX_ENTITIES>& arr, bool debugdrawCheck, int layer);
+	void TextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, bool _isDebugDraw, int layer);
+
+#define LAYER_COUNT 5;
 
 	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
 		PROFILER_START("Rendering");
@@ -63,15 +68,17 @@ namespace Engine
 		GraphicImplementation::Renderer::ResetStats();
 		GraphicImplementation::Renderer::BeginBatch(isDebugDraw);
 
-		//Check texture because less Texture component on entity than Transform
-		const auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<TextureComponent>();
+		// Get texture for entity
+		auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<TextureComponent>();
 
-		// looping through all layers
-		for (int i = 0; i < static_cast<int>(GraphicLayer::COUNT); i++)
+		// Looping through all layers; batch rendering
+		int layerCount = LAYER_COUNT
+		for (int i = 0; i < layerCount; i++)
 		{
 			TextureLayer(textureArray, isDebugDraw, i);
 		}
 
+		// for transparency of textures
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -105,7 +112,7 @@ namespace Engine
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		auto loc = glGetUniformLocation(shd_ref_handle, "u_Textures");
-		int samplers[32];
+		int samplers[32]{};
 		for (int i = 0; i < 32; i++)
 		{
 			samplers[i] = i;
@@ -129,20 +136,27 @@ namespace Engine
 	}
 
 	// Loop through array and render objects based on layer, which is then pass to batch render.
-	void TextureLayer(const std::array<TextureComponent, MAX_ENTITIES>& arr, bool _isDebugDraw, int layer)
+	void TextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, bool _isDebugDraw, int layer)
 	{
-		for (const auto& texture : arr)
+		for (auto& texture : arr)
 		{
-			if (texture.layerIndex == static_cast<GraphicLayer>(layer))
+			const Entity_id& entity_id = texture.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+			if (!texture.isActive) continue;
+
+			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
+			if (!transform || !transform->isActive) continue;
+
+			if (transform->layer == layer)
 			{
-				const Entity_id& entity_id = texture.GetEntityId();
-				if (EntityId_Check(entity_id)) break;
-				if (!texture.isActive) continue;
+				if (texture.isAnimation && (texture.aComplete == false) && 
+					GameState::GetInstance().GetPlaying())
+				{
+					float dt = DeltaTime::GetInstance().GetDeltaTime();
+					texture.AnimationUpdate(dt);
+				}
 
-				TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
-				if (!transform || !transform->isActive) continue;
-
-				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, texture.texobj_hdl);
+				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, texture.texobj_hdl, texture.min, texture.max);
 
 				// to draw debug lines
 				if (_isDebugDraw == GL_TRUE) {

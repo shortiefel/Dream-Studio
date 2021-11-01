@@ -22,14 +22,21 @@ Technology is prohibited.
 
 namespace Engine
 {
+	struct sTexture
+	{
+		GLuint handle;
+		int width, height;
+	};
+
+
 	class TextureManager : public Singleton<TextureManager>
 	{
 	public:
 		void Create();
 		void Destroy();
-		GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+		GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel, bool isTexture = true);
 	private:
-		std::unordered_map<std::string, GLuint> textureList;
+		std::unordered_map<std::string, sTexture> textureList;
 
 		SINGLETON_SETUP(TextureManager);
 	};

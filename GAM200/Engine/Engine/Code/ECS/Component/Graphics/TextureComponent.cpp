@@ -26,26 +26,75 @@ Technology is prohibited.
 namespace Engine
 {
 	TextureComponent::TextureComponent(Entity_id _ID, const std::string _path,
-		GraphicShape _shape, bool _active, GraphicLayer _layer) :
-		IComponent{ _ID },
-		texobj_hdl{ 0 }, filepath{ _path },
-		//width{ 0 }, height{ 0 }, BPP{ 0 },
-		mdl_ref{ _shape },
-		isActive{ _active },
-		layerIndex{ _layer }  {  }
+									   GraphicShape _shape,
+									   bool _animation, bool _loop,
+									   int _endFrame, float _fTime, bool _active) :
+					IComponent{ _ID }, filepath{ _path },
+					mdl_ref{ _shape },
+					isAnimation{ _animation }, isLoop{ _loop }, aComplete { false},
+					startFrame{ 1 }, endFrame{ _endFrame }, currFrame{ 0 },
+					aTime{ 0.f }, fTime{ _fTime }, isActive{ _active },
+					min{ 0.f, 0.f }, max{1.0f, 1.0f},
+					texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 } {}
 
 	TextureComponent::~TextureComponent()
 	{
 		//now done by TextureManager destroy function
 	}
 
+	// Update frames of spritesheets
+	void TextureComponent::AnimationUpdate(float _dt)
+	{
+		aTime += _dt;
+		if (aTime > fTime)
+		{
+			aTime -= fTime;
+			++currFrame;
+
+			if (currFrame > endFrame)
+			{
+				if (isLoop == true)
+				{
+					currFrame = startFrame;
+				}
+				else
+				{
+					currFrame = endFrame;
+					aComplete = true;
+				}
+			}
+			SetUV();
+		}
+	}
+
+	void TextureComponent::SetUV()
+	{
+		float cellWidth = width / endFrame;
+		
+		//std::cout << "WIDTH: " << width << std::endl;
+		min = { static_cast<float>((currFrame - 1) * cellWidth) / width,
+				0.f };
+
+		max = { static_cast<float>(currFrame * cellWidth) / width,
+				static_cast<float>(height) / height };
+	}
+
 	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer)
 	{
-		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
+		//GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
+		filepath = _serializer.GetValue<std::string>("Filepath");
+		texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
 
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
+
+		// For animation
+		isAnimation = _serializer.GetValue<bool>("IsAnimation");
+		isLoop = _serializer.GetValue<bool>("IsLoop");
+		endFrame = _serializer.GetValue<int>("EndFrame");
+		fTime = _serializer.GetValue<float>("TimePerFrame");
+
 		isActive = _serializer.GetValue<bool>("IsActive");
-		layerIndex = GraphicLayer(_serializer.GetValue<int>("Layer"));
+
 		return *this;
 	}
 
@@ -53,7 +102,14 @@ namespace Engine
 	{
 		_serializer.SetValue("Filepath", filepath);
 		_serializer.SetValue("Shape", int(mdl_ref));
+
+		_serializer.SetValue("IsAnimation", isAnimation);
+		_serializer.SetValue("IsLoop", isLoop);
+		_serializer.SetValue("EndFrame", endFrame);
+		_serializer.SetValue("TimePerFrame", fTime);
+
 		_serializer.SetValue("IsActive", isActive);
-		_serializer.SetValue("Layer", int(layerIndex));
+
+		//_serializer.EndSerialize("Texture");
 	}
 }

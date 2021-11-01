@@ -31,20 +31,34 @@ namespace Engine
 
 	struct TextureComponent : public IComponent
 	{
-		GraphicShape mdl_ref = GraphicShape{};
-		GraphicLayer layerIndex = GraphicLayer{};
-
 		std::string filepath = "";
 		std::string textureName = "";
 		GLuint texobj_hdl = GLuint{};
 
-		bool isActive = true;
+		GraphicShape mdl_ref = GraphicShape{};
+
+		GLint width, height, BPP; //BPP - bits per pixel
+
+		bool isAnimation;
+		bool isActive;
+
+		// Animation
+		int startFrame, endFrame, currFrame;
+		float aTime, fTime; //fTime - time per frame; aTime - animation time
+		bool isLoop, aComplete; // aComplete - is animation completed
+
+		Math::vec2 min, max;
+
+		void AnimationUpdate(float _dt);
+		void SetUV();
 
 		TextureComponent(const TextureComponent&) = default;
 		~TextureComponent();
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
-			GraphicShape _shape = GraphicShape::SQUARE, bool _active = true, GraphicLayer _layer = GraphicLayer::GO);
+						 GraphicShape _shape = GraphicShape::SQUARE,
+						 bool _animation = false, bool _loop = false,
+						 int _endFrame = 1, float _fTime = 0, bool _active = true);
 
 		TextureComponent& operator= (const TextureComponent&) = default;
 

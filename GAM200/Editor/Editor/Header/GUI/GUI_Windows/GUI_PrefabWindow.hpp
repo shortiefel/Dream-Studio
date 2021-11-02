@@ -1,11 +1,12 @@
 /* Start Header**********************************************************************************/
 /*
-@file    GUI_StatsWindow.cpp
+@file    GUI_PrefabWindow.hpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu
-@date    20/10/2021
+@date    02/11/2021
 \brief
-#include "Editor/Header/GUI/GUI_Windows/GUI_StatsWindow.hpp"
-This file has the function declaration for GUI State window
+#include "Editor/Header/GUI/GUI_Windows/GUI_PrefabWindow.hpp"
+This file has the function declaration for GUI Prefab window
+The prefab window allow users to 
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -15,14 +16,17 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef STATS_WINDOW_HPP
-#define STATS_WINDOW_HPP
+
+#ifndef PREFAB_WINDOW_HPP
+#define PREFAB_WINDOW_HPP
+
+#include <Imgui/imgui.h>
+
 
 namespace Editor {
 	namespace GUI_Windows {
-		void GUI_Stats(bool* stats_bool);
+		void GUI_Prefab(bool* prefab_bool, ImGuiWindowFlags window_flags);
 	}
 }
-
 
 #endif

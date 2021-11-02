@@ -87,7 +87,7 @@ namespace Engine {
 	void ScriptSystem::PlayInit() {
 		PROFILER_START("Scripting");
 
-		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
+		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
@@ -111,7 +111,7 @@ namespace Engine {
 	void ScriptSystem::PlayRunTime() {
 		PROFILER_START("Scripting");
 
-		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
+		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			if (EntityId_Check(csScript.GetEntityId())) break;
 
@@ -142,7 +142,7 @@ namespace Engine {
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
 		PROFILER_START("Scripting");
 
-		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(e.self);
+		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.self);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
@@ -153,7 +153,7 @@ namespace Engine {
 	bool CallMouseOverlapFunc(const MouseOverlapColliderEvent& e) {
 		PROFILER_START("Scripting");
 
-		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(e.other);
+		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.other);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);

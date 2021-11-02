@@ -285,6 +285,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_GameWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_HierarchyWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_InspectorWindow.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_PrefabWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_ProfilerWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_SceneWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_StatsWindow.hpp" />
@@ -309,6 +310,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_GameWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_HierarchyWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_InspectorWindow.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_PrefabWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_ProfilerWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_SceneWindow.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_StatsWindow.cpp" />

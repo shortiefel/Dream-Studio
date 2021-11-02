@@ -29,13 +29,18 @@ Technology is prohibited.
 #include <unordered_set>
 
 namespace Engine {
-	class DreamECS : public Singleton<DreamECS> {
+	class DreamECS;
+
+	extern std::unique_ptr<DreamECS> dreamECSGame;
+
+	//class DreamECS : public Singleton<DreamECS> {
+	class DreamECS {
 	public:
 		void Create();
 		/*--------------------------------------------------------------------------------------------------------------
 		Entity related functions
 		--------------------------------------------------------------------------------------------------------------*/
-		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, std::unordered_set<Entity_id> _child = std::unordered_set<Entity_id>{}, Entity_id _parent = DEFAULT_ENTITY_ID);
+		Entity& CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, std::unordered_set<Entity_id> _child = std::unordered_set<Entity_id>{}, Entity_id _parent = DEFAULT_ENTITY_ID);
 		void DuplicateEntityAsInstance(Entity ent);
 		void DestroyEntity(Entity_id entity_id);
 		//const std::vector<Entity>& GetUsedEntitySet();
@@ -146,7 +151,7 @@ namespace Engine {
 		std::unordered_set<Entity_id> destroySet{};
 
 
-		SINGLETON_SETUP(DreamECS);
+		//SINGLETON_SETUP(DreamECS);
 	};
 }
 

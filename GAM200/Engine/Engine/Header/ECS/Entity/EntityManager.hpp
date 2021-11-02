@@ -29,7 +29,7 @@ namespace Engine {
 	{
 	public:
 
-		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, Entity_id _parent = MAX_ENTITIES + 1)
+		Entity& CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, Entity_id _parent = MAX_ENTITIES + 1)
 		{
 			//error checking
 			LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
@@ -50,7 +50,7 @@ namespace Engine {
 			Entity entity(entityId, _entityName, _parent);
 			//UsedEntities2.push_back(entity);
 			usedEntities.emplace(entityId, entity);
-			return entity;
+			return usedEntities[entityId];
 		}
 
 		void DestroyEntity(Entity_id entity_id)

@@ -29,13 +29,13 @@ namespace Engine {
 	void PhysicsSystem::Update(float dt) {
 		PROFILER_START("Physics");
 
-		const auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBodyComponent>();
+		const auto& rigidBodyArray = dreamECSGame->GetComponentArrayData<RigidBodyComponent>();
 		for (auto& rigidBody : rigidBodyArray) {
 			const Entity_id& entity_id = rigidBody.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
 			if (!rigidBody.isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
+			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
 			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);

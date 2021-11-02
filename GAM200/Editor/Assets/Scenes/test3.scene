@@ -3,7 +3,8 @@
     "Entity": {
       "Name": "Background",
       "Parent": 10001,
-      "Child": []
+      "Child": [],
+      "Prefab": ""
     },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
@@ -27,7 +28,8 @@
     "Entity": {
       "Name": "Entity10",
       "Parent": 10001,
-      "Child": []
+      "Child": [],
+      "Prefab": ""
     },
     "TransformComponent": {
       "Position": [ -20.0, 200.0 ],
@@ -76,7 +78,8 @@
     "Entity": {
       "Name": "Entity1",
       "Parent": 10001,
-      "Child": []
+      "Child": [],
+      "Prefab": ""
     },
     "TransformComponent": {
       "Position": [ 650.0, -30.0 ],
@@ -112,7 +115,8 @@
     "Entity": {
       "Name": "Entity2",
       "Parent": 10001,
-      "Child": []
+      "Child": [],
+      "Prefab": ""
     },
     "TransformComponent": {
       "Position": [ -350.0, -30.0 ],
@@ -144,7 +148,8 @@
     "Entity": {
       "Name": "Entity3",
       "Parent": 10001,
-      "Child": []
+      "Child": [],
+      "Prefab": ""
     },
     "TransformComponent": {
       "Position": [ -140.0, 60.0 ],
@@ -180,7 +185,8 @@
     "Entity": {
       "Name": "Camera",
       "Parent": 10001,
-      "Child": []
+      "Child": [],
+      "Prefab": ""
     },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
@@ -201,7 +207,8 @@
     "Entity": {
       "Name": "Camera2",
       "Parent": 10001,
-      "Child": []
+      "Child": [],
+      "Prefab": ""
     },
     "TransformComponent": {
       "Position": [ 240.0, 100.0 ],
@@ -222,7 +229,8 @@
     "Entity": {
       "Name": "Camera3",
       "Parent": 10001,
-      "Child": []
+      "Child": [],
+      "Prefab": ""
     },
     "TransformComponent": {
       "Position": [ -40.0, -240.0 ],

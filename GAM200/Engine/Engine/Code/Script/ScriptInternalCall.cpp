@@ -39,16 +39,16 @@ Technology is prohibited.
 #include <mono/metadata/assembly.h>
 
 #define GetEngineType(ID, type, paramName, param)\
-type* ctype = DreamECS::GetInstance().GetComponentPTR<type>(ID);\
+type* ctype = dreamECSGame->GetComponentPTR<type>(ID);\
 if (!ctype) return;\
 param = ctype->paramName;
 
 #define SetEngineType(ID, type, paramName, param)\
-type* ctype = DreamECS::GetInstance().GetComponentPTR<type>(ID);\
+type* ctype = dreamECSGame->GetComponentPTR<type>(ID);\
 if (!ctype) return;\
 ctype->paramName = param;
 
-#define GET_COMPONENT_PTR(type) type* tem = DreamECS::GetInstance().GetComponentPTR<type>(id);\
+#define GET_COMPONENT_PTR(type) type* tem = dreamECSGame->GetComponentPTR<type>(id);\
 								return !(tem == nullptr);
 
 
@@ -284,12 +284,12 @@ namespace Engine {
 	void CreateEntity_Engine(unsigned int* entityId, MonoString* str) {
 		std::string entityName = mono_string_to_utf8(str);
 		if (entityName.empty()) entityName = "Entity";
-		const Entity& entity = DreamECS::GetInstance().CreateEntity(entityName.c_str());
+		const Entity& entity = dreamECSGame->CreateEntity(entityName.c_str());
 		*entityId = entity.id;
 	}
 
 	void FindEntity_Engine(int* entityId, MonoString* str) {
-		const auto& entityMap = DreamECS::GetInstance().GetUsedEntityMap();
+		const auto& entityMap = dreamECSGame->GetUsedEntityMap();
 		std::string entityName = mono_string_to_utf8(str);
 		if (entityName.empty()) {
 			*entityId = -1;
@@ -308,19 +308,19 @@ namespace Engine {
 	bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name) {
 		std::cout << mono_string_to_utf8(name) << "\n";
 		//return false;
-		return DreamECS::GetInstance().AddComponent<ScriptComponent>(ScriptComponent{ entityId, mono_string_to_utf8(name) });
+		return dreamECSGame->AddComponent<ScriptComponent>(ScriptComponent{ entityId, mono_string_to_utf8(name) });
 	}
 
 	bool AddComponent_Transform_Engine(unsigned int entityId) {
-		return DreamECS::GetInstance().AddComponent<TransformComponent>(TransformComponent{ entityId });
+		return dreamECSGame->AddComponent<TransformComponent>(TransformComponent{ entityId });
 	}
 
 	bool AddComponent_Collider_Engine(unsigned int entityId) {
-		return DreamECS::GetInstance().AddComponent<ColliderComponent>(ColliderComponent{ entityId });
+		return dreamECSGame->AddComponent<ColliderComponent>(ColliderComponent{ entityId });
 	}
 
 	bool AddComponent_Camera_Engine(unsigned int entityId) {
-		return DreamECS::GetInstance().AddComponent<CameraComponent>(CameraComponent{ entityId });
+		return dreamECSGame->AddComponent<CameraComponent>(CameraComponent{ entityId });
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -345,7 +345,7 @@ namespace Engine {
 	}
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		//call hascomponent with entityid
-		TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(id);
+		TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 		if (!transform) return;
 		transform->position += *inVec2;
 	}
@@ -367,22 +367,22 @@ namespace Engine {
 	}
 
 	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2) {
-		TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(id);
+		TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle + 90.f);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
 	}
 
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2) {
-		TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(id);
+		TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle);
 		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
 	}
 
 	void SetParent_Engine(int parentId, unsigned int child) {
-		if (parentId < 0) DreamECS::GetInstance().Unparent(child);
-		else DreamECS::GetInstance().Parent(parentId, child);
+		if (parentId < 0) dreamECSGame->Unparent(child);
+		else dreamECSGame->Parent(parentId, child);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -419,7 +419,7 @@ namespace Engine {
 	Check if component exist
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool HasComponent_Scripts_Engine(unsigned int id, MonoString* str) {
-		ScriptComponent* tem = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(id);
+		ScriptComponent* tem = dreamECSGame->GetComponentPTR<ScriptComponent>(id);
 		if (tem == nullptr) return false;
 		const auto& scriptComponent = *tem;
 		std::string strName = mono_string_to_utf8(str);
@@ -445,19 +445,19 @@ namespace Engine {
 	Destroy
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Destroy_Entity_Engine(unsigned int id) {
-		DreamECS::GetInstance().DestroyEntity(id);
+		dreamECSGame->DestroyEntity(id);
 	}
 
 	void Destroy_Transform_Engine(unsigned int id) {
-		DreamECS::GetInstance().RemoveComponent<TransformComponent>(id);
+		dreamECSGame->RemoveComponent<TransformComponent>(id);
 	}
 
 	void Destroy_Collider_Engine(unsigned int id) {
-		DreamECS::GetInstance().RemoveComponent<ColliderComponent>(id);
+		dreamECSGame->RemoveComponent<ColliderComponent>(id);
 	}
 
 	void Destroy_Script_Engine(unsigned int id, MonoString* str) {
-		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(id);
+		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(id);
 		if (!csScript) return;
 		csScript->RemoveScript(mono_string_to_utf8(str));
 	}
@@ -507,11 +507,11 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, int entityId, unsigned int* newId) {
 		if (entityId < 0) {
-			GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), Math::vec2{ 0.f,0.f }, 0.f, *newId);
+			GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), newId, Math::vec2{ 0.f,0.f }, 0.f);
 		}
 		else {
-			const auto& transform = DreamECS::GetInstance().GetComponent<TransformComponent>(static_cast<unsigned int>(entityId));
-			GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), transform.position, transform.angle, *newId);
+			const auto& transform = dreamECSGame->GetComponent<TransformComponent>(static_cast<unsigned int>(entityId));
+			GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), newId, transform.position, transform.angle);
 		}
 		//if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}

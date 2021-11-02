@@ -24,5 +24,7 @@ namespace Engine
 	unsigned int Settings::gameWidth;
 	unsigned int Settings::gameHeight;
 	float Settings::gameAR;
+	std::string Settings::defaultCircle;
+	std::string Settings::defaultSquare;
 }
 

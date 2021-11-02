@@ -47,7 +47,7 @@ namespace Engine {
 																				 -1.f, -1.f, 1.f));
 
 
-			const auto& transformArray = Engine::DreamECS::GetInstance().GetComponentArrayData<Engine::TransformComponent>();
+			const auto& transformArray = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
 			for (const auto& transform : transformArray) {
 				const Engine::Entity_id& entity_id = transform.GetEntityId();
 				if (EntityId_Check(entity_id)) break;

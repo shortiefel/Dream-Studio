@@ -67,7 +67,7 @@ namespace Engine {
 
     void Scene::Stop(bool deserialize) {
         CollisionSystem::GetInstance().Stop();
-        DreamECS::GetInstance().ResetECS();
+        dreamECSGame->ResetECS();
 
         if (deserialize) {
             //std::cout << "deserialize\n";
@@ -101,14 +101,14 @@ namespace Engine {
 
         AI::AISystem::GetInstance().Render();
 
-        DreamECS::GetInstance().ClearDestroyQueue();
+        dreamECSGame->ClearDestroyQueue();
 
         //LayerStack::Update();
         //LayerStack::Draw();
     }
 
     unsigned int Scene::EntityCount() {
-        return DreamECS::GetInstance().GetUsedEntitySize();
+        return dreamECSGame->GetUsedEntitySize();
     }
 
     std::string Scene::GetName() {

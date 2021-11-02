@@ -27,7 +27,7 @@ namespace Editor {
 		int selected = 0;
 
 		void SelectedEntityCheck(std::map<int, Engine::Entity_id>& entity_selected) {
-			auto& entityMap = Engine::DreamECS::GetInstance().GetUsedEntityMap();
+			auto& entityMap = Engine::dreamECSGame->GetUsedEntityMap();
 
 			//Remove if entity is deleted
 			for (auto& [index, entity_id] : entity_selected) {

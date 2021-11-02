@@ -79,7 +79,7 @@ namespace Engine {
 	void CollisionSystem::Update(float) {
 		PROFILER_START("Collision");
 
-		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
+		auto& colliderArray = dreamECSGame->GetComponentArrayData<ColliderComponent>();
 		auto colliderStart = colliderArray.begin(),
 			colliderEnd = colliderArray.end();
 		for (auto& col1 = colliderStart; col1 < colliderEnd; col1++) {
@@ -87,7 +87,7 @@ namespace Engine {
 			if (EntityId_Check(entity_id1)) break;
 			if (!col1->isActive) continue;
 
-			auto& transform1 = DreamECS::GetInstance().GetComponent<TransformComponent>(entity_id1);
+			auto& transform1 = dreamECSGame->GetComponent<TransformComponent>(entity_id1);
 			if (!transform1.isActive) continue;
 
 			ColliderComponent collider1 = *col1;
@@ -102,13 +102,13 @@ namespace Engine {
 				const Entity_id& entity_id2 = col2->GetEntityId();
 				if (EntityId_Check(entity_id2)) break;
 				if (!col2->isActive || col1 == col2) continue;
-				const RigidBodyComponent* rb1 = DreamECS::GetInstance().GetComponentPTR<RigidBodyComponent>(entity_id1);
-				const RigidBodyComponent* rb2 = DreamECS::GetInstance().GetComponentPTR<RigidBodyComponent>(entity_id2);
+				const RigidBodyComponent* rb1 = dreamECSGame->GetComponentPTR<RigidBodyComponent>(entity_id1);
+				const RigidBodyComponent* rb2 = dreamECSGame->GetComponentPTR<RigidBodyComponent>(entity_id2);
 				bool ent1IsMoveable = (rb1 != nullptr) && rb1->isActive,
 					ent2IsMoveable = (rb2 != nullptr) && rb2->isActive;
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 
-				auto& transform2 = DreamECS::GetInstance().GetComponent<TransformComponent>(entity_id2);
+				auto& transform2 = dreamECSGame->GetComponent<TransformComponent>(entity_id2);
 				if (!transform2.isActive) continue;
 
 				if (transform1.layer != transform2.layer) continue; //collision layer
@@ -196,14 +196,14 @@ namespace Engine {
 	bool CollisionSystem::RayCast(const Ray& ray, RaycastHit* hit, std::uint32_t ignoreTarget) {
 		PROFILER_START("Collision");
 
-		auto& colliderArray = DreamECS::GetInstance().GetComponentArrayData<ColliderComponent>();
+		auto& colliderArray = dreamECSGame->GetComponentArrayData<ColliderComponent>();
 		for (const auto& col : colliderArray) {
 			const Entity_id& entity_id = col.GetEntityId();
 			if (entity_id == ignoreTarget) continue;
 			if (EntityId_Check(entity_id)) break;
 			if (!col.isActive) continue;
 
-			auto& transform = DreamECS::GetInstance().GetComponent<TransformComponent>(entity_id);
+			auto& transform = dreamECSGame->GetComponent<TransformComponent>(entity_id);
 			if (!transform.isActive) continue;
 
 			RaycastHit hitTarget;

@@ -35,8 +35,8 @@ namespace Engine {
 	}*/
 
 	void TransformCalculationSystem::Update() {
-		auto& transformArray = DreamECS::GetInstance().GetComponentArrayData<TransformComponent>();
-		auto& entityMap = DreamECS::GetInstance().GetUsedConstEntityMap();
+		auto& transformArray = dreamECSGame->GetComponentArrayData<TransformComponent>();
+		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 
 		for (auto& transform : transformArray) {
 			const Entity_id& entity_id = transform.GetEntityId();
@@ -47,14 +47,14 @@ namespace Engine {
 
 			transform.position = transform.localPosition;
 			if (parent != DEFAULT_ENTITY_ID) {
-				transform.position += DreamECS::GetInstance().GetComponent<TransformComponent>(parent).localPosition;
+				transform.position += dreamECSGame->GetComponent<TransformComponent>(parent).localPosition;
 			}
 		}
 	}
 
 	void TransformCalculationSystem::ChildUpdate() {
-		auto& transformArray = DreamECS::GetInstance().GetComponentArrayData<TransformComponent>();
-		auto& entityMap = DreamECS::GetInstance().GetUsedConstEntityMap();
+		auto& transformArray = dreamECSGame->GetComponentArrayData<TransformComponent>();
+		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 
 		for (auto& transform : transformArray) {
 			const Entity_id& entity_id = transform.GetEntityId();
@@ -64,14 +64,14 @@ namespace Engine {
 			Entity_id parent = itr->second.parent;
 
 			if (parent != DEFAULT_ENTITY_ID) {
-				transform.position = transform.localPosition + DreamECS::GetInstance().GetComponent<TransformComponent>(parent).position;
+				transform.position = transform.localPosition + dreamECSGame->GetComponent<TransformComponent>(parent).position;
 			}
 		}
 	}
 
 	void TransformCalculationSystem::Release() {
-		auto& transformArray = DreamECS::GetInstance().GetComponentArrayData<TransformComponent>();
-		auto& entityMap = DreamECS::GetInstance().GetUsedConstEntityMap();
+		auto& transformArray = dreamECSGame->GetComponentArrayData<TransformComponent>();
+		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 
 		for (auto& transform : transformArray) {
 			const Entity_id& entity_id = transform.GetEntityId();
@@ -82,24 +82,24 @@ namespace Engine {
 
 			transform.localPosition = transform.position;
 			if (parent != DEFAULT_ENTITY_ID) {
-				transform.localPosition -= DreamECS::GetInstance().GetComponent<TransformComponent>(parent).position;
+				transform.localPosition -= dreamECSGame->GetComponent<TransformComponent>(parent).position;
 			}
 		}
 	}
 
 	void TransformCalculationSystem::Parent(Entity_id _parent, Entity_id _child) {
-		auto& entityMap = DreamECS::GetInstance().GetUsedEntityMap();
+		auto& entityMap = dreamECSGame->GetUsedEntityMap();
 		auto& childEntity = entityMap[_child];
 		if (childEntity.parent == _parent) return;
 
 		entityMap[_parent].child.emplace(_child);
 		entityMap[_child].parent = _parent;
-		auto& pos = DreamECS::GetInstance().GetComponent<TransformComponent>(_child).localPosition;
-		pos -= DreamECS::GetInstance().GetComponent<TransformComponent>(_parent).position;
+		auto& pos = dreamECSGame->GetComponent<TransformComponent>(_child).localPosition;
+		pos -= dreamECSGame->GetComponent<TransformComponent>(_parent).position;
 	}
 
 	void TransformCalculationSystem::Unparent(Entity_id _target) {
-		auto& entityMap = DreamECS::GetInstance().GetUsedEntityMap();
+		auto& entityMap = dreamECSGame->GetUsedEntityMap();
 		Entity_id& parent = entityMap[_target].parent;
 		if (parent == DEFAULT_ENTITY_ID) return;
 
@@ -109,8 +109,8 @@ namespace Engine {
 			parentEntity.child.erase(itr);
 		}
 		
-		auto& pos = DreamECS::GetInstance().GetComponent<TransformComponent>(_target).localPosition;
-		pos += DreamECS::GetInstance().GetComponent<TransformComponent>(parent).position;
+		auto& pos = dreamECSGame->GetComponent<TransformComponent>(_target).localPosition;
+		pos += dreamECSGame->GetComponent<TransformComponent>(parent).position;
 
 		parent = DEFAULT_ENTITY_ID;
 	}

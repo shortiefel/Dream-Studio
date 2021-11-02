@@ -47,6 +47,8 @@ namespace Engine {
 	//Track the number of the same name and give index to them
 	std::unordered_map <std::string, int> nameCount;
 
+	std::unique_ptr<DreamECS> dreamECSGame = std::make_unique<DreamECS>();
+
 	void DreamECS::Create()
 	{
 		//gCoordinator.Init();
@@ -55,7 +57,7 @@ namespace Engine {
 		//sysManager = std::make_unique<SystemManager>();
 	}
 
-	Entity DreamECS::CreateEntity(const char* _entityName, std::unordered_set<Entity_id> _child, Entity_id _parent) {
+	Entity& DreamECS::CreateEntity(const char* _entityName, std::unordered_set<Entity_id> _child, Entity_id _parent) {
 		DUPLICATE_NAME_CHECK(_entityName);
 
 		return entityManager->CreateEntity(entityName.c_str(), _parent);

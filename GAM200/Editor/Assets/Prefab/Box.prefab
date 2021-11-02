@@ -1,22 +1,36 @@
 [
+  
   {
     "Entity": {
       "Name": "BoxPrefab",
       "Parent": 10001,
-      "Child": []
+      "Child": [],
+      "Prefab": "Box"
     },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
       "LocalPosition": [ 0.0, 0.0 ],
       "Scale": [ 40.0, 40.0 ],
       "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
       "IsActive": true
     },
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\test1.png",
       "Shape": 0,
-      "IsActive": true,
-      "Layer": 2
+      "IsAnimation": false,
+      "IsLoop": false,
+      "EndFrame": 0,
+      "TimePerFrame": 0.0,
+      "IsActive": true
     }
   }
 ]

@@ -256,7 +256,7 @@ namespace Engine {
 		}
 
 		void InitAllCSClass() {
-			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
+			auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
 
@@ -317,7 +317,7 @@ namespace Engine {
 		}
 
 		void InitAllPublicVariable() {
-			auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
+			auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
 				

@@ -27,6 +27,7 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_HierarchyWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_StatsWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_PrefabWindow.hpp"
 #include "Editor/Header/GUI/GUI_ClickCheck.hpp"
 
 #include "Editor/Header/FunctionOverride.hpp"
@@ -144,7 +145,7 @@ namespace Editor {
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
 
-				Engine::DreamECS::GetInstance().ResetECS();
+				Engine::dreamECSGame->ResetECS();
 				Engine::GameSceneSerializer::SerializeScene(filePath);
 				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
 			}
@@ -322,6 +323,18 @@ namespace Editor {
 
 				ImGui::MenuItem("Undo", "CTRL+Z");
 				ImGui::MenuItem("Redo", "CTRL+Y");
+
+				ImGui::Separator();
+
+				if (ImGui::MenuItem("Add Prefab")) {
+					std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0");
+
+					if (!filePath.empty()) {
+						REMOVE_FROM_FILEPATH;
+
+						Engine::GameSceneSerializer::DeserializePrefab(filePath);
+					}
+				}
 
 
 				ImGui::EndMenu();

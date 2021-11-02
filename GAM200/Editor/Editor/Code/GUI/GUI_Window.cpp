@@ -335,6 +335,10 @@ namespace Editor {
 						Engine::GameSceneSerializer::DeserializePrefab(filePath);
 					}
 				}
+				
+				if (ImGui::MenuItem("Update All Prefab")) {
+					Engine::dreamECSGame->UpdateAllPrefab();
+				}
 
 
 				ImGui::EndMenu();

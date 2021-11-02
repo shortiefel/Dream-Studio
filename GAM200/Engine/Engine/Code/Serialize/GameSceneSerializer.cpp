@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/SSerializer.hpp"
 #include "Engine/Header/Management/Settings.hpp"
 
+#include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
 
 //External Resources
@@ -46,24 +47,20 @@ Technology is prohibited.
 #define SERIALIZE_ENTITY SSerializer serializerEntity(doc, objTypeEntity);\
 						 serializerEntity.SetValue("Name", entity.name);\
 						 serializerEntity.SetValue("Parent", entity.parent);\
-						 serializerEntity.SetValueUSet("Child", entity.child);\
-						 serializerEntity.SetValue("Prefab", entity.prefabName);
+						 serializerEntity.SetValueUSet("Child", entity.child);
 
 #define DESERIALIZE_ENTITY std::string entityName = DEFAULT_ENTITY_NAME;\
 							Entity_id parent = DEFAULT_ENTITY_ID;\
 							std::unordered_set<Entity_id> child{};\
-							std::string _prefab;\
 							\
 							itr = obj.FindMember("Entity");\
 							if (itr != obj.MemberEnd()) {\
 								DSerializer serializer{ itr };\
 								entityName = serializer.GetValue<std::string>("Name");\
 								parent = serializer.GetValue<unsigned int>("Parent");\
-								_prefab = serializer.GetValue<std::string>("Prefab");\
 								\
 							}\
-							Entity& entity = dreamECSGame->CreateEntity(entityName.c_str(), child, parent);\
-							entity.prefabName = _prefab;
+							Entity& entity = dreamECSGame->CreateEntity(entityName.c_str(), child, parent);
 
 //child = serializer.GetUSet<unsigned int>("Child");\
 
@@ -228,8 +225,6 @@ namespace Engine {
 
 		//fileStream.unsetf(std::ofstream::out | std::ofstream::trunc);
 		fileStream.close();
-		
-		//fclose(fp);
 	}
 
 	void GameSceneSerializer::DeserializeScene(std::string filename) {
@@ -278,8 +273,8 @@ namespace Engine {
 		fileStream.close();
 	}
 
-	void GameSceneSerializer::SerializePrefab(std::string filename, Entity_id entity_id) {
-		filename = TO_FULL_PREFAB(filename);
+	void GameSceneSerializer::SerializePrefab(std::string _filename, Entity_id entity_id) {
+		std::string filename = TO_FULL_PREFAB(_filename);
 
 		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 		const auto& [entityId, entity] = *entityMap.find(entity_id);
@@ -288,7 +283,10 @@ namespace Engine {
 		rapidjson::Value entityObject(rapidjson::kObjectType);
 
 		rapidjson::Value objTypeEntity(rapidjson::kObjectType);
-		SERIALIZE_ENTITY;
+		SSerializer serializerEntity(doc, objTypeEntity); 
+		serializerEntity.SetValue("Name", _filename);
+		serializerEntity.SetValue("Parent", entity.parent); 
+		serializerEntity.SetValueUSet("Child", entity.child);
 		entityObject.AddMember("Entity", objTypeEntity, doc.GetAllocator());
 
 		SERIALIZE(TransformComponent);
@@ -319,8 +317,8 @@ namespace Engine {
 		fileStream.close();
 	}
 
-	void GameSceneSerializer::DeserializePrefab(std::string filename, unsigned int* id, Math::vec2 position, float angle) {
-		filename = TO_FULL_PREFAB(filename);
+	void GameSceneSerializer::DeserializePrefab(std::string _filename, unsigned int* id, Math::vec2 position, float angle) {
+		std::string filename = TO_FULL_PREFAB(_filename);
 		
 		std::ifstream fileStream;
 		rapidjson::Document doc;
@@ -334,6 +332,8 @@ namespace Engine {
 			rapidjson::Value::ConstMemberIterator itr;
 
 			DESERIALIZE_ENTITY;
+			dreamECSGame->AddPrefab(Prefab(_filename, entity));
+
 			if (id != nullptr)
 				*id = entity.id;
 
@@ -342,7 +342,7 @@ namespace Engine {
 					DSerializer serializer{ itr }; 
 					const auto& transform = TransformComponent{ entity.id }.Deserialize(serializer);
 					dreamECSGame->AddComponent(
-						 TransformComponent{ entity.id, transform.position + position, transform.scale, transform.angle + angle }
+						 TransformComponent{ entity.id, position, transform.scale, transform.angle + angle }
 					); 
 			}
 
@@ -360,6 +360,8 @@ namespace Engine {
 				);
 			}
 		}
+
+		fileStream.close();
 	}
 
 	void GameSceneSerializer::RefreshPrefab(std::string filename, Entity_id id) {
@@ -376,57 +378,82 @@ namespace Engine {
 		for (auto& obj : doc.GetArray()) {
 			rapidjson::Value::ConstMemberIterator itr;
 
-
 			itr = obj.FindMember("TransformComponent");
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr }; 
-
-				TransformComponent& comp = dreamECSGame->GetComponent<TransformComponent>(id);
-				TransformComponent{ id }.Deserialize(serializer);
+				TransformComponent* comp = dreamECSGame->GetComponentPTR<TransformComponent>(id);
+				if (comp != nullptr) {
+					TransformComponent tem(id);
+					tem.Deserialize(serializer);
+					comp->angle = tem.angle;
+					comp->layer = tem.layer;
+				}
+				else 
+					dreamECSGame->AddComponent(TransformComponent{ id }.Deserialize(serializer));
 			}
 
 			itr = obj.FindMember("ColliderComponent");
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr };
-				ColliderComponent& comp = dreamECSGame->GetComponent<ColliderComponent>(id);
-				comp = ColliderComponent{ id }.Deserialize(serializer);
-
+				ColliderComponent* comp = dreamECSGame->GetComponentPTR<ColliderComponent>(id);
+				if (comp != nullptr)
+					*comp = ColliderComponent{ id }.Deserialize(serializer);
+				else
+					dreamECSGame->AddComponent(ColliderComponent{ id }.Deserialize(serializer));
 			}
 
 			itr = obj.FindMember("RigidBodyComponent");
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr };
-				RigidBodyComponent& comp = dreamECSGame->GetComponent<RigidBodyComponent>(id);
-				comp = RigidBodyComponent{ id }.Deserialize(serializer);
+				RigidBodyComponent* comp = dreamECSGame->GetComponentPTR<RigidBodyComponent>(id);
+				if (comp != nullptr)
+					*comp = RigidBodyComponent{ id }.Deserialize(serializer);
+				else
+					dreamECSGame->AddComponent(RigidBodyComponent{ id }.Deserialize(serializer));
 			}
 
 			itr = obj.FindMember("CameraComponent");
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr };
-				CameraComponent& comp = dreamECSGame->GetComponent<CameraComponent>(id);
-				comp = CameraComponent{ id }.Deserialize(serializer);
+				CameraComponent* comp = dreamECSGame->GetComponentPTR<CameraComponent>(id);
+				if (comp != nullptr)
+					*comp = CameraComponent{ id }.Deserialize(serializer);
+				else
+					dreamECSGame->AddComponent(CameraComponent{ id }.Deserialize(serializer));
 			}
 
 			itr = obj.FindMember("TextureComponent");
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr };
-				TextureComponent& comp = dreamECSGame->GetComponent<TextureComponent>(id);
-				comp = TextureComponent{ id }.Deserialize(serializer);
+				TextureComponent* comp = dreamECSGame->GetComponentPTR<TextureComponent>(id);
+				if (comp != nullptr)
+					*comp = TextureComponent{ id }.Deserialize(serializer);
+				else
+					dreamECSGame->AddComponent(TextureComponent{ id }.Deserialize(serializer));
 			}
 
 			itr = obj.FindMember("UIComponent");
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr };
-				UIComponent& comp = dreamECSGame->GetComponent<UIComponent>(id);
-				comp = UIComponent{ id }.Deserialize(serializer);
+				UIComponent* comp = dreamECSGame->GetComponentPTR<UIComponent>(id);
+				if (comp != nullptr)
+					*comp = UIComponent{ id }.Deserialize(serializer);
+				else
+					dreamECSGame->AddComponent(UIComponent{ id }.Deserialize(serializer));
 			}
 
 			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr };
-				ScriptComponent& comp = dreamECSGame->GetComponent<ScriptComponent>(id);
-				comp = ScriptComponent{ id }.Deserialize(serializer);
+				ScriptComponent* comp = dreamECSGame->GetComponentPTR<ScriptComponent>(id);
+				if (comp != nullptr)
+					*comp = std::move(ScriptComponent{ id }.Deserialize(serializer));
+				else
+					dreamECSGame->AddComponent(std::move(ScriptComponent{ id }.Deserialize(serializer)));
 			}
 		}
+
+		fileStream.close();
 	}
+
 }

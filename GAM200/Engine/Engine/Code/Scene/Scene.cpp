@@ -17,13 +17,13 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Scene/Scene.hpp"
+#include "Engine/Header/Scene/Prefab.hpp"
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Layer/LayerStack.hpp"
 
 #include "Engine/Header/Time/DeltaTime.hpp"
-//#include "Engine/Header/Management/GameState.hpp"
 
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 

@@ -34,7 +34,6 @@ namespace Engine {
 		Entity_id id{};
 		std::string name{};
 		Entity_id parent{};
-		std::string prefabName;
 		std::unordered_set<Entity_id> child{};
 
 		Entity(Entity_id _entityId = MAX_ENTITIES + 1, const char* _entityName = "Entity", Entity_id _parent = MAX_ENTITIES + 1) :

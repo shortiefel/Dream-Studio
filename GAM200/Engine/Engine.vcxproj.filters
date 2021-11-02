@@ -513,6 +513,9 @@
     <ClInclude Include="Engine\Header\ECS\System\FontSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\Scene\Prefab.hpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

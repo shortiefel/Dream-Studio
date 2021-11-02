@@ -21,6 +21,9 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 #include "Engine/Header/ECS/Factory.hpp"
 
+#include "Engine/Header/Scene/Prefab.hpp"
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
+
 #define DESTROY_ENTITY(entity_id)\
 entityManager->DestroyEntity(entity_id);\
 compManager->DestroyEntity(entity_id);
@@ -46,6 +49,9 @@ namespace Engine {
 	// 
 	//Track the number of the same name and give index to them
 	std::unordered_map <std::string, int> nameCount;
+	std::unordered_map<Entity_id, Prefab> mapOfPrefab;
+	
+	std::unordered_set<Entity_id> destroySet{};
 
 	std::unique_ptr<DreamECS> dreamECSGame = std::make_unique<DreamECS>();
 
@@ -89,7 +95,7 @@ namespace Engine {
 		return entityManager->GetUsedEntitySet();
 	}*/
 
-	const EntityMapType& DreamECS::GetUsedConstEntityMap() {
+	const EntityMapType& DreamECS::GetUsedConstEntityMap() const {
 		return entityManager->GetUsedConstEntityMap();
 	}
 
@@ -99,6 +105,10 @@ namespace Engine {
 
 	uint32_t DreamECS::GetUsedEntitySize() const {
 		return entityManager->GetUsedEntitySize();
+	}
+
+	const std::unordered_map<Entity_id, Prefab>& DreamECS::GetConstPrefabMap() const {
+		return mapOfPrefab;
 	}
 
 	void DreamECS::ClearDestroyQueue() {
@@ -154,6 +164,37 @@ namespace Engine {
 
 	void DreamECS::CreateCircle(Math::vec2 pos, Math::vec2 scale) {
 		Factory::InstantiateCircle(pos, scale);
+	}
+
+	void DreamECS::AddPrefab(const Prefab& _prefab) {
+		const auto& itr = mapOfPrefab.find(_prefab.entity.id);
+		if (itr == mapOfPrefab.end()) {
+			mapOfPrefab.emplace(_prefab.entity.id, _prefab);
+		}
+	}
+
+	void DreamECS::RemovePrefab(const Entity_id& entity_id) {
+		const auto& itr = mapOfPrefab.find(entity_id);
+		if (itr != mapOfPrefab.end()) {
+			mapOfPrefab.erase(itr);
+		}
+	}
+
+	void DreamECS::UpdateAllPrefab() {
+		std::unordered_set<Entity_id> deletePrefabSet;
+		auto& entityMap = dreamECSGame->GetUsedEntityMap();
+		for (const auto& [id, prefab] : mapOfPrefab) {
+			if (entityMap.find(id) == entityMap.end()) {
+				deletePrefabSet.emplace(id);
+				continue;
+			}
+
+			GameSceneSerializer::RefreshPrefab(prefab.prefabName, id);
+		}
+
+		for (const auto& id : deletePrefabSet) {
+			mapOfPrefab.erase(id);
+		}
 	}
 
 }

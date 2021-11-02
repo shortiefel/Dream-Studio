@@ -3,8 +3,7 @@
     "Entity": {
       "Name": "Background",
       "Parent": 10001,
-      "Child": [],
-      "Prefab": ""
+      "Child": []
     },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
@@ -28,8 +27,7 @@
     "Entity": {
       "Name": "Entity20",
       "Parent": 10001,
-      "Child": [],
-      "Prefab": ""
+      "Child": []
     },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
@@ -74,8 +72,7 @@
     "Entity": {
       "Name": "UI Object",
       "Parent": 10001,
-      "Child": [],
-      "Prefab": ""
+      "Child": []
     },
     "TransformComponent": {
       "Position": [ 300.0, 0.0 ],
@@ -94,8 +91,7 @@
     "Entity": {
       "Name": "Entity1",
       "Parent": 10001,
-      "Child": [],
-      "Prefab": ""
+      "Child": []
     },
     "TransformComponent": {
       "Position": [ 650.0, 0.0 ],
@@ -131,8 +127,7 @@
     "Entity": {
       "Name": "EntitySprite",
       "Parent": 10001,
-      "Child": [],
-      "Prefab": ""
+      "Child": []
     },
     "TransformComponent": {
       "Position": [ -650.0, 0.0 ],
@@ -168,8 +163,7 @@
     "Entity": {
       "Name": "Camera",
       "Parent": 10001,
-      "Child": [],
-      "Prefab": ""
+      "Child": []
     },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],

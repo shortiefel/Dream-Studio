@@ -326,6 +326,7 @@
     <ClInclude Include="Engine\Header\Physics\Collision.hpp" />
     <ClInclude Include="Engine\Header\Physics\Physics.hpp" />
     <ClInclude Include="Engine\Header\Physics\Ray.hpp" />
+    <ClInclude Include="Engine\Header\Scene\Prefab.hpp" />
     <ClInclude Include="Engine\Header\Scene\Scene.hpp" />
     <ClInclude Include="Engine\Header\Scene\SceneManager.hpp" />
     <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp" />

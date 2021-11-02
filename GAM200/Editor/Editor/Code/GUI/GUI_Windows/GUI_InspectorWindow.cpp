@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/TextureSet.hpp"
 #include "Engine/Header/ECS/Component/UI/TextComponent.hpp"
 
+#include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
@@ -528,16 +529,19 @@ namespace Editor {
 				/**
 				*	Prefab
 				*/
-				const Engine::Entity & entity = Engine::dreamECSGame->GetUsedConstEntityMap().find(entity_selected)->second;
-				if (!(entity.prefabName.empty()))
-				{
+				const auto& prefabMap = Engine::dreamECSGame->GetConstPrefabMap();
+				
+				if (prefabMap.find(entity_selected) != prefabMap.end()) {
+					const Engine::Prefab& prefab = prefabMap.find(entity_selected)->second;
 					if (ImGui::Button("Update Prefab##prefabupdatebtn", { ImGui::GetContentRegionAvail().x, 0 })) {
-						Engine::GameSceneSerializer::SerializePrefab(entity.prefabName, entity_selected);
+						std::cout << "Update \n";
+						Engine::GameSceneSerializer::SerializePrefab(prefab.prefabName, entity_selected);
 					}
 
 					else if (ImGui::Button("Refresh Prefab##btn", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						Engine::GameSceneSerializer::DeserializePrefab(entity.prefabName, entity_selected);
+						std::cout << "Refresh \n";
+						Engine::GameSceneSerializer::RefreshPrefab(prefab.prefabName, entity_selected);
 					}
 				}
 				

@@ -4,8 +4,7 @@
     "Entity": {
       "Name": "BoxPrefab",
       "Parent": 10001,
-      "Child": [],
-      "Prefab": "Box"
+      "Child": []
     },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
@@ -24,7 +23,7 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets\\Textures\\test1.png",
+      "Filepath": "Assets\\Textures\\HouseYellow.png",
       "Shape": 0,
       "IsAnimation": false,
       "IsLoop": false,

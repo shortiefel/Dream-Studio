@@ -89,13 +89,13 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##TransformXPos", &transComp->localPosition.x, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 						ImGui::SameLine(halfWidth * 1.5f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.620f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##TransformYPos", &transComp->localPosition.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 
@@ -198,13 +198,13 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##ColliderXPos", &colComp->offset_position.x, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 						ImGui::SameLine(halfWidth * 1.5f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.620f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##ColliderYPos", &colComp->offset_position.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 
@@ -382,13 +382,27 @@ namespace Editor {
 						if (textureComp->isAnimation == true)
 						{
 							ImGui::Spacing();
-							ImGui::Text("test 1");
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Looping");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::Checkbox("##isLoop", &(textureComp->isLoop));
+
+							ImGui::Spacing();
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Frame End");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::InputInt("##frameEnd", &textureComp->endFrame, 0);
+
+							ImGui::Spacing();
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Time Per Frame");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::InputFloat("##timeFrame", &textureComp->fTime, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+
 						}
-
-
-
-
-
 
 						ImGui::Spacing();
 

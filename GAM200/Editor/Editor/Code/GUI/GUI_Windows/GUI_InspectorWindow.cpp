@@ -534,13 +534,11 @@ namespace Editor {
 				if (prefabMap.find(entity_selected) != prefabMap.end()) {
 					const Engine::Prefab& prefab = prefabMap.find(entity_selected)->second;
 					if (ImGui::Button("Update Prefab##prefabupdatebtn", { ImGui::GetContentRegionAvail().x, 0 })) {
-						std::cout << "Update \n";
 						Engine::GameSceneSerializer::SerializePrefab(prefab.prefabName, entity_selected);
 					}
 
 					else if (ImGui::Button("Refresh Prefab##btn", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						std::cout << "Refresh \n";
 						Engine::GameSceneSerializer::RefreshPrefab(prefab.prefabName, entity_selected);
 					}
 				}
@@ -574,27 +572,21 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::TextureComponent>(entity_selected);
 					if (ImGui::Selectable(" + Rigidbody##addRigidbodycom"))
 						Engine::dreamECSGame->AddComponent<Engine::RigidBodyComponent>(entity_selected);
-					if (ImGui::Selectable(" + Script##addScriptcom"))
-						Engine::dreamECSGame->AddComponent<Engine::ScriptComponent>(entity_selected);
 					if (ImGui::Selectable(" + Camera##addCameracom"))
 						Engine::dreamECSGame->AddComponent<Engine::CameraComponent>(entity_selected);
 					if (ImGui::Selectable(" + UI##addUIcom"))
 						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
 
-					char text[100]{};
+					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
+						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
 
-					ImGui::PushItemWidth(textSize * 1.5f);
-					ImGui::SetNextItemWidth(halfWidth);
-					ImGui::Text(" + Script");
-					ImGui::SameLine(quadWidth);
-					if (ImGui::InputText("##addcomponenttype", text, 100)) {
-						if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
-							std::string textStr{ text };
+						if (!filePath.empty()) {
+							REMOVE_FROM_FILEPATH;
+
 							Engine::dreamECSGame->AddComponent(
-								std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() }));
+								std::move(Engine::ScriptComponent{ entity_selected, filePath.c_str() }));
 						}
 					}
-					ImGui::PopItemWidth();
 
 					ImGui::EndPopup();
 				}

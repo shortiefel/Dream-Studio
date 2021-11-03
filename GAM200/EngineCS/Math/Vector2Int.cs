@@ -17,7 +17,7 @@ Technology is prohibited.
 public struct Vector2Int
 {
     public int x, y;
-    public static Vector2 zero = new Vector2(0, 0);
+    public static Vector2Int zero = new Vector2Int(0, 0);
 
     public Vector2Int(int n1, int n2)
     {

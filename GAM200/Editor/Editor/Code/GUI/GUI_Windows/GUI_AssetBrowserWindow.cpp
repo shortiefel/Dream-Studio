@@ -22,11 +22,6 @@ Technology is prohibited.
 
 #define TEXT_BOX_SIZE 70
 
-#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
-							 filePath = filePath.substr(pos + 1);\
-							 pos = filePath.find_last_of(".");\
-							 filePath = filePath.substr(0, pos);
-
 namespace Editor {
 
 	extern const std::filesystem::path _assetPath = "Assets";

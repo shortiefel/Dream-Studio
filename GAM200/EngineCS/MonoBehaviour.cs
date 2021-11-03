@@ -109,20 +109,15 @@ public class MonoBehaviour : IComponent
     internal static extern bool HasComponent_Collider_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Camera_Engine(uint entityId);
-
-
-    public void DestroySelf()
+    //-----------------------------------------------------------------------------------------------------------------
+    //Destroy
+    public void Destroy(uint id)
     {
-        Destroy_Entity_Engine(entityId);
+        Destroy_Entity_Engine(id);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Destroy_Entity_Engine(uint entityID);
-
-
-
-    //-----------------------------------------------------------------------------------------------------------------
-    //Destroy
-    public void Destroy<T>(T type = default)
+    /*public void Destroy<T>(T type = default)
     {
         Console.WriteLine("Destroy not yet done");
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
@@ -151,7 +146,7 @@ public class MonoBehaviour : IComponent
     internal static extern void Destroy_Collider_Engine(uint entityID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Destroy_Script_Engine(uint entityID, String className);
+    internal static extern void Destroy_Script_Engine(uint entityID, String className);*/
 
     //-----------------------------------------------------------------------------------------------------------------
     //Enable

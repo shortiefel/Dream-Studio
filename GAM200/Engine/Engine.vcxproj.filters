@@ -175,6 +175,9 @@
     <ClCompile Include="Engine\Code\ECS\System\FontSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Random\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -516,6 +519,9 @@
     <ClInclude Include="Engine\Header\Scene\Prefab.hpp">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\Random\Random.hpp">
+      <Filter>Header Files\Random</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -676,6 +682,9 @@
     </Filter>
     <Filter Include="Source Files\Script\InternalCall">
       <UniqueIdentifier>{f6c80cf0-7104-4cc7-8309-4679e9ac5a47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Random">
+      <UniqueIdentifier>{8a054b6c-5a1c-4e4e-b907-85b78bc1e9bb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

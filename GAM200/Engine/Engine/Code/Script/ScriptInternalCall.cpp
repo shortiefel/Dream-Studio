@@ -28,7 +28,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Management/GameState.hpp"
-
+#include "Engine/Header/Random/Random.hpp"
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
 #include "Engine/Header/ECS/System/CollisionSystem.hpp" //For raycast
@@ -113,9 +113,9 @@ namespace Engine {
 	Destroy
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Destroy_Entity_Engine(unsigned int id);
-	void Destroy_Transform_Engine(unsigned int id);
+	/*void Destroy_Transform_Engine(unsigned int id);
 	void Destroy_Collider_Engine(unsigned int id);
-	void Destroy_Script_Engine(unsigned int id, MonoString* str);
+	void Destroy_Script_Engine(unsigned int id, MonoString* str);*/
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Active
@@ -156,6 +156,11 @@ namespace Engine {
 	Console Write
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void ConsoleWrite_Engine(MonoString* message);
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Random
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void Random_Range_Engine(int num1, int num2, int* answer);
 
 
 	void RegisterInternalCall() {
@@ -213,9 +218,9 @@ namespace Engine {
 		Destroy
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("MonoBehaviour::Destroy_Entity_Engine", Destroy_Entity_Engine);
-		mono_add_internal_call("MonoBehaviour::Destroy_Transform_Engine", Destroy_Transform_Engine);
+		/*mono_add_internal_call("MonoBehaviour::Destroy_Transform_Engine", Destroy_Transform_Engine);
 		mono_add_internal_call("MonoBehaviour::Destroy_Collider_Engine", Destroy_Collider_Engine);
-		mono_add_internal_call("MonoBehaviour::Destroy_Script_Engine", Destroy_Script_Engine);
+		mono_add_internal_call("MonoBehaviour::Destroy_Script_Engine", Destroy_Script_Engine);*/
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Active
@@ -256,6 +261,11 @@ namespace Engine {
 		Console Write
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Debug::ConsoleWrite_Engine", ConsoleWrite_Engine);
+		
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Random
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		mono_add_internal_call("Random::Random_Range_Engine", Random_Range_Engine);
 	}
 
 
@@ -448,7 +458,7 @@ namespace Engine {
 		dreamECSGame->DestroyEntity(id);
 	}
 
-	void Destroy_Transform_Engine(unsigned int id) {
+	/*void Destroy_Transform_Engine(unsigned int id) {
 		dreamECSGame->RemoveComponent<TransformComponent>(id);
 	}
 
@@ -460,7 +470,7 @@ namespace Engine {
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(id);
 		if (!csScript) return;
 		csScript->RemoveScript(mono_string_to_utf8(str));
-	}
+	}*/
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Active
@@ -562,5 +572,13 @@ namespace Engine {
 	
 	void ConsoleWrite_Engine(MonoString* message) {
 		ConsoleFuncPtr(mono_string_to_utf8(message));
+	}
+
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Random
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void Random_Range_Engine(int num1, int num2, int* answer) {
+		Random::Range(num1, num2, answer);
 	}
 }

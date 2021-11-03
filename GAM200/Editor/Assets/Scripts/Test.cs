@@ -85,14 +85,14 @@ public class Test : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))
         {
-            go1.AddComponent<Collider>();
+            Debug.Log(Random.Range(10, 30));
             //if (test2 != null)
      
             //else Debug.Log("Is null now");
         }
         if (Input.GetMouseButtonDown(4))
         {
-  
+    
         }
 
         /*if (Input.GetMouseButtonDown(2))

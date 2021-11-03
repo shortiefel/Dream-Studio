@@ -62,7 +62,6 @@ Technology is prohibited.
 							}\
 							Entity& entity = dreamECSGame->CreateEntity(entityName.c_str(), child, parent);
 
-//child = serializer.GetUSet<unsigned int>("Child");\
 
 //Type and Store named must be same to use this
 #define DESERIALIZE_INTERNAL(type, dreamECS) \
@@ -75,6 +74,19 @@ if (itr != obj.MemberEnd()) {\
 }
 
 #define DESERIALIZE(type) DESERIALIZE_INTERNAL(type, dreamECSGame)
+
+#define REFRESH_PREFAB(type) itr = obj.FindMember(#type);\
+							 type* component##type = dreamECSGame->GetComponentPTR<type>(id);\
+							 if (itr != obj.MemberEnd()) {\
+							 	DSerializer serializer{ itr };\
+							 	 if (component##type != nullptr)\
+							 		 *component##type = type{ id }.Deserialize(serializer);\
+							 	 else\
+							 		 dreamECSGame->AddComponent(type{ id }.Deserialize(serializer));\
+							 }\
+							 else if (component##type != nullptr) {\
+							 	 dreamECSGame->RemoveComponent<type>(id);\
+							 }
 
 //#define SERIALIZE(target)\
 //	rapidjson::Value objType(rapidjson::kObjectType);\
@@ -378,78 +390,49 @@ namespace Engine {
 		for (auto& obj : doc.GetArray()) {
 			rapidjson::Value::ConstMemberIterator itr;
 
+			//Logic for each component
+			//1. if in prefab file have a particular component
+			//	1.1 if ECS have the same component for that entity
+			//		change/ammend the variables of the component
+			//	1.2 if entity doesnt have that component
+			//		add component
+			//2. else if entity doesnt have that component (assuming prefab file doesnt have the component too opposite of 1.)
+			//	remove component since prefab file dont have but ECS have
+
 			itr = obj.FindMember("TransformComponent");
+			TransformComponent* transformComponent = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr }; 
-				TransformComponent* comp = dreamECSGame->GetComponentPTR<TransformComponent>(id);
-				if (comp != nullptr) {
+				if (transformComponent != nullptr) {
 					TransformComponent tem(id);
 					tem.Deserialize(serializer);
-					comp->angle = tem.angle;
-					comp->layer = tem.layer;
+					transformComponent->angle = tem.angle;
+					transformComponent->layer = tem.layer;
 				}
 				else 
 					dreamECSGame->AddComponent(TransformComponent{ id }.Deserialize(serializer));
 			}
-
-			itr = obj.FindMember("ColliderComponent");
-			if (itr != obj.MemberEnd()) {
-				DSerializer serializer{ itr };
-				ColliderComponent* comp = dreamECSGame->GetComponentPTR<ColliderComponent>(id);
-				if (comp != nullptr)
-					*comp = ColliderComponent{ id }.Deserialize(serializer);
-				else
-					dreamECSGame->AddComponent(ColliderComponent{ id }.Deserialize(serializer));
+			else if (transformComponent != nullptr) {
+				dreamECSGame->RemoveComponent<TransformComponent>(id);
 			}
 
-			itr = obj.FindMember("RigidBodyComponent");
-			if (itr != obj.MemberEnd()) {
-				DSerializer serializer{ itr };
-				RigidBodyComponent* comp = dreamECSGame->GetComponentPTR<RigidBodyComponent>(id);
-				if (comp != nullptr)
-					*comp = RigidBodyComponent{ id }.Deserialize(serializer);
-				else
-					dreamECSGame->AddComponent(RigidBodyComponent{ id }.Deserialize(serializer));
-			}
-
-			itr = obj.FindMember("CameraComponent");
-			if (itr != obj.MemberEnd()) {
-				DSerializer serializer{ itr };
-				CameraComponent* comp = dreamECSGame->GetComponentPTR<CameraComponent>(id);
-				if (comp != nullptr)
-					*comp = CameraComponent{ id }.Deserialize(serializer);
-				else
-					dreamECSGame->AddComponent(CameraComponent{ id }.Deserialize(serializer));
-			}
-
-			itr = obj.FindMember("TextureComponent");
-			if (itr != obj.MemberEnd()) {
-				DSerializer serializer{ itr };
-				TextureComponent* comp = dreamECSGame->GetComponentPTR<TextureComponent>(id);
-				if (comp != nullptr)
-					*comp = TextureComponent{ id }.Deserialize(serializer);
-				else
-					dreamECSGame->AddComponent(TextureComponent{ id }.Deserialize(serializer));
-			}
-
-			itr = obj.FindMember("UIComponent");
-			if (itr != obj.MemberEnd()) {
-				DSerializer serializer{ itr };
-				UIComponent* comp = dreamECSGame->GetComponentPTR<UIComponent>(id);
-				if (comp != nullptr)
-					*comp = UIComponent{ id }.Deserialize(serializer);
-				else
-					dreamECSGame->AddComponent(UIComponent{ id }.Deserialize(serializer));
-			}
-
+			REFRESH_PREFAB(ColliderComponent);
+			REFRESH_PREFAB(RigidBodyComponent);
+			REFRESH_PREFAB(CameraComponent);
+			REFRESH_PREFAB(TextureComponent);
+			REFRESH_PREFAB(UIComponent);
+			
 			itr = obj.FindMember("ScriptComponent");
+			ScriptComponent* compScript = dreamECSGame->GetComponentPTR<ScriptComponent>(id);
 			if (itr != obj.MemberEnd()) {
 				DSerializer serializer{ itr };
-				ScriptComponent* comp = dreamECSGame->GetComponentPTR<ScriptComponent>(id);
-				if (comp != nullptr)
-					*comp = std::move(ScriptComponent{ id }.Deserialize(serializer));
+				if (compScript != nullptr)
+					*compScript = std::move(ScriptComponent{ id }.Deserialize(serializer));
 				else
 					dreamECSGame->AddComponent(std::move(ScriptComponent{ id }.Deserialize(serializer)));
+			}
+			else if (compScript != nullptr) {
+				dreamECSGame->RemoveComponent<ScriptComponent>(id);
 			}
 		}
 

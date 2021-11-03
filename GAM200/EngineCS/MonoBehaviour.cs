@@ -31,10 +31,11 @@ Technology is prohibited.
 using System;
 using System.Runtime.CompilerServices; //For internal calls
 
-public class MonoBehaviour : IComponent
+public class MonoBehaviour : IBehaviour
 {
-    //public GameObject gameObject;
-    public uint entityId { get; set; }
+    public GameObject gameObject;
+    public Transform transform;
+    //public uint entityId { get; set; }
 
     public virtual void Start() { }
     public virtual void Update() { }
@@ -54,9 +55,11 @@ public class MonoBehaviour : IComponent
     public MonoBehaviour(uint id)
     {
         entityId = id;
+        gameObject = GameObject.RetrieveGameObject(id);
+        transform = new Transform(id);
     }
 
-    public T GetComponent<T>() where T : class, IComponent, new()
+    /*public T GetComponent<T>() where T : class, IComponent, new()
     {
         if (HasComponent<T>(entityId))
         {
@@ -68,7 +71,7 @@ public class MonoBehaviour : IComponent
         return null;
     }
 
-    /*public T GetComponentWithID<T>(uint id) where T : class, IComponent, new()
+    *//*public T GetComponentWithID<T>(uint id) where T : class, IComponent, new()
     {
         if (HasComponent<T>(id))
         {
@@ -78,7 +81,7 @@ public class MonoBehaviour : IComponent
         }
 
         return null;
-    }*/
+    }*//*
 
     public bool HasComponent<T>(uint id)
     {
@@ -108,15 +111,15 @@ public class MonoBehaviour : IComponent
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Collider_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Camera_Engine(uint entityId);
+    internal static extern bool HasComponent_Camera_Engine(uint entityId);*/
     //-----------------------------------------------------------------------------------------------------------------
     //Destroy
-    public void Destroy(uint id)
+    /*public void Destroy(uint id)
     {
         Destroy_Entity_Engine(id);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Destroy_Entity_Engine(uint entityID);
+    internal static extern void Destroy_Entity_Engine(uint entityID);*/
     /*public void Destroy<T>(T type = default)
     {
         Console.WriteLine("Destroy not yet done");
@@ -125,7 +128,7 @@ public class MonoBehaviour : IComponent
             Destroy_Script_Engine(entityId, typeof(T).ToString());
             return;
         }
-
+        
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
@@ -213,11 +216,11 @@ public class MonoBehaviour : IComponent
 
     //-----------------------------------------------------------------------------------------------------------------
     //Instantiate
-    public GameObject Instantiate(string prefabName, Transform transform = null)
+    public GameObject Instantiate(Prefab _prefab, Transform transform = null)
     {
         int newEntityId = -1;
         if (transform != null) newEntityId = (int)transform.entityId;
-        Instantiate_Prefab_Transform_Engine(prefabName, newEntityId, out uint newId);
+        Instantiate_Prefab_Transform_Engine(_prefab.name, newEntityId, out uint newId);
         return new GameObject(false, newId);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

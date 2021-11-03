@@ -47,7 +47,7 @@ Technology is prohibited.
 #define SERIALIZE_ENTITY SSerializer serializerEntity(doc, objTypeEntity);\
 						 serializerEntity.SetValue("Name", entity.name);\
 						 serializerEntity.SetValue("Parent", entity.parent);\
-						 serializerEntity.SetValueUSet("Child", entity.child);
+						 serializerEntity.SetValueSet("Child", entity.child);
 
 #define DESERIALIZE_ENTITY std::string entityName = DEFAULT_ENTITY_NAME;\
 							Entity_id parent = DEFAULT_ENTITY_ID;\
@@ -298,7 +298,7 @@ namespace Engine {
 		SSerializer serializerEntity(doc, objTypeEntity); 
 		serializerEntity.SetValue("Name", _filename);
 		serializerEntity.SetValue("Parent", entity.parent); 
-		serializerEntity.SetValueUSet("Child", entity.child);
+		serializerEntity.SetValueSet("Child", entity.child);
 		entityObject.AddMember("Entity", objTypeEntity, doc.GetAllocator());
 
 		SERIALIZE(TransformComponent);

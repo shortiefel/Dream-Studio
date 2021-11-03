@@ -22,7 +22,7 @@ Technology is prohibited.
 #include <string>
 #include <rapidjson/document.h>
 
-#include <unordered_set>
+#include <set>
 
 #define ADD_MEMBER(name, data)\
 rapidjson::Value vName(name, doc.GetAllocator());\
@@ -86,7 +86,7 @@ namespace Engine {
 		}
 
 		template <typename T>
-		void SetValueUSet(const char* _name, const std::unordered_set<T>& _val) const {
+		void SetValueSet(const char* _name, const std::set<T>& _val) const {
 			rapidjson::Value pos(rapidjson::kArrayType);
 
 			for (const auto& id : _val) {

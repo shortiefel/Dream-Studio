@@ -84,6 +84,9 @@ namespace Engine {
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2);
 	void SetParent_Engine(int parentId, unsigned int child);
 
+	void Transform_GetChildCount_Engine(unsigned int entityId, int* result);
+	void Transform_GetChild_Engine(unsigned int entityId, int index, unsigned int* targetId);
+
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Camera
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -113,9 +116,9 @@ namespace Engine {
 	Destroy
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Destroy_Entity_Engine(unsigned int id);
-	/*void Destroy_Transform_Engine(unsigned int id);
+	void Destroy_Transform_Engine(unsigned int id);
 	void Destroy_Collider_Engine(unsigned int id);
-	void Destroy_Script_Engine(unsigned int id, MonoString* str);*/
+	void Destroy_Script_Engine(unsigned int id, MonoString* str);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Active
@@ -190,6 +193,9 @@ namespace Engine {
 		mono_add_internal_call("Transform::GetTransform_right_Engine", GetTransform_right_Engine);
 		mono_add_internal_call("Transform::SetParent_Engine", SetParent_Engine);
 
+		mono_add_internal_call("Transform::Transform_GetChildCount_Engine", Transform_GetChildCount_Engine);
+		mono_add_internal_call("Transform::Transform_GetChild_Engine", Transform_GetChild_Engine);
+
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Camera
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -209,18 +215,18 @@ namespace Engine {
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Check if component exist
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		mono_add_internal_call("MonoBehaviour::HasComponent_Scripts_Engine", HasComponent_Scripts_Engine);
-		mono_add_internal_call("MonoBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
-		mono_add_internal_call("MonoBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
-		mono_add_internal_call("MonoBehaviour::HasComponent_Camera_Engine", HasComponent_Camera_Engine);
+		mono_add_internal_call("IBehaviour::HasComponent_Scripts_Engine", HasComponent_Scripts_Engine);
+		mono_add_internal_call("IBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
+		mono_add_internal_call("IBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
+		mono_add_internal_call("IBehaviour::HasComponent_Camera_Engine", HasComponent_Camera_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Destroy
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		mono_add_internal_call("MonoBehaviour::Destroy_Entity_Engine", Destroy_Entity_Engine);
-		/*mono_add_internal_call("MonoBehaviour::Destroy_Transform_Engine", Destroy_Transform_Engine);
-		mono_add_internal_call("MonoBehaviour::Destroy_Collider_Engine", Destroy_Collider_Engine);
-		mono_add_internal_call("MonoBehaviour::Destroy_Script_Engine", Destroy_Script_Engine);*/
+		mono_add_internal_call("IBehaviour::Destroy_Entity_Engine", Destroy_Entity_Engine);
+		mono_add_internal_call("IBehaviour::Destroy_Transform_Engine", Destroy_Transform_Engine);
+		mono_add_internal_call("IBehaviour::Destroy_Collider_Engine", Destroy_Collider_Engine);
+		mono_add_internal_call("IBehaviour::Destroy_Script_Engine", Destroy_Script_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Active
@@ -395,6 +401,15 @@ namespace Engine {
 		else dreamECSGame->Parent(parentId, child);
 	}
 
+	void Transform_GetChildCount_Engine(unsigned int entityId, int* result) {
+		const auto& entity = dreamECSGame->GetUsedConstEntityMap().find(entityId)->second;
+		*result = static_cast<int>(entity.child.size());
+	}
+
+	void Transform_GetChild_Engine(unsigned int entityId, int index, unsigned int* targetId) {
+		const auto& entity = dreamECSGame->GetUsedConstEntityMap().find(entityId)->second;
+		*targetId = *(entity.child.find(index));
+	}
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Camera
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -458,7 +473,7 @@ namespace Engine {
 		dreamECSGame->DestroyEntity(id);
 	}
 
-	/*void Destroy_Transform_Engine(unsigned int id) {
+	void Destroy_Transform_Engine(unsigned int id) {
 		dreamECSGame->RemoveComponent<TransformComponent>(id);
 	}
 
@@ -470,7 +485,7 @@ namespace Engine {
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(id);
 		if (!csScript) return;
 		csScript->RemoveScript(mono_string_to_utf8(str));
-	}*/
+	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Active

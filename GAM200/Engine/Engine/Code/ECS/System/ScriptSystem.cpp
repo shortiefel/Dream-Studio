@@ -86,7 +86,7 @@ namespace Engine {
 
 	void ScriptSystem::PlayInit() {
 		PROFILER_START("Scripting");
-
+		
 		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
@@ -96,14 +96,15 @@ namespace Engine {
 			
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
-				void* param[] = { (void*)&entity_id };
-				//std::cout << "class: " << className << "\n";
-				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
-				}
-				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
-				}
+				//void* param[] = { (void*)&entity_id };
+				////std::cout << "class: " << className << "\n";
+				//if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
+				//	Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
+				//}
+				//if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
+				//	Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
+				//}
+				Scripting::InitScript(entity_id, csScriptInstance);
 			}
 		}
 	}

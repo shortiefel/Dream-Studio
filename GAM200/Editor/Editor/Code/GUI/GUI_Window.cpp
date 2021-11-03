@@ -72,9 +72,6 @@ Technology is prohibited.
 
 #define TEXT_BOX_SIZE 70
 
-#define REMOVE_FROM_FILEPATH filePath = filePath.substr(filePath.find_last_of("\\") + 1);\
-							 filePath = filePath.substr(0, filePath.find_last_of("."));
-
 namespace Editor {
 	namespace GUI_Windows {
 		//bool for dockspace (will always be true)

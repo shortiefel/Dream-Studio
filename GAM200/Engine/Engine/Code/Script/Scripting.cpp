@@ -62,7 +62,16 @@ namespace Engine {
 				INVOKE_FUNCTION(InitFunc);
 				break;
 			case MonoFunctionType::UPDATE:
-				INVOKE_FUNCTION(UpdateFunc);
+				//INVOKE_FUNCTION(UpdateFunc);
+				if (_csScriptInstance.csClass.UpdateFunc != nullptr) {
+						mono_runtime_invoke(_csScriptInstance.csClass.UpdateFunc, _csScriptInstance.csClass.object, _param, &exception);
+						if (exception != nullptr) {
+							
+								displayFuncPtr(mono_string_to_utf8(mono_object_to_string(exception, nullptr))); 
+								GameState::GetInstance().SetPlaying(false); 
+								Scripting::DestroyChildDomain(); 
+						}
+				}
 				break;
 			case MonoFunctionType::DESTROY:
 				INVOKE_FUNCTION(DestroyFunc);
@@ -173,7 +182,19 @@ namespace Engine {
 			}
 		}
 
-		bool InitCSClass(CSScriptInstance& _csScriptInstance) {
+		void InitScript(const Entity_id& entity_id, const CSScriptInstance& csScriptInstance) {
+			if (!GameState::GetInstance().GetPlaying()) return;
+			void* param[] = { (void*)&entity_id };
+			//std::cout << "class: " << className << "\n";
+			if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
+				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
+			}
+			if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
+				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
+			}
+		}
+
+		bool InitCSClass(CSScriptInstance& _csScriptInstance, const Entity_id& entity_id) {
 			//If no child domain the klass doesnt exist
 			MonoDomain* currentDomain = mono_domain_get();
 			if (!currentDomain || currentDomain == mono_get_root_domain()) return true;
@@ -252,6 +273,8 @@ namespace Engine {
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnMouseExit = mono_method_desc_search_in_image(description, image);
 
+			Scripting::InitScript(entity_id, _csScriptInstance);
+
 			return true;
 		}
 
@@ -259,10 +282,10 @@ namespace Engine {
 			auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
-
+				
 				std::set<std::string> classToDelete;
 				for (auto& [className, csScriptInstance] : classScriptInstances) {
-					if (!InitCSClass(csScriptInstance)) {
+					if (!InitCSClass(csScriptInstance, csScript.GetEntityId())) {
 						classToDelete.emplace(className);
 					}
 				}

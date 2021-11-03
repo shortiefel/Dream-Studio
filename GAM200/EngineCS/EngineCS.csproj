@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Debug.cs" />
+    <Compile Include="IBehaviour.cs" />
     <Compile Include="Input\Input.cs" />
     <Compile Include="Input\InputCode.cs" />
     <Compile Include="Math\Mathf.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Types\IComponent.cs" />
     <Compile Include="Types\GameObject.cs" />
     <Compile Include="Types\GenericTypesDictonary.cs" />
+    <Compile Include="Types\Prefab.cs" />
     <Compile Include="Types\Transform.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

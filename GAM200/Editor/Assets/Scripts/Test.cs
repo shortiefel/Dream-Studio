@@ -23,14 +23,14 @@ public class Test : MonoBehaviour
     public Transform trans;
     public GameObject go1;
 
- 
+    Prefab _prefab;
     //Collider col1;
 
     public override void Start()
     {
         trans = GetComponent<Transform>();
         go1 = new GameObject("EntityTest");
-
+        _prefab = new Prefab("Box");
         //col1 = GetComponent<Collider>();
         //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
@@ -81,14 +81,11 @@ public class Test : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(2))
         {
-            go1.AddComponent<Transform>();
+            Instantiate(_prefab, transform);
         }
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log(Random.Range(10, 30));
-            //if (test2 != null)
-     
-            //else Debug.Log("Is null now");
+            Instantiate(_prefab);
         }
         if (Input.GetMouseButtonDown(4))
         {

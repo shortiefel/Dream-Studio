@@ -11,13 +11,13 @@ public class StructureModel : MonoBehaviour
         transform = GetComponent<Transform>();
     }
 
-    public void CreateModel(GameObject model)
+    public void CreateModel(string model)
     {
         var structure = Instantiate(model, transform);
         //yHeight = structure.transform.position.y;
     }
 
-    public void SwapModel(GameObject model, float rotation)
+    public void SwapModel(string model, float rotation)
     {
         foreach (Transform child in transform)
         {

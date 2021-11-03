@@ -14,11 +14,13 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_AssetBrowserWindow.hpp"
 #include "Engine/Header/Management/AssetManager.hpp"
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
+#include "Engine/Header/Scene/Scene.hpp"
 
 #define TEXT_BOX_SIZE 70
 
@@ -44,51 +46,77 @@ namespace Editor {
 			Length
 		};
 
-		static AssetView _currentView = AssetView::TextureBrowser;
+		enum class ResourceType {
+			Texture,
+			Scene,
+			Prefabs
+		};
+		static ResourceType type;
+		//static AssetView _currentView = AssetView::TextureBrowser;
 
-		static void ShowSceneBrowser()
+		//static void ShowSceneBrowser()
+		//{
+
+		//	std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+		//		if (!filePath.empty()) {
+		//			REMOVE_FROM_FILEPATH;
+
+		//			Engine::SceneManager::GetInstance().ChangeScene(filePath);
+		//		}
+
+		//}
+
+		//static void ShowTextureBrowser()
+		//{
+		//	std::string filePath = Engine::FileWindowDialog::OpenFile("Texture (*.png)\0*.png\0");
+
+		//		if (!filePath.empty()) {
+		//			REMOVE_FROM_FILEPATH;
+
+		//			//Engine::SceneManager::GetInstance().ChangeScene(filePath);
+		//		}
+		//}
+
+		void OpenScene()
 		{
-			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-			{
 				std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
 
-				if (!filePath.empty()) {
-					REMOVE_FROM_FILEPATH;
+					if (!filePath.empty()) {
+						REMOVE_FROM_FILEPATH;
 
-					Engine::SceneManager::GetInstance().ChangeScene(filePath);
-				}
-			}
+						Engine::SceneManager::GetInstance().ChangeScene(filePath);
+					}		
 		}
 
-		static void ShowTextureBrowser()
+		void OpenScene(const std::filesystem::path& path)
 		{
-			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+			if (path.extension().string() != ".scene")
 			{
-				std::string filePath = Engine::FileWindowDialog::OpenFile("Texture (*.png)\0*.png\0");
-
-				if (!filePath.empty()) {
-					REMOVE_FROM_FILEPATH;
-
-					//Engine::SceneManager::GetInstance().ChangeScene(filePath);
-				}
+				LOG_INSTANCE("Cannot load scene file");
+				return;
 			}
+
+			std::string newScene = std::string{};
+			
+
 		}
 		void GUI_AssetBrowser(bool* asset_bool, ImGuiWindowFlags window_flags)
 		{
 			if (*asset_bool) {
 				ImGui::Begin("Project", asset_bool, window_flags);
 				
-				switch (_currentView)
-				{
-				case AssetView::TextureBrowser:
-					ShowTextureBrowser();
-					break;
-				case AssetView::SceneBrowser:
-					ShowSceneBrowser();
-					break;
-				default:
-					break;
-				}
+				//switch (_currentView)
+				//{
+				//case AssetView::TextureBrowser:
+				//	ShowTextureBrowser();
+				//	break;
+				//case AssetView::SceneBrowser:
+				//	ShowSceneBrowser();
+				//	break;
+				//default:
+				//	break;
+				//}
 				//all assets
 				if (_currentDirectory != std::filesystem::path(_assetPath))
 				{
@@ -97,92 +125,6 @@ namespace Editor {
 						_currentDirectory = _currentDirectory.parent_path();
 					}
 				}
-
-				if (ImGui::TreeNode("Drag and Drop"))
-				{
-					if (ImGui::TreeNode("Drag and drop in standard widgets"))
-					{
-						// ColorEdit widgets automatically act as drag source and drag target.
-						// They are using standardized payload strings IMGUI_PAYLOAD_TYPE_COLOR_3F and IMGUI_PAYLOAD_TYPE_COLOR_4F
-						// to allow your own widgets to use colors in their drag and drop interaction.
-						// Also see 'Demo->Widgets->Color/Picker Widgets->Palette' demo.
-						//HelpMarker("You can drag from the color squares.");
-						static float col1[3] = { 1.0f, 0.0f, 0.2f };
-						static float col2[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
-						ImGui::ColorEdit3("color 1", col1);
-						ImGui::ColorEdit4("color 2", col2);
-						ImGui::TreePop();
-					}
-
-					if (ImGui::TreeNode("Drag and drop to copy/swap items"))
-					{
-						enum Mode
-						{
-							Mode_Copy,
-							Mode_Move,
-							Mode_Swap
-						};
-						static int mode = 0;
-						if (ImGui::RadioButton("Copy", mode == Mode_Copy)) { mode = Mode_Copy; } ImGui::SameLine();
-						if (ImGui::RadioButton("Move", mode == Mode_Move)) { mode = Mode_Move; } ImGui::SameLine();
-						if (ImGui::RadioButton("Swap", mode == Mode_Swap)) { mode = Mode_Swap; }
-						static const char* names[9] =
-						{
-							"Bobby", "Beatrice", "Betty",
-							"Brianna", "Barry", "Bernard",
-							"Bibi", "Blaine", "Bryn"
-						};
-						for (int n = 0; n < IM_ARRAYSIZE(names); n++)
-						{
-							ImGui::PushID(n);
-							if ((n % 3) != 0)
-								ImGui::SameLine();
-							ImGui::Button(names[n], ImVec2(60, 60));
-
-							// Our buttons are both drag sources and drag targets here!
-							if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-							{
-								// Set payload to carry the index of our item (could be anything)
-								ImGui::SetDragDropPayload("DND_DEMO_CELL", &n, sizeof(int));
-
-								// Display preview (could be anything, e.g. when dragging an image we could decide to display
-								// the filename and a small preview of the image, etc.)
-								if (mode == Mode_Copy) { ImGui::Text("Copy %s", names[n]); }
-								if (mode == Mode_Move) { ImGui::Text("Move %s", names[n]); }
-								if (mode == Mode_Swap) { ImGui::Text("Swap %s", names[n]); }
-								ImGui::EndDragDropSource();
-							}
-							if (ImGui::BeginDragDropTarget())
-							{
-								if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_DEMO_CELL"))
-								{
-									IM_ASSERT(payload->DataSize == sizeof(int));
-									int payload_n = *(const int*)payload->Data;
-									if (mode == Mode_Copy)
-									{
-										names[n] = names[payload_n];
-									}
-									if (mode == Mode_Move)
-									{
-										names[n] = names[payload_n];
-										names[payload_n] = "";
-									}
-									if (mode == Mode_Swap)
-									{
-										const char* tmp = names[n];
-										names[n] = names[payload_n];
-										names[payload_n] = tmp;
-									}
-								}
-								ImGui::EndDragDropTarget();
-							}
-							ImGui::PopID();
-						}
-						ImGui::TreePop();
-					}
-					ImGui::TreePop();
-				}
-
 
 				static float padding = 16.0f;
 				static float thumbnailSize = 128.0f;
@@ -209,20 +151,45 @@ namespace Editor {
 					auto asset_icon = directory.is_directory() ? directory_icon : file_icon;
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 					ImGui::ImageButton((ImTextureID)asset_icon, { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
-					if (ImGui::BeginDragDropSource())
+					const wchar_t* itemPath = relative_path.c_str();
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 					{
 						const wchar_t* itemPath = relative_path.c_str();
+						ImGui::Text("I'm Dragging.");
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
-					if (_currentDirectory != std::filesystem::path(_scenePath))
+					if (ImGui::BeginDragDropTarget())
 					{
-						ShowTextureBrowser();
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+						{
+							const wchar_t* path = (const wchar_t*)payload->Data;
+							OpenScene(std::filesystem::path(_assetPath) / path);
+
+							//Engine::SceneManager::GetInstance().OpenScene((std::filesystem::path(_assetPath) / path));
+						}
+						ImGui::EndDragDropTarget();
 					}
-					if (_currentDirectory != std::filesystem::path(_texturePath))
-					{
-						ShowSceneBrowser();
-					}
+
+					//switch (type)
+					//{
+					//case ResourceType::Scene:
+					//	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+					//	{
+					//		ImGui::SetDragDropPayload("SCENE_FILE", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
+					//		ImGui::EndDragDropSource();
+					//	}
+					//	break;
+
+					//}
+					//if (_currentDirectory != std::filesystem::path(_scenePath))
+					//{
+					//	ShowTextureBrowser();
+					//}
+					//if (_currentDirectory != std::filesystem::path(_texturePath))
+					//{
+					//	ShowSceneBrowser();
+					//}
 				
 					//for scene
 					//if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))

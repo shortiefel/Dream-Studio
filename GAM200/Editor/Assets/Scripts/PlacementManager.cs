@@ -6,6 +6,7 @@ public class PlacementManager : MonoBehaviour
 {
     public int width, height;
     Grid placementGrid;
+    private Transform transform;
 
     private Dictionary<Vector2Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector2Int, StructureModel>();
     private Dictionary<Vector2Int, StructureModel> structureDictionary = new Dictionary<Vector2Int, StructureModel>();
@@ -13,6 +14,7 @@ public class PlacementManager : MonoBehaviour
     private void Start()
     {
         placementGrid = new Grid(width, height);
+        transform = GetComponent<Transform>();
     }
 
     internal CellType[] GetNeighbourTypesFor(Vector2Int position)

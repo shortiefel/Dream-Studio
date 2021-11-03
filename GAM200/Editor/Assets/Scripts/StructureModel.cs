@@ -4,6 +4,12 @@ using System.Collections.Generic;
 public class StructureModel : MonoBehaviour
 {
     //float yHeight = 0;
+    private Transform transform;
+
+    private void Start()
+    {
+        transform = GetComponent<Transform>();
+    }
 
     public void CreateModel(GameObject model)
     {
@@ -19,6 +25,6 @@ public class StructureModel : MonoBehaviour
         }
         var structure = Instantiate(model, transform);
         structure.transform.localPosition = new Vector2(0, 0);
-        structure.transform.localRotation = rotation;
+        structure.transform.angle = rotation;
     }
 }

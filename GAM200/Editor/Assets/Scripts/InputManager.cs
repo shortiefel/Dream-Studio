@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
 
 	public Camera mainCamera;
 
+	public bool OverGameObject;
+
 	//public LayerMask groundMask;
 
 	public Vector2 CameraMovementVector
@@ -22,7 +24,7 @@ public class InputManager : MonoBehaviour
 		CheckClickDownEvent();
 		CheckClickUpEvent();
 		CheckClickHoldEvent();
-		CheckArrowInput();
+		//CheckArrowInput();
 	}
 
 	private Vector2Int? RaycastGround()
@@ -31,7 +33,8 @@ public class InputManager : MonoBehaviour
 		//Ray2D ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 		//Debug.Log(ray);
 		//if (Physics2D.Raycast(ray, out hit, Mathf.Infinity, groundMask))
-		RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.GetMousePosition), Vector2.zero);
+		
+		RaycastHit2D hit = Physics2D.RayCast(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()), Vector2.zero);
 
 		if (hit.collider != null)
 		{
@@ -49,9 +52,19 @@ public class InputManager : MonoBehaviour
 	//	cameraMovementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 	//}
 
+	public override void OnMouseEnter()
+	{
+		OverGameObject = true;
+	}
+
+	public override void OnMouseExit()
+	{
+		OverGameObject = false;
+	}
+
 	private void CheckClickHoldEvent()
 	{
-		if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
+		if (Input.GetMouseButton(0) && OverGameObject == false)
 		{
 			//Debug.Log("here1");
 			var position = RaycastGround();
@@ -63,7 +76,7 @@ public class InputManager : MonoBehaviour
 
 	private void CheckClickUpEvent()
 	{
-		if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false)
+		if (Input.GetMouseButtonUp(0) && OverGameObject == false)
 		{
 			OnMouseUp?.Invoke();
 
@@ -72,7 +85,7 @@ public class InputManager : MonoBehaviour
 
 	private void CheckClickDownEvent()
 	{
-		if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
+		if (Input.GetMouseButtonDown(0) && OverGameObject == false)
 		{
 			//Debug.Log("here2");
 			var position = RaycastGround();

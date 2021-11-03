@@ -31,12 +31,23 @@ namespace Editor {
 	namespace GUI_Windows {
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
-				ImGui::Begin("Inspector", inspector_bool, window_flags);
+
+				/**
+				*	WIDTH 
+				*/
 				float halfWidth = ImGui::GetContentRegionAvail().x / 2.f;
 				float quadWidth = ImGui::GetContentRegionAvail().x / 2.5f;
 
-				ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth;
 
+				/**
+				*	INSPECTOR STARTS
+				*/
+				ImGui::Begin("Inspector", inspector_bool, window_flags);
+				
+
+				/**
+				*	Entity Names
+				*/
 				if (EntityId_Check(entity_selected)) {
 					ImGui::End();
 					return;
@@ -51,6 +62,7 @@ namespace Editor {
 					ImGui::End();
 					return;
 				}
+
 				std::string& entityName = itr->second.name;
 				char eName[100];
 				strcpy(eName, entityName.c_str());
@@ -58,7 +70,7 @@ namespace Editor {
 				ImGui::AlignTextToFramePadding();
 				ImGui::Text("Entity Name: ");
 				ImGui::SameLine(halfWidth);
-				ImGui::SetNextItemWidth(halfWidth * 1.5f);
+				ImGui::SetNextItemWidth(halfWidth * 0.9f);
 				if (ImGui::InputText("##EntityName", eName, 100)) {
 					if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 						std::string newName = std::string{ eName };
@@ -69,6 +81,50 @@ namespace Editor {
 				}
 				ImGui::PopItemWidth();
 
+
+				ImGui::Spacing();
+				ImGui::AlignTextToFramePadding();
+				ImGui::SameLine(halfWidth);
+
+				if (ImGui::Button("Add Component##addcomponentbtn", { ImGui::GetContentRegionAvail().x ,  0 }))
+				{
+					ImGui::OpenPopup("##addcomponentpopup");
+				}
+				if (ImGui::BeginPopup("##addcomponentpopup"))
+				{
+				
+					ImGui::AlignTextToFramePadding();
+
+					if (ImGui::Selectable(" + Transform##addTransformcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
+					if (ImGui::Selectable(" + Collider##addTCollidercom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
+					if (ImGui::Selectable(" + Texture##addTTexturecom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TextureComponent>(entity_selected);
+					if (ImGui::Selectable(" + Rigidbody##addRigidbodycom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
+					if (ImGui::Selectable(" + Camera##addCameracom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+					if (ImGui::Selectable(" + UI##addUIcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::UIComponent>(entity_selected);
+					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
+						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
+
+						if (!filePath.empty()) {
+							REMOVE_FROM_FILEPATH;
+
+							Engine::DreamECS::GetInstance().AddComponent(
+								std::move(Engine::ScriptComponent{ entity_selected, filePath.c_str() }));
+						}
+					}
+
+					ImGui::EndPopup();
+
+
+					
+				}
+				
+				
 				/**
 				*	Transform Properties
 				*/
@@ -500,9 +556,6 @@ namespace Editor {
 				}
 
 
-
-
-
 				/**
 				*	Scripts for each component
 				*/
@@ -560,61 +613,6 @@ namespace Editor {
 						}
 					}
 				}
-
-
-				/**
-				*	Add New Components
-				*/
-
-				ImGui::Spacing();
-				ImGui::AlignTextToFramePadding();
-				ImGui::SameLine(quadWidth);
-				if (ImGui::Button("Add Component##addcomponentbtn", { ImGui::GetContentRegionAvail().x, 0 }))
-				{
-					ImGui::OpenPopup("##addcomponentpopup");
-				}
-
-				if (ImGui::BeginPopup("##addcomponentpopup"))
-				{
-					//ImGui::AlignTextToFramePadding();
-					/*float AvailWidth = ImGui::GetContentRegionAvail().x * 1.5f;
-					ImGui::PushItemWidth(AvailWidth);*/
-
-					ImGui::AlignTextToFramePadding();
-					//ImGui::SameLine(halfWidth);
-					if (ImGui::Selectable(" + Transform##addTransformcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
-					if (ImGui::Selectable(" + Collider##addTCollidercom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
-					if (ImGui::Selectable(" + Texture##addTTexturecom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::TextureComponent>(entity_selected);
-					if (ImGui::Selectable(" + Rigidbody##addRigidbodycom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
-					if (ImGui::Selectable(" + Script##addScriptcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
-					if (ImGui::Selectable(" + Camera##addCameracom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
-					if (ImGui::Selectable(" + UI##addUIcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::UIComponent>(entity_selected);
-
-					char text[100]{};
-
-					ImGui::PushItemWidth(textSize * 1.5f);
-					ImGui::SetNextItemWidth(halfWidth);
-					ImGui::Text(" + Script");
-					ImGui::SameLine(quadWidth);
-					if (ImGui::InputText("##addcomponenttype", text, 100)) {
-						if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
-							std::string textStr{ text };
-							Engine::DreamECS::GetInstance().AddComponent(
-								std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() }));
-						}
-					}
-					ImGui::PopItemWidth();
-
-					ImGui::EndPopup();
-				}
-
 
 				ImGui::End();
 			}

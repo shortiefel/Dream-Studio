@@ -71,9 +71,6 @@ Technology is prohibited.
 
 #define TEXT_BOX_SIZE 70
 
-#define REMOVE_FROM_FILEPATH filePath = filePath.substr(filePath.find_last_of("\\") + 1);\
-							 filePath = filePath.substr(0, filePath.find_last_of("."));
-
 namespace Editor {
 	namespace GUI_Windows {
 		//bool for dockspace (will always be true)
@@ -249,6 +246,7 @@ namespace Editor {
 			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetInstance().GetWidth(),
 											 (float)Engine::Window::GetInstance().GetHeight() });
 
+			
 			ImGui::Begin("Dream Engine", &dockspace_bool, dockspace_window_flags);//, & showWindow, ImGuiWindowFlags_NoInputs);
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_dock_flags);

@@ -14,67 +14,89 @@ namespace Editor {
 			if (*hierarchy_bool) {
 				ImGui::Begin("Hierarchy", hierarchy_bool, window_flags);
 
+
 				/**
 				*	Game Object Create
 				*/
-				if (ImGui::Button("+ Create Game Object##CreateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+				if (ImGui::Button("+ Create Object##createObjectBtn", { ImGui::GetContentRegionAvail().x ,  0 }))
 				{
-					Engine::DreamECS::GetInstance().CreateEntity();
+					ImGui::OpenPopup("##createObjectpopup");
 				}
-
-				if (ImGui::BeginPopupContextWindow())
+				if (ImGui::BeginPopup("##createObjectpopup"))
 				{
 					/**
-					*	Game Object Delete
+					*	New Game Object
 					*/
-					if (ImGui::Button("Delete##DeleteGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					if (ImGui::Button("New Object", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						//CallFuncForEach(entity_selected.begin(), entity_selected.end(), []() {});
-						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DestroyEntity(entity.second);  });
-						entity_selected.clear();
-						//
-						// 
-						//Engine::DreamECS::GetInstance().DestroyEntity(entity_selected);
+						Engine::DreamECS::GetInstance().CreateEntity();
 					}
 
 					/**
-					*	Game Object Duplicate
+					*	Game Object Placeholder
 					*/
-					if (ImGui::Button("Duplicate##DuplicateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
-					{
-						//std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(entity.second);  });
-						Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(GetTarget(entity_selected));
-					}
-
-					if (ImGui::Button("Parent##ParentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
-					{
-						//std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(entity.second);  });
-						Engine::Entity_id parent = GetTarget(entity_selected);
-						for (const auto& [index, entity_id] : entity_selected) {
-							if (parent == entity_id) continue;
-							Engine::DreamECS::GetInstance().Parent(parent, entity_id);
-						}
-					}
-
-					if (ImGui::Button("Unparent##UnparentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
-					{
-						for (const auto& [index, entity_id] : entity_selected) {
-							Engine::DreamECS::GetInstance().Unparent(entity_id);
-						}
-					}
-
-					if (ImGui::Button("Create Placeholder Square##PlaceholderSquare", { ImGui::GetContentRegionAvail().x, 0 }))
+					if (ImGui::Button("Create Square##PlaceholderSquare", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
 						Engine::Factory::InstantiateSquare();
 					}
 
-					if (ImGui::Button("Create Placeholder Circle##PlaceholderCircle", { ImGui::GetContentRegionAvail().x, 0 }))
+					if (ImGui::Button("Create Circle##PlaceholderCircle", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
 						Engine::Factory::InstantiateCircle();
 					}
 
 					ImGui::EndPopup();
 				}
+
+
+				
+				
+					
+					
+					///**
+					//*	Game Object Duplicate
+					//*/
+					//if (ImGui::Button("Duplicate##DuplicateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					//{
+					//	//std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(entity.second);  });
+					//	Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(GetTarget(entity_selected));
+					//}
+
+					///**
+					//*	Parenting
+					//*/
+					//if (ImGui::Button("Parent##ParentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					//{
+					//	//std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(entity.second);  });
+					//	Engine::Entity_id parent = GetTarget(entity_selected);
+					//	for (const auto& [index, entity_id] : entity_selected) {
+					//		if (parent == entity_id) continue;
+					//		Engine::DreamECS::GetInstance().Parent(parent, entity_id);
+					//	}
+					//}
+
+					//if (ImGui::Button("Unparent##UnparentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					//{
+					//	for (const auto& [index, entity_id] : entity_selected) {
+					//		Engine::DreamECS::GetInstance().Unparent(entity_id);
+					//	}
+					//}
+
+					
+
+					///**
+					//*	Game Object Delete
+					//*/
+					//if (ImGui::Button("Delete##DeleteGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
+					//{
+					//	//CallFuncForEach(entity_selected.begin(), entity_selected.end(), []() {});
+					//	std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DestroyEntity(entity.second);  });
+					//	entity_selected.clear();
+					//	//
+					//	// 
+					//	//Engine::DreamECS::GetInstance().DestroyEntity(entity_selected);
+					//}
+
 
 				/**
 				*	Game Objects Listing
@@ -88,44 +110,34 @@ namespace Editor {
 				std::set<Engine::Entity_id> setOfUI;
 
 				auto& entity_map = Engine::DreamECS::GetInstance().GetUsedConstEntityMap();
+
+
+
+
 				for (auto& [id, entity] : entity_map)
 				{
 					//if (entity.parent != DEFAULT_ENTITY_ID) continue;
 					bool selected = CheckIfExist(entity_selected, id);
 
-					if (Engine::DreamECS::GetInstance().GetComponentPTR<Engine::UIComponent>(id) == nullptr) {
-						//if (entity.child.empty()) {
+
+
+					if (Engine::DreamECS::GetInstance().GetComponentPTR<Engine::UIComponent>(id) == nullptr)
+					{
+
 						if (selected)
 							ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-						if (ImGui::Selectable(entity.name.c_str())) {
+
+						if (ImGui::Selectable(entity.name.c_str()))
+						{
 							ClickCheck(entity_selected, id);
 						}
 						if (selected)
 							ImGui::PopStyleColor();
 					}
 
-					else {
-						/*if (selected)
-							ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-						if (ImGui::CollapsingHeader(entity.name.c_str())) {
-							if (selected)
-								ImGui::PopStyleColor();
-							for (const auto& entityChild : entity.child) {
-								const auto& itr = entity_map.find(entityChild);
-								if (itr == entity_map.end()) continue;
-
-								selected = CheckIfExist(entity_selected, entityChild);
-								if (selected)
-									ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-								if (ImGui::Selectable(itr->second.name.c_str())) {
-									ClickCheck(entity_selected, entityChild);
-								}
-								if (selected)
-									ImGui::PopStyleColor();
-							}
-						}*/
+					else
 						setOfUI.emplace(id);
-					}
+
 				}
 
 				if (ImGui::CollapsingHeader("Canvas")) {
@@ -146,6 +158,8 @@ namespace Editor {
 
 					}
 				}
+
+				
 			
 
 				ImGui::End();

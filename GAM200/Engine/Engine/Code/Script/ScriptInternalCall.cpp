@@ -352,10 +352,32 @@ namespace Engine {
 	}
 	void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2, bool local) {
 		if (!local) {
-			SetEngineType(id, TransformComponent, position, *inVec2);
+			//SetEngineType(id, TransformComponent, position, *inVec2);
+
+			TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(id); 
+			if (!ctype) return; 
+			Math::vec2 moveDis = *inVec2 - ctype->position;
+			ctype->position = *inVec2;
+			const auto& entity = dreamECSGame->GetUsedConstEntityMap().find(ctype->GetEntityId())->second;
+			for (auto& newId : entity.child) {
+				TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
+				if (newTransform != nullptr)
+					newTransform->position += moveDis;
+			}
 		}
 		else {
-			SetEngineType(id, TransformComponent, localPosition, *inVec2);
+			//SetEngineType(id, TransformComponent, localPosition, *inVec2);
+
+			TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(id);
+			if (!ctype) return;
+			Math::vec2 moveDis = *inVec2 - ctype->position;
+			ctype->localPosition = *inVec2;
+			const auto& entity = dreamECSGame->GetUsedConstEntityMap().find(ctype->GetEntityId())->second;
+			for (auto& newId : entity.child) {
+				TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
+				if (newTransform != nullptr)
+					newTransform->position += moveDis;
+			}
 		}
 		
 	}

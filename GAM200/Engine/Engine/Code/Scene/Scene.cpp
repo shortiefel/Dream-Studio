@@ -60,7 +60,7 @@ namespace Engine {
 
         GameSceneSerializer::SerializeScene("temporary");
         ScriptSystem::GetInstance().UpdateMapData();
-        ScriptSystem::GetInstance().PlayInit();
+        //ScriptSystem::GetInstance().PlayInit();
 
         return true;
     }
@@ -86,16 +86,15 @@ namespace Engine {
     void Scene::Update(float dt, bool playing) {
         if (playing) {
             ScriptSystem::GetInstance().PlayRunTime();
-            TransformCalculationSystem::GetInstance().ChildUpdate();
+            //TransformCalculationSystem::GetInstance().ChildUpdate();
             CollisionSystem::GetInstance().Update(dt);
             PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
-
-            TransformCalculationSystem::GetInstance().Release();
         }
 
         CameraSystem::GetInstance().Update(dt);
        
         GraphicSystem::GetInstance().Render();
+        TransformCalculationSystem::GetInstance().Release();
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
 

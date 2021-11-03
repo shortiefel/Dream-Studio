@@ -85,7 +85,7 @@ public class Test : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))
         {
-            Instantiate(_prefab);
+            //Instantiate(_prefab);
         }
         if (Input.GetMouseButtonDown(4))
         {

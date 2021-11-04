@@ -46,6 +46,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Scene/Prefab.hpp"
 
 //#include "Engine/Header/Script/Scripting.hpp"
 //#include "Engine/Header/Script/ScriptInternalCall.hpp"
@@ -110,6 +111,8 @@ namespace Editor {
 		void    GUI_WindowsMenu();
 		//Menu to undo and redo scene
 		void    GUI_EditMenu();
+		//Menu to change and add prefab
+		void	GUI_PrefabMenu();
 
 		//Internal Variables
 		
@@ -264,6 +267,7 @@ namespace Editor {
 				GUI_FileMenu();
 				GUI_EditMenu();
 				GUI_WindowsMenu();
+				GUI_PrefabMenu();
 
 				ImGui::EndMenuBar();
 
@@ -321,10 +325,29 @@ namespace Editor {
 				ImGui::MenuItem("Undo", "CTRL+Z");
 				ImGui::MenuItem("Redo", "CTRL+Y");
 
-				ImGui::Separator();
+				ImGui::EndMenu();
+			}
+
+		}
+
+		void GUI_PrefabMenu() {
+			if (ImGui::BeginMenu("Prefab")) {
+				if (ImGui::MenuItem("Save Selected as Prefab...")) {
+					const Engine::Entity_id entity_id = GetTarget(entity_selected);
+					if (GetTarget(entity_selected) == DEFAULT_ENTITY_ID) return;
+
+					std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0");
+
+					if (!filePath.empty()) {
+						REMOVE_FROM_FILEPATH;
+						const auto& entity= Engine::dreamECSGame->GetUsedConstEntityMap().find(entity_id)->second;
+						Engine::GameSceneSerializer::SerializePrefab(filePath, GetTarget(entity_selected));
+						Engine::dreamECSGame->AddPrefab(Engine::Prefab(filePath, entity));
+					}
+				}
 
 				if (ImGui::MenuItem("Add Prefab")) {
-					std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0");
+					std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Prefab (*.prefab)\0*.prefab\0");
 
 					if (!filePath.empty()) {
 						REMOVE_FROM_FILEPATH;
@@ -332,7 +355,7 @@ namespace Editor {
 						Engine::GameSceneSerializer::DeserializePrefab(filePath);
 					}
 				}
-				
+
 				if (ImGui::MenuItem("Update All Prefab")) {
 					Engine::dreamECSGame->UpdateAllPrefab();
 				}

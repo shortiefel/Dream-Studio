@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices; //For internal calls
 
 public class Random
 {
-    public static float Range(int num1, int num2)
+    public static int Range(int num1, int num2)
     {
         Random_Range_Engine(num1, num2, out int answer);
         return answer;

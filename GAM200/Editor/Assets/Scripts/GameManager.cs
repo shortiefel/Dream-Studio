@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
 
     public StructureManager structureManager;
 
-    private void Start()
+    //private void Start()
+    public override void Start()
     {
         //uiController.OnRoadPlacement += RoadPlacementHandler;
         //uiController.OnHousePlacement += HousePlacementHandler;
@@ -57,7 +58,8 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseUp = null;
     }
 
-    private void Update()
+    //private void Update()
+    public override void Update()
     {
         //cameraMovement.MoveCamera(new Vector2(inputManager.CameraMovementVector.x, inputManager.CameraMovementVector.y));
     }

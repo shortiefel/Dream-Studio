@@ -19,7 +19,8 @@ public class InputManager : MonoBehaviour
 		get { return cameraMovementVector; }
 	}
 
-	private void Update()
+	//private void Update()
+	public override void Update()
 	{
 		CheckClickDownEvent();
 		CheckClickUpEvent();
@@ -68,9 +69,11 @@ public class InputManager : MonoBehaviour
 		{
 			//Debug.Log("here1");
 			var position = RaycastGround();
+			/*if (position != null)
+				OnMouseHold?.Invoke(position.Value);*/
 			if (position != null)
-				OnMouseHold?.Invoke(position.Value);
-
+				if (OnMouseHold != null)
+					OnMouseHold.Invoke(position.Value);
 		}
 	}
 
@@ -78,8 +81,9 @@ public class InputManager : MonoBehaviour
 	{
 		if (Input.GetMouseButtonUp(0) && OverGameObject == false)
 		{
-			OnMouseUp?.Invoke();
-
+			//OnMouseUp?.Invoke();
+			if (OnMouseUp != null)
+				OnMouseUp.Invoke();
 		}
 	}
 
@@ -89,8 +93,11 @@ public class InputManager : MonoBehaviour
 		{
 			//Debug.Log("here2");
 			var position = RaycastGround();
+			/*if (position != null)
+				OnMouseClick?.Invoke(position.Value);*/
 			if (position != null)
-				OnMouseClick?.Invoke(position.Value);
+				if(OnMouseClick != null)
+					OnMouseClick.Invoke(position.Value);
 
 		}
 	}

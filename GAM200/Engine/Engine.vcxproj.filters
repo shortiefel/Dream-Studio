@@ -175,6 +175,9 @@
     <ClCompile Include="Engine\Code\ECS\System\FontSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp">
+      <Filter>Source Files\ECS\Component\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -513,6 +516,9 @@
     <ClInclude Include="Engine\Header\ECS\System\FontSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp">
+      <Filter>Header Files\ECS\Component\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -673,6 +679,12 @@
     </Filter>
     <Filter Include="Source Files\Script\InternalCall">
       <UniqueIdentifier>{f6c80cf0-7104-4cc7-8309-4679e9ac5a47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Sound">
+      <UniqueIdentifier>{f7e9a89b-6994-4225-afb5-b544235df93a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Sound">
+      <UniqueIdentifier>{c0f5fbe5-b0f5-41b9-82f1-20eabe734cea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

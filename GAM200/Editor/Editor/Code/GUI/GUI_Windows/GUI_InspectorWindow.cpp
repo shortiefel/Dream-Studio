@@ -32,6 +32,8 @@ namespace Editor {
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
 
+
+
 				/**
 				*	WIDTH 
 				*/

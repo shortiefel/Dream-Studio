@@ -26,6 +26,7 @@ Technology is prohibited.
 #include "Engine/Header/Input/Input.hpp"
 
 #include <Imgui/imgui_internal.h>
+#include <filesystem>
 
 namespace Editor {
 	namespace GUI_Windows {
@@ -335,6 +336,7 @@ namespace Editor {
 				/*
 				*	Texture component
 				*/
+
 				Engine::TextureComponent* textureComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextureComponent>(entity_selected);
 				if (textureComp != nullptr)
 				{
@@ -359,7 +361,25 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::SameLine(halfWidth * 1.2f);
 
+						if (ImGui::BeginDragDropTarget())
+						{
+							ImGui::Text("I'm Dropping.");
+							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+							{
+								const wchar_t* path = (const wchar_t*)payload->Data;
+
+								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
+
+								if (!filePath.empty()) {
+									Engine::GraphicImplementation::SetTexture(textureComp, filePath);
+									}
+								
+							}
+							ImGui::EndDragDropTarget();
+						}
+
 						if (ImGui::Button("Change Texture##ChangeTextureTexture")) {
+							
 							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
 
 							if (!filePath.empty()) {

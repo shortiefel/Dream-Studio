@@ -322,12 +322,14 @@ namespace Editor {
 
 		//Menu to undo and redo scene
 		void GUI_EditMenu() {
-			if (ImGui::BeginMenu("Edit")) {
-
-				ImGui::MenuItem("Undo", "CTRL+Z");
-				ImGui::MenuItem("Redo", "CTRL+Y");
-
-
+			if (ImGui::BeginMenu("Edit"))
+			{
+				if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+				ImGui::Separator();
+				if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+				if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+				if (ImGui::MenuItem("Paste", "CTRL+V")) {}
 				ImGui::EndMenu();
 			}
 

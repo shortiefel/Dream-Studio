@@ -130,8 +130,6 @@ namespace Editor {
 						const wchar_t* path = (const wchar_t*)payload->Data;
 
 						OpenFile(std::filesystem::path(_assetPath) / path);
-
-						//Engine::SceneManager::GetInstance().OpenScene((std::filesystem::path(_assetPath) / path));
 					}
 					ImGui::EndDragDropTarget();
 				}

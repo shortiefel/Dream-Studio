@@ -71,10 +71,11 @@ namespace Editor {
 				std::cout << "Unable to load scene file\n";
 				std::exit(EXIT_FAILURE);
 			}
+			
+
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
 
-				//Engine::DreamECS::GetInstance().ResetECS();
 				//Engine::GameSceneSerializer::SerializeScene(filePath);
 				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
 			}

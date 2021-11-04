@@ -29,11 +29,26 @@ Technology is prohibited.
 
 namespace Engine {
 
+	struct SoundImplementation {
+
+		SoundImplementation();
+		~SoundImplementation();
+
+		FMOD::System* fmodSystem;
+
+		void update();
+
+		typedef std::map<std::string, FMOD::Sound*> soundMap;
+		typedef std::map<int, FMOD::Channel*> channelMap;
+		soundMap sMap;
+		channelMap cMap;
+	};
+
 	class SoundComponent {
 		public:
-			static void Init();
-			static void Update();
-			static void Shutdown();
+			static void Init(SoundImplementation* soundImplementation);
+			static void Update(SoundImplementation* soundImplementation);
+			static void Shutdown(SoundImplementation* soundImplementation);
 			static int ErrorCheck(FMOD_RESULT result);
 
 			void LoadSound(const std::string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
@@ -44,11 +59,8 @@ namespace Engine {
 			float VolumeTodB(float volume);
 			FMOD_VECTOR VectorToFmod(const Engine::DreamMath::vec3& vPosition);
 
-		private:
-			typedef std::map<std::string, FMOD::Sound*> soundMap;
-			typedef std::map<int, FMOD::Channel*> channelMap;
-			soundMap sMap;
-			channelMap cMap;
+
+		
 	};
 }
 

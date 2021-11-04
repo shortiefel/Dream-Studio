@@ -21,6 +21,11 @@ Technology is prohibited.
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
 #include "Engine/Header/Debug Tools/Profiler.hpp"
+#include "Engine/Header/Singleton/Singleton.hpp"
+#include <vector>
+#include <deque>
+#include <stack>
+#include <memory>
 
 #define UNDO true
 #define REDO false
@@ -28,11 +33,23 @@ Technology is prohibited.
 
 namespace Engine {
 
-	class Command 
+	class Command : public Singleton<Command>
 	{
+	typedef std::shared_ptr<Command> CommandPtr;
+	public:
 		void ExecuteCommand(bool _undo = true);
+		virtual void undo() = 0;
+		virtual void redo() = 0;
 		void UndoCommand();
 		void RedoCommand();
+		void ClearUndoRedoStack();
+
+	private:
+		std::stack<CommandPtr> undo_stack;
+		std::stack<CommandPtr> redo_stack;
+
+		CommandPtr _fCommands; //to store a command for future use
+		SINGLETON_SETUP(Command);
 	};
 }
 

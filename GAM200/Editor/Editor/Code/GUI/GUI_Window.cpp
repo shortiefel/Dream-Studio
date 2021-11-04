@@ -52,6 +52,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
 #include "Engine/Header/Scene/Prefab.hpp"
+#include "Engine/Header/Commands/Command.hpp"
 
 //#include "Engine/Header/Script/Scripting.hpp"
 //#include "Engine/Header/Script/ScriptInternalCall.hpp"
@@ -217,6 +218,7 @@ namespace Editor {
 			case Engine::Input_KeyCode::Z: {
 				if (ctrl) {
 					//undo
+					Engine::Command::GetInstance().UndoCommand();
 				}
 				break;
 			}

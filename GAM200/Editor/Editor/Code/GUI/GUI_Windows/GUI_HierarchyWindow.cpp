@@ -158,6 +158,8 @@ namespace Editor {
 							ClickCheck(entity_selected, id);
 						}
 
+						ImGui::OpenPopupOnItemClick("##EntityPop", ImGuiPopupFlags_MouseButtonRight);
+
 						if (selected)
 							ImGui::PopStyleColor();
 

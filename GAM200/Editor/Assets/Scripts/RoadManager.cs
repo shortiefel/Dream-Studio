@@ -14,7 +14,8 @@ public class RoadManager : MonoBehaviour
 
     public RoadFixer roadFixer;
 
-    private void Start()
+    //private void Start()
+    public override void Start()
     {
         roadFixer = GetComponent<RoadFixer>();
     }

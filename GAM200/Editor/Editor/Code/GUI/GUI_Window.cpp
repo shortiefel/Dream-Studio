@@ -18,6 +18,11 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+#include "Engine/Header/Management/Settings.hpp"
+
 #include "Editor/Header/GUI/GUI_Window.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ProfilerWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
@@ -159,7 +164,6 @@ namespace Editor {
 				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
 			}
 		}
-
 		void SaveAsFileUtil() {
 			if (Engine::GameState::GetInstance().GetPlaying()) {
 				GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Scene is Playing. unable to save as..." });
@@ -350,6 +354,7 @@ namespace Editor {
 			GUI_Stats(&stats_bool);
 			GUI_Profiler(&profiler_bool);
 			GUI_AssetBrowser(&asset_bool, window_flags);
+
 			GUI_Console(&console_bool, window_flags);
 
 			SelectedEntityCheck(entity_selected);

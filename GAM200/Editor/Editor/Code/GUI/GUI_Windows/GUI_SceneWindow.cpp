@@ -27,10 +27,23 @@ Technology is prohibited.
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Input/Input.hpp"
 
+#include "Engine/Header/Scene/SceneManager.hpp"
+#include "Engine/Header/Management/FileWindowDialog.hpp"
+#include "Engine/Header/Management/GameState.hpp"
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
+
+#include <filesystem>
+
 #define HEIGHT_CHANGE_SPEED 30.f
 #define POS_CHANGE_SPEED 30.f
 
+#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
+							 filePath = filePath.substr(pos + 1);\
+							 pos = filePath.find_last_of(".");\
+							 filePath = filePath.substr(0, pos);
+
 namespace Editor {
+	extern const std::filesystem::path _assetPath;
 	namespace GUI_Windows {
 		Math::vec2 scene_viewportBounds[2];
 		Math::vec2 scene_viewportSize;
@@ -74,6 +87,24 @@ namespace Editor {
 			Engine::MouseMoveEvent::RegisterFunction(moving);
 		}
 
+		void OpenFile(const std::filesystem::path& path) {
+			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+
+			if (path.extension().string() != ".scene")
+			{
+				std::cout << "Unable to load scene file\n";
+				std::exit(EXIT_FAILURE);
+			}
+			if (!filePath.empty()) {
+				REMOVE_FROM_FILEPATH;
+
+				//Engine::DreamECS::GetInstance().ResetECS();
+				//Engine::GameSceneSerializer::SerializeScene(filePath);
+				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
+			}
+
+		}
+
 		//void GUI_SceneWindow(bool* sceneWin_bool, const ImTextureID& sceneWinTex) {
 		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, std::map<int, Engine::Entity_id>& entity_selected, ImGuiWindowFlags window_flags) {
 			inside = false;
@@ -91,7 +122,19 @@ namespace Editor {
 				//ImGui::Image((ImTextureID)sceneWinTex, wSize, ImVec2(0, 1), ImVec2(1, 0));
 				ImGui::Image((ImTextureID)(sceneWinFBO.GetTexture()), wSize, ImVec2(0, 1), ImVec2(1, 0));
 
+				if (ImGui::BeginDragDropTarget())
+				{
+					ImGui::Text("I'm Dropping.");
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+					{
+						const wchar_t* path = (const wchar_t*)payload->Data;
 
+						OpenFile(std::filesystem::path(_assetPath) / path);
+
+						//Engine::SceneManager::GetInstance().OpenScene((std::filesystem::path(_assetPath) / path));
+					}
+					ImGui::EndDragDropTarget();
+				}
 				ImVec2 windowSize = ImGui::GetWindowSize();
 				ImVec2 minBound = ImGui::GetWindowPos();
 				if (windowSize.x > windowSize.y * EditorSceneCamera::GetAR())

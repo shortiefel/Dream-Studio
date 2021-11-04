@@ -159,17 +159,19 @@ namespace Editor {
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
-					if (ImGui::BeginDragDropTarget())
-					{
-						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
-						{
-							const wchar_t* path = (const wchar_t*)payload->Data;
-							OpenScene(std::filesystem::path(_assetPath) / path);
+					//if (ImGui::BeginDragDropTarget())
+					//{
+					//	ImGui::Text("I'm Dropping.");
+					//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+					//	{
+					//		const wchar_t* path = (const wchar_t*)payload->Data;
+					//		
+					//		OpenScene(std::filesystem::path(_assetPath) / path);
 
-							//Engine::SceneManager::GetInstance().OpenScene((std::filesystem::path(_assetPath) / path));
-						}
-						ImGui::EndDragDropTarget();
-					}
+					//		//Engine::SceneManager::GetInstance().OpenScene((std::filesystem::path(_assetPath) / path));
+					//	}
+					//	ImGui::EndDragDropTarget();
+					//}
 
 					//switch (type)
 					//{

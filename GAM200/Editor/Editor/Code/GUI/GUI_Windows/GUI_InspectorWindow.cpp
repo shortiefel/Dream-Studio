@@ -29,6 +29,7 @@ Technology is prohibited.
 #include <filesystem>
 
 namespace Editor {
+	extern const std::filesystem::path _assetPath;
 	namespace GUI_Windows {
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
@@ -367,13 +368,8 @@ namespace Editor {
 							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 							{
 								const wchar_t* path = (const wchar_t*)payload->Data;
-
-								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
-
-								if (!filePath.empty()) {
-									Engine::GraphicImplementation::SetTexture(textureComp, filePath);
-									}
-								
+								std::filesystem::path texturePath = std::filesystem::path(_assetPath) / path;
+								Engine::GraphicImplementation::SetTexture(textureComp, texturePath.string());						
 							}
 							ImGui::EndDragDropTarget();
 						}

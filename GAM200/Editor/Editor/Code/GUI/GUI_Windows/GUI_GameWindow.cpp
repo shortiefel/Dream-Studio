@@ -63,24 +63,23 @@ namespace Editor {
 		}
 
 
-		void OpenSceneFile(const std::filesystem::path& path) {
-			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+		//void OpenSceneFile(const std::filesystem::path& path) {
+		//	//std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
 
-			if (path.extension().string() != ".scene")
-			{
-				std::cout << "Unable to load scene file\n";
-				std::exit(EXIT_FAILURE);
-			}
-			
+		//	if (path.extension().string() != ".scene")
+		//	{
+		//		std::cout << "Unable to load scene file\n";
+		//		std::exit(EXIT_FAILURE);
+		//	}
+		//	
+		//	Engine::Scene* newScene = nullptr;
+		//	Engine::GameSceneSerializer serializer;
+		//	if (serializer.Deserialize(path.string())) {
 
-			if (!filePath.empty()) {
-				REMOVE_FROM_FILEPATH;
+		//		Engine::SceneManager::GetInstance().StartScene();
+		//	}
 
-				//Engine::GameSceneSerializer::SerializeScene(filePath);
-				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
-			}
-
-		}
+		//}
 
 		void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO, ImGuiWindowFlags window_flags) {
 			if (*gameWin_bool) {
@@ -102,8 +101,19 @@ namespace Editor {
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 					{
 						const wchar_t* path = (const wchar_t*)payload->Data;
+						std::filesystem::path scenePath = std::filesystem::path(_assetPath) / path;
+						if (scenePath.extension().string() != ".scene")
+						{
+							std::cout << "Unable to load scene file\n";
+							std::exit(EXIT_FAILURE);
+						}
+							
 
-						OpenSceneFile(std::filesystem::path(_assetPath) / path);
+						if (!scenePath.filename().string().empty())
+						{
+							//Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.filename().string()));
+							Engine::SceneManager::GetInstance().Play();
+						}
 					}
 					ImGui::EndDragDropTarget();
 				}

@@ -37,10 +37,8 @@ Technology is prohibited.
 #define HEIGHT_CHANGE_SPEED 30.f
 #define POS_CHANGE_SPEED 30.f
 
-#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
-							 filePath = filePath.substr(pos + 1);\
-							 pos = filePath.find_last_of(".");\
-							 filePath = filePath.substr(0, pos);
+#define REMOVE_FROM_SCENEPATH scenePath = scenePath.substr(scenePath.find_last_of("\\") + 1);\
+							 scenePath = scenePath.substr(0, scenePath.find_last_of("."));
 
 namespace Editor {
 	extern const std::filesystem::path _assetPath;
@@ -87,23 +85,30 @@ namespace Editor {
 			Engine::MouseMoveEvent::RegisterFunction(moving);
 		}
 
-		void OpenFile(const std::filesystem::path& path) {
-			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+		//void OpenFile(const std::filesystem::path& path) {
+		//	//std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
 
-			if (path.extension().string() != ".scene")
-			{
-				std::cout << "Unable to load scene file\n";
-				std::exit(EXIT_FAILURE);
-			}
-			if (!filePath.empty()) {
-				REMOVE_FROM_FILEPATH;
+		//	if (path.extension().string() != ".scene")
+		//	{
+		//		std::cout << "Unable to load scene file\n";
+		//		//std::exit(EXIT_FAILURE);
+		//	}
 
-				//Engine::DreamECS::GetInstance().ResetECS();
-				//Engine::GameSceneSerializer::SerializeScene(filePath);
-				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
-			}
+		//	std::string newScene;
+		//	Engine::GameSceneSerializer serializer;
+		//	if (serializer.Deserialize(path.string())) {
 
-		}
+		//		Engine::SceneManager::GetInstance().StartScene();
+		//	}
+		//	//if (!filePath.empty()) {
+		//	//	REMOVE_FROM_FILEPATH;
+
+		//	//	//Engine::DreamECS::GetInstance().ResetECS();
+		//	//	//Engine::GameSceneSerializer::SerializeScene(filePath);
+		//	//	Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
+		//	//}
+
+		//}
 
 		//void GUI_SceneWindow(bool* sceneWin_bool, const ImTextureID& sceneWinTex) {
 		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, std::map<int, Engine::Entity_id>& entity_selected, ImGuiWindowFlags window_flags) {
@@ -128,8 +133,19 @@ namespace Editor {
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 					{
 						const wchar_t* path = (const wchar_t*)payload->Data;
+						std::filesystem::path scenePath = std::filesystem::path(_assetPath) / path;
+						if (scenePath.extension().string() != ".scene")
+						{
+							std::cout << "Unable to load scene file\n";
+							std::exit(EXIT_FAILURE);
+						}
 
-						OpenFile(std::filesystem::path(_assetPath) / path);
+						if (!scenePath.filename().string().empty())
+						{
+							//Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.filename().string()));
+							Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.string()));
+						}
+					
 					}
 					ImGui::EndDragDropTarget();
 				}

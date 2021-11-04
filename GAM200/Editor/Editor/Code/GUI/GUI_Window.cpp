@@ -213,6 +213,12 @@ namespace Editor {
 				}
 				break;
 			}
+			case Engine::Input_KeyCode::Z: {
+				if (ctrl) {
+					//undo
+				}
+				break;
+			}
 			}
 
 			return true;
@@ -325,11 +331,11 @@ namespace Editor {
 			if (ImGui::BeginMenu("Edit"))
 			{
 				if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled for now
 				ImGui::Separator();
-				if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-				if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-				if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+				//if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+				//if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+				//if (ImGui::MenuItem("Paste", "CTRL+V")) {}
 				ImGui::EndMenu();
 			}
 

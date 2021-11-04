@@ -32,8 +32,6 @@ Technology is prohibited.
 namespace Editor {
 
 	extern const std::filesystem::path _assetPath = "Assets";
-	extern const std::filesystem::path _scenePath = "Assets/Scenes";
-	extern const std::filesystem::path _texturePath = "Assets/Textures";
 
 	namespace GUI_Windows {
 		static std::filesystem::path _currentDirectory = "Assets";
@@ -46,18 +44,18 @@ namespace Editor {
 			Length
 		};
 
-		enum class ResourceType {
-			Texture,
-			Scene,
-			Prefabs
-		};
-		static ResourceType type;
+		//enum class ResourceType {
+		//	Texture,
+		//	Scene,
+		//	Prefabs
+		//};
+		//static ResourceType type;
 		//static AssetView _currentView = AssetView::TextureBrowser;
 
 		//static void ShowSceneBrowser()
 		//{
 
-		//	std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+		//std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
 
 		//		if (!filePath.empty()) {
 		//			REMOVE_FROM_FILEPATH;
@@ -159,39 +157,6 @@ namespace Editor {
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
-					//if (ImGui::BeginDragDropTarget())
-					//{
-					//	ImGui::Text("I'm Dropping.");
-					//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
-					//	{
-					//		const wchar_t* path = (const wchar_t*)payload->Data;
-					//		
-					//		OpenScene(std::filesystem::path(_assetPath) / path);
-
-					//		//Engine::SceneManager::GetInstance().OpenScene((std::filesystem::path(_assetPath) / path));
-					//	}
-					//	ImGui::EndDragDropTarget();
-					//}
-
-					//switch (type)
-					//{
-					//case ResourceType::Scene:
-					//	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-					//	{
-					//		ImGui::SetDragDropPayload("SCENE_FILE", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
-					//		ImGui::EndDragDropSource();
-					//	}
-					//	break;
-
-					//}
-					//if (_currentDirectory != std::filesystem::path(_scenePath))
-					//{
-					//	ShowTextureBrowser();
-					//}
-					//if (_currentDirectory != std::filesystem::path(_texturePath))
-					//{
-					//	ShowSceneBrowser();
-					//}
 				
 					//for scene
 					//if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))

@@ -39,8 +39,7 @@ Technology is prohibited.
 #define POS_CHANGE_SPEED 30.f
 
 #define REMOVE_FROM_SCENEPATH scenePath = scenePath.string().substr(scenePath.string().find_last_of("\\") + 1);\
-							 scenePath = scenePath.string().substr(0, scenePath.string().find_last_of("."));\
-							scenePath = scenePath.replace_extension(".scene");
+							 scenePath = scenePath.string().substr(0, scenePath.string().find_last_of("."));
 
 namespace Editor {
 	extern const std::filesystem::path _assetPath;

@@ -111,14 +111,14 @@ public class Grid
 
     public Point GetRandomRoadPoint()
     {
-        //Random rand = new Random();
-        return _roadList[Random.Range(0, _roadList.Count - 1)];
+        Random rand = new Random();
+        return _roadList[rand.Next(0, _roadList.Count - 1)];
     }
 
     public Point GetRandomSpecialStructurePoint()
     {
-        //Random rand = new Random();
-        return _roadList[Random.Range(0, _roadList.Count - 1)];
+        Random rand = new Random();
+        return _roadList[rand.Next(0, _roadList.Count - 1)];
     }
 
     public List<Point> GetAdjacentCells(Point cell, bool isAgent)

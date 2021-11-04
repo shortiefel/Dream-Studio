@@ -30,7 +30,7 @@ public class Test : MonoBehaviour
     {
         trans = GetComponent<Transform>();
         go1 = new GameObject("EntityTest");
-        _prefab = new Prefab("Sprite");
+        _prefab = new Prefab("Box");
         //col1 = GetComponent<Collider>();
         //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
@@ -104,6 +104,11 @@ public class Test : MonoBehaviour
     public override void OnMouseEnter()
     {
         Debug.Log("Mouse Enter");
+    }
+
+    public override void OnMouseClick()
+    {
+        Debug.Log("Mouse Enter click");
     }
 
     public override void OnMouseExit()

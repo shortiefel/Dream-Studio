@@ -47,7 +47,7 @@ public class MonoBehaviour : IBehaviour
     public virtual void OnTriggerStay() { }
     public virtual void OnTriggerExit() { }
     public virtual void OnMouseEnter() { }
-    //public virtual void OnMouseClick() { }
+    public virtual void OnMouseClick() { }
     public virtual void OnMouseOver() { }
     public virtual void OnMouseExit() { }
 

@@ -5,16 +5,8 @@ using System.Linq;
 
 public class RoadFixer : MonoBehaviour
 {
-    public Prefab deadEnd, roadStraight, corner, threeWay, fourWay;
+    public GameObject deadEnd, roadStraight, corner, threeWay, fourWay;
 
-    public override void Start()
-    {
-        deadEnd = new Prefab("name");
-        roadStraight = new Prefab("name");
-        corner = new Prefab("name");
-        threeWay = new Prefab("name");
-        fourWay = new Prefab("name");
-    }
     public void FixRoadAtPosition(PlacementManager placementManager, Vector2Int temporaryPosition)
     {
         //[right, up, left, down]

@@ -13,8 +13,7 @@ public class StructureManager : MonoBehaviour
 
     private float[] houseWeights, specialWeights;
 
-    //private void Start()
-    public override void Start()
+    private void Start()
     {
         houseWeights = housesPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
         specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
@@ -58,7 +57,7 @@ public class StructureManager : MonoBehaviour
             sum += weights[i];
         }
 
-        float randomValue = Random.Range(0, (int)sum);
+        float randomValue = Random.Range(0, sum);
         float tempSum = 0;
         for (int i = 0; i < weights.Length; i++)
         {
@@ -97,7 +96,7 @@ public class StructureManager : MonoBehaviour
 [Serializable]
 public struct StructurePrefabWeighted
 {
-    public Prefab prefab;
-    //[Range(0, 1)]
+    public GameObject prefab;
+    [Range(0, 1)]
     public float weight;
 }

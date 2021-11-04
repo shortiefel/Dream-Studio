@@ -14,5 +14,4 @@
 set PATH=%CD:~0,3%Windows\Microsoft.NET\Framework64\v4.0.30319
 @REM outDir: C:\Users\jianw\Desktop\Digipen\GAM200\GAM200\Editor\  +  Data\
 set outDir=%~dp0Data\CSScript\
-#REM msbuild.exe Assets\Scripts\Scripts.csproj /t:build /p:OutputPath=%outDir% /p:Configuration=Release /flp:logfile=Data\msbuild.log /flp:verbosity=normal
-msbuild  Assets\Scripts\Scripts.sln /p:Configuration=Release
+msbuild.exe Assets\Scripts\Scripts.csproj /t:build /p:OutputPath=%outDir% /p:Configuration=Release /flp:logfile=Data\msbuild.log /flp:verbosity=normal

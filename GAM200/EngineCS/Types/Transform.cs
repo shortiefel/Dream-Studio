@@ -119,6 +119,28 @@ public class Transform : IComponent
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void GetTransform_right_Engine(uint entityID, out Vector2 outVec2);
 
+    //-----------------------------------------------------------------------------------------------------------------
+    //Child
+    public int childCount
+    {
+        get
+        {
+            Transform_GetChildCount_Engine(entityId, out int result);
+            return result;
+        }
+        set { }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void Transform_GetChildCount_Engine(uint entityId, out int result);
+
+    public Transform GetChild(int index)
+    {
+        Transform_GetChild_Engine(entityId, index, out uint targetId);
+        return new Transform(targetId);
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void Transform_GetChild_Engine(uint entityId, int index, out uint targetId);
+
     /* public bool GetActive()
      {
          GetTransform_Active_Engine(entityId, out bool _isActive);

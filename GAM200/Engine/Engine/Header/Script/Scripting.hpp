@@ -20,6 +20,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Script/ScriptClass.hpp"
 #include "Engine/Header/Script/MonoFunctionType.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 
 namespace Engine {
 	namespace Scripting {
@@ -54,10 +55,16 @@ namespace Engine {
 		-----------------------------------------------------*/
 		void ReloadMono();
 		/*-----------------------------------------------------
+		Initialize the scripts in mono
+		-Call mono Constructor
+		-Call mono Init
+		-----------------------------------------------------*/
+		void InitScript(const Entity_id& entity_id, const CSScriptInstance& csScriptInstance);
+		/*-----------------------------------------------------
 		-To add/remove class from map
 		-Find the function from c#
 		-----------------------------------------------------*/
-		bool InitCSClass(CSScriptInstance& _csScriptInstance); //Return whether class exist
+		bool InitCSClass(CSScriptInstance& _csScriptInstanc, const Entity_id& entity_ide);
 		void InitAllCSClass();
 		/*-----------------------------------------------------
 		-To add/remove public variable from map

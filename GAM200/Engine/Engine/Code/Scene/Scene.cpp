@@ -17,13 +17,13 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Scene/Scene.hpp"
+#include "Engine/Header/Scene/Prefab.hpp"
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Layer/LayerStack.hpp"
 
 #include "Engine/Header/Time/DeltaTime.hpp"
-//#include "Engine/Header/Management/GameState.hpp"
 
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
@@ -60,14 +60,14 @@ namespace Engine {
 
         GameSceneSerializer::SerializeScene("temporary");
         ScriptSystem::GetInstance().UpdateMapData();
-        ScriptSystem::GetInstance().PlayInit();
+        //ScriptSystem::GetInstance().PlayInit();
 
         return true;
     }
 
     void Scene::Stop(bool deserialize) {
         CollisionSystem::GetInstance().Stop();
-        DreamECS::GetInstance().ResetECS();
+        dreamECSGame->ResetECS();
 
         if (deserialize) {
             //std::cout << "deserialize\n";
@@ -86,29 +86,28 @@ namespace Engine {
     void Scene::Update(float dt, bool playing) {
         if (playing) {
             ScriptSystem::GetInstance().PlayRunTime();
-            TransformCalculationSystem::GetInstance().ChildUpdate();
+            //TransformCalculationSystem::GetInstance().ChildUpdate();
             CollisionSystem::GetInstance().Update(dt);
             PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
-
-            TransformCalculationSystem::GetInstance().Release();
         }
 
         CameraSystem::GetInstance().Update(dt);
        
         GraphicSystem::GetInstance().Render();
+        TransformCalculationSystem::GetInstance().Release();
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
 
         AI::AISystem::GetInstance().Render();
 
-        DreamECS::GetInstance().ClearDestroyQueue();
+        dreamECSGame->ClearDestroyQueue();
 
         //LayerStack::Update();
         //LayerStack::Draw();
     }
 
     unsigned int Scene::EntityCount() {
-        return DreamECS::GetInstance().GetUsedEntitySize();
+        return dreamECSGame->GetUsedEntitySize();
     }
 
     std::string Scene::GetName() {

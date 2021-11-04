@@ -54,13 +54,13 @@ namespace Engine {
 
 		GraphicImplementation::Renderer::BeginBatch(!gameDraw);
 
-		const auto& uiArray = DreamECS::GetInstance().GetComponentArrayData<UIComponent>();
+		const auto& uiArray = dreamECSGame->GetComponentArrayData<UIComponent>();
 		for (const auto& ui : uiArray) {
 			const Entity_id& entity_id = ui.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
 			if (!ui.isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
+			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 			Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
 			GraphicImplementation::Renderer::DrawQuad(transform->position + camPos, transform->scale, transform->angle, ui.texobj_hdl);

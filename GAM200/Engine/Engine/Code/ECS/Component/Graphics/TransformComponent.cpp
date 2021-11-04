@@ -47,21 +47,6 @@ namespace Engine
 		return *this;
 	}
 
-	/*Math::vec2 TransformComponent::GetTruePosition() const {
-		auto& tem = DreamECS::GetInstance().GetUsedConstEntityMap();
-		
-		Entity_id _parent = DEFAULT_ENTITY_ID;
-		const auto & itr = tem.find(GetEntityId());
-		if (itr != tem.end()) {
-			_parent = itr->second.parent;
-		}
-
-		if (_parent != DEFAULT_ENTITY_ID) {
-			return position + DreamECS::GetInstance().GetComponent<TransformComponent>(_parent).GetTruePosition();
-		}
-		return position;
-	}*/
-
 	TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer) {
 		position = _serializer.GetValue<Math::vec2>("Position");
 		localPosition = _serializer.GetValue<Math::vec2>("LocalPosition");

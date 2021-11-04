@@ -28,14 +28,18 @@ namespace Engine {
 		float GetDeltaTime() const;
 		//Set current dt, add to total time and increment the loop count
 		void SetDeltaTime(float _dt);
-
 		float GetFixedDeltaTime();
+		int GetNumberOfSteps();
 	private:
 		float dt = 1/60.0f;
 		float fps = 60.f;
 
-		static float totalTime;
-		static int loopCount;
+		static float accumulatedTime;
+		static int currentNumberOfSteps;
+		static float fixedDeltaTime;
+
+		//static float totalTime;
+		//static int loopCount;
 
 		SINGLETON_SETUP(DeltaTime);
 	};

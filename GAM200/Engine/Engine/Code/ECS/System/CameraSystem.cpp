@@ -38,13 +38,13 @@ namespace Engine
         camFov = 0.f;
         camHeight = 0;
 
-        auto& camArray = DreamECS::GetInstance().GetComponentArrayData<CameraComponent>();
+        auto& camArray = dreamECSGame->GetComponentArrayData<CameraComponent>();
         for (auto& cam : camArray) {
             const Entity_id& entity_id = cam.GetEntityId();
             if (EntityId_Check(entity_id)) break;
             if (!cam.isActive) continue;
 
-            TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
+            TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
             if (!transform || !transform->isActive) continue;
 
             //GLsizei fb_width, fb_height;
@@ -78,8 +78,8 @@ namespace Engine
                     0.f, 1.f, 0.f,
                     -camPosition.x, -camPosition.y, 1.f);
         }
-        const auto& cam = DreamECS::GetInstance().GetComponent<CameraComponent>(*id);
-        const auto& trans = DreamECS::GetInstance().GetComponent<TransformComponent>(*id);
+        const auto& cam = dreamECSGame->GetComponent<CameraComponent>(*id);
+        const auto& trans = dreamECSGame->GetComponent<TransformComponent>(*id);
         return
             Math::mat3(2.f / (Settings::gameAR * cam.height * cam.fov), 0.f, 0.f,
                 0.f, 2.f / (cam.height * cam.fov), 0.f,
@@ -101,8 +101,8 @@ namespace Engine
                     0.f, (camHeight * camFov) / 2.f, 0.f,
                     0.f, 0.f, 1.f);
         }
-        const auto& cam = DreamECS::GetInstance().GetComponent<CameraComponent>(*id);
-        const auto& trans = DreamECS::GetInstance().GetComponent<TransformComponent>(*id);
+        const auto& cam = dreamECSGame->GetComponent<CameraComponent>(*id);
+        const auto& trans = dreamECSGame->GetComponent<TransformComponent>(*id);
         return
             Math::mat3(1.f, 0.f, 0.f,
                 0.f, 1.f, 0.f,

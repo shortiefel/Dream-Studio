@@ -23,14 +23,14 @@ public class Test : MonoBehaviour
     public Transform trans;
     public GameObject go1;
 
- 
+    Prefab _prefab;
     //Collider col1;
 
     public override void Start()
     {
         trans = GetComponent<Transform>();
         go1 = new GameObject("EntityTest");
-
+        _prefab = new Prefab("Sprite");
         //col1 = GetComponent<Collider>();
         //Console.WriteLine(GetComponent<Collider>().entityId);
         //Transform tem = GetTransform();
@@ -81,18 +81,15 @@ public class Test : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(2))
         {
-            go1.AddComponent<Transform>();
+            Instantiate(_prefab, transform);
         }
         if (Input.GetMouseButtonDown(1))
         {
-            go1.AddComponent<Collider>();
-            //if (test2 != null)
-     
-            //else Debug.Log("Is null now");
+            //Instantiate(_prefab);
         }
         if (Input.GetMouseButtonDown(4))
         {
-  
+    
         }
 
         /*if (Input.GetMouseButtonDown(2))
@@ -107,11 +104,6 @@ public class Test : MonoBehaviour
     public override void OnMouseEnter()
     {
         Debug.Log("Mouse Enter");
-    }
-
-    public override void OnMouseClick()
-    {
-        Debug.Log("Mouse Enter click");
     }
 
     public override void OnMouseExit()

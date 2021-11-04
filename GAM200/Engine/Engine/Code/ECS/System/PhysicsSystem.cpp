@@ -25,20 +25,24 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 
+#include "Engine/Header/Time/DeltaTime.hpp"
+
 namespace Engine {
 	void PhysicsSystem::Update(float dt) {
 		PROFILER_START("Physics");
+		int totalStep = DeltaTime::GetInstance().GetNumberOfSteps();
+		for (int step = 0; step < totalStep; step++) {
+			const auto& rigidBodyArray = dreamECSGame->GetComponentArrayData<RigidBodyComponent>();
+			for (auto& rigidBody : rigidBodyArray) {
+				const Entity_id& entity_id = rigidBody.GetEntityId();
+				if (EntityId_Check(entity_id)) break;
+				if (!rigidBody.isActive) continue;
 
-		const auto& rigidBodyArray = DreamECS::GetInstance().GetComponentArrayData<RigidBodyComponent>();
-		for (auto& rigidBody : rigidBodyArray) {
-			const Entity_id& entity_id = rigidBody.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
-			if (!rigidBody.isActive) continue;
+				TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
+				if (!transform || !transform->isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
-			if (!transform || !transform->isActive) continue;
-
-			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);
+				Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);
+			}
 		}
 	}
 

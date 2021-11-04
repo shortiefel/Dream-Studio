@@ -117,6 +117,9 @@
     <ClInclude Include="Editor\Header\FunctionOverride.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_PrefabWindow.hpp">
+      <Filter>Header Files\GUI\GUI_Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -187,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="Editor\Code\FunctionOverride.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_PrefabWindow.cpp">
+      <Filter>Source Files\GUI\GUI_Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

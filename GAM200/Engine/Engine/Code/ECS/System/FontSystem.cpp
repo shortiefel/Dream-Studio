@@ -63,13 +63,13 @@ namespace Engine
         GraphicImplementation::Renderer::ResetStats();
         GraphicImplementation::Renderer::BeginBatch(!fontDraw);
 
-        const auto& textArray = DreamECS::GetInstance().GetComponentArrayData<TextComponent>();
+        const auto& textArray = dreamECSGame->GetComponentArrayData<TextComponent>();
         for (const auto& text : textArray) {
             const Entity_id& entity_id = text.GetEntityId();
             if (EntityId_Check(entity_id)) break;
             if (!text.isActive) continue;
 
-            TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
+            TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
             if (!transform || !transform->isActive) continue;
 
             GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, text.texobj_hdl);
@@ -78,7 +78,7 @@ namespace Engine
             // 
             // to draw debug lines
             //if (fontDraw == GL_TRUE) {
-            //    ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity_id);
+            //    ColliderComponent* collider = dreamECSGame->GetComponentPTR<ColliderComponent>(entity_id);
 
             //    // when object has collider, get collider matrix
             //    if (collider != nullptr)

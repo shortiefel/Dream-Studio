@@ -14,9 +14,15 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#pragma once
+#ifndef FILE_DIALOG_HPP
+#define FILE_DIALOG_HPP
 
 #include <string>
+
+#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
+							 filePath = filePath.substr(pos + 1);\
+							 pos = filePath.find_last_of(".");\
+							 filePath = filePath.substr(0, pos);
 
 namespace Engine {
 	class FileWindowDialog {
@@ -25,3 +31,5 @@ namespace Engine {
 		static std::string SaveFile(const char* filter);
 	};
 }
+
+#endif

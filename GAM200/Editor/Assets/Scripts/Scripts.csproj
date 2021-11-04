@@ -46,6 +46,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CameraController.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="Grid.cs" />
+    <Compile Include="GridSearch.cs" />
+    <Compile Include="InputManager.cs" />
+    <Compile Include="PlacementManager.cs" />
+    <Compile Include="RoadFixer.cs" />
+    <Compile Include="RoadManager.cs" />
+    <Compile Include="StructureManager.cs" />
+    <Compile Include="StructureModel.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Test2.cs" />
   </ItemGroup>

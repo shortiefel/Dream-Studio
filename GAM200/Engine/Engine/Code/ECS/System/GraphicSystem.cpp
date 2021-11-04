@@ -70,7 +70,7 @@ namespace Engine
 		GraphicImplementation::Renderer::BeginBatch(isDebugDraw);
 
 		// Get texture for entity
-		auto& textureArray = DreamECS::GetInstance().GetComponentArrayData<TextureComponent>();
+		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
 
 		// Looping through all layers; batch rendering
 		int layerCount = LAYER_COUNT;
@@ -146,7 +146,7 @@ namespace Engine
 			if (EntityId_Check(entity_id)) break;
 			if (!texture.isActive) continue;
 
-			TransformComponent* transform = DreamECS::GetInstance().GetComponentPTR<TransformComponent>(entity_id);
+			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
 			if (transform->layer == layer)
@@ -162,7 +162,7 @@ namespace Engine
 
 				// to draw debug lines
 				if (_isDebugDraw == GL_TRUE) {
-					ColliderComponent* collider = DreamECS::GetInstance().GetComponentPTR<ColliderComponent>(entity_id);
+					ColliderComponent* collider = dreamECSGame->GetComponentPTR<ColliderComponent>(entity_id);
 
 					// when object has collider, get collider matrix
 					if (collider != nullptr && collider->isActive)

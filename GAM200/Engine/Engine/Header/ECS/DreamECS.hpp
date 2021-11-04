@@ -29,19 +29,26 @@ Technology is prohibited.
 #include <unordered_set>
 
 namespace Engine {
-	class DreamECS : public Singleton<DreamECS> {
+	class DreamECS;
+	struct Prefab;
+
+	extern std::unique_ptr<DreamECS> dreamECSGame;
+
+	//class DreamECS : public Singleton<DreamECS> {
+	class DreamECS {
 	public:
 		void Create();
 		/*--------------------------------------------------------------------------------------------------------------
 		Entity related functions
 		--------------------------------------------------------------------------------------------------------------*/
-		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, std::unordered_set<Entity_id> _child = std::unordered_set<Entity_id>{}, Entity_id _parent = DEFAULT_ENTITY_ID);
+		Entity& CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, std::unordered_set<Entity_id> _child = std::unordered_set<Entity_id>{}, Entity_id _parent = DEFAULT_ENTITY_ID);
 		void DuplicateEntityAsInstance(Entity ent);
 		void DestroyEntity(Entity_id entity_id);
 		//const std::vector<Entity>& GetUsedEntitySet();
-		const EntityMapType& GetUsedConstEntityMap();
+		const EntityMapType& GetUsedConstEntityMap() const;
 		EntityMapType& GetUsedEntityMap();
 		uint32_t GetUsedEntitySize() const;
+		const std::unordered_map<Entity_id, Prefab>& GetConstPrefabMap() const;
 		void ClearDestroyQueue();
 		void ResetECS();
 		void DuplicateNameCheck(std::string& name);
@@ -52,6 +59,19 @@ namespace Engine {
 
 		void Parent(Entity_id _parent, Entity_id _child);
 		void Unparent(Entity_id _target);
+
+		/*
+		* Add an object as a prefab
+		*/
+		void AddPrefab(const Prefab& _prefab);
+		/*
+		* Remove prefab - when entity is deleted / to not be affected by update
+		*/
+		void RemovePrefab(const Entity_id& entity_id);
+		/*
+		* Updates all prefab components to the latest stored version
+		*/
+		void UpdateAllPrefab();
 
 		/*--------------------------------------------------------------------------------------------------------------
 		Component related functions
@@ -143,10 +163,10 @@ namespace Engine {
 		//std::unique_ptr<SystemManager>sysManager;
 
 		//static Coordinator gCoordinator;
-		std::unordered_set<Entity_id> destroySet{};
+		
 
 
-		SINGLETON_SETUP(DreamECS);
+		//SINGLETON_SETUP(DreamECS);
 	};
 }
 

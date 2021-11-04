@@ -19,6 +19,7 @@ Technology is prohibited.
 
 #include <string>
 #include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 
 namespace Engine {
 	class GameSceneSerializer {
@@ -31,11 +32,9 @@ namespace Engine {
 		//From file to a scene
 		static void DeserializeScene(std::string filename);
 
-
-		//static void SerializePrefab(std::string filename, Math::vec2 position, float angle);
-		static void DeserializePrefab(std::string filename, Math::vec2 position, float angle, unsigned int& id);
-
-
+		static void SerializePrefab(std::string filename, Entity_id entity_id);
+		static void DeserializePrefab(std::string filename, unsigned int* id = nullptr, Math::vec2 position = Math::vec2{}, float angle = 0.f);
+		static void RefreshPrefab(std::string filename, Entity_id id);
 	};
 }
 #endif

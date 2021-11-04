@@ -15,7 +15,7 @@ Technology is prohibited.
 
 using System.Runtime.CompilerServices; //For internal calls
 
-public class GameObject : MonoBehaviour
+public class GameObject : IBehaviour
 {
     public Transform transform;
     //Creating New GameObject
@@ -50,6 +50,11 @@ public class GameObject : MonoBehaviour
     {
         entityId = entId;
         transform = new Transform(entityId);
+    }
+
+    public static GameObject RetrieveGameObject(uint entId)
+    {
+        return new GameObject(entId);
     }
 
 

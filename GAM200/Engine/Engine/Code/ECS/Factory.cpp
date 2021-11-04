@@ -24,21 +24,23 @@ Technology is prohibited.
 //Systems
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
+#define CREATE_REGISTER(type) type->Create();\
+                              type->RegisterComponent<CameraComponent>();\
+                              type->RegisterComponent<TransformComponent>();\
+                              type->RegisterComponent<ColliderComponent>();\
+                              type->RegisterComponent<TextureComponent>();\
+                              type->RegisterComponent<RigidBodyComponent>();\
+                              type->RegisterComponent<ScriptComponent>();\
+                              type->RegisterComponent<UIComponent>();\
+                              type->RegisterComponent<TextComponent>();
+
 namespace Engine 
 {
     //Coordinator gCoordinator;=
 
     void Factory::Create() 
     {
-        DreamECS::GetInstance().Create();
-        DreamECS::GetInstance().RegisterComponent<CameraComponent>();
-        DreamECS::GetInstance().RegisterComponent<TransformComponent>();
-        DreamECS::GetInstance().RegisterComponent<ColliderComponent>();
-        DreamECS::GetInstance().RegisterComponent<TextureComponent>();
-        DreamECS::GetInstance().RegisterComponent<RigidBodyComponent>();
-        DreamECS::GetInstance().RegisterComponent<ScriptComponent>();
-        DreamECS::GetInstance().RegisterComponent<UIComponent>();
-        DreamECS::GetInstance().RegisterComponent<TextComponent>();
+       CREATE_REGISTER(dreamECSGame);
 
         CameraSystem::GetInstance().Create();
         CollisionSystem::GetInstance().Create();
@@ -68,20 +70,24 @@ namespace Engine
     //Function will be called when GUI inspector request a Square entity
     void Factory::InstantiateSquare(Math::vec2 pos, Math::vec2 scale) 
     {
-        Entity entity = DreamECS::GetInstance().CreateEntity();
-        DreamECS::GetInstance().AddComponent(
+        Entity entity = dreamECSGame->CreateEntity();
+        dreamECSGame->AddComponent(
             TransformComponent{ entity.id, pos, scale, 0 });
-        DreamECS::GetInstance().AddComponent(
+        dreamECSGame->AddComponent(
             ColliderComponent{ entity.id, ColliderType::SQUARE });
+        /*dreamECSGame->AddComponent(
+            TextureComponent{ entity.id, "Assets\\Textures\\Default_Square.png" });*/
     }
 
     //Function will be called when GUI inspector request a Circle entity
     void Factory::InstantiateCircle(Math::vec2 pos, Math::vec2 scale) 
     {
-        Entity entity = DreamECS::GetInstance().CreateEntity();
-        DreamECS::GetInstance().AddComponent(
+        Entity entity = dreamECSGame->CreateEntity();
+        dreamECSGame->AddComponent(
             TransformComponent{ entity.id, pos, scale, 0 });
-        DreamECS::GetInstance().AddComponent(
+        dreamECSGame->AddComponent(
             ColliderComponent{ entity.id, ColliderType::CIRCLE });
+        /*dreamECSGame->AddComponent(
+            TextureComponent{ entity.id, "Assets\\Textures\\Default_Circle.png" });*/
     }
 }

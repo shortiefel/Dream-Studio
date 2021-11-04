@@ -23,6 +23,9 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/TextureSet.hpp"
 #include "Engine/Header/ECS/Component/UI/TextComponent.hpp"
 
+#include "Engine/Header/Scene/Prefab.hpp"
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
+
 #include "Engine/Header/Input/Input.hpp"
 
 #include <Imgui/imgui_internal.h>
@@ -43,7 +46,7 @@ namespace Editor {
 					ImGui::End();
 					return;
 				}
-				auto& entityMap = Engine::DreamECS::GetInstance().GetUsedEntityMap();
+				auto& entityMap = Engine::dreamECSGame->GetUsedEntityMap();
 				if (entityMap.empty()) {
 					ImGui::End();
 					return;
@@ -64,8 +67,8 @@ namespace Editor {
 				if (ImGui::InputText("##EntityName", eName, 100)) {
 					if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 						std::string newName = std::string{ eName };
-						Engine::DreamECS::GetInstance().DuplicateNameCheck(newName);
-						Engine::DreamECS::GetInstance().ChangeName(entityName, newName);
+						Engine::dreamECSGame->DuplicateNameCheck(newName);
+						Engine::dreamECSGame->ChangeName(entityName, newName);
 						entityName = newName;
 					}
 				}
@@ -74,7 +77,7 @@ namespace Editor {
 				/**
 				*	Transform Properties
 				*/
-				Engine::TransformComponent* transComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TransformComponent>(entity_selected);
+				Engine::TransformComponent* transComp = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(entity_selected);
 				if (transComp != nullptr)
 				{
 					ImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
@@ -172,7 +175,7 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteTransform", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TransformComponent>(entity_selected);
+							Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_selected);
 
 
 					}
@@ -181,7 +184,7 @@ namespace Editor {
 				/*
 				*	Collider for each component
 				*/
-				Engine::ColliderComponent* colComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::ColliderComponent>(entity_selected);
+				Engine::ColliderComponent* colComp = Engine::dreamECSGame->GetComponentPTR<Engine::ColliderComponent>(entity_selected);
 				if (colComp != nullptr)
 				{
 
@@ -247,14 +250,14 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteCollider", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::DreamECS::GetInstance().RemoveComponent<Engine::ColliderComponent>(entity_selected);
+							Engine::dreamECSGame->RemoveComponent<Engine::ColliderComponent>(entity_selected);
 					}
 				}
 
 				/*
 				*	Camera component
 				*/
-				Engine::CameraComponent* camComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::CameraComponent>(entity_selected);
+				Engine::CameraComponent* camComp = Engine::dreamECSGame->GetComponentPTR<Engine::CameraComponent>(entity_selected);
 				if (camComp != nullptr) {
 
 					ImGui::CheckBox_Dream("##CameraActive", &(camComp->isActive));
@@ -290,7 +293,7 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::DreamECS::GetInstance().RemoveComponent<Engine::CameraComponent>(entity_selected);
+							Engine::dreamECSGame->RemoveComponent<Engine::CameraComponent>(entity_selected);
 
 					}
 
@@ -300,7 +303,7 @@ namespace Editor {
 				/*
 				*	RigidBody component
 				*/
-				Engine::RigidBodyComponent* rigidComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::RigidBodyComponent>(entity_selected);
+				Engine::RigidBodyComponent* rigidComp = Engine::dreamECSGame->GetComponentPTR<Engine::RigidBodyComponent>(entity_selected);
 				{
 					if (rigidComp != nullptr)
 					{
@@ -327,7 +330,7 @@ namespace Editor {
 							ImGui::AlignTextToFramePadding();
 							ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Delete Component##DeleteRigid", { ImGui::GetContentRegionAvail().x, 0 }))
-								Engine::DreamECS::GetInstance().RemoveComponent<Engine::RigidBodyComponent>(entity_selected);
+								Engine::dreamECSGame->RemoveComponent<Engine::RigidBodyComponent>(entity_selected);
 
 
 						}
@@ -337,8 +340,7 @@ namespace Editor {
 				/*
 				*	Texture component
 				*/
-
-				Engine::TextureComponent* textureComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextureComponent>(entity_selected);
+				Engine::TextureComponent* textureComp = Engine::dreamECSGame->GetComponentPTR<Engine::TextureComponent>(entity_selected);
 				if (textureComp != nullptr)
 				{
 					ImGui::CheckBox_Dream("##TextureActive", &(textureComp->isActive));
@@ -391,7 +393,7 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteTexture", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextureComponent>(entity_selected);
+							Engine::dreamECSGame->RemoveComponent<Engine::TextureComponent>(entity_selected);
 
 					}
 				}
@@ -400,7 +402,7 @@ namespace Editor {
 				/*
 				*	Text component
 				*/
-				Engine::TextComponent* textComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::TextComponent>(entity_selected);
+				Engine::TextComponent* textComp = Engine::dreamECSGame->GetComponentPTR<Engine::TextComponent>(entity_selected);
 				if (textComp != nullptr)
 				{
 					ImGui::CheckBox_Dream("##TextActive", &(textComp->isActive));
@@ -415,14 +417,14 @@ namespace Editor {
 						if (ImGui::InputText("##addcomponenttype", text, 300)) {
 							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 								std::string textStr{ text };
-								Engine::DreamECS::GetInstance().AddComponent(
+								Engine::dreamECSGame->AddComponent(
 									std::move(Engine::TextComponent{}));
 							}
 						}
 
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::DreamECS::GetInstance().RemoveComponent<Engine::TextComponent>(entity_selected);
+							Engine::dreamECSGame->RemoveComponent<Engine::TextComponent>(entity_selected);
 
 					}
 				}
@@ -436,7 +438,7 @@ namespace Editor {
 				/*
 				*	UI component
 				*/
-				Engine::UIComponent* uiComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::UIComponent>(entity_selected);
+				Engine::UIComponent* uiComp = Engine::dreamECSGame->GetComponentPTR<Engine::UIComponent>(entity_selected);
 				{
 					if (uiComp != nullptr)
 					{
@@ -471,7 +473,7 @@ namespace Editor {
 							ImGui::AlignTextToFramePadding();
 							ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Delete Component##DeletUI", { ImGui::GetContentRegionAvail().x, 0 }))
-								Engine::DreamECS::GetInstance().RemoveComponent<Engine::UIComponent>(entity_selected);
+								Engine::dreamECSGame->RemoveComponent<Engine::UIComponent>(entity_selected);
 
 						}
 					}
@@ -484,7 +486,7 @@ namespace Editor {
 				/**
 				*	Scripts for each component
 				*/
-				Engine::ScriptComponent* scriptComp = Engine::DreamECS::GetInstance().GetComponentPTR<Engine::ScriptComponent>(entity_selected);
+				Engine::ScriptComponent* scriptComp = Engine::dreamECSGame->GetComponentPTR<Engine::ScriptComponent>(entity_selected);
 				if (scriptComp != nullptr) {
 					//if (ImGui::TreeNode("Script")) {
 					auto& scriptsList = scriptComp->klassInstance;
@@ -532,18 +534,35 @@ namespace Editor {
 							ImGui::AlignTextToFramePadding();
 							ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
-								Engine::DreamECS::GetInstance().RemoveScript(entity_selected, className.c_str());
+								Engine::dreamECSGame->RemoveScript(entity_selected, className.c_str());
 
 							ImGui::TreePop();
 						}
 					}
 				}
 
+				/**
+				*	Prefab
+				*/
+				const auto& prefabMap = Engine::dreamECSGame->GetConstPrefabMap();
+				
+				if (prefabMap.find(entity_selected) != prefabMap.end()) {
+					const Engine::Prefab& prefab = prefabMap.find(entity_selected)->second;
+					if (ImGui::Button("Update Prefab##prefabupdatebtn", { ImGui::GetContentRegionAvail().x, 0 })) {
+						Engine::GameSceneSerializer::SerializePrefab(prefab.prefabName, entity_selected);
+					}
+
+					else if (ImGui::Button("Refresh Prefab##btn", { ImGui::GetContentRegionAvail().x, 0 }))
+					{
+						Engine::GameSceneSerializer::RefreshPrefab(prefab.prefabName, entity_selected);
+					}
+				}
+				
+
 
 				/**
 				*	Add New Components
 				*/
-
 				ImGui::Spacing();
 				ImGui::AlignTextToFramePadding();
 				ImGui::SameLine(quadWidth);
@@ -561,34 +580,28 @@ namespace Editor {
 					ImGui::AlignTextToFramePadding();
 					//ImGui::SameLine(halfWidth);
 					if (ImGui::Selectable(" + Transform##addTransformcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::TransformComponent>(entity_selected);
 					if (ImGui::Selectable(" + Collider##addTCollidercom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::ColliderComponent>(entity_selected);
 					if (ImGui::Selectable(" + Texture##addTTexturecom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::TextureComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::TextureComponent>(entity_selected);
 					if (ImGui::Selectable(" + Rigidbody##addRigidbodycom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
-					if (ImGui::Selectable(" + Script##addScriptcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::ScriptComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::RigidBodyComponent>(entity_selected);
 					if (ImGui::Selectable(" + Camera##addCameracom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::CameraComponent>(entity_selected);
 					if (ImGui::Selectable(" + UI##addUIcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::UIComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
 
-					char text[100]{};
+					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
+						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
 
-					ImGui::PushItemWidth(textSize * 1.5f);
-					ImGui::SetNextItemWidth(halfWidth);
-					ImGui::Text(" + Script");
-					ImGui::SameLine(quadWidth);
-					if (ImGui::InputText("##addcomponenttype", text, 100)) {
-						if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
-							std::string textStr{ text };
-							Engine::DreamECS::GetInstance().AddComponent(
-								std::move(Engine::ScriptComponent{ entity_selected, textStr.c_str() }));
+						if (!filePath.empty()) {
+							REMOVE_FROM_FILEPATH;
+
+							Engine::dreamECSGame->AddComponent(
+								std::move(Engine::ScriptComponent{ entity_selected, filePath.c_str() }));
 						}
 					}
-					ImGui::PopItemWidth();
 
 					ImGui::EndPopup();
 				}

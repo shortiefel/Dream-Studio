@@ -16,19 +16,33 @@ Technology is prohibited.
 
 #include "Engine/Header/Time/DeltaTime.hpp"
 
+#define MAX_STEPS 3
+
 namespace Engine {
-	float DeltaTime::totalTime = 0.f;
-	int DeltaTime::loopCount = 0;
+	//float DeltaTime::totalTime = 0.f;
+	//int DeltaTime::loopCount = 0;
+	float  DeltaTime::accumulatedTime = 0.f;
+	int  DeltaTime::currentNumberOfSteps = 0;
+	float  DeltaTime::fixedDeltaTime = 1.f / 60.f;
 
 	float DeltaTime::GetFPS() const { return fps; }
 	void DeltaTime::SetFPS(float _fps) { fps = _fps; }
 	float DeltaTime::GetDeltaTime() const { return dt; }
 	void DeltaTime::SetDeltaTime(float _dt) { 
+		currentNumberOfSteps = 0;
 		dt = _dt; 
+		accumulatedTime += _dt;
 
-		totalTime += _dt;
-		++loopCount;
+		while (accumulatedTime >= fixedDeltaTime) {
+			accumulatedTime -= fixedDeltaTime;
+
+			currentNumberOfSteps++;
+			if (currentNumberOfSteps > MAX_STEPS) break;
+		}
+		//totalTime += _dt;
+		//++loopCount;
 	}
 
-	float DeltaTime::GetFixedDeltaTime() { return totalTime/loopCount; }
+	float DeltaTime::GetFixedDeltaTime() { return fixedDeltaTime; }
+	int DeltaTime::GetNumberOfSteps() { return currentNumberOfSteps; }
 }

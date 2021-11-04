@@ -86,8 +86,8 @@ namespace Engine {
 
 	void ScriptSystem::PlayInit() {
 		PROFILER_START("Scripting");
-
-		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
+		
+		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
@@ -96,14 +96,15 @@ namespace Engine {
 			
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
-				void* param[] = { (void*)&entity_id };
-				//std::cout << "class: " << className << "\n";
-				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
-				}
-				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
-				}
+				//void* param[] = { (void*)&entity_id };
+				////std::cout << "class: " << className << "\n";
+				//if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
+				//	Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
+				//}
+				//if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
+				//	Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
+				//}
+				Scripting::InitScript(entity_id, csScriptInstance);
 			}
 		}
 	}
@@ -111,7 +112,7 @@ namespace Engine {
 	void ScriptSystem::PlayRunTime() {
 		PROFILER_START("Scripting");
 
-		const auto& entScriptArray = DreamECS::GetInstance().GetComponentArrayData<ScriptComponent>();
+		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			if (EntityId_Check(csScript.GetEntityId())) break;
 
@@ -142,7 +143,7 @@ namespace Engine {
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
 		PROFILER_START("Scripting");
 
-		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(e.self);
+		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.self);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
@@ -153,7 +154,7 @@ namespace Engine {
 	bool CallMouseOverlapFunc(const MouseOverlapColliderEvent& e) {
 		PROFILER_START("Scripting");
 
-		ScriptComponent* csScript = DreamECS::GetInstance().GetComponentPTR<ScriptComponent>(e.other);
+		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.other);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);

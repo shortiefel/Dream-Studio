@@ -32,6 +32,7 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_HierarchyWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_StatsWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_PrefabWindow.hpp"
 #include "Editor/Header/GUI/GUI_ClickCheck.hpp"
 
 #include "Editor/Header/FunctionOverride.hpp"
@@ -50,6 +51,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Scene/Prefab.hpp"
 
 //#include "Engine/Header/Script/Scripting.hpp"
 //#include "Engine/Header/Script/ScriptInternalCall.hpp"
@@ -75,9 +77,6 @@ Technology is prohibited.
 //	}\
 
 #define TEXT_BOX_SIZE 70
-
-#define REMOVE_FROM_FILEPATH filePath = filePath.substr(filePath.find_last_of("\\") + 1);\
-							 filePath = filePath.substr(0, filePath.find_last_of("."));
 
 namespace Editor {
 	namespace GUI_Windows {
@@ -117,6 +116,8 @@ namespace Editor {
 		void    GUI_WindowsMenu();
 		//Menu to undo and redo scene
 		void    GUI_EditMenu();
+		//Menu to change and add prefab
+		void	GUI_PrefabMenu();
 
 		//Internal Variables
 		
@@ -149,7 +150,7 @@ namespace Editor {
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
 
-				Engine::DreamECS::GetInstance().ResetECS();
+				Engine::dreamECSGame->ResetECS();
 				Engine::GameSceneSerializer::SerializeScene(filePath);
 				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
 			}
@@ -276,6 +277,7 @@ namespace Editor {
 				GUI_FileMenu();
 				GUI_EditMenu();
 				GUI_WindowsMenu();
+				GUI_PrefabMenu();
 
 				ImGui::EndMenuBar();
 
@@ -328,14 +330,51 @@ namespace Editor {
 
 		//Menu to undo and redo scene
 		void GUI_EditMenu() {
-			if (ImGui::BeginMenu("Edit"))
-			{
+			if (ImGui::BeginMenu("Edit")) {
+
 				if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
 				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled for now
 				ImGui::Separator();
 				//if (ImGui::MenuItem("Cut", "CTRL+X")) {}
 				//if (ImGui::MenuItem("Copy", "CTRL+C")) {}
 				//if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+
+				ImGui::EndMenu();
+			}
+
+		}
+
+		void GUI_PrefabMenu() {
+			if (ImGui::BeginMenu("Prefab")) {
+				if (ImGui::MenuItem("Save Selected as Prefab...")) {
+					const Engine::Entity_id entity_id = GetTarget(entity_selected);
+					if (GetTarget(entity_selected) == DEFAULT_ENTITY_ID) return;
+
+					std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0");
+
+					if (!filePath.empty()) {
+						REMOVE_FROM_FILEPATH;
+						const auto& entity= Engine::dreamECSGame->GetUsedConstEntityMap().find(entity_id)->second;
+						Engine::GameSceneSerializer::SerializePrefab(filePath, GetTarget(entity_selected));
+						Engine::dreamECSGame->AddPrefab(Engine::Prefab(filePath, entity));
+					}
+				}
+
+				if (ImGui::MenuItem("Add Prefab")) {
+					std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Prefab (*.prefab)\0*.prefab\0");
+
+					if (!filePath.empty()) {
+						REMOVE_FROM_FILEPATH;
+
+						Engine::GameSceneSerializer::DeserializePrefab(filePath);
+					}
+				}
+
+				if (ImGui::MenuItem("Update All Prefab")) {
+					Engine::dreamECSGame->UpdateAllPrefab();
+				}
+
+
 				ImGui::EndMenu();
 			}
 

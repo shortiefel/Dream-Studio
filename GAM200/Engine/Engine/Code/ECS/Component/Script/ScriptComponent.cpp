@@ -25,7 +25,11 @@ namespace Engine {
 		IComponent{ _ID } {
 		if (_className) {
 			CSScriptInstance csScriptInstance{ _className };
+			Scripting::InitCSClass(csScriptInstance, _ID);
+			Scripting::InitVariable(csScriptInstance);
+
 			klassInstance.emplace(_className, std::move(csScriptInstance));
+
 		}
 		//CSScriptInstance csScriptInstance{ _className };
 		//klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
@@ -85,8 +89,6 @@ namespace Engine {
 			
 			if (klassInstance.find(className) == klassInstance.end()) {
 				klassInstance.emplace(className, std::move(csScriptInstance));
-				Scripting::InitCSClass(klassInstance[className]);
-				Scripting::InitVariable(klassInstance[className]);
 			}
 
 			else {
@@ -113,7 +115,7 @@ namespace Engine {
 				classJSon["IsActive"].GetBool() };
 
 			rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
-			if (!Scripting::InitCSClass(csScriptInstance)) { continue; }
+			if (!Scripting::InitCSClass(csScriptInstance, GetEntityId())) { continue; }
 			if (variableItr != classJSon.MemberEnd()) {
 				for (auto& variableData : variableItr->value.GetArray()) {
 					const auto& variableName = variableData["Name"].GetString();

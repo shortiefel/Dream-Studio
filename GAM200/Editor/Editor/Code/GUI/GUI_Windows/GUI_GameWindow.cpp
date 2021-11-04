@@ -32,11 +32,9 @@ Technology is prohibited.
 
 #include <filesystem>
 
-#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
-							 filePath = filePath.substr(pos + 1);\
-							 pos = filePath.find_last_of(".");\
-							 filePath = filePath.substr(0, pos);
-
+#define REMOVE_FROM_SCENEPATH scenePath = scenePath.string().substr(scenePath.string().find_last_of("\\") + 1);\
+							 scenePath = scenePath.string().substr(0, scenePath.string().find_last_of("."));\
+							scenePath = scenePath.replace_extension(".scene");
 namespace Editor {
 	extern const std::filesystem::path _assetPath;
 	namespace GUI_Windows {
@@ -61,25 +59,6 @@ namespace Editor {
 		Math::vec2 GetMousePositionGameWindow() {
 			return Math::vec2{ mousePos.x, mousePos.y };
 		}
-
-
-		//void OpenSceneFile(const std::filesystem::path& path) {
-		//	//std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
-
-		//	if (path.extension().string() != ".scene")
-		//	{
-		//		std::cout << "Unable to load scene file\n";
-		//		std::exit(EXIT_FAILURE);
-		//	}
-		//	
-		//	Engine::Scene* newScene = nullptr;
-		//	Engine::GameSceneSerializer serializer;
-		//	if (serializer.Deserialize(path.string())) {
-
-		//		Engine::SceneManager::GetInstance().StartScene();
-		//	}
-
-		//}
 
 		void GUI_GameWindow(bool* gameWin_bool, const Engine::Graphic::FrameBuffer& gameWinFBO, ImGuiWindowFlags window_flags) {
 			if (*gameWin_bool) {
@@ -108,11 +87,11 @@ namespace Editor {
 							std::exit(EXIT_FAILURE);
 						}
 							
-
 						if (!scenePath.filename().string().empty())
 						{
-							//Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.filename().string()));
-							Engine::SceneManager::GetInstance().Play();
+							REMOVE_FROM_SCENEPATH;
+							scenePath.replace_extension("");
+							Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.string()));
 						}
 					}
 					ImGui::EndDragDropTarget();

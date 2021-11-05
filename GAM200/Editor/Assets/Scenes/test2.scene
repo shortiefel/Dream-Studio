@@ -1,5 +1,5 @@
 [
-  
+
   {
     "Entity": {
       "Name": "Background",
@@ -21,146 +21,6 @@
       "IsLoop": false,
       "EndFrame": 0,
       "TimePerFrame": 0.0,
-      "IsActive": true
-    }
-  },
-  {
-    "Entity": {
-      "Name": "Entity20",
-      "Parent": 10001,
-      "Child": []
-    },
-    "TransformComponent": {
-      "Position": [ 0.0, 0.0 ],
-      "LocalPosition": [ 0.0, 0.0 ],
-      "Scale": [ 20.0, 80.0 ],
-      "Angle": 0.0,
-      "Layer": 2,
-      "IsActive": true
-    },
-    "ColliderComponent": {
-      "ColliderType": 1,
-      "Position": [ 0.0, 0.0 ],
-      "Scale": [ 1.0, 1.0 ],
-      "Angle": 0.0,
-      "IsTrigger": false,
-      "IsActive": true
-    },
-    "RigidBodyComponent": {
-      "Speed": 0.0,
-      "IsActive": true
-    },
-    "TextureComponent": {
-      "Filepath": "Assets\\Textures\\OneWayRoad.png",
-      "Shape": 0,
-      "IsAnimation": false,
-      "IsLoop": false,
-      "EndFrame": 0,
-      "TimePerFrame": 0.0,
-      "IsActive": true
-    },
-    "ScriptComponent": [
-      {
-        "Class": "Test",
-        "IsActive": true,
-        "Variable": [
-          {
-            "Name": "health",
-            "Type": 4,
-            "Data": 20
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "Entity": {
-      "Name": "UI Object",
-      "Parent": 10001,
-      "Child": []
-    },
-    "TransformComponent": {
-      "Position": [ 300.0, 0.0 ],
-      "LocalPosition": [ 300.0, 0.0 ],
-      "Scale": [ 120.0, 120.0 ],
-      "Angle": 0.0,
-      "Layer": 3,
-      "IsActive": true
-    },
-    "UIComponent": {
-      "Filepath": "Assets\\Textures\\OneWayRoad.png",
-      "IsActive": true
-    }
-  },
-  {
-    "Entity": {
-      "Name": "Entity1",
-      "Parent": 10001,
-      "Child": []
-    },
-    "TransformComponent": {
-      "Position": [ 650.0, 0.0 ],
-      "LocalPosition": [ 650.0, 0.0 ],
-      "Scale": [ 120.0, 120.0 ],
-      "Angle": 0.0,
-      "Layer": 2,
-      "IsActive": true
-    },
-    "ColliderComponent": {
-      "ColliderType": 1,
-      "Position": [ 0.0, 0.0 ],
-      "Scale": [ 1.0, 1.0 ],
-      "Angle": 0.0,
-      "IsTrigger": false,
-      "IsActive": true
-    },
-    "RigidBodyComponent": {
-      "Speed": 0.0,
-      "IsActive": true
-    },
-    "TextureComponent": {
-      "Filepath": "Assets\\Textures\\HouseYellow.png",
-      "Shape": 0,
-      "IsAnimation": false,
-      "IsLoop": false,
-      "EndFrame": 0,
-      "TimePerFrame": 0.0,
-      "IsActive": true
-    }
-  },
-  {
-    "Entity": {
-      "Name": "EntitySprite",
-      "Parent": 10001,
-      "Child": []
-    },
-    "TransformComponent": {
-      "Position": [ -650.0, 0.0 ],
-      "LocalPosition": [ -650.0, 0.0 ],
-      "Scale": [ 120.0, 120.0 ],
-      "Angle": 0.0,
-      "Layer": 2,
-      "IsActive": true
-    },
-    "ColliderComponent": {
-      "ColliderType": 1,
-      "Position": [ 0.0, 0.0 ],
-      "Scale": [ 1.0, 1.0 ],
-      "Angle": 0.0,
-      "IsTrigger": false,
-      "IsActive": true
-    },
-    "RigidBodyComponent": {
-      "Speed": 0.0,
-      "IsActive": true
-    },
-    "TextureComponent": {
-      "Filepath": "Assets\\Textures\\SpriteTest.png",
-      "Shape": 0,
-      "IsAnimation": true,
-      "IsLoop": true,
-      "EndFrame": 4,
-      "TimePerFrame": 1.0,
       "IsActive": true
     }
   },
@@ -193,34 +53,111 @@
   },
   {
     "Entity": {
-      "Name": "Box",
+      "Name": "GameManager",
       "Parent": 10001,
       "Child": []
     },
     "TransformComponent": {
-      "Position": [ -200.0, 0.0 ],
-      "LocalPosition": [ -200.0, 0.0 ],
-      "Scale": [ 40.0, 40.0 ],
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 20.0, 20.0 ],
       "Angle": 0.0,
       "Layer": 2,
       "IsActive": true
     },
-    "ColliderComponent": {
-      "ColliderType": 1,
+    "ScriptComponent": [
+      {
+        "Class": "GameManager",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "PlacementManager",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
-      "Scale": [ 1.0, 1.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 20.0, 20.0 ],
       "Angle": 0.0,
-      "IsTrigger": false,
+      "Layer": 2,
       "IsActive": true
     },
-    "TextureComponent": {
-      "Filepath": "Assets\\Textures\\OneWayRoad.png",
-      "Shape": 0,
-      "IsAnimation": false,
-      "IsLoop": false,
-      "EndFrame": 0,
-      "TimePerFrame": 0.0,
+    "ScriptComponent": [
+      {
+        "Class": "PlacementManager",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "InputManager",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 20.0, 20.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
       "IsActive": true
-    }
+    },
+    "ScriptComponent": [
+      {
+        "Class": "InputManager",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "RoadManager",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 20.0, 20.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "RoadManager",
+        "IsActive": true
+      },
+      {
+        "Class": "RoadFixer",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "StructureManager",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 20.0, 20.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "StructureManager",
+        "IsActive": true
+      }
+    ]
   }
 ]

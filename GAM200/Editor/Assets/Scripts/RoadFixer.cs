@@ -9,11 +9,11 @@ public class RoadFixer : MonoBehaviour
 
     public override void Start()
     {
-        deadEnd = new Prefab("Box");
-        roadStraight = new Prefab("name");
-        corner = new Prefab("name");
-        threeWay = new Prefab("name");
-        fourWay = new Prefab("name");
+        deadEnd = new Prefab("EndRoad");
+        roadStraight = new Prefab("StraightRoad");
+        corner = new Prefab("CurveRoad");
+        threeWay = new Prefab("ThreeWayRoad");
+        fourWay = new Prefab("FourWayRoad");
     }
     public void FixRoadAtPosition(PlacementManager placementManager, Vector2Int temporaryPosition)
     {

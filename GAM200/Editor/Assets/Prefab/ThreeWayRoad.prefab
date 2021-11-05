@@ -1,15 +1,15 @@
 [
-  
+
   {
     "Entity": {
-      "Name": "Sprite",
+      "Name": "ThreeWayRoad",
       "Parent": 10001,
       "Child": []
     },
     "TransformComponent": {
-      "Position": [ -650.0, 0.0 ],
-      "LocalPosition": [ -650.0, 0.0 ],
-      "Scale": [ 120.0, 120.0 ],
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 40.0, 40.0 ],
       "Angle": 0.0,
       "Layer": 2,
       "IsActive": true
@@ -22,17 +22,13 @@
       "IsTrigger": false,
       "IsActive": true
     },
-    "RigidBodyComponent": {
-      "Speed": 0.0,
-      "IsActive": true
-    },
     "TextureComponent": {
-      "Filepath": "Assets\\Textures\\SpriteTest.png",
+      "Filepath": "Assets\\Textures\\ThreeWayRoad.png",
       "Shape": 0,
-      "IsAnimation": true,
-      "IsLoop": true,
-      "EndFrame": 4,
-      "TimePerFrame": 1.0,
+      "IsAnimation": false,
+      "IsLoop": false,
+      "EndFrame": 0,
+      "TimePerFrame": 0.0,
       "IsActive": true
     }
   }

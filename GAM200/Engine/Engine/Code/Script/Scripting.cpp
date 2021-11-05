@@ -185,7 +185,7 @@ namespace Engine {
 		void InitScript(const Entity_id& entity_id, const CSScriptInstance& csScriptInstance) {
 			if (!GameState::GetInstance().GetPlaying()) return;
 			void* param[] = { (void*)&entity_id };
-			//std::cout << "class: " << className << "\n";
+			//std::cout << "class: " << csScriptInstance.csClass.className << "\n";
 			if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
 				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
 			}

@@ -181,9 +181,6 @@
     <ClCompile Include="Engine\Code\Commands\Command.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Commands\CommandHistory.cpp">
-      <Filter>Source Files\Commands</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -531,7 +528,7 @@
     <ClInclude Include="Engine\Header\Commands\Command.hpp">
       <Filter>Header Files\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Commands\CommandHistory.hpp">
+    <ClInclude Include="Engine\Header\Commands\ObjectCommand.hpp">
       <Filter>Header Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>

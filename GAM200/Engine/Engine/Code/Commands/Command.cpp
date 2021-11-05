@@ -18,5 +18,62 @@ Technology is prohibited.
 
 namespace Engine {
 
-	
+
+	void UndoRedoManager::Add(CommandPtr command)
+	{
+		//Add the newest, current command
+		current_command.push_back(command);
+
+		//if the number of commands go over maximum, remove the oldest command
+		if (current_command.size() > maximum)
+		{
+			current_command.pop_front();
+		}
+	}
+
+	void UndoRedoManager::Undo()
+	{
+		//if (current_command.empty()) { return; }
+
+		////Undo the last command
+		//current_command.back()->undo();
+		//undo_command.push_back(current_command.back());
+		//current_command.pop_back();
+
+		//if(undo_command.size() > maximum)
+		//{
+		//	undo_command.pop_front();
+		//}
+		if (undostack.empty()) { return; }
+
+		//add newest command
+		auto cmd = undostack.top();
+		undostack.pop();
+
+		cmd->undo();
+
+		redostack.push(cmd);
+	}
+
+	void UndoRedoManager::ClearHistory()
+	{
+		undostack = {};
+	}
+
+	//void CommandManager::Redo()
+	//{
+	//	if (undo_command.empty()) { return; }
+
+	//	//redo the last undo command
+	//	undo_command.back()->execute();
+	//	//move to "current" command stack
+	//	current_command.push_back(undo_command.back());
+	//	//remove from 'undo' stack
+	//	CommandsUndo.pop_back();
+
+	//	if (current_command.size() > maximum)
+	//	{
+	//		current_command.pop_front();
+	//	}
+	//}
 }

@@ -19,6 +19,7 @@ Technology is prohibited.
 #define SETTINGS_H
 
 #include <string>
+#include "Engine/Header/Commands/Command.hpp"
 
 namespace Engine 
 {

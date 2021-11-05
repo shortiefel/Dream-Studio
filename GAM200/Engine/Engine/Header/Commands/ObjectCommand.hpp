@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
-@file    CommandHistory.hpp
+@file    ObjectCommand.hpp
 @author  Goh See Yong, Denise   g.seeyongdenise@digipen.edu
 @date    04/11/2021
 \brief
-This file contain the commands regarding for Undo/Redo System
+This file contain the undo / redo commands for game object
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -14,25 +14,18 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef COMMAND_HISTORY_HPP
-#define COMMAND_HISTORY_HPP
+#ifndef OBJECT_COMMAND_HPP
+#define OBJECT_COMMAND_HPP
 
 #include "Engine/Header/Commands/Command.hpp"
 
 namespace Engine {
-	
-	class CommandHistory
+	class ObjectCommand : public ICommand
 	{
 	public:
-		static void AddCommand(Command* cmd);
-		static void UndoCommand();
-		static void RedoCommand();
+		void undo() override;
 
-
-	private:
-		static Command* _commands[1000];
-		static int _commandsize;
-		static int _commandptr;
+		//voir redo() ovverride;
 	};
 }
-#endif 
+#endif

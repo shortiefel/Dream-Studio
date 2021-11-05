@@ -22,38 +22,65 @@ Technology is prohibited.
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"
+#include "Engine/Header/ECS/Component/ComponentList.hpp"
+#include "Engine/Header/Scene/Scene.hpp"
+
 #include <vector>
 #include <deque>
 #include <stack>
 #include <memory>
 
-#define UNDO true
-#define REDO false
 
 
 namespace Engine {
 
-	class Command 
+	//the Command Interface
+	class ICommand 
 	{
 	public:
-		virtual ~Command() {}
-		virtual void execute() = 0;
-		virtual void undo() = 0;
-		virtual void redo() = 0;
-		virtual bool merge(Command* other) = 0;
 		
-		bool CanMerge() const { return _canMerge; }
-		bool SetMerge() { return _noMerge; }
-		//void UndoCommand();
-		//void RedoCommand();
+		//execute a command function
+		virtual void execute() = 0;
+
+		//undo 
+		virtual void undo() = 0;
+		//virtual void redo() = 0;
+	
+	};
+
+	using CommandPtr = std::shared_ptr<ICommand>;
+
+	//class that knows how to undo and redo user changes
+	class UndoRedoManager : public Singleton<UndoRedoManager>{
+	public:
+		
+		UndoRedoManager() : maximum(10) {};
+
+		//adding the latest command pointing to the latest command
+		void Add(CommandPtr command);
+		//undo the last command
+		void Undo();
+		//redo the last command
+		//void Redo();
+
+		//store command to do next time
+		
+		//clear all undo redo histroy
+		void ClearHistory();
+
+
+		//wrap the stack using a std::vector for better performance
+		std::deque<CommandPtr> current_command;
+		std::deque<CommandPtr> undo_command;
+
+		std::stack<CommandPtr> undostack;
+		std::stack<CommandPtr> redostack;
+
+
 
 	private:
-		static int _id;
+		unsigned int maximum;
 
-	protected:
-		bool _canMerge = true;
-		bool _noMerge = false;
-		
 	};
 }
 

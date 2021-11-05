@@ -83,6 +83,7 @@ namespace Editor {
 
 		ImGuiWindowFlags window_flags = 0;
 
+
 		std::map<int, Engine::Entity_id> entity_selected{};
 
 		ImTextureID iconPlay;

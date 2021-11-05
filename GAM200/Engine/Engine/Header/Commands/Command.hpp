@@ -33,23 +33,27 @@ Technology is prohibited.
 
 namespace Engine {
 
-	class Command : public Singleton<Command>
+	class Command 
 	{
-	typedef std::shared_ptr<Command> CommandPtr;
 	public:
-		void ExecuteCommand(bool _undo = true);
+		virtual ~Command() {}
+		virtual void execute() = 0;
 		virtual void undo() = 0;
 		virtual void redo() = 0;
-		void UndoCommand();
-		void RedoCommand();
-		void ClearUndoRedoStack();
+		virtual bool merge(Command* other) = 0;
+		
+		bool CanMerge() const { return _canMerge; }
+		bool SetMerge() { return _noMerge; }
+		//void UndoCommand();
+		//void RedoCommand();
 
 	private:
-		std::stack<CommandPtr> undo_stack;
-		std::stack<CommandPtr> redo_stack;
+		static int _id;
 
-		CommandPtr _fCommands; //to store a command for future use
-		SINGLETON_SETUP(Command);
+	protected:
+		bool _canMerge = true;
+		bool _noMerge = false;
+		
 	};
 }
 

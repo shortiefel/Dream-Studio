@@ -18,26 +18,5 @@ Technology is prohibited.
 
 namespace Engine {
 
-	void Command::UndoCommand()
-	{
-		//if nothing to undo 
-		if (undo_stack.empty()) { return; }
-
-		//get the most recent command 
-		auto command = undo_stack.top();
-		undo_stack.pop();
-
-		redo_stack.push(command);
-	}
-	void Command::RedoCommand()
-	{
-		//if nothing to undo 
-		if (redo_stack.empty()) { return; }
-
-		//get the most recent command 
-		auto command = redo_stack.top();
-		redo_stack.pop();
-
-		undo_stack.push(command);
-	}
+	
 }

@@ -29,9 +29,9 @@ namespace Engine {
 			static void Shutdown();
 			static int ErrorCheck(FMOD_RESULT result);
 
-			void LoadSound(const std::string& soundName, bool b3d = true, bool bLooping = false, bool bStream = false);
+			void LoadSound(const std::string& soundName, bool b3d, bool bLooping , bool bStream );
 			void UnLoadSound(const std::string& soundName);
-			int PlaySounds(const std::string& soundName, const Engine::DreamMath::vec3& vPos = Engine::DreamMath::vec3{ 0, 0, 0 }, float fVolumedB = 0.0f);
+			int PlaySounds(const std::string& soundName, const Engine::DreamMath::vec3& vPos , float fVolumedB );
 			void StopChannel(int nChannelId);
 			float dbToVolume(float dB);
 			float VolumeTodB(float volume);

@@ -21,12 +21,8 @@ namespace Engine {
 
 	void SoundComponent::Init() {
 
-		FMOD_RESULT result = FMOD::System_Create(&soundImplementation->fmodSystem);
-		if (result != FMOD_OK)
-		{
-			std::cout << "FMOD Error: " << FMOD_ErrorString(result) << std::endl;
-		}
-
+		soundImplementation = new SoundImplementation;
+		 
 	}
 
 	void SoundComponent::Soundget() {
@@ -81,7 +77,12 @@ namespace Engine {
 
 		if (pChannel)
 		{
-			//soundFind->second->getMode(pChannel);
+			FMOD_MODE currentMode;
+			soundFind->second->getMode(&currentMode);
+			if (currentMode)
+			{
+				FMOD_VECTOR position = VectorToFmod(vPos);
+			}
 
 			SoundComponent::ErrorCheck(pChannel->setVolume(dbToVolume(fVolumedB)));
 			SoundComponent::ErrorCheck(pChannel->setPaused(false));
@@ -91,4 +92,12 @@ namespace Engine {
 		return channelID;
 	}
 	
+	FMOD_VECTOR SoundComponent::VectorToFmod(const Engine::DreamMath::vec3& vPosition)
+	{
+		FMOD_VECTOR fmodVec;
+		fmodVec.x = vPosition.x;
+		fmodVec.y = vPosition.y;
+		fmodVec.z = vPosition.z;
+		return fmodVec;
+	}
 }

@@ -265,7 +265,7 @@ namespace Engine {
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnMouseExit = mono_method_desc_search_in_image(description, image);
 
-			Scripting::InitScript(entity_id, _csScriptInstance);
+			//Scripting::InitScript(entity_id, _csScriptInstance);
 
 			return true;
 		}

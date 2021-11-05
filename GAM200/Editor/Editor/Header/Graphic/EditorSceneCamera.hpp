@@ -34,6 +34,7 @@ namespace Editor
 		static float GetAR();
 
 		static void changeHeight(float val);
+		static float GetHeight();
 		static void changePosition(Math::vec2 val);
 
 	private:

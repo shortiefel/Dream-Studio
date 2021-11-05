@@ -41,33 +41,42 @@ public class IBehaviour : IComponent
     //private static GenericDictionary dictonaryOfTypes;
 
     public uint entityId { get; set; }
-    public IBehaviour() { }
+    public IBehaviour() {
+        //Console.WriteLine("111: " + this.GetType().Name);
+    }
     public IBehaviour(uint id)
     {
         entityId = id;
+        //Console.WriteLine("2222: " + this.GetType().Name);
     }
     //-----------------------------------------------------------------------------------------------------------------
     //Component
+
+    protected void RecordComponent(Type type,uint entityId) 
+    {
+        
+        if (!dictonaryOfTypes.ContainsKey(type))
+        {
+            dictonaryOfTypes.Add(type, new Dictionary<uint, dynamic>());
+        }
+
+        if (!dictonaryOfTypes[type].ContainsKey(entityId))
+        {
+            dictonaryOfTypes[type].Add(entityId, this);
+            Debug.Log(type.Name);
+        }
+    }
 
     public T GetComponent<T>() where T : class, IComponent, new()
     {
         if (HasComponent<T>(entityId))
         {
+            //Debug.Log(typeof(T));
             //Debug.Log("First " + typeof(T));
-            if (!dictonaryOfTypes.ContainsKey(typeof(T)))
+            if (!dictonaryOfTypes.ContainsKey(typeof(T)) || !dictonaryOfTypes[typeof(T)].ContainsKey(entityId))
             {
-                dictonaryOfTypes.Add(typeof(T), new Dictionary<uint, dynamic>());
-                //Debug.Log("Not found " + typeof(T));
+                return null;
             }
-
-            if (!dictonaryOfTypes[typeof(T)].ContainsKey(entityId))
-            {
-                T component = new T();
-                component.entityId = entityId;
-                dictonaryOfTypes[typeof(T)].Add(entityId, component);
-                //dictonaryOfTypes[typeof(T)][entityId] = component;
-            }
-            
             return dictonaryOfTypes[typeof(T)][entityId] as T;
         }
 

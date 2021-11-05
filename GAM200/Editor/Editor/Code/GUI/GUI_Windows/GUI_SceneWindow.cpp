@@ -28,8 +28,8 @@ Technology is prohibited.
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Input/Input.hpp"
 
-#define HEIGHT_CHANGE_SPEED 30.f
-#define POS_CHANGE_SPEED 30.f
+#define HEIGHT_CHANGE_SPEED 3.f
+#define POS_CHANGE_SPEED EditorSceneCamera::GetHeight() * .005f
 
 namespace Editor {
 	namespace GUI_Windows {

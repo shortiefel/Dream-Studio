@@ -4,17 +4,16 @@ using System.Collections.Generic;
 
 public class PlacementManager : MonoBehaviour
 {
-    private static int width, height;
-    static Grid placementGrid;
+    public int width, height;
+    Grid placementGrid;
+    //private Transform transform;
 
-    private static Dictionary<Vector2Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector2Int, StructureModel>();
-    private static Dictionary<Vector2Int, StructureModel> structureDictionary = new Dictionary<Vector2Int, StructureModel>();
+    private Dictionary<Vector2Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector2Int, StructureModel>();
+    private Dictionary<Vector2Int, StructureModel> structureDictionary = new Dictionary<Vector2Int, StructureModel>();
 
-    PlacementManager placementManager;
     //private void Start()
     public override void Start()
     {
-        placementManager = GetComponent<PlacementManager>();
         width = 10; height = 10;
         placementGrid = new Grid(width, height);
         transform = GetComponent<Transform>();
@@ -25,7 +24,7 @@ public class PlacementManager : MonoBehaviour
         return placementGrid.GetAllAdjacentCellTypes(position.x, position.y);
     }
 
-    internal static bool CheckIfPositionInBound(Vector2Int position)
+    internal bool CheckIfPositionInBound(Vector2Int position)
     {
         if (position.x >= 0 && position.x < width && position.y >= 0 && position.y < height)
         {
@@ -54,12 +53,12 @@ public class PlacementManager : MonoBehaviour
     //    }
     //}
 
-    internal static bool CheckIfPositionIsFree(Vector2Int position)
+    internal bool CheckIfPositionIsFree(Vector2Int position)
     {
         return CheckIfPositionIsOfType(position, CellType.Empty);
     }
 
-    private static bool CheckIfPositionIsOfType(Vector2Int position, CellType type)
+    private bool CheckIfPositionIsOfType(Vector2Int position, CellType type)
     {
         return placementGrid[position.x, position.y] == type;
     }
@@ -116,7 +115,7 @@ public class PlacementManager : MonoBehaviour
         temporaryRoadobjects.Clear();
     }
 
-    internal static void AddtemporaryStructuresToStructureDictionary()
+    internal void AddtemporaryStructuresToStructureDictionary()
     {
         foreach (var structure in temporaryRoadobjects)
         {

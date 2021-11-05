@@ -51,10 +51,11 @@ public class MonoBehaviour : IBehaviour
     public virtual void OnMouseOver() { }
     public virtual void OnMouseExit() { }
 
-    public MonoBehaviour() { }
-    public MonoBehaviour(uint id)
+    public MonoBehaviour() { Debug.Log("Nulling here"); }
+    public MonoBehaviour(uint id) : base(id)
     {
         entityId = id;
+        RecordComponent(this.GetType(), entityId);
         gameObject = GameObject.RetrieveGameObject(id);
         transform = new Transform(id);
     }

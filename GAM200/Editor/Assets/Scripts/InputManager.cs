@@ -4,26 +4,20 @@ using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour
 {
-	public static Action<Vector2Int> OnMouseClick, OnMouseHold;
-	public static Action OnMouseUp;
-
+	public Action<Vector2Int> OnMouseClick, OnMouseHold;
+	public Action OnMouseUp;
 	private Vector2 cameraMovementVector;
-	private bool OverGameObject;
-	
-	Camera mainCamera;
-	InputManager inputManager;
+
+	public Camera mainCamera;
+
+	public bool OverGameObject;
 
 	//public LayerMask groundMask;
 
+	
 	public override void Start()
 	{
-		inputManager = GetComponent<InputManager>();
 		mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
-	}
-
-	public Vector2 CameraMovementVector
-	{
-		get { return inputManager.cameraMovementVector; }
 	}
 
 	//private void Update()
@@ -35,24 +29,28 @@ public class InputManager : MonoBehaviour
 		//CheckArrowInput();
 	}
 
+	public Vector2 CameraMovementVector
+	{
+		get { return cameraMovementVector; }
+	}
+
 	private Vector2Int? RaycastGround()
 	{
 		//RaycastHit2D hit;
 		//Ray2D ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 		//Debug.Log(ray);
 		//if (Physics2D.Raycast(ray, out hit, Mathf.Infinity, groundMask))
-		
+
 		RaycastHit2D hit = Physics2D.RayCast(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()), Vector2.zero);
 
 		if (hit.collider != null)
 		{
-			//Debug.Log(hit.point);
 			Vector2Int positionInt = Vector2Int.RoundToInt(hit.point);
-			//Debug.Log(positionInt);
+			Debug.Log(positionInt);
 			return positionInt;
 		}
-		//else
-			//Debug.Log("did not hit");
+		else
+			Debug.Log("did not hit");
 		return null;
 	}
 
@@ -63,57 +61,55 @@ public class InputManager : MonoBehaviour
 
 	public override void OnMouseEnter()
 	{
-		inputManager.OverGameObject = true;
+		//Console.WriteLine("Successful");
+		OverGameObject = true;
+		//Console.WriteLine("Successful");
 	}
 
 	public override void OnMouseExit()
 	{
-		inputManager.OverGameObject = false;
+		OverGameObject = false;
 	}
 
 	private void CheckClickHoldEvent()
 	{
-		if (Input.GetMouseButton(0) && inputManager.OverGameObject)
-		//if (Input.GetMouseButton(0))
+		if (Input.GetMouseButton(0) && OverGameObject)
 		{
-			//Debug.Log("here1");
-			var position = RaycastGround();
+			Debug.Log("hold");
+			//var position = RaycastGround();
 			/*if (position != null)
 				OnMouseHold?.Invoke(position.Value);*/
-			if (position != null)
-			{
-				Console.WriteLine("here11113");
+			/*if (position != null)
 				if (OnMouseHold != null)
-				{
-					Console.WriteLine("here111114");
-					//OnMouseHold.Invoke(position.Value);
-				}
-			}
+					OnMouseHold.Invoke(position.Value);*/
 		}
 	}
 
 	private void CheckClickUpEvent()
 	{
-		if (Input.GetMouseButtonUp(0) && inputManager.OverGameObject)
+		if (Input.GetMouseButtonUp(0) && OverGameObject)
 		{
+			Debug.Log("out");
 			//OnMouseUp?.Invoke();
 			if (OnMouseUp != null)
+			{
+				Debug.Log("not null");
 				OnMouseUp.Invoke();
+			}
 		}
 	}
 
 	private void CheckClickDownEvent()
 	{
-		//Console.WriteLine("sodos  " + inputManager.OverGameObject);
-		if (Input.GetMouseButtonDown(0) && inputManager.OverGameObject)
+		if (Input.GetMouseButtonDown(0) && OverGameObject)
 		{
-			Debug.Log("here2");
-			var position = RaycastGround();
+			Debug.Log("down");
+			//var position = RaycastGround();
 			/*if (position != null)
 				OnMouseClick?.Invoke(position.Value);*/
-			if (position != null)
-				if(OnMouseClick != null)
-					OnMouseClick.Invoke(position.Value);
+			/*if (position != null)
+				if (OnMouseClick != null)
+					OnMouseClick.Invoke(position.Value);*/
 
 		}
 	}

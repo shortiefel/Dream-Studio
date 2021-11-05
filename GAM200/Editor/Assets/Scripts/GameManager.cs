@@ -5,12 +5,12 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     //public CameraMovement cameraMovement;
-    RoadManager roadManager;
-    InputManager inputManager;
-    StructureManager structureManager;
+    public RoadManager roadManager;
+    public InputManager inputManager;
 
     //public UIController uiController;
 
+    public StructureManager structureManager;
 
     //private void Start()
     public override void Start()
@@ -19,16 +19,19 @@ public class GameManager : MonoBehaviour
         //uiController.OnHousePlacement += HousePlacementHandler;
         //uiController.OnSpecialPlacement += SpecialPlacementHandler;
 
-        roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
-        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
-        structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
-        
-        InputManager.OnMouseClick += roadManager.PlaceRoad;
-        InputManager.OnMouseHold += roadManager.PlaceRoad;
-        InputManager.OnMouseUp += roadManager.FinishPlacingRoad;
+        Debug.Log("Start function");
+
+        roadManager = GetComponent<RoadManager>();
+        inputManager = GetComponent<InputManager>();
+        structureManager = GetComponent<StructureManager>();
+
+        inputManager.OnMouseClick += roadManager.PlaceRoad;
+        inputManager.OnMouseHold += roadManager.PlaceRoad;
+        inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
+
     }
 
-    /*private void SpecialPlacementHandler()
+    private void SpecialPlacementHandler()
     {
         ClearInputActions();
         inputManager.OnMouseClick += structureManager.PlaceSpecial;
@@ -59,7 +62,7 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick = null;
         inputManager.OnMouseHold = null;
         inputManager.OnMouseUp = null;
-    }*/
+    }
 
     //private void Update()
     public override void Update()

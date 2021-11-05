@@ -19,7 +19,7 @@ public class GameObject : IBehaviour
 {
     public Transform transform;
     //Creating New GameObject
-    public GameObject(bool create = true, uint entity_id = 0)
+    public GameObject(bool create = true, uint entity_id = 0) : base(9999)
     {
         if (create)
         {
@@ -35,10 +35,11 @@ public class GameObject : IBehaviour
         }
     }
 
-    public GameObject(string name)
+    public GameObject(string name) : base(9999)
     {
         CreateEntity_Engine(out uint entId, name);
         entityId = entId;
+        
         transform = new Transform(entityId);
         AddComponent_Transform_Engine(entityId);
     }
@@ -46,7 +47,7 @@ public class GameObject : IBehaviour
     internal static extern void CreateEntity_Engine(out uint entityID, string name);
 
     //Referencing existing GameObject
-    private GameObject(uint entId)
+    private GameObject(uint entId) : base(entId)
     {
         entityId = entId;
         transform = new Transform(entityId);
@@ -72,7 +73,7 @@ public class GameObject : IBehaviour
     internal static extern void FindEntity_Engine(out int entityID, string name);
 
     
-    public T AddComponent<T>() where T : class, IComponent, new()
+    public T AddComponent<T>() where T : IBehaviour, IComponent, new()
     {
         if (AddComponentInternal<T>())
         {

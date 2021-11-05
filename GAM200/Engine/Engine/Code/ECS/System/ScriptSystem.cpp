@@ -94,18 +94,22 @@ namespace Engine {
 
 			auto& classScriptInstances = csScript.klassInstance;
 			
+			//Calls all constructor first and then initialize all
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
-				//void* param[] = { (void*)&entity_id };
-				////std::cout << "class: " << className << "\n";
-				//if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
-				//	Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
-				//}
-				//if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
-				//	Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
-				//}
-				Scripting::InitScript(entity_id, csScriptInstance);
+				void* param[] = { (void*)&entity_id };
+				//std::cout << "class: " << className << "\n";
+				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
+				}
 			}
+
+			for (auto& [className, csScriptInstance] : classScriptInstances) {
+				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
+				}
+			}
+			
 		}
 	}
 
@@ -143,7 +147,7 @@ namespace Engine {
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
 		PROFILER_START("Scripting");
-
+		
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.self);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
@@ -157,7 +161,9 @@ namespace Engine {
 
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.other);
 		if (!csScript) return false;
+		std::cout << e.other << " over lap \n";
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
+			std::cout << className << " " << (int)e.type << " over lap \n";
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
 		}
 		return true;

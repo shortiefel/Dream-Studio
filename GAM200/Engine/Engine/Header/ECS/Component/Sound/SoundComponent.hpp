@@ -17,43 +17,21 @@ Technology is prohibited.
 #ifndef SOUND_COMPONENT_H
 #define SOUND_COMPONENT_H
 
-#include <fmod/fmod.hpp>
-#include <fmod/fmod_errors.h>
-#include <fmod/fmod_common.h>
-#include <fmod/fmod_output.h>
-
-#include <map>
-
-#include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/ECS/Component/Sound/SoundImplementation.hpp"
 
 namespace Engine {
 
-	struct SoundImplementation {
-
-		SoundImplementation();
-		~SoundImplementation();
-
-		FMOD::System* fmodSystem;
-
-		void update();
-
-		typedef std::map<std::string, FMOD::Sound*> soundMap;
-		typedef std::map<int, FMOD::Channel*> channelMap;
-		soundMap sMap;
-		channelMap cMap;
-	};
 
 	class SoundComponent {
 		public:
-			static void Init(SoundImplementation* soundImplementation);
-			static void Update(SoundImplementation* soundImplementation);
-			static void Shutdown(SoundImplementation* soundImplementation);
+			static void Init();
+			static void Soundget();
+			static void Shutdown();
 			static int ErrorCheck(FMOD_RESULT result);
 
-			void LoadSound(const std::string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
-			void UnLoadSound(const std::string& strSoundName);
-			int PlaySounds(const std::string& strSoundName, const Engine::DreamMath::vec3& vPos = Engine::DreamMath::vec3{ 0, 0, 0 }, float fVolumedB = 0.0f);
+			void LoadSound(const std::string& soundName, bool b3d, bool bLooping , bool bStream );
+			void UnLoadSound(const std::string& soundName);
+			int PlaySounds(const std::string& soundName, const Engine::DreamMath::vec3& vPos , float fVolumedB );
 			void StopChannel(int nChannelId);
 			float dbToVolume(float dB);
 			float VolumeTodB(float volume);

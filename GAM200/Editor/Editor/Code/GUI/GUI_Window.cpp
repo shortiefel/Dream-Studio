@@ -83,6 +83,7 @@ namespace Editor {
 
 		ImGuiWindowFlags window_flags = 0;
 
+
 		std::map<int, Engine::Entity_id> entity_selected{};
 
 		ImTextureID iconPlay;
@@ -111,6 +112,8 @@ namespace Editor {
 		void    GUI_EditMenu();
 		//Menu to change and add prefab
 		void	GUI_PrefabMenu();
+		//theme
+		void	SetNewThemeColor();
 
 		//Internal Variables
 		
@@ -240,21 +243,48 @@ namespace Editor {
 			*tex_ptr = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/PlayButton.png", &heightIcon, &widthIcon, 0, 4);
 			unsigned int* tex2_ptr = reinterpret_cast<unsigned int*>(&iconStop);
 			*tex2_ptr = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/StopButton.png", &heightIcon, &widthIcon, 0, 4);
+
+
+			/**
+			*		Theme / Fonts / Styling
+			*/
+			ImGuiIO& io = ImGui::GetIO(); (void)io;
+			float fontSize = 18.0f;// *2.0f;
+			io.Fonts->AddFontFromFileTTF("Assets/Fonts/Open_Sans/OpenSans-Bold.ttf", fontSize);
+			io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/Open_Sans/OpenSans-Regular.ttf", fontSize);
+			
+
+			ImGuiStyle& style = ImGui::GetStyle();
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				style.WindowRounding = 0.0f;
+				style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+			}
+
+			SetNewThemeColor();
 		}
 
 		void GUI_DockSpace() {
+			ImGuiViewport* viewport = ImGui::GetMainViewport();
 			Math::vec2 winPos = Engine::Window::GetInstance().GetWindowPosition();
-			ImGui::SetNextWindowPos(ImVec2{ winPos.x, winPos.y });
-			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetInstance().GetWidth(),
-											 (float)Engine::Window::GetInstance().GetHeight() });
+			ImGui::SetNextWindowPos(viewport->Pos);
+			ImGui::SetNextWindowSize(viewport->Size);
+			ImGui::SetNextWindowViewport(viewport->ID);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+			/*ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetInstance().GetWidth(),
+											 (float)Engine::Window::GetInstance().GetHeight() });*/
 
-			
+			ImGuiStyle& style = ImGui::GetStyle();
+			float minWinSizeX = style.WindowMinSize.x;
+			style.WindowMinSize.x = 370.0f;
 			ImGui::Begin("Dream Engine", &dockspace_bool, dockspace_window_flags);//, & showWindow, ImGuiWindowFlags_NoInputs);
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_dock_flags);
 
 			GUI_Menus();
 
+			ImGui::PopStyleVar(2);
 			ImGui::End();
 		}
 
@@ -402,22 +432,22 @@ namespace Editor {
 
 			ImVec2 wSize = ImGui::GetWindowSize();
 			float size = wSize.y / 2.f;
-			ImGui::Begin("Actions", nullptr, window_flags);
+			ImGui::Begin("Tool Bar", nullptr, window_flags);
 
-			ImGui::PushItemWidth(wSize.x);
+			//ImGui::PushItemWidth(wSize.x);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
-
+			ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
 			//ImGui::SameLine(halfWidth);
-			if (ImGui::ImageButton(iconPlay, { 25, 25 }, { 0,1 }, { 1, 0 })) {
+			if (ImGui::ImageButton(iconPlay, { 32, 32 }, { 0,1 }, { 1, 0 })) {
 
 				if (!EditorSceneManager::GetInstance().Play()) Engine::GameState::GetInstance().SetPlaying(false);
 			}
 			ImGui::PopItemFlag();
 
 			ImGui::SameLine();
-			ImGui::PushItemWidth(wSize.x / 2);
+			//ImGui::PushItemWidth(wSize.x / 2);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
-			if (ImGui::ImageButton(iconStop, { 25, 25 }, { 0,1 }, { 1, 0 })) {
+			if (ImGui::ImageButton(iconStop, { 32, 32 }, { 0,1 }, { 1, 0 })) {
 				EditorSceneManager::GetInstance().Stop();
 			}
 			ImGui::PopItemFlag();
@@ -428,7 +458,41 @@ namespace Editor {
 
 		}
 
+		/**
+		*		Theme Colors
+		*/
+		void SetNewThemeColor()
+		{
+			auto& colors = ImGui::GetStyle().Colors;
+			colors[ImGuiCol_WindowBg] = ImVec4{ 0.1f, 0.105f, 0.11f, 1.0f };
 
+			// Headers
+			colors[ImGuiCol_Header] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
+			colors[ImGuiCol_HeaderHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
+			colors[ImGuiCol_HeaderActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+
+			// Buttons
+			colors[ImGuiCol_Button] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
+			colors[ImGuiCol_ButtonHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
+			colors[ImGuiCol_ButtonActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+
+			// Frame BG
+			colors[ImGuiCol_FrameBg] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
+			colors[ImGuiCol_FrameBgHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
+			colors[ImGuiCol_FrameBgActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+
+			// Tabs
+			colors[ImGuiCol_Tab] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+			colors[ImGuiCol_TabHovered] = ImVec4{ 0.38f, 0.3805f, 0.381f, 1.0f };
+			colors[ImGuiCol_TabActive] = ImVec4{ 0.28f, 0.2805f, 0.281f, 1.0f };
+			colors[ImGuiCol_TabUnfocused] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+			colors[ImGuiCol_TabUnfocusedActive] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
+
+			// Title
+			colors[ImGuiCol_TitleBg] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+			colors[ImGuiCol_TitleBgActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+			colors[ImGuiCol_TitleBgCollapsed] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+		}
 		//static void ShowMenuBar()
 		//{
 		//	ImGui::BeginGroup();

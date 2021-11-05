@@ -43,6 +43,11 @@ namespace Editor {
 				float halfWidth = ImGui::GetContentRegionAvail().x / 2.f;
 				float quadWidth = ImGui::GetContentRegionAvail().x / 2.5f;
 
+				/**
+				*	FONT
+				*/
+				ImGuiIO& io = ImGui::GetIO();
+				auto boldFont = io.Fonts->Fonts[0];
 
 				/**
 				*	INSPECTOR STARTS
@@ -73,8 +78,9 @@ namespace Editor {
 				strcpy(eName, entityName.c_str());
 				ImGui::PushItemWidth(textSize);
 				ImGui::AlignTextToFramePadding();
-				ImGui::Text("Entity Name: ");
-				ImGui::SameLine(halfWidth);
+
+				//ImGui::Text("Entity Name: ");
+				//ImGui::SameLine(halfWidth);
 				ImGui::SetNextItemWidth(halfWidth * 0.9f);
 				if (ImGui::InputText("##EntityName", eName, 100)) {
 					if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
@@ -84,17 +90,17 @@ namespace Editor {
 						entityName = newName;
 					}
 				}
+
 				ImGui::PopItemWidth();
 
-
-				ImGui::Spacing();
+				//ImGui::Spacing();
 				ImGui::AlignTextToFramePadding();
 				ImGui::SameLine(halfWidth);
-
 				if (ImGui::Button("Add Component##addcomponentbtn", { ImGui::GetContentRegionAvail().x ,  0 }))
 				{
 					ImGui::OpenPopup("##addcomponentpopup");
 				}
+		
 				if (ImGui::BeginPopup("##addcomponentpopup"))
 				{
 				
@@ -123,8 +129,10 @@ namespace Editor {
 						}
 					}
 
+					
 					ImGui::EndPopup();
 				}
+
 				
 				
 				/**
@@ -142,9 +150,10 @@ namespace Editor {
 						*	Position
 						*/
 						ImGui::AlignTextToFramePadding();
-
+				
 						ImGui::Text("Position");
 						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.375f);
@@ -157,12 +166,17 @@ namespace Editor {
 						if (ImGui::InputFloat("##TransformYPos", &transComp->localPosition.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 
+						ImGui::PopFont();
+
+
 						/**
 						*	Scale
 						*/
 						ImGui::AlignTextToFramePadding();
+						
 						ImGui::Text("Scale");
 						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.125f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.375f);
@@ -175,20 +189,29 @@ namespace Editor {
 						if (ImGui::InputFloat("##TransformYscale", &transComp->scale.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 
+						ImGui::PopFont();
+
 						/**
 						*	Rotation
 						*/
 						ImGui::AlignTextToFramePadding();
+					
 						ImGui::Text("Rotation");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
 						if (ImGui::InputFloat("##TransformRotate", &transComp->angle, ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
+
+						ImGui::PopFont();
+
 
 						/*
 						*	Layer
 						*/
 						ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Layer");
 						ImGui::SameLine(halfWidth);
 
@@ -219,7 +242,6 @@ namespace Editor {
 							ImGui::EndCombo();
 						}
 
-
 						ImGui::Spacing();
 
 						/**
@@ -229,7 +251,6 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteTransform", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_selected);
-
 
 					}
 				}
@@ -254,6 +275,8 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Position");
 						ImGui::SameLine(halfWidth);
+
+						ImGui::PushFont(boldFont);
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.375f);
@@ -265,12 +288,15 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##ColliderYPos", &colComp->offset_position.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
+						ImGui::PopFont();
 
 						/**
 						*	Scale
 						*/
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Scale");
+
+						ImGui::PushFont(boldFont);
 						ImGui::SameLine(halfWidth);
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.125f, 0);
@@ -283,6 +309,8 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##ColliderYscale", &colComp->offset_scale.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
+						ImGui::PopFont();
+
 
 						/**
 						*	Rotation
@@ -291,9 +319,10 @@ namespace Editor {
 						ImGui::Text("Rotation");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
 						if (ImGui::InputFloat("##ColliderRotate", &colComp->angle, ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
-
+						ImGui::PopFont();
 
 						ImGui::Spacing();
 
@@ -325,8 +354,9 @@ namespace Editor {
 						ImGui::Text("FOV");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
 						ImGui::InputFloat("##camFOV", &camComp->fov, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
-
+						ImGui::PopFont();
 
 						/**
 						*	Height
@@ -335,8 +365,9 @@ namespace Editor {
 						ImGui::Text("Height");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
 						ImGui::InputInt("##camheight", &camComp->height, 0);
-
+						ImGui::PopFont();
 
 						ImGui::Spacing();
 
@@ -372,8 +403,9 @@ namespace Editor {
 							ImGui::Text("Speed");
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::PushFont(boldFont);
 							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
-
+							ImGui::PopFont();
 
 							ImGui::Spacing();
 
@@ -411,8 +443,9 @@ namespace Editor {
 						ImGui::Text("Texture");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
 						ImGui::Text(textureComp->textureName.c_str());
-
+						ImGui::PopFont();
 						ImGui::Spacing();
 						ImGui::AlignTextToFramePadding();
 						ImGui::SameLine(halfWidth * 1.2f);
@@ -451,14 +484,19 @@ namespace Editor {
 							ImGui::Text("Frame End");
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::PushFont(boldFont);
 							ImGui::InputInt("##frameEnd", &textureComp->endFrame, 0);
+							ImGui::PopFont();
+
 
 							ImGui::Spacing();
 							ImGui::AlignTextToFramePadding();
 							ImGui::Text("Time Per Frame");
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::PushFont(boldFont);
 							ImGui::InputFloat("##timeFrame", &textureComp->fTime, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+							ImGui::PopFont();
 
 						}
 

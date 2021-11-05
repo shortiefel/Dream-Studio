@@ -28,6 +28,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Input/Input.hpp"
 
+#include "Engine/Header/Commands/Command.hpp"
+
 #include <Imgui/imgui_internal.h>
 #include <filesystem>
 

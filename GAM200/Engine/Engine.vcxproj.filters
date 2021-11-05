@@ -181,6 +181,9 @@
     <ClCompile Include="Engine\Code\Commands\Command.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Commands\ObjectCommand.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">

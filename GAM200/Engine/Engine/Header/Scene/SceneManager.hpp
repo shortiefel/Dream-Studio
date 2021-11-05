@@ -44,6 +44,9 @@ namespace Engine {
 
 		void SetDefaultScene(std::string sceneName);
 
+		//save scene state so that can load the previous state for undo redo
+		
+
 	private:
 		//static SceneManager* sceneManager;
 

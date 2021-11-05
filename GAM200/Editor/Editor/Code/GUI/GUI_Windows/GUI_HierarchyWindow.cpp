@@ -5,6 +5,9 @@
 
 #include "Engine/Header/Input/Input.hpp"
 
+#include "Engine/Header/Commands/Command.hpp"
+#include "Engine/Header/Commands/ObjectCommand.hpp"
+
 #include <algorithm>
 
 namespace Editor {
@@ -19,6 +22,11 @@ namespace Editor {
 				if (ImGui::Button("+ Create Game Object##CreateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 				{
 					Engine::dreamECSGame->CreateEntity();
+					
+
+					//record the object state before change
+					// 
+					//Engine::UndoRedoManager::GetInstance().RecordState();
 				}
 
 				if (ImGui::BeginPopupContextWindow())

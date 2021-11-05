@@ -24,6 +24,7 @@ Technology is prohibited.
 #include "Engine/Header/Singleton/Singleton.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/Scene/Scene.hpp"
+#include "Engine/Header/Commands/ObjectCommand.hpp"
 
 #include <vector>
 #include <deque>
@@ -38,12 +39,11 @@ namespace Engine {
 	class ICommand 
 	{
 	public:
-		
 		//execute a command function
 		virtual void execute() = 0;
-
 		//undo 
 		virtual void undo() = 0;
+		//redo
 		//virtual void redo() = 0;
 	
 	};
@@ -56,6 +56,8 @@ namespace Engine {
 		
 		UndoRedoManager() : maximum(10) {};
 
+		//record current state
+		void RecordState(CommandPtr cmd);
 		//adding the latest command pointing to the latest command
 		void Add(CommandPtr command);
 		//undo the last command

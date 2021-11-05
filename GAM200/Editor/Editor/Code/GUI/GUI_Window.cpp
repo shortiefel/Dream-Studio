@@ -342,7 +342,7 @@ namespace Editor {
 		void GUI_EditMenu() {
 			if (ImGui::BeginMenu("Edit")) {
 
-				if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+				if (ImGui::MenuItem("Undo", "CTRL+Z")) { Engine::UndoRedoManager::GetInstance().Undo(); }
 				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled for now
 				ImGui::Separator();
 				//if (ImGui::MenuItem("Cut", "CTRL+X")) {}

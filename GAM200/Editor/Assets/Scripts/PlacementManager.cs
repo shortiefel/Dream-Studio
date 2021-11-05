@@ -14,6 +14,7 @@ public class PlacementManager : MonoBehaviour
     //private void Start()
     public override void Start()
     {
+        width = 10; height = 10;
         placementGrid = new Grid(width, height);
         transform = GetComponent<Transform>();
     }

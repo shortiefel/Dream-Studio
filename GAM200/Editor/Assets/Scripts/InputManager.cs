@@ -27,13 +27,13 @@ public class InputManager : MonoBehaviour
 	//private void Update()
 	public override void Update()
 	{
-		/*CheckClickDownEvent();
+		CheckClickDownEvent();
 		CheckClickUpEvent();
-		CheckClickHoldEvent();*/
+		CheckClickHoldEvent();
 		//CheckArrowInput();
 	}
 
-	/*private Vector2Int? RaycastGround()
+	private Vector2Int? RaycastGround()
 	{
 		//RaycastHit2D hit;
 		//Ray2D ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -44,6 +44,7 @@ public class InputManager : MonoBehaviour
 
 		if (hit.collider != null)
 		{
+			Debug.Log(hit.point);
 			Vector2Int positionInt = Vector2Int.RoundToInt(hit.point);
 			Debug.Log(positionInt);
 			return positionInt;
@@ -51,7 +52,7 @@ public class InputManager : MonoBehaviour
 		else
 			Debug.Log("did not hit");
 		return null;
-	}*/
+	}
 
 	//private void CheckArrowInput()
 	//{
@@ -68,14 +69,15 @@ public class InputManager : MonoBehaviour
 		OverGameObject = false;
 	}
 
-	/*private void CheckClickHoldEvent()
+	private void CheckClickHoldEvent()
 	{
-		if (Input.GetMouseButton(0) && OverGameObject == false)
+		//if (Input.GetMouseButton(0) && OverGameObject == false)
+		if (Input.GetMouseButton(0))
 		{
 			//Debug.Log("here1");
 			var position = RaycastGround();
-			*//*if (position != null)
-				OnMouseHold?.Invoke(position.Value);*//*
+			/*if (position != null)
+				OnMouseHold?.Invoke(position.Value);*/
 			if (position != null)
 				if (OnMouseHold != null)
 					OnMouseHold.Invoke(position.Value);
@@ -98,12 +100,12 @@ public class InputManager : MonoBehaviour
 		{
 			//Debug.Log("here2");
 			var position = RaycastGround();
-			*//*if (position != null)
-				OnMouseClick?.Invoke(position.Value);*//*
+			/*if (position != null)
+				OnMouseClick?.Invoke(position.Value);*/
 			if (position != null)
 				if(OnMouseClick != null)
 					OnMouseClick.Invoke(position.Value);
 
 		}
-	}*/
+	}
 }

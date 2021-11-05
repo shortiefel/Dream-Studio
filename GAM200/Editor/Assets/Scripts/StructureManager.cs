@@ -18,13 +18,15 @@ public class StructureManager : MonoBehaviour
     {
         housesPrefabs = new StructurePrefabWeighted[2];
         housesPrefabs[0].prefab = new Prefab("House"); housesPrefabs[0].weight = 1;
-        housesPrefabs[0].prefab = new Prefab("House1"); housesPrefabs[1].weight = 1;
 
+        specialPrefabs = new StructurePrefabWeighted[2];
+        specialPrefabs[0].prefab = new Prefab("House1"); specialPrefabs[0].weight = 1;
 
-        houseWeights = housesPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-        specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
+        houseWeights = new float[] { housesPrefabs[0].weight };
+        specialWeights = new float[] { specialPrefabs[0].weight };
 
-        placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+        /*houseWeights = housesPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
+        specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();*/
     }
 
     //private IEnumerator waitABit(Vector2Int newPos)
@@ -40,7 +42,7 @@ public class StructureManager : MonoBehaviour
         if (CheckPositionBeforePlacement(position))
         {
             int randomIndex = GetRandomWeightedIndex(houseWeights);
-           // placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure);
+            placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure);
             //AudioPlayer.instance.PlayPlacementSound();
             //StartCoroutine(waitABit(position));
             Debug.Log("place house");
@@ -52,7 +54,7 @@ public class StructureManager : MonoBehaviour
         if (CheckPositionBeforePlacement(position))
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);
-           // placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.Structure);
+            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.Structure);
             //AudioPlayer.instance.PlayPlacementSound();
         }
     }
@@ -101,7 +103,7 @@ public class StructureManager : MonoBehaviour
     }
 }
 
-//[Serializable]
+[Serializable]
 public struct StructurePrefabWeighted
 {
     public Prefab prefab;

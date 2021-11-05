@@ -34,12 +34,25 @@ namespace Editor {
 	namespace GUI_Windows {
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
-				ImGui::Begin("Inspector", inspector_bool, window_flags);
+
+
+
+				/**
+				*	WIDTH 
+				*/
 				float halfWidth = ImGui::GetContentRegionAvail().x / 2.f;
 				float quadWidth = ImGui::GetContentRegionAvail().x / 2.5f;
 
-				ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth;
 
+				/**
+				*	INSPECTOR STARTS
+				*/
+				ImGui::Begin("Inspector", inspector_bool, window_flags);
+				
+
+				/**
+				*	Entity Names
+				*/
 				if (EntityId_Check(entity_selected)) {
 					ImGui::End();
 					return;
@@ -54,6 +67,7 @@ namespace Editor {
 					ImGui::End();
 					return;
 				}
+
 				std::string& entityName = itr->second.name;
 				char eName[100];
 				strcpy(eName, entityName.c_str());
@@ -61,7 +75,7 @@ namespace Editor {
 				ImGui::AlignTextToFramePadding();
 				ImGui::Text("Entity Name: ");
 				ImGui::SameLine(halfWidth);
-				ImGui::SetNextItemWidth(halfWidth * 1.5f);
+				ImGui::SetNextItemWidth(halfWidth * 0.9f);
 				if (ImGui::InputText("##EntityName", eName, 100)) {
 					if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 						std::string newName = std::string{ eName };
@@ -72,6 +86,47 @@ namespace Editor {
 				}
 				ImGui::PopItemWidth();
 
+
+				ImGui::Spacing();
+				ImGui::AlignTextToFramePadding();
+				ImGui::SameLine(halfWidth);
+
+				if (ImGui::Button("Add Component##addcomponentbtn", { ImGui::GetContentRegionAvail().x ,  0 }))
+				{
+					ImGui::OpenPopup("##addcomponentpopup");
+				}
+				if (ImGui::BeginPopup("##addcomponentpopup"))
+				{
+				
+					ImGui::AlignTextToFramePadding();
+
+					if (ImGui::Selectable(" + Transform##addTransformcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
+					if (ImGui::Selectable(" + Collider##addTCollidercom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
+					if (ImGui::Selectable(" + Texture##addTTexturecom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::TextureComponent>(entity_selected);
+					if (ImGui::Selectable(" + Rigidbody##addRigidbodycom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
+					if (ImGui::Selectable(" + Camera##addCameracom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+					if (ImGui::Selectable(" + UI##addUIcom"))
+						Engine::DreamECS::GetInstance().AddComponent<Engine::UIComponent>(entity_selected);
+					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
+						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
+
+						if (!filePath.empty()) {
+							REMOVE_FROM_FILEPATH;
+
+							Engine::DreamECS::GetInstance().AddComponent(
+								std::move(Engine::ScriptComponent{ entity_selected, filePath.c_str() }));
+						}
+					}
+
+					ImGui::EndPopup();
+				}
+				
+				
 				/**
 				*	Transform Properties
 				*/
@@ -92,13 +147,13 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##TransformXPos", &transComp->localPosition.x, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 						ImGui::SameLine(halfWidth * 1.5f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.620f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##TransformYPos", &transComp->localPosition.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 
@@ -201,13 +256,13 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##ColliderXPos", &colComp->offset_position.x, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 						ImGui::SameLine(halfWidth * 1.5f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.620f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.370f);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						if (ImGui::InputFloat("##ColliderYPos", &colComp->offset_position.y, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 
@@ -370,7 +425,45 @@ namespace Editor {
 							}
 						}
 
+						
+
+						/*
+						*	Animation
+						*/
+						
+						ImGui::AlignTextToFramePadding();
+
+						ImGui::Text("Animation");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::Checkbox("##isAnimation",&(textureComp->isAnimation));
+						if (textureComp->isAnimation == true)
+						{
+							ImGui::Spacing();
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Looping");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::Checkbox("##isLoop", &(textureComp->isLoop));
+
+							ImGui::Spacing();
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Frame End");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::InputInt("##frameEnd", &textureComp->endFrame, 0);
+
+							ImGui::Spacing();
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Time Per Frame");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::InputFloat("##timeFrame", &textureComp->fTime, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+
+						}
+
 						ImGui::Spacing();
+
 
 						/**
 						*	DELETE
@@ -465,9 +558,6 @@ namespace Editor {
 				}
 
 
-
-
-
 				/**
 				*	Scripts for each component
 				*/
@@ -542,56 +632,6 @@ namespace Editor {
 						Engine::GameSceneSerializer::RefreshPrefab(prefab.prefabName, entity_selected);
 					}
 				}
-				
-
-
-				/**
-				*	Add New Components
-				*/
-				ImGui::Spacing();
-				ImGui::AlignTextToFramePadding();
-				ImGui::SameLine(quadWidth);
-				if (ImGui::Button("Add Component##addcomponentbtn", { ImGui::GetContentRegionAvail().x, 0 }))
-				{
-					ImGui::OpenPopup("##addcomponentpopup");
-				}
-
-				if (ImGui::BeginPopup("##addcomponentpopup"))
-				{
-					//ImGui::AlignTextToFramePadding();
-					/*float AvailWidth = ImGui::GetContentRegionAvail().x * 1.5f;
-					ImGui::PushItemWidth(AvailWidth);*/
-
-					ImGui::AlignTextToFramePadding();
-					//ImGui::SameLine(halfWidth);
-					if (ImGui::Selectable(" + Transform##addTransformcom"))
-						Engine::dreamECSGame->AddComponent<Engine::TransformComponent>(entity_selected);
-					if (ImGui::Selectable(" + Collider##addTCollidercom"))
-						Engine::dreamECSGame->AddComponent<Engine::ColliderComponent>(entity_selected);
-					if (ImGui::Selectable(" + Texture##addTTexturecom"))
-						Engine::dreamECSGame->AddComponent<Engine::TextureComponent>(entity_selected);
-					if (ImGui::Selectable(" + Rigidbody##addRigidbodycom"))
-						Engine::dreamECSGame->AddComponent<Engine::RigidBodyComponent>(entity_selected);
-					if (ImGui::Selectable(" + Camera##addCameracom"))
-						Engine::dreamECSGame->AddComponent<Engine::CameraComponent>(entity_selected);
-					if (ImGui::Selectable(" + UI##addUIcom"))
-						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
-
-					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
-						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
-
-						if (!filePath.empty()) {
-							REMOVE_FROM_FILEPATH;
-
-							Engine::dreamECSGame->AddComponent(
-								std::move(Engine::ScriptComponent{ entity_selected, filePath.c_str() }));
-						}
-					}
-
-					ImGui::EndPopup();
-				}
-
-
 				ImGui::End();
 			}
 		}

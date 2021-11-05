@@ -19,10 +19,8 @@ Technology is prohibited.
 
 #include <string>
 
-#define REMOVE_FROM_FILEPATH size_t pos = filePath.find_last_of("\\");\
-							 filePath = filePath.substr(pos + 1);\
-							 pos = filePath.find_last_of(".");\
-							 filePath = filePath.substr(0, pos);
+#define REMOVE_FROM_FILEPATH filePath = filePath.substr(filePath.find_last_of("\\") + 1);\
+							 filePath = filePath.substr(0, filePath.find_last_of("."));
 
 namespace Engine {
 	class FileWindowDialog {

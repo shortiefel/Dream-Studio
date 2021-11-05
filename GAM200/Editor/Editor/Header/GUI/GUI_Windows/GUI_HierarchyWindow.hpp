@@ -3,6 +3,8 @@
 #pragma once
 
 #include <Imgui/imgui.h>
+
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 
 #include <map>

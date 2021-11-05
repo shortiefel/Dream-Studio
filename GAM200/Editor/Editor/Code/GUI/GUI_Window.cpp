@@ -250,6 +250,7 @@ namespace Editor {
 			ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetInstance().GetWidth(),
 											 (float)Engine::Window::GetInstance().GetHeight() });
 
+			
 			ImGui::Begin("Dream Engine", &dockspace_bool, dockspace_window_flags);//, & showWindow, ImGuiWindowFlags_NoInputs);
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_dock_flags);
@@ -395,13 +396,19 @@ namespace Editor {
 		void GUI_HeaderPanel() {
 			//Will always be on so dont need check
 
+			/**
+			*	WIDTH
+			*/
+			float halfWidth = ImGui::GetContentRegionAvail().x / 0.3484f;
+			
+
 			ImVec2 wSize = ImGui::GetWindowSize();
 			ImGui::Begin("Actions", &playStop_bool, window_flags);
 
 			ImGui::PushItemWidth(wSize.x);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
 
-
+			ImGui::SameLine(halfWidth);
 			if (ImGui::ImageButton(iconPlay, { 25, 25 }, { 0,1 }, { 1, 0 })) {
 
 				if (!EditorSceneManager::GetInstance().Play()) Engine::GameState::GetInstance().SetPlaying(false);
@@ -409,7 +416,7 @@ namespace Editor {
 			ImGui::PopItemFlag();
 
 			ImGui::SameLine();
-			ImGui::PushItemWidth(wSize.x / 2 + 20);
+			ImGui::PushItemWidth(wSize.x / 2);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
 			if (ImGui::ImageButton(iconStop, { 25, 25 }, { 0,1 }, { 1, 0 })) {
 				EditorSceneManager::GetInstance().Stop();

@@ -180,6 +180,7 @@
     <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\TextComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\TextComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\UIComponent.hpp" />

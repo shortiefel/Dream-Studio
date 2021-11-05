@@ -21,22 +21,23 @@ Technology is prohibited.
 #include <fmod/fmod_errors.h>
 #include <fmod/fmod_common.h>
 #include <fmod/fmod_output.h>
+#include <fmod/fmod_studio.hpp>
 
 #include <map>
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
 namespace Engine {
 
-	
-
-	class SoundImplementation {
+	class SoundImplementation : public IComponent {
 
 		public:
 			SoundImplementation();
 			~SoundImplementation();
 
+			FMOD::Studio::System* fmodStudioSystem;
 			FMOD::System* fmodSystem;
 
 			void Update();

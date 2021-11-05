@@ -17,16 +17,7 @@ Technology is prohibited.
 #ifndef SOUND_COMPONENT_H
 #define SOUND_COMPONENT_H
 
-#include <fmod/fmod.hpp>
-#include <fmod/fmod_errors.h>
-#include <fmod/fmod_common.h>
-#include <fmod/fmod_output.h>
-
-#include <map>
-
 #include "Engine/Header/ECS/Component/Sound/SoundImplementation.hpp"
-#include "Engine/Header/ECS/Component/IComponent.hpp"
-#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 

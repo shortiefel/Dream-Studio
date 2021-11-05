@@ -96,8 +96,6 @@ namespace Editor {
 		bool gameWin_bool = true;
 		bool sceneWin_bool = true;
 		bool asset_bool = true;
-		//Will always be on
-		bool playStop_bool = true; //Play and stop button
 
 		/*-------------------------------------------------------------------------------------------------
 		Forward declaration (Menus to be used inside dockspace function)
@@ -399,16 +397,17 @@ namespace Editor {
 			/**
 			*	WIDTH
 			*/
-			float halfWidth = ImGui::GetContentRegionAvail().x / 0.3484f;
+			float halfWidth = ImGui::GetContentRegionAvail().x / 2.f;
 			
 
 			ImVec2 wSize = ImGui::GetWindowSize();
-			ImGui::Begin("Actions", &playStop_bool, window_flags);
+			float size = wSize.y / 2.f;
+			ImGui::Begin("Actions", nullptr, window_flags);
 
 			ImGui::PushItemWidth(wSize.x);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
 
-			ImGui::SameLine(halfWidth);
+			//ImGui::SameLine(halfWidth);
 			if (ImGui::ImageButton(iconPlay, { 25, 25 }, { 0,1 }, { 1, 0 })) {
 
 				if (!EditorSceneManager::GetInstance().Play()) Engine::GameState::GetInstance().SetPlaying(false);

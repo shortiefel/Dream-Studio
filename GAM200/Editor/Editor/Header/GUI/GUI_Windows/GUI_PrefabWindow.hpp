@@ -25,7 +25,7 @@ Technology is prohibited.
 
 namespace Editor {
 	namespace GUI_Windows {
-		void GUI_Prefab(bool* prefab_bool, ImGuiWindowFlags window_flags);
+		//void GUI_Prefab(bool* prefab_bool, ImGuiWindowFlags window_flags);
 	}
 }
 

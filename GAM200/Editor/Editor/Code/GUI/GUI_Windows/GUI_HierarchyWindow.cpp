@@ -100,8 +100,8 @@ namespace Editor {
 					*/
 					if (ImGui::Button("Duplicate##DuplicateGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(entity.second);  });
-						Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(GetTarget(entity_selected));
+						//std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DuplicateEntityAsInstance(entity.second);  });
+						Engine::dreamECSGame->DuplicateEntityAsInstance(GetTarget(entity_selected));
 					}
 
 					/**
@@ -109,19 +109,19 @@ namespace Editor {
 					*/
 					if (ImGui::Button("Parent##ParentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(entity.second);  });
+						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DuplicateEntityAsInstance(entity.second);  });
 						Engine::Entity_id parent = GetTarget(entity_selected);
 						for (const auto& [index, entity_id] : entity_selected) 
 						{
 							if (parent == entity_id) continue;
-								Engine::DreamECS::GetInstance().Parent(parent, entity_id);
+								Engine::dreamECSGame->Parent(parent, entity_id);
 						}
 					}
 
 					if (ImGui::Button("Unparent##UnparentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
 						for (const auto& [index, entity_id] : entity_selected) {
-							Engine::DreamECS::GetInstance().Unparent(entity_id);
+							Engine::dreamECSGame->Unparent(entity_id);
 						}
 					}
 
@@ -131,7 +131,7 @@ namespace Editor {
 					if (ImGui::Button("Delete##DeleteGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
 						//CallFuncForEach(entity_selected.begin(), entity_selected.end(), []() {});
-						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DestroyEntity(entity.second);  });
+						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DestroyEntity(entity.second);  });
 						entity_selected.clear();
 						//
 						// 

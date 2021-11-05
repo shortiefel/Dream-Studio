@@ -296,58 +296,58 @@ namespace Engine {
 			}
 		}
 
-		void InitVariable(CSScriptInstance& _csScriptInstance) {
-			if (_csScriptInstance.csClass.klass == nullptr) return;
+		void InitVariable(CSScriptInstance&) {
+			//if (_csScriptInstance.csClass.klass == nullptr) return;
 
-			auto& variableMap = _csScriptInstance.csVariableMap;
+			//auto& variableMap = _csScriptInstance.csVariableMap;
 
-			std::unordered_map<std::string, CSPublicVariable> oldVariable;
-			oldVariable.reserve(variableMap.size());
+			//std::unordered_map<std::string, CSPublicVariable> oldVariable;
+			//oldVariable.reserve(variableMap.size());
 
-			for (auto& [variableName, variableData] : variableMap) {
-				oldVariable.emplace(variableName, std::move(variableData));
-			}
-			
-			variableMap.clear();
+			//for (auto& [variableName, variableData] : variableMap) {
+			//	oldVariable.emplace(variableName, std::move(variableData));
+			//}
+			//
+			//variableMap.clear();
 
-			MonoClassField* classField;
-			void* ptr = nullptr;
-			while ((classField = mono_class_get_fields(_csScriptInstance.csClass.klass, &ptr)) != nullptr) {
-				const char* name = mono_field_get_name(classField);
-				unsigned int flags = mono_field_get_flags(classField);
+			//MonoClassField* classField;
+			//void* ptr = nullptr;
+			//while ((classField = mono_class_get_fields(_csScriptInstance.csClass.klass, &ptr)) != nullptr) {
+			//	const char* name = mono_field_get_name(classField);
+			//	unsigned int flags = mono_field_get_flags(classField);
 
-				//Ignore private variables
-				if ((flags & MONO_FIELD_ATTR_PUBLIC) == 0)
-					continue;
-				MonoType* variableType = mono_field_get_type(classField);
-				CSType csType = GetCSType(variableType);
+			//	//Ignore private variables
+			//	if ((flags & MONO_FIELD_ATTR_PUBLIC) == 0)
+			//		continue;
+			//	MonoType* variableType = mono_field_get_type(classField);
+			//	CSType csType = GetCSType(variableType);
 
-				//char* typeName = mono_type_get_name(variableType);
+			//	//char* typeName = mono_type_get_name(variableType);
 
-				if (oldVariable.find(name) != oldVariable.end() && oldVariable.find(name)->second.variableType == csType) {
-					variableMap.emplace(name, std::move(oldVariable.at(name)));
-				}
-				else {
-					if (csType == CSType::NONE) {
-						LOG_WARNING("Type not found");
-						continue;
-					}
-					CSPublicVariable publicVariable = { name, csType };
-					variableMap.emplace(name, std::move(publicVariable));
-				}
+			//	if (oldVariable.find(name) != oldVariable.end() && oldVariable.find(name)->second.variableType == csType) {
+			//		variableMap.emplace(name, std::move(oldVariable.at(name)));
+			//	}
+			//	else {
+			//		if (csType == CSType::NONE) {
+			//			LOG_WARNING("Type not found");
+			//			continue;
+			//		}
+			//		CSPublicVariable publicVariable = { name, csType };
+			//		variableMap.emplace(name, std::move(publicVariable));
+			//	}
 
-			}
+			//}
 		}
 
 		void InitAllPublicVariable() {
-			auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
+			/*auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
 				
 				for (auto& [className, csScriptInstance] : classScriptInstances) {
 					InitVariable(csScriptInstance);
 				}
-			}
+			}*/
 		}
 
 		CSType GetCSType(MonoType* mt) {

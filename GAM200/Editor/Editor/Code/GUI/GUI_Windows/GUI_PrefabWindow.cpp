@@ -75,32 +75,32 @@ namespace Editor {
 			}
 		}*/
 
-		void GUI_Prefab(bool* prefab_bool, ImGuiWindowFlags window_flags) {
-			/*if (*prefab_bool) {
-				ImGui::Begin("Prefab Customizer", prefab_bool);
+		//void GUI_Prefab(bool* prefab_bool, ImGuiWindowFlags window_flags) {
+		//	/*if (*prefab_bool) {
+		//		ImGui::Begin("Prefab Customizer", prefab_bool);
 
-				if (ImGui::BeginMenu("File")) {
-					if (ImGui::MenuItem("New Scene", "CTRL+N")) {
-						NewFileUtilPrefab();
-					}
+		//		if (ImGui::BeginMenu("File")) {
+		//			if (ImGui::MenuItem("New Scene", "CTRL+N")) {
+		//				NewFileUtilPrefab();
+		//			}
 
-					if (ImGui::MenuItem("Open...", "CTRL+O")) {
-						OpenFileUtilPrefab();
-					}
+		//			if (ImGui::MenuItem("Open...", "CTRL+O")) {
+		//				OpenFileUtilPrefab();
+		//			}
 
-					else if (ImGui::MenuItem("Save", "CTRL+S")) {
-						SaveFileUtilPrefab();
-					}
+		//			else if (ImGui::MenuItem("Save", "CTRL+S")) {
+		//				SaveFileUtilPrefab();
+		//			}
 
-					else if (ImGui::MenuItem("Save as...", "CTRL+SHIFT+S")) {
-						SaveAsFileUtilPrefab();
-					}
+		//			else if (ImGui::MenuItem("Save as...", "CTRL+SHIFT+S")) {
+		//				SaveAsFileUtilPrefab();
+		//			}
 
-					ImGui::EndMenu();
-				}
+		//			ImGui::EndMenu();
+		//		}
 
-				ImGui::End();
-			}*/
-		}
+		//		ImGui::End();
+		//	}*/
+		//}
 	}
 }

@@ -101,24 +101,24 @@ namespace Editor {
 					ImGui::AlignTextToFramePadding();
 
 					if (ImGui::Selectable(" + Transform##addTransformcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::TransformComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::TransformComponent>(entity_selected);
 					if (ImGui::Selectable(" + Collider##addTCollidercom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::ColliderComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::ColliderComponent>(entity_selected);
 					if (ImGui::Selectable(" + Texture##addTTexturecom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::TextureComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::TextureComponent>(entity_selected);
 					if (ImGui::Selectable(" + Rigidbody##addRigidbodycom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::RigidBodyComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::RigidBodyComponent>(entity_selected);
 					if (ImGui::Selectable(" + Camera##addCameracom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::CameraComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::CameraComponent>(entity_selected);
 					if (ImGui::Selectable(" + UI##addUIcom"))
-						Engine::DreamECS::GetInstance().AddComponent<Engine::UIComponent>(entity_selected);
+						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
 
 						if (!filePath.empty()) {
 							REMOVE_FROM_FILEPATH;
 
-							Engine::DreamECS::GetInstance().AddComponent(
+							Engine::dreamECSGame->AddComponent(
 								std::move(Engine::ScriptComponent{ entity_selected, filePath.c_str() }));
 						}
 					}

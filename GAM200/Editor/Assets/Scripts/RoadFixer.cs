@@ -9,7 +9,7 @@ public class RoadFixer : MonoBehaviour
 
     public override void Start()
     {
-        deadEnd = new Prefab("name");
+        deadEnd = new Prefab("Box");
         roadStraight = new Prefab("name");
         corner = new Prefab("name");
         threeWay = new Prefab("name");

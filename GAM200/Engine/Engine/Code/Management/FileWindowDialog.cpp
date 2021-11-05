@@ -14,15 +14,17 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include <Windows.h>
+#include "Engine/Header/pch.hpp"
+#include <GLFW/glfw3.h>
+#include <commdlg.h>
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
+
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 
 #include "Engine/Header/Window.hpp"
 
-#include <GLFW/glfw3.h>
-#include <Windows.h>
-#include <commdlg.h>
-#define GLFW_EXPOSE_NATIVE_WIN32
-#include <GLFW/glfw3native.h>
 
 
 namespace Engine {

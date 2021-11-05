@@ -62,16 +62,7 @@ namespace Engine {
 				INVOKE_FUNCTION(InitFunc);
 				break;
 			case MonoFunctionType::UPDATE:
-				//INVOKE_FUNCTION(UpdateFunc);
-				if (_csScriptInstance.csClass.UpdateFunc != nullptr) {
-						mono_runtime_invoke(_csScriptInstance.csClass.UpdateFunc, _csScriptInstance.csClass.object, _param, &exception);
-						if (exception != nullptr) {
-							
-								displayFuncPtr(mono_string_to_utf8(mono_object_to_string(exception, nullptr))); 
-								GameState::GetInstance().SetPlaying(false); 
-								Scripting::DestroyChildDomain(); 
-						}
-				}
+				INVOKE_FUNCTION(UpdateFunc);
 				break;
 			case MonoFunctionType::DESTROY:
 				INVOKE_FUNCTION(DestroyFunc);
@@ -186,6 +177,7 @@ namespace Engine {
 			if (!GameState::GetInstance().GetPlaying()) return;
 			void* param[] = { (void*)&entity_id };
 			//std::cout << "class: " << csScriptInstance.csClass.className << "\n";
+			
 			if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
 				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
 			}

@@ -5,12 +5,12 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     //public CameraMovement cameraMovement;
-    public RoadManager roadManager;
-    public InputManager inputManager;
+    RoadManager roadManager;
+    InputManager inputManager;
+    StructureManager structureManager;
 
     //public UIController uiController;
 
-    public StructureManager structureManager;
 
     //private void Start()
     public override void Start()
@@ -23,10 +23,12 @@ public class GameManager : MonoBehaviour
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
         structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
         
-        inputManager.OnMouseClick = roadManager.PlaceRoad;
+        InputManager.OnMouseClick += roadManager.PlaceRoad;
+        InputManager.OnMouseHold += roadManager.PlaceRoad;
+        InputManager.OnMouseUp += roadManager.FinishPlacingRoad;
     }
 
-    private void SpecialPlacementHandler()
+    /*private void SpecialPlacementHandler()
     {
         ClearInputActions();
         inputManager.OnMouseClick += structureManager.PlaceSpecial;
@@ -57,7 +59,7 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick = null;
         inputManager.OnMouseHold = null;
         inputManager.OnMouseUp = null;
-    }
+    }*/
 
     //private void Update()
     public override void Update()

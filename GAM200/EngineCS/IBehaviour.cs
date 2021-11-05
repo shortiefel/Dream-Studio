@@ -16,9 +16,30 @@ Technology is prohibited.
 
 using System.Runtime.CompilerServices; //For internal calls
 using System;
+using System.Collections.Generic; //Dictionary
+
+
+/*public class GenericDictionary
+{
+    //private Dictionary<string, object> _dict = new Dictionary<string, object>();
+    private Dictionary<Type, Dictionary<uint, dynamic>> dictonaryOfTypes = new Dictionary<Type, Dictionary<uint, dynamic>>();
+
+    public void Add<T>(uint key, T value) where T : class
+    {
+        dictonaryOfTypes[typeof(T)].Add(key, value);
+    }
+
+    public T GetValue<T>(uint key) where T : class
+    {
+        return dictonaryOfTypes[typeof(T)][key] as T;
+    }
+}*/
 
 public class IBehaviour : IComponent
 {
+    private static Dictionary<Type, Dictionary<uint, dynamic>> dictonaryOfTypes = new Dictionary<Type, Dictionary<uint, dynamic>>();
+    //private static GenericDictionary dictonaryOfTypes;
+
     public uint entityId { get; set; }
     public IBehaviour() { }
     public IBehaviour(uint id)
@@ -27,13 +48,27 @@ public class IBehaviour : IComponent
     }
     //-----------------------------------------------------------------------------------------------------------------
     //Component
+
     public T GetComponent<T>() where T : class, IComponent, new()
     {
         if (HasComponent<T>(entityId))
         {
-            T component = new T();
-            component.entityId = entityId;
-            return component;
+            //Debug.Log("First " + typeof(T));
+            if (!dictonaryOfTypes.ContainsKey(typeof(T)))
+            {
+                dictonaryOfTypes.Add(typeof(T), new Dictionary<uint, dynamic>());
+                //Debug.Log("Not found " + typeof(T));
+            }
+
+            if (!dictonaryOfTypes[typeof(T)].ContainsKey(entityId))
+            {
+                T component = new T();
+                component.entityId = entityId;
+                dictonaryOfTypes[typeof(T)].Add(entityId, component);
+                //dictonaryOfTypes[typeof(T)][entityId] = component;
+            }
+            
+            return dictonaryOfTypes[typeof(T)][entityId] as T;
         }
 
         return null;

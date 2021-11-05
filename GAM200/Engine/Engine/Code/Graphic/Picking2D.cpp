@@ -20,12 +20,14 @@ Technology is prohibited.
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
 #include "Engine/Header/Event/EventDispatcher.hpp"
 
+#include "Engine/Header/Management/GameState.hpp"
+
 namespace Engine {
 	namespace Graphic {
 		std::set<Entity_id> overlapMap;
 
 		void RecordMouseOverlap(Entity_id entity_id, bool type) {
-			if (type) {
+			if (type && GameState::GetInstance().GetPlaying()) {
 				const auto& iter = overlapMap.find(entity_id);
 				if (iter != overlapMap.end()) {
 					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::MOUSE_OVER);

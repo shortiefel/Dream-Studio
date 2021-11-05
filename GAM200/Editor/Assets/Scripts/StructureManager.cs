@@ -6,24 +6,28 @@ using System.Linq;
 
 public class StructureManager : MonoBehaviour
 {
-    public StructurePrefabWeighted[] housesPrefabs, specialPrefabs;
-    public PlacementManager placementManager;
+    private StructurePrefabWeighted[] housesPrefabs, specialPrefabs;
+    PlacementManager placementManager;
     //public NotificationManager notificationManager;
 
-
     private float[] houseWeights, specialWeights;
+
+    StructureManager structureManager;
 
     //private void Start()
     public override void Start()
     {
-        housesPrefabs = new StructurePrefabWeighted[2];
-        housesPrefabs[0].prefab = new Prefab("House"); housesPrefabs[0].weight = 1;
+        structureManager = GetComponent<StructureManager>();
+        structureManager.placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
-        specialPrefabs = new StructurePrefabWeighted[2];
-        specialPrefabs[0].prefab = new Prefab("House1"); specialPrefabs[0].weight = 1;
+        structureManager.housesPrefabs = new StructurePrefabWeighted[2];
+        structureManager.housesPrefabs[0].prefab = new Prefab("House"); structureManager.housesPrefabs[0].weight = 1;
 
-        houseWeights = new float[] { housesPrefabs[0].weight };
-        specialWeights = new float[] { specialPrefabs[0].weight };
+        structureManager.specialPrefabs = new StructurePrefabWeighted[2];
+        structureManager.specialPrefabs[0].prefab = new Prefab("House1"); structureManager.specialPrefabs[0].weight = 1;
+
+        structureManager.houseWeights = new float[] { structureManager.housesPrefabs[0].weight };
+        structureManager.specialWeights = new float[] { structureManager.specialPrefabs[0].weight };
 
         /*houseWeights = housesPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
         specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();*/
@@ -39,10 +43,10 @@ public class StructureManager : MonoBehaviour
     public void PlaceHouse(Vector2Int position)
     {
         Debug.Log("here house");
-        if (CheckPositionBeforePlacement(position))
+        if (structureManager.CheckPositionBeforePlacement(position))
         {
-            int randomIndex = GetRandomWeightedIndex(houseWeights);
-            placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure);
+            int randomIndex = structureManager.GetRandomWeightedIndex(structureManager.houseWeights);
+            placementManager.PlaceObjectOnTheMap(position, structureManager.housesPrefabs[randomIndex].prefab, CellType.Structure);
             //AudioPlayer.instance.PlayPlacementSound();
             //StartCoroutine(waitABit(position));
             Debug.Log("place house");
@@ -51,10 +55,10 @@ public class StructureManager : MonoBehaviour
 
     public void PlaceSpecial(Vector2Int position)
     {
-        if (CheckPositionBeforePlacement(position))
+        if (structureManager.CheckPositionBeforePlacement(position))
         {
-            int randomIndex = GetRandomWeightedIndex(specialWeights);
-            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.Structure);
+            int randomIndex = GetRandomWeightedIndex(structureManager.specialWeights);
+            placementManager.PlaceObjectOnTheMap(position, structureManager.specialPrefabs[randomIndex].prefab, CellType.Structure);
             //AudioPlayer.instance.PlayPlacementSound();
         }
     }
@@ -84,17 +88,17 @@ public class StructureManager : MonoBehaviour
     // change to public cause jiayi needs to use in notification manager
     public bool CheckPositionBeforePlacement(Vector2Int position)
     {
-        if (placementManager.CheckIfPositionInBound(position) == false)
+        if (PlacementManager.CheckIfPositionInBound(position) == false)
         {
             Debug.Log("This position is out of bounds");
             return false;
         }
-        if (placementManager.CheckIfPositionIsFree(position) == false)
+        if (PlacementManager.CheckIfPositionIsFree(position) == false)
         {
             Debug.Log("This position is not EMPTY");
             return false;
         }
-        if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0)
+        if (structureManager.placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0)
         {
             Debug.Log("Must be placed near a road");
             return false;

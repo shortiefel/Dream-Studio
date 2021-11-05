@@ -436,12 +436,15 @@ namespace Engine {
                     normal = Math::normalize(normal);
 
                     float tem = Math::dot(rayEnd - obj1Corner[i], normal);
-                    if (tem < ht.distance) {
+                    /*if (tem < ht.distance) {
                         ht.distance = tem;
                         ht.point = rayEnd + -normal * tem;
-                    }
+                    }*/
                     if (tem < 0) return false;
                 }
+                //Set point as checking point (ray.pos) as its point vs ray
+                ht.distance = 0.f;
+                ht.point = ray.pos;
 
                 return true;
             }

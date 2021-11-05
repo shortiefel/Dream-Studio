@@ -81,7 +81,7 @@ namespace Engine {
 
 		if (pChannel)
 		{
-			soundFind->second->getMode(pChannel);
+			//soundFind->second->getMode(pChannel);
 
 			SoundComponent::ErrorCheck(pChannel->setVolume(dbToVolume(fVolumedB)));
 			SoundComponent::ErrorCheck(pChannel->setPaused(false));

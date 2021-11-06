@@ -50,7 +50,11 @@ public struct Vector2Int
 
     public static Vector2Int RoundToInt(Vector2 vc)
     {
-        return new Vector2Int((int)vc.x, (int)vc.y);
+        int x = (int)vc.x;
+        int y = (int)vc.y;
+        x = vc.x < (x + 0.5) ? x : x + 1;
+        y = vc.y < (y + 0.5) ? y : y + 1;
+        return new Vector2Int(x, y);
     }
     public override string ToString()
     {

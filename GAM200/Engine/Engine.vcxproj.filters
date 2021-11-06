@@ -178,6 +178,9 @@
     <ClCompile Include="Engine\Code\Random\Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp">
+      <Filter>Source Files\ECS\Component\Sound</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundImplementation.cpp">
       <Filter>Source Files\ECS\Component\Sound</Filter>
     </ClCompile>
@@ -525,6 +528,9 @@
     <ClInclude Include="Engine\Header\Random\Random.hpp">
       <Filter>Header Files\Random</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp">
+      <Filter>Header Files\ECS\Component\Sound</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundImplementation.hpp">
       <Filter>Header Files\ECS\Component\Sound</Filter>
     </ClInclude>
@@ -691,6 +697,12 @@
     </Filter>
     <Filter Include="Header Files\Random">
       <UniqueIdentifier>{8a054b6c-5a1c-4e4e-b907-85b78bc1e9bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Sound">
+      <UniqueIdentifier>{be68f09c-5fee-434f-93ae-61df0fdd3564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Sound">
+      <UniqueIdentifier>{7badc663-c032-4a9c-9382-33720bd04647}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

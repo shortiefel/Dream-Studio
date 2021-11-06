@@ -395,15 +395,6 @@ namespace Editor {
 
 		}
 
-		/*int GetSceneSizeX() {
-			return GUI_GetSceneWindowSizeX();
-		}   
-		int GetSceneSizeY() {
-			return GUI_GetSceneWindowSizeY();
-		}*/
-		/*-------------------------------------------------------------------------------------------------
-		-------------------------------------------------------------------------------------------------*/
-
 		/*-------------------------------------------------------------------------------------------------
 		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
@@ -422,17 +413,10 @@ namespace Editor {
 		}
 
 		void GUI_HeaderPanel() {
-			//Will always be on so dont need check
-
-			/**
-			*	WIDTH
-			*/
-			float halfWidth = ImGui::GetContentRegionAvail().x / 2.f;
 			
-
 			ImVec2 wSize = ImGui::GetWindowSize();
 			float size = wSize.y / 2.f;
-			ImGui::Begin("Tool Bar", nullptr, window_flags);
+			ImGui::Begin("Tool Bar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 			//ImGui::PushItemWidth(wSize.x);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());

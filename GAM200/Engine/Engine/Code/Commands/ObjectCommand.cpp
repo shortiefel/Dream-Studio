@@ -19,15 +19,14 @@ namespace Engine
 {
 	void ObjectAddState::SetOldScene(std::string oldScene)
 	{
-		currentScene = new Scene{ oldScene };
 		Engine::GameSceneSerializer::SerializeScene(oldScene);
+		this->scene_id = oldScene;
 	}
 
 	void ObjectAddState::SetNewScene(std::string newScene)
 	{
-		currentScene->Stop(false);
-		currentScene = new Scene{ newScene };
 		Engine::GameSceneSerializer::SerializeScene(newScene);
+		this->scene_id = newScene;
 	}
 
 	void ObjectAddState::undo()
@@ -38,4 +37,5 @@ namespace Engine
 			commands.pop();
 		}
 	}
+
 }

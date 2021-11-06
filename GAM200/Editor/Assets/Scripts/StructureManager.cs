@@ -19,7 +19,6 @@ public class StructureManager : MonoBehaviour
         specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
         placementManager = GetComponent<PlacementManager>();*/
 
-
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
         housesPrefabs = new StructurePrefabWeighted[2];

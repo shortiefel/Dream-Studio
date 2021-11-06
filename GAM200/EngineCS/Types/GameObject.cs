@@ -41,6 +41,8 @@ public class GameObject : IBehaviour
         entityId = entId;
         
         transform = new Transform(entityId);
+        RecordComponent<Transform>(entityId);
+
         AddComponent_Transform_Engine(entityId);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -51,6 +53,7 @@ public class GameObject : IBehaviour
     {
         entityId = entId;
         transform = new Transform(entityId);
+        RecordComponent<Transform>(entityId);
     }
 
     public static GameObject RetrieveGameObject(uint entId)
@@ -77,9 +80,15 @@ public class GameObject : IBehaviour
     {
         if (AddComponentInternal<T>())
         {
-            T component = new T();
+            if (GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+                RecordComponent<T>(entityId);
+            else
+                RecordScript(typeof(T), entityId);
+
+            /*T component = new T();
             component.entityId = entityId;
-            return component;
+            return component;*/
+            return dictonaryOfTypes[typeof(T)][entityId] as T;
         }
         return null;
     }

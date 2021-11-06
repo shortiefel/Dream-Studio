@@ -60,7 +60,7 @@ namespace Engine {
 
         GameSceneSerializer::SerializeScene("temporary");
         ScriptSystem::GetInstance().UpdateMapData();
-        //ScriptSystem::GetInstance().PlayInit();
+        ScriptSystem::GetInstance().PlayInit();
 
         return true;
     }
@@ -94,7 +94,7 @@ namespace Engine {
         CameraSystem::GetInstance().Update(dt);
        
         GraphicSystem::GetInstance().Render();
-        TransformCalculationSystem::GetInstance().Release();
+        //TransformCalculationSystem::GetInstance().Release();
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
 

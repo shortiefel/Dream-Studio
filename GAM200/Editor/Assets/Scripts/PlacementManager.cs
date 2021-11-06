@@ -17,6 +17,9 @@ public class PlacementManager : MonoBehaviour
         width = 10; height = 10;
         placementGrid = new Grid(width, height);
         transform = GetComponent<Transform>();
+
+        temporaryRoadobjects = new Dictionary<Vector2Int, StructureModel>();
+        structureDictionary = new Dictionary<Vector2Int, StructureModel>();
     }
 
     internal CellType[] GetNeighbourTypesFor(Vector2Int position)
@@ -67,6 +70,7 @@ public class PlacementManager : MonoBehaviour
     {
         placementGrid[position.x, position.y] = type;
         StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
+        
         //GameObject newStructure = Instantiate(roadStraight, new Vector3 (position.x, position.y, 0), Quaternion.identity);
         //Debug.Log("Placed road");
         temporaryRoadobjects.Add(position, structure);
@@ -85,11 +89,12 @@ public class PlacementManager : MonoBehaviour
 
     private StructureModel CreateANewStructureModel(Vector2Int position, Prefab structurePrefab, CellType type)
     {
-        GameObject structure = new GameObject(type.ToString());
+        //GameObject structure = new GameObject(type.ToString());
+        GameObject structure = Instantiate(structurePrefab, transform);
         structure.transform.SetParent(transform);
         structure.transform.localPosition = new Vector2(position.x, position.y);
         var structureModel = structure.AddComponent<StructureModel>();
-        structureModel.CreateModel(structurePrefab);
+        //structureModel.CreateModel(structurePrefab);
         return structureModel;
     }
 
@@ -121,7 +126,7 @@ public class PlacementManager : MonoBehaviour
         {
             structureDictionary.Add(structure.Key, structure.Value);
             //DestroyNatureAt(structure.Key);
-            Debug.Log(structureDictionary);
+            //Debug.Log(structureDictionary);
         }
         temporaryRoadobjects.Clear();
     }

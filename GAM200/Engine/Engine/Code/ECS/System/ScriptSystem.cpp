@@ -103,13 +103,21 @@ namespace Engine {
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
 				}
 			}
+		}
+
+		for (auto& csScript : entScriptArray) {
+			const Entity_id& entity_id = csScript.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			auto& classScriptInstances = csScript.klassInstance;
 
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
+					//std::cout << "init function \n";
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
 				}
 			}
-			
+
 		}
 	}
 
@@ -161,9 +169,9 @@ namespace Engine {
 
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.other);
 		if (!csScript) return false;
-		std::cout << e.other << " over lap \n";
+		
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
-			std::cout << className << " " << (int)e.type << " over lap \n";
+			
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
 		}
 		return true;

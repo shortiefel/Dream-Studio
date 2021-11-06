@@ -17,6 +17,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Script/ScriptComponent.hpp"
 #include "Engine/Header/Script/Scripting.hpp"
 
+#include "Engine/Header/Management/GameState.hpp"
+
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
@@ -88,6 +90,7 @@ namespace Engine {
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
 			
 			if (klassInstance.find(className) == klassInstance.end()) {
+				if (GameState::GetInstance().GetPlaying()) Scripting::InitScript(GetEntityId(), csScriptInstance);
 				klassInstance.emplace(className, std::move(csScriptInstance));
 			}
 
@@ -163,6 +166,7 @@ namespace Engine {
 			}
 			//klassInstance[csScriptInstance.csClass.className] = std::move(csScriptInstance);
 			Scripting::InitVariable(csScriptInstance);
+			if (GameState::GetInstance().GetPlaying()) Scripting::InitScript(GetEntityId(), csScriptInstance);
 			klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 		}
 

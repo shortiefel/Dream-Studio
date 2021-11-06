@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundColliderCheck.cs" />
     <Compile Include="CameraController.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Grid.cs" />

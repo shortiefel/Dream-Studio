@@ -47,7 +47,7 @@ namespace Engine
 
 		//Math::vec2 GetTruePosition() const;
 
-		TransformComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{20.f,20.f},
+		TransformComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{1.f,1.f},
 			float _angle = float{}, bool _active = true, int _layer = 2);
 		TransformComponent& operator+= (const TransformComponent& _rhs);
 

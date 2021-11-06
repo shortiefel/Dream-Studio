@@ -62,7 +62,7 @@ namespace Engine
 
 		TextureComponent& operator= (const TextureComponent&) = default;
 
-		void SetTexture(std::string _filepath);
+		//void SetTexture(std::string _filepath);
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);

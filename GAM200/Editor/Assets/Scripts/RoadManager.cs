@@ -5,25 +5,27 @@ using System.Collections.Generic;
 public class RoadManager : MonoBehaviour
 {
     public PlacementManager placementManager;
+    public RoadFixer roadFixer;
 
-    public List<Vector2Int> temporaryPlacementPositions = new List<Vector2Int>();
-    public List<Vector2Int> roadPositionsToRecheck = new List<Vector2Int>();
+    public List<Vector2Int> temporaryPlacementPositions;
+    public List<Vector2Int> roadPositionsToRecheck;
 
     private Vector2Int startPosition;
     private bool placementMode = false;
 
-    public RoadFixer roadFixer;
 
     //private void Start()
     public override void Start()
     {
         roadFixer = GetComponent<RoadFixer>();
-        placementManager = GetComponent<PlacementManager>();
-    }
+        placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+        temporaryPlacementPositions = new List<Vector2Int>();
+        roadPositionsToRecheck = new List<Vector2Int>();
+    }  
 
     public void PlaceRoad(Vector2Int position)
     {
-        Debug.Log("here");
+        //Debug.Log("here");
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
         if (placementManager.CheckIfPositionIsFree(position) == false)
@@ -39,11 +41,12 @@ public class RoadManager : MonoBehaviour
 
             temporaryPlacementPositions.Add(position);
             placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road);
-            Debug.Log("call function");
+            //Console.WriteLine("call function");
 
         }
         else
         {
+            //Console.WriteLine("call function2222222222");
             placementManager.RemoveAllTemporaryStructures();
             temporaryPlacementPositions.Clear();
 
@@ -94,7 +97,7 @@ public class RoadManager : MonoBehaviour
 
     public void FinishPlacingRoad()
     {
-        Debug.Log("Something");
+        //Debug.Log("Something");
         placementMode = false;
         placementManager.AddtemporaryStructuresToStructureDictionary();
         if (temporaryPlacementPositions.Count > 0)

@@ -19,11 +19,9 @@ public class GameManager : MonoBehaviour
         //uiController.OnHousePlacement += HousePlacementHandler;
         //uiController.OnSpecialPlacement += SpecialPlacementHandler;
 
-        Debug.Log("Start function");
-
-        roadManager = GetComponent<RoadManager>();
-        inputManager = GetComponent<InputManager>();
-        structureManager = GetComponent<StructureManager>();
+        roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
 
         inputManager.OnMouseClick += roadManager.PlaceRoad;
         inputManager.OnMouseHold += roadManager.PlaceRoad;

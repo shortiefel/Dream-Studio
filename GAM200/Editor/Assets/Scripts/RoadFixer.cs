@@ -20,7 +20,14 @@ public class RoadFixer : MonoBehaviour
         //[right, up, left, down]
         var result = placementManager.GetNeighbourTypesFor(temporaryPosition);
         int roadCount = 0;
-        roadCount = result.Where(x => x == CellType.Road).Count();
+        //roadCount = result.Where(x => x == CellType.Road).Count();
+        foreach (CellType x in result)
+        {
+            if (x == CellType.Road)
+            {
+                roadCount++;
+            }
+        }
         if (roadCount == 0 || roadCount == 1)
         {
             CreateDeadEnd(placementManager, result, temporaryPosition);

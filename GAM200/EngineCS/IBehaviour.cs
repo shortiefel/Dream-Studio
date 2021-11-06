@@ -37,7 +37,7 @@ using System.Collections.Generic; //Dictionary
 
 public class IBehaviour : IComponent
 {
-    private static Dictionary<Type, Dictionary<uint, dynamic>> dictonaryOfTypes = new Dictionary<Type, Dictionary<uint, dynamic>>();
+    protected static Dictionary<Type, Dictionary<uint, dynamic>> dictonaryOfTypes = new Dictionary<Type, Dictionary<uint, dynamic>>();
     //private static GenericDictionary dictonaryOfTypes;
 
     public uint entityId { get; set; }
@@ -52,9 +52,9 @@ public class IBehaviour : IComponent
     //-----------------------------------------------------------------------------------------------------------------
     //Component
 
-    protected void RecordComponent(Type type,uint entityId) 
+    protected void RecordScript(Type type, uint entityId) 
     {
-        
+        //Console.WriteLine(type.Name);
         if (!dictonaryOfTypes.ContainsKey(type))
         {
             dictonaryOfTypes.Add(type, new Dictionary<uint, dynamic>());
@@ -63,7 +63,26 @@ public class IBehaviour : IComponent
         if (!dictonaryOfTypes[type].ContainsKey(entityId))
         {
             dictonaryOfTypes[type].Add(entityId, this);
-            Debug.Log(type.Name);
+
+            //Console.WriteLine("True " +type.Name);
+        }
+    }
+
+    protected void RecordComponent<T>(uint entityId) where T : class, IComponent, new()
+    {
+        //Console.WriteLine("Custom typeeeeeeeeeeeeeeeeeeeeeeeeee ");
+        Type type = typeof(T);
+        if (!dictonaryOfTypes.ContainsKey(type))
+        {
+            dictonaryOfTypes.Add(type, new Dictionary<uint, dynamic>());
+        }
+
+        if (!dictonaryOfTypes[type].ContainsKey(entityId))
+        {
+            T comp = new T();
+            comp.entityId = entityId;
+            dictonaryOfTypes[type].Add(entityId, comp);
+            //Console.WriteLine("Custom typeeeeeeeeeeeeeeeeeeeeeeeeee addddddddddddddddddddd");
         }
     }
 
@@ -72,11 +91,13 @@ public class IBehaviour : IComponent
         if (HasComponent<T>(entityId))
         {
             //Debug.Log(typeof(T));
-            //Debug.Log("First " + typeof(T));
-            if (!dictonaryOfTypes.ContainsKey(typeof(T)) || !dictonaryOfTypes[typeof(T)].ContainsKey(entityId))
-            {
-                return null;
-            }
+            //Console.WriteLine("First " + typeof(T));
+            if(GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+                RecordComponent<T>(entityId);
+            else
+                RecordScript(typeof(T), entityId);
+            //Console.WriteLine("Got " + typeof(T));
+
             return dictonaryOfTypes[typeof(T)][entityId] as T;
         }
 
@@ -110,6 +131,8 @@ public class IBehaviour : IComponent
                 return HasComponent_Collider_Engine(id);
             case genTypes.Camera:
                 return HasComponent_Camera_Engine(id);
+            case genTypes.Texture:
+                return HasComponent_Texture_Engine(id);
             default:
                 return false;
 
@@ -124,6 +147,8 @@ public class IBehaviour : IComponent
     internal static extern bool HasComponent_Collider_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Camera_Engine(uint entityId);
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool HasComponent_Texture_Engine(uint entityId);
     //-----------------------------------------------------------------------------------------------------------------
     //Destroy
     public void Destroy(uint id)

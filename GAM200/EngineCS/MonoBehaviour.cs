@@ -51,11 +51,34 @@ public class MonoBehaviour : IBehaviour
     public virtual void OnMouseOver() { }
     public virtual void OnMouseExit() { }
 
-    public MonoBehaviour() { Debug.Log("Nulling here"); }
+    public MonoBehaviour() { Console.WriteLine("Nulling here"); }
     public MonoBehaviour(uint id) : base(id)
     {
         entityId = id;
-        RecordComponent(this.GetType(), entityId);
+        if (GenericTypeFinder.dictonary.ContainsKey(this.GetType()))
+        {
+            switch (GenericTypeFinder.dictonary[this.GetType()])
+            {
+                case genTypes.Transform:
+                    RecordComponent<Transform>(entityId);
+                    break;
+                case genTypes.Collider:
+                    RecordComponent<Collider>(entityId);
+                    break;
+                case genTypes.Camera:
+                    RecordComponent<Camera>(entityId);
+                    break;
+                case genTypes.Texture:
+                    RecordComponent<Texture>(entityId);
+                    break;
+                default:
+                    break;
+
+            }
+            
+        }
+        else
+            RecordScript(this.GetType(), entityId);
         gameObject = GameObject.RetrieveGameObject(id);
         transform = new Transform(id);
     }

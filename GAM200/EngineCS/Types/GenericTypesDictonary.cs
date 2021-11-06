@@ -22,7 +22,8 @@ public static class GenericTypeFinder
     public static Dictionary<Type, genTypes> dictonary = new Dictionary<Type, genTypes>(){
         { typeof(Transform), genTypes.Transform },
         { typeof(Collider), genTypes.Collider },
-        { typeof(Camera), genTypes.Camera }
+        { typeof(Camera), genTypes.Camera },
+        { typeof(Texture), genTypes.Texture }
     };
 }
 
@@ -31,6 +32,7 @@ public enum genTypes
     Transform = 0,
     Collider,
     Camera,
-    RigidBody
+    RigidBody,
+    Texture
 }
 

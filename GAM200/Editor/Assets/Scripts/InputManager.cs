@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour
 	public override void Start()
 	{
 		mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
+		OverGameObject = false;
 	}
 
 	//private void Update()
@@ -46,7 +47,7 @@ public class InputManager : MonoBehaviour
 		if (hit.collider != null)
 		{
 			Vector2Int positionInt = Vector2Int.RoundToInt(hit.point);
-			Debug.Log(positionInt);
+			//Debug.Log(positionInt);
 			return positionInt;
 		}
 		else
@@ -59,29 +60,16 @@ public class InputManager : MonoBehaviour
 	//	cameraMovementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 	//}
 
-	public override void OnMouseEnter()
-	{
-		//Console.WriteLine("Successful");
-		OverGameObject = true;
-		//Console.WriteLine("Successful");
-	}
-
-	public override void OnMouseExit()
-	{
-		OverGameObject = false;
-	}
-
 	private void CheckClickHoldEvent()
 	{
 		if (Input.GetMouseButton(0) && OverGameObject)
 		{
-			Debug.Log("hold");
-			//var position = RaycastGround();
+			var position = RaycastGround();
 			/*if (position != null)
 				OnMouseHold?.Invoke(position.Value);*/
-			/*if (position != null)
+			if (position != null)
 				if (OnMouseHold != null)
-					OnMouseHold.Invoke(position.Value);*/
+					OnMouseHold.Invoke(position.Value);
 		}
 	}
 
@@ -89,11 +77,11 @@ public class InputManager : MonoBehaviour
 	{
 		if (Input.GetMouseButtonUp(0) && OverGameObject)
 		{
-			Debug.Log("out");
+			//Console.WriteLine("out");
 			//OnMouseUp?.Invoke();
 			if (OnMouseUp != null)
 			{
-				Debug.Log("not null");
+				//Console.WriteLine("not null");
 				OnMouseUp.Invoke();
 			}
 		}
@@ -103,13 +91,12 @@ public class InputManager : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0) && OverGameObject)
 		{
-			Debug.Log("down");
-			//var position = RaycastGround();
+			var position = RaycastGround();
 			/*if (position != null)
 				OnMouseClick?.Invoke(position.Value);*/
-			/*if (position != null)
+			if (position != null)
 				if (OnMouseClick != null)
-					OnMouseClick.Invoke(position.Value);*/
+					OnMouseClick.Invoke(position.Value);
 
 		}
 	}

@@ -35,6 +35,7 @@ Technology is prohibited.
 #include "Engine/Header/Physics/Collision.hpp"
 #include "Engine/Header/Physics/Ray.hpp" //For raycast
 #include "Engine/Header/Graphic/SpaceTransform.hpp"
+#include "Engine/Header/Graphic/TextureSet.hpp"
 
 #include <mono/metadata/assembly.h>
 
@@ -93,6 +94,11 @@ namespace Engine {
 	void ScreenToWorldPoint_Engine(unsigned int id, Math::vec3* outPosition, Math::vec3 inPosition);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Texture
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void ChangeTexture_Engine(unsigned int entityID, MonoString* name);
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool GetKey_Engine(Input_KeyCode key);
@@ -111,6 +117,7 @@ namespace Engine {
 	bool HasComponent_Transform_Engine(unsigned int id);
 	bool HasComponent_Collider_Engine(unsigned int id);
 	bool HasComponent_Camera_Engine(unsigned int id);
+	bool HasComponent_Texture_Engine(unsigned int id);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Destroy
@@ -202,6 +209,11 @@ namespace Engine {
 		mono_add_internal_call("Camera::ScreenToWorldPoint_Engine", ScreenToWorldPoint_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Texture
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		mono_add_internal_call("Texture::ChangeTexture_Engine", ChangeTexture_Engine);
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Input
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Input::GetKey_Engine", GetKey_Engine);
@@ -219,6 +231,7 @@ namespace Engine {
 		mono_add_internal_call("IBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Camera_Engine", HasComponent_Camera_Engine);
+		mono_add_internal_call("IBehaviour::HasComponent_Texture_Engine", HasComponent_Texture_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Destroy
@@ -322,7 +335,6 @@ namespace Engine {
 	}
 
 	bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name) {
-		std::cout << mono_string_to_utf8(name) << "\n";
 		//return false;
 		return dreamECSGame->AddComponent<ScriptComponent>(ScriptComponent{ entityId, mono_string_to_utf8(name) });
 	}
@@ -358,7 +370,14 @@ namespace Engine {
 			if (!ctype) return; 
 			Math::vec2 moveDis = *inVec2 - ctype->position;
 			ctype->position = *inVec2;
-			const auto& entity = dreamECSGame->GetUsedConstEntityMap().find(ctype->GetEntityId())->second;
+
+			auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
+			const auto& itr = entityMap.find(ctype->GetEntityId());
+			const auto& entity = itr->second;
+			Entity_id parent = entity.parent;
+
+			ctype->localPosition -= dreamECSGame->GetComponent<TransformComponent>(parent).position;
+
 			for (auto& newId : entity.child) {
 				TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
 				if (newTransform != nullptr)
@@ -372,7 +391,13 @@ namespace Engine {
 			if (!ctype) return;
 			Math::vec2 moveDis = *inVec2 - ctype->position;
 			ctype->localPosition = *inVec2;
-			const auto& entity = dreamECSGame->GetUsedConstEntityMap().find(ctype->GetEntityId())->second;
+			auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
+			const auto& itr = entityMap.find(ctype->GetEntityId());
+			const auto& entity = itr->second;
+			Entity_id parent = entity.parent;
+
+			ctype->position = ctype->localPosition + dreamECSGame->GetComponent<TransformComponent>(parent).position;
+
 			for (auto& newId : entity.child) {
 				TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
 				if (newTransform != nullptr)
@@ -444,6 +469,16 @@ namespace Engine {
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Texture
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void ChangeTexture_Engine(unsigned int entityID, MonoString* name) {
+		const auto ptr = dreamECSGame->GetComponentPTR<TextureComponent>(entityID);
+		if (ptr != nullptr) {
+			GraphicImplementation::SetTexture(ptr, "Assets\\Textures\\" + std::string{ mono_string_to_utf8(name) } + ".png");
+		}
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	
@@ -486,6 +521,10 @@ namespace Engine {
 
 	bool HasComponent_Camera_Engine(unsigned int id) {
 		GET_COMPONENT_PTR(CameraComponent);
+	}
+
+	bool HasComponent_Texture_Engine(unsigned int id) {
+		GET_COMPONENT_PTR(TextureComponent);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

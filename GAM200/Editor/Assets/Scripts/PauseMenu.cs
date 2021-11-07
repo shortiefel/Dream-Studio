@@ -1,9 +1,7 @@
-﻿using System;
+﻿
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 public class PauseMenu : MonoBehaviour
 {
@@ -16,8 +14,6 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     public override void Start()
     {
-        pauseMenuUI = GameObject.Find("pauseMenuUI");
-
         pauseMenuUI.SetActive(true);
         if (Input.GetMouseButtonDown(0))
         {
@@ -90,7 +86,7 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         Debug.Log("Load Menu");
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()

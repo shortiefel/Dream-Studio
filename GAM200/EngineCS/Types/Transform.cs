@@ -170,4 +170,10 @@ public class Transform : IComponent
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetParent_Engine(int parentId, uint child);
+
+    public Vector2 InverseTransformPoint(Vector2 val)
+    {
+        GetTransform_Position_Engine(entityId, out Vector2 result, false);
+        return (val - result);
+    }
 }

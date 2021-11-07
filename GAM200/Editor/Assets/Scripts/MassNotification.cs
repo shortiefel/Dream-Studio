@@ -33,20 +33,12 @@ public class MassNotification : MonoBehaviour
         notiPrefab = new Prefab("notification"); //Need to have the same texture name
     }
 
-    public int GetRandomNumber()
-    {
-        int x = Random.Range(1, 20);
-
-        return x;
-    }
-
     public void CreateNotificationModel()
     {
         GameObject[] temp = new GameObject[prefabCounter];
         for (int index = 0; index < prefabCounter; index++)
         {
-            //GameObject initNow = Instantiate(notiPrefab, new Vector3(0, 0, 1), Quaternion.identity);
-            GameObject initNow = Instantiate(notiPrefab);
+            GameObject initNow = Instantiate(notiPrefab, new Vector3(0, 0, 1), Quaternion.identity);
             initNow.SetActive(false);
             temp[index] = initNow;
         }
@@ -57,7 +49,7 @@ public class MassNotification : MonoBehaviour
     // Reusing the game objects
     public void PlaceNotif(Vector2Int newPos)
     {
-        Vector2 pos = new Vector2((newPos.x - 0.4f), (newPos.y + 0.5f));
+        Vector3 pos = new Vector3((newPos.x - 0.4f), (newPos.y + 0.5f), 1);
         if (SearchVaildInactiveObjectIndex() > n_inactive.Length)
         {
             Debug.Log("Sorry, No notification left to fill up");

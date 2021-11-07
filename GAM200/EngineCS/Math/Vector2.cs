@@ -14,6 +14,8 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+using System.Runtime.CompilerServices; //For internal calls
+
 public struct Vector2
 {
     public float x, y;
@@ -31,6 +33,14 @@ public struct Vector2
         y = n.y;
     }
 
+    public static float Distance(Vector2 a, Vector2 b)
+    {
+        GetDistance_Engine(out float outFloat, a, b);
+        return outFloat;
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetDistance_Engine(out float outFloat, Vector2 a, Vector2 b);
+
     public static Vector2 operator +(Vector2 lhs, Vector2 rhs)
     {
         return new Vector2(lhs.x + rhs.x, lhs.y + rhs.y);
@@ -39,6 +49,12 @@ public struct Vector2
     public static Vector2 operator *(Vector2 lhs, float num)
     {
         return new Vector2(lhs.x * num, lhs.y * num);
+    }
+
+    public static Vector2 operator -(Vector2 lhs, Vector2 rhs)
+    {
+
+        return new Vector2(lhs.x - rhs.x, lhs.y - rhs.y);
     }
 
     public static Vector2 operator -(Vector2 lhs)

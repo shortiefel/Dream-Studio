@@ -25,6 +25,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Time/DeltaTime.hpp"
 
+#include "Engine/Header/Grid/Grid.hpp"
+
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #include "Engine/Header/ECS/Factory.hpp"
@@ -52,6 +54,10 @@ namespace Engine {
         //AI::AISystem::GetInstance().SetRender();
     }
 
+    Scene::~Scene() {
+        Game::Grid::GetInstance().DestroyGrid();
+    }
+
     //When user click play to run their game
     bool Scene::Play() {
         if (!ScriptSystem::GetInstance().CompileCS(true)) {
@@ -68,6 +74,7 @@ namespace Engine {
     void Scene::Stop(bool deserialize) {
         CollisionSystem::GetInstance().Stop();
         dreamECSGame->ResetECS();
+        Game::Grid::GetInstance().DestroyGrid();
 
         if (deserialize) {
             //std::cout << "deserialize\n";
@@ -97,8 +104,6 @@ namespace Engine {
         //TransformCalculationSystem::GetInstance().Release();
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
-
-        AI::AISystem::GetInstance().Render();
 
         dreamECSGame->ClearDestroyQueue();
 

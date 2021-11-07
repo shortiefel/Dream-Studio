@@ -17,7 +17,7 @@ public class StructureManager : MonoBehaviour
     {
         /*houseWeights = housesPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
         specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-        placementManager = GetComponent<PlacementManager>();*/
+        placementManager = GetComponent<Pl_roadListacementManager>();*/
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 

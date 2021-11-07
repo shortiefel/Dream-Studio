@@ -37,6 +37,8 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/SpaceTransform.hpp"
 #include "Engine/Header/Graphic/TextureSet.hpp"
 
+#include "Engine/Header/Script/InternalCall/GridInternalCall.hpp"
+
 #include <mono/metadata/assembly.h>
 
 #define GetEngineType(ID, type, paramName, param)\
@@ -285,6 +287,8 @@ namespace Engine {
 		Random
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Random::Random_Range_Engine", Random_Range_Engine);
+
+		RegisterGridInternalCall();
 	}
 
 

@@ -160,9 +160,6 @@
     <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp">
       <Filter>Source Files\ECS\Component\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\AI\Grid.cpp">
-      <Filter>Source Files\AI</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\AI\Node.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
@@ -178,8 +175,17 @@
     <ClCompile Include="Engine\Code\Random\Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundImplementation.cpp">
-      <Filter>Source Files\ECS\Component\Sound</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Grid\Grid.cpp">
+      <Filter>Source Files\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Script\InternalCall\GridInternalCall.cpp">
+      <Filter>Source Files\Script\InternalCall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -507,9 +513,6 @@
     <ClInclude Include="Engine\Header\AI\Node.hpp">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\AI\Grid.hpp">
-      <Filter>Header Files\AI</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\AI\AISystem.hpp">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
@@ -525,8 +528,17 @@
     <ClInclude Include="Engine\Header\Random\Random.hpp">
       <Filter>Header Files\Random</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundImplementation.hpp">
-      <Filter>Header Files\ECS\Component\Sound</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Grid\Grid.hpp">
+      <Filter>Header Files\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\InternalCall\GridInternalCall.hpp">
+      <Filter>Header Files\Script\InternalCall</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -691,6 +703,12 @@
     </Filter>
     <Filter Include="Header Files\Random">
       <UniqueIdentifier>{8a054b6c-5a1c-4e4e-b907-85b78bc1e9bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Grid">
+      <UniqueIdentifier>{370f6d0f-01ae-45ec-8429-012ad5d32a7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Grid">
+      <UniqueIdentifier>{39687018-868e-497e-96b1-9f892c19d34c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

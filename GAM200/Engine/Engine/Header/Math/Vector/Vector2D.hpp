@@ -22,6 +22,7 @@ Technology is prohibited.
 
 #include <iostream> // for operator<< 
 #include "Engine/Header/Math/Vector/Vector3D.hpp"
+#include "Engine/Header/Math/Internal/ConstantsMath.hpp"
 
 namespace Engine {
 	namespace DreamMath {
@@ -161,6 +162,26 @@ namespace Engine {
 					return os;
 				}
 			};
+
+			/*---------------------------------------------------------------------------------------------------------------------
+			* == operator
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T, typename U>
+			bool operator==(const Vector2D<T>& lhs, const Vector2D<U>& rhs) {
+				T x = lhs.x - static_cast<T>(rhs.x);
+				T y = lhs.y - static_cast<T>(rhs.y);
+				return epsilonCheck<T>(x) && epsilonCheck<T>(y);
+			}
+
+			/*---------------------------------------------------------------------------------------------------------------------
+			* < operator
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T, typename U>
+			bool operator<(const Vector2D<T>& lhs, const Vector2D<U>& rhs) {
+				T diff1 = lhs.x + lhs.y;
+				T diff2 = static_cast<T>(rhs.x) + static_cast<T>(rhs.y);
+				return (diff1 < diff2);
+			}
 
 			/*---------------------------------------------------------------------------------------------------------------------
 			* Binary Add

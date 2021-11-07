@@ -1,11 +1,11 @@
 /* Start Header**********************************************************************************/
 /*
-@file    Grid.hpp
+@file    GridInternalCall.hpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu
-@date    29/10/2021
+@date    06/11/2021
 \brief
-#include "Engine/Header/AI/Grid.hpp"
-This file contain the declaration of Grid
+#include "Engine/Header/Script/InternalCall/GridInternalCall.hpp"
+This file contain the declaration of GridInternalCall
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -15,22 +15,13 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef GRID_H
-#define GRID_H
+#ifndef GRID_INTERNAL_CALL_H
+#define GRID_INTERNAL_CALL_H
 
 #include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
-	namespace AI {
-		class Grid {
-		public:
-		private:
-			//Number of tiles in x and y
-			Math::ivec2 mapSize{};
-			//Height and length of a single tile
-			Math::ivec2 tileSize{};
-		};
-	}
+	void RegisterGridInternalCall();
 }
 
 #endif

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Point
+/*public class Point
 {
     public int X { get; set; }
     public int Y { get; set; }
@@ -42,18 +42,18 @@ public class Point
     {
         return "P(" + this.X + ", " + this.Y + ")";
     }
-}
+}*/
 
-public enum CellType
+/*public enum CellType
 {
     Empty,
     Road,
     Structure,
     SpecialStructure,
     None
-}
+}*/
 
-public class Grid
+/*public class Grid
 {
     private CellType[,] _grid;
     private int _width;
@@ -206,4 +206,4 @@ public class Grid
         }
         return neighbours;
     }
-}
+}*/

@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Debug.cs" />
+    <Compile Include="Grid\Grid.cs" />
+    <Compile Include="Grid\GridSearch.cs" />
+    <Compile Include="Grid\Point.cs" />
     <Compile Include="IBehaviour.cs" />
     <Compile Include="Input\Input.cs" />
     <Compile Include="Input\InputCode.cs" />

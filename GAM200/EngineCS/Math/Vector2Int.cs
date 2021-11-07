@@ -30,6 +30,11 @@ public struct Vector2Int
         x = n.x;
         y = n.y;
     }
+    public Vector2Int(Point n)
+    {
+        x = n.X;
+        y = n.Y;
+    }
 
     public static Vector2Int operator +(Vector2Int lhs, Vector2Int rhs)
     {

@@ -4,7 +4,7 @@
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    29/10/2021
 \brief
-#include "Engine/Header/AI/Grid.hpp"
+#include "Engine/Header/Grid/Grid.hpp"
 This file contain the definition of Grid
 
 

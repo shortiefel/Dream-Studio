@@ -53,7 +53,6 @@ namespace Editor {
 
 		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 		Engine::UISystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
-		Engine::AI::AISystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 		Engine::FontSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 
 		//The system already added the time taken

@@ -27,6 +27,8 @@ namespace Engine {
 		temporary file is saved before going into play mode
 		--------------------------------------------------------------------*/
 		Scene(std::string _sceneName, bool tem = false);
+		//Destructor
+		~Scene();
 		/*--------------------------------------------------------------------
 		Start play mode
 		--------------------------------------------------------------------*/

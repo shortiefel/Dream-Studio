@@ -18,7 +18,7 @@ Technology is prohibited.
 #define CONSTANTS_MATH_HPP
 
 #include <limits>
-
+#include <iostream>
 namespace Engine {
     namespace DreamMath {
         template <typename T>
@@ -28,7 +28,7 @@ namespace Engine {
 
         template <typename T>
         inline bool epsilonCheck(const T& target) {
-            return (target > -std::numeric_limits<T>::epsilon() && target < std::numeric_limits<T>::epsilon());
+            return (target >= -std::numeric_limits<T>::epsilon() && target <= std::numeric_limits<T>::epsilon());
         }
 
         template <typename T>

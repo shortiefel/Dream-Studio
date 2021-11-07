@@ -1,6 +1,6 @@
-﻿/*using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices; //For internal calls
 
 public class GridSearch
 {
@@ -12,6 +12,14 @@ public class GridSearch
 
     public static List<Point> AStarSearch(Grid grid, Point startPosition, Point endPosition, bool isAgent = false)
     {
+        Vector2Int[] pos = new Vector2Int[100];
+        AStarSearch_Engine(pos, out int numOfElement, new Vector2Int(startPosition), new Vector2Int(endPosition), isAgent);
+        Console.WriteLine("New path------------------------------------------------------");
+        for (int i = 0; i < numOfElement; i++)
+        {
+            Console.WriteLine(pos[i]);
+        }
+
         List<Point> path = new List<Point>();
 
         List<Point> positionsTocheck = new List<Point>();
@@ -31,6 +39,13 @@ public class GridSearch
             if (current.Equals(endPosition))
             {
                 path = GeneratePath(parentsDictionary, current);
+                Console.WriteLine("Old path");
+                foreach (Point pt in path)
+                {
+                    Console.WriteLine(pt);
+                }
+                Console.WriteLine("------------------------------------------------------------------------------------------------------------");
+
                 return path;
             }
 
@@ -49,8 +64,25 @@ public class GridSearch
                 }
             }
         }
+
+        /*Vector2Int[] pos2 = new Vector2Int[100];
+        AStarSearch_EngineAStarSearch_Engine(pos2, out int numOfElement2, startPosition, endPosition, isAgent);
+        Console.WriteLine("end    New path------------------------------------------------------");
+        for (int i = 0; i < numOfElement2; i++)
+        {
+            Console.WriteLine(pos2[i]);
+        }
+        Console.WriteLine("end     Old path");
+        foreach (Point pt in path)
+        {
+            Console.WriteLine(pt);
+        }
+        Console.WriteLine("------------------------------------------------------------------------------------------------------------");*/
         return path;
     }
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void AStarSearch_Engine(Vector2Int[] pos, out int count, Vector2Int startPosition, Vector2Int endPosition, bool isAgent);
 
     private static Point GetClosestVertex(List<Point> list, Dictionary<Point, float> distanceMap)
     {
@@ -69,8 +101,10 @@ public class GridSearch
     {
         return Math.Abs(endPos.X - point.X) + Math.Abs(endPos.Y - point.Y);
     }
+    /*[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void SetCellType(int x, int y, int cellType);*/
 
-    public static List<Point> GeneratePath(Dictionary<Point, Point> parentMap, Point endState)
+    private static List<Point> GeneratePath(Dictionary<Point, Point> parentMap, Point endState)
     {
         List<Point> path = new List<Point>();
         Point parent = endState;
@@ -81,4 +115,4 @@ public class GridSearch
         }
         return path;
     }
-}*/
+}

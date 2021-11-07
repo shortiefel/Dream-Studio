@@ -2,11 +2,12 @@
 public class Test : MonoBehaviour
 {
     //public int num;
-    RoadFixer roadFixer;
+    //RoadFixer roadFixer;
     public override void Start()
     {
         //Debug.Log("Test start");
-        roadFixer = GameObject.Find("RoadManager").GetComponent<RoadFixer>();
+        //roadFixer = GameObject.Find("RoadManager").GetComponent<RoadFixer>();
+        //Grid.GridTest();
     }
 
     public override void Update()

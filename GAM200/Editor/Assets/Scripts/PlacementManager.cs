@@ -36,12 +36,52 @@ public class PlacementManager : MonoBehaviour
         return false;
     }
 
-    internal void PlaceObjectOnTheMap(Vector2Int position, Prefab structurePrefab, CellType type)
+    //internal void PlaceObjectOnTheMap(Vector2Int position, Prefab structurePrefab, CellType type)
+    //{
+    //    placementGrid[position.x, position.y] = type;
+    //    StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
+    //    structureDictionary.Add(position, structure);
+    //    //DestroyNatureAt(position);
+    //}
+
+    internal void PlaceObjectOnTheMap(Vector2Int position, GameObject structurePrefab, CellType type, int width = 1, int height = 1)
     {
-        placementGrid[position.x, position.y] = type;
         StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
-        structureDictionary.Add(position, structure);
-        //DestroyNatureAt(position);
+
+        var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
+        if (structureNeedingRoad != null)
+        {
+            structureNeedingRoad.RoadPosition = GetNearestRoad(position, width, height).Value;
+            Debug.Log("My nearest road position is: " + structureNeedingRoad.RoadPosition);
+        }
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                var newPosition = position + new Vector2Int(x, y);
+                placementGrid[newPosition.x, newPosition.y] = type;
+                structureDictionary.Add(newPosition, structure);
+                //DestroyNatureAt(newPosition);
+            }
+        }
+    }
+
+    private Vector2Int? GetNearestRoad(Vector2Int position, int width, int height)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                var newPosition = position + new Vector2Int(x, y);
+                var roads = GetNeighboursOfTypeFor(newPosition, CellType.Road);
+                if (roads.Count > 0)
+                {
+                    return roads[0];
+                }
+            }
+        }
+        return null;
     }
 
     //private void DestroyNatureAt(Vector2Int position)
@@ -98,9 +138,9 @@ public class PlacementManager : MonoBehaviour
         return structureModel;
     }
 
-    internal List<Vector2Int> GetPathBetween(Vector2Int startPosition, Vector2Int endPosition)
+    internal List<Vector2Int> GetPathBetween(Vector2Int startPosition, Vector2Int endPosition, bool isAgent = false)
     {
-        var resultPath = GridSearch.AStarSearch(placementGrid, new Point(startPosition.x, startPosition.y), new Point(endPosition.x, endPosition.y));
+        var resultPath = GridSearch.AStarSearch(placementGrid, new Point(startPosition.x, startPosition.y), new Point(endPosition.x, endPosition.y), isAgent);
         List<Vector2Int> path = new List<Vector2Int>();
         foreach (Point point in resultPath)
         {
@@ -137,5 +177,66 @@ public class PlacementManager : MonoBehaviour
             temporaryRoadobjects[position].SwapModel(newModel, rotation);
         else if (structureDictionary.ContainsKey(position))
             structureDictionary[position].SwapModel(newModel, rotation);
+    }
+
+    public StructureModel GetRandomRoad()
+    {
+        var point = placementGrid.GetRandomRoadPoint();
+        return GetStructureAt(point);
+    }
+
+    public StructureModel GetRandomSpecialStrucutre()
+    {
+        var point = placementGrid.GetRandomSpecialStructurePoint();
+        Debug.Log(point);
+        return GetStructureAt(point);
+    }
+
+    public StructureModel GetRandomHouseStructure()
+    {
+        var point = placementGrid.GetRandomHouseStructurePoint();
+        Debug.Log(point);
+        return GetStructureAt(point);
+    }
+
+    public List<StructureModel> GetAllHouses()
+    {
+        List<StructureModel> returnList = new List<StructureModel>();
+        var housePositions = placementGrid.GetAllHouses();
+        foreach (var point in housePositions)
+        {
+            returnList.Add(structureDictionary[new Vector2Int(point.X, point.Y)]);
+        }
+        return returnList;
+    }
+
+    internal List<StructureModel> GetAllSpecialStructures()
+    {
+        List<StructureModel> returnList = new List<StructureModel>();
+        var housePositions = placementGrid.GetAllSpecialStructure();
+        foreach (var point in housePositions)
+        {
+            returnList.Add(structureDictionary[new Vector2Int(point.X, point.Y)]);
+        }
+        return returnList;
+    }
+
+
+    private StructureModel GetStructureAt(Point point)
+    {
+        if (point != null)
+        {
+            return structureDictionary[new Vector2Int(point.X, point.Y)];
+        }
+        return null;
+    }
+
+    public StructureModel GetStructureAt(Vector2Int position)
+    {
+        if (structureDictionary.ContainsKey(position))
+        {
+            return structureDictionary[position];
+        }
+        return null;
     }
 }

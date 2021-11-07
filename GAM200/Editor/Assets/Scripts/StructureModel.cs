@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System;
 
-public class StructureModel : MonoBehaviour
+public class StructureModel : MonoBehaviour, INeedingRoad
 {
     //float yHeight = 0;
     //private Transform transform;
     Texture texure;
-
+    public Vector2Int RoadPosition { get; set; }
     //private void Start()
     public override void Start()
     {

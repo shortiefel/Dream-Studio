@@ -17,28 +17,23 @@ Technology is prohibited.
 #ifndef SOUND_COMPONENT_H
 #define SOUND_COMPONENT_H
 
-#include "Engine/Header/ECS/Component/Sound/SoundImplementation.hpp"
+#include <fmod/fmod.hpp>
+
+#include <string>
+#include <map>
+
+typedef std::map<std::string, FMOD::Sound*> SoundMap;
+
+
 
 namespace Engine {
 
 
 	class SoundComponent {
-		public:
-			static void Init();
-			static void Soundget();
-			static void Shutdown();
-			static int ErrorCheck(FMOD_RESULT result);
 
-			void LoadSound(const std::string& soundName, bool b3d, bool bLooping , bool bStream );
-			void UnLoadSound(const std::string& soundName);
-			int PlaySounds(const std::string& soundName, const Engine::DreamMath::vec3& vPos , float fVolumedB );
-			void StopChannel(int nChannelId);
-			float dbToVolume(float dB);
-			float VolumeTodB(float volume);
-			FMOD_VECTOR VectorToFmod(const Engine::DreamMath::vec3& vPosition);
+	public:
+	
 
-
-		
 	};
 }
 

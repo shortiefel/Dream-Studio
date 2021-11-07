@@ -25,9 +25,9 @@ namespace Editor {
 					
 
 					//record the object state before change
-					std::shared_ptr<ICommand> new_command = std::make_shared<ObjectAddState>();
-					new_command->execute();
-					Engine::UndoRedoManager::GetInstance().RecordState(new_command);
+					//std::shared_ptr<ICommand> new_command = std::make_shared<ObjectAddState>();
+					//new_command->execute();
+					//Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 				}
 
 				if (ImGui::BeginPopupContextWindow())

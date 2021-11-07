@@ -24,7 +24,9 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 namespace Engine {
-	class ObjectCommand : public ICommand
+	class ICommand;
+
+	class ObjectCommand :public ICommand
 	{
 	public:
 		//no commands for objects

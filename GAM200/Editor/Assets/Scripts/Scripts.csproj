@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="BackgroundColliderCheck.cs" />
     <Compile Include="CameraController.cs" />
+    <Compile Include="CarController.cs" />
+    <Compile Include="CarSpawner.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="GridSearch.cs" />

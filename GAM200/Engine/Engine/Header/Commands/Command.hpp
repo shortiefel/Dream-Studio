@@ -24,7 +24,6 @@ Technology is prohibited.
 #include "Engine/Header/Singleton/Singleton.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/Scene/Scene.hpp"
-#include "Engine/Header/Commands/ObjectCommand.hpp"
 
 #include <vector>
 #include <deque>
@@ -64,8 +63,6 @@ namespace Engine {
 		void Undo();
 		//redo the last command
 		//void Redo();
-
-		//store command to do next time
 		
 		//clear all undo redo histroy
 		void ClearHistory();

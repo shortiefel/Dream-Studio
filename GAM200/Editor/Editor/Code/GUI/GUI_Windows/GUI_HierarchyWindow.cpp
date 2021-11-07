@@ -10,6 +10,7 @@
 
 #include <algorithm>
 
+
 namespace Editor {
 	namespace GUI_Windows {
 		void GUI_Hierarchy(bool* hierarchy_bool, std::map<int, Engine::Entity_id>& entity_selected, ImGuiWindowFlags window_flags) {
@@ -25,9 +26,8 @@ namespace Editor {
 					
 
 					//record the object state before change
-					//std::shared_ptr<ICommand> new_command = std::make_shared<ObjectAddState>();
-					//new_command->execute();
-					//Engine::UndoRedoManager::GetInstance().RecordState(new_command);
+					Engine::CommandPtr new_command;
+					Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 				}
 
 				if (ImGui::BeginPopupContextWindow())

@@ -23,6 +23,11 @@ Technology is prohibited.
 #include "Engine/Header/Scene/SceneManager.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
+#include <vector>
+#include <deque>
+#include <stack>
+#include <memory>
+
 namespace Engine {
 	class ICommand;
 

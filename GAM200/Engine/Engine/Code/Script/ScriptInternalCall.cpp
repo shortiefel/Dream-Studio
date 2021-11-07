@@ -149,6 +149,7 @@ namespace Engine {
 	Prefab
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, int entityId, unsigned int* newId);
+	void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, unsigned int* newId);
 	//void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -273,6 +274,7 @@ namespace Engine {
 		Prefab
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Transform_Engine", Instantiate_Prefab_Transform_Engine);
+		mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Position_Engine", Instantiate_Prefab_Position_Engine);
 		//mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Engine", Instantiate_Prefab_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -638,6 +640,10 @@ namespace Engine {
 			GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), newId, transform.position, transform.angle);
 		}
 		//if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
+	}
+
+	void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, unsigned int* newId) {
+		GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), newId, Math::vec2{ pos.x, pos.y }, 0);
 	}
 
 	//void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle) {

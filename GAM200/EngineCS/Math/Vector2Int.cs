@@ -36,6 +36,12 @@ public struct Vector2Int
         y = n.Y;
     }
 
+    public static implicit operator Vector2(Vector2Int val)
+    {
+        Vector2 value = new Vector2(val);
+        return value;
+    }
+
     public static Vector2Int operator +(Vector2Int lhs, Vector2Int rhs)
     {
         return new Vector2Int(lhs.x + rhs.x, lhs.y + rhs.y);

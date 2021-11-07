@@ -1,0 +1,15 @@
+{
+  "Window": {
+    "Width": 1280,
+    "Height": 720
+  },
+  "Game": {
+    "Width": 1280,
+    "Height": 720
+  },
+  "Scene": {
+    "Scene": "test3",
+    "DefaultCircle": "Assets\\Textures\\Default_Circle.png",
+    "DefaultSquare": "Assets\\Textures\\Default_Square.png"
+  }
+}

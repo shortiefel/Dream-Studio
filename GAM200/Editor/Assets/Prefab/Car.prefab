@@ -1,0 +1,27 @@
+[
+  
+  {
+    "Entity": {
+      "Name": "Car",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 0.5, 0.5 ],
+      "Angle": 0.0,
+      "Layer": 3,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Car.png",
+      "Shape": 0,
+      "IsAnimation": false,
+      "IsLoop": false,
+      "EndFrame": 1,
+      "TimePerFrame": 0.0,
+      "IsActive": true
+    }
+  }
+]

@@ -33,6 +33,12 @@ public struct Vector2
         y = n.y;
     }
 
+    public Vector2(Vector2Int n)
+    {
+        x = (float)n.x;
+        y = (float)n.y;
+    }
+
     public static float Distance(Vector2 a, Vector2 b)
     {
         GetDistance_Engine(out float outFloat, a, b);

@@ -35,6 +35,7 @@ public class Grid
     //public int Height { get { return _height; } }
 
     private List<Point> _roadList = new List<Point>();
+    private List<Point> _houseStructure = new List<Point>();
     private List<Point> _specialStructure = new List<Point>();
 
     public Grid(int width, int height)
@@ -282,4 +283,23 @@ public class Grid
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void GetAllAdjacentCellTypes_Engine(int[] pos, int x, int y);
+
+    public List<Point> GetAllHouses()
+    {
+        return _houseStructure;
+    }
+
+    public List<Point> GetAllSpecialStructure()
+    {
+        return _specialStructure;
+    }
+
+    public Point GetRandomHouseStructurePoint()
+    {
+        if (_houseStructure.Count == 0)
+        {
+            return null;
+        }
+        return _houseStructure[Random.Range(0, _houseStructure.Count)];
+    }
 }

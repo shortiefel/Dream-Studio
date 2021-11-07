@@ -25,6 +25,8 @@ namespace Engine {
 	public:
 		float GetFPS() const;
 		void SetFPS(float _fps);
+		float GetTimeScale() const;
+		void SetTimeScale(float _timeScale);
 		float GetDeltaTime() const;
 		//Set current dt, add to total time and increment the loop count
 		void SetDeltaTime(float _dt);
@@ -33,6 +35,7 @@ namespace Engine {
 	private:
 		float dt = 1/60.0f;
 		float fps = 60.f;
+		float timeScale = 1.f;
 
 		static float accumulatedTime;
 		static int currentNumberOfSteps;

@@ -42,6 +42,8 @@ namespace Engine {
 		void Stop();
 		void Save();
 
+		std::string GetCurrentScene() const;
+
 		void SetDefaultScene(std::string sceneName);
 
 	private:

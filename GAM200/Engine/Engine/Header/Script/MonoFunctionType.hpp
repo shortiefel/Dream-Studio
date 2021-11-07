@@ -19,10 +19,13 @@ Technology is prohibited.
 
 namespace Engine {
 	enum class MonoFunctionType {
+		AWAKE,
 		CONSTRUCTOR,
 		INIT,
 		UPDATE,
 		DESTROY,
+		ON_ENABLE,
+		ON_DISABLE,
 		COLLISION_ENTER,
 		COLLISION_STAY,
 		COLLISION_EXIT,

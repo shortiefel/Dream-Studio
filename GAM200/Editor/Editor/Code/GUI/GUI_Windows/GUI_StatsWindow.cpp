@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Graphic/mesh.hpp"
+#include "Engine/Header/Scene/SceneManager.hpp"
 
 #include <Imgui/imgui.h>
 
@@ -42,16 +43,20 @@ namespace Editor {
 				ImGui::Text(outputSS.str().c_str());
 				outputSS.str(std::string());
 
-				outputSS << "Number of Quads : ";
+				outputSS << "Number of Quads: ";
 				outputSS << Engine::GraphicImplementation::Renderer::GetQuadStats().quadCount;
 				ImGui::Text(outputSS.str().c_str());
 				outputSS.str(std::string());
 
 
-				outputSS << "Draw Count : ";
+				outputSS << "Draw Count: ";
 				outputSS << Engine::GraphicImplementation::Renderer::GetQuadStats().drawCount;
 				ImGui::Text(outputSS.str().c_str());
 				outputSS.str(std::string());
+
+				outputSS << "Scene: ";
+				outputSS << Engine::SceneManager::GetInstance().GetCurrentScene();
+				ImGui::Text(outputSS.str().c_str());
 
 				ImGui::End();
 			}

@@ -45,10 +45,13 @@ namespace Engine {
 		MonoObject* object = nullptr;
 		MonoClass* klass = nullptr;
 
+		MonoMethod* AwakeFunc = nullptr;
 		MonoMethod* ConstructorFunc = nullptr;
 		MonoMethod* InitFunc = nullptr;
 		MonoMethod* UpdateFunc = nullptr;
 		MonoMethod* DestroyFunc = nullptr;
+		MonoMethod* OnEnable = nullptr;
+		MonoMethod* OnDisable = nullptr;
 		MonoMethod* OnCollisionEnter = nullptr;
 		MonoMethod* OnCollisionStay = nullptr;
 		MonoMethod* OnCollisionExit = nullptr;
@@ -56,7 +59,6 @@ namespace Engine {
 		MonoMethod* OnTriggerStay = nullptr;
 		MonoMethod* OnTriggerExit = nullptr;
 		MonoMethod* OnMouseEnter = nullptr;
-		//MonoMethod* OnMouseClick = nullptr;
 		MonoMethod* OnMouseOver = nullptr;
 		MonoMethod* OnMouseExit = nullptr;
 	};

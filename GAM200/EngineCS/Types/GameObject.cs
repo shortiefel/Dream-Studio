@@ -130,4 +130,13 @@ public class GameObject : IBehaviour
     internal static extern bool AddComponent_Collider_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool AddComponent_Camera_Engine(uint entityId);
+
+
+
+    public void SetActive(bool state)
+    {
+        SetActive_GameObject_Engine(entityId, state);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void SetActive_GameObject_Engine(uint entityId, bool state);
 }

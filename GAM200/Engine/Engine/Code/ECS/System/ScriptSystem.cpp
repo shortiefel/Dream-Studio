@@ -112,6 +112,20 @@ namespace Engine {
 			auto& classScriptInstances = csScript.klassInstance;
 
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
+				if (csScriptInstance.isActive && csScriptInstance.csClass.AwakeFunc != nullptr) {
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::AWAKE);
+				}
+			}
+
+		}
+
+		for (auto& csScript : entScriptArray) {
+			const Entity_id& entity_id = csScript.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			auto& classScriptInstances = csScript.klassInstance;
+
+			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
 					//std::cout << "init function \n";
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);

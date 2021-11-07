@@ -55,6 +55,9 @@ namespace Engine {
 		void Mono_Runtime_Invoke(const CSScriptInstance& _csScriptInstance, MonoFunctionType _type, void** _param) {
 			MonoObject* exception = nullptr;
 			switch (_type) {
+			case MonoFunctionType::AWAKE:
+				INVOKE_FUNCTION(AwakeFunc);
+				break;
 			case MonoFunctionType::CONSTRUCTOR:
 				INVOKE_FUNCTION(ConstructorFunc);
 				break;
@@ -66,6 +69,12 @@ namespace Engine {
 				break;
 			case MonoFunctionType::DESTROY:
 				INVOKE_FUNCTION(DestroyFunc);
+				break;
+			case MonoFunctionType::ON_ENABLE:
+				INVOKE_FUNCTION(OnEnable);
+				break;
+			case MonoFunctionType::ON_DISABLE:
+				INVOKE_FUNCTION(OnDisable);
 				break;
 			case MonoFunctionType::COLLISION_ENTER:
 				INVOKE_FUNCTION(OnCollisionEnter);
@@ -186,7 +195,7 @@ namespace Engine {
 			}
 		}
 
-		bool InitCSClass(CSScriptInstance& _csScriptInstance, const Entity_id& entity_id) {
+		bool InitCSClass(CSScriptInstance& _csScriptInstance, const Entity_id&) {
 			//If no child domain the klass doesnt exist
 			MonoDomain* currentDomain = mono_domain_get();
 			if (!currentDomain || currentDomain == mono_get_root_domain()) return true;
@@ -207,9 +216,14 @@ namespace Engine {
 				return false;
 			}
 
+
 			std::string methodDesc = "MonoBehaviour:.ctor(uint)";
 			MonoMethodDesc* description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.ConstructorFunc = mono_method_desc_search_in_image(description, imageCore);
+
+			methodDesc = fullName + ":Awake()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.AwakeFunc = mono_method_desc_search_in_image(description, image);
 
 			methodDesc = fullName + ":Start()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
@@ -218,6 +232,14 @@ namespace Engine {
 			methodDesc = fullName + ":Update()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.UpdateFunc = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = fullName + ":OnEnable()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnEnable = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = fullName + ":OnDisable()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnDisable = mono_method_desc_search_in_image(description, image);
 
 			methodDesc = fullName + ":OnDestroy()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);

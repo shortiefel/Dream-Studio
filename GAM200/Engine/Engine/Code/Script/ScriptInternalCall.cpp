@@ -16,6 +16,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Script/ScriptInternalCall.hpp"
+#include "Engine/Header/Script/Scripting.hpp"
 
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp" //Serialize Prefab
 #include "Engine/Header/Scene/SceneManager.hpp"
@@ -48,8 +49,7 @@ param = ctype->paramName;
 
 #define SetEngineType(ID, type, paramName, param)\
 type* ctype = dreamECSGame->GetComponentPTR<type>(ID);\
-if (!ctype) return;\
-ctype->paramName = param;
+if (ctype != nullptr) ctype->paramName = param;
 
 #define GET_COMPONENT_PTR(type) type* tem = dreamECSGame->GetComponentPTR<type>(id);\
 								return !(tem == nullptr);
@@ -143,6 +143,8 @@ namespace Engine {
 	void Active_Collider_Engine(unsigned int id, bool boolean);
 	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str);
 
+	void SetActive_GameObject_Engine(unsigned int entityId, bool state);
+
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Prefab
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -153,6 +155,8 @@ namespace Engine {
 	Deltatime
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetDeltaTime_Engine(float* dt);
+	void SetTimeScale_Engine(float timeScale);
+	void WaitForSeconds_Engine(float timer);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Scene
@@ -257,6 +261,8 @@ namespace Engine {
 		mono_add_internal_call("MonoBehaviour::Active_Collider_Engine", Active_Collider_Engine);
 		mono_add_internal_call("MonoBehaviour::Active_Script_Engine", Active_Script_Engine);
 
+		mono_add_internal_call("GameObject::SetActive_GameObject_Engine", SetActive_GameObject_Engine);
+
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Prefab
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -267,6 +273,8 @@ namespace Engine {
 		Deltatime
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Time::GetDeltaTime_Engine", GetDeltaTime_Engine);
+		mono_add_internal_call("Time::SetTimeScale_Engine", SetTimeScale_Engine);
+		mono_add_internal_call("Time::WaitForSeconds_Engine", WaitForSeconds_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Scene
@@ -591,6 +599,19 @@ namespace Engine {
 		SetEngineType(id, ScriptComponent, klassInstance.find(mono_string_to_utf8(str))->second.isActive, boolean);
 	}
 
+	void SetActive_GameObject_Engine(unsigned int entityId, bool state) {
+		SetEngineType(entityId, TransformComponent, isActive, state);
+		ScriptComponent* scriptType = dreamECSGame->GetComponentPTR<ScriptComponent>(entityId);
+		if (scriptType != nullptr) {
+			auto& klassInt = scriptType->klassInstance;
+			for (auto& [className, scriptInstance] : klassInt) {
+				scriptInstance.isActive = state;
+				if(state) Scripting::Mono_Runtime_Invoke(scriptInstance, MonoFunctionType::ON_ENABLE);
+				else Scripting::Mono_Runtime_Invoke(scriptInstance, MonoFunctionType::ON_DISABLE);
+			}
+		}
+		
+	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Prefab
@@ -618,6 +639,14 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetDeltaTime_Engine(float* dt) {
 		*dt = DeltaTime::GetInstance().GetDeltaTime();
+	}
+
+	void SetTimeScale_Engine(float timeScale) {
+		DeltaTime::GetInstance().SetTimeScale(timeScale);
+	}
+
+	void WaitForSeconds_Engine(float timer) {
+
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

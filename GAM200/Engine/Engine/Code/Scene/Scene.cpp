@@ -92,10 +92,13 @@ namespace Engine {
 
     void Scene::Update(float dt, bool playing) {
         if (playing) {
-            ScriptSystem::GetInstance().PlayRunTime();
-            //TransformCalculationSystem::GetInstance().ChildUpdate();
-            CollisionSystem::GetInstance().Update(dt);
-            PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
+            float timeScale = DeltaTime::GetInstance().GetTimeScale();
+            if (timeScale > 0.f && !Math::EpsilonCheck(timeScale)) {
+                ScriptSystem::GetInstance().PlayRunTime();
+                //TransformCalculationSystem::GetInstance().ChildUpdate();
+                CollisionSystem::GetInstance().Update(dt);
+                PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
+            }
         }
 
         CameraSystem::GetInstance().Update(dt);

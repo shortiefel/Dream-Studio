@@ -37,8 +37,11 @@ public class MonoBehaviour : IBehaviour
     public Transform transform;
     //public uint entityId { get; set; }
 
+    public virtual void Awake() { }
     public virtual void Start() { }
     public virtual void Update() { }
+    public virtual void OnEnable() { }
+    public virtual void OnDisable() { }
     public virtual void OnDestroy() { }
     public virtual void OnCollisionEnter() { }
     public virtual void OnCollisionStay() { }
@@ -249,9 +252,9 @@ public class MonoBehaviour : IBehaviour
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Instantiate_Prefab_Transform_Engine(String prefabName, int entityID, out uint id);
-    
-     
-     
+
+
+
 
 
 

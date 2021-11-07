@@ -30,7 +30,7 @@ namespace Engine {
     Scene* SceneManager::currentScene;*/
 
 	void SceneManager::StartScene() {
-        defaultSceneName = "test2";
+        defaultSceneName = "Default";
        // currentSceneName = defaultSceneName;
         currentScene = new Scene{ defaultSceneName };
 	}
@@ -90,5 +90,9 @@ namespace Engine {
 
     void SceneManager::Save() {
         currentScene->Save();
+    }
+
+    std::string SceneManager::GetCurrentScene() const {
+        return currentScene->GetName();
     }
 }

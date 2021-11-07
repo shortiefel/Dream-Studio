@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices; //For internal calls
 
 public class Time
 {
-    public static float dt
+    public static float deltaTime
     {
         get
         {
@@ -28,4 +28,25 @@ public class Time
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void GetDeltaTime_Engine(out float outFloat);
+
+    public static float timeScale
+    {
+        set
+        {
+            SetTimeScale_Engine(value);
+        }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetTimeScale_Engine(float timeScale);
+}
+
+public class WaitForSeconds
+{
+    public WaitForSeconds(float timer)
+    {
+        Debug.Log("Not done waitforsecond");
+        WaitForSeconds_Engine(timer);
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void WaitForSeconds_Engine(float timer);
 }

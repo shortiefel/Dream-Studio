@@ -33,7 +33,9 @@ Technology is prohibited.
 if (_csScriptInstance.csClass.name != nullptr) {\
 	mono_runtime_invoke(_csScriptInstance.csClass.name, _csScriptInstance.csClass.object, _param, &exception);\
 	if (exception != nullptr) {\
-	displayFuncPtr(mono_string_to_utf8(mono_object_to_string(exception, nullptr)));\
+	char* text = mono_string_to_utf8(mono_object_to_string(exception, nullptr));\
+	displayFuncPtr(std::string{text});\
+	mono_free(text);\
 	GameState::GetInstance().SetPlaying(false);\
 	Scripting::DestroyChildDomain();\
 	}\
@@ -189,7 +191,9 @@ namespace Engine {
 			if (!GameState::GetInstance().GetPlaying()) return;
 			void* param[] = { (void*)&entity_id };
 			//std::cout << "class: " << csScriptInstance.csClass.className << "\n";
-
+			if (csScriptInstance.isActive && csScriptInstance.csClass.AwakeFunc != nullptr) {
+				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::AWAKE, param);
+			}
 			if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
 				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
 			}

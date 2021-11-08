@@ -7,12 +7,13 @@ public class AIDirector : MonoBehaviour
     public PlacementManager placementManager;
     public GameObject[] pedestrianPrefabs;
 
-    public Prefab carPrefab;
+    public Prefab[] carPrefabs;
 
     public override void Start()
     {
-        carPrefab = new Prefab("Car"); //Need to be same name as Texture
-        Instantiate(carPrefab);
+        carPrefabs = new Prefab[1];
+        carPrefabs[0] = new Prefab("Car");
+
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
     }
     public void SpawnACar()
@@ -46,10 +47,16 @@ public class AIDirector : MonoBehaviour
             //    Debug.Log(item2.ToString());
             //}
 
-            var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0));
+            var car = Instantiate(SelectACarPrefab(), new Vector3(startRoadPosition.x, startRoadPosition.y, 0));
             //var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0), Quaternion.identity);
 
             car.GetComponent<CarAI>().SetPath(path.ConvertAll(x => (Vector2)x));
         }
+    }
+
+    private Prefab SelectACarPrefab()
+    {
+        var randomIndex = Random.Range(0, carPrefabs.Length - 1);
+        return carPrefabs[randomIndex];
     }
 }

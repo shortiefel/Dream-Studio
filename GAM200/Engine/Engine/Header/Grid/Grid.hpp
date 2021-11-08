@@ -67,6 +67,7 @@ namespace Engine {
 			CellType* grid = nullptr;
 
 			std::list<Math::ivec2> roadList;
+			std::list<Math::ivec2> houseStructure;
 			std::list<Math::ivec2> specialStructure;
 
 			SINGLETON_SETUP(Grid);

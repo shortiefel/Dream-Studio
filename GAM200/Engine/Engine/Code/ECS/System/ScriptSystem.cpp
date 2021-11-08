@@ -188,7 +188,6 @@ namespace Engine {
 		if (!csScript) return false;
 
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
-
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
 		}
 		return true;

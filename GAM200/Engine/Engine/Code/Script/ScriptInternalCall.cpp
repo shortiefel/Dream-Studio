@@ -367,7 +367,9 @@ namespace Engine {
 	Entity
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void CreateEntity_Engine(unsigned int* entityId, MonoString* str) {
-		std::string entityName = mono_string_to_utf8(str);
+		char* text = mono_string_to_utf8(str);
+		std::string entityName = text;
+		mono_free(text);
 		if (entityName.empty()) entityName = "Entity";
 		const Entity& entity = dreamECSGame->CreateEntity(entityName.c_str());
 		*entityId = entity.id;
@@ -375,7 +377,9 @@ namespace Engine {
 
 	void FindEntity_Engine(int* entityId, MonoString* str) {
 		const auto& entityMap = dreamECSGame->GetUsedEntityMap();
-		std::string entityName = mono_string_to_utf8(str);
+		char* text = mono_string_to_utf8(str);
+		std::string entityName = text;
+		mono_free(text);
 		if (entityName.empty()) {
 			*entityId = -1;
 			return;
@@ -392,7 +396,10 @@ namespace Engine {
 
 	bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name) {
 		//return false;
-		return dreamECSGame->AddComponent<ScriptComponent>(ScriptComponent{ entityId, mono_string_to_utf8(name) });
+		char* text = mono_string_to_utf8(name);
+		bool result = dreamECSGame->AddComponent<ScriptComponent>(ScriptComponent{ entityId, text });
+		mono_free(text);
+		return result;
 	}
 
 	bool AddComponent_Transform_Engine(unsigned int entityId) {
@@ -530,7 +537,9 @@ namespace Engine {
 	void ChangeTexture_Engine(unsigned int entityID, MonoString* name) {
 		const auto ptr = dreamECSGame->GetComponentPTR<TextureComponent>(entityID);
 		if (ptr != nullptr) {
-			GraphicImplementation::SetTexture(ptr, "Assets\\Textures\\" + std::string{ mono_string_to_utf8(name) } + ".png");
+			char* text = mono_string_to_utf8(name);
+			GraphicImplementation::SetTexture(ptr, "Assets\\Textures\\" + std::string{ text } + ".png");
+			mono_free(text);
 		}
 	}
 
@@ -606,7 +615,9 @@ namespace Engine {
 		ScriptComponent* tem = dreamECSGame->GetComponentPTR<ScriptComponent>(id);
 		if (tem == nullptr) return false;
 		const auto& scriptComponent = *tem;
-		std::string strName = mono_string_to_utf8(str);
+		char* text = mono_string_to_utf8(str);
+		std::string strName = text;
+		mono_free(text);
 		for (const auto& [name, klass] : scriptComponent.klassInstance) {
 			if (strName.compare(name) == 0) return true;
 		}
@@ -651,7 +662,9 @@ namespace Engine {
 	void Destroy_Script_Engine(unsigned int id, MonoString* str) {
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(id);
 		if (!csScript) return;
-		csScript->RemoveScript(mono_string_to_utf8(str));
+		char* text = mono_string_to_utf8(str);
+		csScript->RemoveScript(text);
+		mono_free(text);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -690,7 +703,9 @@ namespace Engine {
 	}
 
 	void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {
-		SetEngineType(id, ScriptComponent, klassInstance.find(mono_string_to_utf8(str))->second.isActive, boolean);
+		char* text = mono_string_to_utf8(str);
+		SetEngineType(id, ScriptComponent, klassInstance.find(text)->second.isActive, boolean);
+		mono_free(text);
 	}
 
 	void SetActive_GameObject_Engine(unsigned int entityId, bool state) {
@@ -711,18 +726,22 @@ namespace Engine {
 	Prefab
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, int entityId, unsigned int* newId) {
+		char* text = mono_string_to_utf8(prefabName);
 		if (entityId < 0) {
-			GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), newId, Math::vec2{ 0.f,0.f }, 0.f);
+			GameSceneSerializer::DeserializePrefab(text, newId, Math::vec2{ 0.f,0.f }, 0.f);
 		}
 		else {
 			const auto& transform = dreamECSGame->GetComponent<TransformComponent>(static_cast<unsigned int>(entityId));
-			GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), newId, transform.position, transform.angle);
+			GameSceneSerializer::DeserializePrefab(text, newId, transform.position, transform.angle);
 		}
+		mono_free(text);
 		//if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
 
 	void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, unsigned int* newId) {
-		GameSceneSerializer::DeserializePrefab(mono_string_to_utf8(prefabName), newId, Math::vec2{ pos.x, pos.y }, 0);
+		char* text = mono_string_to_utf8(prefabName);
+		GameSceneSerializer::DeserializePrefab(text, newId, Math::vec2{ pos.x, pos.y }, 0);
+		mono_free(text);
 	}
 
 	//void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle) {
@@ -751,7 +770,9 @@ namespace Engine {
 	Scene
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void LoadScene_Engine(MonoString* sceneName) {
-		SceneManager::GetInstance().ChangeScene(mono_string_to_utf8(sceneName));
+		char* text = mono_string_to_utf8(sceneName);
+		SceneManager::GetInstance().ChangeScene(text);
+		mono_free(text);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -778,7 +799,9 @@ namespace Engine {
 	}
 
 	void ConsoleWrite_Engine(MonoString* message) {
-		ConsoleFuncPtr(mono_string_to_utf8(message));
+		char* text = mono_string_to_utf8(message);
+		ConsoleFuncPtr(text);
+		mono_free(text);
 	}
 
 

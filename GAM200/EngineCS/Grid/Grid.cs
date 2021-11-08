@@ -55,8 +55,8 @@ public class Grid
         {
             
             //Console.WriteLine(GetCellType_Engine(i, j) + " and " + (int)_grid[i, j]);
-            return (CellType)GetCellType_Engine(i, j);
-            //return _grid[i, j];
+            //return (CellType)GetCellType_Engine(i, j);
+            return _grid[i, j];
         }
         set
         {
@@ -68,6 +68,14 @@ public class Grid
             {
                 _roadList.Remove(new Point(i, j));
             }
+            if (value == CellType.Structure)
+            {
+                _houseStructure.Add(new Point(i, j));
+            }
+            else
+            {
+                _houseStructure.Remove(new Point(i, j));
+            }
             if (value == CellType.SpecialStructure)
             {
                 _specialStructure.Add(new Point(i, j));
@@ -76,6 +84,7 @@ public class Grid
             {
                 _specialStructure.Remove(new Point(i, j));
             }
+            
             _grid[i, j] = value;
             SetCellType_Engine(i, j, (int)value);
         }
@@ -96,20 +105,22 @@ public class Grid
 
     public Point GetRandomRoadPoint()
     {
-        //Random rand = new Random();
-        GetRandomRoadPoint_Engine(out Point point);
-        return point;
-        //return _roadList[Random.Range(0, _roadList.Count - 1)];
+        /*GetRandomRoadPoint_Engine(out Point point);
+        return point;*/
+        int count = _roadList.Count - 1;
+        if (count < 0) count = 1;
+        return _roadList[Random.Range(0, count)];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void GetRandomRoadPoint_Engine(out Point point);
 
     public Point GetRandomSpecialStructurePoint()
     {
-        //Random rand = new Random();
-        GetRandomSpecialStructurePoint_Engine(out Point point);
-        return point;
-        //return _roadList[Random.Range(0, _roadList.Count - 1)];
+        //GetRandomSpecialStructurePoint_Engine(out Point point);
+        //return point;
+        int count = _roadList.Count - 1;
+        if (count < 0) count = 1;
+        return _roadList[Random.Range(0, count)];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void GetRandomSpecialStructurePoint_Engine(out Point point);

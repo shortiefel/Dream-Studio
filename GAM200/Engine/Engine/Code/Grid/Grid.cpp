@@ -51,6 +51,14 @@ namespace Engine {
             {
                 roadList.remove(Math::ivec2{ x,y });
             }
+            if (value == CellType::Structure)
+            {
+                houseStructure.emplace_back(Math::ivec2{ x,y });
+            }
+            else
+            {
+                houseStructure.remove(Math::ivec2{ x,y });
+            }
             if (value == CellType::SpecialStructure)
             {
                 specialStructure.emplace_back(Math::ivec2{ x,y });

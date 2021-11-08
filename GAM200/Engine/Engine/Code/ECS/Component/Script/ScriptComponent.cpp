@@ -90,7 +90,7 @@ namespace Engine {
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
 			
 			if (klassInstance.find(className) == klassInstance.end()) {
-				if (GameState::GetInstance().GetPlaying()) Scripting::InitScript(GetEntityId(), csScriptInstance);
+				Scripting::InitScript(GetEntityId(), csScriptInstance);
 				klassInstance.emplace(className, std::move(csScriptInstance));
 			}
 
@@ -165,8 +165,8 @@ namespace Engine {
 
 			}
 			//klassInstance[csScriptInstance.csClass.className] = std::move(csScriptInstance);
-			Scripting::InitVariable(csScriptInstance);
-			if (GameState::GetInstance().GetPlaying()) Scripting::InitScript(GetEntityId(), csScriptInstance);
+			//Scripting::InitVariable(csScriptInstance);
+			//Scripting::InitScript(GetEntityId(), csScriptInstance);
 			klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 		}
 

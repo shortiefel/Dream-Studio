@@ -19,20 +19,45 @@ Technology is prohibited.
 
 #include <fmod/fmod.hpp>
 
+
 #include <string>
 #include <map>
 
 typedef std::map<std::string, FMOD::Sound*> SoundMap;
 
-
-
 namespace Engine {
+
+	class DSerializer;
+	class SSerializer;
 
 
 	class SoundComponent {
 
-	public:
-	
+		public:
+			SoundComponent(const std::string _path, bool _isActive);
+			~SoundComponent();
+
+			void Update(float elapsed);
+			void Load(const std::string& _path);
+			void Stream(const std::string& _path);
+			void Play(const std::string& _path);
+
+			SoundComponent& Deserialize(const DSerializer& _serializer);
+			void Serialize(const SSerializer& _serializer);
+
+		private:
+			std::string path = "";
+			bool isActive;
+			FMOD::System* system;
+			SoundMap sounds;
+			FMOD::Channel* channel;
+			FMOD::Sound* soundN;
+			FMOD::ChannelGroup* channelGp;
+
+			void LoadStream(const std::string& _path, bool _isActive);
+			
+			
+
 
 	};
 }

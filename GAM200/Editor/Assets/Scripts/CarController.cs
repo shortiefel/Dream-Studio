@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class CarController : MonoBehaviour
 {
-    //Rigidbody2D rb;
+    Rigidbody2D rb;
 
     private float power = 5;
 
@@ -15,7 +15,7 @@ public class CarController : MonoBehaviour
 
     public override void Awake()
     {
-        //rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public void Move(Vector2 movementInput)
@@ -23,13 +23,13 @@ public class CarController : MonoBehaviour
         this.movementVector = movementInput;
     }
 
-    private void FixedUpdate()
+    public override void FixedUpdate()
     {
         /*if (rb.velocity.magnitude < maxSpeed)
         {
             rb.AddForce(movementVector.y * transform.up * power);
         }
         //Debug.Log(rb.inertia);
-        rb.AddTorque(movementVector.x * rb.inertia * 45);*/
+        rb.AddTorque(movementVector.x * 45);*/
     }
 }

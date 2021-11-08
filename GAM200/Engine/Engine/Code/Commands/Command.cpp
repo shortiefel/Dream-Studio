@@ -52,25 +52,23 @@ namespace Engine {
 		redostack.push(cmd);
 	}
 
+	//void UndoRedoManager::Redo()
+	//{
+	//	//if nothing to redo then return
+	//	if (redostack.empty()) { return; }
+
+	//	//get recent command from redo stack
+	//	auto cmd = redostack.top();
+	//	redostack.pop();
+
+	//	cmd->redo();
+
+	//	//add command to undo stack
+	//	undostack.push(cmd);
+	//}
+
 	void UndoRedoManager::ClearHistory()
 	{
 		undostack = {};
 	}
-
-	//void CommandManager::Redo()
-	//{
-	//	if (undo_command.empty()) { return; }
-
-	//	//redo the last undo command
-	//	undo_command.back()->execute();
-	//	//move to "current" command stack
-	//	current_command.push_back(undo_command.back());
-	//	//remove from 'undo' stack
-	//	CommandsUndo.pop_back();
-
-	//	if (current_command.size() > maximum)
-	//	{
-	//		current_command.pop_front();
-	//	}
-	//}
 }

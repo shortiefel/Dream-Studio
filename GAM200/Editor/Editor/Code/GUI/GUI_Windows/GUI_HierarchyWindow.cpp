@@ -24,10 +24,6 @@ namespace Editor {
 				{
 					Engine::dreamECSGame->CreateEntity();
 					
-
-					//record the object state before change
-					std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectAddCommand>();
-					Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 				}
 
 				if (ImGui::BeginPopupContextWindow())
@@ -41,9 +37,6 @@ namespace Editor {
 						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DestroyEntity(entity.second);  });
 						entity_selected.clear();
 
-						//record the object state before change
-						std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectAddCommand>();
-						Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 					}
 
 					/**
@@ -53,6 +46,7 @@ namespace Editor {
 					{
 						//std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::DreamECS::GetInstance().DuplicateEntityAsInstance(entity.second);  });
 						Engine::dreamECSGame->DuplicateEntityAsInstance(GetTarget(entity_selected));
+
 					}
 
 					if (ImGui::Button("Parent##ParentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))

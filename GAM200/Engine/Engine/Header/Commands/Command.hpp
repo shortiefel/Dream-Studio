@@ -44,6 +44,8 @@ namespace Engine {
 		virtual void undo() = 0;
 		//redo
 		//virtual void redo() = 0;
+		//record state
+		virtual void record() = 0;
 	
 	};
 

@@ -23,6 +23,10 @@ Technology is prohibited.
 #include "Engine/Header/Scene/SceneManager.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
+
+#include "Engine/Header/Input/Input.hpp"
+#include <iostream>
+
 #include <vector>
 #include <deque>
 #include <stack>
@@ -35,14 +39,34 @@ namespace Engine {
 		//no commands for objects
 	};
 
-	//commands for adding game object
+	//commands for undo and redo adding game object
 	class ObjectAddCommand : public ObjectCommand
+	{
+		Engine::Entity_id object_ID;
+		Engine::Entity_id entity_id;
+		std::map<int, Engine::Entity_id> entity_selected;
+
+	public:
+
+		//undo the changes made to the objects
+		void undo() override;
+		//redo the changes made to the objects
+		//void redo() override;
+
+		void record() override;
+
+		void execute() override;
+
+	};
+
+	//commands for undo and redo deleting game object
+	class ObjectDeleteCommand : public ObjectCommand
 	{
 		Engine::Entity_id object_ID;
 
 	public:
 
-		void AddObject(Engine::Entity_id object_ID);
+		//void AddObject(Engine::Entity_id object_ID);
 		//undo the changes made to the objects
 		void undo() override;
 		//redo the changes made to the objects
@@ -50,11 +74,9 @@ namespace Engine {
 
 		void execute() override;
 
-		
-
-	
-
 	};
+
+	//commands for undo 
 
 	//commands for adding state
 	//class ObjectAddState : public ObjectCommand

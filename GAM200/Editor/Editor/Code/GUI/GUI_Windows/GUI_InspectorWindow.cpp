@@ -29,6 +29,7 @@ Technology is prohibited.
 #include "Engine/Header/Input/Input.hpp"
 
 #include "Engine/Header/Commands/Command.hpp"
+#include "Engine/Header/Commands/ObjectCommand.hpp"
 
 #include <Imgui/imgui_internal.h>
 #include <filesystem>
@@ -181,6 +182,10 @@ namespace Editor {
 
 
 					}
+
+					//record the object state before change
+					std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectAddCommand>();
+					Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 				}
 
 				/*

@@ -181,6 +181,9 @@
     <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp">
       <Filter>Source Files\ECS\Component\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundManager.cpp">
+      <Filter>Source Files\ECS\Component\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -526,6 +529,9 @@
       <Filter>Header Files\Random</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp">
+      <Filter>Header Files\ECS\Component\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundManager.hpp">
       <Filter>Header Files\ECS\Component\Sound</Filter>
     </ClInclude>
   </ItemGroup>

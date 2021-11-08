@@ -21,6 +21,11 @@ Technology is prohibited.
 
 namespace Engine {
 
+	FMOD::Channel* channel;
+	FMOD::Sound* soundN;
+	FMOD::ChannelGroup* channelGp;
+	FMOD::System* system;
+
 	SoundComponent::SoundComponent(const std::string _path, bool _isActive) : path {_path}, isActive{_isActive}
 	{
 		FMOD::System_Create(&system);

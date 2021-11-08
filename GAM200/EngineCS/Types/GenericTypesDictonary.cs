@@ -23,6 +23,7 @@ public static class GenericTypeFinder
         { typeof(Transform), genTypes.Transform },
         { typeof(Collider), genTypes.Collider },
         { typeof(Camera), genTypes.Camera },
+        { typeof(Rigidbody2D), genTypes.Rigidbody2D },
         { typeof(Texture), genTypes.Texture }
     };
 }
@@ -32,7 +33,7 @@ public enum genTypes
     Transform = 0,
     Collider,
     Camera,
-    RigidBody,
+    Rigidbody2D,
     Texture
 }
 

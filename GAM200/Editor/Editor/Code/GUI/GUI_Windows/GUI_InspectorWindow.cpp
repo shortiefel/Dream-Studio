@@ -397,6 +397,40 @@ namespace Editor {
 						if (ImGui::CollapsingHeader("Rigidbody"))
 						{
 							/**
+							*	Mass
+							*/
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Mass");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::PushFont(boldFont);
+							ImGui::InputInt("##objectMass", &rigidComp->mass, 0);
+							if (rigidComp->mass == 0) { rigidComp->mass = 1;  }
+							ImGui::PopFont();
+
+							/**
+							*	LinearDrag
+							*/
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Linear Drag");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::PushFont(boldFont);
+							ImGui::InputFloat("##LinearDrag", &rigidComp->linearDrag, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+							ImGui::PopFont();
+
+							/**
+							*	AngularDrag
+							*/
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Angular Drag");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::PushFont(boldFont);
+							ImGui::InputFloat("##AngularDrag", &rigidComp->linearDrag, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+							ImGui::PopFont();
+
+							/**
 							*	Speed
 							*/
 							ImGui::AlignTextToFramePadding();

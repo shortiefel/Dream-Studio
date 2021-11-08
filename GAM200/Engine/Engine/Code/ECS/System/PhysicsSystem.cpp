@@ -30,19 +30,55 @@ Technology is prohibited.
 namespace Engine {
 	void PhysicsSystem::Update(float dt) {
 		PROFILER_START("Physics");
-		int totalStep = DeltaTime::GetInstance().GetNumberOfSteps();
-		for (int step = 0; step < totalStep; step++) {
-			const auto& rigidBodyArray = dreamECSGame->GetComponentArrayData<RigidBodyComponent>();
-			for (auto& rigidBody : rigidBodyArray) {
-				const Entity_id& entity_id = rigidBody.GetEntityId();
-				if (EntityId_Check(entity_id)) break;
-				if (!rigidBody.isActive) continue;
 
-				TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
-				if (!transform || !transform->isActive) continue;
+		auto& rigidBodyArray = dreamECSGame->GetComponentArrayData<RigidBodyComponent>();
+		for (auto& rigidBody : rigidBodyArray) {
+			const Entity_id& entity_id = rigidBody.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+			if (!rigidBody.isActive) continue;
 
-				Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);
+			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
+			if (!transform || !transform->isActive) continue;
+
+			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);
+			//Linear Physics
+			std::list<LinearForces> tempLinearForces;
+			Math::vec2 summedForces = Math::vec2{ 0.f, 0.f };
+			for (auto& lForce : rigidBody.linearForces) {
+				summedForces += lForce.direction * lForce.magnitude;
+				lForce.magnitude -= rigidBody.linearDrag;
+
+				if (lForce.magnitude > 0.f) tempLinearForces.emplace_back(lForce);
 			}
+			rigidBody.linearForces = tempLinearForces;
+			rigidBody.linearAcceleration = summedForces / rigidBody.mass;
+			rigidBody.linearVelocity = rigidBody.linearVelocity + rigidBody.linearAcceleration * dt;
+			TransformComponent& trans = *transform;
+
+			if (rigidBody.linearForces.size() == 0 && rigidBody.linearDrag > 0.f)
+				rigidBody.linearVelocity = rigidBody.linearVelocity - rigidBody.linearVelocity * dt * rigidBody.linearDrag / rigidBody.mass;
+			trans.position = trans.position + rigidBody.linearVelocity * dt;
+
+			//Angular physics
+			std::list<RotationForces> tempRotationForces;
+			float summedTorque = 0.f;
+			for (auto& rForce : rigidBody.rotationForces) {
+				summedTorque += rForce.torque * rForce.direction;
+				rForce.torque -= rigidBody.angularDrag;
+				
+				if (rForce.torque > 0.f) tempRotationForces.emplace_back(rForce);
+			}
+			rigidBody.rotationForces = tempRotationForces;
+			rigidBody.angularAcceleration = summedTorque / rigidBody.mass;
+			rigidBody.angularVelocity = rigidBody.angularVelocity + rigidBody.angularAcceleration * dt;
+	
+			if (rigidBody.rotationForces.size() == 0 && rigidBody.angularDrag > 0.f)
+				rigidBody.angularVelocity = rigidBody.angularVelocity - rigidBody.angularVelocity * dt * rigidBody.angularDrag / rigidBody.mass ;
+
+			trans.angle = trans.angle + rigidBody.angularVelocity * dt;
+
+			if (trans.angle < 0.f) trans.angle = 360.f;
+			else if (trans.angle > 360.f) trans.angle = 0.f;
 		}
 	}
 

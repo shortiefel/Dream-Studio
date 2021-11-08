@@ -106,6 +106,20 @@ public class Transform : IComponent
     internal static extern void GetTransform_forward_Engine(uint entityID, out Vector2 outVec2);
 
     //-----------------------------------------------------------------------------------------------------------------
+    //Up
+    /*public Vector2 up
+    {
+        get
+        {
+            GetTransform_up_Engine(entityId, out Vector2 result);
+            return result;
+        }
+        set { }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTransform_up_Engine(uint entityID, out Vector2 outVec2);*/
+
+    //-----------------------------------------------------------------------------------------------------------------
     //Right
     public Vector2 right
     {

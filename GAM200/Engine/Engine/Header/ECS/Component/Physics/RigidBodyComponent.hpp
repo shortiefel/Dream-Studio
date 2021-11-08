@@ -4,6 +4,7 @@
 @author  Ow Jian Wen	jianwen.o@digipen.edu
 @date    19/06/2021
 @brief
+#include "Engine/Header/ECS/Component/RigidBodyComponent.hpp"
 This file contain the RigidBody struct to be used by the ECS and various system
 
 
@@ -18,19 +19,33 @@ Technology is prohibited.
 #define RIGIDBODY_H
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Physics/Forces.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
 
+#include <list>
 
 namespace Engine {
 	class DSerializer;
 	class SSerializer;
 
 	struct RigidBodyComponent : public IComponent {
+		//To Display
 		float speed = float{};
-		//Higher = stop faster
-		//float friction = float{};
+		//Display as Mass but recorded as inverse mass
+		int mass = 1;
+		float linearDrag = 0.f;
+		float angularDrag = 0.f;
+		
 		bool isActive = true;
+		
+		Math::vec2 linearVelocity = Math::vec2{ 0.f, 0.f };
+		Math::vec2 linearAcceleration = Math::vec2{ 0.f, 0.f };
+		float angularVelocity = 0.f;
+		float angularAcceleration = 0.f;
+
+		std::list<LinearForces> linearForces;
+		std::list<RotationForces> rotationForces;
 
 		RigidBodyComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);

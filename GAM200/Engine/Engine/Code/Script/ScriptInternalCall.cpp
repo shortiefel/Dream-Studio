@@ -44,8 +44,7 @@ Technology is prohibited.
 
 #define GetEngineType(ID, type, paramName, param)\
 type* ctype = dreamECSGame->GetComponentPTR<type>(ID);\
-if (!ctype) return;\
-param = ctype->paramName;
+if (ctype != nullptr) param = ctype->paramName;
 
 #define SetEngineType(ID, type, paramName, param)\
 type* ctype = dreamECSGame->GetComponentPTR<type>(ID);\
@@ -58,7 +57,7 @@ if (ctype != nullptr) ctype->paramName = param;
 namespace Engine {
 	//Function to call when writing to console (With editor function ptr is overwritten)
 	//Function does nothing in actual game
-	void(*ConsoleFuncPtr)(std::string) = [](std::string) { };
+	void(*ConsoleFuncPtr)(std::string) = [](std::string) {};
 	Math::mat3(*GetViewportFuncPtr)() = []() { printf("not working \n");  return Math::mat3{}; };
 	Math::vec2(*GetMousePositionFuncPtr)() = []() {  printf("not working \n");  return Input::GetMousePosition(); };
 
@@ -101,6 +100,18 @@ namespace Engine {
 	void ChangeTexture_Engine(unsigned int entityID, MonoString* name);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Rigidbody2d
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void GetRigidbody_LinearVelocity_Engine(unsigned int entityID, Math::vec2* velocity);
+	void SetRigidbody_LinearVelocity_Engine(unsigned int entityID, Math::vec2* inVec2);
+	void GetRigidbody_AngularVelocity_Engine(unsigned int  entityID, float* velocity);
+	void SetRigidbody_AngularVelocity_Engine(unsigned int  entityID, float* inVec2);
+	/*void GetRigidbody_Inertia_Engine(unsigned int entityID, float* result);
+	void SetRigidbody_Inertia_Engine(unsigned int entityID, float* inertia);*/
+	void AddForce_Physics_Engine(unsigned int entityID, Math::vec2 force);
+	void AddTorque_Physics_Engine(unsigned int entityID, float torque);
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool GetKey_Engine(Input_KeyCode key);
@@ -119,6 +130,7 @@ namespace Engine {
 	bool HasComponent_Transform_Engine(unsigned int id);
 	bool HasComponent_Collider_Engine(unsigned int id);
 	bool HasComponent_Camera_Engine(unsigned int id);
+	bool HasComponent_Rigidbody_Engine(unsigned int id);
 	bool HasComponent_Texture_Engine(unsigned int id);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -184,6 +196,8 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Atan2_Engine(float* outFloat, float val1, float val2);
 	void GetDistance_Engine(float* outFloat, Math::vec2 a, Math::vec2 b);
+	void GetLength_Engine(float* length, Math::vec2 vec);
+	void GetNormalised_Engine(Math::vec2* vec);
 
 
 	void RegisterInternalCall() {
@@ -227,6 +241,19 @@ namespace Engine {
 		mono_add_internal_call("Texture::ChangeTexture_Engine", ChangeTexture_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Rigidbody2d
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		mono_add_internal_call("Rigidbody2D::GetRigidbody_LinearVelocity_Engine", GetRigidbody_LinearVelocity_Engine);
+		mono_add_internal_call("Rigidbody2D::SetRigidbody_LinearVelocity_Engine", SetRigidbody_LinearVelocity_Engine);
+		mono_add_internal_call("Rigidbody2D::GetRigidbody_AngularVelocity_Engine", GetRigidbody_AngularVelocity_Engine);
+		mono_add_internal_call("Rigidbody2D::SetRigidbody_AngularVelocity_Engine", SetRigidbody_AngularVelocity_Engine);
+		/*mono_add_internal_call("Rigidbody2D::GetRigidbody_Inertia_Engine", GetRigidbody_Inertia_Engine);
+		mono_add_internal_call("Rigidbody2D::SetRigidbody_Inertia_Engine", SetRigidbody_Inertia_Engine);*/
+		mono_add_internal_call("Rigidbody2D::AddForce_Physics_Engine", AddForce_Physics_Engine);
+		mono_add_internal_call("Rigidbody2D::AddTorque_Physics_Engine", AddTorque_Physics_Engine);
+
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Input
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Input::GetKey_Engine", GetKey_Engine);
@@ -244,6 +271,7 @@ namespace Engine {
 		mono_add_internal_call("IBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Camera_Engine", HasComponent_Camera_Engine);
+		mono_add_internal_call("IBehaviour::HasComponent_Rigidbody_Engine", HasComponent_Rigidbody_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Texture_Engine", HasComponent_Texture_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -298,7 +326,7 @@ namespace Engine {
 		Console Write
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Debug::ConsoleWrite_Engine", ConsoleWrite_Engine);
-		
+
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Random
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -309,7 +337,8 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Mathf::Atan2_Engine", Atan2_Engine);
 		mono_add_internal_call("Vector2::GetDistance_Engine", GetDistance_Engine);
-
+		mono_add_internal_call("Vector2::GetLength_Engine", GetLength_Engine);
+		mono_add_internal_call("Vector2::GetNormalised_Engine", GetNormalised_Engine);
 
 		RegisterGridInternalCall();
 	}
@@ -393,8 +422,8 @@ namespace Engine {
 		if (!local) {
 			//SetEngineType(id, TransformComponent, position, *inVec2);
 
-			TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(id); 
-			if (!ctype) return; 
+			TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(id);
+			if (!ctype) return;
 			Math::vec2 moveDis = *inVec2 - ctype->position;
 			ctype->position = *inVec2;
 
@@ -431,7 +460,7 @@ namespace Engine {
 					newTransform->position += moveDis;
 			}
 		}
-		
+
 	}
 	void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 		//call hascomponent with entityid
@@ -506,19 +535,65 @@ namespace Engine {
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Rigidbody2d
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void GetRigidbody_LinearVelocity_Engine(unsigned int entityID, Math::vec2* velocity) {
+		GetEngineType(entityID, RigidBodyComponent, linearVelocity, *velocity);
+	}
+
+	void SetRigidbody_LinearVelocity_Engine(unsigned int entityID, Math::vec2* inVec2) {
+		SetEngineType(entityID, RigidBodyComponent, linearVelocity, *inVec2);
+	}
+
+	void GetRigidbody_AngularVelocity_Engine(unsigned int  entityID, float* velocity) {
+		GetEngineType(entityID, RigidBodyComponent, angularVelocity, *velocity);
+	}
+
+	void SetRigidbody_AngularVelocity_Engine(unsigned int  entityID, float* inVec2) {
+		SetEngineType(entityID, RigidBodyComponent, angularVelocity, *inVec2);
+	}
+
+	/*void GetRigidbody_Inertia_Engine(unsigned int entityID, float* result) {
+		GetEngineType(entityID, RigidBodyComponent, inertia, *result);
+	}
+
+	void SetRigidbody_Inertia_Engine(unsigned int entityID, float* inertia) {
+		SetEngineType(entityID, RigidBodyComponent, inertia, *inertia);
+	}*/
+
+	void AddForce_Physics_Engine(unsigned int entityID, Math::vec2 force) {
+		RigidBodyComponent* rb = dreamECSGame->GetComponentPTR<RigidBodyComponent>(entityID);
+		if (rb != nullptr) {
+			float magnitude = Math::length(force);
+			force = force / magnitude;
+			rb->linearForces.emplace_back(LinearForces{ force, magnitude });
+		}
+	}
+
+	void AddTorque_Physics_Engine(unsigned int entityID, float torque) {
+		RigidBodyComponent* rb = dreamECSGame->GetComponentPTR<RigidBodyComponent>(entityID);
+		if (rb != nullptr) {
+			int direction = torque < 0.f ? -1 : 1;
+			torque *= direction;
+			rb->rotationForces.emplace_back(RotationForces{ torque, direction });
+		}
+	}
+
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	
-	bool GetKey_Engine(Input_KeyCode key) { return Input::IsKeyHold(key); }
-    bool GetKeyDown_Engine(Input_KeyCode key) { return Input::IsKeyPressed(key); }
 
-    bool GetMouse_Engine(Input_MouseCode button) { return Input::IsMouseHold(button); }
+	bool GetKey_Engine(Input_KeyCode key) { return Input::IsKeyHold(key); }
+	bool GetKeyDown_Engine(Input_KeyCode key) { return Input::IsKeyPressed(key); }
+
+	bool GetMouse_Engine(Input_MouseCode button) { return Input::IsMouseHold(button); }
 	bool GetMouseDown_Engine(Input_MouseCode button) { return Input::IsMousePressed(button); }
 	bool GetMouseUp_Engine(Input_MouseCode button) { return Input::IsMouseReleased(button); }
 
-    void GetMousePosition_Engine(Math::vec2* outPosition) {
+	void GetMousePosition_Engine(Math::vec2* outPosition) {
 		*outPosition = GetMousePositionFuncPtr();
-    }
+	}
 
 	void SetGetMousePositionFunc(Math::vec2(*fp)()) {
 		GetMousePositionFuncPtr = fp;
@@ -548,6 +623,10 @@ namespace Engine {
 
 	bool HasComponent_Camera_Engine(unsigned int id) {
 		GET_COMPONENT_PTR(CameraComponent);
+	}
+
+	bool HasComponent_Rigidbody_Engine(unsigned int id) {
+		GET_COMPONENT_PTR(RigidBodyComponent);
 	}
 
 	bool HasComponent_Texture_Engine(unsigned int id) {
@@ -621,11 +700,11 @@ namespace Engine {
 			auto& klassInt = scriptType->klassInstance;
 			for (auto& [className, scriptInstance] : klassInt) {
 				scriptInstance.isActive = state;
-				if(state) Scripting::Mono_Runtime_Invoke(scriptInstance, MonoFunctionType::ON_ENABLE);
+				if (state) Scripting::Mono_Runtime_Invoke(scriptInstance, MonoFunctionType::ON_ENABLE);
 				else Scripting::Mono_Runtime_Invoke(scriptInstance, MonoFunctionType::ON_DISABLE);
 			}
 		}
-		
+
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -664,7 +743,7 @@ namespace Engine {
 		DeltaTime::GetInstance().SetTimeScale(timeScale);
 	}
 
-	void WaitForSeconds_Engine(float timer) {
+	void WaitForSeconds_Engine(float) {
 
 	}
 
@@ -697,7 +776,7 @@ namespace Engine {
 	void SetConsoleWriteFunc(void(*fp)(std::string)) {
 		ConsoleFuncPtr = fp;
 	}
-	
+
 	void ConsoleWrite_Engine(MonoString* message) {
 		ConsoleFuncPtr(mono_string_to_utf8(message));
 	}
@@ -723,5 +802,14 @@ namespace Engine {
 
 	void GetDistance_Engine(float* outFloat, Math::vec2 a, Math::vec2 b) {
 		*outFloat = Math::distance(a, b);
+	}
+
+	void GetLength_Engine(float* length, Math::vec2 vec) {
+		*length = Math::length(vec);
+	}
+
+	void GetNormalised_Engine(Math::vec2* vec) {
+		Math::vec2 temp = *vec;
+		*vec = Math::normalize(temp);
 	}
 }

@@ -66,6 +66,7 @@
     <Compile Include="Types\GameObject.cs" />
     <Compile Include="Types\GenericTypesDictonary.cs" />
     <Compile Include="Types\Prefab.cs" />
+    <Compile Include="Types\Rigidbody2D.cs" />
     <Compile Include="Types\Texture.cs" />
     <Compile Include="Types\Transform.cs" />
   </ItemGroup>

@@ -187,6 +187,9 @@
     <ClCompile Include="Engine\Code\Script\InternalCall\GridInternalCall.cpp">
       <Filter>Source Files\Script\InternalCall</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Event\FixedUpdateEvent.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
@@ -539,6 +542,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Script\InternalCall\GridInternalCall.hpp">
       <Filter>Header Files\Script\InternalCall</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Physics\Forces.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\FixedUpdateEvent.hpp">
+      <Filter>Header Files\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

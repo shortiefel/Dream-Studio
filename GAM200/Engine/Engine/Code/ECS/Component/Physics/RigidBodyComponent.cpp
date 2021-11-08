@@ -23,16 +23,28 @@ namespace Engine {
 	RigidBodyComponent::RigidBodyComponent(Entity_id _ID, bool _active) : IComponent{ _ID }, isActive{ _active } {}
 
 	RigidBodyComponent& RigidBodyComponent::Deserialize(const DSerializer& _serializer) {
-
 		speed = _serializer.GetValue<float>("Speed");
-		//friction = _serializer.GetValue<float>("Friction");
+
+		mass = _serializer.GetValue<int>("Mass");
+		/*linearVelocity = _serializer.GetValue<float>("LinearVelocity");
+		linearAcceleration = _serializer.GetValue<Math::vec2>("LinearAcceleration");*/
+		linearDrag = _serializer.GetValue<float>("LinearDrag");
+
+		/*angularVelocity = _serializer.GetValue<float>("AngularVelocity");
+		angularAcceleration = _serializer.GetValue<float>("AngularAcceleration");*/
+		angularDrag = _serializer.GetValue<float>("AngularDrag");
+
 		isActive = _serializer.GetValue<bool>("IsActive");
 		return *this;
 	}
 
 	void RigidBodyComponent::Serialize(const SSerializer& _serializer) {
 		_serializer.SetValue("Speed", speed);
-		//_serializer.SetValue("Friction", friction);
+
+		_serializer.SetValue("Mass", mass);
+		_serializer.SetValue("LinearDrag", linearDrag);
+		_serializer.SetValue("AngularDrag", angularDrag);
+
 		_serializer.SetValue("IsActive", isActive);
 
 		//_serializer.EndSerialize("RigidBody");

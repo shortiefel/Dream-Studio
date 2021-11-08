@@ -20,7 +20,7 @@ namespace Engine {
 	namespace Physics {
 		void ApplyLinearVelocity(Math::vec2& _position, float _angle, float _speed) {
 			float radians = Math::radians(_angle + 90.f);
-			_position += Math::vec2{ std::cos(radians), std::sin(radians) } * _speed;
+			_position += Math::vec2{ std::cos(radians), std::sin(radians) } *_speed;
 		}
 	}
 }

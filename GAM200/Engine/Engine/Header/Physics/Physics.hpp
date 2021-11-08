@@ -28,8 +28,10 @@ namespace Engine {
 		_speed is value after dt is applied
 		*/
 		void ApplyLinearVelocity(Math::vec2& _position, float _angle, float _speed);
+
+		//void ApplyForces(unsigned int entityId, float fixeddt);
 	}
-	
+
 }
 
 #endif

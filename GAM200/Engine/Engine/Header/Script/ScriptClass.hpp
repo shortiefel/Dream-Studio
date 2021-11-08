@@ -49,6 +49,7 @@ namespace Engine {
 		MonoMethod* ConstructorFunc = nullptr;
 		MonoMethod* InitFunc = nullptr;
 		MonoMethod* UpdateFunc = nullptr;
+		MonoMethod* FixedUpdateFunc = nullptr;
 		MonoMethod* DestroyFunc = nullptr;
 		MonoMethod* OnEnable = nullptr;
 		MonoMethod* OnDisable = nullptr;
@@ -75,13 +76,13 @@ namespace Engine {
 		std::unordered_map<std::string, CSPublicVariable> csVariableMap;
 		bool isActive = true;
 
-		CSScriptInstance(std::string cn = "", bool active = true) : csClass(cn), isActive{active}{}
+		CSScriptInstance(std::string cn = "", bool active = true) : csClass(cn), isActive{ active }{}
 
 		CSScriptInstance(CSScriptInstance&& rhs) noexcept {
 			csClass = std::move(rhs.csClass);
 			csVariableMap = std::move(rhs.csVariableMap);
 		}
-		CSScriptInstance&  operator=(CSScriptInstance&& rhs) noexcept {
+		CSScriptInstance& operator=(CSScriptInstance&& rhs) noexcept {
 			if (this == &rhs) return *this;
 			std::swap(csClass, rhs.csClass);
 			std::swap(csVariableMap, rhs.csVariableMap);

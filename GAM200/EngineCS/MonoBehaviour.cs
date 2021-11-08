@@ -40,6 +40,7 @@ public class MonoBehaviour : IBehaviour
     public virtual void Awake() { }
     public virtual void Start() { }
     public virtual void Update() { }
+    public virtual void FixedUpdate() { }
     public virtual void OnEnable() { }
     public virtual void OnDisable() { }
     public virtual void OnDestroy() { }
@@ -74,11 +75,14 @@ public class MonoBehaviour : IBehaviour
                 case genTypes.Texture:
                     RecordComponent<Texture>(entityId);
                     break;
+                case genTypes.Rigidbody2D:
+                    RecordComponent<Rigidbody2D>(entityId);
+                    break;
                 default:
                     break;
 
             }
-            
+
         }
         else
             RecordScript(this.GetType(), entityId);
@@ -230,7 +234,7 @@ public class MonoBehaviour : IBehaviour
 
         }
     }
-    
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Active_Transform_Engine(uint entityID, bool active);
 

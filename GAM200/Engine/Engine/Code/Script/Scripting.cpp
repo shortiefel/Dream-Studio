@@ -67,6 +67,9 @@ namespace Engine {
 			case MonoFunctionType::UPDATE:
 				INVOKE_FUNCTION(UpdateFunc);
 				break;
+			case MonoFunctionType::FIXED_UPDATE:
+				INVOKE_FUNCTION(FixedUpdateFunc);
+				break;
 			case MonoFunctionType::DESTROY:
 				INVOKE_FUNCTION(DestroyFunc);
 				break;
@@ -97,9 +100,9 @@ namespace Engine {
 			case MonoFunctionType::MOUSE_ENTER:
 				INVOKE_FUNCTION(OnMouseEnter);
 				break;
-			/*case MonoFunctionType::MOUSE_CLICK:
-				INVOKE_FUNCTION(OnMouseClick);
-				break;*/
+				/*case MonoFunctionType::MOUSE_CLICK:
+					INVOKE_FUNCTION(OnMouseClick);
+					break;*/
 			case MonoFunctionType::MOUSE_OVER:
 				INVOKE_FUNCTION(OnMouseOver);
 				break;
@@ -186,7 +189,7 @@ namespace Engine {
 			if (!GameState::GetInstance().GetPlaying()) return;
 			void* param[] = { (void*)&entity_id };
 			//std::cout << "class: " << csScriptInstance.csClass.className << "\n";
-			
+
 			if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
 				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
 			}
@@ -203,7 +206,7 @@ namespace Engine {
 
 			auto& csClass = _csScriptInstance.csClass;
 			auto& fullName = csClass.fullName;
-			
+
 			csClass.klass = mono_class_from_name(image, csClass.namespaceName.c_str(), csClass.className.c_str());
 			if (!csClass.klass) {
 				LOG_ERROR("Failed loading class");
@@ -232,6 +235,10 @@ namespace Engine {
 			methodDesc = fullName + ":Update()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.UpdateFunc = mono_method_desc_search_in_image(description, image);
+
+			methodDesc = fullName + ":FixedUpdate()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.FixedUpdateFunc = mono_method_desc_search_in_image(description, image);
 
 			methodDesc = fullName + ":OnEnable()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
@@ -274,7 +281,7 @@ namespace Engine {
 			methodDesc = fullName + ":OnMouseEnter()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnMouseEnter = mono_method_desc_search_in_image(description, image);
-			
+
 			/*methodDesc = fullName + ":OnMouseClick()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnMouseClick = mono_method_desc_search_in_image(description, image);*/
@@ -296,7 +303,7 @@ namespace Engine {
 			auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
-				
+
 				std::set<std::string> classToDelete;
 				for (auto& [className, csScriptInstance] : classScriptInstances) {
 					if (!InitCSClass(csScriptInstance, csScript.GetEntityId())) {
@@ -357,7 +364,7 @@ namespace Engine {
 			/*auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 			for (auto& csScript : entScriptArray) {
 				auto& classScriptInstances = csScript.klassInstance;
-				
+
 				for (auto& [className, csScriptInstance] : classScriptInstances) {
 					InitVariable(csScriptInstance);
 				}

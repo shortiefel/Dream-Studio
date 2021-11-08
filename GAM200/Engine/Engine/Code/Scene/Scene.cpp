@@ -20,8 +20,11 @@ Technology is prohibited.
 #include "Engine/Header/Scene/Prefab.hpp"
 
 #include "Engine/Header/Window.hpp"
+
 #include "Engine/Header/Event/EventDispatcher.hpp"
-#include "Engine/Header/Layer/LayerStack.hpp"
+#include "Engine/Header/Event/FixedUpdateEvent.hpp"
+
+//#include "Engine/Header/Layer/LayerStack.hpp"
 
 #include "Engine/Header/Time/DeltaTime.hpp"
 
@@ -80,7 +83,7 @@ namespace Engine {
             //std::cout << "deserialize\n";
             GameSceneSerializer::DeserializeScene("temporary");
         }
-        
+
     }
 
     void Scene::Save() {
@@ -96,13 +99,19 @@ namespace Engine {
             if (timeScale > 0.f && !Math::EpsilonCheck(timeScale)) {
                 ScriptSystem::GetInstance().PlayRunTime();
                 //TransformCalculationSystem::GetInstance().ChildUpdate();
-                CollisionSystem::GetInstance().Update(dt);
-                PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
+                int totalStep = DeltaTime::GetInstance().GetNumberOfSteps();
+                for (int step = 0; step < totalStep; step++) {
+                    CollisionSystem::GetInstance().Update(dt);
+                    PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
+
+                    FixedUpdateEvent event;
+                    EventDispatcher::SendEvent(event);
+                }
             }
         }
 
         CameraSystem::GetInstance().Update(dt);
-       
+
         GraphicSystem::GetInstance().Render();
         //TransformCalculationSystem::GetInstance().Release();
         FontSystem::GetInstance().Render();

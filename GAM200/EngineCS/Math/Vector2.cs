@@ -19,6 +19,28 @@ using System.Runtime.CompilerServices; //For internal calls
 public struct Vector2
 {
     public float x, y;
+    
+    public float magnitude
+    {
+        get
+        {
+            GetLength_Engine(out float length, new Vector2(x, y));
+            return length;
+        }
+        set
+        {
+            Vector2 vec = new Vector2(x, y);
+            GetNormalised_Engine(out vec);
+            vec *= value;
+            x = vec.x;
+            y = vec.y;
+        }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetLength_Engine(out float length, Vector2 vec);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetNormalised_Engine(out Vector2 vec);
+
     public static Vector2 zero = new Vector2(0, 0);
 
     public Vector2(float n1, float n2)

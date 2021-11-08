@@ -56,6 +56,7 @@ Technology is prohibited.
 #include "Engine/Header/Script/Scripting.hpp"
 
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
+#include "Engine/Header/Event/FixedUpdateEvent.hpp"
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 
@@ -77,6 +78,7 @@ namespace Engine {
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e); //To be registered to Event
 	bool CallMouseOverlapFunc(const MouseOverlapColliderEvent& e);
+	bool CallFixedUpdate(const FixedUpdateEvent& e);
 
 	bool ScriptSystem::CompileCS(bool play) {
 		PROFILER_START("Scripting");
@@ -86,14 +88,14 @@ namespace Engine {
 
 	void ScriptSystem::PlayInit() {
 		PROFILER_START("Scripting");
-		
+
 		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
 
 			auto& classScriptInstances = csScript.klassInstance;
-			
+
 			//Calls all constructor first and then initialize all
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
@@ -159,6 +161,7 @@ namespace Engine {
 		RegisterInternalCall();
 		OverlapColliderEvent::RegisterFunction(CallOverlapFunc);
 		MouseOverlapColliderEvent::RegisterFunction(CallMouseOverlapFunc);
+		FixedUpdateEvent::RegisterFunction(CallFixedUpdate);
 		LOG_INSTANCE("Script System created");
 	}
 
@@ -169,7 +172,7 @@ namespace Engine {
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
 		PROFILER_START("Scripting");
-		
+
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.self);
 		if (!csScript) return false;
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
@@ -183,11 +186,31 @@ namespace Engine {
 
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.other);
 		if (!csScript) return false;
-		
+
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
-			
+
 			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
 		}
+		return true;
+	}
+
+	bool CallFixedUpdate(const FixedUpdateEvent&) {
+		PROFILER_START("Scripting");
+
+		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
+		for (auto& csScript : entScriptArray) {
+			if (EntityId_Check(csScript.GetEntityId())) break;
+
+			auto& classScriptInstances = csScript.klassInstance;
+
+			//Single class and (class and CS public variable)
+			for (auto& [className, csScriptInstance] : classScriptInstances) {
+				if (csScriptInstance.isActive && csScriptInstance.csClass.FixedUpdateFunc != nullptr) {
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::FIXED_UPDATE);
+				}
+			}
+		}
+
 		return true;
 	}
 

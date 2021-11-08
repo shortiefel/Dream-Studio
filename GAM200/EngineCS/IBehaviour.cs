@@ -41,7 +41,8 @@ public class IBehaviour : IComponent
     //private static GenericDictionary dictonaryOfTypes;
 
     public uint entityId { get; set; }
-    public IBehaviour() {
+    public IBehaviour()
+    {
         //Console.WriteLine("111: " + this.GetType().Name);
     }
     public IBehaviour(uint id)
@@ -52,7 +53,7 @@ public class IBehaviour : IComponent
     //-----------------------------------------------------------------------------------------------------------------
     //Component
 
-    protected void RecordScript(Type type, uint entityId) 
+    protected void RecordScript(Type type, uint entityId)
     {
         //Console.WriteLine(type.Name);
         if (!dictonaryOfTypes.ContainsKey(type))
@@ -92,7 +93,7 @@ public class IBehaviour : IComponent
         {
             //Debug.Log(typeof(T));
             //Console.WriteLine("First " + typeof(T));
-            if(GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+            if (GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
                 RecordComponent<T>(entityId);
             else
                 RecordScript(typeof(T), entityId);
@@ -131,11 +132,12 @@ public class IBehaviour : IComponent
                 return HasComponent_Collider_Engine(id);
             case genTypes.Camera:
                 return HasComponent_Camera_Engine(id);
+            case genTypes.Rigidbody2D:
+                return HasComponent_Rigidbody_Engine(id);
             case genTypes.Texture:
                 return HasComponent_Texture_Engine(id);
             default:
                 return false;
-
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -147,6 +149,8 @@ public class IBehaviour : IComponent
     internal static extern bool HasComponent_Collider_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Camera_Engine(uint entityId);
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool HasComponent_Rigidbody_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Texture_Engine(uint entityId);
     //-----------------------------------------------------------------------------------------------------------------

@@ -29,35 +29,54 @@ Technology is prohibited.
 #include <memory>
 
 namespace Engine {
-	class ICommand;
 
-	class ObjectCommand :public ICommand
+	class ObjectCommand : public ICommand
 	{
-	public:
 		//no commands for objects
 	};
 
-	//commands for adding state
-	class ObjectAddState : public ObjectCommand
+	//commands for adding game object
+	class ObjectAddCommand : public ObjectCommand
 	{
+		Engine::Entity_id object_ID;
+
 	public:
-		std::string scene_id;
-		std::string newScene = std::string{};
-		std::string oldScene = std::string{};
-		Scene* currentScene = nullptr;
 
-		void SetOldScene(std::string oldScene);
-		void SetNewScene(std::string newScene);
-
+		void AddObject(Engine::Entity_id object_ID);
 		//undo the changes made to the objects
-		void undo();
+		void undo() override;
 		//redo the changes made to the objects
 		//void redo();
 
-	private:
-		std::stack <std::unique_ptr<ICommand>> commands;
+		void execute() override;
+
+		
+
+	
 
 	};
+
+	//commands for adding state
+	//class ObjectAddState : public ObjectCommand
+	//{
+	//public:
+	//	std::string scene_id;
+	//	std::string newScene = std::string{};
+	//	std::string oldScene = std::string{};
+	//	Scene* currentScene = nullptr;
+
+	//	void SetOldScene(std::string oldScene);
+	//	void SetNewScene(std::string newScene);
+
+	//	//undo the changes made to the objects
+	//	void undo();
+	//	//redo the changes made to the objects
+	//	//void redo();
+
+	//private:
+	//	std::stack <std::unique_ptr<ICommand>> commands;
+
+	//};
 
 	////commands for deleting state
 	//class ObjectDeleteState : public ObjectCommand

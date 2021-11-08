@@ -41,17 +41,6 @@ namespace Engine {
 
 	void UndoRedoManager::Undo()
 	{
-		//if (current_command.empty()) { return; }
-
-		////Undo the last command
-		//current_command.back()->undo();
-		//undo_command.push_back(current_command.back());
-		//current_command.pop_back();
-
-		//if(undo_command.size() > maximum)
-		//{
-		//	undo_command.pop_front();
-		//}
 		if (undostack.empty()) { return; }
 
 		//add newest command

@@ -30,7 +30,7 @@ Technology is prohibited.
 #include <stack>
 #include <memory>
 
-
+//#pragma warning(disable:2259)
 
 namespace Engine {
 
@@ -66,7 +66,6 @@ namespace Engine {
 		
 		//clear all undo redo histroy
 		void ClearHistory();
-
 
 		//wrap the stack using a std::vector for better performance
 		std::deque<CommandPtr> current_command;

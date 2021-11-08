@@ -17,25 +17,19 @@ Technology is prohibited.
 
 namespace Engine
 {
-	void ObjectAddState::SetOldScene(std::string oldScene)
+	void ObjectAddCommand::AddObject(Engine::Entity_id objectid)
 	{
-		Engine::GameSceneSerializer::SerializeScene(oldScene);
-		this->scene_id = oldScene;
+		this->object_ID = objectid;
 	}
 
-	void ObjectAddState::SetNewScene(std::string newScene)
+	void ObjectAddCommand::execute()
 	{
-		Engine::GameSceneSerializer::SerializeScene(newScene);
-		this->scene_id = newScene;
+
 	}
 
-	void ObjectAddState::undo()
+	void ObjectAddCommand::undo()
 	{
-		if (!commands.empty())
-		{
-			commands.top()->undo();
-			commands.pop();
-		}
+		Engine::dreamECSGame->DestroyEntity(object_ID);
 	}
 
 }

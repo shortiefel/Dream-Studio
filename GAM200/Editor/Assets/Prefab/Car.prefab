@@ -18,7 +18,7 @@
       "Speed": 0.0,
       "Mass": 5,
       "LinearDrag": 10.0,
-      "AngularDrag": 100.0,
+      "AngularDrag": 60.0,
       "IsActive": true
     },
     "TextureComponent": {

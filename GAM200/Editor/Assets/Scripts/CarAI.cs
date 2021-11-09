@@ -67,11 +67,11 @@ public class CarAI : MonoBehaviour
         lastPointArriveDistance = 0.1f;
         //turningAngleOffset = 0.02;
 
-        dotValue = 0.02f;
+        dotValue = 0.06f;
 
         maxSpeed = 3;
         power = 6;
-        turningFactor = 0.5f;
+        turningFactor = 1f;
         movementVector = new Vector2(0, 0);
         //Console.WriteLine("Testing " + rb.velocity);
     }
@@ -91,17 +91,49 @@ public class CarAI : MonoBehaviour
         //    Debug.Log(item.ToString());
         //}
         index = 0;
-        currentTargetPosition = this.path[index];
+        currentTargetPosition = this.path[index + 1];
         //Debug.Log(currentTargetPosition);
 
-        Vector2 relativepoint = transform.InverseTransformPoint(this.path[index + 1]);
+        /*Vector2 relativepoint = transform.InverseTransformPoint(this.path[index + 1]);
         //Debug.Log(relativepoint);
         float angle = Mathf.Atan2(relativepoint.x, relativepoint.y) * Mathf.Rad2Deg;
         Debug.Log(angle);
 
         //transform.rotation = Quaternion.Euler(0, 0, -angle);
         transform.angle = -angle;
-        Console.WriteLine(angle);
+        Console.WriteLine(angle);*/
+
+        Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
+        float value = Vector2.Dot(transform.right, relativeDirection);
+        turningFactor = 1f;
+        Console.WriteLine((int)value);
+        if ((int)value == 1)
+        {
+            //Debug.Log("right");
+            transform.angle = -90f;
+
+        }
+        else if ((int)value == -1)
+        {
+            //Debug.Log("left");
+            transform.angle = 90f;
+        }
+        else
+        {
+            value = Vector2.Dot(transform.up, relativeDirection);
+            Console.WriteLine((int)value);
+            if ((int)value == 1)
+            {
+                //Debug.Log("up");
+                transform.angle = 0f;
+
+            }
+            else if ((int)value == -1)
+            {
+                //Debug.Log("Down");
+                transform.angle = -180f;
+            }
+        }
         Stop = false;
     }
 
@@ -115,11 +147,10 @@ public class CarAI : MonoBehaviour
     {
         if (rb.velocity.magnitude < maxSpeed)
         {
-            
-            rb.AddForce(movementVector.y * transform.up * power);
+            rb.AddForce(movementVector.y * transform.up * power * turningFactor);
         }
         //Debug.Log(rb.inertia);
-        rb.AddTorque(movementVector.x * power * 80);
+        rb.AddTorque(movementVector.x * power * 70);
     }
 
     //private void CheckForCollisions()
@@ -162,15 +193,18 @@ public class CarAI : MonoBehaviour
             Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
             float value = Vector2.Dot(transform.right, relativeDirection);
             var rotateCar = 0;
+            turningFactor = 1f;
             if (value > dotValue)
             {
-                Debug.Log("Turn right");
+                //Debug.Log("Turn right");
                 rotateCar = -1;
+                turningFactor = 0.5f;
             }
             if (value < -dotValue)
             {
-                Debug.Log("Turn left");
+                //Debug.Log("Turn left");
                 rotateCar = 1;
+                turningFactor = 0.5f;
             }
             //OnDrive?.Invoke(new Vector2(rotateCar, 1));
             movementVector = new Vector2(rotateCar, 1);

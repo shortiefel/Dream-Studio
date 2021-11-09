@@ -5,6 +5,7 @@
 @date    04/10/2021
 @brief
 
+This file contains the declaration function for sound component with FMOD
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -23,7 +24,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 
-typedef std::map<std::string, FMOD::Sound*> SoundMap;
+
 
 namespace Engine {
 
@@ -34,23 +35,39 @@ namespace Engine {
 	class SoundComponent : public IComponent {
 
 		public:
-			SoundComponent(const std::string _path, bool _isActive);
-			~SoundComponent();
+			static float VolumeToDecibels(float volume);
+			static float DecibelsToVolume(float volume);
+			static float GetVolume(int ChannelID);
 
-			void Update(float elapsed);
-			void Load(const std::string& _path);
-			void Stream(const std::string& _path);
-			void Play(const std::string& _path);
-			void LoadStream(const std::string& _path, bool _isActive);
 
-			SoundComponent& Deserialize(const DSerializer& _serializer);
-			void Serialize(const SSerializer& _serializer);
+			static void Init();
+			static void ReleaseAll();
+			static int EPlaySound(const std::string& file, float volume,  bool paused);
+			static void Pause(int ChannelID);
+			static void PauseEnd(int ChannelID);
+			static void StopSound(int ChannelID);
+			static bool IsPlaying(int ChannelID);
+			static void SetVolume(int ChannelID, float volume);
+			static void ChangeVolume(int ChannelID, float volume);
+			static void SetVolume(float volume);
+			static void SetLoop(int ChannelID, bool isLoop);
+			static FMOD::Sound* GetSound(const std::string& file);
+			static bool Update();
 
-		private:
-			std::string path = "";
-			bool isActive;
-			FMOD::System* system;
-			SoundMap sounds;
+			static FMOD::System* SystemCore;
+			static FMOD::SoundGroup* SoundGroup;
+			static FMOD::Channel* Channel;
+			static FMOD::ChannelGroup* MasterGroup;
+			static FMOD::ChannelGroup* MusicGroup;
+			static std::map<std::string, FMOD::Sound*> SoundMap;
+			static std::map<int, FMOD::Channel*> ChannelMap;
+
+			float volume;
+			std::string file = "";
+			static int ChannelID;
+
+			static float MinDecibels;
+			static float MaxDeciibels;
 
 	};
 }

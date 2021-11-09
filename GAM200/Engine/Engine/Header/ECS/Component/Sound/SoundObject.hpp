@@ -30,12 +30,17 @@ namespace Engine {
 	class SoundObject : public IComponent {
 
 		public:
-			void PlayAudio();
-			void StopAudio();
-			void MuteAudio();
-			void UnmuteAudio();
-			void SetAudioVolume();
-			void SetAudioLoop();
+			void PlayAudio(std::string filename);
+			void StopAudio(std::string filename);
+			void MuteAudio(std::string filename);
+			void UnmuteAudio(std::string filename);
+			void SetAudioVolume(std::string filename, float vol);
+			void SetAudioLoop(std::string filename, bool isActive);
+
+
+		private:
+			bool isActive;
+			bool loop = true;
 
 	};
 

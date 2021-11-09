@@ -181,7 +181,7 @@
     <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp">
       <Filter>Source Files\ECS\Component\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundManager.cpp">
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundObject.cpp">
       <Filter>Source Files\ECS\Component\Sound</Filter>
     </ClCompile>
   </ItemGroup>
@@ -531,7 +531,7 @@
     <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp">
       <Filter>Header Files\ECS\Component\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundManager.hpp">
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundObject.hpp">
       <Filter>Header Files\ECS\Component\Sound</Filter>
     </ClInclude>
   </ItemGroup>

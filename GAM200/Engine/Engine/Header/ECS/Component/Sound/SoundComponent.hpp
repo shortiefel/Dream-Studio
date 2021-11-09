@@ -62,7 +62,7 @@ namespace Engine {
 			static std::map<std::string, FMOD::Sound*> SoundMap;
 			static std::map<int, FMOD::Channel*> ChannelMap;
 
-			float volume;
+			static float volume;
 			std::string file = "";
 			static int ChannelID;
 

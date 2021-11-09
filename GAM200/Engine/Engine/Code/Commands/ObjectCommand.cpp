@@ -57,9 +57,9 @@ namespace Engine
 		for (auto& [id, entity] : entity_map)
 		{
 			bool selected = CheckIfExist(entity_selected, id);
-			if (selected = true)
+			if (selected)
 			{
-				Engine::dreamECSGame->DestroyEntity(entity_id);
+				//Engine::dreamECSGame->DestroyEntity(entity_id);
 				Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_id);
 			}
 		}
@@ -89,4 +89,15 @@ namespace Engine
 		Engine::dreamECSGame->CreateEntity();
 	}
 
+	void ObjectParentCommand::execute()
+	{
+
+	}
+
+	void ObjectParentCommand::undo()
+	{
+		for (const auto& [index, entity_id] : entity_selected) {
+			Engine::dreamECSGame->Unparent(entity_id);
+		}
+	}
 }

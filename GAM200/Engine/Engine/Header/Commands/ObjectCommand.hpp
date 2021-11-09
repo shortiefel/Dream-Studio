@@ -76,6 +76,23 @@ namespace Engine {
 
 	};
 
+	//commands for undo and redo parenting game object
+	class ObjectParentCommand : public ObjectCommand
+	{
+		Engine::Entity_id object_ID;
+		std::map<int, Engine::Entity_id> entity_selected;
+
+	public:
+
+		//undo the changes made to the objects
+		void undo() override;
+		//redo the changes made to the objects
+		//void redo();
+
+		void execute() override;
+
+	};
+
 	//commands for undo 
 
 	//commands for adding state

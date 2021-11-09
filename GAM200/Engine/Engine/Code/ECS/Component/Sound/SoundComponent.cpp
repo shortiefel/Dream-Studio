@@ -5,7 +5,8 @@
 @date    04/10/2021
 @brief
 
-This file contains the definition function for sound component with FMOD
+This file contains functions to initliaze the audio system in the engine and
+play various sounds. 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

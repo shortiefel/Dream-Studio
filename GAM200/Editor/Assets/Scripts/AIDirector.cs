@@ -35,6 +35,7 @@ public class AIDirector : MonoBehaviour
             Debug.Log(endRoadPosition);
 
             var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
+            Console.WriteLine("Set path: " + path.Count);
             //foreach (var item in path)
             //{
             //    Debug.Log(item.ToString());
@@ -50,7 +51,9 @@ public class AIDirector : MonoBehaviour
             var car = Instantiate(SelectACarPrefab(), new Vector3(startRoadPosition.x, startRoadPosition.y, 0));
             //var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0), Quaternion.identity);
 
-            car.GetComponent<CarAI>().SetPath(path.ConvertAll(x => (Vector2)x));
+            Console.WriteLine("Set path2: " + path.Count);
+            //car.GetComponent<CarAI>().SetPath(path.ConvertAll(x => (Vector2)x));
+            car.GetComponent<CarAI>().SetPath(path);
         }
     }
 

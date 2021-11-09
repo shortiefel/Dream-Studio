@@ -54,9 +54,10 @@ namespace Engine {
 			rigidBody.linearAcceleration = summedForces / rigidBody.mass;
 			rigidBody.linearVelocity = rigidBody.linearVelocity + rigidBody.linearAcceleration * dt;
 			TransformComponent& trans = *transform;
-
-			if (rigidBody.linearForces.size() == 0 && rigidBody.linearDrag > 0.f)
+			size_t linearForcesSz = rigidBody.linearForces.size();
+			if (linearForcesSz == 0 && rigidBody.linearDrag > 0.f)
 				rigidBody.linearVelocity = rigidBody.linearVelocity - rigidBody.linearVelocity * dt * rigidBody.linearDrag / rigidBody.mass;
+			if (linearForcesSz >= 20) rigidBody.linearForces.clear();
 			trans.position = trans.position + rigidBody.linearVelocity * dt;
 
 			//Angular physics
@@ -71,13 +72,15 @@ namespace Engine {
 			rigidBody.rotationForces = tempRotationForces;
 			rigidBody.angularAcceleration = summedTorque / rigidBody.mass;
 			rigidBody.angularVelocity = rigidBody.angularVelocity + rigidBody.angularAcceleration * dt;
-	
-			if (rigidBody.rotationForces.size() == 0 && rigidBody.angularDrag > 0.f)
-				rigidBody.angularVelocity = rigidBody.angularVelocity - rigidBody.angularVelocity * dt * rigidBody.angularDrag / rigidBody.mass ;
+
+			size_t linearRotationSz = rigidBody.rotationForces.size();
+			if ((linearRotationSz == 0 && rigidBody.angularDrag > 0.f) || (rigidBody.angularVelocity * summedTorque) < 0.f)
+				rigidBody.angularVelocity = rigidBody.angularVelocity - rigidBody.angularVelocity * dt * rigidBody.angularDrag / rigidBody.mass;
+			if (linearRotationSz >= 20) rigidBody.rotationForces.clear();
 
 			trans.angle = trans.angle + rigidBody.angularVelocity * dt;
 
-			if (trans.angle < 0.f) trans.angle = 360.f;
+			if (trans.angle < -360.f) trans.angle = 360.f;
 			else if (trans.angle > 360.f) trans.angle = 0.f;
 		}
 	}

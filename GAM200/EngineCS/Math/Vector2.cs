@@ -79,6 +79,11 @@ public struct Vector2
         return new Vector2(lhs.x * num, lhs.y * num);
     }
 
+    public static Vector2 operator *(float num, Vector2 lhs)
+    {
+        return new Vector2(lhs.x * num, lhs.y * num);
+    }
+
     public static Vector2 operator -(Vector2 lhs, Vector2 rhs)
     {
 
@@ -91,6 +96,14 @@ public struct Vector2
         lhs.y = -lhs.y;
         return lhs;
     }
+
+    public static float Dot(Vector2 lhs, Vector2 rhs)
+    {
+        DotProduct_Engine(out float value, lhs, rhs);
+        return value;
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void DotProduct_Engine(out float outFloat, Vector2 lhs, Vector2 rhs);
     public override string ToString()
     {
         return "Vector2: " + x + " " + y;

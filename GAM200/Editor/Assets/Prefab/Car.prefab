@@ -10,8 +10,15 @@
       "Position": [ 0.0, 0.0 ],
       "LocalPosition": [ 0.0, 0.0 ],
       "Scale": [ 1.0, 1.0 ],
-      "Angle": 0.0,
+      "Angle": 360.0,
       "Layer": 2,
+      "IsActive": true
+    },
+    "RigidBodyComponent": {
+      "Speed": 0.0,
+      "Mass": 5,
+      "LinearDrag": 10.0,
+      "AngularDrag": 100.0,
       "IsActive": true
     },
     "TextureComponent": {
@@ -26,10 +33,6 @@
     "ScriptComponent": [
       {
         "Class": "CarAI",
-        "IsActive": true
-      },
-      {
-        "Class": "CarController",
         "IsActive": true
       }
     ]

@@ -55,7 +55,7 @@ public class MonoBehaviour : IBehaviour
     public virtual void OnMouseOver() { }
     public virtual void OnMouseExit() { }
 
-    public MonoBehaviour() { Console.WriteLine("Nulling here"); }
+    public MonoBehaviour() {  }
     public MonoBehaviour(uint id) : base(id)
     {
         entityId = id;

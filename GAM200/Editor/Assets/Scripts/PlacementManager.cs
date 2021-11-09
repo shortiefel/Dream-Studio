@@ -146,6 +146,7 @@ public class PlacementManager : MonoBehaviour
         {
             path.Add(new Vector2Int(point.X, point.Y));
         }
+        Console.WriteLine("Path line count " + path.Count);
         return path;
     }
 

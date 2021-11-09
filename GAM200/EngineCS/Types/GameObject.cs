@@ -19,7 +19,7 @@ public class GameObject : IBehaviour
 {
     public Transform transform;
     //Creating New GameObject
-    public GameObject(bool create = true, uint entity_id = 0) : base(9999)
+    public GameObject(bool create = true, uint entity_id = 9999) : base(entity_id)
     {
         if (create)
         {

@@ -82,7 +82,8 @@ namespace Engine {
 	void SetTransform_Scale_Engine(unsigned int id, Math::vec2* inVec2);
 	void GetTransform_Angle_Engine(unsigned int id, float* outVec2);
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2);
-	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2);
+	//void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2);
+	void GetTransform_up_Engine(unsigned int id, Math::vec2* outVec2);
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2);
 	void SetParent_Engine(int parentId, unsigned int child);
 
@@ -194,10 +195,11 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Math
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void Atan2_Engine(float* outFloat, float val1, float val2);
+	void Atan2_Engine(float* outFloat, float xVal, float yVal);
 	void GetDistance_Engine(float* outFloat, Math::vec2 a, Math::vec2 b);
 	void GetLength_Engine(float* length, Math::vec2 vec);
 	void GetNormalised_Engine(Math::vec2* vec);
+	void DotProduct_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs);
 
 
 	void RegisterInternalCall() {
@@ -223,7 +225,8 @@ namespace Engine {
 		mono_add_internal_call("Transform::SetTransform_Scale_Engine", SetTransform_Scale_Engine);
 		mono_add_internal_call("Transform::GetTransform_Angle_Engine", GetTransform_Angle_Engine);
 		mono_add_internal_call("Transform::SetTransform_Angle_Engine", SetTransform_Angle_Engine);
-		mono_add_internal_call("Transform::GetTransform_forward_Engine", GetTransform_forward_Engine);
+		//mono_add_internal_call("Transform::GetTransform_forward_Engine", GetTransform_forward_Engine);
+		mono_add_internal_call("Transform::GetTransform_up_Engine", GetTransform_up_Engine);
 		mono_add_internal_call("Transform::GetTransform_right_Engine", GetTransform_right_Engine);
 		mono_add_internal_call("Transform::SetParent_Engine", SetParent_Engine);
 
@@ -339,6 +342,7 @@ namespace Engine {
 		mono_add_internal_call("Vector2::GetDistance_Engine", GetDistance_Engine);
 		mono_add_internal_call("Vector2::GetLength_Engine", GetLength_Engine);
 		mono_add_internal_call("Vector2::GetNormalised_Engine", GetNormalised_Engine);
+		mono_add_internal_call("Vector2::DotProduct_Engine", DotProduct_Engine);
 
 		RegisterGridInternalCall();
 	}
@@ -492,7 +496,14 @@ namespace Engine {
 		SetEngineType(id, TransformComponent, angle, *inVec2);
 	}
 
-	void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2) {
+	/*void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2) {
+		TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(id);
+		if (!transform) return;
+		float newAngle = Math::radians(transform->angle);
+		*outVec2 = Math::vec2{ Math::cos(newAngle), Math::sin(newAngle) };
+	}*/
+
+	void GetTransform_up_Engine(unsigned int id, Math::vec2* outVec2) {
 		TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 		if (!transform) return;
 		float newAngle = Math::radians(transform->angle + 90.f);
@@ -815,12 +826,12 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Math
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void Atan2_Engine(float* outFloat, float val1, float val2) {
-		if (Math::epsilonCheck(val2)) {
-			*outFloat = 90;
+	void Atan2_Engine(float* outFloat, float xVal, float yVal) {
+		if (Math::epsilonCheck(xVal)) {
+			*outFloat = 0.f;
 			return;
 		}
-		*outFloat = atan2(val1, val2) * 180.f / Math::pi<float>();
+		*outFloat = atan2(yVal, xVal);
 	}
 
 	void GetDistance_Engine(float* outFloat, Math::vec2 a, Math::vec2 b) {
@@ -834,5 +845,9 @@ namespace Engine {
 	void GetNormalised_Engine(Math::vec2* vec) {
 		Math::vec2 temp = *vec;
 		*vec = Math::normalize(temp);
+	}
+
+	void DotProduct_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs) {
+		*outFloat = Math::dot(lhs, rhs);
 	}
 }

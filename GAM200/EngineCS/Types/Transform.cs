@@ -15,7 +15,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 using System.Runtime.CompilerServices; //For internal calls
-
+using System;
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Transform
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -92,7 +92,7 @@ public class Transform : IComponent
     internal static extern void MoveTransform_Position_Engine(uint entityID, ref Vector2 inVec2);
 
     //-----------------------------------------------------------------------------------------------------------------
-    //Forward
+    /*//Forward
     public Vector2 forward
     {
         get
@@ -103,11 +103,11 @@ public class Transform : IComponent
         set { }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_forward_Engine(uint entityID, out Vector2 outVec2);
+    internal static extern void GetTransform_forward_Engine(uint entityID, out Vector2 outVec2);*/
 
     //-----------------------------------------------------------------------------------------------------------------
     //Up
-    /*public Vector2 up
+    public Vector2 up
     {
         get
         {
@@ -117,7 +117,7 @@ public class Transform : IComponent
         set { }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetTransform_up_Engine(uint entityID, out Vector2 outVec2);*/
+    internal static extern void GetTransform_up_Engine(uint entityID, out Vector2 outVec2);
 
     //-----------------------------------------------------------------------------------------------------------------
     //Right

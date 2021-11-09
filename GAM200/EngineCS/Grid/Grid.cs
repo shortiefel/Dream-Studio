@@ -64,26 +64,26 @@ public class Grid
             {
                 _roadList.Add(new Point(i, j));
             }
-            else
+            /*else
             {
                 _roadList.Remove(new Point(i, j));
-            }
+            }*/
             if (value == CellType.Structure)
             {
                 _houseStructure.Add(new Point(i, j));
             }
-            else
+            /*else
             {
                 _houseStructure.Remove(new Point(i, j));
-            }
+            }*/
             if (value == CellType.SpecialStructure)
             {
                 _specialStructure.Add(new Point(i, j));
             }
-            else
+            /*else
             {
                 _specialStructure.Remove(new Point(i, j));
-            }
+            }*/
             
             _grid[i, j] = value;
             SetCellType_Engine(i, j, (int)value);
@@ -118,9 +118,9 @@ public class Grid
     {
         //GetRandomSpecialStructurePoint_Engine(out Point point);
         //return point;
-        int count = _roadList.Count - 1;
+        int count = _specialStructure.Count - 1;
         if (count < 0) count = 1;
-        return _roadList[Random.Range(0, count)];
+        return _specialStructure[Random.Range(0, count)];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void GetRandomSpecialStructurePoint_Engine(out Point point);

@@ -25,6 +25,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
+#include "Engine/Header/Management/GameState.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
 
@@ -427,7 +428,7 @@ namespace Editor {
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::PushFont(boldFont);
-							ImGui::InputFloat("##AngularDrag", &rigidComp->linearDrag, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+							ImGui::InputFloat("##AngularDrag", &rigidComp->angularDrag, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
 							ImGui::PopFont();
 
 							/**
@@ -693,7 +694,7 @@ namespace Editor {
 				*/
 				const auto& prefabMap = Engine::dreamECSGame->GetConstPrefabMap();
 				
-				if (prefabMap.find(entity_selected) != prefabMap.end()) {
+				if (prefabMap.find(entity_selected) != prefabMap.end() && !(Engine::GameState::GetInstance().GetPlaying())) {
 					const Engine::Prefab& prefab = prefabMap.find(entity_selected)->second;
 					if (ImGui::Button("Update Prefab##prefabupdatebtn", { ImGui::GetContentRegionAvail().x, 0 })) {
 						Engine::GameSceneSerializer::SerializePrefab(prefab.prefabName, entity_selected);

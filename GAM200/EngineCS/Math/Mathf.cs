@@ -15,20 +15,20 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 using System.Runtime.CompilerServices; //For internal calls
-
+using System;
 public class Mathf
 {
     public const float Infinity = float.MaxValue;
     public const float Rad2Deg = 360 / (PI * 2);
     public const float PI = 3.141592653589793238462643383279502884197169399375105820974944f;
 
-    public static float Atan2(float val1, float val2)
+    public static float Atan2(float yVal, float xVal)
     {
-        Atan2_Engine(out float outFloat, val1, val2);
+        Atan2_Engine(out float outFloat, xVal, yVal);
         return outFloat;
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void Atan2_Engine(out float outFloat, float val1, float val2);
+    internal static extern void Atan2_Engine(out float outFloat, float xVal, float yVal);
 }
 
 

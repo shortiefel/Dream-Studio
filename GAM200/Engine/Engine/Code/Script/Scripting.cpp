@@ -191,11 +191,11 @@ namespace Engine {
 			if (!GameState::GetInstance().GetPlaying()) return;
 			void* param[] = { (void*)&entity_id };
 			//std::cout << "class: " << csScriptInstance.csClass.className << "\n";
-			if (csScriptInstance.isActive && csScriptInstance.csClass.AwakeFunc != nullptr) {
-				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::AWAKE, param);
-			}
 			if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
 				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
+			}
+			if (csScriptInstance.isActive && csScriptInstance.csClass.AwakeFunc != nullptr) {
+				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::AWAKE, param);
 			}
 			if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
 				Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);

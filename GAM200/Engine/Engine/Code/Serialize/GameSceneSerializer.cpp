@@ -28,6 +28,7 @@ Technology is prohibited.
 
 //External Resources
 #include <sstream>
+#include <fstream>
 
 #include <rapidjson/document.h>
 
@@ -41,8 +42,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
-
-#include <fstream>
 
 #define SERIALIZE_ENTITY SSerializer serializerEntity(doc, objTypeEntity);\
 						 serializerEntity.SetValue("Name", entity.name);\

@@ -39,10 +39,12 @@ namespace Editor
         return SCENE_CAMERA_HEIGHT;
     }
 
+    // Function that gets the aspect ratio for EditorSceneCamera
     float EditorSceneCamera::GetAR() {
         return ar;
     }
 
+    // Function that gets the transformation matrix for EditorSceneCamera
     Math::mat3 EditorSceneCamera::GetTransform() 
     {
         return
@@ -56,6 +58,7 @@ namespace Editor
                       -position.x, -position.y, 1.f);
     }
     
+    // Function that gets the inverse transformation matrix for EditorSceneCamera
     Math::mat3 EditorSceneCamera::GetInverseTransform()
     {
         return
@@ -69,6 +72,7 @@ namespace Editor
             
     }
 
+    // Function that gets the UI transformation matrix for EditorSceneCamera
     Math::mat3 EditorSceneCamera::GetTransformUI()
     {
         return
@@ -82,18 +86,19 @@ namespace Editor
                 -position.x, -position.y, 1.f);
     }
 
+    // Function that changes the height for EditorSceneCamera
     void EditorSceneCamera::changeHeight(float val) {
         SCENE_CAMERA_HEIGHT += val;
         if (SCENE_CAMERA_HEIGHT < MIN_SCENE_CAMERA_HEIGHT) SCENE_CAMERA_HEIGHT = MIN_SCENE_CAMERA_HEIGHT;
         else if (SCENE_CAMERA_HEIGHT > MAX_SCENE_CAMERA_HEIGHT) SCENE_CAMERA_HEIGHT = MAX_SCENE_CAMERA_HEIGHT;
     }
 
+    // Function that changes the position for EditorSceneCamera
     void EditorSceneCamera::changePosition(Math::vec2 val) {
         position += val;
     }
-
-
-
+    
+    // Create function for EditorSceneCamera
     void EditorSceneCamera::Create(Math::vec2 pos) 
     {
         position = pos;
@@ -105,6 +110,7 @@ namespace Editor
         LOG_INSTANCE("Scene Camera created");
     }
 
+    // Destroy function for EditorSceneCamera
     void EditorSceneCamera::Destroy() 
     {
         LOG_INSTANCE("Scene Camera destroyed");

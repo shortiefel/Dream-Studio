@@ -1,16 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TransformComponent.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    19/06/2021
 @brief
-This file contain the transform struct to be used by the ECS and various system
-
-//Serialize list
--vec2 float:	Position
--vec2 float:    Scale
--string:		Shape
--string:		Shader
+This file contains the TransformComponent declaration
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -23,46 +17,52 @@ Technology is prohibited.
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
-#include "Engine/Header/Graphic/Graphic.hpp"
-
-#include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine 
+namespace Engine
 {
 	class DSerializer;
 	class SSerializer;
 
-	//Scale value for circle in both axis is same
 	struct TransformComponent : public IComponent {
-		Math::vec2 position = Math::vec2{}; //True position 
-		Math::vec2 scale = Math::vec2{};
-		float angle = float{}; // in degree
-		Math::vec2 localPosition = Math::vec2{}; //Local  position(to be displayed and can be same as true position)
+		Math::vec2 position{};		// True position 
+		Math::vec2 localPosition{}; // Local  position(to be displayed and can be same as true position)
+
+		Math::vec2 scale{};		// Can be scaled; xy -> Circle in both axis is same
+
+		float angle{};	// In degrees
+		int layer = 2;	// Higher number -> rendered last
+
 		bool isActive = true;
-		int layer = 2; // higher number = on top
+
+
+		TransformComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec2 _pos = Math::vec2{},
+			Math::vec2 _scale = Math::vec2{ 1.f, 1.f }, float _angle = 0.f,
+			int _layer = 2, bool _active = true);
+
 
 		TransformComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		//Math::vec2 GetTruePosition() const;
-
-		TransformComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec2 _pos = Math::vec2{}, Math::vec2 _scale = Math::vec2{1.f,1.f},
-			float _angle = float{}, bool _active = true, int _layer = 2);
-		TransformComponent& operator+= (const TransformComponent& _rhs);
-
 		TransformComponent(const TransformComponent&) = default;
+
 		TransformComponent& operator=(const TransformComponent&) = default;
+		TransformComponent& operator+=(const TransformComponent& _rhs);
 	};
 }
 #endif
 
+// Code that might be used for the future
 
+/*
+Math::vec2 GetTruePosition() const;
 
+Math::mat3 GetTransform() const;
+*/
 
-//Math::mat3 GetTransform() const;
-
-/*Transform(Transform&& rhs) noexcept {
+/*
+Transform(Transform&& rhs) noexcept {
 	position = std::move(rhs.position);
 	scale = std::move(rhs.scale);
 	angle = std::move(rhs.angle);
@@ -70,4 +70,5 @@ namespace Engine
 	layer = std::move(rhs.layer);
 	SetEntityId(rhs.GetEntity());
 	rhs.SetEntityId(DEFAULT_ENTITY);
-}*/
+}
+*/

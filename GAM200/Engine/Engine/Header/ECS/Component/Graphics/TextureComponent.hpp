@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TextureComponent.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    02/07/2021
 @brief
-This file contain the TextureComponent declaration
+This file contains the TextureComponent declaration
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -17,12 +17,11 @@ Technology is prohibited.
 #ifndef TEXTURE_COMPONENT_HPP
 #define TEXTURE_COMPONENT_HPP
 
-#include "Engine/Header/pch.hpp"
-
-#include "Engine/Header/Graphic/GraphicOptions.hpp"
-#include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Graphic/Graphic.hpp"
+#include "Engine/Header/Graphic/GraphicOptions.hpp"
 
+#include "Engine/Header/pch.hpp"
 
 namespace Engine
 {
@@ -33,39 +32,44 @@ namespace Engine
 	{
 		std::string filepath = "";
 		std::string textureName = "";
-		GLuint texobj_hdl = GLuint{};
+		GLuint texobj_hdl{};
 
 		GraphicShape mdl_ref = GraphicShape{};
 
-		GLint width, height, BPP; //BPP - bits per pixel
+		GLint width{}, height{};
+		GLint BPP{}; // Bits per pixel
 
 		bool isAnimation;
-		bool isActive;
+		bool isActive = true;
 
-		// Animation
+		// Animation variables
 		int startFrame, endFrame, currFrame;
-		float aTime, fTime; //fTime - time per frame; aTime - animation time
-		bool isLoop, aComplete; // aComplete - is animation completed
 
-		Math::vec2 min, max;
+		float aTime; // Animation time
+		float fTime; // Time per frame
+
+		bool isLoop;	// Is texture looping? (Animation)
+		bool aComplete; // Is animation completed?
+
+		Math::vec2 minUV, maxUV;
 
 		void AnimationUpdate(float _dt);
 		void SetUV();
 
-		TextureComponent(const TextureComponent&) = default;
-		~TextureComponent();
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
-						 GraphicShape _shape = GraphicShape::SQUARE,
-						 bool _animation = false, bool _loop = false,
-						 int _endFrame = 1, float _fTime = 0, bool _active = true);
+				GraphicShape _shape = GraphicShape::SQUARE,
+				bool _animation = false, bool _loop = false,
+				int _endFrame = 1, float _fTime = 0, bool _active = true);
 
-		TextureComponent& operator= (const TextureComponent&) = default;
-
-		//void SetTexture(std::string _filepath);
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
+
+		TextureComponent(const TextureComponent&) = default;
+		~TextureComponent();
+
+		TextureComponent& operator=(const TextureComponent&) = default;
 	};
 }
 

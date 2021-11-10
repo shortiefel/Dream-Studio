@@ -24,7 +24,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/UI/UIComponent.hpp"
 
 #include "Engine/Header/Management/ResourceManager.hpp"
-#include "Engine/Header/Graphic/TextureSet.hpp"
+#include "Engine/Header/Graphic/ResourceSet.hpp"
 
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"

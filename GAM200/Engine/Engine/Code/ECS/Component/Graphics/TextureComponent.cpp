@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TextureComponent.cpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    02/07/2021
 \brief
-This file contain the TextureComponent definition
+This file contains the TextureComponent definition
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -15,9 +15,10 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
+
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
-#include "Engine/Header/Graphic/TextureSet.hpp"
+#include "Engine/Header/Graphic/ResourceSet.hpp"
 
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
@@ -25,27 +26,31 @@ Technology is prohibited.
 
 namespace Engine
 {
+	// Contructor for Texture Component
 	TextureComponent::TextureComponent(Entity_id _ID, const std::string _path,
-									   GraphicShape _shape,
-									   bool _animation, bool _loop,
-									   int _endFrame, float _fTime, bool _active) :
-					IComponent{ _ID }, filepath{ _path },
-					mdl_ref{ _shape },
-					isAnimation{ _animation }, isLoop{ _loop }, aComplete { false},
-					startFrame{ 1 }, endFrame{ _endFrame }, currFrame{ 0 },
-					aTime{ 0.f }, fTime{ _fTime }, isActive{ _active },
-					min{ 0.f, 0.f }, max{1.0f, 1.0f},
-					texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 } {}
+		GraphicShape _shape,
+		bool _animation, bool _loop,
+		int _endFrame, float _fTime, bool _active) :
+		IComponent{ _ID }, filepath{ _path },
+		mdl_ref{ _shape },
+		isAnimation{ _animation }, isLoop{ _loop }, aComplete{ false },
+		startFrame{ 1 }, endFrame{ _endFrame }, currFrame{ 0 },
+		aTime{ 0.f }, fTime{ _fTime }, isActive{ _active },
+		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f },
+		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 } {}
 
+	// Destructor for Texture Component
 	TextureComponent::~TextureComponent()
 	{
-		//now done by TextureManager destroy function
+		// Done by ResourceManager::Destroy
 	}
 
-	// Update frames of spritesheets
+	// Function that updates the UV coordinates for spritesheets
+	// and the frame variables for the component based on delta time
 	void TextureComponent::AnimationUpdate(float _dt)
 	{
 		aTime += _dt;
+
 		if (aTime > fTime)
 		{
 			aTime -= fTime;
@@ -63,27 +68,27 @@ namespace Engine
 					aComplete = true;
 				}
 			}
+
 			SetUV();
 		}
 	}
 
+	// Function that sets the UV texture coordinates; For spritesheets
 	void TextureComponent::SetUV()
 	{
 		float cellWidth = static_cast<float>(width) / endFrame;
-		
-		//std::cout << "WIDTH: " << width << std::endl;
-		min = { static_cast<float>((currFrame - 1) * cellWidth) / width,
+
+		minUV = { static_cast<float>((currFrame - 1) * cellWidth) / width,
 				0.f };
 
-		max = { static_cast<float>(currFrame * cellWidth) / width,
+		maxUV = { static_cast<float>(currFrame * cellWidth) / width,
 				static_cast<float>(height) / height };
 	}
 
+	// Deserialize function for Texture Component
 	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer)
 	{
 		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
-		/*filepath = _serializer.GetValue<std::string>("Filepath");
-		texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);*/
 
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 
@@ -98,6 +103,7 @@ namespace Engine
 		return *this;
 	}
 
+	// Serialize function for Texture Component
 	void TextureComponent::Serialize(const SSerializer& _serializer)
 	{
 		_serializer.SetValue("Filepath", filepath);
@@ -109,7 +115,5 @@ namespace Engine
 		_serializer.SetValue("TimePerFrame", fTime);
 
 		_serializer.SetValue("IsActive", isActive);
-
-		//_serializer.EndSerialize("Texture");
 	}
 }

@@ -1,16 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TransformComponent.cpp
-@author  Chia Yi Da		chiayida98@gmail.com
-@date    16/09/2021
+@author  Chia Yi Da		c.yida@digipen.edu
+@date    19/06/2021
 \brief
-This file contain the transform struct to be used by the ECS and various system
-
-//Serialize list
--vec2 float:	Position
--vec2 float:    Scale
--string:		Shape
--string:		Shader
+This file contains the TransformComponent definition
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -21,23 +15,25 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
+
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
-#include "Engine/Header/ECS/DreamECS.hpp"
 
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
+// MACRO
 #define rad(ang) \
 	Math::radians((float)ang)
 
-namespace Engine 
+namespace Engine
 {
-	TransformComponent::TransformComponent(Entity_id _ID, Math::vec2 _pos, Math::vec2 _scale, 
-		float _angle, bool _active, int _layer) :
-		IComponent{ _ID },
-		position{ _pos }, scale{ _scale }, angle{ _angle },
-		isActive{ _active }, layer{ _layer } {}
+	// Contructor for Transform Component
+	TransformComponent::TransformComponent(Entity_id _ID, Math::vec2 _pos, Math::vec2 _scale,
+		float _angle, int _layer, bool _active) :
+		IComponent{ _ID }, position{ _pos }, scale{ _scale },
+		angle{ _angle }, layer{ _layer }, isActive{ _active } {}
 
+	// Operator overloading += for Transform Component
 	TransformComponent& TransformComponent::operator+= (const TransformComponent& _rhs)
 	{
 		position += _rhs.position;
@@ -47,33 +43,39 @@ namespace Engine
 		return *this;
 	}
 
-	TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer) {
+	// Deserialize function for Transform Component
+	TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer)
+	{
 		position = _serializer.GetValue<Math::vec2>("Position");
 		localPosition = _serializer.GetValue<Math::vec2>("LocalPosition");
+
 		scale = _serializer.GetValue<Math::vec2>("Scale");
 		angle = _serializer.GetValue<float>("Angle");
 
 		layer = _serializer.GetValue<int>("Layer");
 		isActive = _serializer.GetValue<bool>("IsActive");
+
 		return *this;
 	}
 
-	void TransformComponent::Serialize(const SSerializer& _serializer) {
+	// Serialize function for Transform Component
+	void TransformComponent::Serialize(const SSerializer& _serializer)
+	{
 		_serializer.SetValue("Position", position);
 		_serializer.SetValue("LocalPosition", localPosition);
+
 		_serializer.SetValue("Scale", scale);
 		_serializer.SetValue("Angle", angle);
 
 		_serializer.SetValue("Layer", layer);
 		_serializer.SetValue("IsActive", isActive);
-
-		//_serializer.EndSerialize("Transform");
 	}
 }
 
+// Code that might be used for the future
 
 /*
-Math::mat3 TransformComponent::GetTransform() const 
+Math::mat3 TransformComponent::GetTransform() const
 {
 	return
 		//Translation
@@ -89,5 +91,22 @@ Math::mat3 TransformComponent::GetTransform() const
 		Math::mat3{ Math::vec3(scale.x, 0, 0),
 					Math::vec3(0, scale.y, 0),
 					Math::vec3(0, 0, 1.f) };
+}
+*/
+
+/*
+Math::vec2 TransformComponent::GetTruePosition() const {
+	auto& tem = DreamECS::GetInstance().GetUsedConstEntityMap();
+
+	Entity_id _parent = DEFAULT_ENTITY_ID;
+	const auto & itr = tem.find(GetEntityId());
+	if (itr != tem.end()) {
+		_parent = itr->second.parent;
+	}
+
+	if (_parent != DEFAULT_ENTITY_ID) {
+		return position + DreamECS::GetInstance().GetComponent<TransformComponent>(_parent).GetTruePosition();
+	}
+	return position;
 }
 */

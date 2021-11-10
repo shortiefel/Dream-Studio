@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Mesh.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    16/06/2021
 \brief
 This file contains the declaration of function that sets up the dynamic buffers of vertices and
@@ -18,7 +18,7 @@ Technology is prohibited.
 #ifndef MESH_H
 #define MESH_H
 
-#include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
 
 namespace Engine
 {
@@ -27,6 +27,7 @@ namespace Engine
         class Renderer
         {
         public:
+            // Functions for GraphicSystem
             static void Init();
             static void Shutdown();
 
@@ -35,23 +36,42 @@ namespace Engine
 
             static void Flush(bool debugdraw);
 
-            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec3 color, Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = {1.f, 1.f});
-            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
+            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec3 color,
+                Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
+            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID,
+                Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
 
             static void DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation);
             static void DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation);
 
+            // Font functions for FontSystem
+            static void InitFont();
+            static void DeleteFont();
+
+            static void BeginFontBatch();
+            static void EndFontBatch();
+
+            static void FlushFont();
+            static void DrawString(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation,
+                const std::string font, const std::string text, const Math::vec3 _colour);
+
+            static void ResetFontStats();
+
+            // Struct declaration
             struct Stats
             {
                 uint32_t drawCount = 0;
                 uint32_t quadCount = 0;
                 uint32_t quadDebugCount = 0;
                 uint32_t circleDebugCount = 0;
+                uint32_t fontCount = 0;
             };
 
+            // Getter functions for stats
             static const Stats& GetQuadStats();
             static const Stats& GetQuadDebugStats();
             static const Stats& GetCircleDebugStats();
+            static const Stats& GetFontStats();
 
             static void ResetStats();
 
@@ -60,6 +80,10 @@ namespace Engine
             static void InitCircle();
             static void InitQuadDebug();
             static void InitCircleDebug();
+
+            static void DestroyQuad();
+            static void DestroyQuadDebug();
+            static void DestroyCircleDebug();
 
             static void BeginQuadBatch();
             static void BeginQuadDebugBatch();
@@ -72,6 +96,10 @@ namespace Engine
             static void FlushQuad();
             static void FlushQuadDebug();
             static void FlushCircleDebug();
+
+            static void ResetQuadStats();
+            static void ResetQuadDebugStats();
+            static void ResetCircleDebugStats();
         };
     }
 }

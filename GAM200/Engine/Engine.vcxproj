@@ -188,7 +188,7 @@
     <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundObject.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp" />
-    <ClCompile Include="Engine\Code\ECS\Component\UI\TextComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\UI\FontComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\DreamECS.cpp" />
     <ClCompile Include="Engine\Code\ECS\Factory.cpp" />
@@ -214,7 +214,7 @@
     <ClCompile Include="Engine\Code\Graphic\Mesh.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Picking2D.cpp" />
     <ClCompile Include="Engine\Code\Graphic\Shader.cpp" />
-    <ClCompile Include="Engine\Code\Graphic\TextureSet.cpp" />
+    <ClCompile Include="Engine\Code\Graphic\ResourceSet.cpp" />
     <ClCompile Include="Engine\Code\Grid\Grid.cpp" />
     <ClCompile Include="Engine\Code\Input\Input.cpp" />
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
@@ -282,7 +282,7 @@
     <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundObject.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp" />
-    <ClInclude Include="Engine\Header\ECS\Component\UI\TextComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\UI\FontComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\UIComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp" />
     <ClInclude Include="Engine\Header\ECS\DreamECS.hpp" />
@@ -314,7 +314,7 @@
     <ClInclude Include="Engine\Header\Graphic\Mesh.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Picking2D.hpp" />
     <ClInclude Include="Engine\Header\Graphic\Shader.hpp" />
-    <ClInclude Include="Engine\Header\Graphic\TextureSet.hpp" />
+    <ClInclude Include="Engine\Header\Graphic\ResourceSet.hpp" />
     <ClInclude Include="Engine\Header\Grid\Grid.hpp" />
     <ClInclude Include="Engine\Header\Input\Input.hpp" />
     <ClInclude Include="Engine\Header\Input\InputCode.hpp" />

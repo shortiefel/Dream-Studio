@@ -14,8 +14,8 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef RESOURCE_MANAGER_HPP
-#define RESOURCE_MANAGER_HPP
+#ifndef TEXTURE_MANAGER_HPP
+#define TEXTURE_MANAGER_HPP
 
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"

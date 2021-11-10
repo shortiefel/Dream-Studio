@@ -20,8 +20,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
-#include "Engine/Header/Graphic/TextureSet.hpp"
-#include "Engine/Header/ECS/Component/UI/TextComponent.hpp"
+#include "Engine/Header/Graphic/ResourceSet.hpp"	
+#include "Engine/Header/ECS/Component/UI/FontComponent.hpp"
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
 #include "Engine/Header/Scene/Prefab.hpp"
@@ -576,7 +576,7 @@ namespace Editor {
 				/*
 				*	Text component
 				*/
-				Engine::TextComponent* textComp = Engine::dreamECSGame->GetComponentPTR<Engine::TextComponent>(entity_selected);
+				Engine::FontComponent* textComp = Engine::dreamECSGame->GetComponentPTR<Engine::FontComponent>(entity_selected);
 				if (textComp != nullptr)
 				{
 					ImGui::CheckBox_Dream("##TextActive", &(textComp->isActive));
@@ -592,13 +592,13 @@ namespace Editor {
 							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
 								std::string textStr{ text };
 								Engine::dreamECSGame->AddComponent(
-									std::move(Engine::TextComponent{}));
+									std::move(Engine::FontComponent{}));
 							}
 						}
 
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::dreamECSGame->RemoveComponent<Engine::TextComponent>(entity_selected);
+							Engine::dreamECSGame->RemoveComponent<Engine::FontComponent>(entity_selected);
 
 					}
 				}

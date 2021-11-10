@@ -32,7 +32,7 @@ Technology is prohibited.
                               type->RegisterComponent<RigidBodyComponent>();\
                               type->RegisterComponent<ScriptComponent>();\
                               type->RegisterComponent<UIComponent>();\
-                              type->RegisterComponent<TextComponent>();
+                              type->RegisterComponent<FontComponent>();
 
 namespace Engine 
 {

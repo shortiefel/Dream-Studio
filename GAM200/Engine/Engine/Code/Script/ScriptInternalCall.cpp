@@ -36,7 +36,7 @@ Technology is prohibited.
 #include "Engine/Header/Physics/Collision.hpp"
 #include "Engine/Header/Physics/Ray.hpp" //For raycast
 #include "Engine/Header/Graphic/SpaceTransform.hpp"
-#include "Engine/Header/Graphic/TextureSet.hpp"
+#include "Engine/Header/Graphic/ResourceSet.hpp"
 
 #include "Engine/Header/Script/InternalCall/GridInternalCall.hpp"
 

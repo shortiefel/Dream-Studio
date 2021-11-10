@@ -88,7 +88,7 @@
     <ClCompile Include="Engine\Code\Graphic\Shader.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\TextureSet.cpp">
+    <ClCompile Include="Engine\Code\Graphic\ResourceSet.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Physics\Physics.cpp">
@@ -184,7 +184,7 @@
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp">
       <Filter>Source Files\ECS\Component\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\UI\TextComponent.cpp">
+    <ClCompile Include="Engine\Code\ECS\Component\UI\FontComponent.cpp">
       <Filter>Source Files\ECS\Component\UI</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp">
@@ -333,13 +333,13 @@
     <ClInclude Include="Engine\Header\Time\Timer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\TextureSet.hpp">
+    <ClInclude Include="Engine\Header\Graphic\ResourceSet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\UI\TextComponent.hpp">
+    <ClInclude Include="Engine\Header\ECS\Component\UI\FontComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp">

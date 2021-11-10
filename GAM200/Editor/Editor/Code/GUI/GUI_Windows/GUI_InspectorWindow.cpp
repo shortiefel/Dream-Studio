@@ -30,9 +30,14 @@ Technology is prohibited.
 
 #include "Engine/Header/Input/Input.hpp"
 
+#include "Engine/Header/Commands/Command.hpp"
+#include "Engine/Header/Commands/ObjectCommand.hpp"
+
 #include <Imgui/imgui_internal.h>
+#include <filesystem>
 
 namespace Editor {
+	extern const std::filesystem::path _assetPath;
 	namespace GUI_Windows {
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
@@ -255,6 +260,10 @@ namespace Editor {
 							Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_selected);
 
 					}
+
+					//record the object state before change
+					std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectAddCommand>();
+					Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 				}
 
 				/*
@@ -486,7 +495,20 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::SameLine(halfWidth * 1.2f);
 
+						if (ImGui::BeginDragDropTarget())
+						{
+							ImGui::Text("I'm Dropping.");
+							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+							{
+								const wchar_t* path = (const wchar_t*)payload->Data;
+								std::filesystem::path texturePath = std::filesystem::path(_assetPath) / path;
+								Engine::GraphicImplementation::SetTexture(textureComp, texturePath.string());						
+							}
+							ImGui::EndDragDropTarget();
+						}
+
 						if (ImGui::Button("Change Texture##ChangeTextureTexture")) {
+							
 							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
 
 							if (!filePath.empty()) {

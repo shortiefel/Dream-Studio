@@ -24,6 +24,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
+#include "Engine/Header/Commands/Command.hpp"
+
 //#include <any> //type safe container
 #include <memory>
 #include <unordered_map>

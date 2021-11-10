@@ -25,7 +25,18 @@ Technology is prohibited.
 
 #include "Engine/Header/Input/Input.hpp"
 
+#include "Engine/Header/Scene/SceneManager.hpp"
+#include "Engine/Header/Management/FileWindowDialog.hpp"
+#include "Engine/Header/Management/GameState.hpp"
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
+
+#include <filesystem>
+
+#define REMOVE_FROM_SCENEPATH scenePath = scenePath.string().substr(scenePath.string().find_last_of("\\") + 1);\
+							 scenePath = scenePath.string().substr(0, scenePath.string().find_last_of("."));\
+							scenePath = scenePath.replace_extension(".scene");
 namespace Editor {
+	extern const std::filesystem::path _assetPath;
 	namespace GUI_Windows {
 		Math::vec2 game_viewportBounds[2];
 		Math::vec2 game_viewportSize;
@@ -63,6 +74,28 @@ namespace Editor {
 	
 				ImGui::Image((ImTextureID)(gameWinFBO.GetTexture()), wSize, ImVec2(0, 1), ImVec2(1, 0));
 
+				if (ImGui::BeginDragDropTarget())
+				{
+					ImGui::Text("I'm Dropping.");
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+					{
+						const wchar_t* path = (const wchar_t*)payload->Data;
+						std::filesystem::path scenePath = std::filesystem::path(_assetPath) / path;
+						if (scenePath.extension().string() != ".scene")
+						{
+							std::cout << "Unable to load scene file\n";
+							std::exit(EXIT_FAILURE);
+						}
+							
+						if (!scenePath.filename().string().empty())
+						{
+							REMOVE_FROM_SCENEPATH;
+							scenePath.replace_extension("");
+							Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.string()));
+						}
+					}
+					ImGui::EndDragDropTarget();
+				}
 
 				ImVec2 windowSize = ImGui::GetWindowSize();
 				ImVec2 minBound = ImGui::GetWindowPos();

@@ -14,76 +14,52 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_AssetBrowserWindow.hpp"
 #include "Engine/Header/Management/AssetManager.hpp"
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
+#include "Engine/Header/Scene/Scene.hpp"
 
 #define TEXT_BOX_SIZE 70
 
 namespace Editor {
 
 	extern const std::filesystem::path _assetPath = "Assets";
-	extern const std::filesystem::path _scenePath = "Assets/Scenes";
-	extern const std::filesystem::path _texturePath = "Assets/Textures";
 
 	namespace GUI_Windows {
 		static std::filesystem::path _currentDirectory = "Assets";
-		
-		enum class AssetView {
-			TextureBrowser,
-			SceneBrowser,
-			ScriptBrowser,
-			FontBrowser,
-			Length
-		};
+	
 
-		static AssetView _currentView = AssetView::TextureBrowser;
-
-		static void ShowSceneBrowser()
+		void OpenScene()
 		{
-			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-			{
 				std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
 
-				if (!filePath.empty()) {
-					REMOVE_FROM_FILEPATH;
+					if (!filePath.empty()) {
+						REMOVE_FROM_FILEPATH;
 
-					Engine::SceneManager::GetInstance().ChangeScene(filePath);
-				}
-			}
+						Engine::SceneManager::GetInstance().ChangeScene(filePath);
+					}		
 		}
 
-		static void ShowTextureBrowser()
+		void OpenScene(const std::filesystem::path& path)
 		{
-			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+			if (path.extension().string() != ".scene")
 			{
-				std::string filePath = Engine::FileWindowDialog::OpenFile("Texture (*.png)\0*.png\0");
-
-				if (!filePath.empty()) {
-					REMOVE_FROM_FILEPATH;
-
-					//Engine::SceneManager::GetInstance().ChangeScene(filePath);
-				}
+				LOG_INSTANCE("Cannot load scene file");
+				return;
 			}
+
+			std::string newScene = std::string{};
+			
+
 		}
 		void GUI_AssetBrowser(bool* asset_bool, ImGuiWindowFlags window_flags)
 		{
 			if (*asset_bool) {
 				ImGui::Begin("Project", asset_bool, window_flags);
 				
-				switch (_currentView)
-				{
-				case AssetView::TextureBrowser:
-					ShowTextureBrowser();
-					break;
-				case AssetView::SceneBrowser:
-					ShowSceneBrowser();
-					break;
-				default:
-					break;
-				}
 				//all assets
 				if (_currentDirectory != std::filesystem::path(_assetPath))
 				{
@@ -118,45 +94,15 @@ namespace Editor {
 					auto asset_icon = directory.is_directory() ? directory_icon : file_icon;
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 					ImGui::ImageButton((ImTextureID)asset_icon, { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
-					if (ImGui::BeginDragDropSource())
+					const wchar_t* itemPath = relative_path.c_str();
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 					{
 						const wchar_t* itemPath = relative_path.c_str();
+						ImGui::Text("I'm Dragging.");
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
-					if (_currentDirectory != std::filesystem::path(_scenePath))
-					{
-						ShowTextureBrowser();
-					}
-					if (_currentDirectory != std::filesystem::path(_texturePath))
-					{
-						ShowSceneBrowser();
-					}
-				
-					//for scene
-					//if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-					//{
-					//	std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
-
-					//	if (!filePath.empty()) {
-					//		REMOVE_FROM_FILEPATH;
-
-					//		Engine::SceneManager::GetInstance().ChangeScene(filePath);
-					//	}
-					//}
-					//for (auto& scene_directory : std::filesystem::directory_iterator("Assets/Scenes/"))
-					//{
-					//	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-					//	{
-					//		std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
-
-					//		if (!filePath.empty()) {
-					//			REMOVE_FROM_FILEPATH;
-
-					//			Engine::SceneManager::GetInstance().ChangeScene(filePath);
-					//		}
-					//	}
-					//}
+			
 
 					ImGui::PopStyleColor();
 					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))

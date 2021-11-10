@@ -18,6 +18,11 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+#include "Engine/Header/Management/Settings.hpp"
+
 #include "Editor/Header/GUI/GUI_Window.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ProfilerWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
@@ -47,6 +52,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/Management/TextureManager.hpp"
 #include "Engine/Header/Scene/Prefab.hpp"
+#include "Engine/Header/Commands/Command.hpp"
+#include "Engine/Header/Commands/ObjectCommand.hpp"
 
 //#include "Engine/Header/Script/Scripting.hpp"
 //#include "Engine/Header/Script/ScriptInternalCall.hpp"
@@ -161,7 +168,6 @@ namespace Editor {
 				Engine::SceneManager::GetInstance().ChangeScene(std::move(filePath));
 			}
 		}
-
 		void SaveAsFileUtil() {
 			if (Engine::GameState::GetInstance().GetPlaying()) {
 				GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Scene is Playing. unable to save as..." });
@@ -208,6 +214,20 @@ namespace Editor {
 			case Engine::Input_KeyCode::P: {
 				if (ctrl) {
 					EditorSceneManager::GetInstance().EditorScenePlay();
+				}
+				break;
+			}
+			case Engine::Input_KeyCode::Z: {
+				if (ctrl) {
+					//undo
+					Engine::UndoRedoManager::GetInstance().Undo();
+				}
+				break;
+			}
+			case Engine::Input_KeyCode::Y: {
+				if (ctrl) {
+					//redo
+					//Engine::CommandHistory::RedoCommand();
 				}
 				break;
 			}
@@ -351,8 +371,12 @@ namespace Editor {
 		void GUI_EditMenu() {
 			if (ImGui::BeginMenu("Edit")) {
 
-				ImGui::MenuItem("Undo", "CTRL+Z");
-				ImGui::MenuItem("Redo", "CTRL+Y");
+				if (ImGui::MenuItem("Undo", "CTRL+Z")) { Engine::UndoRedoManager::GetInstance().Undo(); }
+				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled for now
+				ImGui::Separator();
+				//if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+				//if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+				//if (ImGui::MenuItem("Paste", "CTRL+V")) {}
 
 				ImGui::EndMenu();
 			}
@@ -407,6 +431,7 @@ namespace Editor {
 			GUI_Stats(&stats_bool);
 			GUI_Profiler(&profiler_bool);
 			GUI_AssetBrowser(&asset_bool, window_flags);
+
 			GUI_Console(&console_bool, window_flags);
 
 			SelectedEntityCheck(entity_selected);

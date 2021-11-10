@@ -23,6 +23,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
+#include "Engine/Header/Commands/Command.hpp"
+#include "Engine/Header/Commands/ObjectCommand.hpp"
 
 #define DESTROY_ENTITY(entity_id)\
 entityManager->DestroyEntity(entity_id);\

@@ -7,7 +7,11 @@
 
 #include "Engine/Header/Input/Input.hpp"
 
+#include "Engine/Header/Commands/Command.hpp"
+#include "Engine/Header/Commands/ObjectCommand.hpp"
+
 #include <algorithm>
+
 
 namespace Editor {
 	namespace GUI_Windows {

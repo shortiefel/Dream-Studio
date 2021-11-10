@@ -194,6 +194,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundObject.cpp">
       <Filter>Source Files\ECS\Component\Sound</Filter>
+      </ClCompile>
+    <ClCompile Include="Engine\Code\Commands\Command.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Commands\ObjectCommand.cpp">
+      <Filter>Source Files\Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -558,6 +564,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundObject.hpp">
       <Filter>Header Files\ECS\Component\Sound</Filter>
+      </ClCompile>
+    <ClInclude Include="Engine\Header\Commands\Command.hpp">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Commands\ObjectCommand.hpp">
+      <Filter>Header Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -734,6 +746,12 @@
     </Filter>
     <Filter Include="Source Files\ECS\Component\Sound">
       <UniqueIdentifier>{7badc663-c032-4a9c-9382-33720bd04647}</UniqueIdentifier>
+      </Filter>
+    <Filter Include="Header Files\Commands">
+      <UniqueIdentifier>{f4212038-c5d9-491a-ad93-b1eecbf5432b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commands">
+      <UniqueIdentifier>{15463cc4-f4b6-475a-bc70-35365bdf3384}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

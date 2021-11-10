@@ -16,7 +16,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
-#include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/Graphic/TextureSet.hpp"
 
 #include "Engine/Header/Serialize/DSerializer.hpp"

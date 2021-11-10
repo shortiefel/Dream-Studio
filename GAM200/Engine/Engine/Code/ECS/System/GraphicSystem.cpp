@@ -21,7 +21,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
-#include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
@@ -32,7 +32,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
-#include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 #include "Engine/Header/Management/GameState.hpp"
 

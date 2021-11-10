@@ -17,7 +17,7 @@ Technology is prohibited.
 #define ASSET_MANAGER_HPP
 
 #include "Engine/Header/pch.hpp"
-#include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/ECS/System/FontSystem.hpp"
 #include <filesystem>
 #include <string>

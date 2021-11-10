@@ -16,13 +16,13 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/TextureSet.hpp"
 
-#include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
 
 #define SET_TEXTURE(filepath, textureName, texobj_hdl)  if (_filepath.empty()) return;\
 														filepath = _filepath.substr(_filepath.rfind("Assets"));\
 														textureName = filepath.substr(filepath.find_last_of("\\") + 1);\
 														textureName = textureName.substr(0, textureName.find_last_of("."));\
-														texobj_hdl = TextureManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
+														texobj_hdl = ResourceManager::GetInstance().LoadTexture(filepath, &width, &height, &BPP, 4);
 
 namespace Engine {
 	namespace GraphicImplementation {

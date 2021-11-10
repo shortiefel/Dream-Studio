@@ -89,8 +89,8 @@ namespace Editor {
 					std::string filenameString = relative_path.string();
 
 					ImGui::PushID(filenameString.c_str());
-					auto directory_icon = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/DirectoryIcon.png", &height, &width, 0, 4);
-					auto file_icon = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/FileIcon.png", &height, &width, 0, 4);
+					auto directory_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/DirectoryIcon.png", &height, &width, 0, 4);
+					auto file_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/FileIcon.png", &height, &width, 0, 4);
 					auto asset_icon = directory.is_directory() ? directory_icon : file_icon;
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 					ImGui::ImageButton((ImTextureID)asset_icon, { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });

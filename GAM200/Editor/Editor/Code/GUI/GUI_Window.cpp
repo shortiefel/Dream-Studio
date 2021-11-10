@@ -50,7 +50,7 @@ Technology is prohibited.
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
-#include "Engine/Header/Management/TextureManager.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Commands/Command.hpp"
 #include "Engine/Header/Commands/ObjectCommand.hpp"
@@ -260,9 +260,9 @@ namespace Editor {
 			int heightIcon = 25;
 			int widthIcon = 25;
 			unsigned int* tex_ptr = reinterpret_cast<unsigned int*>(&iconPlay);
-			*tex_ptr = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/PlayButton.png", &heightIcon, &widthIcon, 0, 4);
+			*tex_ptr = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/PlayButton.png", &heightIcon, &widthIcon, 0, 4);
 			unsigned int* tex2_ptr = reinterpret_cast<unsigned int*>(&iconStop);
-			*tex2_ptr = Engine::TextureManager::GetInstance().LoadTexture("Assets/Textures/StopButton.png", &heightIcon, &widthIcon, 0, 4);
+			*tex2_ptr = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/StopButton.png", &heightIcon, &widthIcon, 0, 4);
 
 
 			/**

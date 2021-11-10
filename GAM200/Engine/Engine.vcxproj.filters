@@ -52,17 +52,11 @@
     <ClCompile Include="Engine\Code\Management\AssetManager.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp">
-      <Filter>Source Files\Management</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Management\FileWindowDialog.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Management\GameState.cpp">
       <Filter>Source Files\Management</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Script\InternalCall\GridInternalCall.cpp">
-      <Filter>Source Files\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Management\Settings.cpp">
       <Filter>Source Files\Management</Filter>
@@ -196,11 +190,14 @@
     <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundObject.cpp">
       <Filter>Source Files\ECS\Component\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp">
+      <Filter>Source Files\ECS\Component\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Script\InternalCall\GridInternalCall.cpp">
+      <Filter>Source Files\Scripting\InternalCall</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Header\AI\AISystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Application.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -234,286 +231,13 @@
     <ClInclude Include="..\External Resources\include\rapidjson\uri.h">
       <Filter>External Resources\RapidJson</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Management\AssetManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Physics\Collision.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Commands\Command.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Internal\CommonMath.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Internal\ConstantsMath.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Time\DeltaTime.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\DreamECS.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Serialize\DSerializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\EngineCore.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Entity\Entity.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\Event.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\EventDispatcher.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\WindowEvent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Internal\VectorMath.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector\Vector4D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector\Vector3D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector\Vector2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Vector\Vector.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\UISystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\UI\UIComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\TransformCalculationSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Time\Timer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\ResourceSet.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\UI\FontComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Serialize\SSerializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\SpaceTransform.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundObject.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Singleton\Singleton.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\Shader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Management\Settings.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\ScriptInternalCall.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\Scripting.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\ScriptClass.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Scene\SceneManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Scene\Scene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Physics\Ray.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Random\Random.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Debug Tools\Profiler.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Scene\Prefab.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\Picking2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Physics\Physics.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\OverlapColliderEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\pch.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Commands\ObjectCommand.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\AI\Node.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\MouseEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\Mesh.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Internal\MatrixMath.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Matrix\Matrix4.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Matrix\Matrix3.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\Matrix\Matrix.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\MathLib.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Math\MathInternal.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Layer\Layer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\KeyEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Input\InputCode.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Input\Input.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Script\InternalCall\GridInternalCall.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Grid\Grid.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\GraphicSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\Graphic.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\GLSLShader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Management\GameState.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Graphic\FrameBuffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\FontSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\FontComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Event\FixedUpdateEvent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Management\FileWindowDialog.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Physics\Forces.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Factory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\External Resources\include\rapidjson\prettywriter.h">
@@ -555,11 +279,416 @@
     <ClInclude Include="Engine\Header\Management\ResourceManager.hpp">
       <Filter>Header Files\Management</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\AI\AISystem.hpp">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Management\AssetManager.hpp">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp">
+      <Filter>Header Files\ECS\Component\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ECS\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Physics\Collision.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Commands\Command.hpp">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Internal\CommonMath.hpp">
+      <Filter>Header Files\Math\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Internal\ConstantsMath.hpp">
+      <Filter>Header Files\Math\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Time\DeltaTime.hpp">
+      <Filter>Header Files\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\DreamECS.hpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Serialize\DSerializer.hpp">
+      <Filter>Header Files\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Entity\Entity.hpp">
+      <Filter>Header Files\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Entity\EntityManager.hpp">
+      <Filter>Header Files\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\Event.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\EventDispatcher.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Factory.hpp">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Management\FileWindowDialog.hpp">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\FixedUpdateEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\UI\FontComponent.hpp">
+      <Filter>Header Files\ECS\Component\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\FontSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Physics\Forces.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\FrameBuffer.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Serialize\GameSceneSerializer.hpp">
+      <Filter>Header Files\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Management\GameState.hpp">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\GLSLShader.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\GraphicOptions.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\Graphic.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\GraphicSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Grid\Grid.hpp">
+      <Filter>Header Files\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\InternalCall\GridInternalCall.hpp">
+      <Filter>Header Files\Script\InternalCall</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Input\Input.hpp">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Input\InputCode.hpp">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Layer\Layer.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
+      <Filter>Header Files\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\KeyEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp">
+      <Filter>Header Files\Debug Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\MathInternal.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\MathLib.hpp">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Matrix\Matrix4.hpp">
+      <Filter>Header Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Matrix\Matrix.hpp">
+      <Filter>Header Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Matrix\Matrix3.hpp">
+      <Filter>Header Files\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Internal\MatrixMath.hpp">
+      <Filter>Header Files\Math\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\Mesh.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\MouseEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\AI\Node.hpp">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Commands\ObjectCommand.hpp">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\OverlapColliderEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Physics\Physics.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\Picking2D.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Physics\Ray.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Random\Random.hpp">
+      <Filter>Header Files\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Scene\Prefab.hpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Debug Tools\Profiler.hpp">
+      <Filter>Header Files\Debug Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\ResourceSet.hpp">
+      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ECS\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Scene\Scene.hpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Scene\SceneManager.hpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\ScriptClass.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\ScriptInternalCall.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\Scripting.hpp">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Management\Settings.hpp">
+      <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\Shader.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Singleton\Singleton.hpp">
+      <Filter>Header Files\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundObject.hpp">
+      <Filter>Header Files\ECS\Component\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp">
+      <Filter>Header Files\ECS\Component\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Graphic\SpaceTransform.hpp">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Serialize\SSerializer.hpp">
+      <Filter>Header Files\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Time\Timer.hpp">
+      <Filter>Header Files\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\TransformCalculationSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector\Vector3D.hpp">
+      <Filter>Header Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector\Vector.hpp">
+      <Filter>Header Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector\Vector2D.hpp">
+      <Filter>Header Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Vector\Vector4D.hpp">
+      <Filter>Header Files\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Math\Internal\VectorMath.hpp">
+      <Filter>Header Files\Math\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Event\WindowEvent.hpp">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\UI\UIComponent.hpp">
+      <Filter>Header Files\ECS\Component\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\UISystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp">
+      <Filter>Header Files\ECS\Component\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\freetype.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftadvanc.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftbbox.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftbdf.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftbitmap.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftbzip2.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftcache.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftchapters.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftcid.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftcolor.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftdriver.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\fterrdef.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\fterrors.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftfntfmt.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftgasp.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftglyph.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftgxval.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftgzip.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftimage.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftincrem.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftlcdfil.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftlist.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftlzw.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftmac.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftmm.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftmodapi.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftmoderr.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftotval.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftoutln.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftparams.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftpfr.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftrender.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftsizes.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftsnames.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftstroke.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftsynth.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftsystem.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\fttrigon.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\fttypes.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ftwinfnt.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\t1tables.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\ttnameid.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\tttables.h">
+      <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\freetype\tttags.h">
+      <Filter>External Resources\freetype</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -649,6 +778,99 @@
     </Filter>
     <Filter Include="Source Files\ECS\Component\Sound">
       <UniqueIdentifier>{4916f149-acfd-4228-bb44-8946e70301ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AI">
+      <UniqueIdentifier>{d2e60bd6-8cf5-413e-8c8e-9fed5838ffa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS">
+      <UniqueIdentifier>{3f57787d-b9ab-4eff-9bb0-609805e3cffc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component">
+      <UniqueIdentifier>{f990951b-20f8-429f-a00f-1ad0272adaf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\UI">
+      <UniqueIdentifier>{0334c229-2a9e-4caa-8a25-b473a45a0c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Graphics">
+      <UniqueIdentifier>{ad33acb9-4722-4205-a385-980c294f0df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\System">
+      <UniqueIdentifier>{b9edf1ad-8715-4336-a3c5-c12ae49d81c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Physics">
+      <UniqueIdentifier>{3ba5d162-a94a-4e7e-b866-44c8b7ee082d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Physics">
+      <UniqueIdentifier>{fa9019a7-76ff-4136-acdc-d8cab3ff7a31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Commands">
+      <UniqueIdentifier>{e928371c-ee47-4a30-8994-a62c0586e9e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{e8833302-b3cd-4702-9507-563a74982da7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math\Internal">
+      <UniqueIdentifier>{609bd77f-632a-465b-9148-714976ca586a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Time">
+      <UniqueIdentifier>{8800333a-b61f-4956-95da-975280806ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Serialize">
+      <UniqueIdentifier>{af2fc48f-39ef-40bd-a7fd-ea63993e2784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Entity">
+      <UniqueIdentifier>{052a1e9d-5068-4d08-a336-30e2728e8add}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Event">
+      <UniqueIdentifier>{6691bd5a-3184-4b5a-ae01-1067b60f73b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphic">
+      <UniqueIdentifier>{3ed1d868-549b-4b4e-97b9-ccdfe20929de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Grid">
+      <UniqueIdentifier>{24bdbc37-f781-4866-b5eb-59720a4a2069}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Script">
+      <UniqueIdentifier>{da028e46-8f8f-4a4e-af3e-15f9eead9acc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Script\InternalCall">
+      <UniqueIdentifier>{68456969-964f-4f23-b7d0-14a711ea020d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{f1da21ba-bd50-4a2e-94ff-e3c97581b11a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Layer">
+      <UniqueIdentifier>{0636b0ea-a44c-4990-a4b1-ad780fa297e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Debug Tools">
+      <UniqueIdentifier>{321d3c7a-65cc-4751-aecf-588467a964b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math\Matrix">
+      <UniqueIdentifier>{6b82bfce-1028-4cab-8b5e-1e35f968ab71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Random">
+      <UniqueIdentifier>{1ed670a6-c75a-444f-ad62-7c79d7ea83aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{3aea4a58-12ac-4dfe-8bfd-e815deacd97b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Singleton">
+      <UniqueIdentifier>{0cc66fe8-57df-402a-a911-aab64797398a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Sound">
+      <UniqueIdentifier>{ca316bb2-7538-45c4-ae03-c7cf097d2766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math\Vector">
+      <UniqueIdentifier>{e1fea205-c0f2-4a7b-97ec-87e5d2e4a706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Script">
+      <UniqueIdentifier>{a55dbc21-5727-4a6b-bc24-8f3c149af075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scripting\InternalCall">
+      <UniqueIdentifier>{f603104a-78ba-41b7-83ee-be41650f85ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Resources\freetype">
+      <UniqueIdentifier>{3f4c8fcf-97f0-4b07-9ac8-be6d43834513}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

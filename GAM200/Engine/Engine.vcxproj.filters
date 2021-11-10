@@ -31,46 +31,10 @@
     <ClCompile Include="Engine\Code\Event\EventDispatcher.cpp">
       <Filter>Source Files\Event</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\AI\AISystem.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\ECS\DreamECS.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Factory.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\PhysicsSystem.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\UI\TextComponent.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\UISystem.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Management\ResourceManager.cpp">
@@ -85,23 +49,14 @@
     <ClCompile Include="Engine\Code\Script\Scripting.cpp">
       <Filter>Source Files\Scripting</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Management\AssetManager.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Management\FileWindowDialog.cpp">
       <Filter>Source Files\Management</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\FontSystem.cpp">
-      <Filter>Source Files\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Management\GameState.cpp">
       <Filter>Source Files\Management</Filter>
@@ -109,20 +64,8 @@
     <ClCompile Include="Engine\Code\Script\InternalCall\GridInternalCall.cpp">
       <Filter>Source Files\Scripting</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Management\Settings.cpp">
       <Filter>Source Files\Management</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundObject.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\TransformCalculationSystem.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp">
-      <Filter>Source Files\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\Graphic.cpp">
       <Filter>Source Files\Graphic</Filter>
@@ -133,8 +76,8 @@
     <ClCompile Include="Engine\Code\Graphic\Mesh.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Physics\Physics.cpp">
-      <Filter>Source Files\Physics</Filter>
+    <ClCompile Include="Engine\Code\Graphic\FrameBuffer.cpp">
+      <Filter>Source Files\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\Picking2D.cpp">
       <Filter>Source Files\Graphic</Filter>
@@ -147,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Graphic\TextureSet.cpp">
       <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Physics\Physics.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp">
       <Filter>Source Files\Serialization</Filter>
@@ -184,10 +130,10 @@
     <ClCompile Include="Engine\Code\Physics\Collision.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Graphic\FrameBuffer.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\AI\Node.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\AI\AISystem.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Layer\LayerStack.cpp">
@@ -195,6 +141,60 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Input\Input.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\FontSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\GraphicSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\PhysicsSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\UISystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\TransformCalculationSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp">
+      <Filter>Source Files\ECS\Component\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp">
+      <Filter>Source Files\ECS\Component\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp">
+      <Filter>Source Files\ECS\Component\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp">
+      <Filter>Source Files\ECS\Component\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp">
+      <Filter>Source Files\ECS\Component\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp">
+      <Filter>Source Files\ECS\Component\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\UI\TextComponent.cpp">
+      <Filter>Source Files\ECS\Component\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp">
+      <Filter>Source Files\ECS\Component\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp">
+      <Filter>Source Files\ECS\Component\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundObject.cpp">
+      <Filter>Source Files\ECS\Component\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,9 +244,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Physics\Collision.hpp">
@@ -391,9 +388,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Scene\Scene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Physics\Ray.hpp">
@@ -561,6 +555,12 @@
     <ClInclude Include="Engine\Header\Management\ResourceManager.hpp">
       <Filter>Header Files\Management</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Resources">
@@ -628,6 +628,27 @@
     </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{ca72a502-f4e7-4f65-b917-252ad980bb53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component">
+      <UniqueIdentifier>{4b6c6e69-0fff-47f5-9a4f-030c5c5e0649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\System">
+      <UniqueIdentifier>{85de27e0-94c9-421d-bedc-1c7267580240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Graphic">
+      <UniqueIdentifier>{e7e68f13-1a29-4850-afdc-ee1023c0461f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Physics">
+      <UniqueIdentifier>{bc95b4ac-31c7-4809-8f6c-04268c8bac6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Script">
+      <UniqueIdentifier>{326169d8-e30a-41a5-9075-7f8a52403277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\UI">
+      <UniqueIdentifier>{48d0a849-4e11-4afb-a0b6-40dd750084a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Sound">
+      <UniqueIdentifier>{4916f149-acfd-4228-bb44-8946e70301ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

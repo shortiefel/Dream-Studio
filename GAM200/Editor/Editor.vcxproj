@@ -230,6 +230,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;TRACY_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -263,6 +264,9 @@ if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y</Command>
     </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\Imgui\imconfig.h" />

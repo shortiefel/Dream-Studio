@@ -178,6 +178,7 @@ copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.vert" "$(TargetDir)Asse
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -196,6 +197,9 @@ if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
 copy "$(SolutionDir)\Editor\Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y</Command>
     </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Sandbox\Code\Main.cpp" />

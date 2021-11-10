@@ -5,6 +5,7 @@
 @date    04/10/2021
 @brief
 
+This file contains the declaration function for sound component with FMOD
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -17,28 +18,57 @@ Technology is prohibited.
 #ifndef SOUND_COMPONENT_H
 #define SOUND_COMPONENT_H
 
-#include "Engine/Header/ECS/Component/Sound/SoundImplementation.hpp"
+#include <fmod/fmod.hpp>
+#include <string>
+#include <map>
+
+#include "Engine/Header/ECS/Component/IComponent.hpp"
+
+
 
 namespace Engine {
 
+	class DSerializer;
+	class SSerializer;
 
-	class SoundComponent {
+
+	class SoundComponent : public IComponent {
+
 		public:
+			static float VolumeToDecibels(float volume);
+			static float DecibelsToVolume(float volume);
+			static float GetVolume(int ChannelID);
+
+
 			static void Init();
-			static void Soundget();
-			static void Shutdown();
-			static int ErrorCheck(FMOD_RESULT result);
+			static void ReleaseAll();
+			static int EPlaySound(const std::string& file, float volume,  bool paused);
+			static void Pause(int ChannelID);
+			static void PauseEnd(int ChannelID);
+			static void StopSound(int ChannelID);
+			static bool IsPlaying(int ChannelID);
+			static void SetVolume(int ChannelID, float volume);
+			static void ChangeVolume(int ChannelID, float volume);
+			static void SetVolume(float volume);
+			static void SetLoop(int ChannelID, bool isLoop);
+			static FMOD::Sound* GetSound(const std::string& file);
+			static bool Update();
 
-			void LoadSound(const std::string& soundName, bool b3d, bool bLooping , bool bStream );
-			void UnLoadSound(const std::string& soundName);
-			int PlaySounds(const std::string& soundName, const Engine::DreamMath::vec3& vPos , float fVolumedB );
-			void StopChannel(int nChannelId);
-			float dbToVolume(float dB);
-			float VolumeTodB(float volume);
-			FMOD_VECTOR VectorToFmod(const Engine::DreamMath::vec3& vPosition);
+			static FMOD::System* SystemCore;
+			static FMOD::SoundGroup* SoundGroup;
+			static FMOD::Channel* Channel;
+			static FMOD::ChannelGroup* MasterGroup;
+			static FMOD::ChannelGroup* MusicGroup;
+			static std::map<std::string, FMOD::Sound*> SoundMap;
+			static std::map<int, FMOD::Channel*> ChannelMap;
 
+			static float volume;
+			std::string file = "";
+			static int ChannelID;
 
-		
+			static float MinDecibels;
+			static float MaxDeciibels;
+
 	};
 }
 

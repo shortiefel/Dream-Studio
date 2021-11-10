@@ -189,6 +189,11 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Event\FixedUpdateEvent.cpp">
       <Filter>Source Files\Event</Filter>
+      </ClCompile>
+      <Filter>Source Files\ECS\Component\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundObject.cpp">
+      <Filter>Source Files\ECS\Component\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -548,6 +553,11 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Event\FixedUpdateEvent.hpp">
       <Filter>Header Files\Event</Filter>
+      </ClCompile>
+      <Filter>Header Files\ECS\Component\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundObject.hpp">
+      <Filter>Header Files\ECS\Component\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -718,6 +728,12 @@
     </Filter>
     <Filter Include="Header Files\Grid">
       <UniqueIdentifier>{39687018-868e-497e-96b1-9f892c19d34c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Sound">
+      <UniqueIdentifier>{be68f09c-5fee-434f-93ae-61df0fdd3564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Sound">
+      <UniqueIdentifier>{7badc663-c032-4a9c-9382-33720bd04647}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

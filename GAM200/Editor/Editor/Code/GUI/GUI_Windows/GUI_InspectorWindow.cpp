@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 #include "Engine/Header/Graphic/TextureSet.hpp"
 #include "Engine/Header/ECS/Component/UI/TextComponent.hpp"
+#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
@@ -579,6 +580,26 @@ namespace Editor {
 
 					}
 				}
+
+				/*
+				*	Sound component
+				*/
+			/*	Engine::SoundComponent* soundComp = Engine::dreamECSGame->GetComponentPTR<Engine::SoundComponent>(entity_selected);
+				if (soundComp != nullptr)
+				{
+					ImGui::CheckBox_Dream("##SoundActive", &(soundComp->isActive));
+					ImGui::SameLine();
+
+					if (ImGui::Button("Sound Picker##PickSound")) {
+						std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav; *");
+
+					if (!filePath.empty()) {
+							Engine::SoundComponent::Load(filePath);
+						}
+					}
+
+				}*/
+
 
 
 				/*

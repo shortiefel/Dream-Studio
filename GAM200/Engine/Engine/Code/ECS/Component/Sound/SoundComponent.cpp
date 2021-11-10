@@ -5,7 +5,8 @@
 @date    04/10/2021
 @brief
 
-
+This file contains functions to initliaze the audio system in the engine and
+play various sounds. 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -16,88 +17,255 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+
 namespace Engine {
 
+	FMOD::System* SoundComponent::SystemCore = nullptr;
+	FMOD::Channel* SoundComponent::Channel = nullptr;
+	FMOD::SoundGroup* SoundComponent::SoundGroup;
+	FMOD::ChannelGroup* SoundComponent::MasterGroup = nullptr;
+	FMOD::ChannelGroup* SoundComponent::MusicGroup = nullptr;
 
-	void SoundComponent::Init() {
+	float SoundComponent::MinDecibels = 20;
+	float SoundComponent::MaxDeciibels = 100;
 
-		soundImplementation = new SoundImplementation;
-		 
+	std::map<std::string, FMOD::Sound*> SoundComponent::SoundMap;
+	std::map<int, FMOD::Channel*> SoundComponent::ChannelMap;
+
+	int SoundComponent::ChannelID = 0;
+
+	float VolumeToDecibels(float volume)
+	{
+		if (volume < SoundComponent::MinDecibels)
+			volume = SoundComponent::MinDecibels;
+		else if (volume > SoundComponent::MaxDeciibels)
+			volume = SoundComponent::MaxDeciibels;
+
+		return volume / 100.f;
 	}
 
-	void SoundComponent::Soundget() {
-
-		soundImplementation->Update();
+	float DecibelsToVolume(float volume)
+	{
+		return volume * 100.f;
 	}
 
-	void SoundComponent::LoadSound(const std::string& soundName, bool b3d = true, bool slooping = false, bool sStream = false) {
 
-		auto soundFind = soundImplementation->sMap.find(soundName);
-		if (soundFind != soundImplementation->sMap.end())
-			return;
-		FMOD_MODE eMode = FMOD_DEFAULT;
-		eMode |= b3d ? FMOD_3D : FMOD_2D;
-		eMode |= slooping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
-		eMode |= sStream ? FMOD_CREATESTREAM : FMOD_CREATECOMPRESSEDSAMPLE;
-		FMOD::Sound* playSound = nullptr;
+	void SoundComponent::Init()
+	{
+		//main 
+		if (!FMOD::System_Create(&SystemCore))
+			throw std::runtime_error("FMOD: Failed to create system Object");
 
-		SoundComponent::ErrorCheck(soundImplementation->fmodSystem->createSound(soundName.c_str(), eMode, nullptr, &playSound));
+		if(!SystemCore->init(50, FMOD_INIT_NORMAL, nullptr))
+			throw std::runtime_error("FMOD: Failed to initialise system object");
 
-		if (playSound)
-			soundImplementation->sMap[soundName] = playSound;
+		if (!SystemCore->getMasterChannelGroup(&MasterGroup))
+			throw std::runtime_error("FMOD: Failed to get Master Channel Group");
 
+		if (!SystemCore->createChannelGroup("Music", &MusicGroup))
+			throw std::runtime_error("FMOD: Failed to create Music Channel Group");
 
+		if (MasterGroup->addGroup(MusicGroup))
+			throw std::runtime_error("FMOD: Failed to add Music Channel to Master Group");
+
+		SetVolume(50.f);
 	}
 
-	void SoundComponent::UnLoadSound(const std::string& soundName) {
-		
-
-		auto soundFind = soundImplementation->sMap.find(soundName);
-		if (soundFind == soundImplementation->sMap.end())
-			return;
-
-		SoundComponent::ErrorCheck(soundFind->second->release());
-		soundImplementation->sMap.erase(soundName);
-	}
-
-	int SoundComponent::PlaySounds(const std::string& soundName, const Engine::DreamMath::vec3& vPos = Engine::DreamMath::vec3{ 0, 0, 0 }, float fVolumedB = 0.0f) {
-
-		int channelID = soundImplementation->channelID++;
-		auto soundFind = soundImplementation->sMap.find(soundName);
-		if (soundFind == soundImplementation->sMap.find(soundName))
+	void SoundComponent::ReleaseAll()
+	{
+		std::map<std::string, FMOD::Sound*>::iterator soundit;
+		for (soundit = SoundMap.begin(); soundit != SoundMap.end(); ++soundit)
 		{
-			LoadSound(soundName);
-			soundFind = soundImplementation->sMap.find(soundName);
-			if (soundFind == soundImplementation->sMap.end())
-				return channelID;
+			soundit->second->release();
 		}
 
+		SoundMap.clear();
+		ChannelMap.clear();
+		MusicGroup->release();
+		MasterGroup->release();
+		SystemCore->release();
+	}
+
+	int SoundComponent::EPlaySound(const std::string& file, float volume, bool paused)
+	{
+		int ID = ChannelID++;
+		auto tFoundIt = SoundMap.find(file);
+		FMOD::Sound* sound;
+
+		if (tFoundIt == SoundMap.end())
+			sound = GetSound(file);
+
+		else
+			sound = tFoundIt->second;
+
 		FMOD::Channel* pChannel = nullptr;
-		SoundComponent::ErrorCheck(soundImplementation->fmodSystem->playSound(soundFind->second, nullptr, true, &pChannel));
+		if (!SystemCore->playSound(sound, nullptr, true, &pChannel))
+			throw std::runtime_error("FMOD: Failed to play sound" + file);
 
 		if (pChannel)
 		{
-			FMOD_MODE currentMode;
-			soundFind->second->getMode(&currentMode);
-			if (currentMode)
-			{
-				FMOD_VECTOR position = VectorToFmod(vPos);
-			}
-
-			SoundComponent::ErrorCheck(pChannel->setVolume(dbToVolume(fVolumedB)));
-			SoundComponent::ErrorCheck(pChannel->setPaused(false));
-			soundImplementation->cMap[channelID] = pChannel;
+			if (!pChannel->setVolume(VolumeToDecibels(volume)))
+				throw std::runtime_error("FMOD: Failed to set volume sound: " + file);
+			if (!pChannel->setPaused(paused))
+				throw std::runtime_error("FMOD: Failed to pause sound: " + file);
 		}
+		ChannelMap[ID] = pChannel;
 
-		return channelID;
+		return ID;
+		
+	}
+
+	void SoundComponent::Pause(int ChannelID)
+	{
+		auto it = ChannelMap.find(ChannelID);
+		if (it == ChannelMap.end())
+			return;
+		if (!it->second->setPaused(true))
+			throw std::runtime_error("Failed to set volume Channel : " + ChannelID);
+	}
+
+	void SoundComponent::PauseEnd(int ChannelID)
+	{
+		auto it = ChannelMap.find(ChannelID);
+		if (it == ChannelMap.end())
+			return;
+		if (!it->second->setPaused(false))
+			throw std::runtime_error("Failed to set volume Channel : " + ChannelID);
+	}
+
+	void SoundComponent::StopSound(int ChannelID)
+	{
+		auto it = ChannelMap.find(ChannelID);
+		if (it == ChannelMap.end())
+		{
+			MusicGroup->stop();
+			MasterGroup->stop();
+			return;
+		}
+		if (!it->second->stop())
+			throw std::runtime_error("Failed to set Stop Channel : " + ChannelID);
+	}
+
+	bool SoundComponent::IsPlaying(int ChannelID)
+	{
+		auto it = ChannelMap.find(ChannelID);
+		if (it == ChannelMap.end())
+			return false;
+		bool bIsPlaying = false;
+		it->second->isPlaying(&bIsPlaying);
+		return bIsPlaying;
 	}
 	
-	FMOD_VECTOR SoundComponent::VectorToFmod(const Engine::DreamMath::vec3& vPosition)
+	void SoundComponent::SetVolume(int ChannelID, float volume)
 	{
-		FMOD_VECTOR fmodVec;
-		fmodVec.x = vPosition.x;
-		fmodVec.y = vPosition.y;
-		fmodVec.z = vPosition.z;
-		return fmodVec;
+		auto it = ChannelMap.find(ChannelID);
+		if (it == ChannelMap.end())
+		{
+			return;
+		}
+		if (!it->second->setVolume(VolumeToDecibels(volume)))
+			throw std::runtime_error("Failed to set volume Channel : " + ChannelID);
 	}
+
+	float SoundComponent::GetVolume(int ChannelID)
+	{
+		float volume;
+		auto it = ChannelMap.find(ChannelID);
+		if (it == ChannelMap.end())
+		{
+			return 0.f;
+		}
+		if (!it->second->getVolume(&volume))
+			throw std::runtime_error("Failed to set volume Channel : " + ChannelID);
+
+		return DecibelsToVolume(volume);
+	}
+
+	void SoundComponent::ChangeVolume(int ChannelID, float volume)
+	{
+		auto it = ChannelMap.find(ChannelID);
+		if (it == ChannelMap.end())
+		{
+			return;
+		}
+		float previousVolume;
+		if (!it->second->getVolume(&previousVolume))
+			throw std::runtime_error("Failed to set volume Channel : " + ChannelID);
+
+		previousVolume = VolumeToDecibels(DecibelsToVolume(previousVolume) + volume);
+
+		if (!it->second->setVolume(previousVolume))
+			throw std::runtime_error("Failed to set volume Channel : " + ChannelID);
+	}
+
+	void SoundComponent::SetVolume(float volume)
+	{
+		if (!MasterGroup->setVolume(VolumeToDecibels(volume)))
+			throw std::runtime_error("FMOD: Failed to set Channel Volume master");
+		if (!MusicGroup->setVolume(VolumeToDecibels(volume)))
+			throw std::runtime_error("FMOD: Failed to set Channel Volume music");
+	}
+
+	void SoundComponent::SetLoop(int ChannelID, bool isLoop)
+	{
+		auto it = ChannelMap.find(ChannelID);
+		if (it == ChannelMap.end())
+		{
+			return;
+		}
+		FMOD_MODE eMode = FMOD_LOOP_NORMAL;
+		eMode |= isLoop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+
+		if (!it->second->setMode(eMode))
+		{
+			throw std::runtime_error("FMOD: Failed to play sound" + ChannelID);
+			return;
+		}
+	}
+
+	FMOD::Sound* SoundComponent::GetSound(const std::string& file)
+	{
+		auto it = SoundMap.find(file);
+		if (it == SoundMap.end())
+		{
+			FMOD_MODE eMode = FMOD_DEFAULT;
+			eMode |= FMOD_LOOP_OFF;
+			FMOD::Sound* pSound = nullptr;
+			if (SystemCore->createSound(file.c_str(), eMode, nullptr, &pSound))
+				throw std::runtime_error("FMOD: Unable to create sound: " + file);
+
+			if (pSound)
+				SoundMap[file] = pSound;
+
+			return pSound;
+		}
+
+		return it->second;
+
+	}
+
+	bool SoundComponent::Update()
+	{
+		std::vector<std::map<int, FMOD::Channel*>::iterator> pStopChannels;
+		for (auto it = ChannelMap.begin(); it != ChannelMap.end(); ++it)
+		{
+			bool bIsPlaying = false;
+			it->second->isPlaying(&bIsPlaying);
+			if (!bIsPlaying)
+			{
+				pStopChannels.push_back(it);
+			}
+		}
+		for (auto& it : pStopChannels)
+		{
+			ChannelMap.erase(it);
+		}
+		if (!SystemCore->update())
+			throw std::runtime_error("FMOD: Failed to Update Core System");
+
+		return true;
+	}
+
 }

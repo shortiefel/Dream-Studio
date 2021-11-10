@@ -24,7 +24,7 @@ namespace Engine
 {
 	void AssetManager::Init()
 	{
-		//std::string audiosPath = "./Assets/Audio";
+		std::string audiosPath = "./Assets/Audio";
 		std::string fontsPath = "./Assets/Fonts";
 		std::string shadersPath = "./Assets/Shaders";
 		std::string scenesPath = "./Assets/Scenes/Scenes";

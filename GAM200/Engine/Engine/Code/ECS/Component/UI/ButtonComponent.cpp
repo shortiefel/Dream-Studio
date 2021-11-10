@@ -21,6 +21,7 @@ namespace Engine {
 	ButtonComponent::ButtonComponent(const std::string& label) : ButtonLabel{label}, BState{ButtonState::RELEASED}
 	{
 		//need fonts
+		ResourceManager::GetInstance().LoadFont("Assets\\Fonts\\arial.ttf");
 	}
 
 	bool ButtonComponent::OnClick(const Engine::MousePressedEvent&) 

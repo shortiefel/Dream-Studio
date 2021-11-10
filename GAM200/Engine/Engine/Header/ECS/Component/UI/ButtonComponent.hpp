@@ -43,8 +43,8 @@ namespace Engine {
 			inline void SetLabel(const std::string& label) { ButtonLabel = label; }
 			inline const std::string& GetLabel() const { return ButtonLabel; }
 
-			inline void SetFont(FontComponent* fonts) { Fonts = fonts; }
-			inline const FontComponent& GetFont() const { return *Fonts; }
+			inline void SetFont(ResourceManager* fonts) { Fonts = fonts; }
+			inline const ResourceManager& GetFont() const { return *Fonts; }
 
 			inline void SetAction(const Action& action) { AHandler = action; }
 
@@ -63,7 +63,7 @@ namespace Engine {
 			};
 			std::string ButtonLabel;
 			ButtonState BState;
-			FontComponent* Fonts;
+			ResourceManager* Fonts;
 			Action AHandler;
 
 			static void NoAction() {}

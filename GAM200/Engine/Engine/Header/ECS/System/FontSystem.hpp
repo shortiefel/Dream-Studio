@@ -1,10 +1,12 @@
 /* Start Header**********************************************************************************/
-/*!
-@file FontSystem.hpp
-@authors	Goh See Yong Denise				g.seeyongdenise@digipen.edu
-@date 29/06/2021
+/*
+@file    FontSystem.hpp
+@author  Chia Yi Da c.yida@digipen.edu
+@date    24/10/2021
 @brief
-FontSystem.hpp: This file contains all the structure and class related to the font systems
+#include "Engine/Header/ECS/System/FontSystem.hpp"
+This file has the class to manage Fonts: FontSystem includes declaration to singleton FontSystem
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -13,50 +15,30 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef FONTSYSTEM_H
-#define FONTSYSTEM_H
+#ifndef FONT_SYSTEM_H
+#define FONT_SYSTEM_H
 
-#include "Engine/Header/Graphic/Shader.hpp"
-#include "Engine/Header/Graphic/Graphic.hpp" 
-#include "Engine/Header/ECS/System/GraphicSystem.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"
-#include "Engine/Header/Math/MathLib.hpp"
-#include "Engine/Header/Graphic/FrameBuffer.hpp"
+
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
-#include <glm/glm.hpp>
-#include <map>
-#include <string>
+#include "Engine/Header/Graphic/FrameBuffer.hpp"
+
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine
 {
-	struct Character
-	{
-		unsigned int texture_ID;		//ID hadle of the texture
-		glm::ivec2 size;				//Size of glyph
-		glm::ivec2 bearing;				//Offset from baseline to left/top of glyph
-		long advance;					//offset to advance to next glyph
-	};
-
 	class FontSystem : public Singleton<FontSystem>
 	{
 	public:
-
-		void RenderText(std::string text, float x, float y, float scale, const glm::vec3& colour);
 		bool Create();
 		void Destroy();
 
-		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), Graphic::FrameBuffer* _fbo = nullptr);
+		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI(), Graphic::FrameBuffer* _fbo = nullptr);
 
 	private:
-		std::map<char, Character> characters;
-		unsigned int vao, vbo;
-		
-		GLSLShader* font_shader;
-		GLSLShader shader;
 
 		SINGLETON_SETUP(FontSystem);
 	};
-};
+}
 
-
-#endif /* FontSystem_hpp */
+#endif

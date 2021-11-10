@@ -30,6 +30,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/Vector/Vector2D.hpp"
 #include "Engine/Header/Math/Vector/Vector3D.hpp"
+#include "Engine/Header/Math/Vector/Vector4D.hpp"
 
 namespace Engine {
 	namespace DreamMath {
@@ -46,6 +47,13 @@ namespace Engine {
 		using ivec3 = MathImplementation::Vector3D<int>;
 		//unsigned int vec3
 		using uvec3 = MathImplementation::Vector3D<unsigned int>;
+		
+		//float vec4
+		using vec4 = MathImplementation::Vector4D<float>;
+		//int vec4
+		using ivec4 = MathImplementation::Vector4D<int>;
+		//unsigned int vec4
+		using uvec4 = MathImplementation::Vector4D<unsigned int>;
 	}
 }
 

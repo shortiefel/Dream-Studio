@@ -1,8 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GLSLShader.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
-@date    01/10/2021
+@author  Chia Yi Da		c.yida@digipen.edu
+@date    23/06/2021
 \brief
 This file contains declaration of member functions of class GLSLShader.
 
@@ -23,20 +23,21 @@ Technology is prohibited.
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
+
 #include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine 
+namespace Engine
 {
-    class GLSLShader 
+    class GLSLShader
     {
     public:
-        enum class ShaderType 
+        enum class ShaderType
         {
             VERTEX_SHADER = GL_VERTEX_SHADER,
             FRAGMENT_SHADER = GL_FRAGMENT_SHADER
         };
 
-        GLuint id;
+        GLuint id{};
 
         // default ctor required to initialize GLSLShader object to safe state
         GLSLShader() : pgm_handle(0), is_linked(GL_FALSE) {}
@@ -71,10 +72,9 @@ namespace Engine
         GLboolean IsLinked() const;
         std::string GetLog() const;
 
-        void Select() const;
-
         void DeleteShaderProgram();
 
+        // Uniform Overloading for possibilities
         static void SetUniform(GLchar const* name, GLboolean val, GLuint prgm_handle);
         static void SetUniform(GLchar const* name, GLint val, GLuint prgm_handle);
         static void SetUniform(GLchar const* name, GLfloat val, GLuint prgm_handle);
@@ -83,7 +83,7 @@ namespace Engine
         static void SetUniform(GLchar const* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLuint prgm_handle);
         static void SetUniform(GLchar const* name, Math::vec2 const& val, GLuint prgm_handle);
         static void SetUniform(GLchar const* name, Math::vec3 const& val, GLuint prgm_handle);
-        //static void SetUniform(GLchar const* name, Math::vec4 const& val, GLuint prgm_handle);
+        static void SetUniform(GLchar const* name, Math::vec4 const& val, GLuint prgm_handle);
         static void SetUniform(GLchar const* name, Math::mat3 const& val, GLuint prgm_handle);
         static void SetUniform(GLchar const* name, Math::mat4 const& val, GLuint prgm_handle);
 

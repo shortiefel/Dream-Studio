@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    CameraSystem.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    26/06/2021
 @brief
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
@@ -19,20 +19,19 @@ Technology is prohibited.
 #define CAMERA_SYSTEM_HPP
 
 #include "Engine/Header/pch.hpp"
-
 #include "Engine/Header/Singleton/Singleton.hpp"
-
 #include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine 
+namespace Engine
 {
-	class CameraSystem : public Singleton<CameraSystem> 
+	class CameraSystem : public Singleton<CameraSystem>
 	{
 	public:
 		bool Create();
 		void Destroy();
 
 		void Update(float dt);
+
 		Math::mat3 GetTransform(unsigned int* id = nullptr);
 		Math::mat3 GetInverseTransform(unsigned int* id = nullptr);
 		Math::mat3 GetTransformUI();
@@ -41,10 +40,11 @@ namespace Engine
 		float GetAR() const;
 
 	private:
-		Math::vec2 camPosition;
-		float camFov;
-		int camHeight;
-		//Math::mat3 world_to_ndc_xform{};
+		Math::vec2 camPosition{};
+
+		int camHeight{};
+		float camFov{};
+
 		GLFWwindow* pwindow{};
 
 		SINGLETON_SETUP(CameraSystem);

@@ -1,12 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GraphicSystem.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    16/06/2021
 @brief
-#include "Engine/Header/ECS/System/GraphicSystem.hpp"
-This file has the class to manage graphics: GraphicsSystem
-includes declaration to static function for a singleton GraphicsSystem
+This file contains function declaration for class GraphicsSystem
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -19,11 +17,12 @@ Technology is prohibited.
 #ifndef GRAPHIC_SYSTEM_H
 #define GRAPHIC_SYSTEM_H
 
-#include "Engine/Header/pch.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"
+
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
-#include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/FrameBuffer.hpp"
+
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine
 {
@@ -35,15 +34,14 @@ namespace Engine
 
 		//If _fbo is nullptr = default draw (game scene draw) otherwise it means for editor scene
 		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), Graphic::FrameBuffer* _fbo = nullptr);
-		
+
 		const Graphic::FrameBuffer& GetFrameBuffer() const;
 
 		//void SetPickingFunction(void(*fp)());
 
 	private:
-		Graphic::FrameBuffer fbo;
+		Graphic::FrameBuffer fbo{};
 
-		//void(*pickingFP)() = []() {};
 		SINGLETON_SETUP(GraphicSystem);
 	};
 }

@@ -29,7 +29,7 @@ Technology is prohibited.
 #include "Engine/Header/Input/Input.hpp"
 
 #define HEIGHT_CHANGE_SPEED 3.f
-#define POS_CHANGE_SPEED EditorSceneCamera::GetHeight() * .005f
+#define POS_CHANGE_SPEED EditorSceneCamera::GetHeight() * .01f
 
 #include "Engine/Header/Scene/SceneManager.hpp"
 #include "Engine/Header/Management/FileWindowDialog.hpp"

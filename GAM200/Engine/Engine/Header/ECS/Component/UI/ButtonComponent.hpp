@@ -19,7 +19,9 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 #include "Engine/Header/Event/MouseEvent.hpp"
-#include "Engine/Header/ECS/System/FontSystem.hpp"
+#include "Engine/Header/ECS/Component/UI/FontComponent.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
+#include "Engine/Header/Graphic/ResourceSet.hpp"
 #include "Engine/Header/Graphic/mesh.hpp"
 
 #include "Engine/Header/Serialize/DSerializer.hpp"
@@ -41,8 +43,8 @@ namespace Engine {
 			inline void SetLabel(const std::string& label) { ButtonLabel = label; }
 			inline const std::string& GetLabel() const { return ButtonLabel; }
 
-			inline void SetFont(FontSystem* fonts) { Fonts = fonts; }
-			inline const FontSystem& GetFont() const { return *Fonts; }
+			inline void SetFont(FontComponent* fonts) { Fonts = fonts; }
+			inline const FontComponent& GetFont() const { return *Fonts; }
 
 			inline void SetAction(const Action& action) { AHandler = action; }
 
@@ -61,7 +63,7 @@ namespace Engine {
 			};
 			std::string ButtonLabel;
 			ButtonState BState;
-			FontSystem* Fonts;
+			FontComponent* Fonts;
 			Action AHandler;
 
 			static void NoAction() {}

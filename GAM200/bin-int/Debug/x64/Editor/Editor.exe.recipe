@@ -2,14 +2,14 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\bin\Debug\x64\Editor\Editor.exe</FullPath>
+      <FullPath>C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\bin\Debug\x64\Editor\Editor.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
   <SatelliteDlls />
   <NonRecipeFileRefs>
     <NonRecipeFileRef>
-      <FullPath>C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\EngineCS.csproj</FullPath>
+      <FullPath>C:\Users\Rmp025\Documents\GitHub\Dream-Studio\GAM200\EngineCS\EngineCS.csproj</FullPath>
     </NonRecipeFileRef>
   </NonRecipeFileRefs>
 </Project>

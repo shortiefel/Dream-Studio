@@ -115,7 +115,7 @@ namespace Engine
 			return false;
 		}
 
-		FT_Set_Pixel_Sizes(newface, 0, 40); // 0 for width -> dynamically resize.
+		FT_Set_Pixel_Sizes(newface, 0, 80); // 0 for width -> dynamically resize.
 
 		// Load texture
 
@@ -161,7 +161,6 @@ namespace Engine
 		return true;
 	}
 }
-bool tem = 1 < 0 ? true : false;
 // Code that might be used for the future
 
 /*

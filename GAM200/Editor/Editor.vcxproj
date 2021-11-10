@@ -104,6 +104,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,15 +121,21 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
+copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+
 
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
-copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Default.frag" "$(TargetDir)Assets\Shaders\Default.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Default.vert" "$(TargetDir)Assets\Shaders\Default.vert" /Y
 
-copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
+copy "$(ProjectDir)Assets\Shaders\Collision.frag" "$(TargetDir)Assets\Shaders\Collision.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Collision.vert" "$(TargetDir)Assets\Shaders\Collision.vert" /Y
 
+copy "$(ProjectDir)Assets\Shaders\Font.frag" "$(TargetDir)Assets\Shaders\Font.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Font.vert" "$(TargetDir)Assets\Shaders\Font.vert" /Y
 
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
@@ -144,11 +151,12 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;freetype.lib;fmod_vc.lib;fmodL_vc.lib;fmodstudio_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
@@ -160,15 +168,21 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
+copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+
 
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
-copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Default.frag" "$(TargetDir)Assets\Shaders\Default.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Default.vert" "$(TargetDir)Assets\Shaders\Default.vert" /Y
 
-copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
+copy "$(ProjectDir)Assets\Shaders\Collision.frag" "$(TargetDir)Assets\Shaders\Collision.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Collision.vert" "$(TargetDir)Assets\Shaders\Collision.vert" /Y
 
+copy "$(ProjectDir)Assets\Shaders\Font.frag" "$(TargetDir)Assets\Shaders\Font.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Font.vert" "$(TargetDir)Assets\Shaders\Font.vert" /Y
 
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
@@ -186,13 +200,14 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;TRACY_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;freetype.lib;fmod_vc.lib;fmodL_vc.lib;fmodstudio_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
@@ -204,15 +219,21 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
+copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+
 
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
-copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Default.frag" "$(TargetDir)Assets\Shaders\Default.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Default.vert" "$(TargetDir)Assets\Shaders\Default.vert" /Y
 
-copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
+copy "$(ProjectDir)Assets\Shaders\Collision.frag" "$(TargetDir)Assets\Shaders\Collision.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Collision.vert" "$(TargetDir)Assets\Shaders\Collision.vert" /Y
 
+copy "$(ProjectDir)Assets\Shaders\Font.frag" "$(TargetDir)Assets\Shaders\Font.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Font.vert" "$(TargetDir)Assets\Shaders\Font.vert" /Y
 
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
@@ -231,13 +252,14 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <BrowseInformation>true</BrowseInformation>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.lib;opengl32.lib;glew32.lib;glfw3dll.lib;mono-2.0-sgen.lib;freetype.lib;fmod_vc.lib;fmodL_vc.lib;fmodstudio_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
@@ -249,14 +271,21 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 
+copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+
 
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 
 if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
 
-copy "$(ProjectDir)Assets\Shaders\GraphicShader.frag" "$(TargetDir)Assets\Shaders\GraphicShader.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Default.frag" "$(TargetDir)Assets\Shaders\Default.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Default.vert" "$(TargetDir)Assets\Shaders\Default.vert" /Y
 
-copy "$(ProjectDir)Assets\Shaders\GraphicShader.vert" "$(TargetDir)Assets\Shaders\GraphicShader.vert" /Y
+copy "$(ProjectDir)Assets\Shaders\Collision.frag" "$(TargetDir)Assets\Shaders\Collision.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Collision.vert" "$(TargetDir)Assets\Shaders\Collision.vert" /Y
+
+copy "$(ProjectDir)Assets\Shaders\Font.frag" "$(TargetDir)Assets\Shaders\Font.frag" /Y
+copy "$(ProjectDir)Assets\Shaders\Font.vert" "$(TargetDir)Assets\Shaders\Font.vert" /Y
 
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\

@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Shader.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    16/06/2021
 \brief
-This file contains the declaration of function that sets up all shader files
+This file contains function declaration for shaders that sets up shader files
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -17,9 +17,9 @@ Technology is prohibited.
 #ifndef SHADER_H
 #define SHADER_H
 
-namespace Engine 
+namespace Engine
 {
-    namespace GraphicImplementation 
+    namespace GraphicImplementation
     {
         void setup_shdr();
     }

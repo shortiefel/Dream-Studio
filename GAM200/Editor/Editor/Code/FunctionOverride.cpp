@@ -16,6 +16,9 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include <fstream>
+#include <sstream>
+
 #include "Editor/Header/FunctionOverride.hpp"
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
@@ -24,8 +27,7 @@ Technology is prohibited.
 #include "Engine/Header/Script/Scripting.hpp"
 #include "Engine/Header/Script/ScriptInternalCall.hpp"
 
-#include <fstream>
-#include <sstream>
+
 
 namespace Editor {
 	void Override_Function() {

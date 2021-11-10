@@ -64,6 +64,7 @@ namespace Engine
 				{
 					float dt = DeltaTime::GetInstance().GetDeltaTime();
 					texture.AnimationUpdate(dt);
+					std::cout << "run animation \n";
 				}
 
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,

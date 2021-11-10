@@ -41,6 +41,7 @@ namespace Engine {
 			if (!transform || !transform->isActive) continue;
 
 			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);
+
 			//Linear Physics
 			std::list<LinearForces> tempLinearForces;
 			Math::vec2 summedForces = Math::vec2{ 0.f, 0.f };

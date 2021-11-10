@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Shader.cpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    16/06/2021
 \brief
-This file contains the definition of function that sets up all the shader files
+This file contains function definition for shaders that sets up shader files
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -19,21 +19,21 @@ Technology is prohibited.
 
 namespace Engine
 {
-    namespace GraphicImplementation 
+    namespace GraphicImplementation
     {
-        void setup_shdr() 
+        void setup_shdr()
         {
-            // Default Shader for Objects
+            // Default Shader for Game objects
             std::vector<std::pair<GLSLShader::ShaderType, std::string>> shdr_files
             {
-                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/GraphicShader.vert"),
-                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/GraphicShader.frag") 
+                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/Default.vert"),
+                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/Default.frag")
             };
 
             GLSLShader shdr_pgm;
             shdr_pgm.CompileLinkValidate(shdr_files);
 
-            if (GL_FALSE == shdr_pgm.IsLinked()) 
+            if (GL_FALSE == shdr_pgm.IsLinked())
             {
                 std::cout << "Unable to compile/link/validate shader programs\n";
                 std::cout << shdr_pgm.GetLog() << "\n";
@@ -44,38 +44,34 @@ namespace Engine
 
 
 
-            // Debug Draw Shader for debugging 
+            // Shader for Collision Rendering
             shdr_files = {
-                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/GraphicShader.vert"),
-                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/GraphicsDebugDraw.frag") 
+                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/Collision.vert"),
+                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/Collision.frag")
             };
 
             GLSLShader shdr_pgm2;
             shdr_pgm2.CompileLinkValidate(shdr_files);
 
-            if (GL_FALSE == shdr_pgm2.IsLinked()) 
+            if (GL_FALSE == shdr_pgm2.IsLinked())
             {
                 std::cout << "Unable to compile/link/validate shader programs\n";
                 std::cout << shdr_pgm2.GetLog() << "\n";
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::DEBUG_DRAW, shdr_pgm2));
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::COLLISION, shdr_pgm2));
 
-            // Font Shader
-            std::vector<std::pair<GLSLShader::ShaderType, std::string>> font_shdr_files
-            {
-                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/GraphicShader.vert"),
-                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/GraphicShader.frag")
-            };
 
-            font_shdr_files = {
-                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/FontShader.vert"),
-                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/FontShader.frag")
+
+            // Shader for Font Rendering
+            shdr_files = {
+                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/Font.vert"),
+                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/Font.frag")
             };
 
             GLSLShader shdr_pgm3;
-            shdr_pgm3.CompileLinkValidate(font_shdr_files);
+            shdr_pgm3.CompileLinkValidate(shdr_files);
 
             if (GL_FALSE == shdr_pgm3.IsLinked())
             {

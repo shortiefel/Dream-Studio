@@ -1,6 +1,6 @@
 /* Start Header**********************************************************************************/
 /*
-@file    GraphicShader.frag
+@file    Default.frag
 @author  Chia Yi da		c.yida@digipen.edu
 @date    07/06/2021
 */
@@ -9,7 +9,6 @@
 #version 450 core
 
 uniform sampler2D u_Textures[32];
-
 
 layout (location=0) in vec3 vColor;
 layout (location=1) in vec2 vTexture;

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GraphicOptions.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    16/09/2021
 \brief
 This file has the graphic options
@@ -27,8 +27,8 @@ namespace Engine
 
 	enum class GraphicShader 
 	{
-		DEFAULT = 0,
-		DEBUG_DRAW,
+		DEFAULT = 0, // Game objects
+		COLLISION,
 		FONT_DRAW
 	};
 }

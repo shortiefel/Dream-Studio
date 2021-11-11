@@ -954,7 +954,7 @@ namespace Engine
                 s_FontData.vertexbufferptr->texID = textureIndex;
                 s_FontData.vertexbufferptr->tposition = tposition;
                 s_FontData.vertexbufferptr->tscale = tscale;
-                s_FontData.vertexbufferptr->trotation = trotation;
+                s_FontData.vertexbufferptr->trotation = Math::radians(trotation);
                 s_FontData.vertexbufferptr++;
 
                 s_FontData.vertexbufferptr->position = { xPos + width, yPos + height };
@@ -963,7 +963,7 @@ namespace Engine
                 s_FontData.vertexbufferptr->texID = textureIndex;
                 s_FontData.vertexbufferptr->tposition = tposition;
                 s_FontData.vertexbufferptr->tscale = tscale;
-                s_FontData.vertexbufferptr->trotation = trotation;
+                s_FontData.vertexbufferptr->trotation = Math::radians(trotation);
                 s_FontData.vertexbufferptr++;
 
                 s_FontData.vertexbufferptr->position = { xPos + width, yPos };
@@ -972,7 +972,7 @@ namespace Engine
                 s_FontData.vertexbufferptr->texID = textureIndex;
                 s_FontData.vertexbufferptr->tposition = tposition;
                 s_FontData.vertexbufferptr->tscale = tscale;
-                s_FontData.vertexbufferptr->trotation = trotation;
+                s_FontData.vertexbufferptr->trotation = Math::radians(trotation);
                 s_FontData.vertexbufferptr++;
 
                 s_FontData.vertexbufferptr->position = { xPos, yPos };
@@ -981,7 +981,7 @@ namespace Engine
                 s_FontData.vertexbufferptr->texID = textureIndex;
                 s_FontData.vertexbufferptr->tposition = tposition;
                 s_FontData.vertexbufferptr->tscale = tscale;
-                s_FontData.vertexbufferptr->trotation = trotation;
+                s_FontData.vertexbufferptr->trotation = Math::radians(trotation);
                 s_FontData.vertexbufferptr++;
 
                 s_FontData.indexcount += stOneQuadIndex;

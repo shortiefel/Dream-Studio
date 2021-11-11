@@ -17,11 +17,12 @@ Technology is prohibited.
 #ifndef TEXTURE_COMPONENT_HPP
 #define TEXTURE_COMPONENT_HPP
 
+#include "Engine/Header/pch.hpp"
+
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 
-#include "Engine/Header/pch.hpp"
 
 namespace Engine
 {

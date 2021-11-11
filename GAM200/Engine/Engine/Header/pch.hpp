@@ -16,6 +16,8 @@ Technology is prohibited.
 #ifndef PCH_H
 #define PCH_H
 
+#include <Windows.h>
+
 #include <cassert>
 
 #include <string>

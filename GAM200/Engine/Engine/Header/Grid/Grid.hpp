@@ -43,16 +43,36 @@ namespace Engine {
 
 		class Grid : public Singleton<Grid> {
 		public:
+			/*-----------------------------------------------------
+			Create grid with width and height
+			-----------------------------------------------------*/
 			void CreateGrid(int width, int height);
+			/*-----------------------------------------------------
+			Deallocate memory allocated for grid
+			-----------------------------------------------------*/
 			void DestroyGrid();
 
 			int GetCellType(int x, int y);
 			void SetCellType(int x, int y, int cellType);
+			/*-----------------------------------------------------
+			Randomize index of Road points to retrieve a Road position
+			-----------------------------------------------------*/
 			void GetRandomRoadPoint(Math::ivec2* pos);
+			/*-----------------------------------------------------
+			Randomize index of Road points to retrieve a Road position
+			-----------------------------------------------------*/
 			void GetRandomSpecialStructurePoint(Math::ivec2* pos);
-			
+			/*-----------------------------------------------------
+			Get adjacent cells that the specific object(isAgent) can walk on
+			-----------------------------------------------------*/
 			void GetWalkableAdjacentCells(Math::ivec2(&arr)[4], int* count, int x, int y, bool isAgent);
+			/*-----------------------------------------------------
+			Get count of _type around x and y position
+			-----------------------------------------------------*/
 			void GetAdjacentCellsOfType(Math::ivec2(&arr)[4], int* count, int x, int y, int _type);
+			/*-----------------------------------------------------
+			Get count of all adjacent cells of any type
+			-----------------------------------------------------*/
 			void GetAllAdjacentCellTypes(int(&arr)[4], int x, int y);
 
 			void AStarSearch(Math::ivec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent);

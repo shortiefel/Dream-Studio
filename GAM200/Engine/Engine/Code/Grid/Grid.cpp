@@ -47,26 +47,26 @@ namespace Engine {
             {
                 roadList.emplace_back(Math::ivec2{ x,y });
             }
-            else
+            /*else
             {
                 roadList.remove(Math::ivec2{ x,y });
-            }
+            }*/
             if (value == CellType::Structure)
             {
                 houseStructure.emplace_back(Math::ivec2{ x,y });
             }
-            else
+            /*else
             {
                 houseStructure.remove(Math::ivec2{ x,y });
-            }
+            }*/
             if (value == CellType::SpecialStructure)
             {
                 specialStructure.emplace_back(Math::ivec2{ x,y });
             }
-            else
+            /*else
             {
                 specialStructure.remove(Math::ivec2{ x,y });
-            }
+            }*/
             *(grid + x + (static_cast<size_t>(y) * mapSize.x)) = value;
         }
 

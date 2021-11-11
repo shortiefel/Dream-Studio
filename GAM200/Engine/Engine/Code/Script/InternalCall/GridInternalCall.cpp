@@ -21,6 +21,8 @@ Technology is prohibited.
 #include <mono/jit/jit.h>
 
 namespace Engine {
+	/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
+	//Function calls are used to link to C# (functions from Grid.hpp)
 	void CreateGrid_Engine(int width, int height);
 	int GetCellType_Engine(int x, int y);
 	void SetCellType_Engine(int x, int y, int cellType);
@@ -32,11 +34,9 @@ namespace Engine {
 	void GetAllAdjacentCellTypes_Engine(MonoArray* monoArray, int x, int y);
 
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent);
+	/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 	void RegisterGridInternalCall() {
-		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
-		Grid
-		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Grid::CreateGrid_Engine", CreateGrid_Engine);
 		mono_add_internal_call("Grid::GetCellType_Engine", GetCellType_Engine);
 		mono_add_internal_call("Grid::SetCellType_Engine", SetCellType_Engine);

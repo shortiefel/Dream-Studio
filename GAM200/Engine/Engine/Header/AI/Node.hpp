@@ -15,26 +15,26 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef NODE_H
-#define NODE_H
-
-#include "Engine/Header/Math/MathLib.hpp"
-#include <vector>
-
-namespace Engine {
-	namespace AI {
-		struct Node {
-			int x, y;
-			Math::ivec2 pos;
-			bool obstacle = false;
-			bool visited = false;
-			float globalGoal;
-			float localGoal;
-			
-			Node* parent;
-			std::vector<Node*> neighbours;
-		};
-	}
-}
-
-#endif
+//#ifndef NODE_H
+//#define NODE_H
+//
+//#include "Engine/Header/Math/MathLib.hpp"
+//#include <vector>
+//
+//namespace Engine {
+//	namespace AI {
+//		struct Node {
+//			int x, y;
+//			Math::ivec2 pos;
+//			bool obstacle = false;
+//			bool visited = false;
+//			float globalGoal;
+//			float localGoal;
+//			
+//			Node* parent;
+//			std::vector<Node*> neighbours;
+//		};
+//	}
+//}
+//
+//#endif

@@ -15,9 +15,9 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef GRID_H
-#define GRID_H
-
+//#ifndef GRID_H
+//#define GRID_H
+//
 //#include "Engine/Header/Math/MathLib.hpp"
 //#include "Engine/Header/Singleton/Singleton.hpp"
 //#include "Engine/Header/AI/Node.hpp"
@@ -50,5 +50,5 @@ Technology is prohibited.
 //		};
 //	}
 //}
-
-#endif
+//
+//#endif

@@ -21,6 +21,9 @@ Technology is prohibited.
 #include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
+	/*-----------------------------------------------------
+	Called in ScriptingInternalCall
+	-----------------------------------------------------*/
 	void RegisterGridInternalCall();
 }
 

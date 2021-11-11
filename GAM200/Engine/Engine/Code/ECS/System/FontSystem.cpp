@@ -90,6 +90,8 @@ namespace Engine
 
 		if (fontDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
 		else _fbo->Unbind();
+
+		
 	}
 
 	// Init function for FontSystem

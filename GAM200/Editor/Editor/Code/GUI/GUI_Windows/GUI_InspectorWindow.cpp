@@ -130,8 +130,6 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
 					if (ImGui::Selectable(" + Text##addTextcom"))
 						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
-					//if (ImGui::Selectable(" + Button##addButtoncom"))
-					//	Engine::dreamECSGame->AddComponent<Engine::ButtonComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
 
@@ -591,30 +589,20 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Text"))
 					{
-						ImGui::Spacing();
-						char text[300]{};
-						ImGui::PushItemWidth(textSize);
-						ImGui::Text("Text To Input: ");
-						if (ImGui::InputText("##Text", text, 300)) {
-							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
-								std::string newText = std::string{ text };
-								
-								Engine::dreamECSGame->AddComponent(
-									std::move(Engine::FontComponent{}));
-							}
-						}
-
-						if (ImGui::BeginDragDropTarget())
+						/**
+						*	INPUT TEXT
+						*/
+						static char textObjBuffer[1024 * 16];
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Input Text");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth *1.8);
+						ImGui::PushFont(boldFont);
+						if (ImGui::InputText(" ", textObjBuffer, IM_ARRAYSIZE(textObjBuffer)))
 						{
-							ImGui::Text("I'm Dropping.");
-							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
-							{
-								const wchar_t* path = (const wchar_t*)payload->Data;
-								std::filesystem::path fontPath = std::filesystem::path(_assetPath) / path;
-								Engine::GraphicImplementation::SetFont(textComp, fontPath.string());
-							}
-							ImGui::EndDragDropTarget();
+							textComp->text = textObjBuffer;
 						}
+						ImGui::PopFont();
 
 						if (ImGui::Button("Change Font##ChangeFont")) {
 
@@ -625,10 +613,35 @@ namespace Editor {
 							}
 						}
 
+						
+						
+						/**
+						*	FONT COLOR
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Color");
+						ImGui::SameLine(halfWidth);
+
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" R");
+						ImGui::SameLine(halfWidth * 1.125f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::InputFloat("##colorRed", &textComp->colour.r, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::SameLine(halfWidth * 1.5f);
+						ImGui::Text(" G");
+						ImGui::SameLine(halfWidth * 1.620f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::InputFloat("##colorGreen", &textComp->colour.g, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::SameLine(halfWidth * 2.f);
+						ImGui::Text(" B");
+						ImGui::SameLine(halfWidth * 2.1f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::InputFloat("##colorBlue", &textComp->colour.b, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::PopFont();
+
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::dreamECSGame->RemoveComponent<Engine::FontComponent>(entity_selected);
-
 					}
 				}
 

@@ -22,7 +22,10 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 #include "Engine/Header/Graphic/ResourceSet.hpp"	
 #include "Engine/Header/ECS/Component/UI/FontComponent.hpp"
+#include "Engine/Header/ECS/Component/UI/ButtonComponent.hpp"
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
+#include "Engine/Header/Management/ResourceManager.hpp"
+#include "Engine/Header/Graphic/ResourceSet.hpp"
 
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
@@ -125,6 +128,10 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::CameraComponent>(entity_selected);
 					if (ImGui::Selectable(" + UI##addUIcom"))
 						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
+					if (ImGui::Selectable(" + Text##addTextcom"))
+						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
+					//if (ImGui::Selectable(" + Button##addButtoncom"))
+					//	Engine::dreamECSGame->AddComponent<Engine::ButtonComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
 
@@ -588,11 +595,33 @@ namespace Editor {
 						char text[300]{};
 						ImGui::PushItemWidth(textSize);
 						ImGui::Text("Text To Input: ");
-						if (ImGui::InputText("##addcomponenttype", text, 300)) {
+						if (ImGui::InputText("##Text", text, 300)) {
 							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
-								std::string textStr{ text };
+								std::string newText = std::string{ text };
+								
 								Engine::dreamECSGame->AddComponent(
 									std::move(Engine::FontComponent{}));
+							}
+						}
+
+						if (ImGui::BeginDragDropTarget())
+						{
+							ImGui::Text("I'm Dropping.");
+							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+							{
+								const wchar_t* path = (const wchar_t*)payload->Data;
+								std::filesystem::path fontPath = std::filesystem::path(_assetPath) / path;
+								Engine::GraphicImplementation::SetFont(textComp, fontPath.string());
+							}
+							ImGui::EndDragDropTarget();
+						}
+
+						if (ImGui::Button("Change Font##ChangeFont")) {
+
+							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.ttf;)\0*.ttf;\0");
+
+							if (!filePath.empty()) {
+								Engine::GraphicImplementation::SetFont(textComp, filePath);
 							}
 						}
 

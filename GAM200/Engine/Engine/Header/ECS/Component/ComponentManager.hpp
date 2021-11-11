@@ -87,6 +87,7 @@ namespace Engine {
 			{ DUPLICATE_COMPONENT(ColliderComponent); }
 			{ DUPLICATE_COMPONENT(RigidBodyComponent); }
 			{ DUPLICATE_COMPONENT(UIComponent); }
+			{ DUPLICATE_COMPONENT(FontComponent); }
 		}
 
 		template<typename T>

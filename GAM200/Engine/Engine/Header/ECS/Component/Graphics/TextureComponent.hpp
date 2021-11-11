@@ -58,9 +58,9 @@ namespace Engine
 
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
-				GraphicShape _shape = GraphicShape::SQUARE,
-				bool _animation = false, bool _loop = false,
-				int _endFrame = 1, float _fTime = 0, bool _active = true);
+			GraphicShape _shape = GraphicShape::SQUARE,
+			bool _animation = false, bool _loop = false,
+			int _endFrame = 1, float _fTime = 0, bool _active = true);
 
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);

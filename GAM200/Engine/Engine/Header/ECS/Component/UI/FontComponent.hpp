@@ -26,7 +26,6 @@ namespace Engine
 	class DSerializer;
 	class SSerializer;
 
-	//Scale value for circle in both axis is same
 	struct FontComponent : public IComponent {
 		std::string filepath = "";
 		std::string fontName = "";

@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Settings.cpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    11/09/2021
 \brief
-Stores Window settings
+This file stores the data for window and game screen size
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -16,7 +16,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/Settings.hpp"
 
-namespace Engine 
+namespace Engine
 {
 	unsigned int Settings::windowWidth;
 	unsigned int Settings::windowHeight;
@@ -24,7 +24,4 @@ namespace Engine
 	unsigned int Settings::gameWidth;
 	unsigned int Settings::gameHeight;
 	float Settings::gameAR;
-	std::string Settings::defaultCircle;
-	std::string Settings::defaultSquare;
 }
-

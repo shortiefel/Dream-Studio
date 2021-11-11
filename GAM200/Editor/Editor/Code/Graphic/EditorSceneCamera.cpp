@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EditorSceneCamera.cpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    22/07/2021
 \brief
 This file contain the EditorSceneCamera definition
@@ -33,14 +33,16 @@ namespace Editor
     float SCENE_CAMERA_HEIGHT = 20.f;
     Math::vec2 EditorSceneCamera::position;
     float EditorSceneCamera::ar;
-    //Math::mat3 EditorSceneCamera::world_to_ndc_xform;
 
-    float EditorSceneCamera::GetHeight() {
+    // Function that gets the height for EditorSceneCamera
+    float EditorSceneCamera::GetHeight() 
+    {
         return SCENE_CAMERA_HEIGHT;
     }
 
     // Function that gets the aspect ratio for EditorSceneCamera
-    float EditorSceneCamera::GetAR() {
+    float EditorSceneCamera::GetAR() 
+    {
         return ar;
     }
 

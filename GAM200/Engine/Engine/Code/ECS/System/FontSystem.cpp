@@ -45,9 +45,9 @@ namespace Engine
 		GraphicImplementation::Renderer::ResetFontStats();
 		GraphicImplementation::Renderer::BeginFontBatch();
 
-		const auto& textArray = dreamECSGame->GetComponentArrayData<FontComponent>();
+		const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
 
-		for (const auto& text : textArray)
+		for (const auto& text : fontArray)
 		{
 			if (!text.isFont) continue;
 
@@ -86,7 +86,7 @@ namespace Engine
 	// Init function for FontSystem
 	bool FontSystem::Create()
 	{
-		// uniform for font shader
+		// Uniform for font shader
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::FONT_DRAW].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 

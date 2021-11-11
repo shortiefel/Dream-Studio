@@ -26,13 +26,13 @@ namespace Engine
     namespace GraphicImplementation
     {
         // MACRO; Change to what is best suited
-#define MAXQUADCOUNT 500 // How many quads per buffer
-#define MAXCIRCLECOUNT 50 // How many circles per buffer
-#define CIRCLESLICES 20 // How circular the shape will be, higher number = more circlular.
+        #define MAXQUADCOUNT 500  // How many quads per buffer
+        #define MAXCIRCLECOUNT 50 // How many circles per buffer
+        #define CIRCLESLICES 20   // How circular the shape will be, higher number = more circlular.
 
-// Initialise variables
+        // Initialise variables
 
-// For quads; fill
+        // For quads; fill
         static const size_t stMaxQuadCount = MAXQUADCOUNT;
         static const size_t stOneQuadVertex = 4;
         static const size_t stOneQuadIndex = stOneQuadVertex + 2;

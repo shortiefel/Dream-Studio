@@ -688,46 +688,46 @@ namespace Editor {
 						ImGui::SameLine();
 						if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str()))
 						{
-							ImGui::Spacing();
+							//ImGui::Spacing();
 
-							for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap)
-							{
-								ImGui::Text(varName.c_str());
-								ImGui::SameLine();
-								switch (csPublicVariable.variableType)
-								{
-								case Engine::CSType::CHAR:
-									//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
-									break;
-								case Engine::CSType::BOOL:
-									ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
-									break;
-								case Engine::CSType::FLOAT:
-									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
-									break;
-								case Engine::CSType::INT:
-									ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
-									break;
-								case Engine::CSType::UINT:
-									//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
-									break;
-								case Engine::CSType::VEC2:
-									Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
-									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
-									break;
-								}
-							}
+							//for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap)
+							//{
+							//	ImGui::Text(varName.c_str());
+							//	ImGui::SameLine();
+							//	switch (csPublicVariable.variableType)
+							//	{
+							//	case Engine::CSType::CHAR:
+							//		//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
+							//		break;
+							//	case Engine::CSType::BOOL:
+							//		ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
+							//		break;
+							//	case Engine::CSType::FLOAT:
+							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
+							//		break;
+							//	case Engine::CSType::INT:
+							//		ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
+							//		break;
+							//	case Engine::CSType::UINT:
+							//		//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
+							//		break;
+							//	case Engine::CSType::VEC2:
+							//		Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
+							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
+							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
+							//		break;
+							//	}
+							//}
 
 							/**
 							*	DELETE
 							*/
 							ImGui::AlignTextToFramePadding();
-							ImGui::SameLine(halfWidth);
+							//ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::dreamECSGame->RemoveScript(entity_selected, className.c_str());
 
-							ImGui::TreePop();
+							//ImGui::TreePop();
 						}
 					}
 				}

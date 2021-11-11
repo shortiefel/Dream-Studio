@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Factory.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    23/06/2021
 @brief
 This file contain declaraction of Factory class with it functions
@@ -19,9 +19,9 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
-namespace Engine 
+namespace Engine
 {
-	class Factory 
+	class Factory
 	{
 	public:
 		static void Create();

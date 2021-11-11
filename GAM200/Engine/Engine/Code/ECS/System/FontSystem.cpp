@@ -61,9 +61,11 @@ namespace Engine
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			//std::cout << text.text << std::endl;
+			std::cout << text.text << std::endl;
 
 			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+
+			//std::cout << text.text << std::endl;
 		}
 
 		// For transparency of glyph textures
@@ -81,6 +83,8 @@ namespace Engine
 
 		if (fontDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
 		else _fbo->Unbind();
+
+		
 	}
 
 	// Init function for FontSystem

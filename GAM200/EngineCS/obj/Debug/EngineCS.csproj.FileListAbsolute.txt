@@ -34,3 +34,9 @@ C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.csproj
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.dll
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.pdb
 C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Debug\EngineCS.csproj.AssemblyReference.cache
+C:\Users\65964\Desktop\GAM200\GAM200\EngineCS\bin\Debug\EngineCS.dll
+C:\Users\65964\Desktop\GAM200\GAM200\EngineCS\bin\Debug\EngineCS.pdb
+C:\Users\65964\Desktop\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.csproj.AssemblyReference.cache
+C:\Users\65964\Desktop\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.csproj.CoreCompileInputs.cache
+C:\Users\65964\Desktop\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.dll
+C:\Users\65964\Desktop\GAM200\GAM200\EngineCS\obj\Debug\EngineCS.pdb

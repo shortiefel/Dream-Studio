@@ -125,6 +125,8 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::CameraComponent>(entity_selected);
 					if (ImGui::Selectable(" + UI##addUIcom"))
 						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
+					if (ImGui::Selectable(" + Text##addTextcom"))
+						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
 
@@ -584,22 +586,44 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Text"))
 					{
-						ImGui::Spacing();
-						char text[300]{};
-						ImGui::PushItemWidth(textSize);
-						ImGui::Text("Text To Input: ");
-						if (ImGui::InputText("##addcomponenttype", text, 300)) {
-							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
-								std::string textStr{ text };
-								Engine::dreamECSGame->AddComponent(
-									std::move(Engine::FontComponent{}));
-							}
+						/**
+						*	INPUT TEXT
+						*/
+						static char textObjBuffer[1024 * 16];
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Input Text");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth *1.8);
+						ImGui::PushFont(boldFont);
+						if (ImGui::InputText(" ", textObjBuffer, IM_ARRAYSIZE(textObjBuffer)))
+						{
+							textComp->text = textObjBuffer;
 						}
+						ImGui::PopFont();
 
-						//deleteComponent
-						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
-							Engine::dreamECSGame->RemoveComponent<Engine::FontComponent>(entity_selected);
+						/**
+						*	FONT COLOR
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Color");
+						ImGui::SameLine(halfWidth);
 
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" R");
+						ImGui::SameLine(halfWidth * 1.125f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::InputFloat("##colorRed", &textComp->colour.r, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::SameLine(halfWidth * 1.5f);
+						ImGui::Text(" G");
+						ImGui::SameLine(halfWidth * 1.620f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::InputFloat("##colorGreen", &textComp->colour.g, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::SameLine(halfWidth * 2.f);
+						ImGui::Text(" B");
+						ImGui::SameLine(halfWidth * 2.1f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::InputFloat("##colorBlue", &textComp->colour.b, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::PopFont();
 					}
 				}
 

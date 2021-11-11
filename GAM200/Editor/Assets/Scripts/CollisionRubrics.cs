@@ -16,7 +16,7 @@
         {
             transform.position -= transform.right * 10 * Time.deltaTime;
         }
-        a
+        
         if (Input.GetKey(KeyCode.D))
         {
             transform.position += transform.right * 10 * Time.deltaTime;

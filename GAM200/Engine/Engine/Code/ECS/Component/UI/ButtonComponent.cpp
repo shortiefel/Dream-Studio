@@ -65,10 +65,10 @@ namespace Engine {
 	//	//jw help is needed
 	//}
 
-	void ButtonComponent::Serialize(const SSerializer& _serializer)
+	/*void ButtonComponent::Serialize(const SSerializer& _serializer)
 	{
 		_serializer.SetValue("ButtonLabel", ButtonLabel);
 		_serializer.SetValue("BState", BState);
-	}
+	}*/
 
 }

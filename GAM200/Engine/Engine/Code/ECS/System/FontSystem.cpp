@@ -61,9 +61,18 @@ namespace Engine
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			//std::cout << text.text << std::endl;
+			// Editor
+			if (fontDraw)
+			{
+				GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+			}
+			// Game
+			else 
+			{
+				GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / 75, transform->angle, text.filepath, text.text, text.colour);
+			}
 
-			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+
 		}
 
 		// For transparency of glyph textures

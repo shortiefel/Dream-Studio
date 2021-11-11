@@ -396,6 +396,15 @@ namespace Engine
             glEnableVertexArrayAttrib(s_FontData.va, 3);
             glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texID));
 
+            glEnableVertexArrayAttrib(s_FontData.va, 4);
+            glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tposition));
+
+            glEnableVertexArrayAttrib(s_FontData.va, 5);
+            glVertexAttribPointer(5, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tscale));
+
+            glEnableVertexArrayAttrib(s_FontData.va, 6);
+            glVertexAttribPointer(6, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
+
             /*
             example of indices loop; 2 triangles to form a quad:
                 0, 1, 2,    -> First triangle
@@ -896,8 +905,11 @@ namespace Engine
         void Renderer::DrawString(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const std::string filename, const std::string text,
             const Math::vec3 _colour)
         {
-            Math::vec2 position = tposition;
-            Math::vec2 size = tscale;
+            //Math::vec2 position = tposition;
+            //Math::vec2 size = tscale;
+
+            Math::vec2 position = {-1.f, -1.f};
+            Math::vec2 size = {2.f, 2.f};
 
             for (int i = 0; i < text.length(); i++)
             {

@@ -134,9 +134,11 @@ namespace Editor {
 					*/
 					if (ImGui::Button("Delete##DeleteGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						//CallFuncForEach(entity_selected.begin(), entity_selected.end(), []() {});
-						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DestroyEntity(entity.second);  });
-						entity_selected.clear();
+						if (entity_selected[0] != DEFAULT_ENTITY_ID) {
+							//CallFuncForEach(entity_selected.begin(), entity_selected.end(), []() {});
+							std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DestroyEntity(entity.second);  });
+							entity_selected.clear();
+						}
 						//
 						// 
 						//Engine::DreamECS::GetInstance().DestroyEntity(entity_selected);

@@ -14,10 +14,11 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
+
 #include "Editor/Header/GUI/GUI.hpp"
 #include "Editor/Header/GUI/GUI_Window.hpp"
 
-#include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Management/Settings.hpp"
 

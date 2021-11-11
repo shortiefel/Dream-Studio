@@ -57,7 +57,7 @@ namespace Engine
 		void SetUV();
 
 
-		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
+		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png",
 			GraphicShape _shape = GraphicShape::SQUARE,
 			bool _animation = false, bool _loop = false,
 			int _endFrame = 1, float _fTime = 0, bool _active = true);

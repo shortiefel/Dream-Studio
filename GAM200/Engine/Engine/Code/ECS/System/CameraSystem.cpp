@@ -17,6 +17,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
+
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 #include "Engine/Header/Management/Settings.hpp"

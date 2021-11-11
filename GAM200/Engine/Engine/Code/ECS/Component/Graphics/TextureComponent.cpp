@@ -37,7 +37,9 @@ namespace Engine
 		startFrame{ 1 }, endFrame{ _endFrame }, currFrame{ 0 },
 		aTime{ 0.f }, fTime{ _fTime }, isActive{ _active },
 		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f },
-		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 } {}
+		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 } {
+		GraphicImplementation::SetTexture(this, filepath);
+	}
 
 	// Destructor for Texture Component
 	TextureComponent::~TextureComponent()

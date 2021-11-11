@@ -94,7 +94,7 @@ namespace Editor {
 					auto asset_icon = directory.is_directory() ? directory_icon : file_icon;
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 					ImGui::ImageButton((ImTextureID)asset_icon, { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
-					const wchar_t* itemPath = relative_path.c_str();
+					//const wchar_t* itemPath = relative_path.c_str();
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 					{
 						const wchar_t* itemPath = relative_path.c_str();

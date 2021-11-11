@@ -932,11 +932,11 @@ namespace Engine
 
 
                 float textureIndex = 0.0f;
-                for (uint32_t i = 1; i < s_FontData.uiTextureSlotIndex; i++)
+                for (uint32_t p = 1; p < s_FontData.uiTextureSlotIndex; p++)
                 {
-                    if (s_FontData.arrTextureSlots[i] == c.textureid)
+                    if (s_FontData.arrTextureSlots[p] == c.textureid)
                     {
-                        textureIndex = (float)i;
+                        textureIndex = (float)p;
                         break;
                     }
                 }

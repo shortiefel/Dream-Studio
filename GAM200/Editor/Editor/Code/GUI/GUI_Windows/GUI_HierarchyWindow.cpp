@@ -59,9 +59,9 @@ namespace Editor {
 				*/
 
 				//highlight when object is currently selected
-				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
+				/*ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
 					| ImGuiTreeNodeFlags_OpenOnDoubleClick
-					| ImGuiTreeNodeFlags_SpanAvailWidth;
+					| ImGuiTreeNodeFlags_SpanAvailWidth;*/
 
 				std::set<Engine::Entity_id> setOfUI;
 

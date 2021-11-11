@@ -20,10 +20,9 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
-#include "Engine/Header/Graphic/ResourceSet.hpp"	
+#include "Engine/Header/Graphic/ResourceSet.hpp"
 #include "Engine/Header/ECS/Component/UI/FontComponent.hpp"
 #include "Engine/Header/ECS/Component/UI/ButtonComponent.hpp"
-#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/Graphic/ResourceSet.hpp"
 
@@ -44,14 +43,11 @@ namespace Editor {
 	namespace GUI_Windows {
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
-
-
-
 				/**
 				*	WIDTH 
 				*/
 				float halfWidth = ImGui::GetContentRegionAvail().x / 2.f;
-				float quadWidth = ImGui::GetContentRegionAvail().x / 2.5f;
+				//float quadWidth = ImGui::GetContentRegionAvail().x / 2.5f;
 
 				/**
 				*	FONT
@@ -596,7 +592,7 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Input Text");
 						ImGui::SameLine(halfWidth);
-						ImGui::SetNextItemWidth(halfWidth *1.8);
+						ImGui::SetNextItemWidth(halfWidth *1.8f);
 						ImGui::PushFont(boldFont);
 						if (ImGui::InputText(" ", textObjBuffer, IM_ARRAYSIZE(textObjBuffer)))
 						{

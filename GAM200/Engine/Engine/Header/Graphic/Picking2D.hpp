@@ -53,7 +53,7 @@ namespace Engine {
 				if (EntityId_Check(entity_id)) break;
 				if (!transform.isActive) continue;
 
-				if (Engine::dreamECSGame->GetComponentPTR<ColliderComponent>(entity_id) == nullptr) continue;
+				//if (Engine::dreamECSGame->GetComponentPTR<ColliderComponent>(entity_id) == nullptr) continue;
 
 				Engine::ColliderComponent collider;
 				collider.offset_position = Math::vec2{ transform.position };

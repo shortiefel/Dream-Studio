@@ -237,7 +237,7 @@ namespace Editor {
 
 						ImGui::AlignTextToFramePadding();
 						ImGui::SetNextItemWidth(halfWidth);
-						if (ImGui::BeginCombo("##Layering", previewLayer, flags))
+						if (ImGui::BeginCombo("##TextureLayering", previewLayer, flags))
 						{
 							for (int i{ 0 }; i < sz; i++) {
 								const bool isSelected = (index == i);
@@ -323,7 +323,7 @@ namespace Editor {
 
 						ImGui::AlignTextToFramePadding();
 						ImGui::SetNextItemWidth(halfWidth);
-						if (ImGui::BeginCombo("##Layering", previewLayer, flags))
+						if (ImGui::BeginCombo("##ColliderLayering", previewLayer, flags))
 						{
 							for (int i{ 0 }; i < sz; i++) {
 								const bool isSelected = (index == i);

@@ -102,15 +102,7 @@ namespace Editor {
 
 				//ImGui::Image((ImTextureID)sceneWinTex, wSize, ImVec2(0, 1), ImVec2(1, 0));
 				ImGui::Image((ImTextureID)(sceneWinFBO.GetTexture()), wSize, ImVec2(0, 1), ImVec2(1, 0));
-				if (ImGui::BeginDragDropTarget())
-				{
-					ImGui::Text("I'm Dropping.");
-					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
-					{
-						Engine::dreamECSGame->DuplicateEntityAsInstance(GetTarget(entity_selected));
-					}
-					ImGui::EndDragDropTarget();
-				}
+
 				if (ImGui::BeginDragDropTarget())
 				{
 					ImGui::Text("I'm Dropping.");

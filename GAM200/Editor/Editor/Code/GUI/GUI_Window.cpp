@@ -427,21 +427,12 @@ namespace Editor {
 			ImGui::Begin("Tool Bar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 			//ImGui::PushItemWidth(wSize.x);
-			static bool opt_fullscreen = false;
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, Engine::GameState::GetInstance().GetPlaying());
 			ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
 			//ImGui::SameLine(halfWidth);
 			if (ImGui::ImageButton(iconPlay, { 32, 32 }, { 0,1 }, { 1, 0 })) {
-				if (!opt_fullscreen)
-				{
-
-				const ImGuiViewport* viewport = ImGui::GetMainViewport();
-				ImGui::SetNextWindowPos(opt_fullscreen ? viewport->WorkPos : viewport->Pos);
-				ImGui::SetNextWindowSize(opt_fullscreen ? viewport->WorkSize : viewport->Size);
-				}
 
 				if (!EditorSceneManager::GetInstance().Play()) Engine::GameState::GetInstance().SetPlaying(false);
-
 			}
 			ImGui::PopItemFlag();
 

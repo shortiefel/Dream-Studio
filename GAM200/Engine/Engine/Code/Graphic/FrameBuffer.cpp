@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    FrameBuffer.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu   	100%
 @date    17/10/2021
 \brief
 This file has the function definition for class FrameBuffer

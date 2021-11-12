@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Physics.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu			100%
 @date    27/09/2021
 \brief
 This file contain the Physics definition

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUI_SceneWindow.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    21/10/2021
 \brief
 #include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"

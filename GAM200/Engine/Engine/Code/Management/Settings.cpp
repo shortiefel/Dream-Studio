@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Settings.cpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu		100%
 @date    11/09/2021
 \brief
 This file stores the data for window and game screen size

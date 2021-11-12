@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Mesh.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu  100%
 @date    16/06/2021
 \brief
 This file contains the declaration of function that sets up the dynamic buffers of vertices and

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*!
 @file ECSGlobal.hpp
-@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu	100%
 @date 26/04/2021
 
 @brief

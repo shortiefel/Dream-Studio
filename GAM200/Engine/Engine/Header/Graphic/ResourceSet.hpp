@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ResourceSet.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu	100%
 @date    29/10/2021
 @brief
 #include "Engine/Header/Graphic/ResourceSet.hpp"

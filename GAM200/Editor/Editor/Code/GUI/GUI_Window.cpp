@@ -1,9 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUIWindow.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
-		 Goh See Yong, Denise   g.seeyongdenise@digipen.edu
-		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		50%
+				 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu	50%
 @date    26/07/2021
 \brief
 This file contain the GUIWindow definition
@@ -61,22 +60,6 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
-
-//Create a window with an image
-//E.g Game window 
-//#define CreateImageWindow(windowName, texid, windowBool) \
-//	if (windowBool) {\
-//		ImGui::Begin(windowName, &windowBool, window_flags);\
-//		ImGui::BeginChild("Render");\
-//		ImVec2 wSize = ImGui::GetWindowSize();\
-//		\
-//		ImGui::PushItemWidth(wSize.x);\
-//		ASPECT_RATIO_FIX(wSize);\
-//		\
-//		ImGui::Image((ImTextureID)texid, wSize, ImVec2(0, 1), ImVec2(1, 0));\
-//		ImGui::EndChild();\
-//		ImGui::End();\
-//	}\
 
 #define TEXT_BOX_SIZE 70
 

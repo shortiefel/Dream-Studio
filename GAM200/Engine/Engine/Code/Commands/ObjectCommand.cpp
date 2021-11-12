@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ObjectCommand.cpp
-@author  Goh See Yong, Denise   g.seeyongdenise@digipen.edu
+@author  Goh See Yong, Denise   g.seeyongdenise@digipen.edu	100%
 @date    05/11/2021
 \brief
 This file contain the undo / redo commands for game object/ scene

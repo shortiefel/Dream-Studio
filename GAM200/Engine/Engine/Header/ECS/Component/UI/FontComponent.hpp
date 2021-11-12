@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    FontComponent.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu	100%
 @date    01/11/2021
 \brief
 This file contain the FontComponent declaration

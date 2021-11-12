@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Node.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    29/10/2021
 \brief
 #include "Engine/Header/AI/Node.hpp"

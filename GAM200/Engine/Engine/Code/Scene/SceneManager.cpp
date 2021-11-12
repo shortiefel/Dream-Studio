@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    SceneManager.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu   	100%
 @date    14/09/2021
 \brief
 This file has the function definition of the SceneManager

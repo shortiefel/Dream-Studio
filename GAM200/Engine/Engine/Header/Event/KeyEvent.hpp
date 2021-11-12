@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    KeyEvent.hpp
-@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu	100%
 @date    26/05/2021
 \brief
 This file contain the KeyEvent declaration

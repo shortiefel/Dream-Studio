@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Application.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu	100%
 @date    19/06/2021
 \brief
 Create a window and other various required manager (e.g Physic / Graphic Manager)

@@ -1,7 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUI.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu   80%
+                    tan wei ling felicia		weilingfelicia.tan@digipen.edu	20%
 @date    16/06/2021
 \brief
 This file contain the GUI definition

@@ -3,8 +3,7 @@
 \file 			Main.cpp
 \team name		Dream Studio
 \software name	Dream Express
-\authors		Tan Wei Ling Felicia			weilingfelicia.tan@digipen.edu			
-				Ow Jian Wen						jianwen.o@digipen.edu					
+\authors		Ow Jian Wen				jianwen.o@digipen.edu				100%	
 \date 26/04/2021
 \brief
 

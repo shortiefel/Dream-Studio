@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EditorSceneCamera.cpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu  100%
 @date    22/07/2021
 \brief
 This file contain the EditorSceneCamera definition

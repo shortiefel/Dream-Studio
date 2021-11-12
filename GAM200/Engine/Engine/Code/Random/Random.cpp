@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Random.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu			100%
 @date    03/1/2021
 \brief
 #include "Engine/Header/Random/Random.hpp"

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Collision.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu   	100%
 @date    19/06/2021
 \brief
 This file has the function definition for Physic

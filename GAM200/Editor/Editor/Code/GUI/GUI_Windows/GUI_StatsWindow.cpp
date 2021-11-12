@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUI_StatsWindow.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
 @date    20/10/2021
 \brief
 #include "Editor/Header/GUI/GUI_Windows/GUI_StatsWindow.hpp"

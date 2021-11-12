@@ -1,8 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GLSLShader.cpp
-@author  Chia Yi Da		c.yida@digipen.edu
-@date    23/06/2021
+@author  Chia Yi Da		c.yida@digipen.edu  	100%
+@date    23/06/2021 
 \brief
 This file contains definitions of member functions of class GLSLShader.
 

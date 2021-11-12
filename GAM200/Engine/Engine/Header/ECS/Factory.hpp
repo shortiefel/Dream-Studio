@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Factory.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu	100%
 @date    23/06/2021
 @brief
 This file contain declaraction of Factory class with it functions

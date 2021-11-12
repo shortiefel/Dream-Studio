@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
-@file    CollisionSystem.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@file    CollisionSystem.hpp	
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    19/06/2021
 @brief
 This file has the class to manage physic: CollisionSystem

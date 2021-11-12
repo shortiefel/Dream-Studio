@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
-@file    Vector4D.hpp
-@author  tan wei ling felicia	weilingfelicia.tan@digipen.edu
+@file    Vector4D.hpp	
+@author  tan wei ling felicia	weilingfelicia.tan@digipen.edu	100%
 @date    02/10/2021
 @brief
 

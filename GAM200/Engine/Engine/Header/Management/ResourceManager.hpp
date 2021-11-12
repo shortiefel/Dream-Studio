@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ResourceManager.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu	100%
 @date    02/07/2021
 \brief
 This file has the function declaration for ResourceManager

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ResourceSet.cpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu		100%
 @date    29/10/2021
 @brief
 This file contain a texture setter

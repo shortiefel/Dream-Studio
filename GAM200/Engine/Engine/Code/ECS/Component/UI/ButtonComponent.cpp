@@ -1,7 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Button.cpp
-@author  Tan Wei Ling Felicia weilingfelicia.tan@digipen.edu
+@author  Tan Wei Ling Felicia weilingfelicia.tan@digipen.edu	60%
+					Goh See Yong Denise g.seeyongdenise@digipen.edu	40%
 @date    26/10/2021
 \brief
 This file contain the declaration for ButtonComponent

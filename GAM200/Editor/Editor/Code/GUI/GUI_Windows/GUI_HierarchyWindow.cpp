@@ -1,3 +1,19 @@
+/* Start Header**********************************************************************************/
+/*
+@file    GUI_SceneWindow.cpp
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu		100%
+@date    21/10/2021
+\brief
+#include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"
+This file has the function definition for GUI scene window
+
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_HierarchyWindow.hpp"
 

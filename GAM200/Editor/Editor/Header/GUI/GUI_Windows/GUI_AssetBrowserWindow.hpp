@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUI_AssetBrowser.hpp
-@author  Goh See Yong, Denise   g.seeyongdenise@digipen.edu
+@author  Goh See Yong, Denise   g.seeyongdenise@digipen.edu		100%
 @date    26/07/2021
 \brief
 This file contain the GUI Asset browser declaration

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ComponentList.hpp
-@authors	Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@authors	Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu	100%
 @date    27/06/2021
 @brief
 List of all component

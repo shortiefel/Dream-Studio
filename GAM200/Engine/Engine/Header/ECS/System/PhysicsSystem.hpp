@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    PhysicsSystem.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    23/09/2021
 \brief
 This file has the class declaration for PhysicsSystem

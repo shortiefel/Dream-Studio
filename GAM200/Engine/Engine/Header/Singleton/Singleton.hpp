@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Singleton.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    25/09/2021
 \brief
 This file contains Singleton template

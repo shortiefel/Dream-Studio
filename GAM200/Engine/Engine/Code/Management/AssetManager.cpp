@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    AssetManager.cpp
-@author  Goh See Yong, Denise  	g.seeyongdenise@digipen.edu
+@author  Goh See Yong, Denise  	g.seeyongdenise@digipen.edu		100%
 @date    29/08/2021
 \brief
 This file has the function definition for AssetManager

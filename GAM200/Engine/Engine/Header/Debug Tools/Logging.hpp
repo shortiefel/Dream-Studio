@@ -85,7 +85,7 @@ namespace Engine {
 			if (CheckType(t2)) return;
 			if (CheckType(t3)) return;
 
-			int col = 7;
+			WORD col = 7;
 			switch (ls) {
 			case LogState::Info:
 				col = 9;

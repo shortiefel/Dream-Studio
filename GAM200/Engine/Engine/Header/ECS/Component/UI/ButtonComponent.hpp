@@ -52,8 +52,8 @@ namespace Engine {
 			void OnUpdate();
 			void OnRender(); 
 
-			ButtonComponent& Deserialize(const DSerializer& _serializer);
-			void Serialize(const SSerializer& _serializer);
+			/*ButtonComponent& Deserialize(const DSerializer& _serializer);
+			void Serialize(const SSerializer& _serializer);*/
 
 		private:
 			enum ButtonState

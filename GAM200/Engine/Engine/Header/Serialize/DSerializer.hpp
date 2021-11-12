@@ -36,8 +36,6 @@ namespace Engine {
 		/*--------------------------------------------------------------------------------
 		* T GetValue (name)
 		--------------------------------------------------------------------------------*/
-		
-
 		template <typename T>
 		T GetValueInternal(const char* name) const {
 			VARIABLE_CHECK;

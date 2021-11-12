@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Application.cpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    19/06/2021
 \brief
 Create a window and other various required manager (e.g Physic / Graphic Manager)
@@ -32,69 +32,74 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 #include "Engine/Header/Management/GameState.hpp"
+
 #include <iostream>
 
-namespace Engine 
+namespace Engine
 {
     bool OnWindowClose(const WindowCloseEvent& e);
 
-    void Application::Create() {
+    // Create function for Application
+    void Application::Create()
+    {
         if (s_app_instance) LOG_WARNING("An instance of application already exist!");
+
         s_app_instance = new Application();
         LOG_INSTANCE("Application created");
 
         GameSceneSerializer::DeserializeSetting();
 
-        //Create window and instantiate managers
-        if (!Window::GetInstance().Create("Dream Engine", Settings::windowWidth, Settings::windowHeight)) 
+        // Create window and instantiate managers
+        if (!Window::GetInstance().Create("Dream Engine", Settings::windowWidth, Settings::windowHeight))
             LOG_ERROR("Window creation has failed");
 
         WindowCloseEvent::RegisterFunction(&OnWindowClose);
         Engine::EngineCore::GetInstance().Create();
     }
 
-    void Application::Update() {
-        //Called here since Application have 
-        //to be created before callback is added
-        if (CreateFunc != nullptr) 
-        { 
-            CreateFunc(); 
-        }
+    // Update function for Application
+    void Application::Update()
+    {
+        // Called here since Application have to be created before callback is added
+        if (CreateFunc != nullptr) CreateFunc();
 
-        while (app_run_bool) {
-            {
-                Timer timer("Total", std::move([&](ProfilerResult&& result) {
+        while (app_run_bool)
+        {
+            Timer timer("Total", std::move([&](ProfilerResult&& result)
+                {
                     float sec = static_cast<float>(result.time) * 0.001f;
                     DeltaTime::GetInstance().SetDeltaTime(sec);
 
                     static float wait_time = 0;
                     wait_time += sec;
                     float fps = 1 / sec;
-                    if (wait_time > FPS_Interval) {
+                    if (wait_time > FPS_Interval)
+                    {
                         DeltaTime::GetInstance().SetFPS(fps);
                         wait_time = 0;
                     }
 
-                    Engine::Profiler::GetInstance().profilerResult.emplace_back(ProfilerResult{"FPS", fps});
+                    Engine::Profiler::GetInstance().profilerResult.emplace_back(ProfilerResult{ "FPS", fps });
                     Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result));
-                    }));
+                }));
 
-                glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-                Engine::EngineCore::GetInstance().Update(DeltaTime::GetInstance().GetDeltaTime());
+            Engine::EngineCore::GetInstance().Update(DeltaTime::GetInstance().GetDeltaTime());
 
-                if (UpdateFunc != nullptr) {
-                    UpdateFunc(DeltaTime::GetInstance().GetDeltaTime());
-                }
-
-                Engine::Window::GetInstance().Update();
+            if (UpdateFunc != nullptr)
+            {
+                UpdateFunc(DeltaTime::GetInstance().GetDeltaTime());
             }
-            //Profiler::GetInstance().DisplayProfilerResult();
+
+            Engine::Window::GetInstance().Update();
         }
     }
 
-    void Application::Destroy() {
+    // Destroy function for Applicatio
+    void Application::Destroy()
+    {
         if (DestroyFunc != nullptr) DestroyFunc();
         Engine::EngineCore::GetInstance().Destroy();
         Engine::Window::GetInstance().Destroy();
@@ -104,14 +109,18 @@ namespace Engine
 
     }
 
-    void Application::SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3) {
+    // SetupCallbackFunction function for Application
+    void Application::SetupCallbackFunction(FuncNoData func1, Func1Param func2, FuncNoData func3)
+    {
         CreateFunc = func1;
         UpdateFunc = func2;
         DestroyFunc = func3;
     }
 
     //Local functions-----------------------------------------------------------------
-    bool OnWindowClose(const WindowCloseEvent&) {
+    // OnWindowsClose function
+    bool OnWindowClose(const WindowCloseEvent&)
+    {
         PROFILER_START("Event");
 
         Application::GetInstance().SetAppRun(false);

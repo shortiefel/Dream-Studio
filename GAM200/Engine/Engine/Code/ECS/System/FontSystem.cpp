@@ -45,9 +45,9 @@ namespace Engine
 		GraphicImplementation::Renderer::ResetFontStats();
 		GraphicImplementation::Renderer::BeginFontBatch();
 
-		const auto& textArray = dreamECSGame->GetComponentArrayData<FontComponent>();
+		const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
 
-		for (const auto& text : textArray)
+		for (const auto& text : fontArray)
 		{
 			if (!text.isFont) continue;
 
@@ -61,9 +61,18 @@ namespace Engine
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			//std::cout << text.text << std::endl;
+			// Editor
+			if (fontDraw)
+			{
+				GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+			}
+			// Game
+			else 
+			{
+				GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / 75, transform->angle, text.filepath, text.text, text.colour);
+			}
 
-			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+
 		}
 
 		// For transparency of glyph textures
@@ -81,12 +90,14 @@ namespace Engine
 
 		if (fontDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
 		else _fbo->Unbind();
+
+		
 	}
 
 	// Init function for FontSystem
 	bool FontSystem::Create()
 	{
-		// uniform for font shader
+		// Uniform for font shader
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::FONT_DRAW].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 

@@ -437,13 +437,16 @@ namespace Engine {
 			if (!ctype) return;
 			Math::vec2 moveDis = *inVec2 - ctype->position;
 			ctype->position = *inVec2;
-
+			
 			auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 			const auto& itr = entityMap.find(ctype->GetEntityId());
 			const auto& entity = itr->second;
 			Entity_id parent = entity.parent;
 
-			ctype->localPosition -= dreamECSGame->GetComponent<TransformComponent>(parent).position;
+			if (parent != DEFAULT_ENTITY_ID) //TODO: Need to fix parent-child
+				ctype->localPosition -= dreamECSGame->GetComponent<TransformComponent>(parent).position;
+			else
+				ctype->localPosition = *inVec2;
 
 			for (auto& newId : entity.child) {
 				TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
@@ -463,7 +466,10 @@ namespace Engine {
 			const auto& entity = itr->second;
 			Entity_id parent = entity.parent;
 
-			ctype->position = ctype->localPosition + dreamECSGame->GetComponent<TransformComponent>(parent).position;
+			if (parent != DEFAULT_ENTITY_ID) //TODO: Need to fix parent-child
+				ctype->position = ctype->localPosition + dreamECSGame->GetComponent<TransformComponent>(parent).position;
+			else
+				ctype->position = *inVec2;
 
 			for (auto& newId : entity.child) {
 				TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);

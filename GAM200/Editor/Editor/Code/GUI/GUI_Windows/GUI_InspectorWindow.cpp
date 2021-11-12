@@ -20,10 +20,9 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
-#include "Engine/Header/Graphic/ResourceSet.hpp"	
+#include "Engine/Header/Graphic/ResourceSet.hpp"
 #include "Engine/Header/ECS/Component/UI/FontComponent.hpp"
 #include "Engine/Header/ECS/Component/UI/ButtonComponent.hpp"
-#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/Graphic/ResourceSet.hpp"
 
@@ -44,14 +43,11 @@ namespace Editor {
 	namespace GUI_Windows {
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
-
-
-
 				/**
 				*	WIDTH 
 				*/
 				float halfWidth = ImGui::GetContentRegionAvail().x / 2.f;
-				float quadWidth = ImGui::GetContentRegionAvail().x / 2.5f;
+				//float quadWidth = ImGui::GetContentRegionAvail().x / 2.5f;
 
 				/**
 				*	FONT
@@ -130,8 +126,6 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
 					if (ImGui::Selectable(" + Text##addTextcom"))
 						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
-					//if (ImGui::Selectable(" + Button##addButtoncom"))
-					//	Engine::dreamECSGame->AddComponent<Engine::ButtonComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
 
@@ -591,30 +585,20 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Text"))
 					{
-						ImGui::Spacing();
-						char text[300]{};
-						ImGui::PushItemWidth(textSize);
-						ImGui::Text("Text To Input: ");
-						if (ImGui::InputText("##Text", text, 300)) {
-							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
-								std::string newText = std::string{ text };
-								
-								Engine::dreamECSGame->AddComponent(
-									std::move(Engine::FontComponent{}));
-							}
-						}
-
-						if (ImGui::BeginDragDropTarget())
+						/**
+						*	INPUT TEXT
+						*/
+						static char textObjBuffer[1024 * 16];
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Input Text");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth *1.8f);
+						ImGui::PushFont(boldFont);
+						if (ImGui::InputText(" ", textObjBuffer, IM_ARRAYSIZE(textObjBuffer)))
 						{
-							ImGui::Text("I'm Dropping.");
-							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
-							{
-								const wchar_t* path = (const wchar_t*)payload->Data;
-								std::filesystem::path fontPath = std::filesystem::path(_assetPath) / path;
-								Engine::GraphicImplementation::SetFont(textComp, fontPath.string());
-							}
-							ImGui::EndDragDropTarget();
+							textComp->text = textObjBuffer;
 						}
+						ImGui::PopFont();
 
 						if (ImGui::Button("Change Font##ChangeFont")) {
 
@@ -625,10 +609,35 @@ namespace Editor {
 							}
 						}
 
+						
+						
+						/**
+						*	FONT COLOR
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Color");
+						ImGui::SameLine(halfWidth);
+
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" R");
+						ImGui::SameLine(halfWidth * 1.125f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::InputFloat("##colorRed", &textComp->colour.r, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::SameLine(halfWidth * 1.5f);
+						ImGui::Text(" G");
+						ImGui::SameLine(halfWidth * 1.620f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::InputFloat("##colorGreen", &textComp->colour.g, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::SameLine(halfWidth * 2.f);
+						ImGui::Text(" B");
+						ImGui::SameLine(halfWidth * 2.1f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::InputFloat("##colorBlue", &textComp->colour.b, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::PopFont();
+
 						//deleteComponent
 						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::dreamECSGame->RemoveComponent<Engine::FontComponent>(entity_selected);
-
 					}
 				}
 
@@ -717,46 +726,46 @@ namespace Editor {
 						ImGui::SameLine();
 						if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str()))
 						{
-							ImGui::Spacing();
+							//ImGui::Spacing();
 
-							for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap)
-							{
-								ImGui::Text(varName.c_str());
-								ImGui::SameLine();
-								switch (csPublicVariable.variableType)
-								{
-								case Engine::CSType::CHAR:
-									//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
-									break;
-								case Engine::CSType::BOOL:
-									ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
-									break;
-								case Engine::CSType::FLOAT:
-									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
-									break;
-								case Engine::CSType::INT:
-									ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
-									break;
-								case Engine::CSType::UINT:
-									//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
-									break;
-								case Engine::CSType::VEC2:
-									Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
-									ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
-									break;
-								}
-							}
+							//for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap)
+							//{
+							//	ImGui::Text(varName.c_str());
+							//	ImGui::SameLine();
+							//	switch (csPublicVariable.variableType)
+							//	{
+							//	case Engine::CSType::CHAR:
+							//		//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
+							//		break;
+							//	case Engine::CSType::BOOL:
+							//		ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
+							//		break;
+							//	case Engine::CSType::FLOAT:
+							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
+							//		break;
+							//	case Engine::CSType::INT:
+							//		ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
+							//		break;
+							//	case Engine::CSType::UINT:
+							//		//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
+							//		break;
+							//	case Engine::CSType::VEC2:
+							//		Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
+							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
+							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
+							//		break;
+							//	}
+							//}
 
 							/**
 							*	DELETE
 							*/
 							ImGui::AlignTextToFramePadding();
-							ImGui::SameLine(halfWidth);
+							//ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::dreamECSGame->RemoveScript(entity_selected, className.c_str());
 
-							ImGui::TreePop();
+							//ImGui::TreePop();
 						}
 					}
 				}

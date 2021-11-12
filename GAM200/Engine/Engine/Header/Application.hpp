@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Application.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    19/06/2021
 \brief
 Create a window and other various required manager (e.g Physic / Graphic Manager)
@@ -23,7 +23,7 @@ Technology is prohibited.
 typedef void (*FuncNoData)();
 typedef void (*Func1Param)(float);
 
-namespace Engine 
+namespace Engine
 {
 	//Forward declaration
 	struct GLFWwindow;
@@ -31,7 +31,7 @@ namespace Engine
 	class WindowCloseEvent;
 	class DeltaTime;
 
-	class Application : public Singleton<Application> 
+	class Application : public Singleton<Application>
 	{
 	public:
 		void Create();

@@ -21,6 +21,7 @@ namespace Engine
 {
     namespace GraphicImplementation
     {
+        // Function that sets up all shader files
         void setup_shdr()
         {
             // Default Shader for Game objects

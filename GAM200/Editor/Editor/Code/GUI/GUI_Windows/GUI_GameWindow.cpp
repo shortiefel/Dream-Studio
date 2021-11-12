@@ -15,13 +15,15 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Editor/Header/GUI/GUI_Windows/GUI_GameWindow.hpp"
-
-#include "Engine/Header/ECS/System/CameraSystem.hpp"
+#include <filesystem>
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/Picking2D.hpp"
+
+#include "Editor/Header/GUI/GUI_Windows/GUI_GameWindow.hpp"
+
+#include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 #include "Engine/Header/Input/Input.hpp"
 
@@ -30,7 +32,6 @@ Technology is prohibited.
 #include "Engine/Header/Management/GameState.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
-#include <filesystem>
 
 #define REMOVE_FROM_SCENEPATH scenePath = scenePath.string().substr(scenePath.string().find_last_of("\\") + 1);\
 							 scenePath = scenePath.string().substr(0, scenePath.string().find_last_of("."));\

@@ -26,13 +26,13 @@ namespace Engine
     namespace GraphicImplementation
     {
         // MACRO; Change to what is best suited
-#define MAXQUADCOUNT 500 // How many quads per buffer
-#define MAXCIRCLECOUNT 50 // How many circles per buffer
-#define CIRCLESLICES 20 // How circular the shape will be, higher number = more circlular.
+        #define MAXQUADCOUNT 500  // How many quads per buffer
+        #define MAXCIRCLECOUNT 50 // How many circles per buffer
+        #define CIRCLESLICES 20   // How circular the shape will be, higher number = more circlular.
 
-// Initialise variables
+        // Initialise variables
 
-// For quads; fill
+        // For quads; fill
         static const size_t stMaxQuadCount = MAXQUADCOUNT;
         static const size_t stOneQuadVertex = 4;
         static const size_t stOneQuadIndex = stOneQuadVertex + 2;
@@ -395,6 +395,15 @@ namespace Engine
 
             glEnableVertexArrayAttrib(s_FontData.va, 3);
             glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texID));
+
+            glEnableVertexArrayAttrib(s_FontData.va, 4);
+            glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tposition));
+
+            glEnableVertexArrayAttrib(s_FontData.va, 5);
+            glVertexAttribPointer(5, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tscale));
+
+            glEnableVertexArrayAttrib(s_FontData.va, 6);
+            glVertexAttribPointer(6, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
 
             /*
             example of indices loop; 2 triangles to form a quad:
@@ -896,8 +905,11 @@ namespace Engine
         void Renderer::DrawString(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const std::string filename, const std::string text,
             const Math::vec3 _colour)
         {
-            Math::vec2 position = tposition;
-            Math::vec2 size = tscale;
+            //Math::vec2 position = tposition;
+            //Math::vec2 size = tscale;
+
+            Math::vec2 position = {-1.f, -1.f};
+            Math::vec2 size = {2.f, 2.f};
 
             for (int i = 0; i < text.length(); i++)
             {
@@ -920,11 +932,11 @@ namespace Engine
 
 
                 float textureIndex = 0.0f;
-                for (uint32_t i = 1; i < s_FontData.uiTextureSlotIndex; i++)
+                for (uint32_t p = 1; p < s_FontData.uiTextureSlotIndex; p++)
                 {
-                    if (s_FontData.arrTextureSlots[i] == c.textureid)
+                    if (s_FontData.arrTextureSlots[p] == c.textureid)
                     {
-                        textureIndex = (float)i;
+                        textureIndex = (float)p;
                         break;
                     }
                 }
@@ -942,7 +954,7 @@ namespace Engine
                 s_FontData.vertexbufferptr->texID = textureIndex;
                 s_FontData.vertexbufferptr->tposition = tposition;
                 s_FontData.vertexbufferptr->tscale = tscale;
-                s_FontData.vertexbufferptr->trotation = trotation;
+                s_FontData.vertexbufferptr->trotation = Math::radians(trotation);
                 s_FontData.vertexbufferptr++;
 
                 s_FontData.vertexbufferptr->position = { xPos + width, yPos + height };
@@ -951,7 +963,7 @@ namespace Engine
                 s_FontData.vertexbufferptr->texID = textureIndex;
                 s_FontData.vertexbufferptr->tposition = tposition;
                 s_FontData.vertexbufferptr->tscale = tscale;
-                s_FontData.vertexbufferptr->trotation = trotation;
+                s_FontData.vertexbufferptr->trotation = Math::radians(trotation);
                 s_FontData.vertexbufferptr++;
 
                 s_FontData.vertexbufferptr->position = { xPos + width, yPos };
@@ -960,7 +972,7 @@ namespace Engine
                 s_FontData.vertexbufferptr->texID = textureIndex;
                 s_FontData.vertexbufferptr->tposition = tposition;
                 s_FontData.vertexbufferptr->tscale = tscale;
-                s_FontData.vertexbufferptr->trotation = trotation;
+                s_FontData.vertexbufferptr->trotation = Math::radians(trotation);
                 s_FontData.vertexbufferptr++;
 
                 s_FontData.vertexbufferptr->position = { xPos, yPos };
@@ -969,7 +981,7 @@ namespace Engine
                 s_FontData.vertexbufferptr->texID = textureIndex;
                 s_FontData.vertexbufferptr->tposition = tposition;
                 s_FontData.vertexbufferptr->tscale = tscale;
-                s_FontData.vertexbufferptr->trotation = trotation;
+                s_FontData.vertexbufferptr->trotation = Math::radians(trotation);
                 s_FontData.vertexbufferptr++;
 
                 s_FontData.indexcount += stOneQuadIndex;

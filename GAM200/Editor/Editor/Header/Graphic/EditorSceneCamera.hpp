@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EditorSceneCamera.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    22/07/2021
 \brief
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"

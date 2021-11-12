@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Settings.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    11/09/2021
 \brief
 This file stores the data for window and game screen size
@@ -14,16 +14,12 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <string>
-#include "Engine/Header/Commands/Command.hpp"
-
-namespace Engine 
+namespace Engine
 {
-	struct Settings 
+	struct Settings
 	{
 		static unsigned int windowWidth;
 		static unsigned int windowHeight;
@@ -31,8 +27,6 @@ namespace Engine
 		static unsigned int gameWidth;
 		static unsigned int gameHeight;
 		static float gameAR;
-		static std::string defaultCircle;
-		static std::string defaultSquare;
 	};
 }
 

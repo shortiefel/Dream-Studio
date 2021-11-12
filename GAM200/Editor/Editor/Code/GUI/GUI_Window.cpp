@@ -296,7 +296,7 @@ namespace Editor {
 											 (float)Engine::Window::GetInstance().GetHeight() });*/
 
 			ImGuiStyle& style = ImGui::GetStyle();
-			float minWinSizeX = style.WindowMinSize.x;
+			//float minWinSizeX = style.WindowMinSize.x;
 			style.WindowMinSize.x = 370.0f;
 			ImGui::Begin("Dream Engine", &dockspace_bool, dockspace_window_flags);//, & showWindow, ImGuiWindowFlags_NoInputs);
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");

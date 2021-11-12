@@ -45,37 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AIDirector.cs" />
-    <Compile Include="BackgroundColliderCheck.cs" />
-    <Compile Include="CameraController.cs" />
-    <Compile Include="CarAI.cs" />
-    <Compile Include="CarController.cs" />
-    <Compile Include="CarSpawner.cs" />
-    <Compile Include="CountDownSystem.cs" />
-    <Compile Include="FetchScore.cs" />
-    <Compile Include="GameManager.cs" />
-    <Compile Include="GameOverControl.cs" />
-    <Compile Include="GameProgressor.cs" />
-    <Compile Include="Grid.cs" />
-    <Compile Include="GridSearch.cs" />
-    <Compile Include="INeedingRoad.cs" />
-    <Compile Include="InputManager.cs" />
-    <Compile Include="KeysController.cs" />
-    <Compile Include="MainMenu.cs" />
-    <Compile Include="MassNotification.cs" />
-    <Compile Include="NotificationSolo.cs" />
-    <Compile Include="NotificationTimer.cs" />
-    <Compile Include="PauseMenu.cs" />
-    <Compile Include="PlacementManager.cs" />
-    <Compile Include="RoadFixer.cs" />
-    <Compile Include="RoadManager.cs" />
-    <Compile Include="ScoreSystem.cs" />
-    <Compile Include="Skip.cs" />
-    <Compile Include="StructureManager.cs" />
-    <Compile Include="StructureModel.cs" />
-    <Compile Include="Test.cs" />
-    <Compile Include="Test2.cs" />
-    <Compile Include="Wait.cs" />
+    <Compile Include="*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

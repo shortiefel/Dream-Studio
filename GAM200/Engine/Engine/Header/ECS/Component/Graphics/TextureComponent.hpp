@@ -17,11 +17,12 @@ Technology is prohibited.
 #ifndef TEXTURE_COMPONENT_HPP
 #define TEXTURE_COMPONENT_HPP
 
+#include "Engine/Header/pch.hpp"
+
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 
-#include "Engine/Header/pch.hpp"
 
 namespace Engine
 {
@@ -57,10 +58,10 @@ namespace Engine
 		void SetUV();
 
 
-		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "",
-				GraphicShape _shape = GraphicShape::SQUARE,
-				bool _animation = false, bool _loop = false,
-				int _endFrame = 1, float _fTime = 0, bool _active = true);
+		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png",
+			GraphicShape _shape = GraphicShape::SQUARE,
+			bool _animation = false, bool _loop = false,
+			int _endFrame = 1, float _fTime = 0, bool _active = true);
 
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);

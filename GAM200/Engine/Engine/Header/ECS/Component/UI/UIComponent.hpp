@@ -1,16 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    UIComponent.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
-@date    19/06/2021
+@author  Chia Yi Da		c.yida@digipen.edu
+@date    16/09/2021
 @brief
-This file contain the transform struct to be used by the ECS and various system
-
-//Serialize list
--vec2 float:	Position
--vec2 float:    Scale
--string:		Shape
--string:		Shader
+This file contains the UIComponent declaration
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -23,32 +17,30 @@ Technology is prohibited.
 #ifndef UI_HPP
 #define UI_HPP
 
-#include "Engine/Header/Graphic/Graphic.hpp"
-
-#include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/Component/IComponent.hpp"
-
 
 namespace Engine
 {
 	class DSerializer;
 	class SSerializer;
 
-	//Scale value for circle in both axis is same
 	struct UIComponent : public IComponent {
-		bool isActive = true;
-		int layer = 0; //layer which object is placed in higher number is drawn first (they appear behind)
-
 		std::string filepath = "";
 		std::string textureName = "";
-		GLuint texobj_hdl = GLuint{};
+		unsigned int texobj_hdl;
+
+		bool isActive = true;
+
+
+		UIComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "", bool _active = true);
+
 
 		UIComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		UIComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "", bool _active = true, int _layer = 0);
-
 		UIComponent(const UIComponent&) = default;
+		~UIComponent();
+
 		UIComponent& operator=(const UIComponent&) = default;
 	};
 }

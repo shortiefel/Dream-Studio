@@ -37,16 +37,11 @@ namespace Engine {
 		PROFILER_START("Rendering");
 
 		GLboolean gameDraw;
-		if (!_fbo)
-			gameDraw = GL_TRUE;
-		else
-			gameDraw = GL_FALSE;
+		if (!_fbo) gameDraw = GL_TRUE;
+		else gameDraw = GL_FALSE;
 
-		//GraphicImplementation::BindFramebuffer();
-		if (gameDraw)
-			GraphicSystem::GetInstance().GetFrameBuffer().Bind();
-		else
-			_fbo->Bind();
+		if (gameDraw) GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+		else _fbo->Bind();
 
 		// Load shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
@@ -69,7 +64,6 @@ namespace Engine {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		//GLSLShader::SetUniform("uCamMatrix", Math::mat3{}, shd_ref_handle);
 		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
 
 		GraphicImplementation::Renderer::EndBatch(!gameDraw);
@@ -78,10 +72,8 @@ namespace Engine {
 		// unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-		if (gameDraw)
-			GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
-		else
-			_fbo->Unbind();
+		if (gameDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
+		else _fbo->Unbind();
 	}
 
 	bool UISystem::Create() {

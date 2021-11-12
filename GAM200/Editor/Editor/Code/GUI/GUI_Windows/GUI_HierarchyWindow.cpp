@@ -59,9 +59,9 @@ namespace Editor {
 				*/
 
 				//highlight when object is currently selected
-				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
+				/*ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
 					| ImGuiTreeNodeFlags_OpenOnDoubleClick
-					| ImGuiTreeNodeFlags_SpanAvailWidth;
+					| ImGuiTreeNodeFlags_SpanAvailWidth;*/
 
 				std::set<Engine::Entity_id> setOfUI;
 
@@ -113,7 +113,6 @@ namespace Editor {
 					*/
 					if (ImGui::Button("Parent##ParentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DuplicateEntityAsInstance(entity.second);  });
 						Engine::Entity_id parent = GetTarget(entity_selected);
 						for (const auto& [index, entity_id] : entity_selected) 
 						{
@@ -134,9 +133,11 @@ namespace Editor {
 					*/
 					if (ImGui::Button("Delete##DeleteGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						//CallFuncForEach(entity_selected.begin(), entity_selected.end(), []() {});
-						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DestroyEntity(entity.second);  });
-						entity_selected.clear();
+						if (entity_selected[0] != DEFAULT_ENTITY_ID) {
+							//CallFuncForEach(entity_selected.begin(), entity_selected.end(), []() {});
+							std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DestroyEntity(entity.second);  });
+							entity_selected.clear();
+						}
 						//
 						// 
 						//Engine::DreamECS::GetInstance().DestroyEntity(entity_selected);

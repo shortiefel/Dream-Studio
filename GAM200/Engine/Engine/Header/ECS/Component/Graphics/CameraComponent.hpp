@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    CameraComponent.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    26/06/2021
 @brief
 This file contains the Camera component
@@ -30,17 +30,21 @@ namespace Engine {
     class DSerializer;
     class SSerializer;
 
-    struct CameraComponent : public IComponent 
+    struct CameraComponent : public IComponent
     {
-        // window parameters
-        float ar = float{}, fov = float{};
-        int height = int{};
+        // Window parameters
+        float ar{}, fov{};
+        int height{};
+
         bool isActive = true;
+
+
+        CameraComponent(Entity_id _ID = DEFAULT_ENTITY_ID, int _height = 15, float _fov = 1.f, float _ar = 0.f, bool _active = false);
+
 
         CameraComponent& Deserialize(const DSerializer& _serializer);
         void Serialize(const SSerializer& _serializer);
 
-        CameraComponent(Entity_id _ID = DEFAULT_ENTITY_ID, int _height = 1000, float _fov = 1.f, float _ar = 0.f, bool _active = false);
         CameraComponent(const CameraComponent&) = default;
         CameraComponent& operator=(const CameraComponent&) = default;
     };

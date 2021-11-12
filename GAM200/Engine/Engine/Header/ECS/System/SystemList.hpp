@@ -1,10 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
 @file    SystemList.hpp
-@author  Chia Yi Da		chiayida98@gmail.com
+@author  Chia Yi Da		c.yida@digipen.edu
 @date    27/06/2021
 @brief
-List of all System
+List of all Systems
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -23,6 +23,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/System/PhysicsSystem.hpp"
 #include "Engine/Header/ECS/System/UISystem.hpp"
-#include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 #include "Engine/Header/ECS/System/FontSystem.hpp"
+#include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 #endif

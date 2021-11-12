@@ -15,13 +15,13 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef NODE_H
-#define NODE_H
-
-namespace Engine {
-	namespace AI {
-		
-	}
-}
-
-#endif
+//#ifndef NODE_H
+//#define NODE_H
+//
+//namespace Engine {
+//	namespace AI {
+//		
+//	}
+//}
+//
+//#endif

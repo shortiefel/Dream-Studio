@@ -147,7 +147,12 @@ namespace Editor {
 				}
 
 
-
+				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+				{
+					ImGui::Text("I'm Dragging.");
+					ImGui::SetDragDropPayload("GAME_OBJECT", NULL, NULL);
+					ImGui::EndDragDropSource();
+				}
 
 				if (ImGui::CollapsingHeader("Canvas")) {
 					for (auto& id : setOfUI) {

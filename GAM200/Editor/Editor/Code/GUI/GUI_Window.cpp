@@ -449,8 +449,9 @@ namespace Editor {
 			ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
 			//ImGui::SameLine(halfWidth);
 			if (ImGui::ImageButton(iconPlay, { 32, 32 }, { 0,1 }, { 1, 0 })) {
-				if (opt_fullscreen = true)
+				if (!opt_fullscreen)
 				{
+
 				const ImGuiViewport* viewport = ImGui::GetMainViewport();
 				ImGui::SetNextWindowPos(opt_fullscreen ? viewport->WorkPos : viewport->Pos);
 				ImGui::SetNextWindowSize(opt_fullscreen ? viewport->WorkSize : viewport->Size);
@@ -465,7 +466,6 @@ namespace Editor {
 			//ImGui::PushItemWidth(wSize.x / 2);
 			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(Engine::GameState::GetInstance().GetPlaying()));
 			if (ImGui::ImageButton(iconStop, { 32, 32 }, { 0,1 }, { 1, 0 })) {
-				if (opt_fullscreen)
 				EditorSceneManager::GetInstance().Stop();
 			}
 			ImGui::PopItemFlag();

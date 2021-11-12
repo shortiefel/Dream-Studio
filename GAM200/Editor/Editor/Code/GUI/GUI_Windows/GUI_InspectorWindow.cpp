@@ -171,7 +171,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##TransformYPos", &transComp->localPosition.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 
@@ -197,7 +197,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##TransformYscale", &transComp->scale.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 
@@ -303,7 +303,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderYPos", &colComp->offset_position.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 						ImGui::PopFont();
@@ -360,7 +360,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderYscale", &colComp->offset_scale.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
 							Engine::TransformCalculationSystem::GetInstance().Update();
 						ImGui::PopFont();

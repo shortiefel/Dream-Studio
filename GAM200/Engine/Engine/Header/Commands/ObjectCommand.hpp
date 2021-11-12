@@ -42,9 +42,9 @@ namespace Engine {
 	//commands for undo and redo adding game object
 	class ObjectAddCommand : public ObjectCommand
 	{
-		Engine::Entity_id object_ID;
-		Engine::Entity_id entity_id;
-		std::map<int, Engine::Entity_id> entity_selected;
+		Engine::Entity_id object_ID = Engine::Entity_id{};
+		Engine::Entity_id entity_id = Engine::Entity_id{};
+		std::map<int, Engine::Entity_id> entity_selected = std::map<int, Engine::Entity_id>{};
 
 	public:
 

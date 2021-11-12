@@ -26,7 +26,7 @@ namespace Engine {
 		bool tem true = load temporary file
 		temporary file is saved before going into play mode
 		--------------------------------------------------------------------*/
-		Scene(std::string _sceneName, bool tem = false);
+		Scene(std::string _sceneName, bool _play = false);
 		//Destructor
 		~Scene();
 		/*--------------------------------------------------------------------

@@ -46,13 +46,13 @@ Technology is prohibited.
 #include "Engine/Header/AI/AISystem.hpp"
 
 namespace Engine {
-    Scene::Scene(std::string _sceneName, bool tem) : sceneName{ _sceneName } {
-        if (!tem)
-            GameSceneSerializer::DeserializeScene(sceneName);
-        else
-            GameSceneSerializer::DeserializeScene("temporary");
+    Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
+        GameSceneSerializer::DeserializeScene(sceneName);
 
         ScriptSystem::GetInstance().UpdateMapData();
+        if (_play) {
+            ScriptSystem::GetInstance().PlayInit();
+        }
         //AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });
         //AI::AISystem::GetInstance().SetRender();
     }

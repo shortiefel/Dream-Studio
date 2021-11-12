@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 public class MenuLoad : MonoBehaviour
 {
+    //public override void OnMouseOver()
+    public override void Update()
+    {
+        if (Input.GetMouseButtonDown(MouseCode.Left))
+        {
+            SceneManager.LoadScene("Intro");
+        }
+    }
     public static void PlayButton()
     {
         //Invoke("GoToGameIntro", 1);

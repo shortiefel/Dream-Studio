@@ -45,6 +45,9 @@ namespace Engine
 		GraphicImplementation::Renderer::ResetFontStats();
 		GraphicImplementation::Renderer::BeginFontBatch();
 
+		// Set uniform
+		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
+
 		const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
 
 		for (const auto& text : fontArray)
@@ -78,9 +81,6 @@ namespace Engine
 		// For transparency of glyph textures
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		// Set uniform
-		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
 
 		GraphicImplementation::Renderer::EndFontBatch();
 		GraphicImplementation::Renderer::FlushFont();

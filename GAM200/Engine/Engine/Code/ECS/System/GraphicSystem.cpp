@@ -81,6 +81,10 @@ namespace Engine
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
+		// Set uniform
+		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
+
+
 		// Get texture array for entities
 		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
 
@@ -95,9 +99,6 @@ namespace Engine
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		// Set uniform
-		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
-
 		GraphicImplementation::Renderer::EndBatch(_isDebugDraw);
 		GraphicImplementation::Renderer::Flush(_isDebugDraw);
 
@@ -111,6 +112,9 @@ namespace Engine
 		// Load collision shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::COLLISION].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
+
+		// Set uniform
+		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
 
 		// Get collision array for entities
 		auto& collisionArray = dreamECSGame->GetComponentArrayData<ColliderComponent>();
@@ -144,9 +148,6 @@ namespace Engine
 					0);
 			}
 		}
-
-		// Set uniform
-		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
 
 		GraphicImplementation::Renderer::EndBatch(_isDebugDraw);
 		GraphicImplementation::Renderer::Flush(_isDebugDraw);

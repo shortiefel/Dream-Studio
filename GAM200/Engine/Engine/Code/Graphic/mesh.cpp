@@ -20,14 +20,13 @@ Technology is prohibited.
 
 #pragma warning( push )
 #pragma warning( disable : 28020 )
-#pragma warning( disable : 6262 )
 
 namespace Engine
 {
     namespace GraphicImplementation
     {
         // MACRO; Change to what is best suited
-        #define MAXQUADCOUNT 1600  // How many quads per buffer
+        #define MAXQUADCOUNT 500  // How many quads per buffer
         #define MAXCIRCLECOUNT 50 // How many circles per buffer
         #define CIRCLESLICES 20   // How circular the shape will be, higher number = more circlular.
 

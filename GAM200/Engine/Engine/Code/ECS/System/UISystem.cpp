@@ -57,8 +57,9 @@ namespace Engine {
 
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
+
 			Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
-			GraphicImplementation::Renderer::DrawQuad(transform->position + camPos, transform->scale, transform->angle, ui.texobj_hdl);
+			//GraphicImplementation::Renderer::DrawQuad(transform->position + camPos, transform->scale, transform->angle, ui.texobj_hdl);
 		}
 
 		glEnable(GL_BLEND);

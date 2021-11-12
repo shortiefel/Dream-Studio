@@ -26,5 +26,10 @@
         {
             transform.angle += 100 * Time.deltaTime;
         }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            transform.angle -= 100 * Time.deltaTime;
+        }
     }
 }

@@ -20,6 +20,7 @@ Technology is prohibited.
 
 #pragma warning( push )
 #pragma warning( disable : 28020 )
+#pragma warning( disable : 6262 )
 
 namespace Engine
 {

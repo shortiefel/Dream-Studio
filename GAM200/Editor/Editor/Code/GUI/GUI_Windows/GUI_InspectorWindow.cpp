@@ -632,15 +632,17 @@ namespace Editor {
 						/**
 						*	INPUT TEXT
 						*/
-						static char textObjBuffer[1024 * 16];
+						std::string& textStuff = textComp->text;
+						char textName[100];
+						strcpy(textName, textStuff.c_str());
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Input Text");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth *1.8f);
 						ImGui::PushFont(boldFont);
-						if (ImGui::InputText(" ", textObjBuffer, IM_ARRAYSIZE(textObjBuffer)))
+						if (ImGui::InputText("##textToInput", textName, IM_ARRAYSIZE(textName)))
 						{
-							textComp->text = textObjBuffer;
+							textComp->text = textName;
 						}
 						ImGui::PopFont();
 
@@ -732,7 +734,7 @@ namespace Editor {
 						if (ImGui::CollapsingHeader("UI"))
 						{
 							ImGui::AlignTextToFramePadding();
-							ImGui::Text("Texture");
+							ImGui::Text("UI##UIComp");
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::Text(uiComp->textureName.c_str());

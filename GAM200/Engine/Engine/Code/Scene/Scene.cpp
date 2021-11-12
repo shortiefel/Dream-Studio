@@ -58,6 +58,8 @@ namespace Engine {
     }
 
     Scene::~Scene() {
+        ScriptSystem::GetInstance().DestroyChildDomain();
+
         Game::Grid::GetInstance().DestroyGrid();
     }
 
@@ -75,7 +77,10 @@ namespace Engine {
     }
 
     void Scene::Stop(bool deserialize) {
+        ScriptSystem::GetInstance().DestroyChildDomain();
+
         CollisionSystem::GetInstance().Stop();
+        
         dreamECSGame->ResetECS();
         Game::Grid::GetInstance().DestroyGrid();
 

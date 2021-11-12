@@ -156,6 +156,10 @@ namespace Engine {
 		}
 	}
 
+	void ScriptSystem::DestroyChildDomain() {
+		Scripting::DestroyChildDomain();
+	}
+
 	void ScriptSystem::Create() {
 		Scripting::Setup();
 		RegisterInternalCall();

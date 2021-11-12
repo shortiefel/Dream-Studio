@@ -42,7 +42,7 @@ namespace Engine {
 		/*--------------------------------------------------------------------------------------------------------------
 		Entity related functions
 		--------------------------------------------------------------------------------------------------------------*/
-		Entity& CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, std::unordered_set<Entity_id> _child = std::unordered_set<Entity_id>{}, Entity_id _parent = DEFAULT_ENTITY_ID);
+		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, std::unordered_set<Entity_id> _child = std::unordered_set<Entity_id>{}, Entity_id _parent = DEFAULT_ENTITY_ID);
 		void DuplicateEntityAsInstance(Entity ent);
 		void DestroyEntity(Entity_id entity_id);
 		//const std::vector<Entity>& GetUsedEntitySet();

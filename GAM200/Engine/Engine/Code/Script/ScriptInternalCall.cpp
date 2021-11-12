@@ -375,7 +375,7 @@ namespace Engine {
 		std::string entityName = text;
 		mono_free(text);
 		if (entityName.empty()) entityName = "Entity";
-		const Entity& entity = dreamECSGame->CreateEntity(entityName.c_str());
+		const Entity entity = dreamECSGame->CreateEntity(entityName.c_str());
 		*entityId = entity.id;
 	}
 

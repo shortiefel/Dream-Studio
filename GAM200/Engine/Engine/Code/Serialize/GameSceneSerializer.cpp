@@ -59,7 +59,7 @@ Technology is prohibited.
 								parent = serializer.GetValue<unsigned int>("Parent");\
 								\
 							}\
-							Entity& entity = dreamECSGame->CreateEntity(entityName.c_str(), child, parent);
+							Entity entity = dreamECSGame->CreateEntity(entityName.c_str(), child, parent);
 
 
 //Type and Store named must be same to use this
@@ -346,6 +346,7 @@ namespace Engine {
 			rapidjson::Value::ConstMemberIterator itr;
 
 			DESERIALIZE_ENTITY;
+			if (entity.id == DEFAULT_ENTITY_ID) return;
 			dreamECSGame->AddPrefab(Prefab(_filename, entity));
 
 			if (id != nullptr)
@@ -354,10 +355,11 @@ namespace Engine {
 			itr = obj.FindMember("TransformComponent");
 			if (itr != obj.MemberEnd()) {
 					DSerializer serializer{ itr }; 
-					const auto& transform = TransformComponent{ entity.id }.Deserialize(serializer);
+					auto& transform = TransformComponent{ entity.id }.Deserialize(serializer);
 					dreamECSGame->AddComponent(
 						 TransformComponent{ entity.id, position, transform.scale, transform.angle + angle }
 					); 
+					transform.localPosition = position;
 			}
 
 			DESERIALIZE(ColliderComponent);

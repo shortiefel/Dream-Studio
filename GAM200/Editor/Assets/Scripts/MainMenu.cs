@@ -5,50 +5,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class MainMenu : MonoBehaviour
+public class MenuLoad : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public override void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    public override void Update()
-    {
-
-    }
-    public void PlayButton()
+    public static void PlayButton()
     {
         //Invoke("GoToGameIntro", 1);
-        GoToGameIntro();
+        LoadGame();
     }
-    public void GoToGameIntro()
+    public static void GameIntroButton()
     {
         //SceneManager.LoadScene(1);
         SceneManager.LoadScene("Intro");
     }
-    public void GoToGame()
+    public static void LoadGame()
     {
         //SceneManager.LoadScene(2);
         SceneManager.LoadScene("NewGame");
     }
 
-    public void GetHighScore()
+    public static void LoadHighScore()
     {
         SceneManager.LoadScene("HighScore");
     }
 
-    public void LeaveGame()
+    public static void LeaveGame()
     {
         Debug.Log("Quit Game");
         Application.Quit();
 
     }
 
-    public void MenuButton()
+    public static void MenuButton()
     {
-        //SceneManager.LoadScene(0);
         SceneManager.LoadScene("MainMenu");
     }
 

@@ -24,7 +24,7 @@ Technology is prohibited.
 
 namespace Engine {
 
-	const std::uint32_t MAX_ENTITIES = 10000;
+	const std::uint32_t MAX_ENTITIES = 1600;
 	using Entity_id = std::uint32_t;
 
 	#define DEFAULT_ENTITY_NAME "Entity"

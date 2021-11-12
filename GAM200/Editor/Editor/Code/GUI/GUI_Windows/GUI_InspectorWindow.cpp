@@ -228,7 +228,7 @@ namespace Editor {
 						int index = static_cast<int>(transComp->layer);
 						//arrays
 						const int sz = 4;
-						const char* layerName[sz] = { "Background", "UI Layer", "Manager", "Game Object" };
+						const char* layerName[sz] = { "Background", "Layer 1", "Layer 2", "Layer 3" };
 						const char* previewLayer = layerName[index];
 
 						ImGui::AlignTextToFramePadding();
@@ -520,15 +520,17 @@ namespace Editor {
 						*	Texture files
 						*/
 						ImGui::Spacing();
-						ImGui::AlignTextToFramePadding();
 
+						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Texture");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
 						ImGui::Text(textureComp->textureName.c_str());
 						ImGui::PopFont();
+
 						ImGui::Spacing();
+
 						ImGui::AlignTextToFramePadding();
 						ImGui::SameLine(halfWidth * 1.2f);
 
@@ -634,6 +636,14 @@ namespace Editor {
 						{
 							textComp->text = textObjBuffer;
 						}
+						ImGui::PopFont();
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Font");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(textComp->fontName.c_str());
 						ImGui::PopFont();
 
 						if (ImGui::Button("Change Font##ChangeFont")) {

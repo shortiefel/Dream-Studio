@@ -66,7 +66,7 @@ namespace Engine {
 		//sysManager = std::make_unique<SystemManager>();
 	}
 
-	Entity& DreamECS::CreateEntity(const char* _entityName, std::unordered_set<Entity_id> _child, Entity_id _parent) {
+	Entity DreamECS::CreateEntity(const char* _entityName, std::unordered_set<Entity_id> _child, Entity_id _parent) {
 		DUPLICATE_NAME_CHECK(_entityName);
 
 		return entityManager->CreateEntity(entityName.c_str(), _parent);

@@ -32,7 +32,6 @@ namespace Engine
 		std::string text = "";
 
 		Math::vec3 colour{};
-		float red{}, green{}, blue{};
 
 		bool isFont;
 
@@ -41,7 +40,7 @@ namespace Engine
 		FontComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
 
-		FontComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "", std::string _text = "", bool _isFont = false,
+		FontComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Fonts\\arial.ttf", std::string _text = "", bool _isFont = false,
 			float _red = 1.0f, float _green = 1.0f, float _blue = 1.0f, bool _active = true);
 
 		FontComponent(const FontComponent&) = default;

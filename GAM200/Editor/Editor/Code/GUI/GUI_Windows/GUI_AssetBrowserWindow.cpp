@@ -58,7 +58,7 @@ namespace Editor {
 		void GUI_AssetBrowser(bool* asset_bool, ImGuiWindowFlags window_flags)
 		{
 			if (*asset_bool) {
-				ImGui::Begin("Project", asset_bool, window_flags);
+				ImGui::Begin("Assets Manager", asset_bool, window_flags);
 				
 				//all assets
 				if (_currentDirectory != std::filesystem::path(_assetPath))

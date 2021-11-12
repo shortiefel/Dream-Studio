@@ -30,7 +30,7 @@ namespace Engine
 	FontComponent::FontComponent(Entity_id _ID, const std::string _path, std::string _text, bool _isFont,
 		float _red, float _green, float _blue, bool _active) :
 		IComponent{ _ID }, filepath{ _path }, text{ _text }, isFont{ _isFont },
-		red{ _red }, green{ _green }, blue{ _blue }, colour{ red, green, blue }, isActive{ _active } {}
+		colour{ _red, _green, _blue }, isActive{ _active } { GraphicImplementation::SetFont(this, filepath); }
 
 	// Destructor for Text Component
 	FontComponent::~FontComponent()
@@ -44,9 +44,9 @@ namespace Engine
 		GraphicImplementation::SetFont(this, std::move(_serializer.GetValue<std::string>("Filepath")));
 		text = _serializer.GetValue<std::string>("Text");
 
-		red = _serializer.GetValue<float>("Red");
-		green = _serializer.GetValue<float>("Green");
-		blue = _serializer.GetValue<float>("Blue");
+		float red = _serializer.GetValue<float>("Red");
+		float green = _serializer.GetValue<float>("Green");
+		float blue = _serializer.GetValue<float>("Blue");
 		colour = { red, green, blue };
 
 		isActive = _serializer.GetValue<bool>("IsActive");
@@ -60,9 +60,9 @@ namespace Engine
 		_serializer.SetValue("Filepath", filepath);
 		_serializer.SetValue("Text", text);
 
-		_serializer.SetValue("Red", red);
-		_serializer.SetValue("Green", green);
-		_serializer.SetValue("Blue", blue);
+		_serializer.SetValue("Red", colour.r);
+		_serializer.SetValue("Green", colour.g);
+		_serializer.SetValue("Blue", colour.b);
 
 		_serializer.SetValue("IsActive", isActive);
 	}

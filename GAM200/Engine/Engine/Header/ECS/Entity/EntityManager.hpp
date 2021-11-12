@@ -29,10 +29,15 @@ namespace Engine {
 	{
 	public:
 
-		Entity& CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, Entity_id _parent = MAX_ENTITIES + 1)
+		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, Entity_id _parent = MAX_ENTITIES + 1)
 		{
 			//error checking
-			LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
+			if (AliveEntityCount >= MAX_ENTITIES) {
+				Entity entity{};
+				//Print to console
+				return entity; 
+			}
+			//LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
 
 			Entity_id entityId;
 

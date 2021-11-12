@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    SystemList.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu	100%
 @date    27/06/2021
 @brief
 List of all Systems

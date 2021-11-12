@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    FontSystem.hpp
-@author  Chia Yi Da c.yida@digipen.edu
+@author  Chia Yi Da c.yida@digipen.edu		100%
 @date    24/10/2021
 @brief
 #include "Engine/Header/ECS/System/FontSystem.hpp"

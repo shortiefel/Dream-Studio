@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUI_ConsoleWindow.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu   100%
 @date    18/08/2021
 \brief
 This file contain the Console window definition

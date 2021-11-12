@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Picking2D.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    23/06/2021
 @brief
 #include "Engine/Header/Graphic/Picking2D.hpp"

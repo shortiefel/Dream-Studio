@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    MonoFunctionType.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    21/09/2021
 \brief
 This file contain the enum of Mono function type

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Button.hpp
-@author  Tan Wei Ling Felicia weilingfelicia.tan@digipen.edu
+@author  Tan Wei Ling Felicia weilingfelicia.tan@digipen.edu	90%
 @date    26/10/2021
 \brief
 This file contain the declaration for ButtonComponent

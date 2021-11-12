@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    MouseEvent.hpp
-@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu	100%
 @date    26/05/2021
 \brief
 #include "Engine/Header/Event/MouseEvent.hpp"

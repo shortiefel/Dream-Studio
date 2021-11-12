@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    CommonMath.hpp
-@@author  tan wei ling felicia	weilingfelicia.tan@digipen.edu
+@@author  tan wei ling felicia	weilingfelicia.tan@digipen.edu  100%
 @date    14/09/2021
 \brief
 

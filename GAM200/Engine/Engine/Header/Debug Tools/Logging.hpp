@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    ScriptComponent.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    26/05/2021
 \brief
 

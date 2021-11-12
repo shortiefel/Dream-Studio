@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Input.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu			100%
 @date    31/08/2021
 \brief
 This file has the definition for Input

@@ -1,6 +1,6 @@
 /*
 @file    ScriptInternalCall.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu			100%
 @date    25/08/2021
 \brief
 This file contain the definition of ScriptInternalCall

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    OverlapColliderEvent.hpp
-@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu	100%
 @date    28/08/2021
 \brief
 This file contain the OverlapEvent declaration

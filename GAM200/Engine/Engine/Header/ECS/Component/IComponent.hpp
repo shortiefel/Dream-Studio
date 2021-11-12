@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    IComponent.hpp
-@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu	100%
 @date    08/09/2021
 @brief
 This file is for component to inherit

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    FixedUpdateEvent.hpp
-@authors	Ow Jian Wen	jianwen.o@digipen.edu
+@authors	Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    08/11/2021
 \brief
 #include "Engine/Header/Event/FixedUpdateEvent.hpp"

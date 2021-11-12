@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GraphicSystem.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu	100%
 @date    16/06/2021
 @brief
 This file contains function declaration for class GraphicsSystem

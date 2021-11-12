@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*!
 @file EntityManager.hpp
-@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu	100%
 @date 26/04/2021
 @brief
 Entity Manager is in charge of assigning entity IDs and keeping records of which IDs are in use

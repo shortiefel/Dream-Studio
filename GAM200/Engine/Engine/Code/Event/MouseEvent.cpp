@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    MouseEvent.cpp
-@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu		100%
 @date    27/07/2021
 \brief
 This file contain the MouseEvent definition

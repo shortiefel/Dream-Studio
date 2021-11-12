@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Window.cpp
-@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu		100%
 @date    19/06/2021
 \brief
 Function definitions for creating and destroying a window using GLFW API

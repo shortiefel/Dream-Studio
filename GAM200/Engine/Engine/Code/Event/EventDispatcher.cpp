@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    EventDispatcher.cpp
-@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu	1005
 @date    27/07/2021
 \brief
 This file contain the Event dispatcher definition

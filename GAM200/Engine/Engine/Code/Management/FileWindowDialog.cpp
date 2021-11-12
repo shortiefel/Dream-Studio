@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    FileWindowDialog.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu			100%
 @date    27/10/2021
 \brief
 This contain the definition of FileWindowDialog

@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Scene.cpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu   	100%
 @date    23/06/2021
 \brief
 An application of the dream engine can have multiple game scene to be used

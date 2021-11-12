@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    pch.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu	100%
 @date    26/04/2021
 \brief
 This file contains include files

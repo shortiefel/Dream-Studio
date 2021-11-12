@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    TransformComponent.cpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu	100%
 @date    19/06/2021
 \brief
 This file contains the TransformComponent definition

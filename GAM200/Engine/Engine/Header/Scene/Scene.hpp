@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Scene.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    23/06/2021
 \brief
 This contain the declaration of GameScene class with its function

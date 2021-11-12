@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Graphic.hpp
-@author  Chia Yi Da		c.yida@digipen.edu
+@author  Chia Yi Da		c.yida@digipen.edu      100%
 @date    16/06/2021
 \brief
 This file contains functions declaration that is to be called by the Graphic System

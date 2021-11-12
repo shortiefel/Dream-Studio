@@ -1,8 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    GUIWindow.hpp
-@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
-         Goh See Yong, Denise   g.seeyongdenise@digipen.edu
+@author  Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu  100%
         
 @date    26/07/2021
 \brief

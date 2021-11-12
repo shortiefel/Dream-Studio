@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    SceneManager.cpp
-@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu     100%
 @date    14/09/2021
 \brief
 This file has the function definition of the SceneManager

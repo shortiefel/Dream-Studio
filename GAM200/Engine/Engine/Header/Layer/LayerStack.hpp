@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    LayerStack.hpp
-@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu
+@authors	Goh See Yong Denise		g.seeyongdenise@digipen.edu	100%
 @date    16/06/2021
 \brief
 This file contain LayerStack declaration

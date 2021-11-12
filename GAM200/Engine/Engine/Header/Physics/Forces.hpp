@@ -1,7 +1,7 @@
 /* Start Header**********************************************************************************/
 /*
 @file    Forces.hpp
-@author  Ow Jian Wen	jianwen.o@digipen.edu
+@author  Ow Jian Wen	jianwen.o@digipen.edu		100%
 @date    08/11/2021
 @brief
 #include "Engine/Header/Physics/Forces.hpp"

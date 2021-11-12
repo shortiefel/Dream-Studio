@@ -1,8 +1,8 @@
 /* Start Header**********************************************************************************/
 /*
 @file    DreamECS.hpp
-@author  Ow Jian Wen			jianwen.o@digipen.edu
-		 Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu
+@author  Ow Jian Wen			jianwen.o@digipen.edu		50%
+					Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu	50%
 @date    08/09/2021
 \brief
 This file is the wrapper file for ECS

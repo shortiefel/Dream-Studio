@@ -94,8 +94,12 @@ namespace Engine {
 
 		entityMap[_parent].child.emplace(_child);
 		entityMap[_child].parent = _parent;
-		auto& pos = dreamECSGame->GetComponent<TransformComponent>(_child).localPosition;
-		pos -= dreamECSGame->GetComponent<TransformComponent>(_parent).position;
+		TransformComponent* itr = dreamECSGame->GetComponentPTR<TransformComponent>(_child);
+		if (itr == nullptr) return;
+		auto& pos = itr->localPosition;
+		TransformComponent* itr2 = dreamECSGame->GetComponentPTR<TransformComponent>(_parent);
+		if (itr2 == nullptr) return;
+		pos -= itr2->position;
 	}
 
 	void TransformCalculationSystem::Unparent(Entity_id _target) {

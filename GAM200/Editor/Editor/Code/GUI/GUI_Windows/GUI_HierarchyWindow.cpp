@@ -113,7 +113,6 @@ namespace Editor {
 					*/
 					if (ImGui::Button("Parent##ParentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DuplicateEntityAsInstance(entity.second);  });
 						Engine::Entity_id parent = GetTarget(entity_selected);
 						for (const auto& [index, entity_id] : entity_selected) 
 						{

@@ -302,6 +302,42 @@ namespace Editor {
 							Engine::TransformCalculationSystem::GetInstance().Update();
 						ImGui::PopFont();
 
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Collider Type");
+						ImGui::SameLine(halfWidth);
+
+						ImGui::PushFont(boldFont);
+						//selection
+						static ImGuiComboFlags flags = 0;
+						int index = static_cast<int>(colComp->cType);
+						//arrays
+						const int sz = 2;
+						const char* layerName[sz] = { "Circle", "Square" };
+						const char* previewLayer = layerName[index];
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::SetNextItemWidth(halfWidth);
+						if (ImGui::BeginCombo("##Layering", previewLayer, flags))
+						{
+							for (int i{ 0 }; i < sz; i++) {
+								const bool isSelected = (index == i);
+								if (ImGui::Selectable(layerName[i], isSelected)) {
+									colComp->cType = static_cast<Engine::ColliderType>(i);
+								}
+
+								// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+								if (isSelected)
+									ImGui::SetItemDefaultFocus();
+
+							}
+
+							ImGui::EndCombo();
+						}
+
+
+
+						ImGui::PopFont();
+
 						/**
 						*	Scale
 						*/

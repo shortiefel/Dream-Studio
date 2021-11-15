@@ -26,19 +26,21 @@ Technology is prohibited.
 
 namespace Engine
 {
+	// Constructor for AnimationState struct
+	AnimationState::AnimationState(int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop) :
+		stateRow{ _stateRow }, startX{ _startX }, endX{ _endX }, fTime{ _fTime }, isLoop{ _isLoop }, aTime{ 0.f }, aComplete{ false } {}
+
 	// Contructor for Texture Component
 	TextureComponent::TextureComponent(Entity_id _ID, const std::string _path,
-		GraphicShape _shape,
-		bool _animation, bool _loop,
-		int _endFrame, float _fTime, bool _active) :
-		IComponent{ _ID }, filepath{ _path },
-		mdl_ref{ _shape },
-		isAnimation{ _animation }, isLoop{ _loop }, aComplete{ false },
-		startFrame{ 1 }, endFrame{ _endFrame }, currFrame{ 0 },
-		aTime{ 0.f }, fTime{ _fTime }, isActive{ _active },
+		GraphicShape _shape, bool _animation, bool _active) :
+		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape },
+		isAnimation{ _animation }, isActive{ _active },
 		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f },
-		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 } {
+		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 } 
+	{
 		GraphicImplementation::SetTexture(this, filepath);
+		cellWidth = static_cast<float>(width) / totalColumns;
+		cellHeight = static_cast<float>(height) / totalRows;
 	}
 
 	// Destructor for Texture Component
@@ -49,28 +51,27 @@ namespace Engine
 
 	// Function that updates the UV coordinates for spritesheets
 	// and the frame variables for the component based on delta time
-	void TextureComponent::AnimationUpdate(float _dt)
+	void TextureComponent::AnimationUpdate(float _dt, AnimationState& state)
 	{
-		aTime += _dt;
+		state.aTime += _dt;
 
-		if (aTime > fTime)
+		if (state.aTime > state.fTime)
 		{
-			aTime -= fTime;
-			++currFrame;
+			state.aTime -= state.fTime;
+			++state.currFrame;
 
-			if (currFrame > endFrame)
+			if (state.currFrame > state.endX)
 			{
-				if (isLoop == true)
+				if (state.isLoop == true)
 				{
-					currFrame = startFrame;
+					state.currFrame = state.startX;
 				}
 				else
 				{
-					currFrame = endFrame;
-					aComplete = true;
+					state.currFrame = state.endX;
+					state.aComplete = true;
 				}
 			}
-
 			SetUV();
 		}
 	}

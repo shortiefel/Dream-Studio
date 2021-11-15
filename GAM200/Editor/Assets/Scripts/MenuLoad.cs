@@ -6,7 +6,7 @@ public class MenuLoad : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            SceneManager.LoadScene("Intro");
+            SceneManager.LoadScene("NewGame");
         }
     }
     public static void PlayButton()

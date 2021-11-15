@@ -27,6 +27,8 @@ Technology is prohibited.
 #include "Engine/Header/Commands/Command.hpp"
 #include "Engine/Header/Commands/ObjectCommand.hpp"
 
+#include <unordered_map>
+
 #define DESTROY_ENTITY(entity_id)\
 entityManager->DestroyEntity(entity_id);\
 compManager->DestroyEntity(entity_id);
@@ -55,6 +57,7 @@ namespace Engine {
 	std::unordered_map<Entity_id, Prefab> mapOfPrefab;
 	
 	std::unordered_set<Entity_id> destroySet{};
+	std::unordered_map < Entity_id, std::string > destroyScript{};
 
 	std::unique_ptr<DreamECS> dreamECSGame = std::make_unique<DreamECS>();
 
@@ -129,7 +132,12 @@ namespace Engine {
 			DESTROY_ENTITY(entity_id);
 		}
 
+		for (auto& [entity_id, className] : destroyScript) {
+			compManager->RemoveScript(entity_id, className.c_str());
+		}
+
 		destroySet.clear();
+		destroyScript.clear();
 	}
 
 	void DreamECS::ResetECS() {
@@ -157,7 +165,7 @@ namespace Engine {
 	}
 
 	void DreamECS::RemoveScript(Entity_id entity_id, const char* className) {
-		compManager->RemoveScript(entity_id, className);
+		destroyScript.emplace(entity_id, std::string{ className });
 	}
 
 

@@ -1,10 +1,10 @@
-/*using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 public class FetchScore : MonoBehaviour
 {
-    int m_Score;
+    /*int m_Score;
     int rectWidth = 200;
     int rectHeight = 200;
 
@@ -28,6 +28,5 @@ public class FetchScore : MonoBehaviour
 
         GUI.Label(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 25, 100, 50), "Score : " + m_Score,  centeredStyle);
        // "Score: " + m_Score);
-    }
+    }*/
 }
-*/

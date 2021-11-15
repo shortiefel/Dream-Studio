@@ -1,5 +1,5 @@
 ﻿
-class BackgroundColliderCheck : MonoBehaviour
+public class BackgroundColliderCheck : MonoBehaviour
 {
     public InputManager inputManager;
 

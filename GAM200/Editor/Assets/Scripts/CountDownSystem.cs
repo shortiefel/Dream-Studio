@@ -1,11 +1,11 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 
 public class CountDownSystem : MonoBehaviour
 {
 
-    public int countdownTimer;
+    /*public int countdownTimer;
     public TMP_Text countdownDisplay;
     public GameObject HUDOverlay;
     public GameObject PauseMenuIcon;
@@ -45,7 +45,6 @@ public class CountDownSystem : MonoBehaviour
         //HUDOverlay.gameObject.SetActive(false);
         HUDOverlay.SetActive(false);
         TurnOnPauseMenu();
-    }
+    }*/
 
 }
-*/

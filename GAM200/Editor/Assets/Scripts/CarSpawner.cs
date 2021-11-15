@@ -1,9 +1,9 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 public class CarSpawner : MonoBehaviour
 {
-    public Prefab[] carPrefabs;
+    /*public Prefab[] carPrefabs;
 
     public override void Awake()
     {
@@ -26,6 +26,5 @@ public class CarSpawner : MonoBehaviour
     {
         var randomIndex = Random.Range(0, carPrefabs.Length);
         return carPrefabs[randomIndex];
-    }
+    }*/
 }
-*/

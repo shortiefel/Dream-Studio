@@ -1,9 +1,9 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 public class CarController : MonoBehaviour
 {
-    *//*Rigidbody2D rb;
+    /*Rigidbody2D rb;
 
     private float power = 5;
 
@@ -11,7 +11,7 @@ public class CarController : MonoBehaviour
 
     private float maxSpeed = 5;
 
-    private Vector2 movementVector;*/
+    private Vector2 movementVector;
 
     /*public override void Awake()
     {
@@ -31,6 +31,5 @@ public class CarController : MonoBehaviour
         }
         //Debug.Log(rb.inertia);
         rb.AddTorque(movementVector.x * 45);
-    }*//*
+    }*/
 }
-*/

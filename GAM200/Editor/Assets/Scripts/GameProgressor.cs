@@ -1,13 +1,11 @@
-/*using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 public class GameProgressor : MonoBehaviour
 {
+    /*
     [Header("Text")]
     [TextArea]
     public List<string> storyTextIntro;
@@ -289,6 +287,7 @@ public class GameProgressor : MonoBehaviour
         }
         throw new ArgumentOutOfRangeException();
     }
+    */
 }
 
 public enum StoryStep
@@ -302,4 +301,3 @@ public enum StoryStep
     Victory,
     Defeat
 }
-*/

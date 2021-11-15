@@ -59,6 +59,7 @@ namespace Engine
 		TextureComponent& texture = *tc;
 		stbi_uc* temBuff = stbi_load(texture.filepath.c_str(), &(texture.width), &(texture.height), &(texture.BPP), 4);
 		glTextureSubImage2D(textureList[texture.filepath].texture_handle, 0, 0, 0, (texture.width), (texture.height), GL_RGBA, GL_UNSIGNED_BYTE, temBuff);
+		stbi_image_free(temBuff);
 	}
 
 	// Function loads texture into container without checking if it exist

@@ -34,7 +34,7 @@ namespace Editor {
 
 		void OpenScene()
 		{
-				std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+				std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0", Engine::File_Dialog_Type::Scenes);
 
 					if (!filePath.empty()) {
 						REMOVE_FROM_FILEPATH;

@@ -50,15 +50,15 @@ namespace Engine {
             ent1IsMoveable = ent1Moveable;
             ent2IsMoveable = ent2Moveable;
 
-            if (obj1.cType == ColliderType::CIRCLE) {
-                if (obj2.cType == ColliderType::CIRCLE)
+            if (obj1.cType == ColliderType::Circle) {
+                if (obj2.cType == ColliderType::Circle)
                     return isCollidingCIRCLEtoCIRCLE(dir, obj1, obj2);
                 else
                     return isCollidingCIRCLEtoSQUARE(dir, obj1, obj2);
             }
 
             else {
-                if (obj2.cType == ColliderType::CIRCLE)
+                if (obj2.cType == ColliderType::Circle)
                     return isCollidingSQUAREtoCIRCLE(dir, obj1, obj2);
                 else
                     return isCollidingSQUAREtoSQUARE(dir, obj1, obj2);
@@ -228,13 +228,13 @@ namespace Engine {
 
         //Collision resolution-------------------------------------------------------------------------------
         void CollisionResolution(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent& col1, TransformComponent& trans2, const ColliderComponent& col2) {
-            if (col1.cType == ColliderType::CIRCLE) {
-                if (col2.cType == ColliderType::CIRCLE) {
+            if (col1.cType == ColliderType::Circle) {
+                if (col2.cType == ColliderType::Circle) {
                     CollisionResolutionCIRCLEtoCIRCLE(dir, trans1, col1, trans2, col2);
                     return;
                 }
 
-                else if (col2.cType == ColliderType::SQUARE) {
+                else if (col2.cType == ColliderType::Square) {
                     dir = -dir;
                 }
             }

@@ -127,7 +127,7 @@ namespace Editor {
 					if (ImGui::Selectable(" + Text##addTextcom"))
 						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
-						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
+						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0", Engine::File_Dialog_Type::Scripts);
 
 						if (!filePath.empty()) {
 							REMOVE_FROM_FILEPATH;
@@ -554,7 +554,7 @@ namespace Editor {
 
 						if (ImGui::Button("Change Texture##ChangeTextureTexture")) {
 							
-							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
+							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0", Engine::File_Dialog_Type::Textures);
 
 							if (!filePath.empty()) {
 								Engine::GraphicImplementation::SetTexture(textureComp, filePath);
@@ -660,7 +660,7 @@ namespace Editor {
 
 						if (ImGui::Button("Change Font##ChangeFont")) {
 
-							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.ttf;)\0*.ttf;\0");
+							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.ttf;)\0*.ttf;\0", Engine::File_Dialog_Type::Fonts);
 
 							if (!filePath.empty()) {
 								Engine::GraphicImplementation::SetFont(textComp, filePath);
@@ -748,7 +748,7 @@ namespace Editor {
 							ImGui::AlignTextToFramePadding();
 							ImGui::SameLine(halfWidth * 1.2f);
 							if (ImGui::Button("Change Texture##ChangeUITexture")) {
-								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0");
+								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0", Engine::File_Dialog_Type::Textures);
 
 								if (!filePath.empty()) {
 									Engine::GraphicImplementation::SetTexture(uiComp, filePath);

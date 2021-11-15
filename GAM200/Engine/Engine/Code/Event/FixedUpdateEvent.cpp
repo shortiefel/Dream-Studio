@@ -25,7 +25,7 @@ namespace Engine {
 	-------------------------------------------------------------------------------------------------*/
 	EventType FixedUpdateEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::FIXED_UPDATE;
+		return EventType::Fixed_Update;
 	}
 
 	std::string FixedUpdateEvent::Details() const {

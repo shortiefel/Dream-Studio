@@ -44,7 +44,7 @@ namespace Engine {
 
 	EventType KeyPressedEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::KEY_PRESSED;
+		return EventType::Key_Pressed;
 	}
 	std::string KeyPressedEvent::Details() const {
 		PROFILER_START("Event");
@@ -66,7 +66,7 @@ namespace Engine {
 
 	EventType KeyReleasedEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::KEY_RELEASED;
+		return EventType::Key_Released;
 	}
 
 	std::string KeyReleasedEvent::Details() const {

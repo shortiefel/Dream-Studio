@@ -131,7 +131,7 @@ namespace Editor {
 				return;
 			}
 
-			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Scene (*.scene)\0*.scene\0");
+			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Scene (*.scene)\0*.scene\0", Engine::File_Dialog_Type::Scenes);
 
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
@@ -143,7 +143,7 @@ namespace Editor {
 		}
 		
 		void OpenFileUtil() {
-			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0");
+			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0", Engine::File_Dialog_Type::Scenes);
 
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
@@ -157,7 +157,7 @@ namespace Editor {
 				return;
 			}
 
-			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Scene (*.scene)\0*.scene\0");
+			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Scene (*.scene)\0*.scene\0", Engine::File_Dialog_Type::Scenes);
 
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
@@ -372,7 +372,7 @@ namespace Editor {
 					const Engine::Entity_id entity_id = GetTarget(entity_selected);
 					if (GetTarget(entity_selected) == DEFAULT_ENTITY_ID) return;
 
-					std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0");
+					std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0", Engine::File_Dialog_Type::Prefab);
 
 					if (!filePath.empty()) {
 						REMOVE_FROM_FILEPATH;
@@ -383,7 +383,7 @@ namespace Editor {
 				}
 
 				if (ImGui::MenuItem("Add Prefab")) {
-					std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Prefab (*.prefab)\0*.prefab\0");
+					std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Prefab (*.prefab)\0*.prefab\0", Engine::File_Dialog_Type::Prefab);
 
 					if (!filePath.empty()) {
 						REMOVE_FROM_FILEPATH;

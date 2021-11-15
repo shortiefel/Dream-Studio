@@ -52,9 +52,21 @@ Technology is prohibited.
 #include "Engine/Header/Event/Event.hpp" //checking of event types
 
 
-//Since mouse moved gets triggered pretty much all the time, this is to prevent it from triggering if you do not need it
+
+//Define to ignore/display specific event type
 //1 to show and 0 to not show
+#define SHOW_WINDOW_CLOSE 1
+#define SHOW_WINDOW_RESIZE 1
+#define SHOW_WINDOW_MOVED 1
+#define SHOW_KEY_PRESSED 1
+#define SHOW_KEY_RELEASED 1
 #define SHOW_MOUSE_MOVED 0
+#define SHOW_MOUSE_BUTTON_PRESSED 1
+#define SHOW_MOUSE_BUTTON_RELEASED 1
+#define SHOW_MOUSE_SCROLLED 1
+#define SHOW_OVERLAP_COLLIDER 1
+#define SHOW_MOUSE_OVERLAP_COLLIDER 1
+#define SHOW_FIXED_UPDATE 0
 
 enum class LogState {
 	Info = 0,
@@ -166,7 +178,18 @@ namespace Engine {
 
 		template <>
 		static bool CheckType(const Event& tem) {
-			if (!SHOW_MOUSE_MOVED && tem.GetEventType() == EventType::MOUSE_MOVE) return 1;
+			if constexpr (!SHOW_WINDOW_CLOSE && tem.GetEventType() == EventType::Window_Close) return 1;
+			else if (!SHOW_WINDOW_RESIZE && tem.GetEventType() == EventType::Window_Resize) return 1;
+			else if (!SHOW_WINDOW_MOVED && tem.GetEventType() == EventType::Window_Moved) return 1;
+			else if (!SHOW_KEY_PRESSED && tem.GetEventType() == EventType::Key_Pressed) return 1;
+			else if (!SHOW_KEY_RELEASED && tem.GetEventType() == EventType::Key_Released) return 1;
+			else if (!SHOW_MOUSE_MOVED && tem.GetEventType() == EventType::Mouse_Moved) return 1;
+			else if (!SHOW_MOUSE_BUTTON_PRESSED && tem.GetEventType() == EventType::Mouse_Button_Pressed) return 1;
+			else if (!SHOW_MOUSE_BUTTON_RELEASED && tem.GetEventType() == EventType::Mouse_Button_Released) return 1;
+			else if (!SHOW_MOUSE_SCROLLED && tem.GetEventType() == EventType::Mouse_Scrolled) return 1;
+			else if (!SHOW_OVERLAP_COLLIDER && tem.GetEventType() == EventType::Overlap_Collider) return 1;
+			else if (!SHOW_MOUSE_OVERLAP_COLLIDER && tem.GetEventType() == EventType::Mouse_Overlap_Collider) return 1;
+			else if (!SHOW_FIXED_UPDATE && tem.GetEventType() == EventType::Fixed_Update) return 1;
 			return 0;
 		}
 

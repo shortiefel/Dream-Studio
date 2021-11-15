@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="*.cs" Exclude="..\bin\**\*.cs" />
+    <Compile Include="**\*.cs" Exclude="bin\**;obj\**;Properties\**"/>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

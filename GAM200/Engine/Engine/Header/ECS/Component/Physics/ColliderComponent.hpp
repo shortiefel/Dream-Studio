@@ -34,8 +34,8 @@ namespace Engine {
 	class SSerializer;
 
 	enum class ColliderType {
-		CIRCLE = 0,
-		SQUARE
+		Circle = 0,
+		Square
 	};
 
 	//pos is the world scale position of the object at the top left corner of the object
@@ -45,7 +45,7 @@ namespace Engine {
 
 	struct ColliderComponent : public IComponent {
 
-		ColliderType cType = ColliderType::CIRCLE;
+		ColliderType cType = ColliderType::Circle;
 
 		Math::vec2 offset_position = Math::vec2{};//, origin;
 		Math::vec2 offset_scale = Math::vec2{};
@@ -72,7 +72,7 @@ namespace Engine {
 
 		//Change of type constructor: Copy an existing Collider but with a different type
 		/*Collider(Entity ID, ColliderType c, bool trigger = false);*/
-		ColliderComponent(Entity_id _ID = DEFAULT_ENTITY_ID, ColliderType _c = ColliderType::SQUARE, Math::vec2 _pos = Math::vec2{},
+		ColliderComponent(Entity_id _ID = DEFAULT_ENTITY_ID, ColliderType _c = ColliderType::Square, Math::vec2 _pos = Math::vec2{},
 			Math::vec2 _scale = Math::vec2{1.f, 1.f}, float _rotation = float{}, bool _trigger = false, bool _active = true);
 		ColliderComponent(const ColliderComponent&) = default;
 		ColliderComponent& operator=(const ColliderComponent&) = default;

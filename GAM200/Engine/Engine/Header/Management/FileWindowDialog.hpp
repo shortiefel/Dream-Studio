@@ -23,10 +23,21 @@ Technology is prohibited.
 							 filePath = filePath.substr(0, filePath.find_last_of("."));
 
 namespace Engine {
+	enum class File_Dialog_Type {
+		None = 0,
+		Audio,
+		Fonts,
+		Prefab,
+		Scenes,
+		Scripts,
+		Shaders,
+		Textures
+	};
+
 	class FileWindowDialog {
 	public:
-		static std::string OpenFile(const char* filter);
-		static std::string SaveFile(const char* filter);
+		static std::string OpenFile(const char* filter, File_Dialog_Type ft = File_Dialog_Type::None);
+		static std::string SaveFile(const char* filter, File_Dialog_Type ft = File_Dialog_Type::None);
 	};
 }
 

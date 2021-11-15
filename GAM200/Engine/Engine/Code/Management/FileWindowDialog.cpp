@@ -28,7 +28,29 @@ Technology is prohibited.
 
 
 namespace Engine {
-	std::string FileWindowDialog::OpenFile(const char* filter) {
+	std::string GetNameFromType(File_Dialog_Type ft) {
+		switch (ft) {
+		case File_Dialog_Type::None:
+			return std::string{};
+		case File_Dialog_Type::Audio:
+			return "Audio";
+		case File_Dialog_Type::Fonts:
+			return "Fonts";
+		case File_Dialog_Type::Prefab:
+			return "Prefab";
+		case File_Dialog_Type::Scenes:
+			return "Scenes";
+		case File_Dialog_Type::Scripts:
+			return "Scripts";
+		case File_Dialog_Type::Shaders:
+			return "Shaders";
+		case File_Dialog_Type::Textures:
+			return "Textures";
+		}
+		return std::string{};
+	}
+
+	std::string FileWindowDialog::OpenFile(const char* filter, File_Dialog_Type ft) {
 		OPENFILENAMEA ofna;
 		CHAR _file[260] = { 0 };
 		ZeroMemory(&ofna, sizeof(OPENFILENAME));
@@ -39,6 +61,9 @@ namespace Engine {
 		ofna.lpstrFilter = filter;
 		ofna.nFilterIndex = 1;
 		ofna.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
+		std::string initDir { ".\\Assets" + GetNameFromType(ft) };
+		ofna.lpstrInitialDir = initDir.c_str();
+
 		if (GetOpenFileNameA(&ofna) == TRUE) {
 			return ofna.lpstrFile;
 		}
@@ -46,7 +71,7 @@ namespace Engine {
 		return std::string();
 	}
 
-	std::string FileWindowDialog::SaveFile(const char* filter) {
+	std::string FileWindowDialog::SaveFile(const char* filter, File_Dialog_Type ft) {
 		OPENFILENAMEA ofna;
 		CHAR _file[260] = { 0 };
 		ZeroMemory(&ofna, sizeof(OPENFILENAME));
@@ -57,6 +82,9 @@ namespace Engine {
 		ofna.lpstrFilter = filter;
 		ofna.nFilterIndex = 1;
 		ofna.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
+		std::string initDir{ ".\\Assets" + GetNameFromType(ft) };
+		ofna.lpstrInitialDir = initDir.c_str();
+
 		if (GetSaveFileNameA(&ofna) == TRUE) {
 			return ofna.lpstrFile;
 		}

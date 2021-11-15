@@ -26,7 +26,7 @@ namespace Engine {
 	-------------------------------------------------------------------------------------------------*/
 	EventType WindowCloseEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::WINDOW_CLOSE;
+		return EventType::Window_Close;
 	}
 
 	std::string WindowCloseEvent::Details() const {
@@ -47,7 +47,7 @@ namespace Engine {
 
 	EventType WindowResizeEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::WINDOW_RESIZE;
+		return EventType::Window_Resize;
 	}
 
 	std::string WindowResizeEvent::Details() const {

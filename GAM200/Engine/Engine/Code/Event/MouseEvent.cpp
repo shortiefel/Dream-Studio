@@ -34,7 +34,7 @@ namespace Engine {
 
 	EventType MousePressedEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::MOUSE_BUTTON_PRESSED;
+		return EventType::Mouse_Button_Pressed;
 	}
 
 	std::string MousePressedEvent::Details() const {
@@ -67,7 +67,7 @@ namespace Engine {
 
 	EventType MouseReleasedEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::MOUSE_BUTTON_RELEASED;
+		return EventType::Mouse_Button_Released;
 	}
 
 	std::string MouseReleasedEvent::Details() const {
@@ -113,7 +113,7 @@ namespace Engine {
 
 	EventType MouseMoveEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::MOUSE_MOVE;
+		return EventType::Mouse_Moved;
 	}
 
 	std::string MouseMoveEvent::Details() const {
@@ -139,7 +139,7 @@ namespace Engine {
 
 	EventType MouseScrolledEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::MOUSE_SCROLLED;
+		return EventType::Mouse_Scrolled;
 	}
 
 	std::string MouseScrolledEvent::Details() const {

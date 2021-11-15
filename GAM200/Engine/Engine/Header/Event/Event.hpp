@@ -46,12 +46,12 @@ Technology is prohibited.
 
 namespace Engine {
 	enum class EventType {
-		NONE = 0,
-		WINDOW_CLOSE, WINDOW_RESIZE, WINDOW_MOVED,
-		KEY_PRESSED, KEY_RELEASED,
-		MOUSE_MOVE, MOUSE_BUTTON_PRESSED, MOUSE_BUTTON_RELEASED, MOUSE_SCROLLED,
-		OVERLAP_COLLIDER, MOUSE_OVERLAP_COLLIDER,
-		FIXED_UPDATE
+		None = 0,
+		Window_Close, Window_Resize, Window_Moved,
+		Key_Pressed, Key_Released,
+		Mouse_Moved, Mouse_Button_Pressed, Mouse_Button_Released, Mouse_Scrolled,
+		Overlap_Collider, Mouse_Overlap_Collider,
+		Fixed_Update
 	};
 
 	class Event {

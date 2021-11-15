@@ -70,7 +70,7 @@ namespace Engine
         dreamECSGame->AddComponent(
             TransformComponent{ entity.id, pos, scale, 0 });
         /*dreamECSGame->AddComponent(
-            ColliderComponent{ entity.id, ColliderType::SQUARE });*/
+            ColliderComponent{ entity.id, ColliderType::Square });*/
         dreamECSGame->AddComponent(
             TextureComponent{ entity.id, "Assets\\Textures\\Default_Square.png" });
     }
@@ -82,7 +82,7 @@ namespace Engine
         dreamECSGame->AddComponent(
             TransformComponent{ entity.id, pos, scale, 0 });
         /*dreamECSGame->AddComponent(
-            ColliderComponent{ entity.id, ColliderType::CIRCLE });*/
+            ColliderComponent{ entity.id, ColliderType::Circle });*/
         dreamECSGame->AddComponent(
             TextureComponent{ entity.id, "Assets\\Textures\\Default_Circle.png" });
     }

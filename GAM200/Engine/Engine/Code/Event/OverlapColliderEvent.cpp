@@ -32,7 +32,7 @@ namespace Engine {
 
 	EventType OverlapColliderEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::OVERLAP_COLLIDER;
+		return EventType::Overlap_Collider;
 	}
 	std::string OverlapColliderEvent::Details() const {
 		PROFILER_START("Event");
@@ -54,7 +54,7 @@ namespace Engine {
 
 	EventType MouseOverlapColliderEvent::GetEventType() const {
 		PROFILER_START("Event");
-		return EventType::MOUSE_OVERLAP_COLLIDER;
+		return EventType::Mouse_Overlap_Collider;
 	}
 	std::string MouseOverlapColliderEvent::Details() const {
 		PROFILER_START("Event");

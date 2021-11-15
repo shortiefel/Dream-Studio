@@ -32,7 +32,7 @@ namespace Editor {
 		}
 
 		void NewFileUtilPrefab() {
-			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream prefab (*.prefab)\0*.prefab\0");
+			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream prefab (*.prefab)\0*.prefab\0", Engine::Folder_Type::Prefab);
 
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
@@ -44,7 +44,7 @@ namespace Editor {
 		}
 
 		void OpenFileUtilPrefab() {
-			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Prefab (*.prefab)\0*.prefab\0");
+			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Prefab (*.prefab)\0*.prefab\0",  Engine::Folder_Type::Prefab);
 
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
@@ -54,7 +54,7 @@ namespace Editor {
 		}
 
 		void SaveFileUtilPrefab() {
-			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0");
+			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0", Engine::Folder_Type::Prefab);
 
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;
@@ -65,7 +65,7 @@ namespace Editor {
 		}
 
 		void SaveAsFileUtilPrefab() {
-			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0");
+			std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0", Engine::Folder_Type::Prefab);
 
 			if (!filePath.empty()) {
 				REMOVE_FROM_FILEPATH;

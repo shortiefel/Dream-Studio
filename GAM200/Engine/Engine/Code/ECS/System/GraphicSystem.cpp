@@ -134,14 +134,14 @@ namespace Engine
 			if (!transform || !transform->isActive) continue;
 
 			// Render lines for a quad
-			if (collider.cType == ColliderType::SQUARE)
+			if (collider.cType == ColliderType::Square)
 			{
 				GraphicImplementation::Renderer::DrawQuadDebug(collider.offset_position + transform->position,
 					collider.offset_scale * transform->scale,
 					collider.angle + transform->angle);
 			}
 			// Render lines for circle
-			else if (collider.cType == ColliderType::CIRCLE)
+			else if (collider.cType == ColliderType::Circle)
 			{
 				GraphicImplementation::Renderer::DrawCircleDebug(collider.offset_position + transform->position,
 					collider.offset_scale * transform->scale,

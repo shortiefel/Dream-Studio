@@ -16,6 +16,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
+#include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
 
 #include "stb_image/stb_image.h"
 
@@ -54,18 +55,14 @@ namespace Engine
 		LOG_INSTANCE("ResourceManager destroyed");
 	}
 
-	// Function loads texture into container
-	GLuint ResourceManager::LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel)
-	{
-		// Check if it exist first before loading
-		if (textureList.find(filename) != textureList.end())
-		{
-			*x = textureList[filename].width;
-			*y = textureList[filename].height;
+	void ResourceManager::RefreshTexture(TextureComponent* tc) {
+		TextureComponent& texture = *tc;
+		stbi_uc* temBuff = stbi_load(texture.filepath.c_str(), &(texture.width), &(texture.height), &(texture.BPP), 4);
+		glTextureSubImage2D(textureList[texture.filepath].texture_handle, 0, 0, 0, (texture.width), (texture.height), GL_RGBA, GL_UNSIGNED_BYTE, temBuff);
+	}
 
-			return textureList[filename].texture_handle;
-		}
-
+	// Function loads texture into container without checking if it exist
+	GLuint ResourceManager::LoadTextureInternal(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel) {
 		// Read png file
 		stbi_uc* temBuff = stbi_load(filename.c_str(), x, y, channels_in_files, desired_channel);
 
@@ -84,6 +81,21 @@ namespace Engine
 		textureList[filename].height = *y;
 
 		return textureList[filename].texture_handle;
+	}
+
+	// Function loads texture into container if it doesnt exist
+	GLuint ResourceManager::LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel)
+	{
+		// Check if it exist first before loading
+		if (textureList.find(filename) != textureList.end())
+		{
+			*x = textureList[filename].width;
+			*y = textureList[filename].height;
+
+			return textureList[filename].texture_handle;
+		}
+
+		return LoadTextureInternal(filename, x, y, channels_in_files, desired_channel);
 	}
 
 	// Function loads font into container

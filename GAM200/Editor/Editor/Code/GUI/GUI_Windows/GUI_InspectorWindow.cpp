@@ -561,6 +561,10 @@ namespace Editor {
 							}
 						}
 
+						if (ImGui::Button("Refresh Texture##RefreshTextureTexture")) {
+							Engine::ResourceManager::GetInstance().RefreshTexture(textureComp);
+						}
+
 						
 
 						/*

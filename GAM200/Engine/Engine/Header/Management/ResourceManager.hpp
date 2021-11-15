@@ -26,6 +26,8 @@ Technology is prohibited.
 
 namespace Engine
 {
+	struct TextureComponent;
+
 	struct TextureContainer
 	{
 		GLuint texture_handle{};
@@ -51,12 +53,15 @@ namespace Engine
 		void Create();
 		void Destroy();
 
+		void RefreshTexture(TextureComponent* tc);
 		GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
 		bool LoadFont(std::string filename);
 
 		FontContainer GetFontContainer(std::string filename) { return fontList[filename]; }
 
 	private:
+		GLuint LoadTextureInternal(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+
 		std::unordered_map<std::string, TextureContainer> textureList;
 		std::unordered_map<std::string, FontContainer> fontList;
 

@@ -106,6 +106,19 @@ namespace Engine {
 			objType.PushBack(target, doc.GetAllocator());
 		}
 
+		/*
+		* Put parameter 2 (objType) into parameter 1 (arrayType)
+		*/
+		void SetValueJSonArray(rapidjson::Value& arrayObj, rapidjson::Value& target) const {
+			arrayObj.PushBack(target, doc.GetAllocator());
+		}
+
+		void SetValueJSonArray(const char* _name, rapidjson::Value& target) const {
+			rapidjson::Value vName(_name, doc.GetAllocator());
+			objType.AddMember(vName, target, doc.GetAllocator());
+			//ADD_MEMBER(_name, target);
+		}
+
 		//void EndSerialize(const char* _name, rapidjson::Value& _entityObject) const;
 
 		///*--------------------------------------------------------------------------------

@@ -1,4 +1,5 @@
 [
+  
   {
     "Entity": {
       "Name": "AnimatedSprite",
@@ -25,9 +26,32 @@
       "Filepath": "Assets\\Textures\\SpriteTest.png",
       "Shape": 0,
       "IsAnimation": true,
-      "IsLoop": true,
-      "EndFrame": 4,
-      "TimePerFrame": 0.5,
+      "AnimationState": [
+        {
+          "StateName": "TestState",
+          "StateRow": 1,
+          "StartFrame": 1,
+          "EndFrame": 4,
+          "TimePerFrame": 0.5,
+          "IsLoop": true
+        },
+        {
+          "StateName": "Testing 2",
+          "StateRow": 0,
+          "StartFrame": 0,
+          "EndFrame": 0,
+          "TimePerFrame": 0.0,
+          "IsLoop": true
+        },
+        {
+          "StateName": "",
+          "StateRow": 0,
+          "StartFrame": 0,
+          "EndFrame": 0,
+          "TimePerFrame": 0.0,
+          "IsLoop": true
+        }
+      ],
       "IsActive": true
     }
   }

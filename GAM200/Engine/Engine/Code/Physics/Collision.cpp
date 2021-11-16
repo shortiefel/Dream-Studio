@@ -54,20 +54,20 @@ namespace Engine {
                 if (obj2.cType == ColliderType::Circle)
                     return isCollidingCIRCLEtoCIRCLE(dir, obj1, obj2);
                 else
-                    return isCollidingCircletoSquare(dir, obj1, obj2);
+                    return isCollidingCIRCLEtoSQUARE(dir, obj1, obj2);
             }
 
             else {
                 if (obj2.cType == ColliderType::Circle)
                     return isCollidingSQUAREtoCIRCLE(dir, obj1, obj2);
                 else
-                    return isCollidingSquaretoSquare(dir, obj1, obj2);
+                    return isCollidingSQUAREtoSQUARE(dir, obj1, obj2);
             }
 
             return false;
         }
 
-        bool isCollidingSquaretoSquare(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
+        bool isCollidingSQUAREtoSQUARE(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
             //SAT method
             std::vector<Math::vec2> obj1Corner(4);
             Math::vec2 xaxis1{ Math::cos(Math::radians(obj1.angle)), Math::sin(Math::radians(obj1.angle)) };
@@ -133,7 +133,7 @@ namespace Engine {
             return true;
         }
 
-        bool isCollidingSquaretoCircle(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
+        bool isCollidingSQUAREtoCIRCLE(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
             //SAT method
             std::vector<Math::vec2> obj1Corner(4);
             Math::vec2 xaxis1{ Math::cos(Math::radians(obj1.angle)), Math::sin(Math::radians(obj1.angle)) };
@@ -208,11 +208,11 @@ namespace Engine {
             return true;
         }
 
-        bool isCollidingCircletoSquare(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
-            return isCollidingSquaretoCircle(dir, obj2, obj1);
+        bool isCollidingCIRCLEtoSQUARE(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
+            return isCollidingSQUAREtoCIRCLE(dir, obj2, obj1);
         }
 
-        bool isCollidingCircletoCircle(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
+        bool isCollidingCIRCLEtoCIRCLE(Math::vec2& dir, const ColliderComponent& obj1, const ColliderComponent& obj2) {
             //if (obj1.scale.x == obj1.scale.y && obj2.scale.x == obj2.scale.y) {
             float rad = obj1.offset_scale.x + obj2.offset_scale.x;
             rad = (float)pow(rad, 2);
@@ -348,7 +348,7 @@ namespace Engine {
             CollisionResolutionSQUAREtoCIRCLE(dir, trans2, col2, trans1, col1);
         }*/
 
-        void CollisionResolutionCircletoCircle(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent& col1, TransformComponent& trans2, const ColliderComponent& col2) {
+        void CollisionResolutionCIRCLEtoCIRCLE(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent& col1, TransformComponent& trans2, const ColliderComponent& col2) {
             Math::vec2 len = col1.offset_position - col2.offset_position;
             float length = Math::length(len);
 
@@ -383,7 +383,7 @@ namespace Engine {
             obj1Corner[2] = obj.offset_position - obj.offset_scale.x * Math::vec2{ 1.f, 0.f } - obj.offset_scale.y * Math::vec2{ 0.f, 1.f }; //bot left
             obj1Corner[3] = obj.offset_position + obj.offset_scale.x * Math::vec2{ 1.f, 0.f } - obj.offset_scale.y * Math::vec2{ 0.f, 1.f }; //bot right
 
-            float 
+            float
                 left = obj.offset_position.x - obj.offset_scale.x,
                 right = obj.offset_position.x + obj.offset_scale.x,
                 top = obj.offset_position.y + obj.offset_scale.y,
@@ -425,11 +425,11 @@ namespace Engine {
             obj1Corner[1] = combined.offset_position - combined.offset_scale.x * xaxis1 + combined.offset_scale.y * yaxis1; //top left
             obj1Corner[2] = combined.offset_position - combined.offset_scale.x * xaxis1 - combined.offset_scale.y * yaxis1; //bot left
             obj1Corner[3] = combined.offset_position + combined.offset_scale.x * xaxis1 - combined.offset_scale.y * yaxis1; //bot right
-           
+
             auto& ht = *hit;
             //Point in square check
             if (Math::EpsilonCheck(ray.pos, rayEnd)) {
-                
+
                 for (int i = 0; i < 4; i++) {
                     Math::vec2 nl = obj1Corner[(i + 1) < 4 ? i + 1 : 0] - obj1Corner[i];
                     Math::vec2 normal{ -nl.y, nl.x };
@@ -466,7 +466,7 @@ namespace Engine {
                     return true;
                 }
             }
-            
+
             return false;
         }
     }

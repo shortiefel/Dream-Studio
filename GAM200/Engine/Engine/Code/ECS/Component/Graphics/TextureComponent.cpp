@@ -105,11 +105,30 @@ namespace Engine
 
 		// For animation
 		isAnimation = _serializer.GetValue<bool>("IsAnimation");
-		numberOfStates = _serializer.GetValue<int>("NumberOfStates");
+		//numberOfStates = _serializer.GetValue<int>("NumberOfStates");
 
-		if (isAnimation)
-		{
-			for (int i = 0; i < numberOfStates; i++)
+		if (isAnimation) {
+			//rapidjson::Value objTypeScriptComponent(rapidjson::kArrayType);
+			auto animationStates = _serializer.GetValueArray("AnimationState");
+			for (auto& state : animationStates) {
+				std::string stateName = state["StateName"].GetString();
+
+				int stateRow = state["StateRow"].GetInt();
+
+				int startX = state["StartFrame"].GetInt();
+				int endX = state["EndFrame"].GetInt();
+
+				float fTime = state["TimePerFrame"].GetFloat();
+
+				bool isLoop = state["IsLoop"].GetBool();
+
+				std::cout << stateName << "\n" << stateRow << "\n" << startX << "\n" << endX << "\n" << fTime << "\n" << isLoop << "\n";
+				AnimationState animstate = AnimationState(stateName, stateRow, startX, endX, fTime, isLoop);
+
+				animationStateList.emplace(stateName, animstate);
+				//AddAnimationState(stateName, animstate);
+			}
+			/*for (int i = 0; i < numberOfStates; i++)
 			{
 				std::string stateName = _serializer.GetValue<std::string>("StateName");
 
@@ -125,7 +144,7 @@ namespace Engine
 				AnimationState state = AnimationState(currAnimationState, stateRow, startFrame, endFrame, timePerFrame, isLoop);
 
 				AddAnimationState(stateName, state);
-			}
+			}*/
 		}
 
 		isActive = _serializer.GetValue<bool>("IsActive");
@@ -140,12 +159,32 @@ namespace Engine
 		_serializer.SetValue("Shape", int(mdl_ref));
 
 		_serializer.SetValue("IsAnimation", isAnimation);
-		_serializer.SetValue("NumberOfStates", numberOfStates);
+		//_serializer.SetValue("NumberOfStates", numberOfStates);
 
+		if (isAnimation) {
+			rapidjson::Value allAnimation(rapidjson::kArrayType);
 
-		//_serializer.SetValue("IsLoop", isLoop);
-		//_serializer.SetValue("EndFrame", endFrame);
-		//_serializer.SetValue("TimePerFrame", fTime);
+			for (auto& [name, state] : animationStateList) {
+				std::cout << state.stateName << "\n" << state.stateRow << "\n" << state.startX << "\n" << state.endX << "\n" << state.fTime << "\n" << state.isLoop << "\n";
+
+				rapidjson::Value classObj(rapidjson::kObjectType);
+				SSerializer cserializer(_serializer, classObj);
+
+				cserializer.SetValue("StateName", state.stateName);
+				cserializer.SetValue("StateRow", state.stateRow);
+				cserializer.SetValue("StartFrame", state.startX);
+				cserializer.SetValue("EndFrame", state.endX);
+				cserializer.SetValue("TimePerFrame", state.fTime);
+				cserializer.SetValue("IsLoop", state.isLoop);
+
+				//_serializer.SetValueJSonArray(classObj);
+
+				//_serializer.SetValueJSonArray("AnimationState", classObj);
+				_serializer.SetValueJSonArray(allAnimation, classObj);
+			}
+
+			_serializer.SetValueJSonArray("AnimationState", allAnimation);
+		}
 
 		_serializer.SetValue("IsActive", isActive);
 	}

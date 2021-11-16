@@ -579,7 +579,7 @@ namespace Editor {
 						ImGui::Checkbox("##isAnimation",&(textureComp->isAnimation));
 						if (textureComp->isAnimation == true)
 						{
-							ImGui::Spacing();
+							/*ImGui::Spacing();
 							ImGui::AlignTextToFramePadding();
 							ImGui::Text("Looping");
 							ImGui::SameLine(halfWidth);
@@ -603,7 +603,7 @@ namespace Editor {
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::PushFont(boldFont);
 							ImGui::InputFloat("##timeFrame", &textureComp->fTime, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
-							ImGui::PopFont();
+							ImGui::PopFont();*/
 
 						}
 

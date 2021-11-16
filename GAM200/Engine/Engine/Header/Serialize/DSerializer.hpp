@@ -102,6 +102,10 @@ namespace Engine {
 				return T{};
 			}
 		}
+
+		auto GetValueArray(const char* name) const {
+			return itr->value[name].GetArray();
+		}
 		
 		//If the number of element is unknown, use this
 		template <typename T>

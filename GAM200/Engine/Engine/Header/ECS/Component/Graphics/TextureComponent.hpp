@@ -31,9 +31,10 @@ namespace Engine
 
 	struct AnimationState
 	{
-		AnimationState(int _stateRow = 0, int _startX = 0, int _endX = 0, float _fTime = 0, bool _isLoop = true);
+		AnimationState(std::string _stateName = "", int _stateRow = 0, int _startX = 0, int _endX = 0, float _fTime = 0, bool _isLoop = true);
 
-		// Animation variables
+		std::string stateName;
+
 		int stateRow, startX, endX, currFrame;
 
 		float aTime; // Animation time
@@ -54,10 +55,12 @@ namespace Engine
 		GLint width{}, height{};
 		GLint BPP{}; // Bits per pixel
 
-		bool isAnimation;
 		bool isActive = true;
 
 		// For animations
+		bool isAnimation;
+		int numberOfStates = 0;
+
 		int totalColumns = 1, totalRows = 1;
 		float cellWidth, cellHeight;
 
@@ -66,8 +69,9 @@ namespace Engine
 
 		Math::vec2 minUV, maxUV; // To be passed to shader files (batch rendering)
 
-		void AnimationUpdate(float _dt, AnimationState& state);
-		void SetUV();
+		void AddAnimationState(std::string _stateName, AnimationState _state);
+		void AnimationUpdate(float _dt, AnimationState& _state);
+		void SetUV(AnimationState& _state);
 
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png",

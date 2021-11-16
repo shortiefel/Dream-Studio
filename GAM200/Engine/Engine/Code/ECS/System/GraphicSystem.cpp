@@ -57,13 +57,15 @@ namespace Engine
 
 			if (transform->layer == layer)
 			{
+				AnimationState& state = texture.animationStateList[texture.currAnimationState];
+
 				// For texture animation, update texture coords
 				if (texture.isAnimation &&
-					texture.aComplete == false &&
+					state.aComplete == false &&
 					GameState::GetInstance().GetPlaying())
 				{
 					float dt = DeltaTime::GetInstance().GetDeltaTime();
-					texture.AnimationUpdate(dt);
+					texture.AnimationUpdate(dt, state);
 					std::cout << "run animation \n";
 				}
 

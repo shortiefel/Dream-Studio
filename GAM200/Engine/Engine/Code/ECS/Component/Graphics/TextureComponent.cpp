@@ -27,15 +27,18 @@ Technology is prohibited.
 namespace Engine
 {
 	// Constructor for AnimationState struct
-	AnimationState::AnimationState(int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop) :
-		stateRow{ _stateRow }, startX{ _startX }, endX{ _endX }, fTime{ _fTime }, isLoop{ _isLoop }, aTime{ 0.f }, aComplete{ false } {}
+	AnimationState::AnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop) :
+		stateName{ _stateName }, 
+		stateRow { _stateRow }, startX{ _startX }, endX{ _endX }, currFrame{ _startX }, 
+		fTime{ _fTime }, aTime{ 0.f },
+		isLoop{ _isLoop }, aComplete{ false } {};
 
 	// Contructor for Texture Component
 	TextureComponent::TextureComponent(Entity_id _ID, const std::string _path,
 		GraphicShape _shape, bool _animation, bool _active) :
 		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape },
 		isAnimation{ _animation }, isActive{ _active },
-		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f },
+		numberOfStates{ 0 }, minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f },
 		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 } 
 	{
 		GraphicImplementation::SetTexture(this, filepath);
@@ -51,41 +54,46 @@ namespace Engine
 
 	// Function that updates the UV coordinates for spritesheets
 	// and the frame variables for the component based on delta time
-	void TextureComponent::AnimationUpdate(float _dt, AnimationState& state)
+	void TextureComponent::AnimationUpdate(float _dt, AnimationState& _state)
 	{
-		state.aTime += _dt;
+		_state.aTime += _dt;
 
-		if (state.aTime > state.fTime)
+		if (_state.aTime > _state.fTime)
 		{
-			state.aTime -= state.fTime;
-			++state.currFrame;
+			_state.aTime -= _state.fTime;
+			++_state.currFrame;
 
-			if (state.currFrame > state.endX)
+			if (_state.currFrame > _state.endX)
 			{
-				if (state.isLoop == true)
+				if (_state.isLoop == true)
 				{
-					state.currFrame = state.startX;
+					_state.currFrame = _state.startX;
 				}
 				else
 				{
-					state.currFrame = state.endX;
-					state.aComplete = true;
+					_state.currFrame = _state.endX;
+					_state.aComplete = true;
 				}
 			}
-			SetUV();
+			SetUV(_state);
 		}
 	}
 
 	// Function that sets the UV texture coordinates; For spritesheets
-	void TextureComponent::SetUV()
+	void TextureComponent::SetUV(AnimationState& _state)
 	{
-		float cellWidth = static_cast<float>(width) / endFrame;
+		minUV = { static_cast<float>((_state.currFrame - 1) * cellWidth) / width,
+				  static_cast<float>((_state.stateRow - 1) * cellHeight) / height };
 
-		minUV = { static_cast<float>((currFrame - 1) * cellWidth) / width,
-				0.f };
+		maxUV = { static_cast<float>(_state.currFrame * cellWidth) / width,
+				  static_cast<float>(_state.stateRow * cellHeight) / height };
+	}
 
-		maxUV = { static_cast<float>(currFrame * cellWidth) / width,
-				static_cast<float>(height) / height };
+	// Function that adds AnimationState to animationStateList;
+	// to be called by the editor if they want more states
+	void TextureComponent::AddAnimationState(std::string _stateName, AnimationState _state)
+	{
+		animationStateList[_stateName] = _state;
 	}
 
 	// Deserialize function for Texture Component
@@ -97,9 +105,28 @@ namespace Engine
 
 		// For animation
 		isAnimation = _serializer.GetValue<bool>("IsAnimation");
-		isLoop = _serializer.GetValue<bool>("IsLoop");
-		endFrame = _serializer.GetValue<int>("EndFrame");
-		fTime = _serializer.GetValue<float>("TimePerFrame");
+		numberOfStates = _serializer.GetValue<int>("NumberOfStates");
+
+		if (isAnimation)
+		{
+			for (int i = 0; i < numberOfStates; i++)
+			{
+				std::string stateName = _serializer.GetValue<std::string>("StateName");
+
+				int stateRow = _serializer.GetValue<int>("StateRow");
+
+				int startFrame = _serializer.GetValue<int>("StartFrame");
+				int endFrame = _serializer.GetValue<int>("EndFrame");
+
+				float timePerFrame = _serializer.GetValue<float>("TimePerFrame");
+
+				bool isLoop = _serializer.GetValue<bool>("IsLoop");
+
+				AnimationState state = AnimationState(currAnimationState, stateRow, startFrame, endFrame, timePerFrame, isLoop);
+
+				AddAnimationState(stateName, state);
+			}
+		}
 
 		isActive = _serializer.GetValue<bool>("IsActive");
 
@@ -113,9 +140,12 @@ namespace Engine
 		_serializer.SetValue("Shape", int(mdl_ref));
 
 		_serializer.SetValue("IsAnimation", isAnimation);
-		_serializer.SetValue("IsLoop", isLoop);
-		_serializer.SetValue("EndFrame", endFrame);
-		_serializer.SetValue("TimePerFrame", fTime);
+		_serializer.SetValue("NumberOfStates", numberOfStates);
+
+
+		//_serializer.SetValue("IsLoop", isLoop);
+		//_serializer.SetValue("EndFrame", endFrame);
+		//_serializer.SetValue("TimePerFrame", fTime);
 
 		_serializer.SetValue("IsActive", isActive);
 	}

@@ -55,6 +55,7 @@ namespace Engine
 		LOG_INSTANCE("ResourceManager destroyed");
 	}
 
+	// Function that reloads the texture after it has been updated
 	void ResourceManager::RefreshTexture(TextureComponent* tc) {
 		TextureComponent& texture = *tc;
 		stbi_uc* temBuff = stbi_load(texture.filepath.c_str(), &(texture.width), &(texture.height), &(texture.BPP), 4);

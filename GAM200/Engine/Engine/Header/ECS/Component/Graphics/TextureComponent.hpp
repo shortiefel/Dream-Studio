@@ -29,6 +29,20 @@ namespace Engine
 	class DSerializer;
 	class SSerializer;
 
+	struct AnimationState
+	{
+		AnimationState(int _stateRow = 0, int _startX = 0, int _endX = 0, float _fTime = 0, bool _isLoop = true);
+
+		// Animation variables
+		int stateRow, startX, endX, currFrame;
+
+		float aTime; // Animation time
+		float fTime; // Time per frame
+
+		bool isLoop = true;		// Is texture looping? (Animation)
+		bool aComplete = false; // Is animation completed?
+	};
+
 	struct TextureComponent : public IComponent
 	{
 		std::string filepath = "";
@@ -43,25 +57,21 @@ namespace Engine
 		bool isAnimation;
 		bool isActive = true;
 
-		// Animation variables
-		int startFrame, endFrame, currFrame;
+		// For animations
+		int totalColumns = 1, totalRows = 1;
+		float cellWidth, cellHeight;
 
-		float aTime; // Animation time
-		float fTime; // Time per frame
+		std::string currAnimationState = "";
+		std::unordered_map <std::string, AnimationState> animationStateList{};
 
-		bool isLoop;	// Is texture looping? (Animation)
-		bool aComplete; // Is animation completed?
+		Math::vec2 minUV, maxUV; // To be passed to shader files (batch rendering)
 
-		Math::vec2 minUV, maxUV;
-
-		void AnimationUpdate(float _dt);
+		void AnimationUpdate(float _dt, AnimationState& state);
 		void SetUV();
 
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png",
-			GraphicShape _shape = GraphicShape::SQUARE,
-			bool _animation = false, bool _loop = false,
-			int _endFrame = 1, float _fTime = 0, bool _active = true);
+			GraphicShape _shape = GraphicShape::SQUARE, bool _animation = false, bool _active = true);
 
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);

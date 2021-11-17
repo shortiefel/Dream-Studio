@@ -178,18 +178,18 @@ namespace Engine {
 
 		template <>
 		static bool CheckType(const Event& tem) {
-			if constexpr (!SHOW_WINDOW_CLOSE && tem.GetEventType() == EventType::Window_Close) return 1;
-			else if (!SHOW_WINDOW_RESIZE && tem.GetEventType() == EventType::Window_Resize) return 1;
-			else if (!SHOW_WINDOW_MOVED && tem.GetEventType() == EventType::Window_Moved) return 1;
-			else if (!SHOW_KEY_PRESSED && tem.GetEventType() == EventType::Key_Pressed) return 1;
-			else if (!SHOW_KEY_RELEASED && tem.GetEventType() == EventType::Key_Released) return 1;
-			else if (!SHOW_MOUSE_MOVED && tem.GetEventType() == EventType::Mouse_Moved) return 1;
-			else if (!SHOW_MOUSE_BUTTON_PRESSED && tem.GetEventType() == EventType::Mouse_Button_Pressed) return 1;
-			else if (!SHOW_MOUSE_BUTTON_RELEASED && tem.GetEventType() == EventType::Mouse_Button_Released) return 1;
-			else if (!SHOW_MOUSE_SCROLLED && tem.GetEventType() == EventType::Mouse_Scrolled) return 1;
-			else if (!SHOW_OVERLAP_COLLIDER && tem.GetEventType() == EventType::Overlap_Collider) return 1;
-			else if (!SHOW_MOUSE_OVERLAP_COLLIDER && tem.GetEventType() == EventType::Mouse_Overlap_Collider) return 1;
-			else if (!SHOW_FIXED_UPDATE && tem.GetEventType() == EventType::Fixed_Update) return 1;
+			if constexpr (!SHOW_WINDOW_CLOSE) if (tem.GetEventType() == EventType::Window_Close) return 1;
+			else if  constexpr (!SHOW_WINDOW_RESIZE) if (tem.GetEventType() == EventType::Window_Resize) return 1;
+			else if  constexpr (!SHOW_WINDOW_MOVED) if (tem.GetEventType() == EventType::Window_Moved) return 1;
+			else if  constexpr (!SHOW_KEY_PRESSED) if (tem.GetEventType() == EventType::Key_Pressed) return 1;
+			else if  constexpr (!SHOW_KEY_RELEASED) if (tem.GetEventType() == EventType::Key_Released) return 1;
+			else if  constexpr (!SHOW_MOUSE_MOVED) if (tem.GetEventType() == EventType::Mouse_Moved) return 1;
+			else if  constexpr (!SHOW_MOUSE_BUTTON_PRESSED) if (tem.GetEventType() == EventType::Mouse_Button_Pressed) return 1;
+			else if  constexpr (!SHOW_MOUSE_BUTTON_RELEASED) if (tem.GetEventType() == EventType::Mouse_Button_Released) return 1;
+			else if  constexpr (!SHOW_MOUSE_SCROLLED) if (tem.GetEventType() == EventType::Mouse_Scrolled) return 1;
+			else if  constexpr (!SHOW_OVERLAP_COLLIDER) if (tem.GetEventType() == EventType::Overlap_Collider) return 1;
+			else if  constexpr (!SHOW_MOUSE_OVERLAP_COLLIDER) if (tem.GetEventType() == EventType::Mouse_Overlap_Collider) return 1;
+			else if  constexpr (!SHOW_FIXED_UPDATE) if (tem.GetEventType() == EventType::Fixed_Update) return 1;
 			return 0;
 		}
 

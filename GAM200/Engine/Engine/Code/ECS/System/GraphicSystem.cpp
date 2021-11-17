@@ -57,17 +57,22 @@ namespace Engine
 
 			if (transform->layer == layer)
 			{
-				AnimationState& state = texture.animationStateList[texture.currAnimationState];
+				//AnimationState& state = texture.animationStateList[texture.currAnimationState];
+				auto itr = texture.animationStateList.find(texture.currAnimationState);
+				if (itr != texture.animationStateList.end()) {
+					AnimationState& state = texture.animationStateList[texture.currAnimationState];
 
-				// For texture animation, update texture coords
-				if (texture.isAnimation &&
-					state.aComplete == false &&
-					GameState::GetInstance().GetPlaying())
-				{
-					float dt = DeltaTime::GetInstance().GetDeltaTime();
-					texture.AnimationUpdate(dt, state);
-					std::cout << "run animation \n";
+					// For texture animation, update texture coords
+					if (texture.isAnimation &&
+						state.aComplete == false &&
+						GameState::GetInstance().GetPlaying())
+					{
+						float dt = DeltaTime::GetInstance().GetDeltaTime();
+						texture.AnimationUpdate(dt, state);
+						std::cout << "run animation \n";
+					}
 				}
+				
 
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
 					texture.texobj_hdl, texture.minUV, texture.maxUV);

@@ -91,10 +91,10 @@ namespace Engine
 
 	// Function that adds AnimationState to animationStateList;
 	// to be called by the editor if they want more states
-	void TextureComponent::AddAnimationState(std::string _stateName, AnimationState _state)
-	{
-		animationStateList[_stateName] = _state;
-	}
+	//void TextureComponent::AddAnimationState(std::string _stateName, AnimationState _state)
+	//{
+	//	animationStateList[_stateName] = _state;
+	//}
 
 	// Deserialize function for Texture Component
 	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer)
@@ -122,7 +122,6 @@ namespace Engine
 
 				bool isLoop = state["IsLoop"].GetBool();
 
-				std::cout << stateName << "\n" << stateRow << "\n" << startX << "\n" << endX << "\n" << fTime << "\n" << isLoop << "\n";
 				AnimationState animstate = AnimationState(stateName, stateRow, startX, endX, fTime, isLoop);
 
 				animationStateList.emplace(stateName, animstate);
@@ -146,15 +145,14 @@ namespace Engine
 				AddAnimationState(stateName, state);
 			}*/
 		}
-
 		isActive = _serializer.GetValue<bool>("IsActive");
-
 		return *this;
 	}
 
 	// Serialize function for Texture Component
 	void TextureComponent::Serialize(const SSerializer& _serializer)
 	{
+
 		_serializer.SetValue("Filepath", filepath);
 		_serializer.SetValue("Shape", int(mdl_ref));
 
@@ -165,8 +163,6 @@ namespace Engine
 			rapidjson::Value allAnimation(rapidjson::kArrayType);
 
 			for (auto& [name, state] : animationStateList) {
-				std::cout << state.stateName << "\n" << state.stateRow << "\n" << state.startX << "\n" << state.endX << "\n" << state.fTime << "\n" << state.isLoop << "\n";
-
 				rapidjson::Value classObj(rapidjson::kObjectType);
 				SSerializer cserializer(_serializer, classObj);
 

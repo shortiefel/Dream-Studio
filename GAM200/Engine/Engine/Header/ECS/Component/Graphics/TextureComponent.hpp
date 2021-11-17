@@ -69,7 +69,7 @@ namespace Engine
 
 		Math::vec2 minUV, maxUV; // To be passed to shader files (batch rendering)
 
-		void AddAnimationState(std::string _stateName, AnimationState _state);
+		//void AddAnimationState(std::string _stateName, AnimationState _state);
 		void AnimationUpdate(float _dt, AnimationState& _state);
 		void SetUV(AnimationState& _state);
 

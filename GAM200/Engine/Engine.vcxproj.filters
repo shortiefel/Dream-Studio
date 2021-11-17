@@ -190,6 +190,9 @@
     <ClCompile Include="Engine\Code\Script\InternalCall\GridInternalCall.cpp">
       <Filter>Source Files\Scripting\InternalCall</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\System\SoundSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Application.hpp">
@@ -677,6 +680,12 @@
     </ClInclude>
     <ClInclude Include="..\External Resources\include\freetype\tttags.h">
       <Filter>External Resources\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp">
+      <Filter>Header Files\ECS\Component\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\System\SoundSystem.hpp">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -45,6 +45,8 @@ Technology is prohibited.
 
 #include "Engine/Header/AI/AISystem.hpp"
 
+#include "Engine/Header/ECS/System/SoundSystem.hpp"
+
 namespace Engine {
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
@@ -72,6 +74,7 @@ namespace Engine {
         GameSceneSerializer::SerializeScene("temporary");
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
+        
 
         return true;
     }
@@ -100,6 +103,10 @@ namespace Engine {
 
     void Scene::Update(float dt, bool playing) {
         if (playing) {
+
+            SoundSystem::SoundInit();
+            SoundSystem::SoundUpdate();
+
             float timeScale = DeltaTime::GetInstance().GetTimeScale();
             if (timeScale > 0.f && !Math::EpsilonCheck(timeScale)) {
                 ScriptSystem::GetInstance().PlayRunTime();

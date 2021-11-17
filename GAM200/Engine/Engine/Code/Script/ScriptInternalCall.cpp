@@ -58,8 +58,23 @@ namespace Engine {
 	//Function to call when writing to console (With editor function ptr is overwritten)
 	//Function does nothing in actual game
 	void(*ConsoleFuncPtr)(std::string) = [](std::string) {};
-	Math::mat3(*GetViewportFuncPtr)() = []() { printf("not working \n");  return Math::mat3{}; };
-	Math::vec2(*GetMousePositionFuncPtr)() = []() {  printf("not working \n");  return Input::GetMousePosition(); };
+
+
+
+	Math::mat3(*GetViewportFuncPtr)() = []() -> Math::mat3 { 
+		printf("not working \n");  
+		Math::vec2 game_viewportSize;
+		return Math::mat3(2.f / game_viewportSize.x, 0.f, 0.f,
+			0.f, 2.f / game_viewportSize.y, 0.f,
+			-1.f, -1.f, 1.f);
+	};
+	Math::vec2(*GetMousePositionFuncPtr)() = []() {  
+		printf("not working \n");  
+		//Math::vec3 mousePos;
+		//return Math::vec2{ mousePos.x, mousePos.y };
+		std::cout << "Mouse Position " << Input::GetMousePosition() << "\n";
+		return Input::GetMousePosition(); 
+	};
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Entity

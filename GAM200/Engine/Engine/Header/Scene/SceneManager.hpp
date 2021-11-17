@@ -53,7 +53,7 @@ namespace Engine {
 		//static SceneManager* sceneManager;
 
 		//static std::string currentSceneName;
-		std::string defaultSceneName = std::string{};
+		std::string defaultSceneName = "Default";
 		//The scene when the play was clicked
 		std::string playScene = std::string{};
 		std::string nextScene = std::string{};

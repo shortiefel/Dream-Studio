@@ -30,7 +30,7 @@ namespace Engine {
     Scene* SceneManager::currentScene;*/
 
 	void SceneManager::StartScene() {
-        defaultSceneName = "Default";
+        //defaultSceneName = "Default";
        // currentSceneName = defaultSceneName;
         currentScene = new Scene{ defaultSceneName };
 	}

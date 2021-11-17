@@ -17,6 +17,8 @@ Technology is prohibited.
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <string>
+
 namespace Engine
 {
 	struct Settings
@@ -27,6 +29,9 @@ namespace Engine
 		static unsigned int gameWidth;
 		static unsigned int gameHeight;
 		static float gameAR;
+
+		static std::string defaultCircle;
+		static std::string defaultSquare;
 	};
 }
 

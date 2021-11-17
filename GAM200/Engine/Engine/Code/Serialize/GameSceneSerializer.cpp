@@ -171,17 +171,16 @@ namespace Engine {
 		if (itr != doc.MemberEnd()) {
 			Settings::gameWidth = itr->value["Width"].GetInt();
 			Settings::gameHeight = itr->value["Height"].GetInt();
-
 			Settings::gameAR = static_cast<GLfloat>(Settings::gameWidth) / Settings::gameHeight;
-		}
 
-		/*itr = doc.FindMember("Scene");
-		if (itr != doc.MemberEnd()) {
-			SceneManager::GetInstance().SetDefaultScene(itr->value["Scene"].GetString());
 			Settings::defaultCircle = itr->value["DefaultCircle"].GetString();
 			Settings::defaultSquare = itr->value["DefaultSquare"].GetString();
-		}*/
-		SceneManager::GetInstance().SetDefaultScene("test3");
+		}
+
+		itr = doc.FindMember("Scene");
+		if (itr != doc.MemberEnd()) {
+			SceneManager::GetInstance().SetDefaultScene(itr->value["DefaultScene"].GetString());
+		}
 
 		fileStream.close();
 	}

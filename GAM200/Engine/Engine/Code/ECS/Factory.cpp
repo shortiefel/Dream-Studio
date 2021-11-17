@@ -17,6 +17,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/Factory.hpp"
+#include "Engine/Header/Management/Settings.hpp"
 
 //Components
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
@@ -72,7 +73,7 @@ namespace Engine
         /*dreamECSGame->AddComponent(
             ColliderComponent{ entity.id, ColliderType::Square });*/
         dreamECSGame->AddComponent(
-            TextureComponent{ entity.id, "Assets\\Textures\\Default_Square.png" });
+            TextureComponent{ entity.id, Settings::defaultSquare });
     }
 
     // Function will be called when GUI inspector request a Circle entity
@@ -84,6 +85,6 @@ namespace Engine
         /*dreamECSGame->AddComponent(
             ColliderComponent{ entity.id, ColliderType::Circle });*/
         dreamECSGame->AddComponent(
-            TextureComponent{ entity.id, "Assets\\Textures\\Default_Circle.png" });
+            TextureComponent{ entity.id, Settings::defaultCircle });
     }
 }

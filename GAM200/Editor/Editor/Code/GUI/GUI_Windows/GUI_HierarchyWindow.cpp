@@ -134,6 +134,7 @@ namespace Editor {
 						{
 							if (parent == entity_id) continue;
 								Engine::dreamECSGame->Parent(parent, entity_id);
+
 						}
 					}
 
@@ -185,6 +186,26 @@ namespace Editor {
 
 					}
 				}
+
+				ImGuiTreeNodeFlags flags =  ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
+				flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+
+				if (ImGui::CollapsingHeader("Parent Test"))
+				{
+					Engine::Entity_id parent = GetTarget(entity_selected);
+					for (const auto& [index, entity_id] : entity_selected)
+					{
+						if (parent == entity_id) continue;
+						if (ImGui::TreeNodeEx("Parent", flags))
+						{
+							ImGui::Indent();
+							ImGui::Text("Child");
+							ImGui::TreePop();
+						}
+					}
+					ImGui::OpenPopupOnItemClick("##EntityPop", ImGuiPopupFlags_MouseButtonRight);
+				}
+
 
 				ImGui::End();
 			}

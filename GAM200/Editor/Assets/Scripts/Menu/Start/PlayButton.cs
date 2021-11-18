@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 public class PlayButton : MonoBehaviour
 {
     public override void OnMouseOver()
@@ -6,6 +7,7 @@ public class PlayButton : MonoBehaviour
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
             Debug.Log("Play");
+            Console.WriteLine(Input.GetMousePosition());
             //SceneManager.LoadScene("NewGame");
         }
     }

@@ -158,6 +158,7 @@
       <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
 xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /e /y /i /r
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
@@ -189,6 +190,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
 xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /e /y /i /r
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
@@ -224,6 +226,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
 xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /e /y /i /r
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
@@ -259,6 +262,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
 xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /e /y /i /r
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
@@ -295,6 +299,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
 xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /e /y /i /r
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
@@ -334,6 +339,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
 xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /e /y /i /r
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)glfw3.dll" /Y

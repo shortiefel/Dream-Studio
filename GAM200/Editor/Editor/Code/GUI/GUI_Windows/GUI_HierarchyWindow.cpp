@@ -163,7 +163,34 @@ namespace Editor {
 					ImGui::EndPopup();
 				}
 
+				ImGuiTreeNodeFlags flags =  ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
+				flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
 
+				Engine::Entity_id parent = GetTarget(entity_selected);
+				for (const auto& [index, entity_id] : entity_selected)
+				{
+					if (parent == entity_id) continue;
+					bool selected = CheckIfExist(entity_selected, index);
+
+					if (selected)
+						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+						
+					const auto& iterator = entity_map.find(index);
+					const auto& iterator2 = entity_map.find(parent);
+					if (iterator == entity_map.end()) continue;
+					if (iterator2 == entity_map.end()) continue;
+					if (ImGui::TreeNodeEx(iterator->second.name.c_str(), flags))
+					{
+						ImGui::Indent();
+						ImGui::Text(iterator2->second.name.c_str());
+						ImGui::TreePop();
+						ImGui::Unindent();
+					}
+					ImGui::OpenPopupOnItemClick("##EntityPop", ImGuiPopupFlags_MouseButtonRight);
+					
+					if (selected)
+						ImGui::PopStyleColor();
+					}
 
 
 				if (ImGui::CollapsingHeader("Canvas")) {
@@ -187,28 +214,7 @@ namespace Editor {
 					}
 				}
 
-				ImGuiTreeNodeFlags flags =  ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
-				flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
 
-				if (ImGui::CollapsingHeader("Parent Test"))
-				{
-					Engine::Entity_id parent = GetTarget(entity_selected);
-					for (const auto& [index, entity_id] : entity_selected)
-					{
-						if (parent == entity_id) continue;
-						const auto& iterator = entity_map.find(index);
-						const auto& iterator2 = entity_map.find(parent);
-						if (iterator == entity_map.end()) continue;
-						if (iterator2 == entity_map.end()) continue;
-						if(ImGui::TreeNodeEx(iterator->second.name.c_str(), flags))
-						{
-							ImGui::Indent();
-							ImGui::Text(iterator2->second.name.c_str());
-							ImGui::TreePop();
-						}
-					}
-					ImGui::OpenPopupOnItemClick("##EntityPop", ImGuiPopupFlags_MouseButtonRight);
-				}
 
 
 				ImGui::End();

@@ -196,10 +196,14 @@ namespace Editor {
 					for (const auto& [index, entity_id] : entity_selected)
 					{
 						if (parent == entity_id) continue;
-						if (ImGui::TreeNodeEx("Parent", flags))
+						const auto& iterator = entity_map.find(index);
+						const auto& iterator2 = entity_map.find(parent);
+						if (iterator == entity_map.end()) continue;
+						if (iterator2 == entity_map.end()) continue;
+						if(ImGui::TreeNodeEx(iterator->second.name.c_str(), flags))
 						{
 							ImGui::Indent();
-							ImGui::Text("Child");
+							ImGui::Text(iterator2->second.name.c_str());
 							ImGui::TreePop();
 						}
 					}

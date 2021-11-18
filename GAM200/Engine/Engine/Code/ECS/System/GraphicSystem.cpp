@@ -34,10 +34,17 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 
+#include "Engine/Header/Management/Settings.hpp"
 
 namespace Engine
 {
 #define LAYER_COUNT 5 // Number of layers for game objects
+
+#ifdef _GAME_BUILD
+	auto bindFBO = [](const Graphic::FrameBuffer&) {};
+#else
+	auto bindFBO = [](const Graphic::FrameBuffer& fbo) { fbo.Bind(); };
+#endif
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture
@@ -166,12 +173,12 @@ namespace Engine
 	// Update function for GraphicSystem
 	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
 		PROFILER_START("Rendering");
-
+		
 		GLboolean isDebugDraw;
 		if (!_fbo) isDebugDraw = GL_FALSE;
 		else isDebugDraw = GL_TRUE;
 
-		if (!isDebugDraw) fbo.Bind();
+		if (!isDebugDraw) bindFBO(fbo);
 		else _fbo->Bind();
 
 		GraphicImplementation::Renderer::ResetStats();
@@ -221,7 +228,7 @@ namespace Engine
 		GraphicImplementation::Renderer::Init();
 
 		// Create FBO; 1280 width, 720 height
-		fbo.Create(1280, 720);
+		fbo.Create(Settings::gameWidth, Settings::gameHeight);
 
 		LOG_INSTANCE("Graphic System created");
 		return true;

@@ -26,6 +26,8 @@ Technology is prohibited.
 #include "Engine/Header/Application.hpp"
 #include "Editor/Header/EditorStartPoint.hpp"
 
+//#define GAME_BUILD
+
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //For memory check
 	//use try and except (require logging)

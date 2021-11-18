@@ -64,21 +64,21 @@ namespace Engine {
 		return Math::vec2{ (float)xpos, (float)ypos };
 	}
 
-	void Window::DisplayFPS(float fps) {
-		std::stringstream sstr;
-		sstr << std::fixed << std::setprecision(2) << w_data.title <<
-			" | FPS: " << fps;
+	//void Window::DisplayFPS(float fps) {
+	//	std::stringstream sstr;
+	//	sstr << std::fixed << std::setprecision(2) << w_data.title <<
+	//		" | FPS: " << fps;
 
-		glfwSetWindowTitle(glfw_window, sstr.str().c_str());
+	//	glfwSetWindowTitle(glfw_window, sstr.str().c_str());
 
-		/*std::string stitle = { w_data.title };
-		stitle += " | FPS: ";
-		char buffer[5];
-		sprintf_s(buffer, "%d", fps);
-		stitle += buffer;*/
+	//	/*std::string stitle = { w_data.title };
+	//	stitle += " | FPS: ";
+	//	char buffer[5];
+	//	sprintf_s(buffer, "%d", fps);
+	//	stitle += buffer;*/
 
-		//glfwSetWindowTitle(glfw_window, stitle.c_str());
-	}
+	//	//glfwSetWindowTitle(glfw_window, stitle.c_str());
+	//}
 
 	//Create instance of window class
 	bool Window::Create(const std::string& ttitle, unsigned int twidth, unsigned int theight) {
@@ -181,6 +181,7 @@ namespace Engine {
 
 		WindowResizeEvent event(width, height);
 		EventDispatcher::SendEvent(event);
+		glViewport(0, 0, width, height);
 		//w_data.eventCallBack(event);
 	}
 

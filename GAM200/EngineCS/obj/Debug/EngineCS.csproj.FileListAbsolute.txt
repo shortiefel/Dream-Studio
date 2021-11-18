@@ -46,3 +46,8 @@ C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Debug\EngineCS
 C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Debug\EngineCS.csproj.CoreCompileInputs.cache
 C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Debug\EngineCS.dll
 C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Debug\EngineCS.pdb
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\bin\Debug\EngineCS.dll
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\bin\Debug\EngineCS.pdb
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Debug\EngineCS.csproj.CoreCompileInputs.cache
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Debug\EngineCS.dll
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Debug\EngineCS.pdb

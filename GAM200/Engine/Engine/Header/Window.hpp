@@ -51,7 +51,7 @@ namespace Engine {
 
 		Math::vec2 GetWindowPosition();
 
-		void DisplayFPS(float fps);
+		//void DisplayFPS(float fps);
 
 		void Update();
 

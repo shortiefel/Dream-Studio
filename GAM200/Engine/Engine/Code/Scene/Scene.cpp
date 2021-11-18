@@ -45,7 +45,14 @@ Technology is prohibited.
 
 #include "Engine/Header/AI/AISystem.hpp"
 
+
 namespace Engine {
+#ifdef _GAME_BUILD
+    bool gameBuild = true;
+#else
+    bool gameBuild = false;
+#endif
+
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
 
@@ -55,6 +62,10 @@ namespace Engine {
         }
         //AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });
         //AI::AISystem::GetInstance().SetRender();
+        if (gameBuild) {
+            std::cout << "Playing in game\n";
+            Play();
+        }
     }
 
     Scene::~Scene() {

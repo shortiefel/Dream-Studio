@@ -1,0 +1,5 @@
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.dll
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.pdb
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.CoreCompileInputs.cache
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.dll
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.pdb

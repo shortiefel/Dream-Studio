@@ -27,6 +27,13 @@ Technology is prohibited.
 
 namespace Engine
 {
+
+#ifdef _GAME_BUILD
+	auto bindFBO = [](const Graphic::FrameBuffer&) {};
+#else
+	auto bindFBO = [](const Graphic::FrameBuffer& fbo) { fbo.Bind(); };
+#endif
+
 	void FontSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo)
 	{
 		PROFILER_START("Rendering");
@@ -35,7 +42,7 @@ namespace Engine
 		if (!_fbo) fontDraw = GL_TRUE;
 		else fontDraw = GL_FALSE;
 
-		if (fontDraw) GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+		if (fontDraw) bindFBO(GraphicSystem::GetInstance().GetFrameBuffer());
 		else _fbo->Bind();
 
 		// Load font shader program

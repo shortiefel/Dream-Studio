@@ -61,7 +61,7 @@ namespace Engine {
 		ofna.lpstrFilter = filter;
 		ofna.nFilterIndex = 1;
 		ofna.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
-		std::string initDir { ".\\Assets" + GetNameFromType(ft) };
+		std::string initDir { ".\\Assets\\" + GetNameFromType(ft) };
 		ofna.lpstrInitialDir = initDir.c_str();
 
 		if (GetOpenFileNameA(&ofna) == TRUE) {
@@ -82,7 +82,7 @@ namespace Engine {
 		ofna.lpstrFilter = filter;
 		ofna.nFilterIndex = 1;
 		ofna.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
-		std::string initDir{ ".\\Assets" + GetNameFromType(ft) };
+		std::string initDir{ ".\\Assets\\" + GetNameFromType(ft) };
 		ofna.lpstrInitialDir = initDir.c_str();
 
 		if (GetSaveFileNameA(&ofna) == TRUE) {

@@ -40,17 +40,6 @@ namespace Editor {
 	}
 
 	void EditorStartPoint::Update(float) {
-		//Engine::GraphicImplementation::SetFramebuffer(gameWinFBO);
-		
-
-		//GUI::SetGameFBO();
-		////Engine::GraphicSystem::Update(dt);
-		//Engine::GraphicSystem::GetInstance().Render();
-		
-		//GUI::SetSceneFBO();
-		////Engine::GraphicSystem::Update(dt);
-		////Change this line to editor graphic system
-
 		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 		Engine::UISystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
 		Engine::FontSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());

@@ -123,6 +123,8 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(Tar
 
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
 
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
+
 
 if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
 

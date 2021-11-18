@@ -31,7 +31,7 @@ namespace Engine
 
 	struct AnimationState
 	{
-		AnimationState(std::string _stateName = "", int _stateRow = 0, int _startX = 0, int _endX = 0, float _fTime = 0, bool _isLoop = true);
+		AnimationState(std::string _stateName = "", int _stateRow = 1, int _startX = 1, int _endX = 1, float _fTime = 0.1, bool _isLoop = true);
 
 		std::string stateName;
 
@@ -46,8 +46,8 @@ namespace Engine
 
 	struct TextureComponent : public IComponent
 	{
-		std::string filepath = "";
-		std::string textureName = "";
+		std::string filepath;
+		std::string textureName;
 		GLuint texobj_hdl{};
 
 		GraphicShape mdl_ref = GraphicShape{};
@@ -59,23 +59,27 @@ namespace Engine
 
 		// For animations
 		bool isAnimation;
-		int numberOfStates = 0;
 
-		int totalColumns = 1, totalRows = 1;
+		int totalColumns, totalRows;
 		float cellWidth, cellHeight;
 
-		std::string currAnimationState = "";
+		std::string currAnimationState;
 		std::unordered_map <std::string, AnimationState> animationStateList{};
 
 		Math::vec2 minUV, maxUV; // To be passed to shader files (batch rendering)
 
-		//void AddAnimationState(std::string _stateName, AnimationState _state);
+		// To be called by inspector
+		void AddRefreshAnimationState(std::string _stateName, AnimationState& _state);
+		void AddRefreshAnimationState(std::string _stateName = "", int _stateRow = 0, int _startX = 0, int _endX = 1, float _fTime = 0.1, bool _isLoop = true);
+
+		// Animation functions (used internally)
+		void AnimationStateRename(std::string oldName, std::string newName);
 		void AnimationUpdate(float _dt, AnimationState& _state);
 		void SetUV(AnimationState& _state);
 
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png",
-			GraphicShape _shape = GraphicShape::SQUARE, bool _animation = false, bool _active = true);
+			GraphicShape _shape = GraphicShape::SQUARE, bool _animation = false, std::string _currAnimationState = "", bool _active = true);
 
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);

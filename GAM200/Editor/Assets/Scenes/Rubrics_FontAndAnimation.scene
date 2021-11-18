@@ -1,1 +1,68 @@
-[{"Entity":{"Name":"AnimatedSprite","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-50.0,30.0],"LocalPosition":[-50.0,30.0],"Scale":[10.0,10.0],"Angle":5.0,"Layer":2,"IsActive":true},"ColliderComponent":{"ColliderType":1,"Position":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"IsTrigger":false,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\SpriteTest.png","Shape":0,"IsAnimation":true,"AnimationState":[{"StateName":"TestState","StateRow":1,"StartFrame":1,"EndFrame":4,"TimePerFrame":0.5,"IsLoop":true},{"StateName":"Testing 2","StateRow":0,"StartFrame":0,"EndFrame":0,"TimePerFrame":0.0,"IsLoop":true}],"IsActive":true}}]
+[
+  {
+    "Entity": {
+      "Name": "AnimatedSprite",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 5.0, 5.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\SpriteStateTest.png",
+      "Shape": 0,
+      "IsAnimation": true,
+      "TotalRow": 3,
+      "TotalColumns": 9,
+      "CurrentAnimationState": "",
+      "AnimationState": [
+        {
+          "StateName": "Jump",
+          "StateRow": 3,
+          "StartFrame": 1,
+          "EndFrame": 4,
+          "TimePerFrame": 1,
+          "IsLoop": true
+        },
+        {
+          "StateName": "Run",
+          "StateRow": 2,
+          "StartFrame": 1,
+          "EndFrame": 2,
+          "TimePerFrame": 0.1,
+          "IsLoop": true
+        },
+        {
+          "StateName": "booty shake?",
+          "StateRow": 3,
+          "StartFrame": 6,
+          "EndFrame": 7,
+          "TimePerFrame": 0.1,
+          "IsLoop": true
+        },
+        {
+          "StateName": "more better",
+          "StateRow": 1,
+          "StartFrame": 1,
+          "EndFrame": 6,
+          "TimePerFrame": 0.5,
+          "IsLoop": true
+        }
+      ],
+      "IsActive": true
+    }
+  }
+]

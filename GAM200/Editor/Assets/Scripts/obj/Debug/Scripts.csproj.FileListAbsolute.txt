@@ -10,12 +10,9 @@ C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CopyComplete
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb
-C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.AssemblyReference.cache
-C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CoreCompileInputs.cache
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.dll
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.pdb
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\EngineCS.dll
-C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CopyComplete
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb
 C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.dll
@@ -26,3 +23,6 @@ C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\D
 C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CopyComplete
 C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
 C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.dll
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.pdb
+C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csprojResolveAssemblyReference.cache

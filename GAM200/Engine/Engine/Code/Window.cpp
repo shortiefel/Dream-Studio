@@ -64,6 +64,12 @@ namespace Engine {
 		return Math::vec2{ (float)xpos, (float)ypos };
 	}
 
+
+	Math::vec2 Window::GetWindowSize() {
+		int xpos, ypos;
+		glfwGetWindowSize(glfw_window, &xpos, &ypos);
+		return Math::vec2{ (float)xpos, (float)ypos };
+	}
 	//void Window::DisplayFPS(float fps) {
 	//	std::stringstream sstr;
 	//	sstr << std::fixed << std::setprecision(2) << w_data.title <<

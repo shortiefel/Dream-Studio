@@ -50,6 +50,7 @@ namespace Engine {
 		inline void* GetNativewindow() { return (void*)glfw_window; }
 
 		Math::vec2 GetWindowPosition();
+		Math::vec2 GetWindowSize();
 
 		//void DisplayFPS(float fps);
 

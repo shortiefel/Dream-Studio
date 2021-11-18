@@ -42,8 +42,7 @@ Technology is prohibited.
 //Systems
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
-
-#include "Engine/Header/AI/AISystem.hpp"
+#include "Engine/Header/Management/GameState.hpp"
 
 
 namespace Engine {
@@ -62,6 +61,7 @@ namespace Engine {
         }
         //AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });
         //AI::AISystem::GetInstance().SetRender();
+        std::cout << "Creating scene-------------------------------------------------\n";
         if (gameBuild) {
             std::cout << "Playing in game\n";
             Play();
@@ -80,6 +80,8 @@ namespace Engine {
             return false;
         }
 
+        GameState::GetInstance().SetPlaying(true);
+
         GameSceneSerializer::SerializeScene("temporary");
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
@@ -88,6 +90,8 @@ namespace Engine {
     }
 
     void Scene::Stop(bool deserialize) {
+        GameState::GetInstance().SetPlaying(false);
+
         ScriptSystem::GetInstance().DestroyChildDomain();
 
         CollisionSystem::GetInstance().Stop();

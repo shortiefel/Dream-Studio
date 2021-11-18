@@ -38,6 +38,9 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/SpaceTransform.hpp"
 #include "Engine/Header/Graphic/ResourceSet.hpp"
 
+#include "Engine/Header/Event/WindowEvent.hpp"
+#include "Engine/Header/Window.hpp"
+
 #include "Engine/Header/Script/InternalCall/GridInternalCall.hpp"
 
 #include <mono/metadata/assembly.h>
@@ -59,21 +62,24 @@ namespace Engine {
 	//Function does nothing in actual game
 	void(*ConsoleFuncPtr)(std::string) = [](std::string) {};
 
+	Math::vec2 game_viewportSize{ 0.f,0.f }; //Window size
 
+	bool gameViewportCallBack(const WindowResizeEvent& e) {
+		Math::uvec2 sz = e.GetSize();
+		game_viewportSize = Math::vec2{ static_cast<float>(sz.x), static_cast<float>(sz.y) };
+		return true;
+	}
 
 	Math::mat3(*GetViewportFuncPtr)() = []() -> Math::mat3 { 
-		printf("not working \n");  
-		Math::vec2 game_viewportSize;
 		return Math::mat3(2.f / game_viewportSize.x, 0.f, 0.f,
 			0.f, 2.f / game_viewportSize.y, 0.f,
 			-1.f, -1.f, 1.f);
 	};
 	Math::vec2(*GetMousePositionFuncPtr)() = []() {  
-		printf("not working \n");  
-		//Math::vec3 mousePos;
-		//return Math::vec2{ mousePos.x, mousePos.y };
-		std::cout << "Mouse Position " << Input::GetMousePosition() << "\n";
-		return Input::GetMousePosition(); 
+		//window y size - y position (flip y value)
+		Math::vec2 pos = Input::GetMousePosition();
+		pos.y = Window::GetInstance().GetWindowSize().y - pos.y;
+		return pos;
 	};
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -218,6 +224,8 @@ namespace Engine {
 
 
 	void RegisterInternalCall() {
+		//Register Event callback
+		WindowResizeEvent::RegisterFunction(gameViewportCallBack);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Entity
@@ -634,6 +642,7 @@ namespace Engine {
 
 	void GetMousePosition_Engine(Math::vec2* outPosition) {
 		*outPosition = GetMousePositionFuncPtr();
+		std::cout << "Mouse Position " << *outPosition << "\n";
 	}
 
 	void SetGetMousePositionFunc(Math::vec2(*fp)()) {

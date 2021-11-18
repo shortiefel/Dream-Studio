@@ -162,6 +162,12 @@ namespace Editor {
 
 					ImGui::EndPopup();
 				}
+				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+				{
+					ImGui::Text("I'm Dragging.");
+					ImGui::SetDragDropPayload("GAME_OBJECT", NULL, NULL);
+					ImGui::EndDragDropSource();
+				}
 
 				ImGuiTreeNodeFlags flags =  ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
 				flags |= ImGuiTreeNodeFlags_SpanAvailWidth;

@@ -193,6 +193,9 @@
     <ClCompile Include="Engine\Code\ECS\System\SoundSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp">
+      <Filter>Source Files\ECS\Component\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Application.hpp">

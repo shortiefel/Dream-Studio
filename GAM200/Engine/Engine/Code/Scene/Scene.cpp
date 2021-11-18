@@ -50,6 +50,11 @@ Technology is prohibited.
 namespace Engine {
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
+     
+        
+        SoundSystem::SoundInit();
+        std::cout << "int sound \n";
+
 
         ScriptSystem::GetInstance().UpdateMapData();
         if (_play) {
@@ -74,13 +79,17 @@ namespace Engine {
         GameSceneSerializer::SerializeScene("temporary");
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
-        
+      
 
         return true;
     }
 
     void Scene::Stop(bool deserialize) {
         ScriptSystem::GetInstance().DestroyChildDomain();
+
+        SoundSystem::SoundRelease();
+        std::cout << "end sound \n";
+
 
         CollisionSystem::GetInstance().Stop();
         
@@ -104,8 +113,7 @@ namespace Engine {
     void Scene::Update(float dt, bool playing) {
         if (playing) {
 
-            SoundSystem::SoundInit();
-            SoundSystem::SoundUpdate();
+           
 
             float timeScale = DeltaTime::GetInstance().GetTimeScale();
             if (timeScale > 0.f && !Math::EpsilonCheck(timeScale)) {
@@ -116,11 +124,19 @@ namespace Engine {
                     CollisionSystem::GetInstance().Update(dt);
                     PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
 
+
+                
+
+
                     FixedUpdateEvent event;
                     EventDispatcher::SendEvent(event);
                 }
             }
         }
+
+
+   
+ 
 
         CameraSystem::GetInstance().Update(dt);
 

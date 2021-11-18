@@ -1,4 +1,9 @@
-#pragma once
+#ifndef SOUND_SYSTEM_H
+#define SOUND_SYSTEM_H
+
+
+#include "Engine/Header/pch.hpp"
+#include "Engine/Header/Singleton/Singleton.hpp"
 
 #include <fmod/fmod.hpp>
 #include <map>
@@ -7,7 +12,9 @@
 namespace Engine {
 
 	typedef std::map<std::string  , FMOD::Sound*> SoundMap;
-	class SoundSystem {
+
+	class SoundSystem : public Singleton<SoundSystem>
+	{
 
 	public:
 		static void SoundInit();
@@ -19,5 +26,9 @@ namespace Engine {
 		static FMOD::ChannelGroup* MasterChannel;
 		static 	SoundMap _SoundMap;
 
+		SINGLETON_SETUP(SoundSystem);
+
 	};
 }
+
+#endif

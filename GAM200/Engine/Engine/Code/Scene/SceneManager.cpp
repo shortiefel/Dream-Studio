@@ -19,20 +19,32 @@ Technology is prohibited.
 #include "Engine/Header/Management/GameState.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 
-
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
+#include "Engine/Header/Event/WindowEvent.hpp"
+
+#include "Engine/Header/Math/MathLib.hpp"
+
 namespace Engine {
+    Math::vec2 sceneManagerViewportSize{ 0.f,0.f }; //Window size
+
+    bool gamevpCallBack(const WindowResizeEvent& e) {
+        Math::uvec2 sz = e.GetSize();
+        sceneManagerViewportSize = Math::vec2{ static_cast<float>(sz.x), static_cast<float>(sz.y) };
+        return true;
+    }
+
     //SceneManager* SceneManager::sceneManager;
 
     //std::string SceneManager::currentSceneName;
     /*std::string SceneManager::defaultSceneName;
     Scene* SceneManager::currentScene;*/
 
-	void SceneManager::StartScene() {
+	void SceneManager::Create() {
         //defaultSceneName = "Default";
        // currentSceneName = defaultSceneName;
         currentScene = new Scene{ defaultSceneName };
+        WindowResizeEvent::RegisterFunction(&gamevpCallBack);
 	}
 
     void SceneManager::ChangeScene(std::string sceneName) {
@@ -66,8 +78,9 @@ namespace Engine {
 	}
 
 	void SceneManager::Update(float dt) {
-        currentScene->Update(dt, GameState::GetInstance().GetPlaying());
-
+        currentScene->Update(dt, GameState::GetInstance().GetPlaying(), sceneManagerViewportSize);
+        //currentScene->Update(dt, GameState::GetInstance().GetPlaying(), Math::vec2{});
+        //std::cout << sceneManagerViewportSize << "\n";
         //Scene change at end of update to not disturb entity that is currently being updated
         ChangeSceneInternal();
 	}

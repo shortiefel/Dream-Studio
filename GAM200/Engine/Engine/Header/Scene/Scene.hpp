@@ -18,6 +18,7 @@ Technology is prohibited.
 #define SCENE_HPP
 
 #include <string>
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	class Scene {
@@ -46,7 +47,7 @@ namespace Engine {
 		dt - delta time
 		defaultRender - whether to use default rendering or not
 		--------------------------------------------------------------------*/
-		void Update(float dt, bool playing);
+		void Update(float dt, bool playing, Math::vec2 game_viewportSize);
 
 		unsigned int EntityCount();
 		std::string GetName();

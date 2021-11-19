@@ -26,3 +26,8 @@ C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\D
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.dll
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.pdb
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csprojResolveAssemblyReference.cache
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.dll
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.pdb
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csprojResolveAssemblyReference.cache
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb

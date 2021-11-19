@@ -53,8 +53,8 @@ namespace Engine
         if (!Window::GetInstance().Create("Dream Engine", Settings::windowWidth, Settings::windowHeight))
             LOG_ERROR("Window creation has failed");
 
-        WindowCloseEvent::RegisterFunction(&OnWindowClose);
         Engine::EngineCore::GetInstance().Create();
+        WindowCloseEvent::RegisterFunction(&OnWindowClose);
     }
 
     // Update function for Application

@@ -44,13 +44,28 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/GameState.hpp"
 
+#include "Engine/Header/Graphic/Picking2D.hpp"
+
 
 namespace Engine {
 #ifdef _GAME_BUILD
     bool gameBuild = true;
+    void(*defaultPicking)(Math::vec2) = [](Math::vec2 game_viewportSize) {
+        Math::vec2 pos = Input::GetMousePosition();
+        pos.y = Window::GetInstance().GetWindowSize().y - pos.y;
+        
+        Math::mat3 camMatrix = Engine::CameraSystem::GetInstance().GetTransform();
+        Math::mat3 inverseCamMatrix = Math::Inverse(camMatrix);
+        Engine::Graphic::PickingCheck(Math::vec3{ pos.x, pos.y, 1.f }, game_viewportSize, inverseCamMatrix,
+            [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, true);  },
+            [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); });
+    };
 #else
     bool gameBuild = false;
+    void(*defaultPicking)(Math::vec2) = [](Math::vec2){};
 #endif
+
+    
 
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
@@ -113,7 +128,7 @@ namespace Engine {
         GameSceneSerializer::SerializeScene(sceneName);
     }
 
-    void Scene::Update(float dt, bool playing) {
+    void Scene::Update(float dt, bool playing, Math::vec2 game_viewportSize) {
         if (playing) {
             float timeScale = DeltaTime::GetInstance().GetTimeScale();
             if (timeScale > 0.f && !Math::EpsilonCheck(timeScale)) {
@@ -133,6 +148,8 @@ namespace Engine {
         CameraSystem::GetInstance().Update(dt);
 
         GraphicSystem::GetInstance().Render();
+        defaultPicking(game_viewportSize);
+
         //TransformCalculationSystem::GetInstance().Release();
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();

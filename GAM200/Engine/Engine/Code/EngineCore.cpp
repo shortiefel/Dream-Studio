@@ -40,7 +40,7 @@ namespace Engine {
 		Factory::Create();
 		ResourceManager::GetInstance().Create();
 		AssetManager::GetInstance().Create();
-		SceneManager::GetInstance().StartScene();
+		SceneManager::GetInstance().Create();
 	}
 
 	void EngineCore::Update(float dt) {

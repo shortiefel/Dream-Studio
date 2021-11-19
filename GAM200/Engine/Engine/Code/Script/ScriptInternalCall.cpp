@@ -43,6 +43,9 @@ Technology is prohibited.
 
 #include "Engine/Header/Script/InternalCall/GridInternalCall.hpp"
 
+#include "Engine/Header/Graphic/Picking2D.hpp"
+#include "Engine/Header/Window.hpp"
+
 #include <mono/metadata/assembly.h>
 
 #define GetEngineType(ID, type, paramName, param)\
@@ -642,7 +645,6 @@ namespace Engine {
 
 	void GetMousePosition_Engine(Math::vec2* outPosition) {
 		*outPosition = GetMousePositionFuncPtr();
-		std::cout << "Mouse Position " << *outPosition << "\n";
 	}
 
 	void SetGetMousePositionFunc(Math::vec2(*fp)()) {

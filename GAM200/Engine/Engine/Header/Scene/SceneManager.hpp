@@ -27,7 +27,6 @@ Technology is prohibited.
 namespace Engine {
 	class SceneManager : public Singleton<SceneManager> {
 	public:
-		void StartScene();
 		
 		/*
 		* Add next scene to be changed at the end of the game loop
@@ -35,6 +34,7 @@ namespace Engine {
 		*/
 		void ChangeScene(std::string sceneName);
 
+		void Create();
 		void Update(float dt);
 		void Destroy();
 

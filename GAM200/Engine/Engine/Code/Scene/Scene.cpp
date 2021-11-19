@@ -47,6 +47,9 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Picking2D.hpp"
 
 
+#include "Engine/Header/ECS/System/SoundSystem.hpp"
+//#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
+
 namespace Engine {
 #ifdef _GAME_BUILD
     bool gameBuild = true;
@@ -69,6 +72,11 @@ namespace Engine {
 
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
+     
+        
+        SoundSystem::SoundInit();
+        std::cout << "int sound \n";
+
 
         ScriptSystem::GetInstance().UpdateMapData();
         if (_play) {
@@ -101,6 +109,8 @@ namespace Engine {
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
 
+      
+
         return true;
     }
 
@@ -108,6 +118,10 @@ namespace Engine {
         GameState::GetInstance().SetPlaying(false);
 
         ScriptSystem::GetInstance().DestroyChildDomain();
+
+        SoundSystem::SoundRelease();
+        std::cout << "end sound \n";
+
 
         CollisionSystem::GetInstance().Stop();
         
@@ -130,6 +144,9 @@ namespace Engine {
 
     void Scene::Update(float dt, bool playing, Math::vec2 game_viewportSize) {
         if (playing) {
+
+           
+
             float timeScale = DeltaTime::GetInstance().GetTimeScale();
             if (timeScale > 0.f && !Math::EpsilonCheck(timeScale)) {
                 ScriptSystem::GetInstance().PlayRunTime();
@@ -139,11 +156,19 @@ namespace Engine {
                     CollisionSystem::GetInstance().Update(dt);
                     PhysicsSystem::GetInstance().Update(DeltaTime::GetInstance().GetFixedDeltaTime());
 
+
+                
+
+
                     FixedUpdateEvent event;
                     EventDispatcher::SendEvent(event);
                 }
             }
         }
+
+
+   
+ 
 
         CameraSystem::GetInstance().Update(dt);
 
@@ -153,6 +178,9 @@ namespace Engine {
         //TransformCalculationSystem::GetInstance().Release();
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
+
+        SoundSystem::GetInstance().SoundUpdate();
+        //std::cout << "update sound \n";
 
         dreamECSGame->ClearDestroyQueue();
 

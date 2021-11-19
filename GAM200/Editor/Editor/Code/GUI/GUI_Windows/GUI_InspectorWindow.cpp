@@ -25,6 +25,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/UI/ButtonComponent.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/Graphic/ResourceSet.hpp"
+#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
+#include "Engine/Header/ECS/System/SoundSystem.hpp"
 
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
@@ -126,6 +128,8 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
 					if (ImGui::Selectable(" + Text##addTextcom"))
 						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
+					if (ImGui::Selectable(" + Audio##addAudiocom"))
+						Engine::dreamECSGame->AddComponent<Engine::SoundComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0", Engine::File_Dialog_Type::Scripts);
 
@@ -702,21 +706,65 @@ namespace Editor {
 				/*
 				*	Sound component
 				*/
-			/*	Engine::SoundComponent* soundComp = Engine::dreamECSGame->GetComponentPTR<Engine::SoundComponent>(entity_selected);
+				Engine::SoundComponent* soundComp = Engine::dreamECSGame->GetComponentPTR<Engine::SoundComponent>(entity_selected);
 				if (soundComp != nullptr)
 				{
 					ImGui::CheckBox_Dream("##SoundActive", &(soundComp->isActive));
 					ImGui::SameLine();
 
-					if (ImGui::Button("Sound Picker##PickSound")) {
-						std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav; *");
-
-					if (!filePath.empty()) {
-							Engine::SoundComponent::Load(filePath);
+					if (ImGui::BeginDragDropTarget())
+					{
+						ImGui::Text("I'm Dropping.");
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+						{
+							const wchar_t* path = (const wchar_t*)payload->Data;
+							std::filesystem::path soundPath = std::filesystem::path(_assetPath) / path;
+							Engine::SoundSystem::SoundPlay(soundPath.string());
 						}
+						ImGui::EndDragDropTarget();
 					}
 
-				}*/
+					if (ImGui::CollapsingHeader("Sound")) {
+
+
+						ImGui::Checkbox("##isSound", &(soundComp->isSound));
+						if (soundComp->isSound == true)
+						{
+
+							if (ImGui::Button("Sound Picker##PickSound")) {
+								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav;)\0*.wav; \0");
+
+								if (!filePath.empty()) {
+									soundComp->filepath = filePath;
+									Engine::SoundComponent::GetSound(filePath);
+
+								}
+							}
+
+							if (ImGui::Button("Play"))
+							{
+								std::cout << "plsuong \n";
+								ImGui::Text(soundComp->soundName.c_str());
+								Engine::SoundSystem::SoundPlay(soundComp->filepath);
+							}
+						
+						}
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("File");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(soundComp->soundName.c_str());
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+						
+					}
+				
+
+				}
 
 
 

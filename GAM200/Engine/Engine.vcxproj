@@ -267,6 +267,7 @@
     <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\RigidBodyComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Script\ScriptComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\FontComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp" />
@@ -278,6 +279,7 @@
     <ClCompile Include="Engine\Code\ECS\System\CollisionSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\PhysicsSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp" />
+    <ClCompile Include="Engine\Code\ECS\System\SoundSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\TransformCalculationSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\UISystem.cpp" />
     <ClCompile Include="Engine\Code\EngineCore.cpp" />
@@ -402,6 +404,7 @@
     <ClInclude Include="Engine\Header\ECS\Component\Physics\ColliderComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Physics\RigidBodyComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Script\ScriptComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Sound\SoundComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\FontComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\UIComponent.hpp" />
@@ -416,6 +419,7 @@
     <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\PhysicsSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp" />
+    <ClInclude Include="Engine\Header\ECS\System\SoundSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\TransformCalculationSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\UISystem.hpp" />

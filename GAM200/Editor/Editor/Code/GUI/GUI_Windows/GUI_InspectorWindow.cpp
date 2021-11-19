@@ -675,7 +675,7 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Color");
 						ImGui::SameLine(halfWidth);
-
+						ImGui::ColorPicker3("Color", (float*)&textComp->colour, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
 						ImGui::PushFont(boldFont);
 						ImGui::Text(" R");
 						ImGui::SameLine(halfWidth * 1.125f, 0);

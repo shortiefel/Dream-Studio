@@ -169,9 +169,11 @@ namespace Editor {
 					ImGui::EndDragDropSource();
 				}
 
+
 				ImGuiTreeNodeFlags flags =  ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
 				flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
 
+		
 				Engine::Entity_id parent = GetTarget(entity_selected);
 				for (const auto& [index, entity_id] : entity_selected)
 				{
@@ -180,15 +182,26 @@ namespace Editor {
 
 					if (selected)
 						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-						
+						Engine::dreamECSGame->Parent(parent, entity_id);
+	
 					const auto& iterator = entity_map.find(index);
 					const auto& iterator2 = entity_map.find(parent);
 					if (iterator == entity_map.end()) continue;
 					if (iterator2 == entity_map.end()) continue;
-					if (ImGui::TreeNodeEx(iterator->second.name.c_str(), flags))
+					bool open = ImGui::TreeNodeEx(iterator->second.name.c_str(), flags);
+					if (open)
 					{
 						ImGui::Indent();
-						ImGui::Text(iterator2->second.name.c_str());
+						if (ImGui::BeginDragDropTarget())
+						{
+							ImGui::Text("I'm Dropping.");
+							ImGui::Text(iterator2->second.name.c_str());
+							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
+							{
+								Engine::dreamECSGame->Parent(parent, entity_id);
+							}
+							ImGui::EndDragDropTarget();
+						}
 						ImGui::TreePop();
 						ImGui::Unindent();
 					}

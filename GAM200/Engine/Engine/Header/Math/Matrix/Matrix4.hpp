@@ -62,18 +62,21 @@ namespace Engine {
 				}
 
 				// Assignment operators
-				/*Matrix4<T>& operator *= (const Matrix4<T>& rhs) {
+				Matrix4<T>& operator *= (const Matrix4<T>& rhs) {
 					Matrix4<T> result;
-					for (int i{ 0 }; i < 3; ++i) {
-						for (int o{ 0 }; o < 3; ++o) {
-							int index1 = i * 3;
-							result.m[(i * 3) + o] = (rhs.m[index1] * m[o]) + (rhs.m[index1 + 1] * m[o + 3]) + (rhs.m[index1 + 2] * m[o + 6]);
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 4; j++) {
+							int num = 0;
+							for (int k = 0; k < 4; k++) {
+								num += m[i][k] * rhs.m[k][j];
+							}
+							result[i][j] = num;
 						}
 					}
 
 					*this = result;
 					return *this;
-				}*/
+				}
 
 				friend std::ostream& operator<<(std::ostream& os, const Matrix4<T>& rhs) {
 					for (int i{ 0 }; i < 16; ++i) {

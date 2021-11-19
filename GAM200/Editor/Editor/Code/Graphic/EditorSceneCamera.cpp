@@ -59,6 +59,22 @@ namespace Editor
                        0.f, 1.f, 0.f,
                       -position.x, -position.y, 1.f);
     }
+
+    // Function that gets the transformation matrix (mat4) for EditorSceneCamera
+    Math::mat4 EditorSceneCamera::GetTransformMat4()
+    {
+        return
+            // compute world-to-NDC transformation matrix
+            Math::mat4(2.f / (ar * SCENE_CAMERA_HEIGHT), 0.f, 0.f, 0.f,
+                0.f, 2.f / SCENE_CAMERA_HEIGHT, 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                0.f, 0.f, 0.f, 1.f)
+            *
+            Math::mat4(1.f, 0.f, 0.f, 0.f,
+                0.f, 1.f, 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                -position.x, -position.y, 0.f, 1.f);
+    }
     
     // Function that gets the inverse transformation matrix for EditorSceneCamera
     Math::mat3 EditorSceneCamera::GetInverseTransform()
@@ -72,6 +88,22 @@ namespace Editor
                 0.f, SCENE_CAMERA_HEIGHT / 2.f, 0.f,
                 0.f, 0.f, 1.f);
             
+    }
+
+    // Function that gets the inverse transformation matrix (mat4) for EditorSceneCamera
+    Math::mat4 EditorSceneCamera::GetInverseTransformMat4()
+    {
+        return
+            Math::mat4(1.f, 0.f, 0.f, 0.f,
+                0.f, 1.f, 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                position.x, position.y, 0.f, 1.f)
+            *
+            Math::mat4((ar * SCENE_CAMERA_HEIGHT) / 2.f, 0.f, 0.f, 0.f,
+                0.f, SCENE_CAMERA_HEIGHT / 2.f, 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                0.f, 0.f, 0.f, 1.f);
+
     }
 
     // Function that gets the UI transformation matrix for EditorSceneCamera

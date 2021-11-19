@@ -240,3 +240,227 @@ namespace Engine {
 
 #endif
 
+#if 0
+T m[3]{ 0,0,0 };
+T& x = m[0];
+T& r = m[0];
+T& s = m[0];
+
+T& y = m[1];
+T& g = m[1];
+T& t = m[1];
+
+T& z = m[2];
+T& b = m[2];
+T& u = m[2];
+/*union { T& x, r, s; };
+union { T& y, g, t; };
+union { T& z, b, u; };*/
+
+// Constructors
+Vector3D() : x{ m[0] }, y{ m[1] }, z{ m[2] } {};
+Vector3D(T _x, T _y, T _z) : x{ m[0] }, y{ m[1] }, z{ m[2] } {
+	m[0] = _x; m[1] = _y;; m[2] = _z;
+}
+//Vector3D(Vector2D<T> t, T z = T{}) : x{ t.x }, y{ t.y }, z{ z } {}
+
+/*---------------------------------------------------------------------------------------------------------------------
+* Assignment
+---------------------------------------------------------------------------------------------------------------------*/
+//template<typename U>
+Vector3D<T>& operator = (const Vector3D<T>& rhs) {
+	x = static_cast<T>(rhs.x);
+	y = static_cast<T>(rhs.y);
+	z = static_cast<T>(rhs.z);
+	return *this;
+}
+
+//template<typename U>
+Vector3D<T>& operator = (T rhs) {
+	x = static_cast<T>(rhs);
+	y = static_cast<T>(rhs);
+	z = static_cast<T>(rhs);
+	return *this;
+}
+/*---------------------------------------------------------------------------------------------------------------------
+* Add Assignment
+---------------------------------------------------------------------------------------------------------------------*/
+//template<typename U>
+Vector3D<T>& operator += (const Vector3D<T>& rhs) {
+	x += static_cast<T>(rhs.x);
+	y += static_cast<T>(rhs.y);
+	z += static_cast<T>(rhs.z);
+	return *this;
+}
+
+//template<typename U>
+Vector3D<T>& operator += (T rhs) {
+	x += static_cast<T>(rhs);
+	y += static_cast<T>(rhs);
+	z += static_cast<T>(rhs);
+	return *this;
+}
+/*---------------------------------------------------------------------------------------------------------------------
+* Minus Assignment
+---------------------------------------------------------------------------------------------------------------------*/
+//template<typename U>
+Vector3D<T>& operator -= (const Vector3D<T>& rhs) {
+	x -= static_cast<T>(rhs.x);
+	y -= static_cast<T>(rhs.y);
+	z -= static_cast<T>(rhs.z);
+	return *this;
+}
+
+//template<typename U>
+Vector3D<T>& operator -= (T rhs) {
+	x -= static_cast<T>(rhs);
+	y -= static_cast<T>(rhs);
+	z -= static_cast<T>(rhs);
+	return *this;
+}
+/*---------------------------------------------------------------------------------------------------------------------
+* Multiply Assignment
+---------------------------------------------------------------------------------------------------------------------*/
+//template<typename U>
+Vector3D<T>& operator *= (const Vector3D<T>& rhs) {
+	x *= static_cast<T>(rhs.x);
+	y *= static_cast<T>(rhs.y);
+	z *= static_cast<T>(rhs.z);
+	return *this;
+}
+
+//template<typename U>
+Vector3D<T>& operator *= (T rhs) {
+	x *= static_cast<T>(rhs);
+	y *= static_cast<T>(rhs);
+	z *= static_cast<T>(rhs);
+	return *this;
+}
+/*---------------------------------------------------------------------------------------------------------------------
+* Divide Assignment
+---------------------------------------------------------------------------------------------------------------------*/
+//template<typename U>
+Vector3D<T>& operator /= (const Vector3D<T>& rhs) {
+	x /= static_cast<T>(rhs.x);
+	y /= static_cast<T>(rhs.y);
+	z /= static_cast<T>(rhs.z);
+	return *this;
+}
+
+//template<typename U>
+Vector3D<T>& operator /= (T rhs) {
+	x /= static_cast<T>(rhs);
+	y /= static_cast<T>(rhs);
+	z /= static_cast<T>(rhs);
+	return *this;
+}
+/*---------------------------------------------------------------------------------------------------------------------
+* Pre/post increment
+---------------------------------------------------------------------------------------------------------------------*/
+Vector3D<T>& operator++() {
+	++x;
+	++y;
+	++z;
+	return *this;
+}
+
+Vector3D<T>& operator--() {
+	--x;
+	--y;
+	--z;
+	return *this;
+}
+
+Vector3D<T> operator++(int) {
+	Vector3D<T> Result(*this);
+	++* this;
+	return Result;
+}
+
+Vector3D<T> operator--(int) {
+	Vector3D<T> Result(*this);
+	--* this;
+	return Result;
+}
+/*---------------------------------------------------------------------------------------------------------------------
+* Unary operator
+---------------------------------------------------------------------------------------------------------------------*/
+Vector3D<T> operator-() const {
+	return Vector3D<T>(-x, -y, -z);
+}
+
+Vector3D<T> operator+() const {
+	return *this;
+}
+/*---------------------------------------------------------------------------------------------------------------------
+* ostream operator
+---------------------------------------------------------------------------------------------------------------------*/
+friend std::ostream& operator<<(std::ostream& os, const Vector3D<T>& rhs) {
+	os << "(" << rhs.x << ", " << rhs.y << ", " << rhs.z << ")";
+	return os;
+}
+
+			};
+
+			/*---------------------------------------------------------------------------------------------------------------------
+			* Binary Add
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T>
+			Vector3D<T> operator + (const Vector3D<T>& lhs, const Vector3D<T>& rhs) {
+				return Vector3D<T>(
+					lhs.x + static_cast<T>(rhs.x),
+					lhs.y + static_cast<T>(rhs.y),
+					lhs.z + static_cast<T>(rhs.z));
+			}
+			/*---------------------------------------------------------------------------------------------------------------------
+			* Binary Minus
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T>
+			Vector3D<T> operator - (const Vector3D<T>& lhs, const Vector3D<T>& rhs) {
+				return lhs + -rhs;
+			}
+			/*---------------------------------------------------------------------------------------------------------------------
+			* Binary Multiply
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T>
+			Vector3D<T> operator * (const Vector3D<T>& lhs, const Vector3D<T>& rhs) {
+				return Vector3D<T>(
+					lhs.x * static_cast<T>(rhs.x),
+					lhs.y * static_cast<T>(rhs.y),
+					lhs.z * static_cast<T>(rhs.z));
+			}
+
+			template <typename T>
+			Vector3D<T> operator * (const Vector3D<T>& lhs, T rhs) {
+				return Vector3D<T>(
+					lhs.x * static_cast<T>(rhs),
+					lhs.y * static_cast<T>(rhs),
+					lhs.z * static_cast<T>(rhs));
+			}
+
+			template <typename T>
+			Vector3D<T> operator * (T lhs, const Vector3D<T>& rhs) {
+				return rhs * lhs;
+			}
+			/*---------------------------------------------------------------------------------------------------------------------
+			* Binary Divide
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T>
+			Vector3D<T> operator / (const Vector3D<T>& lhs, const Vector3D<T>& rhs) {
+				return Vector3D<T>(
+					lhs.x / static_cast<T>(rhs.x),
+					lhs.y / static_cast<T>(rhs.y),
+					lhs.z / static_cast<T>(rhs.z));
+			}
+
+			template <typename T>
+			Vector3D<T> operator / (const Vector3D<T>& lhs, T rhs) {
+				return Vector3D<T>(
+					lhs.x / static_cast<T>(rhs),
+					lhs.y / static_cast<T>(rhs),
+					lhs.z / static_cast<T>(rhs));
+			}
+		}
+	}
+}
+#endif

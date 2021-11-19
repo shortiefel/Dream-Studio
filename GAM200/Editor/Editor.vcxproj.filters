@@ -43,6 +43,9 @@
     <Filter Include="Source Files\GUI\GUI_Windows">
       <UniqueIdentifier>{1b973a22-67e8-4522-b947-62a87ddaf9f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External Resources\ImGuizmo">
+      <UniqueIdentifier>{431fa6e9-0c5b-4725-b82a-ed0782892ddf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\Imgui\imconfig.h">
@@ -120,6 +123,27 @@
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_PrefabWindow.hpp">
       <Filter>Header Files\GUI\GUI_Windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\External Resources\include\ImGuizmo\GraphEditor.h">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImCurveEdit.h">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImGradient.h">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImGuizmo.h">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImSequencer.h">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImZoomSlider.h">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_Guizmo.hpp">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -193,6 +217,24 @@
     </ClCompile>
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_PrefabWindow.cpp">
       <Filter>Source Files\GUI\GUI_Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\ImGuizmo\GraphEditor.cpp">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\ImGuizmo\ImCurveEdit.cpp">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\ImGuizmo\ImGradient.cpp">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\ImGuizmo\ImGuizmo.cpp">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External Resources\include\ImGuizmo\ImSequencer.cpp">
+      <Filter>External Resources\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Guizmo.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

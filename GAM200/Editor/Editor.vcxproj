@@ -101,12 +101,12 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/ImGuizmo</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/ImGuizmo</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
@@ -115,26 +115,26 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/ImGuizmo</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Game|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/ImGuizmo</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/ImGuizmo</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Game|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor</IncludePath>
+    <IncludePath>$(SolutionDir)/External Resources/include/;$(SolutionDir)/Engine;$(SolutionDir)/External Resources/include/GL/$(Platform);$(SolutionDir)/External Resources/include/GLFW/$(Platform);$(SolutionDir)/Editor;$(SolutionDir)/External Resources/include/ImGuizmo</IncludePath>
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
@@ -362,6 +362,12 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\External Resources\include\ImGuizmo\GraphEditor.h" />
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImCurveEdit.h" />
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImGradient.h" />
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImGuizmo.h" />
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImSequencer.h" />
+    <ClInclude Include="..\External Resources\include\ImGuizmo\ImZoomSlider.h" />
     <ClInclude Include="..\External Resources\include\Imgui\imconfig.h" />
     <ClInclude Include="..\External Resources\include\Imgui\imgui.h" />
     <ClInclude Include="..\External Resources\include\Imgui\imgui_impl_glfw.h" />
@@ -375,6 +381,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="Editor\Header\Graphic\EditorSceneCamera.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_ClickCheck.hpp" />
+    <ClInclude Include="Editor\Header\GUI\GUI_Guizmo.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Window.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Imgui.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_AssetBrowserWindow.hpp" />
@@ -389,6 +396,11 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="Editor\Header\Scene\EditorSceneManager.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\External Resources\include\ImGuizmo\GraphEditor.cpp" />
+    <ClCompile Include="..\External Resources\include\ImGuizmo\ImCurveEdit.cpp" />
+    <ClCompile Include="..\External Resources\include\ImGuizmo\ImGradient.cpp" />
+    <ClCompile Include="..\External Resources\include\ImGuizmo\ImGuizmo.cpp" />
+    <ClCompile Include="..\External Resources\include\ImGuizmo\ImSequencer.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_draw.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_impl_glfw.cpp" />
@@ -400,6 +412,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClCompile Include="Editor\Code\Graphic\EditorSceneCamera.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_ClickCheck.cpp" />
+    <ClCompile Include="Editor\Code\GUI\GUI_Guizmo.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Imgui.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Window.cpp" />
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_AssetBrowserWindow.cpp" />

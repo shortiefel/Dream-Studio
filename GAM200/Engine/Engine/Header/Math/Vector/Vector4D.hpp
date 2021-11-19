@@ -29,6 +29,22 @@ namespace Engine {
 			template <typename T>
 			class Vector4D {
 			public:
+				/*T m[4];
+				T& x = m[0];
+				T& r = m[0]; 
+				T& s = m[0];
+
+				T& y = m[1];
+				T& g = m[1];
+				T& t = m[1];
+
+				T& z = m[2];
+				T& b = m[2];
+				T& u = m[2];
+
+				T& w = m[4];
+				T& a = m[4];
+				T& v = m[4];*/
 				union { T x, r, s; };
 				union { T y, g, t; };
 				union { T z, b, u; };

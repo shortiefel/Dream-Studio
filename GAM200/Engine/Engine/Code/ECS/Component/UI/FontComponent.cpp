@@ -47,7 +47,7 @@ namespace Engine
 		float red = _serializer.GetValue<float>("Red");
 		float green = _serializer.GetValue<float>("Green");
 		float blue = _serializer.GetValue<float>("Blue");
-		colour = { red, green, blue };
+		colour = Math::vec3{ red, green, blue };
 
 		isActive = _serializer.GetValue<bool>("IsActive");
 

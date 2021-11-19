@@ -19,6 +19,7 @@ Technology is prohibited.
 
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 #include "Editor/Header/GUI/GUI_ClickCheck.hpp"
+#include "Editor/Header/GUI/GUI_Guizmo.hpp"
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
@@ -37,7 +38,7 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #include <filesystem>
-
+#include <ImGuizmo.h>
 #define REMOVE_FROM_SCENEPATH scenePath = scenePath.string().substr(scenePath.string().find_last_of("\\") + 1);\
 							 scenePath = scenePath.string().substr(0, scenePath.string().find_last_of("."));
 
@@ -91,7 +92,6 @@ namespace Editor {
 			inside = false;
 
 			if (*sceneWin_bool) {
-
 				//ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
 				ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
 				ImGui::BeginChild("Render");
@@ -127,8 +127,40 @@ namespace Editor {
 					}
 					ImGui::EndDragDropTarget();
 				}
+				
+				
+
 				ImVec2 windowSize = ImGui::GetWindowSize();
 				ImVec2 minBound = ImGui::GetWindowPos();
+
+				const Engine::Entity_id entity_id = GetTarget(entity_selected);
+				if (!EntityId_Check(entity_id)) {
+					//GUI_Guizmo::Guizmo_Update(GetTarget(entity_selected));
+					ImGuizmo::SetOrthographic(true);
+					ImGuizmo::SetDrawlist();
+					ImGuizmo::SetRect(minBound.x, minBound.y, windowSize.x, windowSize.y);
+					Math::mat4 cameraView = EditorSceneCamera::GetInverseTransformMat4();
+					Math::mat4 cameraProjection = EditorSceneCamera::GetTransformMat4();
+					const Engine::TransformComponent& tc = Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(entity_id);
+					
+					Math::vec3 trans4{ tc.localPosition.x, tc.localPosition.y, 1.f }, 
+						scale4{ tc.scale.x, tc.scale.y, 1.f },
+						rot4{ 1.f, 1.f, tc.angle };
+					Math::mat4 transform; /*transform.SetTransform(tc.localPosition.x, tc.localPosition.y, 1.f,
+																tc.scale.x, tc.scale.y, 1.f);*/
+
+					float transArr[3]{ trans4.x, trans4.y, trans4.z };
+					float scaleArr[3]{ scale4.x, scale4.y, scale4.z };
+					float rotArr[3]{ rot4.x, rot4.y, rot4.z };
+					ImGuizmo::RecomposeMatrixFromComponents(transArr, scaleArr, rotArr, Math::value_ptr(transform));
+
+					ImGuizmo::Manipulate(Math::value_ptr(cameraView), Math::value_ptr(cameraProjection),
+						ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, Math::value_ptr(transform));
+					if (ImGuizmo::IsUsing()) {
+						ImGuizmo::DecomposeMatrixToComponents(Math::value_ptr(transform), transArr, scaleArr, rotArr);
+					}
+				}
+
 				if (windowSize.x > windowSize.y * EditorSceneCamera::GetAR())
 					windowSize.x = windowSize.y * EditorSceneCamera::GetAR();
 				else

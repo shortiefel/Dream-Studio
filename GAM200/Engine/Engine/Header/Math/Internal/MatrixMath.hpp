@@ -128,7 +128,7 @@ namespace Engine {
 			Identity(pResult);
 			pResult.m[0] = x;
 			pResult.m[5] = y;
-			pResult.m[10] = y;
+			pResult.m[10] = z;
 		}
 
 		

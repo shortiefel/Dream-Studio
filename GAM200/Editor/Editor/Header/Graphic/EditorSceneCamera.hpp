@@ -29,7 +29,9 @@ namespace Editor
 		static void Destroy();
 
 		static Math::mat3 GetTransform();
+		static Math::mat4 GetTransformMat4();
 		static Math::mat3 GetInverseTransform();
+		static Math::mat4 GetInverseTransformMat4();
 		static Math::mat3 GetTransformUI();
 		static float GetAR();
 

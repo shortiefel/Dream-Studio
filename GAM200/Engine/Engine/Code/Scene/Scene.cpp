@@ -68,12 +68,10 @@ namespace Engine {
     void(*defaultPicking)(Math::vec2) = [](Math::vec2){};
 #endif
 
-    
 
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
      
-        
         SoundSystem::SoundInit();
         std::cout << "int sound \n";
 
@@ -84,11 +82,8 @@ namespace Engine {
         }
         //AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });
         //AI::AISystem::GetInstance().SetRender();
-        std::cout << "Creating scene-------------------------------------------------\n";
-        if (gameBuild) {
-            std::cout << "Playing in game\n";
-            Play();
-        }
+
+        if (gameBuild) Play();
     }
 
     Scene::~Scene() {
@@ -108,8 +103,6 @@ namespace Engine {
         GameSceneSerializer::SerializeScene("temporary");
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
-
-      
 
         return true;
     }

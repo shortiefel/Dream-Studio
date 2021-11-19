@@ -21,6 +21,7 @@ Technology is prohibited.
 namespace Engine {
 	class Random {
 	public:
+		// param 1 - starting range, - param 2 - end range, param 3 - return value
 		static void Range(int num1, int num2, int* num3);
 	};
 }

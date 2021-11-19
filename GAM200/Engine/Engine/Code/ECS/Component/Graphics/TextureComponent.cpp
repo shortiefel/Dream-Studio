@@ -174,7 +174,6 @@ namespace Engine
 	// Serialize function for Texture Component
 	void TextureComponent::Serialize(const SSerializer& _serializer)
 	{
-
 		_serializer.SetValue("Filepath", filepath);
 		_serializer.SetValue("Shape", int(mdl_ref));
 

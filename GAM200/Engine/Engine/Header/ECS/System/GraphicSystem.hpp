@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/FrameBuffer.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/ECS/Component/Graphics/ParticleComponent.hpp"
 
 namespace Engine
 {
@@ -39,8 +40,12 @@ namespace Engine
 
 		//void SetPickingFunction(void(*fp)());
 
+
 	private:
 		Graphic::FrameBuffer fbo{};
+
+		Math::vec2<ParticleComponent> m_ParticlePool;
+		uint32_t m_PoolIndex = 999;
 
 		SINGLETON_SETUP(GraphicSystem);
 	};

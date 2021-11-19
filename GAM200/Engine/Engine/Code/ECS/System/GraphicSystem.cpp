@@ -84,6 +84,41 @@ namespace Engine
 		}
 	}
 
+	// Function will fill the batch render with vertices and required attributes of game objects
+	// Called by RenderGameObjects function -  to render all game objects with particles
+	void RenderParticleLayer(std::array<ParticleComponent, MAX_ENTITIES>& arr, int layer)
+	{
+		for (auto& particle : arr)
+		{
+			// Option to not render individual game object
+			if (!particle.isActive) continue;
+
+			const Entity_id& entity_id = particle.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			// Get transformation component
+			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
+			if (!transform || !transform->isActive) continue;
+
+			if (transform->layer == layer)
+			{
+				// For texture animation, update texture coords
+				if (particle.aComplete == false &&
+					GameState::GetInstance().GetPlaying())
+				{
+					float dt = DeltaTime::GetInstance().GetDeltaTime();
+					particle.ParticleUpdate(dt);
+					std::cout << "run animation \n";
+				}
+
+				GraphicImplementation::Renderer::DrawQuad(particle.offsetPosition + transform->position, 
+					particle.offset_scale * transform->scale, 
+					particle.angle + transform->angle,
+					particle.texobj_hdl, particle.minUV, particle.maxUV);
+			}
+		}
+	}
+
 	// Function will loop through texture array of game objects and render game objects based on layer; 
 	// 0 will be rendered first, followed by 1, 2 ...
 	void RenderGameObjects(Math::mat3 _camMatrix, bool _isDebugDraw)
@@ -188,6 +223,7 @@ namespace Engine
 		// Render game objects and collision lines
 		RenderGameObjects(camMatrix, isDebugDraw);
 		if (isDebugDraw == GL_TRUE) RenderCollisionLines(camMatrix, isDebugDraw);
+
 
 		if (!isDebugDraw) fbo.Unbind();
 		else _fbo->Unbind();

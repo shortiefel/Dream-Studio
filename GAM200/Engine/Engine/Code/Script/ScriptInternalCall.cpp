@@ -46,6 +46,8 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Picking2D.hpp"
 #include "Engine/Header/Window.hpp"
 
+#include "Engine/Header/Management/Settings.hpp"
+
 #include <mono/metadata/assembly.h>
 
 #define GetEngineType(ID, type, paramName, param)\
@@ -65,7 +67,7 @@ namespace Engine {
 	//Function does nothing in actual game
 	void(*ConsoleFuncPtr)(std::string) = [](std::string) {};
 
-	Math::vec2 game_viewportSize{ 0.f,0.f }; //Window size
+	Math::vec2 game_viewportSize{}; //Window size
 
 	bool gameViewportCallBack(const WindowResizeEvent& e) {
 		Math::uvec2 sz = e.GetSize();
@@ -229,6 +231,7 @@ namespace Engine {
 	void RegisterInternalCall() {
 		//Register Event callback
 		WindowResizeEvent::RegisterFunction(gameViewportCallBack);
+		game_viewportSize = Math::vec2{ static_cast<float>(Settings::windowWidth), static_cast<float>(Settings::windowHeight) };
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Entity

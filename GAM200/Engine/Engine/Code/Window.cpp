@@ -98,9 +98,6 @@ namespace Engine {
 
 		aspectRatio = (float)w_data.height / (float)w_data.width;
 
-		WindowResizeEvent event(twidth, theight);
-		EventDispatcher::SendEvent(event);
-
 		if (!glfwInit()) {
 			LOG_ERROR("GLFW initialization has failed");
 			return false;

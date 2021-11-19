@@ -155,8 +155,7 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /E /Y /I /R
-xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R
+      <Command>
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
@@ -165,10 +164,14 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
-copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y</Command>
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y
+
+xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /E /Y /I /R
+xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -187,8 +190,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /E /Y /I /R
-xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R
+      <Command>
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
@@ -197,10 +199,14 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
-copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y</Command>
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y
+
+xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /E /Y /I /R
+xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -223,8 +229,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /E /Y /I /R
-xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R
+      <Command>
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
@@ -233,10 +238,14 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
-copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y</Command>
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y
+
+xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /E /Y /I /R
+xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Game|Win32'">
@@ -259,8 +268,8 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /Y
-xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R
+      <Command>xcopy "$(SolutionDir)\Sandbox\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
+xcopy "$(SolutionDir)\Sandbox\Data\" "$(TargetDir)\Data\" /e /y /i /r
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
@@ -269,6 +278,7 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
@@ -296,8 +306,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /E /Y /I /R
-xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R
+      <Command>
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
@@ -306,10 +315,14 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
-copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y</Command>
+copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Data\CSScript\EngineCS.dll" /Y
+
+xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /E /Y /I /R
+xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R</Command>
     </PostBuildEvent>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -336,8 +349,8 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Editor\Assets\" "$(TargetDir)\Assets\" /Y
-xcopy "$(SolutionDir)\Editor\Data\" "$(TargetDir)\Data\" /E /Y /I /R
+      <Command>xcopy "$(SolutionDir)\Sandbox\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
+xcopy "$(SolutionDir)\Sandbox\Data\" "$(TargetDir)\Data\" /e /y /i /r
 copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
@@ -346,6 +359,7 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 

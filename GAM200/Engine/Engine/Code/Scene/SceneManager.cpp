@@ -25,8 +25,11 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 
+#include "Engine/Header/Management/Settings.hpp"
+
+
 namespace Engine {
-    Math::vec2 sceneManagerViewportSize{ 0.f,0.f }; //Window size
+    Math::vec2 sceneManagerViewportSize{}; //Window size
 
     bool gamevpCallBack(const WindowResizeEvent& e) {
         Math::uvec2 sz = e.GetSize();
@@ -45,6 +48,8 @@ namespace Engine {
        // currentSceneName = defaultSceneName;
         currentScene = new Scene{ defaultSceneName };
         WindowResizeEvent::RegisterFunction(&gamevpCallBack);
+        
+        sceneManagerViewportSize = Math::vec2{ static_cast<float>(Settings::windowWidth), static_cast<float>(Settings::windowHeight) };
 	}
 
     void SceneManager::ChangeScene(std::string sceneName) {

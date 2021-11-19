@@ -165,23 +165,7 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
-
 copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
-
-
-if not exist $(TargetDir)Assets mkdir $(TargetDir)Assets\
-
-if not exist $(TargetDir)Assets\Shaders mkdir $(TargetDir)Assets\Shaders\
-
-copy "$(ProjectDir)Assets\Shaders\Default.frag" "$(TargetDir)Assets\Shaders\Default.frag" /Y
-copy "$(ProjectDir)Assets\Shaders\Default.vert" "$(TargetDir)Assets\Shaders\Default.vert" /Y
-
-copy "$(ProjectDir)Assets\Shaders\Collision.frag" "$(TargetDir)Assets\Shaders\Collision.frag" /Y
-copy "$(ProjectDir)Assets\Shaders\Collision.vert" "$(TargetDir)Assets\Shaders\Collision.vert" /Y
-
-copy "$(ProjectDir)Assets\Shaders\Font.frag" "$(TargetDir)Assets\Shaders\Font.frag" /Y
-copy "$(ProjectDir)Assets\Shaders\Font.vert" "$(TargetDir)Assets\Shaders\Font.vert" /Y
-
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
@@ -214,6 +198,7 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
@@ -250,6 +235,7 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
@@ -286,6 +272,7 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
@@ -323,6 +310,7 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 
@@ -363,6 +351,7 @@ copy "$(SolutionDir)External Resources\lib\$(Platform)\glfw3.dll" "$(TargetDir)g
 copy "$(SolutionDir)External Resources\lib\$(Platform)\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
 copy "$(SolutionDir)External Resources\lib\$(Platform)\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(SolutionDir)External Resources\lib\$(Platform)\fmod.dll" "$(TargetDir)fmod.dll" /Y
 
 if not exist $(TargetDir)Data\CSScript mkdir $(TargetDir)Data\CSScript\
 copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(TargetDir)Data\CSScript\EngineCS.dll" /Y 

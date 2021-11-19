@@ -25,6 +25,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/UI/ButtonComponent.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/Graphic/ResourceSet.hpp"
+#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
@@ -126,6 +127,8 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
 					if (ImGui::Selectable(" + Text##addTextcom"))
 						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
+					if (ImGui::Selectable(" + Audio##addAudiocom"))
+						Engine::dreamECSGame->AddComponent<Engine::SoundComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0");
 
@@ -702,21 +705,24 @@ namespace Editor {
 				/*
 				*	Sound component
 				*/
-			/*	Engine::SoundComponent* soundComp = Engine::dreamECSGame->GetComponentPTR<Engine::SoundComponent>(entity_selected);
+				Engine::SoundComponent* soundComp = Engine::dreamECSGame->GetComponentPTR<Engine::SoundComponent>(entity_selected);
 				if (soundComp != nullptr)
 				{
 					ImGui::CheckBox_Dream("##SoundActive", &(soundComp->isActive));
 					ImGui::SameLine();
 
-					if (ImGui::Button("Sound Picker##PickSound")) {
-						std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav; *");
+					if (ImGui::CollapsingHeader("Sound")) {
+						if (ImGui::Button("Sound Picker##PickSound")) {
+							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav; *");
 
-					if (!filePath.empty()) {
-							Engine::SoundComponent::Load(filePath);
+							if (!filePath.empty()) {
+								Engine::SoundComponent::GetSound(filePath);
+							}
 						}
 					}
+				
 
-				}*/
+				}
 
 
 

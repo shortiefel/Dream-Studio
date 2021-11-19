@@ -5,6 +5,14 @@
 
 namespace Engine {
 
+	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, int channelID, bool _loop) :
+		IComponent{ _ID }, filepath{ _path }, isSound{ _isSound }, isActive{ _isActive }, ChannelID{ channelID }, loop{ _loop }  {
+	}
+	SoundComponent::~SoundComponent() {
+
+	}
+
+
 	FMOD::Sound* SoundComponent::GetSound(const std::string& _path)
 	{
 		auto it = _soundMap.find(_path);
@@ -14,8 +22,8 @@ namespace Engine {
 			eMode |= FMOD_LOOP_OFF;
 			FMOD::Sound* pSound = nullptr;
 
-			if (!System->createSound(_path.c_str(), eMode, nullptr, &pSound))
-				throw std::runtime_error("FMOD: Unable to create sound" + _path);
+			System->createSound(_path.c_str(), eMode, nullptr, &pSound);
+				//throw std::runtime_error("FMOD: Unable to create sound" + _path);
 
 			if (pSound)
 				_soundMap[_path] = pSound;
@@ -39,6 +47,7 @@ namespace Engine {
 		if (!it->second->setMode(eMode))
 			return;
 	}
-
+	
+	
 
 }

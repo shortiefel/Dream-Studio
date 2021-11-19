@@ -5,6 +5,11 @@
 #include <map>
 #include "Engine/Header/ECS/Component/IComponent.hpp"
 
+
+#include "Engine/Header/pch.hpp"
+#include "Engine/Header/Serialize/DSerializer.hpp"
+#include "Engine/Header/Serialize/SSerializer.hpp"
+
 namespace Engine {
 
 	typedef  std::map<std::string, FMOD::Sound*> SoundMap;
@@ -13,9 +18,9 @@ namespace Engine {
 	struct SoundComponent : public IComponent {
 		
 
-		SoundComponent();
+		SoundComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Audio\\sampleSound.wav", bool _isSound = false, bool _isActive = false, int channelID = 0, bool _loop = false);
 		~SoundComponent();
-		FMOD::Sound* GetSound(const std::string& _path);
+		static FMOD::Sound* GetSound(const std::string& _path);
 		void SetLoop(int channelID, bool _loop);
 		
 
@@ -28,6 +33,8 @@ namespace Engine {
 		static SoundMap _soundMap;
 		static FMOD::System* System;
 		static ChannelMap channelMap;
+		static FMOD::ChannelGroup* MasterGroup;
+		static FMOD::ChannelGroup* MusicGroup;
 
 		std::string filepath = "";
 		//std::string soundName = "";

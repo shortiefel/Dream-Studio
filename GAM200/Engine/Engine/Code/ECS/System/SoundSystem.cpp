@@ -5,9 +5,19 @@
 
 namespace Engine
 {
+
 	std::map<std::string, FMOD::Sound*> SoundComponent::_soundMap;
+	std::map<int, FMOD::Channel*>  SoundComponent::channelMap;
 	FMOD::System* SoundComponent::System = nullptr;
+	FMOD::ChannelGroup* SoundComponent::MasterGroup = nullptr;
+	FMOD::ChannelGroup* SoundComponent::MusicGroup = nullptr;
 	
+	bool operator!(FMOD_RESULT res)
+	{
+		return res != FMOD_OK;
+	}
+
+
 	void SoundSystem::SoundInit()
 	{
 		if (!FMOD::System_Create(&SoundComponent::System))
@@ -16,10 +26,10 @@ namespace Engine
 		if (!SoundComponent::System->init(512, FMOD_INIT_NORMAL, nullptr))
 			throw std::runtime_error("FMOD: Failed to initialise system object");
 
-		if (!SoundComponent::System->getMasterChannelGroup(&MasterGroup))
+		if (!SoundComponent::System->getMasterChannelGroup(&SoundComponent::MasterGroup))
 			throw std::runtime_error("FMOD: Failed to get Master Channel Group");
 
-		if (!SoundComponent::System->createChannelGroup("Music", &MusicGroup))
+		if (!SoundComponent::System->createChannelGroup("Music", &SoundComponent::MusicGroup))
 			throw std::runtime_error("FMOD: Failed to create Music Channel Group");
 
 		//to set volume in future
@@ -54,8 +64,8 @@ namespace Engine
 
 		SoundComponent::_soundMap.clear();
 		SoundComponent::channelMap.clear();
-		MusicGroup->release();
-		MasterGroup->release();
+		SoundComponent::MusicGroup->release();
+		SoundComponent::MasterGroup->release();
 		SoundComponent::System->release();
 	}
 

@@ -38,6 +38,8 @@ namespace Engine
         dreamECSGame->RegisterComponent<ScriptComponent>();
         dreamECSGame->RegisterComponent<UIComponent>();
         dreamECSGame->RegisterComponent<FontComponent>();
+        dreamECSGame->RegisterComponent<SoundComponent>();
+        
 
         CameraSystem::GetInstance().Create();
         CollisionSystem::GetInstance().Create();
@@ -48,6 +50,7 @@ namespace Engine
         GraphicSystem::GetInstance().Create();
         UISystem::GetInstance().Create();
         FontSystem::GetInstance().Create();
+        SoundSystem::GetInstance().SoundInit();
     }
 
     // Destroy function for Factory 

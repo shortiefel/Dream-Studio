@@ -13,31 +13,17 @@
 namespace Engine {
 
 	//typedef std::map<std::string  , FMOD::Sound*> SoundMap;
-	typedef std::map<int, FMOD::Channel*> ChannelMap;
+	//typedef std::map<int, FMOD::Channel*> ChannelMap;
 
-	class SoundSystem : public Singleton<SoundSystem>
+	struct SoundSystem : public Singleton<SoundSystem>
 	{
 
-	public:
 		/**
 		*		BASICS
 		*/
 		static void SoundInit();
 		static void SoundUpdate();
 		static void SoundRelease();
-
-	
-
-
-
-	private:
-		//static FMOD::System* System;
-		static FMOD::ChannelGroup* MasterGroup;
-		static FMOD::ChannelGroup* MusicGroup;
-
-		
-
-		//static 	SoundMap _SoundMap;
 
 		SINGLETON_SETUP(SoundSystem);
 

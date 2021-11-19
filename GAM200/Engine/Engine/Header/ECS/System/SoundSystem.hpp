@@ -24,6 +24,7 @@ namespace Engine {
 		static void SoundInit();
 		static void SoundUpdate();
 		static void SoundRelease();
+		static void SoundPlay(const std::string& _path);
 
 		SINGLETON_SETUP(SoundSystem);
 

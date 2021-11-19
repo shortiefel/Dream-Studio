@@ -18,10 +18,11 @@ namespace Engine {
 	struct SoundComponent : public IComponent {
 		
 
-		SoundComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Audio\\sampleSound.wav", bool _isSound = false, bool _isActive = false, int channelID = 0, bool _loop = false);
+		SoundComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Sound\\sampleSound", bool _isSound = false, bool _isActive = false, int channelID = 0, bool _loop = false);
 		~SoundComponent();
 		static FMOD::Sound* GetSound(const std::string& _path);
 		void SetLoop(int channelID, bool _loop);
+		bool IsPlaying(int channelID);
 		
 
 		/**
@@ -37,7 +38,7 @@ namespace Engine {
 		static FMOD::ChannelGroup* MusicGroup;
 
 		std::string filepath = "";
-		//std::string soundName = "";
+		std::string soundName = "";
 
 		//float volume;
 		bool isSound;

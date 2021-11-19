@@ -46,6 +46,7 @@ Technology is prohibited.
 #include "Engine/Header/AI/AISystem.hpp"
 
 #include "Engine/Header/ECS/System/SoundSystem.hpp"
+//#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
 namespace Engine {
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
@@ -79,6 +80,7 @@ namespace Engine {
         GameSceneSerializer::SerializeScene("temporary");
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
+
       
 
         return true;
@@ -144,6 +146,9 @@ namespace Engine {
         //TransformCalculationSystem::GetInstance().Release();
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
+
+        SoundSystem::GetInstance().SoundUpdate();
+        //std::cout << "update sound \n";
 
         dreamECSGame->ClearDestroyQueue();
 

@@ -36,7 +36,6 @@ namespace Editor {
         GUI_Windows::GUI_Console_Clear();
 
         Engine::GameState::GetInstance().SetPlaying(true);
-        
         if (!Engine::SceneManager::GetInstance().Play()) return false;
         return true;
     }

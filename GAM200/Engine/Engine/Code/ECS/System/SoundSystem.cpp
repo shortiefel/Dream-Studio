@@ -1,6 +1,7 @@
 #include "Engine/Header/ECS/System/SoundSystem.hpp"
 
 #include <stdexcept>
+#include < iterator >
 
 
 namespace Engine
@@ -40,6 +41,7 @@ namespace Engine
 	{
 		for (auto it = SoundComponent::channelMap.begin(); it != SoundComponent::channelMap.end(); ++it)
 		{
+			std::cout << "have something inside \n";
 			bool bIsPlaying = false;
 			it->second->isPlaying(&bIsPlaying);
 		}
@@ -47,11 +49,26 @@ namespace Engine
 		if(!SoundComponent::System->update())
 			throw std::runtime_error("FMOD: Failed to Update System");
 
-	//	System->createSound("C:/Users/tanwe/OneDrive/Desktop/GAM200/GAM200/Editor/Assets/Audio/sampleSound.wav", FMOD_LOOP_NORMAL, 0, &test);
-		//System->playSound(test,0 , false, 0);
 
 	}
 
+	void SoundSystem::SoundPlay(const std::string& _path)
+	{
+		auto tFoundIt = SoundComponent::_soundMap.find(_path);
+		FMOD::Sound* sound;
+		
+		if (tFoundIt == SoundComponent::_soundMap.end())
+			sound = SoundComponent::GetSound(_path);
+
+		else
+			sound = tFoundIt->second;
+
+		FMOD::Channel* pChannel = nullptr;
+		SoundComponent::System->playSound(sound, nullptr, false , &pChannel);
+
+		//std::cout << "i am called\n";
+
+	}
 
 
 	void SoundSystem::SoundRelease()

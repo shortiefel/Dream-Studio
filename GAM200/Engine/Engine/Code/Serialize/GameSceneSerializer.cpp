@@ -266,20 +266,11 @@ namespace Engine {
 
 			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {
-#if 1
 				DSerializer serializer{ itr };
 				dreamECSGame->AddComponent(
 					std::move(ScriptComponent{ entity.id }.Deserialize(serializer))
 			);
-#else
-				DSerializer serializer(itr);
-				CSClassInstance classInstance;
 
-
-				ScriptSystem::Deserialize(serializer, classInstance);
-
-				ScriptSystem::csEntityClassInstance.emplace(ent, std::move(classInstance));
-#endif
 			}
 		}
 		fileStream.close();

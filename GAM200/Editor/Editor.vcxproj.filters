@@ -123,6 +123,9 @@
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_PrefabWindow.hpp">
       <Filter>Header Files\GUI\GUI_Windows</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\GUI\GUI_Guizmo.hpp">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
     <ClInclude Include="..\External Resources\include\ImGuizmo\GraphEditor.h">
       <Filter>External Resources\ImGuizmo</Filter>
     </ClInclude>
@@ -140,9 +143,6 @@
     </ClInclude>
     <ClInclude Include="..\External Resources\include\ImGuizmo\ImZoomSlider.h">
       <Filter>External Resources\ImGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\Header\GUI\GUI_Guizmo.hpp">
-      <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +218,9 @@
     <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_PrefabWindow.cpp">
       <Filter>Source Files\GUI\GUI_Windows</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\Code\GUI\GUI_Guizmo.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
     <ClCompile Include="..\External Resources\include\ImGuizmo\GraphEditor.cpp">
       <Filter>External Resources\ImGuizmo</Filter>
     </ClCompile>
@@ -232,9 +235,6 @@
     </ClCompile>
     <ClCompile Include="..\External Resources\include\ImGuizmo\ImSequencer.cpp">
       <Filter>External Resources\ImGuizmo</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Code\GUI\GUI_Guizmo.cpp">
-      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

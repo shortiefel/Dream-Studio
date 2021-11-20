@@ -135,12 +135,61 @@ namespace Editor {
 
 				const Engine::Entity_id entity_id = GetTarget(entity_selected);
 				if (!EntityId_Check(entity_id)) {
+					//static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
+					////if (ImGui::IsKeyPressed(90))
+					////	mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+					////if (ImGui::IsKeyPressed(69))
+					////	mCurrentGizmoOperation = ImGuizmo::ROTATE;
+					////if (ImGui::IsKeyPressed(82)) // r Key
+					////	mCurrentGizmoOperation = ImGuizmo::SCALE;
+					////if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
+					////	mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+					////ImGui::SameLine();
+					////if (ImGui::RadioButton("Rotate", mCurrentGizmoOperation == ImGuizmo::ROTATE))
+					////	mCurrentGizmoOperation = ImGuizmo::ROTATE;
+					////ImGui::SameLine();
+					////if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
+					////	mCurrentGizmoOperation = ImGuizmo::SCALE;
+					////float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+					////ImGuizmo::DecomposeMatrixToComponents(matrix.m16, matrixTranslation, matrixRotation, matrixScale);
+					////ImGui::InputFloat3("Tr", matrixTranslation, 3);
+					////ImGui::InputFloat3("Rt", matrixRotation, 3);
+					////ImGui::InputFloat3("Sc", matrixScale, 3);
+					////ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, matrix.m16);
+
+					//
+
+					//Math::mat4 cameraView = EditorSceneCamera::GetInverseTransformMat4();
+					//Math::mat4 cameraProjection = EditorSceneCamera::GetTransformMat4();
+
+					//const Engine::TransformComponent& tc = Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(entity_id);
+					//Math::vec3 trans4{ tc.localPosition.x, tc.localPosition.y, 1.f },
+					//scale4{ tc.scale.x, tc.scale.y, 1.f },
+					//rot4{ 1.f, 1.f, tc.angle };
+					//Math::mat4 transform;
+
+					//float transArr[3]{ trans4.x, trans4.y, trans4.z };
+					//float scaleArr[3]{ scale4.x, scale4.y, scale4.z };
+					//float rotArr[3]{ rot4.x, rot4.y, rot4.z };
+					//ImGuizmo::RecomposeMatrixFromComponents(transArr, scaleArr, rotArr, Math::value_ptr(transform));
+
+					//ImGuiIO& io = ImGui::GetIO();
+					//ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+					////ImGuizmo::Manipulate(camera.mView.m16, camera.mProjection.m16, mCurrentGizmoOperation, ImGuizmo::LOCAL, matrix.m16, NULL, useSnap ? &snap.x : NULL);
+					//ImGuizmo::Manipulate(Math::value_ptr(cameraView), Math::value_ptr(cameraProjection),
+					//			ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, Math::value_ptr(transform));
+
+					//ImGuizmo::DecomposeMatrixToComponents(Math::value_ptr(transform), transArr, scaleArr, rotArr);
+
 					//GUI_Guizmo::Guizmo_Update(GetTarget(entity_selected));
-					ImGuizmo::SetOrthographic(true);
+					ImGuizmo::SetOrthographic(false);
 					ImGuizmo::SetDrawlist();
-					ImGuizmo::SetRect(minBound.x, minBound.y, windowSize.x, windowSize.y);
-					Math::mat4 cameraView = EditorSceneCamera::GetInverseTransformMat4();
-					Math::mat4 cameraProjection = EditorSceneCamera::GetTransformMat4();
+					float windowWidth = (float)ImGui::GetWindowWidth();
+					float windowWHeight = (float)ImGui::GetWindowHeight();
+					ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowWHeight);
+					//ImGuizmo::SetRect(minBound.x, minBound.y, windowSize.x, windowSize.y);
+					const Math::mat4 cameraView = EditorSceneCamera::GetInverseTransformMat4();
+					const Math::mat4 cameraProjection = EditorSceneCamera::GetTransformMat4();
 					const Engine::TransformComponent& tc = Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(entity_id);
 					
 					Math::vec3 trans4{ tc.localPosition.x, tc.localPosition.y, 1.f }, 

@@ -24,9 +24,9 @@
 // SOFTWARE.
 //
 
-#include "Imgui/imgui.h"
+#include "imgui.h"
 #define IMGUI_DEFINE_MATH_OPERATORS
-#include "Imgui/imgui_internal.h"
+#include "imgui_internal.h"
 #include <math.h>
 #include <vector>
 #include <float.h>
@@ -366,15 +366,15 @@ static bool HandleConnections(ImDrawList* drawList,
 
     size_t InputsCount = nodeTemplate.mInputCount;
     size_t OutputsCount = nodeTemplate.mOutputCount;
-    inputSlotOver = static_cast<SlotIndex>(-1);
-    outputSlotOver = static_cast<SlotIndex>(-1);
+    inputSlotOver = -1;
+    outputSlotOver = -1;
 
     // draw/use inputs/outputs
     bool hoverSlot = false;
     for (int i = 0; i < 2; i++)
     {
         float closestDistance = FLT_MAX;
-        SlotIndex closestConn = static_cast<SlotIndex>(-1);
+        SlotIndex closestConn = -1;
         ImVec2 closestTextPos;
         ImVec2 closestPos;
         const size_t slotCount[2] = {InputsCount, OutputsCount};
@@ -866,7 +866,7 @@ void Show(Delegate& delegate, const Options& options, ViewState& viewState, bool
 
     if (enabled)
     {
-        static NodeIndex hoveredNode = static_cast<NodeIndex>(-1);
+        static NodeIndex hoveredNode = -1;
         // Display links
         drawList->ChannelsSplit(3);
 
@@ -895,11 +895,11 @@ void Show(Delegate& delegate, const Options& options, ViewState& viewState, bool
 
         // Display nodes
         drawList->PushClipRect(regionRect.Min, regionRect.Max, true);
-        hoveredNode = static_cast<NodeIndex>(-1);
+        hoveredNode = -1;
         
-        SlotIndex inputSlotOver = static_cast<SlotIndex>(-1);
-        SlotIndex outputSlotOver = static_cast<SlotIndex>(-1);
-        NodeIndex nodeOver = static_cast<NodeIndex>(-1);
+        SlotIndex inputSlotOver = -1;
+        SlotIndex outputSlotOver = -1;
+        NodeIndex nodeOver = -1;
 
         const auto nodeCount = delegate.GetNodeCount();
         for (int i = 0; i < 2; i++)
@@ -923,8 +923,8 @@ void Show(Delegate& delegate, const Options& options, ViewState& viewState, bool
                 }
 
                 ImGui::PushID((int)nodeIndex);
-                SlotIndex inputSlot = static_cast<SlotIndex>(-1);
-                SlotIndex outputSlot = static_cast<SlotIndex>(-1);
+                SlotIndex inputSlot = -1;
+                SlotIndex outputSlot = -1;
 
                 bool overInput = (!inMinimap) && HandleConnections(drawList, nodeIndex, offset, viewState.mFactor, delegate, options, false, inputSlot, outputSlot, inMinimap);
 

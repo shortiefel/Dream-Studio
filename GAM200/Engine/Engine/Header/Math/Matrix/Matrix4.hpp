@@ -66,14 +66,13 @@ namespace Engine {
 					Matrix4<T> result;
 					for (int i = 0; i < 4; i++) {
 						for (int j = 0; j < 4; j++) {
-							int num = 0;
+							T num = 0;
 							for (int k = 0; k < 4; k++) {
-								num += m[i][k] * rhs.m[k][j];
+								num += m[i + k * 4] * rhs.m[k + j * 4];
 							}
-							result[i][j] = num;
+							result.m[i + j * 4] = num;
 						}
 					}
-
 					*this = result;
 					return *this;
 				}

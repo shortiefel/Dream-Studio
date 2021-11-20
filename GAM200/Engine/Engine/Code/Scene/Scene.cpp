@@ -84,6 +84,10 @@ namespace Engine {
         //AI::AISystem::GetInstance().SetRender();
 
         if (gameBuild) Play();
+
+        Math::mat4 test{ 1.f, 3.f, 2.f, 1.f,    2.f, 4.f, 5.f, 1.f,    4.f, 5.f,2.f,4.f,      1.f, 2.f,5.f,6.f };
+        Math::mat4 test2{ 2.f, 4.f, 5.f, 1.f,     3.f, 2.f, 1.f, 1.f,    4.f, 2.f,5.f,4.f,      1.f,  3.f, 2.f, 1.f };
+        std::cout << test * test2 << "\n";
     }
 
     Scene::~Scene() {

@@ -815,21 +815,22 @@ namespace Editor {
 					ImGui::CheckBox_Dream("##SoundActive", &(soundComp->isActive));
 					ImGui::SameLine();
 
-					if (ImGui::BeginDragDropTarget())
+				/*	if (ImGui::BeginDragDropTarget())
 					{
 						ImGui::Text("I'm Dropping.");
 						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 						{
 							const wchar_t* path = (const wchar_t*)payload->Data;
 							std::filesystem::path soundPath = std::filesystem::path(_assetPath) / path;
-							Engine::SoundSystem::SoundPlay(soundPath.string());
+							Engine::SoundSystem::SoundPlay(soundPath.string(), sound);
 						}
 						ImGui::EndDragDropTarget();
-					}
+					}*/
 
 					if (ImGui::CollapsingHeader("Sound")) {
 
-
+						ImGui::Text("Add Sound");
+						ImGui::SameLine(halfWidth);
 						ImGui::Checkbox("##isSound", &(soundComp->isSound));
 						if (soundComp->isSound == true)
 						{
@@ -848,7 +849,7 @@ namespace Editor {
 							{
 								std::cout << "plsuong \n";
 								ImGui::Text(soundComp->soundName.c_str());
-								Engine::SoundSystem::SoundPlay(soundComp->filepath);
+								Engine::SoundSystem::SoundPlay(soundComp->filepath, soundComp->Pause);
 							}
 						
 						}

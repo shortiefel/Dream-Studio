@@ -5,8 +5,8 @@
 
 namespace Engine {
 
-	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, int channelID, bool _loop) :
-		IComponent{ _ID }, filepath{ _path }, isSound{ _isSound }, isActive{ _isActive }, ChannelID{ channelID }, loop{ _loop }  {
+	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, int channelID, bool _loop, bool _pause) :
+		IComponent{ _ID }, filepath{ _path }, isSound{ _isSound }, isActive{ _isActive }, ChannelID{ channelID }, loop{ _loop }, Pause{ _pause } {
 
 		SoundComponent::GetSound(_path);
 	}
@@ -51,7 +51,7 @@ namespace Engine {
 			return;
 	}
 	
-	/*bool SoundComponent::IsPlaying(int channelID)
+	bool SoundComponent::IsPlaying(int channelID)
 	{
 		auto it = channelMap.find(channelID);
 		if (it == channelMap.end())
@@ -61,8 +61,8 @@ namespace Engine {
 		bool bIsPlaying = false;
 		it->second->isPlaying(&bIsPlaying);
 		return bIsPlaying;
-
-	}*/
+	}
+	
 	
 
 }

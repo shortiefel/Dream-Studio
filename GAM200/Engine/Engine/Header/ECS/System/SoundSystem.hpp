@@ -23,8 +23,12 @@ namespace Engine {
 		*/
 		static void SoundInit();
 		static void SoundUpdate();
+		static void SoundPlay(const std::string& _path, bool _pause);
+		static void SoundPause(int channelID);
+		static void SoundUnpause(int channelD);
+		static void SoundStop(int channelID);
 		static void SoundRelease();
-		static void SoundPlay(const std::string& _path);
+	
 
 		SINGLETON_SETUP(SoundSystem);
 

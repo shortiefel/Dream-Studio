@@ -122,16 +122,20 @@ namespace Editor {
 			if (*sceneWin_bool) {
 				//ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
 				ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
-				ImGui::BeginChild("Render");
+				ImGui::BeginChild("Render", ImVec2(0, 0), false, window_flags | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+				ImGui::SetScrollY(0.f);
 				makeChange = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
 
-				ImVec2 wSize = ImGui::GetWindowSize();
+				ImVec2 windowSize = ImGui::GetWindowSize();
+				ImGui::PushItemWidth(windowSize.x);
 
-				//sceneWinFBO.Resize(static_cast<GLsizei>(wSize.x), static_cast<GLsizei>(wSize.y));
-				ImGui::PushItemWidth(wSize.x);
-				ASPECT_RATIO_FIX(wSize);
+				if (windowSize.x < windowSize.y * EditorSceneCamera::GetAR())
+					windowSize.x = windowSize.y * EditorSceneCamera::GetAR();
+				else
+					windowSize.y = windowSize.x / EditorSceneCamera::GetAR();
 
-				ImGui::Image((ImTextureID)(sceneWinFBO.GetTexture()), wSize, ImVec2(0, 1), ImVec2(1, 0));
+
+				ImGui::Image((ImTextureID)(sceneWinFBO.GetTexture()), windowSize, ImVec2(0, 1), ImVec2(1, 0));
 
 				if (ImGui::BeginDragDropTarget())
 				{
@@ -158,13 +162,9 @@ namespace Editor {
 					ImGui::EndDragDropTarget();
 				}
 
-				ImVec2 windowSize = ImGui::GetWindowSize();
+
 				ImVec2 minBound = ImGui::GetWindowPos();
 				
-				if (windowSize.x > windowSize.y * EditorSceneCamera::GetAR())
-					windowSize.x = windowSize.y * EditorSceneCamera::GetAR();
-				else
-					windowSize.y = windowSize.x / EditorSceneCamera::GetAR();
 
 				//Either guizmo or the object picking is being used
 				bool guizmoPressed = false;
@@ -227,12 +227,6 @@ namespace Editor {
 					inside = true;
 
 					if (Engine::Input::IsMousePressed(Engine::Input_MouseCode::Mouse_Left)) {
-						/*mousePos = Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
-							0.f, 2.f / viewportSize.y, 0.f,
-							-1.f, -1.f, 1.f) * mousePos;
-							mousePos = inverseCamMatrix * mousePos;
-							Entity_PickingCheck(entity_selected);*/
-						//Engine::Graphic::PickingCheck(entity_selected, mousePos, scene_viewportSize, inverseCamMatrix);
 						Engine::Graphic::PickingCheck(mousePos, scene_viewportSize, inverseCamMatrix, [&](const Engine::Entity_id& entity_id) { ClickCheck(entity_selected, entity_id); }, [&](const Engine::Entity_id&) {  });
 					}
 				}

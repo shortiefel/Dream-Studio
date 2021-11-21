@@ -155,9 +155,7 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Sandbox\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
-xcopy "$(SolutionDir)\Sandbox\Data\" "$(TargetDir)\Data\" /e /y /i /r
-copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+      <Command>copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
@@ -188,9 +186,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Sandbox\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
-xcopy "$(SolutionDir)\Sandbox\Data\" "$(TargetDir)\Data\" /e /y /i /r
-copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+      <Command>copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
@@ -225,9 +221,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Sandbox\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
-xcopy "$(SolutionDir)\Sandbox\Data\" "$(TargetDir)\Data\" /e /y /i /r
-copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+      <Command>copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
@@ -262,9 +256,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Sandbox\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
-xcopy "$(SolutionDir)\Sandbox\Data\" "$(TargetDir)\Data\" /e /y /i /r
-copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+      <Command>copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
@@ -300,9 +292,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Sandbox\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
-xcopy "$(SolutionDir)\Sandbox\Data\" "$(TargetDir)\Data\" /e /y /i /r
-copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+      <Command>copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y
@@ -341,9 +331,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\Sandbox\Assets\" "$(TargetDir)\Assets\" /e /y /i /r
-xcopy "$(SolutionDir)\Sandbox\Data\" "$(TargetDir)\Data\" /e /y /i /r
-copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
+      <Command>copy "$(SolutionDir)\Editor\CompileCS.bat" "$(TargetDir)\CompileCS.bat" /Y
 copy "$(SolutionDir)\Editor\imgui.ini" "$(TargetDir)\imgui.ini" /Y
 
 copy "$(SolutionDir)\bin\$(Configuration)\$(Platform)\Engine\Engine.lib" "$(TargetDir)Engine.lib" /Y

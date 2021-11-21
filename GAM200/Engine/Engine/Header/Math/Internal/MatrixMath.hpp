@@ -360,8 +360,9 @@ namespace Engine {
 		*/
 		/**************************************************************************/
 		template <typename T>
-		void Inverse(MI::Matrix4<T>& pResult, float& determinant, const MI::Matrix4<T>& pMtx) {
-
+		MI::Matrix4<T> Inverse(const MI::Matrix4<T>& pMtx) {
+			float determinant;
+			MI::Matrix4<T> pResult;
 			pResult.m[0] = pMtx.m[5] * pMtx.m[10] * pMtx.m[15] -
 				pMtx.m[5] * pMtx.m[11] * pMtx.m[14] -
 				pMtx.m[9] * pMtx.m[6] * pMtx.m[15] +
@@ -392,7 +393,7 @@ namespace Engine {
 
 			determinant = pMtx.m[0] * pResult.m[0] + pMtx.m[1] * pResult.m[4] + pMtx.m[2] * pResult.m[8] + pMtx.m[3] * pResult.m[12];
 
-			if (determinant > -epsilon<T>() && determinant < epsilon<T>()) { Identity(pResult); return; }
+			if (determinant > -epsilon<T>() && determinant < epsilon<T>()) { Identity(pResult); return MI::Matrix4<T>{}; }
 
 			determinant = 1 / determinant;
 
@@ -498,6 +499,37 @@ namespace Engine {
 			pResult.m[7] *= determinant;
 			pResult.m[11] *= determinant;
 			pResult.m[15] *= determinant;
+
+			return pResult;
+		}
+
+		/**************************************************************************/
+		/*!
+			This function calculates the Orthographic projection matrix
+		*/
+		/**************************************************************************/
+		template <typename T>
+		MI::Matrix4<T> OrthoGraphic(T l, T r, T b, T t, T zn, T zf)
+		{
+			MI::Matrix4<T> pResult;
+			pResult.m[0] = 2 / (r - l);
+			pResult.m[1] = T{};
+			pResult.m[2] = T{};
+			pResult.m[3] = T{};
+			pResult.m[4] = T{};
+			pResult.m[5] = 2 / (t - b);
+			pResult.m[6] = T{};
+			pResult.m[7] = T{};
+			pResult.m[8] = T{};
+			pResult.m[9] = T{};
+			pResult.m[10] = -2.0f / (zf - zn);
+			pResult.m[11] = T{};
+			pResult.m[12] = (l + r) / (l - r);
+			pResult.m[13] = (t + b) / (b - t);
+			pResult.m[14] = (zn + zf) / (zn - zf);
+			pResult.m[15] = 1.0f;
+
+			return pResult;
 		}
 		
 	}

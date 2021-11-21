@@ -40,7 +40,14 @@ namespace Engine {
 		if (!_fbo) gameDraw = GL_TRUE;
 		else gameDraw = GL_FALSE;
 
-		if (gameDraw) GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+		if (gameDraw) {
+			//GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+#ifdef _GAME_BUILD
+
+#else
+			GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+#endif
+		}
 		else _fbo->Bind();
 
 		// Load shader program
@@ -58,8 +65,13 @@ namespace Engine {
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
-			//GraphicImplementation::Renderer::DrawQuad(transform->position + camPos, transform->scale, transform->angle, ui.texobj_hdl);
+			if (_fbo == nullptr) {
+				Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+				GraphicImplementation::Renderer::DrawQuad(transform->position + camPos, transform->scale, transform->angle, ui.texobj_hdl);
+			}
+			else {
+				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl);
+			}
 		}
 
 		glEnable(GL_BLEND);

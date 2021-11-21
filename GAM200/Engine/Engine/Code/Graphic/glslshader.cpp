@@ -380,7 +380,7 @@ namespace Engine
         GLint loc = glGetUniformLocation(prgm_handle, name);
         if (loc >= 0)
         {
-            glUniformMatrix3fv(loc, 1, GL_FALSE, Math::value_ptr(val));
+            glUniformMatrix4fv(loc, 1, GL_FALSE, Math::value_ptr(val));
         }
         else
         {

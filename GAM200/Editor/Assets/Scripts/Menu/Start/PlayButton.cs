@@ -2,10 +2,10 @@
 
 public class PlayButton : MonoBehaviour
 {
-    /*public override void Start()
+    public override void Start()
     {
         Console.WriteLine("going in start play");
-    }*/
+    }
 
     public override void Update()
     {
@@ -14,11 +14,11 @@ public class PlayButton : MonoBehaviour
 
     public override void OnMouseOver()
     {
-        Console.WriteLine(Input.GetMousePosition());
+        //Console.WriteLine(Input.GetMousePosition());
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            Debug.Log("Play");
-            
+            Console.WriteLine("Play");
+
             //SceneManager.LoadScene("NewGame");
         }
     }

@@ -24,9 +24,11 @@ Technology is prohibited.
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/Picking2D.hpp"
+#include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 
 
 #include "Engine/Header/Event/MouseEvent.hpp"
+#include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/Input/Input.hpp"
 
 #define HEIGHT_CHANGE_SPEED 3.f
@@ -47,6 +49,26 @@ namespace Editor {
 	namespace GUI_Windows {
 		Math::vec2 scene_viewportBounds[2];
 		Math::vec2 scene_viewportSize;
+
+		ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
+
+		bool keyPressedGuizmo(const Engine::KeyPressedEvent& e) {
+			Engine::Input_KeyCode keyCode = e.GetKeyCode();
+
+			switch (keyCode) {
+			case Engine::Input_KeyCode::R:
+				mCurrentGizmoOperation = ImGuizmo::ROTATE;
+				break;
+			case Engine::Input_KeyCode::T:
+				mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+				break;
+			case Engine::Input_KeyCode::S:
+				mCurrentGizmoOperation = ImGuizmo::SCALE;
+				break;
+			}
+
+			return true;
+		}
 
 		bool inside = false;
 
@@ -85,6 +107,7 @@ namespace Editor {
 		void GUI_SceneSetup() {
 			Engine::MouseScrolledEvent::RegisterFunction(scrolling);
 			Engine::MouseMoveEvent::RegisterFunction(moving);
+			Engine::KeyPressedEvent::RegisterFunction(keyPressedGuizmo);
 		}
 
 		//void GUI_SceneWindow(bool* sceneWin_bool, const ImTextureID& sceneWinTex) {
@@ -127,93 +150,54 @@ namespace Editor {
 					}
 					ImGui::EndDragDropTarget();
 				}
-				
-				
 
 				ImVec2 windowSize = ImGui::GetWindowSize();
 				ImVec2 minBound = ImGui::GetWindowPos();
-
-				const Engine::Entity_id entity_id = GetTarget(entity_selected);
-				if (!EntityId_Check(entity_id)) {
-					//static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
-					////if (ImGui::IsKeyPressed(90))
-					////	mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-					////if (ImGui::IsKeyPressed(69))
-					////	mCurrentGizmoOperation = ImGuizmo::ROTATE;
-					////if (ImGui::IsKeyPressed(82)) // r Key
-					////	mCurrentGizmoOperation = ImGuizmo::SCALE;
-					////if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
-					////	mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-					////ImGui::SameLine();
-					////if (ImGui::RadioButton("Rotate", mCurrentGizmoOperation == ImGuizmo::ROTATE))
-					////	mCurrentGizmoOperation = ImGuizmo::ROTATE;
-					////ImGui::SameLine();
-					////if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
-					////	mCurrentGizmoOperation = ImGuizmo::SCALE;
-					////float matrixTranslation[3], matrixRotation[3], matrixScale[3];
-					////ImGuizmo::DecomposeMatrixToComponents(matrix.m16, matrixTranslation, matrixRotation, matrixScale);
-					////ImGui::InputFloat3("Tr", matrixTranslation, 3);
-					////ImGui::InputFloat3("Rt", matrixRotation, 3);
-					////ImGui::InputFloat3("Sc", matrixScale, 3);
-					////ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, matrix.m16);
-
-					//
-
-					//Math::mat4 cameraView = EditorSceneCamera::GetInverseTransformMat4();
-					//Math::mat4 cameraProjection = EditorSceneCamera::GetTransformMat4();
-
-					//const Engine::TransformComponent& tc = Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(entity_id);
-					//Math::vec3 trans4{ tc.localPosition.x, tc.localPosition.y, 1.f },
-					//scale4{ tc.scale.x, tc.scale.y, 1.f },
-					//rot4{ 1.f, 1.f, tc.angle };
-					//Math::mat4 transform;
-
-					//float transArr[3]{ trans4.x, trans4.y, trans4.z };
-					//float scaleArr[3]{ scale4.x, scale4.y, scale4.z };
-					//float rotArr[3]{ rot4.x, rot4.y, rot4.z };
-					//ImGuizmo::RecomposeMatrixFromComponents(transArr, scaleArr, rotArr, Math::value_ptr(transform));
-
-					//ImGuiIO& io = ImGui::GetIO();
-					//ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-					////ImGuizmo::Manipulate(camera.mView.m16, camera.mProjection.m16, mCurrentGizmoOperation, ImGuizmo::LOCAL, matrix.m16, NULL, useSnap ? &snap.x : NULL);
-					//ImGuizmo::Manipulate(Math::value_ptr(cameraView), Math::value_ptr(cameraProjection),
-					//			ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, Math::value_ptr(transform));
-
-					//ImGuizmo::DecomposeMatrixToComponents(Math::value_ptr(transform), transArr, scaleArr, rotArr);
-
-					//GUI_Guizmo::Guizmo_Update(GetTarget(entity_selected));
-					ImGuizmo::SetOrthographic(false);
-					ImGuizmo::SetDrawlist();
-					float windowWidth = (float)ImGui::GetWindowWidth();
-					float windowWHeight = (float)ImGui::GetWindowHeight();
-					ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowWHeight);
-					//ImGuizmo::SetRect(minBound.x, minBound.y, windowSize.x, windowSize.y);
-					const Math::mat4 cameraView = EditorSceneCamera::GetInverseTransformMat4();
-					const Math::mat4 cameraProjection = EditorSceneCamera::GetTransformMat4();
-					const Engine::TransformComponent& tc = Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(entity_id);
-					
-					Math::vec3 trans4{ tc.localPosition.x, tc.localPosition.y, 1.f }, 
-						scale4{ tc.scale.x, tc.scale.y, 1.f },
-						rot4{ 1.f, 1.f, tc.angle };
-					Math::mat4 transform; /*transform.SetTransform(tc.localPosition.x, tc.localPosition.y, 1.f,
-																tc.scale.x, tc.scale.y, 1.f);*/
-
-					float transArr[3]{ trans4.x, trans4.y, trans4.z };
-					float scaleArr[3]{ scale4.x, scale4.y, scale4.z };
-					float rotArr[3]{ rot4.x, rot4.y, rot4.z };
-					ImGuizmo::RecomposeMatrixFromComponents(transArr, scaleArr, rotArr, Math::value_ptr(transform));
-
-					ImGuizmo::Manipulate(Math::value_ptr(cameraView), Math::value_ptr(cameraProjection),
-						ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, Math::value_ptr(transform));
-					if (ImGuizmo::IsUsing()) {
-						ImGuizmo::DecomposeMatrixToComponents(Math::value_ptr(transform), transArr, scaleArr, rotArr);
-					}
-				}
 
 				if (windowSize.x > windowSize.y * EditorSceneCamera::GetAR())
 					windowSize.x = windowSize.y * EditorSceneCamera::GetAR();
 				else
 					windowSize.y = windowSize.x / EditorSceneCamera::GetAR();
+
+				//Either guizmo or the object picking is being used
+				bool guizmoPressed = false;
+				const Engine::Entity_id entity_id = GetTarget(entity_selected);
+				if (!EntityId_Check(entity_id)) {
+					Engine::TransformComponent* tc = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(entity_id);
+
+					if (tc != nullptr) {
+						ImGuizmo::SetOrthographic(true);
+						ImGuizmo::SetDrawlist();
+						ImGuizmo::SetRect(minBound.x, minBound.y, windowSize.x, windowSize.y);
+						ImGuizmo::SetGizmoSizeClipSpace(EditorSceneCamera::GetHeight() / 4.f);
+
+						const Math::mat4 cameraView = EditorSceneCamera::GetTransformMat4();
+						const Math::mat4 cameraProjection{};
+
+						float transArr[3]{ tc->localPosition.x, tc->localPosition.y, 0.f };
+						float rotArr[3]{ 0.f, 0.f, tc->angle };
+						float scaleArr[3]{ tc->scale.x, tc->scale.y, 1.f };
+						Math::mat4 transform;
+						ImGuizmo::RecomposeMatrixFromComponents(transArr, rotArr, scaleArr, Math::value_ptr(transform));
+
+						ImGuizmo::Manipulate(Math::value_ptr(cameraView), Math::value_ptr(cameraProjection),
+							mCurrentGizmoOperation, ImGuizmo::LOCAL, Math::value_ptr(transform));
+
+						if (ImGuizmo::IsUsing()) {
+							guizmoPressed = true;
+							ImGuizmo::DecomposeMatrixToComponents(Math::value_ptr(transform), transArr, rotArr, scaleArr);
+
+							tc->localPosition = Math::vec2{ transArr[0], transArr[1] };
+							Engine::TransformCalculationSystem::GetInstance().Update();
+
+							float angleDiff = rotArr[2] - tc->angle;
+							tc->angle += angleDiff;
+
+							tc->scale = Math::vec2{ scaleArr[0], scaleArr[1] };
+
+						}
+					}
+				}
 				
 				ImVec2 maxBound = ImVec2{ minBound.x + windowSize.x, minBound.y + windowSize.y };
 				scene_viewportBounds[0] = Math::vec2{ minBound.x, minBound.y };
@@ -231,7 +215,8 @@ namespace Editor {
 				int mouseX = (int)mousePos.x;
 				int mouseY = (int)mousePos.y;
 
-				if (mouseX >= 0 && mouseX < (int)scene_viewportSize.x &&
+				if (!guizmoPressed &&
+					mouseX >= 0 && mouseX < (int)scene_viewportSize.x &&
 					mouseY >= 0 && mouseY < (int)scene_viewportSize.y) {
 					inside = true;
 

@@ -32,9 +32,15 @@ namespace Engine
 
 		void Update(float dt);
 
+		//Get View Transform
 		Math::mat3 GetTransform(unsigned int* id = nullptr);
+		//Get View Transform Mat4
+		Math::mat4 GetTransformMat4(unsigned int* id = nullptr);
 		Math::mat3 GetInverseTransform(unsigned int* id = nullptr);
+		//Get View Transform for UI
 		Math::mat3 GetTransformUI();
+		//Get View Transform Mat4 for UI
+		Math::mat4 GetTransformUIMat4();
 		Math::vec2 GetPosition();
 
 		float GetAR() const;

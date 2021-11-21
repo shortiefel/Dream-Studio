@@ -187,7 +187,9 @@ namespace Engine {
 
 		WindowResizeEvent event(width, height);
 		EventDispatcher::SendEvent(event);
+#ifdef _GAME_BUILD
 		glViewport(0, 0, width, height);
+#endif
 		//w_data.eventCallBack(event);
 	}
 

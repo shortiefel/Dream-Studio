@@ -55,6 +55,7 @@ namespace Engine {
 			Entity entity(entityId, _entityName, _parent);
 			//UsedEntities2.push_back(entity);
 			usedEntities.emplace(entityId, entity);
+
 			return usedEntities[entityId];
 		}
 

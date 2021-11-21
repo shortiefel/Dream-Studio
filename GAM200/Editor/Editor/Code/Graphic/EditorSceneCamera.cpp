@@ -46,6 +46,21 @@ namespace Editor
         return ar;
     }
 
+    //// Function that gets the rthographic Projection matrix for EditorSceneCamera
+    //Math::mat4 EditorSceneCamera::GetOrthographicProjection()
+    //{
+    //    /*float r = ar * static_cast<float>(MAX_SCENE_CAMERA_HEIGHT), t = static_cast<float>(MAX_SCENE_CAMERA_HEIGHT), f = static_cast<float>(MAX_SCENE_CAMERA_HEIGHT);
+    //    return
+    //        Math::OrthoGraphic(-r, r, -t, t, -f, f);*/
+    //    //float r = 5.f, l = -r, t = r * ( 1280.f/ 720.f), b = -t, zn = 20.f, zf = -zn;
+    //    /*float r = 5.f, l = -r, t = r, b = -t, zn = 1.f, zf = -zn;
+    //    return Math::mat4(2.f / (r - l), 0.f, 0.f, 0.f,
+    //        0.f, 2.f / (t - b), 0.f, 0.f,
+    //        0.f, 0.f, -2.f / (zf - zn), 0.f,
+    //        (l + r) / (l - r), (t + b) / (b - t), (zn + zf) / (zn - zf), 1.0f);*/
+    //    return Math::mat4{};
+    //}
+
     // Function that gets the transformation matrix for EditorSceneCamera
     Math::mat3 EditorSceneCamera::GetTransform() 
     {
@@ -74,6 +89,7 @@ namespace Editor
                 0.f, 1.f, 0.f, 0.f,
                 0.f, 0.f, 1.f, 0.f,
                 -position.x, -position.y, 0.f, 1.f);
+        //return Math::Inverse(GetInverseTransformMat4());
     }
     
     // Function that gets the inverse transformation matrix for EditorSceneCamera

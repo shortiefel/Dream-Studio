@@ -67,7 +67,6 @@ namespace Engine
 	GLuint ResourceManager::LoadTextureInternal(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel) {
 		// Read png file
 		stbi_uc* temBuff = stbi_load(filename.c_str(), x, y, channels_in_files, desired_channel);
-		printf("calling \n");
 
 		GLuint texobj_hdl{};
 		glCreateTextures(GL_TEXTURE_2D, 1, &texobj_hdl);

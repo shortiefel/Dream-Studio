@@ -28,10 +28,14 @@ namespace Editor
 		static void Create(Math::vec2 pos);
 		static void Destroy();
 
+		//static Math::mat4 GetOrthographicProjection();
+		//Get View Transform
 		static Math::mat3 GetTransform();
+		//Get View Transform Mat4
 		static Math::mat4 GetTransformMat4();
 		static Math::mat3 GetInverseTransform();
 		static Math::mat4 GetInverseTransformMat4();
+		//Get View Transform for UI
 		static Math::mat3 GetTransformUI();
 		static float GetAR();
 

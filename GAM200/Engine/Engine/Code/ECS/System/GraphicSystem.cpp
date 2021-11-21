@@ -40,11 +40,7 @@ namespace Engine
 {
 #define LAYER_COUNT 5 // Number of layers for game objects
 
-#ifdef _GAME_BUILD
-	auto bindFBO = [](const Graphic::FrameBuffer&) {};
-#else
-	auto bindFBO = [](const Graphic::FrameBuffer& fbo) { fbo.Bind(); };
-#endif
+
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture
@@ -86,6 +82,7 @@ namespace Engine
 
 	// Function will loop through texture array of game objects and render game objects based on layer; 
 	// 0 will be rendered first, followed by 1, 2 ...
+	//void RenderGameObjects(Math::mat3 _camMatrix, Math::mat4 _newcamMatrix, bool _isDebugDraw)
 	void RenderGameObjects(Math::mat3 _camMatrix, bool _isDebugDraw)
 	{
 		// Load default shader program
@@ -94,6 +91,7 @@ namespace Engine
 
 		// Set uniform
 		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
+		//GLSLShader::SetUniform("newCamMatrix", _newcamMatrix, shd_ref_handle);
 
 
 		// Get texture array for entities
@@ -126,6 +124,11 @@ namespace Engine
 
 		// Set uniform
 		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
+
+		/*for (int i = 0; i < 9; i++) {
+			std::cout << _camMatrix.m[i] << " ";
+		}
+		std::cout << " camMatrix\n";*/
 
 		// Get collision array for entities
 		auto& collisionArray = dreamECSGame->GetComponentArrayData<ColliderComponent>();
@@ -169,13 +172,20 @@ namespace Engine
 
 	// Update function for GraphicSystem
 	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
+	//void GraphicSystem::Render(Math::mat3 camMatrix, Math::mat4 _newcamMatrix, Graphic::FrameBuffer* _fbo, Math::mat4 _projMatrix) {
 		PROFILER_START("Rendering");
 		
 		GLboolean isDebugDraw;
 		if (!_fbo) isDebugDraw = GL_FALSE;
 		else isDebugDraw = GL_TRUE;
 
-		if (!isDebugDraw) bindFBO(fbo);
+		if (!isDebugDraw) {
+#ifdef _GAME_BUILD
+
+#else
+			fbo.Bind();
+#endif
+		}
 		else _fbo->Bind();
 
 		GraphicImplementation::Renderer::ResetStats();

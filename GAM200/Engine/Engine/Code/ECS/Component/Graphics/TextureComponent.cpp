@@ -134,19 +134,22 @@ namespace Engine
 	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer)
 	{
 		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
-		totalRows = _serializer.GetValue<int>("TotalRow");
-		totalColumns = _serializer.GetValue<int>("TotalColumns");
-
-		cellWidth = static_cast<float>(width) / totalColumns;
-		cellHeight = static_cast<float>(height) / totalRows;
 
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 
 		// For animation
 		isAnimation = _serializer.GetValue<bool>("IsAnimation");
-		currAnimationState = _serializer.GetValue<std::string>("CurrentAnimationState");
+		
 
 		if (isAnimation) {
+			totalRows = _serializer.GetValue<int>("TotalRow");
+			totalColumns = _serializer.GetValue<int>("TotalColumns");
+
+			cellWidth = static_cast<float>(width) / totalColumns;
+			cellHeight = static_cast<float>(height) / totalRows;
+
+			currAnimationState = _serializer.GetValue<std::string>("CurrentAnimationState");
+
 			auto animationStates = _serializer.GetValueArray("AnimationState");
 
 			for (auto& state : animationStates) {
@@ -180,16 +183,17 @@ namespace Engine
 
 		_serializer.SetValue("IsAnimation", isAnimation);
 
-		_serializer.SetValue("CurrentAnimationState", currAnimationState);
+		
 
-
-		_serializer.SetValue("TotalRow", totalRows);
-		_serializer.SetValue("TotalColumns", totalColumns);
-
-		cellWidth = static_cast<float>(width) / totalColumns;
-		cellHeight = static_cast<float>(height) / totalRows;
+		/*cellWidth = static_cast<float>(width) / totalColumns;
+		cellHeight = static_cast<float>(height) / totalRows;*/
 
 		if (isAnimation) {
+			_serializer.SetValue("CurrentAnimationState", currAnimationState);
+
+			_serializer.SetValue("TotalRow", totalRows);
+			_serializer.SetValue("TotalColumns", totalColumns);
+
 			rapidjson::Value allAnimation(rapidjson::kArrayType);
 
 			for (auto& [name, state] : animationStateList) {

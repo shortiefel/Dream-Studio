@@ -88,6 +88,37 @@ namespace Engine
                 -trans.position.x, -trans.position.y, 1.f);
     }
 
+    Math::mat4 CameraSystem::GetTransformMat4(unsigned int* id)
+    {
+        if (id == nullptr)
+        {
+            return
+                Math::mat4(2.f / (Settings::gameAR * camHeight * camFov), 0.f, 0.f, 0.f,
+                    0.f, 2.f / (camHeight * camFov), 0.f, 0.f,
+                    0.f, 0.f, 1.f, 0.f,
+                    0.f, 0.f, 0.f, 1.f)
+                *
+                Math::mat4(1.f, 0.f, 0.f, 0.f,
+                    0.f, 1.f, 0.f, 0.f,
+                    0.f, 0.f, 1.f, 0.f,
+                    -camPosition.x, -camPosition.y, 0.f,  1.f);
+        }
+
+        const auto& cam = dreamECSGame->GetComponent<CameraComponent>(*id);
+        const auto& trans = dreamECSGame->GetComponent<TransformComponent>(*id);
+
+        return
+            Math::mat4(2.f / (Settings::gameAR * cam.height * cam.fov), 0.f, 0.f, 0.f,
+                0.f, 2.f / (cam.height * cam.fov), 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                0.f, 0.f, 0.f, 1.f)
+            *
+            Math::mat4(1.f, 0.f, 0.f, 0.f,
+                0.f, 1.f, 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                -trans.position.x, -trans.position.y, 0.f, 1.f);
+    }
+
     // Function that gets the inverse transform matrix for camera
     Math::mat3 CameraSystem::GetInverseTransform(unsigned int* id)
     {
@@ -128,6 +159,20 @@ namespace Engine
             Math::mat3(1.f, 0.f, 0.f,
                 0.f, 1.f, 0.f,
                 -camPosition.x, -camPosition.y, 1.f);
+    }
+
+    Math::mat4 CameraSystem::GetTransformUIMat4(){
+         return
+            Math::mat4(2.f / (Settings::gameAR * FIXED_UI_HEIGHT * camFov), 0.f, 0.f, 0.f,
+                0.f, 2.f / (FIXED_UI_HEIGHT * camFov), 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                0.f, 0.f, 0.f, 1.f)
+            *
+
+            Math::mat4(1.f, 0.f, 0.f, 0.f,
+                0.f, 1.f, 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                -camPosition.x, -camPosition.y, 0.f, 1.f);
     }
 
     // Function that gets the position for camera

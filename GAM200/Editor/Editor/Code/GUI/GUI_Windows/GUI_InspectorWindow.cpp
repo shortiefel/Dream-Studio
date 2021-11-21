@@ -128,8 +128,10 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::UIComponent>(entity_selected);
 					if (ImGui::Selectable(" + Text##addTextcom"))
 						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
-					if (ImGui::Selectable(" + Audio##addAudiocom"))
+					if (ImGui::Selectable(" + Sound##addSoundcom"))
 						Engine::dreamECSGame->AddComponent<Engine::SoundComponent>(entity_selected);
+					if (ImGui::Selectable(" + Animation##addAnicom"))
+						Engine::dreamECSGame->AddComponent<Engine::TextureComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0", Engine::File_Dialog_Type::Scripts);
 
@@ -569,48 +571,6 @@ namespace Editor {
 							Engine::ResourceManager::GetInstance().RefreshTexture(textureComp);
 						}
 
-						
-
-						/*
-						*	Animation
-						*/
-						
-						ImGui::AlignTextToFramePadding();
-
-						ImGui::Text("Animation");
-						ImGui::SameLine(halfWidth);
-						ImGui::SetNextItemWidth(halfWidth);
-						ImGui::Checkbox("##isAnimation",&(textureComp->isAnimation));
-						if (textureComp->isAnimation == true)
-						{
-							/*ImGui::Spacing();
-							ImGui::AlignTextToFramePadding();
-							ImGui::Text("Looping");
-							ImGui::SameLine(halfWidth);
-							ImGui::SetNextItemWidth(halfWidth);
-							ImGui::Checkbox("##isLoop", &(textureComp->isLoop));
-
-							ImGui::Spacing();
-							ImGui::AlignTextToFramePadding();
-							ImGui::Text("Frame End");
-							ImGui::SameLine(halfWidth);
-							ImGui::SetNextItemWidth(halfWidth);
-							ImGui::PushFont(boldFont);
-							ImGui::InputInt("##frameEnd", &textureComp->endFrame, 0);
-							ImGui::PopFont();
-
-
-							ImGui::Spacing();
-							ImGui::AlignTextToFramePadding();
-							ImGui::Text("Time Per Frame");
-							ImGui::SameLine(halfWidth);
-							ImGui::SetNextItemWidth(halfWidth);
-							ImGui::PushFont(boldFont);
-							ImGui::InputFloat("##timeFrame", &textureComp->fTime, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
-							ImGui::PopFont();*/
-
-						}
-
 						ImGui::Spacing();
 
 
@@ -624,6 +584,149 @@ namespace Editor {
 
 					}
 				}
+					
+				/*
+				*	Animation
+				*/
+				//Engine::AnimationState* animationState = Engine::dreamECSGame->GetComponentPTR<Engine::AnimationState>(entity_selected);
+				if (textureComp != nullptr)//& animationState != nullptr)
+				{
+					ImGui::CheckBox_Dream("##AnimationActive", &(textureComp->isAnimation));
+					ImGui::SameLine();
+
+
+					if (ImGui::CollapsingHeader("Animation"))
+					{
+						ImGui::AlignTextToFramePadding();
+
+						/**
+						*	ANIMATION NAME
+						*/
+						std::string& aniName = textureComp->currAnimationState;
+						char aniDisplay[100];
+						strcpy(aniDisplay, aniName.c_str());
+
+
+						ImGui::Spacing();
+						ImGui::AlignTextToFramePadding();
+						ImGui::PushFont(boldFont);
+						ImGui::Text("State Name");
+						ImGui::SameLine(halfWidth * 1.28f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						if (ImGui::InputText("##displayStatename", aniDisplay, 100))
+						{
+							if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter))
+							{
+								std::string newAniName = std::string{ aniDisplay };
+								textureComp->AnimationStateRename(aniDisplay, newAniName);
+								std::cout << "hi my name is changing \n";
+								aniName = newAniName;
+							}
+						}
+
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+
+						/**
+						*	TOTAL COLUMNS & ROWS
+						*/
+						ImGui::PushFont(boldFont);
+						ImGui::Text("Sprite Sheet");
+						ImGui::SameLine(halfWidth);
+						ImGui::Text(" Cols");
+						ImGui::SameLine(halfWidth * 1.28f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputInt("##TotalCols", &textureComp->totalColumns);
+
+						ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
+						ImGui::Text(" Rows");
+						ImGui::SameLine(halfWidth * 1.28f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputInt("##TotalCols", &textureComp->totalRows);
+						ImGui::PopFont();
+
+						/**
+						*	ANIMATION STATE NAME
+						*/
+						/*ImGui::AlignTextToFramePadding();
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" State Name");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						
+						ImGui::InputText(AnimationComp->currAnimationState.c_str())
+
+
+						ImGui::PopFont();*/
+
+
+						/**
+						*	ANIMATION STATE LIST
+						*/
+						/*ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Animation States");
+						ImGui::SameLine(halfWidth);
+						if (ImGui::BeginListBox("#AnimationList"))
+						{
+					
+							for (auto x : AnimationComp->animationStateList)
+							{
+								std::string& stateName = AnimationComp->currAnimationState;
+								const bool isSelected =&(AnimationComp->animationStateList);
+
+								if (ImGui::Selectable(stateName[x], isSelected)) {
+									
+								}
+							}
+						}*/
+
+
+
+						
+
+		
+
+						////FRAMES
+						//ImGui::Text("Frame ");
+						//ImGui::SameLine(halfWidth);
+						//ImGui::PushFont(boldFont);
+						//ImGui::Text(" Start");
+						//ImGui::SameLine(halfWidth * 1.28f, 0);
+						//ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						//ImGui::InputInt("##frameStart", &animationState->startX, 0, 0, 1);
+
+						//ImGui::Spacing();
+
+						//ImGui::AlignTextToFramePadding();
+						//ImGui::SameLine(halfWidth);
+						//ImGui::Text(" End");
+						//ImGui::SameLine(halfWidth * 1.28f, 0);
+						//ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						//ImGui::InputInt("##frameEnd", &animationState->endX, 0, 0, 1);
+
+
+						//ImGui::Spacing();
+
+						//ImGui::AlignTextToFramePadding();
+						//ImGui::SameLine(halfWidth);
+						//ImGui::Text(" Current");
+						//ImGui::SameLine(halfWidth * 1.28f, 0);
+						//ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						//ImGui::InputInt("##frameCurr", &animationState->currFrame, 0, 0, 1);
+						//ImGui::PopFont();
+						
+
+					}
+				}
+
+						
 
 
 				/*

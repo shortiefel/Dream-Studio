@@ -24,7 +24,7 @@ Technology is prohibited.
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 
 #define MIN_SCENE_CAMERA_HEIGHT 5
-#define MAX_SCENE_CAMERA_HEIGHT 100
+#define MAX_SCENE_CAMERA_HEIGHT 200
 
 #define FIXED_UI_MULTIPLIER 0.4f
 

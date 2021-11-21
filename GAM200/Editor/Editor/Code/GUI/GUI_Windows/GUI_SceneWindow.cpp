@@ -19,7 +19,6 @@ Technology is prohibited.
 
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 #include "Editor/Header/GUI/GUI_ClickCheck.hpp"
-#include "Editor/Header/GUI/GUI_Guizmo.hpp"
 
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
@@ -31,7 +30,7 @@ Technology is prohibited.
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/Input/Input.hpp"
 
-#define HEIGHT_CHANGE_SPEED 3.f
+#define HEIGHT_CHANGE_SPEED 6.f
 #define POS_CHANGE_SPEED EditorSceneCamera::GetHeight() * .01f
 
 #include "Engine/Header/Scene/SceneManager.hpp"

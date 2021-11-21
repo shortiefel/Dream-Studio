@@ -33,7 +33,7 @@ namespace Engine
 		bool Create();
 		void Destroy();
 
-		void Render(Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI(), Graphic::FrameBuffer* _fbo = nullptr);
+		void Render(Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI());
 
 	private:
 

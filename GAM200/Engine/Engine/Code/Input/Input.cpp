@@ -365,7 +365,7 @@ namespace Engine {
 	}
 
 	void Input::SetKeyStatus(int key, InputType status) {
-		if (status == InputType::PRESS) keyChange = true;
+		keyChange = true;
 		InputKeyStatus[GLFWtoInputKey[key]] = status;
 	}
 

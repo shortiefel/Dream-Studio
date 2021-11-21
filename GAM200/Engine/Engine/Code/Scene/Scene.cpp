@@ -121,11 +121,12 @@ namespace Engine {
         GameSceneSerializer::SerializeScene(sceneName);
     }
 
+#ifdef _GAME_BUILD
     void Scene::Update(float dt, bool playing, Math::vec2 game_viewportSize) {
+#else
+    void Scene::Update(float dt, bool playing, Math::vec2) {
+#endif
         if (playing) {
-
-           
-
             float timeScale = DeltaTime::GetInstance().GetTimeScale();
             if (timeScale > 0.f && !Math::EpsilonCheck(timeScale)) {
                 ScriptSystem::GetInstance().PlayRunTime();
@@ -143,8 +144,7 @@ namespace Engine {
 
         CameraSystem::GetInstance().Update(dt);
 
-        GraphicSystem::GetInstance().Render();
-
+        
 #ifdef _GAME_BUILD
         //Default 2d picking
         Math::vec2 pos = Input::GetMousePosition();
@@ -156,21 +156,17 @@ namespace Engine {
             [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, true);  },
             [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); });
 
-#else
-#endif
-        //defaultPicking(game_viewportSize);
-
-        //TransformCalculationSystem::GetInstance().Release();
+        GraphicSystem::GetInstance().Render();
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
+#else
+#endif
 
         SoundSystem::GetInstance().SoundUpdate();
-        //std::cout << "update sound \n";
+
 
         dreamECSGame->ClearDestroyQueue();
 
-        //LayerStack::Update();
-        //LayerStack::Draw();
     }
 
     unsigned int Scene::EntityCount() {

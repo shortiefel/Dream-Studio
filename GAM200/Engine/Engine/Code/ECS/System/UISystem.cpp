@@ -33,22 +33,28 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 namespace Engine {
-	void UISystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
+	void UISystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw) {
 		PROFILER_START("Rendering");
 
-		GLboolean gameDraw;
+		/*GLboolean gameDraw;
 		if (!_fbo) gameDraw = GL_TRUE;
-		else gameDraw = GL_FALSE;
+		else gameDraw = GL_FALSE;*/
 
-		if (gameDraw) {
-			//GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+//		if (gameDraw) {
+//			//GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+//#ifdef _GAME_BUILD
+//
+//#else
+//			//GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+//			_fbo->Bind();
+//#endif
+//		}
+//		else _fbo->Bind();
 #ifdef _GAME_BUILD
 
 #else
-			GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+		_fbo->Bind();
 #endif
-		}
-		else _fbo->Bind();
 
 		// Load shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
@@ -65,7 +71,7 @@ namespace Engine {
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			if (_fbo == nullptr) {
+			if (gameDraw) {
 				Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
 				GraphicImplementation::Renderer::DrawQuad(transform->position + camPos, transform->scale, transform->angle, ui.texobj_hdl);
 			}
@@ -85,8 +91,13 @@ namespace Engine {
 		// unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-		if (gameDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
-		else _fbo->Unbind();
+		/*if (gameDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
+		else _fbo->Unbind();*/
+#ifdef _GAME_BUILD
+
+#else
+		_fbo->Unbind();
+#endif
 	}
 
 	bool UISystem::Create() {

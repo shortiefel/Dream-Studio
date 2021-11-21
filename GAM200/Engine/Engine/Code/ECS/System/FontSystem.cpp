@@ -24,25 +24,31 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/Mesh.hpp"
 
-
 namespace Engine
 {
-	void FontSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo)
+	constexpr float FONT_MULTIPLIER = 50.f;
+
+	void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix)
 	{
 		PROFILER_START("Rendering");
 
-		GLboolean fontDraw;
-		if (!_fbo) fontDraw = GL_TRUE;
-		else fontDraw = GL_FALSE;
-
-		if (fontDraw) {
+//		GLboolean fontDraw;
+//		if (!_fbo) fontDraw = GL_TRUE;
+//		else fontDraw = GL_FALSE;
+//
+//		if (fontDraw) {
+//#ifdef _GAME_BUILD
+//
+//#else
+//			//GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+//#endif
+//		}
+//		else _fbo->Bind();
 #ifdef _GAME_BUILD
 
 #else
-			GraphicSystem::GetInstance().GetFrameBuffer().Bind();
+		_fbo->Bind();
 #endif
-		}
-		else _fbo->Bind();
 
 		// Load font shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::FONT_DRAW].GetHandle();
@@ -70,17 +76,18 @@ namespace Engine
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			// Editor
-			if (fontDraw)
-			{
-				GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
-			}
 			// Game
-			else 
-			{
-				GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / 75, transform->angle, text.filepath, text.text, text.colour);
-			}
-
+			//if (fontDraw)
+			//{
+			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
+			//}
+			//// Editor
+			//else 
+			//{
+			//	//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / 75, transform->angle, text.filepath, text.text, text.colour);
+			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
+			//}
+			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
 
 		}
 
@@ -94,9 +101,13 @@ namespace Engine
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-		if (fontDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
-		else _fbo->Unbind();
+		/*if (fontDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
+		else _fbo->Unbind();*/
+#ifdef _GAME_BUILD
 
+#else
+		_fbo->Unbind();
+#endif
 		
 	}
 

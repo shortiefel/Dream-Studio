@@ -41,6 +41,7 @@ namespace Editor {
     ImTextureID gameWinTex, sceneWinTex;
 
     Engine::Graphic::FrameBuffer editor_fbo;
+    Engine::Graphic::FrameBuffer game_fbo;
 
 
     void GUI::Update() {
@@ -53,7 +54,8 @@ namespace Editor {
 
         GUI_Windows::GUI_DockSpace();
         //editor_fbo.Resize(GUI_Windows::GetSceneSizeX(), GUI_Windows::GetSceneSizeY());
-        GUI_Windows::All_Windows(Engine::GraphicSystem::GetInstance().GetFrameBuffer(), editor_fbo);
+        //GUI_Windows::All_Windows(Engine::GraphicSystem::GetInstance().GetFrameBuffer(), editor_fbo);
+        GUI_Windows::All_Windows(game_fbo, editor_fbo);
     }
 
     void GUI::Draw() {
@@ -104,6 +106,7 @@ namespace Editor {
         //Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight, &gameWinFBO, reinterpret_cast<unsigned int*>(&gameWinTex));
         //Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight, &sceneWinFBO, reinterpret_cast<unsigned int*>(&sceneWinTex));
         editor_fbo.Create(Engine::Settings::windowWidth, Engine::Settings::windowHeight);
+        game_fbo.Create(Engine::Settings::gameWidth, Engine::Settings::gameHeight);
 
         return true;
     }
@@ -125,7 +128,11 @@ namespace Editor {
         Engine::GraphicImplementation::SetFramebuffer(sceneWinFBO);
     }*/
 
-    Engine::Graphic::FrameBuffer* GUI::GetFboPtr() {
+    Engine::Graphic::FrameBuffer* GUI::GetEditorFboPtr() {
         return &editor_fbo;
+    }
+
+    Engine::Graphic::FrameBuffer* GUI::GetGameFboPtr() {
+        return &game_fbo;
     }
 }

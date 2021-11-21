@@ -171,11 +171,11 @@ namespace Engine
 	}
 
 	// Update function for GraphicSystem
-	void GraphicSystem::Render(Math::mat3 camMatrix, Graphic::FrameBuffer* _fbo) {
+	void GraphicSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw) {
 	//void GraphicSystem::Render(Math::mat3 camMatrix, Math::mat4 _newcamMatrix, Graphic::FrameBuffer* _fbo, Math::mat4 _projMatrix) {
 		PROFILER_START("Rendering");
 		
-		GLboolean isDebugDraw;
+		/*GLboolean isDebugDraw;
 		if (!_fbo) isDebugDraw = GL_FALSE;
 		else isDebugDraw = GL_TRUE;
 
@@ -186,28 +186,41 @@ namespace Engine
 			fbo.Bind();
 #endif
 		}
-		else _fbo->Bind();
+		else _fbo->Bind();*/
+#ifdef _GAME_BUILD
+
+#else
+		_fbo->Bind();
+#endif
 
 		GraphicImplementation::Renderer::ResetStats();
-		GraphicImplementation::Renderer::BeginBatch(isDebugDraw);
+		//GraphicImplementation::Renderer::BeginBatch(isDebugDraw);
+		GraphicImplementation::Renderer::BeginBatch(!gameDraw);
 
 		// Set background to purple color
 		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Render game objects and collision lines
-		RenderGameObjects(camMatrix, isDebugDraw);
-		if (isDebugDraw == GL_TRUE) RenderCollisionLines(camMatrix, isDebugDraw);
+		//RenderGameObjects(camMatrix, isDebugDraw);
+		RenderGameObjects(camMatrix, !gameDraw);
+		//if (isDebugDraw == GL_TRUE) RenderCollisionLines(camMatrix, isDebugDraw);
+		if (!gameDraw) RenderCollisionLines(camMatrix, !gameDraw);
 
-		if (!isDebugDraw) fbo.Unbind();
-		else _fbo->Unbind();
+		/*if (!isDebugDraw) fbo.Unbind();
+		else _fbo->Unbind();*/
+#ifdef _GAME_BUILD
+
+#else
+		_fbo->Unbind();
+#endif
 	}
 
 	// Function to get frame buffer
-	const Graphic::FrameBuffer& GraphicSystem::GetFrameBuffer() const
+	/*const Graphic::FrameBuffer& GraphicSystem::GetFrameBuffer() const
 	{
 		return fbo;
-	}
+	}*/
 
 	// Init function for GraphicSystem
 	bool GraphicSystem::Create()
@@ -235,7 +248,7 @@ namespace Engine
 		GraphicImplementation::Renderer::Init();
 
 		// Create FBO; 1280 width, 720 height
-		fbo.Create(Settings::gameWidth, Settings::gameHeight);
+		//fbo.Create(Settings::gameWidth, Settings::gameHeight);
 
 		LOG_INSTANCE("Graphic System created");
 		return true;

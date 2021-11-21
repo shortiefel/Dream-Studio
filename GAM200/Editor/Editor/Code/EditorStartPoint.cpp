@@ -40,9 +40,13 @@ namespace Editor {
 	}
 
 	void EditorStartPoint::Update(float) {
-		Engine::GraphicSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
-		Engine::UISystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
-		Engine::FontSystem::GetInstance().Render(EditorSceneCamera::GetTransform(), GUI::GetFboPtr());
+		Engine::GraphicSystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
+		Engine::UISystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
+		Engine::FontSystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());
+
+		Engine::GraphicSystem::GetInstance().Render(GUI::GetGameFboPtr());
+		Engine::UISystem::GetInstance().Render(GUI::GetGameFboPtr());
+		Engine::FontSystem::GetInstance().Render(GUI::GetGameFboPtr());
 
 		//The system already added the time taken
 		PROFILER_START("Rendering");

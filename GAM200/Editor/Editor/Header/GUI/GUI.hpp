@@ -32,7 +32,8 @@ namespace Editor {
 
 		/*static void SetGameFBO();
 		static void SetSceneFBO();*/
-		static Engine::Graphic::FrameBuffer* GetFboPtr();
+		static Engine::Graphic::FrameBuffer* GetEditorFboPtr();
+		static Engine::Graphic::FrameBuffer* GetGameFboPtr();
 
 	private:
 		static GUI* m_instance;

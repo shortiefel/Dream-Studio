@@ -28,7 +28,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
 
-#define FIXED_UI_HEIGHT 1000.f
+//#define FIXED_UI_HEIGHT 1000.f
+#define FIXED_UI_HEIGHT 100.f
 
 namespace Engine
 {

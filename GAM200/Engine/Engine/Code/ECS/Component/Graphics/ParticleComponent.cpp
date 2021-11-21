@@ -23,6 +23,8 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
+#include "Engine/Header/Random/Random.hpp"
+
 namespace Engine
 {
 	// Contructor for Particle Component
@@ -33,25 +35,40 @@ namespace Engine
 
 	void ParticleComponent::ParticleUpdate(float _dt)
 	{
-		//for (auto& particle : m_ParticlePool)
+		if (particle.LifeRemaining <= 0.0f)
 		{
-			if (!particle.Active)
-				continue;
-
-			if (particle.LifeRemaining <= 0.0f)
-			{
-				particle.Active = false;
-				continue;
-			}
-
-			particle.LifeRemaining -= ts;
-			particle.Position += particle.Velocity * (float)ts;
-			particle.Rotation += 0.01f * ts;
+			particle.isActive = false;
+			continue;
 		}
+
+		particle.LifeRemaining -= _dt;
+		particle.Position += particle.Velocity * (float)_dt;
+		particle.Rotation += 0.01f * _dt;
 	}
 
+	void ParticleComponent::ParticleEmit(const ParticleProps& particleProps)
+	{
+		ParticleComponent& particle = m_ParticlePool[m_PoolIndex];
+		particle.isActive = true;
+		particle.offsetPosition = particleProps.offsetPosition;
+		particle.angle = Random::Float() * 2.0f * glm::pi<float>();
 
+		// Velocity
+		particle.velocity = particleProps.velocity;
+		particle.velocity.x += particleProps.velocityVariation.x * (Random::Float() - 0.5f);
+		particle.velocity.y += particleProps.velocityVariation.y * (Random::Float() - 0.5f);
 
+		// Color
+		particle.colorBegin = particleProps.ColorBegin;
+		particle.colorEnd = particleProps.ColorEnd;
+
+		particle.lifeTime = particleProps.lifeTime;
+		particle.lifeRemaining = particleProps.lifeTime;
+		particle.sizeBegin = particleProps.sizeBegin + particleProps.SizeVariation * (Random::Float() - 0.5f);
+		particle.sizeEnd = particleProps.sizeEnd;
+
+		m_PoolIndex = --m_PoolIndex % m_ParticlePool.size();
+	}
 
 
 

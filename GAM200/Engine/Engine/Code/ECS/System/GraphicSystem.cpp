@@ -102,13 +102,17 @@ namespace Engine
 
 			if (transform->layer == layer)
 			{
-				// For texture animation, update texture coords
-				if (particle.aComplete == false &&
-					GameState::GetInstance().GetPlaying())
+				for (int i = 0; i < particle.emitSize; i++)
 				{
-					float dt = DeltaTime::GetInstance().GetDeltaTime();
-					particle.ParticleUpdate(dt);
-					std::cout << "run animation \n";
+
+				}
+
+
+
+				// For particles, update life time, position and rotation
+				if (GameState::GetInstance().GetPlaying())
+				{
+					particle.ParticleUpdate(DeltaTime::GetInstance().GetDeltaTime());
 				}
 
 				GraphicImplementation::Renderer::DrawQuad(particle.offsetPosition + transform->position, 
@@ -133,12 +137,14 @@ namespace Engine
 
 		// Get texture array for entities
 		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
+		auto& particleArray = dreamECSGame->GetComponentArrayData<ParticleComponent>();
 
 		// Looping through all layers for game objects; batch rendering
 		int layerCount = LAYER_COUNT;
 		for (int i = 0; i < layerCount; i++)
 		{
 			RenderTextureLayer(textureArray, i);
+			RenderParticleLayer(particleArray, i);
 		}
 
 		// Enable GL_BLEND for transparency of textures

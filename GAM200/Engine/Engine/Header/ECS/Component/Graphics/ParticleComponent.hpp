@@ -60,10 +60,12 @@ namespace Engine
 		float lifeTime = 1.0f;
 		float lifeRemaining = 0.0f;
 
+		int emitSize = 1;
+
 		bool isActive = true;
 
-
 		void ParticleUpdate(float _dt);
+		void ParticleEmit(const ParticleProps& particleProps);
 
 
 		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", bool _active = true);

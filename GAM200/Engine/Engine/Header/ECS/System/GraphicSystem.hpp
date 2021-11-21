@@ -44,7 +44,7 @@ namespace Engine
 	private:
 		Graphic::FrameBuffer fbo{};
 
-		Math::vec2<ParticleComponent> m_ParticlePool;
+		std::vector<ParticleComponent> m_ParticlePool;
 		uint32_t m_PoolIndex = 999;
 
 		SINGLETON_SETUP(GraphicSystem);

@@ -52,9 +52,16 @@ namespace Editor {
 
 		ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
 
-		bool keyPressedGuizmo(const Engine::KeyPressedEvent& e) {
-			Engine::Input_KeyCode keyCode = e.GetKeyCode();
+		//Allow changes to be made when window is focused or hovered
+		bool makeChange = false;
 
+		bool inside = false;
+
+		bool keyPressedGuizmo(const Engine::KeyPressedEvent& e) {
+			//If not within screen return
+			if (!makeChange) return false;
+
+			Engine::Input_KeyCode keyCode = e.GetKeyCode();
 			switch (keyCode) {
 			case Engine::Input_KeyCode::R:
 				mCurrentGizmoOperation = ImGuizmo::ROTATE;
@@ -69,8 +76,6 @@ namespace Editor {
 
 			return true;
 		}
-
-		bool inside = false;
 
 		bool moving(const Engine::MouseMoveEvent& e) {
 			if (!inside || !Engine::Input::IsMouseHold(Engine::Input_MouseCode::Mouse_Middle)) return false;
@@ -111,19 +116,21 @@ namespace Editor {
 		}
 
 		//void GUI_SceneWindow(bool* sceneWin_bool, const ImTextureID& sceneWinTex) {
-		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, std::map<int, Engine::Entity_id>& entity_selected, ImGuiWindowFlags window_flags) {
+		void GUI_SceneWindow(bool* sceneWin_bool, Engine::Graphic::FrameBuffer& sceneWinFBO, std::map<int, Engine::Entity_id>& entity_selected, ImGuiWindowFlags window_flags) {
 			inside = false;
 
 			if (*sceneWin_bool) {
 				//ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
 				ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
 				ImGui::BeginChild("Render");
+				makeChange = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
+
 				ImVec2 wSize = ImGui::GetWindowSize();
 
+				//sceneWinFBO.Resize(static_cast<GLsizei>(wSize.x), static_cast<GLsizei>(wSize.y));
 				ImGui::PushItemWidth(wSize.x);
 				ASPECT_RATIO_FIX(wSize);
 
-				//ImGui::Image((ImTextureID)sceneWinTex, wSize, ImVec2(0, 1), ImVec2(1, 0));
 				ImGui::Image((ImTextureID)(sceneWinFBO.GetTexture()), wSize, ImVec2(0, 1), ImVec2(1, 0));
 
 				if (ImGui::BeginDragDropTarget())
@@ -137,7 +144,7 @@ namespace Editor {
 						if (scenePath.extension().string() != ".scene")
 						{
 							std::cout << "Unable to load scene file\n";
-							std::exit(EXIT_FAILURE);
+							//std::exit(EXIT_FAILURE);
 						}
 						
 						if (!scenePath.filename().string().empty())
@@ -153,7 +160,7 @@ namespace Editor {
 
 				ImVec2 windowSize = ImGui::GetWindowSize();
 				ImVec2 minBound = ImGui::GetWindowPos();
-
+				
 				if (windowSize.x > windowSize.y * EditorSceneCamera::GetAR())
 					windowSize.x = windowSize.y * EditorSceneCamera::GetAR();
 				else
@@ -194,7 +201,6 @@ namespace Editor {
 							tc->angle += angleDiff;
 
 							tc->scale = Math::vec2{ scaleArr[0], scaleArr[1] };
-
 						}
 					}
 				}

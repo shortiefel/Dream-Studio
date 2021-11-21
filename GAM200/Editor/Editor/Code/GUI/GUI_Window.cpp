@@ -405,7 +405,7 @@ namespace Editor {
 		/*-------------------------------------------------------------------------------------------------
 		Windows creation: Header, Hierarchy, Inspector, Game window, Scene window, Asset Manager
 		-------------------------------------------------------------------------------------------------*/
-		void All_Windows(const Engine::Graphic::FrameBuffer& gameWinFBO, const Engine::Graphic::FrameBuffer& sceneWinFBO) {
+		void All_Windows(Engine::Graphic::FrameBuffer& gameWinFBO, Engine::Graphic::FrameBuffer& sceneWinFBO) {
 			GUI_HeaderPanel();
 			GUI_GameWindow(&gameWin_bool, gameWinFBO, window_flags);
 			GUI_SceneWindow(&sceneWin_bool, sceneWinFBO, entity_selected, window_flags);

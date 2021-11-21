@@ -25,7 +25,7 @@ Technology is prohibited.
 namespace Editor {
     namespace GUI_Windows {
         //void    All_Windows(const ImTextureID& gameWinTex, const ImTextureID& sceneWinTex);
-        void    All_Windows(const Engine::Graphic::FrameBuffer& gameWinFBO, const Engine::Graphic::FrameBuffer& sceneWinFBO);
+        void    All_Windows(Engine::Graphic::FrameBuffer& gameWinFBO, Engine::Graphic::FrameBuffer& sceneWinFBO);
         /*int     GetSceneSizeX();
         int     GetSceneSizeY();*/
 

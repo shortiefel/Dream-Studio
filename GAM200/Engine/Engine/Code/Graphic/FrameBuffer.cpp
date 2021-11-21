@@ -56,7 +56,8 @@ namespace Engine {
 
             /*float ar = static_cast<float>(_width) / _height;
             height = static_cast<GLsizei>(width / ar);*/
-
+            width = _width;
+            height = _height;
             unsigned int* tex_ptr = reinterpret_cast<unsigned int*>(&fbo_texture);
             glBindTexture(GL_TEXTURE_2D, *tex_ptr);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);

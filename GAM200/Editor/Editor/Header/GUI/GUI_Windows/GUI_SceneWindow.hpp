@@ -29,7 +29,7 @@ Technology is prohibited.
 namespace Editor {
 	namespace GUI_Windows {
 		void GUI_SceneSetup();
-		void GUI_SceneWindow(bool* sceneWin_bool, const Engine::Graphic::FrameBuffer& sceneWinFBO, std::map<int, Engine::Entity_id>& entity_selected, ImGuiWindowFlags window_flags);
+		void GUI_SceneWindow(bool* sceneWin_bool, Engine::Graphic::FrameBuffer& sceneWinFBO, std::map<int, Engine::Entity_id>& entity_selected, ImGuiWindowFlags window_flags);
 		/*int GUI_GetSceneWindowSizeX();
 		int GUI_GetSceneWindowSizeY();*/
 	}

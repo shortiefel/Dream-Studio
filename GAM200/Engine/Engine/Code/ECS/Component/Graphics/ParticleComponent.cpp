@@ -35,15 +35,18 @@ namespace Engine
 
 	void ParticleComponent::ParticleUpdate(float _dt)
 	{
-		if (particle.LifeRemaining <= 0.0f)
+		for (auto& particle : m_ParticlePool)
 		{
-			particle.isActive = false;
-			continue;
-		}
+			if (particle.lifeRemaining <= 0.0f)
+			{
+				particle.isActive = false;
+				continue;
+			}
 
-		particle.LifeRemaining -= _dt;
-		particle.Position += particle.Velocity * (float)_dt;
-		particle.Rotation += 0.01f * _dt;
+			particle.lifeRemaining -= _dt;
+			particle.offsetPosition += particle.velocity * (float)_dt;
+			particle.angle += 0.01f * _dt;
+		}
 	}
 
 	void ParticleComponent::ParticleEmit(const ParticleProps& particleProps)
@@ -81,6 +84,7 @@ namespace Engine
 	{
 		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
 
+		emitSize = _serializer.GetValue<int>("EmitSize");
 		isActive = _serializer.GetValue<bool>("IsActive");
 
 		// Particle Data
@@ -109,6 +113,8 @@ namespace Engine
 	void ParticleComponent::Serialize(const SSerializer& _serializer)
 	{
 		_serializer.SetValue("Filepath", filepath);
+
+		_serializer.SetValue("EmitSize", emitSize);
 		_serializer.SetValue("IsActive", isActive);
 
 		// Particle Data

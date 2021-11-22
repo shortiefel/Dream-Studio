@@ -99,22 +99,33 @@ namespace Engine
 
 			if (transform->layer == layer)
 			{
-				for (int i = 0; i < particle.emitSize; i++)
-				{
-					particle.ParticleEmit(particle.particleData);
-				}
-
-
 				// For particles, update life time, position and rotation
 				if (GameState::GetInstance().GetPlaying())
 				{
-					particle.ParticleUpdate(DeltaTime::GetInstance().GetDeltaTime());
-				}
+					for (int i = 0; i < particle.emitSize; i++)
+					{
+						particle.ParticleEmit(particle.particleData);
+					}
 
-				GraphicImplementation::Renderer::DrawQuad(particle.offsetPosition + transform->position, 
-					particle.offset_scale * transform->scale, 
-					particle.angle + transform->angle,
-					particle.texobj_hdl, particle.minUV, particle.maxUV);
+					particle.ParticleUpdate(DeltaTime::GetInstance().GetDeltaTime());
+
+					for (auto& p : particle.m_ParticlePool)
+					{
+						if (!p.isActive) continue;
+
+						// Fade away particles
+						float life = p.lifeRemaining / p.lifeTime;
+						Math::vec4 color = Math::lerp(p.colorEnd, particle.colorBegin, life);
+						//color.a = color.a * life;
+
+						float size = Math::lerp(particle.SizeEnd, particle.SizeBegin, life);
+
+						GraphicImplementation::Renderer::DrawQuad(particle.offsetPosition + transform->position,
+							particle.offset_scale * transform->scale,
+							particle.angle + transform->angle,
+							particle.texobj_hdl, particle.minUV, particle.maxUV);
+					}
+				}
 			}
 		}
 	}

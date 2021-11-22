@@ -28,8 +28,8 @@ namespace Engine
 	struct ParticleProps
 	{
 		Math::vec2 offsetPosition{};
-		Math::vec2 velocity, velocityVariation;
-		Math::vec4 colorBegin, colorEnd;
+		Math::vec2 velocity{}, velocityVariation{};
+		Math::vec4 colorBegin , colorEnd;
 		float sizeBegin, sizeEnd, sizeVariation;
 		float lifeTime = 1.0f;
 	};
@@ -64,7 +64,7 @@ namespace Engine
 
 		Math::vec2 offset_scale;
 
-		int emitSize = 1;
+		int emitSize;
 
 		bool isActive = true;
 		

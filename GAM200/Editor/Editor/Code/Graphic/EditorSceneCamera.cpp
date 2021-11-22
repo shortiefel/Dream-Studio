@@ -30,7 +30,8 @@ Technology is prohibited.
 
 namespace Editor 
 {
-    float SCENE_CAMERA_HEIGHT = 20.f;
+    //Start height
+    float SCENE_CAMERA_HEIGHT = 70.f;
     Math::vec2 EditorSceneCamera::position;
     float EditorSceneCamera::ar;
 

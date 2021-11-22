@@ -39,11 +39,22 @@ namespace Engine
 
 	void SoundSystem::SoundUpdate()
 	{
+		std::vector<std::map<int, FMOD::Channel*>::iterator> StoppedChannels;
 		for (auto it = SoundComponent::channelMap.begin(); it != SoundComponent::channelMap.end(); ++it)
 		{
 			std::cout << "have something inside \n";
 			bool bIsPlaying = false;
 			it->second->isPlaying(&bIsPlaying);
+
+			if (!bIsPlaying)
+			{
+				StoppedChannels.push_back(it);
+			}
+		}
+
+		for (auto& it : StoppedChannels)
+		{
+			SoundComponent::channelMap.erase(it);
 		}
 
 		if(!SoundComponent::System->update())
@@ -52,7 +63,7 @@ namespace Engine
 
 	}
 
-	void SoundSystem::SoundPlay(const std::string& _path)
+	void SoundSystem::SoundPlay(const std::string& _path, bool _pause)
 	{
 		auto tFoundIt = SoundComponent::_soundMap.find(_path);
 		FMOD::Sound* sound;
@@ -64,15 +75,47 @@ namespace Engine
 			sound = tFoundIt->second;
 
 		FMOD::Channel* pChannel = nullptr;
-		SoundComponent::System->playSound(sound, nullptr, false , &pChannel);
+		SoundComponent::System->playSound(sound, nullptr, _pause , &pChannel);
 
 		//std::cout << "i am called\n";
 
 	}
 
+	void SoundSystem::SoundPause(int channelID)
+	{
+		auto it = SoundComponent::channelMap.find(channelID);
+
+		if (it == SoundComponent::channelMap.end())
+			return;
+		else
+			it->second->setPaused(true);
+	}
+
+	void SoundSystem::SoundUnpause(int channelID)
+	{
+		auto it = SoundComponent::channelMap.find(channelID);
+
+		if (it == SoundComponent::channelMap.end())
+			return;
+		else
+			it->second->setPaused(false);
+	}
+
+	void SoundSystem::SoundStop(int channelID)
+	{
+		auto it = SoundComponent::channelMap.find(channelID);
+		if (it == SoundComponent::channelMap.end())
+		{
+			SoundComponent::MusicGroup->stop();
+			SoundComponent::MasterGroup->stop();
+			return;
+		}
+	}
 
 	void SoundSystem::SoundRelease()
 	{
+		SoundSystem::SoundStop(SoundComponent::ChannelID);
+
 		std::map<std::string, FMOD::Sound*>::iterator soundit;
 		for (soundit = SoundComponent::_soundMap.begin(); soundit != SoundComponent::_soundMap.end(); ++soundit)
 		{

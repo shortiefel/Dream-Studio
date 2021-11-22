@@ -66,8 +66,8 @@ namespace Engine
 			SoundComponent::channelMap.erase(it);
 		}
 
-		if(!SoundComponent::System->update())
-			throw std::runtime_error("FMOD: Failed to Update System");
+		SoundComponent::System->update();
+			//throw std::runtime_error("FMOD: Failed to Update System");
 
 		return true;
 	}

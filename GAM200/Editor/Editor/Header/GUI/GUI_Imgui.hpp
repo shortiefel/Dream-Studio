@@ -19,7 +19,7 @@ Technology is prohibited.
 #ifndef GUI_IMGUI
 #define GUI_IMGUI
 
-namespace ImGui {
+namespace DreamImGui {
 	void CheckBox_Dream(const char* _text, bool* _boolean);
 }
 

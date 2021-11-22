@@ -39,7 +39,7 @@ namespace Engine
 		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape },
 		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 }, totalRows{ 1 }, totalColumns{ 1 },
 		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f },
-		isAnimation{ _animation }, currAnimationState{_currAnimationState },
+		isAnimation{ _animation }, startAnimationState{ std::string{} }, currAnimationState{ _currAnimationState },
 		isActive{ _active }
 	{
 		GraphicImplementation::SetTexture(this, filepath);
@@ -103,23 +103,33 @@ namespace Engine
 			AnimationState& newState = itr->second;
 			newState.stateName = newName;
 
-			AddRefreshAnimationState(newName, newState);
+			AddRefreshAnimationState(newState);
+			//AddRefreshAnimationState(newName, newState);
 			animationStateList.erase(itr);
 		}
 	}
 
 	// Function that adds/replace AnimationState to/in animationStateList;
 	// to be called by the editor if they want more states
-	void TextureComponent::AddRefreshAnimationState(std::string _stateName, AnimationState& _state)
+	void TextureComponent::AddRefreshAnimationState(AnimationState _state)
+	//void TextureComponent::AddRefreshAnimationState(std::string _stateName, AnimationState _state)
 	{
-		animationStateList[_stateName] = _state;
+		if (animationStateList.find(_state.stateName) != animationStateList.end()) {
+			int index = 1;
+			while (animationStateList.find(_state.stateName) != animationStateList.end()) {
+				index++;
+			}
+			_state.stateName += std::to_string(index);
+		}
+		animationStateList[_state.stateName] = _state;
 	}
 
 	// Function that adds/replace AnimationState to/in animationStateList;
 	// to be called by the editor if they want more states
 	void TextureComponent::AddRefreshAnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop)
 	{
-		animationStateList[_stateName].stateName = _stateName;
+		AddRefreshAnimationState(AnimationState{ _stateName, _stateRow, _startX, _endX, _fTime, _isLoop });
+		/*animationStateList[_stateName].stateName = _stateName;
 		animationStateList[_stateName].stateRow = _stateRow;
 		animationStateList[_stateName].startX = _startX;
 		animationStateList[_stateName].endX = _endX;
@@ -127,7 +137,7 @@ namespace Engine
 		animationStateList[_stateName].fTime = _fTime;
 		animationStateList[_stateName].aTime = 0.f;
 		animationStateList[_stateName].isLoop = _isLoop;
-		animationStateList[_stateName].aComplete = false;
+		animationStateList[_stateName].aComplete = false;*/
 	}
 
 	// Deserialize function for Texture Component
@@ -148,6 +158,7 @@ namespace Engine
 			cellWidth = static_cast<float>(width) / totalColumns;
 			cellHeight = static_cast<float>(height) / totalRows;
 
+			startAnimationState = _serializer.GetValue<std::string>("StartAnimationState");
 			currAnimationState = _serializer.GetValue<std::string>("CurrentAnimationState");
 
 			auto animationStates = _serializer.GetValueArray("AnimationState");
@@ -183,16 +194,15 @@ namespace Engine
 
 		_serializer.SetValue("IsAnimation", isAnimation);
 
-		
-
 		/*cellWidth = static_cast<float>(width) / totalColumns;
 		cellHeight = static_cast<float>(height) / totalRows;*/
 
 		if (isAnimation) {
-			_serializer.SetValue("CurrentAnimationState", currAnimationState);
-
 			_serializer.SetValue("TotalRow", totalRows);
 			_serializer.SetValue("TotalColumns", totalColumns);
+
+			_serializer.SetValue("StartAnimationState", startAnimationState);
+			_serializer.SetValue("CurrentAnimationState", currAnimationState);
 
 			rapidjson::Value allAnimation(rapidjson::kArrayType);
 

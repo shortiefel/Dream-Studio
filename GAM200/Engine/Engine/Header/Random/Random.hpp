@@ -18,11 +18,20 @@ Technology is prohibited.
 #ifndef RANDOM_HPP
 #define RANDOM_HPP
 
+#include <random>
+
 namespace Engine {
 	class Random {
 	public:
+		static void Create();
+		static float Float();
+
 		// param 1 - starting range, - param 2 - end range, param 3 - return value
 		static void Range(int num1, int num2, int* num3);
+
+	private:
+		static std::mt19937 s_RandomEngine;
+		static std::uniform_int_distribution<std::mt19937::result_type> s_Distribution;
 	};
 }
 

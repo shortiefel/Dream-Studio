@@ -28,12 +28,26 @@ namespace Engine
 	struct ParticleProps
 	{
 		Math::vec2 offsetPosition{};
-		Math::vec2 offset_scale;
-
 		Math::vec2 velocity, velocityVariation;
 		Math::vec4 colorBegin, colorEnd;
 		float sizeBegin, sizeEnd, sizeVariation;
 		float lifeTime = 1.0f;
+	};
+
+	struct Particle
+	{
+		Math::vec2 offsetPosition;	// offset from Transform Component
+
+		float angle = 0.0f;
+		float sizeBegin, sizeEnd;
+
+		Math::vec2 velocity;
+		Math::vec4 colorBegin, colorEnd;
+
+		float lifeTime = 1.0f;
+		float lifeRemaining = 0.0f;
+
+		bool isActive = false;
 	};
 
 	struct ParticleComponent : public IComponent 
@@ -48,21 +62,17 @@ namespace Engine
 
 		Math::vec2 minUV, maxUV;
 
-		Math::vec2 offsetPosition;	// offset from Transform Component
 		Math::vec2 offset_scale;
-
-		Math::vec2 velocity;
-		Math::vec4 colorBegin, colorEnd;
-		float angle = 0.0f;
-
-		float sizeBegin, sizeEnd;
-
-		float lifeTime = 1.0f;
-		float lifeRemaining = 0.0f;
 
 		int emitSize = 1;
 
 		bool isActive = true;
+		
+		ParticleProps particleData;
+
+		//Particle m_ParticlePool[999]{};
+		uint32_t m_PoolIndex = 999;
+		std::vector<Particle> m_ParticlePool;
 
 		void ParticleUpdate(float _dt);
 		void ParticleEmit(const ParticleProps& particleProps);

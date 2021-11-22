@@ -14,27 +14,24 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/ECS/System/GraphicSystem.hpp"
+
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 
-#include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Management/GameState.hpp"
-
-#include "Engine/Header/ECS/System/GraphicSystem.hpp"
+#include "Engine/Header/Management/Settings.hpp"
+#include "Engine/Header/Time/DeltaTime.hpp"
 
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
-#include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
-#include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
-#include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
+#include "Engine/Header/ECS/Component/ComponentList.hpp"
 
-#include "Engine/Header/Graphic/Mesh.hpp"
 #include "Engine/Header/Graphic/Shader.hpp"
 #include "Engine/Header/Graphic/GLSLShader.hpp"
+#include "Engine/Header/Graphic/Mesh.hpp"
 
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
-
-#include "Engine/Header/Management/Settings.hpp"
 
 namespace Engine
 {
@@ -104,9 +101,8 @@ namespace Engine
 			{
 				for (int i = 0; i < particle.emitSize; i++)
 				{
-
+					particle.ParticleEmit(particle.particleData);
 				}
-
 
 
 				// For particles, update life time, position and rotation

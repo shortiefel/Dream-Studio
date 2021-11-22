@@ -48,10 +48,13 @@ namespace Engine
 
 	void ParticleComponent::ParticleEmit(const ParticleProps& particleProps)
 	{
-		ParticleComponent& particle = m_ParticlePool[m_PoolIndex];
+		Particle& particle = m_ParticlePool[m_PoolIndex];
+
 		particle.isActive = true;
+
+		// Position and Angle
 		particle.offsetPosition = particleProps.offsetPosition;
-		particle.angle = Random::Float() * 2.0f * glm::pi<float>();
+		particle.angle = Random::Float() * 2.0f * Math::pi<float>();
 
 		// Velocity
 		particle.velocity = particleProps.velocity;
@@ -59,59 +62,68 @@ namespace Engine
 		particle.velocity.y += particleProps.velocityVariation.y * (Random::Float() - 0.5f);
 
 		// Color
-		particle.colorBegin = particleProps.ColorBegin;
-		particle.colorEnd = particleProps.ColorEnd;
+		particle.colorBegin = particleProps.colorBegin;
+		particle.colorEnd = particleProps.colorEnd;
 
+		// Life Time
 		particle.lifeTime = particleProps.lifeTime;
 		particle.lifeRemaining = particleProps.lifeTime;
-		particle.sizeBegin = particleProps.sizeBegin + particleProps.SizeVariation * (Random::Float() - 0.5f);
+
+		// Size
+		particle.sizeBegin = particleProps.sizeBegin + particleProps.sizeVariation * (Random::Float() - 0.5f);
 		particle.sizeEnd = particleProps.sizeEnd;
 
 		m_PoolIndex = --m_PoolIndex % m_ParticlePool.size();
 	}
-
-
-
 
 	// Deserialize function for Particle Component
 	ParticleComponent& ParticleComponent::Deserialize(const DSerializer& _serializer)
 	{
 		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
 
-		offsetPosition = _serializer.GetValue<Math::vec2>("OffsetPosition");
-		rotation = _serializer.GetValue<float>("Rotation");
-		sizeBegin = _serializer.GetValue<float>("SizeBegin");
-		sizeEnd = _serializer.GetValue<float>("SizeEnd");
-		velocity = _serializer.GetValue<Math::vec2>("Velocity");
-		
-		colorBegin = _serializer.GetValue<Math::vec2>("ColorBegin");
-		colorEnd = _serializer.GetValue<Math::vec2>("ColorEnd");
-
-		lifeTime = _serializer.GetValue<float>("LifeTime");
-		lifeRemaining = _serializer.GetValue<float>("LifeRemaining");
-
 		isActive = _serializer.GetValue<bool>("IsActive");
+
+		// Particle Data
+		Math::vec2 offsetPosition = _serializer.GetValue<Math::vec2>("OffsetPosition");
+
+		Math::vec2 velocity = _serializer.GetValue<Math::vec2>("Velocity");
+		Math::vec2 velocityVariation = _serializer.GetValue<Math::vec2>("VelocityVariation");
+
+		Math::vec4 colorBegin = _serializer.GetValue<Math::vec4>("ColorBegin");
+		Math::vec4 colorEnd = _serializer.GetValue<Math::vec4>("ColorEnd");
+
+		float sizeBegin = _serializer.GetValue<float>("SizeBegin");
+		float sizeEnd = _serializer.GetValue<float>("SizeEnd");
+		float sizeVariation = _serializer.GetValue<float>("SizeVariation");
+
+		float lifeTime = _serializer.GetValue<float>("LifeTime");
+
+		particleData = { offsetPosition, velocity, velocityVariation, 
+						 colorBegin, colorEnd, sizeBegin, sizeEnd, sizeVariation, 
+						 lifeTime };
 
 		return *this;
 	}
 
-	// Serialize function for Transform Component
+	// Serialize function for Particle Component
 	void ParticleComponent::Serialize(const SSerializer& _serializer)
 	{
 		_serializer.SetValue("Filepath", filepath);
-
-		_serializer.SetValue("OffsetPosition", offsetPosition);
-		_serializer.SetValue("Rotation", rotation);
-		_serializer.SetValue("SizeBegin", sizeBegin);
-		_serializer.SetValue("SizeEnd", sizeEnd);
-		_serializer.SetValue("Velocity", velocity);
-
-		_serializer.SetValue("ColorBegin", colorBegin);
-		_serializer.SetValue("ColorEnd", colorEnd);
-
-		_serializer.SetValue("LifeTime", lifeTime);
-		_serializer.SetValue("LifeRemaining", lifeRemaining);
-
 		_serializer.SetValue("IsActive", isActive);
+
+		// Particle Data
+		_serializer.SetValue("OffsetPosition", particleData.offsetPosition);
+
+		_serializer.SetValue("Velocity", particleData.velocity);
+		_serializer.SetValue("VelocityVariation", particleData.velocityVariation);
+
+		_serializer.SetValue("ColorBegin", particleData.colorBegin);
+		_serializer.SetValue("ColorEnd", particleData.colorEnd);
+
+		_serializer.SetValue("SizeBegin", particleData.sizeBegin);
+		_serializer.SetValue("SizeEnd", particleData.sizeEnd);
+		_serializer.SetValue("SizeVariation", particleData.sizeVariation);
+
+		_serializer.SetValue("LifeTime", particleData.lifeTime);
 	}
 }

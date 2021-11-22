@@ -25,6 +25,10 @@ Technology is prohibited.
 //Systems
 #include "Engine/Header/ECS/System/SystemList.hpp"
 
+//Random Class
+#include "Engine/Header/Random/Random.hpp"
+
+
 namespace Engine
 {
     // Init function for Factory
@@ -39,6 +43,7 @@ namespace Engine
         dreamECSGame->RegisterComponent<ScriptComponent>();
         dreamECSGame->RegisterComponent<UIComponent>();
         dreamECSGame->RegisterComponent<FontComponent>();
+        dreamECSGame->RegisterComponent<ParticleComponent>();
 
         CameraSystem::GetInstance().Create();
         CollisionSystem::GetInstance().Create();
@@ -49,6 +54,8 @@ namespace Engine
         GraphicSystem::GetInstance().Create();
         UISystem::GetInstance().Create();
         FontSystem::GetInstance().Create();
+
+        Random::Create();
     }
 
     // Destroy function for Factory 

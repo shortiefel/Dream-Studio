@@ -114,7 +114,7 @@ namespace Engine
 
 	void SoundSystem::SoundRelease()
 	{
-		//SoundSystem::SoundStop(SoundComponent::ChannelID);
+		SoundSystem::SoundStop(SoundComponent::ChannelID);
 
 		std::map<std::string, FMOD::Sound*>::iterator soundit;
 		for (soundit = SoundComponent::_soundMap.begin(); soundit != SoundComponent::_soundMap.end(); ++soundit)

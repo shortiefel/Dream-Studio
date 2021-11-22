@@ -7,10 +7,12 @@
 namespace Engine {
 
 	std::string _path;
+	int channelID;
 	std::string SoundComponent::filepath = _path;
+	int SoundComponent::ChannelID = channelID;
 
-	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, int channelID, bool _loop, bool _pause) :
-		IComponent{ _ID },  isSound{ _isSound }, isActive{ _isActive }, ChannelID{ channelID }, loop{ _loop }, Pause{ _pause } {
+	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, bool _loop, bool _pause) :
+		IComponent{ _ID },  isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause } {
 
 		SoundComponent::GetSound(_path);
 	}

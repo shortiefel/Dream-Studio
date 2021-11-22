@@ -19,7 +19,7 @@ namespace Engine {
 		
 
 		SoundComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Sound\\sampleSound",
-			bool _isSound = false, bool _isActive = false, int channelID = 0, bool _loop = false, bool _pause = false);
+			bool _isSound = false, bool _isActive = false, bool _loop = false, bool _pause = false);
 		~SoundComponent();
 		static FMOD::Sound* GetSound(const std::string& _path);
 		void SetLoop(int channelID, bool _loop);
@@ -44,7 +44,7 @@ namespace Engine {
 		//float volume;
 		bool isSound;
 		bool isActive = true;
-		int ChannelID;
+		static int ChannelID;
 		bool loop;
 		bool Pause;
 			

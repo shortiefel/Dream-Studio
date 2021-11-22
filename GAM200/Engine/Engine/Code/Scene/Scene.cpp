@@ -89,6 +89,9 @@ namespace Engine {
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
 
+        SoundSystem::SoundPlay(SoundComponent::filepath, false);
+        std::cout << "sound play \n";
+
 
         return true;
     }
@@ -98,7 +101,7 @@ namespace Engine {
 
         ScriptSystem::GetInstance().DestroyChildDomain();
 
-        //SoundSystem::SoundStop(SoundComponent::ChannelID);
+       // SoundSystem::SoundStop(SoundComponent::ChannelID);
         SoundSystem::SoundRelease();
         std::cout << "end sound \n";
 
@@ -141,8 +144,7 @@ namespace Engine {
                     EventDispatcher::SendEvent(event);
                 }
             }
-            SoundSystem::SoundPlay(SoundComponent::filepath, false);
-            std::cout << "sound play \n";
+            
         }
 
         CameraSystem::GetInstance().Update(dt);

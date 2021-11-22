@@ -3,10 +3,14 @@
 
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
+
 namespace Engine {
 
+	std::string _path;
+	std::string SoundComponent::filepath = _path;
+
 	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, int channelID, bool _loop, bool _pause) :
-		IComponent{ _ID }, filepath{ _path }, isSound{ _isSound }, isActive{ _isActive }, ChannelID{ channelID }, loop{ _loop }, Pause{ _pause } {
+		IComponent{ _ID },  isSound{ _isSound }, isActive{ _isActive }, ChannelID{ channelID }, loop{ _loop }, Pause{ _pause } {
 
 		SoundComponent::GetSound(_path);
 	}
@@ -62,7 +66,6 @@ namespace Engine {
 		it->second->isPlaying(&bIsPlaying);
 		return bIsPlaying;
 	}
-	
 	
 
 }

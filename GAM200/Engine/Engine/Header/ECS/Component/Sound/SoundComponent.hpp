@@ -38,7 +38,7 @@ namespace Engine {
 		static FMOD::ChannelGroup* MasterGroup;
 		static FMOD::ChannelGroup* MusicGroup;
 
-		std::string filepath = "";
+		static std::string filepath;
 		std::string soundName = "";
 
 		//float volume;

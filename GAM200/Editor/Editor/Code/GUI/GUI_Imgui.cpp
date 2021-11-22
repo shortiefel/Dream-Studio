@@ -19,11 +19,11 @@ Technology is prohibited.
 #include <Imgui/imgui.h>
 //#include <Imgui/imgui_internal.h>
 
-namespace ImGui {
+namespace DreamImGui {
 	void CheckBox_Dream(const char* _text, bool* _boolean) {
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-		Checkbox(_text, _boolean);
-		PopStyleVar();
+		ImGui::Checkbox(_text, _boolean);
+		ImGui::PopStyleVar();
 	}
 	
 }

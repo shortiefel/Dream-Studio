@@ -848,8 +848,15 @@ namespace Editor {
 							if (ImGui::Button("Play"))
 							{
 								std::cout << "plsuong \n";
-								ImGui::Text(soundComp->soundName.c_str());
+								ImGui::Text(soundComp->filepath.c_str());
 								Engine::SoundSystem::SoundPlay(soundComp->filepath, soundComp->Pause);
+							}
+
+							if (ImGui::Button("Stop"))
+							{
+								std::cout << "stopping \n";
+								ImGui::Text(soundComp->filepath.c_str());
+								Engine::SoundSystem::SoundStop(soundComp->ChannelID);
 							}
 						
 						}
@@ -859,7 +866,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
-						ImGui::Text(soundComp->soundName.c_str());
+						ImGui::Text(soundComp->filepath.c_str());
 						ImGui::PopFont();
 
 						ImGui::Spacing();

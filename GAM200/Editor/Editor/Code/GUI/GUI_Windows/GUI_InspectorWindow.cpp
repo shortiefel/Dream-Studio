@@ -130,8 +130,6 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
 					if (ImGui::Selectable(" + Sound##addSoundcom"))
 						Engine::dreamECSGame->AddComponent<Engine::SoundComponent>(entity_selected);
-					if (ImGui::Selectable(" + Animation##addAnicom"))
-						Engine::dreamECSGame->AddComponent<Engine::TextureComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0", Engine::File_Dialog_Type::Scripts);
 

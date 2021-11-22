@@ -53,7 +53,7 @@ namespace Engine {
 		FMOD_MODE eMode = FMOD_LOOP_NORMAL;
 		eMode |= _loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
 
-		if (!it->second->setMode(eMode))
+		if (it->second->setMode(eMode))
 			return;
 	}
 	

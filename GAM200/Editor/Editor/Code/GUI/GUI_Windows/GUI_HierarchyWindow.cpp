@@ -134,6 +134,7 @@ namespace Editor {
 						{
 							if (parent == entity_id) continue;
 								Engine::dreamECSGame->Parent(parent, entity_id);
+
 						}
 					}
 
@@ -154,15 +155,76 @@ namespace Editor {
 							std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DestroyEntity(entity.second);  });
 							entity_selected.clear();
 						}
-						//
-						// 
-						//Engine::DreamECS::GetInstance().DestroyEntity(entity_selected);
 					}
 
 					ImGui::EndPopup();
 				}
+				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+				{
+					ImGui::Text("I'm Dragging.");
+					ImGui::SetDragDropPayload("GAME_OBJECT", NULL, NULL);
+					ImGui::EndDragDropSource();
+				}
 
 
+				ImGuiTreeNodeFlags flags =  ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
+				flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+
+		
+				Engine::Entity_id parent = GetTarget(entity_selected);
+				for (const auto& [index, entity_id] : entity_selected)
+				{
+					if (parent == entity_id) continue;
+					bool selected = CheckIfExist(entity_selected, index);
+
+					if (selected)
+						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+						Engine::dreamECSGame->Parent(parent, entity_id);
+	
+					const auto& iterator = entity_map.find(index);
+					const auto& iterator2 = entity_map.find(parent);
+					if (iterator == entity_map.end()) continue;
+					if (iterator2 == entity_map.end()) continue;
+					bool open = ImGui::TreeNodeEx(iterator->second.name.c_str(), flags);
+
+					//if (ImGui::BeginDragDropTarget())
+					//{
+					//	ImGui::Text("I'm Dropping.");
+					//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
+					//	{
+					//		Engine::dreamECSGame->Parent(parent, entity_id);
+					//		if (open)
+					//		{
+					//			ImGui::Indent();
+					//			ImGui::Text(iterator2->second.name.c_str());
+					//			ImGui::TreePop();
+					//			ImGui::Unindent();
+					//		}
+					//	}
+					//	ImGui::EndDragDropTarget();
+					//}
+					if (open)
+					{
+						ImGui::Indent();
+						ImGui::Text(iterator2->second.name.c_str());
+						if (ImGui::BeginDragDropTarget())
+						{
+							ImGui::Text("I'm Dropping.");
+							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
+							{
+								Engine::dreamECSGame->Parent(parent, entity_id);
+								ImGui::Text(iterator2->second.name.c_str());
+							}
+							ImGui::EndDragDropTarget();
+						}
+						ImGui::TreePop();
+						ImGui::Unindent();
+					}
+					ImGui::OpenPopupOnItemClick("##EntityPop", ImGuiPopupFlags_MouseButtonRight);
+					
+					if (selected)
+						ImGui::PopStyleColor();
+					}
 
 
 				if (ImGui::CollapsingHeader("Canvas")) {
@@ -185,6 +247,9 @@ namespace Editor {
 
 					}
 				}
+
+
+
 
 				ImGui::End();
 			}

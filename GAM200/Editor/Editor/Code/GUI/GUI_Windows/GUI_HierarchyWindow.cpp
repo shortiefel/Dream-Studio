@@ -155,9 +155,6 @@ namespace Editor {
 							std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DestroyEntity(entity.second);  });
 							entity_selected.clear();
 						}
-						//
-						// 
-						//Engine::DreamECS::GetInstance().DestroyEntity(entity_selected);
 					}
 
 					ImGui::EndPopup();
@@ -189,16 +186,34 @@ namespace Editor {
 					if (iterator == entity_map.end()) continue;
 					if (iterator2 == entity_map.end()) continue;
 					bool open = ImGui::TreeNodeEx(iterator->second.name.c_str(), flags);
+
+					//if (ImGui::BeginDragDropTarget())
+					//{
+					//	ImGui::Text("I'm Dropping.");
+					//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
+					//	{
+					//		Engine::dreamECSGame->Parent(parent, entity_id);
+					//		if (open)
+					//		{
+					//			ImGui::Indent();
+					//			ImGui::Text(iterator2->second.name.c_str());
+					//			ImGui::TreePop();
+					//			ImGui::Unindent();
+					//		}
+					//	}
+					//	ImGui::EndDragDropTarget();
+					//}
 					if (open)
 					{
 						ImGui::Indent();
+						ImGui::Text(iterator2->second.name.c_str());
 						if (ImGui::BeginDragDropTarget())
 						{
 							ImGui::Text("I'm Dropping.");
-							ImGui::Text(iterator2->second.name.c_str());
 							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
 							{
 								Engine::dreamECSGame->Parent(parent, entity_id);
+								ImGui::Text(iterator2->second.name.c_str());
 							}
 							ImGui::EndDragDropTarget();
 						}

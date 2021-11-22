@@ -12,6 +12,9 @@ namespace Engine
 	FMOD::System* SoundComponent::System = nullptr;
 	FMOD::ChannelGroup* SoundComponent::MasterGroup = nullptr;
 	FMOD::ChannelGroup* SoundComponent::MusicGroup = nullptr;
+	FMOD::ChannelGroup* SoundComponent::SFXGroup = nullptr;
+
+	
 	
 	bool operator!(FMOD_RESULT res)
 	{
@@ -33,16 +36,22 @@ namespace Engine
 		if (!SoundComponent::System->createChannelGroup("Music", &SoundComponent::MusicGroup))
 			throw std::runtime_error("FMOD: Failed to create Music Channel Group");
 
+		SoundComponent::MasterGroup->addGroup(SoundComponent::MusicGroup);
+
+		if (!SoundComponent::System->createChannelGroup("SFX", &SoundComponent::SFXGroup))
+			throw std::runtime_error("FMOD: Failed to create SFX Channel Group");
+
+		SoundComponent::MasterGroup->addGroup(SoundComponent::SFXGroup);
+
 		//to set volume in future
 
 	}
 
-	void SoundSystem::SoundUpdate()
+	bool SoundSystem::SoundUpdate()
 	{
 		std::vector<std::map<int, FMOD::Channel*>::iterator> StoppedChannels;
 		for (auto it = SoundComponent::channelMap.begin(); it != SoundComponent::channelMap.end(); ++it)
 		{
-			std::cout << "have something inside \n";
 			bool bIsPlaying = false;
 			it->second->isPlaying(&bIsPlaying);
 
@@ -60,11 +69,12 @@ namespace Engine
 		if(!SoundComponent::System->update())
 			throw std::runtime_error("FMOD: Failed to Update System");
 
-
+		return true;
 	}
 
-	void SoundSystem::SoundPlay(const std::string& _path, bool _pause)
+	int SoundSystem::SoundPlay(const std::string& _path, bool _pause)
 	{
+		int ID = SoundComponent::ChannelID;
 		auto tFoundIt = SoundComponent::_soundMap.find(_path);
 		FMOD::Sound* sound;
 		
@@ -75,9 +85,25 @@ namespace Engine
 			sound = tFoundIt->second;
 
 		FMOD::Channel* pChannel = nullptr;
-		SoundComponent::System->playSound(sound, nullptr, _pause , &pChannel);
+		if (pChannel)
+		{
+			switch (SoundComponent::SoundGrp())
+			{
+			case SoundComponent::SoundGrp::MUSIC:
+				pChannel->setChannelGroup(SoundComponent::MusicGroup);
+			case SoundComponent::SoundGrp::MASTER:
+				pChannel->setChannelGroup(SoundComponent::MasterGroup);
+			};
 
-		//std::cout << "i am called\n";
+			SoundComponent::channelMap[ID] = pChannel;
+		}
+
+		
+
+		SoundComponent::System->playSound(sound, nullptr, _pause , &pChannel);
+		std::cout << "Sound play" << ID << "\n";
+
+		return ID;
 
 	}
 
@@ -104,6 +130,7 @@ namespace Engine
 	void SoundSystem::SoundStop(int channelID)
 	{
 		auto it = SoundComponent::channelMap.find(channelID);
+		std::cout << "Sound Stop"  << channelID << "\n";
 		if (it == SoundComponent::channelMap.end())
 		{
 			SoundComponent::MusicGroup->stop();
@@ -114,7 +141,7 @@ namespace Engine
 
 	void SoundSystem::SoundRelease()
 	{
-		SoundSystem::SoundStop(SoundComponent::ChannelID);
+		//SoundSystem::SoundStop(SoundComponent::ChannelID);
 
 		std::map<std::string, FMOD::Sound*>::iterator soundit;
 		for (soundit = SoundComponent::_soundMap.begin(); soundit != SoundComponent::_soundMap.end(); ++soundit)
@@ -124,6 +151,7 @@ namespace Engine
 
 		SoundComponent::_soundMap.clear();
 		SoundComponent::channelMap.clear();
+		SoundComponent::SFXGroup->release();
 		SoundComponent::MusicGroup->release();
 		SoundComponent::MasterGroup->release();
 		SoundComponent::System->release();

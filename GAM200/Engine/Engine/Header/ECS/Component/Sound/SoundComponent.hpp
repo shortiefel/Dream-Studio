@@ -35,8 +35,8 @@ namespace Engine {
 		static SoundMap _soundMap;
 		static FMOD::System* System;
 		static ChannelMap channelMap;
-		static FMOD::ChannelGroup* MasterGroup;
-		static FMOD::ChannelGroup* MusicGroup;
+	/*	static FMOD::ChannelGroup* MasterGroup;
+		static FMOD::ChannelGroup* MusicGroup;*/
 
 		static std::string filepath;
 		std::string soundName = "";
@@ -47,6 +47,18 @@ namespace Engine {
 		static int ChannelID;
 		bool loop;
 		bool Pause;
+
+		enum SoundGrp {
+			MASTER,
+			MUSIC,
+			SFX
+		};
+
+		static FMOD::ChannelGroup* MasterGroup ;
+		static FMOD::ChannelGroup* MusicGroup;
+		static FMOD::ChannelGroup* SFXGroup;
+
+
 			
 
 

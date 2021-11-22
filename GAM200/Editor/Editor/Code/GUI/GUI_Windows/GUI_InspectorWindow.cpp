@@ -876,16 +876,19 @@ namespace Editor {
 								ImGui::Text(soundComp->filepath.c_str());
 								Engine::SoundSystem::SoundStop(soundComp->ChannelID);
 							}
+
+							ImGui::Spacing();
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("File");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::PushFont(boldFont);
+							ImGui::Text(soundComp->filepath.c_str());
+							ImGui::PopFont();
 						
 						}
 
-						ImGui::AlignTextToFramePadding();
-						ImGui::Text("File");
-						ImGui::SameLine(halfWidth);
-						ImGui::SetNextItemWidth(halfWidth);
-						ImGui::PushFont(boldFont);
-						ImGui::Text(soundComp->filepath.c_str());
-						ImGui::PopFont();
+					
 
 						ImGui::Spacing();
 

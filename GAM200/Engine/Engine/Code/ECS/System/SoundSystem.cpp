@@ -43,7 +43,7 @@ namespace Engine
 
 		SoundComponent::MasterGroup->addGroup(SoundComponent::SFXGroup);
 
-		//to set volume in future
+		
 
 	}
 
@@ -89,10 +89,15 @@ namespace Engine
 		{
 			switch (SoundComponent::SoundGrp())
 			{
+			case SoundComponent::SoundGrp::SFX:
+				pChannel->setChannelGroup(SoundComponent::SFXGroup);
+				SoundComponent::SFXGroup->setVolume(SoundComponent::VolumeDecimal(50.f));
 			case SoundComponent::SoundGrp::MUSIC:
 				pChannel->setChannelGroup(SoundComponent::MusicGroup);
+				SoundComponent::MusicGroup->setVolume(SoundComponent::VolumeDecimal(100.f));
 			case SoundComponent::SoundGrp::MASTER:
 				pChannel->setChannelGroup(SoundComponent::MasterGroup);
+				SoundComponent::MusicGroup->setVolume(SoundComponent::VolumeDecimal(100.f));
 			};
 
 			SoundComponent::channelMap[ID] = pChannel;
@@ -101,7 +106,6 @@ namespace Engine
 		
 
 		SoundComponent::System->playSound(sound, nullptr, _pause , &pChannel);
-		std::cout << "Sound play" << ID << "\n";
 
 		return ID;
 
@@ -137,6 +141,31 @@ namespace Engine
 			SoundComponent::MasterGroup->stop();
 			return;
 		}
+	}
+
+	void SoundSystem::SoundSetVolume(int channelID,float _vol)
+	{
+		auto it = SoundComponent::channelMap.find(channelID);
+		if (it == SoundComponent::channelMap.end())
+		{
+			return;
+		}
+
+		it->second->setVolume(SoundComponent::VolumeDecimal(_vol));
+	}
+
+	float SoundSystem::SoundGetVolume(int channelID)
+	{
+		float vol;
+		auto it = SoundComponent::channelMap.find(channelID);
+		if (it == SoundComponent::channelMap.end())
+		{
+			return 0.f;
+		}
+
+		it->second->getVolume(&vol);
+
+		return SoundComponent::DecimalVolume(vol);
 	}
 
 	void SoundSystem::SoundRelease()

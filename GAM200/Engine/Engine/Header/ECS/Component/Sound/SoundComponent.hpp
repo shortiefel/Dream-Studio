@@ -29,24 +29,24 @@ namespace Engine {
 		/**
 		*		VOLUME
 		*/
-	/*	float VolumeDecimal(float _vol);
-		float DecimalVolume(float _vol);*/
+		static float VolumeDecimal(float _vol);
+		static float DecimalVolume(float _vol);
 
+
+		/**
+		*		FMOD RELATED
+		*/
 		static SoundMap _soundMap;
 		static FMOD::System* System;
 		static ChannelMap channelMap;
-	/*	static FMOD::ChannelGroup* MasterGroup;
-		static FMOD::ChannelGroup* MusicGroup;*/
+		static FMOD::ChannelGroup * MasterGroup;
+		static FMOD::ChannelGroup* MusicGroup;
+		static FMOD::ChannelGroup* SFXGroup;
 
-		static std::string filepath;
-		std::string soundName = "";
 
-		//float volume;
-		bool isSound;
-		bool isActive = true;
-		static int ChannelID;
-		bool loop;
-		bool Pause;
+		/**
+		*		VARIABLES
+		*/
 
 		enum SoundGrp {
 			MASTER,
@@ -54,9 +54,19 @@ namespace Engine {
 			SFX
 		};
 
-		static FMOD::ChannelGroup* MasterGroup ;
-		static FMOD::ChannelGroup* MusicGroup;
-		static FMOD::ChannelGroup* SFXGroup;
+		static std::string filepath;
+		std::string soundName = "";
+
+		static float volume;
+		bool isSound;
+		bool isActive = true;
+		static int ChannelID;
+		bool loop;
+		bool Pause;
+
+		
+
+
 
 
 			

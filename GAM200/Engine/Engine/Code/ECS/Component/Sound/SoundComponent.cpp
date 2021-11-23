@@ -10,6 +10,8 @@ namespace Engine {
 	int channelID;
 	std::string SoundComponent::filepath = _path;
 	int SoundComponent::ChannelID = channelID;
+	float _vol;
+	float SoundComponent::volume = _vol;
 
 	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, bool _loop, bool _pause) :
 		IComponent{ _ID },  isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause } {
@@ -69,5 +71,28 @@ namespace Engine {
 		return bIsPlaying;
 	}
 	
+	/**
+	*		VOLUMES
+	*		--- LOUD = 100.f ->1.f
+	*		--- NORMAL = 50.f -> 0.5f
+	*		--- SOFT = 20.f ->0.2f
+	*/
+	float SoundComponent::VolumeDecimal(float _vol)
+	{
+		if (_vol < 20.f)
+			_vol = 20.f;
+		else if (_vol >= 20.f && _vol <= 100.f)
+			_vol = 50.f;
+		else if (_vol > 100.f)
+			_vol = 100.f;
+
+		return _vol / 100.f;
+			
+	}
+
+	float SoundComponent::DecimalVolume(float _vol)
+	{
+		return _vol * 100.f;
+	}
 
 }

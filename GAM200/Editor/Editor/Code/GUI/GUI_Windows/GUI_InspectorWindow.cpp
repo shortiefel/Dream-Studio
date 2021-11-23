@@ -850,7 +850,9 @@ namespace Editor {
 						ImGui::Checkbox("##isSound", &(soundComp->isSound));
 						if (soundComp->isSound == true)
 						{
-
+							ImGui::Text("Sound Picker");
+							ImGui::SameLine(halfWidth);
+							ImGui::SameLine(halfWidth * 1.125f, 0);
 							if (ImGui::Button("Sound Picker##PickSound")) {
 								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav;)\0*.wav; \0");
 
@@ -860,6 +862,35 @@ namespace Editor {
 
 								}
 							}
+
+							////selection
+							//static ImGuiComboFlags flags = 0;
+							//int index = 3;
+							////arrays
+							//const int sg = 3;
+							//const char* soundName[sg] = { "Master", "Music", "SFX"};
+							//const char* previewSound = soundName[index];
+
+							//ImGui::AlignTextToFramePadding();
+							//ImGui::SetNextItemWidth(halfWidth);
+							//if (ImGui::BeginCombo("##SoundGroup", previewSound, flags))
+							//{
+							//	for (int n = 0; n < 3; n++)
+							//	{
+							//		const bool is_selected = (index == n);
+							//		if (ImGui::Selectable(soundName[n], is_selected))
+							//			index = n;
+
+							//		// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+							//		if (is_selected)
+							//			ImGui::SetItemDefaultFocus();
+							//	}
+
+							//	ImGui::EndCombo();
+							//}
+
+
+							ImGui::AlignTextToFramePadding();
 
 							if (ImGui::Button("Play"))
 							{

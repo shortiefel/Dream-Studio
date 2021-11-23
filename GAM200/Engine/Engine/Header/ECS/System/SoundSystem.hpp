@@ -27,6 +27,10 @@ namespace Engine {
 		static void SoundPause(int channelID);
 		static void SoundUnpause(int channelD);
 		static void SoundStop(int channelID);
+		
+		static void SoundSetVolume(int channelID, float _vol);
+		static float SoundGetVolume(int channelID);
+
 		static void SoundRelease();
 	
 

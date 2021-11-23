@@ -62,8 +62,6 @@ namespace Engine
 
 		Math::vec2 minUV, maxUV;
 
-		Math::vec2 offset_scale;
-
 		int emitSize;
 
 		bool isActive = true;

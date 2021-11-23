@@ -115,14 +115,12 @@ namespace Engine
 
 						// Fade away particles
 						float life = p.lifeRemaining / p.lifeTime;
-						Math::vec4 color = Math::lerp(p.colorEnd, particle.colorBegin, life);
-						//color.a = color.a * life;
+						//Math::vec4 color = Math::Lerp(p.colorEnd, p.colorBegin, life);
 
-						float size = Math::lerp(particle.SizeEnd, particle.SizeBegin, life);
+						//float size = Math::Lerp(p.sizeEnd, p.sizeBegin, life);
 
-						GraphicImplementation::Renderer::DrawQuad(particle.offsetPosition + transform->position,
-							particle.offset_scale * transform->scale,
-							particle.angle + transform->angle,
+						GraphicImplementation::Renderer::DrawQuad(p.offsetPosition + transform->position,
+							0 * transform->scale, p.angle + transform->angle,
 							particle.texobj_hdl, particle.minUV, particle.maxUV);
 					}
 				}

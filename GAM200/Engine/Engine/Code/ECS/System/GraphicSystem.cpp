@@ -120,8 +120,8 @@ namespace Engine
 						float size = Math::Lerp(p.sizeEnd, p.sizeBegin, life);
 
 						GraphicImplementation::Renderer::DrawQuad(p.offsetPosition + transform->position,
-							0 * transform->scale, p.angle + transform->angle,
-							particle.texobj_hdl, particle.minUV, particle.maxUV);
+							size * transform->scale, p.angle + transform->angle,
+							particle.texobj_hdl, color);
 					}
 				}
 			}

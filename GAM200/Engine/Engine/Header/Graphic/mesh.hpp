@@ -36,9 +36,11 @@ namespace Engine
 
             static void Flush(bool debugdraw);
 
-            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec3 color,
+            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color,
                 Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
             static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID,
+                Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
+            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, const Math::vec4 color,
                 Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
 
             static void DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation);
@@ -53,7 +55,7 @@ namespace Engine
 
             static void FlushFont();
             static void DrawString(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation,
-                const std::string font, const std::string text, const Math::vec3 _colour);
+                const std::string font, const std::string text, const Math::vec4 _colour);
 
             static void ResetFontStats();
 

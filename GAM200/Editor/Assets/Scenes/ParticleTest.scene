@@ -1,0 +1,38 @@
+[
+  {
+    "Entity": {
+      "Name": "Entity",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\BlueBtn.png",
+      "Shape": 0,
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ParticleComponent": {
+      "Filepath": "Assets\\Textures\\BlueBtn.png",
+      "Shape": 0,
+      "EmitSize": 2,
+      "IsActive": true,
+      "OffsetPosition": [ 0.0, 1.0 ],
+      "Velocity": [ 0.0, 1.0 ],
+      "VelocityVariation": [ 0.0, 10.0 ],
+      "ColorBegin": [ 1.0, 1.0, 1.0, 1.0 ],
+      "ColorEnd": [ 1.0, 1.0, 1.0, 0.0 ],
+      "SizeBegin": 0.5,
+      "SizeEnd": 0.0,
+      "SizeVariation": 0,
+      "LifeTime": 1.0
+    }
+  }
+]

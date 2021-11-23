@@ -28,9 +28,14 @@ Technology is prohibited.
 namespace Engine
 {
 	// Contructor for Particle Component
-	ParticleComponent::ParticleComponent(Entity_id _ID, const std::string _path, bool _active) :
-		IComponent{ _ID }, filepath{ _path }, texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 },
-		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f }, isActive{ _active } {}
+	ParticleComponent::ParticleComponent(Entity_id _ID, const std::string _path, GraphicShape _shape, int _emitSize, bool _active) :
+		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape },
+		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 },
+		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f }, emitSize{ _emitSize },
+		isActive{ _active }
+	{
+		m_ParticlePool.resize(1000);
+	}
 
 
 	void ParticleComponent::ParticleUpdate(float _dt)
@@ -84,6 +89,8 @@ namespace Engine
 	{
 		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
 
+		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
+
 		emitSize = _serializer.GetValue<int>("EmitSize");
 		isActive = _serializer.GetValue<bool>("IsActive");
 
@@ -113,6 +120,7 @@ namespace Engine
 	void ParticleComponent::Serialize(const SSerializer& _serializer)
 	{
 		_serializer.SetValue("Filepath", filepath);
+		_serializer.SetValue("Shape", int(mdl_ref));
 
 		_serializer.SetValue("EmitSize", emitSize);
 		_serializer.SetValue("IsActive", isActive);

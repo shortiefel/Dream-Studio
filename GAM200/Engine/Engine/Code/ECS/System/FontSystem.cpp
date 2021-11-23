@@ -81,8 +81,6 @@ namespace Engine
 			{
 				GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / 75, transform->angle, text.filepath, text.text, text.colour);
 			}
-
-
 		}
 
 		// For transparency of glyph textures

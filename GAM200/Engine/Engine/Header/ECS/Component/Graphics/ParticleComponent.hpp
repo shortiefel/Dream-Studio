@@ -18,6 +18,8 @@ Technology is prohibited.
 #define PARTICLE_COMPONENT_HPP
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Graphic/Graphic.hpp"
+#include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine
@@ -57,26 +59,27 @@ namespace Engine
 		std::string textureName;
 		GLuint texobj_hdl{};
 
+		GraphicShape mdl_ref = GraphicShape{};
+
 		GLint width{}, height{};
 		GLint BPP{}; // Bits per pixel
 
-		Math::vec2 minUV, maxUV;
+		bool isActive = true;
 
+		Math::vec2 minUV, maxUV;
+		
+		ParticleProps particleData{};
 		int emitSize;
 
-		bool isActive = true;
-		
-		ParticleProps particleData;
-
-		//Particle m_ParticlePool[999]{};
 		uint32_t m_PoolIndex = 999;
+		//Particle m_ParticlePool[999]{};
 		std::vector<Particle> m_ParticlePool;
 
 		void ParticleUpdate(float _dt);
 		void ParticleEmit(const ParticleProps& particleProps);
 
 
-		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", bool _active = true);
+		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", GraphicShape _shape = GraphicShape::SQUARE, int _emitSize = 1, bool _active = true);
 
 
 		ParticleComponent& Deserialize(const DSerializer& _serializer);

@@ -30,7 +30,7 @@ namespace Engine
 	FontComponent::FontComponent(Entity_id _ID, const std::string _path, std::string _text, bool _isFont,
 		float _red, float _green, float _blue, bool _active) :
 		IComponent{ _ID }, filepath{ _path }, text{ _text }, isFont{ _isFont },
-		colour{ _red, _green, _blue }, isActive{ _active } { GraphicImplementation::SetFont(this, filepath); }
+		colour{ _red, _green, _blue, 1.0f }, isActive{ _active } { GraphicImplementation::SetFont(this, filepath); }
 
 	// Destructor for Text Component
 	FontComponent::~FontComponent()
@@ -47,7 +47,7 @@ namespace Engine
 		float red = _serializer.GetValue<float>("Red");
 		float green = _serializer.GetValue<float>("Green");
 		float blue = _serializer.GetValue<float>("Blue");
-		colour = { red, green, blue };
+		colour = { red, green, blue, 1.0f };
 
 		isActive = _serializer.GetValue<bool>("IsActive");
 

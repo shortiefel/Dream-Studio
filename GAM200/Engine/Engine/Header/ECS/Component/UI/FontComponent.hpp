@@ -31,7 +31,7 @@ namespace Engine
 		std::string fontName = "";
 		std::string text = "";
 
-		Math::vec3 colour{};
+		Math::vec4 colour{};
 
 		bool isFont;
 

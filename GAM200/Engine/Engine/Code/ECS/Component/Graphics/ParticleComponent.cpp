@@ -93,8 +93,8 @@ namespace Engine
 		Math::vec2 velocity = _serializer.GetValue<Math::vec2>("Velocity");
 		Math::vec2 velocityVariation = _serializer.GetValue<Math::vec2>("VelocityVariation");
 
-		//Math::vec4 colorBegin = _serializer.GetValue<Math::vec4>("ColorBegin");
-		//Math::vec4 colorEnd = _serializer.GetValue<Math::vec4>("ColorEnd");
+		Math::vec4 colorBegin = _serializer.GetValue<Math::vec4>("ColorBegin");
+		Math::vec4 colorEnd = _serializer.GetValue<Math::vec4>("ColorEnd");
 
 		float sizeBegin = _serializer.GetValue<float>("SizeBegin");
 		float sizeEnd = _serializer.GetValue<float>("SizeEnd");
@@ -102,9 +102,9 @@ namespace Engine
 
 		float lifeTime = _serializer.GetValue<float>("LifeTime");
 
-		//particleData = { offsetPosition, velocity, velocityVariation, 
-		//				 colorBegin, colorEnd, sizeBegin, sizeEnd, sizeVariation, 
-		//				 lifeTime };
+		particleData = { offsetPosition, velocity, velocityVariation, 
+						 colorBegin, colorEnd, sizeBegin, sizeEnd, sizeVariation, 
+						 lifeTime };
 
 		return *this;
 	}

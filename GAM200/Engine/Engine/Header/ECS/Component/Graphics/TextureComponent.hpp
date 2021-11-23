@@ -63,14 +63,16 @@ namespace Engine
 		int totalColumns, totalRows;
 		float cellWidth, cellHeight;
 
+		std::string startAnimationState;
 		std::string currAnimationState;
 		std::unordered_map <std::string, AnimationState> animationStateList{};
 
 		Math::vec2 minUV, maxUV; // To be passed to shader files (batch rendering)
 
 		// To be called by inspector
-		void AddRefreshAnimationState(std::string _stateName, AnimationState& _state);
-		void AddRefreshAnimationState(std::string _stateName = "", int _stateRow = 0, int _startX = 0, int _endX = 1, float _fTime = 0.1, bool _isLoop = true);
+		void AddRefreshAnimationState(AnimationState _state);
+		//void AddRefreshAnimationState(std::string _stateName, AnimationState _state);
+		void AddRefreshAnimationState(std::string _stateName = "Default", int _stateRow = 0, int _startX = 0, int _endX = 1, float _fTime = 0.1, bool _isLoop = true);
 
 		// Animation functions (used internally)
 		void AnimationStateRename(std::string oldName, std::string newName);

@@ -211,7 +211,7 @@ namespace Engine {
 			---------------------------------------------------------------------------------------------------------------------*/
 			template <typename T, typename U>
 			Vector4D<T> operator * (const Vector4D<T>& lhs, const Vector4D<U>& rhs) {
-				return Vector3D<T>(
+				return Vector4D<T>(
 					lhs.x * static_cast<T>(rhs.x),
 					lhs.y * static_cast<T>(rhs.y),
 					lhs.z * static_cast<T>(rhs.z),
@@ -220,7 +220,7 @@ namespace Engine {
 
 			template <typename T, typename U>
 			Vector4D<T> operator * (const Vector4D<T>& lhs, U rhs) {
-				return Vector3D<T>(
+				return Vector4D<T>(
 					lhs.x * static_cast<T>(rhs),
 					lhs.y * static_cast<T>(rhs),
 					lhs.z * static_cast<T>(rhs),

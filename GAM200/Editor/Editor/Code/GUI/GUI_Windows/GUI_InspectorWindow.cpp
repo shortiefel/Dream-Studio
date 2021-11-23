@@ -852,7 +852,6 @@ namespace Editor {
 						{
 							ImGui::Text("Sound Picker");
 							ImGui::SameLine(halfWidth);
-							ImGui::SameLine(halfWidth * 1.125f, 0);
 							if (ImGui::Button("Sound Picker##PickSound")) {
 								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav;)\0*.wav; \0");
 
@@ -863,34 +862,22 @@ namespace Editor {
 								}
 							}
 
-							////selection
-							//static ImGuiComboFlags flags = 0;
-							//int index = 3;
-							////arrays
-							//const int sg = 3;
-							//const char* soundName[sg] = { "Master", "Music", "SFX"};
-							//const char* previewSound = soundName[index];
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("File");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::PushFont(boldFont);
+							ImGui::Text(soundComp->filepath.c_str());
+							ImGui::PopFont();
 
-							//ImGui::AlignTextToFramePadding();
-							//ImGui::SetNextItemWidth(halfWidth);
-							//if (ImGui::BeginCombo("##SoundGroup", previewSound, flags))
-							//{
-							//	for (int n = 0; n < 3; n++)
-							//	{
-							//		const bool is_selected = (index == n);
-							//		if (ImGui::Selectable(soundName[n], is_selected))
-							//			index = n;
-
-							//		// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-							//		if (is_selected)
-							//			ImGui::SetItemDefaultFocus();
-							//	}
-
-							//	ImGui::EndCombo();
-							//}
-
+							ImGui::Spacing();
 
 							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Loop");
+							ImGui::SameLine(halfWidth);
+							ImGui::Checkbox("##soundLoop", &soundComp->loop);
+
+							ImGui::Spacing();
 
 							if (ImGui::Button("Play"))
 							{
@@ -906,15 +893,36 @@ namespace Editor {
 								Engine::SoundSystem::SoundStop(soundComp->ChannelID);
 							}
 
-							ImGui::Spacing();
-							ImGui::AlignTextToFramePadding();
-							ImGui::Text("File");
-							ImGui::SameLine(halfWidth);
-							ImGui::SetNextItemWidth(halfWidth);
-							ImGui::PushFont(boldFont);
-							ImGui::Text(soundComp->filepath.c_str());
-							ImGui::PopFont();
+							////selection
+							//static ImGuiComboFlags flags = 0;
+							//int index = static_cast<int>(soundComp->SG);
+							////arrays
+							//const int sz = 3;
+							//const char* layerName[sz] = { "MUSIC", "SFX" };
+							//const char* previewLayer = layerName[index];
+
+							//ImGui::AlignTextToFramePadding();
+							//ImGui::SetNextItemWidth(halfWidth);
+							//if (ImGui::BeginCombo("##soundGrp", previewLayer, flags))
+							//{
+							//	for (int i{ 0 }; i < sz; i++) {
+							//		const bool isSelected = (index == i);
+							//		if (ImGui::Selectable(layerName[i], isSelected)) {
+							//			soundComp->SG = static_cast<Engine::SoundGrp>(i);
+							//		}
+
+							//		// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+							//		if (isSelected)
+							//			ImGui::SetItemDefaultFocus();
+
+							//	}
+
+							//	ImGui::EndCombo();
+							//}
 						
+
+
+							
 						}
 
 					
@@ -993,36 +1001,6 @@ namespace Editor {
 						ImGui::SameLine();
 						if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str()))
 						{
-							//ImGui::Spacing();
-
-							//for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap)
-							//{
-							//	ImGui::Text(varName.c_str());
-							//	ImGui::SameLine();
-							//	switch (csPublicVariable.variableType)
-							//	{
-							//	case Engine::CSType::CHAR:
-							//		//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
-							//		break;
-							//	case Engine::CSType::BOOL:
-							//		ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
-							//		break;
-							//	case Engine::CSType::FLOAT:
-							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
-							//		break;
-							//	case Engine::CSType::INT:
-							//		ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
-							//		break;
-							//	case Engine::CSType::UINT:
-							//		//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
-							//		break;
-							//	case Engine::CSType::VEC2:
-							//		Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
-							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
-							//		break;
-							//	}
-							//}
 
 							/**
 							*	DELETE
@@ -1032,7 +1010,6 @@ namespace Editor {
 							if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::dreamECSGame->RemoveScript(entity_selected, className.c_str());
 
-							//ImGui::TreePop();
 						}
 					}
 				}

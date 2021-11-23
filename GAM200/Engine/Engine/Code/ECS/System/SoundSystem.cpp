@@ -87,15 +87,15 @@ namespace Engine
 		FMOD::Channel* pChannel = nullptr;
 		if (pChannel)
 		{
-			switch (SoundComponent::SoundGrp())
+			switch (SoundGrp())
 			{
-			case SoundComponent::SoundGrp::SFX:
+			case SoundGrp::SFX:
 				pChannel->setChannelGroup(SoundComponent::SFXGroup);
 				SoundComponent::SFXGroup->setVolume(SoundComponent::VolumeDecimal(50.f));
-			case SoundComponent::SoundGrp::MUSIC:
+			case SoundGrp::MUSIC:
 				pChannel->setChannelGroup(SoundComponent::MusicGroup);
 				SoundComponent::MusicGroup->setVolume(SoundComponent::VolumeDecimal(100.f));
-			case SoundComponent::SoundGrp::MASTER:
+			case SoundGrp::MASTER:
 				pChannel->setChannelGroup(SoundComponent::MasterGroup);
 				SoundComponent::MusicGroup->setVolume(SoundComponent::VolumeDecimal(100.f));
 			};

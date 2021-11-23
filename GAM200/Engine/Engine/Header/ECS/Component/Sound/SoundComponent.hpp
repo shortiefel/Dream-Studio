@@ -15,6 +15,12 @@ namespace Engine {
 	typedef  std::map<std::string, FMOD::Sound*> SoundMap;
 	typedef std::map<int, FMOD::Channel*> ChannelMap;
 
+	enum class SoundGrp {
+		MASTER,
+		MUSIC,
+		SFX
+	};
+
 	struct SoundComponent : public IComponent {
 		
 
@@ -44,16 +50,7 @@ namespace Engine {
 		static FMOD::ChannelGroup* SFXGroup;
 
 
-		/**
-		*		VARIABLES
-		*/
-
-		enum SoundGrp {
-			MASTER,
-			MUSIC,
-			SFX
-		};
-
+		SoundGrp SG;
 		static std::string filepath;
 		std::string soundName = "";
 

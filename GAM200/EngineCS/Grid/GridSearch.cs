@@ -12,13 +12,13 @@ public class GridSearch
 
     public static List<Point> AStarSearch(Grid grid, Point startPosition, Point endPosition, bool isAgent = false)
     {
-        Vector2Int[] pos = new Vector2Int[100];
+        /*Vector2Int[] pos = new Vector2Int[100];
         AStarSearch_Engine(pos, out int numOfElement, new Vector2Int(startPosition), new Vector2Int(endPosition), isAgent);
         Console.WriteLine("New path------------------------------------------------------");
         for (int i = 0; i < numOfElement; i++)
         {
             Console.WriteLine(pos[i]);
-        }
+        }*/
 
         List<Point> path = new List<Point>();
 

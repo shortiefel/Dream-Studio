@@ -19,7 +19,7 @@ Technology is prohibited.
 #include "Engine/Header/Layer/LayerStack.hpp"
 
 #include "Engine/Header/Management/FileWindowDialog.hpp"
-#include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
+#include "Engine/Header/Parent/ParentManager.hpp"
 #include "Engine/Header/Graphic/ResourceSet.hpp"
 #include "Engine/Header/ECS/Component/UI/FontComponent.hpp"
 #include "Engine/Header/ECS/Component/UI/ButtonComponent.hpp"
@@ -172,14 +172,15 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##TransformXPos", &transComp->localPosition.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+							
 						
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##TransformYPos", &transComp->localPosition.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 
 						ImGui::PopFont();
 
@@ -199,13 +200,13 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##TransformXscale", &transComp->scale.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##TransformYscale", &transComp->scale.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 
 						ImGui::PopFont();
 
@@ -219,7 +220,7 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
 						if (ImGui::DragFloat("##TransformYrot", &transComp->angle, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 
 						ImGui::PopFont();
 
@@ -305,13 +306,13 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderXPos", &colComp->offset_position.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderYPos", &colComp->offset_position.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 						ImGui::PopFont();
 
 						ImGui::AlignTextToFramePadding();
@@ -362,13 +363,13 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderXscale", &colComp->offset_scale.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderYscale", &colComp->offset_scale.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 						ImGui::PopFont();
 
 
@@ -381,7 +382,7 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
 						if (ImGui::DragFloat("##ColliderRotate", &colComp->angle, 0.1f, -360.0f, 360.f, "%.1f", 1))
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 						ImGui::PopFont();
 
 						ImGui::Spacing();

@@ -94,16 +94,25 @@ namespace Engine {
 		/*-------------------------------------------------------------------------------------------------------------------
 		Normalize
 		-------------------------------------------------------------------------------------------------------------------*/
+		/*
+		* Beware of Value becoming NaN
+		*/
 		template <typename T>
 		MI::Vector2D<T> normalize(const MI::Vector2D<T>& pResult) {
 			return (pResult / length(pResult));
 		}
 
+		/*
+		* Beware of Value becoming NaN
+		*/
 		template <typename T>
 		MI::Vector3D<T> normalize(const MI::Vector3D<T>& pResult) {
 			return (pResult / length(pResult));
 		}
 
+		/*
+		* Beware of Value becoming NaN
+		*/
 		template <typename T>
 		MI::Vector4D<T> normalize(const MI::Vector4D<T>& pResult) {
 			return (pResult / length(pResult));

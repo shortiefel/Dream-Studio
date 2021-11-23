@@ -21,10 +21,11 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
-#include "Engine/Header/Management/Settings.hpp"
 
+#include "Engine/Header/Management/Settings.hpp"
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
+#include "Engine/Header/Parent/ParentManager.hpp"
 
 //External Resources
 #include <sstream>
@@ -349,7 +350,7 @@ namespace Engine {
 					dreamECSGame->AddComponent(
 						 TransformComponent{ entity.id, position, transform.scale, transform.angle + angle }
 					); 
-					transform.localPosition = position;
+					ParentManager::GetInstance().UpdateTruePos(entity.id);
 			}
 
 			DESERIALIZE(ColliderComponent);

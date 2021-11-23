@@ -17,10 +17,10 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 
 #include "Engine/Header/Physics/Physics.hpp"
+#include "Engine/Header/Parent/ParentManager.hpp"
 
 #include "Engine/Header/ECS/System/PhysicsSystem.hpp"
 #include "Engine/Header/ECS/Component/Physics/RigidBodyComponent.hpp"
-
 #include "Engine/Header/ECS/DreamECS.hpp"
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
@@ -40,7 +40,7 @@ namespace Engine {
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			Physics::ApplyLinearVelocity(transform->position, transform->angle, rigidBody.speed * dt);
+			//Physics::ApplyLinearVelocity(transform->localPosition, transform->angle, rigidBody.speed * dt);
 
 			//Linear Physics
 			std::list<LinearForces> tempLinearForces;
@@ -59,8 +59,9 @@ namespace Engine {
 			if (linearForcesSz == 0 && rigidBody.linearDrag > 0.f)
 				rigidBody.linearVelocity = rigidBody.linearVelocity - rigidBody.linearVelocity * dt * rigidBody.linearDrag / rigidBody.mass;
 			if (linearForcesSz >= 20) rigidBody.linearForces.clear();
-			trans.position = trans.position + rigidBody.linearVelocity * dt;
-
+			trans.localPosition = trans.localPosition + rigidBody.linearVelocity * dt;
+			ParentManager::GetInstance().UpdateTruePos(entity_id);
+#if 0
 			//Angular physics
 			std::list<RotationForces> tempRotationForces;
 			float summedTorque = 0.f;
@@ -80,6 +81,7 @@ namespace Engine {
 			if (linearRotationSz >= 20) rigidBody.rotationForces.clear();
 
 			trans.angle = trans.angle + rigidBody.angularVelocity * dt;
+#endif
 
 			if (trans.angle < -360.f) trans.angle = 360.f;
 			else if (trans.angle > 360.f) trans.angle = 0.f;

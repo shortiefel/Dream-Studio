@@ -32,6 +32,9 @@ namespace Engine {
             return false;
         }
 
+        /*
+        * Return true if its almost 0
+        */
         template <typename T>
         bool EpsilonCheck(T target) {
             if (target >= -epsilon<T>() && target <= epsilon<T>())

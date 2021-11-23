@@ -5,14 +5,14 @@ using System;
 public class CarAI : MonoBehaviour
 {
     //[SerializeField]
-    private List<Vector2Int> path = null;
+    private List<Vector2Int> path;
     //[SerializeField]
     private float arriveDistance, lastPointArriveDistance;
     //[SerializeField]
     //private float turningAngleOffset;
     //[SerializeField]
     private Vector2 currentTargetPosition;
-    
+
     //[SerializeField]
     //private GameObject raycastStartingPoint = null;
     //[SerializeField]
@@ -23,12 +23,12 @@ public class CarAI : MonoBehaviour
     //    return index >= path.Count - 1;
     //}
 
-    private int index = 0;
+    private int index;
 
-    private bool stop;
-    private bool collisionStop = false;
+    private bool stopping;
+    private bool collisionStop;
 
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     private float power;
 
@@ -40,11 +40,11 @@ public class CarAI : MonoBehaviour
 
     private Vector2 movementVector;
 
-    public bool Stop
+    /*public bool Stop
     {
         get { return stop || collisionStop; }
         set { stop = value; }
-    }
+    }*/
 
     //[field: SerializeField]
     //public UnityEvent<Vector2> OnDrive { get; set; }
@@ -52,11 +52,19 @@ public class CarAI : MonoBehaviour
 
     public override void Start()
     {
+        path = null; 
+        index = 0;
+        stopping = false;
+        collisionStop = false;
+
         rb = GetComponent<Rigidbody2D>();
 
+        //if (path == null || path.Count == 0)
         if (path == null || path.Count == 0)
         {
-            Stop = true;
+            Debug.Log("stop");
+            stopping = true;
+            //Destroy(gameObject);
         }
         else
         {
@@ -72,20 +80,21 @@ public class CarAI : MonoBehaviour
         maxSpeed = 3;
         power = 6;
         turningFactor = 1f;
-        movementVector = new Vector2(0, 0);
+        movementVector = new Vector2(0, 1);
         //Console.WriteLine("Testing " + rb.velocity);
+        Debug.Log("Start " + stopping);
     }
 
-    public void SetPath(List<Vector2Int> path)
+    public void SetPath(List<Vector2Int> newPath)
     {
         Console.WriteLine("Set 2nd  CarAi path");
-        if (path.Count == 0)
+        if (newPath.Count == 0)
         {
-            Console.WriteLine("Size: " + path.Count);
+            Console.WriteLine("Size: " + newPath.Count);
             Destroy(gameObject);
             return;
         }
-        this.path = path;
+        this.path = newPath;
         //foreach (var item in path)
         //{
         //    Debug.Log(item.ToString());
@@ -134,11 +143,17 @@ public class CarAI : MonoBehaviour
                 transform.angle = -180f;
             }
         }
-        Stop = false;
+        stopping = false;
+        Debug.Log("Set path " + stopping);
     }
 
     public override void Update()
     {
+        if (path == null || path.Count == 0)
+        {
+            Debug.Log("Deleted " + stopping);
+            Destroy(gameObject);
+        }
         CheckIfArrived();
         Drive();
         //CheckForCollisions();
@@ -167,8 +182,10 @@ public class CarAI : MonoBehaviour
 
     private void Drive()
     {
-        if (Stop)
+        if (stopping)
         {
+            //Console.WriteLine("stopping ");
+            //if (path == null) Console.WriteLine("stopping2222222 ");
             //OnDrive?.Invoke(Vector2.zero);
             movementVector = Vector2.zero;
         }
@@ -214,7 +231,8 @@ public class CarAI : MonoBehaviour
 
     private void CheckIfArrived()
     {
-        if (Stop == false)
+        //if (stop == false)
+        if (!stopping)
         {
             var distanceToCheck = arriveDistance;
             if (index == path.Count - 1)
@@ -237,7 +255,7 @@ public class CarAI : MonoBehaviour
         index++;
         if (index >= path.Count)
         {
-            Stop = true;
+            //stop = true;
             //ScoreSystem.Instance.AddScore();
             Destroy(gameObject);
         }

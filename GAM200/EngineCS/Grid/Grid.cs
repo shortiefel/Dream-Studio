@@ -43,7 +43,7 @@ public class Grid
         _width = width;
         _height = height;
         _grid = new CellType[width, height];
-        CreateGrid_Engine(width, height);
+        //CreateGrid_Engine(width, height);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void CreateGrid_Engine(int width, int height);
@@ -86,7 +86,7 @@ public class Grid
             }*/
             
             _grid[i, j] = value;
-            SetCellType_Engine(i, j, (int)value);
+            //SetCellType_Engine(i, j, (int)value);
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -109,7 +109,9 @@ public class Grid
         return point;*/
         int count = _roadList.Count - 1;
         if (count < 0) count = 1;
-        return _roadList[Random.Range(0, count)];
+        int n = Random.Range(0, count);
+        Console.WriteLine("The count of random road " + count + " at n " + n);
+        return _roadList[n];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void GetRandomRoadPoint_Engine(out Point point);
@@ -120,7 +122,9 @@ public class Grid
         //return point;
         int count = _specialStructure.Count - 1;
         if (count < 0) count = 1;
-        return _specialStructure[Random.Range(0, count)];
+        int n = Random.Range(0, count);
+        Console.WriteLine("The count of random " + count + " at n " + n );
+        return _specialStructure[n];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void GetRandomSpecialStructurePoint_Engine(out Point point);
@@ -156,14 +160,14 @@ public class Grid
         }
         //Console.WriteLine("GetAllAdjacentCells: ----------------------------");
         //---------------------------------------------------------------------------------WORKING----------------------------------------------------------------------------------
-        Vector2Int[] pos = new Vector2Int[4];
-        GetAllAdjacentCells_Engine(pos, out int count, x, y);
+       /* Vector2Int[] pos = new Vector2Int[4];
+        //GetAllAdjacentCells_Engine(pos, out int count, x, y);
         List<Point> adjacentCellsTest = new List<Point>();
         for (int i = 0; i < count; i++)
         {
             adjacentCellsTest.Add(new Point(pos[i]));
             //Console.WriteLine(adjacentCellsTest[i]);
-        }
+        }*/
 
         /*Console.WriteLine("Old GetAllAdjacentCells ");
 
@@ -190,14 +194,14 @@ public class Grid
         }
         //Console.WriteLine("walkableadjacentCells: ----------------------------");
         //---------------------------------------------------------------------------------WORKING----------------------------------------------------------------------------------
-        Vector2Int[] pos = new Vector2Int[4];
+        /*Vector2Int[] pos = new Vector2Int[4];
         GetWalkableAdjacentCells_Engine(pos, out int count, x, y, isAgent);
         List<Point> adjacentCellsTest = new List<Point>();
         for (int i = 0; i < count; i++)
         {
             adjacentCellsTest.Add(new Point(pos[i]));
             //Console.WriteLine(adjacentCellsTest[i]);
-        }
+        }*/
 
         /*Console.WriteLine("Old walkableadjacentCells ");
 
@@ -223,14 +227,14 @@ public class Grid
         }
         //Console.WriteLine("adjacentCells: ----------------------------");
         //---------------------------------------------------------------------------------WORKING----------------------------------------------------------------------------------
-        Vector2Int[] pos = new Vector2Int[4];
+        /*Vector2Int[] pos = new Vector2Int[4];
         GetAdjacentCellsOfType_Engine(pos, out int count, x, y, (int)type);
         List<Point> adjacentCellsTest = new List<Point>();
         for (int i = 0; i < count; i++)
         {
             adjacentCellsTest.Add(new Point(pos[i]));
             //Console.WriteLine(adjacentCellsTest[i]);
-        }
+        }*/
 
         /*Console.WriteLine("Old adjacentCells ");
 
@@ -274,14 +278,14 @@ public class Grid
 
         //Console.WriteLine("Neighbour: ----------------------------");
         //---------------------------------------------------------------------------------WORKING----------------------------------------------------------------------------------
-        int[] pos = new int[4];
+        /*int[] pos = new int[4];
         GetAllAdjacentCellTypes_Engine(pos, x, y);
         CellType[] neighboursTest = { CellType.None, CellType.None, CellType.None, CellType.None };
         for (int i = 0; i < 4; i++)
         {
             neighboursTest[i] = (CellType)(pos[i]);
             //Console.WriteLine((int)neighboursTest[i] + " " + pos[i]);
-        }
+        }*/
 
         /*Console.WriteLine("Old Neighbour ");
 

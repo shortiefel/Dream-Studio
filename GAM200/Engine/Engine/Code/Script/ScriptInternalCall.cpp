@@ -620,6 +620,7 @@ namespace Engine {
 		RigidBodyComponent* rb = dreamECSGame->GetComponentPTR<RigidBodyComponent>(entityID);
 		if (rb != nullptr) {
 			float magnitude = Math::length(force);
+			if (Math::EpsilonCheck(magnitude)) magnitude = 1.f;
 			force = force / magnitude;
 			rb->linearForces.emplace_back(LinearForces{ force, magnitude });
 		}

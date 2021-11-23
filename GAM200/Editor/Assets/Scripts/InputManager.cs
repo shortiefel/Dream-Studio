@@ -62,7 +62,8 @@ public class InputManager : MonoBehaviour
 
 	private void CheckClickHoldEvent()
 	{
-		if (Input.GetMouseButton(0) && OverGameObject)
+		//if (Input.GetMouseButton(0) && OverGameObject)
+		if (Input.GetMouseButton(0))
 		{
 			var position = RaycastGround();
 			/*if (position != null)
@@ -75,7 +76,8 @@ public class InputManager : MonoBehaviour
 
 	private void CheckClickUpEvent()
 	{
-		if (Input.GetMouseButtonUp(0) && OverGameObject)
+		//if (Input.GetMouseButtonUp(0) && OverGameObject)
+		if (Input.GetMouseButtonUp(0))
 		{
 			//Console.WriteLine("out");
 			//OnMouseUp?.Invoke();
@@ -89,7 +91,8 @@ public class InputManager : MonoBehaviour
 
 	private void CheckClickDownEvent()
 	{
-		if (Input.GetMouseButtonDown(0) && OverGameObject)
+		//if (Input.GetMouseButtonDown(0) && OverGameObject)
+		if (Input.GetMouseButtonDown(0))
 		{
 			var position = RaycastGround();
 			/*if (position != null)

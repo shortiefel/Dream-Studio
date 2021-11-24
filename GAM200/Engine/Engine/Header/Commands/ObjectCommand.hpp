@@ -93,6 +93,37 @@ namespace Engine {
 
 	};
 
+	//commands for undo for gizmo
+	class ObjectGizmoCommand : public ObjectCommand
+	{
+	public:
+
+		//undo the changes made to the objects
+		void undo() override;
+		//redo the changes made to the objects
+		//void redo();
+
+		void record() override;
+
+		void execute() override;
+
+	};
+
+	//command for undo naming of entity
+	class ObjectNameCommand : public ObjectCommand
+	{
+		Engine::Entity_id entity_selected = Engine::Entity_id{};
+
+	public:
+
+		//undo
+		void undo() override;
+
+		void record() override;
+
+		void execute() override;
+	};
+
 	//commands for undo 
 
 	//commands for adding state

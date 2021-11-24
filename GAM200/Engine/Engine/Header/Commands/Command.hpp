@@ -29,6 +29,7 @@ Technology is prohibited.
 #include <deque>
 #include <stack>
 #include <memory>
+#include <list>
 
 //#pragma warning(disable:2259)
 
@@ -55,6 +56,7 @@ namespace Engine {
 	using CommandPtr = std::shared_ptr<ICommand>;
 
 	//class that knows how to undo and redo user changes
+	//template <class T = ICommand>
 	class UndoRedoManager : public Singleton<UndoRedoManager>{
 	public:
 		
@@ -84,6 +86,9 @@ namespace Engine {
 		//wrap the stack using a std::vector for better performance
 		std::deque<CommandPtr> current_command;
 		std::deque<CommandPtr> undo_command;
+
+		//testing command list
+		//typedef list<T*> CommandList;
 
 		std::stack<CommandPtr> undostack;
 		std::stack<CommandPtr> redostack;

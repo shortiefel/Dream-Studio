@@ -96,6 +96,10 @@ namespace Editor {
 						Engine::dreamECSGame->DuplicateNameCheck(newName);
 						Engine::dreamECSGame->ChangeName(entityName, newName);
 						entityName = newName;
+
+						//record the object state before change
+						std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectNameCommand>();
+						Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 					}
 				}
 

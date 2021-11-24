@@ -196,6 +196,9 @@
     <ClCompile Include="Engine\Code\ECS\Component\Sound\SoundComponent.cpp">
       <Filter>Source Files\ECS\Component\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Parent\ParentManager.cpp">
+      <Filter>Source Files\Parent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Application.hpp">
@@ -690,6 +693,9 @@
     <ClInclude Include="Engine\Header\ECS\System\SoundSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\Parent\ParentManager.hpp">
+      <Filter>Header Files\Parent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Resources">
@@ -871,6 +877,12 @@
     </Filter>
     <Filter Include="External Resources\freetype">
       <UniqueIdentifier>{3f4c8fcf-97f0-4b07-9ac8-be6d43834513}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parent">
+      <UniqueIdentifier>{e052a95a-9975-410f-92de-047852e6e9ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parent">
+      <UniqueIdentifier>{886125dc-2a0c-4e1f-8588-92a402df5eb7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

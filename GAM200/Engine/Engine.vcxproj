@@ -305,6 +305,7 @@
     <ClCompile Include="Engine\Code\Management\GameState.cpp" />
     <ClCompile Include="Engine\Code\Management\ResourceManager.cpp" />
     <ClCompile Include="Engine\Code\Management\Settings.cpp" />
+    <ClCompile Include="Engine\Code\Parent\ParentManager.cpp" />
     <ClCompile Include="Engine\Code\Physics\Collision.cpp" />
     <ClCompile Include="Engine\Code\Physics\Physics.cpp" />
     <ClCompile Include="Engine\Code\Random\Random.cpp" />
@@ -463,6 +464,7 @@
     <ClInclude Include="Engine\Header\Math\Vector\Vector2D.hpp" />
     <ClInclude Include="Engine\Header\Math\Vector\Vector3D.hpp" />
     <ClInclude Include="Engine\Header\Math\Vector\Vector4D.hpp" />
+    <ClInclude Include="Engine\Header\Parent\ParentManager.hpp" />
     <ClInclude Include="Engine\Header\pch.hpp" />
     <ClInclude Include="Engine\Header\Physics\Collision.hpp" />
     <ClInclude Include="Engine\Header\Physics\Forces.hpp" />

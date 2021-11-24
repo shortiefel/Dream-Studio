@@ -25,7 +25,7 @@ public class CarAI : MonoBehaviour
 
     private int index;
 
-    private bool stopping;
+    private bool stop;
     private bool collisionStop;
 
     private Rigidbody2D rb;
@@ -54,7 +54,7 @@ public class CarAI : MonoBehaviour
     {
         path = null; 
         index = 0;
-        stopping = false;
+        stop = false;
         collisionStop = false;
 
         rb = GetComponent<Rigidbody2D>();
@@ -63,7 +63,7 @@ public class CarAI : MonoBehaviour
         if (path == null || path.Count == 0)
         {
             Debug.Log("stop");
-            stopping = true;
+            stop = true;
             //Destroy(gameObject);
         }
         else
@@ -80,9 +80,8 @@ public class CarAI : MonoBehaviour
         maxSpeed = 3;
         power = 6;
         turningFactor = 1f;
-        movementVector = new Vector2(0, 1);
+        movementVector = new Vector2(0, 0);
         //Console.WriteLine("Testing " + rb.velocity);
-        Debug.Log("Start " + stopping);
     }
 
     public void SetPath(List<Vector2Int> newPath)
@@ -90,7 +89,6 @@ public class CarAI : MonoBehaviour
         Console.WriteLine("Set 2nd  CarAi path");
         if (newPath.Count == 0)
         {
-            Console.WriteLine("Size: " + newPath.Count);
             Destroy(gameObject);
             return;
         }
@@ -143,17 +141,15 @@ public class CarAI : MonoBehaviour
                 transform.angle = -180f;
             }
         }
-        stopping = false;
-        Debug.Log("Set path " + stopping);
+        stop = false;
     }
 
     public override void Update()
     {
-        if (path == null || path.Count == 0)
-        {
-            Debug.Log("Deleted " + stopping);
-            Destroy(gameObject);
-        }
+        //if (path == null || path.Count == 0)
+        //{
+        //    Destroy(gameObject);
+        //}
         CheckIfArrived();
         Drive();
         //CheckForCollisions();
@@ -182,7 +178,7 @@ public class CarAI : MonoBehaviour
 
     private void Drive()
     {
-        if (stopping)
+        if (stop)
         {
             //Console.WriteLine("stopping ");
             //if (path == null) Console.WriteLine("stopping2222222 ");
@@ -232,7 +228,7 @@ public class CarAI : MonoBehaviour
     private void CheckIfArrived()
     {
         //if (stop == false)
-        if (!stopping)
+        if (!stop)
         {
             var distanceToCheck = arriveDistance;
             if (index == path.Count - 1)
@@ -255,7 +251,7 @@ public class CarAI : MonoBehaviour
         index++;
         if (index >= path.Count)
         {
-            //stop = true;
+            stop = true;
             //ScoreSystem.Instance.AddScore();
             Destroy(gameObject);
         }

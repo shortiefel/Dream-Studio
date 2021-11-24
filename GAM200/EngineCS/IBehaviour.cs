@@ -87,6 +87,17 @@ public class IBehaviour : IComponent
         }
     }
 
+    protected void Remove_Types(uint entityId)
+    {
+        foreach (KeyValuePair<Type, Dictionary<uint, dynamic>> entry in dictonaryOfTypes)
+        {
+            if (entry.Value.ContainsKey(entityId))
+            {
+                entry.Value.Remove(entityId);
+            }
+        }
+    }
+
     public T GetComponent<T>() where T : class, IComponent, new()
     {
         if (HasComponent<T>(entityId))
@@ -161,6 +172,7 @@ public class IBehaviour : IComponent
     }
     public void Destroy(GameObject go)
     {
+        Remove_Types(go.entityId);
         Destroy_Entity_Engine(go.entityId);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

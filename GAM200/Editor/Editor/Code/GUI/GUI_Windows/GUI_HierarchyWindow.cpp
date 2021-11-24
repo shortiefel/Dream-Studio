@@ -158,6 +158,10 @@ namespace Editor {
 					}
 
 					ImGui::EndPopup();
+
+					//record the object state before change
+					std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectAddCommand>();
+					Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 				}
 				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 				{

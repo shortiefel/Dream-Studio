@@ -40,10 +40,13 @@ namespace Engine {
 	public:
 		//execute a command function
 		virtual void execute() = 0;
+
 		//undo 
 		virtual void undo() = 0;
+		
 		//redo
 		//virtual void redo() = 0;
+		
 		//record state
 		virtual void record() = 0;
 	
@@ -59,13 +62,22 @@ namespace Engine {
 
 		//record current state
 		void RecordState(CommandPtr cmd);
+
 		//adding the latest command pointing to the latest command
 		void Add(CommandPtr command);
+		
 		//undo the last command
 		void Undo();
+
 		//redo the last command
 		//void Redo();
 		
+		//store command
+		void StoreCommand(CommandPtr command);
+
+		//modify the command storing for later
+		CommandPtr GetStoredCommand();
+
 		//clear all undo redo histroy
 		void ClearHistory();
 
@@ -75,6 +87,8 @@ namespace Engine {
 
 		std::stack<CommandPtr> undostack;
 		std::stack<CommandPtr> redostack;
+
+		CommandPtr future_command; //for gizmo to store command
 
 
 

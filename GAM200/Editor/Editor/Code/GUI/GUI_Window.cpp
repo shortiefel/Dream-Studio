@@ -311,6 +311,9 @@ namespace Editor {
 			if (ImGui::BeginMenu("File")) {
 				if (ImGui::MenuItem("New Scene", "CTRL+N")) {
 						NewFileUtil();
+
+						//contact undo redo system to clear command history
+						Engine::UndoRedoManager::GetInstance().ClearHistory();
 				}
 
 				if (ImGui::MenuItem("Open...", "CTRL+O")) {

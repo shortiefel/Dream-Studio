@@ -67,8 +67,20 @@ namespace Engine {
 	//	undostack.push(cmd);
 	//}
 
+	void UndoRedoManager::StoreCommand(CommandPtr command)
+	{
+		future_command = command;
+	}
+
+	CommandPtr UndoRedoManager::GetStoredCommand()
+	{
+		return future_command;
+	}
+
 	void UndoRedoManager::ClearHistory()
 	{
+		future_command = nullptr;
 		undostack = {};
+		redostack = {};
 	}
 }

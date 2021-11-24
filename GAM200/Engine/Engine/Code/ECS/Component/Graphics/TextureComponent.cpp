@@ -129,15 +129,7 @@ namespace Engine
 	void TextureComponent::AddRefreshAnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop)
 	{
 		AddRefreshAnimationState(AnimationState{ _stateName, _stateRow, _startX, _endX, _fTime, _isLoop });
-		/*animationStateList[_stateName].stateName = _stateName;
-		animationStateList[_stateName].stateRow = _stateRow;
-		animationStateList[_stateName].startX = _startX;
-		animationStateList[_stateName].endX = _endX;
-		animationStateList[_stateName].currFrame = animationStateList[_stateName].startX;
-		animationStateList[_stateName].fTime = _fTime;
-		animationStateList[_stateName].aTime = 0.f;
-		animationStateList[_stateName].isLoop = _isLoop;
-		animationStateList[_stateName].aComplete = false;*/
+
 	}
 
 	// Deserialize function for Texture Component

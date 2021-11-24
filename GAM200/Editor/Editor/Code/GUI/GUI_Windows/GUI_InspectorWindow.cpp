@@ -831,17 +831,17 @@ namespace Editor {
 					DreamImGui::CheckBox_Dream("##SoundActive", &(soundComp->isActive));
 					ImGui::SameLine();
 
-				/*	if (ImGui::BeginDragDropTarget())
+					if (ImGui::BeginDragDropTarget())
 					{
 						ImGui::Text("I'm Dropping.");
 						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 						{
 							const wchar_t* path = (const wchar_t*)payload->Data;
 							std::filesystem::path soundPath = std::filesystem::path(_assetPath) / path;
-							Engine::SoundSystem::SoundPlay(soundPath.string(), sound);
+							Engine::SoundSystem::SoundPlay(soundPath.string(), true);
 						}
 						ImGui::EndDragDropTarget();
-					}*/
+					}
 
 					if (ImGui::CollapsingHeader("Sound")) {
 
@@ -879,49 +879,56 @@ namespace Editor {
 
 							ImGui::Spacing();
 
+							//selection
+							static ImGuiComboFlags flags = 0;
+							int index = static_cast<int>(soundComp->SG);
+							//arrays
+							const int sz = 3;
+							const char* soundName[sz] = { "MASTER", "MUSIC", "SFX" };
+							const char* previewLayer = soundName[index];
+
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Sound Group");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							if (ImGui::BeginCombo("##soundGrp", previewLayer, flags))
+							{
+								for (int i{ 0 }; i < sz; i++) {
+									const bool isSelected = (index == i);
+									if (ImGui::Selectable(soundName[i], isSelected)) {
+										soundComp->SG = static_cast<Engine::SoundGrp>(i);
+									}
+
+									if (isSelected)
+										ImGui::SetItemDefaultFocus();
+
+								}
+
+								ImGui::EndCombo();
+							}
+
+
+							ImGui::Spacing();
+
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Test Sound");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
 							if (ImGui::Button("Play"))
 							{
 								std::cout << "plsuong \n";
-								ImGui::Text(soundComp->filepath.c_str());
+								//ImGui::Text(soundComp->filepath.c_str());
 								Engine::SoundSystem::SoundPlay(soundComp->filepath, soundComp->Pause);
 							}
 
+							ImGui::SameLine(halfWidth * 1.25);
+							ImGui::SetNextItemWidth(halfWidth);
 							if (ImGui::Button("Stop"))
 							{
 								std::cout << "stopping \n";
-								ImGui::Text(soundComp->filepath.c_str());
+								//ImGui::Text(soundComp->filepath.c_str());
 								Engine::SoundSystem::SoundStop(soundComp->ChannelID);
 							}
-
-							////selection
-							//static ImGuiComboFlags flags = 0;
-							//int index = static_cast<int>(soundComp->SG);
-							////arrays
-							//const int sz = 3;
-							//const char* layerName[sz] = { "MUSIC", "SFX" };
-							//const char* previewLayer = layerName[index];
-
-							//ImGui::AlignTextToFramePadding();
-							//ImGui::SetNextItemWidth(halfWidth);
-							//if (ImGui::BeginCombo("##soundGrp", previewLayer, flags))
-							//{
-							//	for (int i{ 0 }; i < sz; i++) {
-							//		const bool isSelected = (index == i);
-							//		if (ImGui::Selectable(layerName[i], isSelected)) {
-							//			soundComp->SG = static_cast<Engine::SoundGrp>(i);
-							//		}
-
-							//		// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-							//		if (isSelected)
-							//			ImGui::SetItemDefaultFocus();
-
-							//	}
-
-							//	ImGui::EndCombo();
-							//}
-						
-
-
 							
 						}
 
@@ -929,6 +936,13 @@ namespace Editor {
 
 						ImGui::Spacing();
 
+						/**
+						*	DELETE
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
+						if (ImGui::Button("Delete Component##soundDelete", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::dreamECSGame->RemoveComponent<Engine::SoundComponent>(entity_selected);
 						
 					}
 				

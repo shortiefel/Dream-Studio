@@ -1,8 +1,20 @@
+/* Start Header**********************************************************************************/
+/*
+@file			SoundComponent.cpp
+@author	Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu	100%
+@date		15/11/2021
+\brief
+This file contain the Components needed for sound
 
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
 #include <stdexcept>
 
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
-
 
 namespace Engine {
 
@@ -13,8 +25,8 @@ namespace Engine {
 	float _vol;
 	float SoundComponent::volume = _vol;
 
-	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, bool _loop, bool _pause) :
-		IComponent{ _ID },  isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause } {
+	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, bool _loop, bool _pause, SoundGrp SG) :
+		IComponent{ _ID }, isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause }, SG{SoundGrp::MASTER} {
 
 		SoundComponent::GetSound(_path);
 	}
@@ -93,6 +105,31 @@ namespace Engine {
 	float SoundComponent::DecimalVolume(float _vol)
 	{
 		return _vol * 100.f;
+	}
+
+	SoundComponent& SoundComponent::Deserialize(const DSerializer& _serializer)
+	{
+
+		//isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause }
+
+		SG = SoundGrp(_serializer.GetValue<int>("SoundGrpType"));
+		isActive = _serializer.GetValue<bool>("IsActive");
+		loop = _serializer.GetValue<bool>("IsLoop");
+		Pause = _serializer.GetValue<bool>("IsPause");
+		SoundComponent::GetSound(std::move(_serializer.GetValue<std::string>("Filepath")));
+		//volume = _serialize.GetValue<float>("Volume");
+		//isSound = _serialize.GetValue<bool>("Soundbool");
+
+		return *this;
+	}
+
+	void SoundComponent::Serialize(const SSerializer& _serializer)
+	{
+		_serializer.SetValue("SoundGrpType", (int)SG);
+		_serializer.SetValue("IsActive", isActive);
+		_serializer.SetValue("IsLoop", loop);
+		_serializer.SetValue("IsPause", Pause);
+		_serializer.SetValue("Filepath", filepath);
 	}
 
 }

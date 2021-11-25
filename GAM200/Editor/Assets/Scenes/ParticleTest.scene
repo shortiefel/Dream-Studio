@@ -20,19 +20,18 @@
       "IsActive": true
     },
     "ParticleComponent": {
-      "Filepath": "Assets\\Textures\\BlueBtn.png",
+      "Filepath": "Assets\\Textures\\whitecircle.png",
       "Shape": 0,
       "EmitSize": 1,
       "IsActive": true,
       "OffsetPosition": [ 0.0, 1.0 ],
-      "Angle": 0.0,
-      "Velocity": [ 0.0, 0.0 ],
-      "VelocityVariation": [ 3.0, 10.0 ],
-      "ColorBegin": [ 1.0, 1.0, 1.0, 1.0 ],
-      "ColorEnd": [ 1.0, 1.0, 1.0, 0.0 ],
-      "SizeBegin": 0.5,
-      "SizeEnd": 0.0,
-      "SizeVariation": 0,
+      "Velocity": [ 0.0, 1.0 ],
+      "VelocityVariation": [ 1.0, 2.5 ],
+      "ColorBegin": [ 0.5019607843137255, 0.5019607843137255, 0.5019607843137255, 1.0 ],
+      "ColorEnd": [ 0.5019607843137255, 0.5019607843137255, 0.5019607843137255, 0.0 ],
+      "SizeBegin": [ 0.5, 0.5 ],
+      "SizeEnd": [ 0.0, 0.0 ],
+      "SizeVariation": [ 0.0, 0.0 ],
       "LifeTime": 1.0
     }
   }

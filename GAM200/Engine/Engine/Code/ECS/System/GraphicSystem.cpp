@@ -104,23 +104,22 @@ namespace Engine
 				{
 					for (int i = 0; i < particle.emitSize; i++)
 					{
-						particle.ParticleEmit(particle.particleData, false, true, false);
+						particle.ParticleEmit(particle.particleData, true, true);
 					}
-
-					particle.ParticleUpdate(DeltaTime::GetInstance().GetDeltaTime());
 
 					for (auto& p : particle.m_ParticlePool)
 					{
-						if (!p.isActive) continue;
+						particle.ParticleUpdate(p, DeltaTime::GetInstance().GetDeltaTime());
 
-						// Fade away particles
+						if (!p.isActive) continue; 
+
+						// Fade away particles, for lerping
 						float life = p.lifeRemaining / p.lifeTime;
 						Math::vec4 color = Math::Lerp(p.colorEnd, p.colorBegin, life);
 
-						float size = Math::Lerp(p.sizeEnd, p.sizeBegin, life);
+						Math::vec2 size = Math::Lerp(p.sizeEnd, p.sizeBegin, life);
 
-						GraphicImplementation::Renderer::DrawQuad(p.offsetPosition + transform->position,
-							size * transform->scale, p.angle + transform->angle,
+						GraphicImplementation::Renderer::DrawQuad(p.offsetPosition + transform->position, size, p.angle,
 							particle.texobj_hdl, color);
 					}
 				}

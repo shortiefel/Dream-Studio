@@ -29,11 +29,10 @@ namespace Engine
 
 	struct ParticleProps
 	{
-		Math::vec2 offsetPosition{};
-		float angle = 0.f;
-		Math::vec2 velocity{}, velocityVariation{};
+		Math::vec2 offsetPosition;
+		Math::vec2 velocity, velocityVariation;
 		Math::vec4 colorBegin , colorEnd;
-		float sizeBegin, sizeEnd, sizeVariation;
+		Math::vec2 sizeBegin, sizeEnd, sizeVariation;
 		float lifeTime = 1.0f;
 	};
 
@@ -42,12 +41,12 @@ namespace Engine
 		Math::vec2 offsetPosition;	// offset from Transform Component
 
 		float angle = 0.0f;
-		float sizeBegin, sizeEnd;
+		Math::vec2 sizeBegin, sizeEnd;
 
 		Math::vec2 velocity;
 		Math::vec4 colorBegin, colorEnd;
 
-		float lifeTime = 1.0f;
+		float lifeTime;
 		float lifeRemaining = 0.0f;
 
 		bool isActive = false;
@@ -65,23 +64,21 @@ namespace Engine
 		GLint width{}, height{};
 		GLint BPP{}; // Bits per pixel
 
-		bool isActive = true;
+		bool isActive;
 
 		Math::vec2 minUV, maxUV;
 		
-		ParticleProps particleData{};
+		ParticleProps particleData;
 		int emitSize;
 
-		uint32_t m_PoolIndex = 399;
+		uint32_t m_PoolIndex = 1499;
 		std::vector<Particle> m_ParticlePool;
 
-		void ParticleUpdate(float _dt);
+		void ParticleUpdate(Particle& particle, float _dt);
 		//void ParticleEmit(const ParticleProps& particleProps, bool isAngleRandom);
 
 		void ParticleEmit(const ParticleProps& particleProps,
-			bool isAngleRandom,
-			bool isVelocityAllDirectionRandom, bool isVelocityVariationDirectionRandom);
-
+			bool isAngleRandom, bool isVelocityVariation, bool isSizeVariation);
 
 		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", GraphicShape _shape = GraphicShape::SQUARE, int _emitSize = 1, bool _active = true);
 

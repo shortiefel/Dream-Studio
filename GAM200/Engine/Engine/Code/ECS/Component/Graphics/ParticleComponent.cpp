@@ -34,29 +34,34 @@ namespace Engine
 		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f }, emitSize{ _emitSize },
 		isActive{ _active }
 	{
-		m_ParticlePool.resize(400);
+		m_ParticlePool.resize(1500);
 	}
 
 
-	void ParticleComponent::ParticleUpdate(float _dt)
+	void ParticleComponent::ParticleUpdate(Particle& particle, float _dt)
 	{
-		for (auto& particle : m_ParticlePool)
+		if (particle.lifeRemaining <= 0.0f)
 		{
-			if (particle.lifeRemaining <= 0.0f)
-			{
-				particle.isActive = false;
-				continue;
-			}
-
-			particle.lifeRemaining -= _dt;
-			particle.offsetPosition += particle.velocity * (float)_dt;
-			particle.angle += 0.01f * _dt;
+			particle.isActive = false;
+			return;
 		}
+
+		particle.lifeRemaining -= _dt;
+		particle.offsetPosition += particle.velocity * (float)_dt;
+		particle.angle += 0.01f * _dt;
 	}
 
+	/*
+	* \param2	False -> No rotation
+				True  -> Particle rotates randomly
+	* \param3	False -> Particle uses set velocity
+				True  -> set velocity += either +velocityVariation/2 or -velocityVariation/2
+						 If user wants particle to go in the same direction, set velocity to be half of velocityVariation axis
+	* \param4	False -> Particle uses set sizes
+				True  -> set size += either +sizeVariation/2 or -sizeVariation/2
+	*/
 	void ParticleComponent::ParticleEmit(const ParticleProps& particleProps, 
-		bool isAngleRandom,
-		bool isVelocityAllDirectionRandom, bool isVelocityVariationDirectionRandom)
+		bool isAngleRandom, bool isVelocityVariation, bool isSizeVariation)
 	{
 		Particle& particle = m_ParticlePool[m_PoolIndex];
 
@@ -65,18 +70,19 @@ namespace Engine
 		// Position and Angle
 		particle.offsetPosition = particleProps.offsetPosition;
 
-		particle.angle = particleProps.angle;
-		if (isAngleRandom) particle.angle += Random::Float();
-
+		if (isAngleRandom)
+		{
+			// 360 degrees, convert to radians (done by mesh) when pass to shader
+			particle.angle = Random::Float() * 360.0f;
+		}
+		
 		// Velocity
 		particle.velocity = particleProps.velocity;
-
-		if (isVelocityAllDirectionRandom) particle.velocity += particleProps.velocityVariation * (Random::Float() - 0.5f); // All directions
-		else if (isVelocityVariationDirectionRandom) particle.velocity += particleProps.velocityVariation * Random::Float(); //
-
-		//std::cout << "RANDOM: " << Random::Float() - 0.5f << std::endl;
-		std::cout << "RANDOM + velocityVariation: " << particle.velocity << std::endl;
-
+		if (isVelocityVariation)
+		{
+			 particle.velocity.x += particleProps.velocityVariation.x * (Random::Float() -0.5f);
+			 particle.velocity.y += particleProps.velocityVariation.y * (Random::Float() - 0.5f);
+		}
 
 		// Color
 		particle.colorBegin = particleProps.colorBegin;
@@ -87,8 +93,13 @@ namespace Engine
 		particle.lifeRemaining = particleProps.lifeTime;
 
 		// Size
-		particle.sizeBegin = particleProps.sizeBegin + particleProps.sizeVariation * (Random::Float() - 0.5f);
+		particle.sizeBegin = particleProps.sizeBegin;
 		particle.sizeEnd = particleProps.sizeEnd;
+		if (isSizeVariation)
+		{
+			// Do not have 2 randoms for x and y so as to maintain shape integrity
+			particle.sizeBegin += particleProps.sizeVariation * (Random::Float() - 0.5f);
+		}
 
 		m_PoolIndex = --m_PoolIndex % m_ParticlePool.size();
 	}
@@ -105,7 +116,6 @@ namespace Engine
 
 		// Particle Data
 		Math::vec2 offsetPosition = _serializer.GetValue<Math::vec2>("OffsetPosition");
-		float angle = _serializer.GetValue<float>("Angle");
 
 		Math::vec2 velocity = _serializer.GetValue<Math::vec2>("Velocity");
 		Math::vec2 velocityVariation = _serializer.GetValue<Math::vec2>("VelocityVariation");
@@ -113,13 +123,13 @@ namespace Engine
 		Math::vec4 colorBegin = _serializer.GetValue<Math::vec4>("ColorBegin");
 		Math::vec4 colorEnd = _serializer.GetValue<Math::vec4>("ColorEnd");
 
-		float sizeBegin = _serializer.GetValue<float>("SizeBegin");
-		float sizeEnd = _serializer.GetValue<float>("SizeEnd");
-		float sizeVariation = _serializer.GetValue<float>("SizeVariation");
+		Math::vec2 sizeBegin = _serializer.GetValue<Math::vec2>("SizeBegin");
+		Math::vec2 sizeEnd = _serializer.GetValue<Math::vec2>("SizeEnd");
+		Math::vec2 sizeVariation = _serializer.GetValue<Math::vec2>("SizeVariation");
 
 		float lifeTime = _serializer.GetValue<float>("LifeTime");
 
-		particleData = { offsetPosition, angle, velocity, velocityVariation, 
+		particleData = { offsetPosition, velocity, velocityVariation, 
 						 colorBegin, colorEnd, sizeBegin, sizeEnd, sizeVariation, 
 						 lifeTime };
 
@@ -137,7 +147,6 @@ namespace Engine
 
 		// Particle Data
 		_serializer.SetValue("OffsetPosition", particleData.offsetPosition);
-		_serializer.SetValue("Angle", particleData.angle);
 
 		_serializer.SetValue("Velocity", particleData.velocity);
 		_serializer.SetValue("VelocityVariation", particleData.velocityVariation);

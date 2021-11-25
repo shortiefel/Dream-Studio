@@ -63,7 +63,7 @@ namespace Engine
 	{
 		// Set particle's loop to be completed once container is empty
 		// Stops the rendering and update of particle once it is complete
-		if (!isLooping && ((m_PoolIndex - emitSize) <= 0))
+		if (!isLooping && ((m_PoolIndex - emitSize) < 0))
 		{
 			loopComplete = true;
 			return;
@@ -73,11 +73,20 @@ namespace Engine
 		{
 			Particle& particle = m_ParticlePool[m_PoolIndex];
 
+			if (particle.lifeRemaining > 0.0f)
+			{
+				if ((m_PoolIndex - 1) < 0) m_PoolIndex = 999;
+				m_PoolIndex = --m_PoolIndex % m_ParticlePool.size();
+
+				continue;
+			}
+
 			particle.isActive = true;
 
-			// Position and Angle
+			// Position
 			particle.offsetPosition = particleProps.offsetPosition;
 
+			// Angle
 			if (isAngleRandom)
 			{
 				// 360 degrees, convert to radians (done by mesh) when pass to shader
@@ -107,6 +116,8 @@ namespace Engine
 			// Do not have 2 randoms for x and y so as to maintain shape integrity
 			particle.sizeBegin += particleProps.sizeVariation * (Random::Float() - 0.5f);
 
+			// Index reset
+			if ((m_PoolIndex - 1) < 0) m_PoolIndex = 999;
 			m_PoolIndex = --m_PoolIndex % m_ParticlePool.size();
 		}
 	}

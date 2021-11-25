@@ -73,7 +73,7 @@ namespace Engine
 		int emitSize;
 		bool isLooping, loopComplete;
 
-		uint32_t m_PoolIndex = 999;
+		int m_PoolIndex = 999;
 		std::vector<Particle> m_ParticlePool;
 
 		void ParticleUpdate(Particle& particle, float _dt);

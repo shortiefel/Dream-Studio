@@ -81,9 +81,9 @@ namespace Engine {
         Linear Interpolation
         -------------------------------------------------------------------------------------------------------------------*/
 
-        template <typename T, typename U>
-        inline T Lerp(T start, T end, U num) {
-            return (start + (end - start) * num);
+        template <typename T>
+        inline T Lerp(T a, T b, float t) {
+            return (a + t * (b - a));
         }
 	}
 }

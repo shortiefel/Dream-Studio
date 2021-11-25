@@ -64,23 +64,25 @@ namespace Engine
 		GLint width{}, height{};
 		GLint BPP{}; // Bits per pixel
 
+		Math::vec2 minUV{}, maxUV{};
+
 		bool isActive;
-
-		Math::vec2 minUV, maxUV;
 		
-		ParticleProps particleData;
-		int emitSize;
+		ParticleProps particleData{};
 
-		uint32_t m_PoolIndex = 1499;
+		int emitSize;
+		bool isLooping, loopComplete;
+
+		uint32_t m_PoolIndex = 999;
 		std::vector<Particle> m_ParticlePool;
 
 		void ParticleUpdate(Particle& particle, float _dt);
-		//void ParticleEmit(const ParticleProps& particleProps, bool isAngleRandom);
 
-		void ParticleEmit(const ParticleProps& particleProps,
-			bool isAngleRandom, bool isVelocityVariation, bool isSizeVariation);
+		void ParticleEmit(const ParticleProps& particleProps, bool isAngleRandom, bool isVelocityVariation);
 
-		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", GraphicShape _shape = GraphicShape::SQUARE, int _emitSize = 1, bool _active = true);
+		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", GraphicShape _shape = GraphicShape::SQUARE, 
+						  int _emitSize = 1, bool _isLooping = true, bool _loopComplete = false, 
+						  bool _active = true);
 
 
 		ParticleComponent& Deserialize(const DSerializer& _serializer);

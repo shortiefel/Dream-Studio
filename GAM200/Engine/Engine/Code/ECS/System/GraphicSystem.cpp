@@ -102,10 +102,8 @@ namespace Engine
 				// For particles, update life time, position and rotation
 				if (GameState::GetInstance().GetPlaying())
 				{
-					for (int i = 0; i < particle.emitSize; i++)
-					{
-						particle.ParticleEmit(particle.particleData, true, true);
-					}
+					particle.ParticleEmit(particle.particleData, true, true);
+					if (particle.loopComplete) particle.isActive = true;
 
 					for (auto& p : particle.m_ParticlePool)
 					{
@@ -116,11 +114,11 @@ namespace Engine
 						// Fade away particles, for lerping
 						float life = p.lifeRemaining / p.lifeTime;
 						Math::vec4 color = Math::Lerp(p.colorEnd, p.colorBegin, life);
-
 						Math::vec2 size = Math::Lerp(p.sizeEnd, p.sizeBegin, life);
-
+						
 						GraphicImplementation::Renderer::DrawQuad(p.offsetPosition + transform->position, size, p.angle,
 							particle.texobj_hdl, color);
+
 					}
 				}
 			}

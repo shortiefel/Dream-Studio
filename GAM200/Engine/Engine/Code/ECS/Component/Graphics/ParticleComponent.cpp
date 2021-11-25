@@ -28,13 +28,13 @@ Technology is prohibited.
 namespace Engine
 {
 	// Contructor for Particle Component
-	ParticleComponent::ParticleComponent(Entity_id _ID, const std::string _path, GraphicShape _shape, int _emitSize, bool _active) :
+	ParticleComponent::ParticleComponent(Entity_id _ID, const std::string _path, GraphicShape _shape, int _emitSize, bool _isLooping, bool _loopComplete, bool _active) :
 		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape },
-		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 },
-		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f }, emitSize{ _emitSize },
+		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 }, minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f },
+		emitSize{ _emitSize }, isLooping{ _isLooping }, loopComplete{ _loopComplete },
 		isActive{ _active }
 	{
-		m_ParticlePool.resize(1500);
+		m_ParticlePool.resize(1000);
 	}
 
 
@@ -57,51 +57,58 @@ namespace Engine
 	* \param3	False -> Particle uses set velocity
 				True  -> set velocity += either +velocityVariation/2 or -velocityVariation/2
 						 If user wants particle to go in the same direction, set velocity to be half of velocityVariation axis
-	* \param4	False -> Particle uses set sizes
-				True  -> set size += either +sizeVariation/2 or -sizeVariation/2
 	*/
 	void ParticleComponent::ParticleEmit(const ParticleProps& particleProps, 
-		bool isAngleRandom, bool isVelocityVariation, bool isSizeVariation)
+		bool isAngleRandom, bool isVelocityVariation)
 	{
-		Particle& particle = m_ParticlePool[m_PoolIndex];
-
-		particle.isActive = true;
-
-		// Position and Angle
-		particle.offsetPosition = particleProps.offsetPosition;
-
-		if (isAngleRandom)
+		// Set particle's loop to be completed once container is empty
+		// Stops the rendering and update of particle once it is complete
+		if (!isLooping && ((m_PoolIndex - emitSize) <= 0))
 		{
-			// 360 degrees, convert to radians (done by mesh) when pass to shader
-			particle.angle = Random::Float() * 360.0f;
-		}
-		
-		// Velocity
-		particle.velocity = particleProps.velocity;
-		if (isVelocityVariation)
-		{
-			 particle.velocity.x += particleProps.velocityVariation.x * (Random::Float() -0.5f);
-			 particle.velocity.y += particleProps.velocityVariation.y * (Random::Float() - 0.5f);
+			loopComplete = true;
+			return;
 		}
 
-		// Color
-		particle.colorBegin = particleProps.colorBegin;
-		particle.colorEnd = particleProps.colorEnd;
-
-		// Life Time
-		particle.lifeTime = particleProps.lifeTime;
-		particle.lifeRemaining = particleProps.lifeTime;
-
-		// Size
-		particle.sizeBegin = particleProps.sizeBegin;
-		particle.sizeEnd = particleProps.sizeEnd;
-		if (isSizeVariation)
+		for (int i = 0; i < emitSize; i++)
 		{
+			Particle& particle = m_ParticlePool[m_PoolIndex];
+
+			particle.isActive = true;
+
+			// Position and Angle
+			particle.offsetPosition = particleProps.offsetPosition;
+
+			if (isAngleRandom)
+			{
+				// 360 degrees, convert to radians (done by mesh) when pass to shader
+				particle.angle = Random::Float() * 360.0f;
+			}
+
+			// Velocity
+			particle.velocity = particleProps.velocity;
+			if (isVelocityVariation)
+			{
+				particle.velocity.x += particleProps.velocityVariation.x * (Random::Float() - 0.5f);
+				particle.velocity.y += particleProps.velocityVariation.y * (Random::Float() - 0.5f);
+			}
+
+			// Color
+			particle.colorBegin = particleProps.colorBegin;
+			particle.colorEnd = particleProps.colorEnd;
+
+			// Life Time
+			particle.lifeTime = particleProps.lifeTime;
+			particle.lifeRemaining = particleProps.lifeTime;
+
+			// Size
+			particle.sizeBegin = particleProps.sizeBegin;
+			particle.sizeEnd = particleProps.sizeEnd;
+
 			// Do not have 2 randoms for x and y so as to maintain shape integrity
 			particle.sizeBegin += particleProps.sizeVariation * (Random::Float() - 0.5f);
-		}
 
-		m_PoolIndex = --m_PoolIndex % m_ParticlePool.size();
+			m_PoolIndex = --m_PoolIndex % m_ParticlePool.size();
+		}
 	}
 
 	// Deserialize function for Particle Component
@@ -133,6 +140,9 @@ namespace Engine
 						 colorBegin, colorEnd, sizeBegin, sizeEnd, sizeVariation, 
 						 lifeTime };
 
+		// Particle loop
+		isLooping = _serializer.GetValue<bool>("IsLooping");
+
 		return *this;
 	}
 
@@ -159,5 +169,8 @@ namespace Engine
 		_serializer.SetValue("SizeVariation", particleData.sizeVariation);
 
 		_serializer.SetValue("LifeTime", particleData.lifeTime);
+
+		// Particle loop
+		_serializer.SetValue("IsLooping", isLooping);
 	}
 }

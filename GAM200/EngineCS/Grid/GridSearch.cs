@@ -78,7 +78,7 @@ public class GridSearch
             Console.WriteLine(pt);
         }
         Console.WriteLine("------------------------------------------------------------------------------------------------------------");*/
-        return path;
+        return null;
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

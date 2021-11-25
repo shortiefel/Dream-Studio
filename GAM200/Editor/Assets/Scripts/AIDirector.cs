@@ -9,8 +9,11 @@ public class AIDirector : MonoBehaviour
 
     public Prefab[] carPrefabs;
 
+    public float carSpawnTimerInterval;
+
     public override void Start()
     {
+        carSpawnTimerInterval = 2f;
         carPrefabs = new Prefab[1];
         carPrefabs[0] = new Prefab("Car");
 
@@ -24,6 +27,14 @@ public class AIDirector : MonoBehaviour
         }
     }
 
+    public void SpawnAHouseCar(StructureModel house)
+    {
+        /*foreach (var house in placementManager.GetAllHouses())
+        {*/
+            TrySpawninACar(house, placementManager.GetRandomSpecialStrucutre());
+        //}
+    }
+
     private void TrySpawninACar(StructureModel startStructure, StructureModel endStructure)
     {
         if (startStructure != null && endStructure != null)
@@ -35,6 +46,7 @@ public class AIDirector : MonoBehaviour
             Debug.Log(endRoadPosition);
 
             var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
+            if (path == null) return;
             Console.WriteLine("Set path: " + path.Count);
             //foreach (var item in path)
             //{
@@ -53,7 +65,7 @@ public class AIDirector : MonoBehaviour
 
             Console.WriteLine("Set path2: " + path.Count);
             //car.GetComponent<CarAI>().SetPath(path.ConvertAll(x => (Vector2)x));
-            car.GetComponent<CarAI>().SetPath(path);
+            car.GetComponent<CarAI>().SetPath(path, ref endStructure);
         }
     }
 

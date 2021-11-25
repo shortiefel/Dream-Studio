@@ -40,6 +40,8 @@ public class CarAI : MonoBehaviour
 
     private Vector2 movementVector;
 
+    private StructureModel endPoint;
+
     /*public bool Stop
     {
         get { return stop || collisionStop; }
@@ -52,6 +54,7 @@ public class CarAI : MonoBehaviour
 
     public override void Start()
     {
+        endPoint = null;
         path = null; 
         index = 0;
         stop = false;
@@ -62,9 +65,7 @@ public class CarAI : MonoBehaviour
         //if (path == null || path.Count == 0)
         if (path == null || path.Count == 0)
         {
-            Debug.Log("stop");
             stop = true;
-            //Destroy(gameObject);
         }
         else
         {
@@ -84,8 +85,10 @@ public class CarAI : MonoBehaviour
         //Console.WriteLine("Testing " + rb.velocity);
     }
 
-    public void SetPath(List<Vector2Int> newPath)
+    public void SetPath(List<Vector2Int> newPath, ref StructureModel endStructure)
     {
+        endPoint = endStructure;
+
         Console.WriteLine("Set 2nd  CarAi path");
         if (newPath.Count == 0)
         {
@@ -253,12 +256,19 @@ public class CarAI : MonoBehaviour
         {
             stop = true;
             //ScoreSystem.Instance.AddScore();
-            Destroy(gameObject);
+            
+            ReachToEndPoint();
         }
         else
         {
             currentTargetPosition = path[index];
         }
+    }
+
+    private void ReachToEndPoint()
+    {
+        Destroy(gameObject);
+        endPoint.Notify();
     }
 
     /*public void Move(Vector2 movementInput)

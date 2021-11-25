@@ -3,6 +3,28 @@ using System.Collections.Generic;
 using System;
 public class CarSpawner : MonoBehaviour
 {
+    AIDirector aiDirector;
+    float timer;
+    float maxTimer;
+    StructureModel structureModel;
+    public override void Start()
+    {
+        timer = 0f;
+        aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
+        maxTimer = aiDirector.carSpawnTimerInterval;
+        structureModel = GetComponent<StructureModel>();
+    }
+
+    public override void Update()
+    {
+        //timer += Time.deltaTime;
+        if (timer > maxTimer)
+        {
+            aiDirector.SpawnAHouseCar(structureModel);
+            maxTimer = aiDirector.carSpawnTimerInterval;
+            timer = 0f;
+        }
+    }
     /*public Prefab[] carPrefabs;
 
     public override void Awake()

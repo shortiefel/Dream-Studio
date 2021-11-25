@@ -8,7 +8,7 @@ public class BackgroundColliderCheck : MonoBehaviour
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
     }
 
-	public override void OnMouseEnter()
+	/*public override void OnMouseEnter()
 	{
 		inputManager.OverGameObject = true;
 	}
@@ -16,5 +16,5 @@ public class BackgroundColliderCheck : MonoBehaviour
 	public override void OnMouseExit()
 	{
 		inputManager.OverGameObject = false;
-	}
+	}*/
 }

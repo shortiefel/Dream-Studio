@@ -130,6 +130,7 @@ namespace Engine {
 		}*/
 		for (auto& entity_id : destroySet) {
 			DESTROY_ENTITY(entity_id);
+			RemovePrefab(entity_id);
 		}
 
 		for (auto& [entity_id, className] : destroyScript) {
@@ -142,6 +143,7 @@ namespace Engine {
 
 	void DreamECS::ResetECS() {
 		nameCount.clear();
+		mapOfPrefab.clear();
 
 		auto& entityMap = entityManager->GetUsedConstEntityMap();
 		for (auto& [entity_id, entity] : entityMap) {

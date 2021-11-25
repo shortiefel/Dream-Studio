@@ -1,5 +1,4 @@
 [
-
   {
     "Entity": {
       "Name": "FourWayRoad",
@@ -18,10 +17,13 @@
       "Filepath": "Assets\\Textures\\FourWayRoad.png",
       "Shape": 0,
       "IsAnimation": false,
-      "IsLoop": false,
-      "EndFrame": 0,
-      "TimePerFrame": 0.0,
       "IsActive": true
-    }
+    },
+    "ScriptComponent": [
+      {
+        "Class": "StructureModel",
+        "IsActive": true
+      }
+    ]
   }
 ]

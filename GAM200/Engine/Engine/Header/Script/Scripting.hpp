@@ -57,9 +57,10 @@ namespace Engine {
 		/*-----------------------------------------------------
 		Initialize the scripts in mono
 		-Call mono Constructor
+		-Call mono Awake
 		-Call mono Init
 		-----------------------------------------------------*/
-		void InitScript(const Entity_id& entity_id, const CSScriptInstance& csScriptInstance);
+		void InitScript(const Entity_id& entity_id, const CSScriptInstance& csScriptInstance, MonoFunctionType type);
 		/*-----------------------------------------------------
 		-To add/remove class from map
 		-Find the function from c#

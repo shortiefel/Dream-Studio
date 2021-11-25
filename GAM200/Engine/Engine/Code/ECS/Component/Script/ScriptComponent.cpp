@@ -22,19 +22,21 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
+#include <algorithm>
+
 namespace Engine {
 	ScriptComponent::ScriptComponent(Entity_id _ID, const char* _className) :
 		IComponent{ _ID } {
 		if (_className) {
 			CSScriptInstance csScriptInstance{ _className };
 			Scripting::InitCSClass(csScriptInstance, _ID);
-			Scripting::InitVariable(csScriptInstance);
+			//Scripting::InitVariable(csScriptInstance);
 
 			klassInstance.emplace(_className, std::move(csScriptInstance));
-
 		}
 		//CSScriptInstance csScriptInstance{ _className };
 		//klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
+
 	}
 
 	ScriptComponent::ScriptComponent(ScriptComponent&& rhs) noexcept {
@@ -86,20 +88,28 @@ namespace Engine {
 	//}
 
 	bool ScriptComponent::AddScript(ScriptComponent& comp) {
-		bool same = true;
+		//Add scripts first
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
-			
 			if (klassInstance.find(className) == klassInstance.end()) {
-				Scripting::InitScript(GetEntityId(), csScriptInstance);
 				klassInstance.emplace(className, std::move(csScriptInstance));
-			}
-
-			else {
-				same = false;
 			}
 		}
 
-		return same;
+		//Initialize constructor, awake and init (InitScript has checks for whether it is in play mode)
+		//Mainly for initializing when Scripts are added during game runtime
+		std::for_each(klassInstance.begin(), klassInstance.end(), [this](auto& target) {
+				Scripting::InitScript(GetEntityId(), target.second, MonoFunctionType::CONSTRUCTOR);
+			});
+
+		std::for_each(klassInstance.begin(), klassInstance.end(), [this](auto& target) {
+			Scripting::InitScript(GetEntityId(), target.second, MonoFunctionType::AWAKE);
+			});
+
+		std::for_each(klassInstance.begin(), klassInstance.end(), [this](auto& target) {
+			Scripting::InitScript(GetEntityId(), target.second, MonoFunctionType::INIT);
+			});
+
+		return true;
 	}
 
 	bool ScriptComponent::RemoveScript(const char* _className) {
@@ -119,6 +129,7 @@ namespace Engine {
 
 			rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
 			if (!Scripting::InitCSClass(csScriptInstance, GetEntityId())) { continue; }
+#if 0
 			if (variableItr != classJSon.MemberEnd()) {
 				for (auto& variableData : variableItr->value.GetArray()) {
 					const auto& variableName = variableData["Name"].GetString();
@@ -164,11 +175,14 @@ namespace Engine {
 				}
 
 			}
+#endif
 			//klassInstance[csScriptInstance.csClass.className] = std::move(csScriptInstance);
 			//Scripting::InitVariable(csScriptInstance);
 			//Scripting::InitScript(GetEntityId(), csScriptInstance);
+
 			klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 		}
+		//AddScript(sc);
 
 		return *this;
 	}
@@ -181,6 +195,7 @@ namespace Engine {
 			cserializer.SetValue("Class", scriptInstance.csClass.fullName);
 			cserializer.SetValue("IsActive", scriptInstance.isActive);
 
+#if 0
 			if (scriptInstance.csVariableMap.size()) {
 				rapidjson::Value variableArray(rapidjson::kArrayType);
 
@@ -221,6 +236,7 @@ namespace Engine {
 
 				cserializer.SetValueJSon("Variable", variableArray);
 			}
+#endif
 
 			_serializer.SetValueJSonArray(classObj);
 		}

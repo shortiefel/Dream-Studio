@@ -47,7 +47,6 @@ public class PlacementManager : MonoBehaviour
     internal void PlaceObjectOnTheMap(Vector2Int position, Prefab structurePrefab, CellType type, int width = 1, int height = 1)
     {
         StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
-
         //var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
         //if (structureNeedingRoad != null)
         //{
@@ -130,17 +129,23 @@ public class PlacementManager : MonoBehaviour
     private StructureModel CreateANewStructureModel(Vector2Int position, Prefab structurePrefab, CellType type)
     {
         //GameObject structure = new GameObject(type.ToString());
-        GameObject structure = Instantiate(structurePrefab, transform);
+        
+        //GameObject structure = Instantiate(structurePrefab, transform);
+        GameObject structure = Instantiate(structurePrefab, new Vector3(position.x, position.y, 0f));
         structure.transform.SetParent(transform);
-        structure.transform.localPosition = new Vector2(position.x, position.y);
-        var structureModel = structure.AddComponent<StructureModel>();
+        //structure.transform.localPosition = new Vector2(position.x, position.y);
+ 
+        //var structureModel = structure.AddComponent<StructureModel>();
+        var structureModel = structure.GetComponent<StructureModel>();
         //structureModel.CreateModel(structurePrefab);
+        
         return structureModel;
     }
 
     internal List<Vector2Int> GetPathBetween(Vector2Int startPosition, Vector2Int endPosition, bool isAgent = false)
     {
         var resultPath = GridSearch.AStarSearch(placementGrid, new Point(startPosition.x, startPosition.y), new Point(endPosition.x, endPosition.y), isAgent);
+        if (resultPath == null) return null;
         List<Vector2Int> path = new List<Vector2Int>();
         foreach (Point point in resultPath)
         {

@@ -184,24 +184,25 @@ public class MonoBehaviour : IBehaviour
 
     //-----------------------------------------------------------------------------------------------------------------
     //Enable
-    public void Enable<T>(T type)
+    public void Enable<T>(T type) where T : class, IComponent
     {
-        Console.WriteLine("Enable not yet done");
+        
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
         {
-            Active_Script_Engine(entityId, true, typeof(T).ToString());
+            Active_Script_Engine(type.entityId, true, typeof(T).ToString());
             return;
         }
 
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
-                Active_Transform_Engine(entityId, true);
+                Active_Transform_Engine(type.entityId, true);
                 break;
             case genTypes.Collider:
-                Active_Collider_Engine(entityId, true);
+                Active_Collider_Engine(type.entityId, true);
                 break;
             default:
+                Console.WriteLine("Enable not yet done");
                 return;
 
         }
@@ -212,24 +213,24 @@ public class MonoBehaviour : IBehaviour
 
     //-----------------------------------------------------------------------------------------------------------------
     //Disable
-    public void Disable<T>(T type)
+    public void Disable<T>(T type) where T : class, IComponent
     {
-        Console.WriteLine("Disable not yet done");
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
         {
-            Active_Script_Engine(entityId, false, typeof(T).ToString());
+            Active_Script_Engine(type.entityId, false, typeof(T).ToString());
             return;
         }
 
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
-                Active_Transform_Engine(entityId, false);
+                Active_Transform_Engine(type.entityId, false);
                 break;
             case genTypes.Collider:
-                Active_Collider_Engine(entityId, false);
+                Active_Collider_Engine(type.entityId, false);
                 break;
             default:
+                Console.WriteLine("Disable not yet done");
                 return;
 
         }

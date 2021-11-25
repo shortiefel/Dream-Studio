@@ -1227,11 +1227,13 @@ namespace Editor {
 				if (prefabMap.find(entity_selected) != prefabMap.end() && !(Engine::GameState::GetInstance().GetPlaying())) {
 					const Engine::Prefab& prefab = prefabMap.find(entity_selected)->second;
 					if (ImGui::Button("Update Prefab##prefabupdatebtn", { ImGui::GetContentRegionAvail().x, 0 })) {
+						
 						Engine::GameSceneSerializer::SerializePrefab(prefab.prefabName, entity_selected);
 					}
 
 					else if (ImGui::Button("Refresh Prefab##btn", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
+						
 						Engine::GameSceneSerializer::RefreshPrefab(prefab.prefabName, entity_selected);
 					}
 				}

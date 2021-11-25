@@ -26,7 +26,7 @@ namespace Engine {
 	float SoundComponent::volume = _vol;
 
 	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, bool _loop, bool _pause, SoundGrp SG) :
-		IComponent{ _ID }, isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause }, SG{SoundGrp::MASTER} {
+		IComponent{ _ID }, isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause }, SG{ SoundGrp::MASTER } {
 
 		SoundComponent::GetSound(_path);
 	}
@@ -116,9 +116,9 @@ namespace Engine {
 		isActive = _serializer.GetValue<bool>("IsActive");
 		loop = _serializer.GetValue<bool>("IsLoop");
 		Pause = _serializer.GetValue<bool>("IsPause");
-		SoundComponent::GetSound(std::move(_serializer.GetValue<std::string>("Filepath")));
-		//volume = _serialize.GetValue<float>("Volume");
-		//isSound = _serialize.GetValue<bool>("Soundbool");
+		SoundComponent::GetSound(std::move(_serializer.GetValue<std::string>("filepath")));
+		volume = _serializer.GetValue<float>("volume");
+		isSound = _serializer.GetValue<bool>("isSound");
 
 		return *this;
 	}
@@ -129,7 +129,9 @@ namespace Engine {
 		_serializer.SetValue("IsActive", isActive);
 		_serializer.SetValue("IsLoop", loop);
 		_serializer.SetValue("IsPause", Pause);
-		_serializer.SetValue("Filepath", filepath);
+		_serializer.SetValue("filepath", filepath);
+		_serializer.SetValue("volume", volume);
+		_serializer.SetValue("isSound", isSound);
 	}
 
 }

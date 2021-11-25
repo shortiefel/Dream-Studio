@@ -30,6 +30,7 @@ namespace Engine
 	struct ParticleProps
 	{
 		Math::vec2 offsetPosition{};
+		float angle = 0.f;
 		Math::vec2 velocity{}, velocityVariation{};
 		Math::vec4 colorBegin , colorEnd;
 		float sizeBegin, sizeEnd, sizeVariation;
@@ -71,12 +72,15 @@ namespace Engine
 		ParticleProps particleData{};
 		int emitSize;
 
-		uint32_t m_PoolIndex = 999;
-		//Particle m_ParticlePool[999]{};
+		uint32_t m_PoolIndex = 399;
 		std::vector<Particle> m_ParticlePool;
 
 		void ParticleUpdate(float _dt);
-		void ParticleEmit(const ParticleProps& particleProps);
+		//void ParticleEmit(const ParticleProps& particleProps, bool isAngleRandom);
+
+		void ParticleEmit(const ParticleProps& particleProps,
+			bool isAngleRandom,
+			bool isVelocityAllDirectionRandom, bool isVelocityVariationDirectionRandom);
 
 
 		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", GraphicShape _shape = GraphicShape::SQUARE, int _emitSize = 1, bool _active = true);

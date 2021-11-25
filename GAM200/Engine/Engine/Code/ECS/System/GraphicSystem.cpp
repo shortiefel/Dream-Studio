@@ -104,7 +104,7 @@ namespace Engine
 				{
 					for (int i = 0; i < particle.emitSize; i++)
 					{
-						particle.ParticleEmit(particle.particleData);
+						particle.ParticleEmit(particle.particleData, false, true, false);
 					}
 
 					particle.ParticleUpdate(DeltaTime::GetInstance().GetDeltaTime());

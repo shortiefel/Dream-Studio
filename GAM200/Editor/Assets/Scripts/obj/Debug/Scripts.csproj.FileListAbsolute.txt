@@ -31,9 +31,12 @@ C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\o
 C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\Editor\Data\CSScript\CSScript.dll
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\Editor\Data\CSScript\CSScript.pdb
-C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csprojResolveAssemblyReference.cache
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.dll
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.pdb
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csprojResolveAssemblyReference.cache
+C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.dll
+C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.pdb
+C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\Editor\Assets\Scripts\bin\Debug\EngineCS.dll
+C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csprojResolveAssemblyReference.cache

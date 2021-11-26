@@ -48,15 +48,14 @@ Technology is prohibited.
 
 
 #include "Engine/Header/ECS/System/SoundSystem.hpp"
-//#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
+#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
 namespace Engine {
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
      
         SoundSystem::SoundInit();
-        std::cout << "int sound \n";
-
+        std::cout << "loaded sound \n";
 
         ScriptSystem::GetInstance().UpdateMapData();
         if (_play) {
@@ -90,6 +89,10 @@ namespace Engine {
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
 
+        SoundSystem::SoundPlay(SoundComponent::filepath, false);
+        std::cout << "sound play \n";
+
+
         return true;
     }
 
@@ -98,6 +101,7 @@ namespace Engine {
 
         ScriptSystem::GetInstance().DestroyChildDomain();
 
+        //SoundSystem::SoundStop(SoundComponent::ChannelID);
         SoundSystem::SoundRelease();
         std::cout << "end sound \n";
 
@@ -140,6 +144,7 @@ namespace Engine {
                     EventDispatcher::SendEvent(event);
                 }
             }
+            
         }
 
         CameraSystem::GetInstance().Update(dt);
@@ -165,6 +170,7 @@ namespace Engine {
         }
 #endif
 
+       
         SoundSystem::GetInstance().SoundUpdate();
 
 

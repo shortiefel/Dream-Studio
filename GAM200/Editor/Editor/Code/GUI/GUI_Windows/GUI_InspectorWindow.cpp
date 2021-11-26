@@ -130,8 +130,6 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
 					if (ImGui::Selectable(" + Sound##addSoundcom"))
 						Engine::dreamECSGame->AddComponent<Engine::SoundComponent>(entity_selected);
-					if (ImGui::Selectable(" + Animation##addAnicom"))
-						Engine::dreamECSGame->AddComponent<Engine::TextureComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0", Engine::File_Dialog_Type::Scripts);
 
@@ -587,7 +585,7 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth);
 						DreamImGui::CheckBox_Dream("##isAnimation", &(textureComp->isAnimation));
 						if (textureComp->isAnimation) {
-							//ImGui::AlignTextToFramePadding();
+							ImGui::AlignTextToFramePadding();
 							/**
 							*	TOTAL COLUMNS & ROWS
 							*/
@@ -611,45 +609,6 @@ namespace Editor {
 
 							ImGui::Spacing();
 							ImGui::Spacing();
-
-
-							/**
-							*	ANIMATION STATE NAME
-							*/
-							/*ImGui::AlignTextToFramePadding();
-							ImGui::PushFont(boldFont);
-							ImGui::Text(" State Name");
-							ImGui::SameLine(halfWidth * 1.120f, 0);
-							ImGui::SetNextItemWidth(halfWidth * 0.5f);
-
-							ImGui::InputText(AnimationComp->currAnimationState.c_str())
-
-
-							ImGui::PopFont();*/
-
-
-							/**
-							*	ANIMATION STATE LIST
-							*/
-							//ImGui::Spacing();
-
-							//ImGui::AlignTextToFramePadding();
-							//ImGui::Text("Animation States");
-							//ImGui::SameLine(halfWidth);
-							//if (ImGui::BeginListBox("#AnimationList"))
-							//{
-
-							//	for (auto name : textureComp->animationStateList)
-							//	{
-							//		std::string& stateName = textureComp->currAnimationState;
-							//		const bool isSelected = &(textureComp->animationStateList);
-
-							//		/*if (ImGui::Selectable(stateName[x], isSelected)) {
-
-							//		}*/
-							//	}
-							//}
-
 
 							ImGui::AlignTextToFramePadding();
 							ImGui::Text("Start Anim State");
@@ -765,50 +724,10 @@ namespace Editor {
 
 									}
 								}
-								//for (int i{ 0 }; i < sz; i++) {
-								//	const bool isSelected = (index == i);
-								//	if (ImGui::Selectable(layerName[i], isSelected)) {
-								//		transComp->layer = i;
-								//	}
-
-								//	// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-								//	if (isSelected)
-								//		ImGui::SetItemDefaultFocus();
-
-								//}
 
 								ImGui::EndCombo();
 							}
 #endif
-
-							////FRAMES
-							//ImGui::Text("Frame ");
-							//ImGui::SameLine(halfWidth);
-							//ImGui::PushFont(boldFont);
-							//ImGui::Text(" Start");
-							//ImGui::SameLine(halfWidth * 1.28f, 0);
-							//ImGui::SetNextItemWidth(halfWidth * 0.5f);
-							//ImGui::InputInt("##frameStart", &animationState->startX, 0, 0, 1);
-
-							//ImGui::Spacing();
-
-							//ImGui::AlignTextToFramePadding();
-							//ImGui::SameLine(halfWidth);
-							//ImGui::Text(" End");
-							//ImGui::SameLine(halfWidth * 1.28f, 0);
-							//ImGui::SetNextItemWidth(halfWidth * 0.5f);
-							//ImGui::InputInt("##frameEnd", &animationState->endX, 0, 0, 1);
-
-
-							//ImGui::Spacing();
-
-							//ImGui::AlignTextToFramePadding();
-							//ImGui::SameLine(halfWidth);
-							//ImGui::Text(" Current");
-							//ImGui::SameLine(halfWidth * 1.28f, 0);
-							//ImGui::SetNextItemWidth(halfWidth * 0.5f);
-							//ImGui::InputInt("##frameCurr", &animationState->currFrame, 0, 0, 1);
-							//ImGui::PopFont();
 						}
 
 
@@ -824,148 +743,7 @@ namespace Editor {
 					}
 				}
 					
-				///*
-				//*	Animation
-				//*/
-				////Engine::AnimationState* animationState = Engine::dreamECSGame->GetComponentPTR<Engine::AnimationState>(entity_selected);
-				//if (textureComp != nullptr)//& animationState != nullptr)
-				//{
-				//	DreamImGui::CheckBox_Dream("##AnimationActive", &(textureComp->isAnimation));
-				//	ImGui::SameLine();
-
-
-				//	if (ImGui::CollapsingHeader("Animation"))
-				//	{
-				//		ImGui::AlignTextToFramePadding();
-
-				//		/**
-				//		*	ANIMATION NAME
-				//		*/
-				//		std::string& aniName = textureComp->currAnimationState;
-				//		char aniDisplay[100];
-				//		strcpy(aniDisplay, aniName.c_str());
-
-
-				//		ImGui::Spacing();
-				//		ImGui::AlignTextToFramePadding();
-				//		ImGui::PushFont(boldFont);
-				//		ImGui::Text("State Name");
-				//		ImGui::SameLine(halfWidth * 1.28f, 0);
-				//		ImGui::SetNextItemWidth(halfWidth * 0.5f);
-				//		if (ImGui::InputText("##displayStatename", aniDisplay, 100))
-				//		{
-				//			if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter))
-				//			{
-				//				std::string newAniName = std::string{ aniDisplay };
-				//				textureComp->AnimationStateRename(aniDisplay, newAniName);
-				//				std::cout << "hi my name is changing \n";
-				//				aniName = newAniName;
-				//			}
-				//		}
-
-				//		ImGui::PopFont();
-
-				//		ImGui::Spacing();
-
-
-				//		/**
-				//		*	TOTAL COLUMNS & ROWS
-				//		*/
-				//		ImGui::PushFont(boldFont);
-				//		ImGui::Text("Sprite Sheet");
-				//		ImGui::SameLine(halfWidth);
-				//		ImGui::Text(" Cols");
-				//		ImGui::SameLine(halfWidth * 1.28f, 0);
-				//		ImGui::SetNextItemWidth(halfWidth * 0.5f);
-				//		ImGui::InputInt("##AnimationTotalCols", &textureComp->totalColumns);
-
-				//		ImGui::Spacing();
-
-				//		ImGui::AlignTextToFramePadding();
-				//		ImGui::SameLine(halfWidth);
-				//		ImGui::Text(" Rows");
-				//		ImGui::SameLine(halfWidth * 1.28f, 0);
-				//		ImGui::SetNextItemWidth(halfWidth * 0.5f);
-				//		ImGui::InputInt("##AnimationTotalRows", &textureComp->totalRows);
-				//		ImGui::PopFont();
-
-				//		/**
-				//		*	ANIMATION STATE NAME
-				//		*/
-				//		/*ImGui::AlignTextToFramePadding();
-				//		ImGui::PushFont(boldFont);
-				//		ImGui::Text(" State Name");
-				//		ImGui::SameLine(halfWidth * 1.120f, 0);
-				//		ImGui::SetNextItemWidth(halfWidth * 0.5f);
-				//		
-				//		ImGui::InputText(AnimationComp->currAnimationState.c_str())
-
-
-				//		ImGui::PopFont();*/
-
-
-				//		/**
-				//		*	ANIMATION STATE LIST
-				//		*/
-				//		/*ImGui::Spacing();
-
-				//		ImGui::AlignTextToFramePadding();
-				//		ImGui::Text("Animation States");
-				//		ImGui::SameLine(halfWidth);
-				//		if (ImGui::BeginListBox("#AnimationList"))
-				//		{
-				//	
-				//			for (auto x : AnimationComp->animationStateList)
-				//			{
-				//				std::string& stateName = AnimationComp->currAnimationState;
-				//				const bool isSelected =&(AnimationComp->animationStateList);
-
-				//				if (ImGui::Selectable(stateName[x], isSelected)) {
-				//					
-				//				}
-				//			}
-				//		}*/
-
-
-
-				//		
-
 		
-
-				//		////FRAMES
-				//		//ImGui::Text("Frame ");
-				//		//ImGui::SameLine(halfWidth);
-				//		//ImGui::PushFont(boldFont);
-				//		//ImGui::Text(" Start");
-				//		//ImGui::SameLine(halfWidth * 1.28f, 0);
-				//		//ImGui::SetNextItemWidth(halfWidth * 0.5f);
-				//		//ImGui::InputInt("##frameStart", &animationState->startX, 0, 0, 1);
-
-				//		//ImGui::Spacing();
-
-				//		//ImGui::AlignTextToFramePadding();
-				//		//ImGui::SameLine(halfWidth);
-				//		//ImGui::Text(" End");
-				//		//ImGui::SameLine(halfWidth * 1.28f, 0);
-				//		//ImGui::SetNextItemWidth(halfWidth * 0.5f);
-				//		//ImGui::InputInt("##frameEnd", &animationState->endX, 0, 0, 1);
-
-
-				//		//ImGui::Spacing();
-
-				//		//ImGui::AlignTextToFramePadding();
-				//		//ImGui::SameLine(halfWidth);
-				//		//ImGui::Text(" Current");
-				//		//ImGui::SameLine(halfWidth * 1.28f, 0);
-				//		//ImGui::SetNextItemWidth(halfWidth * 0.5f);
-				//		//ImGui::InputInt("##frameCurr", &animationState->currFrame, 0, 0, 1);
-				//		//ImGui::PopFont();
-				//		
-
-				//	}
-				//}
-
-						
 
 
 				/*
@@ -1054,17 +832,17 @@ namespace Editor {
 					DreamImGui::CheckBox_Dream("##SoundActive", &(soundComp->isActive));
 					ImGui::SameLine();
 
-				/*	if (ImGui::BeginDragDropTarget())
+					if (ImGui::BeginDragDropTarget())
 					{
 						ImGui::Text("I'm Dropping.");
 						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 						{
 							const wchar_t* path = (const wchar_t*)payload->Data;
 							std::filesystem::path soundPath = std::filesystem::path(_assetPath) / path;
-							Engine::SoundSystem::SoundPlay(soundPath.string(), sound);
+							Engine::SoundSystem::SoundPlay(soundPath.string(), true);
 						}
 						ImGui::EndDragDropTarget();
-					}*/
+					}
 
 					if (ImGui::CollapsingHeader("Sound")) {
 
@@ -1073,7 +851,8 @@ namespace Editor {
 						ImGui::Checkbox("##isSound", &(soundComp->isSound));
 						if (soundComp->isSound == true)
 						{
-
+							ImGui::Text("Sound Picker");
+							ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Sound Picker##PickSound")) {
 								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav;)\0*.wav; \0");
 
@@ -1084,36 +863,92 @@ namespace Editor {
 								}
 							}
 
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("File");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							ImGui::PushFont(boldFont);
+							ImGui::Text(soundComp->filepath.c_str());
+							ImGui::PopFont();
+
+							ImGui::Spacing();
+
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Loop");
+							ImGui::SameLine(halfWidth);
+							ImGui::Checkbox("##soundLoop", &soundComp->loop);
+
+							ImGui::Spacing();
+
+							//selection
+							static ImGuiComboFlags flags = 0;
+							int index = static_cast<int>(soundComp->SG);
+							//arrays
+							const int sz = 3;
+							const char* soundName[sz] = { "MASTER", "MUSIC", "SFX" };
+							const char* previewLayer = soundName[index];
+
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Sound Group");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
+							if (ImGui::BeginCombo("##soundGrp", previewLayer, flags))
+							{
+								for (int i{ 0 }; i < sz; i++) {
+									const bool isSelected = (index == i);
+									if (ImGui::Selectable(soundName[i], isSelected)) {
+										soundComp->SG = static_cast<Engine::SoundGrp>(i);
+									}
+
+									if (isSelected)
+										ImGui::SetItemDefaultFocus();
+
+								}
+
+								ImGui::EndCombo();
+							}
+
+
+							ImGui::Spacing();
+
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Test Sound");
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth);
 							if (ImGui::Button("Play"))
 							{
 								std::cout << "plsuong \n";
-								ImGui::Text(soundComp->soundName.c_str());
+								//ImGui::Text(soundComp->filepath.c_str());
 								Engine::SoundSystem::SoundPlay(soundComp->filepath, soundComp->Pause);
 							}
-						
+
+							ImGui::SameLine(halfWidth * 1.25);
+							ImGui::SetNextItemWidth(halfWidth);
+							if (ImGui::Button("Stop"))
+							{
+								std::cout << "stopping \n";
+								//ImGui::Text(soundComp->filepath.c_str());
+								Engine::SoundSystem::SoundStop(soundComp->ChannelID);
+							}
+							
 						}
 
-						ImGui::AlignTextToFramePadding();
-						ImGui::Text("File");
-						ImGui::SameLine(halfWidth);
-						ImGui::SetNextItemWidth(halfWidth);
-						ImGui::PushFont(boldFont);
-						ImGui::Text(soundComp->soundName.c_str());
-						ImGui::PopFont();
+					
 
 						ImGui::Spacing();
 
+						/**
+						*	DELETE
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
+						if (ImGui::Button("Delete Component##soundDelete", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::dreamECSGame->RemoveComponent<Engine::SoundComponent>(entity_selected);
 						
 					}
 				
 
 				}
-
-
-
-				/*
-				*	Color component
-				*/
 
 
 				/*
@@ -1129,7 +964,7 @@ namespace Editor {
 						if (ImGui::CollapsingHeader("UI"))
 						{
 							ImGui::AlignTextToFramePadding();
-							ImGui::Text("UI##UIComp");
+							ImGui::Text("UI");
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::Text(uiComp->textureName.c_str());
@@ -1175,36 +1010,6 @@ namespace Editor {
 						ImGui::SameLine();
 						if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str()))
 						{
-							//ImGui::Spacing();
-
-							//for (auto& [varName, csPublicVariable] : csScriptInstance.csVariableMap)
-							//{
-							//	ImGui::Text(varName.c_str());
-							//	ImGui::SameLine();
-							//	switch (csPublicVariable.variableType)
-							//	{
-							//	case Engine::CSType::CHAR:
-							//		//ImGui::InputFloat("A", (float*)csPublicVariable.GetVariableDataPTR<char>(), 0);
-							//		break;
-							//	case Engine::CSType::BOOL:
-							//		ImGui::Checkbox(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<bool>()));
-							//		break;
-							//	case Engine::CSType::FLOAT:
-							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<float>()), 0);
-							//		break;
-							//	case Engine::CSType::INT:
-							//		ImGui::InputInt(std::string{ "##" + varName }.c_str(), &(csPublicVariable.GetVariableData<int>()), 0);
-							//		break;
-							//	case Engine::CSType::UINT:
-							//		//ImGui::InputFloat("E", (float*)csPublicVariable.GetVariableDataPTR<unsigned int>(), 0);
-							//		break;
-							//	case Engine::CSType::VEC2:
-							//		Math::vec2& tem = csPublicVariable.GetVariableData<Math::vec2>();
-							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.x), 0);
-							//		ImGui::InputFloat(std::string{ "##" + varName }.c_str(), &(tem.y), 0);
-							//		break;
-							//	}
-							//}
 
 							/**
 							*	DELETE
@@ -1214,7 +1019,6 @@ namespace Editor {
 							if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
 								Engine::dreamECSGame->RemoveScript(entity_selected, className.c_str());
 
-							//ImGui::TreePop();
 						}
 					}
 				}

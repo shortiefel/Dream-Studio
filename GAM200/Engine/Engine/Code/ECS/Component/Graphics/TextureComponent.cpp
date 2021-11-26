@@ -39,7 +39,7 @@ namespace Engine
 		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape },
 		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 }, totalRows{ 1 }, totalColumns{ 1 },
 		minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f },
-		isAnimation{ _animation }, startAnimationState{ std::string{} }, currAnimationState{ _currAnimationState },
+		isAnimation{ _animation }, currAnimationState{ _currAnimationState },
 		isActive{ _active }
 	{
 		GraphicImplementation::SetTexture(this, filepath);
@@ -146,7 +146,6 @@ namespace Engine
 			cellWidth = static_cast<float>(width) / totalColumns;
 			cellHeight = static_cast<float>(height) / totalRows;
 
-			startAnimationState = _serializer.GetValue<std::string>("StartAnimationState");
 			currAnimationState = _serializer.GetValue<std::string>("CurrentAnimationState");
 
 			auto animationStates = _serializer.GetValueArray("AnimationState");
@@ -189,7 +188,6 @@ namespace Engine
 			_serializer.SetValue("TotalRow", totalRows);
 			_serializer.SetValue("TotalColumns", totalColumns);
 
-			_serializer.SetValue("StartAnimationState", startAnimationState);
 			_serializer.SetValue("CurrentAnimationState", currAnimationState);
 
 			rapidjson::Value allAnimation(rapidjson::kArrayType);

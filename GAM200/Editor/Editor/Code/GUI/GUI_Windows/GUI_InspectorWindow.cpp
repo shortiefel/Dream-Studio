@@ -612,17 +612,17 @@ namespace Editor {
 							ImGui::Spacing();
 
 							ImGui::AlignTextToFramePadding();
-							ImGui::Text("Start Anim State");
+							ImGui::Text("Start State");
 							ImGui::SameLine(halfWidth);
 
 							ImGui::AlignTextToFramePadding();
 							ImGui::SetNextItemWidth(halfWidth);
-							std::string& startAnimStateString = textureComp->startAnimationState;
-							if (ImGui::BeginCombo("##StartAnimState", startAnimStateString.c_str())) {
+							std::string& currAnimStateString = textureComp->currAnimationState;
+							if (ImGui::BeginCombo("##StartAnimState", currAnimStateString.c_str())) {
 								for (auto [name, animState] : textureComp->animationStateList) {
 
 									if (ImGui::Selectable(name.c_str())) {
-										startAnimStateString = name;
+										currAnimStateString = name;
 									}
 								}
 								ImGui::EndCombo();

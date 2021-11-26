@@ -63,7 +63,6 @@ namespace Engine
 		int totalColumns, totalRows;
 		float cellWidth, cellHeight;
 
-		std::string startAnimationState;
 		std::string currAnimationState;
 		std::unordered_map <std::string, AnimationState> animationStateList{};
 

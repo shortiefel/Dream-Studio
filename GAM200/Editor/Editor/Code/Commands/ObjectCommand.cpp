@@ -105,13 +105,13 @@ namespace Editor
 
 	void ObjectTransformCommand::undo()
 	{
-		Engine::TransformComponent* transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected));
-		if (transform != nullptr)
-		{
-			//Position
-			transform->position = transform->localPosition;
-			transform->position -= Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected)).localPosition;
-		}
+		//Engine::TransformComponent* transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected));
+		//if (transform != nullptr)
+		//{
+		//	//Position
+		//	transform->position = transform->localPosition;
+		//	transform->position -= Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected)).localPosition;
+		//}
 	}
 
 	void ObjectTransformCommand::redo()

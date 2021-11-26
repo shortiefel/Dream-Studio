@@ -46,11 +46,8 @@
     <Filter Include="External Resources\ImGuizmo">
       <UniqueIdentifier>{431fa6e9-0c5b-4725-b82a-ed0782892ddf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Commands">
-      <UniqueIdentifier>{81ccd764-8454-4c19-955d-29c2dc594543}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Commands">
-      <UniqueIdentifier>{e7586384-40b5-4228-b4dc-4008eae2ae09}</UniqueIdentifier>
+      <UniqueIdentifier>{3aee50f5-359c-4807-b4bb-73825da887f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -146,12 +143,6 @@
     </ClInclude>
     <ClInclude Include="..\External Resources\include\ImGuizmo\ImZoomSlider.h">
       <Filter>External Resources\ImGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\Header\Commands\Command.hpp">
-      <Filter>Header Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\Header\Commands\ObjectCommand.hpp">
-      <Filter>Header Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

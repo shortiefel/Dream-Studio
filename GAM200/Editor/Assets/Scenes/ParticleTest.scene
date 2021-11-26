@@ -17,23 +17,25 @@
       "Filepath": "Assets\\Textures\\BlueBtn.png",
       "Shape": 0,
       "IsAnimation": false,
-      "IsActive": true
+      "IsActive": true 
     },
     "ParticleComponent": {
-      "Filepath": "Assets\\Textures\\whitecircle.png",
+      "Filepath": "Assets\\Textures\\DeleteRoad.png",
       "Shape": 0,
       "EmitSize": 1,
       "IsActive": true,
       "OffsetPosition": [ 0.0, 1.0 ],
-      "Velocity": [ 0.0, 2.0 ],
-      "VelocityVariation": [ 1.0, 4.0 ],
+      "Velocity": [ 0.0, 1.0 ],
+      "VelocityVariation": [ 1.0, 2.0 ],
       "ColorBegin": [ 0.5, 0.5, 0.5, 1.0 ],
       "ColorEnd": [ 0.5, 0.5, 0.5, 0.0 ],
-      "SizeBegin": [ 0.5, 0.5 ],
+      "SizeBegin": [ 1.0, 1.0 ],
       "SizeEnd": [ 0.0, 0.0 ],
       "SizeVariation": [ 0.0, 0.0 ],
       "LifeTime": 20.0,
-      "IsLooping": true
+      "IsLooping": true,
+      "IsAngleRandom": true,
+      "IsVelocityVariation": true
     }
   }
 ]

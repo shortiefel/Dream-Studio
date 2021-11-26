@@ -33,6 +33,8 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 
+static float timer1 = 0.f;
+
 namespace Engine
 {
 #define LAYER_COUNT 5 // Number of layers for game objects
@@ -45,7 +47,7 @@ namespace Engine
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture
-	void RenderTextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, int layer)
+	void RenderTextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, int layer, float _dt)
 	{
 		for (auto& texture : arr)
 		{
@@ -72,7 +74,7 @@ namespace Engine
 						state.aComplete == false &&
 						GameState::GetInstance().GetPlaying())
 					{
-						texture.AnimationUpdate(DeltaTime::GetInstance().GetDeltaTime(), state);
+						texture.AnimationUpdate(_dt, state);
 					}
 				}
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
@@ -83,7 +85,7 @@ namespace Engine
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with particles
-	void RenderParticleLayer(std::array<ParticleComponent, MAX_ENTITIES>& arr, int layer)
+	void RenderParticleLayer(std::array<ParticleComponent, MAX_ENTITIES>& arr, int layer, float _dt)
 	{
 		for (auto& particle : arr)
 		{
@@ -102,12 +104,12 @@ namespace Engine
 				// For particles, update life time, position and rotation
 				if (GameState::GetInstance().GetPlaying())
 				{
-					particle.ParticleEmit(particle.particleData, true, true);
+					particle.ParticleEmit(particle.particleData, particle.isAngleRandom, particle.isVelocityVariation);
 					if (particle.loopComplete) particle.isActive = true;
 
 					for (auto& p : particle.m_ParticlePool)
 					{
-						particle.ParticleUpdate(p, DeltaTime::GetInstance().GetDeltaTime());
+						particle.ParticleUpdate(p, _dt);
 
 						if (!p.isActive) continue; 
 
@@ -118,7 +120,6 @@ namespace Engine
 						
 						GraphicImplementation::Renderer::DrawQuad(p.offsetPosition + transform->position, size, p.angle,
 							particle.texobj_hdl, color);
-
 					}
 				}
 			}
@@ -127,7 +128,7 @@ namespace Engine
 
 	// Function will loop through texture array of game objects and render game objects based on layer; 
 	// 0 will be rendered first, followed by 1, 2 ...
-	void RenderGameObjects(Math::mat3 _camMatrix, bool _isDebugDraw)
+	void RenderGameObjects(Math::mat3 _camMatrix, bool _isDebugDraw, float _dt)
 	{
 		// Load default shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
@@ -135,7 +136,6 @@ namespace Engine
 
 		// Set uniform
 		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
-
 
 		// Get texture array for entities
 		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
@@ -145,8 +145,8 @@ namespace Engine
 		int layerCount = LAYER_COUNT;
 		for (int i = 0; i < layerCount; i++)
 		{
-			RenderTextureLayer(textureArray, i);
-			RenderParticleLayer(particleArray, i);
+			RenderTextureLayer(textureArray, i, _dt);
+			RenderParticleLayer(particleArray, i, _dt);
 		}
 
 		// Enable GL_BLEND for transparency of textures
@@ -215,7 +215,12 @@ namespace Engine
 		PROFILER_START("Rendering");
 		
 		GLboolean isDebugDraw;
-		if (!_fbo) isDebugDraw = GL_FALSE;
+		float dt = 0.f;
+		if (!_fbo)
+		{
+			isDebugDraw = GL_FALSE;
+			dt = DeltaTime::GetInstance().GetDeltaTime(); // Get game timer
+		}
 		else isDebugDraw = GL_TRUE;
 
 		if (!isDebugDraw) bindFBO(fbo);
@@ -229,7 +234,7 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Render game objects and collision lines
-		RenderGameObjects(camMatrix, isDebugDraw);
+		RenderGameObjects(camMatrix, isDebugDraw, dt);
 		if (isDebugDraw == GL_TRUE) RenderCollisionLines(camMatrix, isDebugDraw);
 
 

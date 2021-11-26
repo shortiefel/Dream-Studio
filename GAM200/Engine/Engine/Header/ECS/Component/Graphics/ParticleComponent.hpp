@@ -33,7 +33,7 @@ namespace Engine
 		Math::vec2 velocity, velocityVariation;
 		Math::vec4 colorBegin , colorEnd;
 		Math::vec2 sizeBegin, sizeEnd, sizeVariation;
-		float lifeTime = 1.0f;
+		float lifeTime;
 	};
 
 	struct Particle
@@ -47,7 +47,7 @@ namespace Engine
 		Math::vec4 colorBegin, colorEnd;
 
 		float lifeTime;
-		float lifeRemaining = 0.0f;
+		float lifeRemaining;
 
 		bool isActive = false;
 	};
@@ -72,6 +72,7 @@ namespace Engine
 
 		int emitSize;
 		bool isLooping, loopComplete;
+		bool isAngleRandom, isVelocityVariation;
 
 		int m_PoolIndex = 999;
 		std::vector<Particle> m_ParticlePool;
@@ -81,7 +82,7 @@ namespace Engine
 		void ParticleEmit(const ParticleProps& particleProps, bool isAngleRandom, bool isVelocityVariation);
 
 		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", GraphicShape _shape = GraphicShape::SQUARE, 
-						  int _emitSize = 1, bool _isLooping = true, bool _loopComplete = false, 
+						  int _emitSize = 1, bool _isLooping = true, bool _loopComplete = false, bool _isAngleRandom = true, bool _isVelocityVariation = true,
 						  bool _active = true);
 
 

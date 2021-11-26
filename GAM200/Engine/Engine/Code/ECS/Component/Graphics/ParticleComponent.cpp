@@ -28,10 +28,11 @@ Technology is prohibited.
 namespace Engine
 {
 	// Contructor for Particle Component
-	ParticleComponent::ParticleComponent(Entity_id _ID, const std::string _path, GraphicShape _shape, int _emitSize, bool _isLooping, bool _loopComplete, bool _active) :
+	ParticleComponent::ParticleComponent(Entity_id _ID, const std::string _path, GraphicShape _shape, 
+		int _emitSize, bool _isLooping, bool _loopComplete, bool _isAngleRandom, bool _isVelocityVariation, bool _active) :
 		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape },
 		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 }, minUV{ 0.f, 0.f }, maxUV{ 1.0f, 1.0f },
-		emitSize{ _emitSize }, isLooping{ _isLooping }, loopComplete{ _loopComplete },
+		emitSize{ _emitSize }, isLooping{ _isLooping }, loopComplete{ _loopComplete }, isAngleRandom{ _isAngleRandom }, isVelocityVariation{ _isVelocityVariation },
 		isActive{ _active }
 	{
 		m_ParticlePool.resize(1000);
@@ -40,7 +41,7 @@ namespace Engine
 
 	void ParticleComponent::ParticleUpdate(Particle& particle, float _dt)
 	{
-		if (particle.lifeRemaining <= 0.0f)
+		if (particle.lifeRemaining < 0.0f)
 		{
 			particle.isActive = false;
 			return;
@@ -48,7 +49,7 @@ namespace Engine
 
 		particle.lifeRemaining -= _dt;
 		particle.offsetPosition += particle.velocity * (float)_dt;
-		particle.angle += 0.01f * _dt;
+		particle.angle += 1.0f;
 	}
 
 	/*
@@ -59,7 +60,7 @@ namespace Engine
 						 If user wants particle to go in the same direction, set velocity to be half of velocityVariation axis
 	*/
 	void ParticleComponent::ParticleEmit(const ParticleProps& particleProps, 
-		bool isAngleRandom, bool isVelocityVariation)
+		bool _isAngleRandom, bool _isVelocityVariation)
 	{
 		// Set particle's loop to be completed once container is empty
 		// Stops the rendering and update of particle once it is complete
@@ -114,7 +115,7 @@ namespace Engine
 			particle.sizeEnd = particleProps.sizeEnd;
 
 			// Do not have 2 randoms for x and y so as to maintain shape integrity
-			particle.sizeBegin += particleProps.sizeVariation * (Random::Float() - 0.5f);
+			particle.sizeBegin += particleProps.sizeVariation * Random::Float();
 
 			// Index reset
 			if ((m_PoolIndex - 1) < 0) m_PoolIndex = 999;
@@ -154,6 +155,10 @@ namespace Engine
 		// Particle loop
 		isLooping = _serializer.GetValue<bool>("IsLooping");
 
+		// Boolean for random effets
+		isAngleRandom = _serializer.GetValue<bool>("IsAngleRandom");
+		isVelocityVariation = _serializer.GetValue<bool>("IsVelocityVariation");
+
 		return *this;
 	}
 
@@ -175,7 +180,7 @@ namespace Engine
 		_serializer.SetValue("ColorBegin", particleData.colorBegin);
 		_serializer.SetValue("ColorEnd", particleData.colorEnd);
 
-		_serializer.SetValue("SizeBegin", particleData.sizeBegin);
+		_serializer.SetValue("SizeBegin", particleData.sizeBegin);	
 		_serializer.SetValue("SizeEnd", particleData.sizeEnd);
 		_serializer.SetValue("SizeVariation", particleData.sizeVariation);
 
@@ -183,5 +188,9 @@ namespace Engine
 
 		// Particle loop
 		_serializer.SetValue("IsLooping", isLooping);
+
+		// Boolean for random effets
+		_serializer.SetValue("IsAngleRandom", isAngleRandom);
+		_serializer.SetValue("IsVelocityVariation", isVelocityVariation);
 	}
 }

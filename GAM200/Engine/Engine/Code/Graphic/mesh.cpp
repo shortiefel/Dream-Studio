@@ -875,7 +875,7 @@ namespace Engine
         }
 
         // Function that adds to the vertex buffer pointer for the quad lines mesh
-        void Renderer::DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation)
+        void Renderer::DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color)
         {
             if (s_QuadDebugData.indexcount >= stMaxQuadDebugIndexCount)
             {
@@ -883,8 +883,6 @@ namespace Engine
                 FlushQuadDebug();
                 BeginQuadDebugBatch();
             }
-
-            Math::vec4 color = { 1.0f, 0.f, 0.f, 1.f };
 
             float textureIndex = 0.0f;
             Math::vec2 position = { -1.f, -1.f };
@@ -931,7 +929,7 @@ namespace Engine
         }
 
         // Function that adds to the vertex buffer pointer for the circle lines mesh
-        void Renderer::DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation)
+        void Renderer::DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color)
         {
             if (s_CircleDebugData.indexcount >= stMaxCircleDebugIndexCount)
             {
@@ -939,8 +937,6 @@ namespace Engine
                 FlushCircleDebug();
                 BeginCircleDebugBatch();
             }
-
-            Math::vec4 color = { 1.0f, 0.0f, 0.0f, 1.0f };
 
             float textureIndex = 0.0f;
 

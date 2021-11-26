@@ -43,8 +43,8 @@ namespace Engine
             static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, const Math::vec4 color,
                 Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
 
-            static void DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation);
-            static void DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation);
+            static void DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color);
+            static void DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color);
 
             // Font functions for FontSystem
             static void InitFont();

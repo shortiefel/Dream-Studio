@@ -193,15 +193,15 @@ namespace Engine
 			if (collider.cType == ColliderType::Square)
 			{
 				GraphicImplementation::Renderer::DrawQuadDebug(collider.offset_position + transform->position,
-					collider.offset_scale * transform->scale,
-					collider.angle + transform->angle);
+															   collider.offset_scale * transform->scale, collider.angle + transform->angle, 
+															   { 1.0f, 0.0f, 0.0f, 1.0f });
 			}
 			// Render lines for circle
 			else if (collider.cType == ColliderType::Circle)
 			{
 				GraphicImplementation::Renderer::DrawCircleDebug(collider.offset_position + transform->position,
-					collider.offset_scale * transform->scale,
-					0);
+																 collider.offset_scale * transform->scale, 0.0f, 
+																 { 1.0f, 0.0f, 0.0f, 1.0f });
 			}
 		}
 

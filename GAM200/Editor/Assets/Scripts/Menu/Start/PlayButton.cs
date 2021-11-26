@@ -19,7 +19,7 @@ public class PlayButton : MonoBehaviour
         {
             Console.WriteLine("Play");
 
-            //SceneManager.LoadScene("NewGame");
+            SceneManager.LoadScene("NewGame");
         }
     }
 }

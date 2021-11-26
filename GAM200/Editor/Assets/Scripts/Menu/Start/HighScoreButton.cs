@@ -17,6 +17,7 @@ public class HighScoreButton : MonoBehaviour
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
             Console.WriteLine("Highscore selected");
+            SceneManager.LoadScene("HighScore");
         }
     }
 }

@@ -45,7 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="bin\**;obj\**;Properties\**"/>
+    <Compile Include="**\*.cs" Exclude="bin\**;obj\**;Properties\**" />
+    <Compile Include="Menu\GameScene\PauseButton.cs" />
+    <Compile Include="Menu\PauseMenu\HowToPlayButton.cs" />
+    <Compile Include="Menu\PauseMenu\OptionsButton.cs" />
+    <Compile Include="Menu\PauseMenu\PauseQuitButton.cs" />
+    <Compile Include="Menu\PauseMenu\ResumeButton.cs" />
+    <Compile Include="Menu\Start\CreditsButton.cs" />
+    <Compile Include="Menu\Start\HighScoreButton.cs" />
+    <Compile Include="Menu\Start\QuitButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

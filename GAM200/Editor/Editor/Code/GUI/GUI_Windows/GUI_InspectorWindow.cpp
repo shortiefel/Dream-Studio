@@ -963,7 +963,7 @@ namespace Editor {
 						if (ImGui::CollapsingHeader("UI"))
 						{
 							ImGui::AlignTextToFramePadding();
-							ImGui::Text("UI##UIComp");
+							ImGui::Text("UI");
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::Text(uiComp->textureName.c_str());

@@ -17,6 +17,7 @@ public class CreditsButton : MonoBehaviour
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
             Console.WriteLine("Credit selected");
+            SceneManager.LoadScene("Credits");
         }
     }
 }

@@ -57,22 +57,28 @@ namespace Engine
 		//undo for component 
 		// if selected then will remove the object
 		//if entity is selected = true then undo
-		auto& entity_map = Engine::dreamECSGame->GetUsedConstEntityMap();
-		for (auto& [id, entity] : entity_map)
-		{
-			bool selected = CheckIfExist(entity_selected, id);
-			if (selected)
-			{
-				//Engine::dreamECSGame->DestroyEntity(entity_id);
-				Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_id);
-			}
-		}
-		//if (entity_id = true)
+		//auto& entity_map = Engine::dreamECSGame->GetUsedConstEntityMap();
+		//for (auto& [id, entity] : entity_map)
 		//{
-		//	Engine::dreamECSGame->DestroyEntity(entity_id);
-		//	Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_id);
+		//	bool selected = CheckIfExist(entity_selected, id);
+		//	if (selected)
+		//	{
+		//		//Engine::dreamECSGame->DestroyEntity(entity_id);
+		//		Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_id);
+		//	}
 		//}
 
+		//need entity selected for now its deleting the first one 
+		//if (entity_id = true)
+		//{
+		//	Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_id);
+		//}
+		
+		if (entity_selected[0] != DEFAULT_ENTITY_ID)
+		{
+			Engine::dreamECSGame->DestroyEntity(entity_id);
+			Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_selected[1]);
+		}
 
 
 

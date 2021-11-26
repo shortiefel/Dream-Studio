@@ -917,12 +917,11 @@ namespace Editor {
 							ImGui::SetNextItemWidth(halfWidth);
 							if (ImGui::Button("Play"))
 							{
-								std::cout << "plsuong \n";
 								//ImGui::Text(soundComp->filepath.c_str());
 								Engine::SoundSystem::SoundPlay(soundComp->filepath, soundComp->Pause);
 							}
 
-							ImGui::SameLine(halfWidth * 1.25);
+							ImGui::SameLine(halfWidth * 1.25f);
 							ImGui::SetNextItemWidth(halfWidth);
 							if (ImGui::Button("Stop"))
 							{

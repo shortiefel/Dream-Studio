@@ -51,7 +51,7 @@ namespace Engine {
 //		}
 //		else _fbo->Bind();
 #ifdef _GAME_BUILD
-
+		_fbo;
 #else
 		_fbo->Bind();
 #endif

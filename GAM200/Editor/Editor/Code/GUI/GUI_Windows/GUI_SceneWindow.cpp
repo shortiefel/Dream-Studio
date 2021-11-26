@@ -38,8 +38,8 @@ Technology is prohibited.
 #include "Engine/Header/Management/GameState.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
-#include "Engine/Header/Commands/Command.hpp"
-#include "Engine/Header/Commands/ObjectCommand.hpp"
+#include "Editor/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/ObjectCommand.hpp"
 
 #include <filesystem>
 #include <ImGuizmo.h>

@@ -34,8 +34,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Input/Input.hpp"
 
-#include "Engine/Header/Commands/Command.hpp"
-#include "Engine/Header/Commands/ObjectCommand.hpp"
+#include "Editor/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/ObjectCommand.hpp"
 
 #include <Imgui/imgui_internal.h>
 #include <filesystem>
@@ -98,10 +98,11 @@ namespace Editor {
 						entityName = newName;
 
 					}
-					//record the object state before change
-					//std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectNameCommand>();
-					//Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 				}
+				
+				//record the object state before change
+				//std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectNameCommand>();
+				//Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 
 				ImGui::PopItemWidth();
 

@@ -18,6 +18,8 @@ Technology is prohibited.
 #define OBJECT_COMMAND_HPP
 
 #include "Editor/Header/Commands/Command.hpp"
+#include "Editor/Header/GUI/GUI_ClickCheck.hpp"
+
 #include "Engine/Header/ECS/Component/ComponentManager.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
@@ -34,22 +36,25 @@ Technology is prohibited.
 
 namespace Editor {
 
+	namespace GUI_Windows {
 	class ObjectCommand : public ICommand
 	{
 		//no commands for objects
 	};
 
-	//commands for undo and redo adding game object
+	//commands for undo and redo adding game object transform component
 	class ObjectAddCommand : public ObjectCommand
 	{
 		Engine::Entity_id object_ID = Engine::Entity_id{};
 		Engine::Entity_id entity_id = Engine::Entity_id{};
+		Engine::Entity_id selectable = Engine::Entity_id{};
 		std::map<int, Engine::Entity_id> entity_selected = std::map<int, Engine::Entity_id>{};
 
 	public:
 
 		//undo the changes made to the objects
 		void undo() override;
+
 		//redo the changes made to the objects
 		void redo() override;
 
@@ -166,5 +171,7 @@ namespace Editor {
 	//	//void redo();
 
 	//};
+	}
+
 }
 #endif

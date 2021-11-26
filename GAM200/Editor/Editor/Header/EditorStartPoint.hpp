@@ -20,7 +20,7 @@ namespace Editor {
 	class EditorStartPoint {
 	public:
 		static void Create();
-		static void Update(float dt);
+		static void Update(float _dt);
 		static void Destroy();
 
 	private:

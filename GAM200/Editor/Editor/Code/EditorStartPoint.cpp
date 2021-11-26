@@ -39,12 +39,12 @@ namespace Editor {
 		EditorSceneCamera::Create({ 0.f,0.f });
 	}
 
-	void EditorStartPoint::Update(float) {
-		Engine::GraphicSystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
+	void EditorStartPoint::Update(float _dt) {
+		Engine::GraphicSystem::GetInstance().Render(0.f, GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
 		Engine::UISystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
 		Engine::FontSystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());
 
-		Engine::GraphicSystem::GetInstance().Render(GUI::GetGameFboPtr());
+		Engine::GraphicSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());
 		Engine::UISystem::GetInstance().Render(GUI::GetGameFboPtr());
 		Engine::FontSystem::GetInstance().Render(GUI::GetGameFboPtr());
 

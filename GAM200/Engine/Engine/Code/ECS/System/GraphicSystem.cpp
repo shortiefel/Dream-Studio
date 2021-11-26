@@ -125,7 +125,7 @@ namespace Engine
 	// Function will loop through texture array of game objects and render game objects based on layer; 
 	// 0 will be rendered first, followed by 1, 2 ...
 	//void RenderGameObjects(Math::mat3 _camMatrix, Math::mat4 _newcamMatrix, bool _isDebugDraw)
-	void RenderGameObjects(Math::mat3 _camMatrix, bool _isDebugDraw) {
+	void RenderGameObjects(Math::mat3 _camMatrix, bool _isDebugDraw, float _dt) {
 		// Load default shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
@@ -213,7 +213,7 @@ namespace Engine
 	}
 
 	// Update function for GraphicSystem
-	void GraphicSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw) {
+	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw) {
 	//void GraphicSystem::Render(Math::mat3 camMatrix, Math::mat4 _newcamMatrix, Graphic::FrameBuffer* _fbo, Math::mat4 _projMatrix) {
 		PROFILER_START("Rendering");
 		

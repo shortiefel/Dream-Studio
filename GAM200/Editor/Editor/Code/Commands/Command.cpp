@@ -14,9 +14,9 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#include "Engine/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/Command.hpp"
 
-namespace Engine {
+namespace Editor {
 
 	void UndoRedoManager::RecordState(CommandPtr cmd)
 	{
@@ -52,23 +52,35 @@ namespace Engine {
 		redostack.push(cmd);
 	}
 
-	//void UndoRedoManager::Redo()
-	//{
-	//	//if nothing to redo then return
-	//	if (redostack.empty()) { return; }
+	void UndoRedoManager::Redo()
+	{
+		//if nothing to redo then return
+		if (redostack.empty()) { return; }
 
-	//	//get recent command from redo stack
-	//	auto cmd = redostack.top();
-	//	redostack.pop();
+		//get recent command from redo stack
+		auto cmd = redostack.top();
+		redostack.pop();
 
-	//	cmd->redo();
+		cmd->redo();
 
-	//	//add command to undo stack
-	//	undostack.push(cmd);
-	//}
+		//add command to undo stack
+		undostack.push(cmd);
+	}
+
+	void UndoRedoManager::StoreCommand(CommandPtr command)
+	{
+		future_command = command;
+	}
+
+	CommandPtr UndoRedoManager::GetStoredCommand()
+	{
+		return future_command;
+	}
 
 	void UndoRedoManager::ClearHistory()
 	{
+		future_command = nullptr;
 		undostack = {};
+		redostack = {};
 	}
 }

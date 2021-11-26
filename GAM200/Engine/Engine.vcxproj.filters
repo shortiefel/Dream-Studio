@@ -103,14 +103,8 @@
     <ClCompile Include="Engine\Code\Scene\SceneManager.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Commands\ObjectCommand.cpp">
-      <Filter>Source Files\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Grid\Grid.cpp">
       <Filter>Source Files\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Code\Commands\Command.cpp">
-      <Filter>Source Files\Commands</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp">
       <Filter>Source Files\Serialization</Filter>
@@ -306,9 +300,6 @@
     <ClInclude Include="Engine\Header\ECS\System\CollisionSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Header\Commands\Command.hpp">
-      <Filter>Header Files\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Header\Math\Internal\CommonMath.hpp">
       <Filter>Header Files\Math\Internal</Filter>
     </ClInclude>
@@ -443,9 +434,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\AI\Node.hpp">
       <Filter>Header Files\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Commands\ObjectCommand.hpp">
-      <Filter>Header Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Event\OverlapColliderEvent.hpp">
       <Filter>Header Files\Event</Filter>
@@ -746,9 +734,6 @@
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{622b2414-9206-4141-9835-c4adf5281d63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Commands">
-      <UniqueIdentifier>{9daab980-7878-4ff3-94d7-0a035f59ed18}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Grid">
       <UniqueIdentifier>{91b16f86-516a-487d-96f2-c2dae4550530}</UniqueIdentifier>
     </Filter>
@@ -808,9 +793,6 @@
     </Filter>
     <Filter Include="Header Files\Physics">
       <UniqueIdentifier>{fa9019a7-76ff-4136-acdc-d8cab3ff7a31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Commands">
-      <UniqueIdentifier>{e928371c-ee47-4a30-8994-a62c0586e9e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Math">
       <UniqueIdentifier>{e8833302-b3cd-4702-9507-563a74982da7}</UniqueIdentifier>

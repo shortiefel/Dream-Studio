@@ -17,7 +17,9 @@ Technology is prohibited.
 #ifndef OBJECT_COMMAND_HPP
 #define OBJECT_COMMAND_HPP
 
-#include "Engine/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/Command.hpp"
+#include "Editor/Header/GUI/GUI_ClickCheck.hpp"
+
 #include "Engine/Header/ECS/Component/ComponentManager.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
@@ -32,26 +34,47 @@ Technology is prohibited.
 #include <stack>
 #include <memory>
 
-namespace Engine {
+namespace Editor {
 
+	namespace GUI_Windows {
 	class ObjectCommand : public ICommand
 	{
 		//no commands for objects
 	};
 
-	//commands for undo and redo adding game object
+	//commands for undo and redo adding game object transform component
 	class ObjectAddCommand : public ObjectCommand
 	{
 		Engine::Entity_id object_ID = Engine::Entity_id{};
 		Engine::Entity_id entity_id = Engine::Entity_id{};
+		Engine::Entity_id selectable = Engine::Entity_id{};
 		std::map<int, Engine::Entity_id> entity_selected = std::map<int, Engine::Entity_id>{};
 
 	public:
 
 		//undo the changes made to the objects
 		void undo() override;
+
 		//redo the changes made to the objects
-		//void redo() override;
+		void redo() override;
+
+		void record() override;
+
+		void execute() override;
+
+	};
+
+	class ObjectTransformCommand : public ObjectCommand
+	{
+		std::map<int, Engine::Entity_id> entity_selected{};
+
+	public:
+
+		//undo the changes made to the objects
+		void undo() override;
+
+		//redo the changes made to the objects
+		void redo() override;
 
 		void record() override;
 
@@ -69,8 +92,9 @@ namespace Engine {
 		//void AddObject(Engine::Entity_id object_ID);
 		//undo the changes made to the objects
 		void undo() override;
+
 		//redo the changes made to the objects
-		//void redo();
+		void redo() override;
 
 		void execute() override;
 
@@ -91,6 +115,37 @@ namespace Engine {
 
 		void execute() override;
 
+	};
+
+	//commands for undo for gizmo
+	class ObjectGizmoCommand : public ObjectCommand
+	{
+	public:
+
+		//undo the changes made to the objects
+		void undo() override;
+		//redo the changes made to the objects
+		//void redo();
+
+		void record() override;
+
+		void execute() override;
+
+	};
+
+	//command for undo naming of entity
+	class ObjectNameCommand : public ObjectCommand
+	{
+		Engine::Entity_id entity_selected = Engine::Entity_id{};
+
+	public:
+
+		//undo
+		void undo() override;
+
+		void record() override;
+
+		void execute() override;
 	};
 
 	//commands for undo 
@@ -134,5 +189,7 @@ namespace Engine {
 	//	//void redo();
 
 	//};
+	}
+
 }
 #endif

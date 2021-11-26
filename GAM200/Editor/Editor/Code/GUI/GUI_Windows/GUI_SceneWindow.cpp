@@ -38,6 +38,9 @@ Technology is prohibited.
 #include "Engine/Header/Management/GameState.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
+#include "Editor/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/ObjectCommand.hpp"
+
 #include <filesystem>
 #include <ImGuizmo.h>
 #define REMOVE_FROM_SCENEPATH scenePath = scenePath.string().substr(scenePath.string().find_last_of("\\") + 1);\
@@ -139,6 +142,16 @@ namespace Editor {
 				if (ImGui::BeginDragDropTarget())
 				{
 					ImGui::Text("I'm Dropping.");
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
+					{
+						Engine::dreamECSGame->DuplicateEntityAsInstance(GetTarget(entity_selected));
+					}
+					ImGui::EndDragDropTarget();
+				}
+
+				if (ImGui::BeginDragDropTarget())
+				{
+					ImGui::Text("I'm Dropping.");
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 					{
 						const wchar_t* path = (const wchar_t*)payload->Data;
@@ -200,6 +213,9 @@ namespace Editor {
 							tc->angle += angleDiff;
 
 							tc->scale = Math::vec2{ scaleArr[0], scaleArr[1] };
+
+							//Engine::CommandPtr new_Command = std::make_shared<Engine::ObjectGizmoCommand>();
+							//Engine::UndoRedoManager::GetInstance().StoreCommand(new_Command);
 						}
 					}
 				}

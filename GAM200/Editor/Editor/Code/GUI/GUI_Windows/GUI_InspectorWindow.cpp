@@ -34,8 +34,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Input/Input.hpp"
 
-#include "Engine/Header/Commands/Command.hpp"
-#include "Engine/Header/Commands/ObjectCommand.hpp"
+#include "Editor/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/ObjectCommand.hpp"
 
 #include <Imgui/imgui_internal.h>
 #include <filesystem>
@@ -96,6 +96,7 @@ namespace Editor {
 						Engine::dreamECSGame->DuplicateNameCheck(newName);
 						Engine::dreamECSGame->ChangeName(entityName, newName);
 						entityName = newName;
+
 					}
 				}
 
@@ -272,8 +273,8 @@ namespace Editor {
 					}
 
 					//record the object state before change
-					std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectAddCommand>();
-					Engine::UndoRedoManager::GetInstance().RecordState(new_command);
+					std::shared_ptr<ICommand> new_command = std::make_shared<ObjectTransformCommand>();
+					UndoRedoManager::GetInstance().RecordState(new_command);
 				}
 
 				/*
@@ -799,7 +800,7 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Color");
 						ImGui::SameLine(halfWidth);
-
+						ImGui::ColorPicker3("Color", (float*)&textComp->colour, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
 						ImGui::PushFont(boldFont);
 						ImGui::Text(" R");
 						ImGui::SameLine(halfWidth * 1.125f, 0);

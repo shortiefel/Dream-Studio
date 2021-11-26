@@ -380,6 +380,8 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="..\External Resources\include\Imgui\imstb_rectpack.h" />
     <ClInclude Include="..\External Resources\include\Imgui\imstb_textedit.h" />
     <ClInclude Include="..\External Resources\include\Imgui\imstb_truetype.h" />
+    <ClInclude Include="Editor\Header\Commands\Command.hpp" />
+    <ClInclude Include="Editor\Header\Commands\ObjectCommand.hpp" />
     <ClInclude Include="Editor\Header\EditorStartPoint.hpp" />
     <ClInclude Include="Editor\Header\FunctionOverride.hpp" />
     <ClInclude Include="Editor\Header\Graphic\EditorSceneCamera.hpp" />
@@ -410,6 +412,8 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClCompile Include="..\External Resources\include\Imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_tables.cpp" />
     <ClCompile Include="..\External Resources\include\Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Editor\Code\Commands\Command.cpp" />
+    <ClCompile Include="Editor\Code\Commands\ObjectCommand.cpp" />
     <ClCompile Include="Editor\Code\EditorStartPoint.cpp" />
     <ClCompile Include="Editor\Code\FunctionOverride.cpp" />
     <ClCompile Include="Editor\Code\Graphic\EditorSceneCamera.cpp" />

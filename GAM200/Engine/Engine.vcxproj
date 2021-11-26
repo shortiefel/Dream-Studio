@@ -258,8 +258,6 @@
     <ClCompile Include="Engine\Code\AI\AISystem.cpp" />
     <ClCompile Include="Engine\Code\AI\Node.cpp" />
     <ClCompile Include="Engine\Code\Application.cpp" />
-    <ClCompile Include="Engine\Code\Commands\Command.cpp" />
-    <ClCompile Include="Engine\Code\Commands\ObjectCommand.cpp" />
     <ClCompile Include="Engine\Code\Debug Tools\Profiler.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp" />
@@ -391,8 +389,6 @@
     <ClInclude Include="Engine\Header\AI\AISystem.hpp" />
     <ClInclude Include="Engine\Header\AI\Node.hpp" />
     <ClInclude Include="Engine\Header\Application.hpp" />
-    <ClInclude Include="Engine\Header\Commands\Command.hpp" />
-    <ClInclude Include="Engine\Header\Commands\ObjectCommand.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Logging.hpp" />
     <ClInclude Include="Engine\Header\Debug Tools\Profiler.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentArray.hpp" />

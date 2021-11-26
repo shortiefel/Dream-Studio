@@ -29,10 +29,11 @@ Technology is prohibited.
 #include <deque>
 #include <stack>
 #include <memory>
+#include <list>
 
 //#pragma warning(disable:2259)
 
-namespace Engine {
+namespace Editor {
 
 	//the Command Interface
 	class ICommand 
@@ -40,10 +41,13 @@ namespace Engine {
 	public:
 		//execute a command function
 		virtual void execute() = 0;
+
 		//undo 
 		virtual void undo() = 0;
+		
 		//redo
-		//virtual void redo() = 0;
+		virtual void redo() = 0;
+		
 		//record state
 		virtual void record() = 0;
 	
@@ -52,20 +56,30 @@ namespace Engine {
 	using CommandPtr = std::shared_ptr<ICommand>;
 
 	//class that knows how to undo and redo user changes
-	class UndoRedoManager : public Singleton<UndoRedoManager>{
+	//template <class T = ICommand>
+	class UndoRedoManager : public Engine::Singleton<UndoRedoManager>{
 	public:
 		
 		UndoRedoManager() : maximum(10) {};
 
 		//record current state
 		void RecordState(CommandPtr cmd);
+
 		//adding the latest command pointing to the latest command
 		void Add(CommandPtr command);
+		
 		//undo the last command
 		void Undo();
+
 		//redo the last command
-		//void Redo();
+		void Redo();
 		
+		//store command
+		void StoreCommand(CommandPtr command);
+
+		//modify the command storing for later
+		CommandPtr GetStoredCommand();
+
 		//clear all undo redo histroy
 		void ClearHistory();
 
@@ -73,8 +87,13 @@ namespace Engine {
 		std::deque<CommandPtr> current_command;
 		std::deque<CommandPtr> undo_command;
 
+		//testing command list
+		//typedef list<T*> CommandList;
+
 		std::stack<CommandPtr> undostack;
 		std::stack<CommandPtr> redostack;
+
+		CommandPtr future_command; //for gizmo to store command
 
 
 

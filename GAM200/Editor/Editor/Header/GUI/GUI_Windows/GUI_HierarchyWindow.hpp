@@ -21,8 +21,8 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
-#include "Engine/Header/Commands/Command.hpp"
-#include "Engine/Header/Commands/ObjectCommand.hpp"
+#include "Editor/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/ObjectCommand.hpp"
 
 #include <map>
 

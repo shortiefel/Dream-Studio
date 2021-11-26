@@ -133,7 +133,7 @@ namespace Editor {
 				if (mouseX >= 0 && mouseX < (int)game_viewportSize.x &&
 					mouseY >= 0 && mouseY < (int)game_viewportSize.y) {
 					
-					Engine::Graphic::PickingCheck(mousePos, game_viewportSize, inverseCamMatrix, 
+					Engine::Graphic::PickingCheckCollider(mousePos, game_viewportSize, inverseCamMatrix,
 						[&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, true);  }, 
 						[&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); });
 				}

@@ -19,7 +19,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
-#include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
+#include "Engine/Header/Parent/ParentManager.hpp"
 #include "Engine/Header/ECS/Factory.hpp"
 
 #include "Engine/Header/Scene/Prefab.hpp"
@@ -156,12 +156,14 @@ namespace Engine {
 		if (_parent == _child) return;
 		if (_parent == DEFAULT_ENTITY_ID) return;
 		if (_child == DEFAULT_ENTITY_ID) return;
-		TransformCalculationSystem::GetInstance().Parent(_parent, _child);
+		//TransformCalculationSystem::GetInstance().Parent(_parent, _child);
+		ParentManager::GetInstance().Parent(_parent, _child);
 	}
 
 	void DreamECS::Unparent(Entity_id _target) {
 		if (_target == DEFAULT_ENTITY_ID) return;
-		TransformCalculationSystem::GetInstance().Unparent(_target);
+		//TransformCalculationSystem::GetInstance().Unparent(_target);
+		ParentManager::GetInstance().Unparent(_target);
 	}
 
 	void DreamECS::RemoveScript(Entity_id entity_id, const char* className) {

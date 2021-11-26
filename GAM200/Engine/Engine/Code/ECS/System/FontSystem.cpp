@@ -20,6 +20,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/FontSystem.hpp"
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 
+#include "Engine/Header/Parent/ParentManager.hpp"
+
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
 
 #include "Engine/Header/Graphic/Mesh.hpp"
@@ -27,6 +29,8 @@ Technology is prohibited.
 namespace Engine
 {
 	//constexpr float FONT_MULTIPLIER = 50.f;
+
+	static Math::vec2 prevPos;
 
 	void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw)
 	{
@@ -60,8 +64,8 @@ namespace Engine
 		// Set uniform
 		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
 
+		Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
 		const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
-
 		for (const auto& text : fontArray)
 		{
 			if (!text.isFont) continue;
@@ -88,16 +92,20 @@ namespace Engine
 			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
 			//}
 			if (gameDraw) {
-				Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
-				GraphicImplementation::Renderer::DrawString(transform->position + camPos, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+				//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+				transform->localPosition += camPos - prevPos;
+				ParentManager::GetInstance().UpdateTruePos(entity_id);
+				//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
 			}
-			else {
-				GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
-			}
+			//else {
+			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+			//}
+			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
 			
 			//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
 
 		}
+		prevPos = camPos;
 
 		// For transparency of glyph textures
 		glEnable(GL_BLEND);
@@ -117,6 +125,10 @@ namespace Engine
 		_fbo->Unbind();
 #endif
 		
+	}
+
+	void FontSystem::Reset() {
+		prevPos = CameraSystem::GetInstance().GetPosition();
 	}
 
 	// Init function for FontSystem

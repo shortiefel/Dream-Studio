@@ -23,7 +23,7 @@ Technology is prohibited.
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/Picking2D.hpp"
-#include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
+#include "Engine/Header/Parent/ParentManager.hpp"
 
 
 #include "Engine/Header/Event/MouseEvent.hpp"
@@ -216,7 +216,8 @@ namespace Editor {
 							ImGuizmo::DecomposeMatrixToComponents(Math::value_ptr(transform), transArr, rotArr, scaleArr);
 
 							tc->localPosition = Math::vec2{ transArr[0], transArr[1] };
-							Engine::TransformCalculationSystem::GetInstance().Update();
+							Engine::ParentManager::GetInstance().UpdateTruePos(entity_id);
+							//Engine::TransformCalculationSystem::GetInstance().Update();
 
 							float angleDiff = rotArr[2] - tc->angle;
 							tc->angle += angleDiff;

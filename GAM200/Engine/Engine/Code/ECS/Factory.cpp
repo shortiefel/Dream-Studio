@@ -50,7 +50,6 @@ namespace Engine
         CollisionSystem::GetInstance().Create();
         PhysicsSystem::GetInstance().Create();
         ScriptSystem::GetInstance().Create();
-        TransformCalculationSystem::GetInstance().Create();
 
         GraphicSystem::GetInstance().Create();
         UISystem::GetInstance().Create();
@@ -66,7 +65,6 @@ namespace Engine
         GraphicSystem::GetInstance().Destroy();
         FontSystem::GetInstance().Destroy();
         UISystem::GetInstance().Destroy();
-        TransformCalculationSystem::GetInstance().Destroy();
         ScriptSystem::GetInstance().Destroy();
         PhysicsSystem::GetInstance().Destroy();
         CollisionSystem::GetInstance().Destroy();

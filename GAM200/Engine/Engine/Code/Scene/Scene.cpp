@@ -54,6 +54,11 @@ namespace Engine {
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
      
+        //Recalculate camera position
+        CameraSystem::GetInstance().Update(0.f);
+        FontSystem::GetInstance().Reset();
+        UISystem::GetInstance().Reset();
+
         SoundSystem::SoundInit();
         std::cout << "loaded sound \n";
 
@@ -157,7 +162,7 @@ namespace Engine {
 
         Math::mat3 camMatrix = Engine::CameraSystem::GetInstance().GetTransform();
         Math::mat3 inverseCamMatrix = Math::Inverse(camMatrix);
-        Engine::Graphic::PickingCheck(Math::vec3{ pos.x, pos.y, 1.f }, game_viewportSize, inverseCamMatrix,
+        Engine::Graphic::PickingCheckCollider(Math::vec3{ pos.x, pos.y, 1.f }, game_viewportSize, inverseCamMatrix,
             [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, true);  },
             [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); });
 

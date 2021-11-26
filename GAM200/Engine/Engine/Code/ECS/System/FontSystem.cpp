@@ -26,9 +26,9 @@ Technology is prohibited.
 
 namespace Engine
 {
-	constexpr float FONT_MULTIPLIER = 50.f;
+	//constexpr float FONT_MULTIPLIER = 50.f;
 
-	void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix)
+	void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw)
 	{
 		PROFILER_START("Rendering");
 
@@ -87,7 +87,15 @@ namespace Engine
 			//	//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / 75, transform->angle, text.filepath, text.text, text.colour);
 			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
 			//}
-			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
+			if (gameDraw) {
+				Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+				GraphicImplementation::Renderer::DrawString(transform->position + camPos, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+			}
+			else {
+				GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+			}
+			
+			//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
 
 		}
 

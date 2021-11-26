@@ -29,6 +29,7 @@ namespace Engine
         #define MAXQUADCOUNT 500  // How many quads per buffer
         #define MAXCIRCLECOUNT 50 // How many circles per buffer
         #define CIRCLESLICES 20   // How circular the shape will be, higher number = more circlular.
+        constexpr float FONT_MULTIPLIER = 50.f;
 
         // Initialise variables
 
@@ -980,7 +981,8 @@ namespace Engine
             //Math::vec2 size = tscale;
 
             Math::vec2 position = {-1.f, -1.f};
-            Math::vec2 size = {2.f, 2.f};
+            //Math::vec2 size = {2.f, 2.f};
+            Math::vec2 size = { 2.f / FONT_MULTIPLIER, 2.f / FONT_MULTIPLIER };
 
             for (int i = 0; i < text.length(); i++)
             {

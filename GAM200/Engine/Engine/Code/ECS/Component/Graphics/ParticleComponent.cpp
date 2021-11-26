@@ -60,8 +60,7 @@ namespace Engine
 				True  -> set velocity += either +velocityVariation/2 or -velocityVariation/2
 						 If user wants particle to go in the same direction, set velocity to be half of velocityVariation axis
 	*/
-	void ParticleComponent::ParticleEmit(const ParticleProps& particleProps, 
-		bool _isAngleRandom, bool _isVelocityVariation)
+	void ParticleComponent::ParticleEmit(const ParticleProps& particleProps)
 	{
 		// Set particle's loop to be completed once container is empty
 		// Stops the rendering and update of particle once it is complete

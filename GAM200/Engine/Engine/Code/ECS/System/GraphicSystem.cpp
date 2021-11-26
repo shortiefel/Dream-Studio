@@ -104,7 +104,7 @@ namespace Engine
 				// For particles, update life time, position and rotation
 				if (GameState::GetInstance().GetPlaying())
 				{
-					particle.ParticleEmit(particle.particleData, particle.isAngleRandom, particle.isVelocityVariation);
+					particle.ParticleEmit(particle.particleData);
 					if (particle.loopComplete) particle.isActive = true;
 
 					for (auto& p : particle.m_ParticlePool)

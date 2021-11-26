@@ -147,6 +147,8 @@ namespace Engine {
 			if (play)
 				compileFuncPtr();
 			if (status > 0) return false;
+
+			//Compile Successful
 			return true;
 		}
 

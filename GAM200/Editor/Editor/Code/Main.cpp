@@ -30,8 +30,8 @@ Technology is prohibited.
 
 //#define GAME_BUILD
 
-//int main() {
-int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int) {
+int main() {
+//int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); //For memory check
 	//use try and except (require logging)
 	Engine::Application::GetInstance().Create(); //Needed for game

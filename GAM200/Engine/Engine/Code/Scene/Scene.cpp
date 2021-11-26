@@ -161,7 +161,7 @@ namespace Engine {
             [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, true);  },
             [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); });
 
-        GraphicSystem::GetInstance().Render();
+        GraphicSystem::GetInstance().Render(dt);
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
 #else

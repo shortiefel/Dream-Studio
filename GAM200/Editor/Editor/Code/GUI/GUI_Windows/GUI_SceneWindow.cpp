@@ -214,8 +214,8 @@ namespace Editor {
 
 							tc->scale = Math::vec2{ scaleArr[0], scaleArr[1] };
 
-							Engine::CommandPtr new_Command = std::make_shared<Engine::ObjectGizmoCommand>();
-							Engine::UndoRedoManager::GetInstance().StoreCommand(new_Command);
+							//Engine::CommandPtr new_Command = std::make_shared<Engine::ObjectGizmoCommand>();
+							//Engine::UndoRedoManager::GetInstance().StoreCommand(new_Command);
 						}
 					}
 				}

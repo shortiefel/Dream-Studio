@@ -18,8 +18,10 @@ Technology is prohibited.
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/Picking2D.hpp"
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
+#include "Editor/Header/GUI/GUI_ClickCheck.hpp"
+#include "Engine/Header/Input/Input.hpp"
 //#include <ImGuizmo/ImGuizmo.h>
-namespace Engine
+namespace Editor
 {
 	//void ObjectAddCommand::AddObject(Engine::Entity_id objectid)
 	//{
@@ -77,29 +79,30 @@ namespace Engine
 		if (entity_selected[0] != DEFAULT_ENTITY_ID)
 		{
 			Engine::dreamECSGame->DestroyEntity(entity_id);
-			Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_selected[1]);
+			//Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(GetTarget(entity_selected));
 		}
 
 
 
 	}
 
-	//void ObjectAddCommand::redo()
-	//{
-
-	//}
-
-	void ObjectDeleteCommand::execute()
+	void ObjectAddCommand::redo()
 	{
-
+		Engine::dreamECSGame->CreateEntity();
 	}
+
 
 	void ObjectDeleteCommand::undo()
 	{
 		Engine::dreamECSGame->CreateEntity();
 	}
 
-	void ObjectParentCommand::execute()
+	void ObjectDeleteCommand::redo()
+	{
+
+	}
+
+	void ObjectDeleteCommand::execute()
 	{
 
 	}
@@ -111,11 +114,16 @@ namespace Engine
 		}
 	}
 
-	void ObjectGizmoCommand::undo()
+	void ObjectParentCommand::execute()
 	{
+
+	}
+
+	//void ObjectGizmoCommand::undo()
+	//{
 		//have yet to add undo for gizmo command
 		//Either guizmo or the object picking is being used
-		bool guizmoPressed = false;
+		//bool guizmoPressed = false;
 		//const Engine::Entity_id entity_id = GetTarget(entity_selected);
 		//if (!EntityId_Check(entity_id)) {
 		//	Engine::TransformComponent* tc = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(entity_id);
@@ -155,57 +163,57 @@ namespace Engine
 		//		}
 		//	}
 		//}
-	}
+	//}
 
-	void ObjectGizmoCommand::record()
-	{
+	//void ObjectGizmoCommand::record()
+	//{
 
-	}
+	//}
 
-	void ObjectGizmoCommand::execute()
-	{
+	//void ObjectGizmoCommand::execute()
+	//{
 
-	}
+	//}
 
-	void ObjectNameCommand::undo()
-	{
-		/**
-		*	Entity Names
-		*/
-		if (EntityId_Check(entity_selected)) {
-			return;
-		}
-		auto& entityMap = Engine::dreamECSGame->GetUsedEntityMap();
-		if (entityMap.empty()) {
-			return;
-		}
-		const auto& itr = entityMap.find(entity_selected);
-		if (itr == entityMap.end()) {
-			return;
-		}
+	//void ObjectNameCommand::undo()
+	//{
+	//	/**
+	//	*	Entity Names
+	//	*/
+	//	if (EntityId_Check(entity_selected)) {
+	//		return;
+	//	}
+	//	auto& entityMap = Engine::dreamECSGame->GetUsedEntityMap();
+	//	if (entityMap.empty()) {
+	//		return;
+	//	}
+	//	const auto& itr = entityMap.find(entity_selected);
+	//	if (itr == entityMap.end()) {
+	//		return;
+	//	}
 
-		std::string& entityName = itr->second.name;
-		//char eName[100];
-		//strcpy(eName, entityName.c_str());
+	//	std::string& entityName = itr->second.name;
+	//	//char eName[100];
+	//	//strcpy(eName, entityName.c_str());
 
-		//if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) 
-		//{
-		//		std::string newName = std::string{ eName };
-		//		Engine::dreamECSGame->DuplicateNameCheck(newName);
-		//		Engine::dreamECSGame->ChangeName(entityName, newName);
-		//		entityName = newName;
-		//	
-		//}
-	}
+	//	//if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) 
+	//	//{
+	//	//		std::string newName = std::string{ eName };
+	//	//		Engine::dreamECSGame->DuplicateNameCheck(newName);
+	//	//		Engine::dreamECSGame->ChangeName(entityName, newName);
+	//	//		entityName = newName;
+	//	//	
+	//	//}
+	//}
 
 
-	void ObjectNameCommand::record()
-	{
+	//void ObjectNameCommand::record()
+	//{
 
-	}
+	//}
 
-	void ObjectNameCommand::execute()
-	{
+	//void ObjectNameCommand::execute()
+	//{
 
-	}
+	//}
 }

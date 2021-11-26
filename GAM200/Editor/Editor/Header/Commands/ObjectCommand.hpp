@@ -17,7 +17,7 @@ Technology is prohibited.
 #ifndef OBJECT_COMMAND_HPP
 #define OBJECT_COMMAND_HPP
 
-#include "Engine/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/Command.hpp"
 #include "Engine/Header/ECS/Component/ComponentManager.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
@@ -32,7 +32,7 @@ Technology is prohibited.
 #include <stack>
 #include <memory>
 
-namespace Engine {
+namespace Editor {
 
 	class ObjectCommand : public ICommand
 	{
@@ -51,7 +51,7 @@ namespace Engine {
 		//undo the changes made to the objects
 		void undo() override;
 		//redo the changes made to the objects
-		//void redo() override;
+		void redo() override;
 
 		void record() override;
 
@@ -69,8 +69,9 @@ namespace Engine {
 		//void AddObject(Engine::Entity_id object_ID);
 		//undo the changes made to the objects
 		void undo() override;
+
 		//redo the changes made to the objects
-		//void redo();
+		void redo() override;
 
 		void execute() override;
 

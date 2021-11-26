@@ -46,6 +46,12 @@
     <Filter Include="External Resources\ImGuizmo">
       <UniqueIdentifier>{431fa6e9-0c5b-4725-b82a-ed0782892ddf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Commands">
+      <UniqueIdentifier>{81ccd764-8454-4c19-955d-29c2dc594543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commands">
+      <UniqueIdentifier>{e7586384-40b5-4228-b4dc-4008eae2ae09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\External Resources\include\Imgui\imconfig.h">
@@ -141,6 +147,12 @@
     <ClInclude Include="..\External Resources\include\ImGuizmo\ImZoomSlider.h">
       <Filter>External Resources\ImGuizmo</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\Header\Commands\Command.hpp">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Header\Commands\ObjectCommand.hpp">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\Imgui\imgui.cpp">
@@ -229,6 +241,12 @@
     </ClCompile>
     <ClCompile Include="..\External Resources\include\ImGuizmo\ImSequencer.cpp">
       <Filter>External Resources\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\Commands\Command.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Code\Commands\ObjectCommand.cpp">
+      <Filter>Source Files\Commands</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -51,8 +51,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/Scene/Prefab.hpp"
-#include "Engine/Header/Commands/Command.hpp"
-#include "Engine/Header/Commands/ObjectCommand.hpp"
+#include "Editor/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/ObjectCommand.hpp"
 
 //#include "Engine/Header/Script/Scripting.hpp"
 //#include "Engine/Header/Script/ScriptInternalCall.hpp"
@@ -203,14 +203,14 @@ namespace Editor {
 			case Engine::Input_KeyCode::Z: {
 				if (ctrl) {
 					//undo
-					Engine::UndoRedoManager::GetInstance().Undo();
+					UndoRedoManager::GetInstance().Undo();
 				}
 				break;
 			}
 			case Engine::Input_KeyCode::Y: {
 				if (ctrl) {
 					//redo
-					//Engine::CommandHistory::RedoCommand();
+					UndoRedoManager::GetInstance().Redo();
 				}
 				break;
 			}
@@ -313,7 +313,7 @@ namespace Editor {
 						NewFileUtil();
 
 						//contact undo redo system to clear command history
-						Engine::UndoRedoManager::GetInstance().ClearHistory();
+						UndoRedoManager::GetInstance().ClearHistory();
 				}
 
 				if (ImGui::MenuItem("Open...", "CTRL+O")) {
@@ -357,7 +357,7 @@ namespace Editor {
 		void GUI_EditMenu() {
 			if (ImGui::BeginMenu("Edit")) {
 
-				if (ImGui::MenuItem("Undo", "CTRL+Z")) { Engine::UndoRedoManager::GetInstance().Undo(); }
+				if (ImGui::MenuItem("Undo", "CTRL+Z")) { UndoRedoManager::GetInstance().Undo(); }
 				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled for now
 				ImGui::Separator();
 				//if (ImGui::MenuItem("Cut", "CTRL+X")) {}

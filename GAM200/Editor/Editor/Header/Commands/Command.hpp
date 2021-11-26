@@ -33,7 +33,7 @@ Technology is prohibited.
 
 //#pragma warning(disable:2259)
 
-namespace Engine {
+namespace Editor {
 
 	//the Command Interface
 	class ICommand 
@@ -46,7 +46,7 @@ namespace Engine {
 		virtual void undo() = 0;
 		
 		//redo
-		//virtual void redo() = 0;
+		virtual void redo() = 0;
 		
 		//record state
 		virtual void record() = 0;
@@ -57,7 +57,7 @@ namespace Engine {
 
 	//class that knows how to undo and redo user changes
 	//template <class T = ICommand>
-	class UndoRedoManager : public Singleton<UndoRedoManager>{
+	class UndoRedoManager : public Engine::Singleton<UndoRedoManager>{
 	public:
 		
 		UndoRedoManager() : maximum(10) {};
@@ -72,7 +72,7 @@ namespace Engine {
 		void Undo();
 
 		//redo the last command
-		//void Redo();
+		void Redo();
 		
 		//store command
 		void StoreCommand(CommandPtr command);

@@ -322,7 +322,7 @@ namespace Engine {
 		fileStream.close();
 	}
 
-	void GameSceneSerializer::DeserializePrefab(std::string _filename, unsigned int* id, Math::vec2 position, float angle) {
+	void GameSceneSerializer::DeserializePrefab(std::string _filename, unsigned int* id, Math::vec2 position, float angle, int layer) {
 		std::string filename = TO_FULL_PREFAB(_filename);
 		
 		std::ifstream fileStream;
@@ -348,7 +348,7 @@ namespace Engine {
 					DSerializer serializer{ itr }; 
 					auto& transform = TransformComponent{ entity.id }.Deserialize(serializer);
 					dreamECSGame->AddComponent(
-						 TransformComponent{ entity.id, position, transform.scale, transform.angle + angle }
+						 TransformComponent{ entity.id, position, transform.scale, transform.angle + angle, layer }
 					); 
 					ParentManager::GetInstance().UpdateTruePos(entity.id);
 			}

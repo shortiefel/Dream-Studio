@@ -66,6 +66,23 @@ public class Transform : IComponent
     internal static extern void GetTransform_Scale_Engine(uint entityID, out Vector2 outVec2);
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetTransform_Scale_Engine(uint entityID, ref Vector2 inVec2);
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //Scale
+    public int layer
+    {
+        get
+        {
+            GetTransform_Layer_Engine(entityId, out int result);
+            return result;
+        }
+        set { SetTransform_Layer_Engine(entityId, ref value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTransform_Layer_Engine(uint entityID, out int outLayer);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetTransform_Layer_Engine(uint entityID, ref int inLayer);
+
     //-----------------------------------------------------------------------------------------------------------------
     //Angle
     public float angle

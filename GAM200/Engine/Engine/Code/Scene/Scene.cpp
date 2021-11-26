@@ -83,7 +83,7 @@ namespace Engine {
         if (!ScriptSystem::GetInstance().CompileCS(true)) {
             return false;
         }
-
+        
         GameState::GetInstance().SetPlaying(true);
 
         GameSceneSerializer::SerializeScene("temporary");
@@ -143,7 +143,7 @@ namespace Engine {
         }
 
         CameraSystem::GetInstance().Update(dt);
-
+        
         
 #ifdef _GAME_BUILD
         //Default 2d picking
@@ -160,6 +160,9 @@ namespace Engine {
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render();
 #else
+        if (Input::IsKeyPressed(Input_KeyCode::F)) {
+            Window::GetInstance().ToggleFullscreen();
+        }
 #endif
 
         SoundSystem::GetInstance().SoundUpdate();

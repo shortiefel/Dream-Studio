@@ -259,13 +259,13 @@ public class MonoBehaviour : IBehaviour
     internal static extern void Instantiate_Prefab_Transform_Engine(String prefabName, int entityID, out uint id);
 
 
-    public GameObject Instantiate(Prefab _prefab, Vector3 pos)
+    public GameObject Instantiate(Prefab _prefab, Vector3 pos, int layer = 2)
     {
-        Instantiate_Prefab_Position_Engine(_prefab.name, pos, out uint newId);
+        Instantiate_Prefab_Position_Engine(_prefab.name, pos, layer, out uint newId);
         return new GameObject(false, newId);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Instantiate_Prefab_Position_Engine(String prefabName, Vector3 pos, out uint newId);
+    internal static extern void Instantiate_Prefab_Position_Engine(String prefabName, Vector3 pos, int layer, out uint newId);
 
 
 

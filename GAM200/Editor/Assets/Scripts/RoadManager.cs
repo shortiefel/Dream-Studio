@@ -40,7 +40,7 @@ public class RoadManager : MonoBehaviour
             Debug.Log(position);
 
             temporaryPlacementPositions.Add(position);
-            placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road);
+            placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
             //Console.WriteLine("call function");
 
         }
@@ -66,7 +66,7 @@ public class RoadManager : MonoBehaviour
                     roadPositionsToRecheck.Add(temporaryPosition);
                     continue;
                 }
-                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road);
+                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road, 1);
             }
         }
 

@@ -108,6 +108,8 @@ namespace Engine {
 	void SetTransform_Scale_Engine(unsigned int id, Math::vec2* inVec2);
 	void GetTransform_Angle_Engine(unsigned int id, float* outVec2);
 	void SetTransform_Angle_Engine(unsigned int id, float* inVec2);
+	void GetTransform_Layer_Engine(unsigned int id, int* outLayer);
+	void SetTransform_Layer_Engine(unsigned int id, int* inLayer);
 	//void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2);
 	void GetTransform_up_Engine(unsigned int id, Math::vec2* outVec2);
 	void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2);
@@ -188,7 +190,7 @@ namespace Engine {
 	Prefab
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, int entityId, unsigned int* newId);
-	void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, unsigned int* newId);
+	void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, int layer, unsigned int* newId);
 	//void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -254,6 +256,8 @@ namespace Engine {
 		mono_add_internal_call("Transform::SetTransform_Scale_Engine", SetTransform_Scale_Engine);
 		mono_add_internal_call("Transform::GetTransform_Angle_Engine", GetTransform_Angle_Engine);
 		mono_add_internal_call("Transform::SetTransform_Angle_Engine", SetTransform_Angle_Engine);
+		mono_add_internal_call("Transform::GetTransform_Layer_Engine", GetTransform_Layer_Engine);
+		mono_add_internal_call("Transform::SetTransform_Layer_Engine", SetTransform_Layer_Engine);
 		//mono_add_internal_call("Transform::GetTransform_forward_Engine", GetTransform_forward_Engine);
 		mono_add_internal_call("Transform::GetTransform_up_Engine", GetTransform_up_Engine);
 		mono_add_internal_call("Transform::GetTransform_right_Engine", GetTransform_right_Engine);
@@ -531,6 +535,12 @@ namespace Engine {
 		SetEngineType(id, TransformComponent, angle, *inVec2);
 	}
 
+	void GetTransform_Layer_Engine(unsigned int id, int* outLayer) {
+		GetEngineType(id, TransformComponent, layer, *outLayer);
+	}
+	void SetTransform_Layer_Engine(unsigned int id, int* inLayer) {
+		SetEngineType(id, TransformComponent, layer, *inLayer);
+	}
 	/*void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2) {
 		TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 		if (!transform) return;
@@ -785,9 +795,9 @@ namespace Engine {
 		//if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
 	}
 
-	void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, unsigned int* newId) {
+	void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, int layer, unsigned int* newId) {
 		char* text = mono_string_to_utf8(prefabName);
-		GameSceneSerializer::DeserializePrefab(text, newId, Math::vec2{ pos.x, pos.y }, 0);
+		GameSceneSerializer::DeserializePrefab(text, newId, Math::vec2{ pos.x, pos.y }, 0, layer);
 		mono_free(text);
 	}
 

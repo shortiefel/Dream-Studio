@@ -105,10 +105,10 @@ public class PlacementManager : MonoBehaviour
         return placementGrid[position.x, position.y] == type;
     }
 
-    internal void PlaceTemporaryStructure(Vector2Int position, Prefab structurePrefab, CellType type)
+    internal void PlaceTemporaryStructure(Vector2Int position, Prefab structurePrefab, CellType type, int layer)
     {
         placementGrid[position.x, position.y] = type;
-        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
+        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, layer);
         
         //GameObject newStructure = Instantiate(roadStraight, new Vector3 (position.x, position.y, 0), Quaternion.identity);
         //Debug.Log("Placed road");
@@ -126,12 +126,12 @@ public class PlacementManager : MonoBehaviour
         return neighbours;
     }
 
-    private StructureModel CreateANewStructureModel(Vector2Int position, Prefab structurePrefab, CellType type)
+    private StructureModel CreateANewStructureModel(Vector2Int position, Prefab structurePrefab, CellType type, int layer = 2)
     {
         //GameObject structure = new GameObject(type.ToString());
         
         //GameObject structure = Instantiate(structurePrefab, transform);
-        GameObject structure = Instantiate(structurePrefab, new Vector3(position.x, position.y, 0f));
+        GameObject structure = Instantiate(structurePrefab, new Vector3(position.x, position.y, 0f), layer);
         structure.transform.SetParent(transform);
         //structure.transform.localPosition = new Vector2(position.x, position.y);
  

@@ -40,7 +40,7 @@ namespace Engine {
 	public:
 		float aspectRatio = 1.f;
 
-		bool Create(const std::string& ttitle = "untitled", unsigned int twidth = 1280, unsigned int theight = 720);
+		bool Create(const std::string& ttitle, unsigned int twidth, unsigned int theight);
 		void Destroy();
 
 		inline const char* GetGLSLVersion() { return "#version 450"; }
@@ -51,6 +51,8 @@ namespace Engine {
 
 		Math::vec2 GetWindowPosition();
 		Math::vec2 GetWindowSize();
+
+		void ToggleFullscreen();
 
 		//void DisplayFPS(float fps);
 
@@ -74,6 +76,8 @@ namespace Engine {
 
 			//std::function<void(Event&)> eventCallBack;
 		};
+
+		bool fullScreen;
 
 		WinData w_data { "", 0, 0 };
 		GLFWwindow* glfw_window = 0;

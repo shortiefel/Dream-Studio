@@ -32,6 +32,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 
+#include "Engine/Header/Management/Settings.hpp"
+
 namespace Engine {
 	//GLFWwindow* Window::glfw_window = 0;
 	////Window* Window::s_instance = 0;
@@ -85,6 +87,16 @@ namespace Engine {
 
 	//	//glfwSetWindowTitle(glfw_window, stitle.c_str());
 	//}
+	void Window::ToggleFullscreen() {
+		if (fullScreen) {
+			glfwSetWindowMonitor(glfw_window, NULL, 0, 0, Settings::gameWidth, Settings::gameHeight, GLFW_DONT_CARE);
+			fullScreen = false;
+		}
+		else {
+			glfwSetWindowMonitor(glfw_window, glfwGetPrimaryMonitor(), 0, 0, Settings::gameWidth, Settings::gameHeight, GLFW_DONT_CARE);
+			fullScreen = true;
+		}
+	}
 
 	//Create instance of window class
 	bool Window::Create(const std::string& ttitle, unsigned int twidth, unsigned int theight) {
@@ -95,6 +107,7 @@ namespace Engine {
 		w_data.title = ttitle;
 		w_data.width = twidth;
 		w_data.height = theight;
+		fullScreen = true;
 
 		aspectRatio = (float)w_data.height / (float)w_data.width;
 
@@ -111,7 +124,8 @@ namespace Engine {
 		//glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
 		//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
 
-		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
+
+		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 		if (!glfw_window) {
 			LOG_ERROR("unable to create openGL context");
 			glfwTerminate();

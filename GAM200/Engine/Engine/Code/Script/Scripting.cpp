@@ -143,7 +143,7 @@ namespace Engine {
 
 		bool CompileCSInternal(bool play) {
 			Scripting::DestroyChildDomain();
-#if 1
+#if 0
 			int status = std::system("CompileCS.bat");
 			if (play)
 				compileFuncPtr();

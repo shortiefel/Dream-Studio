@@ -126,7 +126,8 @@ namespace Editor {
 				ImGui::Begin("Scene Window", sceneWin_bool, window_flags);
 				ImGui::BeginChild("Render", ImVec2(0, 0), false, window_flags | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 				ImGui::SetScrollY(0.f);
-				makeChange = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
+
+				makeChange = ImGui::IsWindowHovered();
 
 				ImVec2 windowSize = ImGui::GetWindowSize();
 				ImGui::PushItemWidth(windowSize.x);
@@ -174,6 +175,8 @@ namespace Editor {
 					ImGui::EndDragDropTarget();
 				}
 
+				
+				
 
 				ImVec2 minBound = ImGui::GetWindowPos();
 				
@@ -202,6 +205,12 @@ namespace Editor {
 						ImGuizmo::Manipulate(Math::value_ptr(cameraView), Math::value_ptr(cameraProjection),
 							mCurrentGizmoOperation, ImGuizmo::LOCAL, Math::value_ptr(transform));
 
+						if (!makeChange) {
+							ImGui::EndChild();
+							ImGui::End();
+							return;
+						}
+
 						if (ImGuizmo::IsUsing()) {
 							guizmoPressed = true;
 							ImGuizmo::DecomposeMatrixToComponents(Math::value_ptr(transform), transArr, rotArr, scaleArr);
@@ -219,6 +228,13 @@ namespace Editor {
 						}
 					}
 				}
+
+				if (!makeChange) {
+					ImGui::EndChild();
+					ImGui::End();
+					return;
+				}
+
 				
 				ImVec2 maxBound = ImVec2{ minBound.x + windowSize.x, minBound.y + windowSize.y };
 				scene_viewportBounds[0] = Math::vec2{ minBound.x, minBound.y };
@@ -230,6 +246,7 @@ namespace Editor {
 				mousePos.x -= scene_viewportBounds[0].x;
 				mousePos.y -= scene_viewportBounds[0].y;
 				mousePos.y = scene_viewportSize.y - mousePos.y;
+
 
 				Math::mat3 inverseCamMatrix = EditorSceneCamera::GetInverseTransform();
 

@@ -48,6 +48,20 @@ namespace Engine
 			SET_TEXTURE(filepath, textureName, texobj_hdl);
 		}
 
+		// Function that load texture and set variables to Particle Component
+		void SetTexture(ParticleComponent* _texptr, std::string _filepath)
+		{
+			std::string& filepath = _texptr->filepath;
+			std::string& textureName = _texptr->textureName;
+			GLuint& texobj_hdl = _texptr->texobj_hdl;
+
+			GLint& width = _texptr->width;
+			GLint& height = _texptr->height;
+			GLint& BPP = _texptr->BPP;
+
+			SET_TEXTURE(filepath, textureName, texobj_hdl);
+		}
+
 		// Function that load texture and set variables to UI Component
 		void SetTexture(UIComponent* _texptr, std::string _filepath)
 		{

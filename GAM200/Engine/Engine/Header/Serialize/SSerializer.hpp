@@ -85,6 +85,27 @@ namespace Engine {
 			ADD_MEMBER(_name, pos);
 		}
 
+		template <>
+		void SetValue(const char* _name, const Math::vec3& _val) const {
+			rapidjson::Value pos(rapidjson::kArrayType);
+			pos.PushBack(_val.x, doc.GetAllocator());
+			pos.PushBack(_val.y, doc.GetAllocator());
+			pos.PushBack(_val.z, doc.GetAllocator());
+
+			ADD_MEMBER(_name, pos);
+		}
+
+		template <>
+		void SetValue(const char* _name, const Math::vec4& _val) const {
+			rapidjson::Value pos(rapidjson::kArrayType);
+			pos.PushBack(_val.x, doc.GetAllocator());
+			pos.PushBack(_val.y, doc.GetAllocator());
+			pos.PushBack(_val.z, doc.GetAllocator());
+			pos.PushBack(_val.w, doc.GetAllocator());
+
+			ADD_MEMBER(_name, pos);
+		}
+
 		template <typename T>
 		void SetValueSet(const char* _name, const std::set<T>& _val) const {
 			rapidjson::Value pos(rapidjson::kArrayType);

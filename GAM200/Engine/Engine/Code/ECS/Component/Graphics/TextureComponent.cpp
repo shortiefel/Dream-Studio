@@ -28,8 +28,8 @@ namespace Engine
 {
 	// Constructor for AnimationState
 	AnimationState::AnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop) :
-		stateName{ _stateName }, 
-		stateRow { _stateRow }, startX{ _startX }, endX{ _endX }, currFrame{ _startX }, 
+		stateName{ _stateName },
+		stateRow{ _stateRow }, startX{ _startX }, endX{ _endX }, currFrame{ _startX },
 		fTime{ _fTime }, aTime{ 0.f },
 		isLoop{ _isLoop }, aComplete{ false } {};
 
@@ -98,7 +98,7 @@ namespace Engine
 
 		auto itr = animationStateList.find(oldName);
 
-		if (itr != animationStateList.end()) 
+		if (itr != animationStateList.end())
 		{
 			AnimationState& newState = itr->second;
 			newState.stateName = newName;
@@ -111,9 +111,7 @@ namespace Engine
 
 	// Function that adds/replace AnimationState to/in animationStateList;
 	// to be called by the editor if they want more states
-	void TextureComponent::AddRefreshAnimationState(AnimationState _state)
-	//void TextureComponent::AddRefreshAnimationState(std::string _stateName, AnimationState _state)
-	{
+	void TextureComponent::AddRefreshAnimationState(AnimationState _state) {
 		if (animationStateList.find(_state.stateName) != animationStateList.end()) {
 			int index = 1;
 			while (animationStateList.find(_state.stateName) != animationStateList.end()) {
@@ -129,7 +127,6 @@ namespace Engine
 	void TextureComponent::AddRefreshAnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop)
 	{
 		AddRefreshAnimationState(AnimationState{ _stateName, _stateRow, _startX, _endX, _fTime, _isLoop });
-
 	}
 
 	// Deserialize function for Texture Component
@@ -142,7 +139,6 @@ namespace Engine
 		// For animation
 		isAnimation = _serializer.GetValue<bool>("IsAnimation");
 		
-
 		if (isAnimation) {
 			totalRows = _serializer.GetValue<int>("TotalRow");
 			totalColumns = _serializer.GetValue<int>("TotalColumns");

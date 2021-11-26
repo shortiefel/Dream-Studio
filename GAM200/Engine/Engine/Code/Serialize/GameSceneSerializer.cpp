@@ -209,6 +209,7 @@ namespace Engine {
 			SERIALIZE(UIComponent);
 			SERIALIZE(FontComponent);
 			SERIALIZE(SoundComponent);
+			SERIALIZE(ParticleComponent);
 
 			ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(entityId);
 			if (csScript != nullptr) {
@@ -266,6 +267,7 @@ namespace Engine {
 			DESERIALIZE(UIComponent);
 			DESERIALIZE(FontComponent);
 			DESERIALIZE(SoundComponent);
+			DESERIALIZE(ParticleComponent);
 
 			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {
@@ -303,6 +305,7 @@ namespace Engine {
 		SERIALIZE(UIComponent);
 		SERIALIZE(FontComponent);
 		SERIALIZE(SoundComponent);
+		SERIALIZE(ParticleComponent);
 
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(entityId);
 		if (csScript != nullptr) {
@@ -363,6 +366,7 @@ namespace Engine {
 			DESERIALIZE(UIComponent);
 			DESERIALIZE(FontComponent);
 			DESERIALIZE(SoundComponent);
+			DESERIALIZE(ParticleComponent);
 
 			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {
@@ -423,6 +427,7 @@ namespace Engine {
 			REFRESH_PREFAB(UIComponent);
 			REFRESH_PREFAB(FontComponent);
 			REFRESH_PREFAB(SoundComponent);
+			REFRESH_PREFAB(ParticleComponent);
 			
 			itr = obj.FindMember("ScriptComponent");
 			ScriptComponent* compScript = dreamECSGame->GetComponentPTR<ScriptComponent>(id);

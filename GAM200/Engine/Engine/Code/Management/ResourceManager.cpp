@@ -17,6 +17,7 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
+#include "Engine/Header/ECS/Component/Graphics/ParticleComponent.hpp"
 
 #include "stb_image/stb_image.h"
 
@@ -56,8 +57,18 @@ namespace Engine
 	}
 
 	// Function that reloads the texture after it has been updated
-	void ResourceManager::RefreshTexture(TextureComponent* tc) {
+	// Overloading for TextureComponent and Particlecomponent
+	void ResourceManager::RefreshTexture(TextureComponent* tc) 
+	{
 		TextureComponent& texture = *tc;
+		stbi_uc* temBuff = stbi_load(texture.filepath.c_str(), &(texture.width), &(texture.height), &(texture.BPP), 4);
+		glTextureSubImage2D(textureList[texture.filepath].texture_handle, 0, 0, 0, (texture.width), (texture.height), GL_RGBA, GL_UNSIGNED_BYTE, temBuff);
+		stbi_image_free(temBuff);
+	}
+
+	void ResourceManager::RefreshTexture(ParticleComponent* pc)
+	{
+		ParticleComponent& texture = *pc;
 		stbi_uc* temBuff = stbi_load(texture.filepath.c_str(), &(texture.width), &(texture.height), &(texture.BPP), 4);
 		glTextureSubImage2D(textureList[texture.filepath].texture_handle, 0, 0, 0, (texture.width), (texture.height), GL_RGBA, GL_UNSIGNED_BYTE, temBuff);
 		stbi_image_free(temBuff);

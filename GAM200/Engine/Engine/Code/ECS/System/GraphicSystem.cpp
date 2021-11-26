@@ -14,27 +14,26 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/ECS/System/GraphicSystem.hpp"
+
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
 
-#include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Management/GameState.hpp"
-
-#include "Engine/Header/ECS/System/GraphicSystem.hpp"
+#include "Engine/Header/Management/Settings.hpp"
+#include "Engine/Header/Time/DeltaTime.hpp"
 
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
-#include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
-#include "Engine/Header/ECS/Component/Graphics/TextureComponent.hpp"
-#include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
+#include "Engine/Header/ECS/Component/ComponentList.hpp"
 
-#include "Engine/Header/Graphic/Mesh.hpp"
 #include "Engine/Header/Graphic/Shader.hpp"
 #include "Engine/Header/Graphic/GLSLShader.hpp"
+#include "Engine/Header/Graphic/Mesh.hpp"
 
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 
-#include "Engine/Header/Management/Settings.hpp"
+static float timer1 = 0.f;
 
 namespace Engine
 {
@@ -44,7 +43,7 @@ namespace Engine
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture
-	void RenderTextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, int layer)
+	void RenderTextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, int layer, float _dt)
 	{
 		for (auto& texture : arr)
 		{
@@ -71,7 +70,7 @@ namespace Engine
 						state.aComplete == false &&
 						GameState::GetInstance().GetPlaying())
 					{
-						texture.AnimationUpdate(DeltaTime::GetInstance().GetDeltaTime(), state);
+						texture.AnimationUpdate(_dt, state);
 					}
 				}
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
@@ -80,11 +79,53 @@ namespace Engine
 		}
 	}
 
+	// Function will fill the batch render with vertices and required attributes of game objects
+	// Called by RenderGameObjects function -  to render all game objects with particles
+	void RenderParticleLayer(std::array<ParticleComponent, MAX_ENTITIES>& arr, int layer, float _dt)
+	{
+		for (auto& particle : arr)
+		{
+			// Option to not render individual game object
+			if (!particle.isActive) continue;
+
+			const Entity_id& entity_id = particle.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			// Get transformation component
+			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
+			if (!transform || !transform->isActive) continue;
+
+			if (transform->layer == layer)
+			{
+				// For particles, update life time, position and rotation
+				if (GameState::GetInstance().GetPlaying())
+				{
+					particle.ParticleEmit(particle.particleData);
+					if (particle.loopComplete) particle.isActive = true;
+
+					for (auto& p : particle.m_ParticlePool)
+					{
+						particle.ParticleUpdate(p, _dt, particle.isAngleRandom);
+
+						if (!p.isActive) continue; 
+
+						// Fade away particles, for lerping
+						float life = p.lifeRemaining / p.lifeTime;
+						Math::vec4 color = Math::Lerp(p.colorEnd, p.colorBegin, life);
+						Math::vec2 size = Math::Lerp(p.sizeEnd, p.sizeBegin, life);
+						
+						GraphicImplementation::Renderer::DrawQuad(p.offsetPosition + transform->position, size, p.angle,
+							particle.texobj_hdl, color);
+					}
+				}
+			}
+		}
+	}
+
 	// Function will loop through texture array of game objects and render game objects based on layer; 
 	// 0 will be rendered first, followed by 1, 2 ...
 	//void RenderGameObjects(Math::mat3 _camMatrix, Math::mat4 _newcamMatrix, bool _isDebugDraw)
-	void RenderGameObjects(Math::mat3 _camMatrix, bool _isDebugDraw)
-	{
+	void RenderGameObjects(Math::mat3 _camMatrix, bool _isDebugDraw) {
 		// Load default shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
@@ -93,15 +134,16 @@ namespace Engine
 		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
 		//GLSLShader::SetUniform("newCamMatrix", _newcamMatrix, shd_ref_handle);
 
-
 		// Get texture array for entities
 		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
+		auto& particleArray = dreamECSGame->GetComponentArrayData<ParticleComponent>();
 
 		// Looping through all layers for game objects; batch rendering
 		int layerCount = LAYER_COUNT;
 		for (int i = 0; i < layerCount; i++)
 		{
-			RenderTextureLayer(textureArray, i);
+			RenderTextureLayer(textureArray, i, _dt);
+			RenderParticleLayer(particleArray, i, _dt);
 		}
 
 		// Enable GL_BLEND for transparency of textures
@@ -203,7 +245,7 @@ namespace Engine
 
 		// Render game objects and collision lines
 		//RenderGameObjects(camMatrix, isDebugDraw);
-		RenderGameObjects(camMatrix, !gameDraw);
+		RenderGameObjects(camMatrix, !gameDraw, _dt);
 		//if (isDebugDraw == GL_TRUE) RenderCollisionLines(camMatrix, isDebugDraw);
 		if (!gameDraw) RenderCollisionLines(camMatrix, !gameDraw);
 

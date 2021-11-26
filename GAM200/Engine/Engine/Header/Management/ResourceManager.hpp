@@ -27,6 +27,7 @@ Technology is prohibited.
 namespace Engine
 {
 	struct TextureComponent;
+	struct ParticleComponent;
 
 	struct TextureContainer
 	{
@@ -54,6 +55,7 @@ namespace Engine
 		void Destroy();
 
 		void RefreshTexture(TextureComponent* tc);
+		void RefreshTexture(ParticleComponent* pc);
 		GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
 		bool LoadFont(std::string filename);
 

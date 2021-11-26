@@ -59,7 +59,7 @@ namespace Engine
         struct GLMesh
         {
             Math::vec2 position{};
-            Math::vec3 color{};
+            Math::vec4 color{};
             Math::vec2 texCoords{};
             float texID{};
 
@@ -115,7 +115,7 @@ namespace Engine
             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, position));
 
             glEnableVertexArrayAttrib(s_QuadData.va, 1);
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
 
             glEnableVertexArrayAttrib(s_QuadData.va, 2);
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texCoords));
@@ -202,7 +202,7 @@ namespace Engine
             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, position));
 
             glEnableVertexArrayAttrib(s_QuadDebugData.va, 1);
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
 
             glEnableVertexArrayAttrib(s_QuadDebugData.va, 2);
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texCoords));
@@ -296,7 +296,7 @@ namespace Engine
             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, position));
 
             glEnableVertexArrayAttrib(s_CircleDebugData.va, 1);
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
 
             glEnableVertexArrayAttrib(s_CircleDebugData.va, 2);
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texCoords));
@@ -388,7 +388,7 @@ namespace Engine
             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, position));
 
             glEnableVertexArrayAttrib(s_FontData.va, 1);
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
 
             glEnableVertexArrayAttrib(s_FontData.va, 2);
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texCoords));
@@ -677,7 +677,7 @@ namespace Engine
         }
 
         // Function that adds to the vertex buffer pointer for the quad fill (without texture) mesh
-        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec3 color,
+        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color, 
             Math::vec2 _min, Math::vec2 _max)
         {
             if (s_QuadData.indexcount >= stMaxQuadIndexCount)
@@ -732,7 +732,7 @@ namespace Engine
         }
 
         // Function that adds to the vertex buffer pointer for the quad fill (with texture) mesh
-        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID,
+        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, 
             Math::vec2 _min, Math::vec2 _max)
         {
             if (s_QuadData.indexcount >= stMaxQuadIndexCount || s_QuadData.uiTextureSlotIndex > 31)
@@ -742,7 +742,78 @@ namespace Engine
                 BeginQuadBatch();
             }
 
-            Math::vec3 color = { 1.0f, 1.0f, 1.0f };
+            Math::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+            Math::vec2 position = { -1.f, -1.f };
+            Math::vec2 size = { 2.f, 2.f };
+
+            float textureIndex = 0.0f;
+            for (uint32_t i = 1; i < s_QuadData.uiTextureSlotIndex; i++)
+            {
+                if (s_QuadData.arrTextureSlots[i] == textureID)
+                {
+                    textureIndex = (float)i;
+                    break;
+                }
+            }
+
+            if (textureIndex == 0.0f)
+            {
+                textureIndex = (float)s_QuadData.uiTextureSlotIndex;
+                s_QuadData.arrTextureSlots[(size_t)textureIndex] = textureID;
+                s_QuadData.uiTextureSlotIndex++;
+            }
+
+            s_QuadData.vertexbufferptr->position = { position.x, position.y };
+            s_QuadData.vertexbufferptr->color = color;
+            s_QuadData.vertexbufferptr->texCoords = { _min.x, _min.y };
+            s_QuadData.vertexbufferptr->texID = textureIndex;
+            s_QuadData.vertexbufferptr->tposition = tposition;
+            s_QuadData.vertexbufferptr->tscale = tscale;
+            s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr++;
+
+            s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y };
+            s_QuadData.vertexbufferptr->color = color;
+            s_QuadData.vertexbufferptr->texCoords = { _max.x, _min.y };
+            s_QuadData.vertexbufferptr->texID = textureIndex;
+            s_QuadData.vertexbufferptr->tposition = tposition;
+            s_QuadData.vertexbufferptr->tscale = tscale;
+            s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr++;
+
+            s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
+            s_QuadData.vertexbufferptr->color = color;
+            s_QuadData.vertexbufferptr->texCoords = { _max.x, _max.y };
+            s_QuadData.vertexbufferptr->texID = textureIndex;
+            s_QuadData.vertexbufferptr->tposition = tposition;
+            s_QuadData.vertexbufferptr->tscale = tscale;
+            s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr++;
+
+            s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
+            s_QuadData.vertexbufferptr->color = color;
+            s_QuadData.vertexbufferptr->texCoords = { _min.x, _max.y };
+            s_QuadData.vertexbufferptr->texID = textureIndex;
+            s_QuadData.vertexbufferptr->tposition = tposition;
+            s_QuadData.vertexbufferptr->tscale = tscale;
+            s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr++;
+
+            s_QuadData.indexcount += stOneQuadIndex;
+            s_QuadData.renderStats.quadCount++;
+        }
+
+        // Function that adds to the vertex buffer pointer for the quad fill (with texture and colour) mesh
+        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, const Math::vec4 color,
+            Math::vec2 _min, Math::vec2 _max)
+        {
+            if (s_QuadData.indexcount >= stMaxQuadIndexCount || s_QuadData.uiTextureSlotIndex > 31)
+            {
+                EndQuadBatch();
+                FlushQuad();
+                BeginQuadBatch();
+            }
+
             Math::vec2 position = { -1.f, -1.f };
             Math::vec2 size = { 2.f, 2.f };
 
@@ -813,7 +884,7 @@ namespace Engine
                 BeginQuadDebugBatch();
             }
 
-            Math::vec3 color = { 1.f, 0.f, 0.f };
+            Math::vec4 color = { 1.0f, 0.f, 0.f, 1.f };
 
             float textureIndex = 0.0f;
             Math::vec2 position = { -1.f, -1.f };
@@ -869,7 +940,7 @@ namespace Engine
                 BeginCircleDebugBatch();
             }
 
-            Math::vec3 color = { 1.f, 0.f, 0.f };
+            Math::vec4 color = { 1.0f, 0.0f, 0.0f, 1.0f };
 
             float textureIndex = 0.0f;
 
@@ -903,7 +974,7 @@ namespace Engine
 
         // Function that adds to the vertex buffer pointer for the font mesh (string)
         void Renderer::DrawString(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const std::string filename, const std::string text,
-            const Math::vec3 _colour)
+            const Math::vec4 _colour)
         {
             //Math::vec2 position = tposition;
             //Math::vec2 size = tscale;
@@ -1075,7 +1146,7 @@ void Renderer::InitCircle()
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, position));
 
     glEnableVertexArrayAttrib(s_CircleData.VA, 1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
 
     glEnableVertexArrayAttrib(s_CircleData.VA, 2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texCoords));
@@ -1147,7 +1218,7 @@ void Renderer::InitCircle()
 
 
 void Renderer::DrawCircle(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation,
-    Math::vec3 color)
+    Math::vec4 color)
 {
     if (s_CircleData.IndexCount >= MaxCircleIndexCount || s_CircleData.TextureSlotIndex > 31)
     {
@@ -1196,7 +1267,7 @@ void Renderer::DrawCircle(const Math::vec2& tposition, const Math::vec2 tscale, 
         BeginCircleBatch();
     }
 
-    Math::vec3 color = { 1.0f, 1.0f, 1.0f };
+    Math::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
     float textureIndex = 0.0f;
     for (uint32_t i = 1; i < s_CircleData.TextureSlotIndex; i++)

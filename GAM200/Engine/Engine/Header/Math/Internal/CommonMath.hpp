@@ -19,8 +19,6 @@ Technology is prohibited.
 #ifndef COMMON_MATH_H
 #define COMMON_MATH_H
 
-
-
 namespace Engine {
 	namespace DreamMath {
 		/*-------------------------------------------------------------------------------------------------------------------
@@ -69,8 +67,8 @@ namespace Engine {
         template <typename T>
         inline const T* value_ptr(const MathImplementation::Matrix4<T>& rhs) {
             return &(rhs.m[0]);
-
         }
+
         template <typename T>
         inline T* value_ptr(MathImplementation::Matrix4<T>& rhs) {
             return &(rhs.m[0]);
@@ -98,6 +96,15 @@ namespace Engine {
         template <typename T, typename U>
         inline T Max(T num1, U num2) {
             return (std::max)((num1), static_cast<T>(num2));
+        }
+
+        /*-------------------------------------------------------------------------------------------------------------------
+        Linear Interpolation
+        -------------------------------------------------------------------------------------------------------------------*/
+
+        template <typename T>
+        inline T Lerp(T a, T b, float t) {
+            return (a + t * (b - a));
         }
 	}
 }

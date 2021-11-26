@@ -260,6 +260,7 @@
     <ClCompile Include="Engine\Code\Application.cpp" />
     <ClCompile Include="Engine\Code\Debug Tools\Profiler.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\ParticleComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Physics\ColliderComponent.cpp" />

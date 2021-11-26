@@ -79,6 +79,25 @@ namespace Engine {
 				itr->value[name].GetArray()[1].GetFloat() };
 		}
 
+		template <>
+		Math::vec3 GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
+			return Math::vec3{
+				itr->value[name].GetArray()[0].GetFloat(),
+				itr->value[name].GetArray()[1].GetFloat(),
+				itr->value[name].GetArray()[2].GetFloat() };
+		}
+
+		template <>
+		Math::vec4 GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
+			return Math::vec4{
+				itr->value[name].GetArray()[0].GetFloat(),
+				itr->value[name].GetArray()[1].GetFloat(),
+				itr->value[name].GetArray()[2].GetFloat(),
+				itr->value[name].GetArray()[3].GetFloat() };
+		}
+
 		/*rapidjson::Value& GetArray() const {
 			return  itr->value["ma,e"].GetString();
 		}*/

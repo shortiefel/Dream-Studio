@@ -192,6 +192,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Parent\ParentManager.cpp">
       <Filter>Source Files\Parent</Filter>
+      </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\ParticleComponent.cpp">
+      <Filter>Source Files\ECS\Component\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

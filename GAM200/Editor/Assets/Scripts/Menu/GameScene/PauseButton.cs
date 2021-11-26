@@ -9,7 +9,8 @@ public class PauseButton : MonoBehaviour
 
     public override void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Console.WriteLine("Pause selected using esc");
     }
 
     public override void OnMouseOver()

@@ -77,12 +77,12 @@ namespace Engine
 		int m_PoolIndex = 999;
 		std::vector<Particle> m_ParticlePool;
 
-		void ParticleUpdate(Particle& particle, float _dt);
+		void ParticleUpdate(Particle& particle, float _dt, bool _isAngleRandom);
 
 		void ParticleEmit(const ParticleProps& particleProps, bool isAngleRandom, bool isVelocityVariation);
 
 		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", GraphicShape _shape = GraphicShape::SQUARE, 
-						  int _emitSize = 1, bool _isLooping = true, bool _loopComplete = false, bool _isAngleRandom = true, bool _isVelocityVariation = true,
+						  int _emitSize = 1, bool _isLooping = true, bool _loopComplete = false, bool _isAngleRandom = false, bool _isVelocityVariation = true,
 						  bool _active = true);
 
 

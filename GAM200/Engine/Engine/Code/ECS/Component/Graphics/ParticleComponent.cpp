@@ -39,7 +39,7 @@ namespace Engine
 	}
 
 
-	void ParticleComponent::ParticleUpdate(Particle& particle, float _dt)
+	void ParticleComponent::ParticleUpdate(Particle& particle, float _dt, bool _isAngleRandom)
 	{
 		if (particle.lifeRemaining < 0.0f)
 		{
@@ -49,7 +49,8 @@ namespace Engine
 
 		particle.lifeRemaining -= _dt;
 		particle.offsetPosition += particle.velocity * (float)_dt;
-		particle.angle += 1.0f;
+
+		if (_isAngleRandom) particle.angle += 1.0f;
 	}
 
 	/*

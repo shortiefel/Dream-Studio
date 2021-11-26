@@ -109,7 +109,7 @@ namespace Engine
 
 					for (auto& p : particle.m_ParticlePool)
 					{
-						particle.ParticleUpdate(p, _dt);
+						particle.ParticleUpdate(p, _dt, particle.isAngleRandom);
 
 						if (!p.isActive) continue; 
 

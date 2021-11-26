@@ -108,9 +108,8 @@ public class Grid
         /*GetRandomRoadPoint_Engine(out Point point);
         return point;*/
         int count = _roadList.Count - 1;
-        if (count < 0) count = 1;
+        if (count < 0) return null;
         int n = Random.Range(0, count);
-        Console.WriteLine("The count of random road " + count + " at n " + n);
         return _roadList[n];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -121,9 +120,8 @@ public class Grid
         //GetRandomSpecialStructurePoint_Engine(out Point point);
         //return point;
         int count = _specialStructure.Count - 1;
-        if (count < 0) count = 1;
+        if (count < 0) return null;
         int n = Random.Range(0, count);
-        Console.WriteLine("The count of random " + count + " at n " + n );
         return _specialStructure[n];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

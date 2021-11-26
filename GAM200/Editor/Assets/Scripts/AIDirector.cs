@@ -37,8 +37,10 @@ public class AIDirector : MonoBehaviour
 
     private void TrySpawninACar(StructureModel startStructure, StructureModel endStructure)
     {
+        Console.WriteLine("here but go in ?");
         if (startStructure != null && endStructure != null)
         {
+        Console.WriteLine(" actually inside ");
             var startRoadPosition = ((INeedingRoad)startStructure).RoadPosition;
             var endRoadPosition = ((INeedingRoad)endStructure).RoadPosition;
 
@@ -46,7 +48,13 @@ public class AIDirector : MonoBehaviour
             Debug.Log(endRoadPosition);
 
             var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
-            if (path == null) return;
+            if (path.Count == 0)
+            {
+                Console.WriteLine("No path exist");
+                return;
+            }
+            //return;
+            //if (path == null) return;
             Console.WriteLine("Set path: " + path.Count);
             //foreach (var item in path)
             //{

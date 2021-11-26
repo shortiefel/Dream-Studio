@@ -61,7 +61,7 @@ namespace Engine {
 			if (linearForcesSz >= 20) rigidBody.linearForces.clear();
 			trans.localPosition = trans.localPosition + rigidBody.linearVelocity * dt;
 			ParentManager::GetInstance().UpdateTruePos(entity_id);
-#if 0
+
 			//Angular physics
 			std::list<RotationForces> tempRotationForces;
 			float summedTorque = 0.f;
@@ -81,7 +81,6 @@ namespace Engine {
 			if (linearRotationSz >= 20) rigidBody.rotationForces.clear();
 
 			trans.angle = trans.angle + rigidBody.angularVelocity * dt;
-#endif
 
 			if (trans.angle < -360.f) trans.angle = 360.f;
 			else if (trans.angle > 360.f) trans.angle = 0.f;

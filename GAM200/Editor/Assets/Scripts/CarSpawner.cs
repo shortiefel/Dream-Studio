@@ -17,7 +17,7 @@ public class CarSpawner : MonoBehaviour
 
     public override void Update()
     {
-        //timer += Time.deltaTime;
+        timer += Time.deltaTime;
         if (timer > maxTimer)
         {
             aiDirector.SpawnAHouseCar(structureModel);

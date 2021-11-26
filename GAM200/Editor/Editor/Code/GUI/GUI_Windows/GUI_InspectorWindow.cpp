@@ -950,12 +950,6 @@ namespace Editor {
 				}
 
 
-
-				/*
-				*	Color component
-				*/
-
-
 				/*
 				*	UI component
 				*/

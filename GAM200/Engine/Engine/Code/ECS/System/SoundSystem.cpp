@@ -30,7 +30,6 @@ namespace Engine
 	FMOD::ChannelGroup* SoundComponent::SFXGroup = nullptr;
 
 	
-	
 	bool operator!(FMOD_RESULT res)
 	{
 		return res != FMOD_OK;
@@ -87,14 +86,10 @@ namespace Engine
 		return true;
 	}
 
-
-
-
-
 	int SoundSystem::SoundPlay(const std::string& _path, bool _pause)
 	{
 		SoundGrp sg = SoundGrp::MASTER;
-		int ID = SoundComponent::ChannelID;
+		int ID = SoundComponent::ChannelID++;
 		auto tFoundIt = SoundComponent::_soundMap.find(_path);
 		FMOD::Sound* sound;
 		
@@ -160,7 +155,7 @@ namespace Engine
 		std::cout << "channel ID Stop" << channelID << "\n";
 		auto it = SoundComponent::channelMap.find(channelID);
 		std::cout << "Sound Stop"  << channelID << "\n";
-		if (it != SoundComponent::channelMap.end())
+		if (it == SoundComponent::channelMap.end())
 		{
 			SoundComponent::SFXGroup->stop();
 			SoundComponent::MusicGroup->stop();

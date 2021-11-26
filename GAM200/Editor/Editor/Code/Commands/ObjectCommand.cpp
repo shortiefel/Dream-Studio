@@ -95,20 +95,39 @@ namespace Editor
 
 	void ObjectAddCommand::redo()
 	{
-		//if (EntityId_Check(selectable)) {
-		//	return;
-		//}
-		//auto& entityMap = Engine::dreamECSGame->GetUsedEntityMap();
-		//if (entityMap.empty()) {
-		//	return;
-		//}
-		//const auto& itr = entityMap.find(selectable);
-		//if (itr == entityMap.end()) {
-		//	return;
-		//}
-		Engine::dreamECSGame->AddComponent<Engine::TransformComponent>(selectable);
+		Engine::TransformComponent* transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected));
+		if (transform != nullptr)
+		{
+			Engine::dreamECSGame->AddComponent<Engine::TransformComponent>(GetTarget(entity_selected));
+
+		}
 	}
 
+	void ObjectTransformCommand::undo()
+	{
+		Engine::TransformComponent* transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected));
+		if (transform != nullptr)
+		{
+			//Position
+			transform->position = transform->localPosition;
+			transform->position -= Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected)).localPosition;
+		}
+	}
+
+	void ObjectTransformCommand::redo()
+	{
+
+	}
+
+	void ObjectTransformCommand::record()
+	{
+
+	}
+
+	void ObjectTransformCommand::execute()
+	{
+
+	}
 
 	void ObjectDeleteCommand::undo()
 	{

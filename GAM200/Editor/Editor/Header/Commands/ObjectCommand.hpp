@@ -64,6 +64,24 @@ namespace Editor {
 
 	};
 
+	class ObjectTransformCommand : public ObjectCommand
+	{
+		std::map<int, Engine::Entity_id> entity_selected{};
+
+	public:
+
+		//undo the changes made to the objects
+		void undo() override;
+
+		//redo the changes made to the objects
+		void redo() override;
+
+		void record() override;
+
+		void execute() override;
+
+	};
+
 	//commands for undo and redo deleting game object
 	class ObjectDeleteCommand : public ObjectCommand
 	{

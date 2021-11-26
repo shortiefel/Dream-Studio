@@ -99,10 +99,6 @@ namespace Editor {
 
 					}
 				}
-				
-				//record the object state before change
-				//std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectNameCommand>();
-				//Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 
 				ImGui::PopItemWidth();
 
@@ -278,11 +274,8 @@ namespace Editor {
 					}
 
 					//record the object state before change
-					std::shared_ptr<ICommand> new_add_command = std::make_shared<ObjectAddCommand>();
-					UndoRedoManager::GetInstance().RecordState(new_add_command);
-
-					//std::shared_ptr<Engine::ICommand> new_delete_command = std::make_shared<Engine::ObjectDeleteCommand>();
-					//Engine::UndoRedoManager::GetInstance().RecordState(new_delete_command);
+					std::shared_ptr<ICommand> new_command = std::make_shared<ObjectTransformCommand>();
+					UndoRedoManager::GetInstance().RecordState(new_command);
 				}
 
 				/*

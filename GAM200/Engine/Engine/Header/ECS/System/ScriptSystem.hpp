@@ -46,7 +46,7 @@ namespace Engine {
 		static void Stop();
 		Compile CS files together
 		-----------------------------------------------------*/
-		bool CompileCS(bool play);
+		bool CompileCS();
 		/*-----------------------------------------------------
 		Update information by
 		-Reinstantiating Classes

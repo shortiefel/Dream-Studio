@@ -46,7 +46,7 @@ namespace Engine {
 		static void Stop();
 		Compile CS files together
 		-----------------------------------------------------*/
-		bool CompileCSInternal(bool play);
+		bool CompileCSInternal();
 		/*-----------------------------------------------------
 		Called when play button is pressed
 		-Stop child domain
@@ -82,10 +82,6 @@ namespace Engine {
 		-Set function ptr that will be overwritten in editor to display exception
 		-----------------------------------------------------*/
 		void SetDisplayFuncPtr(void(*fp)(std::string));
-		/*-----------------------------------------------------
-		-Set function ptr that will be overwritten in editor to display compile data
-		-----------------------------------------------------*/
-		void SetCompileFuncPtr(void(*fp)());
 	}
 }
 

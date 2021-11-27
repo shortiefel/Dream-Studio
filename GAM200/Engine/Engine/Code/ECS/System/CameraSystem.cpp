@@ -154,12 +154,12 @@ namespace Engine
         return
             Math::mat3(2.f / (Settings::gameAR * FIXED_UI_HEIGHT * camFov), 0.f, 0.f,
                 0.f, 2.f / (FIXED_UI_HEIGHT * camFov), 0.f,
-                0.f, 0.f, 1.f)
-            *
+                0.f, 0.f, 1.f);
+            //*
 
-            Math::mat3(1.f, 0.f, 0.f,
-                0.f, 1.f, 0.f,
-                -camPosition.x, -camPosition.y, 1.f);
+            //Math::mat3(1.f, 0.f, 0.f,
+            //    0.f, 1.f, 0.f,
+            //    -camPosition.x, -camPosition.y, 1.f);
     }
 
     Math::mat4 CameraSystem::GetTransformUIMat4(){

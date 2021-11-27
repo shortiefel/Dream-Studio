@@ -34,7 +34,6 @@ namespace Engine
 		void Destroy();
 
 		void Render(Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI(), bool gameDraw = true);
-		void Reset();
 	private:
 
 		SINGLETON_SETUP(FontSystem);

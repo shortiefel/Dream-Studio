@@ -124,9 +124,7 @@ namespace Editor {
 					return;
 				}
 
-				Math::mat3 camMatrix = Engine::CameraSystem::GetInstance().GetTransform();
-
-				Math::mat3 inverseCamMatrix = Math::Inverse(camMatrix);
+				Math::mat3 inverseCamMatrix = Math::Inverse(Engine::CameraSystem::GetInstance().GetTransform());
 
 				int mouseX = (int)_mousePos.x;
 				int mouseY = (int)_mousePos.y;
@@ -136,7 +134,9 @@ namespace Editor {
 					
 					Engine::Graphic::PickingCheckCollider(mousePos, game_viewportSize, inverseCamMatrix,
 						[&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, true);  }, 
-						[&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); });
+						[&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); },
+						Math::Inverse(Engine::CameraSystem::GetInstance().GetTransformUI()));
+						//Math::Inverse(Engine::CameraSystem::GetInstance().GetTransformNoTranslate()));
 				}
 
 				ImGui::EndChild();

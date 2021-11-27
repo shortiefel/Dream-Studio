@@ -86,12 +86,16 @@ namespace Engine {
 		*/
 		//Callback is called when mouse is over entity while CallbackFail is called when there is not over entity (Calls when callback is not called)
 		template<typename Func, typename Func2>
-		void PickingCheckCollider(const Math::vec3& mousePos, const Math::vec2& viewportSize, const Math::mat3& inverseCamMatrix, Func Callback, Func2 CallbackFail) {
-			Math::vec3 screenPos = mousePos;
-			screenPos = ScreenToWorldPoint(screenPos, inverseCamMatrix, Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
+		void PickingCheckCollider(const Math::vec3& mousePos, const Math::vec2& viewportSize, const Math::mat3& inverseCamMatrix, Func Callback, Func2 CallbackFail, const Math::mat3& inverseCamMatrixUI) {
+			
+			Math::vec3 worldPos = ScreenToWorldPoint(mousePos, inverseCamMatrix, Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
 				0.f, 2.f / viewportSize.y, 0.f,
 				-1.f, -1.f, 1.f));
+			Math::vec3 uiPos = ScreenToWorldPoint(mousePos, inverseCamMatrixUI, Math::mat3(2.f / viewportSize.x, 0.f, 0.f,
+					0.f, 2.f / viewportSize.y, 0.f,
+					-1.f, -1.f, 1.f));
 
+			Math::vec3 screenPos;
 
 			const auto& transformArray = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
 			for (const auto& transform : transformArray) {
@@ -101,11 +105,23 @@ namespace Engine {
 
 				Engine::ColliderComponent* colPtr = Engine::dreamECSGame->GetComponentPTR<ColliderComponent>(entity_id);
 				if (colPtr == nullptr) continue;
+				if (!colPtr->isActive) continue;
 
 				Engine::ColliderComponent collider;
 				collider.offset_position = colPtr->offset_position + transform.position;
 				collider.offset_scale = colPtr->offset_scale * transform.scale;
 				collider.angle = colPtr->angle + transform.angle;
+
+				bool uiTest = Engine::dreamECSGame->GetComponentPTR<FontComponent>(entity_id) != nullptr ||
+					Engine::dreamECSGame->GetComponentPTR<UIComponent>(entity_id) != nullptr;
+
+				if (!uiTest) {
+					screenPos = worldPos;
+				}
+				else {
+					screenPos = uiPos;
+				}
+
 				if (Math::epsilonCheck(collider.angle)) {
 					if (Engine::CollisionImplementation::PointToSquareAABB(Math::vec2{ screenPos.x, screenPos.y }, collider)) {
 						Callback(entity_id);

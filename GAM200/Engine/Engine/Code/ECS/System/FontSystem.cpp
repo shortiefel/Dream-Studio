@@ -30,7 +30,7 @@ namespace Engine
 {
 	//constexpr float FONT_MULTIPLIER = 50.f;
 
-	static Math::vec2 prevPos;
+	//static Math::vec2 prevPos;
 
 	void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw)
 	{
@@ -64,7 +64,7 @@ namespace Engine
 		// Set uniform
 		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
 
-		Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+		//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
 		const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
 		for (const auto& text : fontArray)
 		{
@@ -91,12 +91,12 @@ namespace Engine
 			//	//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / 75, transform->angle, text.filepath, text.text, text.colour);
 			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
 			//}
-			if (gameDraw) {
-				//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
-				transform->localPosition += camPos - prevPos;
-				ParentManager::GetInstance().UpdateTruePos(entity_id);
-				//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
-			}
+			//if (gameDraw) {
+			//	//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+			//	//transform->localPosition += camPos - prevPos;
+			//	//ParentManager::GetInstance().UpdateTruePos(entity_id);
+			//	//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+			//}
 			//else {
 			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
 			//}
@@ -105,7 +105,7 @@ namespace Engine
 			//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
 
 		}
-		prevPos = camPos;
+		//prevPos = camPos;
 
 		// For transparency of glyph textures
 		glEnable(GL_BLEND);
@@ -125,10 +125,6 @@ namespace Engine
 		_fbo->Unbind();
 #endif
 		
-	}
-
-	void FontSystem::Reset() {
-		prevPos = CameraSystem::GetInstance().GetPosition();
 	}
 
 	// Init function for FontSystem

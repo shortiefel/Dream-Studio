@@ -1,17 +1,12 @@
 ﻿using System;
-
 public class HowToPlayButton : MonoBehaviour
 {
-    public override void Start()
-    {
-        Console.WriteLine("going into howtoplay scene");
-    }
-
-    public override void Update()
-    {
-
-    }
-
+    //GameObject howToPlayScreen;
+    //PauseMenu pauseMenu;
+    //public override void Start()
+    //{
+    //    pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
+    //}
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))

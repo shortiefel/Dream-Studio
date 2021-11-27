@@ -80,10 +80,10 @@ namespace Engine {
 	bool CallMouseOverlapFunc(const MouseOverlapColliderEvent& e);
 	bool CallFixedUpdate(const FixedUpdateEvent& e);
 
-	bool ScriptSystem::CompileCS(bool play) {
+	bool ScriptSystem::CompileCS() {
 		PROFILER_START("Scripting");
 
-		return Scripting::CompileCSInternal(play);
+		return Scripting::CompileCSInternal();
 	}
 
 	void ScriptSystem::PlayInit() {
@@ -192,7 +192,8 @@ namespace Engine {
 		if (!csScript) return false;
 
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
-			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
+			if(csScriptInstance.isActive)
+				Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
 		}
 		return true;
 	}

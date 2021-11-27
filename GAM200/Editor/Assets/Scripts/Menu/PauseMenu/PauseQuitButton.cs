@@ -1,21 +1,16 @@
-﻿using System;
+﻿
 public class PauseQuitButton : MonoBehaviour
 {
+    PauseMenu pauseMenu;
     public override void Start()
     {
-        Console.WriteLine("going into Quit scene");
+        pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
     }
-
-    public override void Update()
-    {
-
-    }
-
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            Console.WriteLine("Quit selected");
+            pauseMenu.QuitAction();
         }
     }
 }

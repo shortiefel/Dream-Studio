@@ -34,17 +34,5 @@ namespace Editor {
 		Engine::SetGetViewportFunc(GUI_Windows::GetViewport);
 		Engine::SetGetMousePositionFunc(GUI_Windows::GetMousePositionGameWindow);
 		Engine::Scripting::SetDisplayFuncPtr([](std::string str) { GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ str.c_str() }); });
-		Engine::Scripting::SetCompileFuncPtr([]() {
-			//Read compile result
-			std::ifstream fs{ "Data/msbuild.log" };
-			if (fs.is_open()) {
-				std::ostringstream buffer;
-				buffer << fs.rdbuf();
-
-				GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
-			}
-
-			fs.close();
-			});
 	}
 }

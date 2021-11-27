@@ -35,7 +35,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 namespace Engine {
-	static Math::vec2 prevPos;
+	//static Math::vec2 prevPos;
 
 	void UISystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw) {
 		PROFILER_START("Rendering");
@@ -66,7 +66,7 @@ namespace Engine {
 
 		GraphicImplementation::Renderer::BeginBatch(!gameDraw);
 
-		Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+		//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
 		const auto& uiArray = dreamECSGame->GetComponentArrayData<UIComponent>();
 		for (const auto& ui : uiArray) {
 			const Entity_id& entity_id = ui.GetEntityId();
@@ -76,17 +76,17 @@ namespace Engine {
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			if (gameDraw) {
-				transform->localPosition += camPos - prevPos;
-				ParentManager::GetInstance().UpdateTruePos(entity_id);
-				//GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl);
-			}
+			//if (gameDraw) {
+			//	//transform->localPosition += camPos - prevPos;
+			//	//ParentManager::GetInstance().UpdateTruePos(entity_id);
+			//	//GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl);
+			//}
 			//else {
 			//	GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl);
 			//}
 			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl);
 		}
-		prevPos = camPos;
+		//prevPos = camPos;
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -106,10 +106,6 @@ namespace Engine {
 #else
 		_fbo->Unbind();
 #endif
-	}
-
-	void UISystem::Reset() {
-		prevPos = CameraSystem::GetInstance().GetPosition();
 	}
 
 	bool UISystem::Create() {

@@ -6,6 +6,7 @@ public class PlacementManager : MonoBehaviour
 {
     public int width, height;
     Grid placementGrid;
+    RoadFixer roadFixer;
     //private Transform transform;
 
     private Dictionary<Vector2Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector2Int, StructureModel>();
@@ -17,7 +18,8 @@ public class PlacementManager : MonoBehaviour
         width = 10; height = 10;
         placementGrid = new Grid(width, height);
         transform = GetComponent<Transform>();
-
+        roadFixer = GameObject.Find("RoadManager").GetComponent<RoadFixer>();
+       
         temporaryRoadobjects = new Dictionary<Vector2Int, StructureModel>();
         structureDictionary = new Dictionary<Vector2Int, StructureModel>();
     }
@@ -105,14 +107,29 @@ public class PlacementManager : MonoBehaviour
         return placementGrid[position.x, position.y] == type;
     }
 
-    internal void PlaceTemporaryStructure(Vector2Int position, Prefab structurePrefab, CellType type, int layer)
+    internal bool TryAddRoad(Vector2Int position)
+    {
+        List<Vector2Int> listOfEmpty = GetNeighboursOfTypeFor(position, CellType.Empty);
+        int cnt = listOfEmpty.Count;
+        if (cnt <= 0) return false;
+        int index = Random.Range(0, cnt - 1);
+        Console.WriteLine("Index: " + index + " sz " + cnt + " in placementManager");
+        Vector2Int roadPos = listOfEmpty[index];
+
+        PlaceTemporaryStructure(roadPos, roadFixer.deadEnd, CellType.Road, 1, true);
+
+        return true;
+    }
+
+    internal void PlaceTemporaryStructure(Vector2Int position, Prefab structurePrefab, CellType type, int layer, bool single = false)
     {
         placementGrid[position.x, position.y] = type;
         StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, layer);
         
         //GameObject newStructure = Instantiate(roadStraight, new Vector3 (position.x, position.y, 0), Quaternion.identity);
         //Debug.Log("Placed road");
-        temporaryRoadobjects.Add(position, structure);
+        if (!single)
+            temporaryRoadobjects.Add(position, structure);
     }
 
     internal List<Vector2Int> GetNeighboursOfTypeFor(Vector2Int position, CellType type)

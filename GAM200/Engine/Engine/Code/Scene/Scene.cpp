@@ -51,20 +51,9 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
 namespace Engine {
-    /*
-    * Reset font and ui position by recalculating camera position
-    */
-    void Reset() {
-        //Recalculate camera position
-        CameraSystem::GetInstance().Update(0.f);
-        FontSystem::GetInstance().Reset();
-        UISystem::GetInstance().Reset();
-    }
 
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
-        //std::cout << sceneName << " new scene \n";
-        Reset();
 
         SoundSystem::SoundInit();
         std::cout << "loaded sound \n";
@@ -91,10 +80,9 @@ namespace Engine {
 
     //When user click play to run their game
     bool Scene::Play() {
-        if (!ScriptSystem::GetInstance().CompileCS(true)) {
+        if (!ScriptSystem::GetInstance().CompileCS()) {
             return false;
         }
-        
         GameState::GetInstance().SetPlaying(true);
 
         GameSceneSerializer::SerializeScene("temporary");
@@ -124,16 +112,14 @@ namespace Engine {
         Game::Grid::GetInstance().DestroyGrid();
 
         if (deserialize) {
-            std::cout << "deserialize------------------\n";
             GameState::GetInstance().SetPlaying(false);
             GameSceneSerializer::DeserializeScene("temporary");
-            Reset();
         }
 
     }
 
     void Scene::Save() {
-        ScriptSystem::GetInstance().CompileCS(false);
+        ScriptSystem::GetInstance().CompileCS();
         ScriptSystem::GetInstance().UpdateMapData();
 
         GameSceneSerializer::SerializeScene(sceneName);
@@ -169,11 +155,12 @@ namespace Engine {
         Math::vec2 pos = Input::GetMousePosition();
         pos.y = Window::GetInstance().GetWindowSize().y - pos.y;
 
-        Math::mat3 camMatrix = Engine::CameraSystem::GetInstance().GetTransform();
-        Math::mat3 inverseCamMatrix = Math::Inverse(camMatrix);
+        Math::mat3 inverseCamMatrix = Math::Inverse(Engine::CameraSystem::GetInstance().GetTransform());
+
         Engine::Graphic::PickingCheckCollider(Math::vec3{ pos.x, pos.y, 1.f }, game_viewportSize, inverseCamMatrix,
             [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, true);  },
-            [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); });
+            [&](const Engine::Entity& entity) { Engine::Graphic::RecordMouseOverlap(entity.id, false); },
+            Math::Inverse(Engine::CameraSystem::GetInstance().GetTransformUI()));
 
         GraphicSystem::GetInstance().Render(dt);
         FontSystem::GetInstance().Render();

@@ -1,10 +1,100 @@
 ﻿
-using System.Collections;
-using System.Collections.Generic;
 
+using System;
 
 public class PauseMenu : MonoBehaviour
 {
+    GameObject resume;
+    GameObject howToPlay;
+    //GameObject options;
+    GameObject pauseQuit;
+    GameObject areYouSure;
+    GameObject quitYes;
+    GameObject quitNo;
+
+    bool pauseState;
+
+    public override void Start()
+    {
+        resume = GameObject.Find("ResumeText");
+        howToPlay = GameObject.Find("HowToText");
+        //ob = GameObject.Find("OptionText");
+        pauseQuit = GameObject.Find("QuitText");
+
+        areYouSure = GameObject.Find("AreYouSureText");
+        quitYes = GameObject.Find("YesText");
+        quitNo = GameObject.Find("NoText");
+
+        pauseState = false;
+    }
+
+    private void PauseAction()
+    {
+        pauseState = !pauseState;
+
+        if(pauseState)
+        {
+            Console.WriteLine("Pausing now");
+            Enable<Transform>(resume.transform);
+            Enable<Transform>(howToPlay.transform);
+            Enable<Transform>(pauseQuit.transform);
+        }
+        else
+        {
+            Console.WriteLine("Unpausing now");
+            Disable<Transform>(resume.transform);
+            Disable<Transform>(howToPlay.transform);
+            Disable<Transform>(pauseQuit.transform);
+
+            Disable<Transform>(areYouSure.transform);
+            Disable<Transform>(quitYes.transform);
+            Disable<Transform>(quitNo.transform);
+        }
+        
+        
+
+    }
+
+    public override void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseAction();
+        }
+    }
+
+    public override void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(MouseCode.Left))
+        {
+            PauseAction();
+        }
+    }
+    internal void ResumeAction()
+    {
+        PauseAction();
+    }
+
+    internal void QuitAction()
+    {
+        Console.WriteLine("Quit selected");
+        Enable<Transform>(areYouSure.transform);
+        Enable<Transform>(quitYes.transform);
+        Enable<Transform>(quitNo.transform);
+    }
+
+    internal void QuitYesAction()
+    {
+        Console.WriteLine("Quiting");
+    }
+
+    internal void QuitNoAction()
+    {
+        Console.WriteLine("Quit stopped");
+        Disable<Transform>(areYouSure.transform);
+        Disable<Transform>(quitYes.transform);
+        Disable<Transform>(quitNo.transform);
+    }
 
     /*// Start is called before the first frame update
     public static bool GameIsPaused = false;

@@ -50,7 +50,6 @@ namespace Engine {
 		MonoImage* imageCore;
 		//Does nothing in base game
 		void(*displayFuncPtr)(std::string) = [](std::string) {};
-		void(*compileFuncPtr)() = []() {};
 
 		CSType GetCSType(MonoType* mt);
 
@@ -140,7 +139,24 @@ namespace Engine {
 			}
 		}
 
-		bool CompileCSInternal(bool play) {
+		bool CheckIfCompileSuccessful() {
+			bool result = false;
+			std::ifstream fs{ "Data/msbuild.log" };
+			if (!fs.is_open()) {
+				std::cout << "Unabled to check compilation state\n";
+				return false;
+			}
+
+			std::ostringstream buffer;
+			buffer << fs.rdbuf();
+			if (buffer.str().find("FAILED") == std::string::npos) result = true;
+
+			fs.close();
+
+			return result;
+		}
+
+		bool CompileCSInternal() {
 			Scripting::DestroyChildDomain();
 #if 0
 			int status = std::system("CompileCS.bat");
@@ -167,10 +183,9 @@ namespace Engine {
 			CloseHandle(pi.hProcess);
 			CloseHandle(pi.hThread);
 
-			if (play)
-				compileFuncPtr();
-
-			return true;
+			bool result = CheckIfCompileSuccessful();
+			std::cout << result << " -------------------------------\n";
+			return result;
 #endif
 		}
 
@@ -441,10 +456,6 @@ namespace Engine {
 
 		void SetDisplayFuncPtr(void(*fp)(std::string)) {
 			displayFuncPtr = fp;
-		}
-
-		void SetCompileFuncPtr(void(*fp)()) {
-			compileFuncPtr = fp;
 		}
 
 	}

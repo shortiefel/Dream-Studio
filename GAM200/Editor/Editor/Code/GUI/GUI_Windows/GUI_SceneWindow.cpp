@@ -143,16 +143,6 @@ namespace Editor {
 				if (ImGui::BeginDragDropTarget())
 				{
 					ImGui::Text("I'm Dropping.");
-					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
-					{
-						Engine::dreamECSGame->DuplicateEntityAsInstance(GetTarget(entity_selected));
-					}
-					ImGui::EndDragDropTarget();
-				}
-
-				if (ImGui::BeginDragDropTarget())
-				{
-					ImGui::Text("I'm Dropping.");
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 					{
 						const wchar_t* path = (const wchar_t*)payload->Data;
@@ -164,13 +154,19 @@ namespace Editor {
 							//std::exit(EXIT_FAILURE);
 						}
 						
-						if (!scenePath.filename().string().empty())
-						{
-							REMOVE_FROM_SCENEPATH;
-							scenePath.replace_extension("");
-							Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.string()));
+						else {
+							if (!scenePath.filename().string().empty())
+							{
+								REMOVE_FROM_SCENEPATH;
+								scenePath.replace_extension("");
+								Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.string()));
+							}
 						}
-					
+					}
+
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
+					{
+						Engine::dreamECSGame->DuplicateEntityAsInstance(GetTarget(entity_selected));
 					}
 					ImGui::EndDragDropTarget();
 				}

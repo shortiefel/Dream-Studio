@@ -87,12 +87,13 @@ namespace Editor {
 							std::cout << "Unable to load scene file\n";
 							//std::exit(EXIT_FAILURE);
 						}
-							
-						if (!scenePath.filename().string().empty())
-						{
-							REMOVE_FROM_SCENEPATH;
-							scenePath.replace_extension("");
-							Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.string()));
+						else {
+							if (!scenePath.filename().string().empty())
+							{
+								REMOVE_FROM_SCENEPATH;
+								scenePath.replace_extension("");
+								Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.string()));
+							}
 						}
 					}
 					ImGui::EndDragDropTarget();

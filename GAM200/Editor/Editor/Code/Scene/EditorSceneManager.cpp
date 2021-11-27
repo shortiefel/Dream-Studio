@@ -50,7 +50,7 @@ namespace Editor {
         }
 
         fs.close();
-            
+        
         if (result)
             return false;
         return true;
@@ -59,7 +59,7 @@ namespace Editor {
     void EditorSceneManager::Stop() {
         GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Game Stopped\n" });
 
-        Engine::GameState::GetInstance().SetPlaying(false);
+        //Engine::GameState::GetInstance().SetPlaying(false);
         //Engine::SceneManager::GetInstance().ChangeScene("");
         Engine::SceneManager::GetInstance().Stop();
     }

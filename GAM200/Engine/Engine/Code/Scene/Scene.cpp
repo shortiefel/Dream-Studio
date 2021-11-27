@@ -97,8 +97,6 @@ namespace Engine {
     }
 
     void Scene::Stop(bool deserialize) {
-        //GameState::GetInstance().SetPlaying(false);
-
         ScriptSystem::GetInstance().DestroyChildDomain();
 
         //SoundSystem::SoundStop(SoundComponent::ChannelID);

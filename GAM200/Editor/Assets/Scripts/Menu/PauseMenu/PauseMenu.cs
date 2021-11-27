@@ -86,6 +86,7 @@ public class PauseMenu : MonoBehaviour
     internal void QuitYesAction()
     {
         Console.WriteLine("Quiting");
+        Application.Quit();
     }
 
     internal void QuitNoAction()

@@ -20,7 +20,7 @@ public class Application
 {
     public static void Quit()
     {
-        Debug.Log("Quit does nothing yet");
+        Quit_Engine();
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void Quit_Engine();

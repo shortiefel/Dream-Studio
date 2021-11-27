@@ -39,6 +39,7 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/ResourceSet.hpp"
 
 #include "Engine/Header/Event/WindowEvent.hpp"
+#include "Engine/Header/Event/EventDispatcher.hpp"
 #include "Engine/Header/Window.hpp"
 
 #include "Engine/Header/Script/InternalCall/GridInternalCall.hpp"
@@ -229,6 +230,11 @@ namespace Engine {
 	void GetNormalised_Engine(Math::vec2* vec);
 	void DotProduct_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs);
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Application
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void Quit_Engine();
+
 
 	void RegisterInternalCall() {
 		//Register Event callback
@@ -376,6 +382,12 @@ namespace Engine {
 		mono_add_internal_call("Vector2::GetLength_Engine", GetLength_Engine);
 		mono_add_internal_call("Vector2::GetNormalised_Engine", GetNormalised_Engine);
 		mono_add_internal_call("Vector2::DotProduct_Engine", DotProduct_Engine);
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Application
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		mono_add_internal_call("Application::Quit_Engine", Quit_Engine);
+
 
 		RegisterGridInternalCall();
 	}
@@ -895,5 +907,17 @@ namespace Engine {
 
 	void DotProduct_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs) {
 		*outFloat = Math::dot(lhs, rhs);
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Application
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void Quit_Engine() {
+#ifdef _GAME_BUILD
+		Engine::WindowCloseEvent event;
+		Engine::EventDispatcher::SendEvent(event);
+#else
+		SceneManager::GetInstance().Stop();
+#endif
 	}
 }

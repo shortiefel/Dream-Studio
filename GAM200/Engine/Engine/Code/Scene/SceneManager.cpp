@@ -31,6 +31,8 @@ Technology is prohibited.
 namespace Engine {
     Math::vec2 sceneManagerViewportSize{}; //Window size
 
+    bool endState = false;
+
     bool gamevpCallBack(const WindowResizeEvent& e) {
         Math::uvec2 sz = e.GetSize();
         sceneManagerViewportSize = Math::vec2{ static_cast<float>(sz.x), static_cast<float>(sz.y) };
@@ -71,6 +73,12 @@ namespace Engine {
             //    tem = true;
             //}
 
+            if (endState) {
+                endState = false;
+                currentScene->Stop(true);
+                return;
+            }
+
             currentScene->Stop(false);
             delete currentScene;
 
@@ -104,7 +112,9 @@ namespace Engine {
     }
 
     void SceneManager::Stop() {
-        currentScene->Stop(true);
+        //currentScene->Stop(true);
+        endState = true;
+        ChangeScene("");
     }
 
     void SceneManager::Save() {

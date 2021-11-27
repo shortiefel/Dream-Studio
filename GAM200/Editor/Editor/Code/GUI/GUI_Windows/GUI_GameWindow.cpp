@@ -85,7 +85,7 @@ namespace Editor {
 						if (scenePath.extension().string() != ".scene")
 						{
 							std::cout << "Unable to load scene file\n";
-							std::exit(EXIT_FAILURE);
+							//std::exit(EXIT_FAILURE);
 						}
 							
 						if (!scenePath.filename().string().empty())

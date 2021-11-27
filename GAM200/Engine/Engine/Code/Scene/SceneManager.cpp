@@ -75,10 +75,10 @@ namespace Engine {
             delete currentScene;
 
             //currentSceneName = sceneName;
-            currentScene = new Scene{ nextScene };
+            currentScene = new Scene{ nextScene, GameState::GetInstance().GetPlaying() };
             //currentScene = new Scene{ nextScene, GameState::GetInstance().GetPlaying() };
             nextScene = std::string{};
-            if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
+            //if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
         }
 	}
 

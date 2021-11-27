@@ -50,8 +50,13 @@ namespace Engine
         GameSceneSerializer::DeserializeSetting();
 
         // Create window and instantiate managers
+#ifdef _GAME_BUILD
+        if (!Window::GetInstance().Create("Dream Express", Settings::windowWidth, Settings::windowHeight))
+            LOG_ERROR("Window creation has failed");
+#else
         if (!Window::GetInstance().Create("Dream Engine", Settings::windowWidth, Settings::windowHeight))
             LOG_ERROR("Window creation has failed");
+#endif
 
         Engine::EngineCore::GetInstance().Create();
         WindowCloseEvent::RegisterFunction(&OnWindowClose);

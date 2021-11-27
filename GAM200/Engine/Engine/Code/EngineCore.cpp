@@ -17,7 +17,6 @@ Technology is prohibited.
 #include "Engine/Header/Debug Tools/Logging.hpp"
 #include "Engine/Header/EngineCore.hpp"
 
-#include "Engine/Header/Layer/LayerStack.hpp"
 #include "Engine/Header/Management/ResourceManager.hpp"
 #include "Engine/Header/Management/AssetManager.hpp"
 #include "Engine/Header/ECS/Factory.hpp"
@@ -30,13 +29,6 @@ Technology is prohibited.
 namespace Engine {
 
 	void EngineCore::Create() {
-		if (!LayerStack::Create()) LOG_ERROR("LayerStack creation has failed");
-
-		//const char* glsl_version = "#version 450";
-		//if (!GUILayer::Create(Window::GetGLFWwindow(), glsl_version)) LOG_ERROR("GUILayer creation has failed");
-
-		//LayerStack::AddOverlayLayer(GUILayer::Get());
-
 		Factory::Create();
 		ResourceManager::GetInstance().Create();
 		AssetManager::GetInstance().Create();
@@ -53,8 +45,6 @@ namespace Engine {
 		ResourceManager::GetInstance().Destroy();
 
 		Factory::Destroy();
-		//GUILayer::Destroy();
-		LayerStack::Destroy();
 	}
 
 }

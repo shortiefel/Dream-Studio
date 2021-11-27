@@ -51,13 +51,20 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
 namespace Engine {
-    Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
-        GameSceneSerializer::DeserializeScene(sceneName);
-     
+    /*
+    * Reset font and ui position by recalculating camera position
+    */
+    void Reset() {
         //Recalculate camera position
         CameraSystem::GetInstance().Update(0.f);
         FontSystem::GetInstance().Reset();
         UISystem::GetInstance().Reset();
+    }
+
+    Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
+        GameSceneSerializer::DeserializeScene(sceneName);
+        //std::cout << sceneName << " new scene \n";
+        Reset();
 
         SoundSystem::SoundInit();
         std::cout << "loaded sound \n";
@@ -102,7 +109,7 @@ namespace Engine {
     }
 
     void Scene::Stop(bool deserialize) {
-        GameState::GetInstance().SetPlaying(false);
+        //GameState::GetInstance().SetPlaying(false);
 
         ScriptSystem::GetInstance().DestroyChildDomain();
 
@@ -117,8 +124,10 @@ namespace Engine {
         Game::Grid::GetInstance().DestroyGrid();
 
         if (deserialize) {
-            //std::cout << "deserialize\n";
+            std::cout << "deserialize------------------\n";
+            GameState::GetInstance().SetPlaying(false);
             GameSceneSerializer::DeserializeScene("temporary");
+            Reset();
         }
 
     }

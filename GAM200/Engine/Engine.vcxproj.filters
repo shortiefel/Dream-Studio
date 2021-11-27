@@ -124,9 +124,6 @@
     <ClCompile Include="Engine\Code\AI\AISystem.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Layer\LayerStack.cpp">
-      <Filter>Source Files\Layer</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\Input\Input.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
@@ -192,7 +189,7 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Parent\ParentManager.cpp">
       <Filter>Source Files\Parent</Filter>
-      </ClCompile>
+    </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\ParticleComponent.cpp">
       <Filter>Source Files\ECS\Component\Graphic</Filter>
     </ClCompile>
@@ -395,12 +392,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Input\InputCode.hpp">
       <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Layer\Layer.hpp">
-      <Filter>Header Files\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\Layer\LayerStack.hpp">
-      <Filter>Header Files\Layer</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Event\KeyEvent.hpp">
       <Filter>Header Files\Event</Filter>
@@ -746,9 +737,6 @@
     <Filter Include="Source Files\AI">
       <UniqueIdentifier>{447e043b-743e-4bf1-8649-0c7fe3055336}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Layer">
-      <UniqueIdentifier>{08215d51-6f14-448e-b7e5-fb42968bc7a3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{ca72a502-f4e7-4f65-b917-252ad980bb53}</UniqueIdentifier>
     </Filter>
@@ -829,9 +817,6 @@
     </Filter>
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{f1da21ba-bd50-4a2e-94ff-e3c97581b11a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Layer">
-      <UniqueIdentifier>{0636b0ea-a44c-4990-a4b1-ad780fa297e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Debug Tools">
       <UniqueIdentifier>{321d3c7a-65cc-4751-aecf-588467a964b2}</UniqueIdentifier>

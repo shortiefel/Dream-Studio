@@ -298,7 +298,6 @@
     <ClCompile Include="Engine\Code\Graphic\ResourceSet.cpp" />
     <ClCompile Include="Engine\Code\Grid\Grid.cpp" />
     <ClCompile Include="Engine\Code\Input\Input.cpp" />
-    <ClCompile Include="Engine\Code\Layer\LayerStack.cpp" />
     <ClCompile Include="Engine\Code\Management\AssetManager.cpp" />
     <ClCompile Include="Engine\Code\Management\FileWindowDialog.cpp" />
     <ClCompile Include="Engine\Code\Management\GameState.cpp" />
@@ -441,8 +440,6 @@
     <ClInclude Include="Engine\Header\Grid\Grid.hpp" />
     <ClInclude Include="Engine\Header\Input\Input.hpp" />
     <ClInclude Include="Engine\Header\Input\InputCode.hpp" />
-    <ClInclude Include="Engine\Header\Layer\Layer.hpp" />
-    <ClInclude Include="Engine\Header\Layer\LayerStack.hpp" />
     <ClInclude Include="Engine\Header\Management\AssetManager.hpp" />
     <ClInclude Include="Engine\Header\Management\FileWindowDialog.hpp" />
     <ClInclude Include="Engine\Header\Management\GameState.hpp" />

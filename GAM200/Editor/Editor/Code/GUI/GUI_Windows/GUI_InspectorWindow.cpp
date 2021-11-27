@@ -16,7 +16,6 @@ Technology is prohibited.
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
 #include "Editor/Header/GUI/GUI_Imgui.hpp"
-#include "Engine/Header/Layer/LayerStack.hpp"
 
 #include "Engine/Header/Management/FileWindowDialog.hpp"
 #include "Engine/Header/Parent/ParentManager.hpp"

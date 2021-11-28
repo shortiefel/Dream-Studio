@@ -200,7 +200,7 @@ namespace Engine
 			else if (collider.cType == ColliderType::Circle)
 			{
 				GraphicImplementation::Renderer::DrawCircleDebug(collider.offset_position + transform->position,
-																 collider.offset_scale * transform->scale, 0.0f, 
+																 collider.offset_scale * transform->scale, 
 																 { 1.0f, 0.0f, 0.0f, 1.0f });
 			}
 		}

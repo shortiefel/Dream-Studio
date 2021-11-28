@@ -78,6 +78,11 @@ namespace Engine {
 		-Open Visual Studio file
 		-----------------------------------------------------*/
 		void OpenVS(std::string fileName);
+
+		/*-----------------------------------------------------
+		-Call function DisplayFuncPtr
+		-----------------------------------------------------*/
+		void CallDisplayFuncPtr(std::string text);
 		/*-----------------------------------------------------
 		-Set function ptr that will be overwritten in editor to display exception
 		-----------------------------------------------------*/

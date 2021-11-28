@@ -55,6 +55,8 @@ namespace Engine {
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
 
+        DeltaTime::GetInstance().SetTimeScale(1.f);
+
         SoundSystem::SoundInit();
         std::cout << "loaded sound \n";
 
@@ -91,13 +93,14 @@ namespace Engine {
 
         SoundSystem::SoundPlay(SoundComponent::filepath, false);
         std::cout << "sound play \n";
-
+        DeltaTime::GetInstance().SetTimeScale(1.f);
 
         return true;
     }
 
     void Scene::Stop(bool deserialize) {
         ScriptSystem::GetInstance().DestroyChildDomain();
+        DeltaTime::GetInstance().SetTimeScale(1.f);
 
         //SoundSystem::SoundStop(SoundComponent::ChannelID);
         SoundSystem::SoundRelease();
@@ -128,9 +131,11 @@ namespace Engine {
 #else
     void Scene::Update(float dt, bool playing, Math::vec2) {
 #endif
+        //if (GameState::GetInstance().GetPause()) return;
+
         if (playing) {
-            float timeScale = DeltaTime::GetInstance().GetTimeScale();
-            if (timeScale > 0.f && !Math::EpsilonCheck(timeScale)) {
+            //float timeScale = DeltaTime::GetInstance().GetTimeScale();
+            //if (timeScale > 0.f && !Math::EpsilonCheck(timeScale)) {
                 ScriptSystem::GetInstance().PlayRunTime();
                 //TransformCalculationSystem::GetInstance().ChildUpdate();
                 int totalStep = DeltaTime::GetInstance().GetNumberOfSteps();
@@ -141,7 +146,7 @@ namespace Engine {
                     FixedUpdateEvent event;
                     EventDispatcher::SendEvent(event);
                 }
-            }
+            //}
             
         }
 

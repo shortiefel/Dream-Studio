@@ -199,6 +199,7 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void GetDeltaTime_Engine(float* dt);
 	void SetTimeScale_Engine(float timeScale);
+	void GetTimeScale_Engine(float* timeScale);
 	void WaitForSeconds_Engine(float timer);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -225,6 +226,8 @@ namespace Engine {
 	Math
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Atan2_Engine(float* outFloat, float xVal, float yVal);
+	void Approximately_Engine(float num1, float num2, bool* result);
+
 	void GetDistance_Engine(float* outFloat, Math::vec2 a, Math::vec2 b);
 	void GetLength_Engine(float* length, Math::vec2 vec);
 	void GetNormalised_Engine(Math::vec2* vec);
@@ -234,6 +237,7 @@ namespace Engine {
 	Application
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Quit_Engine();
+	void SetPause_Engine(bool state);
 
 
 	void RegisterInternalCall() {
@@ -352,6 +356,7 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Time::GetDeltaTime_Engine", GetDeltaTime_Engine);
 		mono_add_internal_call("Time::SetTimeScale_Engine", SetTimeScale_Engine);
+		mono_add_internal_call("Time::GetTimeScale_Engine", GetTimeScale_Engine);
 		mono_add_internal_call("Time::WaitForSeconds_Engine", WaitForSeconds_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -378,16 +383,19 @@ namespace Engine {
 		Math
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Mathf::Atan2_Engine", Atan2_Engine);
+		mono_add_internal_call("Mathf::Approximately_Engine", Approximately_Engine);
+
 		mono_add_internal_call("Vector2::GetDistance_Engine", GetDistance_Engine);
 		mono_add_internal_call("Vector2::GetLength_Engine", GetLength_Engine);
 		mono_add_internal_call("Vector2::GetNormalised_Engine", GetNormalised_Engine);
 		mono_add_internal_call("Vector2::DotProduct_Engine", DotProduct_Engine);
-
+		
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Application
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Application::Quit_Engine", Quit_Engine);
-
+		mono_add_internal_call("Application::SetPause_Engine", SetPause_Engine);
+		
 
 		RegisterGridInternalCall();
 	}
@@ -831,6 +839,10 @@ namespace Engine {
 		DeltaTime::GetInstance().SetTimeScale(timeScale);
 	}
 
+	void GetTimeScale_Engine(float* timeScale) {
+		*timeScale = DeltaTime::GetInstance().GetTimeScale();
+	}
+
 	void WaitForSeconds_Engine(float) {
 
 	}
@@ -885,11 +897,15 @@ namespace Engine {
 	Math
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Atan2_Engine(float* outFloat, float xVal, float yVal) {
-		if (Math::epsilonCheck(xVal)) {
+		if (Math::EpsilonCheck(xVal)) {
 			*outFloat = 0.f;
 			return;
 		}
 		*outFloat = atan2(yVal, xVal);
+	}
+
+	void Approximately_Engine(float num1, float num2, bool* result) {
+		*result = Math::EpsilonCheck(num1, num2);
 	}
 
 	void GetDistance_Engine(float* outFloat, Math::vec2 a, Math::vec2 b) {
@@ -917,7 +933,12 @@ namespace Engine {
 		Engine::WindowCloseEvent event;
 		Engine::EventDispatcher::SendEvent(event);
 #else
+		Scripting::CallDisplayFuncPtr("Game Stopped\n");
 		SceneManager::GetInstance().Stop();
 #endif
+	}
+
+	void SetPause_Engine(bool state) {
+		GameState::GetInstance().SetPause(state);
 	}
 }

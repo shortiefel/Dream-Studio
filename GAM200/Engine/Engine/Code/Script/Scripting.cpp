@@ -454,6 +454,10 @@ namespace Engine {
 			printf("Does nothing for now\n");
 		}
 
+		void CallDisplayFuncPtr(std::string text) {
+			displayFuncPtr(text);
+		}
+
 		void SetDisplayFuncPtr(void(*fp)(std::string)) {
 			displayFuncPtr = fp;
 		}

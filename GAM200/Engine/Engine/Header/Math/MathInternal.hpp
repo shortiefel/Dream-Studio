@@ -32,16 +32,6 @@ namespace Engine {
             return false;
         }
 
-        /*
-        * Return true if its almost 0
-        */
-        template <typename T>
-        bool EpsilonCheck(T target) {
-            if (target >= -epsilon<T>() && target <= epsilon<T>())
-                return true;
-            return false;
-        }
-
         template <typename T>
         bool EpsilonCheck(DreamMath::MathImplementation::Vector2D<T> target, DreamMath::MathImplementation::Vector2D<T> target2) {
             const auto& xPos = target.x - target2.x;

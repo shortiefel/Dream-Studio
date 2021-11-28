@@ -26,9 +26,12 @@ namespace Engine {
             return std::numeric_limits<T>::epsilon();
         }
 
+        /*
+        * Return true if its almost 0
+        */
         template <typename T>
-        inline bool epsilonCheck(const T& target) {
-            return (target >= -std::numeric_limits<T>::epsilon() && target <= std::numeric_limits<T>::epsilon());
+        bool EpsilonCheck(const T& target, const T& val2 = T{ 0 }) {
+            return (target >= val2 - std::numeric_limits<T>::epsilon() && target <= val2 + std::numeric_limits<T>::epsilon());
         }
 
         template <typename T>

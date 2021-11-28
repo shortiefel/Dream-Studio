@@ -35,9 +35,16 @@ public class Time
         {
             SetTimeScale_Engine(value);
         }
+        get
+        {
+            GetTimeScale_Engine(out float result);
+            return result;
+        }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetTimeScale_Engine(float timeScale);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTimeScale_Engine(out float timeScale);
 }
 
 public class WaitForSeconds

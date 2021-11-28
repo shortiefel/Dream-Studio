@@ -42,14 +42,13 @@ namespace Editor {
         bool result = !Engine::SceneManager::GetInstance().Play();
         
         std::ifstream fs{ "Data/msbuild.log" };
+        std::ostringstream buffer;
         if (fs.is_open()) {
-            std::ostringstream buffer;
+            
             buffer << fs.rdbuf();
 
             GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
         }
-
-        fs.close();
         
         if (result)
             return false;

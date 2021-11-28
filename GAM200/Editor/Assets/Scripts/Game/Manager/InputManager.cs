@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour
 	//private void Update()
 	public override void Update()
 	{
+		if (Mathf.Approximately(0f, Time.timeScale)) return;
 		CheckClickDownEvent();
 		CheckClickUpEvent();
 		CheckClickHoldEvent();

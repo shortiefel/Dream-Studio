@@ -29,6 +29,15 @@ public class Mathf
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void Atan2_Engine(out float outFloat, float xVal, float yVal);
+
+
+    public static bool Approximately(float num1, float num2)
+    {
+        Approximately_Engine(num1, num2, out bool result);
+        return result;
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void Approximately_Engine(float num1, float num2, out bool result);
 }
 
 

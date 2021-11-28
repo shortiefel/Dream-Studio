@@ -32,7 +32,8 @@ namespace Engine
 
 	//static Math::vec2 prevPos;
 
-	void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw)
+	//void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw)
+	void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix)
 	{
 		PROFILER_START("Rendering");
 

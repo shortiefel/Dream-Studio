@@ -36,8 +36,11 @@ Technology is prohibited.
 
 namespace Engine {
 	//static Math::vec2 prevPos;
-
-	void UISystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw) {
+#ifdef _GAME_BUILD
+	void UISystem::Render(Graphic::FrameBuffer*, Math::mat3 camMatrix, bool gameDraw) {
+#else
+	void UISystem::Render(Graphic::FrameBuffer * _fbo, Math::mat3 camMatrix, bool gameDraw) {
+#endif
 		PROFILER_START("Rendering");
 
 		/*GLboolean gameDraw;
@@ -55,7 +58,7 @@ namespace Engine {
 //		}
 //		else _fbo->Bind();
 #ifdef _GAME_BUILD
-		_fbo;
+		
 #else
 		_fbo->Bind();
 #endif

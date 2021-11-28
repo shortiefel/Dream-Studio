@@ -170,7 +170,7 @@ namespace Engine {
 			bool operator==(const Vector2D<T>& lhs, const Vector2D<U>& rhs) {
 				T x = lhs.x - static_cast<T>(rhs.x);
 				T y = lhs.y - static_cast<T>(rhs.y);
-				return epsilonCheck<T>(x) && epsilonCheck<T>(y);
+				return EpsilonCheck<T>(x) && EpsilonCheck<T>(y);
 			}
 
 			/*---------------------------------------------------------------------------------------------------------------------

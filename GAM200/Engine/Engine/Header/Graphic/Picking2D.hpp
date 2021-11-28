@@ -60,7 +60,7 @@ namespace Engine {
 				collider.offset_position = Math::vec2{ transform.position };
 				collider.offset_scale = transform.scale;
 				collider.angle = transform.angle;
-				if (Math::epsilonCheck(transform.angle)) {
+				if (Math::EpsilonCheck(transform.angle)) {
 					if (Engine::CollisionImplementation::PointToSquareAABB(Math::vec2{ screenPos.x, screenPos.y }, collider)) {
 						Callback(entity_id);
 					}
@@ -122,7 +122,7 @@ namespace Engine {
 					screenPos = uiPos;
 				}
 
-				if (Math::epsilonCheck(collider.angle)) {
+				if (Math::EpsilonCheck(collider.angle)) {
 					if (Engine::CollisionImplementation::PointToSquareAABB(Math::vec2{ screenPos.x, screenPos.y }, collider)) {
 						Callback(entity_id);
 					}

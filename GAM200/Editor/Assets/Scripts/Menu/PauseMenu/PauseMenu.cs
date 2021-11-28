@@ -38,6 +38,9 @@ public class PauseMenu : MonoBehaviour
             Enable<Transform>(resume.transform);
             Enable<Transform>(howToPlay.transform);
             Enable<Transform>(pauseQuit.transform);
+
+            //Application.SetPause(true);
+            Time.timeScale = 0f;
         }
         else
         {
@@ -49,9 +52,12 @@ public class PauseMenu : MonoBehaviour
             Disable<Transform>(areYouSure.transform);
             Disable<Transform>(quitYes.transform);
             Disable<Transform>(quitNo.transform);
+
+            //Application.SetPause(false);
+            Time.timeScale = 1f;
         }
-        
-        
+
+
 
     }
 

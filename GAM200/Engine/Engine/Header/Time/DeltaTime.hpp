@@ -32,6 +32,7 @@ namespace Engine {
 		void SetDeltaTime(float _dt);
 		float GetFixedDeltaTime();
 		int GetNumberOfSteps();
+
 	private:
 		float dt = 1/60.0f;
 		float fps = 60.f;

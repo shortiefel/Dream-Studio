@@ -31,7 +31,7 @@ namespace Engine {
 	void DeltaTime::SetTimeScale(float _timeScale) {
 		timeScale = _timeScale;
 	}
-	float DeltaTime::GetDeltaTime() const { return dt; }
+	float DeltaTime::GetDeltaTime() const { return dt * timeScale; }
 	void DeltaTime::SetDeltaTime(float _dt) { 
 		currentNumberOfSteps = 0;
 		dt = _dt; 
@@ -47,7 +47,6 @@ namespace Engine {
 		//++loopCount;
 	}
 
-	float DeltaTime::GetFixedDeltaTime() { return fixedDeltaTime; }
+	float DeltaTime::GetFixedDeltaTime() { return fixedDeltaTime * timeScale; }
 	int DeltaTime::GetNumberOfSteps() { return currentNumberOfSteps; }
-	
 }

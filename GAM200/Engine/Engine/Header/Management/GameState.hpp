@@ -25,13 +25,8 @@ namespace Engine {
 	public:
 		bool GetPlaying() const;
 		void SetPlaying(bool playState);
-
-		bool GetPause() const;
-		void SetPause(bool t);
-		
 	private:
 		bool playing = false;
-		bool pause = false;
 
 		SINGLETON_SETUP(GameState);
 	};

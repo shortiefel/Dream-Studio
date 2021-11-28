@@ -56,6 +56,7 @@ namespace Engine {
         GameSceneSerializer::DeserializeScene(sceneName);
 
         DeltaTime::GetInstance().SetTimeScale(1.f);
+        CameraSystem::GetInstance().Update(0.f);
 
         SoundSystem::SoundInit();
         std::cout << "loaded sound \n";

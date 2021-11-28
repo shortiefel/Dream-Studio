@@ -24,12 +24,5 @@ public class Application
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void Quit_Engine();
-
-    public static void SetPause(bool state)
-    {
-        SetPause_Engine(state);
-    }
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetPause_Engine(bool state);
 }
 

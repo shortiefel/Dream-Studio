@@ -237,7 +237,6 @@ namespace Engine {
 	Application
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Quit_Engine();
-	void SetPause_Engine(bool state);
 
 
 	void RegisterInternalCall() {
@@ -394,7 +393,6 @@ namespace Engine {
 		Application
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Application::Quit_Engine", Quit_Engine);
-		mono_add_internal_call("Application::SetPause_Engine", SetPause_Engine);
 		
 
 		RegisterGridInternalCall();
@@ -936,9 +934,5 @@ namespace Engine {
 		Scripting::CallDisplayFuncPtr("Game Stopped\n");
 		SceneManager::GetInstance().Stop();
 #endif
-	}
-
-	void SetPause_Engine(bool state) {
-		GameState::GetInstance().SetPause(state);
 	}
 }

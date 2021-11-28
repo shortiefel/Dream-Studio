@@ -27,9 +27,13 @@ Technology is prohibited.
 
 #include <unordered_map>
 
-#define DESTROY_ENTITY(entity_id)\
-entityManager->DestroyEntity(entity_id);\
-compManager->DestroyEntity(entity_id);
+#define DESTROY_ENTITY(entity)\
+const auto& iter = nameCount.find(entity->second.name);\
+if (iter != nameCount.end()) nameCount.erase(iter);\
+compManager->DestroyEntity(entity->second.id);\
+entityManager->DestroyEntity(entity->second.id);
+
+
 //systemManager->EntityDestroyed(entity);
 
 #define DUPLICATE_NAME_CHECK(name) std::string entityName{ name };\
@@ -126,8 +130,10 @@ namespace Engine {
 			destroyQueue.pop();
 			--num;
 		}*/
+		const auto& enityMap = entityManager->GetUsedConstEntityMap();
 		for (auto& entity_id : destroySet) {
-			DESTROY_ENTITY(entity_id);
+			
+			DESTROY_ENTITY(enityMap.find(entity_id));
 			RemovePrefab(entity_id);
 		}
 

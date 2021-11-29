@@ -702,14 +702,13 @@ namespace Engine
                 BeginQuadBatch();
             }
 
-            float textureIndex = 0.0f;
             Math::vec2 position = { -1.f, -1.f };
             Math::vec2 size = { 2.f, 2.f };
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y };
             s_QuadData.vertexbufferptr->color = color;
             s_QuadData.vertexbufferptr->texCoords = { _min.x, _min.y };
-            s_QuadData.vertexbufferptr->texID = textureIndex;
+            s_QuadData.vertexbufferptr->texID = 0.0f;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
@@ -718,7 +717,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y };
             s_QuadData.vertexbufferptr->color = color;
             s_QuadData.vertexbufferptr->texCoords = { _max.x, _min.y };
-            s_QuadData.vertexbufferptr->texID = textureIndex;
+            s_QuadData.vertexbufferptr->texID = 0.0f;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
@@ -727,7 +726,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
             s_QuadData.vertexbufferptr->color = color;
             s_QuadData.vertexbufferptr->texCoords = { _max.x, _max.y };
-            s_QuadData.vertexbufferptr->texID = textureIndex;
+            s_QuadData.vertexbufferptr->texID = 0.0f;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
@@ -736,7 +735,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
             s_QuadData.vertexbufferptr->color = color;
             s_QuadData.vertexbufferptr->texCoords = { _min.x, _max.y };
-            s_QuadData.vertexbufferptr->texID = textureIndex;
+            s_QuadData.vertexbufferptr->texID = 0.0f;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
@@ -757,7 +756,6 @@ namespace Engine
                 BeginQuadBatch();
             }
 
-            Math::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
             Math::vec2 position = { -1.f, -1.f };
             Math::vec2 size = { 2.f, 2.f };
 
@@ -779,7 +777,7 @@ namespace Engine
             }
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y };
-            s_QuadData.vertexbufferptr->color = color;
+            s_QuadData.vertexbufferptr->color = { 1.0f, 1.0f, 1.0f, 1.0f };
             s_QuadData.vertexbufferptr->texCoords = { _min.x, _min.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
@@ -788,7 +786,7 @@ namespace Engine
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y };
-            s_QuadData.vertexbufferptr->color = color;
+            s_QuadData.vertexbufferptr->color = { 1.0f, 1.0f, 1.0f, 1.0f };
             s_QuadData.vertexbufferptr->texCoords = { _max.x, _min.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
@@ -797,7 +795,7 @@ namespace Engine
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
-            s_QuadData.vertexbufferptr->color = color;
+            s_QuadData.vertexbufferptr->color = { 1.0f, 1.0f, 1.0f, 1.0f };
             s_QuadData.vertexbufferptr->texCoords = { _max.x, _max.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;
@@ -806,7 +804,7 @@ namespace Engine
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
-            s_QuadData.vertexbufferptr->color = color;
+            s_QuadData.vertexbufferptr->color = { 1.0f, 1.0f, 1.0f, 1.0f };
             s_QuadData.vertexbufferptr->texCoords = { _min.x, _max.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;
             s_QuadData.vertexbufferptr->tposition = tposition;

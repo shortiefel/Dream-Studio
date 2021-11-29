@@ -68,7 +68,18 @@ namespace Editor {
 	{
 		std::map<int, Engine::Entity_id> entity_selected{};
 
+		Engine::Entity_id entity_id{};
+
+		//before state for transform data
+		Engine::TransformComponent before;
+
+		//after state for transform data
+		Engine::TransformComponent after;
+
 	public:
+
+		//currently stored transforms to each transform component
+		void StoredTransform(Engine::TransformComponent& transforms);
 
 		//undo the changes made to the objects
 		void undo() override;

@@ -29,6 +29,9 @@ namespace Engine
         #define MAXQUADCOUNT 500  // How many quads per buffer
         #define MAXCIRCLECOUNT 50 // How many circles per buffer
         #define CIRCLESLICES 20   // How circular the shape will be, higher number = more circlular.
+        #define MAXLINESCOUNT 100  // How many lines per buffer
+        #define LINETHICKNESS 5.0f // How thick you want the lines to be
+        
         constexpr float FONT_MULTIPLIER = 50.f;
 
         // Initialise variables
@@ -40,7 +43,7 @@ namespace Engine
         static const size_t stMaxQuadVertexCount = stMaxQuadCount * stOneQuadVertex;
         static const size_t stMaxQuadIndexCount = stMaxQuadCount * stOneQuadIndex;
 
-        // For game objects; lines
+        // For game objects; debug lines
         static const size_t stMaxQuadDebugCount = MAXQUADCOUNT;
         static const size_t stOneQuadDebugVertex = 4;
         static const size_t stOneQuadDebugIndex = stOneQuadDebugVertex * 2;
@@ -52,6 +55,13 @@ namespace Engine
         static const size_t stOneCircleDebugIndex = stOneCircleDebugVertex * 2;
         static const size_t stMaxCircleDebugVertexCount = stMaxCircleDebugCount * stOneCircleDebugVertex;
         static const size_t stMaxCircleDebugIndexCount = stMaxCircleDebugCount * stOneCircleDebugIndex;
+
+        // For lines (not for collision)
+        static const size_t stMaxLinesCount = MAXLINESCOUNT;
+        static const size_t stOneLineVertex = 2;
+        static const size_t stOneLineIndex =  2;
+        static const size_t stMaxLinesVertexCount = stMaxLinesCount * stOneLineVertex;
+        static const size_t stMaxLinesIndexCount = stMaxLinesCount * stOneLineIndex;
 
         // For texture slots
         static const size_t stMaxTextures = 32;
@@ -94,6 +104,7 @@ namespace Engine
         static RendererData s_QuadDebugData;
         static RendererData s_CircleDebugData;
         static RendererData s_FontData;
+        static RendererData s_LinesData;
 
         // Init function for Quad fill mesh
         void Renderer::InitQuad()
@@ -206,19 +217,13 @@ namespace Engine
             glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
 
             glEnableVertexArrayAttrib(s_QuadDebugData.va, 2);
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texCoords));
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tposition));
 
             glEnableVertexArrayAttrib(s_QuadDebugData.va, 3);
-            glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texID));
+            glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tscale));
 
             glEnableVertexArrayAttrib(s_QuadDebugData.va, 4);
-            glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tposition));
-
-            glEnableVertexArrayAttrib(s_QuadDebugData.va, 5);
-            glVertexAttribPointer(5, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tscale));
-
-            glEnableVertexArrayAttrib(s_QuadDebugData.va, 6);
-            glVertexAttribPointer(6, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
+            glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
 
             /*
             example of indices loop; 4 lines to draw a quad:
@@ -258,22 +263,6 @@ namespace Engine
             glCreateBuffers(1, &s_QuadDebugData.ib);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_QuadDebugData.ib);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-            // 1x1 white texture
-            glCreateTextures(GL_TEXTURE_2D, 1, &s_QuadDebugData.whitetexture);
-            glBindTexture(GL_TEXTURE_2D, s_QuadDebugData.whitetexture);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            uint32_t color = 0xffffffff; // white color
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &color);
-
-            s_QuadDebugData.arrTextureSlots[0] = s_QuadDebugData.whitetexture;
-            for (size_t i = 1; i < stMaxTextures; i++)
-            {
-                s_QuadDebugData.arrTextureSlots[i] = 0;
-            }
         }
 
         // Init function for Circle lines mesh
@@ -300,19 +289,13 @@ namespace Engine
             glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
 
             glEnableVertexArrayAttrib(s_CircleDebugData.va, 2);
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texCoords));
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tposition));
 
             glEnableVertexArrayAttrib(s_CircleDebugData.va, 3);
-            glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, texID));
+            glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tscale));
 
             glEnableVertexArrayAttrib(s_CircleDebugData.va, 4);
-            glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tposition));
-
-            glEnableVertexArrayAttrib(s_CircleDebugData.va, 5);
-            glVertexAttribPointer(5, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tscale));
-
-            glEnableVertexArrayAttrib(s_CircleDebugData.va, 6);
-            glVertexAttribPointer(6, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
+            glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
 
             uint32_t indices[stMaxCircleDebugIndexCount]{};
             uint32_t offset = 0;
@@ -350,22 +333,65 @@ namespace Engine
             glCreateBuffers(1, &s_CircleDebugData.ib);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_CircleDebugData.ib);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        }
 
-            // 1x1 white texture
-            glCreateTextures(GL_TEXTURE_2D, 1, &s_CircleDebugData.whitetexture);
-            glBindTexture(GL_TEXTURE_2D, s_CircleDebugData.whitetexture);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            uint32_t color = 0xffffffff; // white color
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &color);
-
-            s_CircleDebugData.arrTextureSlots[0] = s_CircleDebugData.whitetexture;
-            for (size_t i = 1; i < stMaxTextures; i++)
+        // Init function for Lines mesh
+        void Renderer::InitLines()
+        {
+            if (s_LinesData.vertexbuffer != nullptr)
             {
-                s_CircleDebugData.arrTextureSlots[i] = 0;
+                return;
             }
+
+            s_LinesData.vertexbuffer = new GLMesh[stMaxLinesVertexCount];
+
+            glCreateVertexArrays(1, &s_LinesData.va);
+            glBindVertexArray(s_LinesData.va);
+
+            glCreateBuffers(1, &s_LinesData.vb);
+            glBindBuffer(GL_ARRAY_BUFFER, s_LinesData.vb);
+            glBufferData(GL_ARRAY_BUFFER, stMaxLinesVertexCount * sizeof(GLMesh), nullptr, GL_DYNAMIC_DRAW);
+
+            glEnableVertexArrayAttrib(s_LinesData.va, 0);
+            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, position));
+
+            glEnableVertexArrayAttrib(s_LinesData.va, 1);
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, color));
+
+            glEnableVertexArrayAttrib(s_LinesData.va, 2);
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tposition));
+
+            glEnableVertexArrayAttrib(s_LinesData.va, 3);
+            glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, tscale));
+
+            glEnableVertexArrayAttrib(s_LinesData.va, 4);
+            glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
+
+            /*
+            example of indices loop; 2 indices to draw a line:
+                0, 1        -> first line,
+                2, 3        -> second line, 
+                4, 5        -> third line,
+
+                and so forth...
+            */
+
+            // edit indices from here
+            uint32_t indices[stMaxLinesIndexCount]{};
+            uint32_t offset = 0;
+
+            for (int i = 0; i < stMaxLinesIndexCount; i += stOneLineIndex)
+            {
+                indices[i + 0] = 0 + offset;
+                indices[i + 1] = 1 + offset;
+
+                offset += stOneLineVertex;
+            }
+            // end edit here
+
+            glCreateBuffers(1, &s_LinesData.ib);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_LinesData.ib);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
         }
 
         // Init function for Font mesh; indices use quad as fonts should be generated as quads
@@ -463,10 +489,11 @@ namespace Engine
 
             InitQuadDebug();
             InitCircleDebug();
+            InitLines();
         }
 
         // Shutdown function for Renderer; Deletes all allocated memory for all meshes
-        // For quad fill mesh, quad lines mesh, circle lines mesh and font mesh
+        // For quad fill, quad lines, circle lines, lines and font meshes
         void Renderer::DestroyQuad()
         {
             glDeleteVertexArrays(1, &s_QuadData.va);
@@ -484,8 +511,6 @@ namespace Engine
             glDeleteBuffers(1, &s_QuadDebugData.vb);
             glDeleteBuffers(1, &s_QuadDebugData.ib);
 
-            glDeleteTextures(1, &s_QuadDebugData.whitetexture);
-
             delete[] s_QuadDebugData.vertexbuffer;
         }
 
@@ -495,9 +520,16 @@ namespace Engine
             glDeleteBuffers(1, &s_CircleDebugData.vb);
             glDeleteBuffers(1, &s_CircleDebugData.ib);
 
-            glDeleteTextures(1, &s_CircleDebugData.whitetexture);
-
             delete[] s_CircleDebugData.vertexbuffer;
+        }
+
+        void Renderer::DestroyLines()
+        {
+            glDeleteVertexArrays(1, &s_LinesData.va);
+            glDeleteBuffers(1, &s_LinesData.vb);
+            glDeleteBuffers(1, &s_LinesData.ib);
+
+            delete[] s_LinesData.vertexbuffer;
         }
 
         // For FontSystem
@@ -511,16 +543,18 @@ namespace Engine
 
             delete[] s_FontData.vertexbuffer;
         }
+
         // For GraphicSystem
         void Renderer::Shutdown()
         {
             DestroyQuad();
             DestroyQuadDebug();
             DestroyCircleDebug();
+            DestroyLines();
         }
 
         // BeginBatch functions assigns the VBptr to the start of the buffer
-        // For quad fill mesh, quad lines mesh, circle lines mesh and font mesh
+        // For quad fill, quad lines, circle lines, lines and font meshes
         void Renderer::BeginQuadBatch()
         {
             s_QuadData.vertexbufferptr = s_QuadData.vertexbuffer;
@@ -536,6 +570,11 @@ namespace Engine
             s_CircleDebugData.vertexbufferptr = s_CircleDebugData.vertexbuffer;
         }
 
+        void Renderer::BeginLinesBatch()
+        {
+            s_LinesData.vertexbufferptr = s_LinesData.vertexbuffer;
+        }
+
         // To be called by FontSystem
         void Renderer::BeginFontBatch()
         {
@@ -546,6 +585,7 @@ namespace Engine
         void Renderer::BeginBatch(bool debugdraw)
         {
             BeginQuadBatch();
+            BeginLinesBatch();
 
             if (debugdraw == GL_TRUE)
             {
@@ -555,7 +595,7 @@ namespace Engine
         }
 
         // EndBatch functions binds the respective buffers by getting the offset
-        // For quad fill mesh, quad lines mesh, circle lines mesh and font mesh
+        // For quad fill, quad lines, circle lines, lines and font meshes
         void Renderer::EndQuadBatch()
         {
             GLsizeiptr sizeQuad = (uint8_t*)s_QuadData.vertexbufferptr - (uint8_t*)s_QuadData.vertexbuffer;
@@ -577,6 +617,13 @@ namespace Engine
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeCircleDebug, s_CircleDebugData.vertexbuffer);
         }
 
+        void Renderer::EndLinesBatch()
+        {
+            GLsizeiptr sizeLines = (uint8_t*)s_LinesData.vertexbufferptr - (uint8_t*)s_LinesData.vertexbuffer;
+            glBindBuffer(GL_ARRAY_BUFFER, s_LinesData.vb);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeLines, s_LinesData.vertexbuffer);
+        }
+
         // To be called by FontSystem
         void Renderer::EndFontBatch()
         {
@@ -589,6 +636,7 @@ namespace Engine
         void Renderer::EndBatch(bool debugdraw)
         {
             EndQuadBatch();
+            EndLinesBatch();
 
             if (debugdraw == GL_TRUE)
             {
@@ -598,7 +646,7 @@ namespace Engine
         }
 
         // Function that binds texture slots followed by batch rendering the VA
-        // For quad fill mesh, quad lines mesh, circle lines mesh and font mesh
+        // For quad fill, quad lines, circle lines, lines and font meshes
         void Renderer::FlushQuad()
         {
             for (uint32_t i = 0; i < s_QuadData.uiTextureSlotIndex; i++)
@@ -616,32 +664,36 @@ namespace Engine
 
         void Renderer::FlushQuadDebug()
         {
-            for (uint32_t i = 0; i < s_QuadDebugData.uiTextureSlotIndex; i++)
-            {
-                glBindTextureUnit(i, s_QuadDebugData.arrTextureSlots[i]);
-            }
             glBindVertexArray(s_QuadDebugData.va);
 
             glDrawElements(GL_LINES, s_QuadDebugData.indexcount, GL_UNSIGNED_INT, nullptr);
             s_QuadDebugData.renderStats.drawCount++;
 
             s_QuadDebugData.indexcount = 0;
-            s_QuadDebugData.uiTextureSlotIndex = 1;
         }
 
         void Renderer::FlushCircleDebug()
         {
-            for (uint32_t i = 0; i < s_CircleDebugData.uiTextureSlotIndex; i++)
-            {
-                glBindTextureUnit(i, s_CircleDebugData.arrTextureSlots[i]);
-            }
             glBindVertexArray(s_CircleDebugData.va);
 
             glDrawElements(GL_LINES, s_CircleDebugData.indexcount, GL_UNSIGNED_INT, nullptr);
             s_CircleDebugData.renderStats.drawCount++;
 
             s_CircleDebugData.indexcount = 0;
-            s_CircleDebugData.uiTextureSlotIndex = 1;
+        }
+
+        void Renderer::FlushLines()
+        {
+            glLineWidth(LINETHICKNESS);
+
+            glBindVertexArray(s_LinesData.va);
+
+            glDrawElements(GL_LINES, s_LinesData.indexcount, GL_UNSIGNED_INT, nullptr);
+            s_LinesData.renderStats.drawCount++;
+
+            s_LinesData.indexcount = 0;
+
+            glLineWidth(1.f);
         }
 
         // To be called by FontSystem
@@ -664,6 +716,7 @@ namespace Engine
         void Renderer::Flush(bool debugdraw)
         {
             FlushQuad();
+            FlushLines();
 
             if (debugdraw == GL_TRUE)
             {
@@ -674,7 +727,6 @@ namespace Engine
 
                 glLineWidth(1.f);
             }
-
         }
 
         // Function that adds to the vertex buffer pointer for the quad fill (without texture) mesh
@@ -876,7 +928,7 @@ namespace Engine
         }
 
         // Function that adds to the vertex buffer pointer for the quad lines mesh
-        void Renderer::DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation)
+        void Renderer::DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color)
         {
             if (s_QuadDebugData.indexcount >= stMaxQuadDebugIndexCount)
             {
@@ -885,16 +937,11 @@ namespace Engine
                 BeginQuadDebugBatch();
             }
 
-            Math::vec4 color = { 1.0f, 0.f, 0.f, 1.f };
-
-            float textureIndex = 0.0f;
             Math::vec2 position = { -1.f, -1.f };
             Math::vec2 size = { 2.f, 2.f };
 
             s_QuadDebugData.vertexbufferptr->position = { position.x, position.y };
             s_QuadDebugData.vertexbufferptr->color = color;
-            s_QuadDebugData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
-            s_QuadDebugData.vertexbufferptr->texID = textureIndex;
             s_QuadDebugData.vertexbufferptr->tposition = tposition;
             s_QuadDebugData.vertexbufferptr->tscale = tscale;
             s_QuadDebugData.vertexbufferptr->trotation = Math::radians(trotation);
@@ -902,8 +949,6 @@ namespace Engine
 
             s_QuadDebugData.vertexbufferptr->position = { position.x + size.x, position.y };
             s_QuadDebugData.vertexbufferptr->color = color;
-            s_QuadDebugData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
-            s_QuadDebugData.vertexbufferptr->texID = textureIndex;
             s_QuadDebugData.vertexbufferptr->tposition = tposition;
             s_QuadDebugData.vertexbufferptr->tscale = tscale;
             s_QuadDebugData.vertexbufferptr->trotation = Math::radians(trotation);
@@ -911,8 +956,6 @@ namespace Engine
 
             s_QuadDebugData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
             s_QuadDebugData.vertexbufferptr->color = color;
-            s_QuadDebugData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
-            s_QuadDebugData.vertexbufferptr->texID = textureIndex;
             s_QuadDebugData.vertexbufferptr->tposition = tposition;
             s_QuadDebugData.vertexbufferptr->tscale = tscale;
             s_QuadDebugData.vertexbufferptr->trotation = Math::radians(trotation);
@@ -920,8 +963,6 @@ namespace Engine
 
             s_QuadDebugData.vertexbufferptr->position = { position.x, position.y + size.y };
             s_QuadDebugData.vertexbufferptr->color = color;
-            s_QuadDebugData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
-            s_QuadDebugData.vertexbufferptr->texID = textureIndex;
             s_QuadDebugData.vertexbufferptr->tposition = tposition;
             s_QuadDebugData.vertexbufferptr->tscale = tscale;
             s_QuadDebugData.vertexbufferptr->trotation = Math::radians(trotation);
@@ -932,7 +973,7 @@ namespace Engine
         }
 
         // Function that adds to the vertex buffer pointer for the circle lines mesh
-        void Renderer::DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation)
+        void Renderer::DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const Math::vec4 color)
         {
             if (s_CircleDebugData.indexcount >= stMaxCircleDebugIndexCount)
             {
@@ -941,31 +982,23 @@ namespace Engine
                 BeginCircleDebugBatch();
             }
 
-            Math::vec4 color = { 1.0f, 0.0f, 0.0f, 1.0f };
-
-            float textureIndex = 0.0f;
-
             // Number of vertices
             float rad = Math::radians(360.f / static_cast<float>(CIRCLESLICES));
 
             s_CircleDebugData.vertexbufferptr->position = { cos(rad * 1), sin(rad * 1) };
             s_CircleDebugData.vertexbufferptr->color = color;
-            s_CircleDebugData.vertexbufferptr->texCoords = { 0.f, 0.f };
-            s_CircleDebugData.vertexbufferptr->texID = textureIndex;
             s_CircleDebugData.vertexbufferptr->tposition = tposition;
             s_CircleDebugData.vertexbufferptr->tscale = tscale;
-            s_CircleDebugData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_CircleDebugData.vertexbufferptr->trotation = Math::radians(0.0f);
             s_CircleDebugData.vertexbufferptr++;
 
             for (int i = 1, j = 2; i < stOneCircleDebugVertex; i++, j++)
             {
                 s_CircleDebugData.vertexbufferptr->position = { cos(rad * j), sin(rad * j) };
                 s_CircleDebugData.vertexbufferptr->color = color;
-                s_CircleDebugData.vertexbufferptr->texCoords = { 0.f, 0.f };
-                s_CircleDebugData.vertexbufferptr->texID = textureIndex;
                 s_CircleDebugData.vertexbufferptr->tposition = tposition;
                 s_CircleDebugData.vertexbufferptr->tscale = tscale;
-                s_CircleDebugData.vertexbufferptr->trotation = Math::radians(trotation);
+                s_CircleDebugData.vertexbufferptr->trotation = Math::radians(0.0f);
                 s_CircleDebugData.vertexbufferptr++;
             }
 
@@ -973,13 +1006,38 @@ namespace Engine
             s_CircleDebugData.renderStats.circleDebugCount++;
         }
 
+        // Function that adds to the vertex buffer pointer for the lines mesh
+        void Renderer::DrawLines(const Math::vec2& position1, const Math::vec2& position2, const Math::vec4 color)
+        {
+            if (s_LinesData.indexcount >= stMaxLinesIndexCount)
+            {
+                EndLinesBatch();
+                FlushLines();
+                BeginLinesBatch();
+            }
+
+            s_LinesData.vertexbufferptr->position = { position1.x, position1.y };
+            s_LinesData.vertexbufferptr->color = color;
+            s_LinesData.vertexbufferptr->tposition = {0.0f, 0.0f};
+            s_LinesData.vertexbufferptr->tscale = {1.0f, 1.0f};
+            s_LinesData.vertexbufferptr->trotation = Math::radians(0.0f);
+            s_LinesData.vertexbufferptr++;
+
+            s_LinesData.vertexbufferptr->position = { position2.x, position2.y };
+            s_LinesData.vertexbufferptr->color = color;
+            s_LinesData.vertexbufferptr->tposition = { 0.0f, 0.0f };
+            s_LinesData.vertexbufferptr->tscale = { 1.0f, 1.0f };
+            s_LinesData.vertexbufferptr->trotation = Math::radians(0.0f);
+            s_LinesData.vertexbufferptr++;
+
+            s_LinesData.indexcount += stOneLineIndex;
+            s_LinesData.renderStats.linesCount++;
+        }
+
         // Function that adds to the vertex buffer pointer for the font mesh (string)
         void Renderer::DrawString(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const std::string filename, const std::string text,
             const Math::vec4 _colour)
         {
-            //Math::vec2 position = tposition;
-            //Math::vec2 size = tscale;
-
             Math::vec2 position = {-1.f, -1.f};
             //Math::vec2 size = {2.f, 2.f};
             Math::vec2 size = { 2.f / FONT_MULTIPLIER, 2.f / FONT_MULTIPLIER };
@@ -1067,7 +1125,7 @@ namespace Engine
         }
 
         // Functions that get the render stats
-        // For quad fill mesh, quad lines mesh, circle lines mesh and font mesh
+        // For quad fill, quad lines, circle lines, lines and font meshes
         const Renderer::Stats& Renderer::GetQuadStats()
         {
             return s_QuadData.renderStats;
@@ -1083,6 +1141,11 @@ namespace Engine
             return s_CircleDebugData.renderStats;
         }
 
+        const Renderer::Stats& Renderer::GetLinesStats()
+        {
+            return s_LinesData.renderStats;
+        }
+
         const Renderer::Stats& Renderer::GetFontStats()
         {
             return s_FontData.renderStats;
@@ -1090,7 +1153,7 @@ namespace Engine
 
 
         // Functions that resets the render stats
-        // For quad fill mesh, quad lines mesh, circle lines mesh and font mesh
+        // For quad fill, quad lines, circle lines, lines and font meshes
         void Renderer::ResetQuadStats()
         {
             memset(&s_QuadData.renderStats, 0, sizeof(Stats));
@@ -1106,6 +1169,11 @@ namespace Engine
             memset(&s_CircleDebugData.renderStats, 0, sizeof(Stats));
         }
 
+        void Renderer::ResetLinesStats()
+        {
+            memset(&s_LinesData.renderStats, 0, sizeof(Stats));
+        }
+
         // For FontSystem
         void Renderer::ResetFontStats()
         {
@@ -1118,6 +1186,7 @@ namespace Engine
             ResetQuadStats();
             ResetQuadDebugStats();
             ResetCircleDebugStats();
+            ResetLinesStats();
         }
     }
 }

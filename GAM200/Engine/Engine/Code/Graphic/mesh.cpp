@@ -59,7 +59,7 @@ namespace Engine
         // For lines (not for collision)
         static const size_t stMaxLinesCount = MAXLINESCOUNT;
         static const size_t stOneLineVertex = 2;
-        static const size_t stOneLineIndex =  2;
+        static const size_t stOneLineIndex = 2;
         static const size_t stMaxLinesVertexCount = stMaxLinesCount * stOneLineVertex;
         static const size_t stMaxLinesIndexCount = stMaxLinesCount * stOneLineIndex;
 
@@ -533,7 +533,7 @@ namespace Engine
         }
 
         // For FontSystem
-        void Renderer::DeleteFont()
+        void Renderer::DestroyFont()
         {
             glDeleteVertexArrays(1, &s_FontData.va);
             glDeleteBuffers(1, &s_FontData.vb);
@@ -582,16 +582,12 @@ namespace Engine
         }
 
         // Function that begins the batch for all meshes for GraphicSystem
-        void Renderer::BeginBatch(bool debugdraw)
+        void Renderer::BeginBatch()
         {
             BeginQuadBatch();
             BeginLinesBatch();
-
-            if (debugdraw == GL_TRUE)
-            {
-                BeginQuadDebugBatch();
-                BeginCircleDebugBatch();
-            }
+            BeginQuadDebugBatch();
+            BeginCircleDebugBatch();
         }
 
         // EndBatch functions binds the respective buffers by getting the offset
@@ -630,19 +626,6 @@ namespace Engine
             GLsizeiptr sizeQuad = (uint8_t*)s_FontData.vertexbufferptr - (uint8_t*)s_FontData.vertexbuffer;
             glBindBuffer(GL_ARRAY_BUFFER, s_FontData.vb);
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeQuad, s_FontData.vertexbuffer);
-        }
-
-        // Function that ends the batch for all meshes for GraphicSystem
-        void Renderer::EndBatch(bool debugdraw)
-        {
-            EndQuadBatch();
-            EndLinesBatch();
-
-            if (debugdraw == GL_TRUE)
-            {
-                EndQuadDebugBatch();
-                EndCircleDebugBatch();
-            }
         }
 
         // Function that binds texture slots followed by batch rendering the VA
@@ -684,16 +667,12 @@ namespace Engine
 
         void Renderer::FlushLines()
         {
-            glLineWidth(LINETHICKNESS);
-
             glBindVertexArray(s_LinesData.va);
 
             glDrawElements(GL_LINES, s_LinesData.indexcount, GL_UNSIGNED_INT, nullptr);
             s_LinesData.renderStats.drawCount++;
 
             s_LinesData.indexcount = 0;
-
-            glLineWidth(1.f);
         }
 
         // To be called by FontSystem
@@ -710,23 +689,6 @@ namespace Engine
 
             s_FontData.indexcount = 0;
             s_FontData.uiTextureSlotIndex = 1;
-        }
-
-        // Function that draws all meshes for GraphicSystem
-        void Renderer::Flush(bool debugdraw)
-        {
-            FlushQuad();
-            FlushLines();
-
-            if (debugdraw == GL_TRUE)
-            {
-                glLineWidth(5.f);
-
-                FlushQuadDebug();
-                FlushCircleDebug();
-
-                glLineWidth(1.f);
-            }
         }
 
         // Function that adds to the vertex buffer pointer for the quad fill (without texture) mesh

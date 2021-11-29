@@ -35,28 +35,13 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 namespace Engine {
-	//static Math::vec2 prevPos;
 #ifdef _GAME_BUILD
-	void UISystem::Render(Graphic::FrameBuffer*, Math::mat3 camMatrix, bool gameDraw) {
+	void UISystem::Render(Graphic::FrameBuffer*, Math::mat3 camMatrix) {
 #else
-	void UISystem::Render(Graphic::FrameBuffer * _fbo, Math::mat3 camMatrix, bool gameDraw) {
+	void UISystem::Render(Graphic::FrameBuffer * _fbo, Math::mat3 camMatrix) {
 #endif
 		PROFILER_START("Rendering");
 
-		/*GLboolean gameDraw;
-		if (!_fbo) gameDraw = GL_TRUE;
-		else gameDraw = GL_FALSE;*/
-
-//		if (gameDraw) {
-//			//GraphicSystem::GetInstance().GetFrameBuffer().Bind();
-//#ifdef _GAME_BUILD
-//
-//#else
-//			//GraphicSystem::GetInstance().GetFrameBuffer().Bind();
-//			_fbo->Bind();
-//#endif
-//		}
-//		else _fbo->Bind();
 #ifdef _GAME_BUILD
 		
 #else
@@ -67,7 +52,7 @@ namespace Engine {
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
-		GraphicImplementation::Renderer::BeginBatch(!gameDraw);
+		GraphicImplementation::Renderer::BeginBatch();
 
 		//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
 		const auto& uiArray = dreamECSGame->GetComponentArrayData<UIComponent>();
@@ -79,31 +64,20 @@ namespace Engine {
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			//if (gameDraw) {
-			//	//transform->localPosition += camPos - prevPos;
-			//	//ParentManager::GetInstance().UpdateTruePos(entity_id);
-			//	//GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl);
-			//}
-			//else {
-			//	GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl);
-			//}
 			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl);
 		}
-		//prevPos = camPos;
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
 
-		GraphicImplementation::Renderer::EndBatch(!gameDraw);
-		GraphicImplementation::Renderer::Flush(!gameDraw);
+		GraphicImplementation::Renderer::EndQuadBatch();
+		GraphicImplementation::Renderer::FlushQuad();
 
 		// unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-		/*if (gameDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
-		else _fbo->Unbind();*/
 #ifdef _GAME_BUILD
 
 #else

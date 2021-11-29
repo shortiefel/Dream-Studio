@@ -28,27 +28,10 @@ Technology is prohibited.
 
 namespace Engine
 {
-	//constexpr float FONT_MULTIPLIER = 50.f;
-
-	//static Math::vec2 prevPos;
-
-	//void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw)
 	void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix)
 	{
 		PROFILER_START("Rendering");
 
-//		GLboolean fontDraw;
-//		if (!_fbo) fontDraw = GL_TRUE;
-//		else fontDraw = GL_FALSE;
-//
-//		if (fontDraw) {
-//#ifdef _GAME_BUILD
-//
-//#else
-//			//GraphicSystem::GetInstance().GetFrameBuffer().Bind();
-//#endif
-//		}
-//		else _fbo->Bind();
 #ifdef _GAME_BUILD
 		_fbo;
 #else
@@ -81,32 +64,8 @@ namespace Engine
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			// Game
-			//if (fontDraw)
-			//{
-			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
-			//}
-			//// Editor
-			//else 
-			//{
-			//	//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / 75, transform->angle, text.filepath, text.text, text.colour);
-			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
-			//}
-			//if (gameDraw) {
-			//	//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
-			//	//transform->localPosition += camPos - prevPos;
-			//	//ParentManager::GetInstance().UpdateTruePos(entity_id);
-			//	//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
-			//}
-			//else {
-			//	GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
-			//}
 			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
-			
-			//GraphicImplementation::Renderer::DrawString(transform->position, transform->scale / FONT_MULTIPLIER, transform->angle, text.filepath, text.text, text.colour);
-
 		}
-		//prevPos = camPos;
 
 		// For transparency of glyph textures
 		glEnable(GL_BLEND);
@@ -118,14 +77,11 @@ namespace Engine
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-		/*if (fontDraw) GraphicSystem::GetInstance().GetFrameBuffer().Unbind();
-		else _fbo->Unbind();*/
 #ifdef _GAME_BUILD
 
 #else
 		_fbo->Unbind();
 #endif
-		
 	}
 
 	// Init function for FontSystem
@@ -155,7 +111,7 @@ namespace Engine
 	// Destroy function for FontSystem
 	void FontSystem::Destroy()
 	{
-		GraphicImplementation::Renderer::DeleteFont();
+		GraphicImplementation::Renderer::DestroyFont();
 
 		LOG_INSTANCE("Font System destroyed");
 	}

@@ -45,7 +45,7 @@ namespace Editor {
 		Engine::FontSystem::GetInstance().Render(GUI::GetGameFboPtr());
 
 		Engine::GraphicSystem::GetInstance().Render(0.f, GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
-		Engine::UISystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
+		Engine::UISystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());
 		Engine::FontSystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());
 
 		

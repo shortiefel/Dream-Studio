@@ -30,11 +30,7 @@ namespace Engine
             // Functions for GraphicSystem
             static void Init();
             static void Shutdown();
-
-            static void BeginBatch(bool debugdraw);
-            static void EndBatch(bool debugdraw);
-
-            static void Flush(bool debugdraw);
+            static void BeginBatch();
 
             static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color,
                 Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
@@ -45,16 +41,27 @@ namespace Engine
 
             static void DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color);
             static void DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const Math::vec4 color);
-            static void DrawLines(const Math::vec2& position1, const Math::vec2& position2, const Math::vec4 color);
+            static void DrawLines(const Math::vec2& position1, const Math::vec2& position2, const Math::vec4 color = {0.0f, 1.0f, 0.0f, 1.0f});
 
             // Font functions for FontSystem
             static void InitFont();
-            static void DeleteFont();
-
+            static void DestroyFont();
             static void BeginFontBatch();
+
+            // End batch functions
+            static void EndQuadBatch();
+            static void EndQuadDebugBatch();
+            static void EndCircleDebugBatch();
+            static void EndLinesBatch();
             static void EndFontBatch();
 
+            // Flush batch functions
+            static void FlushQuad();
+            static void FlushQuadDebug();
+            static void FlushCircleDebug();
+            static void FlushLines();
             static void FlushFont();
+
             static void DrawString(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation,
                 const std::string font, const std::string text, const Math::vec4 _colour);
 
@@ -96,16 +103,6 @@ namespace Engine
             static void BeginQuadDebugBatch();
             static void BeginCircleDebugBatch();
             static void BeginLinesBatch();
-
-            static void EndQuadBatch();
-            static void EndQuadDebugBatch();
-            static void EndCircleDebugBatch();
-            static void EndLinesBatch();
-
-            static void FlushQuad();
-            static void FlushQuadDebug();
-            static void FlushCircleDebug();
-            static void FlushLines();
 
             static void ResetQuadStats();
             static void ResetQuadDebugStats();

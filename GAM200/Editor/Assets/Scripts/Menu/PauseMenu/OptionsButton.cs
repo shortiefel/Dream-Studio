@@ -7,11 +7,6 @@ public class OptionsButton : MonoBehaviour
         Console.WriteLine("going into Options scene");
     }
 
-    public override void Update()
-    {
-
-    }
-
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))

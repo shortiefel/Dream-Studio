@@ -31,6 +31,8 @@ namespace Engine
         #define CIRCLESLICES 20   // How circular the shape will be, higher number = more circlular.
         #define MAXLINESCOUNT 100  // How many lines per buffer
         #define LINETHICKNESS 5.0f // How thick you want the lines to be
+        
+        constexpr float FONT_MULTIPLIER = 50.f;
 
         // Initialise variables
 
@@ -1037,7 +1039,8 @@ namespace Engine
             const Math::vec4 _colour)
         {
             Math::vec2 position = {-1.f, -1.f};
-            Math::vec2 size = {2.f, 2.f};
+            //Math::vec2 size = {2.f, 2.f};
+            Math::vec2 size = { 2.f / FONT_MULTIPLIER, 2.f / FONT_MULTIPLIER };
 
             for (int i = 0; i < text.length(); i++)
             {

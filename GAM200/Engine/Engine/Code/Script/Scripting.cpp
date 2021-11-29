@@ -143,13 +143,36 @@ namespace Engine {
 
 		bool CompileCSInternal(bool play) {
 			Scripting::DestroyChildDomain();
+#if 0
 			int status = std::system("CompileCS.bat");
 			if (play)
 				compileFuncPtr();
 			if (status > 0) return false;
-
+			
 			//Compile Successful
 			return true;
+#else
+			STARTUPINFOW si;
+			PROCESS_INFORMATION pi;
+
+			ZeroMemory(&si, sizeof(si));
+			si.cb = sizeof(si);
+			ZeroMemory(&pi, sizeof(pi));
+
+			wchar_t arg[] = L"CompileCS.bat";
+			if (!CreateProcessW(NULL, arg, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi)) {
+				return false;
+			}
+
+			WaitForSingleObject(pi.hProcess, INFINITE);
+			CloseHandle(pi.hProcess);
+			CloseHandle(pi.hThread);
+
+			if (play)
+				compileFuncPtr();
+
+			return true;
+#endif
 		}
 
 

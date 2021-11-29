@@ -124,8 +124,12 @@ namespace Engine {
 		//glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
 		//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
 
-
+#ifdef _GAME_BUILD
+		//glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
+#else
+		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
+#endif
 		if (!glfw_window) {
 			LOG_ERROR("unable to create openGL context");
 			glfwTerminate();

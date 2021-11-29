@@ -7,11 +7,6 @@ public class PlayButton : MonoBehaviour
         Console.WriteLine("going in start play");
     }
 
-    public override void Update()
-    {
-        //Console.WriteLine(Input.GetMousePosition());
-    }
-
     public override void OnMouseOver()
     {
         //Console.WriteLine(Input.GetMousePosition());

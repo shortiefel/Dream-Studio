@@ -33,7 +33,7 @@ namespace Engine
 		bool Create();
 		void Destroy();
 
-		void Render(Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI());
+		void Render(Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI(), bool gameDraw = true);
 
 	private:
 

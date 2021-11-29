@@ -117,6 +117,12 @@ namespace Editor {
 				_mousePos.y = game_viewportSize.y - _mousePos.y;
 				mousePos = _mousePos;
 
+				if (!ImGui::IsWindowHovered()) {
+					ImGui::EndChild();
+					ImGui::End();
+					return;
+				}
+
 				Math::mat3 camMatrix = Engine::CameraSystem::GetInstance().GetTransform();
 
 				Math::mat3 inverseCamMatrix = Math::Inverse(camMatrix);

@@ -16,6 +16,7 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\FourWayRoad.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsActive": true
     },

@@ -72,7 +72,7 @@ namespace Engine
 					}
 				}
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
-					texture.texobj_hdl, texture.minUV, texture.maxUV);
+					texture.texobj_hdl, texture.colour, texture.minUV, texture.maxUV);
 			}
 		}
 	}

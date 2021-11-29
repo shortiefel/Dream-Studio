@@ -18,6 +18,7 @@ Technology is prohibited.
 #define UI_HPP
 
 #include "Engine/Header/ECS/Component/IComponent.hpp"
+#include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine
 {
@@ -28,6 +29,7 @@ namespace Engine
 		std::string filepath = "";
 		std::string textureName = "";
 		unsigned int texobj_hdl;
+		Math::vec4 colour;
 
 		bool isActive = true;
 

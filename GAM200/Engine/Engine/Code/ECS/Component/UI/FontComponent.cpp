@@ -44,10 +44,7 @@ namespace Engine
 		GraphicImplementation::SetFont(this, std::move(_serializer.GetValue<std::string>("Filepath")));
 		text = _serializer.GetValue<std::string>("Text");
 
-		float red = _serializer.GetValue<float>("Red");
-		float green = _serializer.GetValue<float>("Green");
-		float blue = _serializer.GetValue<float>("Blue");
-		colour = { red, green, blue, 1.0f };
+		colour = _serializer.GetValue<Math::vec4>("Colour");
 
 		isActive = _serializer.GetValue<bool>("IsActive");
 
@@ -60,9 +57,7 @@ namespace Engine
 		_serializer.SetValue("Filepath", filepath);
 		_serializer.SetValue("Text", text);
 
-		_serializer.SetValue("Red", colour.r);
-		_serializer.SetValue("Green", colour.g);
-		_serializer.SetValue("Blue", colour.b);
+		_serializer.SetValue("Colour", colour);
 
 		_serializer.SetValue("IsActive", isActive);
 	}

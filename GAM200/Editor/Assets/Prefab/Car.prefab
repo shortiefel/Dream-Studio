@@ -1,5 +1,4 @@
 [
-  
   {
     "Entity": {
       "Name": "Car",
@@ -24,6 +23,7 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\Car.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsLoop": false,
       "EndFrame": 1,

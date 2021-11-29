@@ -588,6 +588,11 @@ namespace Editor {
 
 						ImGui::Spacing();
 
+
+						ImGui::ColorPicker4("Color", (float*)&textureComp->colour, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
+
+
+
 						/*
 						*	Animation
 						*/

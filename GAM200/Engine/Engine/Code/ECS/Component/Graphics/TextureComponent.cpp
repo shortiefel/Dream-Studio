@@ -35,8 +35,8 @@ namespace Engine
 
 	// Contructor for Texture Component
 	TextureComponent::TextureComponent(Entity_id _ID, const std::string _path,
-		GraphicShape _shape, bool _animation, std::string _currAnimationState, bool _active) :
-		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape },
+		GraphicShape _shape, Math::vec4 _colour, bool _animation, std::string _currAnimationState, bool _active) :
+		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape }, colour {_colour},
 		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 }, totalRows{ 1 }, totalColumns{ 1 },
 		minUV{ 0.01f, 0.01f }, maxUV{ 0.99f, 0.99f },
 		isAnimation{ _animation }, currAnimationState{ _currAnimationState },
@@ -136,6 +136,8 @@ namespace Engine
 
 		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
 
+		colour = _serializer.GetValue<Math::vec4>("Colour");
+
 		// For animation
 		isAnimation = _serializer.GetValue<bool>("IsAnimation");
 		
@@ -178,6 +180,8 @@ namespace Engine
 
 		_serializer.SetValue("Filepath", filepath);
 		_serializer.SetValue("Shape", int(mdl_ref));
+
+		_serializer.SetValue("Colour", colour);
 
 		_serializer.SetValue("IsAnimation", isAnimation);
 

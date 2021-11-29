@@ -1,1 +1,66 @@
-[{"Entity":{"Name":"Camera","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"Layer":2,"IsActive":true},"CameraComponent":{"Height":15,"FOV":1.0,"AR":1.7777777910232545,"IsActive":true}},{"Entity":{"Name":"BG","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[15.0,10.0],"Angle":0.0,"Layer":0,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\HighScoreBG-01.png","Shape":0,"IsAnimation":false,"IsActive":true}},{"Entity":{"Name":"Credits","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-15.699999809265137,21.100000381469728],"LocalPosition":[-15.699999809265137,21.100000381469728],"Scale":[2.5,2.0],"Angle":0.0,"Layer":2,"IsActive":true},"FontComponent":{"Filepath":"Assets\\Fonts\\Subtle Curves.ttf","Text":"Credits ","Red":0.0,"Green":0.0,"Blue":0.0,"IsActive":true}}]
+[
+  {
+    "Entity": {
+      "Name": "Camera",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "CameraComponent": {
+      "Height": 15,
+      "FOV": 1.0,
+      "AR": 1.7777777910232545,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "BG",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 15.0, 10.0 ],
+      "Angle": 0.0,
+      "Layer": 0,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\HighScoreBG-01.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Credits",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -15.699999809265137, 21.100000381469728 ],
+      "LocalPosition": [ -15.699999809265137, 21.100000381469728 ],
+      "Scale": [ 2.5, 2.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "FontComponent": {
+      "Filepath": "Assets\\Fonts\\Subtle Curves.ttf",
+      "Text": "Credits ",
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsActive": true
+    }
+  }
+]

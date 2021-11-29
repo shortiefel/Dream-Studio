@@ -1,5 +1,4 @@
 [
-  
   {
     "Entity": {
       "Name": "Camera",
@@ -38,6 +37,7 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\pauseBG.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsActive": true
     }
@@ -67,6 +67,7 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\Default_Square.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsActive": false
     },
@@ -102,6 +103,7 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\Default_Square.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsActive": false
     },
@@ -137,6 +139,7 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\Default_Square.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsActive": false
     },
@@ -172,6 +175,7 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\Default_Square.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsActive": false
     },
@@ -199,9 +203,7 @@
     "FontComponent": {
       "Filepath": "Assets\\Fonts\\Subtle Curves.ttf",
       "Text": "RESUME",
-      "Red": 1.0,
-      "Green": 1.0,
-      "Blue": 1.0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsActive": true
     }
   },
@@ -222,9 +224,7 @@
     "FontComponent": {
       "Filepath": "Assets\\Fonts\\Subtle Curves.ttf",
       "Text": "HOW To PLAy",
-      "Red": 1.0,
-      "Green": 1.0,
-      "Blue": 1.0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsActive": true
     }
   },
@@ -245,9 +245,7 @@
     "FontComponent": {
       "Filepath": "Assets\\Fonts\\Subtle Curves.ttf",
       "Text": "Options",
-      "Red": 1.0,
-      "Green": 1.0,
-      "Blue": 1.0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsActive": true
     }
   },
@@ -268,9 +266,7 @@
     "FontComponent": {
       "Filepath": "Assets\\Fonts\\Subtle Curves.ttf",
       "Text": "Quit",
-      "Red": 1.0,
-      "Green": 1.0,
-      "Blue": 1.0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsActive": true
     }
   }

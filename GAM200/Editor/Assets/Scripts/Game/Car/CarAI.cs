@@ -87,6 +87,7 @@ public class CarAI : MonoBehaviour
 
     public void SetPath(List<Vector2Int> newPath, ref StructureModel endStructure)
     {
+        stop = false;
         endPoint = endStructure;
 
         Console.WriteLine("Set 2nd  CarAi path");
@@ -95,15 +96,31 @@ public class CarAI : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        Console.WriteLine("p1 " + newPath.Count);
         this.path = newPath;
         //foreach (var item in path)
         //{
         //    Debug.Log(item.ToString());
         //}
+        Console.WriteLine("p2 " + path.Count + " " + this.path.Count + "-------------------------------------------------");
         index = 0;
-        currentTargetPosition = this.path[index + 1];
+        currentTargetPosition = this.path[index];
+        //Vector2 directionToFace = new Vector2(0f, 0f);
+        //if (this.path.Count != 1)
+        //{
+        //    directionToFace = currentTargetPosition = this.path[index];
+        //}
+        //
+        //
+        //else
+        //{
+        //    currentTargetPosition = this.path[0];
+        //    directionToFace = endStructure.transform.position;
+        //    Debug.Log("end ");
+        //}
+        Console.WriteLine("p3 " + index);
         //Debug.Log(currentTargetPosition);
-
+        
         /*Vector2 relativepoint = transform.InverseTransformPoint(this.path[index + 1]);
         //Debug.Log(relativepoint);
         float angle = Mathf.Atan2(relativepoint.x, relativepoint.y) * Mathf.Rad2Deg;
@@ -144,7 +161,6 @@ public class CarAI : MonoBehaviour
                 transform.angle = -180f;
             }
         }
-        stop = false;
     }
 
     public override void Update()
@@ -251,7 +267,9 @@ public class CarAI : MonoBehaviour
 
     private void SetNextTargetIndex()
     {
+        Console.WriteLine(index + " index ");
         index++;
+        Console.WriteLine(index + " index22222222 ");
         if (index >= path.Count)
         {
             stop = true;

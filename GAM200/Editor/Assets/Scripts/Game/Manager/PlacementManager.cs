@@ -48,7 +48,7 @@ public class PlacementManager : MonoBehaviour
 
     internal void PlaceObjectOnTheMap(Vector2Int position, GameObject structurePrefab, CellType type, int width = 1, int height = 1)
     {
-        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
+        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, 3);
         //var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
         //if (structureNeedingRoad != null)
         //{

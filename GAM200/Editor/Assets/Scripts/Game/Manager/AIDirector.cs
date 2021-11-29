@@ -68,7 +68,9 @@ public class AIDirector : MonoBehaviour
             //    Debug.Log(item2.ToString());
             //}
 
-            var car = Instantiate(SelectACarPrefab(), new Vector3(startRoadPosition.x, startRoadPosition.y, 0));
+            //var car = Instantiate(SelectACarPrefab(), new Vector3(startRoadPosition.x, startRoadPosition.y, 0));
+            Vector2 pos = startStructure.transform.position;
+            var car = Instantiate(SelectACarPrefab(), new Vector3(pos.x, pos.y, 0));
             //var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0), Quaternion.identity);
 
             Console.WriteLine("Set path2: " + path.Count);

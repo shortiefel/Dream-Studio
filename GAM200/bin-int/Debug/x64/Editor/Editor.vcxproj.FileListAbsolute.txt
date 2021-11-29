@@ -1,2 +1,0 @@
-C:\Users\ao.wang\Documents\GitHub\Dream-Studio\GAM200\bin-int\Debug\x64\Editor\Editor.vcxproj.CopyComplete
-C:\Users\ao.wang\Documents\GitHub\Dream-Studio\GAM200\bin-int\Debug\x64\Editor\Editor.vcxproj.AssemblyReference.cache

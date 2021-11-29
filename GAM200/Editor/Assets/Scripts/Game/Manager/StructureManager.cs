@@ -22,7 +22,8 @@ public class StructureManager : MonoBehaviour
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
         housesPrefabs = new StructurePrefabWeighted[2];
-        housesPrefabs[0].prefab = new Prefab("HouseColour"); housesPrefabs[0].weight = 1;
+        //housesPrefabs[0].prefab = new Prefab("HouseColour"); housesPrefabs[0].weight = 1;
+        housesPrefabs[0].prefab = new GameObject(new Prefab("HouseColour")); housesPrefabs[0].weight = 1;
 
         specialPrefabs = new StructurePrefabWeighted[2];
         specialPrefabs[0].prefab = new Prefab("DestinationColour"); specialPrefabs[0].weight = 1;

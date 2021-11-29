@@ -255,6 +255,14 @@ public class MonoBehaviour : IBehaviour
         Instantiate_Prefab_Transform_Engine(_prefab.name, newEntityId, out uint newId);
         return new GameObject(false, newId);
     }
+
+    public GameObject Instantiate(GameObject _go, Transform transform = null)
+    {
+        int newEntityId = -1;
+        if (transform != null) newEntityId = (int)transform.entityId;
+        Instantiate_Prefab_Transform_Engine(_go.name, newEntityId, out uint newId);
+        return new GameObject(false, newId);
+    }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Instantiate_Prefab_Transform_Engine(String prefabName, int entityID, out uint id);
 

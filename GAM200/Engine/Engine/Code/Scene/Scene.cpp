@@ -132,7 +132,7 @@ namespace Engine {
 #else
     void Scene::Update(float dt, bool playing, Math::vec2) {
 #endif
-        //if (GameState::GetInstance().GetPause()) return;
+        if (!Window::GetInstance().GetFocusStatus()) return;
 
         if (playing) {
             //float timeScale = DeltaTime::GetInstance().GetTimeScale();

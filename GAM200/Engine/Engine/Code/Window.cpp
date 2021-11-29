@@ -43,6 +43,16 @@ namespace Engine {
 
 	//float Window::aspectRatio;
 
+	bool window_focus = true;
+
+	void WindowSizeCallback(GLFWwindow* window, int width, int height);
+	void WindowCloseCallback(GLFWwindow* window);
+	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+	void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+	void CursorCallBack(GLFWwindow* window, double xpos, double ypos);
+	void WindowFocusCallBack(GLFWwindow*, int focused);
+
 	void Window::Update() {
 		PROFILER_START("Application");
 
@@ -58,6 +68,10 @@ namespace Engine {
 		glfwTerminate();
 
 		LOG_INSTANCE("Window destroyed");
+	}
+
+	bool Window::GetFocusStatus() {
+		return window_focus;
 	}
 
 	Math::vec2 Window::GetWindowPosition() {
@@ -90,10 +104,12 @@ namespace Engine {
 	void Window::ToggleFullscreen() {
 		if (fullScreen) {
 			glfwSetWindowMonitor(glfw_window, NULL, 0, 0, Settings::gameWidth, Settings::gameHeight, GLFW_DONT_CARE);
+			std::cout << "Not full screen \n";
 			fullScreen = false;
 		}
 		else {
 			glfwSetWindowMonitor(glfw_window, glfwGetPrimaryMonitor(), 0, 0, Settings::gameWidth, Settings::gameHeight, GLFW_DONT_CARE);
+			std::cout << " full screen \n";
 			fullScreen = true;
 		}
 	}
@@ -147,6 +163,7 @@ namespace Engine {
 		glfwSetMouseButtonCallback(glfw_window, MouseButtonCallback);
 		glfwSetScrollCallback(glfw_window, ScrollCallback);
 		glfwSetCursorPosCallback(glfw_window, CursorCallBack);
+		glfwSetWindowFocusCallback(glfw_window, WindowFocusCallBack);
 
 		GLenum err = glewInit();
 		if (GLEW_OK != err) {
@@ -199,8 +216,8 @@ namespace Engine {
 	glfwSetCursorPosCallback
 	*/
 
-	void Window::WindowSizeCallback(GLFWwindow*, int width, int height) {
-		auto& win_data = Window::GetInstance().w_data;
+	void WindowSizeCallback(GLFWwindow*, int width, int height) {
+		auto& win_data = Window::GetInstance().GetWindowData();
 		win_data.width = width;
 		win_data.height = height;
 
@@ -212,13 +229,13 @@ namespace Engine {
 		//w_data.eventCallBack(event);
 	}
 
-	void Window::WindowCloseCallback(GLFWwindow*) {
+	void WindowCloseCallback(GLFWwindow*) {
 		WindowCloseEvent event;
 		EventDispatcher::SendEvent(event);
 		//w_data.eventCallBack(event);
 	}
 
-	void Window::KeyCallback(GLFWwindow*, int key, int, int action, int) {
+	void KeyCallback(GLFWwindow*, int key, int, int action, int) {
 		switch (action) {
 		case GLFW_PRESS: {
 			KeyPressedEvent event(Input::GetKeyCode(key), false);
@@ -243,7 +260,7 @@ namespace Engine {
 		}
 	}
 
-	void Window::MouseButtonCallback(GLFWwindow*, int button, int action, int) {
+	void MouseButtonCallback(GLFWwindow*, int button, int action, int) {
 		switch (action) {
 		case GLFW_PRESS: {
 			MousePressedEvent event(button);
@@ -262,13 +279,13 @@ namespace Engine {
 		}
 	}
 
-	void Window::ScrollCallback(GLFWwindow*, double xoffset, double yoffset) {
+	void ScrollCallback(GLFWwindow*, double xoffset, double yoffset) {
 		MouseScrolledEvent event((float)xoffset, (float)yoffset);
 		EventDispatcher::SendEvent(event);
 		//w_data.eventCallBack(event);
 	}
 
-	void Window::CursorCallBack(GLFWwindow*, double xpos, double ypos) {
+	void CursorCallBack(GLFWwindow*, double xpos, double ypos) {
 		static Math::vec2 previousPos{};
 
 		MouseMoveEvent event((float)xpos, (float)ypos, 
@@ -278,6 +295,19 @@ namespace Engine {
 		previousPos = Math::vec2{ (float)xpos, (float)ypos };
 		Input::SetMousePosition(Math::vec2{ static_cast<float>(xpos),static_cast<float>(ypos) });
 		//w_data.eventCallBack(event);
+	}
+
+	void WindowFocusCallBack(GLFWwindow*, int focused) {
+		if (focused) {
+			// The window gained input focus
+			std::cout << "in focus \n";
+			window_focus = true;
+		}
+		else {
+			// The window lost input focus
+			std::cout << "lose focus \n";
+			window_focus = false;
+		}
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

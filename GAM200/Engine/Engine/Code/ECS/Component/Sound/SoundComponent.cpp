@@ -25,10 +25,10 @@ namespace Engine {
 	float _vol;
 	float SoundComponent::volume = _vol;
 
-	SoundComponent::SoundComponent(Entity_id _ID, const std::string _path, bool _isSound, bool _isActive, bool _loop, bool _pause, SoundGrp SG) :
-		IComponent{ _ID }, isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause }, SG{ SoundGrp::MASTER } {
+	SoundComponent::SoundComponent(Entity_id _ID, const std::string g_path, bool g_isSound, bool g_isActive, bool g_loop, bool g_pause, SoundGrp g_SG) :
+		IComponent{ _ID }, isSound{ g_isSound }, isActive{ g_isActive }, loop{ g_loop }, Pause{ g_pause }, SG{ g_SG } {
 
-		SoundComponent::GetSound(_path);
+		SoundComponent::GetSound(g_path);
 	}
 	SoundComponent::~SoundComponent() {
 
@@ -36,20 +36,20 @@ namespace Engine {
 	}
 
 
-	FMOD::Sound* SoundComponent::GetSound(const std::string& _path)
+	FMOD::Sound* SoundComponent::GetSound(const std::string& g_path)
 	{
-		auto it = _soundMap.find(_path);
+		auto it = _soundMap.find(g_path);
 		if (it == _soundMap.end())
 		{
 			FMOD_MODE eMode = FMOD_DEFAULT;
 			eMode |= FMOD_LOOP_OFF;
 			FMOD::Sound* pSound = nullptr;
 
-			System->createSound(_path.c_str(), eMode, nullptr, &pSound);
+			System->createSound(g_path.c_str(), eMode, nullptr, &pSound);
 				//throw std::runtime_error("FMOD: Unable to create sound" + _path);
 
 			if (pSound)
-				_soundMap[_path] = pSound;
+				_soundMap[g_path] = pSound;
 
 			return pSound;
 		}
@@ -57,23 +57,23 @@ namespace Engine {
 		return it->second;
 	}
 
-	void SoundComponent::SetLoop(int channelID, bool _loop)
+	void SoundComponent::SetLoop(int g_channelID, bool g_loop)
 	{
-		auto it = channelMap.find(channelID);
+		auto it = channelMap.find(g_channelID);
 		if (it == channelMap.end())
 		{
 			return;
 		}
 		FMOD_MODE eMode = FMOD_LOOP_NORMAL;
-		eMode |= _loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+		eMode |= g_loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
 
 		if (it->second->setMode(eMode))
 			return;
 	}
 	
-	bool SoundComponent::IsPlaying(int channelID)
+	bool SoundComponent::IsPlaying(int g_channelID)
 	{
-		auto it = channelMap.find(channelID);
+		auto it = channelMap.find(g_channelID);
 		if (it == channelMap.end())
 		{
 			return false;
@@ -89,22 +89,22 @@ namespace Engine {
 	*		--- NORMAL = 50.f -> 0.5f
 	*		--- SOFT = 20.f ->0.2f
 	*/
-	float SoundComponent::VolumeDecimal(float _vol)
+	float SoundComponent::VolumeDecimal(float g_vol)
 	{
-		if (_vol < 20.f)
-			_vol = 20.f;
-		else if (_vol >= 20.f && _vol <= 100.f)
-			_vol = 50.f;
-		else if (_vol > 100.f)
-			_vol = 100.f;
+		if (g_vol < 20.f)
+			g_vol = 20.f;
+		else if (g_vol >= 20.f && g_vol <= 100.f)
+			g_vol = 50.f;
+		else if (g_vol > 100.f)
+			g_vol = 100.f;
 
-		return _vol / 100.f;
+		return g_vol / 100.f;
 			
 	}
 
-	float SoundComponent::DecimalVolume(float _vol)
+	float SoundComponent::DecimalVolume(float g_vol)
 	{
-		return _vol * 100.f;
+		return g_vol * 100.f;
 	}
 
 	SoundComponent& SoundComponent::Deserialize(const DSerializer& _serializer)

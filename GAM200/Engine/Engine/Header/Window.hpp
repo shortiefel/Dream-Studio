@@ -35,8 +35,10 @@ else { \
 
 namespace Engine {
 	class Event; //Forward declaration
+	
 
 	class Window : public Singleton<Window> {
+		struct WinData;
 	public:
 		float aspectRatio = 1.f;
 
@@ -48,7 +50,9 @@ namespace Engine {
 		inline unsigned int GetWidth() { return w_data.width; }
 		inline unsigned int GetHeight() { return w_data.height; }
 		inline void* GetNativewindow() { return (void*)glfw_window; }
+		inline WinData& GetWindowData() { return w_data; }
 
+		bool GetFocusStatus();
 		Math::vec2 GetWindowPosition();
 		Math::vec2 GetWindowSize();
 
@@ -60,13 +64,6 @@ namespace Engine {
 
 		//static void SetEventCallBack(const std::function<void(Event&)> callback);
 
-
-		static void WindowSizeCallback(GLFWwindow* window, int width, int height);
-		static void WindowCloseCallback(GLFWwindow* window);
-		static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-		static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-		static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
-		static void CursorCallBack(GLFWwindow* window, double xpos, double ypos);
 
 
 	private:
@@ -83,10 +80,7 @@ namespace Engine {
 		GLFWwindow* glfw_window = 0;
 		//static Window* s_instance;
 
-		Window() {}
-		~Window() {}
-
-		friend class Singleton<Window>;
+		SINGLETON_SETUP(Window);
 	};
 }
 

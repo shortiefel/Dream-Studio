@@ -18,6 +18,7 @@ using System.Runtime.CompilerServices; //For internal calls
 public class GameObject : IBehaviour
 {
     public Transform transform;
+    public string name;
     //Creating New GameObject
     public GameObject(bool create = true, uint entity_id = 9999) : base(entity_id)
     {
@@ -47,6 +48,7 @@ public class GameObject : IBehaviour
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void CreateEntity_Engine(out uint entityID, string name);
+    //--------------------------------------------------------------------
 
     //Referencing existing GameObject
     private GameObject(uint entId) : base(entId)
@@ -59,6 +61,15 @@ public class GameObject : IBehaviour
     public static GameObject RetrieveGameObject(uint entId)
     {
         return new GameObject(entId);
+    }
+
+
+    public GameObject(Prefab _prefab, uint entity_id = 9999) : base(entity_id)
+    {
+        name = _prefab.name;
+        
+        entityId = entity_id;
+        transform = null;
     }
 
 

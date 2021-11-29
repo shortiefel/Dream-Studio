@@ -815,6 +815,7 @@ namespace Engine {
 
 	void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, int layer, unsigned int* newId) {
 		char* text = mono_string_to_utf8(prefabName);
+		std::cout << "pref " << std::string{ text } << "\n";
 		GameSceneSerializer::DeserializePrefab(text, newId, Math::vec2{ pos.x, pos.y }, 0, layer);
 		mono_free(text);
 	}

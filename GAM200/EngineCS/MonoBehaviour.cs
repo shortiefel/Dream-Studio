@@ -253,7 +253,7 @@ public class MonoBehaviour : IBehaviour
         int newEntityId = -1;
         if (transform != null) newEntityId = (int)transform.entityId;
         Instantiate_Prefab_Transform_Engine(_prefab.name, newEntityId, out uint newId);
-        return new GameObject(false, newId);
+        return new GameObject(false, newId, _prefab.name);
     }
 
     public GameObject Instantiate(GameObject _go, Transform transform = null)
@@ -261,7 +261,7 @@ public class MonoBehaviour : IBehaviour
         int newEntityId = -1;
         if (transform != null) newEntityId = (int)transform.entityId;
         Instantiate_Prefab_Transform_Engine(_go.name, newEntityId, out uint newId);
-        return new GameObject(false, newId);
+        return new GameObject(false, newId, _go.name);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Instantiate_Prefab_Transform_Engine(String prefabName, int entityID, out uint id);
@@ -270,7 +270,12 @@ public class MonoBehaviour : IBehaviour
     public GameObject Instantiate(Prefab _prefab, Vector3 pos, int layer = 2)
     {
         Instantiate_Prefab_Position_Engine(_prefab.name, pos, layer, out uint newId);
-        return new GameObject(false, newId);
+        return new GameObject(false, newId, _prefab.name);
+    }
+    public GameObject Instantiate(GameObject _go, Vector3 pos, int layer = 2)
+    {
+        Instantiate_Prefab_Position_Engine(_go.name, pos, layer, out uint newId);
+        return new GameObject(false, newId, _go.name);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Instantiate_Prefab_Position_Engine(String prefabName, Vector3 pos, int layer, out uint newId);

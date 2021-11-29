@@ -9,8 +9,8 @@ public class PlacementManager : MonoBehaviour
     RoadFixer roadFixer;
     //private Transform transform;
 
-    private Dictionary<Vector2Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector2Int, StructureModel>();
-    private Dictionary<Vector2Int, StructureModel> structureDictionary = new Dictionary<Vector2Int, StructureModel>();
+    private Dictionary<Vector2Int, StructureModel> temporaryRoadobjects;
+    private Dictionary<Vector2Int, StructureModel> structureDictionary;
 
     //private void Start()
     public override void Start()
@@ -46,7 +46,7 @@ public class PlacementManager : MonoBehaviour
     //    //DestroyNatureAt(position);
     //}
 
-    internal void PlaceObjectOnTheMap(Vector2Int position, Prefab structurePrefab, CellType type, int width = 1, int height = 1)
+    internal void PlaceObjectOnTheMap(Vector2Int position, GameObject structurePrefab, CellType type, int width = 1, int height = 1)
     {
         StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
         //var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
@@ -121,7 +121,7 @@ public class PlacementManager : MonoBehaviour
         return true;
     }
 
-    internal void PlaceTemporaryStructure(Vector2Int position, Prefab structurePrefab, CellType type, int layer, bool single = false)
+    internal void PlaceTemporaryStructure(Vector2Int position, GameObject structurePrefab, CellType type, int layer, bool single = false)
     {
         placementGrid[position.x, position.y] = type;
         StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, layer);
@@ -143,7 +143,7 @@ public class PlacementManager : MonoBehaviour
         return neighbours;
     }
 
-    private StructureModel CreateANewStructureModel(Vector2Int position, Prefab structurePrefab, CellType type, int layer = 2)
+    private StructureModel CreateANewStructureModel(Vector2Int position, GameObject structurePrefab, CellType type, int layer = 2)
     {
         //GameObject structure = new GameObject(type.ToString());
         
@@ -195,7 +195,7 @@ public class PlacementManager : MonoBehaviour
         temporaryRoadobjects.Clear();
     }
 
-    public void ModifyStructureModel(Vector2Int position, Prefab newModel, float rotation)
+    public void ModifyStructureModel(Vector2Int position, GameObject newModel, float rotation)
     {
         if (temporaryRoadobjects.ContainsKey(position))
             temporaryRoadobjects[position].SwapModel(newModel, rotation);

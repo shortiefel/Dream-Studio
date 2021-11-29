@@ -45,7 +45,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         //yHeight = structure.transform.position.y;
     }*/
 
-    public void SwapModel(Prefab model, float rotation)
+    public void SwapModel(GameObject model, float rotation)
     {
         /*foreach (Transform child in transform)
         {

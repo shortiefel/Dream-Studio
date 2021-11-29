@@ -22,9 +22,10 @@ public class CarSpawner : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > maxTimer)
         {
-            //aiDirector.SpawnAHouseCar(structureModel);
-            //maxTimer = aiDirector.carSpawnTimerInterval;
-            spawnManager.CheckPosition();
+            aiDirector.SpawnAHouseCar(structureModel);
+            maxTimer = aiDirector.carSpawnTimerInterval;
+            //spawnManager.CheckPosition();
+            Debug.Log("carspawner");
 
             timer = 0f;
         }

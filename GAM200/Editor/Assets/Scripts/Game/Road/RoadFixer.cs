@@ -5,15 +5,15 @@ using System.Linq;
 
 public class RoadFixer : MonoBehaviour
 {
-    public Prefab deadEnd, roadStraight, corner, threeWay, fourWay;
+    public GameObject deadEnd, roadStraight, corner, threeWay, fourWay;
 
     public override void Awake()
     {
-        deadEnd = new Prefab("EndRoad");
-        roadStraight = new Prefab("StraightRoad");
-        corner = new Prefab("CurveRoad");
-        threeWay = new Prefab("ThreeWayRoad");
-        fourWay = new Prefab("FourWayRoad");
+        deadEnd = new GameObject(new Prefab("EndRoad"));
+        roadStraight = new GameObject(new Prefab("StraightRoad"));
+        corner = new GameObject(new Prefab("CurveRoad"));
+        threeWay = new GameObject(new Prefab("ThreeWayRoad"));
+        fourWay = new GameObject(new Prefab("FourWayRoad"));
     }
     public void FixRoadAtPosition(PlacementManager placementManager, Vector2Int temporaryPosition)
     {

@@ -20,14 +20,16 @@ public class GameObject : IBehaviour
     public Transform transform;
     public string name;
     //Creating New GameObject
-    public GameObject(bool create = true, uint entity_id = 9999) : base(entity_id)
+    public GameObject(bool create = true, uint entity_id = 9999, string _name = null) : base(entity_id)
     {
+        name = _name;
         if (create)
         {
             CreateEntity_Engine(out uint entId, "");
             entityId = entId;
             transform = new Transform(entityId);
             AddComponent_Transform_Engine(entityId);
+
         }
         else
         {

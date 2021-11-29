@@ -13,8 +13,7 @@ public class RoadManager : MonoBehaviour
 
     private Vector2Int startPosition;
     private Vector2Int randomDestinationPosition;
-    private bool placementMode = false;
-
+    private bool placementMode;
 
     //private void Start()
     public override void Start()
@@ -24,6 +23,8 @@ public class RoadManager : MonoBehaviour
         structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
         temporaryPlacementPositions = new List<Vector2Int>();
         roadPositionsToRecheck = new List<Vector2Int>();
+
+        placementMode = false;
     }
 
     public void PlaceSpawnHouse(Vector2Int position)

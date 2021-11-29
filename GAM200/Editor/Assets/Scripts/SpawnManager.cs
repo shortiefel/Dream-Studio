@@ -11,7 +11,21 @@ public class SpawnManager : MonoBehaviour
 
     private Vector2Int randomRoadPosition;
 
-    private int scoreToSpawn = 0;
+    private int scoreToSpawn;
+    float timer;
+    float maxTimer;
+
+    public override void Start()
+    {
+        placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+        structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
+        roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
+
+        scoreToSpawn = 0;
+
+        timer = 0f;
+        maxTimer = 2.0f;
+    }
 
     private Vector2Int SpawnRandomRoad()
     {
@@ -99,12 +113,26 @@ public class SpawnManager : MonoBehaviour
                 //Debug.Log(housePosition.y);
 
                 roadManager.PlaceSpawnHouse(roadPosition);
-                roadManager.PlaceSpawnDestination(roadPosition2);
+                //roadManager.PlaceSpawnDestination(roadPosition2);
+            Debug.Log("here");
                 //structureManager.PlaceHouse(housePosition);
-                scoreToSpawn += 5;
+                //scoreToSpawn += 5;
             //}
         }
 
+    }
+
+    public override void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer > maxTimer)
+        {
+            
+            CheckPosition();
+            Debug.Log("hous espawner");
+
+            timer = 0f;
+        }
     }
 
     //private void Update()

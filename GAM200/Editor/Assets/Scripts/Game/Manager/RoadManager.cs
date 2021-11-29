@@ -6,11 +6,13 @@ public class RoadManager : MonoBehaviour
 {
     public PlacementManager placementManager;
     public RoadFixer roadFixer;
+    public StructureManager structureManager;
 
     public List<Vector2Int> temporaryPlacementPositions;
     public List<Vector2Int> roadPositionsToRecheck;
 
     private Vector2Int startPosition;
+    private Vector2Int randomDestinationPosition;
     private bool placementMode = false;
 
 
@@ -19,9 +21,130 @@ public class RoadManager : MonoBehaviour
     {
         roadFixer = GetComponent<RoadFixer>();
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+        structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
         temporaryPlacementPositions = new List<Vector2Int>();
         roadPositionsToRecheck = new List<Vector2Int>();
-    }  
+    }
+
+    public void PlaceSpawnHouse(Vector2Int position)
+    {
+        if (placementManager.CheckIfPositionInBound(position) == false)
+            return;
+        if (placementManager.CheckIfPositionIsFree(position) == false)
+            return;
+
+        temporaryPlacementPositions.Clear();
+        roadPositionsToRecheck.Clear();
+
+        startPosition = position;
+        //Debug.Log(position);
+
+        temporaryPlacementPositions.Add(position);
+
+        var spawnRoad = Instantiate(roadFixer.deadEnd, transform);
+
+        int random = Random.Range(0, 3);
+        int rotate = 0;
+
+        int randomX = position.x;
+        int randomY = position.y;
+
+        if (random == 0)
+        {
+            rotate = 0;
+            randomDestinationPosition.x = randomX;
+            randomDestinationPosition.y = randomY + 1;
+        }
+        else if (random == 1)
+        {
+            rotate = 90;
+            randomDestinationPosition.x = randomX - 1;
+            randomDestinationPosition.y = randomY;
+        }
+        else if (random == 2)
+        {
+            rotate = 180;
+            randomDestinationPosition.x = randomX;
+            randomDestinationPosition.y = randomY - 1;
+        }
+        else if (random == 3)
+        {
+            rotate = 270;
+            randomDestinationPosition.x = randomX + 1;
+            randomDestinationPosition.y = randomY;
+        }
+
+        float rotation = rotate;
+
+        spawnRoad.transform.angle = rotation;
+
+        placementManager.PlaceTemporaryStructure(position, spawnRoad, CellType.Road, 1);
+        structureManager.PlaceHouse(randomDestinationPosition);
+
+        placementManager.AddtemporaryStructuresToStructureDictionary();
+        temporaryPlacementPositions.Clear();
+        startPosition = Vector2Int.zero;
+    }
+
+    public void PlaceSpawnDestination(Vector2Int position)
+    {
+        if (placementManager.CheckIfPositionInBound(position) == false)
+            return;
+        if (placementManager.CheckIfPositionIsFree(position) == false)
+            return;
+
+        temporaryPlacementPositions.Clear();
+        roadPositionsToRecheck.Clear();
+
+        startPosition = position;
+        //Debug.Log(position);
+
+        temporaryPlacementPositions.Add(position);
+
+        var spawnRoad = Instantiate(roadFixer.deadEnd, transform);
+
+        int random = Random.Range(0, 3);
+        int rotate = 0;
+
+        int randomX = position.x;
+        int randomY = position.y;
+
+        if (random == 0)
+        {
+            rotate = 0;
+            randomDestinationPosition.x = randomX;
+            randomDestinationPosition.y = randomY + 1;
+        }
+        else if (random == 1)
+        {
+            rotate = 90;
+            randomDestinationPosition.x = randomX - 1;
+            randomDestinationPosition.y = randomY;
+        }
+        else if (random == 2)
+        {
+            rotate = 180;
+            randomDestinationPosition.x = randomX;
+            randomDestinationPosition.y = randomY - 1;
+        }
+        else if (random == 3)
+        {
+            rotate = 270;
+            randomDestinationPosition.x = randomX + 1;
+            randomDestinationPosition.y = randomY;
+        }
+
+        float rotation = rotate;
+
+        spawnRoad.transform.angle = rotation;
+
+        placementManager.PlaceTemporaryStructure(position, spawnRoad, CellType.Road, 1);
+        structureManager.PlaceSpecial(randomDestinationPosition);
+
+        placementManager.AddtemporaryStructuresToStructureDictionary();
+        temporaryPlacementPositions.Clear();
+        startPosition = Vector2Int.zero;
+    }
 
     public void PlaceRoad(Vector2Int position)
     {

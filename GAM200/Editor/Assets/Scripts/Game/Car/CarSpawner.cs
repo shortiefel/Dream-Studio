@@ -4,6 +4,7 @@ using System;
 public class CarSpawner : MonoBehaviour
 {
     AIDirector aiDirector;
+    SpawnManager spawnManager;
     float timer;
     float maxTimer;
     StructureModel structureModel;
@@ -11,6 +12,7 @@ public class CarSpawner : MonoBehaviour
     {
         timer = 0f;
         aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         maxTimer = aiDirector.carSpawnTimerInterval;
         structureModel = GetComponent<StructureModel>();
     }
@@ -20,8 +22,10 @@ public class CarSpawner : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > maxTimer)
         {
-            aiDirector.SpawnAHouseCar(structureModel);
-            maxTimer = aiDirector.carSpawnTimerInterval;
+            //aiDirector.SpawnAHouseCar(structureModel);
+            //maxTimer = aiDirector.carSpawnTimerInterval;
+            spawnManager.CheckPosition();
+
             timer = 0f;
         }
     }

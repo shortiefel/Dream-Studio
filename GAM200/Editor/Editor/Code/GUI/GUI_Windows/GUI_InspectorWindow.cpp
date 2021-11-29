@@ -386,6 +386,18 @@ namespace Editor {
 						ImGui::Spacing();
 
 						/**
+						*	Is Trigger
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Is Trigger");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						
+						DreamImGui::CheckBox_Dream("##ColliderIsTrigger", &(colComp->isTrigger));
+
+						ImGui::Spacing();
+
+						/**
 						*	DELETE
 						*/
 						ImGui::AlignTextToFramePadding();

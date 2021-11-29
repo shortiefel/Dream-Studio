@@ -26,6 +26,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/Physics/ColliderComponent.hpp"
 #include "Engine/Header/ECS/Component/Graphics/TransformComponent.hpp"
 
+#include "Engine/Header/Parent/ParentManager.hpp"
+
 #include "Engine/Header/Physics/Ray.hpp"
 #include <iostream>
 
@@ -244,17 +246,21 @@ namespace Engine {
         void CollisionResolutionMain(Math::vec2& dir, TransformComponent& trans1, const ColliderComponent&, TransformComponent& trans2, const ColliderComponent&) {
             if (ent1IsMoveable && ent2IsMoveable) {
                 trans1.position -= (dir * 0.5f);
+                ParentManager::GetInstance().UpdateLocalPos(trans1.GetEntityId());
                 trans2.position += (dir * 0.5f);
+                ParentManager::GetInstance().UpdateLocalPos(trans2.GetEntityId());
             }
 
             //if only one moveable it should move by the full length amount
             else if (ent1IsMoveable) {
                 trans1.position -= dir;
+                ParentManager::GetInstance().UpdateLocalPos(trans1.GetEntityId());
             }
 
             else if (ent2IsMoveable) {
                 //std::cout << "Resolving 3\n";
                 trans2.position += dir;
+                ParentManager::GetInstance().UpdateLocalPos(trans2.GetEntityId());
             }
         }
 
@@ -363,16 +369,20 @@ namespace Engine {
             //since dir is from col1, object2 will move in dir and object1 will move in -dir
             if (ent1IsMoveable && ent2IsMoveable) {
                 trans1.position += length / 2 * dir; //for col1
+                ParentManager::GetInstance().UpdateLocalPos(trans1.GetEntityId());
                 trans2.position += length / 2 * -dir; //for col2
+                ParentManager::GetInstance().UpdateLocalPos(trans2.GetEntityId());
             }
 
             //if only one moveable it should move by the full length amount
             else if (ent1IsMoveable) {
                 trans1.position += length * dir; //for col1
+                ParentManager::GetInstance().UpdateLocalPos(trans1.GetEntityId());
             }
 
             else if (ent2IsMoveable) {
                 trans2.position += length * -dir; //for col2
+                ParentManager::GetInstance().UpdateLocalPos(trans2.GetEntityId());
             }
         }
 

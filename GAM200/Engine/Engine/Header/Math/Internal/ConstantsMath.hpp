@@ -35,6 +35,11 @@ namespace Engine {
         }
 
         template <typename T>
+        inline bool epsilonCheck(const T& target) {
+            return (target >= -std::numeric_limits<T>::epsilon() && target <= std::numeric_limits<T>::epsilon());
+        }
+
+        template <typename T>
         inline T pi() {
             return static_cast<T>(3.141592653589793238462643383279502884197169399375105820974944);
         }

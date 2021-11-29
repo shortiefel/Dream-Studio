@@ -74,7 +74,7 @@ namespace Engine
 		bool isLooping, loopComplete;
 		bool isAngleRandom, isVelocityVariation;
 
-		int m_PoolIndex = 999;
+		int m_PoolIndex = 299;
 		std::vector<Particle> m_ParticlePool;
 
 		void ParticleUpdate(Particle& particle, float _dt, bool _isAngleRandom);

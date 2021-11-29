@@ -118,7 +118,7 @@ namespace Engine
 			particle.sizeBegin += particleProps.sizeVariation * Random::Float();
 
 			// Index reset
-			if ((m_PoolIndex - 1) < 0) m_PoolIndex = 999;
+			if ((m_PoolIndex - 1) < 0) m_PoolIndex = 299;
 			m_PoolIndex = --m_PoolIndex % m_ParticlePool.size();
 		}
 	}

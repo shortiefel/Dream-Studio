@@ -30,7 +30,7 @@ public class Notification : MonoBehaviour
         if (lifeTime > maxLifeTime)
         {
             //GameOver();
-            Debug.Log("Lose");
+            //Debug.Log("Lose");
         }
         if (lifeTime > showNotification)
         {

@@ -113,7 +113,7 @@ public class SpawnManager : MonoBehaviour
                 //Debug.Log(housePosition.y);
 
                 roadManager.PlaceSpawnHouse(roadPosition);
-                //roadManager.PlaceSpawnDestination(roadPosition2);
+                roadManager.PlaceSpawnDestination(roadPosition2);
             Debug.Log("here");
                 //structureManager.PlaceHouse(housePosition);
                 //scoreToSpawn += 5;

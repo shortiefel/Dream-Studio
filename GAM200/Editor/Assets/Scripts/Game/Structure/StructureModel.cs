@@ -11,7 +11,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     //CarSpawner carSpawner;
     public Vector2Int RoadPosition { get; set; }
 
-    private Prefab notifiPrefab;
+    //private Prefab notifiPrefab;
     private GameObject notifiSymbol;
     public override void Start()
     {
@@ -22,10 +22,10 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         
         if (notification != null)
         {
-            notifiPrefab = new Prefab("Notification");
+            //notifiPrefab = ;
             Vector2 center = transform.localPosition;
             
-            notifiSymbol = Instantiate(notifiPrefab, new Vector3(center.x, center.y + 0.7f, 0f), 3);
+            notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 0.7f, 0f), 3);
         }
     }
 

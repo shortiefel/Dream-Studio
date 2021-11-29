@@ -150,6 +150,7 @@ namespace Engine {
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				if (csScriptInstance.isActive && csScriptInstance.csClass.UpdateFunc != nullptr) {
+					std::cout << className << "\n";
 					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::UPDATE);
 				}
 			}

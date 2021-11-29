@@ -132,13 +132,20 @@ namespace Editor
 		{
 			//Position
 			transform->position = transform->localPosition;
-			transform->position = before.localPosition;
-			//transform->position -= Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected)).localPosition;
+			transform->position = before.position;
+			transform->position -= Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected)).localPosition;
 		}
 	}
 
 	void ObjectTransformCommand::undo()
 	{
+		//Engine::TransformComponent* transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected));
+		//if (transform != nullptr)
+		//{
+		//	//Position
+		//	transform->position = transform->localPosition;
+		//	transform->position -= Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected)).localPosition;
+		//}
 		StoredTransform(before);
 	}
 

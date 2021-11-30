@@ -17,6 +17,7 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\EndRoad.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsLoop": false,
       "EndFrame": 0,

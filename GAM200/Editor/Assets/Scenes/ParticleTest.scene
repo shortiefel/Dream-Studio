@@ -14,8 +14,9 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets\\Textures\\BlueBtn.png",
+      "Filepath": "Assets\\Textures\\Car.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsActive": true
     },
@@ -24,15 +25,15 @@
       "Shape": 0,
       "EmitSize": 1,
       "IsActive": true,
-      "OffsetPosition": [ 0.0, 1.0 ],
+      "OffsetPosition": [ 0.0, 0.4 ],
       "Velocity": [ 0.0, 1.0 ],
       "VelocityVariation": [ 1.0, 2.0 ],
       "ColorBegin": [ 0.5, 0.5, 0.5, 1.0 ],
       "ColorEnd": [ 0.5, 0.5, 0.5, 0.0 ],
-      "SizeBegin": [ 0.30000001192092898, 0.30000001192092898 ],
+      "SizeBegin": [ 0.05, 0.05 ],
       "SizeEnd": [ 0.0, 0.0 ],
       "SizeVariation": [ 0.0, 0.0 ],
-      "LifeTime": 0.5,
+      "LifeTime": 0.1,
       "IsLooping": true,
       "IsAngleRandom": false,
       "IsVelocityVariation": true

@@ -38,6 +38,8 @@ namespace Engine {
 	{
 		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
 
+		colour = _serializer.GetValue<Math::vec4>("Colour");
+
 		isActive = _serializer.GetValue<bool>("IsActive");
 
 		return *this;
@@ -47,6 +49,7 @@ namespace Engine {
 	void UIComponent::Serialize(const SSerializer& _serializer)
 	{
 		_serializer.SetValue("Filepath", filepath);
+		_serializer.SetValue("Colour", colour);
 		_serializer.SetValue("IsActive", isActive);
 	}
 }

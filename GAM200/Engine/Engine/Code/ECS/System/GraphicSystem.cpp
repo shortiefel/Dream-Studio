@@ -72,7 +72,7 @@ namespace Engine
 					}
 				}
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
-					texture.texobj_hdl, texture.minUV, texture.maxUV);
+					texture.texobj_hdl, texture.colour, texture.minUV, texture.maxUV);
 			}
 		}
 	}
@@ -111,8 +111,27 @@ namespace Engine
 						float life = p.lifeRemaining / p.lifeTime;
 						Math::vec4 color = Math::Lerp(p.colorEnd, p.colorBegin, life);
 						Math::vec2 size = Math::Lerp(p.sizeEnd, p.sizeBegin, life);
+
+						// Compute offset position matrix
+						Math::mat3 offsetPosition = Math::mat3(
+							// Translate
+							Math::mat3(Math::vec3(1.f, 0, 0),
+									   Math::vec3(0, 1.f, 0),
+									   Math::vec3(transform->position.x, transform->position.y, 1.f))
+							*
+							// Rotate
+							Math::mat3(Math::vec3(cos(Math::radians(transform->angle)), sin(Math::radians(transform->angle)), 0.f),
+									   Math::vec3(-sin(Math::radians(transform->angle)), cos(Math::radians(transform->angle)), 0.f),
+									   Math::vec3(0.f, 0.f, 1.f))
+						);
+
+						// Change to all take in vec3 for position in the future
+						Math::vec3 v3position = offsetPosition * Math::vec3(p.offsetPosition.x, 
+																			p.offsetPosition.y, 
+																			1.0f);
+						Math::vec2 v2position = { v3position.x, v3position.y };
 						
-						GraphicImplementation::Renderer::DrawQuad(p.offsetPosition + transform->position, size, p.angle,
+						GraphicImplementation::Renderer::DrawQuad(v2position, size, p.angle,
 							particle.texobj_hdl, color);
 					}
 				}
@@ -219,7 +238,7 @@ namespace Engine
 		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
 
 		// Looping through lines buffer; batch rendering
-		GraphicImplementation::Renderer::DrawLines({ 0.f, 0.f }, { 10.f, 10.f }, { 1.f, 1.f, 0.f, 1.f }); // example on how to draw line
+		// GraphicImplementation::Renderer::DrawLines({ 0.f, 0.f }, { 10.f, 10.f }, { 1.f, 1.f, 0.f, 1.f }); // example on how to draw line
 
 		GraphicImplementation::Renderer::EndLinesBatch();
 

@@ -33,11 +33,10 @@ namespace Engine
             static void BeginBatch();
 
             static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color,
-                Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
-            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID,
-                Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
-            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, const Math::vec4 color,
-                Math::vec2 _min = { 0.f, 0.f }, Math::vec2 _max = { 1.f, 1.f });
+                Math::vec2 _min = { 0.01f, 0.01f }, Math::vec2 _max = { 0.99f, 0.99f });
+            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, 
+                const Math::vec4 color = {1.0f, 1.0f, 1.0f, 1.0f},
+                Math::vec2 _min = { 0.01f, 0.01f }, Math::vec2 _max = { 0.99f, 0.99f });
 
             static void DrawQuadDebug(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color);
             static void DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const Math::vec4 color);

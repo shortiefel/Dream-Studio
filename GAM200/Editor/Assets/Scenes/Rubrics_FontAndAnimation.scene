@@ -24,6 +24,7 @@
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\SpriteStateTest.png",
       "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": true,
       "TotalRow": 3,
       "TotalColumns": 9,

@@ -51,6 +51,7 @@ namespace Engine
 		GLuint texobj_hdl{};
 
 		GraphicShape mdl_ref = GraphicShape{};
+		Math::vec4 colour;
 
 		GLint width{}, height{};
 		GLint BPP{}; // Bits per pixel
@@ -80,7 +81,8 @@ namespace Engine
 
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png",
-			GraphicShape _shape = GraphicShape::SQUARE, bool _animation = false, std::string _currAnimationState = "", bool _active = true);
+			GraphicShape _shape = GraphicShape::SQUARE, Math::vec4 _colour = {1.0f, 1.0f, 1.0f, 1.0f}, 
+			bool _animation = false, std::string _currAnimationState = "", bool _active = true);
 
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);

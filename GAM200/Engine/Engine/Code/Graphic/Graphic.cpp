@@ -16,6 +16,9 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/Graphic.hpp" 
 
+#include "Engine/Header/Graphic/Mesh.hpp"
+#include "Engine/Header/Time/DeltaTime.hpp"
+
 namespace Engine
 {
     namespace GraphicImplementation
@@ -30,6 +33,55 @@ namespace Engine
         void UnUseShaderHandle()
         {
             glUseProgram(0);
+        }
+
+
+        void FadeInScene(Math::vec3 _colour, float time, float _dt)
+        {
+            if (fadeStruct.flag == false)
+            {
+                fadeStruct.lifeTime = fadeStruct.lifeRemaining = time;
+                fadeStruct.colourBegin = { _colour.x, _colour.y, _colour.z, 0.0f };
+                fadeStruct.colourEnd = { _colour.x, _colour.y, _colour.z, 1.0f };
+
+                fadeStruct.flag = true;
+            }
+            else if (fadeStruct.flag == true)
+            {
+                fadeStruct.lifeRemaining -= _dt;
+
+                float life = fadeStruct.lifeRemaining / fadeStruct.lifeTime;
+                Math::vec4 colour = Math::Lerp(fadeStruct.colourEnd, fadeStruct.colourBegin, life);
+
+                if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flag = false;
+
+                if (fadeStruct.flag == true) 
+                    GraphicImplementation::Renderer::DrawQuad({0.0f, 0.0f}, { 2.0f, 2.0f }, 0.0f, colour);
+            }
+        }
+
+        void FadeOutScene(Math::vec4 _colour, float time, float _dt)
+        {
+            if (fadeStruct.flag == false)
+            {
+                fadeStruct.lifeTime = fadeStruct.lifeRemaining = time;
+                fadeStruct.colourBegin = { _colour.x, _colour.y, _colour.z, 1.0f };
+                fadeStruct.colourEnd = { _colour.x, _colour.y, _colour.z, 0.0f };
+
+                fadeStruct.flag = true;
+            }
+            else if (fadeStruct.flag == true)
+            {
+                fadeStruct.lifeRemaining -= _dt;
+
+                float life = fadeStruct.lifeRemaining / fadeStruct.lifeTime;
+                Math::vec4 colour = Math::Lerp(fadeStruct.colourEnd, fadeStruct.colourBegin, life);
+
+                if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flag = false;
+
+                if (fadeStruct.flag == true)
+                    GraphicImplementation::Renderer::DrawQuad({ 0.0f, 0.0f }, { 2.0f, 2.0f }, 0.0f, colour);
+            }
         }
     }
 }

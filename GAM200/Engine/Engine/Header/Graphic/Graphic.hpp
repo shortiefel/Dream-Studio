@@ -27,11 +27,29 @@ namespace Engine
 {
     namespace GraphicImplementation
     {
+        struct FadeStruct
+        {
+            float lifeTime = 1.0f;
+            float lifeRemaining = 0.0f;
+
+            Math::vec4 colourBegin;
+            Math::vec4 colourEnd;
+
+            bool flag = false;
+        };
+
+        static FadeStruct fadeStruct;
+
         // Install the shader program with object handle
         void UseShaderHandle(unsigned int prgm_handle);
 
         // De-install previously installed shader program object.
         void UnUseShaderHandle();
+
+        // Fades scene when called; user is able to choose colour and fading time
+        void FadeInScene(Math::vec4 colour, float time);
+        void FadeOutScene(Math::vec4 colour, float time);
+
 
         extern std::map<GraphicShader, GLSLShader> shdrpgms;
     }

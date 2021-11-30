@@ -136,6 +136,8 @@ namespace Engine {
 #ifdef _GAME_BUILD
             //Render game when not in focus
             GraphicSystem::GetInstance().Render(dt);
+            FontSystem::GetInstance().Render();
+            UISystem::GetInstance().Render();
 #endif
             return;
         }

@@ -8,7 +8,7 @@
 ; !!NOTE!!: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click "Tools" | "Create GUID" inside the Visual Studio IDE.)
-AppId={{99612BF2-3DA1-45E8-9086-75D4E4760CBF}
+AppId={{9A10AAA4-23C5-430E-B036-265D07B740FA}
 
 ; Standard app data stuff
 ; !!NOTE!!: Replace all instances of "Dream_Express" with your game name.

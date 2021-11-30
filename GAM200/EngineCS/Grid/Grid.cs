@@ -43,7 +43,7 @@ public class Grid
         _width = width;
         _height = height;
         _grid = new CellType[width, height];
-        //CreateGrid_Engine(width, height);
+        CreateGrid_Engine(width, height);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void CreateGrid_Engine(int width, int height);

@@ -44,6 +44,10 @@ namespace Engine {
 		class Grid : public Singleton<Grid> {
 		public:
 			/*-----------------------------------------------------
+			Get grid size
+			-----------------------------------------------------*/
+			Math::ivec2 GetGridSize();
+			/*-----------------------------------------------------
 			Create grid with width and height
 			-----------------------------------------------------*/
 			void CreateGrid(int width, int height);

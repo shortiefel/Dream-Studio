@@ -206,6 +206,7 @@ namespace Engine {
 	Scene
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void LoadScene_Engine(MonoString* sceneName);
+	void SetDrawMode_Engine(bool state);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Physics
@@ -362,6 +363,7 @@ namespace Engine {
 		Scene
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("SceneManager::LoadScene_Engine", LoadScene_Engine);
+		mono_add_internal_call("SceneManager::SetDrawMode_Engine", SetDrawMode_Engine);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Physics
@@ -853,6 +855,10 @@ namespace Engine {
 		char* text = mono_string_to_utf8(sceneName);
 		SceneManager::GetInstance().ChangeScene(text);
 		mono_free(text);
+	}
+
+	void SetDrawMode_Engine(bool state) {
+		GameState::GetInstance().SetShouldDraw(state);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

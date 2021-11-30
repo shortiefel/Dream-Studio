@@ -7,11 +7,6 @@ public class CreditsButton : MonoBehaviour
         Console.WriteLine("going into credit scene");
     }
 
-    public override void Update()
-    {
-
-    }
-
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))

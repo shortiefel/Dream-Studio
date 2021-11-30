@@ -25,8 +25,12 @@ namespace Engine {
 	public:
 		bool GetPlaying() const;
 		void SetPlaying(bool playState);
+
+		bool GetShouldDraw() const;
+		void SetShouldDraw(bool _shouldDraw);
 	private:
 		bool playing = false;
+		bool shouldDraw = false;
 
 		SINGLETON_SETUP(GameState);
 	};

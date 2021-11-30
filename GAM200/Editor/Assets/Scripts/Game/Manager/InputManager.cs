@@ -13,10 +13,11 @@ public class InputManager : MonoBehaviour
 	public bool OverGameObject;
 
 	//public LayerMask groundMask;
+	GameState gameState;
 
-	
 	public override void Start()
 	{
+		gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 		mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
 		OverGameObject = false;
 	}
@@ -24,7 +25,9 @@ public class InputManager : MonoBehaviour
 	//private void Update()
 	public override void Update()
 	{
-		if (Mathf.Approximately(0f, Time.timeScale)) return;
+		//if (Mathf.Approximately(0f, Time.timeScale)) return;
+		if (!gameState.ShouldDraw()) return;
+
 		CheckClickDownEvent();
 		CheckClickUpEvent();
 		CheckClickHoldEvent();

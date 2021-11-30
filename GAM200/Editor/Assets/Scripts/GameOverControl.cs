@@ -6,7 +6,7 @@ public class GameOverControl : MonoBehaviour
 {
 
     // Start is called before the first frame update
-    public static bool GameIsPaused = false;
+    //public static bool GameIsPaused = false;
     /* public Text ScoreTxt;
      public Text HighScoreTxt;*/
     //private TextMeshPro txt;

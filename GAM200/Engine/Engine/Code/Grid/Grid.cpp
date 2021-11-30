@@ -22,6 +22,10 @@ Technology is prohibited.
 
 namespace Engine {
     namespace Game {
+        Math::ivec2 Grid::GetGridSize() {
+            return mapSize;
+        }
+
         void Grid::CreateGrid(int width, int height) {
             if (grid != nullptr) return;
             mapSize = { width, height };
@@ -29,6 +33,7 @@ namespace Engine {
         }
 
         void Grid::DestroyGrid() {
+            mapSize = { -1, -1 };
             if (grid != nullptr)
                 delete[] grid;
 

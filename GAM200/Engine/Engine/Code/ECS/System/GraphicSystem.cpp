@@ -33,6 +33,8 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 
+#include "Engine/Header/Grid/Grid.hpp"
+
 namespace Engine
 {
 #define LAYER_COUNT 5 // Number of layers for game objects
@@ -230,6 +232,7 @@ namespace Engine
 	// Function will loop through lines buffer and render it out
 	void RenderLines(Math::mat3 _camMatrix)
 	{
+		if (!GameState::GetInstance().GetShouldDraw()) return;
 		// Load collision shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::COLLISION].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
@@ -239,10 +242,15 @@ namespace Engine
 
 		// Looping through lines buffer; batch rendering
 		// GraphicImplementation::Renderer::DrawLines({ 0.f, 0.f }, { 10.f, 10.f }, { 1.f, 1.f, 0.f, 1.f }); // example on how to draw line
+		Math::ivec2 mapSize = Game::Grid::GetInstance().GetGridSize();
+		for(int xPos = 0; xPos <= mapSize.x; xPos++)
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, -0.5f }, { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 1.f, 1.f, 0.f, 1.f });
+		for(int yPos = 0; yPos <= mapSize.y; yPos++)
+			GraphicImplementation::Renderer::DrawLines({ -0.5f, static_cast<float>(yPos) - 0.5f }, {  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 1.f, 1.f, 0.f, 1.f });
 
 		GraphicImplementation::Renderer::EndLinesBatch();
 
-		glLineWidth(5.f); // Adjust line thickness here
+		glLineWidth(2.5f); // Adjust line thickness here
 		GraphicImplementation::Renderer::FlushLines();
 		glLineWidth(1.f);
 

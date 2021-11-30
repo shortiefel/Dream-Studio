@@ -115,6 +115,7 @@ namespace Engine {
 
         if (deserialize) {
             GameState::GetInstance().SetPlaying(false);
+            GameState::GetInstance().SetShouldDraw(false);
             GameSceneSerializer::DeserializeScene("temporary");
         }
 

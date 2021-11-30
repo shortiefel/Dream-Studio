@@ -12,7 +12,13 @@ public class PauseMenu : MonoBehaviour
     GameObject quitYes;
     GameObject quitNo;
 
-    bool pauseState;
+    //bool pauseState;
+    GameState gameState;
+
+    /*public bool GetPause()
+    {
+        return pauseState;
+    }*/
 
     public override void Start()
     {
@@ -25,14 +31,14 @@ public class PauseMenu : MonoBehaviour
         quitYes = GameObject.Find("YesText");
         quitNo = GameObject.Find("NoText");
 
-        pauseState = false;
+        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
     }
 
     private void PauseAction()
     {
-        pauseState = !pauseState;
+        gameState.InvertPause();
 
-        if(pauseState)
+        if (gameState.GetPause())
         {
             Console.WriteLine("Pausing now");
             Enable<Transform>(resume.transform);
@@ -63,9 +69,12 @@ public class PauseMenu : MonoBehaviour
 
     public override void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (!gameState.GetDrawMode())
         {
-            PauseAction();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseAction();
+            }
         }
     }
 

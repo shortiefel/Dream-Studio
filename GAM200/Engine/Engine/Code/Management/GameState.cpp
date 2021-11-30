@@ -19,4 +19,7 @@ Technology is prohibited.
 namespace Engine {
 	bool GameState::GetPlaying() const  { return playing; }
 	void GameState::SetPlaying(bool playState) { playing = playState; }
+
+	bool GameState::GetShouldDraw() const { return shouldDraw; }
+	void GameState::SetShouldDraw(bool _shouldDraw) { shouldDraw = _shouldDraw; }
 }

@@ -48,6 +48,11 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void CreateGrid_Engine(int width, int height);
 
+    public Vector2Int GetGridSize()
+    {
+        return new Vector2Int(_width, _height);
+    }
+
     // Adding index operator to our Grid class so that we can use grid[][] to access specific cell from our grid. 
     public CellType this[int i, int j]
     {

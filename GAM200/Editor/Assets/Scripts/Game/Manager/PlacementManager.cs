@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlacementManager : MonoBehaviour
 {
     public int width, height;
-    Grid placementGrid;
+    public Grid placementGrid;
     RoadFixer roadFixer;
     //private Transform transform;
 

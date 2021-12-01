@@ -12,6 +12,8 @@ public class InputManager : MonoBehaviour
 
 	public bool OverGameObject;
 
+	PlacementManager placementManager;
+
 	//public LayerMask groundMask;
 	GameState gameState;
 
@@ -19,18 +21,52 @@ public class InputManager : MonoBehaviour
 	{
 		gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 		mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
+
+		placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+
 		OverGameObject = false;
 	}
 
 	//private void Update()
 	public override void Update()
 	{
+		if (!gameState.GetPause())
+		{
+			bool state = gameState.GetDrawMode();
+			if (Input.GetMouseButtonDown(MouseCode.Left)) {
+				if (!state)
+				{
+					var position = RaycastGround();
+					if (position != null)
+					{
+						if (CheckIfOutside(position.Value) == true)
+						{
+							SwitchMode();
+							return;
+						}
+					}
+				}
+
+				else
+				{
+					var position = RaycastGround();
+					if (position != null) {
+						if (CheckIfOutside(position.Value) == false)
+						{
+							SwitchMode();
+							return;
+						}
+					}
+				}
+			}
+		}
+
 		//if (Mathf.Approximately(0f, Time.timeScale)) return;
 		if (!gameState.ShouldDraw()) return;
 
 		CheckClickDownEvent();
-		CheckClickUpEvent();
 		CheckClickHoldEvent();
+		CheckClickUpEvent();
 		//CheckArrowInput();
 	}
 
@@ -72,9 +108,10 @@ public class InputManager : MonoBehaviour
 			var position = RaycastGround();
 			/*if (position != null)
 				OnMouseHold?.Invoke(position.Value);*/
-			if (position != null)
+			if (position != null) {
 				if (OnMouseHold != null)
-					OnMouseHold.Invoke(position.Value);
+					OnMouseHold.Invoke(position.Value); 
+			}
 		}
 	}
 
@@ -102,9 +139,40 @@ public class InputManager : MonoBehaviour
 			/*if (position != null)
 				OnMouseClick?.Invoke(position.Value);*/
 			if (position != null)
+			{
 				if (OnMouseClick != null)
 					OnMouseClick.Invoke(position.Value);
-
+			}
 		}
+	}
+
+	public void SwitchMode()
+	{
+
+		if (gameState.GetDrawMode())
+		{
+			SceneManager.SetDrawMode(false);
+
+			//drawModeBool = false;
+			gameState.SetDrawMode(false);
+		}
+		else
+		{
+			SceneManager.SetDrawMode(true);
+
+			//drawModeBool = true;
+			gameState.SetDrawMode(true);
+		}
+	}
+
+	/*
+	 * True = inside
+	 * False = outside
+	*/
+
+	bool CheckIfOutside(Vector2Int pos)
+    {
+		Vector2Int gridSize = placementManager.placementGrid.GetGridSize();
+		return (pos.x >= 0 && pos.x < gridSize.x && pos.y >= 0 && pos.y < gridSize.y);
 	}
 }

@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     public StructureManager structureManager;
     public KeysController keysController;
 
-    GameState gameState;
-
     //private void Start()
     public override void Start()
     {
@@ -31,7 +29,6 @@ public class GameManager : MonoBehaviour
         keysController.OnHousePlacement += HousePlacementHandler;
         keysController.OnSpecialPlacement += SpecialPlacementHandler;
 
-        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
     }
 
     private void SpecialPlacementHandler()
@@ -75,33 +72,6 @@ public class GameManager : MonoBehaviour
     public override void Update()
     {
         //cameraMovement.MoveCamera(new Vector2(inputManager.CameraMovementVector.x, inputManager.CameraMovementVector.y));
-        if (!gameState.GetPause())
-        {
-            bool state = gameState.GetDrawMode();
-            if (!state && Input.GetMouseButtonDown(MouseCode.Left) ||
-                state && Input.GetKeyDown(KeyCode.Escape))
-            {
-                SwitchMode();
-            }
-        }
-    }
-
-    public void SwitchMode()
-    {
-
-        if (gameState.GetDrawMode())
-        {
-            SceneManager.SetDrawMode(false);
-
-            //drawModeBool = false;
-            gameState.SetDrawMode(false);
-        }
-        else
-        {
-            SceneManager.SetDrawMode(true);
-
-            //drawModeBool = true;
-            gameState.SetDrawMode(true);
-        }
+        
     }
 }

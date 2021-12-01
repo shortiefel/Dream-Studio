@@ -29,10 +29,10 @@ public class Text : IComponent
        //     GetFont_Text_Engine(entityId, out string text);
        //     return text;
        // }
-        set { SetFont_Text_Engine(entityId, ref value); }
+        set { SetFont_Text_Engine(entityId,  value); }
     }
    //[MethodImpl(MethodImplOptions.InternalCall)]
    //internal static extern void GetFont_Text_Engine(uint entityID, out string text);
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetFont_Text_Engine(uint entityID, ref string text);
+    internal static extern void SetFont_Text_Engine(uint entityID,  string text);
 }

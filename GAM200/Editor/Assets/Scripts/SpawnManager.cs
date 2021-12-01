@@ -24,7 +24,8 @@ public class SpawnManager : MonoBehaviour
         scoreToSpawn = 0;
 
         timer = 0f;
-        maxTimer = 2.0f;
+        //maxTimer = 2.0f;
+        maxTimer = 0.5f;
     }
 
     private Vector2Int SpawnRandomRoad()

@@ -12,6 +12,15 @@ public class GameState : MonoBehaviour
         highscore = 0;
     }
 
+    public void IncrementHighscore()
+    {
+        highscore++;
+    }
+    public int GetHighscore()
+    {
+        return highscore;
+    }
+
     public void InvertPause()
     {
         pauseState = !pauseState;

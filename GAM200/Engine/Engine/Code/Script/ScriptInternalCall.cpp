@@ -147,6 +147,7 @@ namespace Engine {
 	Text/Font
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void SetFont_Text_Engine(unsigned int entityID, MonoString* _text);
+	//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
@@ -684,11 +685,10 @@ namespace Engine {
 	void SetFont_Text_Engine(unsigned int entityID, MonoString* _text) {
 		char* tempText = mono_string_to_utf8(_text);
 		SetEngineType(entityID, FontComponent, text, std::string{ tempText });
-//#define SetEngineType(ID, type, paramName, param)\
-//type* ctype = dreamECSGame->GetComponentPTR<type>(ID);\
-//if (ctype != nullptr) ctype->paramName = param;
 		mono_free(tempText);
 	}
+
+	//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text) {}
 
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -33,9 +33,11 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     {
         if (notification != null && notification.shouldShow == true)
         {
-            //Console.WriteLine("Reshowing noti");
+            Console.WriteLine("Reshowing noti");
             Enable<Transform>(notifiSymbol.transform);
+            Console.WriteLine("After noti");
             notification.shouldShow = false;
+            //notification.ResetTimer();
         }
     }
 

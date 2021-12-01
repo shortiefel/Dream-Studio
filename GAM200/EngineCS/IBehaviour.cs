@@ -83,7 +83,7 @@ public class IBehaviour : IComponent
             T comp = new T();
             comp.entityId = entityId;
             dictonaryOfTypes[type].Add(entityId, comp);
-            //Console.WriteLine("Custom typeeeeeeeeeeeeeeeeeeeeeeeeee addddddddddddddddddddd");
+            Console.WriteLine("Adding components: " + type.Name + " size: " + dictonaryOfTypes[type].Count);
         }
     }
 

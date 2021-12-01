@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/Picking2D.hpp"
 #include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
+#include "Engine/Header/Parent/ParentManager.hpp"
 #include "Engine/Header/Input/Input.hpp"
 
 //#include <ImGuizmo/ImGuizmo.h>
@@ -103,20 +104,61 @@ namespace Editor
 		}
 	}
 
+
+	Engine::DreamMath::vec2 ObjectTransformCommand::GetTransformPosition()
+	{
+		return _position;
+	}
+
+	void ObjectTransformCommand::StoredTransform(Engine::Entity_id _id, Engine::DreamMath::vec2 positions)
+	{
+		positions = GetTransformPosition();
+		/*Engine::TransformComponent* entity_transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(_id);*/
+		//Engine::TransformComponent* id_transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(_id);
+		//if (id_transform != nullptr)
+		//{
+		//	if (EntityId_Check(_id)) {
+		//		return;
+		//	}
+		//	id_transform->position =  positions;
+		//	id_transform->localPosition = positions;
+		//	Engine::ParentManager::GetInstance().UpdateTruePos(_id);
+
+		//}
+
+		//this one affects all entity but after that will be able to undo each entity
+		auto& transformArray = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
+		auto& entityMap = Engine::dreamECSGame->GetUsedConstEntityMap();
+
+		for (auto& transform : transformArray) {
+			_id = transform.GetEntityId();
+			if (EntityId_Check(_id)) break;
+
+			const auto& itr = entityMap.find(_id);
+			Engine::Entity_id parent = itr->second.parent;
+
+			transform.position = transform.localPosition;
+			transform.position = positions;
+			transform.localPosition = positions;
+
+			if (parent != DEFAULT_ENTITY_ID) {
+				transform.position += Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(parent).localPosition;
+			}
+		}
+
+	}
+
 	void ObjectTransformCommand::undo()
 	{
-		//Engine::TransformComponent* transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected));
-		//if (transform != nullptr)
-		//{
-		//	//Position
-		//	transform->position = transform->localPosition;
-		//	transform->position -= Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected)).localPosition;
-		//}
+		_oldposition = GetTransformPosition();
+		StoredTransform(id, _oldposition);
 	}
 
 	void ObjectTransformCommand::redo()
 	{
-
+		std::cout << "redo ing" << "\n";
+		_newposition = 10.0f;
+		StoredTransform(id, _newposition);
 	}
 
 	void ObjectTransformCommand::record()
@@ -128,6 +170,8 @@ namespace Editor
 	{
 
 	}
+
+
 
 	void ObjectDeleteCommand::undo()
 	{

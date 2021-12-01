@@ -24,7 +24,8 @@ public static class GenericTypeFinder
         { typeof(Collider), genTypes.Collider },
         { typeof(Camera), genTypes.Camera },
         { typeof(Rigidbody2D), genTypes.Rigidbody2D },
-        { typeof(Texture), genTypes.Texture }
+        { typeof(Texture), genTypes.Texture },
+        { typeof(Text), genTypes.Text }
     };
 }
 
@@ -34,6 +35,7 @@ public enum genTypes
     Collider,
     Camera,
     Rigidbody2D,
-    Texture
+    Texture,
+    Text
 }
 

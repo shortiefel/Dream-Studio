@@ -78,7 +78,11 @@ public class MonoBehaviour : IBehaviour
                 case genTypes.Rigidbody2D:
                     RecordComponent<Rigidbody2D>(entityId);
                     break;
+                case genTypes.Text:
+                    RecordComponent<Text>(entityId);
+                    break;
                 default:
+                    Console.WriteLine("Type cant be recorded yet");
                     break;
 
             }

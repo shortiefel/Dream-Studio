@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/GLSLShader.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 #include "Engine/Header/pch.hpp"
 
@@ -27,11 +28,31 @@ namespace Engine
 {
     namespace GraphicImplementation
     {
+        struct FadeStruct
+        {
+            float lifeTime = 0.0f;
+            float lifeRemaining = 0.0f;
+
+            Math::vec4 colourBegin;
+            Math::vec4 colourEnd;
+
+            bool flagFade = false;
+        };
+
+        static FadeStruct fadeStruct;
+
         // Install the shader program with object handle
         void UseShaderHandle(unsigned int prgm_handle);
 
         // De-install previously installed shader program object.
         void UnUseShaderHandle();
+
+        // Fades scene when called; user is able to choose colour and fading time
+        // Default fade in to black
+        void FadeScene(float time, float _dt, 
+            Math::mat3 _camMatrix = CameraSystem::GetInstance().GetTransform(),
+            Math::vec4 _colourBegin = {0.0f, 0.0f, 0.0f, 0.0f}, Math::vec4 _colourEnd = { 0.0f, 0.0f, 0.0f, 1.0f });
+
 
         extern std::map<GraphicShader, GLSLShader> shdrpgms;
     }

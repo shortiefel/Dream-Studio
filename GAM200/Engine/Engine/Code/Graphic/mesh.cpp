@@ -692,8 +692,7 @@ namespace Engine
         }
 
         // Function that adds to the vertex buffer pointer for the quad fill (without texture) mesh
-        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color, 
-            Math::vec2 _min, Math::vec2 _max)
+        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color)
         {
             if (s_QuadData.indexcount >= stMaxQuadIndexCount)
             {
@@ -702,12 +701,14 @@ namespace Engine
                 BeginQuadBatch();
             }
 
+            
+
             Math::vec2 position = { -1.f, -1.f };
             Math::vec2 size = { 2.f, 2.f };
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { _min.x, _min.y };
+            s_QuadData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
             s_QuadData.vertexbufferptr->texID = 0.0f;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -716,7 +717,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { _max.x, _min.y };
+            s_QuadData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
             s_QuadData.vertexbufferptr->texID = 0.0f;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -725,7 +726,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { _max.x, _max.y };
+            s_QuadData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
             s_QuadData.vertexbufferptr->texID = 0.0f;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
@@ -734,7 +735,7 @@ namespace Engine
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
             s_QuadData.vertexbufferptr->color = color;
-            s_QuadData.vertexbufferptr->texCoords = { _min.x, _max.y };
+            s_QuadData.vertexbufferptr->texCoords = { 0.0f, 0.0f };
             s_QuadData.vertexbufferptr->texID = 0.0f;
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;

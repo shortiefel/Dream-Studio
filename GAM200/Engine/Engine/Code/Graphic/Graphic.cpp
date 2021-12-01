@@ -16,6 +16,10 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/Graphic.hpp" 
 
+#include "Engine/Header/Graphic/Mesh.hpp"
+#include "Engine/Header/Time/DeltaTime.hpp"
+#include "Engine/Header/Management/GameState.hpp"
+
 namespace Engine
 {
     namespace GraphicImplementation
@@ -30,6 +34,53 @@ namespace Engine
         void UnUseShaderHandle()
         {
             glUseProgram(0);
+        }
+
+        void FadeScene(float time, float _dt, Math::mat3 _camMatrix, Math::vec4 _colourBegin, Math::vec4 _colourEnd)
+        {
+            GraphicImplementation::Renderer::BeginBatch();
+
+            // Load default shader program
+            const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
+            UseShaderHandle(shd_ref_handle);
+
+            // Set uniform
+            GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
+
+            if (fadeStruct.flagFade == false)
+            {
+                fadeStruct.lifeTime = fadeStruct.lifeRemaining = time;
+                fadeStruct.colourBegin = _colourBegin;
+                fadeStruct.colourEnd = _colourEnd;
+
+                fadeStruct.flagFade = true;
+            }
+            
+            if (fadeStruct.flagFade == true)
+            {
+
+                fadeStruct.lifeRemaining -= _dt;
+
+                float life = fadeStruct.lifeRemaining / fadeStruct.lifeTime;
+                Math::vec4 colour = Math::Lerp(fadeStruct.colourEnd, fadeStruct.colourBegin, life);
+
+                GraphicImplementation::Renderer::DrawQuad({ 0.0f, 0.0f }, { 90.0f, 55.0f }, 0.0f, colour);
+
+                std::cout << "colour: " << colour << std::endl;
+                std::cout << "fadeStruct.lifeRemaining: " << fadeStruct.lifeRemaining << std::endl;
+
+                if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flagFade = false;
+            }
+
+            // Enable GL_BLEND for transparency of textures
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+            Renderer::EndQuadBatch();
+            Renderer::FlushQuad();
+
+            // Unload shader program
+            UnUseShaderHandle();
         }
     }
 }

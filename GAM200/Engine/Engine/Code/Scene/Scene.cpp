@@ -161,7 +161,9 @@ namespace Engine {
         }
 
         CameraSystem::GetInstance().Update(dt);
-        
+
+
+        //GraphicImplementation::FadeScene(3.f, dt, camMatrix);
         
 #ifdef _GAME_BUILD
         //Default 2d picking

@@ -26,6 +26,8 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/ResourceSet.hpp"
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 #include "Engine/Header/ECS/System/SoundSystem.hpp"
+#include "Engine/Header/Management/SoundManager.hpp"
+#include "Engine/Header/ECS/Component/Graphics/ParticleComponent.hpp"
 
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
@@ -41,11 +43,27 @@ Technology is prohibited.
 
 namespace Editor {
 	extern const std::filesystem::path _assetPath;
+
 	namespace GUI_Windows {
+
+		void HelperMarker(const char* desc)
+		{
+			ImGui::TextDisabled("(?)");
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+				ImGui::TextUnformatted(desc);
+				ImGui::PopTextWrapPos();
+				ImGui::EndTooltip();
+			}
+		}
+
+
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags) {
 			if (*inspector_bool) {
 				/**
-				*	WIDTH 
+				*	WIDTH
 				*/
 				float halfWidth = ImGui::GetContentRegionAvail().x / 2.f;
 				//float quadWidth = ImGui::GetContentRegionAvail().x / 2.5f;
@@ -56,11 +74,15 @@ namespace Editor {
 				ImGuiIO& io = ImGui::GetIO();
 				auto boldFont = io.Fonts->Fonts[0];
 
+
+
+
+
 				/**
 				*	INSPECTOR STARTS
 				*/
 				ImGui::Begin("Inspector", inspector_bool, window_flags);
-				
+
 
 				/**
 				*	Entity Names
@@ -108,10 +130,10 @@ namespace Editor {
 				{
 					ImGui::OpenPopup("##addcomponentpopup");
 				}
-		
+
 				if (ImGui::BeginPopup("##addcomponentpopup"))
 				{
-				
+
 					ImGui::AlignTextToFramePadding();
 
 					if (ImGui::Selectable(" + Transform##addTransformcom"))
@@ -130,6 +152,8 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::FontComponent>(entity_selected);
 					if (ImGui::Selectable(" + Sound##addSoundcom"))
 						Engine::dreamECSGame->AddComponent<Engine::SoundComponent>(entity_selected);
+					if (ImGui::Selectable(" + Particle##addParticlecom"))
+						Engine::dreamECSGame->AddComponent<Engine::ParticleComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0", Engine::File_Dialog_Type::Scripts);
 
@@ -141,12 +165,12 @@ namespace Editor {
 						}
 					}
 
-					
+
 					ImGui::EndPopup();
 				}
 
-				
-				
+
+
 				/**
 				*	Transform Properties
 				*/
@@ -162,8 +186,10 @@ namespace Editor {
 						*	Position
 						*/
 						ImGui::AlignTextToFramePadding();
-				
+
 						ImGui::Text("Position");
+						ImGui::SameLine();
+						HelperMarker("Position of the entity");
 						ImGui::SameLine(halfWidth);
 						ImGui::PushFont(boldFont);
 						ImGui::Text(" X");
@@ -171,8 +197,8 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##TransformXPos", &transComp->localPosition.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
-							
-						
+
+
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
@@ -186,12 +212,14 @@ namespace Editor {
 						/**
 						*	Scale
 						*/
-						
+
 						ImGui::Spacing();
 
 						ImGui::AlignTextToFramePadding();
-						
+
 						ImGui::Text("Scale");
+						ImGui::SameLine();
+						HelperMarker("Scaling of the entity");
 						ImGui::SameLine(halfWidth);
 						ImGui::PushFont(boldFont);
 						ImGui::Text(" X");
@@ -212,8 +240,10 @@ namespace Editor {
 						*	Rotation
 						*/
 						ImGui::AlignTextToFramePadding();
-					
+
 						ImGui::Text("Rotation");
+						ImGui::SameLine();
+						HelperMarker("Rotation of the entity");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
@@ -230,6 +260,8 @@ namespace Editor {
 
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Layer");
+						ImGui::SameLine();
+						HelperMarker("Assignment of entity to different layer");
 						ImGui::SameLine(halfWidth);
 
 						//selection
@@ -295,6 +327,8 @@ namespace Editor {
 						*/
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Position");
+						ImGui::SameLine();
+						HelperMarker("Collider position");
 						ImGui::SameLine(halfWidth);
 
 						ImGui::PushFont(boldFont);
@@ -315,6 +349,8 @@ namespace Editor {
 
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Collider Type");
+						ImGui::SameLine();
+						HelperMarker("Type of collider: Circle or Square");
 						ImGui::SameLine(halfWidth);
 
 						ImGui::PushFont(boldFont);
@@ -354,6 +390,8 @@ namespace Editor {
 						*/
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Scale");
+						ImGui::SameLine();
+						HelperMarker("Collider to scale by X and Y");
 
 						ImGui::PushFont(boldFont);
 						ImGui::SameLine(halfWidth);
@@ -376,24 +414,14 @@ namespace Editor {
 						*/
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Rotation");
+						ImGui::SameLine();
+						HelperMarker("Collider to rotate by how many degree (cap to -360 and 360 degree)");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
 						if (ImGui::DragFloat("##ColliderRotate", &colComp->angle, 0.1f, -360.0f, 360.f, "%.1f", 1))
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 						ImGui::PopFont();
-
-						ImGui::Spacing();
-
-						/**
-						*	Is Trigger
-						*/
-						ImGui::AlignTextToFramePadding();
-						ImGui::Text("Is Trigger");
-						ImGui::SameLine(halfWidth);
-						ImGui::SetNextItemWidth(halfWidth);
-						
-						DreamImGui::CheckBox_Dream("##ColliderIsTrigger", &(colComp->isTrigger));
 
 						ImGui::Spacing();
 
@@ -423,6 +451,8 @@ namespace Editor {
 						*/
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("FOV");
+						ImGui::SameLine();
+						HelperMarker("Field of View");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
@@ -434,6 +464,8 @@ namespace Editor {
 						*/
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Height");
+						ImGui::SameLine();
+						HelperMarker("The distance of camera");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
@@ -472,11 +504,13 @@ namespace Editor {
 							*/
 							ImGui::AlignTextToFramePadding();
 							ImGui::Text("Mass");
+							ImGui::SameLine();
+							HelperMarker("The mass of the entity \n  ");
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::PushFont(boldFont);
 							ImGui::InputInt("##objectMass", &rigidComp->mass, 0);
-							if (rigidComp->mass == 0) { rigidComp->mass = 1;  }
+							if (rigidComp->mass == 0) { rigidComp->mass = 1; }
 							ImGui::PopFont();
 
 							/**
@@ -484,6 +518,8 @@ namespace Editor {
 							*/
 							ImGui::AlignTextToFramePadding();
 							ImGui::Text("Linear Drag");
+							ImGui::SameLine();
+							HelperMarker("Positional movement ");
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::PushFont(boldFont);
@@ -495,6 +531,8 @@ namespace Editor {
 							*/
 							ImGui::AlignTextToFramePadding();
 							ImGui::Text("Angular Drag");
+							ImGui::SameLine();
+							HelperMarker("Affects rotational movement \n A higher value of drag will cause an object's rotation to come to rest more quickly following a force.");
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::PushFont(boldFont);
@@ -564,13 +602,13 @@ namespace Editor {
 							{
 								const wchar_t* path = (const wchar_t*)payload->Data;
 								std::filesystem::path texturePath = std::filesystem::path(_assetPath) / path;
-								Engine::GraphicImplementation::SetTexture(textureComp, texturePath.string());						
+								Engine::GraphicImplementation::SetTexture(textureComp, texturePath.string());
 							}
 							ImGui::EndDragDropTarget();
 						}
 
 						if (ImGui::Button("Change Texture##ChangeTextureTexture")) {
-							
+
 							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0", Engine::File_Dialog_Type::Textures);
 
 							if (!filePath.empty()) {
@@ -588,16 +626,13 @@ namespace Editor {
 
 						ImGui::Spacing();
 
-
-						ImGui::ColorPicker4("Color", (float*)&textureComp->colour, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
-
-
-
 						/*
 						*	Animation
 						*/
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Is Animation");
+						ImGui::SameLine();
+						HelperMarker("Is this entity to be animated");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						DreamImGui::CheckBox_Dream("##isAnimation", &(textureComp->isAnimation));
@@ -606,11 +641,13 @@ namespace Editor {
 							/**
 							*	TOTAL COLUMNS & ROWS
 							*/
-							ImGui::PushFont(boldFont);
 							ImGui::Text("Sprite Sheet");
+							ImGui::PushFont(boldFont);
 							ImGui::SameLine(halfWidth);
 							ImGui::Text("Cols");
-							ImGui::SameLine(halfWidth * 1.28f, 0);
+							ImGui::SameLine();
+							HelperMarker("Total number of columns on sprite sheet");
+							ImGui::SameLine(halfWidth * 1.5f, 0);
 							ImGui::SetNextItemWidth(halfWidth * 0.5f);
 							ImGui::InputInt("##AnimationTotalCols", &textureComp->totalColumns);
 
@@ -619,7 +656,9 @@ namespace Editor {
 							ImGui::AlignTextToFramePadding();
 							ImGui::SameLine(halfWidth);
 							ImGui::Text("Rows");
-							ImGui::SameLine(halfWidth * 1.28f, 0);
+							ImGui::SameLine();
+							HelperMarker("Total number of rows on sprite sheet");
+							ImGui::SameLine(halfWidth * 1.5f, 0);
 							ImGui::SetNextItemWidth(halfWidth * 0.5f);
 							ImGui::InputInt("##AnimationTotalRows", &textureComp->totalRows);
 							ImGui::PopFont();
@@ -629,6 +668,8 @@ namespace Editor {
 
 							ImGui::AlignTextToFramePadding();
 							ImGui::Text("Start State");
+							ImGui::SameLine();
+							HelperMarker("List of Animation state created. To do so, add a state.");
 							ImGui::SameLine(halfWidth);
 
 							ImGui::AlignTextToFramePadding();
@@ -643,7 +684,7 @@ namespace Editor {
 								}
 								ImGui::EndCombo();
 							}
-							
+
 							ImGui::Spacing();
 							ImGui::Spacing();
 
@@ -662,7 +703,7 @@ namespace Editor {
 
 							ImGui::Spacing();
 							ImGui::Spacing();
-							
+
 							/**
 							*	ANIMATION STATE
 							*/
@@ -680,27 +721,35 @@ namespace Editor {
 										textureComp->AnimationStateRename(name, std::string{ aniDisplay });
 									}
 								}
-	
+
 								ImGui::AlignTextToFramePadding();
 								ImGui::Text("Row");
+								ImGui::SameLine();
+								HelperMarker("Which row it starts on");
 								ImGui::SameLine(halfWidth);
 								ImGui::SetNextItemWidth(halfWidth * 0.5f);
 								ImGui::InputInt(std::string{ "##AnimStateRow" + name }.c_str(), &animState.stateRow, 1);
 
 								ImGui::AlignTextToFramePadding();
 								ImGui::Text("Start Frame");
+								ImGui::SameLine();
+								HelperMarker("When do animation start");
 								ImGui::SameLine(halfWidth);
 								ImGui::SetNextItemWidth(halfWidth * 0.5f);
 								ImGui::InputInt(std::string{ "##AnimStartFrame" + name }.c_str(), &animState.startX, 1);
 
 								ImGui::AlignTextToFramePadding();
 								ImGui::Text("End Frame");
+								ImGui::SameLine();
+								HelperMarker("When do animation end");
 								ImGui::SameLine(halfWidth);
 								ImGui::SetNextItemWidth(halfWidth * 0.5f);
 								ImGui::InputInt(std::string{ "##AnimEndFrame" + name }.c_str(), &animState.endX, 1);
 
 								ImGui::AlignTextToFramePadding();
 								ImGui::Text("Time Per Frame");
+								ImGui::SameLine();
+								HelperMarker("How many times does it animate per frame");
 								ImGui::SameLine(halfWidth);
 								ImGui::SetNextItemWidth(halfWidth);
 								ImGui::InputFloat(std::string{ "##AnimTimePerFrame" + name }.c_str(), &animState.fTime);
@@ -759,8 +808,8 @@ namespace Editor {
 
 					}
 				}
-					
-		
+
+
 
 
 				/*
@@ -783,7 +832,7 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Input Text");
 						ImGui::SameLine(halfWidth);
-						ImGui::SetNextItemWidth(halfWidth *1.8f);
+						ImGui::SetNextItemWidth(halfWidth * 1.8f);
 						ImGui::PushFont(boldFont);
 						if (ImGui::InputText("##textToInput", textName, IM_ARRAYSIZE(textName)))
 						{
@@ -799,7 +848,8 @@ namespace Editor {
 						ImGui::Text(textComp->fontName.c_str());
 						ImGui::PopFont();
 
-						if (ImGui::Button("Change Font##ChangeFont")) {
+						if (ImGui::Button("Change Font##ChangeFont"))
+						{
 
 							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.ttf;)\0*.ttf;\0", Engine::File_Dialog_Type::Fonts);
 
@@ -808,33 +858,21 @@ namespace Editor {
 							}
 						}
 
-						
-						
+
+
 						/**
 						*	FONT COLOR
 						*/
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Color");
 						ImGui::SameLine(halfWidth);
-						ImGui::ColorPicker3("Color", (float*)&textComp->colour, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
-						ImGui::PushFont(boldFont);
-						ImGui::Text(" R");
-						ImGui::SameLine(halfWidth * 1.125f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.375f);
-						ImGui::InputFloat("##colorRed", &textComp->colour.r, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
-						ImGui::SameLine(halfWidth * 1.5f);
-						ImGui::Text(" G");
-						ImGui::SameLine(halfWidth * 1.620f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.375f);
-						ImGui::InputFloat("##colorGreen", &textComp->colour.g, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
-						ImGui::SameLine(halfWidth * 2.f);
-						ImGui::Text(" B");
-						ImGui::SameLine(halfWidth * 2.1f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.375f);
-						ImGui::InputFloat("##colorBlue", &textComp->colour.b, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
-						ImGui::PopFont();
+						ImGui::ColorPicker4("Color", (float*)&textComp->colour, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
 
-						//deleteComponent
+						ImGui::Spacing();
+
+						/**
+						*	DELETE
+						*/
 						if (ImGui::Button("Delete Component##DeleteText", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::dreamECSGame->RemoveComponent<Engine::FontComponent>(entity_selected);
 					}
@@ -849,20 +887,9 @@ namespace Editor {
 					DreamImGui::CheckBox_Dream("##SoundActive", &(soundComp->isActive));
 					ImGui::SameLine();
 
-					if (ImGui::BeginDragDropTarget())
+					if (ImGui::CollapsingHeader("Sound"))
 					{
-						ImGui::Text("I'm Dropping.");
-						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
-						{
-							const wchar_t* path = (const wchar_t*)payload->Data;
-							std::filesystem::path soundPath = std::filesystem::path(_assetPath) / path;
-							Engine::SoundSystem::SoundPlay(soundPath.string(), true);
-						}
-						ImGui::EndDragDropTarget();
-					}
-
-					if (ImGui::CollapsingHeader("Sound")) {
-
+						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Add Sound");
 						ImGui::SameLine(halfWidth);
 						ImGui::Checkbox("##isSound", &(soundComp->isSound));
@@ -870,86 +897,84 @@ namespace Editor {
 						{
 							ImGui::Text("Sound Picker");
 							ImGui::SameLine(halfWidth);
-							if (ImGui::Button("Sound Picker##PickSound")) {
+							if (ImGui::Button("Sound Picker##PickSound"))
+							{
 								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav;)\0*.wav; \0");
 
-								if (!filePath.empty()) {
-									soundComp->filepath = filePath;
-									Engine::SoundComponent::GetSound(filePath);
+								if (!filePath.empty())
+								{
+									soundComp->filepath = filePath = filePath.substr(filePath.rfind("Assets"));
+									filePath = filePath.substr(filePath.find_last_of("\\") + 1);
+									soundComp->soundName = filePath.substr(0, filePath.find_last_of("."));
+									std::cout << soundComp->filepath << "\n";
+									std::cout << soundComp->soundName << "\n";
 
+
+
+
+
+									//Engine::SoundManager::GetInstance().GetSound(filePath, soundComp->soundName);
 								}
 							}
-
-							ImGui::AlignTextToFramePadding();
-							ImGui::Text("File");
-							ImGui::SameLine(halfWidth);
-							ImGui::SetNextItemWidth(halfWidth);
-							ImGui::PushFont(boldFont);
-							ImGui::Text(soundComp->filepath.c_str());
-							ImGui::PopFont();
-
-							ImGui::Spacing();
-
-							ImGui::AlignTextToFramePadding();
-							ImGui::Text("Loop");
-							ImGui::SameLine(halfWidth);
-							ImGui::Checkbox("##soundLoop", &soundComp->loop);
-
-							ImGui::Spacing();
-
-							//selection
-							static ImGuiComboFlags flags = 0;
-							int index = static_cast<int>(soundComp->SG);
-							//arrays
-							const int sz = 3;
-							const char* soundName[sz] = { "MASTER", "MUSIC", "SFX" };
-							const char* previewLayer = soundName[index];
-
-							ImGui::AlignTextToFramePadding();
-							ImGui::Text("Sound Group");
-							ImGui::SameLine(halfWidth);
-							ImGui::SetNextItemWidth(halfWidth);
-							if (ImGui::BeginCombo("##soundGrp", previewLayer, flags))
-							{
-								for (int i{ 0 }; i < sz; i++) {
-									const bool isSelected = (index == i);
-									if (ImGui::Selectable(soundName[i], isSelected)) {
-										soundComp->SG = static_cast<Engine::SoundGrp>(i);
-									}
-
-									if (isSelected)
-										ImGui::SetItemDefaultFocus();
-
-								}
-
-								ImGui::EndCombo();
-							}
-
-
-							ImGui::Spacing();
-
-							ImGui::AlignTextToFramePadding();
-							ImGui::Text("Test Sound");
-							ImGui::SameLine(halfWidth);
-							ImGui::SetNextItemWidth(halfWidth);
-							if (ImGui::Button("Play"))
-							{
-								//ImGui::Text(soundComp->filepath.c_str());
-								Engine::SoundSystem::SoundPlay(soundComp->filepath, soundComp->Pause);
-							}
-
-							ImGui::SameLine(halfWidth * 1.25f);
-							ImGui::SetNextItemWidth(halfWidth);
-							if (ImGui::Button("Stop"))
-							{
-								std::cout << "stopping \n";
-								//ImGui::Text(soundComp->filepath.c_str());
-								Engine::SoundSystem::SoundStop(soundComp->ChannelID);
-							}
-							
 						}
 
-					
+						ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("File");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(soundComp->soundName.c_str());
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Loop");
+						ImGui::SameLine(halfWidth);
+						ImGui::Checkbox("##soundLoop", &soundComp->loop);
+
+						ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
+
+						//selection
+						static ImGuiComboFlags flags = 0;
+						int* index = reinterpret_cast<int*>(&Engine::SoundManager::GetInstance().SG);
+						//arrays
+						const char* soundName[] = { "MASTER", "MUSIC", "SFX" };
+						ImGui::Text("Sound Group");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+
+						ImGui::Combo("##soundGroup", index, soundName, IM_ARRAYSIZE(soundName));
+						if (static_cast<int>(Engine::SoundManager::GetInstance().SG) != *index)
+						{
+							Engine::SoundManager::GetInstance().SG = static_cast<Engine::SoundGrp>(*index);
+						}
+
+						ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Test Sound");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						if (ImGui::Button("Play"))
+						{
+							int channelID = Engine::SoundManager::GetInstance().ChannelID;
+							Engine::SoundSystem::GetInstance().SoundPlay(soundComp, channelID);
+
+						}
+
+						ImGui::SameLine(halfWidth * 1.25f);
+						ImGui::SetNextItemWidth(halfWidth);
+						if (ImGui::Button("Stop"))
+						{
+							int channelID = Engine::SoundManager::GetInstance().ChannelID;
+							std::cout << "stopping \n";
+							Engine::SoundSystem::GetInstance().SoundStop(channelID);
+						}
 
 						ImGui::Spacing();
 
@@ -960,12 +985,9 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##soundDelete", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::dreamECSGame->RemoveComponent<Engine::SoundComponent>(entity_selected);
-						
 					}
-				
 
 				}
-
 
 				/*
 				*	UI component
@@ -1024,6 +1046,8 @@ namespace Editor {
 						//ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
 						DreamImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
 						ImGui::SameLine();
+						HelperMarker("Insert the script you have coded\n To edit the script, go to Editor->Assets->Script and select solution");
+						ImGui::SameLine();
 						if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str()))
 						{
 
@@ -1040,20 +1064,326 @@ namespace Editor {
 				}
 
 				/**
+				*		PARTICLE
+				*/
+				Engine::ParticleComponent* particleComp = Engine::dreamECSGame->GetComponentPTR<Engine::ParticleComponent>(entity_selected);
+				if (particleComp != nullptr)
+				{
+					DreamImGui::CheckBox_Dream("##ParticleActive", &(particleComp->isActive));
+					ImGui::SameLine();
+
+					if (ImGui::CollapsingHeader("Particle"))
+					{
+
+						/**
+						*		FILE SELECTION
+						*/
+						ImGui::Spacing();
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Particle");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(particleComp->filepath.c_str());
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth * 1.2f);
+						ImGui::SetNextItemWidth(halfWidth);
+						if (ImGui::Button("Change Particle ##ChangeParticle"))
+						{
+
+							std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.jpg; *.jpeg; *.png; *.svg;)\0*.jpg; *.jpeg; *.png; *.svg;\0", Engine::File_Dialog_Type::Textures);
+
+							if (!filePath.empty()) {
+								Engine::GraphicImplementation::SetTexture(particleComp, filePath);
+							}
+						}
+
+
+
+						/**
+						*	Position
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Offset Position");
+						ImGui::SameLine();
+						HelperMarker("Particle Position from Object");
+						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##offsetPosX", &particleComp->particleData.offsetPosition.x, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::SameLine(halfWidth * 1.7f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.820f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##offsetPosY", &particleComp->particleData.offsetPosition.y, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+
+						/**
+						*	EMIT SIZE
+						*/
+						ImGui::AlignTextToFramePadding();
+
+						ImGui::Text("Emit Size");
+						ImGui::SameLine();
+						HelperMarker("How many particles generated per frame. \n E.g if emit size = 5, On click render -> 5 particles rendered");
+						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputInt("##emitSize", &particleComp->emitSize, 0, 0, 1);
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+						/**
+						*	PARTICLE DURATION
+						*/
+						ImGui::AlignTextToFramePadding();
+
+						ImGui::Text("Duration");
+						ImGui::SameLine();
+						HelperMarker("Lifetime per particle duration");
+						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##duration", &particleComp->particleData.lifeTime, 0.f, 0.f, "%.1f", 1);
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+
+						/**
+						*	LOOP
+						*/
+						ImGui::AlignTextToFramePadding();
+
+						ImGui::Text("Loop");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
+						DreamImGui::CheckBox_Dream(std::string{ "##ParticlesLoop" + particleComp->filepath }.c_str(), &particleComp->isLooping);
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+						/**
+						*	ANGLE
+						*/
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Random Angle");
+						ImGui::SameLine();
+						HelperMarker("False: no rotation of particles \nTrue: all particle rotates randomly.");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
+						DreamImGui::CheckBox_Dream(std::string{ "##ParticlesAngle" + particleComp->filepath }.c_str(), &particleComp->isAngleRandom);
+
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+
+						/**
+						*	VELOCITY
+						*/
+
+						ImGui::Text("Velocity");
+						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##particleVeloX", &particleComp->particleData.velocity.x, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::SameLine(halfWidth * 1.7f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.820f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##particleVeloY", &particleComp->particleData.velocity.y, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+						/**
+						*	VELOCITY VARIATION CHECK
+						*/
+						ImGui::AlignTextToFramePadding();
+
+						ImGui::Text("Velocity Varies");
+						ImGui::SameLine();
+						HelperMarker("False: all particles will have the same velocity\n True: Random velocity of particles based on particle's velocity += a range from -(Variation/2) to (Variation/2).");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
+						DreamImGui::CheckBox_Dream(std::string{ "##veloVari" + particleComp->filepath }.c_str(), &particleComp->isVelocityVariation);
+
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+
+						/**
+						*	VELOCITY VARIATION
+						*/
+
+						if (particleComp->isVelocityVariation == true)
+						{
+							ImGui::Text("Velocity Variations");
+							ImGui::SameLine(halfWidth);
+							ImGui::PushFont(boldFont);
+							ImGui::Text(" X");
+							ImGui::SameLine(halfWidth * 1.120f, 0);
+							ImGui::SetNextItemWidth(halfWidth * 0.5f);
+							ImGui::InputFloat("##particleVeloVariX", &particleComp->particleData.velocityVariation.x, 0.f, 0.f, "%.1f", 1);
+
+							ImGui::SameLine(halfWidth * 1.7f);
+							ImGui::Text(" Y");
+							ImGui::SameLine(halfWidth * 1.820f, 0);
+							ImGui::SetNextItemWidth(halfWidth * 0.5f);
+							ImGui::InputFloat("##particleVeloVariY", &particleComp->particleData.velocityVariation.y, 0.f, 0.f, "%.1f", 1);
+
+							ImGui::PopFont();
+
+							ImGui::Spacing();
+						}
+
+
+						/**
+						*		SIZE BEGIN
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Size Begin");
+						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##particleSizeBeginX", &particleComp->particleData.sizeBegin.x, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::SameLine(halfWidth * 1.7f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.820f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##particleSizeBeginY", &particleComp->particleData.sizeBegin.y, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+
+						/**
+						*		SIZE END
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Size End");
+						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##particleSizeEndX", &particleComp->particleData.sizeEnd.x, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::SameLine(halfWidth * 1.7f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.820f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##particleSizeEndY", &particleComp->particleData.sizeEnd.y, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+						/**
+						*		SIZE VARIATION
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Size Variation");
+						ImGui::SameLine();
+						HelperMarker("if (0,0) = All same size \n if you have different sizes, the particle will be between begin and end of variation");
+						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##particleSizeVarX", &particleComp->particleData.sizeVariation.x, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::SameLine(halfWidth * 1.7f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.820f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##particleSizeVarY", &particleComp->particleData.sizeVariation.y, 0.f, 0.f, "%.1f", 1);
+
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+
+						/**
+						*		COLOR  BEGIN
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Color Begin");
+						ImGui::SameLine();
+						HelperMarker("Default = White(1,1,1,1) \n This shows that there is no color on top of texture. \n For particles to fade, Begin with (1,1,1,1) and End with (1,1,1,0)");
+						ImGui::SameLine(halfWidth);
+						ImGui::ColorPicker4("##pColorBegin", (float*)&particleComp->particleData.colorBegin, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
+
+						ImGui::Spacing();
+
+						/**
+						*		COLOR  END
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Color End");
+						ImGui::SameLine();
+						HelperMarker("Default = White(1,1,1,1) \n This shows that there is no color on top of texture. \n For particles to fade, Begin with (1,1,1,1) and End with (1,1,1,0)");
+						ImGui::SameLine(halfWidth);
+						ImGui::ColorPicker4("##pColorEnd", (float*)&particleComp->particleData.colorEnd, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
+
+						ImGui::Spacing();
+
+
+
+						/**
+						*	DELETE
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
+						if (ImGui::Button("Delete Component##DeleteParticle", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::dreamECSGame->RemoveComponent<Engine::ParticleComponent>(entity_selected);
+
+
+					}
+				}
+
+
+				/**
 				*	Prefab
 				*/
 				const auto& prefabMap = Engine::dreamECSGame->GetConstPrefabMap();
-				
+
 				if (prefabMap.find(entity_selected) != prefabMap.end() && !(Engine::GameState::GetInstance().GetPlaying())) {
 					const Engine::Prefab& prefab = prefabMap.find(entity_selected)->second;
 					if (ImGui::Button("Update Prefab##prefabupdatebtn", { ImGui::GetContentRegionAvail().x, 0 })) {
-						
+
 						Engine::GameSceneSerializer::SerializePrefab(prefab.prefabName, entity_selected);
 					}
 
 					else if (ImGui::Button("Refresh Prefab##btn", { ImGui::GetContentRegionAvail().x, 0 }))
 					{
-						
+
 						Engine::GameSceneSerializer::RefreshPrefab(prefab.prefabName, entity_selected);
 					}
 				}

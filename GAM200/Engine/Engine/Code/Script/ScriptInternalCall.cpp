@@ -402,8 +402,6 @@ namespace Engine {
 		RegisterGridInternalCall();
 	}
 
-
-
 	//void GetComponentInScriptEmbeded(unsigned int id, Transform* outTransform) {
 	//	//call hascomponent with entityid
 	//	Transform* transform = nullptr;

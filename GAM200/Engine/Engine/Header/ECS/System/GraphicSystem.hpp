@@ -35,14 +35,7 @@ namespace Engine
 		//If _fbo is nullptr = default draw (game scene draw) otherwise it means for editor scene
 		void Render(float _dt, Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), bool gameDraw = true);
 
-		//const Graphic::FrameBuffer& GetFrameBuffer() const;
-
-		//void SetPickingFunction(void(*fp)());
-
-
 	private:
-		//Graphic::FrameBuffer fbo{};
-
 		SINGLETON_SETUP(GraphicSystem);
 	};
 }

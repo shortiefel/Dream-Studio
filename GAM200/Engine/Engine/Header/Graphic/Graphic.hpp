@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/GLSLShader.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
+#include "Engine/Header/ECS/System/CameraSystem.hpp"
 
 #include "Engine/Header/pch.hpp"
 
@@ -29,13 +30,13 @@ namespace Engine
     {
         struct FadeStruct
         {
-            float lifeTime = 1.0f;
+            float lifeTime = 0.0f;
             float lifeRemaining = 0.0f;
 
             Math::vec4 colourBegin;
             Math::vec4 colourEnd;
 
-            bool flag = false;
+            bool flagFade = false;
         };
 
         static FadeStruct fadeStruct;
@@ -47,8 +48,8 @@ namespace Engine
         void UnUseShaderHandle();
 
         // Fades scene when called; user is able to choose colour and fading time
-        void FadeInScene(Math::vec4 colour, float time);
-        void FadeOutScene(Math::vec4 colour, float time);
+        // Default fade in to black
+        void FadeScene(float time, float _dt, Math::mat3 _camMatrix, Math::vec4 _colourBegin = {0.0f, 0.0f, 0.0f, 0.0f}, Math::vec4 _colourEnd = { 0.0f, 0.0f, 0.0f, 1.0f });
 
 
         extern std::map<GraphicShader, GLSLShader> shdrpgms;

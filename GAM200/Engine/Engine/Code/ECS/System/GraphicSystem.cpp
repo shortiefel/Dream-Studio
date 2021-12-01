@@ -274,6 +274,10 @@ namespace Engine
 		RenderLines(camMatrix);
 		if (!gameDraw) RenderCollisionLines(camMatrix);
 
+
+		GraphicImplementation::FadeScene(3.f, _dt, camMatrix);
+
+
 #ifdef _GAME_BUILD
 
 #else

@@ -18,6 +18,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/Mesh.hpp"
 #include "Engine/Header/Time/DeltaTime.hpp"
+#include "Engine/Header/Management/GameState.hpp"
 
 namespace Engine
 {
@@ -35,52 +36,45 @@ namespace Engine
             glUseProgram(0);
         }
 
-
-        void FadeInScene(Math::vec3 _colour, float time, float _dt)
+        void FadeScene(float time, float _dt, Math::mat3 _camMatrix, Math::vec4 _colourBegin, Math::vec4 _colourEnd)
         {
-            if (fadeStruct.flag == false)
+            if (fadeStruct.flagFade == false)
             {
                 fadeStruct.lifeTime = fadeStruct.lifeRemaining = time;
-                fadeStruct.colourBegin = { _colour.x, _colour.y, _colour.z, 0.0f };
-                fadeStruct.colourEnd = { _colour.x, _colour.y, _colour.z, 1.0f };
+                fadeStruct.colourBegin = _colourBegin;
+                fadeStruct.colourEnd = _colourEnd;
 
-                fadeStruct.flag = true;
+                fadeStruct.flagFade = true;
             }
-            else if (fadeStruct.flag == true)
+            
+            if (fadeStruct.flagFade == true)
             {
+                // Load default shader program
+                const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
+                UseShaderHandle(shd_ref_handle);
+
+                // Set uniform
+                GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
+
+
                 fadeStruct.lifeRemaining -= _dt;
 
                 float life = fadeStruct.lifeRemaining / fadeStruct.lifeTime;
                 Math::vec4 colour = Math::Lerp(fadeStruct.colourEnd, fadeStruct.colourBegin, life);
 
-                if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flag = false;
+                GraphicImplementation::Renderer::DrawQuad({ 0.0f, 0.0f }, { 90.0f, 55.0f }, 0.0f, colour);
 
-                if (fadeStruct.flag == true) 
-                    GraphicImplementation::Renderer::DrawQuad({0.0f, 0.0f}, { 2.0f, 2.0f }, 0.0f, colour);
-            }
-        }
+                // Enable GL_BLEND for transparency of textures
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        void FadeOutScene(Math::vec4 _colour, float time, float _dt)
-        {
-            if (fadeStruct.flag == false)
-            {
-                fadeStruct.lifeTime = fadeStruct.lifeRemaining = time;
-                fadeStruct.colourBegin = { _colour.x, _colour.y, _colour.z, 1.0f };
-                fadeStruct.colourEnd = { _colour.x, _colour.y, _colour.z, 0.0f };
+                Renderer::EndQuadBatch();
+                Renderer::FlushQuad();
 
-                fadeStruct.flag = true;
-            }
-            else if (fadeStruct.flag == true)
-            {
-                fadeStruct.lifeRemaining -= _dt;
+                // Unload shader program
+                UnUseShaderHandle();
 
-                float life = fadeStruct.lifeRemaining / fadeStruct.lifeTime;
-                Math::vec4 colour = Math::Lerp(fadeStruct.colourEnd, fadeStruct.colourBegin, life);
-
-                if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flag = false;
-
-                if (fadeStruct.flag == true)
-                    GraphicImplementation::Renderer::DrawQuad({ 0.0f, 0.0f }, { 2.0f, 2.0f }, 0.0f, colour);
+                if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flagFade = false;
             }
         }
     }

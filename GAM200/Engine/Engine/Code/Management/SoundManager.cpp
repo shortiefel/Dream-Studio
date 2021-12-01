@@ -1,0 +1,147 @@
+/* Start Header**********************************************************************************/
+/*
+@file			SoundManager.hpp
+@author	Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu	100%
+@date		29/11/2021
+\brief
+
+
+
+Copyright (C) 2021 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **********************************************************************************/
+
+#include "Engine/Header/Debug Tools/Logging.hpp"
+#include "Engine/Header/Management/SoundManager.hpp"
+#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
+
+namespace Engine
+{
+
+	std::map<std::string, FMOD::Sound*> SoundManager::_soundMap;
+	std::map<int, FMOD::Channel*>  SoundManager::channelMap;
+	FMOD::System* SoundManager::System = nullptr;
+	FMOD::ChannelGroup* SoundManager::MasterGroup = nullptr;
+	FMOD::ChannelGroup* SoundManager::MusicGroup = nullptr;
+	FMOD::ChannelGroup* SoundManager::SFXGroup = nullptr;
+
+	void SoundManager::Create()
+	{
+		LOG_INSTANCE("SoundManager created");
+	}
+
+	void SoundManager::Destroy()
+	{
+
+		std::map<std::string, FMOD::Sound*>::iterator soundit;
+		for (soundit = SoundManager::_soundMap.begin(); soundit != SoundManager::_soundMap.end(); ++soundit)
+		{
+			soundit->second->release();
+		}
+
+		SoundManager::_soundMap.clear();
+		SoundManager::channelMap.clear();
+		SoundManager::SFXGroup->release();
+		SoundManager::MusicGroup->release();
+		SoundManager::MasterGroup->release();
+		SoundManager::System->release();
+	}
+
+	FMOD::Sound* SoundManager::GetSound(SoundComponent* soundCom,std::string& filePath,  std::string& soundName)
+	{
+
+		auto it = SoundManager::_soundMap.find(soundName);
+		if (it == SoundManager::_soundMap.end())
+		{
+			FMOD_MODE eMode = FMOD_DEFAULT;
+			eMode |= FMOD_LOOP_OFF;
+			FMOD::Sound* pSound;
+			std::cout << soundCom->filepath << "\n";
+			SoundManager::System->createSound(soundCom->filepath.c_str(), eMode, nullptr, &pSound);
+			//throw std::runtime_error("FMOD: Unable to create sound" + _path);
+			
+			if (pSound)
+			{
+				SoundManager::_soundMap[soundCom->soundName] = pSound;
+				return pSound;
+			}
+			
+				return it->second;
+			
+		}
+
+		return it->second;
+	}
+
+	int SoundManager::SetPlay(SoundComponent* soundCom, std::string& _soundName, bool _pause, SoundGrp SG, float _vol)
+	{
+		int ID = ChannelID++;
+		auto tFoundIt = _soundMap.find(_soundName);
+		FMOD::Sound* sound = nullptr;
+
+		if (tFoundIt == _soundMap.end())
+			sound = GetSound(soundCom, soundCom->filepath, soundCom->soundName);
+
+		else
+			sound = tFoundIt->second;
+
+		FMOD::Channel* pChannel = nullptr;
+
+		System->playSound(sound, nullptr, _pause, &pChannel);
+		if (pChannel)
+		{
+
+			switch (SG)
+			{
+			case SoundGrp::MUSIC:
+				pChannel->setChannelGroup(MusicGroup);
+				MusicGroup->setVolume(soundCom->VolumeDecimal(100.f));
+				break;
+			case SoundGrp::SFX:
+				pChannel->setChannelGroup(SFXGroup);
+				SFXGroup->setVolume(soundCom->VolumeDecimal(50.f));
+				break;
+
+			default:
+				pChannel->setChannelGroup(MasterGroup);
+				MusicGroup->setVolume(soundCom->VolumeDecimal(100.f));
+				break;
+
+			};
+
+			channelMap[ID] = pChannel;
+		}
+		std::cout << "channel ID Play" << ID << "\n";
+		return ID;
+	}
+
+	void SoundManager::SetLoop(int channelID, bool _loop)
+	{
+		auto it = channelMap.find(channelID);
+		if (it == channelMap.end())
+		{
+			return;
+		}
+		FMOD_MODE eMode = FMOD_LOOP_NORMAL;
+		eMode |= _loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+
+		if (it->second->setMode(eMode))
+			return;
+	}
+
+	bool SoundManager::IsPlaying(int channelID)
+	{
+		auto it = channelMap.find(channelID);
+		if (it == channelMap.end())
+		{
+			return false;
+		}
+		bool bIsPlaying = false;
+		it->second->isPlaying(&bIsPlaying);
+		return bIsPlaying;
+	}
+
+}

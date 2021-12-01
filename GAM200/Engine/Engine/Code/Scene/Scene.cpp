@@ -46,8 +46,8 @@ Technology is prohibited.
 
 #include "Engine/Header/Graphic/Picking2D.hpp"
 
-
 #include "Engine/Header/ECS/System/SoundSystem.hpp"
+#include "Engine/Header/Management/SoundManager.hpp"
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
 namespace Engine {
@@ -94,8 +94,7 @@ namespace Engine {
         ScriptSystem::GetInstance().UpdateMapData();
         ScriptSystem::GetInstance().PlayInit();
 
-        SoundSystem::SoundPlay(SoundComponent::filepath, false);
-        std::cout << "sound play \n";
+
         DeltaTime::GetInstance().SetTimeScale(1.f);
 
         return true;
@@ -105,9 +104,8 @@ namespace Engine {
         ScriptSystem::GetInstance().DestroyChildDomain();
         DeltaTime::GetInstance().SetTimeScale(1.f);
 
-        //SoundSystem::SoundStop(SoundComponent::ChannelID);
-        SoundSystem::SoundRelease();
-        std::cout << "end sound \n";
+        SoundSystem::GetInstance().SoundStop(SoundManager::GetInstance().ChannelID);
+        std::cout << "pause sound \n";
 
 
         CollisionSystem::GetInstance().Stop();

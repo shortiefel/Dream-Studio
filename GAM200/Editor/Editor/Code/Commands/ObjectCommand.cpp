@@ -104,38 +104,69 @@ namespace Editor
 		}
 	}
 
-	void ObjectTransformCommand::StoredTransform(Engine::DreamMath::vec2 positions)
+	void ObjectTransformCommand::StoredTransform(Engine::DreamMath::vec2 positions, Engine::Entity_id _id)
 	{
+		//Engine::TransformComponent* entity_transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(_id);
+		//Engine::TransformComponent* id_transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(_id);
+		//if (entity_transform != nullptr)
+		//{
+		//	
+		//	id_transform->position = _oldposition;
+		//	id_transform->localPosition = _oldposition;
+		//	Engine::ParentManager::GetInstance().UpdateTruePos(_id);
+
+		//	//auto& transform_array = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
+		//	//auto& entityMap = Engine::dreamECSGame->GetUsedConstEntityMap();
+
+		//	//for (auto& transform : transform_array)
+		//	//{
+		//	//	if (EntityId_Check(_id)) break;
+
+		//	//	const auto& itr = entityMap.find(_id);
+
+		//	//	Engine::Entity_id entity_selected = itr->second.parent;
+
+		//	//	transform.position = transform.localPosition;
+		//	//	if (entity_selected != DEFAULT_ENTITY_ID) {
+		//	//	transform.position += Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(entity_selected).localPosition;
+		//	//	}
+		//	//}
+
+		//}
+
+
 		auto& transformArray = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
 		auto& entityMap = Engine::dreamECSGame->GetUsedConstEntityMap();
 
 		for (auto& transform : transformArray) {
-			const Engine::Entity_id& entity_id = transform.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
+			_id = transform.GetEntityId();
+			if (EntityId_Check(_id)) break;
 
-			const auto& itr = entityMap.find(entity_id);
+			const auto& itr = entityMap.find(_id);
 			Engine::Entity_id parent = itr->second.parent;
 
 			transform.position = transform.localPosition;
-
 			transform.position = positions;
 			transform.localPosition = positions;
 
 			if (parent != DEFAULT_ENTITY_ID) {
 				transform.position += Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(parent).localPosition;
 			}
+
 		}
+
 
 	}
 
 	void ObjectTransformCommand::undo()
 	{
-		StoredTransform(_oldposition);
+		
+		StoredTransform(_oldposition, id);
 	}
 
 	void ObjectTransformCommand::redo()
 	{
-		StoredTransform(_newposition);
+		StoredTransform(_newposition, id);
 	}
 
 	void ObjectTransformCommand::record()

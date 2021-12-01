@@ -68,18 +68,18 @@ namespace Editor {
 	{
 		std::map<int, Engine::Entity_id> entity_selected{};
 
-		Engine::Entity_id entity_id{};
+		Engine::Entity_id id{};
 
-		//before state for transform data
-		Engine::DreamMath::vec2 _oldposition{};
+		//old position for transform component
+		Engine::DreamMath::vec2 _oldposition;
 
-		//after state for transform data
-		Engine::DreamMath::vec2 _newposition{};
+		//new position for transform component
+		Engine::DreamMath::vec2 _newposition;
 
 	public:
 
 		//currently stored transforms to each transform component
-		void StoredTransform(Engine::DreamMath::vec2 positions);
+		void StoredTransform(Engine::DreamMath::vec2 _positions, Engine::Entity_id _id);
 
 		//undo the changes made to the objects
 		void undo() override;

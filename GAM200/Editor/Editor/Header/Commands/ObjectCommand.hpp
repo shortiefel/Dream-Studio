@@ -71,15 +71,15 @@ namespace Editor {
 		Engine::Entity_id entity_id{};
 
 		//before state for transform data
-		Engine::TransformComponent before;
+		Engine::DreamMath::vec2 _oldposition{};
 
 		//after state for transform data
-		Engine::TransformComponent after;
+		Engine::DreamMath::vec2 _newposition{};
 
 	public:
 
 		//currently stored transforms to each transform component
-		void StoredTransform(Engine::TransformComponent& transforms);
+		void StoredTransform(Engine::DreamMath::vec2 positions);
 
 		//undo the changes made to the objects
 		void undo() override;

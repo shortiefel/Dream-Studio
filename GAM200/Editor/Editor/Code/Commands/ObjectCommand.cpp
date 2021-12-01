@@ -104,54 +104,38 @@ namespace Editor
 		}
 	}
 
-	void ObjectTransformCommand::StoredTransform(Engine::TransformComponent& transforms)
+	void ObjectTransformCommand::StoredTransform(Engine::DreamMath::vec2 positions)
 	{
-		//auto& transformArray = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
-		//auto& entityMap = Engine::dreamECSGame->GetUsedConstEntityMap();
+		auto& transformArray = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
+		auto& entityMap = Engine::dreamECSGame->GetUsedConstEntityMap();
 
-		//for (auto& transform : transformArray) {
-		//	const Engine::Entity_id& entity_id = transform.GetEntityId();
-		//	if (EntityId_Check(entity_id)) break;
+		for (auto& transform : transformArray) {
+			const Engine::Entity_id& entity_id = transform.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
 
-		//	const auto& itr = entityMap.find(entity_id);
-		//	Engine::Entity_id parent = itr->second.id;
+			const auto& itr = entityMap.find(entity_id);
+			Engine::Entity_id parent = itr->second.parent;
 
-		//	transform.position = transform.localPosition;
-		//	if (parent != DEFAULT_ENTITY_ID) {
-		//		transform.position += Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(parent).localPosition;
-		//	}
-		//}
+			transform.position = transform.localPosition;
 
-		//Engine::ParentManager::GetInstance().UpdateAllTruePos();
-		//for (auto& transform : transforms)
-		//{
+			transform.position = positions;
+			transform.localPosition = positions;
 
-		//}	
-		Engine::TransformComponent* transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected));
-		if (transform != nullptr)
-		{
-			//Position
-			transform->position = transform->localPosition;
-			transform->position = before.position;
-			transform->position -= Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected)).localPosition;
+			if (parent != DEFAULT_ENTITY_ID) {
+				transform.position += Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(parent).localPosition;
+			}
 		}
+
 	}
 
 	void ObjectTransformCommand::undo()
 	{
-		//Engine::TransformComponent* transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected));
-		//if (transform != nullptr)
-		//{
-		//	//Position
-		//	transform->position = transform->localPosition;
-		//	transform->position -= Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected)).localPosition;
-		//}
-		StoredTransform(before);
+		StoredTransform(_oldposition);
 	}
 
 	void ObjectTransformCommand::redo()
 	{
-		StoredTransform(after);
+		StoredTransform(_newposition);
 	}
 
 	void ObjectTransformCommand::record()

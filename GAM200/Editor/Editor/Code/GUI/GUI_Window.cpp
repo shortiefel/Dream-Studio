@@ -203,7 +203,7 @@ namespace Editor {
 			case Engine::Input_KeyCode::Z: {
 				if (ctrl) {
 					//undo
-					//UndoRedoManager::GetInstance().Undo();
+					UndoRedoManager::GetInstance().Undo();
 				}
 				break;
 			}

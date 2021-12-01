@@ -49,7 +49,7 @@ namespace Engine
 
         // Fades scene when called; user is able to choose colour and fading time
         // Default fade in to black
-        void FadeScene(float time, float _dt, 
+        bool FadeScene(float time, float _dt, 
             Math::mat3 _camMatrix = CameraSystem::GetInstance().GetTransform(),
             Math::vec4 _colourBegin = {0.0f, 0.0f, 0.0f, 0.0f}, Math::vec4 _colourEnd = { 0.0f, 0.0f, 0.0f, 1.0f });
 

@@ -39,6 +39,8 @@ namespace Engine
 {
 #define LAYER_COUNT 5 // Number of layers for game objects
 
+	//bool fadeToBlack = false;
+	//bool fadeToClear = false;
 
 
 	// Function will fill the batch render with vertices and required attributes of game objects
@@ -282,8 +284,6 @@ namespace Engine
 		RenderLines(camMatrix);
 		if (!gameDraw) RenderCollisionLines(camMatrix);
 
-		GraphicImplementation::FadeScene(3.f, _dt, camMatrix);
-
 #ifdef _GAME_BUILD
 
 #else
@@ -327,4 +327,12 @@ namespace Engine
 
 		LOG_INSTANCE("Graphic System destroyed");
 	}
+
+	/*void GraphicSystem::SetFadeToBlack() {
+		fadeToBlack = true;
+	}
+
+	void GraphicSystem::SetFadeToClear() {
+		fadeToClear = true;
+	}*/
 }

@@ -36,7 +36,7 @@ namespace Engine
             glUseProgram(0);
         }
 
-        void FadeScene(float time, float _dt, Math::mat3 _camMatrix, Math::vec4 _colourBegin, Math::vec4 _colourEnd)
+        bool FadeScene(float time, float _dt, Math::mat3 _camMatrix, Math::vec4 _colourBegin, Math::vec4 _colourEnd)
         {
             GraphicImplementation::Renderer::BeginBatch();
 
@@ -81,6 +81,8 @@ namespace Engine
 
             // Unload shader program
             UnUseShaderHandle();
+
+            return fadeStruct.flagFade;
         }
     }
 }

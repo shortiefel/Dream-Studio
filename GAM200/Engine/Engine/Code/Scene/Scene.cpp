@@ -73,6 +73,8 @@ namespace Engine {
         Play(); 
 #else
 #endif
+
+        UISystem::GetInstance().SetFadeToClear();
     }
 
     Scene::~Scene() {
@@ -138,7 +140,7 @@ namespace Engine {
             //Render game when not in focus
             GraphicSystem::GetInstance().Render(dt);
             FontSystem::GetInstance().Render();
-            UISystem::GetInstance().Render();
+            UISystem::GetInstance().Render(dt);
 #endif
             return;
         }
@@ -179,10 +181,12 @@ namespace Engine {
 
         GraphicSystem::GetInstance().Render(dt);
         FontSystem::GetInstance().Render();
-        UISystem::GetInstance().Render();
+        UISystem::GetInstance().Render(dt);
+
+        GraphicSystem::GetInstance().FadeRender();
 #else
         if (Input::IsKeyPressed(Input_KeyCode::F)) {
-            Window::GetInstance().ToggleFullscreen();
+            Window::GetInstance().ToggleFullscreen(); 
         }
 #endif
 

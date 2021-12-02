@@ -6,6 +6,7 @@ public class Notification : MonoBehaviour
     private float maxLifeTime;
     private float showNotification;
     public bool shouldShow;
+
     
     public override void Start()
     {

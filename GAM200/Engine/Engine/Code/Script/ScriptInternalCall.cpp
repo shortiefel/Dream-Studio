@@ -144,6 +144,12 @@ namespace Engine {
 	void AddTorque_Physics_Engine(unsigned int entityID, float torque);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Text/Font
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void SetFont_Text_Engine(unsigned int entityID, MonoString* _text);
+	//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text);
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	bool GetKey_Engine(Input_KeyCode key);
@@ -164,6 +170,7 @@ namespace Engine {
 	bool HasComponent_Camera_Engine(unsigned int id);
 	bool HasComponent_Rigidbody_Engine(unsigned int id);
 	bool HasComponent_Texture_Engine(unsigned int id);
+	bool HasComponent_Font_Engine(unsigned int id);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Destroy
@@ -300,6 +307,11 @@ namespace Engine {
 		mono_add_internal_call("Rigidbody2D::AddForce_Physics_Engine", AddForce_Physics_Engine);
 		mono_add_internal_call("Rigidbody2D::AddTorque_Physics_Engine", AddTorque_Physics_Engine);
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Text/Font
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		mono_add_internal_call("Text::SetFont_Text_Engine", SetFont_Text_Engine);
+
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Input
@@ -321,7 +333,8 @@ namespace Engine {
 		mono_add_internal_call("IBehaviour::HasComponent_Camera_Engine", HasComponent_Camera_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Rigidbody_Engine", HasComponent_Rigidbody_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Texture_Engine", HasComponent_Texture_Engine);
-
+		mono_add_internal_call("IBehaviour::HasComponent_Font_Engine", HasComponent_Font_Engine);
+		
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Destroy
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -667,6 +680,18 @@ namespace Engine {
 
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Text/Font
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void SetFont_Text_Engine(unsigned int entityID, MonoString* _text) {
+		char* tempText = mono_string_to_utf8(_text);
+		SetEngineType(entityID, FontComponent, text, std::string{ tempText });
+		mono_free(tempText);
+	}
+
+	//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text) {}
+
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -719,6 +744,10 @@ namespace Engine {
 
 	bool HasComponent_Texture_Engine(unsigned int id) {
 		GET_COMPONENT_PTR(TextureComponent);
+	}
+
+	bool HasComponent_Font_Engine(unsigned int id) {
+		GET_COMPONENT_PTR(FontComponent);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

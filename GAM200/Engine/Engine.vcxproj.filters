@@ -193,6 +193,9 @@
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\ParticleComponent.cpp">
       <Filter>Source Files\ECS\Component\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Management\SoundManager.cpp">
+      <Filter>Source Files\Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Application.hpp">
@@ -677,6 +680,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Parent\ParentManager.hpp">
       <Filter>Header Files\Parent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Management\SoundManager.hpp">
+      <Filter>Header Files\Management</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

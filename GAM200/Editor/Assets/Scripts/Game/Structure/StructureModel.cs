@@ -11,10 +11,14 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     //CarSpawner carSpawner;
     public Vector2Int RoadPosition { get; set; }
 
+    GameState gameState;
+
     //private Prefab notifiPrefab;
     private GameObject notifiSymbol;
     public override void Start()
     {
+        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+
         transform = GetComponent<Transform>();
         texure = GetComponent<Texture>();
         notification = GetComponent<Notification>();
@@ -33,9 +37,11 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     {
         if (notification != null && notification.shouldShow == true)
         {
-            //Console.WriteLine("Reshowing noti");
-            Enable<Transform>(notifiSymbol.transform);
+            Console.WriteLine("Reshowing noti");
+           Enable<Transform>(notifiSymbol.transform);
+            Console.WriteLine("Reshowing after......");
             notification.shouldShow = false;
+            notification.ResetTimer();
         }
     }
 
@@ -67,6 +73,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         if (notification != null)
         {
             Disable<Transform>(notifiSymbol.transform);
+            //gameState.IncrementHighscore();
             //notification.transform.
             notification.ResetTimer();
         }

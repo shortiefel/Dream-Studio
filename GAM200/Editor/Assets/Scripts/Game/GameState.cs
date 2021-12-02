@@ -3,6 +3,23 @@ public class GameState : MonoBehaviour
 {
     bool pauseState;
     bool drawModeBool;
+    int highscore;
+
+    public override void Start()
+    {
+        pauseState = false;
+        drawModeBool = false;
+        highscore = 0;
+    }
+
+    public void IncrementHighscore()
+    {
+        highscore++;
+    }
+    public int GetHighscore()
+    {
+        return highscore;
+    }
 
     public void InvertPause()
     {
@@ -25,11 +42,5 @@ public class GameState : MonoBehaviour
     public bool ShouldDraw()
     {
         return !pauseState && drawModeBool;
-    }
-
-    public override void Start()
-    {
-        pauseState = false;
-        drawModeBool = false;
     }
 }

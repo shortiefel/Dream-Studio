@@ -702,6 +702,16 @@ namespace Editor {
 							}
 
 							ImGui::Spacing();
+
+							/**
+							*	FONT COLOR
+							*/
+
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Color");
+							ImGui::SameLine(halfWidth);
+							ImGui::ColorPicker4("Color", (float*)&textureComp->colour, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
+
 							ImGui::Spacing();
 
 							/**

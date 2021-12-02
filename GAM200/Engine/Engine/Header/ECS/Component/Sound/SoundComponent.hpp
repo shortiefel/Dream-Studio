@@ -25,30 +25,17 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
+
 namespace Engine {
-
-	typedef  std::map<std::string, FMOD::Sound*> SoundMap;
-	typedef std::map<int, FMOD::Channel*> ChannelMap;
-
-	enum class SoundGrp {
-		MASTER,
-		MUSIC,
-		SFX
-	};
 
 	class DSerializer;
 	class SSerializer;
 
 	struct SoundComponent : public IComponent {
-		
-
-		SoundComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Sound\\sampleSound",
-			bool _isSound = false, bool _isActive = false, bool _loop = false, bool _pause = false, SoundGrp SG = SoundGrp::MASTER);
+	
+		SoundComponent(Entity_id _ID = DEFAULT_ENTITY_ID, std::string _filepath = "Assets\\Sound\\sampleSound.wav", std::string _soundName = "sampleSound",
+			bool _isSound = false, bool _isActive = false, bool _loop = false, bool _pause = false, float _vol = 100.f);
 		~SoundComponent();
-		static FMOD::Sound* GetSound(const std::string& _path);
-		void SetLoop(int channelID, bool _loop);
-		static bool IsPlaying(int channelID);
-		
 
 		SoundComponent& Deserialize(const DSerializer& _serializer);
 		void Serialize(const SSerializer& _serializer);
@@ -56,29 +43,16 @@ namespace Engine {
 		/**
 		*		VOLUME
 		*/
-		static float VolumeDecimal(float _vol);
-		static float DecimalVolume(float _vol);
+		float VolumeDecimal(float _vol);
+		float DecimalVolume(float _vol);
 
+		std::string filepath;
+		std::string soundName;
 
-		/**
-		*		FMOD RELATED
-		*/
-		static SoundMap _soundMap;
-		static FMOD::System* System;
-		static ChannelMap channelMap;
-		static FMOD::ChannelGroup * MasterGroup;
-		static FMOD::ChannelGroup* MusicGroup;
-		static FMOD::ChannelGroup* SFXGroup;
-
-
-		SoundGrp SG;
-		static std::string filepath;
-		std::string soundName = "";
-
-		static float volume;
+		float volume;
 		bool isSound, loop, Pause;
 		bool isActive = true;
-		static int ChannelID;
+		
 
 
 	};

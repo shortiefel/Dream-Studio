@@ -14,6 +14,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Engine/Header/ECS/System/SoundSystem.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 #include <stdexcept>
 #include < iterator >
@@ -22,13 +23,12 @@ Technology is prohibited.
 namespace Engine
 {
 
-	std::map<std::string, FMOD::Sound*> SoundComponent::_soundMap;
-	std::map<int, FMOD::Channel*>  SoundComponent::channelMap;
-	FMOD::System* SoundComponent::System = nullptr;
-	FMOD::ChannelGroup* SoundComponent::MasterGroup = nullptr;
-	FMOD::ChannelGroup* SoundComponent::MusicGroup = nullptr;
-	FMOD::ChannelGroup* SoundComponent::SFXGroup = nullptr;
-
+	//std::map<std::string, FMOD::Sound*> SoundManager::_soundMap;
+	//std::map<int, FMOD::Channel*>  SoundManager::channelMap;
+	//FMOD::System* SoundManager::System = nullptr;
+	//FMOD::ChannelGroup* SoundManager::MasterGroup = nullptr;
+	//FMOD::ChannelGroup* SoundManager::MusicGroup = nullptr;
+	//FMOD::ChannelGroup* SoundManager::SFXGroup = nullptr;
 	
 	bool operator!(FMOD_RESULT res)
 	{
@@ -38,37 +38,35 @@ namespace Engine
 
 	void SoundSystem::SoundInit()
 	{
-		if (!FMOD::System_Create(&SoundComponent::System))
+		if (!FMOD::System_Create(&SoundManager::System))
 			throw std::runtime_error("FMOD: Failed to create system object");
 
-		if (!SoundComponent::System->init(512, FMOD_INIT_NORMAL, nullptr))
+		if (!SoundManager::System->init(512, FMOD_INIT_NORMAL, nullptr))
 			throw std::runtime_error("FMOD: Failed to initialise system object");
 
-		if (!SoundComponent::System->getMasterChannelGroup(&SoundComponent::MasterGroup))
+		if (!SoundManager::System->getMasterChannelGroup(&SoundManager::MasterGroup))
 			throw std::runtime_error("FMOD: Failed to get Master Channel Group");
 
-		if (!SoundComponent::System->createChannelGroup("Music", &SoundComponent::MusicGroup))
+		if (!SoundManager::System->createChannelGroup("Music", &SoundManager::MusicGroup))
 			throw std::runtime_error("FMOD: Failed to create Music Channel Group");
 
-		SoundComponent::MasterGroup->addGroup(SoundComponent::MusicGroup);
+		SoundManager::MasterGroup->addGroup(SoundManager::MusicGroup);
 
-		if (!SoundComponent::System->createChannelGroup("SFX", &SoundComponent::SFXGroup))
+		if (!SoundManager::System->createChannelGroup("SFX", &SoundManager::SFXGroup))
 			throw std::runtime_error("FMOD: Failed to create SFX Channel Group");
 
-		SoundComponent::MasterGroup->addGroup(SoundComponent::SFXGroup);
-
-		
+		SoundManager::MasterGroup->addGroup(SoundManager::SFXGroup);
 
 	}
 
 	bool SoundSystem::SoundUpdate()
 	{
 		std::vector<std::map<int, FMOD::Channel*>::iterator> StoppedChannels;
-		for (auto it = SoundComponent::channelMap.begin(); it != SoundComponent::channelMap.end(); ++it)
+		for (auto it = SoundManager::channelMap.begin(); it != SoundManager::channelMap.end(); ++it)
 		{
 			bool bIsPlaying = false;
 			it->second->isPlaying(&bIsPlaying);
-
+			
 			if (!bIsPlaying)
 			{
 				StoppedChannels.push_back(it);
@@ -77,64 +75,29 @@ namespace Engine
 
 		for (auto& it : StoppedChannels)
 		{
-			SoundComponent::channelMap.erase(it);
+			SoundManager::channelMap.erase(it);
 		}
 
-		SoundComponent::System->update();
+		SoundManager::System->update();
 			//throw std::runtime_error("FMOD: Failed to Update System");
 
 		return true;
 	}
 
-	int SoundSystem::SoundPlay(const std::string& _path, bool _pause)
+
+
+	void SoundSystem::SoundPlay(SoundComponent* soundCom,int channelID)
 	{
-		SoundGrp sg = SoundGrp::MASTER;
-		int ID = SoundComponent::ChannelID++;
-		auto tFoundIt = SoundComponent::_soundMap.find(_path);
-		FMOD::Sound* sound;
-		
-		if (tFoundIt == SoundComponent::_soundMap.end())
-			sound = SoundComponent::GetSound(_path);
-
-		else
-			sound = tFoundIt->second;
-
-		FMOD::Channel* pChannel = nullptr;
-
-		SoundComponent::System->playSound(sound, nullptr, _pause, &pChannel);
-		if (pChannel)
-		{
-			
-			switch (sg)
-			{
-			case SoundGrp::MASTER:
-				pChannel->setChannelGroup(SoundComponent::MasterGroup);
-				SoundComponent::MusicGroup->setVolume(SoundComponent::VolumeDecimal(100.f));
-				break;
-			case SoundGrp::MUSIC:
-				pChannel->setChannelGroup(SoundComponent::MusicGroup);
-				SoundComponent::MusicGroup->setVolume(SoundComponent::VolumeDecimal(100.f));
-				break;
-			case SoundGrp::SFX:
-				pChannel->setChannelGroup(SoundComponent::SFXGroup);
-				SoundComponent::SFXGroup->setVolume(SoundComponent::VolumeDecimal(50.f));
-				break;
-			
-			};
-
-			SoundComponent::channelMap[ID] = pChannel;
-		}
-
-		std::cout << "channel ID Play" << ID << "\n";
-		return ID;
-
+		SoundManager::GetInstance().IsPlaying(channelID);
+		auto it = SoundManager::channelMap.find(channelID);
+		SoundManager::GetInstance().SetPlay(soundCom, soundCom->soundName, soundCom->Pause, SoundGrp::MASTER, soundCom->volume );
 	}
 
 	void SoundSystem::SoundPause(int channelID)
 	{
-		auto it = SoundComponent::channelMap.find(channelID);
+		auto it = SoundManager::channelMap.find(channelID);
 
-		if (it == SoundComponent::channelMap.end())
+		if (it == SoundManager::channelMap.end())
 			return;
 		else
 			it->second->setPaused(true);
@@ -142,9 +105,9 @@ namespace Engine
 
 	void SoundSystem::SoundUnpause(int channelID)
 	{
-		auto it = SoundComponent::channelMap.find(channelID);
+		auto it = SoundManager::channelMap.find(channelID);
 
-		if (it == SoundComponent::channelMap.end())
+		if (it != SoundManager::channelMap.end())
 			return;
 		else
 			it->second->setPaused(false);
@@ -153,57 +116,43 @@ namespace Engine
 	void SoundSystem::SoundStop(int channelID)
 	{
 		std::cout << "channel ID Stop" << channelID << "\n";
-		auto it = SoundComponent::channelMap.find(channelID);
+		auto it = SoundManager::channelMap.find(channelID);
 		std::cout << "Sound Stop"  << channelID << "\n";
-		if (it == SoundComponent::channelMap.end())
+		if (it == SoundManager::channelMap.end())
 		{
-			SoundComponent::SFXGroup->stop();
-			SoundComponent::MusicGroup->stop();
-			SoundComponent::MasterGroup->stop();
+			SoundManager::SFXGroup->stop();
+			SoundManager::MusicGroup->stop();
+			SoundManager::MasterGroup->stop();
 			return;
 		}
 	}
 
 	void SoundSystem::SoundSetVolume(int channelID,float _vol)
 	{
-		auto it = SoundComponent::channelMap.find(channelID);
-		if (it == SoundComponent::channelMap.end())
+		SoundComponent SoundCom;
+
+		auto it = SoundManager::channelMap.find(channelID);
+		if (it == SoundManager::channelMap.end())
 		{
 			return;
 		}
 
-		it->second->setVolume(SoundComponent::VolumeDecimal(_vol));
+		it->second->setVolume(SoundCom.VolumeDecimal(_vol));
 	}
 
-	float SoundSystem::SoundGetVolume(int channelID)
+	float SoundSystem::SoundGetVolume(int channelID, float _vol)
 	{
-		float vol;
-		auto it = SoundComponent::channelMap.find(channelID);
-		if (it == SoundComponent::channelMap.end())
+		SoundComponent SoundCom;
+		auto it = SoundManager::channelMap.find(channelID);
+		if (it == SoundManager::channelMap.end())
 		{
 			return 0.f;
 		}
 
-		it->second->getVolume(&vol);
+		it->second->getVolume(&_vol);
 
-		return SoundComponent::DecimalVolume(vol);
+		return SoundCom.DecimalVolume(_vol);
 	}
 
-	void SoundSystem::SoundRelease()
-	{
-	
-		std::map<std::string, FMOD::Sound*>::iterator soundit;
-		for (soundit = SoundComponent::_soundMap.begin(); soundit != SoundComponent::_soundMap.end(); ++soundit)
-		{
-			soundit->second->release();
-		}
-
-		SoundComponent::_soundMap.clear();
-		SoundComponent::channelMap.clear();
-		SoundComponent::SFXGroup->release();
-		SoundComponent::MusicGroup->release();
-		SoundComponent::MasterGroup->release();
-		SoundComponent::System->release();
-	}
 
 }

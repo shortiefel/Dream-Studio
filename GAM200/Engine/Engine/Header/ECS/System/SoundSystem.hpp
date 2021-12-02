@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
+#include "Engine/Header/Management/SoundManager.hpp"
 
 #include <fmod/fmod.hpp>
 #include <map>
@@ -28,27 +29,22 @@ Technology is prohibited.
 
 namespace Engine {
 
-	//typedef std::map<std::string  , FMOD::Sound*> SoundMap;
-	//typedef std::map<int, FMOD::Channel*> ChannelMap;
-
 	struct SoundSystem : public Singleton<SoundSystem>
 	{
 
 		/**
 		*		BASICS
 		*/
-		static void SoundInit();
-		static bool SoundUpdate();
-		static int SoundPlay(const std::string& _path, bool _pause);
-		static void SoundPause(int channelID);
-		static void SoundUnpause(int channelD);
-		static void SoundStop(int channelID);
+		void SoundInit();
+		bool SoundUpdate();
+		void SoundPlay(SoundComponent* soundCom, int channelID);
+		void SoundPause(int channelID);
+		void SoundUnpause(int channelD);
+		void SoundStop(int channelID);
 		
-		static void SoundSetVolume(int channelID, float _vol);
-		static float SoundGetVolume(int channelID);
+		void SoundSetVolume(int channelID, float _vol);
+		float SoundGetVolume(int channelID, float _vol);
 
-		static void SoundRelease();
-	
 
 		SINGLETON_SETUP(SoundSystem);
 

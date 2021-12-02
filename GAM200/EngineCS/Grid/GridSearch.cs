@@ -106,13 +106,17 @@ public class GridSearch
 
     private static List<Point> GeneratePath(Dictionary<Point, Point> parentMap, Point endState)
     {
+        Console.WriteLine("Generating path");
         List<Point> path = new List<Point>();
+        Console.WriteLine("Generating path middle " + path.Count);
         Point parent = endState;
+        Console.WriteLine("Generating path before " + path.Count);
         while (parent != null && parentMap.ContainsKey(parent))
         {
             path.Add(parent);
             parent = parentMap[parent];
         }
+        Console.WriteLine("Generating path ending....  " + path.Count);
         return path;
     }
 }

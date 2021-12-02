@@ -93,7 +93,7 @@ namespace Editor {
 					GLuint file_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/FileIcon.png", &height, &width, 0, 4);
 					GLuint asset_icon = directory.is_directory() ? directory_icon : file_icon;
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-					ImGui::Image((ImTextureID)static_cast<uintptr_t>(asset_icon), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
+					ImGui::ImageButton((ImTextureID)static_cast<uintptr_t>(asset_icon), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
 
 
 					//const wchar_t* itemPath = relative_path.c_str();

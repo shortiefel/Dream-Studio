@@ -74,7 +74,7 @@ namespace Engine {
 #else
 #endif
 
-        UISystem::GetInstance().SetFadeToClear();
+        FontSystem::GetInstance().SetFadeToClear();
     }
 
     Scene::~Scene() {

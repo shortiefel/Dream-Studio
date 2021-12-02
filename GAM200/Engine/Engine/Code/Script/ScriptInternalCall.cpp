@@ -32,7 +32,7 @@ Technology is prohibited.
 #include "Engine/Header/Random/Random.hpp"
 #include "Engine/Header/Input/Input.hpp" //Input key/mouse code
 
-#include "Engine/Header/ECS/System/UISystem.hpp"
+#include "Engine/Header/ECS/System/FontSystem.hpp"
 
 #include "Engine/Header/ECS/System/CollisionSystem.hpp" //For raycast
 #include "Engine/Header/Physics/Collision.hpp"
@@ -882,7 +882,7 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void LoadScene_Engine(MonoString* sceneName) {
 		char* text = mono_string_to_utf8(sceneName);
-		UISystem::GetInstance().SetFadeToBlack(text);
+		FontSystem::GetInstance().SetFadeToBlack(text);
 		//SceneManager::GetInstance().ChangeScene(text);
 		mono_free(text);
 	}

@@ -33,7 +33,10 @@ namespace Engine
 		bool Create();
 		void Destroy();
 
-		void Render(Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI());
+		void Render(float _dt, Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransformUI());
+
+		void SetFadeToBlack(std::string _scene);
+		void SetFadeToClear();
 	private:
 
 		SINGLETON_SETUP(FontSystem);

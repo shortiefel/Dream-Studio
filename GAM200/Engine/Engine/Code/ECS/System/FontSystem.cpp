@@ -20,6 +20,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/FontSystem.hpp"
 #include "Engine/Header/ECS/System/GraphicSystem.hpp"
 
+#include "Engine/Header/Scene/SceneManager.hpp"
+
 #include "Engine/Header/Parent/ParentManager.hpp"
 
 #include "Engine/Header/ECS/Component/ComponentArray.hpp"
@@ -28,12 +30,19 @@ Technology is prohibited.
 
 namespace Engine
 {
-	void FontSystem::Render(Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix)
+	bool fadeToBlack = false;
+	bool fadeToClear = false;
+	std::string sceneToChangeTo;
+
+#ifdef _GAME_BUILD
+	void FontSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 camMatrix)
+#else
+	void FontSystem::Render(float _dt, Graphic::FrameBuffer * _fbo, Math::mat3 camMatrix)
+#endif
 	{
 		PROFILER_START("Rendering");
 
 #ifdef _GAME_BUILD
-		_fbo;
 #else
 		_fbo->Bind();
 #endif
@@ -77,6 +86,15 @@ namespace Engine
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
+		if (fadeToBlack) {
+			fadeToBlack = GraphicImplementation::FadeScene(3.f, _dt, camMatrix);
+			if (!fadeToBlack)
+				SceneManager::GetInstance().ChangeScene(sceneToChangeTo);
+	}
+
+		if (fadeToClear)
+			fadeToClear = GraphicImplementation::FadeScene(3.f, _dt, camMatrix, Math::vec4{ 0.0f, 0.0f, 0.0f, 1.0f }, Math::vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
+
 #ifdef _GAME_BUILD
 
 #else
@@ -114,5 +132,14 @@ namespace Engine
 		GraphicImplementation::Renderer::DestroyFont();
 
 		LOG_INSTANCE("Font System destroyed");
+	}
+
+	void FontSystem::SetFadeToBlack(std::string _scene) {
+		fadeToBlack = true;
+		sceneToChangeTo = _scene;
+	}
+
+	void FontSystem::SetFadeToClear() {
+		fadeToClear = true;
 	}
 }

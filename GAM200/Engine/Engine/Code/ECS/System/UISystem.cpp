@@ -37,14 +37,10 @@ Technology is prohibited.
 
 namespace Engine {
 
-	bool fadeToBlack = false;
-	bool fadeToClear = false;
-	std::string sceneToChangeTo;
-
 #ifdef _GAME_BUILD
-	void UISystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 camMatrix) {
+	void UISystem::Render(Graphic::FrameBuffer*, Math::mat3 camMatrix) {
 #else
-	void UISystem::Render(float _dt, Graphic::FrameBuffer * _fbo, Math::mat3 camMatrix) {
+	void UISystem::Render(Graphic::FrameBuffer * _fbo, Math::mat3 camMatrix) {
 #endif
 		PROFILER_START("Rendering");
 
@@ -84,16 +80,7 @@ namespace Engine {
 
 		// unload shader program
 		GraphicImplementation::UnUseShaderHandle();
-
-
-		if (fadeToBlack) {
-			fadeToBlack = GraphicImplementation::FadeScene(3.f, _dt, camMatrix);
-			if (!fadeToBlack)
-				SceneManager::GetInstance().ChangeScene(sceneToChangeTo);
-		}
-
-		if (fadeToClear)
-			fadeToClear = GraphicImplementation::FadeScene(3.f, _dt, camMatrix, Math::vec4{ 0.0f, 0.0f, 0.0f, 1.0f }, Math::vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
+		
 
 #ifdef _GAME_BUILD
 
@@ -111,12 +98,4 @@ namespace Engine {
 		LOG_INSTANCE("UI System destroyed");
 	}
 
-	void UISystem::SetFadeToBlack(std::string _scene) {
-		fadeToBlack = true;
-		sceneToChangeTo = _scene;
-	}
-
-	void UISystem::SetFadeToClear() {
-		fadeToClear = true;
-	}
 }

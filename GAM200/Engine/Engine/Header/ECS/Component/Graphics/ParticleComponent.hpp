@@ -81,7 +81,7 @@ namespace Engine
 
 		void ParticleEmit(const ParticleProps& particleProps);
 
-		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", GraphicShape _shape = GraphicShape::SQUARE, 
+		ParticleComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png", GraphicShape _shape = GraphicShape::Square, 
 						  int _emitSize = 1, bool _isLooping = true, bool _loopComplete = false, bool _isAngleRandom = false, bool _isVelocityVariation = true,
 						  bool _active = true);
 

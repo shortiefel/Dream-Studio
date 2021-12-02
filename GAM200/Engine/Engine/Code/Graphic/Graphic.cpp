@@ -41,7 +41,7 @@ namespace Engine
             GraphicImplementation::Renderer::BeginBatch();
 
             // Load default shader program
-            const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
+            const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
             UseShaderHandle(shd_ref_handle);
 
             // Set uniform
@@ -64,10 +64,7 @@ namespace Engine
                 float life = fadeStruct.lifeRemaining / fadeStruct.lifeTime;
                 Math::vec4 colour = Math::Lerp(fadeStruct.colourEnd, fadeStruct.colourBegin, life);
 
-                GraphicImplementation::Renderer::DrawQuad({ 0.0f, 0.0f }, { 90.0f, 55.0f }, 0.0f, colour);
-
-                std::cout << "colour: " << colour << std::endl;
-                std::cout << "fadeStruct.lifeRemaining: " << fadeStruct.lifeRemaining << std::endl;
+                GraphicImplementation::Renderer::DrawQuad({ 0.0f, 0.0f }, { 200.0f, 200.0f }, 0.0f, colour);
 
                 if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flagFade = false;
             }

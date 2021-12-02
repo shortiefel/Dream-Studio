@@ -147,7 +147,7 @@ namespace Engine
 	// 0 will be rendered first, followed by 1, 2 ...
 	void RenderGameObjects(Math::mat3 _camMatrix, float _dt) {
 		// Load default shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Set uniform
@@ -180,7 +180,7 @@ namespace Engine
 	void RenderCollisionLines(Math::mat3 _camMatrix)
 	{
 		// Load collision shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::COLLISION].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Collision].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Set uniform
@@ -236,7 +236,7 @@ namespace Engine
 	{
 		if (!GameState::GetInstance().GetShouldDraw()) return;
 		// Load collision shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::COLLISION].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Collision].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Set uniform
@@ -298,7 +298,7 @@ namespace Engine
 		GraphicImplementation::setup_shdr();
 
 		// Load shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Uniform for game object texture shader

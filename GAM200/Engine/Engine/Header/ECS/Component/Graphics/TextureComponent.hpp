@@ -81,7 +81,7 @@ namespace Engine
 
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png",
-			GraphicShape _shape = GraphicShape::SQUARE, Math::vec4 _colour = {1.0f, 1.0f, 1.0f, 1.0f}, 
+			GraphicShape _shape = GraphicShape::Square, Math::vec4 _colour = {1.0f, 1.0f, 1.0f, 1.0f}, 
 			bool _animation = false, std::string _currAnimationState = "", bool _active = true);
 
 

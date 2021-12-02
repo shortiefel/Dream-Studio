@@ -39,7 +39,7 @@ namespace Engine
 #endif
 
 		// Load font shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::FONT_DRAW].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Font_Draw].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		GraphicImplementation::Renderer::ResetFontStats();
@@ -88,7 +88,7 @@ namespace Engine
 	bool FontSystem::Create()
 	{
 		// Uniform for font shader
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::FONT_DRAW].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Font_Draw].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		auto loc = glGetUniformLocation(shd_ref_handle, "u_FontTexture");

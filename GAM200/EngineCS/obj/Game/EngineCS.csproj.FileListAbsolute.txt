@@ -1,8 +1,3 @@
-C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.dll
-C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.pdb
-C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.CoreCompileInputs.cache
-C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.dll
-C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.pdb
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.dll
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.pdb
 C:\Users\jianw\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.AssemblyReference.cache
@@ -15,3 +10,9 @@ C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineC
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.CoreCompileInputs.cache
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.dll
 C:\Users\jianwen.o\Desktop\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.pdb
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.dll
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.pdb
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.AssemblyReference.cache
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.CoreCompileInputs.cache
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.dll
+C:\Users\jianwen.o\Downloads\Digipen\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.pdb

@@ -89,7 +89,7 @@ namespace Engine {
 	void ScriptSystem::PlayInit() {
 		PROFILER_START("Scripting");
 
-		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
+		auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
@@ -140,7 +140,7 @@ namespace Engine {
 	void ScriptSystem::PlayRunTime() {
 		PROFILER_START("Scripting");
 
-		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
+		auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			if (EntityId_Check(csScript.GetEntityId())) break;
 
@@ -202,7 +202,7 @@ namespace Engine {
 	bool CallFixedUpdate(const FixedUpdateEvent&) {
 		PROFILER_START("Scripting");
 
-		const auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
+		auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		for (auto& csScript : entScriptArray) {
 			if (EntityId_Check(csScript.GetEntityId())) break;
 

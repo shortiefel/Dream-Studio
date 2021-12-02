@@ -38,8 +38,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         if (notification != null && notification.shouldShow == true)
         {
             Enable<Transform>(notifiSymbol.transform);
-            notification.shouldShow = false;
-            notification.ResetTimer();
+            //notification.shouldShow = false;
+            //notification.ResetTimer();
         }
     }
 

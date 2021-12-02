@@ -180,8 +180,6 @@ namespace Engine {
         GraphicSystem::GetInstance().Render(dt);
         FontSystem::GetInstance().Render();
         UISystem::GetInstance().Render(dt);
-
-        GraphicSystem::GetInstance().FadeRender();
 #else
         if (Input::IsKeyPressed(Input_KeyCode::F)) {
             Window::GetInstance().ToggleFullscreen(); 

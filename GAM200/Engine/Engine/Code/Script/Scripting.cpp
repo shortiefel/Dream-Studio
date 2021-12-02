@@ -53,20 +53,41 @@ namespace Engine {
 
 		CSType GetCSType(MonoType* mt);
 
-		void Mono_Runtime_Invoke(const CSScriptInstance& _csScriptInstance, MonoFunctionType _type, void** _param) {
+		void Mono_Runtime_Invoke(CSScriptInstance& _csScriptInstance, MonoFunctionType _type, void** _param) {
 			MonoObject* exception = nullptr;
 			switch (_type) {
 			case MonoFunctionType::Awake:
 				INVOKE_FUNCTION(AwakeFunc);
 				break;
 			case MonoFunctionType::Constructor:
-				INVOKE_FUNCTION(ConstructorFunc);
+				//INVOKE_FUNCTION(ConstructorFunc);
+				if (_csScriptInstance.csClass.ConstructorFunc != nullptr) {
+					_csScriptInstance.csClass.object = mono_object_new(mono_domain_get(), _csScriptInstance.csClass.klass);
+						mono_runtime_invoke(_csScriptInstance.csClass.ConstructorFunc, _csScriptInstance.csClass.object, _param, &exception);
+						if (exception != nullptr) {
+								char* text = mono_string_to_utf8(mono_object_to_string(exception, nullptr));
+								displayFuncPtr(std::string{ text }); 
+								mono_free(text); 
+								SceneManager::GetInstance().Stop(); 
+						}
+
+						_csScriptInstance.csClass.gc_handle = mono_gchandle_new(_csScriptInstance.csClass.object, true);
+				}
 				break;
 			case MonoFunctionType::Init:
 				INVOKE_FUNCTION(InitFunc);
 				break;
 			case MonoFunctionType::Update:
-				INVOKE_FUNCTION(UpdateFunc);
+				//INVOKE_FUNCTION(UpdateFunc);
+				if (_csScriptInstance.csClass.UpdateFunc != nullptr) {
+						mono_runtime_invoke(_csScriptInstance.csClass.UpdateFunc, _csScriptInstance.csClass.object, _param, &exception);
+						if (exception != nullptr) {
+								char* text = mono_string_to_utf8(mono_object_to_string(exception, nullptr));
+								displayFuncPtr(std::string{ text }); 
+								mono_free(text);
+								SceneManager::GetInstance().Stop();
+						}
+				}
 				break;
 			case MonoFunctionType::Fixed_Update:
 				INVOKE_FUNCTION(FixedUpdateFunc);
@@ -226,7 +247,7 @@ namespace Engine {
 			}
 		}
 
-		void InitScript(const Entity_id& entity_id, const CSScriptInstance& csScriptInstance, MonoFunctionType type) {
+		void InitScript(const Entity_id& entity_id, CSScriptInstance& csScriptInstance, MonoFunctionType type) {
 			if (!GameState::GetInstance().GetPlaying()) return;
 			void* param[] = { (void*)&entity_id };
 			//std::cout << "class: " << csScriptInstance.csClass.className << "\n";

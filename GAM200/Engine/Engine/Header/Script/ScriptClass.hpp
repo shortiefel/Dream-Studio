@@ -21,7 +21,7 @@ Technology is prohibited.
 #include <mono/metadata/threads.h>
 
 #include "Engine/Header/Script/ScriptClassVariable.hpp"
-
+#include <iostream>
 namespace Engine {
 	/*-----------------------------------------------------------------------------------------------------------------------------------
 	Script classes
@@ -41,6 +41,12 @@ namespace Engine {
 				className = fullName;
 			}
 		}
+
+		~CSClass() {
+			mono_gchandle_free(gc_handle);
+		}
+
+		uint32_t gc_handle = 0;
 
 		MonoObject* object = nullptr;
 		MonoClass* klass = nullptr;

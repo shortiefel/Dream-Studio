@@ -50,6 +50,7 @@ public class IBehaviour : IComponent
         entityId = id;
         //Console.WriteLine("2222: " + this.GetType().Name);
     }
+
     //-----------------------------------------------------------------------------------------------------------------
     //Component
 

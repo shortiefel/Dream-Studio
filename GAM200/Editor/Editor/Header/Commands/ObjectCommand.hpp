@@ -66,8 +66,6 @@ namespace Editor {
 
 	class ObjectTransformCommand : public ObjectCommand
 	{
-		std::map<int, Engine::Entity_id> entity_selected{};
-
 		Engine::Entity_id id{};
 
 		//current position
@@ -83,8 +81,14 @@ namespace Editor {
 
 		Engine::DreamMath::vec2 GetTransformPosition();
 
+		//setting old position
+		void SetOldPosition(Engine::DreamMath::vec2 _oldPosition);
+		
+		// setting new position
+		void SetNewPosition(Engine::DreamMath::vec2 _newPosition);
+
 		//currently stored transforms to each transform component
-		void StoredTransform(Engine::Entity_id _id, Engine::DreamMath::vec2 _positions);
+		void StoredTransform(const Engine::Entity_id& entity_selected, Engine::DreamMath::vec2 _positions);
 
 		//undo the changes made to the objects
 		void undo() override;

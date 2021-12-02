@@ -304,8 +304,12 @@ namespace Editor {
 					}
 
 					//record the object state before change
-					std::shared_ptr<ICommand> new_command = std::make_shared<ObjectTransformCommand>();
-					UndoRedoManager::GetInstance().RecordState(new_command);
+					auto move_command = std::make_shared<ObjectTransformCommand>();
+
+					//get old position
+					move_command->SetOldPosition(transComp->position);
+					Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+					UndoRedoManager::GetInstance().RecordState(move_command);
 				}
 
 				/*

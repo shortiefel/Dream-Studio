@@ -17,6 +17,7 @@ Technology is prohibited.
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
 
+#include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
@@ -74,6 +75,9 @@ namespace Editor {
 		//redo the last command
 		void Redo();
 		
+		//Records last state
+		void Record();
+
 		//store command
 		void StoreCommand(CommandPtr command);
 
@@ -99,6 +103,7 @@ namespace Editor {
 
 	private:
 		unsigned int maximum;
+		Engine::Entity_id entity_selected;
 
 	};
 }

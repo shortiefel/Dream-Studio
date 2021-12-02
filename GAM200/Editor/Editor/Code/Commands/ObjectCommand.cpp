@@ -135,16 +135,12 @@ namespace Editor
 
 			}
 
-			//if (parent != DEFAULT_ENTITY_ID) {
-			//	transform.position += Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(parent).localPosition;
-			//}
 		}
 
 	}
 
 	void ObjectTransformCommand::undo()
 	{
-		//_oldposition = GetTransformPosition();
 		StoredTransform(id, _oldposition);
 	}
 

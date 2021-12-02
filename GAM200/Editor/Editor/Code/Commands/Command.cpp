@@ -27,6 +27,27 @@ namespace Editor {
 		redostack = {};
 
 	}
+
+	void UndoRedoManager::Record()
+	{
+		//get entity data and name
+		if (EntityId_Check(entity_selected)) {
+			return;
+		}
+
+		auto& entityMap = Engine::dreamECSGame->GetUsedEntityMap();
+		if (entityMap.empty()) {
+			return;
+		}
+		const auto& itr = entityMap.find(entity_selected);
+		if (itr == entityMap.end()) {
+			return;
+		}
+
+		std::string& entityName = itr->second.name;
+		Engine::dreamECSGame->DuplicateNameCheck(entityName);
+	}
+
 	void UndoRedoManager::Add(CommandPtr command)
 	{
 		//Add the newest, current command

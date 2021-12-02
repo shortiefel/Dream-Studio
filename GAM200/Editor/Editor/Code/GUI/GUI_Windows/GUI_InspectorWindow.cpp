@@ -626,6 +626,17 @@ namespace Editor {
 
 						ImGui::Spacing();
 
+						/**
+						*	TEXTURE COLOR
+						*/
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Color");
+						ImGui::SameLine(halfWidth);
+						ImGui::ColorPicker4("Color", (float*)&textureComp->colour, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
+
+						ImGui::Spacing();
+
 						/*
 						*	Animation
 						*/
@@ -702,7 +713,8 @@ namespace Editor {
 							}
 
 							ImGui::Spacing();
-							ImGui::Spacing();
+
+					
 
 							/**
 							*	ANIMATION STATE

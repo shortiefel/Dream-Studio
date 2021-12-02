@@ -190,7 +190,11 @@ public class MonoBehaviour : IBehaviour
     //Enable
     public void Enable<T>(T type) where T : class, IComponent
     {
-        
+        if (type == null)
+        {
+            Console.WriteLine("Enable Is actually nulll------------------------------------------------------------------------------------------------------------------------------------------------------");
+            return;
+        }
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
         {
             Active_Script_Engine(type.entityId, true, typeof(T).ToString());
@@ -219,6 +223,11 @@ public class MonoBehaviour : IBehaviour
     //Disable
     public void Disable<T>(T type) where T : class, IComponent
     {
+        if (type == null)
+        {
+            Console.WriteLine("disable Is actually nulll------------------------------------------------------------------------------------------------------------------------------------------------------");
+            return;
+        }
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
         {
             Active_Script_Engine(type.entityId, false, typeof(T).ToString());

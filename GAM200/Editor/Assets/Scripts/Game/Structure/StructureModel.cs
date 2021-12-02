@@ -17,6 +17,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     private GameObject notifiSymbol;
     public override void Start()
     {
+        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+
         transform = GetComponent<Transform>();
         texure = GetComponent<Texture>();
         notification = GetComponent<Notification>();
@@ -38,8 +40,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         if (notification != null && notification.shouldShow == true)
         {
             Enable<Transform>(notifiSymbol.transform);
-            //notification.shouldShow = false;
-            //notification.ResetTimer();
+            notification.shouldShow = false;
+            notification.ResetTimer();
         }
     }
 

@@ -36,6 +36,15 @@ public class GameState : MonoBehaviour
         return highscore;
     }
 
+    public void IncrementHighscore()
+    {
+        highscore++;
+    }
+    public int GetHighscore()
+    {
+        return highscore;
+    }
+
     public void InvertPause()
     {
         pauseState = !pauseState;

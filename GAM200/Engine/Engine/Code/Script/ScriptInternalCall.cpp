@@ -147,6 +147,7 @@ namespace Engine {
 	Text/Font
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void SetFont_Text_Engine(unsigned int entityID, MonoString* _text);
+	//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Input
@@ -686,6 +687,8 @@ namespace Engine {
 		SetEngineType(entityID, FontComponent, text, std::string{ tempText });
 		mono_free(tempText);
 	}
+
+	//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text) {}
 
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

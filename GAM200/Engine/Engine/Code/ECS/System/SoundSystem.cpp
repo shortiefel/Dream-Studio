@@ -41,7 +41,7 @@ namespace Engine
 		if (!FMOD::System_Create(&SoundManager::System))
 			throw std::runtime_error("FMOD: Failed to create system object");
 
-		if (!SoundManager::System->init(512, FMOD_INIT_NORMAL, nullptr))
+		if (SoundManager::System->init(512, FMOD_INIT_NORMAL, nullptr))
 			throw std::runtime_error("FMOD: Failed to initialise system object");
 
 		if (!SoundManager::System->getMasterChannelGroup(&SoundManager::MasterGroup))

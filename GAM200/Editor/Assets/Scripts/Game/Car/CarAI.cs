@@ -102,7 +102,7 @@ public class CarAI : MonoBehaviour
         //{
         //    Debug.Log(item.ToString());
         //}
-        Console.WriteLine("p2 " + path.Count + " " + this.path.Count + "-------------------------------------------------");
+        Console.WriteLine("p2 " + path.Count + " " + this.path.Count);
         index = 0;
         currentTargetPosition = this.path[index];
         //Vector2 directionToFace = new Vector2(0f, 0f);
@@ -222,6 +222,7 @@ public class CarAI : MonoBehaviour
                 Debug.Log("Turn left");
                 rotateCar = 1;
             }*/
+            Console.WriteLine("Before Drive ");
             Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
             float value = Vector2.Dot(transform.right, relativeDirection);
             var rotateCar = 0;
@@ -240,28 +241,35 @@ public class CarAI : MonoBehaviour
             }
             //OnDrive?.Invoke(new Vector2(rotateCar, 1));
             movementVector = new Vector2(rotateCar, 1);
-
+            Console.WriteLine("End drive ");
         }
     }
 
     private void CheckIfArrived()
     {
         //if (stop == false)
+        Console.WriteLine("Before CheckIfArrived ");
         if (!stop)
         {
+            Console.WriteLine("After stop ");
             var distanceToCheck = arriveDistance;
             if (index == path.Count - 1)
             {
                 distanceToCheck = lastPointArriveDistance;
             }
+            Console.WriteLine("After index ");
             if (Vector2.Distance(currentTargetPosition, transform.position) < distanceToCheck)
             {
+            Console.WriteLine("Insde Distance ");
                 // Add the mass manager here
                 //scoreSystem.AddScore();
                 SetNextTargetIndex();
+            Console.WriteLine("After SetNextTargetIndex ");
                 //Debug.Log(transform.position);
             }
         }
+
+        Console.WriteLine("After CheckIfArrived ");
 
     }
 
@@ -283,8 +291,11 @@ public class CarAI : MonoBehaviour
 
     private void ReachToEndPoint()
     {
+        Console.WriteLine("Before Notify ");
         Destroy(gameObject);
+        Console.WriteLine("After delete ");
         endPoint.Notify();
+        Console.WriteLine("After Notify ");
     }
 
     /*public void Move(Vector2 movementInput)

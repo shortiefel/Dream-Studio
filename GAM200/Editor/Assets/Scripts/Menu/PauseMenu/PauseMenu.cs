@@ -4,6 +4,7 @@ using System;
 
 public class PauseMenu : MonoBehaviour
 {
+    GameObject pauseBG;
     GameObject resume;
     GameObject howToPlay;
     //GameObject options;
@@ -22,6 +23,7 @@ public class PauseMenu : MonoBehaviour
 
     public override void Start()
     {
+        pauseBG = GameObject.Find("pauseBG");
         resume = GameObject.Find("ResumeText");
         howToPlay = GameObject.Find("HowToText");
         //ob = GameObject.Find("OptionText");

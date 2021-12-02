@@ -36,8 +36,6 @@ if (_csScriptInstance.csClass.name != nullptr) {\
 	char* text = mono_string_to_utf8(mono_object_to_string(exception, nullptr));\
 	displayFuncPtr(std::string{text});\
 	mono_free(text);\
-	GameState::GetInstance().SetPlaying(false);\
-	Scripting::DestroyChildDomain();\
 	}\
 }
 

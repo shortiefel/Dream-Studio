@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class CarController : MonoBehaviour
-{
+//public class CarController : MonoBehaviour
+//{
     /*Rigidbody2D rb;
 
     private float power = 5;
@@ -32,4 +32,4 @@ public class CarController : MonoBehaviour
         //Debug.Log(rb.inertia);
         rb.AddTorque(movementVector.x * 45);
     }*/
-}
+//}

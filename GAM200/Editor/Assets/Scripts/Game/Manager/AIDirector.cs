@@ -31,6 +31,7 @@ public class AIDirector : MonoBehaviour
     {
         /*foreach (var house in placementManager.GetAllHouses())
         {*/
+        if (house != null)
             TrySpawninACar(house, placementManager.GetRandomSpecialStrucutre());
         //}
     }
@@ -41,7 +42,10 @@ public class AIDirector : MonoBehaviour
         if (startStructure != null && endStructure != null)
         {
         Console.WriteLine(" actually inside ");
+            if(startStructure == null) Console.WriteLine("is null");
+            if(startStructure != null) Console.WriteLine("is not null");
             var startRoadPosition = ((INeedingRoad)startStructure).RoadPosition;
+            Console.WriteLine("after start");
             var endRoadPosition = ((INeedingRoad)endStructure).RoadPosition;
 
             Debug.Log(startRoadPosition);

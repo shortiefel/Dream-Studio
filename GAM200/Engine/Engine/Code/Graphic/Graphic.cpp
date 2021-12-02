@@ -66,8 +66,8 @@ namespace Engine
 
                 GraphicImplementation::Renderer::DrawQuad({ 0.0f, 0.0f }, { 90.0f, 55.0f }, 0.0f, colour);
 
-                std::cout << "colour: " << colour << std::endl;
-                std::cout << "fadeStruct.lifeRemaining: " << fadeStruct.lifeRemaining << std::endl;
+                //std::cout << "colour: " << colour << std::endl;
+                //std::cout << "fadeStruct.lifeRemaining: " << fadeStruct.lifeRemaining << std::endl;
 
                 if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flagFade = false;
             }

@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
     public PlacementManager placementManager;
     public StructureManager structureManager;
     public RoadManager roadManager;
-    public ScoreSystem scoreSystem;
+    //public ScoreSystem scoreSystem;
 
     private Vector2Int randomRoadPosition;
 

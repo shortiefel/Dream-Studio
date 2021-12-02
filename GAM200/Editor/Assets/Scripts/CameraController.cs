@@ -1,5 +1,5 @@
-﻿public class CameraController : MonoBehaviour
-{
+﻿//public class CameraController : MonoBehaviour
+//{
     /*Rigidbody2D rb;
 
     private float power = 5;
@@ -29,4 +29,4 @@
         //Debug.Log(rb.inertia);
         rb.AddTorque(movementVector.x * 45);
     }*/
-}
+//}

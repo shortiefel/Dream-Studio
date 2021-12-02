@@ -98,15 +98,15 @@ namespace Engine {
 		//Initialize constructor, awake and init (InitScript has checks for whether it is in play mode)
 		//Mainly for initializing when Scripts are added during game runtime
 		std::for_each(klassInstance.begin(), klassInstance.end(), [this](auto& target) {
-				Scripting::InitScript(GetEntityId(), target.second, MonoFunctionType::CONSTRUCTOR);
+				Scripting::InitScript(GetEntityId(), target.second, MonoFunctionType::Constructor);
 			});
 
 		std::for_each(klassInstance.begin(), klassInstance.end(), [this](auto& target) {
-			Scripting::InitScript(GetEntityId(), target.second, MonoFunctionType::AWAKE);
+			Scripting::InitScript(GetEntityId(), target.second, MonoFunctionType::Awake);
 			});
 
 		std::for_each(klassInstance.begin(), klassInstance.end(), [this](auto& target) {
-			Scripting::InitScript(GetEntityId(), target.second, MonoFunctionType::INIT);
+			Scripting::InitScript(GetEntityId(), target.second, MonoFunctionType::Init);
 			});
 
 		return true;

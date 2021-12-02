@@ -56,58 +56,58 @@ namespace Engine {
 		void Mono_Runtime_Invoke(const CSScriptInstance& _csScriptInstance, MonoFunctionType _type, void** _param) {
 			MonoObject* exception = nullptr;
 			switch (_type) {
-			case MonoFunctionType::AWAKE:
+			case MonoFunctionType::Awake:
 				INVOKE_FUNCTION(AwakeFunc);
 				break;
-			case MonoFunctionType::CONSTRUCTOR:
+			case MonoFunctionType::Constructor:
 				INVOKE_FUNCTION(ConstructorFunc);
 				break;
-			case MonoFunctionType::INIT:
+			case MonoFunctionType::Init:
 				INVOKE_FUNCTION(InitFunc);
 				break;
-			case MonoFunctionType::UPDATE:
+			case MonoFunctionType::Update:
 				INVOKE_FUNCTION(UpdateFunc);
 				break;
-			case MonoFunctionType::FIXED_UPDATE:
+			case MonoFunctionType::Fixed_Update:
 				INVOKE_FUNCTION(FixedUpdateFunc);
 				break;
-			case MonoFunctionType::DESTROY:
+			case MonoFunctionType::Destroy:
 				INVOKE_FUNCTION(DestroyFunc);
 				break;
-			case MonoFunctionType::ON_ENABLE:
+			case MonoFunctionType::On_Enable:
 				INVOKE_FUNCTION(OnEnable);
 				break;
-			case MonoFunctionType::ON_DISABLE:
+			case MonoFunctionType::On_Disable:
 				INVOKE_FUNCTION(OnDisable);
 				break;
-			case MonoFunctionType::COLLISION_ENTER:
+			case MonoFunctionType::Collision_Enter:
 				INVOKE_FUNCTION(OnCollisionEnter);
 				break;
-			case MonoFunctionType::COLLISION_STAY:
+			case MonoFunctionType::Collision_Stay:
 				INVOKE_FUNCTION(OnCollisionStay);
 				break;
-			case MonoFunctionType::COLLISION_EXIT:
+			case MonoFunctionType::Collision_Exit:
 				INVOKE_FUNCTION(OnCollisionExit);
 				break;
-			case MonoFunctionType::TRIGGER_ENTER:
+			case MonoFunctionType::Trigger_Enter:
 				INVOKE_FUNCTION(OnTriggerEnter);
 				break;
-			case MonoFunctionType::TRIGGER_STAY:
+			case MonoFunctionType::Trigger_Stay:
 				INVOKE_FUNCTION(OnTriggerStay);
 				break;
-			case MonoFunctionType::TRIGGER_EXIT:
+			case MonoFunctionType::Trigger_Exit:
 				INVOKE_FUNCTION(OnTriggerExit);
 				break;
-			case MonoFunctionType::MOUSE_ENTER:
+			case MonoFunctionType::Mouse_Enter:
 				INVOKE_FUNCTION(OnMouseEnter);
 				break;
 				/*case MonoFunctionType::MOUSE_CLICK:
 					INVOKE_FUNCTION(OnMouseClick);
 					break;*/
-			case MonoFunctionType::MOUSE_OVER:
+			case MonoFunctionType::Mouse_Over:
 				INVOKE_FUNCTION(OnMouseOver);
 				break;
-			case MonoFunctionType::MOUSE_EXIT:
+			case MonoFunctionType::Mouse_Exit:
 				INVOKE_FUNCTION(OnMouseExit);
 				break;
 			}
@@ -231,19 +231,19 @@ namespace Engine {
 			void* param[] = { (void*)&entity_id };
 			//std::cout << "class: " << csScriptInstance.csClass.className << "\n";
 			switch (type) {
-			case MonoFunctionType::CONSTRUCTOR:
+			case MonoFunctionType::Constructor:
 				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::Constructor, param);
 				}
 				break;
-			case MonoFunctionType::AWAKE:
+			case MonoFunctionType::Awake:
 				if (csScriptInstance.isActive && csScriptInstance.csClass.AwakeFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::AWAKE, param);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::Awake, param);
 				}
 				break;
-			case MonoFunctionType::INIT:
+			case MonoFunctionType::Init:
 				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::Init);
 				}
 				break;
 			}

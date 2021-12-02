@@ -267,9 +267,7 @@ public class CarAI : MonoBehaviour
 
     private void SetNextTargetIndex()
     {
-        Console.WriteLine(index + " index ");
         index++;
-        Console.WriteLine(index + " index22222222 ");
         if (index >= path.Count)
         {
             stop = true;

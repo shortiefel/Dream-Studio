@@ -102,7 +102,7 @@ namespace Engine {
 				void* param[] = { (void*)&entity_id };
 				//std::cout << "class: " << className << "\n";
 				if (csScriptInstance.isActive && csScriptInstance.csClass.ConstructorFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::CONSTRUCTOR, param);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::Constructor, param);
 				}
 			}
 		}
@@ -115,7 +115,7 @@ namespace Engine {
 
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				if (csScriptInstance.isActive && csScriptInstance.csClass.AwakeFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::AWAKE);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::Awake);
 				}
 			}
 
@@ -130,7 +130,7 @@ namespace Engine {
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				if (csScriptInstance.isActive && csScriptInstance.csClass.InitFunc != nullptr) {
 					//std::cout << "init function \n";
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::INIT);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::Init);
 				}
 			}
 
@@ -151,7 +151,7 @@ namespace Engine {
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				if (csScriptInstance.isActive && csScriptInstance.csClass.UpdateFunc != nullptr) {
 					//std::cout << className << "\n";
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::UPDATE);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::Update);
 				}
 			}
 		}
@@ -211,7 +211,7 @@ namespace Engine {
 			//Single class and (class and CS public variable)
 			for (auto& [className, csScriptInstance] : classScriptInstances) {
 				if (csScriptInstance.isActive && csScriptInstance.csClass.FixedUpdateFunc != nullptr) {
-					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::FIXED_UPDATE);
+					Scripting::Mono_Runtime_Invoke(csScriptInstance, MonoFunctionType::Fixed_Update);
 				}
 			}
 		}

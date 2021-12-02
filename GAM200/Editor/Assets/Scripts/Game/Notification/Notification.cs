@@ -13,6 +13,7 @@ public class Notification : MonoBehaviour
         maxLifeTime = 10f;
         showNotification = 0f;
         shouldShow = false;
+
     }
 
     public void ResetTimer()

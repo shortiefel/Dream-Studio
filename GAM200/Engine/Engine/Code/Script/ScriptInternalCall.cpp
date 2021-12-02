@@ -684,9 +684,6 @@ namespace Engine {
 	void SetFont_Text_Engine(unsigned int entityID, MonoString* _text) {
 		char* tempText = mono_string_to_utf8(_text);
 		SetEngineType(entityID, FontComponent, text, std::string{ tempText });
-//#define SetEngineType(ID, type, paramName, param)\
-//type* ctype = dreamECSGame->GetComponentPTR<type>(ID);\
-//if (ctype != nullptr) ctype->paramName = param;
 		mono_free(tempText);
 	}
 
@@ -821,8 +818,8 @@ namespace Engine {
 			auto& klassInt = scriptType->klassInstance;
 			for (auto& [className, scriptInstance] : klassInt) {
 				scriptInstance.isActive = state;
-				if (state) Scripting::Mono_Runtime_Invoke(scriptInstance, MonoFunctionType::ON_ENABLE);
-				else Scripting::Mono_Runtime_Invoke(scriptInstance, MonoFunctionType::ON_DISABLE);
+				if (state) Scripting::Mono_Runtime_Invoke(scriptInstance, MonoFunctionType::On_Enable);
+				else Scripting::Mono_Runtime_Invoke(scriptInstance, MonoFunctionType::On_Disable);
 			}
 		}
 

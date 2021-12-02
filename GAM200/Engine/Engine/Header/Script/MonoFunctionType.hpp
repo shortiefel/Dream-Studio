@@ -19,24 +19,24 @@ Technology is prohibited.
 
 namespace Engine {
 	enum class MonoFunctionType {
-		AWAKE,
-		CONSTRUCTOR,
-		INIT,
-		UPDATE,
-		FIXED_UPDATE,
-		DESTROY,
-		ON_ENABLE,
-		ON_DISABLE,
-		COLLISION_ENTER,
-		COLLISION_STAY,
-		COLLISION_EXIT,
-		TRIGGER_ENTER,
-		TRIGGER_STAY,
-		TRIGGER_EXIT,
-		MOUSE_ENTER,
-		MOUSE_CLICK,
-		MOUSE_OVER,
-		MOUSE_EXIT
+		Awake,
+		Constructor,
+		Init,
+		Update,
+		Fixed_Update,
+		Destroy,
+		On_Enable,
+		On_Disable,
+		Collision_Enter,
+		Collision_Stay,
+		Collision_Exit,
+		Trigger_Enter,
+		Trigger_Stay,
+		Trigger_Exit,
+		Mouse_Enter,
+		Mouse_Click,
+		Mouse_Over,
+		Mouse_Exit
 	};
 }
 

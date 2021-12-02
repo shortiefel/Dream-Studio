@@ -56,9 +56,9 @@ namespace Engine {
 				if (ent.id == rhs) {
 					MonoFunctionType type;
 					if (lhsTrigger)
-						type = MonoFunctionType::TRIGGER_STAY;
+						type = MonoFunctionType::Trigger_Stay;
 					else
-						type = MonoFunctionType::COLLISION_STAY;
+						type = MonoFunctionType::Collision_Stay;
 
 					OverlapColliderEvent event(lhs, rhs, type);
 					EventDispatcher::SendEvent(event);
@@ -70,9 +70,9 @@ namespace Engine {
 		overlapMap[lhs].emplace_back(rhs);
 		MonoFunctionType type;
 		if (lhsTrigger)
-			type = MonoFunctionType::TRIGGER_ENTER;
+			type = MonoFunctionType::Trigger_Enter;
 		else
-			type = MonoFunctionType::COLLISION_ENTER;
+			type = MonoFunctionType::Collision_Enter;
 
 		OverlapColliderEvent event(lhs, rhs, type);
 		EventDispatcher::SendEvent(event);
@@ -160,9 +160,9 @@ namespace Engine {
 
 								MonoFunctionType type;
 								if (collider1.isTrigger)
-									type = MonoFunctionType::TRIGGER_EXIT;
+									type = MonoFunctionType::Trigger_Exit;
 								else
-									type = MonoFunctionType::COLLISION_EXIT;
+									type = MonoFunctionType::Collision_Exit;
 
 								OverlapColliderEvent event(entity_id1, entity_id2, type);
 								EventDispatcher::SendEvent(event);
@@ -179,9 +179,9 @@ namespace Engine {
 
 								MonoFunctionType type;
 								if (collider2.isTrigger)
-									type = MonoFunctionType::TRIGGER_EXIT;
+									type = MonoFunctionType::Trigger_Exit;
 								else
-									type = MonoFunctionType::COLLISION_EXIT;
+									type = MonoFunctionType::Collision_Exit;
 
 								OverlapColliderEvent event(entity_id2, entity_id1, type);
 								EventDispatcher::SendEvent(event);

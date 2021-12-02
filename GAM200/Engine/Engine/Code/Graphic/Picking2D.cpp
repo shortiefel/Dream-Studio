@@ -30,17 +30,17 @@ namespace Engine {
 			if (type && GameState::GetInstance().GetPlaying()) {
 				const auto& iter = overlapMap.find(entity_id);
 				if (iter != overlapMap.end()) {
-					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::MOUSE_OVER);
+					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::Mouse_Over);
 					EventDispatcher::SendEvent(event);
 				}
 				else {
 					overlapMap.insert(entity_id);
-					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::MOUSE_ENTER);
+					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::Mouse_Enter);
 					EventDispatcher::SendEvent(event);
 				}
 
 				if (Input::IsMousePressed(Input_MouseCode::Mouse_Left)) {
-					MouseOverlapColliderEvent event2(entity_id, MonoFunctionType::MOUSE_CLICK);
+					MouseOverlapColliderEvent event2(entity_id, MonoFunctionType::Mouse_Click);
 					EventDispatcher::SendEvent(event2);
 				}
 			}
@@ -48,7 +48,7 @@ namespace Engine {
 				const auto& iter = overlapMap.find(entity_id);
 				if (iter != overlapMap.end()) {
 					overlapMap.erase(iter);
-					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::MOUSE_EXIT);
+					MouseOverlapColliderEvent event(entity_id, MonoFunctionType::Mouse_Exit);
 					EventDispatcher::SendEvent(event);
 				}
 			}

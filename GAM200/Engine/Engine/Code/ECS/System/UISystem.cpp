@@ -53,14 +53,17 @@ namespace Engine {
 #else
 		_fbo->Bind();
 #endif
+		GraphicImplementation::Renderer::BeginQuadBatch();
 
 		// Load shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
-		GraphicImplementation::Renderer::BeginBatch();
+		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
 
-		//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		const auto& uiArray = dreamECSGame->GetComponentArrayData<UIComponent>();
 		for (const auto& ui : uiArray) {
 			const Entity_id& entity_id = ui.GetEntityId();
@@ -73,18 +76,13 @@ namespace Engine {
 			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl, ui.colour);
 		}
 
-
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
-
 		GraphicImplementation::Renderer::EndQuadBatch();
 		GraphicImplementation::Renderer::FlushQuad();
 
 		// unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
+		glDisable(GL_BLEND);
 
 		if (fadeToBlack) {
 			fadeToBlack = GraphicImplementation::FadeScene(3.f, _dt, camMatrix);

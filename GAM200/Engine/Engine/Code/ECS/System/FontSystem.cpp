@@ -37,16 +37,19 @@ namespace Engine
 #else
 		_fbo->Bind();
 #endif
+		GraphicImplementation::Renderer::ResetFontStats();
+		GraphicImplementation::Renderer::BeginFontBatch();
 
 		// Load font shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Font_Draw].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
-		GraphicImplementation::Renderer::ResetFontStats();
-		GraphicImplementation::Renderer::BeginFontBatch();
-
 		// Set uniform
 		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
+
+		// For transparency of glyph textures
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
 		const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
@@ -67,12 +70,11 @@ namespace Engine
 			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
 		}
 
-		// For transparency of glyph textures
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 		GraphicImplementation::Renderer::EndFontBatch();
 		GraphicImplementation::Renderer::FlushFont();
+
+		// Disable GL_BLEND for transparency
+		glDisable(GL_BLEND);
 
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();

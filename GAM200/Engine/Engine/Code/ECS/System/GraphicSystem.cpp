@@ -273,7 +273,10 @@ namespace Engine
 		_fbo->Bind();
 #endif
 		GraphicImplementation::Renderer::ResetStats();
-		GraphicImplementation::Renderer::BeginBatch();
+		GraphicImplementation::Renderer::BeginQuadBatch();
+		GraphicImplementation::Renderer::BeginLinesBatch();
+		GraphicImplementation::Renderer::BeginQuadDebugBatch();
+		GraphicImplementation::Renderer::BeginCircleDebugBatch();
 
 		// Set background to purple color
 		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);

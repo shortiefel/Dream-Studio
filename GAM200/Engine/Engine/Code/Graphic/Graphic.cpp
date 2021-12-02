@@ -38,7 +38,7 @@ namespace Engine
 
         bool FadeScene(float time, float _dt, Math::mat3 _camMatrix, Math::vec4 _colourBegin, Math::vec4 _colourEnd)
         {
-            GraphicImplementation::Renderer::BeginBatch();
+            GraphicImplementation::Renderer::BeginQuadBatch();
 
             // Load default shader program
             const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
@@ -46,6 +46,10 @@ namespace Engine
 
             // Set uniform
             GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
+
+            // Enable GL_BLEND for transparency of textures
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
             if (fadeStruct.flagFade == false)
             {
@@ -69,12 +73,10 @@ namespace Engine
                 if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flagFade = false;
             }
 
-            // Enable GL_BLEND for transparency of textures
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
             Renderer::EndQuadBatch();
             Renderer::FlushQuad();
+
+            glDisable(GL_BLEND);
 
             // Unload shader program
             UnUseShaderHandle();

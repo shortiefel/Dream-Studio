@@ -581,15 +581,6 @@ namespace Engine
             s_FontData.vertexbufferptr = s_FontData.vertexbuffer;
         }
 
-        // Function that begins the batch for all meshes for GraphicSystem
-        void Renderer::BeginBatch()
-        {
-            BeginQuadBatch();
-            BeginLinesBatch();
-            BeginQuadDebugBatch();
-            BeginCircleDebugBatch();
-        }
-
         // EndBatch functions binds the respective buffers by getting the offset
         // For quad fill, quad lines, circle lines, lines and font meshes
         void Renderer::EndQuadBatch()

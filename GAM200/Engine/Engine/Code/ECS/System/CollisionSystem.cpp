@@ -90,13 +90,13 @@ namespace Engine {
 			if (EntityId_Check(entity_id1)) break;
 			if (!col1->isActive) continue;
 
-			auto& transform1 = dreamECSGame->GetComponent<TransformComponent>(entity_id1);
-			if (!transform1.isActive) continue;
+			TransformComponent* transform1 = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id1);
+			if (!transform1->isActive || transform1 == nullptr) continue;
 
 			ColliderComponent collider1 = *col1;
-			collider1.offset_position += Math::vec2{ transform1.position };
-			collider1.offset_scale *= transform1.scale;
-			collider1.angle += transform1.angle;
+			collider1.offset_position += Math::vec2{ transform1->position };
+			collider1.offset_scale *= transform1->scale;
+			collider1.angle += transform1->angle;
 
 			/*
 			* Start of collision checks
@@ -111,15 +111,15 @@ namespace Engine {
 					ent2IsMoveable = (rb2 != nullptr) && rb2->isActive;
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 
-				auto& transform2 = dreamECSGame->GetComponent<TransformComponent>(entity_id2);
-				if (!transform2.isActive) continue;
+				TransformComponent* transform2 = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id2);
+				if (!transform2->isActive) continue;
 
-				if (transform1.layer != transform2.layer) continue; //collision layer
+				if (transform1->layer != transform2->layer) continue; //collision layer
 
 				ColliderComponent collider2 = *col2;
-				collider2.offset_position += Math::vec2{ transform2.position };
-				collider2.offset_scale *= transform2.scale;
-				collider2.angle += transform2.angle;
+				collider2.offset_position += Math::vec2{ transform2->position };
+				collider2.offset_scale *= transform2->scale;
+				collider2.angle += transform2->angle;
 
 				//Direction from collider2 towards collider1
 				Math::vec2 dir = Math::vec2{};
@@ -143,11 +143,11 @@ namespace Engine {
 					if (EpsilonCheck.x < Math::epsilon<float>() && EpsilonCheck.x > -Math::epsilon<float>() &&
 						EpsilonCheck.y < Math::epsilon<float>() && EpsilonCheck.y > -Math::epsilon<float>()) {
 
-						collider1.offset_position.x -= 0.5f * transform1.scale.x;
-						transform1.position.x -= 0.5f * transform1.scale.x;
+						collider1.offset_position.x -= 0.5f * transform1->scale.x;
+						transform1->position.x -= 0.5f * transform1->scale.x;
 						dir = Math::vec2{ 1.f, 0.f };
 					}
-					CollisionImplementation::CollisionResolution(dir, transform1, collider1, transform2, collider2);
+					CollisionImplementation::CollisionResolution(dir, *transform1, collider1, *transform2, collider2);
 				}
 
 				else {

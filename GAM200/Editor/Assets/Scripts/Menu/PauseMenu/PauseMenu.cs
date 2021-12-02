@@ -4,11 +4,13 @@ using System;
 
 public class PauseMenu : MonoBehaviour
 {
-    GameObject pauseBG;
     GameObject resume;
-    GameObject howToPlay;
-    //GameObject options;
+    //GameObject howToPlay;
+    GameObject menuText;
+    GameObject options;
     GameObject pauseQuit;
+    GameObject pauseBG;
+
     GameObject areYouSure;
     GameObject quitYes;
     GameObject quitNo;
@@ -23,15 +25,27 @@ public class PauseMenu : MonoBehaviour
 
     public override void Start()
     {
-        pauseBG = GameObject.Find("pauseBG");
         resume = GameObject.Find("ResumeText");
-        howToPlay = GameObject.Find("HowToText");
-        //ob = GameObject.Find("OptionText");
+        //howToPlay = GameObject.Find("HowToText");
+        menuText = GameObject.Find("MenuText");
+        options = GameObject.Find("OptionText");
         pauseQuit = GameObject.Find("QuitText");
+        pauseBG = GameObject.Find("PauseBG");
 
         areYouSure = GameObject.Find("AreYouSureText");
         quitYes = GameObject.Find("YesText");
         quitNo = GameObject.Find("NoText");
+
+        Disable<Transform>(resume.transform);
+        //Disable<Transform>(howToPlay.transform);
+        Disable<Transform>(menuText.transform);
+        Disable<Transform>(options.transform);
+        Disable<Transform>(pauseQuit.transform);
+        Disable<Transform>(pauseBG.transform);
+
+        Disable<Transform>(areYouSure.transform);
+        Disable<Transform>(quitYes.transform);
+        Disable<Transform>(quitNo.transform);
 
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
     }
@@ -44,9 +58,13 @@ public class PauseMenu : MonoBehaviour
         {
             Console.WriteLine("Pausing now");
             Enable<Transform>(resume.transform);
-            Enable<Transform>(howToPlay.transform);
+            //Enable<Transform>(howToPlay.transform);
+            Enable<Transform>(menuText.transform);
+            Enable<Transform>(options.transform);
             Enable<Transform>(pauseQuit.transform);
+            Enable<Transform>(pauseBG.transform);
 
+            Enable<Transform>(pauseQuit.transform);
             //Application.SetPause(true);
             Time.timeScale = 0f;
         }
@@ -54,8 +72,11 @@ public class PauseMenu : MonoBehaviour
         {
             Console.WriteLine("Unpausing now");
             Disable<Transform>(resume.transform);
-            Disable<Transform>(howToPlay.transform);
+            //Disable<Transform>(howToPlay.transform);
+            Disable<Transform>(menuText.transform);
+            Disable<Transform>(options.transform);
             Disable<Transform>(pauseQuit.transform);
+            Disable<Transform>(pauseBG.transform);
 
             Disable<Transform>(areYouSure.transform);
             Disable<Transform>(quitYes.transform);

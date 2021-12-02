@@ -281,7 +281,7 @@ namespace Engine {
 
 			csClass.klass = mono_class_from_name(image, csClass.namespaceName.c_str(), csClass.className.c_str());
 			if (!csClass.klass) {
-				LOG_ERROR("Failed loading class");
+				LOG_ERROR("Failed loading class: ", csClass.className);
 				return false;
 			}
 

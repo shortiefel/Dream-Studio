@@ -19,8 +19,8 @@ Technology is prohibited.
 
 namespace Engine {
 
-	SoundComponent::SoundComponent(Entity_id _ID ,  std::string _filepath,  std::string _soundName ,bool _isSound , bool _isActive , bool _loop , bool _pause, float _vol)
-		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName } , isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause }, volume{ _vol }
+	SoundComponent::SoundComponent(Entity_id _ID ,  std::string _filepath,  std::string _soundName ,bool _isSound , bool _isActive , bool _loop , bool _pause, float _vol, SoundGrp _soundType)
+		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName } , isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause }, volume{ _vol }, soundType { _soundType }
 	{
 		
 	}

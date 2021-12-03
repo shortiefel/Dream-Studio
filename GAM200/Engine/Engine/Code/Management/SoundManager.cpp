@@ -76,10 +76,10 @@ namespace Engine
 		return it->second;
 	}
 
-	int SoundManager::SetPlay(SoundComponent* soundCom, std::string& _soundName, bool _pause, SoundGrp SG, float _vol)
+	int SoundManager::SetPlay(SoundComponent* soundCom)
 	{
 		int ID = ChannelID++;
-		auto tFoundIt = _soundMap.find(_soundName);
+		auto tFoundIt = _soundMap.find(soundCom->soundName);
 		FMOD::Sound* sound = nullptr;
 
 		if (tFoundIt == _soundMap.end())
@@ -90,26 +90,25 @@ namespace Engine
 
 		FMOD::Channel* pChannel = nullptr;
 
-		System->playSound(sound, nullptr, _pause, &pChannel);
+		System->playSound(sound, nullptr, false, &pChannel);
 		if (pChannel)
 		{
 
-			switch (SG)
+			switch (soundCom->soundType)
 			{
 			case SoundGrp::MUSIC:
 				pChannel->setChannelGroup(MusicGroup);
-				MusicGroup->setVolume(soundCom->VolumeDecimal(100.f));
+				MusicGroup->setVolume(0.8f);
 				break;
 			case SoundGrp::SFX:
 				pChannel->setChannelGroup(SFXGroup);
-				SFXGroup->setVolume(soundCom->VolumeDecimal(50.f));
+				SFXGroup->setVolume(0.5f);
 				break;
 
 			default:
 				pChannel->setChannelGroup(MasterGroup);
-				MusicGroup->setVolume(soundCom->VolumeDecimal(100.f));
+				MusicGroup->setVolume(1.f);
 				break;
-
 			};
 
 			channelMap[ID] = pChannel;

@@ -18,6 +18,7 @@ Technology is prohibited.
 
 #include "Engine/Header/pch.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"
+#include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 #include <fmod/fmod.hpp>
 
 //// MACROS
@@ -34,12 +35,6 @@ namespace Engine {
 	using SoundMap =  std::map<std::string, FMOD::Sound*> ;
 	using ChannelMap =  std::map<int, FMOD::Channel*> ;
 
-	enum class SoundGrp {
-		MASTER,
-		MUSIC,
-		SFX
-	};
-
 	struct SoundManager : public Singleton<SoundManager>
 	{
 			
@@ -48,7 +43,7 @@ namespace Engine {
 
 			FMOD::Sound* GetSound(SoundComponent* soundCom, std::string& filePath,  std::string& soundName);
 			//void SetSound(SoundComponent* _textptr, std::string _filepath);
-			int SetPlay(SoundComponent* soundCom, std::string& _soundName, bool _pause, SoundGrp SG, float _vol);
+			int SetPlay(SoundComponent* soundCom);
 
 			void SetLoop(int channelID, bool _loop);
 			bool IsPlaying(int channelID);

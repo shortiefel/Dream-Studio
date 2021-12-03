@@ -953,7 +953,8 @@ namespace Editor {
 
 						//selection
 						static ImGuiComboFlags flags = 0;
-						int* index = reinterpret_cast<int*>(&Engine::SoundManager::GetInstance().SG);
+						//int* index = reinterpret_cast<int*>(&Engine::SoundManager::GetInstance().SG);
+						int* index = reinterpret_cast<int*>(&(soundComp->soundType));
 						//arrays
 						const char* soundName[] = { "MASTER", "MUSIC", "SFX" };
 						ImGui::Text("Sound Group");

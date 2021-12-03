@@ -103,8 +103,8 @@ namespace Engine
         GLuint shader_handle = 0;
         switch (shader_type)
         {
-        case ShaderType::VERTEX_SHADER: shader_handle = glCreateShader(GL_VERTEX_SHADER); break;
-        case ShaderType::FRAGMENT_SHADER: shader_handle = glCreateShader(GL_FRAGMENT_SHADER); break;
+        case ShaderType::Vertex_Shader: shader_handle = glCreateShader(GL_VERTEX_SHADER); break;
+        case ShaderType::Fragment_Shader: shader_handle = glCreateShader(GL_FRAGMENT_SHADER); break;
         default:
             log_string = "Incorrect shader type";
             return GL_FALSE;

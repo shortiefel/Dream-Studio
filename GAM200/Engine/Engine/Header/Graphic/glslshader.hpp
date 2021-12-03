@@ -33,8 +33,8 @@ namespace Engine
     public:
         enum class ShaderType
         {
-            VERTEX_SHADER = GL_VERTEX_SHADER,
-            FRAGMENT_SHADER = GL_FRAGMENT_SHADER
+            Vertex_Shader = GL_VERTEX_SHADER,
+            Fragment_Shader = GL_FRAGMENT_SHADER
         };
 
         GLuint id{};

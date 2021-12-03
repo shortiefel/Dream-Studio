@@ -27,8 +27,8 @@ namespace Engine
             // Default Shader for Game objects
             std::vector<std::pair<GLSLShader::ShaderType, std::string>> shdr_files
             {
-                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/Default.vert"),
-                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/Default.frag")
+                std::make_pair(GLSLShader::ShaderType::Vertex_Shader, "Assets/Shaders/Default.vert"),
+                std::make_pair(GLSLShader::ShaderType::Fragment_Shader, "Assets/Shaders/Default.frag")
             };
 
             GLSLShader shdr_pgm;
@@ -47,8 +47,8 @@ namespace Engine
 
             // Shader for Collision Rendering
             shdr_files = {
-                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/Collision.vert"),
-                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/Collision.frag")
+                std::make_pair(GLSLShader::ShaderType::Vertex_Shader, "Assets/Shaders/Collision.vert"),
+                std::make_pair(GLSLShader::ShaderType::Fragment_Shader, "Assets/Shaders/Collision.frag")
             };
 
             GLSLShader shdr_pgm2;
@@ -67,8 +67,8 @@ namespace Engine
 
             // Shader for Font Rendering
             shdr_files = {
-                std::make_pair(GLSLShader::ShaderType::VERTEX_SHADER, "Assets/Shaders/Font.vert"),
-                std::make_pair(GLSLShader::ShaderType::FRAGMENT_SHADER, "Assets/Shaders/Font.frag")
+                std::make_pair(GLSLShader::ShaderType::Vertex_Shader, "Assets/Shaders/Font.vert"),
+                std::make_pair(GLSLShader::ShaderType::Fragment_Shader, "Assets/Shaders/Font.frag")
             };
 
             GLSLShader shdr_pgm3;

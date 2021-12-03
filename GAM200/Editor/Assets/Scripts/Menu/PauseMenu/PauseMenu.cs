@@ -35,7 +35,7 @@ public class PauseMenu : MonoBehaviour
         areYouSure = GameObject.Find("AreYouSureText");
         quitYes = GameObject.Find("YesText");
         quitNo = GameObject.Find("NoText");
-
+        
         Disable<Transform>(resume.transform);
         //Disable<Transform>(howToPlay.transform);
         Disable<Transform>(menuText.transform);
@@ -92,13 +92,13 @@ public class PauseMenu : MonoBehaviour
 
     public override void Update()
     {
-        //if (!gameState.GetDrawMode())
-        //{
-        //    if (Input.GetKeyDown(KeyCode.Escape))
-        //    {
-        //        PauseAction();
-        //    }
-        //}
+        if (!gameState.GetDrawMode())
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseAction();
+            }
+        }
     }
 
     public override void OnMouseOver()

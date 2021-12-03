@@ -130,46 +130,76 @@ namespace Editor
 	//	_newposition = _id;
 	//}
 
-	void ObjectTransformCommand::StoredTransform(const Engine::Entity_id& entity_selected, Engine::DreamMath::vec2 positions)
+	//void ObjectTransformCommand::StoredTransform(std::map<int, Engine::Entity_id>& entity_selected, Engine::DreamMath::vec2 positions)
+	void ObjectTransformCommand::StoredTransform(Engine::Entity_id entity_id, Engine::DreamMath::vec2 positions)
 	{
-		positions = GetTransformPosition();
-		Engine::TransformComponent* id_transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(entity_selected);
+		positions = Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(entity_id).position;
+		Engine::TransformComponent* id_transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(entity_id);
 		if (id_transform != nullptr)
 		{
 			id_transform->position = positions;
 			id_transform->localPosition = positions;
-			Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+			Engine::ParentManager::GetInstance().UpdateTruePos(entity_id);
 
 		}
 
+		//Engine::TransformComponent * transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected));
+		//auto& transform = Engine::dreamECSGame->GetComponent<Engine::TransformComponent>(GetTarget(entity_selected));
+		//auto& entityMap = Engine::dreamECSGame->GetUsedConstEntityMap();
+		
+		//std::cout << "printing out"<< "\n";
+		/*transform.position = positions - Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected))->position;
+		transform.localPosition = positions - Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(GetTarget(entity_selected))->localPosition;*/
+		//Engine::ParentManager::GetInstance().UpdateTruePos(entity_id);
+		 
+
+
+
 		//this one affects all entity but after that will be able to undo each entity
 		//auto& transformArray = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
-		//auto& entityMap = Engine::dreamECSGame->GetUsedConstEntityMap();
+		//auto& entity_map = Engine::dreamECSGame->GetUsedConstEntityMap();
 
-		//for (auto& transform : transformArray) {
-		//	if (EntityId_Check(entity_selected)) break;
-
-		//	if (id_transform != nullptr)
+		//for (auto& [id, entity] : entity_map) {
+		//	
+		//	bool selected = CheckIfExist(entity_selected, id);
+		//	std::cout << id << "\n";
+		//	
+		//	if (Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(id) != nullptr)
 		//	{
-		//		id_transform->position =  positions;
-		//		id_transform->localPosition = positions;
-		//		Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
-
+		//		if (selected)
+		//		{
+		//			std::cout << "not printing out" << "\n";
+		//			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 255, 255));
+		//			Engine::TransformComponent* transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(id);
+		//			//Engine::DreamECS::GetComponent<>(id);
+		//			transform->position = positions;
+		//			transform->localPosition = positions;
+		//			Engine::ParentManager::GetInstance().UpdateTruePos(id);
+		//		}
+		//		else
+		//		{
+		//			std::cout << "hello im here \n";
+		//			Engine::ParentManager::GetInstance().UpdateTruePos(id);
+		//		}
 		//	}
 
 		//}
+
+	
 
 	}
 
 	void ObjectTransformCommand::undo()
 	{
-		StoredTransform(id, _oldposition);
+		std::cout << "undo-ing" << "\n";
+		StoredTransform(id, _position);
+		//StoredTransform(entity_selected, _oldposition);
 	}
 
 	void ObjectTransformCommand::redo()
 	{
 		std::cout << "redo ing" << "\n";
-		StoredTransform(id, _newposition);
+		//StoredTransform(entity_selected, _newposition);
 	}
 
 	void ObjectTransformCommand::record()

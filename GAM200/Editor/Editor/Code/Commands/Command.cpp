@@ -18,6 +18,23 @@ Technology is prohibited.
 
 namespace Editor {
 
+	//void Action::StartAction(const Engine::Entity_id* entity)
+	//{
+	//	auto _entity = entity;
+	//	auto transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(*_entity);
+	//	auto frame = ActionList{ *_entity, *transform };
+	//	frames.push(frame);
+	//}
+	//void Action::UndoAction()
+	//{
+	//	if (frames.empty()) { return; }
+
+	//	auto lastFrame = frames.top();
+	//	auto& transformComp = *Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(lastFrame._entity);
+	//	transformComp = lastFrame.trans;
+	//	frames.pop();
+	//}
+
 	void UndoRedoManager::RecordState(CommandPtr cmd)
 	{
 		//push the command into undo stack
@@ -86,6 +103,8 @@ namespace Editor {
 
 		//add command to undo stack
 		undostack.push(cmd);
+
+		
 	}
 
 	void UndoRedoManager::StoreCommand(CommandPtr command)

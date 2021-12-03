@@ -303,6 +303,9 @@ namespace Editor {
 
 					}
 
+					//Action actions;
+					//actions.StartAction(&entity_selected);
+
 					//record the object state before change
 					auto move_command = std::make_shared<ObjectTransformCommand>();
 

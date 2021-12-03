@@ -127,8 +127,18 @@ namespace Editor {
 								Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.string()));
 							}
 						}
-
 					}
+
+					//create new folder
+					//if (ImGui::BeginPopupContextItem("##AssetPanel"))
+					//{
+					//	if (ImGui::Button("Create Folder##CreateFolder", { ImGui::GetContentRegionAvail().x, 0 }))
+					//	{
+					//		std::filesystem::create_directories(_assetPath.string() + " New Folder");
+					//	}
+					//	ImGui::EndPopup();
+					//}
+
 					ImGui::TextWrapped(file_name.c_str());
 
 					ImGui::NextColumn();

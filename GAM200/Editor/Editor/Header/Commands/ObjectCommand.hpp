@@ -64,9 +64,16 @@ namespace Editor {
 
 	};
 
+	struct TransformContainer
+	{
+
+	};
+
 	class ObjectTransformCommand : public ObjectCommand
 	{
 		Engine::Entity_id id{};
+
+		std::map<int, Engine::Entity_id> entity_selected{};
 
 		//current position
 		Engine::DreamMath::vec2 _currentposition;
@@ -93,8 +100,9 @@ namespace Editor {
 		//void SetNewPosition(unsigned int* id = nullptr);
 
 		//currently stored transforms to each transform component
-		void StoredTransform(const Engine::Entity_id& entity_selected, Engine::DreamMath::vec2 _positions);
-
+		//void StoredTransform(std::map<int, Engine::Entity_id>& entity_selected, Engine::DreamMath::vec2 positions);
+		void StoredTransform(Engine::Entity_id entity_id, Engine::DreamMath::vec2 positions);
+		
 		//undo the changes made to the objects
 		void undo() override;
 
@@ -107,6 +115,7 @@ namespace Editor {
 
 	private:
 		Engine::DreamMath::vec2 _position;
+		Engine::DreamMath::vec2 _localposition;
 
 	};
 

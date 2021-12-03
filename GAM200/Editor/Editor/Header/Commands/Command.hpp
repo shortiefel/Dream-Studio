@@ -18,6 +18,7 @@ Technology is prohibited.
 #define COMMAND_HPP
 
 #include "Engine/Header/ECS/DreamECS.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
@@ -32,9 +33,31 @@ Technology is prohibited.
 #include <memory>
 #include <list>
 
-//#pragma warning(disable:2259)
 
 namespace Editor {
+
+	
+	//trying action handler to do undo 
+	//class Action
+	//{
+	//public:
+	//	void StartAction(const Engine::Entity_id* entity);
+	//	void UndoAction();
+
+	//private:
+	//	struct ActionList
+	//	{
+	//		Engine::Entity_id _entity;
+	//		Engine::TransformComponent trans;
+	//	};
+
+	//	std::stack<ActionList> frames;
+	//};
+	//struct Actions
+	//{
+	//	std::vector<EditorAction> history;
+	//	size_t size = 0;
+	//} m_actions;
 
 	//the Command Interface
 	class ICommand 
@@ -87,7 +110,7 @@ namespace Editor {
 		//clear all undo redo histroy
 		void ClearHistory();
 
-		//wrap the stack using a std::vector for better performance
+		//wrap the stack using a std::vector/deque for better performance
 		std::deque<CommandPtr> current_command;
 		std::deque<CommandPtr> undo_command;
 
@@ -96,6 +119,7 @@ namespace Editor {
 
 		std::stack<CommandPtr> undostack;
 		std::stack<CommandPtr> redostack;
+
 
 		CommandPtr future_command; //for gizmo to store command
 

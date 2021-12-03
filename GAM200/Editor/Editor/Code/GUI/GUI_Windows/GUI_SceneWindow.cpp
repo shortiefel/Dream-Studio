@@ -17,6 +17,9 @@ Technology is prohibited.
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_SceneWindow.hpp"
 
+#include "Editor/Header/Commands/Command.hpp"
+#include "Editor/Header/Commands/ObjectCommand.hpp"
+
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
 #include "Editor/Header/GUI/GUI_ClickCheck.hpp"
 
@@ -58,6 +61,9 @@ namespace Editor {
 		bool makeChange = false;
 
 		bool inside = false;
+
+		bool firstEnter = true; //Using
+		Engine::TransformComponent firstTrans; //Using
 
 		bool keyPressedGuizmo(const Engine::KeyPressedEvent& e) {
 			//If not within screen return
@@ -206,6 +212,8 @@ namespace Editor {
 							return;
 						}
 
+						bool enter = false;
+
 						if (ImGuizmo::IsUsing()) {
 							guizmoPressed = true;
 							ImGuizmo::DecomposeMatrixToComponents(Math::value_ptr(transform), transArr, rotArr, scaleArr);
@@ -221,7 +229,25 @@ namespace Editor {
 
 							//Engine::CommandPtr new_Command = std::make_shared<Engine::ObjectGizmoCommand>();
 							//Engine::UndoRedoManager::GetInstance().StoreCommand(new_Command);
+							
+							enter = true; //Using
 						}
+
+						//---------------------------------------------------------------------------------------------------------------
+						//Using
+						if (enter && firstEnter) {
+							firstEnter = false;
+							//Record here
+							firstTrans = *tc;
+							std::cout << " Holding \n";
+						}
+
+						if (!enter && !firstEnter) {
+							firstEnter = true;
+							Editor::UndoRedoManager::GetInstance().RecordState(std::make_shared<Editor::GUI_Windows::ObjectTransformChangeCommand>(firstTrans, *tc));
+							std::cout << tc->GetEntityId() << "\n";
+						}
+						//---------------------------------------------------------------------------------------------------------------
 					}
 				}
 

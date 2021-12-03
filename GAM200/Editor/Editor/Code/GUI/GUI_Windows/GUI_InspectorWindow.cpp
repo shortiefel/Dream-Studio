@@ -310,9 +310,9 @@ namespace Editor {
 					auto move_command = std::make_shared<ObjectTransformCommand>();
 
 					//get old position
-					move_command->SetOldPosition(transComp->position);
-					Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
-					UndoRedoManager::GetInstance().RecordState(move_command);
+					//move_command->SetOldPosition(transComp->position);
+					//Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+					//UndoRedoManager::GetInstance().RecordState(move_command);
 				}
 
 				/*

@@ -42,6 +42,35 @@ namespace Editor {
 		//no commands for objects
 	};
 
+	//---------------------------------------------------------------------------------------------------------------
+	//Using
+	class ObjectTransformChangeCommand : public ObjectCommand
+	{
+
+	public:
+
+
+		//undo the changes made to the objects
+		void undo() override;
+
+		//redo the changes made to the objects
+		void redo() override;
+
+		void record() override;
+
+		void execute() override;
+
+		ObjectTransformChangeCommand(Engine::TransformComponent _prevTransform, Engine::TransformComponent _nextTransform);
+		ObjectTransformChangeCommand() = delete;
+
+	private:
+		Engine::TransformComponent prevTransform;
+		Engine::TransformComponent nextTransform;
+
+	};
+	//---------------------------------------------------------------------------------------------------------------
+
+
 	//commands for undo and redo adding game object transform component
 	class ObjectAddCommand : public ObjectCommand
 	{
@@ -68,6 +97,8 @@ namespace Editor {
 	{
 
 	};
+
+	
 
 	class ObjectTransformCommand : public ObjectCommand
 	{

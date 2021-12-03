@@ -29,6 +29,37 @@ Technology is prohibited.
 namespace Editor
 {
 	namespace GUI_Windows {
+		//---------------------------------------------------------------------------------------------------------------
+		//Using
+		void ObjectTransformChangeCommand::undo()
+		{
+			Engine::TransformComponent* tc = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(prevTransform.GetEntityId());
+			if (tc != nullptr) *tc = prevTransform;
+			std::cout << "Undo " << prevTransform.position << " " << prevTransform.GetEntityId() << "\n";
+		}
+
+		void ObjectTransformChangeCommand::redo()
+		{
+			Engine::TransformComponent* tc = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(nextTransform.GetEntityId());
+			if (tc != nullptr) *tc = nextTransform;
+			std::cout << "Redo " << nextTransform.position << " " << nextTransform.GetEntityId() << "\n";
+		}
+
+		void ObjectTransformChangeCommand::record()
+		{
+
+		}
+
+		void ObjectTransformChangeCommand::execute()
+		{
+
+		}
+
+		ObjectTransformChangeCommand::ObjectTransformChangeCommand(Engine::TransformComponent _prevTransform, Engine::TransformComponent _nextTransform) :
+			prevTransform { _prevTransform }, nextTransform{ _nextTransform } {
+			std::cout << prevTransform.GetEntityId() << " " << _nextTransform.GetEntityId() << "\n";
+		}
+		//---------------------------------------------------------------------------------------------------------------
 	//void ObjectAddCommand::AddObject(Engine::Entity_id objectid)
 	//{
 	//	this->object_ID = objectid;
@@ -191,8 +222,8 @@ namespace Editor
 
 	void ObjectTransformCommand::undo()
 	{
-		std::cout << "undo-ing" << "\n";
-		StoredTransform(id, _position);
+		std::cout << " past undo-ing" << "\n";
+		//StoredTransform(id, _position);
 		//StoredTransform(entity_selected, _oldposition);
 	}
 

@@ -1,7 +1,8 @@
 [
+  
   {
     "Entity": {
-      "Name": "HouseColour",
+      "Name": "Destination",
       "Parent": 10001,
       "Child": []
     },
@@ -14,19 +15,20 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets\\Textures\\HouseBlue1.png",
+      "Filepath": "Assets\\Textures\\destination_new.png",
       "Shape": 0,
-      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "Colour": [1.0, 1.0, 1.0, 1.0],
       "IsAnimation": false,
       "IsActive": true
     },
     "ScriptComponent": [
+
       {
-        "Class": "CarSpawner",
+        "Class": "StructureModel",
         "IsActive": true
       },
       {
-        "Class": "StructureModel",
+        "Class": "Notification",
         "IsActive": true
       }
     ]

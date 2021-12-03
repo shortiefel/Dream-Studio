@@ -23,7 +23,6 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         texure = GetComponent<Texture>();
         notification = GetComponent<Notification>();
 
-        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
         //carSpawner = GetComponent<CarSpawner>();
 
         if (notification != null)

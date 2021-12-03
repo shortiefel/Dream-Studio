@@ -42,45 +42,44 @@ public class RoadManager : MonoBehaviour
 
         temporaryPlacementPositions.Add(position);
 
-        var spawnRoad = Instantiate(roadFixer.deadEnd, transform);
-
         int random = Random.Range(0, 3);
-        int rotate = 0;
+        int structureRotate = 0;
+        int roadRotate = 0;
 
         int randomX = position.x;
         int randomY = position.y;
 
         if (random == 0)
         {
-            rotate = 0;
+            structureRotate = 0;
+            roadRotate = 180;
             randomDestinationPosition.x = randomX;
             randomDestinationPosition.y = randomY + 1;
         }
         else if (random == 1)
         {
-            rotate = 90;
+            structureRotate = 90;
+            roadRotate = 270;
             randomDestinationPosition.x = randomX - 1;
             randomDestinationPosition.y = randomY;
         }
         else if (random == 2)
         {
-            rotate = 180;
+            structureRotate = 180;
+            roadRotate = 0;
             randomDestinationPosition.x = randomX;
             randomDestinationPosition.y = randomY - 1;
         }
         else if (random == 3)
         {
-            rotate = 270;
+            structureRotate = 270;
+            roadRotate = 90;
             randomDestinationPosition.x = randomX + 1;
             randomDestinationPosition.y = randomY;
         }
 
-        float rotation = rotate;
-
-        spawnRoad.transform.angle = rotation;
-
-        placementManager.PlaceTemporaryStructure(position, spawnRoad, CellType.Road, 1);
-        structureManager.PlaceHouse(randomDestinationPosition);
+        placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1, false, roadRotate);
+        structureManager.PlaceHouse(randomDestinationPosition, structureRotate);
 
         placementManager.AddtemporaryStructuresToStructureDictionary();
         temporaryPlacementPositions.Clear();
@@ -102,45 +101,44 @@ public class RoadManager : MonoBehaviour
 
         temporaryPlacementPositions.Add(position);
 
-        var spawnRoad = Instantiate(roadFixer.deadEnd, transform);
-
         int random = Random.Range(0, 3);
-        int rotate = 0;
+        int structureRotate = 0;
+        int roadRotate = 0;
 
         int randomX = position.x;
         int randomY = position.y;
 
         if (random == 0)
         {
-            rotate = 0;
+            structureRotate = 0;
+            roadRotate = 180;
             randomDestinationPosition.x = randomX;
             randomDestinationPosition.y = randomY + 1;
         }
         else if (random == 1)
         {
-            rotate = 90;
+            structureRotate = 90;
+            roadRotate = 270;
             randomDestinationPosition.x = randomX - 1;
             randomDestinationPosition.y = randomY;
         }
         else if (random == 2)
         {
-            rotate = 180;
+            structureRotate = 180;
+            roadRotate = 0;
             randomDestinationPosition.x = randomX;
             randomDestinationPosition.y = randomY - 1;
         }
         else if (random == 3)
         {
-            rotate = 270;
+            structureRotate = 270;
+            roadRotate = 90;
             randomDestinationPosition.x = randomX + 1;
             randomDestinationPosition.y = randomY;
         }
 
-        float rotation = rotate;
-
-        spawnRoad.transform.angle = rotation;
-
-        placementManager.PlaceTemporaryStructure(position, spawnRoad, CellType.Road, 1);
-        structureManager.PlaceSpecial(randomDestinationPosition);
+        placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1, false, roadRotate);
+        structureManager.PlaceSpecial(randomDestinationPosition, structureRotate);
 
         placementManager.AddtemporaryStructuresToStructureDictionary();
         temporaryPlacementPositions.Clear();

@@ -50,7 +50,7 @@ namespace Engine
 		SoundManager::System->release();
 	}
 
-	FMOD::Sound* SoundManager::GetSound(SoundComponent* soundCom,std::string& filePath,  std::string& soundName)
+	FMOD::Sound* SoundManager::GetSound(SoundComponent* soundCom,std::string&,  std::string& soundName)
 	{
 
 		auto it = SoundManager::_soundMap.find(soundName);

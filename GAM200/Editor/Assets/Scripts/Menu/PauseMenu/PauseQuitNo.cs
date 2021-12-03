@@ -1,5 +1,5 @@
 ﻿
-public class QuitYes : MonoBehaviour
+public class PauseQuitNo : MonoBehaviour
 {
     PauseMenu pauseMenu;
     Text text;
@@ -19,7 +19,7 @@ public class QuitYes : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            pauseMenu.QuitYesAction();
+            pauseMenu.QuitNoAction();
         }
     }
 

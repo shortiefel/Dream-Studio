@@ -1,12 +1,9 @@
 ﻿
-public class QuitNo : MonoBehaviour
+public class QuitYes : MonoBehaviour
 {
-    PauseMenu pauseMenu;
     Text text;
     public override void Start()
     {
-        pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
-
         text = GetComponent<Text>();
     }
 
@@ -19,7 +16,7 @@ public class QuitNo : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            pauseMenu.QuitNoAction();
+            Application.Quit();
         }
     }
 

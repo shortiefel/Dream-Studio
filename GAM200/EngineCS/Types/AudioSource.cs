@@ -22,10 +22,17 @@ public class AudioSource : IComponent
     public AudioSource() { }
     public AudioSource(uint entity_id) { entityId = entity_id; }
 
+    enum AudioType
+    {
+        Play = 0,
+        Pause,
+        Unpause
+    }
 
     public void Play()
     {
         //SetAudioSource_Play_Engine(entityId);
+        SetAudioSource_Engine(entityId);
     }
     //[MethodImpl(MethodImplOptions.InternalCall)]
     //internal static extern void SetAudioSource_Play_Engine(uint entityID);

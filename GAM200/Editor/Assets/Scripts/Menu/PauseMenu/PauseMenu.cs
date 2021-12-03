@@ -9,7 +9,13 @@ public class PauseMenu : MonoBehaviour
     GameObject menuText;
     GameObject options;
     GameObject pauseQuit;
-    GameObject pauseBG;
+
+    GameObject resumeBtn;
+    GameObject menuBtn;
+    GameObject optionsBtn;
+    GameObject pauseBtn;
+
+     GameObject pauseBG;
 
     GameObject areYouSure;
     GameObject quitYes;
@@ -25,23 +31,35 @@ public class PauseMenu : MonoBehaviour
 
     public override void Start()
     {
+        pauseBG = GameObject.Find("PauseBG");
+
         resume = GameObject.Find("ResumeText");
         //howToPlay = GameObject.Find("HowToText");
         menuText = GameObject.Find("MenuText");
         options = GameObject.Find("OptionText");
         pauseQuit = GameObject.Find("QuitText");
-        pauseBG = GameObject.Find("PauseBG");
+
+        resumeBtn = GameObject.Find("ResumeBtn");
+        menuBtn = GameObject.Find("MenuBtn");
+        optionsBtn = GameObject.Find("Optionsbtn");
+        pauseBtn = GameObject.Find("QuitBtn");
 
         areYouSure = GameObject.Find("AreYouSureText");
         quitYes = GameObject.Find("YesText");
         quitNo = GameObject.Find("NoText");
         
+        Disable<Transform>(pauseBG.transform);
+
         Disable<Transform>(resume.transform);
         //Disable<Transform>(howToPlay.transform);
         Disable<Transform>(menuText.transform);
         Disable<Transform>(options.transform);
         Disable<Transform>(pauseQuit.transform);
-        Disable<Transform>(pauseBG.transform);
+
+        Disable<Transform>(resumeBtn.transform);
+        Disable<Transform>(menuBtn.transform);
+        Disable<Transform>(optionsBtn.transform);
+        Disable<Transform>(pauseBtn.transform);
 
         Disable<Transform>(areYouSure.transform);
         Disable<Transform>(quitYes.transform);
@@ -57,12 +75,18 @@ public class PauseMenu : MonoBehaviour
         if (gameState.GetPause())
         {
             Console.WriteLine("Pausing now");
+            Enable<Transform>(pauseBG.transform);
+
             Enable<Transform>(resume.transform);
             //Enable<Transform>(howToPlay.transform);
             Enable<Transform>(menuText.transform);
             Enable<Transform>(options.transform);
             Enable<Transform>(pauseQuit.transform);
-            Enable<Transform>(pauseBG.transform);
+
+            Enable<Transform>(resumeBtn.transform);
+            Enable<Transform>(menuBtn.transform);
+            Enable<Transform>(optionsBtn.transform);
+            Enable<Transform>(pauseBtn.transform);
 
             Enable<Transform>(pauseQuit.transform);
             //Application.SetPause(true);
@@ -71,12 +95,18 @@ public class PauseMenu : MonoBehaviour
         else
         {
             Console.WriteLine("Unpausing now");
+            Disable<Transform>(pauseBG.transform);
+
             Disable<Transform>(resume.transform);
             //Disable<Transform>(howToPlay.transform);
             Disable<Transform>(menuText.transform);
             Disable<Transform>(options.transform);
             Disable<Transform>(pauseQuit.transform);
-            Disable<Transform>(pauseBG.transform);
+
+            Disable<Transform>(resumeBtn.transform);
+            Disable<Transform>(menuBtn.transform);
+            Disable<Transform>(optionsBtn.transform);
+            Disable<Transform>(pauseBtn.transform);
 
             Disable<Transform>(areYouSure.transform);
             Disable<Transform>(quitYes.transform);

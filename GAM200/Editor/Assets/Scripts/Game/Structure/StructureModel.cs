@@ -31,7 +31,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             //notifiPrefab = ;
             Vector2 center = transform.localPosition;
             
-            notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 0.7f, 0f), 3);
+            notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 0.7f, 0f), 4);
         }
     }
 

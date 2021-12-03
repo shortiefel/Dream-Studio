@@ -246,9 +246,9 @@ namespace Engine
 		// GraphicImplementation::Renderer::DrawLines({ 0.f, 0.f }, { 10.f, 10.f }, { 1.f, 1.f, 0.f, 1.f }); // example on how to draw line
 		Math::ivec2 mapSize = Game::Grid::GetInstance().GetGridSize();
 		for(int xPos = 0; xPos <= mapSize.x; xPos++)
-			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, -0.5f }, { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 1.f, 1.f, 0.f, 1.f });
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, -0.5f }, { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
 		for(int yPos = 0; yPos <= mapSize.y; yPos++)
-			GraphicImplementation::Renderer::DrawLines({ -0.5f, static_cast<float>(yPos) - 0.5f }, {  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 1.f, 1.f, 0.f, 1.f });
+			GraphicImplementation::Renderer::DrawLines({ -0.5f, static_cast<float>(yPos) - 0.5f }, {  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
 
 		GraphicImplementation::Renderer::EndLinesBatch();
 

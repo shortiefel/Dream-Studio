@@ -21,15 +21,15 @@ namespace Engine
 {
 	enum class GraphicShape 
 	{
-		SQUARE = 0,
-		CIRCLE
+		Square = 0,
+		Circle
 	};
 
 	enum class GraphicShader 
 	{
-		DEFAULT = 0, // Game objects
-		COLLISION,
-		FONT_DRAW
+		Default = 0, // Game objects
+		Collision,
+		Font_Draw
 	};
 }
 

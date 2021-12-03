@@ -39,10 +39,6 @@ namespace Engine
 {
 #define LAYER_COUNT 5 // Number of layers for game objects
 
-	//bool fadeToBlack = false;
-	//bool fadeToClear = false;
-
-
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture
 	void RenderTextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, int layer, float _dt)
@@ -135,8 +131,7 @@ namespace Engine
 																			1.0f);
 						Math::vec2 v2position = { v3position.x, v3position.y };
 						
-						GraphicImplementation::Renderer::DrawQuad(v2position, size, p.angle,
-							particle.texobj_hdl, color);
+						GraphicImplementation::Renderer::DrawQuad(v2position, size, p.angle, particle.texobj_hdl, color);
 					}
 				}
 			}
@@ -146,8 +141,11 @@ namespace Engine
 	// Function will loop through texture array of game objects and render game objects based on layer; 
 	// 0 will be rendered first, followed by 1, 2 ...
 	void RenderGameObjects(Math::mat3 _camMatrix, float _dt) {
+
+		GraphicImplementation::Renderer::BeginQuadBatch();
+
 		// Load default shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Set uniform
@@ -165,10 +163,6 @@ namespace Engine
 			RenderParticleLayer(particleArray, i, _dt);
 		}
 
-		// Enable GL_BLEND for transparency of textures
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 		GraphicImplementation::Renderer::EndQuadBatch();
 		GraphicImplementation::Renderer::FlushQuad();
 
@@ -179,8 +173,11 @@ namespace Engine
 	// Function will loop through collision array of game objects and render out the collision lines
 	void RenderCollisionLines(Math::mat3 _camMatrix)
 	{
+		GraphicImplementation::Renderer::BeginQuadDebugBatch();
+		GraphicImplementation::Renderer::BeginCircleDebugBatch();
+
 		// Load collision shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::COLLISION].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Collision].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Set uniform
@@ -234,9 +231,11 @@ namespace Engine
 	// Function will loop through lines buffer and render it out
 	void RenderLines(Math::mat3 _camMatrix)
 	{
+		GraphicImplementation::Renderer::BeginLinesBatch();
+
 		if (!GameState::GetInstance().GetShouldDraw()) return;
 		// Load collision shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::COLLISION].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Collision].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Set uniform
@@ -273,16 +272,21 @@ namespace Engine
 		_fbo->Bind();
 #endif
 		GraphicImplementation::Renderer::ResetStats();
-		GraphicImplementation::Renderer::BeginBatch();
 
 		// Set background to purple color
 		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		// Enable GL_BLEND for transparency of textures
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		// Render game objects and collision lines
 		RenderGameObjects(camMatrix, _dt);
 		RenderLines(camMatrix);
 		if (!gameDraw) RenderCollisionLines(camMatrix);
+
+		glDisable(GL_BLEND);
 
 #ifdef _GAME_BUILD
 
@@ -298,7 +302,7 @@ namespace Engine
 		GraphicImplementation::setup_shdr();
 
 		// Load shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Uniform for game object texture shader
@@ -327,12 +331,4 @@ namespace Engine
 
 		LOG_INSTANCE("Graphic System destroyed");
 	}
-
-	/*void GraphicSystem::SetFadeToBlack() {
-		fadeToBlack = true;
-	}
-
-	void GraphicSystem::SetFadeToClear() {
-		fadeToClear = true;
-	}*/
 }

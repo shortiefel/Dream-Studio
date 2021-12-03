@@ -30,7 +30,6 @@ namespace Engine
             // Functions for GraphicSystem
             static void Init();
             static void Shutdown();
-            static void BeginBatch();
 
             static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color);
             static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, 
@@ -41,10 +40,19 @@ namespace Engine
             static void DrawCircleDebug(const Math::vec2& tposition, const Math::vec2 tscale, const Math::vec4 color);
             static void DrawLines(const Math::vec2& position1, const Math::vec2& position2, const Math::vec4 color = {0.0f, 1.0f, 0.0f, 1.0f});
 
+
             // Font functions for FontSystem
             static void InitFont();
             static void DestroyFont();
             static void BeginFontBatch();
+
+
+
+            // Start batch functions
+            static void BeginQuadBatch();
+            static void BeginQuadDebugBatch();
+            static void BeginCircleDebugBatch();
+            static void BeginLinesBatch();
 
             // End batch functions
             static void EndQuadBatch();
@@ -96,11 +104,6 @@ namespace Engine
             static void DestroyQuadDebug();
             static void DestroyCircleDebug();
             static void DestroyLines();
-
-            static void BeginQuadBatch();
-            static void BeginQuadDebugBatch();
-            static void BeginCircleDebugBatch();
-            static void BeginLinesBatch();
 
             static void ResetQuadStats();
             static void ResetQuadDebugStats();

@@ -41,7 +41,7 @@ namespace Engine
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::DEFAULT, shdr_pgm));
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::Default, shdr_pgm));
 
 
 
@@ -61,7 +61,7 @@ namespace Engine
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::COLLISION, shdr_pgm2));
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::Collision, shdr_pgm2));
 
 
 
@@ -81,7 +81,7 @@ namespace Engine
                 std::exit(EXIT_FAILURE);
             }
 
-            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::FONT_DRAW, shdr_pgm3));
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::Font_Draw, shdr_pgm3));
         }
     }
 }

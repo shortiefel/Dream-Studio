@@ -28,19 +28,6 @@ namespace Engine
 {
     namespace GraphicImplementation
     {
-        struct FadeStruct
-        {
-            float lifeTime = 0.0f;
-            float lifeRemaining = 0.0f;
-
-            Math::vec4 colourBegin;
-            Math::vec4 colourEnd;
-
-            bool flagFade = false;
-        };
-
-        static FadeStruct fadeStruct;
-
         // Install the shader program with object handle
         void UseShaderHandle(unsigned int prgm_handle);
 

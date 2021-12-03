@@ -74,7 +74,12 @@ namespace Engine {
 			//std::function<void(Event&)> eventCallBack;
 		};
 
-		bool fullScreen;
+#ifdef _GAME_BUILD
+		bool fullScreen = true;
+#else
+		bool fullScreen = false;
+#endif
+		
 
 		WinData w_data { "", 0, 0 };
 		GLFWwindow* glfw_window = 0;

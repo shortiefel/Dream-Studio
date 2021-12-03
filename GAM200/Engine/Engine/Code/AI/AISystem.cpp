@@ -143,7 +143,7 @@ Technology is prohibited.
 //				_fbo->Bind();
 //
 //			// Load shader program
-//			const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::DEFAULT].GetHandle();
+//			const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
 //			GraphicImplementation::UseShaderHandle(shd_ref_handle);
 //
 //			GraphicImplementation::Renderer::BeginBatch(!gameDraw);

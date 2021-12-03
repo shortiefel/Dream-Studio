@@ -46,13 +46,16 @@ namespace Engine
 #else
 		_fbo->Bind();
 #endif
-
-		// Load font shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::FONT_DRAW].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle);
+		// For transparency of glyph textures
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		GraphicImplementation::Renderer::ResetFontStats();
 		GraphicImplementation::Renderer::BeginFontBatch();
+
+		// Load font shader program
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Font_Draw].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Set uniform
 		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
@@ -76,10 +79,6 @@ namespace Engine
 			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
 		}
 
-		// For transparency of glyph textures
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 		GraphicImplementation::Renderer::EndFontBatch();
 		GraphicImplementation::Renderer::FlushFont();
 
@@ -95,6 +94,8 @@ namespace Engine
 		if (fadeToClear)
 			fadeToClear = GraphicImplementation::FadeScene(3.f, _dt, camMatrix, Math::vec4{ 0.0f, 0.0f, 0.0f, 1.0f }, Math::vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
 
+		glDisable(GL_BLEND);
+
 #ifdef _GAME_BUILD
 
 #else
@@ -106,7 +107,7 @@ namespace Engine
 	bool FontSystem::Create()
 	{
 		// Uniform for font shader
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::FONT_DRAW].GetHandle();
+		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Font_Draw].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		auto loc = glGetUniformLocation(shd_ref_handle, "u_FontTexture");

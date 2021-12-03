@@ -83,6 +83,7 @@ namespace Engine {
 
 		WinData w_data { "", 0, 0 };
 		GLFWwindow* glfw_window = 0;
+		GLFWcursor* glfw_custom_cursor = 0;
 		//static Window* s_instance;
 
 		SINGLETON_SETUP(Window);

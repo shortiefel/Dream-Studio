@@ -53,6 +53,9 @@ namespace Engine {
 #else
 		_fbo->Bind();
 #endif
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		GraphicImplementation::Renderer::BeginQuadBatch();
 
 		// Load shader program
@@ -61,8 +64,6 @@ namespace Engine {
 
 		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		const auto& uiArray = dreamECSGame->GetComponentArrayData<UIComponent>();
 		for (const auto& ui : uiArray) {

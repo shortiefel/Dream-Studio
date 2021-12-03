@@ -37,6 +37,10 @@ namespace Engine
 #else
 		_fbo->Bind();
 #endif
+		// For transparency of glyph textures
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		GraphicImplementation::Renderer::ResetFontStats();
 		GraphicImplementation::Renderer::BeginFontBatch();
 
@@ -46,10 +50,6 @@ namespace Engine
 
 		// Set uniform
 		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
-
-		// For transparency of glyph textures
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
 		const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
@@ -73,11 +73,11 @@ namespace Engine
 		GraphicImplementation::Renderer::EndFontBatch();
 		GraphicImplementation::Renderer::FlushFont();
 
-		// Disable GL_BLEND for transparency
-		glDisable(GL_BLEND);
-
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
+
+		// Disable GL_BLEND for transparency
+		glDisable(GL_BLEND);
 
 #ifdef _GAME_BUILD
 

@@ -103,7 +103,7 @@ namespace Editor {
 
 	private:
 		unsigned int maximum;
-		Engine::Entity_id entity_selected;
+		Engine::Entity_id entity_selected{};
 
 	};
 }

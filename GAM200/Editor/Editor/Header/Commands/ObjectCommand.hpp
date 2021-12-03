@@ -77,15 +77,20 @@ namespace Editor {
 		//new position for transform component
 		Engine::DreamMath::vec2 _newposition;
 
+		//checking if undo or redo
+		bool check_redo;
+
 	public:
 
 		Engine::DreamMath::vec2 GetTransformPosition();
 
 		//setting old position
 		void SetOldPosition(Engine::DreamMath::vec2 _oldPosition);
+		//void SetOldPosition(unsigned int* id = nullptr);
 		
 		// setting new position
 		void SetNewPosition(Engine::DreamMath::vec2 _newPosition);
+		//void SetNewPosition(unsigned int* id = nullptr);
 
 		//currently stored transforms to each transform component
 		void StoredTransform(const Engine::Entity_id& entity_selected, Engine::DreamMath::vec2 _positions);

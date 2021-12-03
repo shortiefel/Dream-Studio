@@ -159,11 +159,13 @@ namespace Editor {
 							std::for_each(entity_selected.begin(), entity_selected.end(), [](std::pair<int, Engine::Entity_id> entity) { Engine::dreamECSGame->DestroyEntity(entity.second);  });
 							entity_selected.clear();
 						}
-					}
 
+					}
 					ImGui::EndPopup();
 
 					//record the object state before change
+					//std::shared_ptr<ICommand> delete_command = std::make_shared<ObjectDeleteCommand>();
+					//UndoRedoManager::GetInstance().RecordState(delete_command);
 					//std::shared_ptr<Engine::ICommand> new_command = std::make_shared<Engine::ObjectAddCommand>();
 					//Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 

@@ -112,30 +112,52 @@ namespace Editor
 
 	void ObjectTransformCommand::SetOldPosition(Engine::DreamMath::vec2 _oldPosition)
 	{
-		_oldposition =_oldPosition;
+		_oldposition = _oldPosition;
 	}
+
+
+	void ObjectTransformCommand::SetNewPosition(Engine::DreamMath::vec2 _newPosition)
+	{
+		_newposition = _newPosition;
+	}
+	//void ObjectTransformCommand::SetOldPosition(unsigned int* _id)
+	//{
+	//	_oldposition =_id;
+	//}
+
+	//void ObjectTransformCommand::SetNewPosition(unsigned int* _id)
+	//{
+	//	_newposition = _id;
+	//}
 
 	void ObjectTransformCommand::StoredTransform(const Engine::Entity_id& entity_selected, Engine::DreamMath::vec2 positions)
 	{
 		positions = GetTransformPosition();
 		Engine::TransformComponent* id_transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(entity_selected);
-
-		//this one affects all entity but after that will be able to undo each entity
-		auto& transformArray = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
-		auto& entityMap = Engine::dreamECSGame->GetUsedConstEntityMap();
-
-		for (auto& transform : transformArray) {
-			if (EntityId_Check(entity_selected)) break;
-
-			if (id_transform != nullptr)
-			{
-				id_transform->position =  positions;
-				id_transform->localPosition = positions;
-				Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
-
-			}
+		if (id_transform != nullptr)
+		{
+			id_transform->position = positions;
+			id_transform->localPosition = positions;
+			Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 
 		}
+
+		//this one affects all entity but after that will be able to undo each entity
+		//auto& transformArray = Engine::dreamECSGame->GetComponentArrayData<Engine::TransformComponent>();
+		//auto& entityMap = Engine::dreamECSGame->GetUsedConstEntityMap();
+
+		//for (auto& transform : transformArray) {
+		//	if (EntityId_Check(entity_selected)) break;
+
+		//	if (id_transform != nullptr)
+		//	{
+		//		id_transform->position =  positions;
+		//		id_transform->localPosition = positions;
+		//		Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+
+		//	}
+
+		//}
 
 	}
 
@@ -164,7 +186,7 @@ namespace Editor
 
 	void ObjectDeleteCommand::undo()
 	{
-		Engine::dreamECSGame->CreateEntity();
+		Engine::dreamECSGame->DuplicateEntityAsInstance(object_ID);
 	}
 
 	void ObjectDeleteCommand::redo()

@@ -88,9 +88,9 @@ namespace Editor {
 				{
 					const auto& path = directory.path();
 					auto relative_path = std::filesystem::relative(path, _assetPath);
-					std::string filenameString = relative_path.string();
+					std::string file_name = relative_path.filename().string();
 
-					ImGui::PushID(filenameString.c_str());
+					ImGui::PushID(file_name.c_str());
 					GLuint directory_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/DirectoryIcon.png", &height, &width, 0, 4);
 					GLuint file_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/FileIcon.png", &height, &width, 0, 4);
 					GLuint asset_icon = directory.is_directory() ? directory_icon : file_icon;
@@ -100,7 +100,7 @@ namespace Editor {
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 					{
 						const wchar_t* itemPath = relative_path.c_str();
-						ImGui::Text("%s", filenameString.c_str());
+						ImGui::Text("%s", file_name.c_str());
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
@@ -129,7 +129,7 @@ namespace Editor {
 						}
 
 					}
-					ImGui::TextWrapped(filenameString.c_str());
+					ImGui::TextWrapped(file_name.c_str());
 
 					ImGui::NextColumn();
 

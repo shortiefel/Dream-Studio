@@ -962,9 +962,9 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth);
 
 						ImGui::Combo("##soundGroup", index, soundName, IM_ARRAYSIZE(soundName));
-						if (static_cast<int>(Engine::SoundManager::GetInstance().SG) != *index)
+						if (static_cast<int>(soundComp->soundType) != *index)
 						{
-							Engine::SoundManager::GetInstance().SG = static_cast<Engine::SoundGrp>(*index);
+							soundComp->soundType = static_cast<Engine::SoundGrp>(*index);
 						}
 
 						ImGui::Spacing();
@@ -975,8 +975,8 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth);
 						if (ImGui::Button("Play"))
 						{
-							int channelID = Engine::SoundManager::GetInstance().ChannelID;
-							Engine::SoundSystem::GetInstance().SoundPlay(soundComp, channelID);
+							//int channelID = Engine::SoundManager::GetInstance().ChannelID;
+							Engine::SoundSystem::GetInstance().SoundPlay(soundComp);
 
 						}
 
@@ -984,9 +984,9 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth);
 						if (ImGui::Button("Stop"))
 						{
-							int channelID = Engine::SoundManager::GetInstance().ChannelID;
+							//int channelID = Engine::SoundManager::GetInstance().ChannelID;
 							std::cout << "stopping \n";
-							Engine::SoundSystem::GetInstance().SoundStop(channelID);
+							Engine::SoundSystem::GetInstance().SoundStopAllSound();
 						}
 
 						ImGui::Spacing();

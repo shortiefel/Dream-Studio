@@ -150,6 +150,8 @@ public class IBehaviour : IComponent
                 return HasComponent_Texture_Engine(id);
             case genTypes.Text:
                 return HasComponent_Font_Engine(id);
+            case genTypes.Audio:
+                return HasComponent_Sound_Engine(id);
             default:
                 Console.WriteLine("Type cant be found yet");
                 return false;
@@ -170,7 +172,9 @@ public class IBehaviour : IComponent
     internal static extern bool HasComponent_Texture_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Font_Engine(uint entityId);
-    
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool HasComponent_Sound_Engine(uint entityId);
+
     //-----------------------------------------------------------------------------------------------------------------
     //Destroy
     public void Destroy(uint id)

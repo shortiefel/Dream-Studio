@@ -38,10 +38,11 @@ namespace Engine {
 		void SoundCreate();
 		bool SoundUpdate();
 		void SoundDestroy();
-		void SoundPlay(SoundComponent* soundCom, int channelID);
+		void SoundPlay(SoundComponent* soundCom);
 		void SoundPause(int channelID);
 		void SoundUnpause(int channelD);
-		void SoundStop(int channelID);
+		void SoundStopAllSound();
+		void SoundStop(SoundComponent* soundCom);
 		
 		void SoundSetVolume(int channelID, float _vol);
 		float SoundGetVolume(int channelID, float _vol);

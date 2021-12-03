@@ -78,7 +78,16 @@ namespace Engine
 
 	int SoundManager::SetPlay(SoundComponent* soundCom)
 	{
-		int ID = ChannelID++;
+		int ID;
+		if (soundCom->channelID != -1) {
+			ID = soundCom->channelID;
+			channelMap[ID]->stop();
+		}
+		else {
+			ID = ChannelID++;
+			soundCom->channelID = ID;
+		}
+
 		auto tFoundIt = _soundMap.find(soundCom->soundName);
 		FMOD::Sound* sound = nullptr;
 
@@ -91,6 +100,7 @@ namespace Engine
 		FMOD::Channel* pChannel = nullptr;
 
 		System->playSound(sound, nullptr, false, &pChannel);
+		pChannel->isPlaying(&(soundCom->isPlaying));
 		if (pChannel)
 		{
 

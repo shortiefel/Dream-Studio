@@ -101,8 +101,8 @@ namespace Engine {
         ScriptSystem::GetInstance().DestroyChildDomain();
         DeltaTime::GetInstance().SetTimeScale(1.f);
 
-        SoundSystem::GetInstance().SoundStop(SoundManager::GetInstance().ChannelID);
-        std::cout << "pause sound \n";
+        SoundSystem::GetInstance().SoundStopAllSound();
+        std::cout << "Stop sound \n";
 
 
         CollisionSystem::GetInstance().Stop();

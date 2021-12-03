@@ -35,4 +35,17 @@ public class Text : IComponent
    //internal static extern void GetFont_Text_Engine(uint entityID, out string text);
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetFont_Text_Engine(uint entityID, string text);
+
+    public Color color
+    {
+        // get
+        // {
+        //     GetFont_Text_Engine(entityId, out string text);
+        //     return text;
+        // }
+        set { SetTexture_Color_Engine(entityId, value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetTexture_Color_Engine(uint entityID, Color col);
+
 }

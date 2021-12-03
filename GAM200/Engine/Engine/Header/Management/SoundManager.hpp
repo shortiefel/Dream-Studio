@@ -60,7 +60,7 @@ namespace Engine {
 			static FMOD::ChannelGroup* MusicGroup;
 			static FMOD::ChannelGroup* SFXGroup;
 			
-			SoundGrp SG;
+			//SoundGrp SG;
 			int ChannelID;
 
 			SINGLETON_SETUP(SoundManager);

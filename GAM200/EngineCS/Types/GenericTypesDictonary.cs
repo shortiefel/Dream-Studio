@@ -25,7 +25,8 @@ public static class GenericTypeFinder
         { typeof(Camera), genTypes.Camera },
         { typeof(Rigidbody2D), genTypes.Rigidbody2D },
         { typeof(Texture), genTypes.Texture },
-        { typeof(Text), genTypes.Text }
+        { typeof(Text), genTypes.Text },
+        { typeof(AudioSource), genTypes.Audio }
     };
 }
 
@@ -36,6 +37,7 @@ public enum genTypes
     Camera,
     Rigidbody2D,
     Texture,
-    Text
+    Text,
+    Audio
 }
 

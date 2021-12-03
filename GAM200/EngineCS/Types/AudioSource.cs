@@ -32,7 +32,7 @@ public class AudioSource : IComponent
     public void Play()
     {
         //SetAudioSource_Play_Engine(entityId);
-        SetAudioSource_Engine(entityId);
+        SetAudioSource_Engine(entityId, (int)AudioType.Play);
     }
     //[MethodImpl(MethodImplOptions.InternalCall)]
     //internal static extern void SetAudioSource_Play_Engine(uint entityID);
@@ -40,6 +40,7 @@ public class AudioSource : IComponent
     public void Pause()
     {
         //SetAudioSource_Pause_Engine(entityId);
+        SetAudioSource_Engine(entityId, (int)AudioType.Pause);
     }
     //[MethodImpl(MethodImplOptions.InternalCall)]
     //internal static extern void SetAudioSource_Pause_Engine(uint entityID);
@@ -47,10 +48,11 @@ public class AudioSource : IComponent
     public void UnPause()
     {
         //SetAudioSource_UnPause_Engine(entityId);
+        SetAudioSource_Engine(entityId, (int)AudioType.Unpause);
     }
     //[MethodImpl(MethodImplOptions.InternalCall)]
     //internal static extern void SetAudioSource_UnPause_Engine(uint entityID);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetAudioSource_Engine(uint entityID);
+    internal static extern void SetAudioSource_Engine(uint entityID, int audioType);
 }

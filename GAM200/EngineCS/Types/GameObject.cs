@@ -132,6 +132,7 @@ public class GameObject : IBehaviour
                 return b3;
 
             default:
+                Debug.Log("Cant add this type in!");
                 return false;
         }
     }

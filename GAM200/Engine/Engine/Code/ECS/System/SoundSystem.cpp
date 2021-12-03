@@ -86,10 +86,11 @@ namespace Engine
 
 
 
-	void SoundSystem::SoundPlay(SoundComponent* soundCom,int channelID)
+	void SoundSystem::SoundPlay(SoundComponent* soundCom)
 	{
-		SoundManager::GetInstance().IsPlaying(channelID);
-		auto it = SoundManager::channelMap.find(channelID);
+		//SoundManager::GetInstance().IsPlaying(soundCom->channelID);
+		//auto it = SoundManager::channelMap.find(soundCom->channelID);
+		//it->second->isPlaying(&(soundCom->));
 		SoundManager::GetInstance().SetPlay(soundCom);
 	}
 
@@ -97,9 +98,7 @@ namespace Engine
 	{
 		auto it = SoundManager::channelMap.find(channelID);
 
-		if (it == SoundManager::channelMap.end())
-			return;
-		else
+		if (it != SoundManager::channelMap.end())
 			it->second->setPaused(true);
 	}
 
@@ -108,22 +107,24 @@ namespace Engine
 		auto it = SoundManager::channelMap.find(channelID);
 
 		if (it != SoundManager::channelMap.end())
-			return;
-		else
-			it->second->setPaused(false);
+			it->second->setPaused(false);	
 	}
 
-	void SoundSystem::SoundStop(int channelID)
+	void SoundSystem::SoundStopAllSound()
 	{
-		std::cout << "channel ID Stop" << channelID << "\n";
-		auto it = SoundManager::channelMap.find(channelID);
-		std::cout << "Sound Stop"  << channelID << "\n";
-		if (it == SoundManager::channelMap.end())
+		SoundManager::SFXGroup->stop();
+		SoundManager::MusicGroup->stop();
+		SoundManager::MasterGroup->stop();
+	}
+
+	void SoundSystem::SoundStop(SoundComponent* soundCom)
+	{
+		std::cout << "channel ID Stop" << soundCom->channelID << "\n";
+		auto it = SoundManager::channelMap.find(soundCom->channelID);
+		std::cout << "Sound Stop" << soundCom->channelID << "\n";
+		if (it != SoundManager::channelMap.end())
 		{
-			SoundManager::SFXGroup->stop();
-			SoundManager::MusicGroup->stop();
-			SoundManager::MasterGroup->stop();
-			return;
+			it->second->stop();
 		}
 	}
 

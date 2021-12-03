@@ -72,6 +72,7 @@
     <Compile Include="Types\AudioSource.cs" />
     <Compile Include="Types\Camera.cs" />
     <Compile Include="Types\Collider.cs" />
+    <Compile Include="Types\Color.cs" />
     <Compile Include="Types\IComponent.cs" />
     <Compile Include="Types\GameObject.cs" />
     <Compile Include="Types\GenericTypesDictonary.cs" />

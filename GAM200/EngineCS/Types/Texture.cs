@@ -28,4 +28,16 @@ public class Texture : IComponent
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void ChangeTexture_Engine(uint entityID, string name);
+
+    public Color color
+    {
+        // get
+        // {
+        //     GetFont_Text_Engine(entityId, out string text);
+        //     return text;
+        // }
+        set { SetTexture_Color_Engine(entityId, value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetTexture_Color_Engine(uint entityID, Color col);
 }

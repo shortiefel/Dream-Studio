@@ -19,8 +19,8 @@ Technology is prohibited.
 
 namespace Engine {
 
-	SoundComponent::SoundComponent(Entity_id _ID ,  std::string _filepath,  std::string _soundName ,bool _isSound , bool _isActive , bool _loop , bool _pause, float _vol, SoundGrp _soundType)
-		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName } , isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, Pause{ _pause }, volume{ _vol }, soundType { _soundType }
+	SoundComponent::SoundComponent(Entity_id _ID ,  std::string _filepath,  std::string _soundName ,bool _isSound , bool _isActive , bool _loop, float _vol, SoundGrp _soundType)
+		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName } , isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, volume{ _vol }, soundType { _soundType }
 	{
 		
 	}
@@ -60,7 +60,7 @@ namespace Engine {
 		//SoundGrp(_serializer.GetValue<int>("SoundGrpType"));
 		isActive = _serializer.GetValue<bool>("IsActive");
 		loop = _serializer.GetValue<bool>("IsLoop");
-		Pause = _serializer.GetValue<bool>("IsPause");
+		//Pause = _serializer.GetValue<bool>("IsPause");
 		filepath = _serializer.GetValue<std::string>("filepath");
 		//SoundManager::GetInstance().GetSound(filepath, soundName);
 		volume = _serializer.GetValue<float>("volume");
@@ -75,7 +75,7 @@ namespace Engine {
 		//_serializer.SetValue("SoundGrpType", (int)_SG);
 		_serializer.SetValue("IsActive", isActive);
 		_serializer.SetValue("IsLoop", loop);
-		_serializer.SetValue("IsPause", Pause);
+		//_serializer.SetValue("IsPause", Pause);
 		_serializer.SetValue("filepath", filepath);
 		//std::cout << "filepath: " << filepath << "\n";
 		_serializer.SetValue("volume", volume);

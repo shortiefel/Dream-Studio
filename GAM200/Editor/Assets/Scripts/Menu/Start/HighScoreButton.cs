@@ -7,11 +7,6 @@ public class HighScoreButton : MonoBehaviour
         Console.WriteLine("going into highscore scene");
     }
 
-    public override void Update()
-    {
-
-    }
-
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))

@@ -25,7 +25,9 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/ComponentList.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
 #include "Engine/Header/ECS/DreamECS.hpp"
+
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
+#include "Engine/Header/ECS/System/SoundSystem.hpp"
 
 #include "Engine/Header/Time/DeltaTime.hpp"
 #include "Engine/Header/Management/GameState.hpp"
@@ -130,6 +132,8 @@ namespace Engine {
 	Texture
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void ChangeTexture_Engine(unsigned int entityID, MonoString* name);
+	void SetTexture_Color_Engine(unsigned int entityID, Math::vec4 col);
+
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Rigidbody2d
@@ -148,6 +152,7 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void SetFont_Text_Engine(unsigned int entityID, MonoString* _text);
 	//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text);
+	void SetFont_Color_Engine(unsigned int entityID, Math::vec4 col);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Sound / Audio Source
@@ -176,6 +181,7 @@ namespace Engine {
 	bool HasComponent_Rigidbody_Engine(unsigned int id);
 	bool HasComponent_Texture_Engine(unsigned int id);
 	bool HasComponent_Font_Engine(unsigned int id);
+	bool HasComponent_Sound_Engine(unsigned int id);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Destroy
@@ -299,6 +305,8 @@ namespace Engine {
 		Texture
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Texture::ChangeTexture_Engine", ChangeTexture_Engine);
+		mono_add_internal_call("Texture::SetTexture_Color_Engine", SetTexture_Color_Engine);
+
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Rigidbody2d
@@ -316,6 +324,8 @@ namespace Engine {
 		Text/Font
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Text::SetFont_Text_Engine", SetFont_Text_Engine);
+		mono_add_internal_call("Text::SetFont_Color_Engine", SetFont_Color_Engine);
+		
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Sound / Audio Source
@@ -343,6 +353,7 @@ namespace Engine {
 		mono_add_internal_call("IBehaviour::HasComponent_Rigidbody_Engine", HasComponent_Rigidbody_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Texture_Engine", HasComponent_Texture_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Font_Engine", HasComponent_Font_Engine);
+		mono_add_internal_call("IBehaviour::HasComponent_Sound_Engine", HasComponent_Sound_Engine);
 		
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Destroy
@@ -641,6 +652,11 @@ namespace Engine {
 		}
 	}
 
+	void SetTexture_Color_Engine(unsigned int entityID, Math::vec4 col) {
+		SetEngineType(entityID, TextureComponent, colour, col);
+	}
+
+
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Rigidbody2d
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -697,6 +713,10 @@ namespace Engine {
 		mono_free(tempText);
 	}
 
+	void SetFont_Color_Engine(unsigned int entityID, Math::vec4 col) {
+		SetEngineType(entityID, FontComponent, colour, col);
+	}
+
 	//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text) {}
 
 
@@ -704,7 +724,21 @@ namespace Engine {
 	Sound / Audio Source
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void SetAudioSource_Engine(unsigned int entityID, int audioState) {
-
+		SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
+		
+		switch (audioState) {
+		case 0:
+			SoundSystem::GetInstance().SoundPlay(ctype);
+			break;
+		case 1:
+			SoundSystem::GetInstance().SoundPause(ctype->channelID);
+			break;
+		case 2:
+			SoundSystem::GetInstance().SoundUnpause(ctype->channelID);
+			break;
+		default:
+			break;
+		}
 	}
 
 
@@ -765,6 +799,10 @@ namespace Engine {
 
 	bool HasComponent_Font_Engine(unsigned int id) {
 		GET_COMPONENT_PTR(FontComponent);
+	}
+
+	bool HasComponent_Sound_Engine(unsigned int id) {
+		GET_COMPONENT_PTR(SoundComponent);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

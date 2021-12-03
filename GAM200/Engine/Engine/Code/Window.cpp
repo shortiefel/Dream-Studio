@@ -34,6 +34,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/Settings.hpp"
 
+#include "stb_image/stb_image.h"
 namespace Engine {
 	//GLFWwindow* Window::glfw_window = 0;
 	////Window* Window::s_instance = 0;
@@ -64,8 +65,10 @@ namespace Engine {
 
 	//Destroy glfw window
 	void Window::Destroy() {
+		glfwDestroyCursor(glfw_custom_cursor);
 		glfwDestroyWindow(glfw_window);
 		glfwTerminate();
+
 
 		LOG_INSTANCE("Window destroyed");
 	}
@@ -116,7 +119,6 @@ namespace Engine {
 
 	//Create instance of window class
 	bool Window::Create(const std::string& ttitle, unsigned int twidth, unsigned int theight) {
-
 		LOG_INSTANCE("Window Created");
 
 		//For logging purposes
@@ -141,14 +143,31 @@ namespace Engine {
 		//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
 
 #ifdef _GAME_BUILD
-		//CHANGE BACK
-		//glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
-		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
+		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
+
+		// Read png file for cursor
+		GLFWimage image;
+		image.pixels = stbi_load("Assets/Textures/cursor.png", &image.width, &image.height, 0, 4);
+
+		// Create the cursor object
+		glfw_custom_cursor = glfwCreateCursor(&image, 0, 0);
+
+		if (image.pixels) stbi_image_free(image.pixels);
+
+		if (glfw_custom_cursor == NULL)
+		{
+			LOG_ERROR("unable to create openGL context (cursor)");
+			glfwTerminate();
+			return false;
+		}
+
+		// set cursor to window
+		glfwSetCursor(glfw_window, glfw_custom_cursor);
 #else
 		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
 #endif
 		if (!glfw_window) {
-			LOG_ERROR("unable to create openGL context");
+			LOG_ERROR("unable to create openGL context (window)");
 			glfwTerminate();
 			return false;
 		}
@@ -181,13 +200,6 @@ namespace Engine {
 
 		return true;
 	}
-
-
-
-
-
-
-
 
 	//Event call back order
 	//glfw detects event -> call user-defined specific type of event call back function (listed below SetEventCallBack function) 

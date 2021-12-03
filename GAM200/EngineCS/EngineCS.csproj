@@ -69,6 +69,7 @@
     <Compile Include="Random\Random.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="Time.cs" />
+    <Compile Include="Types\AudioSource.cs" />
     <Compile Include="Types\Camera.cs" />
     <Compile Include="Types\Collider.cs" />
     <Compile Include="Types\IComponent.cs" />

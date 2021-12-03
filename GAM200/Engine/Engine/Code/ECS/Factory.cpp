@@ -54,7 +54,7 @@ namespace Engine
         GraphicSystem::GetInstance().Create();
         UISystem::GetInstance().Create();
         FontSystem::GetInstance().Create();
-        SoundSystem::GetInstance().SoundInit();
+        SoundSystem::GetInstance().SoundCreate();
 
         Random::Create();
     }
@@ -62,9 +62,11 @@ namespace Engine
     // Destroy function for Factory 
     void Factory::Destroy()
     {
-        GraphicSystem::GetInstance().Destroy();
+        SoundSystem::GetInstance().SoundDestroy();
         FontSystem::GetInstance().Destroy();
         UISystem::GetInstance().Destroy();
+        GraphicSystem::GetInstance().Destroy();
+
         ScriptSystem::GetInstance().Destroy();
         PhysicsSystem::GetInstance().Destroy();
         CollisionSystem::GetInstance().Destroy();

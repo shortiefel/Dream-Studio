@@ -35,8 +35,9 @@ namespace Engine {
 		/**
 		*		BASICS
 		*/
-		void SoundInit();
+		void SoundCreate();
 		bool SoundUpdate();
+		void SoundDestroy();
 		void SoundPlay(SoundComponent* soundCom, int channelID);
 		void SoundPause(int channelID);
 		void SoundUnpause(int channelD);

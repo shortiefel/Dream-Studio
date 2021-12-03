@@ -58,9 +58,6 @@ namespace Engine {
         DeltaTime::GetInstance().SetTimeScale(1.f);
         CameraSystem::GetInstance().Update(0.f);
 
-        SoundSystem::GetInstance().SoundInit();
-        std::cout << "loaded sound \n";
-
         ScriptSystem::GetInstance().UpdateMapData();
         if (_play) {
             ScriptSystem::GetInstance().PlayInit();

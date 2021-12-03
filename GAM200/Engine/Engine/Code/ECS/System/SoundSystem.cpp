@@ -36,7 +36,7 @@ namespace Engine
 	}
 
 
-	void SoundSystem::SoundInit()
+	void SoundSystem::SoundCreate()
 	{
 		if (!FMOD::System_Create(&SoundManager::System))
 			throw std::runtime_error("FMOD: Failed to create system object");
@@ -125,6 +125,13 @@ namespace Engine
 			SoundManager::MasterGroup->stop();
 			return;
 		}
+	}
+
+	void SoundSystem::SoundDestroy()
+	{
+		SoundManager::GetInstance().Destroy();
+
+		LOG_INSTANCE("Sound System destroyed");
 	}
 
 	void SoundSystem::SoundSetVolume(int channelID,float _vol)

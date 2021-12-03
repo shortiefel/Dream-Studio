@@ -34,10 +34,10 @@ namespace Engine {
             return (target >= val2 - std::numeric_limits<T>::epsilon() && target <= val2 + std::numeric_limits<T>::epsilon());
         }
 
-        template <typename T>
+        /*template <typename T>
         inline bool epsilonCheck(const T& target) {
             return (target >= -std::numeric_limits<T>::epsilon() && target <= std::numeric_limits<T>::epsilon());
-        }
+        }*/
 
         template <typename T>
         inline T pi() {

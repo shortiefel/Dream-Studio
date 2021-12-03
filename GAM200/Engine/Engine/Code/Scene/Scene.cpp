@@ -175,8 +175,8 @@ namespace Engine {
             Math::Inverse(Engine::CameraSystem::GetInstance().GetTransformUI()));
 
         GraphicSystem::GetInstance().Render(dt);
-        FontSystem::GetInstance().Render();
-        UISystem::GetInstance().Render(dt);
+        UISystem::GetInstance().Render();
+        FontSystem::GetInstance().Render(dt);
 #else
         if (Input::IsKeyPressed(Input_KeyCode::F)) {
             Window::GetInstance().ToggleFullscreen(); 

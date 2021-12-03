@@ -43,9 +43,9 @@ public class Text : IComponent
         //     GetFont_Text_Engine(entityId, out string text);
         //     return text;
         // }
-        set { SetTexture_Color_Engine(entityId, value); }
+        set { SetFont_Color_Engine(entityId, value); }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetTexture_Color_Engine(uint entityID, Color col);
+    internal static extern void SetFont_Color_Engine(uint entityID, Color col);
 
 }

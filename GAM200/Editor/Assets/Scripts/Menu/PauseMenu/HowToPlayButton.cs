@@ -1,17 +1,103 @@
 ﻿using System;
 public class HowToPlayButton : MonoBehaviour
 {
-    //GameObject howToPlayScreen;
-    //PauseMenu pauseMenu;
-    //public override void Start()
-    //{
-    //    pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
-    //}
+    Text text;
+    UI texture;
+    Transform pauseMenuBackIcon;
+    Transform howToPlayBGTransform;
+    Transform newBackTransform;
+
+    Transform howToPlayTransform;
+    Transform resumeTransform;
+    Transform quitTransform;
+
+    Transform areYouSureTransform;
+    Transform quitYesTransform;
+    Transform quitNoTransform;
+
+    bool htw;
+
+
+    public override void Start()
+    {
+        htw = false;
+
+        pauseMenuBackIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
+        howToPlayBGTransform = GameObject.Find("HowToBG").GetComponent<Transform>();
+        newBackTransform = GameObject.Find("HowToPlayBack").GetComponent<Transform>();
+
+        howToPlayTransform = GameObject.Find("HowToText").GetComponent<Transform>();
+        resumeTransform = GameObject.Find("ResumeText").GetComponent<Transform>();
+        quitTransform = GameObject.Find("QuitText").GetComponent<Transform>();
+        texture = GameObject.Find("howToPlayBtn").GetComponent<UI>();
+
+        areYouSureTransform = GameObject.Find("AreYouSureText").GetComponent<Transform>();
+        quitYesTransform = GameObject.Find("YesText").GetComponent<Transform>();
+        quitNoTransform = GameObject.Find("NoText").GetComponent<Transform>();
+
+
+        text = GetComponent<Text>();
+
+        //Is actually How to play button
+        if (text != null)
+        {
+            
+            texture.color = new Color(0f, 0f, 0f);
+            htw = true;
+        }
+
+        
+    }
+
+    public override void OnMouseEnter()
+    {
+        if (htw)
+        {
+            text.color = new Color(0f, 0f, 0f);
+            texture.color = new Color(1f, 1f, 1f);
+        }
+    }
+
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            Console.WriteLine("howtoplay selected");
+            if (htw)
+            {
+                Enable<Transform>(howToPlayBGTransform);
+                Enable<Transform>(newBackTransform);
+
+                Disable<Transform>(howToPlayTransform);
+                Disable<Transform>(resumeTransform);
+                Disable<Transform>(quitTransform);
+
+                Disable<Transform>(pauseMenuBackIcon);
+
+                Disable<Transform>(areYouSureTransform);
+                Disable<Transform>(quitYesTransform);
+                Disable<Transform>(quitNoTransform);
+            }
+
+            else
+            {
+                Disable<Transform>(howToPlayBGTransform);
+                Disable<Transform>(newBackTransform);
+
+                Enable<Transform>(howToPlayTransform);
+                Enable<Transform>(resumeTransform);
+                Enable<Transform>(quitTransform);
+
+                Enable<Transform>(pauseMenuBackIcon);
+            }
+        }
+    }
+
+    public override void OnMouseExit()
+    {
+        if (htw)
+        {
+            text.color = new Color(1f, 1f, 1f);
+            texture.color = new Color(0f, 0f, 0f);
         }
     }
 }

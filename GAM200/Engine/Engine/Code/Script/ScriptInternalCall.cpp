@@ -155,6 +155,11 @@ namespace Engine {
 	void SetFont_Color_Engine(unsigned int entityID, Math::vec4 col);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	UI color
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void SetUI_Color_Engine(unsigned int entityID, Math::vec4 col);
+
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Sound / Audio Source
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void SetAudioSource_Engine(unsigned int entityID, int audioState);
@@ -182,6 +187,7 @@ namespace Engine {
 	bool HasComponent_Texture_Engine(unsigned int id);
 	bool HasComponent_Font_Engine(unsigned int id);
 	bool HasComponent_Sound_Engine(unsigned int id);
+	bool HasComponent_UI_Engine(unsigned int id);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Destroy
@@ -328,6 +334,11 @@ namespace Engine {
 		
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		UI color
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		mono_add_internal_call("UI::SetUI_Color_Engine", SetUI_Color_Engine);
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Sound / Audio Source
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("AudioSource::SetAudioSource_Engine", SetAudioSource_Engine);
@@ -354,6 +365,8 @@ namespace Engine {
 		mono_add_internal_call("IBehaviour::HasComponent_Texture_Engine", HasComponent_Texture_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Font_Engine", HasComponent_Font_Engine);
 		mono_add_internal_call("IBehaviour::HasComponent_Sound_Engine", HasComponent_Sound_Engine);
+		mono_add_internal_call("IBehaviour::HasComponent_UI_Engine", HasComponent_UI_Engine);
+		
 		
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Destroy
@@ -719,6 +732,14 @@ namespace Engine {
 
 	//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text) {}
 
+	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	UI color
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	void SetUI_Color_Engine(unsigned int entityID, Math::vec4 col) {
+		SetEngineType(entityID, UIComponent, colour, col);
+	}
+
+
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Sound / Audio Source
@@ -803,6 +824,10 @@ namespace Engine {
 
 	bool HasComponent_Sound_Engine(unsigned int id) {
 		GET_COMPONENT_PTR(SoundComponent);
+	}
+
+	bool HasComponent_UI_Engine(unsigned int id) {
+		GET_COMPONENT_PTR(UIComponent);
 	}
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

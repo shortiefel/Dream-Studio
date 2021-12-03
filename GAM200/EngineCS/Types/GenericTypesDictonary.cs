@@ -26,7 +26,8 @@ public static class GenericTypeFinder
         { typeof(Rigidbody2D), genTypes.Rigidbody2D },
         { typeof(Texture), genTypes.Texture },
         { typeof(Text), genTypes.Text },
-        { typeof(AudioSource), genTypes.Audio }
+        { typeof(AudioSource), genTypes.Audio },
+        { typeof(UI), genTypes.UI }
     };
 }
 
@@ -38,6 +39,7 @@ public enum genTypes
     Rigidbody2D,
     Texture,
     Text,
-    Audio
+    Audio,
+    UI
 }
 

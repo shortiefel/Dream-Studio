@@ -84,6 +84,9 @@ public class MonoBehaviour : IBehaviour
                 case genTypes.Audio:
                     RecordComponent<AudioSource>(entityId);
                     break;
+                case genTypes.UI:
+                    RecordComponent<UI>(entityId);
+                    break;
                 default:
                     Console.WriteLine("Type cant be recorded yet");
                     break;

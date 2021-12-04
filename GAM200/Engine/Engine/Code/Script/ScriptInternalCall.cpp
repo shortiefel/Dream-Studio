@@ -972,6 +972,7 @@ namespace Engine {
 		rapidjson::Value::ConstMemberIterator itr = doc.GetArray()[0].FindMember("Score");
 		if (itr != doc.GetArray()[0].MemberEnd()) {
 			highScore = itr->value["HighScore"].GetInt();
+			currentScore = itr->value["CurrentScore"].GetInt();
 		}
 	}
 	void SetHighscore_Engine(int value, MonoString* str) {
@@ -1031,6 +1032,7 @@ namespace Engine {
 		}
 
 		if (strcmp(text, "CurrentScore") == 0) {
+			std::cout << "Current " << currentScore << "\n";
 			*value = currentScore;
 		}
 

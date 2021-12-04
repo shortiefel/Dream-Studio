@@ -13,6 +13,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     GameState gameState;
 
+    Animation animation;
+
     //private Prefab notifiPrefab;
     private GameObject notifiSymbol;
     public override void Start()
@@ -23,6 +25,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         texure = GetComponent<Texture>();
         notification = GetComponent<Notification>();
         //carSpawner = GetComponent<CarSpawner>();
+        animation = GetComponent<Animation>();
 
         if (notification != null)
         {
@@ -71,6 +74,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         if (notification != null)
         {
             Disable<Transform>(notifiSymbol.transform);
+            if (animation != null)
+                animation.Play("Destroy");
             //notification.transform.
             gameState.IncrementScore();
             notification.ResetTimer();

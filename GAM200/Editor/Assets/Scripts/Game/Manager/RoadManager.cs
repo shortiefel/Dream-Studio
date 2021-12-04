@@ -83,7 +83,28 @@ public class RoadManager : MonoBehaviour
 
         placementManager.AddtemporaryStructuresToStructureDictionary();
         temporaryPlacementPositions.Clear();
-        startPosition = Vector2Int.zero;
+        //startPosition = Vector2Int.zero;
+
+        //foreach (var positionsToFix in roadPositionsToRecheck)
+        //{
+        //    roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
+        //}
+
+        //roadPositionsToRecheck.Clear();
+
+        //temporaryPlacementPositions = placementManager.GetPathBetween(startPosition, position);
+
+        //foreach (var temporaryPosition in temporaryPlacementPositions)
+        //{
+        //    if (placementManager.CheckIfPositionIsFree(temporaryPosition) == false)
+        //    {
+        //        roadPositionsToRecheck.Add(temporaryPosition);
+        //        continue;
+        //    }
+        //    placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road, 1);
+        //}
+
+        FixRoadPrefabs();
     }
 
     public void PlaceSpawnDestination(Vector2Int position)
@@ -142,7 +163,28 @@ public class RoadManager : MonoBehaviour
 
         placementManager.AddtemporaryStructuresToStructureDictionary();
         temporaryPlacementPositions.Clear();
-        startPosition = Vector2Int.zero;
+        //startPosition = Vector2Int.zero;
+
+        //foreach (var positionsToFix in roadPositionsToRecheck)
+        //{
+        //    roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
+        //}
+
+        //roadPositionsToRecheck.Clear();
+
+        //temporaryPlacementPositions = placementManager.GetPathBetween(startPosition, position);
+
+        //foreach (var temporaryPosition in temporaryPlacementPositions)
+        //{
+        //    if (placementManager.CheckIfPositionIsFree(temporaryPosition) == false)
+        //    {
+        //        roadPositionsToRecheck.Add(temporaryPosition);
+        //        continue;
+        //    }
+        //    placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road, 1);
+        //}
+
+        FixRoadPrefabs();
     }
 
     public void PlaceRoad(Vector2Int position)

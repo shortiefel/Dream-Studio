@@ -20,6 +20,8 @@ public class RoadFixer : MonoBehaviour
         //[right, up, left, down]
         var result = placementManager.GetNeighbourTypesFor(temporaryPosition);
         int roadCount = 0;
+        int houseCount = 0;
+        int destinationCount = 0;
         //roadCount = result.Where(x => x == CellType.Road).Count();
         foreach (CellType x in result)
         {
@@ -27,18 +29,32 @@ public class RoadFixer : MonoBehaviour
             {
                 roadCount++;
             }
+            else if (x == CellType.Structure)
+            {
+                houseCount++;
+                Debug.Log(houseCount);
+            }
+            else if (x == CellType.SpecialStructure)
+            {
+                destinationCount++;
+                Debug.Log(destinationCount);
+            }
         }
         if (roadCount == 0 || roadCount == 1)
         {
             CreateDeadEnd(placementManager, result, temporaryPosition);
         }
-        else if (roadCount == 2)
+        else if (roadCount == 2 || houseCount == 2 || destinationCount == 2 || (roadCount == 1 && houseCount == 1) || 
+            (roadCount == 1 && destinationCount == 1) || (houseCount == 1 && destinationCount == 1))
         {
             if (CreateStraightRoad(placementManager, result, temporaryPosition))
                 return;
             CreateCorner(placementManager, result, temporaryPosition);
         }
-        else if (roadCount == 3)
+        else if (roadCount == 3 || (roadCount == 2 && houseCount == 1) || (roadCount == 2 && destinationCount == 1) ||
+            (roadCount == 1 && houseCount == 2) || (roadCount == 1 && destinationCount == 2) || 
+            (roadCount == 1 && houseCount == 1 && destinationCount == 1) || (houseCount == 2 && destinationCount == 1) ||
+            (houseCount == 1 && destinationCount == 2) || houseCount == 3 || destinationCount == 3)
         {
             Create3Way(placementManager, result, temporaryPosition);
         }
@@ -56,19 +72,86 @@ public class RoadFixer : MonoBehaviour
     //[left, up, right, down]
     private void Create3Way(PlacementManager placementManager, CellType[] result, Vector2Int temporaryPosition)
     {
-        if (result[1] == CellType.Road && result[2] == CellType.Road && result[3] == CellType.Road)
+        if ((result[1] == CellType.Road && result[2] == CellType.Road && result[3] == CellType.Road) ||
+            (result[1] == CellType.Structure && result[2] == CellType.Structure && result[3] == CellType.Structure) ||
+            (result[1] == CellType.SpecialStructure && result[2] == CellType.SpecialStructure && result[3] == CellType.SpecialStructure) ||
+            (result[1] == CellType.Road && result[2] == CellType.Road && result[3] == CellType.Structure) ||
+            (result[1] == CellType.Road && result[2] == CellType.Road && result[3] == CellType.SpecialStructure) ||
+            //(result[1] == CellType.Road && result[2] == CellType.Structure && result[3] == CellType.Road) ||
+            (result[1] == CellType.Road && result[2] == CellType.Structure && result[3] == CellType.Structure) ||
+            (result[1] == CellType.Structure && result[2] == CellType.Road && result[3] == CellType.Structure) ||
+            (result[1] == CellType.Structure && result[2] == CellType.Structure && result[3] == CellType.Road) ||
+            (result[1] == CellType.Road && result[2] == CellType.SpecialStructure && result[3] == CellType.SpecialStructure) ||
+            (result[1] == CellType.SpecialStructure && result[2] == CellType.SpecialStructure && result[3] == CellType.Road) ||
+            (result[1] == CellType.SpecialStructure && result[2] == CellType.SpecialStructure && result[3] == CellType.Road) ||
+            (result[1] == CellType.Road && result[2] == CellType.Structure && result[3] == CellType.SpecialStructure) ||
+            (result[1] == CellType.Road && result[2] == CellType.SpecialStructure && result[3] == CellType.Structure) ||
+            (result[1] == CellType.Structure && result[2] == CellType.Road && result[3] == CellType.SpecialStructure) ||
+            (result[1] == CellType.Structure && result[2] == CellType.SpecialStructure && result[3] == CellType.Road) ||
+            (result[1] == CellType.SpecialStructure && result[2] == CellType.Road && result[3] == CellType.Structure) ||
+            (result[1] == CellType.SpecialStructure && result[2] == CellType.Structure && result[3] == CellType.Road))
         {
             placementManager.ModifyStructureModel(temporaryPosition, threeWay, 90);
         }
-        else if (result[2] == CellType.Road && result[3] == CellType.Road && result[0] == CellType.Road)
+        else if ((result[2] == CellType.Road && result[3] == CellType.Road && result[0] == CellType.Road) ||
+            (result[2] == CellType.Structure && result[3] == CellType.Structure && result[0] == CellType.Structure) ||
+            (result[2] == CellType.SpecialStructure && result[2] == CellType.SpecialStructure && result[0] == CellType.SpecialStructure) ||
+            (result[2] == CellType.Road && result[3] == CellType.Road && result[0] == CellType.Structure) ||
+            (result[2] == CellType.Road && result[3] == CellType.Road && result[0] == CellType.SpecialStructure) ||
+            //(result[1] == CellType.Road && result[2] == CellType.Structure && result[3] == CellType.Road) ||
+            (result[2] == CellType.Road && result[3] == CellType.Structure && result[0] == CellType.Structure) ||
+            (result[2] == CellType.Structure && result[3] == CellType.Road && result[0] == CellType.Structure) ||
+            (result[2] == CellType.Structure && result[3] == CellType.Structure && result[0] == CellType.Road) ||
+            (result[2] == CellType.Road && result[3] == CellType.SpecialStructure && result[0] == CellType.SpecialStructure) ||
+            (result[2] == CellType.SpecialStructure && result[3] == CellType.SpecialStructure && result[0] == CellType.Road) ||
+            (result[2] == CellType.SpecialStructure && result[3] == CellType.SpecialStructure && result[0] == CellType.Road) ||
+            (result[2] == CellType.Road && result[3] == CellType.Structure && result[0] == CellType.SpecialStructure) ||
+            (result[2] == CellType.Road && result[3] == CellType.SpecialStructure && result[0] == CellType.Structure) ||
+            (result[2] == CellType.Structure && result[3] == CellType.Road && result[0] == CellType.SpecialStructure) ||
+            (result[2] == CellType.Structure && result[3] == CellType.SpecialStructure && result[0] == CellType.Road) ||
+            (result[2] == CellType.SpecialStructure && result[3] == CellType.Road && result[0] == CellType.Structure) ||
+            (result[2] == CellType.SpecialStructure && result[3] == CellType.Structure && result[0] == CellType.Road))
         {
             placementManager.ModifyStructureModel(temporaryPosition, threeWay, 0);
         }
-        else if (result[3] == CellType.Road && result[0] == CellType.Road && result[1] == CellType.Road)
+        else if ((result[3] == CellType.Road && result[0] == CellType.Road && result[1] == CellType.Road) ||
+            (result[3] == CellType.Structure && result[0] == CellType.Structure && result[1] == CellType.Structure) ||
+            (result[3] == CellType.SpecialStructure && result[0] == CellType.SpecialStructure && result[1] == CellType.SpecialStructure) ||
+            (result[3] == CellType.Road && result[0] == CellType.Road && result[1] == CellType.Structure) ||
+            (result[3] == CellType.Road && result[0] == CellType.Road && result[1] == CellType.SpecialStructure) ||
+            //(result[1] == CellType.Road && result[2] == CellType.Structure && result[3] == CellType.Road) ||
+            (result[3] == CellType.Road && result[0] == CellType.Structure && result[1] == CellType.Structure) ||
+            (result[3] == CellType.Structure && result[0] == CellType.Road && result[1] == CellType.Structure) ||
+            (result[3] == CellType.Structure && result[0] == CellType.Structure && result[1] == CellType.Road) ||
+            (result[3] == CellType.Road && result[0] == CellType.SpecialStructure && result[1] == CellType.SpecialStructure) ||
+            (result[3] == CellType.SpecialStructure && result[0] == CellType.SpecialStructure && result[1] == CellType.Road) ||
+            (result[3] == CellType.SpecialStructure && result[0] == CellType.SpecialStructure && result[1] == CellType.Road) ||
+            (result[3] == CellType.Road && result[0] == CellType.Structure && result[1] == CellType.SpecialStructure) ||
+            (result[3] == CellType.Road && result[0] == CellType.SpecialStructure && result[1] == CellType.Structure) ||
+            (result[3] == CellType.Structure && result[0] == CellType.Road && result[1] == CellType.SpecialStructure) ||
+            (result[3] == CellType.Structure && result[0] == CellType.SpecialStructure && result[1] == CellType.Road) ||
+            (result[3] == CellType.SpecialStructure && result[0] == CellType.Road && result[1] == CellType.Structure) ||
+            (result[3] == CellType.SpecialStructure && result[0] == CellType.Structure && result[1] == CellType.Road))
         {
             placementManager.ModifyStructureModel(temporaryPosition, threeWay, 270);
         }
-        else if (result[0] == CellType.Road && result[1] == CellType.Road && result[2] == CellType.Road)
+        else if ((result[0] == CellType.Road && result[1] == CellType.Road && result[2] == CellType.Road) ||
+            (result[0] == CellType.Structure && result[1] == CellType.Structure && result[2] == CellType.Structure) ||
+            (result[0] == CellType.SpecialStructure && result[1] == CellType.SpecialStructure && result[2] == CellType.SpecialStructure) ||
+            (result[0] == CellType.Road && result[1] == CellType.Road && result[2] == CellType.Structure) ||
+            (result[0] == CellType.Road && result[1] == CellType.Road && result[2] == CellType.SpecialStructure) ||
+            (result[0] == CellType.Road && result[1] == CellType.Structure && result[2] == CellType.Structure) ||
+            (result[0] == CellType.Structure && result[1] == CellType.Road && result[2] == CellType.Structure) ||
+            (result[0] == CellType.Structure && result[1] == CellType.Structure && result[2] == CellType.Road) ||
+            (result[0] == CellType.Road && result[1] == CellType.SpecialStructure && result[2] == CellType.SpecialStructure) ||
+            (result[0] == CellType.SpecialStructure && result[1] == CellType.SpecialStructure && result[2] == CellType.Road) ||
+            (result[0] == CellType.SpecialStructure && result[1] == CellType.SpecialStructure && result[2] == CellType.Road) ||
+            (result[0] == CellType.Road && result[1] == CellType.Structure && result[2] == CellType.SpecialStructure) ||
+            (result[0] == CellType.Road && result[1] == CellType.SpecialStructure && result[2] == CellType.Structure) ||
+            (result[0] == CellType.Structure && result[1] == CellType.Road && result[2] == CellType.SpecialStructure) ||
+            (result[0] == CellType.Structure && result[1] == CellType.SpecialStructure && result[2] == CellType.Road) ||
+            (result[0] == CellType.SpecialStructure && result[1] == CellType.Road && result[2] == CellType.Structure) ||
+            (result[0] == CellType.SpecialStructure && result[1] == CellType.Structure && result[2] == CellType.Road))
         {
             placementManager.ModifyStructureModel(temporaryPosition, threeWay, 180);
         }
@@ -99,12 +182,29 @@ public class RoadFixer : MonoBehaviour
     //[left, up, right, down]
     private bool CreateStraightRoad(PlacementManager placementManager, CellType[] result, Vector2Int temporaryPosition)
     {
-        if (result[0] == CellType.Road && result[2] == CellType.Road)
+        if ((result[0] == CellType.Road && result[2] == CellType.Road) ||
+            (result[0] == CellType.Structure && result[2] == CellType.Structure) ||
+            (result[0] == CellType.SpecialStructure && result[2] == CellType.SpecialStructure) ||
+            (result[0] == CellType.Road && result[2] == CellType.Structure) ||
+            (result[0] == CellType.Structure && result[2] == CellType.Road) ||
+            (result[0] == CellType.Road && result[2] == CellType.SpecialStructure) ||
+            (result[0] == CellType.SpecialStructure && result[2] == CellType.Road) ||
+            (result[0] == CellType.Structure && result[2] == CellType.SpecialStructure) ||
+            (result[0] == CellType.SpecialStructure && result[2] == CellType.Structure))
         {
             placementManager.ModifyStructureModel(temporaryPosition, roadStraight, 90);
+            Debug.Log("straight");
             return true;
         }
-        else if (result[1] == CellType.Road && result[3] == CellType.Road)
+        else if ((result[1] == CellType.Road && result[3] == CellType.Road) ||
+            (result[1] == CellType.Structure && result[3] == CellType.Structure) ||
+            (result[1] == CellType.SpecialStructure && result[3] == CellType.SpecialStructure) ||
+            (result[1] == CellType.Road && result[3] == CellType.Structure) ||
+            (result[1] == CellType.Structure && result[3] == CellType.Road) ||
+            (result[1] == CellType.Road && result[3] == CellType.SpecialStructure) ||
+            (result[1] == CellType.SpecialStructure && result[3] == CellType.Road) ||
+            (result[1] == CellType.Structure && result[3] == CellType.SpecialStructure) ||
+            (result[1] == CellType.SpecialStructure && result[3] == CellType.Structure))
         {
             placementManager.ModifyStructureModel(temporaryPosition, roadStraight, 0);
             return true;

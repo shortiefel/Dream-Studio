@@ -87,6 +87,9 @@ public class MonoBehaviour : IBehaviour
                 case genTypes.UI:
                     RecordComponent<UI>(entityId);
                     break;
+                case genTypes.Animation:
+                    RecordComponent<Animation>(entityId);
+                    break;
                 default:
                     Console.WriteLine("Type cant be recorded yet");
                     break;

@@ -154,6 +154,8 @@ public class IBehaviour : IComponent
                 return HasComponent_Sound_Engine(id);
             case genTypes.UI:
                 return HasComponent_UI_Engine(id);
+            case genTypes.Animation:
+                return HasComponent_Texture_Engine(id);
             default:
                 Console.WriteLine("Type cant be found yet");
                 return false;

@@ -44,11 +44,11 @@ namespace Editor {
 
 	//---------------------------------------------------------------------------------------------------------------
 	//Using
+	//command for gizmo
 	class ObjectTransformChangeCommand : public ObjectCommand
 	{
 
 	public:
-
 
 		//undo the changes made to the objects
 		void undo() override;
@@ -91,48 +91,13 @@ namespace Editor {
 
 		void execute() override;
 
-	};
+	};	
 
-	struct TransformContainer
-	{
-
-	};
-
-	
-
+	//command for inspector transform
 	class ObjectTransformCommand : public ObjectCommand
 	{
-		Engine::Entity_id id{};
-
-		std::map<int, Engine::Entity_id> entity_selected{};
-
-		//current position
-		Engine::DreamMath::vec2 _currentposition;
-
-		//old position for transform component
-		Engine::DreamMath::vec2 _oldposition;
-
-		//new position for transform component
-		Engine::DreamMath::vec2 _newposition;
-
-		//checking if undo or redo
-		bool check_redo;
 
 	public:
-
-		Engine::DreamMath::vec2 GetTransformPosition();
-
-		//setting old position
-		void SetOldPosition(Engine::DreamMath::vec2 _oldPosition);
-		//void SetOldPosition(unsigned int* id = nullptr);
-		
-		// setting new position
-		void SetNewPosition(Engine::DreamMath::vec2 _newPosition);
-		//void SetNewPosition(unsigned int* id = nullptr);
-
-		//currently stored transforms to each transform component
-		//void StoredTransform(std::map<int, Engine::Entity_id>& entity_selected, Engine::DreamMath::vec2 positions);
-		void StoredTransform(Engine::Entity_id entity_id, Engine::DreamMath::vec2 positions);
 		
 		//undo the changes made to the objects
 		void undo() override;
@@ -144,9 +109,13 @@ namespace Editor {
 
 		void execute() override;
 
+
+		ObjectTransformCommand(Engine::TransformComponent _oldposition, Engine::TransformComponent _newposition);
+		ObjectTransformCommand() = delete;
+
 	private:
-		Engine::DreamMath::vec2 _position;
-		Engine::DreamMath::vec2 _localposition;
+		Engine::TransformComponent oldposition;
+		Engine::TransformComponent newposition;
 
 	};
 
@@ -179,23 +148,7 @@ namespace Editor {
 		//undo the changes made to the objects
 		void undo() override;
 		//redo the changes made to the objects
-		//void redo();
-
-		void execute() override;
-
-	};
-
-	//commands for undo for gizmo
-	class ObjectGizmoCommand : public ObjectCommand
-	{
-	public:
-
-		//undo the changes made to the objects
-		void undo() override;
-		//redo the changes made to the objects
-		//void redo();
-
-		void record() override;
+		void redo();
 
 		void execute() override;
 
@@ -204,59 +157,29 @@ namespace Editor {
 	//command for undo naming of entity
 	class ObjectNameCommand : public ObjectCommand
 	{
-		Engine::Entity_id entity_selected = Engine::Entity_id{};
+		Engine::Entity_id entity_selected;
 
 	public:
 
 		//undo
 		void undo() override;
 
+		//redo
+		void redo() override;
+
 		void record() override;
 
 		void execute() override;
+
+		ObjectNameCommand(std::string _oldName, std::string _newName);
+		ObjectNameCommand() = delete;
+
+	private:
+		std::string newName;
+		std::string oldName;
+
 	};
 
-	//commands for undo 
-
-	//commands for adding state
-	//class ObjectAddState : public ObjectCommand
-	//{
-	//public:
-	//	std::string scene_id;
-	//	std::string newScene = std::string{};
-	//	std::string oldScene = std::string{};
-	//	Scene* currentScene = nullptr;
-
-	//	void SetOldScene(std::string oldScene);
-	//	void SetNewScene(std::string newScene);
-
-	//	//undo the changes made to the objects
-	//	void undo();
-	//	//redo the changes made to the objects
-	//	//void redo();
-
-	//private:
-	//	std::stack <std::unique_ptr<ICommand>> commands;
-
-	//};
-
-	////commands for deleting state
-	//class ObjectDeleteState : public ObjectCommand
-	//{
-	//public:
-	//	std::string scene_id;
-	//	std::string newScene = std::string{};
-	//	std::string oldScene = std::string{};
-
-	//	void SetOldScene(std::string oldScene);
-	//	void SetNewScene(std::string newScene);
-
-	//	//undo the changes made to the objects
-	//	void undo();
-	//	//redo the changes made to the objects
-	//	//void redo();
-
-	//};
 	}
 
 }

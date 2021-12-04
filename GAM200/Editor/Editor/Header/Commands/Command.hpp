@@ -36,29 +36,6 @@ Technology is prohibited.
 
 namespace Editor {
 
-	
-	//trying action handler to do undo 
-	//class Action
-	//{
-	//public:
-	//	void StartAction(const Engine::Entity_id* entity);
-	//	void UndoAction();
-
-	//private:
-	//	struct ActionList
-	//	{
-	//		Engine::Entity_id _entity;
-	//		Engine::TransformComponent trans;
-	//	};
-
-	//	std::stack<ActionList> frames;
-	//};
-	//struct Actions
-	//{
-	//	std::vector<EditorAction> history;
-	//	size_t size = 0;
-	//} m_actions;
-
 	//the Command Interface
 	class ICommand 
 	{
@@ -97,10 +74,7 @@ namespace Editor {
 
 		//redo the last command
 		void Redo();
-		
-		//Records last state
-		void Record();
-
+	
 		//store command
 		void StoreCommand(CommandPtr command);
 

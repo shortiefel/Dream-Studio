@@ -18,51 +18,15 @@ Technology is prohibited.
 
 namespace Editor {
 
-	//void Action::StartAction(const Engine::Entity_id* entity)
-	//{
-	//	auto _entity = entity;
-	//	auto transform = Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(*_entity);
-	//	auto frame = ActionList{ *_entity, *transform };
-	//	frames.push(frame);
-	//}
-	//void Action::UndoAction()
-	//{
-	//	if (frames.empty()) { return; }
-
-	//	auto lastFrame = frames.top();
-	//	auto& transformComp = *Engine::dreamECSGame->GetComponentPTR<Engine::TransformComponent>(lastFrame._entity);
-	//	transformComp = lastFrame.trans;
-	//	frames.pop();
-	//}
-
 	void UndoRedoManager::RecordState(CommandPtr cmd)
 	{
+		std::cout << "Record State!\n";
 		//push the command into undo stack
 		undostack.push(cmd);
 
 		//clear redo stack
 		redostack = {};
 
-	}
-
-	void UndoRedoManager::Record()
-	{
-		//get entity data and name
-		if (EntityId_Check(entity_selected)) {
-			return;
-		}
-
-		auto& entityMap = Engine::dreamECSGame->GetUsedEntityMap();
-		if (entityMap.empty()) {
-			return;
-		}
-		const auto& itr = entityMap.find(entity_selected);
-		if (itr == entityMap.end()) {
-			return;
-		}
-
-		std::string& entityName = itr->second.name;
-		Engine::dreamECSGame->DuplicateNameCheck(entityName);
 	}
 
 	void UndoRedoManager::Add(CommandPtr command)

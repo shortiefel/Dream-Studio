@@ -32,5 +32,4 @@ public class SceneManager
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetDrawMode_Engine(bool state);
-    
 }

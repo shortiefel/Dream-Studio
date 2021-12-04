@@ -27,6 +27,24 @@ public class PlayButton : MonoBehaviour
             Console.WriteLine("Play");
             SceneManager.LoadScene("NewGame");
         }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            SetHighscore(2, "CurrentScore");
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Console.WriteLine(GetHighscore("CurrentScore"));
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            SetHighscore(2, "HighScore");
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Console.WriteLine(GetHighscore("HighScore"));
+        }
     }
 
     public override void OnMouseExit()

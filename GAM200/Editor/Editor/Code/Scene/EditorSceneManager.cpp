@@ -48,7 +48,7 @@ namespace Editor {
 
             GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
         }
-        
+        fs.close();
         if (result)
             return false;
         return true;

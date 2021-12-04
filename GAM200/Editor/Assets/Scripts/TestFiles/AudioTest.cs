@@ -68,6 +68,14 @@ public class AudioTest : MonoBehaviour
                 animation.Play("more better");
         }
 
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            SetHighscore(2, "Highscore");
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Console.WriteLine(GetHighscore("Highscore"));
+        }
 
     }
 

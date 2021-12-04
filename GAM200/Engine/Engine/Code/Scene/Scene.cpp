@@ -178,9 +178,9 @@ namespace Engine {
         UISystem::GetInstance().Render();
         FontSystem::GetInstance().Render(dt);
 #else
-        if (Input::IsKeyPressed(Input_KeyCode::F)) {
-            Window::GetInstance().ToggleFullscreen(); 
-        }
+        //if (Input::IsKeyPressed(Input_KeyCode::F)) {
+        //    Window::GetInstance().ToggleFullscreen(); 
+        //}
 #endif
 
        

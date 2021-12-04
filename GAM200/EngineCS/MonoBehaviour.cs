@@ -103,6 +103,21 @@ public class MonoBehaviour : IBehaviour
         transform = new Transform(id);
     }
 
+    public static void SetHighscore(int value, string name)
+    {
+        SetHighscore_Engine(value, name);
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetHighscore_Engine(int value, string name);
+
+    public static int GetHighscore(string name)
+    {
+        GetHighscore_Engine(out int value, name);
+        return value;
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetHighscore_Engine(out int value, string name);
+
     /*public T GetComponent<T>() where T : class, IComponent, new()
     {
         if (HasComponent<T>(entityId))

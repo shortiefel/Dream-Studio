@@ -44,108 +44,78 @@ namespace Engine
 	}
 	void AssetManager::Create()
 	{
+		stbi_set_flip_vertically_on_load(1);
 		LOG_INSTANCE("AssetManager created");
 	}
 
 	void AssetManager::Destroy()
 	{
+		// For textures
+		for (auto& a : textureList)
+		{
+			glDeleteTextures(1, &a.second.texture_handle);
+		}
+		textureList.clear();
+
+		// For fonts
+		for (auto& b : fontList)
+		{
+			for (auto& c : b.second.characters)
+			{
+				glDeleteTextures(1, &c.second.textureid);
+			}
+		}
+		fontList.clear();
 		LOG_INSTANCE("AssetManager destroyed");
 	}
 
-	GLuint AssetManager::LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel)
+	// Function loads texture into container without checking if it exist
+	GLuint AssetManager::LoadTextureInternal(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel)
 	{
-		//Check if it exist first before loading
-		if (textureList.find(filename) != textureList.end()) return textureList[filename];
 
+		//using ResourceManager LoadTextureInternal
+		// Read png file
 		stbi_uc* temBuff = stbi_load(filename.c_str(), x, y, channels_in_files, desired_channel);
 
-		GLuint texobj_hdl;
-
-		// define and initialize a handle to texture object that will
-		// encapsulate two-dimensional textures
+		GLuint texobj_hdl{};
 		glCreateTextures(GL_TEXTURE_2D, 1, &texobj_hdl);
 
-		// allocate GPU storage for texture image data loaded from file
-		glTextureStorage2D(texobj_hdl, 1, GL_RGBA8, *x, *y);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		// copy image data from client memory to GPU texture buffer memory
+		glTextureStorage2D(texobj_hdl, 1, GL_RGBA8, *x, *y);
 		glTextureSubImage2D(texobj_hdl, 0, 0, 0, *x, *y, GL_RGBA, GL_UNSIGNED_BYTE, temBuff);
 
-		if (temBuff)
-		{
-			stbi_image_free(temBuff);
-		}
+		glBindTexture(GL_TEXTURE_2D, 0);
 
-		//store in a container to be reused later
-		textureList[filename] = texobj_hdl;
-		return textureList[filename];
+		if (temBuff) stbi_image_free(temBuff);
+
+		// Store in container to be reused later
+		textureList[filename].texture_handle = texobj_hdl;
+		textureList[filename].width = *x;
+		textureList[filename].height = *y;
+
+		return textureList[filename].texture_handle;
 	}
 
-	GLuint AssetManager::LoadFont(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel)
+	GLuint AssetManager::LoadTexture(std::string _filename, int* x, int* y, int* channels_in_files, int desired_channel)
 	{
-		//Check if it exist first before loading
-		if (fontList.find(filename) != fontList.end()) return fontList[filename];
-
-		stbi_uc* temBuff = stbi_load(filename.c_str(), x, y, channels_in_files, desired_channel);
-
-		GLuint fontobj_hdl;
-
-		// define and initialize a handle to texture object that will
-		// encapsulate two-dimensional textures
-		glCreateTextures(GL_TEXTURE_2D, 1, &fontobj_hdl);
-
-		// allocate GPU storage for texture image data loaded from file
-		glTextureStorage2D(fontobj_hdl, 1, GL_RGBA8, *x, *y);
-
-		// copy image data from client memory to GPU texture buffer memory
-		glTextureSubImage2D(fontobj_hdl, 0, 0, 0, *x, *y, GL_RGBA, GL_UNSIGNED_BYTE, temBuff);
-
-		if (temBuff)
-		{
-			stbi_image_free(temBuff);
-		}
-
-		//store in a container to be reused later
-		fontList[filename] = fontobj_hdl;
-		return fontList[filename];
-
+		//using ResourceManager LoadTexture
+		return ResourceManager::GetInstance().LoadTexture(_filename, x, y, channels_in_files, desired_channel);
 	}
 
-	//void AssetManager::addResource(Resource* resource, const std::string& name, const std::string& path)
-	//{
-	//	//resource->getResourcePath(path);
-	//	//resource->getResourceId(mResources.size());
-	//	resource->loadResource();
 
-	//	mResources.insert(std::pair<std::string, Resource*>(name, resource));
-	//}
-	//with sfml graphic test later
-	//void AssetManager::loadTexture(std::string name, std::string fileName)
-	//{
-	//	sf::Texture tex;
-	//	if (tex.loadFromFile(fileName))
-	//	{
-	//		this->textures_[name] = tex;
-	//	}
-	//}
+	bool AssetManager::LoadFont(std::string _filename)
+	{
+		//using ResourceManager LoadFont
+		return ResourceManager::GetInstance().LoadFont(_filename);
+	}
 
-	//sf::Texture& AssetManager::GetTexture(std::string name)
-	//{
-	//	return this->textures_.at(name);
-	//}
+	void AssetManager::UpdateList()
+	{
 
-	//void AssetManager::loadFont(std::string name, std::string fileName)
-	//{
-	//	sf::Font font;
-	//	if (font.loadFromFile(fileName))
-	//	{
-	//		this->fonts_[name] = font;
-	//	}
-	//}
-
-	//sf::Font& AssetManager::GetFont(std::string name)
-	//{
-	//	return this->fonts_.at(name);
-	//}
+	}
 
 }

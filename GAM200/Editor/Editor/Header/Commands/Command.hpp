@@ -17,6 +17,8 @@ Technology is prohibited.
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
 
+#include "Engine/Header/ECS/DreamECS.hpp"
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 #include "Engine/Header/Event/MouseEvent.hpp"
 #include "Engine/Header/Event/KeyEvent.hpp"
 #include "Engine/Header/Event/OverlapColliderEvent.hpp"
@@ -31,7 +33,6 @@ Technology is prohibited.
 #include <memory>
 #include <list>
 
-//#pragma warning(disable:2259)
 
 namespace Editor {
 
@@ -73,7 +74,7 @@ namespace Editor {
 
 		//redo the last command
 		void Redo();
-		
+	
 		//store command
 		void StoreCommand(CommandPtr command);
 
@@ -83,7 +84,7 @@ namespace Editor {
 		//clear all undo redo histroy
 		void ClearHistory();
 
-		//wrap the stack using a std::vector for better performance
+		//wrap the stack using a std::vector/deque for better performance
 		std::deque<CommandPtr> current_command;
 		std::deque<CommandPtr> undo_command;
 
@@ -93,12 +94,14 @@ namespace Editor {
 		std::stack<CommandPtr> undostack;
 		std::stack<CommandPtr> redostack;
 
+
 		CommandPtr future_command; //for gizmo to store command
 
 
 
 	private:
 		unsigned int maximum;
+		Engine::Entity_id entity_selected{};
 
 	};
 }

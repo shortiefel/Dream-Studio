@@ -23,6 +23,8 @@ Technology is prohibited.
 #include "Engine/Header/Scene/Scene.hpp"
 
 #define TEXT_BOX_SIZE 70
+#define REMOVE_FROM_SCENEPATH scenePath = scenePath.string().substr(scenePath.string().find_last_of("\\") + 1);\
+							 scenePath = scenePath.string().substr(0, scenePath.string().find_last_of("."));
 
 namespace Editor {
 
@@ -86,21 +88,19 @@ namespace Editor {
 				{
 					const auto& path = directory.path();
 					auto relative_path = std::filesystem::relative(path, _assetPath);
-					std::string filenameString = relative_path.string();
+					std::string file_name = relative_path.filename().string();
 
-					ImGui::PushID(filenameString.c_str());
+					ImGui::PushID(file_name.c_str());
 					GLuint directory_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/DirectoryIcon.png", &height, &width, 0, 4);
 					GLuint file_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/FileIcon.png", &height, &width, 0, 4);
 					GLuint asset_icon = directory.is_directory() ? directory_icon : file_icon;
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 					ImGui::ImageButton((ImTextureID)static_cast<uintptr_t>(asset_icon), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
-
-
-					//const wchar_t* itemPath = relative_path.c_str();
+				
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 					{
 						const wchar_t* itemPath = relative_path.c_str();
-						ImGui::Text("I'm Dragging.");
+						ImGui::Text("%s", file_name.c_str());
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
@@ -114,8 +114,32 @@ namespace Editor {
 							_currentDirectory /= path.filename();
 						}
 
+						std::filesystem::path scenePath = std::filesystem::path(_assetPath) / path;
+						if (scenePath.extension().string() != ".scene")
+						{
+							std::cout << "Unable to load scene file\n";
+						}
+						else {
+							if (!scenePath.filename().string().empty())
+							{
+								REMOVE_FROM_SCENEPATH;
+								scenePath.replace_extension("");
+								Engine::SceneManager::GetInstance().ChangeScene(std::move(scenePath.string()));
+							}
+						}
 					}
-					ImGui::TextWrapped(filenameString.c_str());
+
+					//create new folder
+					//if (ImGui::BeginPopupContextItem("##AssetPanel"))
+					//{
+					//	if (ImGui::Button("Create Folder##CreateFolder", { ImGui::GetContentRegionAvail().x, 0 }))
+					//	{
+					//		std::filesystem::create_directories(_assetPath.string() + " New Folder");
+					//	}
+					//	ImGui::EndPopup();
+					//}
+
+					ImGui::TextWrapped(file_name.c_str());
 
 					ImGui::NextColumn();
 

@@ -903,14 +903,16 @@ namespace Editor {
 					{
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Add Sound");
-						ImGui::SameLine(halfWidth);
-						ImGui::Checkbox("##isSound", &(soundComp->isSound));
-						if (soundComp->isSound == true)
-						{
-							ImGui::Text("Sound Picker");
+						/*ImGui::SameLine(halfWidth);
+						ImGui::Checkbox("##isSound", &(soundComp->isSound));*/
+						//if (soundComp->isSound == true)
+						//{
+							//ImGui::Text("Sound Picker");
 							ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Sound Picker##PickSound"))
 							{
+								soundComp->isSound = true;
+
 								std::string filePath = Engine::FileWindowDialog::OpenFile("Files | (*.wav;)\0*.wav; \0");
 
 								if (!filePath.empty())
@@ -928,7 +930,7 @@ namespace Editor {
 									//Engine::SoundManager::GetInstance().GetSound(filePath, soundComp->soundName);
 								}
 							}
-						}
+						//}
 
 						ImGui::Spacing();
 

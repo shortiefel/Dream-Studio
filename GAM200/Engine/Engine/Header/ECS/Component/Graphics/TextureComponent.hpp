@@ -65,6 +65,7 @@ namespace Engine
 		float cellWidth, cellHeight;
 
 		std::string currAnimationState;
+		std::string nextAnimationState;
 		std::unordered_map <std::string, AnimationState> animationStateList{};
 
 		Math::vec2 minUV, maxUV; // To be passed to shader files (batch rendering)
@@ -78,11 +79,13 @@ namespace Engine
 		void AnimationStateRename(std::string oldName, std::string newName);
 		void AnimationUpdate(float _dt, AnimationState& _state);
 		void SetUV(AnimationState& _state);
+		void ResetAnimationState(void);
 
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png",
-			GraphicShape _shape = GraphicShape::Square, Math::vec4 _colour = {1.0f, 1.0f, 1.0f, 1.0f}, 
-			bool _animation = false, std::string _currAnimationState = "", bool _active = true);
+			GraphicShape _shape = GraphicShape::Square, Math::vec4 _colour = { 1.0f, 1.0f, 1.0f, 1.0f },
+			bool _animation = false, std::string _currAnimationState = "", std::string _nextAnimationState = "",
+			bool _active = true);
 
 
 		TextureComponent& Deserialize(const DSerializer& _serializer);

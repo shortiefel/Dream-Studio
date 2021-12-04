@@ -29,7 +29,7 @@ namespace Engine
 	// Constructor for AnimationState
 	AnimationState::AnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop) :
 		stateName{ _stateName },
-		stateRow{ _stateRow }, startX{ _startX }, endX{ _endX }, currFrame{ _startX },
+		stateRow{ _stateRow }, startX{ _startX }, endX{ _endX }, currFrame{ _startX - 1 },
 		fTime{ _fTime }, aTime{ 0.f },
 		isLoop{ _isLoop }, aComplete{ false } {};
 

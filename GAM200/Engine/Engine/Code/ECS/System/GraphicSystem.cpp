@@ -57,9 +57,16 @@ namespace Engine
 
 			if (transform->layer == layer)
 			{
+				// go to next state and resets state variables
+				if (texture.currAnimationState != texture.nextAnimationState)
+				{
+					texture.currAnimationState = texture.nextAnimationState;
+					texture.ResetAnimationState();
+				}
+
 				auto itr = texture.animationStateList.find(texture.currAnimationState);
 
-				if (itr != texture.animationStateList.end()) 
+				if (itr != texture.animationStateList.end())
 				{
 					AnimationState& state = itr->second;
 

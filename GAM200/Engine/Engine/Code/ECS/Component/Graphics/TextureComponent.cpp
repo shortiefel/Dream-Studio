@@ -29,17 +29,19 @@ namespace Engine
 	// Constructor for AnimationState
 	AnimationState::AnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop) :
 		stateName{ _stateName },
-		stateRow{ _stateRow }, startX{ _startX }, endX{ _endX }, currFrame{ _startX },
+		stateRow{ _stateRow }, startX{ _startX }, endX{ _endX }, currFrame{ _startX - 1 },
 		fTime{ _fTime }, aTime{ 0.f },
 		isLoop{ _isLoop }, aComplete{ false } {};
 
 	// Contructor for Texture Component
 	TextureComponent::TextureComponent(Entity_id _ID, const std::string _path,
-		GraphicShape _shape, Math::vec4 _colour, bool _animation, std::string _currAnimationState, bool _active) :
+		GraphicShape _shape, Math::vec4 _colour, bool _animation, 
+		std::string _currAnimationState, std::string _nextAnimationState,
+		bool _active) :
 		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape }, colour {_colour},
 		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 }, totalRows{ 1 }, totalColumns{ 1 },
 		minUV{ 0.01f, 0.01f }, maxUV{ 0.99f, 0.99f },
-		isAnimation{ _animation }, currAnimationState{ _currAnimationState },
+		isAnimation{ _animation }, currAnimationState{ _currAnimationState }, nextAnimationState{ _nextAnimationState },
 		isActive{ _active }
 	{
 		GraphicImplementation::SetTexture(this, filepath);
@@ -90,6 +92,17 @@ namespace Engine
 				  static_cast<float>(_state.stateRow * cellHeight) / height };
 	}
 
+	// Function that resets the current animation state
+	void TextureComponent::ResetAnimationState()
+	{
+		auto itr = animationStateList.find(currAnimationState);
+		AnimationState& state = itr->second;
+
+		state.aComplete = false;
+		state.aTime = 0.f;
+		state.currFrame = state.startX - 1;
+	}
+
 	// Function that finds the name in container and rename it to param
 	// to be called by the editor for renaming states
 	void TextureComponent::AnimationStateRename(std::string oldName, std::string newName)
@@ -104,7 +117,6 @@ namespace Engine
 			newState.stateName = newName;
 
 			AddRefreshAnimationState(newState);
-			//AddRefreshAnimationState(newName, newState);
 			animationStateList.erase(itr);
 		}
 	}

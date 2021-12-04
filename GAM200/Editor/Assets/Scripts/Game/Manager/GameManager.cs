@@ -26,29 +26,29 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
 
         keysController.OnRoadPlacement += RoadPlacementHandler;
-        keysController.OnHousePlacement += HousePlacementHandler;
-        keysController.OnSpecialPlacement += SpecialPlacementHandler;
+        //keysController.OnHousePlacement += HousePlacementHandler;
+        //keysController.OnSpecialPlacement += SpecialPlacementHandler;
 
     }
 
-    private void SpecialPlacementHandler()
-    {
-        Debug.Log("Call Special");
+    //private void SpecialPlacementHandler()
+    //{
+    //    Debug.Log("Call Special");
 
-        ClearInputActions();
-        inputManager.OnMouseClick += structureManager.PlaceSpecial;
-    }
+    //    ClearInputActions();
+    //    inputManager.OnMouseClick += structureManager.PlaceSpecial;
+    //}
 
 
-    // place notification icon here
-    private void HousePlacementHandler()
-    {
-        Debug.Log("call place house");
+    //// place notification icon here
+    //private void HousePlacementHandler()
+    //{
+    //    Debug.Log("call place house");
 
-        ClearInputActions();
-        inputManager.OnMouseClick += structureManager.PlaceHouse;
-        //StartCoroutine(waitABit(new Vector2Int(structureManager.PlaceHouse.x, structureManager.PlaceHouse.y)));
-    }
+    //    ClearInputActions();
+    //    inputManager.OnMouseClick += structureManager.PlaceHouse;
+    //    //StartCoroutine(waitABit(new Vector2Int(structureManager.PlaceHouse.x, structureManager.PlaceHouse.y)));
+    //}
 
 
     private void RoadPlacementHandler()

@@ -12,14 +12,18 @@ public class SpawnManager : MonoBehaviour
     private Vector2Int randomRoadPosition;
 
     private int scoreToSpawn;
+    int score;
     float timer;
     float maxTimer;
+
+    GameState gameState;
 
     public override void Start()
     {
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
         structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
         roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
+        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         scoreToSpawn = 0;
 
@@ -108,39 +112,40 @@ public class SpawnManager : MonoBehaviour
 
         if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
         {
-            //if (scoreSystem.score == scoreToSpawn)
+            //if (score == scoreToSpawn)
             //{
                 //Debug.Log(housePosition.x);
                 //Debug.Log(housePosition.y);
 
                 roadManager.PlaceSpawnHouse(roadPosition);
                 roadManager.PlaceSpawnDestination(roadPosition2);
-            Debug.Log("here");
+                Debug.Log("here");
                 //structureManager.PlaceHouse(housePosition);
-                //scoreToSpawn += 5;
+                scoreToSpawn += 5;
             //}
         }
 
     }
 
-    public override void Update()
-    {
-        timer += Time.deltaTime;
-        if (timer > maxTimer)
-        {
-            
-            CheckPosition();
-            Debug.Log("hous espawner");
-
-            timer = 0f;
-        }
-    }
-
-    //private void Update()
+    //public override void Update()
     //{
-    //    if (scoreSystem.score == scoreToSpawn)
+    //    timer += Time.deltaTime;
+    //    if (timer > maxTimer)
     //    {
+
     //        CheckPosition();
+    //        Debug.Log("hous espawner");
+
+    //        timer = 0f;
     //    }
     //}
+
+    public override void Update()
+    {
+        score = gameState.GetScore();
+        if (score == scoreToSpawn)
+        {
+            CheckPosition();
+        }
+    }
 }

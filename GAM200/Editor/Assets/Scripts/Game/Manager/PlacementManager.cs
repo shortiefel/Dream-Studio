@@ -46,9 +46,9 @@ public class PlacementManager : MonoBehaviour
     //    //DestroyNatureAt(position);
     //}
 
-    internal void PlaceObjectOnTheMap(Vector2Int position, GameObject structurePrefab, CellType type, int width = 1, int height = 1)
+    internal void PlaceObjectOnTheMap(Vector2Int position, GameObject structurePrefab, CellType type, float rotation, int width = 1, int height = 1)
     {
-        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, 3);
+        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, 3, rotation);
         //var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
         //if (structureNeedingRoad != null)
         //{
@@ -87,14 +87,15 @@ public class PlacementManager : MonoBehaviour
 
     //private void DestroyNatureAt(Vector2Int position)
     //{
-    //    //RaycastHit[] hits = Physics.BoxCastAll(position + new Vector3(0, 0.5f, 0), new Vector3(0.5f, 0.5f, 0.5f),
-    //                                              transform.up, Quaternion.identity, 1f, 1 << LayerMask.NameToLayer("Nature"));
-    //    RaycastHit2D[] hits = Physics2D.BoxCastAll(position + new Vector2(0, 0.5f), new Vector2(0.5f, 0.5f),
-    //                                              transform.up, Quaternion.identity, 1f, 1 << LayerMask.NameToLayer("Nature"));
-    //    foreach (var item in hits)
-    //    {
-    //        Destroy(item.collider.gameObject);
-    //    }
+    //    //RaycastHit2D[] hits = Physics2D.BoxCastAll(position + new Vector2(0, 0.5f), new Vector2(0.5f, 0.5f),
+    //    //                                          transform.up, Quaternion.identity, 1f, 1 << LayerMask.NameToLayer("Nature"));
+
+    //    RaycastHit2D hits = Physics2D.RayCast(new Vector3(position.x, position.y, 0), Vector2.zero);
+
+    //    //foreach (var item in hits)
+    //    //{
+    //    //    Destroy(item.collider.gameObject);
+    //    //}
     //}
 
     internal bool CheckIfPositionIsFree(Vector2Int position)
@@ -121,10 +122,10 @@ public class PlacementManager : MonoBehaviour
         return true;
     }
 
-    internal void PlaceTemporaryStructure(Vector2Int position, GameObject structurePrefab, CellType type, int layer, bool single = false)
+    internal void PlaceTemporaryStructure(Vector2Int position, GameObject structurePrefab, CellType type, int layer, bool single = false, float rotation = 0)
     {
         placementGrid[position.x, position.y] = type;
-        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, layer);
+        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, layer, rotation);
         
         //GameObject newStructure = Instantiate(roadStraight, new Vector3 (position.x, position.y, 0), Quaternion.identity);
         //Debug.Log("Placed road");
@@ -143,13 +144,14 @@ public class PlacementManager : MonoBehaviour
         return neighbours;
     }
 
-    private StructureModel CreateANewStructureModel(Vector2Int position, GameObject structurePrefab, CellType type, int layer = 2)
+    private StructureModel CreateANewStructureModel(Vector2Int position, GameObject structurePrefab, CellType type, int layer = 2, float rotation = 0)
     {
         //GameObject structure = new GameObject(type.ToString());
         
         //GameObject structure = Instantiate(structurePrefab, transform);
         GameObject structure = Instantiate(structurePrefab, new Vector3(position.x, position.y, 0f), layer);
         structure.transform.SetParent(transform);
+        structure.transform.angle = rotation;
         //structure.transform.localPosition = new Vector2(position.x, position.y);
  
         //var structureModel = structure.AddComponent<StructureModel>();

@@ -46,6 +46,7 @@ namespace Editor {
 
 	bool firstEnter = true;
 	Engine::TransformComponent firstTransform;
+	bool enter = false;
 
 	namespace GUI_Windows {
 
@@ -120,9 +121,26 @@ namespace Editor {
 						Engine::dreamECSGame->DuplicateNameCheck(newName);
 						Engine::dreamECSGame->ChangeName(entityName, newName);
 						entityName = newName;
-
+						enter = true;
 					}
 				}
+
+				//if (enter && firstEnter)
+				//{
+				//	firstEnter = false;
+				//	//Record here 
+				//	firstTransform = *transComp;
+				//	std::cout << "Holding \n";
+				//}
+
+				//if (!enter && !firstEnter)
+				//{
+				//	firstEnter = true;
+				//	//Record State
+				//	auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
+				//	UndoRedoManager::GetInstance().RecordState(move_command);
+				//	std::cout << transComp->GetEntityId() << "\n";
+				//}
 
 				ImGui::PopItemWidth();
 
@@ -400,13 +418,37 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderXPos", &colComp->offset_position.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+							enter = true;
+						}
+
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderYPos", &colComp->offset_position.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+							enter = true;
+						}
+
+						if (enter && firstEnter)
+						{
+							firstEnter = false;
+							//Record here 
+							firstTransform = *transComp;
+							std::cout << "Holding \n";
+						}
+
+						if (!enter && !firstEnter)
+						{
+							firstEnter = true;
+							//Record State
+							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
+							UndoRedoManager::GetInstance().RecordState(move_command);
+							std::cout << transComp->GetEntityId() << "\n";
+						}
 						ImGui::PopFont();
 
 						ImGui::AlignTextToFramePadding();
@@ -461,13 +503,37 @@ namespace Editor {
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderXscale", &colComp->offset_scale.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+							enter = true;
+						}
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
 						if (ImGui::DragFloat("##ColliderYscale", &colComp->offset_scale.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+							enter = true;
+						}
+
+						if (enter && firstEnter)
+						{
+							firstEnter = false;
+							//Record here 
+							firstTransform = *transComp;
+							std::cout << "Holding \n";
+						}
+
+						if (!enter && !firstEnter)
+						{
+							firstEnter = true;
+							//Record State
+							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
+							UndoRedoManager::GetInstance().RecordState(move_command);
+							std::cout << transComp->GetEntityId() << "\n";
+						}
+
 						ImGui::PopFont();
 
 
@@ -482,7 +548,27 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
 						if (ImGui::DragFloat("##ColliderRotate", &colComp->angle, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+							enter = true;
+						}
+						if (enter && firstEnter)
+						{
+							firstEnter = false;
+							//Record here 
+							firstTransform = *transComp;
+							std::cout << "Holding \n";
+						}
+
+						if (!enter && !firstEnter)
+						{
+							firstEnter = true;
+							//Record State
+							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
+							UndoRedoManager::GetInstance().RecordState(move_command);
+							std::cout << transComp->GetEntityId() << "\n";
+						}
+
 						ImGui::PopFont();
 
 						ImGui::Spacing();

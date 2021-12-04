@@ -47,8 +47,8 @@ namespace Engine
 
             // Shader for Collision Rendering
             shdr_files = {
-                std::make_pair(GLSLShader::ShaderType::Vertex_Shader, "Assets/Shaders/Collision.vert"),
-                std::make_pair(GLSLShader::ShaderType::Fragment_Shader, "Assets/Shaders/Collision.frag")
+                std::make_pair(GLSLShader::ShaderType::Vertex_Shader, "Assets/Shaders/Lines.vert"),
+                std::make_pair(GLSLShader::ShaderType::Fragment_Shader, "Assets/Shaders/Lines.frag")
             };
 
             GLSLShader shdr_pgm2;

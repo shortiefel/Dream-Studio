@@ -1,8 +1,10 @@
 /* Start Header**********************************************************************************/
 /*
-@file    Collision.frag
+@file    Lines.frag
 @author  Chia Yi da		c.yida@digipen.edu
 @date    07/06/2021
+
+Used for line drawings, including debug draw
 */
 /* End Header **********************************************************************************/
 

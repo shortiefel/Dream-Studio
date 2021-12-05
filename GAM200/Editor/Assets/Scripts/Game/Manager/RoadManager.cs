@@ -15,7 +15,8 @@ public class RoadManager : MonoBehaviour
     private Vector2Int randomDestinationPosition;
     private bool placementMode;
 
-    private AudioSource sound;
+    private AudioSource placeSound;
+    private AudioSource removeSound;
 
     //private void Start()
     public override void Start()
@@ -28,7 +29,8 @@ public class RoadManager : MonoBehaviour
 
         placementMode = false;
 
-        sound = GetComponent<AudioSource>();
+        placeSound = GameObject.Find("DrawRoad").GetComponent<AudioSource>();
+        removeSound = GameObject.Find("RemoveRoad").GetComponent<AudioSource>();
     }
 
     public void PlaceSpawnHouse(Vector2Int position)
@@ -276,6 +278,22 @@ public class RoadManager : MonoBehaviour
         temporaryPlacementPositions.Clear();
         startPosition = Vector2Int.zero;
 
-        sound.Play();
+        placeSound.Play();
     }
+
+    public void RemoveRoad(Vector2Int position)
+    {
+        if (placementManager.CheckIfPositionInBound(position) == false)
+            return;
+        if (placementManager.CheckIfPositionIsFree(position) == false)
+        {
+            if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
+            {
+                placementManager.RemoveCurrentGrid(position);
+                placementMode = false;
+                removeSound.Play();
+            }
+        }
+    }
+
 }

@@ -50,8 +50,7 @@ public class GameManager : MonoBehaviour
     //    //StartCoroutine(waitABit(new Vector2Int(structureManager.PlaceHouse.x, structureManager.PlaceHouse.y)));
     //}
 
-
-    private void RoadPlacementHandler()
+    internal void RoadPlacementHandler()
     {
         Debug.Log("Call Road");
         ClearInputActions();
@@ -59,6 +58,12 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick += roadManager.PlaceRoad;
         inputManager.OnMouseHold += roadManager.PlaceRoad;
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
+    }
+
+    internal void RemoveRoadHandler()
+    {
+        ClearInputActions();
+        inputManager.OnMouseClick += roadManager.RemoveRoad;
     }
 
     private void ClearInputActions()
@@ -69,9 +74,11 @@ public class GameManager : MonoBehaviour
     }
 
     //private void Update()
-    public override void Update()
-    {
-        //cameraMovement.MoveCamera(new Vector2(inputManager.CameraMovementVector.x, inputManager.CameraMovementVector.y));
-        
-    }
+    //public override void Update()
+    //{
+    //    //cameraMovement.MoveCamera(new Vector2(inputManager.CameraMovementVector.x, inputManager.CameraMovementVector.y));
+    //    
+    //}
+
+    
 }

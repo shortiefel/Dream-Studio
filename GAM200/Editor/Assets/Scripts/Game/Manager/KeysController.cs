@@ -17,31 +17,31 @@ public class KeysController : MonoBehaviour
     // Update is called once per frame
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            //OnRoadPlacement?.Invoke();
-            if (OnRoadPlacement != null)
-                OnRoadPlacement.Invoke();
-        }
-
-        else if (Input.GetKeyDown(KeyCode.H))
-        {
-            //Debug.Log("pressed h");
-            //OnHousePlacement?.Invoke();
-            if (OnHousePlacement != null)
-                OnHousePlacement.Invoke();
-        }
-
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            //OnSpecialPlacement?.Invoke();
-            if (OnSpecialPlacement != null)
-                OnSpecialPlacement.Invoke();
-        }
-
-        else if (Input.GetKeyDown(KeyCode.C))
-        {
-            aiDirector.SpawnACar();
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    //OnRoadPlacement?.Invoke();
+        //    if (OnRoadPlacement != null)
+        //        OnRoadPlacement.Invoke();
+        //}
+        //
+        //else if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    //Debug.Log("pressed h");
+        //    //OnHousePlacement?.Invoke();
+        //    if (OnHousePlacement != null)
+        //        OnHousePlacement.Invoke();
+        //}
+        //
+        //else if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    //OnSpecialPlacement?.Invoke();
+        //    if (OnSpecialPlacement != null)
+        //        OnSpecialPlacement.Invoke();
+        //}
+        //
+        //else if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    aiDirector.SpawnACar();
+        //}
     }
 }

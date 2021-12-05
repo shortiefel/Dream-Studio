@@ -123,4 +123,9 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             notification.ResetTimer();
         }
     }
+
+    internal void DeleteModel()
+    {
+        Destroy(entityId);
+    }
 }

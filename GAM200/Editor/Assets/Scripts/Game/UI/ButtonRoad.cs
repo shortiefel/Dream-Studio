@@ -3,9 +3,13 @@ public class ButtonRoad : MonoBehaviour
 {
     UI buttonUI;
     bool result;
+
+    GameManager gameManager;
+
     public override void Start()
     {
         buttonUI = GetComponent<UI>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         if (transform.entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId)
         {
@@ -30,9 +34,9 @@ public class ButtonRoad : MonoBehaviour
         {
             //SceneManager.LoadScene("MainMenu");
             if (result)
-                Debug.Log("Change to draw");
+                gameManager.RoadPlacementHandler();
             else
-                Debug.Log("Change to delete");
+                gameManager.RemoveRoadHandler();
         }
     }
 

@@ -27,16 +27,17 @@ public class AIDirector : MonoBehaviour
         }
     }
 
-    public void SpawnAHouseCar(StructureModel house)
+    public bool SpawnAHouseCar(StructureModel house)
     {
         /*foreach (var house in placementManager.GetAllHouses())
         {*/
         if (house != null)
-            TrySpawninACar(house, placementManager.GetRandomSpecialStrucutre());
+            return TrySpawninACar(house, placementManager.GetRandomSpecialStrucutre());
+        return false;
         //}
     }
 
-    private void TrySpawninACar(StructureModel startStructure, StructureModel endStructure)
+    private bool TrySpawninACar(StructureModel startStructure, StructureModel endStructure)
     {
         Console.WriteLine("here but go in ?");
         if (startStructure != null && endStructure != null)
@@ -55,7 +56,7 @@ public class AIDirector : MonoBehaviour
             if (path.Count == 0)
             {
                 Console.WriteLine("No path exist");
-                return;
+                return false;
             }
             //return;
             //if (path == null) return;
@@ -80,7 +81,10 @@ public class AIDirector : MonoBehaviour
             Console.WriteLine("Set path2: " + path.Count);
             //car.GetComponent<CarAI>().SetPath(path.ConvertAll(x => (Vector2)x));
             car.GetComponent<CarAI>().SetPath(path, ref endStructure);
+            return true;
         }
+
+        return false;
     }
 
     private Prefab SelectACarPrefab()

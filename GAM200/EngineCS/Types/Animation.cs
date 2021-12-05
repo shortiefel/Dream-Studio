@@ -16,6 +16,7 @@ Technology is prohibited.
 
 using System.Runtime.CompilerServices; //For internal calls
 
+using System;
 public class Animation : IComponent
 {
     public uint entityId { get; set; }
@@ -24,7 +25,6 @@ public class Animation : IComponent
 
     public void Play(string _state)
     {
-        //SetAudioSource_Play_Engine(entityId);
         SetAnimation_Engine(entityId, _state);
     }
 

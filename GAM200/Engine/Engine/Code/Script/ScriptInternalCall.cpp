@@ -803,7 +803,7 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void SetAnimation_Engine(unsigned int entityID, MonoString * _state) {
 		char* tempText = mono_string_to_utf8(_state);
-		SetEngineType(entityID, TextureComponent, currAnimationState, std::string{ tempText });
+		SetEngineType(entityID, TextureComponent, nextAnimationState, std::string{ tempText });
 		mono_free(tempText);
 	}
 

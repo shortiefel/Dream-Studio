@@ -62,9 +62,13 @@ namespace Engine {
 		loop = _serializer.GetValue<bool>("IsLoop");
 		//Pause = _serializer.GetValue<bool>("IsPause");
 		filepath = _serializer.GetValue<std::string>("filepath");
+		soundName = filepath.substr(filepath.find_last_of("\\") + 1);
+		soundName = soundName.substr(0, soundName.find_last_of("."));
+
 		//SoundManager::GetInstance().GetSound(filepath, soundName);
 		volume = _serializer.GetValue<float>("volume");
 		isSound = _serializer.GetValue<bool>("isSound");
+		soundType = static_cast<SoundGrp>(_serializer.GetValue<int>("SoundGroup"));
 
 
 		return *this;
@@ -80,6 +84,7 @@ namespace Engine {
 		//std::cout << "filepath: " << filepath << "\n";
 		_serializer.SetValue("volume", volume);
 		_serializer.SetValue("isSound", isSound);
+		_serializer.SetValue("SoundGroup", static_cast<int>(soundType));
 
 	}
 

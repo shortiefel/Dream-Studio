@@ -963,10 +963,27 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 
-						ImGui::Combo("##soundGroup", index, soundName, IM_ARRAYSIZE(soundName));
+						/*ImGui::Combo("##soundGroup", index, soundName, IM_ARRAYSIZE(soundName));
 						if (static_cast<int>(soundComp->soundType) != *index)
 						{
 							soundComp->soundType = static_cast<Engine::SoundGrp>(*index);
+						}*/
+
+						if (ImGui::BeginCombo("##soundGroup", soundName[*index], flags))
+						{
+							for (int i{ 0 }; i < 3; i++) {
+								const bool isSelected = (*index == i);
+								if (ImGui::Selectable(soundName[i], isSelected)) {
+									*index = i;
+								}
+
+								// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+								//if (isSelected)
+									//ImGui::SetItemDefaultFocus();
+
+							}
+
+							ImGui::EndCombo();
 						}
 
 						ImGui::Spacing();

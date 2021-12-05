@@ -96,11 +96,13 @@ namespace Engine
 	void TextureComponent::ResetAnimationState()
 	{
 		auto itr = animationStateList.find(currAnimationState);
-		AnimationState& state = itr->second;
+		if (itr != animationStateList.end()) {
+			AnimationState& state = itr->second;
 
-		state.aComplete = false;
-		state.aTime = 0.f;
-		state.currFrame = state.startX - 1;
+			state.aComplete = false;
+			state.aTime = 0.f;
+			state.currFrame = state.startX - 1;
+		}
 	}
 
 	// Function that finds the name in container and rename it to param

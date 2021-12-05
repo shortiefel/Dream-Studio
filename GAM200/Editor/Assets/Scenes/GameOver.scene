@@ -1,1 +1,108 @@
-[{"Entity":{"Name":"Camera","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"Layer":2,"IsActive":true},"CameraComponent":{"Height":100,"FOV":1.0,"AR":1.7777777910232545,"IsActive":true}},{"Entity":{"Name":"BG","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.6929988861083984],"LocalPosition":[0.0,0.6929988861083984],"Scale":[90.0,52.0],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Default_BG-01.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true},"SoundComponent":{"IsActive":true,"IsLoop":false,"filepath":"Assets\\Sound\\MainMenu.wav","volume":100.0,"isSound":true},"ScriptComponent":[{"Class":"MusicPlayer","IsActive":true}]},{"Entity":{"Name":"DefaultHS","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-36.0,11.5],"LocalPosition":[-36.0,11.5],"Scale":[2.0,2.0],"Angle":0.0,"Layer":2,"IsActive":true},"FontComponent":{"Filepath":"Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf","Text":"plan your route early","Colour":[0.00009999999747378752,0.00009998999303206801,0.00009998999303206801,1.0],"IsActive":true}},{"Entity":{"Name":"DefaultHSStored","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,-0.699999988079071],"LocalPosition":[0.0,-0.699999988079071],"Scale":[1.7999999523162842,1.7999999523162842],"Angle":0.0,"Layer":2,"IsActive":true},"FontComponent":{"Filepath":"Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf","Text":"70","Colour":[0.00009999999747378752,0.00009998999303206801,0.00009998999303206801,1.0],"IsActive":true},"ScriptComponent":[{"Class":"CurrentScore","IsActive":true}]}]
+[
+  
+  {
+    "Entity": {
+      "Name": "Camera",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "CameraComponent": {
+      "Height": 100,
+      "FOV": 1.0,
+      "AR": 1.7777777910232545,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "BG",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.6929988861083984 ],
+      "LocalPosition": [ 0.0, 0.6929988861083984 ],
+      "Scale": [ 90.0, 52.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Default_BG-01.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "SoundComponent": {
+      "IsActive": true,
+      "IsLoop": false,
+      "filepath": "Assets\\Sound\\MainMenu.wav",
+      "volume": 100.0,
+      "isSound": true,
+      "SoundGroup": 1
+    },
+    "ScriptComponent": [
+      {
+        "Class": "MusicPlayer",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "DefaultHS",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -36.0, 11.5 ],
+      "LocalPosition": [ -36.0, 11.5 ],
+      "Scale": [ 2.0, 2.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "FontComponent": {
+      "Filepath": "Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf",
+      "Text": "plan your route early",
+      "Colour": [ 0.00009999999747378752, 0.00009998999303206801, 0.00009998999303206801, 1.0 ],
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "DefaultHSStored",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, -0.699999988079071 ],
+      "LocalPosition": [ 0.0, -0.699999988079071 ],
+      "Scale": [ 1.7999999523162842, 1.7999999523162842 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "FontComponent": {
+      "Filepath": "Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf",
+      "Text": "70",
+      "Colour": [ 0.00009999999747378752, 0.00009998999303206801, 0.00009998999303206801, 1.0 ],
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CurrentScore",
+        "IsActive": true
+      }
+    ]
+  }
+]

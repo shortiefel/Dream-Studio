@@ -685,12 +685,12 @@ namespace Editor {
 
 							ImGui::AlignTextToFramePadding();
 							ImGui::SetNextItemWidth(halfWidth);
-							std::string& currAnimStateString = textureComp->currAnimationState;
-							if (ImGui::BeginCombo("##StartAnimState", currAnimStateString.c_str())) {
+							std::string& nextAnimStateString = textureComp->nextAnimationState;
+							if (ImGui::BeginCombo("##StartAnimState", nextAnimStateString.c_str())) {
 								for (auto [name, animState] : textureComp->animationStateList) {
 
 									if (ImGui::Selectable(name.c_str())) {
-										currAnimStateString = name;
+										nextAnimStateString = name;
 									}
 								}
 								ImGui::EndCombo();
@@ -795,7 +795,7 @@ namespace Editor {
 							if (ImGui::BeginCombo("##AnimationStates", previewLayer, flags))
 							{
 								for (auto [name, animState] : textureComp->animationStateList) {
-									std::string& stateName = textureComp->currAnimationState;
+									std::string& stateName = textureComp->nextAnimationState;
 									const bool isSelected = false;
 
 									if (ImGui::Selectable(name.c_str(), isSelected)) {

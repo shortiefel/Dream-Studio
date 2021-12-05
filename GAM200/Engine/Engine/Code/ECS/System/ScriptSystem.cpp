@@ -177,6 +177,7 @@ namespace Engine {
 
 	bool CallOverlapFunc(const OverlapColliderEvent& e) {
 		PROFILER_START("Scripting");
+		if (!GameState::GetInstance().GetPlaying()) return false;
 
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.self);
 		if (!csScript) return false;
@@ -188,6 +189,7 @@ namespace Engine {
 
 	bool CallMouseOverlapFunc(const MouseOverlapColliderEvent& e) {
 		PROFILER_START("Scripting");
+		if (!GameState::GetInstance().GetPlaying()) return false;
 
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.other);
 		if (!csScript) return false;

@@ -6,11 +6,12 @@ public class BackToStartMenu : MonoBehaviour
     public override void Start()
     {
         backButtonUI = GetComponent<UI>();
+        backButtonUI.color = new Color(0f, 0f, 0f);
     }
 
     public override void OnMouseEnter()
     {
-        backButtonUI.color = new Color(0f, 0f, 0f);
+        backButtonUI.color = new Color(1f, 1f, 1f);
     }
 
     public override void OnMouseOver()
@@ -23,6 +24,6 @@ public class BackToStartMenu : MonoBehaviour
 
     public override void OnMouseExit()
     {
-        backButtonUI.color = new Color(1f, 1f, 1f);
+        backButtonUI.color = new Color(0f, 0f, 0f); 
     }
 }

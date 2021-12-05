@@ -49,8 +49,12 @@ public class HowToPlayButton : MonoBehaviour
             texture.color = new Color(0f, 0f, 0f);
             htw = true;
         }
+        else
+        {
+            backButtonUI.color = new Color(0f, 0f, 0f);
+        }
 
-        
+
     }
 
     public override void OnMouseEnter()
@@ -63,7 +67,7 @@ public class HowToPlayButton : MonoBehaviour
 
         else
         {
-            backButtonUI.color = new Color(0f, 0f, 0f);
+            backButtonUI.color = new Color(1f, 1f, 1f);
         }
     }
 
@@ -110,7 +114,7 @@ public class HowToPlayButton : MonoBehaviour
         }
         else
         {
-            backButtonUI.color = new Color(1f, 1f, 1f);
+            backButtonUI.color = new Color(0f, 0f, 0f); 
         }
     }
 }

@@ -25,14 +25,16 @@ public class GameState : MonoBehaviour
         if (shouldEnd)
         {
             shouldEnd = false;
-            TrySetHighscore();
+            
             SceneManager.LoadScene("GameOver");
+            TrySetHighscore();
         }
         //--------------------------
         //Cheat code
         if (Input.GetKeyDown(KeyCode.L))
         {
             SceneManager.LoadScene("GameOver");
+            TrySetHighscore();
         }
         if (Input.GetKeyDown(KeyCode.P))
         {

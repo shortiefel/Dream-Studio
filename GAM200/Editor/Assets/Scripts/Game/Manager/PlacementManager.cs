@@ -103,7 +103,7 @@ public class PlacementManager : MonoBehaviour
         return CheckIfPositionIsOfType(position, CellType.Empty);
     }
 
-    private bool CheckIfPositionIsOfType(Vector2Int position, CellType type)
+    public bool CheckIfPositionIsOfType(Vector2Int position, CellType type)
     {
         return placementGrid[position.x, position.y] == type;
     }
@@ -256,6 +256,12 @@ public class PlacementManager : MonoBehaviour
             return structureDictionary[new Vector2Int(point.X, point.Y)];
         }
         return null;
+    }
+
+    internal void RemoveCurrentGrid(Vector2Int position, GameObject model)
+    {
+        structureDictionary[position].DeleteModel(model);
+        placementGrid[position.x, position.y] = CellType.Empty;
     }
 
     public StructureModel GetStructureAt(Vector2Int position)

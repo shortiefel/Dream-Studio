@@ -86,4 +86,13 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             notification.ResetTimer();
         }
     }
+
+    internal void DeleteModel(GameObject model)
+    {
+        //texure.delete;
+        //foreach (Transform child in transform)
+        //{
+        //    Destroy(child.gameObject);
+        //}
+    }
 }

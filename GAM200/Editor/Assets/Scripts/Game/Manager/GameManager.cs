@@ -31,6 +31,12 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void RemoveRoadHandler()
+    {
+        ClearInputActions();
+        inputManager.OnMouseClick += roadManager.RemoveRoad;
+    }
+
     //private void SpecialPlacementHandler()
     //{
     //    Debug.Log("Call Special");

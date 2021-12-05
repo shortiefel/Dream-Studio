@@ -271,4 +271,18 @@ public class RoadManager : MonoBehaviour
         temporaryPlacementPositions.Clear();
         startPosition = Vector2Int.zero;
     }
+
+    public void RemoveRoad(Vector2Int position)
+    {
+        if (placementManager.CheckIfPositionInBound(position) == false)
+            return;
+        if (placementManager.CheckIfPositionIsFree(position) == false)
+        {
+            if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
+            {
+                placementManager.RemoveCurrentGrid(position, this.gameObject);
+                placementMode = true;
+            }
+        }
+    }
 }

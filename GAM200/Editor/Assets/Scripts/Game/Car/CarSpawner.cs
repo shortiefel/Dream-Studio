@@ -17,19 +17,21 @@ public class CarSpawner : MonoBehaviour
         structureModel = GetComponent<StructureModel>();
     }
 
-    //public override void Update()
-    //{
-    //    timer += Time.deltaTime;
-    //    if (timer > maxTimer)
-    //    {
-    //        aiDirector.SpawnAHouseCar(structureModel);
-    //        maxTimer = aiDirector.carSpawnTimerInterval;
-    //        //spawnManager.CheckPosition();
-    //        Debug.Log("carspawner");
+    public override void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer > maxTimer)
+        {
+            aiDirector.SpawnAHouseCar(structureModel);
+            //maxTimer = aiDirector.carSpawnTimerInterval;
+            //spawnManager.CheckPosition();
+            Debug.Log("carspawner");
 
-    //        timer = 0f;
-    //    }
-    //}
+            timer = 0f;
+            maxTimer += 3f;
+            Debug.Log(maxTimer);
+        }
+    }
     /*public Prefab[] carPrefabs;
 
     public override void Awake()

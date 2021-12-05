@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class AIDirector : MonoBehaviour
 {
     public PlacementManager placementManager;
-    public GameObject[] pedestrianPrefabs;
+    //public GameObject[] pedestrianPrefabs;
 
     public Prefab[] carPrefabs;
 

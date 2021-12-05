@@ -50,6 +50,7 @@ namespace Engine {
        // currentSceneName = defaultSceneName;
 #ifdef _GAME_BUILD
         currentScene = new Scene{ defaultSceneName, true };
+        Play();
 #else
         currentScene = new Scene{ defaultSceneName };
 #endif

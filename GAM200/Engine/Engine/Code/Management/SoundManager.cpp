@@ -141,10 +141,8 @@ namespace Engine
 				return it->second->setMode(eMode);
 			}
 		}
-		else
-			return 0;
 
-
+		return 0;
 	}
 
 	bool SoundManager::IsPlaying(int channelID)

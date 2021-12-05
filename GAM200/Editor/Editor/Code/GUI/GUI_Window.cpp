@@ -205,6 +205,11 @@ namespace Editor {
 					//undo
 					UndoRedoManager::GetInstance().Undo();
 				}
+
+				if (ctrl && shift) {
+					//redo
+					UndoRedoManager::GetInstance().Redo();
+				}
 				break;
 			}
 			case Engine::Input_KeyCode::Y: {
@@ -358,7 +363,7 @@ namespace Editor {
 			if (ImGui::BeginMenu("Edit")) {
 
 				if (ImGui::MenuItem("Undo", "CTRL+Z")) { UndoRedoManager::GetInstance().Undo(); }
-				if (ImGui::MenuItem("Redo", "CTRL+Y")) { UndoRedoManager::GetInstance().Redo(); } 
+				if (ImGui::MenuItem("Redo", "CTRL+Y / CTRL+SHIFT+Z")) { UndoRedoManager::GetInstance().Redo(); } 
 				ImGui::Separator();
 				//if (ImGui::MenuItem("Cut", "CTRL+X")) {}
 				//if (ImGui::MenuItem("Copy", "CTRL+C")) {}

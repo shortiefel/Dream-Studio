@@ -44,8 +44,8 @@ namespace Engine {
 			FMOD::Sound* GetSound(SoundComponent* soundCom, std::string& filePath,  std::string& soundName);
 			//void SetSound(SoundComponent* _textptr, std::string _filepath);
 			int SetPlay(SoundComponent* soundCom);
+			int SetLoop(SoundComponent* soundCom);
 
-			void SetLoop(int channelID, bool _loop);
 			bool IsPlaying(int channelID);
 
 

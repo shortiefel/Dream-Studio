@@ -127,18 +127,24 @@ namespace Engine
 		return ID;
 	}
 
-	void SoundManager::SetLoop(int channelID, bool _loop)
+	int SoundManager::SetLoop(SoundComponent* soundCom)
 	{
-		auto it = channelMap.find(channelID);
-		if (it == channelMap.end())
-		{
-			return;
-		}
-		FMOD_MODE eMode = FMOD_LOOP_NORMAL;
-		eMode |= _loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+		auto it = channelMap.find(soundCom->channelID);
 
-		if (it->second->setMode(eMode))
-			return;
+		if (soundCom->loop == true)
+		{
+			if (it != channelMap.end())
+			{
+				FMOD_MODE eMode = FMOD_LOOP_NORMAL;
+				eMode |= soundCom->loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+
+				return it->second->setMode(eMode);
+			}
+		}
+		else
+			return 0;
+
+
 	}
 
 	bool SoundManager::IsPlaying(int channelID)

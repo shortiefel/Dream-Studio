@@ -92,6 +92,7 @@ namespace Engine
 		//auto it = SoundManager::channelMap.find(soundCom->channelID);
 		//it->second->isPlaying(&(soundCom->));
 		SoundManager::GetInstance().SetPlay(soundCom);
+		SoundManager::GetInstance().SetLoop(soundCom);
 	}
 
 	void SoundSystem::SoundPause(int channelID)

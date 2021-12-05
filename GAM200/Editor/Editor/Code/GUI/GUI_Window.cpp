@@ -358,7 +358,7 @@ namespace Editor {
 			if (ImGui::BeginMenu("Edit")) {
 
 				if (ImGui::MenuItem("Undo", "CTRL+Z")) { UndoRedoManager::GetInstance().Undo(); }
-				if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled for now
+				if (ImGui::MenuItem("Redo", "CTRL+Y")) { UndoRedoManager::GetInstance().Redo(); } 
 				ImGui::Separator();
 				//if (ImGui::MenuItem("Cut", "CTRL+X")) {}
 				//if (ImGui::MenuItem("Copy", "CTRL+C")) {}

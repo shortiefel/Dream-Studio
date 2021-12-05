@@ -20,6 +20,7 @@ namespace Editor {
 
 	void UndoRedoManager::RecordState(CommandPtr cmd)
 	{
+		std::cout << "Record State!\n";
 		//push the command into undo stack
 		undostack.push(cmd);
 
@@ -27,6 +28,7 @@ namespace Editor {
 		redostack = {};
 
 	}
+
 	void UndoRedoManager::Add(CommandPtr command)
 	{
 		//Add the newest, current command
@@ -65,6 +67,8 @@ namespace Editor {
 
 		//add command to undo stack
 		undostack.push(cmd);
+
+		
 	}
 
 	void UndoRedoManager::StoreCommand(CommandPtr command)

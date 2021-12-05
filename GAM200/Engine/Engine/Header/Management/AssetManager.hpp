@@ -32,35 +32,33 @@ namespace Engine {
 		// Initialize any assets that should be created on start up
 		void Init();
 
-		
+
 		void Create();
 
 		// Clean up any assets
 		void Destroy();
 
-		GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+		GLuint LoadTexture(std::string _filename, int* x, int* y, int* channels_in_files, int desired_channel);
 
-		GLuint LoadFont(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+		bool LoadFont(std::string _filename);
 
-		//void addResource(Resource* resource, const std::string& name, const std::string& path);
+		//bool AddNewFontAssets(const std::string _fontlist);
+		void UpdateList();
 
-		//template <typename T>
-		//T* getResource(const std::string& name)
-		//{
-		//	return dynamic_cast<T * resources.find(name)->second);
-		//}
+		FontContainer GetFontContainer(std::string _filename) { return fontList[_filename]; }
 
-		//static const std::vector<Texture>& GetAllTextures() { return textureList; }
-		bool AddNewFontAssets(const std::string _fontlist);
-
-		FontSystem* GetFontAssets(const std::string& _name);
 		void ClearAllAssets();
+
 	private:
-		std::unordered_map<std::string, GLuint> textureList;
+		GLuint LoadTextureInternal(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
 
-		std::unordered_map<std::string, GLuint> fontList;
+		std::unordered_map<std::string, TextureContainer> textureList;
 
-		//std::map<std::string, Resource*> resources;
+		std::unordered_map<std::string, FontContainer> fontList;
+
+		std::string _assetdirection;
+
+		std::vector<std::string> assetList;
 
 		SINGLETON_SETUP(AssetManager);
 	};

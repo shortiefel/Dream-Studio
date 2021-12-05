@@ -42,6 +42,35 @@ namespace Editor {
 		//no commands for objects
 	};
 
+	//---------------------------------------------------------------------------------------------------------------
+	//Using
+	//command for gizmo
+	class ObjectTransformChangeCommand : public ObjectCommand
+	{
+
+	public:
+
+		//undo the changes made to the objects
+		void undo() override;
+
+		//redo the changes made to the objects
+		void redo() override;
+
+		void record() override;
+
+		void execute() override;
+
+		ObjectTransformChangeCommand(Engine::TransformComponent _prevTransform, Engine::TransformComponent _nextTransform);
+		ObjectTransformChangeCommand() = delete;
+
+	private:
+		Engine::TransformComponent prevTransform;
+		Engine::TransformComponent nextTransform;
+
+	};
+	//---------------------------------------------------------------------------------------------------------------
+
+
 	//commands for undo and redo adding game object transform component
 	class ObjectAddCommand : public ObjectCommand
 	{
@@ -62,14 +91,14 @@ namespace Editor {
 
 		void execute() override;
 
-	};
+	};	
 
+	//command for inspector transform
 	class ObjectTransformCommand : public ObjectCommand
 	{
-		std::map<int, Engine::Entity_id> entity_selected{};
 
 	public:
-
+		
 		//undo the changes made to the objects
 		void undo() override;
 
@@ -79,6 +108,14 @@ namespace Editor {
 		void record() override;
 
 		void execute() override;
+
+
+		ObjectTransformCommand(Engine::TransformComponent _oldposition, Engine::TransformComponent _newposition);
+		ObjectTransformCommand() = delete;
+
+	private:
+		Engine::TransformComponent oldposition;
+		Engine::TransformComponent newposition;
 
 	};
 
@@ -111,23 +148,7 @@ namespace Editor {
 		//undo the changes made to the objects
 		void undo() override;
 		//redo the changes made to the objects
-		//void redo();
-
-		void execute() override;
-
-	};
-
-	//commands for undo for gizmo
-	class ObjectGizmoCommand : public ObjectCommand
-	{
-	public:
-
-		//undo the changes made to the objects
-		void undo() override;
-		//redo the changes made to the objects
-		//void redo();
-
-		void record() override;
+		void redo();
 
 		void execute() override;
 
@@ -136,59 +157,29 @@ namespace Editor {
 	//command for undo naming of entity
 	class ObjectNameCommand : public ObjectCommand
 	{
-		Engine::Entity_id entity_selected = Engine::Entity_id{};
+		Engine::Entity_id entity_selected;
 
 	public:
 
 		//undo
 		void undo() override;
 
+		//redo
+		void redo() override;
+
 		void record() override;
 
 		void execute() override;
+
+		ObjectNameCommand(std::string _oldName, std::string _newName);
+		ObjectNameCommand() = delete;
+
+	private:
+		std::string newName;
+		std::string oldName;
+
 	};
 
-	//commands for undo 
-
-	//commands for adding state
-	//class ObjectAddState : public ObjectCommand
-	//{
-	//public:
-	//	std::string scene_id;
-	//	std::string newScene = std::string{};
-	//	std::string oldScene = std::string{};
-	//	Scene* currentScene = nullptr;
-
-	//	void SetOldScene(std::string oldScene);
-	//	void SetNewScene(std::string newScene);
-
-	//	//undo the changes made to the objects
-	//	void undo();
-	//	//redo the changes made to the objects
-	//	//void redo();
-
-	//private:
-	//	std::stack <std::unique_ptr<ICommand>> commands;
-
-	//};
-
-	////commands for deleting state
-	//class ObjectDeleteState : public ObjectCommand
-	//{
-	//public:
-	//	std::string scene_id;
-	//	std::string newScene = std::string{};
-	//	std::string oldScene = std::string{};
-
-	//	void SetOldScene(std::string oldScene);
-	//	void SetNewScene(std::string newScene);
-
-	//	//undo the changes made to the objects
-	//	void undo();
-	//	//redo the changes made to the objects
-	//	//void redo();
-
-	//};
 	}
 
 }

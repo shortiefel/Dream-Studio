@@ -269,7 +269,6 @@ public class PlacementManager : MonoBehaviour
 
     internal void RemoveCurrentGrid(Vector2Int position)
     {
-        Console.WriteLine("Removing " + placementGrid[position.x, position.y] + " -------------------");
         structureDictionary[position].DeleteModel();
         structureDictionary.Remove(position);
         placementGrid[position.x, position.y] = CellType.Empty;

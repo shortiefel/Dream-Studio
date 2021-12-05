@@ -14,10 +14,8 @@ Goh	See Yong Denise				(2001220@sit.singaporetech.edu.sg)
 
 Ow Jian Wen						    (jianwen123321@hotmail.com)				
 Chia Yi Da						    chiayida98@gmail.com)
-Margaret Teo Boon See			(Teo.b@digipen.edu)	
 
 Wang Ao							      (Ao.Wang@digipen.edu)
-Ng Jia Yi						      (Jiayi.ng@digipen.edu)
 
 #Game Instructions:
 ---TO BE ADDED---

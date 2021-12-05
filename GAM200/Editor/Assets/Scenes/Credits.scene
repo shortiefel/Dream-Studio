@@ -44,22 +44,36 @@
   },
   {
     "Entity": {
-      "Name": "BackToMenu",
+      "Name": "BackToStartMenu",
       "Parent": 10001,
       "Child": []
     },
     "TransformComponent": {
-      "Position": [ -12.58011245727539, 6.783390045166016 ],
-      "LocalPosition": [ -12.58011245727539, 6.783390045166016 ],
-      "Scale": [ 0.5, 0.5 ],
+      "Position": [ -81.30000305175781, 41.400001525878909 ],
+      "LocalPosition": [ -81.30000305175781, 41.400001525878909 ],
+      "Scale": [ 5.0, 5.0 ],
       "Angle": 0.0,
       "Layer": 2,
       "IsActive": true
     },
-    "UIComponent": {
-      "Filepath": "Assets\\Textures\\Game\\back-01.png",
-      "Colour": [ 0.0, 0.0, 0.0, 0.0 ],
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
       "IsActive": true
-    }
+    },
+    "UIComponent": {
+      "Filepath": "Assets\\Textures\\Game\\BackWhite.png",
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "BackToStartMenu",
+        "IsActive": true
+      }
+    ]
   }
 ]

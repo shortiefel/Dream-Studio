@@ -48,7 +48,12 @@ namespace Engine {
 	void SceneManager::Create() {
         //defaultSceneName = "Default";
        // currentSceneName = defaultSceneName;
+#ifdef _GAME_BUILD
+        currentScene = new Scene{ defaultSceneName, true };
+#else
         currentScene = new Scene{ defaultSceneName };
+#endif
+        
         WindowResizeEvent::RegisterFunction(&gamevpCallBack);
         
         sceneManagerViewportSize = Math::vec2{ static_cast<float>(Settings::windowWidth), static_cast<float>(Settings::windowHeight) };
@@ -83,7 +88,12 @@ namespace Engine {
             delete currentScene;
 
             //currentSceneName = sceneName;
+#ifdef _GAME_BUILD
+            currentScene = new Scene{ nextScene, true };
+#else
             currentScene = new Scene{ nextScene, GameState::GetInstance().GetPlaying() };
+#endif
+            
             //currentScene = new Scene{ nextScene, GameState::GetInstance().GetPlaying() };
             nextScene = std::string{};
             //if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();

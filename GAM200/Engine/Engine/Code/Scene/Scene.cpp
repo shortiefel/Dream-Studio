@@ -66,10 +66,6 @@ namespace Engine {
         //AI::AISystem::GetInstance().SetRender();
 
         //if (gameBuild) Play();
-#ifdef _GAME_BUILD
-        Play(); 
-#else
-#endif
 
         FontSystem::GetInstance().SetFadeToClear();
     }

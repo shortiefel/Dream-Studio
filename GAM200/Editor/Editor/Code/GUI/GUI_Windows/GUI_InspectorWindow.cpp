@@ -203,7 +203,7 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Transform"))
 					{
-						bool enter = false;
+						//bool enter = false;
 
 						/**
 						*	Position

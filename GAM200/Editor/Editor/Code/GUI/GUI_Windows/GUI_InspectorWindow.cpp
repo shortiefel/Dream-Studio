@@ -953,6 +953,16 @@ namespace Editor {
 
 						ImGui::AlignTextToFramePadding();
 
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Volume");
+						ImGui::SameLine();
+						HelperMarker("Range: 0 - 100");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::InputFloat("##SoundVolume", &soundComp->volume, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::PopFont();
+
 						//selection
 						static ImGuiComboFlags flags = 0;
 						//int* index = reinterpret_cast<int*>(&Engine::SoundManager::GetInstance().SG);

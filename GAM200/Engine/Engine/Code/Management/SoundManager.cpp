@@ -103,21 +103,22 @@ namespace Engine
 		pChannel->isPlaying(&(soundCom->isPlaying));
 		if (pChannel)
 		{
-
+			std::cout << " volume " << soundCom->volume << "\n";
+			float vol = soundCom->volume / 100.f;
 			switch (soundCom->soundType)
 			{
 			case SoundGrp::MUSIC:
+				MusicGroup->setVolume(0.5f * vol);
 				pChannel->setChannelGroup(MusicGroup);
-				MusicGroup->setVolume(0.8f);
 				break;
 			case SoundGrp::SFX:
+				SFXGroup->setVolume(0.8f * vol);
 				pChannel->setChannelGroup(SFXGroup);
-				SFXGroup->setVolume(0.5f);
 				break;
 
 			default:
+				MusicGroup->setVolume(vol);
 				pChannel->setChannelGroup(MasterGroup);
-				MusicGroup->setVolume(1.f);
 				break;
 			};
 

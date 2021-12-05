@@ -19,6 +19,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     //private Prefab notifiPrefab;
     private GameObject notifiSymbol;
+    private AudioSource notificationSound;
+
     public override void Start()
     {
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
@@ -41,6 +43,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             animation = notifiSymbol.GetComponent<Animation>();
             animation.Play("Appear");
             notification.SetAnimation("Appear");
+            notificationSound = GetComponent<AudioSource>();
             //aiDirector.SpawnACar();
         }
     }
@@ -65,6 +68,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             {
                 animation.Play("Appear");
                 notification.SetAnimation("Appear");
+                notificationSound.Play();
                 notification.shouldShow = false;
                 notification.ResetTimer();
                 Enable<Transform>(notifiSymbol.transform);

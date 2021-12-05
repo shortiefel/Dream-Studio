@@ -15,6 +15,8 @@ public class RoadManager : MonoBehaviour
     private Vector2Int randomDestinationPosition;
     private bool placementMode;
 
+    private AudioSource sound;
+
     //private void Start()
     public override void Start()
     {
@@ -25,6 +27,8 @@ public class RoadManager : MonoBehaviour
         roadPositionsToRecheck = new List<Vector2Int>();
 
         placementMode = false;
+
+        sound = GetComponent<AudioSource>();
     }
 
     public void PlaceSpawnHouse(Vector2Int position)
@@ -189,6 +193,7 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceRoad(Vector2Int position)
     {
+        
         //Debug.Log("here");
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
@@ -270,5 +275,7 @@ public class RoadManager : MonoBehaviour
         }
         temporaryPlacementPositions.Clear();
         startPosition = Vector2Int.zero;
+
+        sound.Play();
     }
 }

@@ -50,8 +50,15 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     public override void Update()
     {
+        
         if (notification != null)
         {
+            if (!notification.NotificationUpdate())
+            {
+                gameState.TrySetHighscore();
+                SceneManager.LoadScene("GameOver");
+            }
+
             if (notification.AppearCheck())
             {
                 animation.Play("Stay");

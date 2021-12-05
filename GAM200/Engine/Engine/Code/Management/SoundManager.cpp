@@ -103,7 +103,6 @@ namespace Engine
 		pChannel->isPlaying(&(soundCom->isPlaying));
 		if (pChannel)
 		{
-			std::cout << " volume " << soundCom->volume << "\n";
 			float vol = soundCom->volume / 100.f;
 			switch (soundCom->soundType)
 			{

@@ -45,12 +45,13 @@ public class GameState : MonoBehaviour
         return highscore;
     }
 
-    public void TrySetHighscore(int score)
+    public void TrySetHighscore()
     {
-        if (score > GetHighscore("HighScore"))
+        if (highscore > GetHighscore("HighScore"))
         {
-            SetHighscore(score, "HighScore");
+            SetHighscore(highscore, "HighScore");
         }
+        SetHighscore(highscore, "CurrentScore");
     }
 
     public void InvertPause()

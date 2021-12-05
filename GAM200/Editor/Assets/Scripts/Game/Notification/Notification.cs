@@ -20,7 +20,7 @@ public class Notification : MonoBehaviour
     {
         lifeTime = 0f;
         notiTime = 0f;
-        maxLifeTime = 10f;
+        maxLifeTime = 80f;
         showNotification = 0f;
         shouldShow = false;
         alreadyShowing = false;
@@ -47,7 +47,6 @@ public class Notification : MonoBehaviour
     {
         if (appearBool)
         {
-            Debug.Log("In her ");
             countDownTimer += Time.deltaTime;
             if (countDownTimer > 0.4f)
             {
@@ -74,7 +73,7 @@ public class Notification : MonoBehaviour
         return false;
     }
 
-    public override void Update()
+    public bool NotificationUpdate()
     {
         lifeTime += Time.deltaTime; // slowly add until maxLifeTime
         if (!alreadyShowing)
@@ -84,12 +83,16 @@ public class Notification : MonoBehaviour
         {
             //GameOver();
             //Debug.Log("Lose");
+            lifeTime = 0f;
+            return false;
         }
         if (notiTime > showNotification)
         {
             shouldShow = true;
             showNotification = maxLifeTime;
         }
+
+        return true;
     }
 
     public void GameOver()

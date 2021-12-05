@@ -1,1 +1,142 @@
-[{"Entity":{"Name":"BG","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[15.0,10.0],"Angle":0.0,"Layer":0,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Default_BG-01.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true},"SoundComponent":{"IsActive":true,"IsLoop":false,"filepath":"Assets\\Sound\\MainMenu.wav","volume":40.0,"isSound":true,"SoundGroup":1},"ScriptComponent":[{"Class":"MusicPlayer","IsActive":true}]},{"Entity":{"Name":"Camera","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"Layer":2,"IsActive":true},"CameraComponent":{"Height":15,"FOV":1.0,"AR":1.7777777910232545,"IsActive":true}},{"Entity":{"Name":"HighScoreText","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-22.700000762939454,5.800000190734863],"LocalPosition":[-22.700000762939454,5.800000190734863],"Scale":[2.5,2.5],"Angle":0.0,"Layer":2,"IsActive":true},"FontComponent":{"Filepath":"Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf","Text":"HIGHSCORE","Colour":[0.00009999999747378752,0.00009998999303206801,0.00009998999303206801,1.0],"IsActive":true}},{"Entity":{"Name":"DisplayHighScore","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-2.5,-7.5],"LocalPosition":[-2.5,-7.5],"Scale":[2.0,2.0],"Angle":0.0,"Layer":2,"IsActive":true},"FontComponent":{"Filepath":"Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf","Text":"100","Colour":[0.00009999999747378752,0.00009998999303206801,0.00009998999303206801,1.0],"IsActive":true},"ScriptComponent":[{"Class":"HighScore","IsActive":true}]},{"Entity":{"Name":"Backbtn","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-12.172412872314454,6.501952171325684],"LocalPosition":[-12.172412872314454,6.501952171325684],"Scale":[0.6000000238418579,0.6000000238418579],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Game\\back-01.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true},"UIComponent":{"Filepath":"Assets\\Textures\\Game\\back-01.png","Colour":[0.0,0.0,0.0,0.0],"IsActive":true}}]
+[
+  
+  {
+    "Entity": {
+      "Name": "BG",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 15.0, 10.0 ],
+      "Angle": 0.0,
+      "Layer": 0,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Default_BG-01.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "SoundComponent": {
+      "IsActive": true,
+      "IsLoop": false,
+      "filepath": "Assets\\Sound\\MainMenu.wav",
+      "volume": 40.0,
+      "isSound": true,
+      "SoundGroup": 1
+    },
+    "ScriptComponent": [
+      {
+        "Class": "MusicPlayer",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Camera",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "CameraComponent": {
+      "Height": 15,
+      "FOV": 1.0,
+      "AR": 1.7777777910232545,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "HighScoreText",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -22.700000762939454, 5.800000190734863 ],
+      "LocalPosition": [ -22.700000762939454, 5.800000190734863 ],
+      "Scale": [ 2.5, 2.5 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "FontComponent": {
+      "Filepath": "Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf",
+      "Text": "HIGHSCORE",
+      "Colour": [ 0.00009999999747378752, 0.00009998999303206801, 0.00009998999303206801, 1.0 ],
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "DisplayHighScore",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -2.5, -7.5 ],
+      "LocalPosition": [ -2.5, -7.5 ],
+      "Scale": [ 2.0, 2.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "FontComponent": {
+      "Filepath": "Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf",
+      "Text": "100",
+      "Colour": [ 0.00009999999747378752, 0.00009998999303206801, 0.00009998999303206801, 1.0 ],
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "HighScore",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "BackToStartMenu",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -81.30000305175781, 41.400001525878909 ],
+      "LocalPosition": [ -81.30000305175781, 41.400001525878909 ],
+      "Scale": [ 5.0, 5.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": false,
+      "IsActive": true
+    },
+    "UIComponent": {
+      "Filepath": "Assets\\Textures\\Game\\BackWhite.png",
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "BackToStartMenu",
+        "IsActive": true
+      }
+    ]
+  }
+]

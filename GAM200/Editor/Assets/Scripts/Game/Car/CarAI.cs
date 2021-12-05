@@ -61,6 +61,7 @@ public class CarAI : MonoBehaviour
         collisionStop = false;
 
         rb = GetComponent<Rigidbody2D>();
+        GetComponent<AudioSource>().Play();
 
         //if (path == null || path.Count == 0)
         if (path == null || path.Count == 0)

@@ -26,6 +26,8 @@ public class PauseMenu : MonoBehaviour
     //bool pauseState;
     GameState gameState;
 
+    UI texture;
+
     /*public bool GetPause()
     {
         return pauseState;
@@ -33,6 +35,8 @@ public class PauseMenu : MonoBehaviour
 
     public override void Start()
     {
+        texture = GetComponent<UI>();
+
         pauseBG = GameObject.Find("PauseBG");
         HowToBG = GameObject.Find("HowToBG");
 
@@ -140,6 +144,11 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    public override void OnMouseEnter()
+    {
+        texture.color = new Color(0f, 0f, 0f);
+    }
+
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
@@ -147,6 +156,12 @@ public class PauseMenu : MonoBehaviour
             PauseAction();
         }
     }
+
+    public override void OnMouseExit()
+    {
+        texture.color = new Color(1f, 1f, 1f);
+    }
+
     internal void ResumeAction()
     {
         PauseAction();

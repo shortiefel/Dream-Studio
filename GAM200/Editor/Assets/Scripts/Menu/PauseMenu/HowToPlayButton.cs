@@ -15,6 +15,8 @@ public class HowToPlayButton : MonoBehaviour
     Transform quitYesTransform;
     Transform quitNoTransform;
 
+    UI backButtonUI;
+
     bool htw;
 
 
@@ -34,6 +36,8 @@ public class HowToPlayButton : MonoBehaviour
         areYouSureTransform = GameObject.Find("AreYouSureText").GetComponent<Transform>();
         quitYesTransform = GameObject.Find("YesText").GetComponent<Transform>();
         quitNoTransform = GameObject.Find("NoText").GetComponent<Transform>();
+
+        backButtonUI = GetComponent<UI>();
 
 
         text = GetComponent<Text>();
@@ -55,6 +59,11 @@ public class HowToPlayButton : MonoBehaviour
         {
             text.color = new Color(0f, 0f, 0f);
             texture.color = new Color(1f, 1f, 1f);
+        }
+
+        else
+        {
+            backButtonUI.color = new Color(0f, 0f, 0f);
         }
     }
 
@@ -98,6 +107,10 @@ public class HowToPlayButton : MonoBehaviour
         {
             text.color = new Color(1f, 1f, 1f);
             texture.color = new Color(0f, 0f, 0f);
+        }
+        else
+        {
+            backButtonUI.color = new Color(1f, 1f, 1f);
         }
     }
 }

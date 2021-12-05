@@ -4,7 +4,8 @@ public class GameState : MonoBehaviour
     bool pauseState;
     bool drawModeBool;
     int highscore;
-    bool shouldEnd;
+
+    public bool shouldEnd;
 
     Text highscoreText;
 
@@ -23,9 +24,23 @@ public class GameState : MonoBehaviour
         highscoreText.text = highscore.ToString();
         if (shouldEnd)
         {
-            //SceneManager.LoadScene();
+            shouldEnd = false;
+            TrySetHighscore();
+            SceneManager.LoadScene("GameOver");
         }
+        //--------------------------
+        //Cheat code
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            IncrementScore();
+        }
+        //-------------------------
     }
+
 
     public void IncrementScore()
     {
@@ -45,7 +60,7 @@ public class GameState : MonoBehaviour
         return highscore;
     }
 
-    public void TrySetHighscore()
+    private void TrySetHighscore()
     {
         if (highscore > GetHighscore("HighScore"))
         {

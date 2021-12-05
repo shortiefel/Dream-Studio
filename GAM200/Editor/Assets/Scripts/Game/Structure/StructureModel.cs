@@ -55,8 +55,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         {
             if (!notification.NotificationUpdate())
             {
-                gameState.TrySetHighscore();
-                SceneManager.LoadScene("GameOver");
+                gameState.shouldEnd = true;
             }
 
             if (notification.AppearCheck())

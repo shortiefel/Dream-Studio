@@ -7,7 +7,9 @@ public class Notification : MonoBehaviour
     private float showNotification;
     public bool shouldShow;
 
-    
+    Animation animation;
+
+
     public override void Start()
     {
         lifeTime = 0f;
@@ -15,6 +17,7 @@ public class Notification : MonoBehaviour
         showNotification = 0f;
         shouldShow = false;
 
+        animation = GetComponent<Animation>();
     }
 
     public void ResetTimer()

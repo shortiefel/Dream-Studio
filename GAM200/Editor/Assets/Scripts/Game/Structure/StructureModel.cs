@@ -13,16 +13,23 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     GameState gameState;
 
+    Animation animation;
+    AIDirector aiDirector;
+    StructureModel structureModel;
+
     //private Prefab notifiPrefab;
     private GameObject notifiSymbol;
     public override void Start()
     {
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+        aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
+        structureModel = GetComponent<StructureModel>();
 
         transform = GetComponent<Transform>();
         texure = GetComponent<Texture>();
         notification = GetComponent<Notification>();
         //carSpawner = GetComponent<CarSpawner>();
+        animation = GetComponent<Animation>();
 
         if (notification != null)
         {
@@ -30,6 +37,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             Vector2 center = transform.localPosition;
             
             notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 0.7f, 0f), 4);
+            //aiDirector.SpawnACar();
         }
     }
 
@@ -71,6 +79,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         if (notification != null)
         {
             Disable<Transform>(notifiSymbol.transform);
+            if (animation != null)
+                animation.Play("Destroy");
             //notification.transform.
             gameState.IncrementScore();
             notification.ResetTimer();

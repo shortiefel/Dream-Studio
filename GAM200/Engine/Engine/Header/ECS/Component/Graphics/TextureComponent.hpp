@@ -25,7 +25,7 @@ Technology is prohibited.
 
 
 namespace Engine
-{
+{	
 	class DSerializer;
 	class SSerializer;
 

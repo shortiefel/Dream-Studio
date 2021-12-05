@@ -117,7 +117,6 @@ namespace Engine
 			newState.stateName = newName;
 
 			AddRefreshAnimationState(newState);
-			//AddRefreshAnimationState(newName, newState);
 			animationStateList.erase(itr);
 		}
 	}

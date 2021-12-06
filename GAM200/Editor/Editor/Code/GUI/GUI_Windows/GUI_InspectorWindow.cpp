@@ -777,7 +777,7 @@ namespace Editor {
 						ImGui::Spacing();
 
 						ImGui::AlignTextToFramePadding();
-						ImGui::Text("Texture");
+						ImGui::Text("Texture Name");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);

@@ -15,6 +15,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
+#include "Editor/Header/GUI/GUI_Windows/GUI_ConsoleWindow.hpp"
 #include "Editor/Header/GUI/GUI_Imgui.hpp"
 
 #include "Engine/Header/Management/FileWindowDialog.hpp"
@@ -902,7 +903,10 @@ namespace Editor {
 							strcpy(createAnim, "");
 							if (ImGui::InputText("##createStatename", createAnim, 100)) {
 								if (Engine::Input::IsKeyPressed(Engine::Input_KeyCode::Enter)) {
-									textureComp->AddRefreshAnimationState(std::string{ createAnim });
+
+									if (!(textureComp->AddRefreshAnimationState(std::string(createAnim))))
+										GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Same Animation State Name. Use a different name" });
+									
 								}
 							}
 

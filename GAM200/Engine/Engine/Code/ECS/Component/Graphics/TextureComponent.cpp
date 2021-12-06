@@ -125,22 +125,20 @@ namespace Engine
 
 	// Function that adds/replace AnimationState to/in animationStateList;
 	// to be called by the editor if they want more states
-	void TextureComponent::AddRefreshAnimationState(AnimationState _state) {
-		if (animationStateList.find(_state.stateName) != animationStateList.end()) {
-			int index = 1;
-			while (animationStateList.find(_state.stateName) != animationStateList.end()) {
-				index++;
-			}
-			_state.stateName += std::to_string(index);
+	bool TextureComponent::AddRefreshAnimationState(AnimationState _state) {
+		if (animationStateList.find(_state.stateName) != animationStateList.end()) 
+		{
+			return false;
 		}
 		animationStateList[_state.stateName] = _state;
+		return true;
 	}
 
 	// Function that adds/replace AnimationState to/in animationStateList;
 	// to be called by the editor if they want more states
-	void TextureComponent::AddRefreshAnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop)
+	bool TextureComponent::AddRefreshAnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop)
 	{
-		AddRefreshAnimationState(AnimationState{ _stateName, _stateRow, _startX, _endX, _fTime, _isLoop });
+		return AddRefreshAnimationState(AnimationState{ _stateName, _stateRow, _startX, _endX, _fTime, _isLoop });
 	}
 
 	// Deserialize function for Texture Component

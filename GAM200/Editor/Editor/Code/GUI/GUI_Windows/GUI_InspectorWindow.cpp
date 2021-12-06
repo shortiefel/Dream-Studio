@@ -217,7 +217,7 @@ namespace Editor {
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##TransformXPos", &transComp->localPosition.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						if (ImGui::DragFloat("##TransformXPos", &transComp->localPosition.x, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -243,7 +243,7 @@ namespace Editor {
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##TransformYPos", &transComp->localPosition.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						if (ImGui::DragFloat("##TransformYPos", &transComp->localPosition.y, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -283,7 +283,7 @@ namespace Editor {
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##TransformXscale", &transComp->scale.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						if (ImGui::DragFloat("##TransformXscale", &transComp->scale.x, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -292,7 +292,7 @@ namespace Editor {
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##TransformYscale", &transComp->scale.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						if (ImGui::DragFloat("##TransformYscale", &transComp->scale.y, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -310,7 +310,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
-						if (ImGui::DragFloat("##TransformYrot", &transComp->angle, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						if (ImGui::DragFloat("##TransformYrot", &transComp->angle, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -416,7 +416,7 @@ namespace Editor {
 						ImGui::SetNextItemWidth(halfWidth * 0.375f);
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##ColliderXPos", &colComp->offset_position.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						if (ImGui::DragFloat("##ColliderXPos", &colComp->offset_position.x, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -426,7 +426,7 @@ namespace Editor {
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##ColliderYPos", &colComp->offset_position.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						if (ImGui::DragFloat("##ColliderYPos", &colComp->offset_position.y, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -491,49 +491,96 @@ namespace Editor {
 						/**
 						*	Scale
 						*/
-						ImGui::AlignTextToFramePadding();
-						ImGui::Text("Scale");
-						ImGui::SameLine();
-						HelperMarker("Collider to scale by X and Y");
 
-						ImGui::PushFont(boldFont);
-						ImGui::SameLine(halfWidth);
-						ImGui::Text(" X");
-						ImGui::SameLine(halfWidth * 1.120f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##ColliderXscale", &colComp->offset_scale.x, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						if (index)
 						{
-							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
-							enter = true;
+							/**
+							*	SQUARE
+							*/
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Scale");
+							ImGui::SameLine();
+							HelperMarker("Collider to scale by X and Y");
+
+							ImGui::PushFont(boldFont);
+							ImGui::SameLine(halfWidth);
+							ImGui::Text(" X");
+							ImGui::SameLine(halfWidth * 1.120f, 0);
+							ImGui::SetNextItemWidth(halfWidth * 0.5f);
+							if (ImGui::DragFloat("##ColliderXscale", &colComp->offset_scale.x, 0.1f, -360.0f, 360.f, "%.2f", 1))
+							{
+								Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+								enter = true;
+							}
+							ImGui::SameLine(halfWidth * 1.7f);
+							ImGui::Text(" Y");
+							ImGui::SameLine(halfWidth * 1.820f, 0);
+							ImGui::SetNextItemWidth(halfWidth * 0.5f);
+							if (ImGui::DragFloat("##ColliderYscale", &colComp->offset_scale.y, 0.1f, -360.0f, 360.f, "%.2f", 1))
+							{
+								Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+								enter = true;
+							}
+
+							if (enter && firstEnter)
+							{
+								firstEnter = false;
+								//Record here 
+								firstTransform = *transComp;
+								std::cout << "Holding \n";
+							}
+
+							if (!enter && !firstEnter)
+							{
+								firstEnter = true;
+								//Record State
+								auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
+								UndoRedoManager::GetInstance().RecordState(move_command);
+								std::cout << transComp->GetEntityId() << "\n";
+							}
+
+							ImGui::PopFont();
 						}
-						ImGui::SameLine(halfWidth * 1.7f);
-						ImGui::Text(" Y");
-						ImGui::SameLine(halfWidth * 1.820f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##ColliderYscale", &colComp->offset_scale.y, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						
+						else
 						{
-							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
-							enter = true;
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Radius");
+							ImGui::SameLine();
+							HelperMarker("Collider to scale by radius");
+
+							ImGui::PushFont(boldFont);
+							ImGui::SameLine(halfWidth);
+							ImGui::SetNextItemWidth(halfWidth * 0.5f);
+							if (ImGui::DragFloat("##ColliderXscaleC", &colComp->offset_scale.x, 0.1f, -360.0f, 360.f, "%.2f", 1))
+							{
+								colComp->offset_scale.x = colComp->offset_scale.y;
+								Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+								enter = true;
+							}
+					
+
+							if (enter && firstEnter)
+							{
+								firstEnter = false;
+								//Record here 
+								firstTransform = *transComp;
+								std::cout << "Holding \n";
+							}
+
+							if (!enter && !firstEnter)
+							{
+								firstEnter = true;
+								//Record State
+								auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
+								UndoRedoManager::GetInstance().RecordState(move_command);
+								std::cout << transComp->GetEntityId() << "\n";
+							}
+
+							ImGui::PopFont();
 						}
 
-						if (enter && firstEnter)
-						{
-							firstEnter = false;
-							//Record here 
-							firstTransform = *transComp;
-							std::cout << "Holding \n";
-						}
-
-						if (!enter && !firstEnter)
-						{
-							firstEnter = true;
-							//Record State
-							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
-							UndoRedoManager::GetInstance().RecordState(move_command);
-							std::cout << transComp->GetEntityId() << "\n";
-						}
-
-						ImGui::PopFont();
+					
 
 
 						/**
@@ -546,7 +593,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
-						if (ImGui::DragFloat("##ColliderRotate", &colComp->angle, 0.1f, -360.0f, 360.f, "%.1f", 1))
+						if (ImGui::DragFloat("##ColliderRotate", &colComp->angle, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -603,7 +650,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
-						ImGui::InputFloat("##camFOV", &camComp->fov, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::InputFloat("##camFOV", &camComp->fov, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
 						ImGui::PopFont();
 
 						/**
@@ -670,7 +717,7 @@ namespace Editor {
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::PushFont(boldFont);
-							ImGui::InputFloat("##LinearDrag", &rigidComp->linearDrag, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+							ImGui::InputFloat("##LinearDrag", &rigidComp->linearDrag, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
 							ImGui::PopFont();
 
 							/**
@@ -683,7 +730,7 @@ namespace Editor {
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::PushFont(boldFont);
-							ImGui::InputFloat("##AngularDrag", &rigidComp->angularDrag, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+							ImGui::InputFloat("##AngularDrag", &rigidComp->angularDrag, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
 							ImGui::PopFont();
 
 							/**
@@ -694,7 +741,7 @@ namespace Editor {
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::PushFont(boldFont);
-							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
 							ImGui::PopFont();
 
 							ImGui::Spacing();
@@ -1107,7 +1154,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
-						ImGui::InputFloat("##SoundVolume", &soundComp->volume, 0.f, 0.f, "%.1f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::InputFloat("##SoundVolume", &soundComp->volume, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
 						ImGui::PopFont();
 
 						//selection
@@ -1305,13 +1352,13 @@ namespace Editor {
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##offsetPosX", &particleComp->particleData.offsetPosition.x, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##offsetPosX", &particleComp->particleData.offsetPosition.x, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##offsetPosY", &particleComp->particleData.offsetPosition.y, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##offsetPosY", &particleComp->particleData.offsetPosition.y, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::PopFont();
 
@@ -1345,7 +1392,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::PushFont(boldFont);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##duration", &particleComp->particleData.lifeTime, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##duration", &particleComp->particleData.lifeTime, 0.f, 0.f, "%.2f", 1);
 						ImGui::PopFont();
 
 						ImGui::Spacing();
@@ -1393,13 +1440,13 @@ namespace Editor {
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##particleVeloX", &particleComp->particleData.velocity.x, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##particleVeloX", &particleComp->particleData.velocity.x, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##particleVeloY", &particleComp->particleData.velocity.y, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##particleVeloY", &particleComp->particleData.velocity.y, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::PopFont();
 
@@ -1435,13 +1482,13 @@ namespace Editor {
 							ImGui::Text(" X");
 							ImGui::SameLine(halfWidth * 1.120f, 0);
 							ImGui::SetNextItemWidth(halfWidth * 0.5f);
-							ImGui::InputFloat("##particleVeloVariX", &particleComp->particleData.velocityVariation.x, 0.f, 0.f, "%.1f", 1);
+							ImGui::InputFloat("##particleVeloVariX", &particleComp->particleData.velocityVariation.x, 0.f, 0.f, "%.2f", 1);
 
 							ImGui::SameLine(halfWidth * 1.7f);
 							ImGui::Text(" Y");
 							ImGui::SameLine(halfWidth * 1.820f, 0);
 							ImGui::SetNextItemWidth(halfWidth * 0.5f);
-							ImGui::InputFloat("##particleVeloVariY", &particleComp->particleData.velocityVariation.y, 0.f, 0.f, "%.1f", 1);
+							ImGui::InputFloat("##particleVeloVariY", &particleComp->particleData.velocityVariation.y, 0.f, 0.f, "%.2f", 1);
 
 							ImGui::PopFont();
 
@@ -1459,13 +1506,13 @@ namespace Editor {
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##particleSizeBeginX", &particleComp->particleData.sizeBegin.x, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##particleSizeBeginX", &particleComp->particleData.sizeBegin.x, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##particleSizeBeginY", &particleComp->particleData.sizeBegin.y, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##particleSizeBeginY", &particleComp->particleData.sizeBegin.y, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::PopFont();
 
@@ -1482,13 +1529,13 @@ namespace Editor {
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##particleSizeEndX", &particleComp->particleData.sizeEnd.x, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##particleSizeEndX", &particleComp->particleData.sizeEnd.x, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##particleSizeEndY", &particleComp->particleData.sizeEnd.y, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##particleSizeEndY", &particleComp->particleData.sizeEnd.y, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::PopFont();
 
@@ -1506,13 +1553,13 @@ namespace Editor {
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##particleSizeVarX", &particleComp->particleData.sizeVariation.x, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##particleSizeVarX", &particleComp->particleData.sizeVariation.x, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::SameLine(halfWidth * 1.7f);
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##particleSizeVarY", &particleComp->particleData.sizeVariation.y, 0.f, 0.f, "%.1f", 1);
+						ImGui::InputFloat("##particleSizeVarY", &particleComp->particleData.sizeVariation.y, 0.f, 0.f, "%.2f", 1);
 
 						ImGui::PopFont();
 

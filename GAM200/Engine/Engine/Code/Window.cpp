@@ -143,8 +143,11 @@ namespace Engine {
 		//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
 
 #ifdef _GAME_BUILD
-		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
-
+		//glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
+		//glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
+		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
+		//glfwSetWindowMonitor(glfw_window, glfwGetPrimaryMonitor(), 0, 0, (int)w_data.width, (int)w_data.height, 60);
+		glViewport(0, 0, (int)w_data.width, (int)w_data.height);
 		// Read png file for cursor
 		GLFWimage image;
 		image.pixels = stbi_load("Assets/Textures/cursor.png", &image.width, &image.height, 0, 4);

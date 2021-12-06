@@ -1207,7 +1207,10 @@ namespace Editor {
 				{
 					if (uiComp != nullptr)
 					{
+						
 						DreamImGui::CheckBox_Dream("##UIActive", &(uiComp->isActive));
+						ImGui::SameLine();
+						HelperMarker("If you want your object to always follow the camera, check this box ");
 						ImGui::SameLine();
 
 						if (ImGui::CollapsingHeader("UI"))
@@ -1292,6 +1295,8 @@ namespace Editor {
 						ImGui::Spacing();
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Particle");
+						ImGui::SameLine();
+						HelperMarker("To use color begin and end, ensure that the asset is whitecircle.png or UIBox.png");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);

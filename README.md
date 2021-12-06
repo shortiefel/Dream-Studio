@@ -1,23 +1,22 @@
 # Dream Studio
 
-#Brief:
-We are a group of Digipen (Singapore) Students and in this group we have 3 different degree's working together to do up a game. We were inspired from In My Shadows a game that was release in Steam and a movie that was released in 2020, Drømmebyggerne (Dream Builder). Our game will be follow the storyline of Drømmebyggerne and it will be a 2D adventure puzzle game.
+#-----------------Brief---------------------------------
+
+Dream Express is a top-down road builder game where players design a map by building roads to connect between different places
+—building one road at a time creates a transport system for the bustling city.
 
 
-#Software Name:
----TO BE ADDED---
+#------------Software Name------------------------------
+Dream Express
 
-#Authors:
+#-------------Authors-----------------------------------
 							              
-Tan Wei Ling Felicia			(weilingfelicia.tan@digipen.edu)	
-Goh	See Yong Denise				(2001220@sit.singaporetech.edu.sg)
+Tan Wei Ling Felicia	(weilingfelicia.tan@digipen.edu)	
+Goh See Yong Denise	(g.seeyongdenise@digipen.edu)
+Ow Jian Wen		(jianwen.o@digipen.edu)				
+Chia Yi Da		(c.yida@digipen.edu)
+Wang Ao			(Ao.Wang@digipen.edu)
 
-Ow Jian Wen						    (jianwen123321@hotmail.com)				
-Chia Yi Da						    chiayida98@gmail.com)
-Margaret Teo Boon See			(Teo.b@digipen.edu)	
-
-Wang Ao							      (Ao.Wang@digipen.edu)
-Ng Jia Yi						      (Jiayi.ng@digipen.edu)
 
 #Game Instructions:
 ---TO BE ADDED---
@@ -25,18 +24,32 @@ Ng Jia Yi						      (Jiayi.ng@digipen.edu)
 #Installation Instructions:
 ---TO BE ADDED---
 
-#Credits
+#-------------Credits------------------------------------
 
 Instructors: 
----TO BE ADDED---
 
-TA:
----TO BE ADDED---
+Elie Hosry
+Alwyn Lee
+Michael Thompson
+Choon Wee Keh
+
+
+TAs:
+Ying Hui HO
+Lin Xiang GAN
+Shu Xian NG
+Geok Teng Janelle TAN
+Vinceen OON
+Choon Jieh Gabriel WONG
 
 President: 
 Claude Comair 
 
-Executives: Jason Chu, Samir Abou Samra, Prasanna Ghali, Angela Kugler, Melvin Gunsalvez, John Bauer, Raymond Yan, Michele Comair, Xin Li, Meighan Mckelvey, Micheal Gats, Christopher Comair, Charles Duba, Ben Ellinger, Johnny Deek, Erik Mohrmann
+Executives: 
+Jason Chu, Samir Abou Samra, Prasanna Ghali, Angela Kugler, Melvin Gunsalvez, John Bauer, Raymond Yan, Michele Comair, 
+Xin Li, Meighan Mckelvey, Micheal Gats, Christopher Comair, Charles Duba, Ben Ellinger, Johnny Deek, Erik Mohrmann
+
 
 -----------------------------------------------------------------------------------------------------------------------------
-Copyright (C) 2021 DigiPen Institute of Technology. Reproduction or disclosure of this file or its contents without the prior written consent of DigiPen Institute of Technology is prohibited.
+Copyright (C) 2021 DigiPen Institute of Technology. 
+Reproduction or disclosure of this file or its contents without the prior written consent of DigiPen Institute of Technology is prohibited.

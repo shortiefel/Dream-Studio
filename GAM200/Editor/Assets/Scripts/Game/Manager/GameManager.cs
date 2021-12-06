@@ -21,9 +21,9 @@ public class GameManager : MonoBehaviour
         structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
         keysController = GameObject.Find("KeysController").GetComponent<KeysController>();
 
-        inputManager.OnMouseClick += roadManager.PlaceRoad;
-        inputManager.OnMouseHold += roadManager.PlaceRoad;
-        inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
+        //inputManager.OnMouseClick += roadManager.PlaceRoad;
+        //inputManager.OnMouseHold += roadManager.PlaceRoad;
+        //inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
 
         keysController.OnRoadPlacement += RoadPlacementHandler;
         //keysController.OnHousePlacement += HousePlacementHandler;

@@ -493,11 +493,11 @@ namespace Editor {
 						*	Scale
 						*/
 
+						if (index == static_cast<int>(Engine::ColliderType::Square)) {
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Scale");
 						ImGui::SameLine();
 
-						if (index == static_cast<int>(Engine::ColliderType::Square)) {
 							HelperMarker("Collider to scale by X and Y");
 
 							ImGui::PushFont(boldFont);
@@ -520,12 +520,13 @@ namespace Editor {
 							}
 						}
 						else {
-							HelperMarker("Radius");
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Radius");
+							ImGui::SameLine();
 
 							ImGui::PushFont(boldFont);
 							ImGui::SameLine(halfWidth);
-							ImGui::Text(" X");
-							ImGui::SameLine(halfWidth * 1.120f, 0);
+							ImGui::SameLine(halfWidth * 1.000f, 0);
 							ImGui::SetNextItemWidth(halfWidth * 0.5f);
 							if (ImGui::DragFloat("##ColliderXscale", &colComp->offset_scale.x, 0.1f, -360.0f, 360.f, "%.1f", 1)) {
 								colComp->offset_scale.y = colComp->offset_scale.x;

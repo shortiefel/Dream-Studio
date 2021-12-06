@@ -46,7 +46,7 @@ namespace Editor {
 
 	bool firstEnter = true;
 	Engine::TransformComponent firstTransform;
-	bool enter = false;
+	//bool enter = false;
 
 	namespace GUI_Windows {
 
@@ -121,7 +121,7 @@ namespace Editor {
 						Engine::dreamECSGame->DuplicateNameCheck(newName);
 						Engine::dreamECSGame->ChangeName(entityName, newName);
 						entityName = newName;
-						enter = true;
+						//enter = true;
 					}
 				}
 

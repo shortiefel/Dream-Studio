@@ -21,6 +21,20 @@ public class Camera : IComponent
     public uint entityId { get; set; }
     public Camera() { }
     public Camera(uint entity_id) { entityId = entity_id; }
+    public int height
+    {
+        get
+        {
+            GetCameraHeight_Engine(entityId, out int result);
+            return result;
+        }
+        set { SetCameraHeight_Engine(entityId, value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetCameraHeight_Engine(uint entityID, out int pos);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetCameraHeight_Engine(uint entityID, int pos);
+
 
     public Vector3 ScreenToWorldPoint(Vector3 position)
     {

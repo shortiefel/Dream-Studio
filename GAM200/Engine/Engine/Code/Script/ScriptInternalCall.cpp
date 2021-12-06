@@ -137,6 +137,8 @@ namespace Engine {
 	Camera
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void ScreenToWorldPoint_Engine(unsigned int id, Math::vec3* outPosition, Math::vec3 inPosition);
+	void GetCameraHeight_Engine(unsigned int id, int* _height);
+	void SetCameraHeight_Engine(unsigned int id, int _height);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Texture
@@ -275,6 +277,7 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void Atan2_Engine(float* outFloat, float xVal, float yVal);
 	void Approximately_Engine(float num1, float num2, bool* result);
+	void Lerp_Engine(float* num1, float num2, float t);
 
 	void GetDistance_Engine(float* outFloat, Math::vec2 a, Math::vec2 b);
 	void GetLength_Engine(float* length, Math::vec2 vec);
@@ -329,6 +332,9 @@ namespace Engine {
 		Camera
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Camera::ScreenToWorldPoint_Engine", ScreenToWorldPoint_Engine);
+		mono_add_internal_call("Camera::GetCameraHeight_Engine", GetCameraHeight_Engine);
+		mono_add_internal_call("Camera::SetCameraHeight_Engine", SetCameraHeight_Engine);
+		
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Texture
@@ -468,6 +474,7 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Mathf::Atan2_Engine", Atan2_Engine);
 		mono_add_internal_call("Mathf::Approximately_Engine", Approximately_Engine);
+		mono_add_internal_call("Mathf::Lerp_Engine", Lerp_Engine);
 
 		mono_add_internal_call("Vector2::GetDistance_Engine", GetDistance_Engine);
 		mono_add_internal_call("Vector2::GetLength_Engine", GetLength_Engine);
@@ -683,6 +690,13 @@ namespace Engine {
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void ScreenToWorldPoint_Engine(unsigned int id, Math::vec3* outPosition, Math::vec3 inPosition) {
 		*outPosition = ScreenToWorldPoint(inPosition, CameraSystem::GetInstance().GetInverseTransform(&id), GetViewportFuncPtr());
+	}
+
+	void GetCameraHeight_Engine(unsigned int id, int* _height) {
+		GetEngineType(id, CameraComponent, height, *_height);
+	}
+	void SetCameraHeight_Engine(unsigned int id, int _height) {
+		SetEngineType(id, CameraComponent, height, _height);
 	}
 
 	void SetGetViewportFunc(Math::mat3(*fp)()) {
@@ -1152,6 +1166,10 @@ namespace Engine {
 
 	void Approximately_Engine(float num1, float num2, bool* result) {
 		*result = Math::EpsilonCheck(num1, num2);
+	}
+
+	void Lerp_Engine(float* num1, float num2, float t) {
+		*num1 = Math::Lerp(*num1, num2, t);
 	}
 
 	void GetDistance_Engine(float* outFloat, Math::vec2 a, Math::vec2 b) {

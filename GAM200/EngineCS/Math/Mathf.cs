@@ -38,6 +38,15 @@ public class Mathf
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void Approximately_Engine(float num1, float num2, out bool result);
+
+    public static float Lerp(float num1, float num2, float t)
+    {
+        float result = num1;
+        Lerp_Engine(out result, num2, t);
+        return result;
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void Lerp_Engine(out float num1, float num2, float t);
 }
 
 

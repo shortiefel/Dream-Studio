@@ -378,7 +378,11 @@ namespace Editor {
 			if (ImGui::BeginMenu("Prefab")) {
 				if (ImGui::MenuItem("Save Selected as Prefab...")) {
 					const Engine::Entity_id entity_id = GetTarget(entity_selected);
-					if (GetTarget(entity_selected) == DEFAULT_ENTITY_ID) return;
+					if (GetTarget(entity_selected) == DEFAULT_ENTITY_ID) {
+						GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "No entity is selected" });
+						ImGui::EndMenu();
+						return;
+					}
 
 					std::string filePath = Engine::FileWindowDialog::SaveFile("Dream Prefab (*.prefab)\0*.prefab\0", Engine::File_Dialog_Type::Prefab);
 

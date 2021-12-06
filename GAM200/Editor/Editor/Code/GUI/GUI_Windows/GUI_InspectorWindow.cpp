@@ -496,26 +496,45 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Scale");
 						ImGui::SameLine();
-						HelperMarker("Collider to scale by X and Y");
 
-						ImGui::PushFont(boldFont);
-						ImGui::SameLine(halfWidth);
-						ImGui::Text(" X");
-						ImGui::SameLine(halfWidth * 1.120f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##ColliderXscale", &colComp->offset_scale.x, 0.1f, -360.0f, 360.f, "%.1f", 1)) {
+						if (index == static_cast<int>(Engine::ColliderType::Square)) {
+							HelperMarker("Collider to scale by X and Y");
+
+							ImGui::PushFont(boldFont);
+							ImGui::SameLine(halfWidth);
+							ImGui::Text(" X");
+							ImGui::SameLine(halfWidth * 1.120f, 0);
+							ImGui::SetNextItemWidth(halfWidth * 0.5f);
+							if (ImGui::DragFloat("##ColliderXscale", &colComp->offset_scale.x, 0.1f, -360.0f, 360.f, "%.1f", 1)) {
 								Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 								enter = true;
+							}
+							ImGui::SameLine(halfWidth * 1.7f);
+							ImGui::Text(" Y");
+							ImGui::SameLine(halfWidth * 1.820f, 0);
+							ImGui::SetNextItemWidth(halfWidth * 0.5f);
+							if (ImGui::DragFloat("##ColliderYscale", &colComp->offset_scale.y, 0.1f, -360.0f, 360.f, "%.1f", 1)) {
+								Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+								enter = true;
+
+							}
 						}
-						ImGui::SameLine(halfWidth * 1.7f);
-						ImGui::Text(" Y");
-						ImGui::SameLine(halfWidth * 1.820f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##ColliderYscale", &colComp->offset_scale.y, 0.1f, -360.0f, 360.f, "%.1f", 1)) {
-							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
-							enter = true;
+						else {
+							HelperMarker("Radius");
+
+							ImGui::PushFont(boldFont);
+							ImGui::SameLine(halfWidth);
+							ImGui::Text(" X");
+							ImGui::SameLine(halfWidth * 1.120f, 0);
+							ImGui::SetNextItemWidth(halfWidth * 0.5f);
+							if (ImGui::DragFloat("##ColliderXscale", &colComp->offset_scale.x, 0.1f, -360.0f, 360.f, "%.1f", 1)) {
+								colComp->offset_scale.y = colComp->offset_scale.x;
+								Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
+								enter = true;
+							}
+						}
 						
-						}if (enter && firstEnter)
+						if (enter && firstEnter)
 						{
 							firstEnter = false;
 							//Record here 

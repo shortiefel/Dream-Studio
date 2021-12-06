@@ -48,6 +48,8 @@ namespace Engine {
 
 			bool IsPlaying(int channelID);
 
+			void SetPauseAllSound(bool paused);
+
 
 
 			/**

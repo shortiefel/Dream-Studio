@@ -157,4 +157,10 @@ namespace Engine
 		return bIsPlaying;
 	}
 
+	void SoundManager::SetPauseAllSound(bool paused) {
+		MasterGroup->setPaused(paused);
+		MusicGroup->setPaused(paused);
+		SFXGroup->setPaused(paused);
+	}
+
 }

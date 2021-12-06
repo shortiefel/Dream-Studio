@@ -144,9 +144,7 @@ namespace Engine {
 
 #ifdef _GAME_BUILD
 		//glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
-		//glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
-		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
-		//glfwSetWindowMonitor(glfw_window, glfwGetPrimaryMonitor(), 0, 0, (int)w_data.width, (int)w_data.height, 60);
+		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 		glViewport(0, 0, (int)w_data.width, (int)w_data.height);
 		// Read png file for cursor
 		GLFWimage image;

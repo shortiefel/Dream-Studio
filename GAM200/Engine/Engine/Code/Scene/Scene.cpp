@@ -52,6 +52,8 @@ Technology is prohibited.
 
 namespace Engine {
 
+    bool previousFocusState = true;
+
     Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
         GameSceneSerializer::DeserializeScene(sceneName);
 
@@ -126,14 +128,23 @@ namespace Engine {
 #else
     void Scene::Update(float dt, bool playing, Math::vec2) {
 #endif
-        if (!Window::GetInstance().GetFocusStatus()) {
+        bool focusState = Window::GetInstance().GetFocusStatus();
+        if (!focusState) {
 #ifdef _GAME_BUILD
             //Render game when not in focus
             GraphicSystem::GetInstance().Render(dt);
             UISystem::GetInstance().Render();
             FontSystem::GetInstance().Render(dt);
 #endif
+            if (focusState != previousFocusState) {
+                SoundSystem::GetInstance().SoundSetPauseAllSound(true);
+                previousFocusState = focusState;
+            }
             return;
+        }
+        if (focusState != previousFocusState) {
+            SoundSystem::GetInstance().SoundSetPauseAllSound(false);
+            previousFocusState = focusState;
         }
 
         if (playing) {
@@ -180,7 +191,7 @@ namespace Engine {
 #endif
 
        
-        SoundSystem::GetInstance().SoundUpdate();
+        //SoundSystem::GetInstance().SoundUpdate();
 
 
         dreamECSGame->ClearDestroyQueue();

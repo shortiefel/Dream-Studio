@@ -7,6 +7,7 @@ public class QuitNo : MonoBehaviour
     Transform areYouSure;
     Transform quitYes;
     Transform quitNo;
+    Transform quitOverlay;
 
     public override void Start()
     {
@@ -15,6 +16,7 @@ public class QuitNo : MonoBehaviour
         areYouSure = GameObject.Find("AreYouSureText").GetComponent<Transform>();
         quitYes = GameObject.Find("YesText").GetComponent<Transform>();
         quitNo = GameObject.Find("NoText").GetComponent<Transform>();
+        quitOverlay = GameObject.Find("QuitOverlay").GetComponent<Transform>();
     }
 
     public override void OnMouseEnter()
@@ -29,6 +31,8 @@ public class QuitNo : MonoBehaviour
             Disable<Transform>(areYouSure);
             Disable<Transform>(quitYes);
             Disable<Transform>(quitNo);
+            Disable<Transform>(quitNo);
+            Disable<Transform>(quitOverlay);
         }
     }
 

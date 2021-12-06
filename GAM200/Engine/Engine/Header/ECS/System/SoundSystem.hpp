@@ -47,6 +47,8 @@ namespace Engine {
 		void SoundSetVolume(int channelID, float _vol);
 		float SoundGetVolume(int channelID, float _vol);
 
+		void SoundSetPauseAllSound(bool _paused);
+
 
 		SINGLETON_SETUP(SoundSystem);
 

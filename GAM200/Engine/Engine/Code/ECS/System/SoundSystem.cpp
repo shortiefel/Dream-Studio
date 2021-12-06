@@ -163,5 +163,8 @@ namespace Engine
 		return SoundCom.DecimalVolume(_vol);
 	}
 
+	void SoundSystem::SoundSetPauseAllSound(bool _paused) {
+		SoundManager::GetInstance().SetPauseAllSound(_paused);
+	}
 
 }

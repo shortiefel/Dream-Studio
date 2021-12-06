@@ -55,8 +55,5 @@ public class Tutorial : MonoBehaviour
 
     }
 
-    public override void Update()
-    {
-        CheckPosition();
-    }
+    
 }

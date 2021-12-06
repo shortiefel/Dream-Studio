@@ -14,7 +14,7 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets\\Textures\\house_new.png",
+      "Filepath": "Assets\\Textures\\House.png",
       "Shape": 0,
       "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,

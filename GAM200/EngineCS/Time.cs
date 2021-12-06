@@ -22,12 +22,35 @@ public class Time
     {
         get
         {
-            GetDeltaTime_Engine(out float result);
+            GetDeltaTime_Engine(out float result, true);
+            return result;
+        }
+    }
+ 
+
+    public static float unscaledDeltaTime
+    {
+        get
+        {
+            GetDeltaTime_Engine(out float result, false);
+            return result;
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetDeltaTime_Engine(out float outFloat, bool _timeScale);
+
+
+    public static float fixedDeltaTime
+    {
+        get
+        {
+            GetFixedDeltaTime_Engine(out float result);
             return result;
         }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetDeltaTime_Engine(out float outFloat);
+    internal static extern void GetFixedDeltaTime_Engine(out float outFloat);
 
     public static float timeScale
     {

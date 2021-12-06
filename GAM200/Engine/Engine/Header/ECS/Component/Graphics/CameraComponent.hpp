@@ -34,12 +34,12 @@ namespace Engine {
     {
         // Window parameters
         float ar{}, fov{};
-        int height{};
+        float height{};
 
         bool isActive = true;
 
 
-        CameraComponent(Entity_id _ID = DEFAULT_ENTITY_ID, int _height = 15, float _fov = 1.f, float _ar = 0.f, bool _active = false);
+        CameraComponent(Entity_id _ID = DEFAULT_ENTITY_ID, float _height = 15, float _fov = 1.f, float _ar = 0.f, bool _active = false);
 
 
         CameraComponent& Deserialize(const DSerializer& _serializer);

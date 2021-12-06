@@ -48,7 +48,7 @@ namespace Engine
 	private:
 		Math::vec2 camPosition{};
 
-		int camHeight{};
+		float camHeight{};
 		float camFov{};
 
 		GLFWwindow* pwindow{};

@@ -137,8 +137,8 @@ namespace Engine {
 	Camera
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	void ScreenToWorldPoint_Engine(unsigned int id, Math::vec3* outPosition, Math::vec3 inPosition);
-	void GetCameraHeight_Engine(unsigned int id, int* _height);
-	void SetCameraHeight_Engine(unsigned int id, int _height);
+	void GetCameraHeight_Engine(unsigned int id, float* _height);
+	void SetCameraHeight_Engine(unsigned int id, float _height);
 
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Texture
@@ -246,7 +246,8 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Deltatime
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void GetDeltaTime_Engine(float* dt);
+	void GetDeltaTime_Engine(float* dt, bool _timeScale);
+	void GetFixedDeltaTime_Engine(float* dt);
 	void SetTimeScale_Engine(float timeScale);
 	void GetTimeScale_Engine(float* timeScale);
 	void WaitForSeconds_Engine(float timer);
@@ -444,6 +445,7 @@ namespace Engine {
 		Deltatime
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		mono_add_internal_call("Time::GetDeltaTime_Engine", GetDeltaTime_Engine);
+		mono_add_internal_call("Time::GetFixedDeltaTime_Engine", GetFixedDeltaTime_Engine);
 		mono_add_internal_call("Time::SetTimeScale_Engine", SetTimeScale_Engine);
 		mono_add_internal_call("Time::GetTimeScale_Engine", GetTimeScale_Engine);
 		mono_add_internal_call("Time::WaitForSeconds_Engine", WaitForSeconds_Engine);
@@ -692,10 +694,10 @@ namespace Engine {
 		*outPosition = ScreenToWorldPoint(inPosition, CameraSystem::GetInstance().GetInverseTransform(&id), GetViewportFuncPtr());
 	}
 
-	void GetCameraHeight_Engine(unsigned int id, int* _height) {
+	void GetCameraHeight_Engine(unsigned int id, float* _height) {
 		GetEngineType(id, CameraComponent, height, *_height);
 	}
-	void SetCameraHeight_Engine(unsigned int id, int _height) {
+	void SetCameraHeight_Engine(unsigned int id, float _height) {
 		SetEngineType(id, CameraComponent, height, _height);
 	}
 
@@ -1071,7 +1073,6 @@ namespace Engine {
 
 	void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, int layer, unsigned int* newId) {
 		char* text = mono_string_to_utf8(prefabName);
-		std::cout << "pref " << std::string{ text } << "\n";
 		GameSceneSerializer::DeserializePrefab(text, newId, Math::vec2{ pos.x, pos.y }, 0, layer);
 		mono_free(text);
 	}
@@ -1086,8 +1087,16 @@ namespace Engine {
 	/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Deltatime
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-	void GetDeltaTime_Engine(float* dt) {
-		*dt = DeltaTime::GetInstance().GetDeltaTime();
+	//_timeScale = true means affected by time scale
+	void GetDeltaTime_Engine(float* dt, bool _timeScale) {
+		if (_timeScale)
+			*dt = DeltaTime::GetInstance().GetDeltaTime();
+		else
+			*dt = DeltaTime::GetInstance().GetUnscaledDeltaTime();
+	}
+
+	void GetFixedDeltaTime_Engine(float* dt) {
+		*dt = DeltaTime::GetInstance().GetFixedDeltaTime();
 	}
 
 	void SetTimeScale_Engine(float timeScale) {

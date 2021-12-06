@@ -9,6 +9,8 @@ public class GameState : MonoBehaviour
 
     Text highscoreText;
 
+    CameraMovement camMovement;
+
     public override void Start()
     {
         pauseState = false;
@@ -17,6 +19,8 @@ public class GameState : MonoBehaviour
         shouldEnd = false;
 
         highscoreText = GameObject.Find("CounterText").GetComponent<Text>();
+
+        camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
     }
 
     public override void Update()
@@ -25,22 +29,35 @@ public class GameState : MonoBehaviour
         if (shouldEnd)
         {
             shouldEnd = false;
-            
-            SceneManager.LoadScene("GameOver");
-            TrySetHighscore();
+
+            GameOver();
         }
         //--------------------------
         //Cheat code
         if (Input.GetKeyDown(KeyCode.L))
         {
-            SceneManager.LoadScene("GameOver");
-            TrySetHighscore();
+            GameOver();
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
             IncrementScore();
         }
         //-------------------------
+    }
+
+    void GameOver ()
+    {
+        //SceneManager.LoadScene("GameOver");
+        if (camMovement.toZoom) return;
+        camMovement.toZoom = true;
+
+        Time.timeScale = 0f;
+        TrySetHighscore();
+    }
+
+    public void SetLoseHouse(Vector2 _pos)
+    {
+        camMovement.SetTargetPosition(_pos);
     }
 
 

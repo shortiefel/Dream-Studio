@@ -31,6 +31,11 @@ namespace Engine {
 
 
 	void Random::Range(int num1, int num2, int* num3) {
+		if (num1 > num2) {
+			int tem = num1;
+			num1 = num2;
+			num2 = tem;
+		}
 		std::random_device dev;
 		std::mt19937 rng(dev());
 		std::uniform_int_distribution<std::mt19937::result_type> dist(num1, num2);

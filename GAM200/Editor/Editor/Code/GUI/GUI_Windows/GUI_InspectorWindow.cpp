@@ -663,7 +663,7 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
-						ImGui::InputInt("##camheight", &camComp->height, 0);
+						ImGui::InputFloat("##camheight", &camComp->height, 0);
 						ImGui::PopFont();
 
 						ImGui::Spacing();

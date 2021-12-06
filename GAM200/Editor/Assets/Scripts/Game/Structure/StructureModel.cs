@@ -56,6 +56,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             if (!notification.NotificationUpdate())
             {
                 gameState.shouldEnd = true;
+                gameState.SetLoseHouse(transform.position);
             }
 
             if (notification.AppearCheck())

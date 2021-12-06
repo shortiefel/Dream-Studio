@@ -28,6 +28,7 @@ namespace Engine {
 		float GetTimeScale() const;
 		void SetTimeScale(float _timeScale);
 		float GetDeltaTime() const;
+		float GetUnscaledDeltaTime() const;
 		//Set current dt, add to total time and increment the loop count
 		void SetDeltaTime(float _dt);
 		float GetFixedDeltaTime();

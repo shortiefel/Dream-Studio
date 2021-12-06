@@ -20,7 +20,7 @@ public class Notification : MonoBehaviour
     {
         lifeTime = 0f;
         notiTime = 0f;
-        maxLifeTime = 80f;
+        maxLifeTime =40f;
         showNotification = 0f;
         shouldShow = false;
         alreadyShowing = false;
@@ -93,11 +93,6 @@ public class Notification : MonoBehaviour
         }
 
         return true;
-    }
-
-    public void GameOver()
-    {
-        SceneManager.LoadScene("GameOver");
     }
 
     public void SetAnimation(string state)

@@ -190,7 +190,7 @@ namespace Editor {
 					ImGui::EndPopup();
 				}
 
-
+				bool enter = false;
 
 				/**
 				*	Transform Properties
@@ -203,7 +203,6 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Transform"))
 					{
-						//bool enter = false;
 
 						/**
 						*	Position
@@ -261,7 +260,7 @@ namespace Editor {
 						{
 							firstEnter = true;
 							//Record State
-							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
+							auto move_command = std::make_shared<ObjectTransformChangeCommand>(firstTransform, *transComp);
 							UndoRedoManager::GetInstance().RecordState(move_command);
 							std::cout << transComp->GetEntityId() << "\n";
 						}
@@ -329,7 +328,7 @@ namespace Editor {
 						{
 							firstEnter = true;
 							//Record State
-							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
+							auto move_command = std::make_shared<ObjectTransformChangeCommand>(firstTransform, *transComp);
 							UndoRedoManager::GetInstance().RecordState(move_command);
 							std::cout << transComp->GetEntityId() << "\n";
 						}

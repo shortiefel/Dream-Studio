@@ -20,6 +20,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     //private Prefab notifiPrefab;
     private GameObject notifiSymbol;
     private AudioSource notificationSound;
+    private AudioSource destroySound;
 
     public override void Start()
     {
@@ -44,6 +45,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             animation.Play("Appear");
             notification.SetAnimation("Appear");
             notificationSound = GetComponent<AudioSource>();
+            destroySound = notifiSymbol.GetComponent<AudioSource>();
             //aiDirector.SpawnACar();
         }
     }
@@ -67,6 +69,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             if (notification.DestroyCheck())
             {
                 Disable<Transform>(notifiSymbol.transform);
+                destroySound.Play();
                 notification.alreadyShowing = false;
                 animation.Play("Stay");
             }

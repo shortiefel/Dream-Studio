@@ -65,7 +65,7 @@ namespace Editor {
 				//all assets
 				if (_currentDirectory != std::filesystem::path(_assetPath))
 				{
-					if (ImGui::Button("Assets"))
+					if (ImGui::Button("Back"))
 					{
 						_currentDirectory = _currentDirectory.parent_path();
 					}

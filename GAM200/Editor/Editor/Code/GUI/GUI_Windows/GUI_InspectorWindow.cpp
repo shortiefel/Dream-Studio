@@ -763,7 +763,6 @@ namespace Editor {
 
 						if (ImGui::BeginDragDropTarget())
 						{
-							ImGui::Text("I'm Dropping.");
 							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 							{
 								const wchar_t* path = (const wchar_t*)payload->Data;
@@ -1105,9 +1104,15 @@ namespace Editor {
 						ImGui::Spacing();
 
 						ImGui::AlignTextToFramePadding();
+
+
+						ImGui::Text("File");
+						ImGui::SameLine(halfWidth);
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);	
+						ImGui::Text(soundComp->soundName.c_str());		
 						if (ImGui::BeginDragDropTarget())
 						{
-							ImGui::Text("I'm Dropping.");
 							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 							{
 								const wchar_t* path = (const wchar_t*)payload->Data;
@@ -1126,12 +1131,6 @@ namespace Editor {
 							}
 							ImGui::EndDragDropTarget();
 						}
-
-						ImGui::Text("File");
-						ImGui::SameLine(halfWidth);
-						ImGui::SetNextItemWidth(halfWidth);
-						ImGui::PushFont(boldFont);
-						ImGui::Text(soundComp->soundName.c_str());
 						ImGui::PopFont();
 
 						ImGui::Spacing();

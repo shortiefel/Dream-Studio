@@ -18,6 +18,8 @@ public class SpawnManager : MonoBehaviour
 
     GameState gameState;
 
+    bool checkForNoSpawn;
+
     public override void Start()
     {
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
@@ -30,6 +32,32 @@ public class SpawnManager : MonoBehaviour
         timer = 0f;
         //maxTimer = 2.0f;
         maxTimer = 0.5f;
+
+        checkForNoSpawn = true;
+        //while (checkForNoSpawn)
+        //{
+        //    Vector2Int roadPosition = SpawnRandomRoad();
+        //    //Vector2Int housePosition = SpawnRandomHouse(roadPosition);
+        //    Vector2Int roadPosition2 = SpawnRandomRoad();
+        //
+        //    if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
+        //    {
+        //        roadManager.PlaceSpawnHouse(roadPosition);
+        //        roadManager.PlaceSpawnDestination(roadPosition2);
+        //    }
+        //    if (placementManager.placementGrid.GetAllHouses().Count != 0 && placementManager.placementGrid.GetAllSpecialStructure().Count != 0)
+        //    {
+        //        checkForNoSpawn = false;
+        //    }
+        //}
+       //Vector2Int roadPosition = new Vector2Int(5,5);
+       //Vector2Int roadPosition2 = new Vector2Int(10, 5);
+       //
+       //if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
+       //{
+       //    roadManager.PlaceSpawnHouse(roadPosition);
+       //    roadManager.PlaceSpawnDestination(roadPosition2);
+       //}
     }
 
     private Vector2Int SpawnRandomRoad()
@@ -119,7 +147,7 @@ public class SpawnManager : MonoBehaviour
 
                 roadManager.PlaceSpawnHouse(roadPosition);
                 roadManager.PlaceSpawnDestination(roadPosition2);
-                Debug.Log("here");
+
                 //structureManager.PlaceHouse(housePosition);
                 scoreToSpawn += 5;
             //}
@@ -146,6 +174,28 @@ public class SpawnManager : MonoBehaviour
         if (score == scoreToSpawn)
         {
             CheckPosition();
+            if (checkForNoSpawn)
+            {
+                while (checkForNoSpawn)
+                {
+                    if (placementManager.placementGrid.GetAllHouses().Count != 0 && placementManager.placementGrid.GetAllSpecialStructure().Count != 0)
+                    {
+                        checkForNoSpawn = false;
+                        break;
+                    }
+
+                    Vector2Int roadPosition = SpawnRandomRoad();
+                    //Vector2Int housePosition = SpawnRandomHouse(roadPosition);
+                    Vector2Int roadPosition2 = SpawnRandomRoad();
+
+                    if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
+                    {
+                        roadManager.PlaceSpawnHouse(roadPosition);
+                        roadManager.PlaceSpawnDestination(roadPosition2);
+                    }
+                    
+                }
+            }
         }
     }
 }

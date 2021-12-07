@@ -279,8 +279,8 @@ namespace Engine
 #endif
 		GraphicImplementation::Renderer::ResetStats();
 
-		// Set background to purple color
-		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+		// Set background
+		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Enable GL_BLEND for transparency of textures

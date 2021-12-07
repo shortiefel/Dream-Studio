@@ -20,7 +20,7 @@ public class Notification : MonoBehaviour
     {
         lifeTime = 0f;
         notiTime = 0f;
-        maxLifeTime =40f;
+        maxLifeTime =80f;
         showNotification = 0f;
         shouldShow = false;
         alreadyShowing = false;

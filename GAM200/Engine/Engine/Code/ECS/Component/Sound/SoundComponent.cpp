@@ -4,7 +4,7 @@
 @author	Tan Wei Ling Felicia	weilingfelicia.tan@digipen.edu	100%
 @date		15/11/2021
 \brief
-This file contain the Components needed for sound
+This file contain the definiation Components needed for sound
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

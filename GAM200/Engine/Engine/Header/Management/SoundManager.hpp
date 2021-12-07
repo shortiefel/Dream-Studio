@@ -5,7 +5,7 @@
 @date		29/11/2021
 \brief
 
-
+It contains all the FMOD functions and to manage the sound
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents

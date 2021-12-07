@@ -30,39 +30,39 @@ public class InputManager : MonoBehaviour
 	//private void Update()
 	public override void Update()
 	{
-		if (!gameState.GetPause())
-		{
-			bool state = gameState.GetDrawMode();
-			if (Input.GetMouseButtonDown(MouseCode.Left)) {
-				if (!state)
-				{
-					var position = RaycastGround();
-					if (position != null)
-					{
-						if (CheckIfOutside(position.Value) == true)
-						{
-							SwitchMode();
-							return;
-						}
-					}
-				}
+		//if (!gameState.GetPause())
+		//{
+		//	bool state = gameState.GetDrawMode();
+		//	if (Input.GetMouseButtonDown(MouseCode.Left)) {
+		//		if (!state)
+		//		{
+		//			var position = RaycastGround();
+		//			if (position != null)
+		//			{
+		//				if (CheckIfOutside(position.Value) == true)
+		//				{
+		//					SwitchMode();
+		//					return;
+		//				}
+		//			}
+		//		}
 
-				else
-				{
-					var position = RaycastGround();
-					if (position != null) {
-						if (CheckIfOutside(position.Value) == false)
-						{
-							SwitchMode();
-							return;
-						}
-					}
-				}
-			}
-		}
+		//		else
+		//		{
+		//			var position = RaycastGround();
+		//			if (position != null) {
+		//				if (CheckIfOutside(position.Value) == false)
+		//				{
+		//					SwitchMode();
+		//					return;
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
 
-		//if (Mathf.Approximately(0f, Time.timeScale)) return;
-		if (!gameState.ShouldDraw()) return;
+		////if (Mathf.Approximately(0f, Time.timeScale)) return;
+		//if (!gameState.ShouldDraw()) return;
 
 		CheckClickDownEvent();
 		CheckClickHoldEvent();
@@ -146,24 +146,24 @@ public class InputManager : MonoBehaviour
 		}
 	}
 
-	public void SwitchMode()
-	{
+	//public void SwitchMode()
+	//{
 
-		if (gameState.GetDrawMode())
-		{
-			SceneManager.SetDrawMode(false);
+	//	if (gameState.GetDrawMode())
+	//	{
+	//		SceneManager.SetDrawMode(false);
 
-			//drawModeBool = false;
-			gameState.SetDrawMode(false);
-		}
-		else
-		{
-			SceneManager.SetDrawMode(true);
+	//		//drawModeBool = false;
+	//		gameState.SetDrawMode(false);
+	//	}
+	//	else
+	//	{
+	//		SceneManager.SetDrawMode(true);
 
-			//drawModeBool = true;
-			gameState.SetDrawMode(true);
-		}
-	}
+	//		//drawModeBool = true;
+	//		gameState.SetDrawMode(true);
+	//	}
+	//}
 
 	/*
 	 * True = inside

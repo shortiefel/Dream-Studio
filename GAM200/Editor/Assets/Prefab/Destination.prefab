@@ -24,7 +24,7 @@
     "SoundComponent": {
       "IsActive": true,
       "IsLoop": false,
-      "filepath": "Assets\\Sound\\Notification.wav",
+      "filepath": "Assets\\Sound\\NotificationCleared.wav",
       "volume": 50.0,
       "isSound": true,
       "SoundGroup": 2

@@ -164,7 +164,12 @@ namespace Engine {
 		// set cursor to window
 		glfwSetCursor(glfw_window, glfw_custom_cursor);
 #else
+		
+		Settings::gameWidth = Settings::windowWidth = w_data.width = 1920;  
+		Settings::gameHeight = Settings::windowHeight = w_data.height = 1080;
 		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
+		glViewport(0, 0, w_data.width, w_data.height);
+		//glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 #endif
 		if (!glfw_window) {
 			LOG_ERROR("unable to create openGL context (window)");

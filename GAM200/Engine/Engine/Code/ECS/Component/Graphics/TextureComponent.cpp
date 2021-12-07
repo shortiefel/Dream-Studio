@@ -59,6 +59,13 @@ namespace Engine
 	// and the frame variables for the component based on delta time
 	void TextureComponent::AnimationUpdate(float _dt, AnimationState& _state)
 	{
+		if (_state.currFrame < _state.startX)
+		{
+			++_state.currFrame;
+			SetUV(_state);
+			return;
+		}
+
 		_state.aTime += _dt;
 
 		if (_state.aTime > _state.fTime)
@@ -80,6 +87,8 @@ namespace Engine
 			}
 			SetUV(_state);
 		}
+
+		std::cout << "_state.currFrame" << _state.currFrame << std::endl;
 	}
 
 	// Function that sets the UV texture coordinates; For spritesheets

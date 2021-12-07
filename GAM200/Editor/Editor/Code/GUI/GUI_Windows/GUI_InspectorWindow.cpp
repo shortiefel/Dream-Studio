@@ -1077,6 +1077,7 @@ namespace Editor {
 						//if (soundComp->isSound == true)
 						//{
 							//ImGui::Text("Sound Picker");
+	
 							ImGui::SameLine(halfWidth);
 							if (ImGui::Button("Sound Picker##PickSound"))
 							{
@@ -1104,6 +1105,28 @@ namespace Editor {
 						ImGui::Spacing();
 
 						ImGui::AlignTextToFramePadding();
+						if (ImGui::BeginDragDropTarget())
+						{
+							ImGui::Text("I'm Dropping.");
+							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+							{
+								const wchar_t* path = (const wchar_t*)payload->Data;
+								std::filesystem::path soundPath = std::filesystem::path(_assetPath) / path;
+								soundComp->isSound = true;
+
+								if (!soundPath.empty())
+								{
+									soundComp->filepath = soundPath.string().substr(soundPath.string().rfind("Assets"));
+									soundPath = soundPath.string().substr(soundPath.string().find_last_of("\\") + 1);
+									soundComp->soundName = soundPath.string().substr(0, soundPath.string().find_last_of("."));
+									std::cout << soundComp->filepath << "\n";
+									std::cout << soundComp->soundName << "\n";
+								}
+
+							}
+							ImGui::EndDragDropTarget();
+						}
+
 						ImGui::Text("File");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);

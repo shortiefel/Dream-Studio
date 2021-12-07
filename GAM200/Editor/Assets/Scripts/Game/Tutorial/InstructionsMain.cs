@@ -22,6 +22,8 @@ public class InstructionsMain : MonoBehaviour
 
         tutorial = GameObject.Find("TutorialManager").GetComponent<Tutorial>();
 
+        //GameObject.Find("Instructions1").GetComponent<Animation>().Play("Open");
+
         stages = 0;
     }
 
@@ -31,7 +33,10 @@ public class InstructionsMain : MonoBehaviour
         {
             if (instructions1Script.state)
             {
-                Disable<Transform>(GameObject.Find("Instructions1").GetComponent<Transform>());
+                GameObject go1 = GameObject.Find("Instructions1");
+                Disable<Transform>(go1.GetComponent<Transform>());
+                go1.GetComponent<Animation>().Play("Close");
+                
                 Enable<Transform>(GameObject.Find("Instructions2").GetComponent<Transform>());
                 stages++;
             }

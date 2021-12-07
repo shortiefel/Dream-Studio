@@ -13,7 +13,7 @@ public class ButtonRoad : MonoBehaviour
     Transform removeRoadWhite;
 
     GameManager gameManager;
-    InputManager inputManager;
+    //InputManager inputManager;
 
     GameState gameState;
 

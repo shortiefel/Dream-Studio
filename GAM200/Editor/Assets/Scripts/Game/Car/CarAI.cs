@@ -26,7 +26,7 @@ public class CarAI : MonoBehaviour
     private int index;
 
     private bool stop;
-    private bool collisionStop;
+    //private bool collisionStop;
 
     private Rigidbody2D rb;
 
@@ -58,7 +58,7 @@ public class CarAI : MonoBehaviour
         path = null; 
         index = 0;
         stop = false;
-        collisionStop = false;
+        //collisionStop = false;
 
         rb = GetComponent<Rigidbody2D>();
         GetComponent<AudioSource>().Play();

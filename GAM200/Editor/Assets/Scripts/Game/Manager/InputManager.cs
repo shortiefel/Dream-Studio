@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour
 {
 	public Action<Vector2Int> OnMouseClick, OnMouseHold;
 	public Action OnMouseUp;
-	private Vector2 cameraMovementVector;
+	//private Vector2 cameraMovementVector;
 
 	public Camera mainCamera;
 
@@ -70,10 +70,10 @@ public class InputManager : MonoBehaviour
 		//CheckArrowInput();
 	}
 
-	public Vector2 CameraMovementVector
-	{
-		get { return cameraMovementVector; }
-	}
+	//public Vector2 CameraMovementVector
+	//{
+	//	get { return cameraMovementVector; }
+	//}
 
 	private Vector2Int? RaycastGround()
 	{

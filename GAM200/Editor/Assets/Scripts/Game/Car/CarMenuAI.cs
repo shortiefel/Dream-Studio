@@ -5,7 +5,7 @@ using System;
 public class CarMenuAI : MonoBehaviour
 {
     private Vector2 startPosition;
-    private Vector2 endPosition;
+    //private Vector2 endPosition;
 
     private bool type;
 

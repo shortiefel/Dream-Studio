@@ -13,8 +13,8 @@ public class SpawnManager : MonoBehaviour
 
     private int scoreToSpawn;
     int score;
-    float timer;
-    float maxTimer;
+    //float timer;
+    //float maxTimer;
 
     GameState gameState;
 
@@ -29,9 +29,9 @@ public class SpawnManager : MonoBehaviour
 
         scoreToSpawn = 0;
 
-        timer = 0f;
+        //timer = 0f;
         //maxTimer = 2.0f;
-        maxTimer = 0.5f;
+        //maxTimer = 0.5f;
 
         checkForNoSpawn = true;
         //while (checkForNoSpawn)

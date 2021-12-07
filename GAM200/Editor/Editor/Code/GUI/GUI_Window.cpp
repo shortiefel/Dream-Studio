@@ -31,7 +31,6 @@ Technology is prohibited.
 #include "Editor/Header/GUI/GUI_Windows/GUI_InspectorWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_HierarchyWindow.hpp"
 #include "Editor/Header/GUI/GUI_Windows/GUI_StatsWindow.hpp"
-#include "Editor/Header/GUI/GUI_Windows/GUI_PrefabWindow.hpp"
 #include "Editor/Header/GUI/GUI_ClickCheck.hpp"
 
 #include "Editor/Header/FunctionOverride.hpp"

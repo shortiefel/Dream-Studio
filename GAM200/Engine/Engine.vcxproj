@@ -279,7 +279,6 @@
     <ClCompile Include="Engine\Code\ECS\System\PhysicsSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\ScriptSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\SoundSystem.cpp" />
-    <ClCompile Include="Engine\Code\ECS\System\TransformCalculationSystem.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\UISystem.cpp" />
     <ClCompile Include="Engine\Code\EngineCore.cpp" />
     <ClCompile Include="Engine\Code\Event\EventDispatcher.cpp" />
@@ -419,7 +418,6 @@
     <ClInclude Include="Engine\Header\ECS\System\ScriptSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SoundSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\SystemList.hpp" />
-    <ClInclude Include="Engine\Header\ECS\System\TransformCalculationSystem.hpp" />
     <ClInclude Include="Engine\Header\ECS\System\UISystem.hpp" />
     <ClInclude Include="Engine\Header\EngineCore.hpp" />
     <ClInclude Include="Engine\Header\Event\Event.hpp" />

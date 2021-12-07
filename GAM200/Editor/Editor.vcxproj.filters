@@ -123,9 +123,6 @@
     <ClInclude Include="Editor\Header\FunctionOverride.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_PrefabWindow.hpp">
-      <Filter>Header Files\GUI\GUI_Windows</Filter>
-    </ClInclude>
     <ClInclude Include="..\External Resources\include\ImGuizmo\GraphEditor.h">
       <Filter>External Resources\ImGuizmo</Filter>
     </ClInclude>
@@ -214,9 +211,6 @@
     </ClCompile>
     <ClCompile Include="Editor\Code\FunctionOverride.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Code\GUI\GUI_Windows\GUI_PrefabWindow.cpp">
-      <Filter>Source Files\GUI\GUI_Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\External Resources\include\ImGuizmo\GraphEditor.cpp">
       <Filter>External Resources\ImGuizmo</Filter>

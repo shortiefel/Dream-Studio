@@ -19,7 +19,6 @@ Technology is prohibited.
 #include "Engine/Header/Window.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Graphic/Picking2D.hpp"
-#include "Engine/Header/ECS/System/TransformCalculationSystem.hpp"
 #include "Engine/Header/Parent/ParentManager.hpp"
 #include "Engine/Header/Input/Input.hpp"
 

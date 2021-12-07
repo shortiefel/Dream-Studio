@@ -145,9 +145,6 @@
     <ClCompile Include="Engine\Code\ECS\System\UISystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\System\TransformCalculationSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp">
       <Filter>Source Files\ECS\Component\Graphic</Filter>
     </ClCompile>
@@ -509,9 +506,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp">
       <Filter>Header Files\ECS\Component\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\System\TransformCalculationSystem.hpp">
-      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\Math\Vector\Vector3D.hpp">
       <Filter>Header Files\Math\Vector</Filter>

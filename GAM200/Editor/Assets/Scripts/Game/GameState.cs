@@ -11,12 +11,15 @@ public class GameState : MonoBehaviour
 
     CameraMovement camMovement;
 
+    bool gameOverBool;
+
     public override void Start()
     {
         pauseState = false;
         drawModeBool = false;
         highscore = 0;
         shouldEnd = false;
+        gameOverBool = false;
 
         highscoreText = GameObject.Find("CounterText").GetComponent<Text>();
 
@@ -31,6 +34,17 @@ public class GameState : MonoBehaviour
             shouldEnd = false;
 
             GameOver();
+        }
+        else
+        {
+            if (!gameOverBool)
+            {
+                if (highscore >= 10)
+                {
+                    shouldEnd = true;
+                    gameOverBool = true;
+                }
+            }
         }
         //--------------------------
         //Cheat code

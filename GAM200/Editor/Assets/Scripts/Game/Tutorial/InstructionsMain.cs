@@ -5,6 +5,8 @@ public class InstructionsMain : MonoBehaviour
     InstructionsClick instructions2Script;
     InstructionsClick instructions3Script;
     InstructionsClick instructions4Script;
+    InstructionsClick instructions5Script;
+    InstructionsClick instructions6Script;
 
     Tutorial tutorial;
 
@@ -15,6 +17,8 @@ public class InstructionsMain : MonoBehaviour
         instructions2Script = GameObject.Find("Instructions2").GetComponent<InstructionsClick>();
         instructions3Script = GameObject.Find("Instructions3").GetComponent<InstructionsClick>();
         instructions4Script = GameObject.Find("Instructions4").GetComponent<InstructionsClick>();
+        instructions5Script = GameObject.Find("Instructions5").GetComponent<InstructionsClick>();
+        instructions6Script = GameObject.Find("Instructions6").GetComponent<InstructionsClick>();
 
         tutorial = GameObject.Find("TutorialManager").GetComponent<Tutorial>();
 
@@ -58,11 +62,28 @@ public class InstructionsMain : MonoBehaviour
             if (instructions4Script.state)
             {
                 Disable<Transform>(GameObject.Find("Instructions4").GetComponent<Transform>());
-                //Enable<Transform>(GameObject.Find("Instructions4").GetComponent<Transform>());
+                Enable<Transform>(GameObject.Find("Instructions5").GetComponent<Transform>());
+                stages++;
+            }
+        }
+        else if (stages == 4)
+        {
+            if (instructions5Script.state)
+            {
+                Disable<Transform>(GameObject.Find("Instructions5").GetComponent<Transform>());
+                Enable<Transform>(GameObject.Find("Instructions6").GetComponent<Transform>());
+                stages++;
+            }
+        }
+        else if (stages == 5)
+        {
+            if (instructions6Script.state)
+            {
                 SceneManager.LoadScene("NewGame");
                 stages++;
             }
         }
+
     }
 }
 

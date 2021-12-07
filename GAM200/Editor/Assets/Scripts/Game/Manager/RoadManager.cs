@@ -292,9 +292,10 @@ public class RoadManager : MonoBehaviour
                 placementManager.RemoveCurrentGrid(position);
                 placementMode = false;
                 removeSound.Play();
-                FixRoadPrefabs();
             }
         }
+
+        FixRoadPrefabs();
     }
 
 }

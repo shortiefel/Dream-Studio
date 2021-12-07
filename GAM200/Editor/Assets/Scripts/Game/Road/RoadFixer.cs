@@ -41,7 +41,8 @@ public class RoadFixer : MonoBehaviour
                 Debug.Log(destinationCount);
             }
         }
-        if ((roadCount == 0  && houseCount == 0 && destinationCount == 0) || (roadCount == 1 && houseCount == 0 && destinationCount == 0))
+        if ((roadCount == 0  && houseCount == 0 && destinationCount == 0) || (roadCount == 1 && houseCount == 0 && destinationCount == 0) ||
+            (roadCount == 0 && houseCount == 1 && destinationCount == 0) || (roadCount == 0 && houseCount == 0 && destinationCount == 1))
         {
             CreateDeadEnd(placementManager, result, temporaryPosition);
         }
@@ -264,19 +265,19 @@ public class RoadFixer : MonoBehaviour
     //[left, up, right, down]
     private void CreateDeadEnd(PlacementManager placementManager, CellType[] result, Vector2Int temporaryPosition)
     {
-        if (result[1] == CellType.Road)
+        if ((result[1] == CellType.Road) || (result[1] == CellType.Structure) || (result[1] == CellType.SpecialStructure))
         {
             placementManager.ModifyStructureModel(temporaryPosition, deadEnd, 180);
         }
-        else if (result[2] == CellType.Road)
+        else if ((result[2] == CellType.Road) || (result[2] == CellType.Structure) || (result[2] == CellType.SpecialStructure))
         {
             placementManager.ModifyStructureModel(temporaryPosition, deadEnd, 90);
         }
-        else if (result[3] == CellType.Road)
+        else if ((result[3] == CellType.Road) || (result[3] == CellType.Structure) || (result[3] == CellType.SpecialStructure))
         {
             placementManager.ModifyStructureModel(temporaryPosition, deadEnd, 0);
         }
-        else if (result[0] == CellType.Road)
+        else if ((result[0] == CellType.Road) || (result[0] == CellType.Structure) || (result[0] == CellType.SpecialStructure))
         {
             placementManager.ModifyStructureModel(temporaryPosition, deadEnd, 270);
         }

@@ -11,6 +11,9 @@ public class InstructionsMain : MonoBehaviour
     Tutorial tutorial;
 
     int stages;
+    float timer;
+    bool stateCheck;
+
     public override void Start()
     {
         instructions1Script = GameObject.Find("Instructions1").GetComponent<InstructionsClick>();
@@ -22,9 +25,21 @@ public class InstructionsMain : MonoBehaviour
 
         tutorial = GameObject.Find("TutorialManager").GetComponent<Tutorial>();
 
-        //GameObject.Find("Instructions1").GetComponent<Animation>().Play("Open");
+        GameObject.Find("Instructions1").GetComponent<Animation>().Play("Open");
 
         stages = 0;
+        timer = 0;
+    }
+
+    public bool CheckTimer()
+    {
+        timer += Time.deltaTime;
+        if (timer > 0.3f)
+        {
+            timer = 0;
+            return true;
+        }
+        return false;
     }
 
     public override void Update()
@@ -33,12 +48,17 @@ public class InstructionsMain : MonoBehaviour
         {
             if (instructions1Script.state)
             {
-                GameObject go1 = GameObject.Find("Instructions1");
-                Disable<Transform>(go1.GetComponent<Transform>());
-                go1.GetComponent<Animation>().Play("Close");
-                
-                Enable<Transform>(GameObject.Find("Instructions2").GetComponent<Transform>());
-                stages++;
+                if (CheckTimer())
+                {
+                    GameObject go1 = GameObject.Find("Instructions1");
+                    Disable<Transform>(go1.GetComponent<Transform>());
+                    go1.GetComponent<Animation>().Play("Close");
+
+                    GameObject go2 = GameObject.Find("Instructions2");
+                    Enable<Transform>(go2.GetComponent<Transform>());
+                    go2.GetComponent<Animation>().Play("Open");
+                    stages++;
+                }
             }
         }
 

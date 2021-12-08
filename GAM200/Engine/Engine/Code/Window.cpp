@@ -143,7 +143,16 @@ namespace Engine {
 		//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
 
 #ifdef _GAME_BUILD
-		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
+		glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+
+		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		//std::cout << mode->width << " " << mode->height << "\n";
+		Settings::gameWidth = Settings::windowWidth = w_data.width = mode->width;
+		Settings::gameHeight = Settings::windowHeight = w_data.height = mode->height;
+		//glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
+
+		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), NULL, nullptr);
+		glViewport(0, 0, w_data.width, w_data.height);
 
 		// Read png file for cursor
 		GLFWimage image;

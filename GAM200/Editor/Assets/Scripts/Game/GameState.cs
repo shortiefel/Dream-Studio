@@ -39,7 +39,7 @@ public class GameState : MonoBehaviour
         {
             if (!gameOverBool)
             {
-                if (highscore >= 10)
+                if (highscore >= 80)
                 {
                     shouldEnd = true;
                     gameOverBool = true;

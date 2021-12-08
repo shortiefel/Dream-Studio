@@ -95,11 +95,6 @@ namespace Engine
                 UpdateFunc(DeltaTime::GetInstance().GetDeltaTime());
             }
 
-            if (Input::IsKeyPressed(Input_KeyCode::M)) {
-                const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-                std::cout << mode->width << " " << mode->height << "\n";
-            }
-
             Engine::Window::GetInstance().Update();
         }
     }

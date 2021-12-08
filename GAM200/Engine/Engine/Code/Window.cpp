@@ -323,15 +323,21 @@ namespace Engine {
 		//w_data.eventCallBack(event);
 	}
 
-	void WindowFocusCallBack(GLFWwindow*, int focused) {
+	void WindowFocusCallBack(GLFWwindow* window, int focused) {
 		if (focused) {
 			// The window gained input focus
 			std::cout << "in focus \n";
+#ifdef _GAME_BUILD
+			glfwRestoreWindow(window);
+#endif
 			window_focus = true;
 		}
 		else {
 			// The window lost input focus
 			std::cout << "lose focus \n";
+#ifdef _GAME_BUILD
+			glfwIconifyWindow(window);
+#endif
 			window_focus = false;
 		}
 	}

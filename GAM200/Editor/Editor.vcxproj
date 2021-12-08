@@ -410,6 +410,7 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_SceneWindow.hpp" />
     <ClInclude Include="Editor\Header\GUI\GUI_Windows\GUI_StatsWindow.hpp" />
     <ClInclude Include="Editor\Header\Scene\EditorSceneManager.hpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\External Resources\include\ImGuizmo\GraphEditor.cpp" />
@@ -450,6 +451,9 @@ copy "$(SolutionDir)EngineCS\bin\$(Configuration)\EngineCS.dll" "$(ProjectDir)Da
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{f1ed2fb0-16c2-4362-a3e4-6992be2f6f90}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

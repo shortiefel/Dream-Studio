@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices; //For internal calls
 
 public class UI: IComponent
 {
-    public uint entityId { get; set; }
+    //public uint entityId { get; set; }
     public UI() { }
     public UI(uint entity_id) { entityId = entity_id; }
 

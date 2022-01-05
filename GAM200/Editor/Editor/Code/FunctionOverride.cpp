@@ -31,8 +31,8 @@ Technology is prohibited.
 
 namespace Editor {
 	void Override_Function() {
-		Engine::SetGetViewportFunc(GUI_Windows::GetViewport);
-		Engine::SetGetMousePositionFunc(GUI_Windows::GetMousePositionGameWindow);
+		Engine::InternalCall::SetGetViewportFunc(GUI_Windows::GetViewport);
+		Engine::InternalCall::SetGetMousePositionFunc(GUI_Windows::GetMousePositionGameWindow);
 		Engine::Scripting::SetDisplayFuncPtr([](std::string str) { GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ str.c_str() }); });
 	}
 }

@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices; //For internal calls
 
 public class Collider : IComponent
 {
-    public uint entityId { get; set; }
+    //public uint entityId { get; set; }
     public Collider() { }
     public Collider(uint entity_id) { entityId = entity_id; }
 

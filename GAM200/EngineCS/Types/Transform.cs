@@ -21,7 +21,7 @@ Transform
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 public class Transform : IComponent
 {
-    public uint entityId { get; set; }
+    //public uint entityId { get; set; }
     public Transform() { }
     public Transform(uint entity_id) { entityId = entity_id; }
     //-----------------------------------------------------------------------------------------------------------------

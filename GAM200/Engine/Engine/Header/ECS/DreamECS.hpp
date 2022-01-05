@@ -28,6 +28,17 @@ Technology is prohibited.
 #include <memory>
 #include <unordered_set>
 
+#define GetEngineType(ID, type, paramName, param)\
+type* ctype = dreamECSGame->GetComponentPTR<type>(ID);\
+if (ctype != nullptr) param = ctype->paramName;
+
+#define SetEngineType(ID, type, paramName, param)\
+type* ctype = dreamECSGame->GetComponentPTR<type>(ID);\
+if (ctype != nullptr) ctype->paramName = param;
+
+#define GET_COMPONENT_PTR(type) type* tem = dreamECSGame->GetComponentPTR<type>(id);\
+								return !(tem == nullptr);
+
 namespace Engine {
 	class DreamECS;
 	struct Prefab;

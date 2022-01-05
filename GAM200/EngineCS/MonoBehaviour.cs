@@ -212,7 +212,7 @@ public class MonoBehaviour : IBehaviour
 
     //-----------------------------------------------------------------------------------------------------------------
     //Enable
-    public void Enable<T>(T type) where T : class, IComponent
+    public void Enable<T>(T type) where T : IComponent
     {
         if (type == null)
         {
@@ -245,7 +245,7 @@ public class MonoBehaviour : IBehaviour
 
     //-----------------------------------------------------------------------------------------------------------------
     //Disable
-    public void Disable<T>(T type) where T : class, IComponent
+    public void Disable<T>(T type) where T : IComponent
     {
         if (type == null)
         {

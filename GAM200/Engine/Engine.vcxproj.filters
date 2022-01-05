@@ -193,6 +193,21 @@
     <ClCompile Include="Engine\Code\Management\SoundManager.cpp">
       <Filter>Source Files\Management</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\Script\InternalCall\GameObjectInternalCall.cpp">
+      <Filter>Source Files\Scripting\InternalCall</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Script\InternalCall\ComponentsInternalCall.cpp">
+      <Filter>Source Files\Scripting\InternalCall</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Script\InternalCall\CoreInternalCall.cpp">
+      <Filter>Source Files\Scripting\InternalCall</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Script\InternalCall\UtilityInternalCall.cpp">
+      <Filter>Source Files\Scripting\InternalCall</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Script\InternalCall\MathInternalCall.cpp">
+      <Filter>Source Files\Scripting\InternalCall</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Application.hpp">
@@ -677,6 +692,21 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Management\SoundManager.hpp">
       <Filter>Header Files\Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\InternalCall\UtilityInternalCall.hpp">
+      <Filter>Header Files\Script\InternalCall</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\InternalCall\MathInternalCall.hpp">
+      <Filter>Header Files\Script\InternalCall</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\InternalCall\CoreInternalCall.hpp">
+      <Filter>Header Files\Script\InternalCall</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\InternalCall\ComponentsInternalCall.hpp">
+      <Filter>Header Files\Script\InternalCall</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\Script\InternalCall\GameObjectInternalCall.hpp">
+      <Filter>Header Files\Script\InternalCall</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

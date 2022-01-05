@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices; //For internal calls
 
 public class AudioSource : IComponent
 {
-    public uint entityId { get; set; }
+    //public uint entityId { get; set; }
     public AudioSource() { }
     public AudioSource(uint entity_id) { entityId = entity_id; }
 

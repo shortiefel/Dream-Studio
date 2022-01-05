@@ -309,7 +309,12 @@
     <ClCompile Include="Engine\Code\Random\Random.cpp" />
     <ClCompile Include="Engine\Code\Scene\Scene.cpp" />
     <ClCompile Include="Engine\Code\Scene\SceneManager.cpp" />
+    <ClCompile Include="Engine\Code\Script\InternalCall\ComponentsInternalCall.cpp" />
+    <ClCompile Include="Engine\Code\Script\InternalCall\CoreInternalCall.cpp" />
+    <ClCompile Include="Engine\Code\Script\InternalCall\GameObjectInternalCall.cpp" />
     <ClCompile Include="Engine\Code\Script\InternalCall\GridInternalCall.cpp" />
+    <ClCompile Include="Engine\Code\Script\InternalCall\MathInternalCall.cpp" />
+    <ClCompile Include="Engine\Code\Script\InternalCall\UtilityInternalCall.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp" />
     <ClCompile Include="Engine\Code\Script\Scripting.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptInternalCall.cpp" />
@@ -468,7 +473,12 @@
     <ClInclude Include="Engine\Header\Scene\Prefab.hpp" />
     <ClInclude Include="Engine\Header\Scene\Scene.hpp" />
     <ClInclude Include="Engine\Header\Scene\SceneManager.hpp" />
+    <ClInclude Include="Engine\Header\Script\InternalCall\ComponentsInternalCall.hpp" />
+    <ClInclude Include="Engine\Header\Script\InternalCall\CoreInternalCall.hpp" />
+    <ClInclude Include="Engine\Header\Script\InternalCall\GameObjectInternalCall.hpp" />
     <ClInclude Include="Engine\Header\Script\InternalCall\GridInternalCall.hpp" />
+    <ClInclude Include="Engine\Header\Script\InternalCall\MathInternalCall.hpp" />
+    <ClInclude Include="Engine\Header\Script\InternalCall\UtilityInternalCall.hpp" />
     <ClInclude Include="Engine\Header\Script\MonoFunctionType.hpp" />
     <ClInclude Include="Engine\Header\Script\ScriptClass.hpp" />
     <ClInclude Include="Engine\Header\Script\ScriptClassVariable.hpp" />

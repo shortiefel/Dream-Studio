@@ -1,11 +1,11 @@
 /* Start Header**********************************************************************************/
 /*
-@file    ScriptInternalCall.hpp
+@file    ComponentsInternalCall.hpp
 @author  Ow Jian Wen	jianwen.o@digipen.edu		100%
-@date    25/08/2021
+@date    04/01/2022
 \brief
-#include "Engine/Header/Script/ScriptInternalCall.hpp"
-This file contain the declaration of ScriptInternalCall
+#include "Engine/Header/Script/InternalCall/ComponentsInternalCall.hpp"
+This file contain the declaration of ComponentsInternalCall
 
 
 Copyright (C) 2021 DigiPen Institute of Technology.
@@ -15,24 +15,18 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
-#ifndef SCRIPT_INTERNAL_CALL
-#define SCRIPT_INTERNAL_CALL
+#pragma once
 
-#include <string>
 #include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
 	namespace InternalCall {
-		//Register Internal call for C# side to use
-		void RegisterInternalCall();
+		/*-----------------------------------------------------
+		Called in ScriptingInternalCall
+		-----------------------------------------------------*/
+		void RegisterComponentsInternalCall();
 
-		//Set the function that will be called for Debug.Log in c#
-		void SetConsoleWriteFunc(void(*fp)(std::string));
 		//Set the function that will be called for ScreenToWorldPoint in c#
-		void SetGetViewportFunc(Math::mat3(*fp)());
-		//Set the function that will be called for GetMousePosition in c#
-		void SetGetMousePositionFunc(Math::vec2(*fp)());
+		void SetGetViewportInternalFunc(Math::mat3(*fp)());
 	}
 }
-
-#endif

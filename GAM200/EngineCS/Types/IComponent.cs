@@ -15,9 +15,9 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 //Default Component that contains entityId
-public interface IComponent
+public class IComponent
 {
-    uint entityId { get; set; }
+    public uint entityId { get; set; }
 }
 
 

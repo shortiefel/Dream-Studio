@@ -81,7 +81,7 @@ namespace Editor {
         }
 
         void GUI_ConsoleWindow::Create() {
-            Engine::SetConsoleWriteFunc(
+            Engine::InternalCall::SetConsoleWriteFunc(
                 [](std::string message) {
                     GUI_Console_Add(ConsoleString{ message.c_str() });
                 }

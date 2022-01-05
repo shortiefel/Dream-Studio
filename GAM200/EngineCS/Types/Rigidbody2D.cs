@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices; //For internal calls
 
 public class Rigidbody2D : IComponent
 {
-    public uint entityId { get; set; }
+    //public uint entityId { get; set; }
     public Rigidbody2D() { }
     public Rigidbody2D(uint entity_id) { entityId = entity_id; }
 

@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices; //For internal calls
 
 public class Camera : IComponent
 {
-    public uint entityId { get; set; }
+    //public uint entityId { get; set; }
     public Camera() { }
     public Camera(uint entity_id) { entityId = entity_id; }
     public float height

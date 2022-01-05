@@ -163,7 +163,7 @@ namespace Engine {
 
 	void ScriptSystem::Create() {
 		Scripting::Setup();
-		RegisterInternalCall();
+		InternalCall::RegisterInternalCall();
 		OverlapColliderEvent::RegisterFunction(CallOverlapFunc);
 		MouseOverlapColliderEvent::RegisterFunction(CallMouseOverlapFunc);
 		FixedUpdateEvent::RegisterFunction(CallFixedUpdate);

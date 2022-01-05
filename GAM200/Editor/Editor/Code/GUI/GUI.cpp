@@ -105,8 +105,8 @@ namespace Editor {
 
         //Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::gameWidth, Engine::Settings::gameHeight, &gameWinFBO, reinterpret_cast<unsigned int*>(&gameWinTex));
         //Engine::GraphicImplementation::CreateFramebuffer(Engine::Settings::windowWidth, Engine::Settings::windowHeight, &sceneWinFBO, reinterpret_cast<unsigned int*>(&sceneWinTex));
-        editor_fbo.Create(Engine::Settings::gameWidth, Engine::Settings::gameHeight);
-        game_fbo.Create(Engine::Settings::gameWidth, Engine::Settings::gameHeight);
+        editor_fbo.Create(Engine::Settings::windowWidth, Engine::Settings::windowHeight);
+        game_fbo.Create(Engine::Settings::windowWidth, Engine::Settings::windowHeight);
 
         return true;
     }

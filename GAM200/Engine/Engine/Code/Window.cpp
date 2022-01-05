@@ -106,12 +106,12 @@ namespace Engine {
 	//}
 	void Window::ToggleFullscreen() {
 		if (fullScreen) {
-			glfwSetWindowMonitor(glfw_window, NULL, 0, 0, Settings::gameWidth, Settings::gameHeight, GLFW_DONT_CARE);
+			glfwSetWindowMonitor(glfw_window, NULL, 0, 0, Settings::windowWidth, Settings::windowHeight, GLFW_DONT_CARE);
 			std::cout << "Not full screen \n";
 			fullScreen = false;
 		}
 		else {
-			glfwSetWindowMonitor(glfw_window, glfwGetPrimaryMonitor(), 0, 0, Settings::gameWidth, Settings::gameHeight, GLFW_DONT_CARE);
+			glfwSetWindowMonitor(glfw_window, glfwGetPrimaryMonitor(), 0, 0, Settings::windowWidth, Settings::windowHeight, GLFW_DONT_CARE);
 			std::cout << " full screen \n";
 			fullScreen = true;
 		}
@@ -147,8 +147,8 @@ namespace Engine {
 
 		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		//std::cout << mode->width << " " << mode->height << "\n";
-		Settings::gameWidth = Settings::windowWidth = w_data.width = mode->width;
-		Settings::gameHeight = Settings::windowHeight = w_data.height = mode->height;
+		Settings::windowWidth = w_data.width = mode->width;
+		Settings::windowHeight = w_data.height = mode->height;
 		//glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
 
 		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), NULL, nullptr);
@@ -174,8 +174,8 @@ namespace Engine {
 		glfwSetCursor(glfw_window, glfw_custom_cursor);
 #else
 		
-		Settings::gameWidth = Settings::windowWidth = w_data.width = 1920;  
-		Settings::gameHeight = Settings::windowHeight = w_data.height = 1080;
+		/*Settings::gameWidth = Settings::windowWidth = w_data.width = 1920;  
+		Settings::gameHeight = Settings::windowHeight = w_data.height = 1080;*/
 		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
 		glViewport(0, 0, w_data.width, w_data.height);
 		//glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
@@ -323,7 +323,11 @@ namespace Engine {
 		//w_data.eventCallBack(event);
 	}
 
+#ifdef _GAME_BUILD
 	void WindowFocusCallBack(GLFWwindow* window, int focused) {
+#else
+	void WindowFocusCallBack(GLFWwindow*, int focused) {
+#endif
 		if (focused) {
 			// The window gained input focus
 			std::cout << "in focus \n";

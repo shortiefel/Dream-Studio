@@ -89,51 +89,78 @@ public class GameObject : IBehaviour
     internal static extern void FindEntity_Engine(out int entityID, string name);
 
     
-    public T AddComponent<T>() where T : IBehaviour, IComponent, new()
+    private enum AddCompState
     {
-        if (AddComponentInternal<T>())
+        Added,
+        Found,
+        Failed
+    }
+    //public T AddComponent<T>() where T : IBehaviour, IComponent, new()
+    public T AddComponent<T>() where T : IComponent, new()
+    {
+        switch (AddComponentInternal<T>())
         {
-            if (GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
-                RecordComponent<T>(entityId);
-            else
-                RecordScript(typeof(T), entityId);
+            case AddCompState.Added:
+                if (GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+                    RecordComponent<T>(entityId);
+                else
+                    RecordScript(typeof(T), entityId);
 
-            /*T component = new T();
-            component.entityId = entityId;
-            return component;*/
-            return dictonaryOfTypes[typeof(T)][entityId] as T;
+                /*T component = new T();
+                component.entityId = entityId;
+                return component;*/
+                return dictonaryOfTypes[typeof(T)][entityId] as T;
+
+            case AddCompState.Found:
+                return dictonaryOfTypes[typeof(T)][entityId] as T;
+
+            case AddCompState.Failed:
+                return null;
         }
         return null;
     }
 
-    private bool AddComponentInternal<T>() where T : class, IComponent, new()
+    private AddCompState AddComponentInternal<T>() where T : IComponent, new()
     {
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
         {
             bool bl = AddComponent_Scripts_Engine(entityId, typeof(T).ToString());
-            if (!bl) Debug.Log("Script already exist!");
-            return bl;
+            if (!bl)
+            {
+                Debug.Log("Script already exist!");
+                return AddCompState.Found;
+            }
+            return AddCompState.Added;
         }
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
                 bool bl = AddComponent_Transform_Engine(entityId);
-                if (!bl) Debug.Log("Transform already exist!");
-                return bl;
+                if (!bl) {
+                    Debug.Log("Transform already exist!"); 
+                    return AddCompState.Found;
+                }
+                return AddCompState.Added;
 
             case genTypes.Collider:
                 bool b2 = AddComponent_Collider_Engine(entityId);
-                if (!b2) Debug.Log("Collider already exist!");
-                return b2;
+                if (!b2) {
+                    Debug.Log("Collider already exist!");
+                    return AddCompState.Found;
+                }
+                return AddCompState.Added;
 
             case genTypes.Camera:
                 bool b3 = AddComponent_Camera_Engine(entityId);
-                if (!b3) Debug.Log("Camera already exist!");
-                return b3;
+                if (!b3) {
+                    Debug.Log("Camera already exist!");
+                    return AddCompState.Found;
+                }
+                return AddCompState.Added;
 
             default:
                 Debug.Log("Cant add this type in!");
-                return false;
+                return AddCompState.Failed;
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

@@ -19,7 +19,7 @@ using System.Runtime.CompilerServices; //For internal calls
 using System;
 public class Animation : IComponent
 {
-    public uint entityId { get; set; }
+    //public uint entityId { get; set; }
     public Animation() { }
     public Animation(uint entity_id) { entityId = entity_id; }
 

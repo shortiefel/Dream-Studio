@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices; //For internal calls
 
 public class Text : IComponent
 {
-    public uint entityId { get; set; }
+    //public uint entityId { get; set; }
     public Text() { }
     public Text(uint entity_id) { entityId = entity_id; }
 

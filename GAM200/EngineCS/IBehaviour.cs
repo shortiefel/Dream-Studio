@@ -40,7 +40,7 @@ public class IBehaviour : IComponent
     protected static Dictionary<Type, Dictionary<uint, dynamic>> dictonaryOfTypes = new Dictionary<Type, Dictionary<uint, dynamic>>();
     //private static GenericDictionary dictonaryOfTypes;
 
-    public uint entityId { get; set; }
+    //public uint entityId { get; set; }
     public IBehaviour()
     {
         //Console.WriteLine("111: " + this.GetType().Name);
@@ -70,7 +70,7 @@ public class IBehaviour : IComponent
         }
     }
 
-    protected void RecordComponent<T>(uint entityId) where T : class, IComponent, new()
+    protected void RecordComponent<T>(uint entityId) where T : IComponent, new()
     {
         //Console.WriteLine("Custom typeeeeeeeeeeeeeeeeeeeeeeeeee ");
         Type type = typeof(T);
@@ -99,7 +99,7 @@ public class IBehaviour : IComponent
         }
     }
 
-    public T GetComponent<T>() where T : class, IComponent, new()
+    public T GetComponent<T>() where T : IComponent, new()
     {
         if (HasComponent<T>(entityId))
         {

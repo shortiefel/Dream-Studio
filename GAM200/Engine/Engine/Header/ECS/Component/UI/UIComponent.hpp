@@ -29,7 +29,7 @@ namespace Engine
 		std::string filepath = "";
 		std::string textureName = "";
 		unsigned int texobj_hdl;
-		Math::vec4 colour;
+		Math::vec4 colour = Math::vec4{ 1.f,1.f,1.f,1.f };
 
 		bool isActive = true;
 

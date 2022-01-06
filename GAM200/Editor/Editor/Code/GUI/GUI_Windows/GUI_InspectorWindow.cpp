@@ -713,7 +713,7 @@ namespace Editor {
 							ImGui::SameLine(halfWidth);
 							ImGui::SetNextItemWidth(halfWidth);
 							ImGui::PushFont(boldFont);
-							ImGui::InputFloat("##camFOV", &rigidComp->speed, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
+							ImGui::InputFloat("##rigidbodySpeed", &rigidComp->speed, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
 							ImGui::PopFont();
 
 							ImGui::Spacing();

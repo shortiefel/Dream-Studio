@@ -32,6 +32,7 @@ namespace Engine {
 	class DSerializer {
 	public:
 		DSerializer(const JsonIter& i = JsonIter{});
+		void SetIterator(const JsonIter& i);
 
 		/*--------------------------------------------------------------------------------
 		* T GetValue (name)
@@ -39,7 +40,7 @@ namespace Engine {
 		template <typename T>
 		T GetValueInternal(const char* name) const {
 			VARIABLE_CHECK;
-			LOG_WARNING("DSerializer: Unknowm type");
+			LOG_WARNING("DSerializer: Unknown type");
 		}
 		template <>
 		bool GetValueInternal(const char* name) const {

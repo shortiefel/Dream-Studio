@@ -33,16 +33,21 @@ Technology is prohibited.
 
 #include "Engine/Header/Window.hpp"
 
+#include "Engine/Header/Physics/Collision.hpp"
+#include "Engine/Header/ECS/System/CollisionSystem.hpp" //For raycast
+#include "Engine/Header/Physics/Ray.hpp" //For raycast
+
+#include "Engine/Header/Serialize/SSerializer.hpp"
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp" //Serialize Prefab
+#include "Engine/Header/Scene/SceneManager.hpp"
+
+
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/filereadstream.h>
 #include <rapidjson/filewritestream.h>
 #include <rapidjson/istreamwrapper.h>
 #include <rapidjson/ostreamwrapper.h>
-
-#include "Engine/Header/Serialize/SSerializer.hpp"
-#include "Engine/Header/Serialize/GameSceneSerializer.hpp" //Serialize Prefab
-#include "Engine/Header/Scene/SceneManager.hpp"
 
 #include <mono/jit/jit.h>
 
@@ -122,6 +127,11 @@ namespace Engine {
 		void Random_Range_Engine(int num1, int num2, int* answer);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Physics
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		bool RayCast_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, unsigned int* entity_id, float* hitDistance, Math::vec2* hitPoint);
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Application
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void Quit_Engine();
@@ -178,6 +188,11 @@ namespace Engine {
 			Random
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("Random::Random_Range_Engine", Random_Range_Engine);
+
+			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+			Physics
+			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+			mono_add_internal_call("Physics2D::RayCast_Engine", RayCast_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Application
@@ -371,6 +386,22 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void Random_Range_Engine(int num1, int num2, int* answer) {
 			Random::Range(num1, num2, answer);
+		}
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Physics
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		bool RayCast_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, unsigned int* entity_id, float* hitDistance, Math::vec2* hitPoint) {
+			RaycastHit hitCast;
+			//if (distance < 0) distance = RAY_LENGTH;
+			std::uint32_t ignored = ignoreTarget < 0 ? DEFAULT_ENTITY_ID : ignoreTarget;
+			CollisionSystem::GetInstance().RayCast(Engine::Ray{ Math::vec2 {pos.x, pos.y}, dir, distance }, &hitCast, ignored);
+			*hitDistance = hitCast.distance;
+			*hitPoint = hitCast.point;
+			*entity_id = hitCast.entity_id;
+
+			if (hitCast.entity_id < 0) return false;
+			return true;
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

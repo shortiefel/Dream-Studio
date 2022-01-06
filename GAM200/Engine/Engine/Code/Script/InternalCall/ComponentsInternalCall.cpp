@@ -22,9 +22,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 
-#include "Engine/Header/ECS/System/CollisionSystem.hpp" //For raycast
-#include "Engine/Header/Physics/Collision.hpp"
-#include "Engine/Header/Physics/Ray.hpp" //For raycast
 #include "Engine/Header/Graphic/SpaceTransform.hpp"
 #include "Engine/Header/ECS/System/SoundSystem.hpp"
 
@@ -113,10 +110,6 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void SetAnimation_Engine(unsigned int entityID, MonoString* _state);
 
-		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
-		Physics
-		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		bool RayCast_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, unsigned int* entity_id, float* hitDistance, Math::vec2* hitPoint);
 
 		/*-----------------------------------------------------
 		Called in ScriptingInternalCall
@@ -448,22 +441,6 @@ namespace Engine {
 			char* tempText = mono_string_to_utf8(_state);
 			SetEngineType(entityID, TextureComponent, nextAnimationState, std::string{ tempText });
 			mono_free(tempText);
-		}
-
-		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
-		Physics
-		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		bool RayCast_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, unsigned int* entity_id, float* hitDistance, Math::vec2* hitPoint) {
-			RaycastHit hitCast;
-			//if (distance < 0) distance = RAY_LENGTH;
-			std::uint32_t ignored = ignoreTarget < 0 ? DEFAULT_ENTITY_ID : ignoreTarget;
-			CollisionSystem::GetInstance().RayCast(Engine::Ray{ Math::vec2 {pos.x, pos.y}, dir, distance }, &hitCast, ignored);
-			*hitDistance = hitCast.distance;
-			*hitPoint = hitCast.point;
-			*entity_id = hitCast.entity_id;
-
-			if (hitCast.entity_id < 0) return false;
-			return true;
 		}
 	}
 }

@@ -24,5 +24,6 @@ Technology is prohibited.
 
 namespace Engine {
 	DSerializer::DSerializer(const JsonIter& i) : itr{ i } {}
+	void DSerializer::SetIterator(const JsonIter& i) { itr = i; }
 
 }

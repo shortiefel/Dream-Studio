@@ -88,8 +88,8 @@
     <ClCompile Include="Engine\Code\Physics\Physics.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Serialize\SSerialiser.cpp">
-      <Filter>Source Files\Serialization</Filter>
+    <ClCompile Include="Engine\Code\Serialize\SSerializer.cpp">
+      <Filter>Source Files\Serialize</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Debug Tools\Profiler.cpp">
       <Filter>Source Files\Debug Tools</Filter>
@@ -107,10 +107,10 @@
       <Filter>Source Files\Grid</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Serialize\GameSceneSerializer.cpp">
-      <Filter>Source Files\Serialization</Filter>
+      <Filter>Source Files\Serialize</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Serialize\DSerializer.cpp">
-      <Filter>Source Files\Serialization</Filter>
+      <Filter>Source Files\Serialize</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Code\Time\DeltaTime.cpp">
       <Filter>Source Files\Time</Filter>
@@ -207,6 +207,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Code\Script\InternalCall\MathInternalCall.cpp">
       <Filter>Source Files\Scripting\InternalCall</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Code\Serialize\Serializer.cpp">
+      <Filter>Source Files\Serialize</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -708,6 +711,9 @@
     <ClInclude Include="Engine\Header\Script\InternalCall\GameObjectInternalCall.hpp">
       <Filter>Header Files\Script\InternalCall</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\Serialize\Serializer.hpp">
+      <Filter>Header Files\Serialize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Resources">
@@ -745,9 +751,6 @@
     </Filter>
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{5d10bc97-70b2-42ab-b2c1-a93b46cf740a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Serialization">
-      <UniqueIdentifier>{2aea85f9-b0d2-4481-a367-7d9ed5f5c510}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Random">
       <UniqueIdentifier>{16b393cf-564d-4cd7-9dd0-5490c843f699}</UniqueIdentifier>
@@ -883,6 +886,9 @@
     </Filter>
     <Filter Include="Header Files\Parent">
       <UniqueIdentifier>{886125dc-2a0c-4e1f-8588-92a402df5eb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Serialize">
+      <UniqueIdentifier>{2aea85f9-b0d2-4481-a367-7d9ed5f5c510}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

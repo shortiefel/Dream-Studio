@@ -54,14 +54,20 @@ namespace Engine {
 
     bool previousFocusState = true;
 
-    Scene::Scene(std::string _sceneName, bool _play) : sceneName{ _sceneName } {
-        GameSceneSerializer::DeserializeScene(sceneName);
+    Scene::Scene(std::string _sceneName, bool _deserializeState) : sceneName{ _sceneName } {
+        if (_deserializeState) {
+            std::cout << "Recreate scene\n";
+            GameSceneSerializer::DeserializeScene(sceneName);
+        }
+        else {
+            GameSceneSerializer::DeserializeScene("temporary");
+        }
 
         DeltaTime::GetInstance().SetTimeScale(1.f);
         CameraSystem::GetInstance().Update(0.f);
 
         ScriptSystem::GetInstance().UpdateMapData();
-        if (_play) {
+        if (GameState::GetInstance().GetPlaying()) {
             ScriptSystem::GetInstance().PlayInit();
         }
         //AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });
@@ -111,7 +117,7 @@ namespace Engine {
         if (deserialize) {
             GameState::GetInstance().SetPlaying(false);
             GameState::GetInstance().SetShouldDraw(false);
-            GameSceneSerializer::DeserializeScene("temporary");
+            //GameSceneSerializer::DeserializeScene("temporary");
         }
 
     }

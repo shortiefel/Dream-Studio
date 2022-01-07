@@ -24,10 +24,10 @@ namespace Engine {
 	class Scene {
 	public:
 		/*--------------------------------------------------------------------
-		bool tem true = load temporary file
-		temporary file is saved before going into play mode
+		if _deserializeState is true = load own file
+		if false, it loads the temporary scene (used for when stop button is pressed
 		--------------------------------------------------------------------*/
-		Scene(std::string _sceneName, bool _play = false);
+		Scene(std::string _sceneName, bool _deserializeState = true);
 		//Destructor
 		~Scene();
 		/*--------------------------------------------------------------------

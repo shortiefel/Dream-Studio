@@ -78,26 +78,33 @@ namespace Engine {
             //    if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();*/
             //    tem = true;
             //}
-
+#if 0
             if (endState) {
                 endState = false;
                 currentScene->Stop(true);
+                delete currentScene;
+                currentScene = new Scene{ nextScene, false };
+                nextScene = std::string{};
                 return;
             }
 
             currentScene->Stop(false);
             delete currentScene;
 
-            //currentSceneName = sceneName;
-#ifdef _GAME_BUILD
-            currentScene = new Scene{ nextScene, true };
-#else
-            currentScene = new Scene{ nextScene, GameState::GetInstance().GetPlaying() };
-#endif
+            currentScene = new Scene{ nextScene };
             
             //currentScene = new Scene{ nextScene, GameState::GetInstance().GetPlaying() };
             nextScene = std::string{};
             //if (GameState::GetInstance().GetPlaying()) ScriptSystem::GetInstance().PlayInit();
+#endif
+
+            currentScene->Stop(endState);
+            delete currentScene;
+
+            currentScene = new Scene{ nextScene, !endState };
+
+            nextScene = std::string{};
+            endState = false;
         }
 	}
 

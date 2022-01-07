@@ -49,7 +49,7 @@ namespace Engine {
 		void EndEntitySerialize();
 
 		//Serialize
-		void AddData(const TransformComponent * const t);
+		void AddData(const TransformComponent* const t);
 		void AddData(const ColliderComponent* const t);
 		void AddData(const RigidBodyComponent* const t);
 		void AddData(const CameraComponent* const t);
@@ -60,28 +60,26 @@ namespace Engine {
 		void AddData(const ParticleComponent* const t);
 		void AddData(const ScriptComponent* const t);
 
+		/*void SetSerializeData(const std::string& str);
+
+		void AddData() { mainObject.AddMember(rapidjson::GenericStringRef<char>{serializeTargetName.c_str()}, temObjType, doc.GetAllocator()); }
+
+		template <typename G, typename... Types>
+		void AddData(std::string name, const G& data, const Types&... param) {
+			serializerMain.SetValue(name.c_str(), data);
+			AddData(param...);
+		}*/
+
+
 		//Deserialize
 		void DeserializeArray(std::function<void(void)> fp);
-
-		unsigned int RetrieveId();
-		Entity RetrieveEntity();
-		bool RetrieveTransform();
-		void RetrieveCollider();
-		void RetrieveRigidBody();
-		void RetrieveCamera();
-		void RetrieveTexture();
-		void RetrieveUI();
-		void RetrieveFont();
-		void RetrieveSound();
-		void RetrieveParticle();
-		void RetrieveScript();
 
 		/*
 		Param is data type in string
 		Eg: TransformComponent, ColliderComponent
 		If data type is found, return true
 		*/
-		bool SelectDataType(const std::string& type);
+		bool SelectDeserializeDataType(const std::string& type);
 
 		void RetrieveData() { }
 		/*
@@ -99,9 +97,16 @@ namespace Engine {
 		
 
 	private:
+		//SSerializer serializerMain;
+
+		rapidjson::Document doc;
+		rapidjson::Value mainObject;
+		//rapidjson::Value temObjType = rapidjson::Value{ rapidjson::kObjectType };
+		//std::string serializeTargetName;
+
+		
 		DSerializer deserializer;
-		rapidjson::Value arrayType;
-		unsigned int arrayIndex = 0;
+
 
 		static int seCounter;
 		int entCounter = 0;

@@ -133,7 +133,7 @@ doc.ParseStream(is);
 
 namespace Engine {
 	void DeserializeOtherComponents(Serializer& sceneSerializer, const unsigned int& entityId) {
-		if (sceneSerializer.SelectDataType("ColliderComponent")) {
+		if (sceneSerializer.SelectDeserializeDataType("ColliderComponent")) {
 			ColliderComponent tem(entityId);
 			int colType;
 			sceneSerializer.RetrieveData(
@@ -148,7 +148,7 @@ namespace Engine {
 			dreamECSGame->AddComponent(tem);
 		}
 
-		if (sceneSerializer.SelectDataType("RigidBodyComponent")) {
+		if (sceneSerializer.SelectDeserializeDataType("RigidBodyComponent")) {
 			RigidBodyComponent tem(entityId);
 			sceneSerializer.RetrieveData(
 				"Speed", tem.speed,
@@ -160,7 +160,7 @@ namespace Engine {
 			dreamECSGame->AddComponent(tem);
 		}
 
-		if (sceneSerializer.SelectDataType("CameraComponent")) {
+		if (sceneSerializer.SelectDeserializeDataType("CameraComponent")) {
 			CameraComponent tem(entityId);
 			sceneSerializer.RetrieveData(
 				"Height", tem.height,
@@ -171,7 +171,7 @@ namespace Engine {
 			dreamECSGame->AddComponent(tem);
 		}
 
-		if (sceneSerializer.SelectDataType("TextureComponent")) {
+		if (sceneSerializer.SelectDeserializeDataType("TextureComponent")) {
 			TextureComponent tem(entityId);
 			std::string fp;
 			sceneSerializer.RetrieveData("Filepath", fp);
@@ -215,7 +215,7 @@ namespace Engine {
 			dreamECSGame->AddComponent(tem);
 		}
 
-		if (sceneSerializer.SelectDataType("UIComponent")) {
+		if (sceneSerializer.SelectDeserializeDataType("UIComponent")) {
 			UIComponent tem(entityId);
 			std::string fp;
 			sceneSerializer.RetrieveData("Filepath", fp);
@@ -228,7 +228,7 @@ namespace Engine {
 		}
 
 
-		if (sceneSerializer.SelectDataType("FontComponent")) {
+		if (sceneSerializer.SelectDeserializeDataType("FontComponent")) {
 			FontComponent tem(entityId);
 			std::string fp;
 			sceneSerializer.RetrieveData("Filepath", fp);
@@ -241,7 +241,7 @@ namespace Engine {
 			dreamECSGame->AddComponent(tem);
 		}
 
-		if (sceneSerializer.SelectDataType("SoundComponent")) {
+		if (sceneSerializer.SelectDeserializeDataType("SoundComponent")) {
 			SoundComponent tem(entityId);
 			int soundGrpTem;
 			sceneSerializer.RetrieveData(
@@ -260,7 +260,7 @@ namespace Engine {
 			dreamECSGame->AddComponent(tem);
 		}
 
-		if (sceneSerializer.SelectDataType("ParticleComponent")) {
+		if (sceneSerializer.SelectDeserializeDataType("ParticleComponent")) {
 			ParticleComponent tem(entityId);
 			std::string fp;
 			sceneSerializer.RetrieveData("Filepath", fp);
@@ -298,7 +298,7 @@ namespace Engine {
 			dreamECSGame->AddComponent(tem);
 		}
 
-		if (sceneSerializer.SelectDataType("ScriptComponent")) {
+		if (sceneSerializer.SelectDeserializeDataType("ScriptComponent")) {
 			ScriptComponent tem(entityId);
 			for (auto& classJSon : sceneSerializer.RetrieveDataArray("")) {
 				const auto& fullName = classJSon["Class"].GetString();
@@ -512,7 +512,7 @@ namespace Engine {
 		std::function<void(void)> deserializeSceneFP = [&sceneSerializer]() -> void {
 			//unsigned int entityId = sceneSerializer.RetrieveEntity().id;
 			unsigned int entityId = DEFAULT_ENTITY_ID;
-			if (sceneSerializer.SelectDataType("Entity")) {
+			if (sceneSerializer.SelectDeserializeDataType("Entity")) {
 				std::string entityName = DEFAULT_ENTITY_NAME;
 				Entity_id parent = DEFAULT_ENTITY_ID;
 				std::unordered_set<Entity_id> child{};
@@ -530,7 +530,7 @@ namespace Engine {
 
 
 
-			if (sceneSerializer.SelectDataType("TransformComponent")) {
+			if (sceneSerializer.SelectDeserializeDataType("TransformComponent")) {
 				TransformComponent tem(entityId);
 				sceneSerializer.RetrieveData(
 					"Position", tem.position,
@@ -662,15 +662,32 @@ namespace Engine {
 		std::string filename = TO_FULL_PREFAB(_filename);
 		Serializer sceneSerializer(filename);
 
-		std::function<void(void)> fp = [&sceneSerializer, &position, &angle, &layer, &id, &_filename]() -> void {
-			dreamECSGame->AddPrefab(Prefab(_filename, sceneSerializer.RetrieveEntity()));
-			
-			unsigned int entityId = sceneSerializer.RetrieveId();
+		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &position, &angle, &layer, &id, &_filename]() -> void {
+
+			Entity entity;
+			if (sceneSerializer.SelectDeserializeDataType("Entity")) {
+				std::string entityName = DEFAULT_ENTITY_NAME;
+				Entity_id parent = DEFAULT_ENTITY_ID;
+				std::unordered_set<Entity_id> child{};
+				sceneSerializer.RetrieveData(
+					"Name", entityName,
+					"Parent", parent);
+
+				entity = dreamECSGame->CreateEntity(entityName.c_str(), child, parent);
+			}
+			if (entity.id == DEFAULT_ENTITY_ID) {
+				LOG_WARNING("Deserialize entity failed\n");
+				return;
+			}
+
+
+			dreamECSGame->AddPrefab(Prefab(_filename, entity));
+			unsigned int entityId = entity.id;
 
 			if (id != nullptr)
 				*id = entityId;
 
-			if (sceneSerializer.SelectDataType("TransformComponent")) {
+			if (sceneSerializer.SelectDeserializeDataType("TransformComponent")) {
 				TransformComponent tem(entityId);
 				sceneSerializer.RetrieveData(
 					"Scale", tem.scale,
@@ -688,7 +705,7 @@ namespace Engine {
 			DeserializeOtherComponents(sceneSerializer, entityId);
 		};
 
-		sceneSerializer.DeserializeArray(fp);
+		sceneSerializer.DeserializeArray(deserializePrefabFP);
 
 #if 0
 		std::ifstream fileStream;

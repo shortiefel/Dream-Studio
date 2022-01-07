@@ -28,6 +28,7 @@ namespace Engine {
 	SSerializer::SSerializer(const SSerializer& _serializer, rapidjson::Value& _objType) : 
 		doc{ _serializer.doc }, objType{ _objType } {}
 
+
 	/*void SSerializer::EndSerialize(const char* _name, rapidjson::Value& _entityObject) const {
 		rapidjson::Value vName(_name, doc.GetAllocator());
 		entityObject.AddMember(vName, objType, doc.GetAllocator());

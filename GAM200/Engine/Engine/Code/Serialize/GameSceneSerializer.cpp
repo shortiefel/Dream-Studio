@@ -448,8 +448,27 @@ namespace Engine {
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ScriptComponent>(entityId)); 
 			sceneSerializer.EndEntitySerialize();
 		}
+		sceneSerializer.EndSerialize();
 
 
+		/*Serializer sceneSerializerTest(TO_FULL_SCENE(std::string{ "TestSeralizeScene" }));
+		sceneSerializer.StartSerialize();
+
+		for (const auto& [entityId, entity] : entityMap) {
+			sceneSerializer.StartEntitySerialize(entity);
+			TransformComponent* tc = dreamECSGame->GetComponentPTR<TransformComponent>(entityId);
+			if (tc != nullptr) {
+				sceneSerializer.AddData(
+					"Position", tc->position, 
+					"LocalPosition", tc->localPosition,
+					"Scale", tc->scale, 
+					"Angle", tc->angle, 
+					"Layer", tc->layer, 
+					"IsActive", tc->isActive);
+			}
+
+			sceneSerializer.EndEntitySerialize();
+		}*/
 		sceneSerializer.EndSerialize();
 #if 0
 		rapidjson::Document doc(rapidjson::kArrayType);

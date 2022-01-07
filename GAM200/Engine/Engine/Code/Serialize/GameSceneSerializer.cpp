@@ -130,7 +130,243 @@ doc.ParseStream(is);
 //fclose(fp);
 
 
+
 namespace Engine {
+	void DeserializeOtherComponents(Serializer& sceneSerializer, const unsigned int& entityId) {
+		if (sceneSerializer.SelectDataType("ColliderComponent")) {
+			ColliderComponent tem(entityId);
+			int colType;
+			sceneSerializer.RetrieveData(
+				"ColliderType", colType,
+				"Position", tem.offset_position,
+				"Scale", tem.offset_scale,
+				"Angle", tem.angle,
+				"IsTrigger", tem.isTrigger,
+				"IsActive", tem.isActive);
+
+			tem.cType = ColliderType(colType);
+			dreamECSGame->AddComponent(tem);
+		}
+
+		if (sceneSerializer.SelectDataType("RigidBodyComponent")) {
+			RigidBodyComponent tem(entityId);
+			sceneSerializer.RetrieveData(
+				"Speed", tem.speed,
+				"Mass", tem.mass,
+				"LinearDrag", tem.linearDrag,
+				"AngularDrag", tem.angularDrag,
+				"IsActive", tem.isActive);
+
+			dreamECSGame->AddComponent(tem);
+		}
+
+		if (sceneSerializer.SelectDataType("CameraComponent")) {
+			CameraComponent tem(entityId);
+			sceneSerializer.RetrieveData(
+				"Height", tem.height,
+				"FOV", tem.fov,
+				"AR", tem.ar,
+				"IsActive", tem.isActive);
+
+			dreamECSGame->AddComponent(tem);
+		}
+
+		if (sceneSerializer.SelectDataType("TextureComponent")) {
+			TextureComponent tem(entityId);
+			std::string fp;
+			sceneSerializer.RetrieveData("Filepath", fp);
+			GraphicImplementation::SetTexture(&tem, std::move(fp));
+
+			int shapeType;
+			sceneSerializer.RetrieveData(
+				"Shape", shapeType,
+				"Colour", tem.colour,
+				"IsAnimation", tem.isAnimation,
+				"IsActive", tem.isActive);
+
+			if (tem.isAnimation) {
+				sceneSerializer.RetrieveData(
+					"TotalRow", tem.totalRows,
+					"TotalColumns", tem.totalColumns,
+					"CurrentAnimationState", tem.currAnimationState);
+
+				auto animationStates = sceneSerializer.RetrieveDataArray("AnimationState");
+				for (auto& state : animationStates) {
+					std::string stateName = state["StateName"].GetString();
+
+					int stateRow = state["StateRow"].GetInt();
+
+					int startX = state["StartFrame"].GetInt();
+					int endX = state["EndFrame"].GetInt();
+
+					float fTime = state["TimePerFrame"].GetFloat();
+
+					bool isLoop = state["IsLoop"].GetBool();
+
+					AnimationState animstate = AnimationState(stateName, stateRow, startX, endX, fTime, isLoop);
+
+					tem.animationStateList.emplace(stateName, animstate);
+				}
+			}
+
+			tem.cellWidth = static_cast<float>(tem.width) / tem.totalColumns;
+			tem.cellHeight = static_cast<float>(tem.height) / tem.totalRows;
+			tem.mdl_ref = GraphicShape(shapeType);
+			dreamECSGame->AddComponent(tem);
+		}
+
+		if (sceneSerializer.SelectDataType("UIComponent")) {
+			UIComponent tem(entityId);
+			std::string fp;
+			sceneSerializer.RetrieveData("Filepath", fp);
+			GraphicImplementation::SetTexture(&tem, fp);
+			sceneSerializer.RetrieveData(
+				"Colour", tem.colour,
+				"IsActive", tem.isActive);
+
+			dreamECSGame->AddComponent(tem);
+		}
+
+
+		if (sceneSerializer.SelectDataType("FontComponent")) {
+			FontComponent tem(entityId);
+			std::string fp;
+			sceneSerializer.RetrieveData("Filepath", fp);
+			GraphicImplementation::SetFont(&tem, fp);
+			sceneSerializer.RetrieveData(
+				"Text", tem.text,
+				"Colour", tem.colour,
+				"IsActive", tem.isActive);
+
+			dreamECSGame->AddComponent(tem);
+		}
+
+		if (sceneSerializer.SelectDataType("SoundComponent")) {
+			SoundComponent tem(entityId);
+			int soundGrpTem;
+			sceneSerializer.RetrieveData(
+				"IsLoop", tem.loop,
+				"filepath", tem.filepath,
+				"volume", tem.volume,
+				"isSound", tem.isSound,
+				"SoundGroup", soundGrpTem,
+				"IsActive", tem.isActive);
+
+			tem.soundName = tem.filepath.substr(tem.filepath.find_last_of("\\") + 1);
+			tem.soundName = tem.soundName.substr(0, tem.soundName.find_last_of("."));
+
+			tem.soundType = static_cast<SoundGrp>(soundGrpTem);
+
+			dreamECSGame->AddComponent(tem);
+		}
+
+		if (sceneSerializer.SelectDataType("ParticleComponent")) {
+			ParticleComponent tem(entityId);
+			std::string fp;
+			sceneSerializer.RetrieveData("Filepath", fp);
+			GraphicImplementation::SetTexture(&tem, fp);
+			int graphicShapeTem;
+
+			Math::vec2 offsetPosition, velocity, velocityVariation,
+				sizeBegin, sizeEnd, sizeVariation;
+
+			Math::vec4 colorBegin, colorEnd;
+			float lifeTime;
+
+			sceneSerializer.RetrieveData(
+				"Shape", graphicShapeTem,
+				"EmitSize", tem.emitSize,
+				"OffsetPosition", offsetPosition,
+				"Velocity", velocity,
+				"VelocityVariation", velocityVariation,
+				"ColorBegin", colorBegin,
+				"ColorEnd", colorEnd,
+				"SizeBegin", sizeBegin,
+				"SizeEnd", sizeEnd,
+				"SizeVariation", sizeVariation,
+				"LifeTime", lifeTime,
+				"IsLooping", tem.isLooping,
+				"IsAngleRandom", tem.isAngleRandom,
+				"IsVelocityVariation", tem.isVelocityVariation,
+				"IsActive", tem.isActive);
+
+			tem.mdl_ref = GraphicShape(graphicShapeTem);
+			tem.particleData = { offsetPosition, velocity, velocityVariation,
+						 colorBegin, colorEnd, sizeBegin, sizeEnd, sizeVariation,
+						 lifeTime };
+
+			dreamECSGame->AddComponent(tem);
+		}
+
+		if (sceneSerializer.SelectDataType("ScriptComponent")) {
+			ScriptComponent tem(entityId);
+			for (auto& classJSon : sceneSerializer.RetrieveDataArray("")) {
+				const auto& fullName = classJSon["Class"].GetString();
+
+				CSScriptInstance csScriptInstance(
+					fullName,
+					classJSon["IsActive"].GetBool());
+
+				rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
+				if (!Scripting::InitCSClass(csScriptInstance, entityId)) { continue; }
+#if 0
+				if (variableItr != classJSon.MemberEnd()) {
+					for (auto& variableData : variableItr->value.GetArray()) {
+						const auto& variableName = variableData["Name"].GetString();
+						const auto& variableType = CSType{ variableData["Type"].GetInt() };
+
+
+						CSPublicVariable csPublicvariable{ variableName, variableType };
+
+						if (variableType == CSType::CHAR) {
+							char charData = static_cast<char>(variableData["Data"].GetInt());
+							csPublicvariable.SetVariableData(&charData);
+						}
+
+						else if (variableType == CSType::BOOL) {
+							bool boolData = variableData["Data"].GetBool();
+							csPublicvariable.SetVariableData(&boolData);
+						}
+
+						else if (variableType == CSType::FLOAT) {
+							float floatData = variableData["Data"].GetFloat();
+							csPublicvariable.SetVariableData(&floatData);
+						}
+						else if (variableType == CSType::INT) {
+							int intData = variableData["Data"].GetInt();
+							csPublicvariable.SetVariableData(&intData);
+						}
+						else if (variableType == CSType::UINT) {
+							unsigned int uinData = variableData["Data"].GetUint();
+							csPublicvariable.SetVariableData(&uinData);
+						}
+
+						else if (variableType == CSType::VEC2) {
+							Math::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
+												variableData["Data"].GetArray()[1].GetFloat() };
+							csPublicvariable.SetVariableData(&vec2Data);
+						}
+						/*else if (variableType == CSType::GAMEOBJECT) {
+							const char* tem = variableData["Data"].GetString();
+							csPublicvariable.SetVariableData(const_cast<char*>(tem));
+						}*/
+
+						csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
+					}
+
+				}
+#endif
+				//klassInstance[csScriptInstance.csClass.className] = std::move(csScriptInstance);
+				//Scripting::InitVariable(csScriptInstance);
+				//Scripting::InitScript(GetEntityId(), csScriptInstance);
+
+				tem.klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
+			}
+
+
+			dreamECSGame->AddComponent(std::move(tem));
+		}
+	}
 	void GameSceneSerializer::SerializeSetting() {
 		rapidjson::Document doc(rapidjson::kObjectType);
 
@@ -274,7 +510,25 @@ namespace Engine {
 		Serializer sceneSerializer(filename);
 
 		std::function<void(void)> deserializeSceneFP = [&sceneSerializer]() -> void {
-			unsigned int entityId = sceneSerializer.RetrieveEntity().id;
+			//unsigned int entityId = sceneSerializer.RetrieveEntity().id;
+			unsigned int entityId = DEFAULT_ENTITY_ID;
+			if (sceneSerializer.SelectDataType("Entity")) {
+				std::string entityName = DEFAULT_ENTITY_NAME;
+				Entity_id parent = DEFAULT_ENTITY_ID;
+				std::unordered_set<Entity_id> child{};
+				sceneSerializer.RetrieveData(
+					"Name", entityName,
+					"Parent", parent);
+
+				entityId = dreamECSGame->CreateEntity(entityName.c_str(), child, parent).id;
+			}
+			if (entityId == DEFAULT_ENTITY_ID) {
+				LOG_WARNING("Deserialize entity failed\n");
+				return;
+			}
+			
+
+
 
 			if (sceneSerializer.SelectDataType("TransformComponent")) {
 				TransformComponent tem(entityId);
@@ -289,239 +543,7 @@ namespace Engine {
 				dreamECSGame->AddComponent(tem);
 			}
 
-			if (sceneSerializer.SelectDataType("ColliderComponent")) {
-				ColliderComponent tem(entityId);
-				int colType;
-				sceneSerializer.RetrieveData(
-					"ColliderType", colType,
-					"Position", tem.offset_position,
-					"Scale", tem.offset_scale,
-					"Angle", tem.angle,
-					"IsTrigger", tem.isTrigger,
-					"IsActive", tem.isActive);
-
-				tem.cType = ColliderType(colType);
-				dreamECSGame->AddComponent(tem);
-			}
-
-			if (sceneSerializer.SelectDataType("RigidBodyComponent")) {
-				RigidBodyComponent tem(entityId);
-				sceneSerializer.RetrieveData(
-					"Speed", tem.speed,
-					"Mass", tem.mass,
-					"LinearDrag", tem.linearDrag,
-					"AngularDrag", tem.angularDrag,
-					"IsActive", tem.isActive);
-
-				dreamECSGame->AddComponent(tem);
-			}
-
-			if (sceneSerializer.SelectDataType("CameraComponent")) {
-				CameraComponent tem(entityId);
-				sceneSerializer.RetrieveData(
-					"Height", tem.height,
-					"FOV", tem.fov,
-					"AR", tem.ar,
-					"IsActive", tem.isActive);
-
-				dreamECSGame->AddComponent(tem);
-			}
-
-			if (sceneSerializer.SelectDataType("TextureComponent")) {
-				TextureComponent tem(entityId);
-				std::string fp;
-				sceneSerializer.RetrieveData("Filepath", fp);
-				GraphicImplementation::SetTexture(&tem, std::move(fp));
-
-				int shapeType;
-				sceneSerializer.RetrieveData(
-					"Shape", shapeType,
-					"Colour", tem.colour,
-					"IsAnimation", tem.isAnimation,
-					"IsActive", tem.isActive);
-
-				if (tem.isAnimation) {
-					sceneSerializer.RetrieveData(
-						"TotalRow", tem.totalRows,
-						"TotalColumns", tem.totalColumns,
-						"CurrentAnimationState", tem.currAnimationState);
-
-					auto animationStates = sceneSerializer.RetrieveDataArray("AnimationState");
-					for (auto& state : animationStates) {
-						std::string stateName = state["StateName"].GetString();
-
-						int stateRow = state["StateRow"].GetInt();
-
-						int startX = state["StartFrame"].GetInt();
-						int endX = state["EndFrame"].GetInt();
-
-						float fTime = state["TimePerFrame"].GetFloat();
-
-						bool isLoop = state["IsLoop"].GetBool();
-
-						AnimationState animstate = AnimationState(stateName, stateRow, startX, endX, fTime, isLoop);
-
-						tem.animationStateList.emplace(stateName, animstate);
-					}
-				}
-
-				tem.cellWidth = static_cast<float>(tem.width) / tem.totalColumns;
-				tem.cellHeight = static_cast<float>(tem.height) / tem.totalRows;
-				tem.mdl_ref = GraphicShape(shapeType);
-				dreamECSGame->AddComponent(tem);
-			}
-
-			if (sceneSerializer.SelectDataType("UIComponent")) {
-				UIComponent tem(entityId);
-				std::string fp;
-				sceneSerializer.RetrieveData("Filepath", fp);
-				GraphicImplementation::SetTexture(&tem, fp);
-				sceneSerializer.RetrieveData(
-					"Colour", tem.colour,
-					"IsActive", tem.isActive);
-
-				dreamECSGame->AddComponent(tem);
-			}
-
-				
-			if (sceneSerializer.SelectDataType("FontComponent")) {
-				FontComponent tem(entityId);
-				std::string fp;
-				sceneSerializer.RetrieveData("Filepath", fp);
-				GraphicImplementation::SetFont(&tem, fp);
-				sceneSerializer.RetrieveData(
-					"Text", tem.text,
-					"Colour", tem.colour,
-					"IsActive", tem.isActive);
-
-				dreamECSGame->AddComponent(tem);
-			}
-
-			if (sceneSerializer.SelectDataType("SoundComponent")) {
-				SoundComponent tem(entityId);
-				int soundGrpTem;
-				sceneSerializer.RetrieveData(
-					"IsLoop", tem.loop,
-					"filepath", tem.filepath,
-					"volume", tem.volume,
-					"isSound", tem.isSound,
-					"SoundGroup", soundGrpTem,
-					"IsActive", tem.isActive);
-
-				tem.soundName = tem.filepath.substr(tem.filepath.find_last_of("\\") + 1);
-				tem.soundName = tem.soundName.substr(0, tem.soundName.find_last_of("."));
-
-				tem.soundType = static_cast<SoundGrp>(soundGrpTem);
-
-				dreamECSGame->AddComponent(tem);
-			}
-
-			if (sceneSerializer.SelectDataType("ParticleComponent")) {
-				ParticleComponent tem(entityId);
-				std::string fp;
-				sceneSerializer.RetrieveData("Filepath", fp);
-				GraphicImplementation::SetTexture(&tem, fp);
-				int graphicShapeTem;
-
-				Math::vec2 offsetPosition, velocity, velocityVariation, 
-					sizeBegin, sizeEnd, sizeVariation;
-
-				Math::vec4 colorBegin, colorEnd;
-				float lifeTime;
-
-				sceneSerializer.RetrieveData(
-					"Shape", graphicShapeTem,
-					"EmitSize", tem.emitSize,
-					"OffsetPosition", offsetPosition,
-					"Velocity", velocity,
-					"VelocityVariation", velocityVariation,
-					"ColorBegin", colorBegin,
-					"ColorEnd", colorEnd,
-					"SizeBegin", sizeBegin,
-					"SizeEnd", sizeEnd,
-					"SizeVariation", sizeVariation,
-					"LifeTime", lifeTime,
-					"IsLooping", tem.isLooping,
-					"IsAngleRandom", tem.isAngleRandom,
-					"IsVelocityVariation", tem.isVelocityVariation,
-					"IsActive", tem.isActive);
-
-				tem.mdl_ref = GraphicShape(graphicShapeTem);
-				tem.particleData = { offsetPosition, velocity, velocityVariation,
-							 colorBegin, colorEnd, sizeBegin, sizeEnd, sizeVariation,
-							 lifeTime };
-
-				dreamECSGame->AddComponent(tem);
-			}
-
-			if (sceneSerializer.SelectDataType("ScriptComponent")) {
-				ScriptComponent tem(entityId);
-				for (auto& classJSon : sceneSerializer.RetrieveDataArray("")) {
-					const auto& fullName = classJSon["Class"].GetString();
-
-					CSScriptInstance csScriptInstance(
-						fullName,
-						classJSon["IsActive"].GetBool());
-
-					rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
-					if (!Scripting::InitCSClass(csScriptInstance, entityId)) { continue; }
-#if 0
-					if (variableItr != classJSon.MemberEnd()) {
-						for (auto& variableData : variableItr->value.GetArray()) {
-							const auto& variableName = variableData["Name"].GetString();
-							const auto& variableType = CSType{ variableData["Type"].GetInt() };
-
-
-							CSPublicVariable csPublicvariable{ variableName, variableType };
-
-							if (variableType == CSType::CHAR) {
-								char charData = static_cast<char>(variableData["Data"].GetInt());
-								csPublicvariable.SetVariableData(&charData);
-							}
-
-							else if (variableType == CSType::BOOL) {
-								bool boolData = variableData["Data"].GetBool();
-								csPublicvariable.SetVariableData(&boolData);
-							}
-
-							else if (variableType == CSType::FLOAT) {
-								float floatData = variableData["Data"].GetFloat();
-								csPublicvariable.SetVariableData(&floatData);
-							}
-							else if (variableType == CSType::INT) {
-								int intData = variableData["Data"].GetInt();
-								csPublicvariable.SetVariableData(&intData);
-							}
-							else if (variableType == CSType::UINT) {
-								unsigned int uinData = variableData["Data"].GetUint();
-								csPublicvariable.SetVariableData(&uinData);
-							}
-
-							else if (variableType == CSType::VEC2) {
-								Math::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
-													variableData["Data"].GetArray()[1].GetFloat() };
-								csPublicvariable.SetVariableData(&vec2Data);
-							}
-							/*else if (variableType == CSType::GAMEOBJECT) {
-								const char* tem = variableData["Data"].GetString();
-								csPublicvariable.SetVariableData(const_cast<char*>(tem));
-							}*/
-
-							csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
-						}
-
-					}
-#endif
-					//klassInstance[csScriptInstance.csClass.className] = std::move(csScriptInstance);
-					//Scripting::InitVariable(csScriptInstance);
-					//Scripting::InitScript(GetEntityId(), csScriptInstance);
-
-					tem.klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
-				}
-
-
-				dreamECSGame->AddComponent(std::move(tem));
-			}
+			DeserializeOtherComponents(sceneSerializer, entityId);
 		};
 
 		sceneSerializer.DeserializeArray(deserializeSceneFP);
@@ -648,37 +670,22 @@ namespace Engine {
 			if (id != nullptr)
 				*id = entityId;
 
-			
 			if (sceneSerializer.SelectDataType("TransformComponent")) {
 				TransformComponent tem(entityId);
 				sceneSerializer.RetrieveData(
-					"Position", tem.position,
-					"LocalPosition", tem.localPosition,
 					"Scale", tem.scale,
-					"Angle", tem.angle,
-					"Layer", tem.layer,
-					"IsActive", tem.isActive);
+					"Angle", tem.angle
+				);
 
-				tem.position = position;
-				tem.angle += angle;
-				tem.layer = layer;
-
-				dreamECSGame->AddComponent(tem);
+				dreamECSGame->AddComponent(
+					TransformComponent{ entityId, position, tem.scale, tem.angle + angle, layer }
+				);
 
 				ParentManager::GetInstance().UpdateTruePos(entityId);
 			}
 
 
-
-			sceneSerializer.RetrieveCollider();
-			sceneSerializer.RetrieveRigidBody();
-			sceneSerializer.RetrieveCamera();
-			sceneSerializer.RetrieveTexture();
-			sceneSerializer.RetrieveUI();
-			sceneSerializer.RetrieveFont();
-			sceneSerializer.RetrieveSound();
-			sceneSerializer.RetrieveParticle();
-			sceneSerializer.RetrieveScript();
+			DeserializeOtherComponents(sceneSerializer, entityId);
 		};
 
 		sceneSerializer.DeserializeArray(fp);

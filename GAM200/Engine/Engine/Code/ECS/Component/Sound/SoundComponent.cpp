@@ -19,10 +19,10 @@ Technology is prohibited.
 
 namespace Engine {
 
-	SoundComponent::SoundComponent(Entity_id _ID ,  std::string _filepath,  std::string _soundName ,bool _isSound , bool _isActive , bool _loop, float _vol, SoundGrp _soundType)
-		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName } , isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, volume{ _vol }, soundType { _soundType }
+	SoundComponent::SoundComponent(Entity_id _ID, std::string _filepath, std::string _soundName, bool _isSound, bool _isActive, bool _loop, float _vol, SoundGrp _soundType, bool _isBGMMuted)
+		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName }, isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, volume{ _vol }, soundType{ _soundType }, isBGMMuted{ _isBGMMuted }
 	{
-		
+
 	}
 
 
@@ -31,28 +31,16 @@ namespace Engine {
 		//Called by SoundManager
 	}
 
-	/**
-	*		VOLUMES
-	*		--- LOUD = 100.f ->1.f
-	*		--- NORMAL = 50.f -> 0.5f
-	*		--- SOFT = 20.f ->0.2f
-	*/
-	float SoundComponent::VolumeDecimal(float _vol)
+
+	float SoundComponent::GetVolume(float _vol)
 	{
-		if (_vol < 20.f)
-			_vol = 20.f;
-		else if (_vol >= 20.f && _vol <= 100.f)
-			_vol = 50.f;
-		else if (_vol > 100.f)
-			_vol = 100.f;
-		
-		return _vol / 100.f;
-			
+		volume = _vol < 0.0f ? 0.0f : _vol;
+		return volume;
 	}
 
-	float SoundComponent::DecimalVolume(float _vol)
+	float SoundComponent::SetVolume(float _vol)
 	{
-		return _vol * 100.f;
+		return volume;
 	}
 
 	SoundComponent& SoundComponent::Deserialize(const DSerializer& _serializer)
@@ -70,6 +58,8 @@ namespace Engine {
 		isSound = _serializer.GetValue<bool>("isSound");
 		soundType = static_cast<SoundGrp>(_serializer.GetValue<int>("SoundGroup"));
 
+		isBGMMuted = _serializer.GetValue<bool>("isBGMMuted");
+
 
 		return *this;
 	}
@@ -85,6 +75,7 @@ namespace Engine {
 		_serializer.SetValue("volume", volume);
 		_serializer.SetValue("isSound", isSound);
 		_serializer.SetValue("SoundGroup", static_cast<int>(soundType));
+		_serializer.SetValue("isBGMMuted", isBGMMuted);
 
 	}
 

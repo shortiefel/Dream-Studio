@@ -32,40 +32,44 @@ namespace Engine {
 
 	struct SoundComponent;
 
-	using SoundMap =  std::map<std::string, FMOD::Sound*> ;
-	using ChannelMap =  std::map<int, FMOD::Channel*> ;
+	using SoundMap = std::map<std::string, FMOD::Sound*>;
+	using ChannelMap = std::map<int, FMOD::Channel*>;
 
 	struct SoundManager : public Singleton<SoundManager>
 	{
-			
-			void Create();
-			void Destroy();
 
-			FMOD::Sound* GetSound(SoundComponent* soundCom, std::string& filePath,  std::string& soundName);
-			//void SetSound(SoundComponent* _textptr, std::string _filepath);
-			int SetPlay(SoundComponent* soundCom);
-			int SetLoop(SoundComponent* soundCom);
+		void Create();
+		void Destroy();
 
-			bool IsPlaying(int channelID);
+		FMOD::Sound* GetSound(SoundComponent* soundCom, std::string& filePath, std::string& soundName);
+		//void SetSound(SoundComponent* _textptr, std::string _filepath);
+		int SetPlay(SoundComponent* soundCom);
+		int SetLoop(SoundComponent* soundCom);
 
-			void SetPauseAllSound(bool paused);
+		bool IsPlaying(int channelID);
+
+		//for toggling
+		void SetPauseAllSound(bool paused);
 
 
+		//NEW STUFF
+		void MuteBGM(SoundComponent* soundCom);
 
-			/**
-			*		FMOD RELATED
-			*/
-			static SoundMap _soundMap;
-			static FMOD::System* System;
-			static ChannelMap channelMap;
-			static FMOD::ChannelGroup* MasterGroup;
-			static FMOD::ChannelGroup* MusicGroup;
-			static FMOD::ChannelGroup* SFXGroup;
-			
-			//SoundGrp SG;
-			int ChannelID;
 
-			SINGLETON_SETUP(SoundManager);
+		/**
+		*		FMOD RELATED
+		*/
+		static SoundMap _soundMap;
+		static FMOD::System* System;
+		static ChannelMap channelMap;
+		static FMOD::ChannelGroup* MasterGroup;
+		static FMOD::ChannelGroup* MusicGroup;
+		static FMOD::ChannelGroup* SFXGroup;
+
+		//SoundGrp SG;
+		int ChannelID;
+
+		SINGLETON_SETUP(SoundManager);
 
 	};
 }

@@ -5,7 +5,7 @@
 @date		29/11/2021
 \brief
 
-This file contain the definiation for sound 
+This file contain the definiation for sound
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -50,7 +50,7 @@ namespace Engine
 		SoundManager::System->release();
 	}
 
-	FMOD::Sound* SoundManager::GetSound(SoundComponent* soundCom,std::string&,  std::string& soundName)
+	FMOD::Sound* SoundManager::GetSound(SoundComponent* soundCom, std::string&, std::string& soundName)
 	{
 
 		auto it = SoundManager::_soundMap.find(soundName);
@@ -62,15 +62,15 @@ namespace Engine
 			std::cout << soundCom->filepath << "\n";
 			SoundManager::System->createSound(soundCom->filepath.c_str(), eMode, nullptr, &pSound);
 			//throw std::runtime_error("FMOD: Unable to create sound" + _path);
-			
+
 			if (pSound)
 			{
 				SoundManager::_soundMap[soundCom->soundName] = pSound;
 				return pSound;
 			}
-			
-				return it->second;
-			
+
+			return it->second;
+
 		}
 
 		return it->second;
@@ -103,7 +103,7 @@ namespace Engine
 		pChannel->isPlaying(&(soundCom->isPlaying));
 		if (pChannel)
 		{
-			float vol = soundCom->volume / 100.f;
+			float vol = soundCom->volume;;
 			switch (soundCom->soundType)
 			{
 			case SoundGrp::MUSIC:
@@ -162,5 +162,18 @@ namespace Engine
 		MusicGroup->setPaused(paused);
 		SFXGroup->setPaused(paused);
 	}
+
+	void SoundManager::MuteBGM(SoundComponent* soundCom)
+	{
+
+		if (soundCom->soundType == SoundGrp::MUSIC)
+		{
+			auto it = channelMap.find(soundCom->channelID);
+			it->second->setMute(soundCom->isBGMMuted);
+		}
+
+
+	}
+
 
 }

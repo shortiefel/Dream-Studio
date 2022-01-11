@@ -80,7 +80,12 @@ namespace Engine {
             return cellType == CellType::Empty || cellType == CellType::Road;
         }
 
-        void Grid::GetRandomRoadPoint(Math::ivec2* pos) {
+        bool Grid::GetRandomRoadPoint(Math::ivec2* pos) {
+            int count = roadList.size() - 1;
+            if (count < 0) return false;
+            /*int n = Random.Range(0, count);
+            return _roadList[n];*/
+
             int num;
             Random::Range(0, static_cast<int>(roadList.size()) - 1, &num);
             std::list<Math::ivec2>::iterator it = roadList.begin();
@@ -88,16 +93,23 @@ namespace Engine {
                 it++;
             }
             *pos = *it;
+
+            return true;
         }
 
-        void Grid::GetRandomSpecialStructurePoint(Math::ivec2* pos) {
+        bool Grid::GetRandomSpecialStructurePoint(Math::ivec2* pos) {
+            int count = specialStructure.size() - 1;
+            if (count < 0) return false;
+
             int num;
-            Random::Range(0, static_cast<int>(roadList.size()) - 1, &num);
-            std::list<Math::ivec2>::iterator it = roadList.begin();
+            Random::Range(0, static_cast<int>(specialStructure.size()) - 1, &num);
+            std::list<Math::ivec2>::iterator it = specialStructure.begin();
             for (int i = 0; i < num; i++) {
                 it++;
             }
             *pos = *it;
+
+            return true;
         }
 
         void Grid::GetAllAdjacentCells(Math::ivec2(&arr)[4], int* count, int x, int y) {
@@ -216,6 +228,17 @@ namespace Engine {
                 parent = parentMap[parent];
             }
             return path;
+        }
+
+        void Grid::PrintGridOut_Engine() {
+            int num = mapSize.y * mapSize.x;
+            for (int i = 0; i < num; i++) {
+                if (i % mapSize.x == 0) std::cout << "\n";
+                if ((int)(*(grid + i)) == 0) std::cout << "  ";
+                else std::cout << (int)(*(grid + i)) << " ";
+            }
+
+            std::cout << "\n";
         }
 
         void Grid::AStarSearch(Math::ivec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent) {

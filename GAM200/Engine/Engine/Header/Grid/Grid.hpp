@@ -61,11 +61,11 @@ namespace Engine {
 			/*-----------------------------------------------------
 			Randomize index of Road points to retrieve a Road position
 			-----------------------------------------------------*/
-			void GetRandomRoadPoint(Math::ivec2* pos);
+			bool GetRandomRoadPoint(Math::ivec2* pos);
 			/*-----------------------------------------------------
 			Randomize index of Road points to retrieve a Road position
 			-----------------------------------------------------*/
-			void GetRandomSpecialStructurePoint(Math::ivec2* pos);
+			bool GetRandomSpecialStructurePoint(Math::ivec2* pos);
 			/*-----------------------------------------------------
 			Get adjacent cells that the specific object(isAgent) can walk on
 			-----------------------------------------------------*/
@@ -82,6 +82,9 @@ namespace Engine {
 			void AStarSearch(Math::ivec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent);
 
 			void GetAllAdjacentCells(Math::ivec2(&arr)[4], int* count, int x, int y); // Should be private
+
+			void PrintGridOut_Engine();
+
 		private:
 			std::list<Math::ivec2> AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent);
 			std::list<Math::ivec2> GetAdjacentCells(Math::ivec2 cell, bool isAgent);

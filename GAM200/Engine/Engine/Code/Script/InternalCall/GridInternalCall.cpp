@@ -26,14 +26,16 @@ namespace Engine {
 	void CreateGrid_Engine(int width, int height);
 	int GetCellType_Engine(int x, int y);
 	void SetCellType_Engine(int x, int y, int cellType);
-	void GetRandomRoadPoint_Engine(Math::ivec2* point);
-	void GetRandomSpecialStructurePoint_Engine(Math::ivec2* point);
+	bool GetRandomRoadPoint_Engine(Math::ivec2* point);
+	bool GetRandomSpecialStructurePoint_Engine(Math::ivec2* point);
 	void GetAllAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y);
 	void GetWalkableAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y, bool isAgent);
 	void GetAdjacentCellsOfType_Engine(MonoArray* monoArray, int* count, int x, int y, int type);
 	void GetAllAdjacentCellTypes_Engine(MonoArray* monoArray, int x, int y);
 
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent);
+
+	void PrintGridOut_Engine();
 	/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 	void RegisterGridInternalCall() {
@@ -48,6 +50,7 @@ namespace Engine {
 		mono_add_internal_call("Grid::GetAllAdjacentCellTypes_Engine", GetAllAdjacentCellTypes_Engine);
 
 		mono_add_internal_call("GridSearch::AStarSearch_Engine", AStarSearch_Engine);
+		mono_add_internal_call("Grid::PrintGridOut_Engine", PrintGridOut_Engine);
 	}
 
 	void CreateGrid_Engine(int width, int height) {
@@ -59,11 +62,11 @@ namespace Engine {
 	void SetCellType_Engine(int x, int y, int cellType) {
 		Game::Grid::GetInstance().SetCellType(x, y, cellType);
 	}
-	void GetRandomRoadPoint_Engine(Math::ivec2* point) {
-		Game::Grid::GetInstance().GetRandomRoadPoint(point);
+	bool GetRandomRoadPoint_Engine(Math::ivec2* point) {
+		return Game::Grid::GetInstance().GetRandomRoadPoint(point);
 	}
-	void GetRandomSpecialStructurePoint_Engine(Math::ivec2* point) {
-		Game::Grid::GetInstance().GetRandomSpecialStructurePoint(point);
+	bool GetRandomSpecialStructurePoint_Engine(Math::ivec2* point) {
+		return Game::Grid::GetInstance().GetRandomSpecialStructurePoint(point);
 	}
 	void GetAllAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y) {
 		Math::ivec2 arr[4];
@@ -114,5 +117,9 @@ namespace Engine {
 		for (int i = 0; i < loop; i++) {
 			mono_array_set(monoArray, Math::ivec2, i, (arr[i]));
 		}
+	}
+
+	void PrintGridOut_Engine() {
+		Game::Grid::GetInstance().PrintGridOut_Engine();
 	}
 }

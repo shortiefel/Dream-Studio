@@ -170,6 +170,10 @@ public class SpawnManager : MonoBehaviour
 
     public override void Update()
     {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            CheckPosition();
+        }
         score = gameState.GetScore();
         if (score == scoreToSpawn)
         {

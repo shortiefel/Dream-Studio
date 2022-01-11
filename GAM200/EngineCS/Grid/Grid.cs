@@ -48,6 +48,25 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void CreateGrid_Engine(int width, int height);
 
+    public void PrintGridOut()
+    {
+        for (int y = 0; y < _height; y++)
+            
+        {
+            for (int x = 0; x < _width; x++)
+            {
+                if ((int)_grid[x, y] == 0) Debug.Log("  ");
+                else Debug.Log((int)_grid[x, y] + " ");
+            }
+            Debug.Log("\n");
+        }
+
+        PrintGridOut_Engine();
+
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void PrintGridOut_Engine();
+
     public Vector2Int GetGridSize()
     {
         return new Vector2Int(_width, _height);
@@ -91,7 +110,7 @@ public class Grid
             }*/
             
             _grid[i, j] = value;
-            //SetCellType_Engine(i, j, (int)value);
+            SetCellType_Engine(i, j, (int)value);
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -110,27 +129,47 @@ public class Grid
 
     public Point GetRandomRoadPoint()
     {
-        /*GetRandomRoadPoint_Engine(out Point point);
-        return point;*/
+        if (GetRandomRoadPoint_Engine(out Point point)) Debug.Log("True1--------------------------------------------------");
+        else Debug.Log("False1--------------------------------------------------");
+        /*return point;*/
+
         int count = _roadList.Count - 1;
-        if (count < 0) return null;
+        if (count < 0)
+        {
+            Debug.Log("False2--------------------------------------------------");
+            return null;
+        }
+        else
+        {
+            Debug.Log("True2--------------------------------------------------");
+        }
         int n = Random.Range(0, count);
         return _roadList[n];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void GetRandomRoadPoint_Engine(out Point point);
+    internal static extern bool GetRandomRoadPoint_Engine(out Point point);
 
     public Point GetRandomSpecialStructurePoint()
     {
-        //GetRandomSpecialStructurePoint_Engine(out Point point);
-        //return point;
+        if (GetRandomSpecialStructurePoint_Engine(out Point point)) Debug.Log("True1--------------------------------------------------\n");
+        else Debug.Log("False1--------------------------------------------------");
+        /*return point;*/
+
         int count = _specialStructure.Count - 1;
-        if (count < 0) return null;
+        if (count < 0)
+        {
+            Debug.Log("False2--------------------------------------------------\n");
+            return null;
+        }
+        else
+        {
+            Debug.Log("True2--------------------------------------------------");
+        }
         int n = Random.Range(0, count);
         return _specialStructure[n];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void GetRandomSpecialStructurePoint_Engine(out Point point);
+    internal static extern bool GetRandomSpecialStructurePoint_Engine(out Point point);
 
     public List<Point> GetAdjacentCells(Point cell, bool isAgent)
     {

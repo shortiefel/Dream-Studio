@@ -90,8 +90,8 @@ public class InputManager : MonoBehaviour
 			//Debug.Log(positionInt);
 			return positionInt;
 		}
-		else
-			Debug.Log("did not hit");
+		//else
+			//Debug.Log("did not hit");
 		return null;
 	}
 

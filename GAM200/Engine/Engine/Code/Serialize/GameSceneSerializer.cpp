@@ -468,8 +468,8 @@ namespace Engine {
 			}
 
 			sceneSerializer.EndEntitySerialize();
-		}*/
-		sceneSerializer.EndSerialize();
+		}
+		sceneSerializer.EndSerialize();*/
 #if 0
 		rapidjson::Document doc(rapidjson::kArrayType);
 		

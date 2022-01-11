@@ -1,0 +1,15 @@
+{
+  "Window": {
+    "Width": 1600,
+    "Height": 900
+  },
+  "Game": {
+    "Width": 1600,
+    "Height": 900,
+    "DefaultCircle": "Assets\\Textures\\Default_Circle.png",
+    "DefaultSquare": "Assets\\Textures\\Default_Square.png"
+  },
+  "Scene": {
+    "DefaultScene": "MainMenu"
+  }
+}

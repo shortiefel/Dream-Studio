@@ -1,0 +1,34 @@
+[
+
+  {
+    "Entity": {
+      "Name": "Box",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\ThreeWayRoad.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsLoop": false,
+      "EndFrame": 0,
+      "TimePerFrame": 0.0,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "Test",
+        "IsActive": true
+      }
+    ]
+  }
+]

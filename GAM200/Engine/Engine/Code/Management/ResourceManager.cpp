@@ -87,9 +87,43 @@ namespace Engine
 	}
 
 	// Function loads texture into container without checking if it exist
-	GLuint ResourceManager::LoadTextureInternal(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel) {
+	GLuint ResourceManager::LoadTextureInternal(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel) 
+	{
 		// Read png file
 		stbi_uc* temBuff = stbi_load(filename.c_str(), x, y, channels_in_files, desired_channel);
+
+		GLuint texobj_hdl{};
+		glCreateTextures(GL_TEXTURE_2D, 1, &texobj_hdl);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		glTextureStorage2D(texobj_hdl, 1, GL_RGBA8, *x, *y);
+		glTextureSubImage2D(texobj_hdl, 0, 0, 0, *x, *y, GL_RGBA, GL_UNSIGNED_BYTE, temBuff);
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		if (temBuff) stbi_image_free(temBuff);
+
+		// Store in container to be reused later
+		textureList[filename].texture_handle = texobj_hdl;
+		textureList[filename].width = *x;
+		textureList[filename].height = *y;
+
+		return textureList[filename].texture_handle;
+	}
+
+	// Function loads texture into container without checking if it exist
+	GLuint ResourceManager::LoadTextureInternal(std::string filename) 
+	{
+		int* x{};
+		int* y{};
+		int* BPP{};
+
+		// Read png file
+		stbi_uc* temBuff = stbi_load(filename.c_str(), x, y, BPP, 4);
 
 		GLuint texobj_hdl{};
 		glCreateTextures(GL_TEXTURE_2D, 1, &texobj_hdl);
@@ -127,6 +161,18 @@ namespace Engine
 		}
 
 		return LoadTextureInternal(filename, x, y, channels_in_files, desired_channel);
+	}
+
+	// Function loads texture into container if it doesnt exist
+	GLuint ResourceManager::LoadTexture(std::string filename)
+	{
+		// Check if it exist first before loading
+		if (textureList.find(filename) != textureList.end())
+		{
+			return textureList[filename].texture_handle;
+		}
+
+		return LoadTextureInternal(filename);
 	}
 
 	// Function loads font into container

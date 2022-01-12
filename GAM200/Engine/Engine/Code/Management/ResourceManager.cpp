@@ -118,12 +118,14 @@ namespace Engine
 	// Function loads texture into container without checking if it exist
 	GLuint ResourceManager::LoadTextureInternal(std::string filename) 
 	{
-		int* x{};
-		int* y{};
-		int* BPP{};
+		int width = 0, height = 0, BPP = 0;
+
+		int* x = &width;
+		int* y = &height;
+		int* channels_in_files = &BPP;
 
 		// Read png file
-		stbi_uc* temBuff = stbi_load(filename.c_str(), x, y, BPP, 4);
+		stbi_uc* temBuff = stbi_load(filename.c_str(), x, y, channels_in_files, 4);
 
 		GLuint texobj_hdl{};
 		glCreateTextures(GL_TEXTURE_2D, 1, &texobj_hdl);
@@ -149,30 +151,30 @@ namespace Engine
 	}
 
 	// Function loads texture into container if it doesnt exist
-	GLuint ResourceManager::LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel)
+	GLuint ResourceManager::LoadTexture(std::string filepath, int* x, int* y, int* channels_in_files, int desired_channel)
 	{
 		// Check if it exist first before loading
-		if (textureList.find(filename) != textureList.end())
+		if (textureList.find(filepath) != textureList.end())
 		{
-			*x = textureList[filename].width;
-			*y = textureList[filename].height;
+			*x = textureList[filepath].width;
+			*y = textureList[filepath].height;
 
-			return textureList[filename].texture_handle;
+			return textureList[filepath].texture_handle;
 		}
 
-		return LoadTextureInternal(filename, x, y, channels_in_files, desired_channel);
+		return LoadTextureInternal(filepath, x, y, channels_in_files, desired_channel);
 	}
 
 	// Function loads texture into container if it doesnt exist
-	GLuint ResourceManager::LoadTexture(std::string filename)
+	GLuint ResourceManager::LoadTexture(std::string filepath)
 	{
 		// Check if it exist first before loading
-		if (textureList.find(filename) != textureList.end())
+		if (textureList.find(filepath) != textureList.end())
 		{
-			return textureList[filename].texture_handle;
+			return textureList[filepath].texture_handle;
 		}
 
-		return LoadTextureInternal(filename);
+		return LoadTextureInternal(filepath);
 	}
 
 	// Function loads font into container

@@ -31,7 +31,7 @@ namespace Engine
 
 	struct AnimationState
 	{
-		AnimationState(std::string _stateName = "", int _stateRow = 1, int _startX = 1, int _endX = 1, float _fTime = 0.1, bool _isLoop = true);
+		AnimationState(std::string _stateName = "", int _stateRow = 1, int _startX = 1, int _endX = 1, float _fTime = 0.f, bool _isLoop = true);
 
 		std::string stateName;
 
@@ -72,7 +72,6 @@ namespace Engine
 
 		// To be called by inspector
 		bool AddRefreshAnimationState(AnimationState _state);
-		//void AddRefreshAnimationState(std::string _stateName, AnimationState _state);
 		bool AddRefreshAnimationState(std::string _stateName = "Default", int _stateRow = 0, int _startX = 0, int _endX = 1, float _fTime = 0.1, bool _isLoop = true);
 
 		// Animation functions (used internally)
@@ -83,7 +82,7 @@ namespace Engine
 
 
 		TextureComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Textures\\Default_Square.png",
-			GraphicShape _shape = GraphicShape::Square, Math::vec4 _colour = { 1.0f, 1.0f, 1.0f, 1.0f },
+			GraphicShape _shape = GraphicShape::Square, Math::vec4 _colour = { 1.f, 1.f, 1.f, 1.f },
 			bool _animation = false, std::string _currAnimationState = "", std::string _nextAnimationState = "",
 			bool _active = true);
 

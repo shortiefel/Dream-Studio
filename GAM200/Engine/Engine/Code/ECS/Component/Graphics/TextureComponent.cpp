@@ -40,7 +40,7 @@ namespace Engine
 		bool _active) :
 		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape }, colour{ _colour },
 		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 }, totalRows{ 1 }, totalColumns{ 1 },
-		minUV{ 0.01f, 0.01f }, maxUV{ 0.99f, 0.99f },
+		minUV{ 0.f, 0.f }, maxUV{ 1.f, 1.f },
 		isAnimation{ _animation }, currAnimationState{ _currAnimationState }, nextAnimationState{ _nextAnimationState },
 		isActive{ _active }
 	{
@@ -87,8 +87,6 @@ namespace Engine
 			}
 			SetUV(_state);
 		}
-
-		std::cout << "_state.currFrame" << _state.currFrame << std::endl;
 	}
 
 	// Function that sets the UV texture coordinates; For spritesheets
@@ -162,7 +160,8 @@ namespace Engine
 		// For animation
 		isAnimation = _serializer.GetValue<bool>("IsAnimation");
 		
-		if (isAnimation) {
+		if (isAnimation)
+		{
 			totalRows = _serializer.GetValue<int>("TotalRow");
 			totalColumns = _serializer.GetValue<int>("TotalColumns");
 
@@ -173,7 +172,8 @@ namespace Engine
 
 			auto animationStates = _serializer.GetValueArray("AnimationState");
 
-			for (auto& state : animationStates) {
+			for (auto& state : animationStates) 
+			{
 				std::string stateName = state["StateName"].GetString();
 
 				int stateRow = state["StateRow"].GetInt();
@@ -206,10 +206,8 @@ namespace Engine
 
 		_serializer.SetValue("IsAnimation", isAnimation);
 
-		/*cellWidth = static_cast<float>(width) / totalColumns;
-		cellHeight = static_cast<float>(height) / totalRows;*/
-
-		if (isAnimation) {
+		if (isAnimation)
+		{
 			_serializer.SetValue("TotalRow", totalRows);
 			_serializer.SetValue("TotalColumns", totalColumns);
 
@@ -217,7 +215,8 @@ namespace Engine
 
 			rapidjson::Value allAnimation(rapidjson::kArrayType);
 
-			for (auto& [name, state] : animationStateList) {
+			for (auto& [name, state] : animationStateList) 
+			{
 				rapidjson::Value classObj(rapidjson::kObjectType);
 				SSerializer cserializer(_serializer, classObj);
 

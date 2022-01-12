@@ -176,6 +176,7 @@ namespace Engine {
 			/*---------------------------------------------------------------------------------------------------------------------
 			* < operator
 			---------------------------------------------------------------------------------------------------------------------*/
+			//PROBLEM TO FIX!!! EG (8, 7) vs (7, 8) issue
 			template <typename T, typename U>
 			bool operator<(const Vector2D<T>& lhs, const Vector2D<U>& rhs) {
 				T diff1 = lhs.x + lhs.y;

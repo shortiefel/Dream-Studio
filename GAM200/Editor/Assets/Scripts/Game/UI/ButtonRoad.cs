@@ -1,6 +1,8 @@
 ﻿using System;
 public class ButtonRoad : MonoBehaviour
 {
+    PlacementManager placementManager;
+
     UI buttonUI;
     bool buttonType;
     bool activeType;
@@ -17,8 +19,14 @@ public class ButtonRoad : MonoBehaviour
 
     GameState gameState;
 
+    private Camera mainCamera;
+
     public override void Start()
     {
+        mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
+
+        placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+
         buttonUI = GetComponent<UI>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
@@ -55,12 +63,28 @@ public class ButtonRoad : MonoBehaviour
     //    buttonUI.color = new Color(1f, 0f, 0f);
     //}
 
+    public override void Update()
+    {
+        if (Input.GetMouseButtonDown(MouseCode.Left))
+        {
+            Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
+            Vector2 startPos = placementManager.placementGrid.GetStartPoint();
+            Vector2 endPos = placementManager.placementGrid.GetGridSize() + startPos;
+            if (mousePos.x < startPos.x - 0.5 || mousePos.x > endPos.x - 0.5 ||
+                mousePos.y < startPos.y - 0.5 || mousePos.y > endPos.y - 0.5)
+            {
+                DisableAll();
+            }
+        }
+    }
+
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
             if (buttonType)
             {
+                //Show draw road
                 if (!activeType)
                 {
                     Disable<Transform>(drawRoad);
@@ -76,22 +100,14 @@ public class ButtonRoad : MonoBehaviour
                 }
                 else
                 {
-                    Enable<Transform>(drawRoad);
-                    Disable<Transform>(drawRoadWhite);
-                    //drawRoadMode = false;
-                    Disable<Transform>(removeRoadWhite);
-                    Enable<Transform>(removeRoad);
-                    gameManager.ClearInputActions();
-                    //SwitchMode();
-                    SceneManager.SetDrawMode(false);
-                    gameState.SetDrawMode(false);
-                    activeType = false;
+                    DisableAll();
                 }
 
             }
 
             else
             {
+                //Show remove road
                 if (!activeType)
                 {
                     Disable<Transform>(removeRoad);
@@ -108,22 +124,26 @@ public class ButtonRoad : MonoBehaviour
                 }
                 else
                 {
-                    Disable<Transform>(removeRoadWhite);
-                    Enable<Transform>(removeRoad);
-                    //deleteRoadMode = false;
-                    Enable<Transform>(drawRoad);
-                    Disable<Transform>(drawRoadWhite);
-                    
-                    gameManager.ClearInputActions();
-                    //SwitchMode();
-                    SceneManager.SetDrawMode(false);
-                    gameState.SetDrawMode(false);
-                    activeType = false;
+                    DisableAll();
                 }
 
             }
 
         }
+    }
+
+    public void DisableAll()
+    {
+        Enable<Transform>(drawRoad);
+        Disable<Transform>(drawRoadWhite);
+        //drawRoadMode = false;
+        Disable<Transform>(removeRoadWhite);
+        Enable<Transform>(removeRoad);
+        gameManager.ClearInputActions();
+        //SwitchMode();
+        SceneManager.SetDrawMode(false);
+        gameState.SetDrawMode(false);
+        activeType = false;
     }
 
 }

@@ -32,6 +32,8 @@ public class Grid
     private int _width;
     //public int Width { get { return _width; } }
     private int _height;
+    private int _xOffset;
+    private int _yOffset;
     //public int Height { get { return _height; } }
 
     private List<Point> _roadList = new List<Point>();
@@ -42,15 +44,51 @@ public class Grid
     {
         _width = width;
         _height = height;
+        _xOffset = 0;
+        _yOffset = 0;
         _grid = new CellType[width, height];
         CreateGrid_Engine(width, height);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void CreateGrid_Engine(int width, int height);
 
+    //Size of grid is expanded by 2 (Default) times
+    public void Expand(int xMul = 2, int yMul = 2)
+    {
+        Resize(_width * xMul, _height * yMul);
+    }
+
+    private void Resize(int newWidth, int newHeight)
+    {
+        _xOffset = (newWidth - _width) / 2;
+        _yOffset = (newHeight - _height) / 2;
+        CellType[,] temGrid = new CellType[newWidth, newHeight];
+
+        for (int y = 0; y < _height; y++)
+        {
+            for (int x = 0; x < _width; x++)
+            {
+                temGrid[x, y] = _grid[x, y];
+            }
+        }
+
+        _grid = temGrid;
+        _width = newWidth;
+        _height = newHeight;
+        ResizeGrid_Engine(newWidth, newHeight);
+    }
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void ResizeGrid_Engine(int newWidth, int newHeight);
+
+    public Vector2Int GetStartPoint()
+    {
+        return new Vector2Int(-_xOffset, -_yOffset);
+    }
+
     public void PrintGridOut()
     {
-        for (int y = 0; y < _height; y++)
+        /*for (int y = 0; y < _height; y++)
             
         {
             for (int x = 0; x < _width; x++)
@@ -61,7 +99,11 @@ public class Grid
             Debug.Log("\n");
         }
 
-        PrintGridOut_Engine();
+        PrintGridOut_Engine();*/
+        Console.WriteLine("-----------------------------------------");
+        Console.WriteLine(-_xOffset + " " + -_yOffset);
+        Console.WriteLine(_width + " " + _height);
+        Console.WriteLine("-----------------------------------------");
 
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -80,7 +122,7 @@ public class Grid
             
             //Console.WriteLine(GetCellType_Engine(i, j) + " and " + (int)_grid[i, j]);
             //return (CellType)GetCellType_Engine(i, j);
-            return _grid[i, j];
+            return _grid[i + _xOffset, j + _yOffset];
         }
         set
         {
@@ -109,8 +151,8 @@ public class Grid
                 _specialStructure.Remove(new Point(i, j));
             }*/
             
-            _grid[i, j] = value;
-            SetCellType_Engine(i, j, (int)value);
+            _grid[i + _xOffset, j + _yOffset] = value;
+            //SetCellType_Engine(i, j, (int)value);
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -129,20 +171,12 @@ public class Grid
 
     public Point GetRandomRoadPoint()
     {
-        if (GetRandomRoadPoint_Engine(out Point point)) Debug.Log("True1--------------------------------------------------");
-        else Debug.Log("False1--------------------------------------------------");
+        //GetRandomRoadPoint_Engine(out Point point);
         /*return point;*/
 
         int count = _roadList.Count - 1;
-        if (count < 0)
-        {
-            Debug.Log("False2--------------------------------------------------");
-            return null;
-        }
-        else
-        {
-            Debug.Log("True2--------------------------------------------------");
-        }
+        if (count < 0) return null;
+
         int n = Random.Range(0, count);
         return _roadList[n];
     }
@@ -151,20 +185,12 @@ public class Grid
 
     public Point GetRandomSpecialStructurePoint()
     {
-        if (GetRandomSpecialStructurePoint_Engine(out Point point)) Debug.Log("True1--------------------------------------------------\n");
-        else Debug.Log("False1--------------------------------------------------");
+        //GetRandomSpecialStructurePoint_Engine(out Point point);
         /*return point;*/
 
         int count = _specialStructure.Count - 1;
-        if (count < 0)
-        {
-            Debug.Log("False2--------------------------------------------------\n");
-            return null;
-        }
-        else
-        {
-            Debug.Log("True2--------------------------------------------------");
-        }
+        if (count < 0) return null;
+ 
         int n = Random.Range(0, count);
         return _specialStructure[n];
     }
@@ -226,10 +252,13 @@ public class Grid
     public List<Point> GetWakableAdjacentCells(int x, int y, bool isAgent)
     {
         List<Point> adjacentCells = GetAllAdjacentCells(x, y);
+        Console.WriteLine("Start part: " + x + " " + y);
         for (int i = adjacentCells.Count - 1; i >= 0; i--)
         {
             //if (IsCellWakable(GetCellType(adjacentCells[i].X, adjacentCells[i].Y), isAgent) == false)
-            if (IsCellWakable(_grid[adjacentCells[i].X, adjacentCells[i].Y], isAgent) == false)
+            Console.WriteLine("Error part: " + _width + " " + _height);
+            Console.WriteLine("Error part: " + (adjacentCells[i].X + _xOffset) + " " + (adjacentCells[i].Y + _yOffset));
+            if (IsCellWakable(_grid[adjacentCells[i].X + _xOffset, adjacentCells[i].Y + _yOffset], isAgent) == false)
             {
                 adjacentCells.RemoveAt(i);
             }
@@ -262,7 +291,7 @@ public class Grid
         List<Point> adjacentCells = GetAllAdjacentCells(x, y);
         for (int i = adjacentCells.Count - 1; i >= 0; i--)
         {
-            if (_grid[adjacentCells[i].X, adjacentCells[i].Y] != type)
+            if (_grid[adjacentCells[i].X + _xOffset, adjacentCells[i].Y + _yOffset] != type)
             {
                 adjacentCells.RemoveAt(i);
             }
@@ -302,20 +331,20 @@ public class Grid
         CellType[] neighbours = { CellType.None, CellType.None, CellType.None, CellType.None };
         if (x > 0)
         {
-            neighbours[0] = _grid[x - 1, y];
+            neighbours[0] = _grid[x - 1 + _xOffset, y + _yOffset];
         }
         if (x < _width - 1)
         {
 
-            neighbours[2] = _grid[x + 1, y];
+            neighbours[2] = _grid[x + 1 + _xOffset, y + _yOffset];
         }
         if (y > 0)
         {
-            neighbours[3] = _grid[x, y - 1];
+            neighbours[3] = _grid[x + _xOffset, y - 1 + _yOffset];
         }
         if (y < _height - 1)
         {
-            neighbours[1] = _grid[x, y + 1];
+            neighbours[1] = _grid[x + _xOffset, y + 1 + _yOffset];
         }
 
         //Console.WriteLine("Neighbour: ----------------------------");

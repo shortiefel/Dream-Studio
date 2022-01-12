@@ -26,10 +26,35 @@ namespace Engine {
             return mapSize;
         }
 
+        Math::ivec2 Grid::GetStartPoint() {
+            return -offset;
+        }
+
         void Grid::CreateGrid(int width, int height) {
             if (grid != nullptr) return;
             mapSize = { width, height };
             grid = new CellType[static_cast<size_t>(width) * static_cast<size_t>(height)]();
+            offset = { 0, 0 };
+        }
+
+        void Grid::ResizeGrid(int newWidth, int newHeight) {
+            offset.x = ((newWidth - mapSize.x) / 2);
+            offset.y = ((newHeight - mapSize.y) / 2);
+            /*CellType* temGrid = new CellType[static_cast<size_t>(newWidth) * static_cast<size_t>(newHeight)]();
+
+
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                for (int x = 0; x < mapSize.x; x++)
+                {
+                    temGrid[offset.x + x, offset.y + y] = grid[x, y];
+                }
+            }
+
+            delete[] grid;
+            grid = temGrid;*/
+            mapSize = { newWidth, newHeight };
+            
         }
 
         void Grid::DestroyGrid() {
@@ -81,13 +106,13 @@ namespace Engine {
         }
 
         bool Grid::GetRandomRoadPoint(Math::ivec2* pos) {
-            int count = roadList.size() - 1;
+            int count = static_cast<int>(roadList.size()) - 1;
             if (count < 0) return false;
             /*int n = Random.Range(0, count);
             return _roadList[n];*/
 
             int num;
-            Random::Range(0, static_cast<int>(roadList.size()) - 1, &num);
+            Random::Range(0, count, &num);
             std::list<Math::ivec2>::iterator it = roadList.begin();
             for (int i = 0; i < num; i++) {
                 it++;
@@ -98,11 +123,11 @@ namespace Engine {
         }
 
         bool Grid::GetRandomSpecialStructurePoint(Math::ivec2* pos) {
-            int count = specialStructure.size() - 1;
+            int count = static_cast<int>(specialStructure.size()) - 1;
             if (count < 0) return false;
 
             int num;
-            Random::Range(0, static_cast<int>(specialStructure.size()) - 1, &num);
+            Random::Range(0, count, &num);
             std::list<Math::ivec2>::iterator it = specialStructure.begin();
             for (int i = 0; i < num; i++) {
                 it++;

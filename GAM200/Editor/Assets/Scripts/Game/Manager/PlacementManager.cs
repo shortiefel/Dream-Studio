@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PlacementManager : MonoBehaviour
 {
-    public int width, height;
+    //public int width, height;
     public Grid placementGrid;
     RoadFixer roadFixer;
     //private Transform transform;
@@ -15,8 +15,8 @@ public class PlacementManager : MonoBehaviour
     //private void Start()
     public override void Start()
     {
-        width = 20; height = 10;
-        placementGrid = new Grid(width, height);
+        //width = 20; height = 10;
+        placementGrid = new Grid(20, 10);
         transform = GetComponent<Transform>();
         roadFixer = GameObject.Find("RoadManager").GetComponent<RoadFixer>();
        
@@ -31,7 +31,9 @@ public class PlacementManager : MonoBehaviour
 
     internal bool CheckIfPositionInBound(Vector2Int position)
     {
-        if (position.x >= 0 && position.x < width && position.y >= 0 && position.y < height)
+        Vector2Int startPoint = placementGrid.GetStartPoint();
+        Vector2Int endPoint = placementGrid.GetGridSize() + startPoint;
+        if (position.x >= startPoint.x && position.x < endPoint.x && position.y >= startPoint.y && position.y < endPoint.y)
         {
             return true;
         }

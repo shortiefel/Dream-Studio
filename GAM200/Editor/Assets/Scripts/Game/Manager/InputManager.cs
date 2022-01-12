@@ -30,6 +30,11 @@ public class InputManager : MonoBehaviour
 	//private void Update()
 	public override void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.B))
+		{
+			placementManager.placementGrid.Expand();
+		}
+		
 		//if (!gameState.GetPause())
 		//{
 		//	bool state = gameState.GetDrawMode();
@@ -170,9 +175,10 @@ public class InputManager : MonoBehaviour
 	 * False = outside
 	*/
 
-	bool CheckIfOutside(Vector2Int pos)
+	/*bool CheckIfOutside(Vector2Int pos)
     {
-		Vector2Int gridSize = placementManager.placementGrid.GetGridSize();
-		return (pos.x >= 0 && pos.x < gridSize.x && pos.y >= 0 && pos.y < gridSize.y);
-	}
+		Vector2Int startPoint = placementManager.placementGrid.GetStartPoint();
+		Vector2Int gridSize = placementManager.placementGrid.GetGridSize() + startPoint;
+		return (pos.x >= startPoint.x && pos.x < gridSize.x && pos.y >= startPoint.y && pos.y < gridSize.y);
+	}*/
 }

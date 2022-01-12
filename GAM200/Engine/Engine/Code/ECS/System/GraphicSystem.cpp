@@ -249,11 +249,12 @@ namespace Engine
 		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
 
 		// Looping through lines buffer; batch rendering
-		Math::ivec2 mapSize = Game::Grid::GetInstance().GetGridSize();
-		for(int xPos = 0; xPos <= mapSize.x; xPos++)
-			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, -0.5f }, { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
-		for(int yPos = 0; yPos <= mapSize.y; yPos++)
-			GraphicImplementation::Renderer::DrawLines({ -0.5f, static_cast<float>(yPos) - 0.5f }, {  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
+		Math::ivec2 startPoint = Game::Grid::GetInstance().GetStartPoint();
+		Math::ivec2 mapSize = Game::Grid::GetInstance().GetGridSize() + startPoint;
+		for(int xPos = startPoint.x; xPos <= mapSize.x; xPos++)
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, static_cast<float>(startPoint.y) -0.5f }, { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
+		for(int yPos = startPoint.y; yPos <= mapSize.y; yPos++)
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(startPoint.x) -0.5f, static_cast<float>(yPos) - 0.5f }, {  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
 
 		GraphicImplementation::Renderer::EndLinesBatch();
 

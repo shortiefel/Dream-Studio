@@ -24,6 +24,7 @@ namespace Engine {
 	/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
 	//Function calls are used to link to C# (functions from Grid.hpp)
 	void CreateGrid_Engine(int width, int height);
+	void ResizeGrid_Engine(int newWidth, int newHeight);
 	int GetCellType_Engine(int x, int y);
 	void SetCellType_Engine(int x, int y, int cellType);
 	bool GetRandomRoadPoint_Engine(Math::ivec2* point);
@@ -40,6 +41,7 @@ namespace Engine {
 
 	void RegisterGridInternalCall() {
 		mono_add_internal_call("Grid::CreateGrid_Engine", CreateGrid_Engine);
+		mono_add_internal_call("Grid::ResizeGrid_Engine", ResizeGrid_Engine);
 		mono_add_internal_call("Grid::GetCellType_Engine", GetCellType_Engine);
 		mono_add_internal_call("Grid::SetCellType_Engine", SetCellType_Engine);
 		mono_add_internal_call("Grid::GetRandomRoadPoint_Engine", GetRandomRoadPoint_Engine);
@@ -56,6 +58,11 @@ namespace Engine {
 	void CreateGrid_Engine(int width, int height) {
 		Game::Grid::GetInstance().CreateGrid(width, height);
 	}
+
+	void ResizeGrid_Engine(int newWidth, int newHeight) {
+		Game::Grid::GetInstance().ResizeGrid(newWidth, newHeight);
+	}
+
 	int GetCellType_Engine(int x, int y) {
 		return Game::Grid::GetInstance().GetCellType(x, y);
 	}

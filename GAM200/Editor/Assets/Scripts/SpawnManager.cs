@@ -62,11 +62,22 @@ public class SpawnManager : MonoBehaviour
 
     private Vector2Int SpawnRandomRoad()
     {
-        int width = placementManager.width;
+        /*int width = placementManager.width;
         int height = placementManager.height;
 
         int randomX = Random.Range(1, width - 2);
         int randomY = Random.Range(1, height - 2);
+
+        randomRoadPosition.x = randomX;
+        randomRoadPosition.y = randomY;
+
+        return randomRoadPosition;*/
+
+        Vector2Int startPoint = placementManager.placementGrid.GetStartPoint();
+        Vector2Int endPoint = placementManager.placementGrid.GetGridSize() + startPoint;
+
+        int randomX = Random.Range(startPoint.x + 1, endPoint.x - 2);
+        int randomY = Random.Range(startPoint.y + 1, endPoint.y - 2);
 
         randomRoadPosition.x = randomX;
         randomRoadPosition.y = randomY;

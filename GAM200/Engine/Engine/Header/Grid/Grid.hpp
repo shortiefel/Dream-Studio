@@ -47,10 +47,12 @@ namespace Engine {
 			Get grid size
 			-----------------------------------------------------*/
 			Math::ivec2 GetGridSize();
+			Math::ivec2 GetStartPoint();
 			/*-----------------------------------------------------
 			Create grid with width and height
 			-----------------------------------------------------*/
 			void CreateGrid(int width, int height);
+			void ResizeGrid(int newWidth, int newHeight);
 			/*-----------------------------------------------------
 			Deallocate memory allocated for grid
 			-----------------------------------------------------*/
@@ -91,6 +93,7 @@ namespace Engine {
 
 			//Number of tiles in x and y
 			Math::ivec2 mapSize{};
+			Math::ivec2 offset{};
 			CellType* grid = nullptr;
 
 			std::list<Math::ivec2> roadList;

@@ -43,6 +43,7 @@ namespace Engine {
 		return volume;
 	}
 
+
 	SoundComponent& SoundComponent::Deserialize(const DSerializer& _serializer)
 	{
 		//SoundGrp(_serializer.GetValue<int>("SoundGrpType"));

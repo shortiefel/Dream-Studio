@@ -45,5 +45,7 @@ namespace Engine
 
 		UIComponent& operator=(const UIComponent&) = default;
 	};
+
+	
 }
 #endif

@@ -103,7 +103,7 @@ namespace Engine
 		pChannel->isPlaying(&(soundCom->isPlaying));
 		if (pChannel)
 		{
-			float vol = soundCom->volume;;
+			float vol = soundCom->volume;
 			switch (soundCom->soundType)
 			{
 			case SoundGrp::MUSIC:
@@ -125,6 +125,27 @@ namespace Engine
 		}
 		std::cout << "channel ID Play" << ID << "\n";
 		return ID;
+	}
+
+	float SoundManager::GetCurrentMasterVolume(SoundComponent* soundCom)
+	{
+		float currentVol;
+		switch (soundCom->soundType)
+		{
+
+		case SoundGrp::MUSIC:
+			currentVol = MusicGroup->getVolume(&soundCom->volume);
+			break;
+		case SoundGrp::SFX:
+			currentVol = SFXGroup->getVolume(&soundCom->volume);
+			break;
+		default:
+			currentVol = MasterGroup->getVolume(&soundCom->volume);
+			break;
+			
+		}
+		return currentVol;
+		
 	}
 
 	int SoundManager::SetLoop(SoundComponent* soundCom)
@@ -171,8 +192,6 @@ namespace Engine
 			auto it = channelMap.find(soundCom->channelID);
 			it->second->setMute(soundCom->isBGMMuted);
 		}
-
-
 	}
 
 	void SoundManager::MuteSFX(SoundComponent* soundCom)

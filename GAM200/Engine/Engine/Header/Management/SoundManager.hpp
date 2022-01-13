@@ -56,6 +56,8 @@ namespace Engine {
 		void MuteBGM(SoundComponent* soundCom);
 		void MuteSFX(SoundComponent* soundCom);
 
+		float GetCurrentMasterVolume(SoundComponent* soundCom);
+
 
 		/**
 		*		FMOD RELATED

@@ -134,7 +134,7 @@ public class CarAI : MonoBehaviour
         Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
         float value = Vector2.Dot(transform.right, relativeDirection);
         turningFactor = 1f;
-        Console.WriteLine((int)value);
+        //Console.WriteLine((int)value);
         if ((int)value == 1)
         {
             //Debug.Log("right");
@@ -149,7 +149,7 @@ public class CarAI : MonoBehaviour
         else
         {
             value = Vector2.Dot(transform.up, relativeDirection);
-            Console.WriteLine((int)value);
+            //Console.WriteLine((int)value);
             if ((int)value == 1)
             {
                 //Debug.Log("up");

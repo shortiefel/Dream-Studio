@@ -210,7 +210,7 @@ public class Grid
     public List<Point> GetAllAdjacentCells(int x, int y)
     {
         List<Point> adjacentCells = new List<Point>();
-        if (x > 0)
+        if (x > -_xOffset)
         {
             adjacentCells.Add(new Point(x - 1, y));
         }
@@ -218,7 +218,7 @@ public class Grid
         {
             adjacentCells.Add(new Point(x + 1, y));
         }
-        if (y > 0)
+        if (y > -_yOffset)
         {
             adjacentCells.Add(new Point(x, y - 1));
         }

@@ -45,9 +45,9 @@ public class AIDirector : MonoBehaviour
         Console.WriteLine(" actually inside ");
             if(startStructure == null) Console.WriteLine("is null");
             if(startStructure != null) Console.WriteLine("is not null");
-            var startRoadPosition = ((INeedingRoad)startStructure).RoadPosition;
+            var startRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)startStructure).RoadPosition);
             Console.WriteLine("after start");
-            var endRoadPosition = ((INeedingRoad)endStructure).RoadPosition;
+            var endRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)endStructure).RoadPosition);
 
             Debug.Log(startRoadPosition);
             Debug.Log(endRoadPosition);

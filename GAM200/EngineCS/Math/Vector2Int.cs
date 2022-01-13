@@ -61,10 +61,14 @@ public struct Vector2Int
 
     public static Vector2Int RoundToInt(Vector2 vc)
     {
-        int x = (int)vc.x;
-        int y = (int)vc.y;
-        x = vc.x < (x + 0.5) ? x : x + 1;
-        y = vc.y < (y + 0.5) ? y : y + 1;
+        float cx = vc.x < 0 ? -vc.x : vc.x;
+        float cy = vc.y < 0 ? -vc.y : vc.y;
+        int x = (int)cx;
+        int y = (int)cy;
+        x = cx < (x + 0.5) ? x : x + 1;
+        y = cy < (y + 0.5) ? y : y + 1;
+        x = vc.x < 0 ? -x : x;
+        y = vc.y < 0 ? -y : y;
         return new Vector2Int(x, y);
     }
     public override string ToString()

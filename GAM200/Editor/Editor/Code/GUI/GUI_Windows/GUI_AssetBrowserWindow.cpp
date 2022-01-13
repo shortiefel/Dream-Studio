@@ -104,7 +104,6 @@ namespace Editor {
 						ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 						ImGui::EndDragDropSource();
 					}
-			
 
 					ImGui::PopStyleColor();
 					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))

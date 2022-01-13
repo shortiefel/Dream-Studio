@@ -195,7 +195,6 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceRoad(Vector2Int position)
     {
-        
         //Debug.Log("here");
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;

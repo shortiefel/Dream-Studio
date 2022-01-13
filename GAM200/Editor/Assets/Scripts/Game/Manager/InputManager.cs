@@ -30,6 +30,19 @@ public class InputManager : MonoBehaviour
 	//private void Update()
 	public override void Update()
 	{
+		if (Input.GetMouseButtonDown(MouseCode.Left))
+		{
+			Vector3 mPos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
+			Vector2 mousePos = Vector2Int.RoundToInt(new Vector2(mPos.x, mPos.y));
+			//Vector2 startPos = placementManager.placementGrid.GetStartPoint();
+			//Vector2 endPos = placementManager.placementGrid.GetGridSize() + startPos;
+			Console.WriteLine("Actual Mouse position: " + mousePos + " ------------------------------------------");
+
+			Vector2Int offset = -placementManager.placementGrid.GetStartPoint();
+			Console.WriteLine("offset: " + (offset) + " ------------------------------------------");
+			Console.WriteLine("actually the Actual Mouse position: " + (offset + mousePos) + " ------------------------------------------");
+			
+		}
 		if (Input.GetKeyDown(KeyCode.B))
 		{
 			placementManager.placementGrid.Expand();
@@ -147,6 +160,7 @@ public class InputManager : MonoBehaviour
 			{
 				if (OnMouseClick != null)
 					OnMouseClick.Invoke(position.Value);
+				Console.WriteLine("  dsfdfsfsdfs " + position.Value + "\n");
 			}
 		}
 	}

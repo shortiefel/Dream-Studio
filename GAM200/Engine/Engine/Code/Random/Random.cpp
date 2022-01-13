@@ -36,9 +36,11 @@ namespace Engine {
 			num1 = num2;
 			num2 = tem;
 		}
+		int offset = 0;
+		if (num1 < 0) offset = -num1;
 		std::random_device dev;
 		std::mt19937 rng(dev());
-		std::uniform_int_distribution<std::mt19937::result_type> dist(num1, num2);
-		*num3 = dist(rng);
+		std::uniform_int_distribution<std::mt19937::result_type> dist(num1 + offset, num2 + offset);
+		*num3 = dist(rng) - offset;
 	}
 }

@@ -32,8 +32,8 @@ public class Grid
     private int _width;
     //public int Width { get { return _width; } }
     private int _height;
-    private int _xOffset;
-    private int _yOffset;
+    private int _startX;
+    private int _startY;
     //public int Height { get { return _height; } }
 
     private List<Point> _roadList = new List<Point>();
@@ -44,8 +44,8 @@ public class Grid
     {
         _width = width;
         _height = height;
-        _xOffset = 0;
-        _yOffset = 0;
+        _startX = 0;
+        _startY = 0;
         _grid = new CellType[width, height];
         CreateGrid_Engine(width, height);
     }
@@ -60,15 +60,22 @@ public class Grid
 
     private void Resize(int newWidth, int newHeight)
     {
-        _xOffset = (newWidth - _width) / 2;
-        _yOffset = (newHeight - _height) / 2;
+        int xTem = -(newWidth - _width) / 2;
+        int yTem = -(newHeight - _height) / 2;
+        int xOffset = xTem;
+        int yOffset = yTem;
+        xOffset -= _startX;
+        yOffset -= _startY;
+        _startX = xTem;
+        _startY = yTem;
+
         CellType[,] temGrid = new CellType[newWidth, newHeight];
 
         for (int y = 0; y < _height; y++)
         {
             for (int x = 0; x < _width; x++)
             {
-                temGrid[x, y] = _grid[x, y];
+                temGrid[x - xOffset, y - yOffset] = _grid[x, y];
             }
         }
 
@@ -83,25 +90,24 @@ public class Grid
 
     public Vector2Int GetStartPoint()
     {
-        return new Vector2Int(-_xOffset, -_yOffset);
+        return new Vector2Int(_startX, _startY);
     }
 
     public void PrintGridOut()
     {
-        /*for (int y = 0; y < _height; y++)
-            
+        for (int y = _height - 1; y >= 0; y--)
         {
             for (int x = 0; x < _width; x++)
             {
-                if ((int)_grid[x, y] == 0) Debug.Log("  ");
+                if ((int)_grid[x, y] == 0) Debug.Log("- ");
                 else Debug.Log((int)_grid[x, y] + " ");
             }
             Debug.Log("\n");
         }
 
-        PrintGridOut_Engine();*/
+        //PrintGridOut_Engine();*/
         Console.WriteLine("-----------------------------------------");
-        Console.WriteLine(-_xOffset + " " + -_yOffset);
+        Console.WriteLine(_startX + " " + _startY);
         Console.WriteLine(_width + " " + _height);
         Console.WriteLine("-----------------------------------------");
 
@@ -122,7 +128,7 @@ public class Grid
             
             //Console.WriteLine(GetCellType_Engine(i, j) + " and " + (int)_grid[i, j]);
             //return (CellType)GetCellType_Engine(i, j);
-            return _grid[i + _xOffset, j + _yOffset];
+            return _grid[i - _startX, j - _startY];
         }
         set
         {
@@ -151,7 +157,7 @@ public class Grid
                 _specialStructure.Remove(new Point(i, j));
             }*/
             
-            _grid[i + _xOffset, j + _yOffset] = value;
+            _grid[i - _startX, j - _startY] = value;
             //SetCellType_Engine(i, j, (int)value);
         }
     }
@@ -210,19 +216,19 @@ public class Grid
     public List<Point> GetAllAdjacentCells(int x, int y)
     {
         List<Point> adjacentCells = new List<Point>();
-        if (x > -_xOffset)
+        if (x > _startX)
         {
             adjacentCells.Add(new Point(x - 1, y));
         }
-        if (x < _width - 1)
+        if (x < _width + _startX - 1)
         {
             adjacentCells.Add(new Point(x + 1, y));
         }
-        if (y > -_yOffset)
+        if (y > _startY)
         {
             adjacentCells.Add(new Point(x, y - 1));
         }
-        if (y < _height - 1)
+        if (y < _height + _startY - 1)
         {
             adjacentCells.Add(new Point(x, y + 1));
         }
@@ -257,8 +263,8 @@ public class Grid
         {
             //if (IsCellWakable(GetCellType(adjacentCells[i].X, adjacentCells[i].Y), isAgent) == false)
             Console.WriteLine("Error part: " + _width + " " + _height);
-            Console.WriteLine("Error part: " + (adjacentCells[i].X + _xOffset) + " " + (adjacentCells[i].Y + _yOffset));
-            if (IsCellWakable(_grid[adjacentCells[i].X + _xOffset, adjacentCells[i].Y + _yOffset], isAgent) == false)
+            Console.WriteLine("Error part: " + (adjacentCells[i].X - _startX) + " " + (adjacentCells[i].Y - _startY));
+            if (IsCellWakable(_grid[adjacentCells[i].X - _startX, adjacentCells[i].Y - _startY], isAgent) == false)
             {
                 adjacentCells.RemoveAt(i);
             }
@@ -291,7 +297,7 @@ public class Grid
         List<Point> adjacentCells = GetAllAdjacentCells(x, y);
         for (int i = adjacentCells.Count - 1; i >= 0; i--)
         {
-            if (_grid[adjacentCells[i].X + _xOffset, adjacentCells[i].Y + _yOffset] != type)
+            if (_grid[adjacentCells[i].X - _startX, adjacentCells[i].Y - _startY] != type)
             {
                 adjacentCells.RemoveAt(i);
             }
@@ -329,22 +335,22 @@ public class Grid
     public CellType[] GetAllAdjacentCellTypes(int x, int y)
     {
         CellType[] neighbours = { CellType.None, CellType.None, CellType.None, CellType.None };
-        if (x > 0)
+        if (x > _startX)
         {
-            neighbours[0] = _grid[x - 1 + _xOffset, y + _yOffset];
+            neighbours[0] = _grid[x - 1 - _startX, y - _startY];
         }
-        if (x < _width - 1)
+        if (x < _width + _startX - 1)
         {
 
-            neighbours[2] = _grid[x + 1 + _xOffset, y + _yOffset];
+            neighbours[2] = _grid[x + 1 - _startX, y - _startY];
         }
-        if (y > 0)
+        if (y > _startY)
         {
-            neighbours[3] = _grid[x + _xOffset, y - 1 + _yOffset];
+            neighbours[3] = _grid[x - _startX, y - 1 - _startY];
         }
-        if (y < _height - 1)
+        if (y < _height + _startY - 1)
         {
-            neighbours[1] = _grid[x + _xOffset, y + 1 + _yOffset];
+            neighbours[1] = _grid[x - _startX, y + 1 - _startY];
         }
 
         //Console.WriteLine("Neighbour: ----------------------------");

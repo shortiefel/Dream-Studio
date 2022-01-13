@@ -16,7 +16,7 @@ public class PlacementManager : MonoBehaviour
     public override void Start()
     {
         //width = 20; height = 10;
-        placementGrid = new Grid(20, 10);
+        placementGrid = new Grid(10, 5);
         transform = GetComponent<Transform>();
         roadFixer = GameObject.Find("RoadManager").GetComponent<RoadFixer>();
        
@@ -55,7 +55,7 @@ public class PlacementManager : MonoBehaviour
         //if (structureNeedingRoad != null)
         //{
         structure.RoadPosition = GetNearestRoad(position, width, height).Value;
-        Debug.Log("My nearest road position is: " + structure.RoadPosition);
+        //Debug.Log("My nearest road position is: " + structure.RoadPosition);
         //}
 
         for (int x = 0; x < width; x++)
@@ -217,14 +217,14 @@ public class PlacementManager : MonoBehaviour
     {
         var point = placementGrid.GetRandomSpecialStructurePoint();
         if (point == null) return null;
-        Debug.Log(point);
+        //Debug.Log("Here acutal " + point);
         return GetStructureAt(point);
     }
 
     public StructureModel GetRandomHouseStructure()
     {
         var point = placementGrid.GetRandomHouseStructurePoint();
-        Debug.Log(point);
+        //Debug.Log(point);
         return GetStructureAt(point);
     }
 

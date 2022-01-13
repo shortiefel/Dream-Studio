@@ -207,7 +207,7 @@ public class RoadManager : MonoBehaviour
 
             placementMode = true;
             startPosition = position;
-            Debug.Log(position);
+            Debug.Log(position + " -----------------\n");
 
             temporaryPlacementPositions.Add(position);
             placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);

@@ -175,5 +175,17 @@ namespace Engine
 
 	}
 
+	void SoundManager::MuteSFX(SoundComponent* soundCom)
+	{
+
+		if (soundCom->soundType == SoundGrp::SFX)
+		{
+			auto it = channelMap.find(soundCom->channelID);
+			it->second->setMute(soundCom->isBGMMuted);
+		}
+
+
+	}
+
 
 }

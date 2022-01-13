@@ -54,6 +54,7 @@ namespace Engine {
 
 		//NEW STUFF
 		void MuteBGM(SoundComponent* soundCom);
+		void MuteSFX(SoundComponent* soundCom);
 
 
 		/**

@@ -19,8 +19,8 @@ Technology is prohibited.
 
 namespace Engine {
 
-	SoundComponent::SoundComponent(Entity_id _ID, std::string _filepath, std::string _soundName, bool _isSound, bool _isActive, bool _loop, float _vol, SoundGrp _soundType, bool _isBGMMuted)
-		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName }, isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, volume{ _vol }, soundType{ _soundType }, isBGMMuted{ _isBGMMuted }
+	SoundComponent::SoundComponent(Entity_id _ID, std::string _filepath, std::string _soundName, bool _isSound, bool _isActive, bool _loop, float _vol, SoundGrp _soundType, bool _isBGMMuted, bool _isSFXMuted)
+		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName }, isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, volume{ _vol }, soundType{ _soundType }, isBGMMuted{ _isBGMMuted }, isSFXMuted{ _isSFXMuted }
 	{
 
 	}
@@ -59,6 +59,7 @@ namespace Engine {
 		soundType = static_cast<SoundGrp>(_serializer.GetValue<int>("SoundGroup"));
 
 		isBGMMuted = _serializer.GetValue<bool>("isBGMMuted");
+		isSFXMuted = _serializer.GetValue<bool>("isSFXMuted");
 
 
 		return *this;
@@ -76,6 +77,7 @@ namespace Engine {
 		_serializer.SetValue("isSound", isSound);
 		_serializer.SetValue("SoundGroup", static_cast<int>(soundType));
 		_serializer.SetValue("isBGMMuted", isBGMMuted);
+		_serializer.SetValue("isSFXMuted", isSFXMuted);
 
 	}
 

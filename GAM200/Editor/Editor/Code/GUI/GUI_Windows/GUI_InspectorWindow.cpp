@@ -485,8 +485,6 @@ namespace Editor {
 							ImGui::EndCombo();
 						}
 
-
-
 						ImGui::PopFont();
 
 						/**
@@ -553,8 +551,6 @@ namespace Editor {
 
 						ImGui::PopFont();
 					
-
-
 						/**
 						*	Rotation
 						*/
@@ -586,6 +582,12 @@ namespace Editor {
 							UndoRedoManager::GetInstance().RecordState(move_command);
 							std::cout << transComp->GetEntityId() << "\n";
 						}
+
+						ImGui::Text("Trigger");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::SameLine(halfWidth);
+						ImGui::Checkbox("##ColliderTrigger", &(colComp->isTrigger));
 
 						ImGui::PopFont();
 

@@ -6,12 +6,13 @@ public class CarAI : MonoBehaviour
 {
     //[SerializeField]
     private List<Vector2Int> path;
+    private Queue<Vector2Int> tlPath;
     //[SerializeField]
     private float arriveDistance, lastPointArriveDistance;
     //[SerializeField]
     //private float turningAngleOffset;
     //[SerializeField]
-    private Vector2 currentTargetPosition;
+    private Vector2Int currentTargetPosition;
 
     //[SerializeField]
     //private GameObject raycastStartingPoint = null;
@@ -41,6 +42,8 @@ public class CarAI : MonoBehaviour
     private Vector2 movementVector;
 
     private StructureModel endPoint;
+
+    private TrafficLightManager tlm;
 
     /*public bool Stop
     {
@@ -84,6 +87,9 @@ public class CarAI : MonoBehaviour
         turningFactor = 1f;
         movementVector = new Vector2(0, 0);
         //Console.WriteLine("Testing " + rb.velocity);
+
+        tlm = GameObject.Find("TrafficLightManager").GetComponent<TrafficLightManager>();
+        tlPath = tlm.GetTrafficLightPosition(path);
     }
 
     public void SetPath(List<Vector2Int> newPath, ref StructureModel endStructure)
@@ -204,6 +210,8 @@ public class CarAI : MonoBehaviour
             //if (path == null) Console.WriteLine("stopping2222222 ");
             //OnDrive?.Invoke(Vector2.zero);
             movementVector = Vector2.zero;
+
+            stop = !tlm.GetTrafficLightState(currentTargetPosition, transform.position)
         }
         else
         {
@@ -249,7 +257,7 @@ public class CarAI : MonoBehaviour
     private void CheckIfArrived()
     {
         //if (stop == false)
-        Console.WriteLine("Before CheckIfArrived ");
+        //Console.WriteLine("Before CheckIfArrived ");
         if (!stop)
         {
             Console.WriteLine("After stop ");
@@ -270,7 +278,7 @@ public class CarAI : MonoBehaviour
             }
         }
 
-        Console.WriteLine("After CheckIfArrived ");
+        //Console.WriteLine("After CheckIfArrived ");
 
     }
 
@@ -287,6 +295,12 @@ public class CarAI : MonoBehaviour
         else
         {
             currentTargetPosition = path[index];
+            if (currentTargetPosition == tlPath.Peek())
+            {
+                tlPath.Dequeue();
+                //True = move so stop would false
+                stop = !tlm.GetTrafficLightState(currentTargetPosition, transform.position);
+            }
         }
     }
 

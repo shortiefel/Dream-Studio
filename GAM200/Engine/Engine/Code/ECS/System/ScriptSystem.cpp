@@ -181,8 +181,9 @@ namespace Engine {
 
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(e.self);
 		if (!csScript) return false;
+		void* param[] = { (void*)&(e.other) };
 		for (auto& [className, csScriptInstance] : csScript->klassInstance) {
-			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type);
+			Scripting::Mono_Runtime_Invoke(csScriptInstance, e.type, param);
 		}
 		return true;
 	}

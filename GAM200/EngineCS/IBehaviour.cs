@@ -117,17 +117,23 @@ public class IBehaviour : IComponent
         return null;
     }
 
-    /*public T GetComponentWithID<T>(uint id) where T : class, IComponent, new()
+    public T GetComponentWithID<T>(uint id) where T : IComponent, new()
     {
         if (HasComponent<T>(id))
         {
-            T component = new T();
-            component.entityId = id;
-            return component;
+            //Debug.Log(typeof(T));
+            //Console.WriteLine("First " + typeof(T));
+            if (GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+                RecordComponent<T>(id);
+            else
+                RecordScript(typeof(T), id);
+            //Console.WriteLine("Got " + typeof(T));
+
+            return dictonaryOfTypes[typeof(T)][id] as T;
         }
 
         return null;
-    }*/
+    }
 
     public bool HasComponent<T>(uint id)
     {

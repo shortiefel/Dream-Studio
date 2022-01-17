@@ -78,16 +78,7 @@ namespace Engine {
 				INVOKE_FUNCTION(InitFunc);
 				break;
 			case MonoFunctionType::Update:
-				//INVOKE_FUNCTION(UpdateFunc);
-				if (_csScriptInstance.csClass.UpdateFunc != nullptr) {
-						mono_runtime_invoke(_csScriptInstance.csClass.UpdateFunc, _csScriptInstance.csClass.object, _param, &exception);
-						if (exception != nullptr) {
-								char* text = mono_string_to_utf8(mono_object_to_string(exception, nullptr));
-								displayFuncPtr(std::string{ text }); 
-								mono_free(text);
-								SceneManager::GetInstance().Stop();
-						}
-				}
+				INVOKE_FUNCTION(UpdateFunc);
 				break;
 			case MonoFunctionType::Fixed_Update:
 				INVOKE_FUNCTION(FixedUpdateFunc);
@@ -325,28 +316,28 @@ namespace Engine {
 			csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
 
 
-			methodDesc = fullName + ":OnCollisionEnter()";
+			methodDesc = fullName + ":OnCollisionEnter(uint)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnCollisionEnter = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = fullName + ":OnCollisionStay()";
+			methodDesc = fullName + ":OnCollisionStay(uint)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnCollisionStay = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = fullName + ":OnCollisionExit()";
+			methodDesc = fullName + ":OnCollisionExit(uint)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
 
 
-			methodDesc = fullName + ":OnTriggerEnter()";
+			methodDesc = fullName + ":OnTriggerEnter(uint)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = fullName + ":OnTriggerStay()";
+			methodDesc = fullName + ":OnTriggerStay(uint)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerStay = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = fullName + ":OnTriggerExit()";
+			methodDesc = fullName + ":OnTriggerExit(uint)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
 

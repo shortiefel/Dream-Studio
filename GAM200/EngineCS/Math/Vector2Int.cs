@@ -25,6 +25,12 @@ public struct Vector2Int
         y = n2;
     }
 
+    public Vector2Int(Vector2 n)
+    {
+        x = (int)n.x;
+        y = (int)n.y;
+    }
+
     public Vector2Int(Vector2Int n)
     {
         x = n.x;
@@ -57,6 +63,16 @@ public struct Vector2Int
         lhs.x = -lhs.x;
         lhs.y = -lhs.y;
         return lhs;
+    }
+
+    public static bool operator ==(Vector2Int lhs, Vector2Int rhs)
+    {
+        return (lhs.x == rhs.x && lhs.y == rhs.y);
+    }
+
+    public static bool operator !=(Vector2Int lhs, Vector2Int rhs)
+    {
+        return !(lhs.x == rhs.x && lhs.y == rhs.y);
     }
 
     public static Vector2Int RoundToInt(Vector2 vc)

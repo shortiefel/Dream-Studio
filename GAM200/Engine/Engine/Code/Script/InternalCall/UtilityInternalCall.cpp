@@ -376,8 +376,8 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void ConsoleWrite_Engine(MonoString* message) {
 			char* text = mono_string_to_utf8(message);
-			//ConsoleFuncPtr(text);
-			std::cout << std::string(text);
+			ConsoleFuncPtr(text);
+			//std::cout << std::string(text);
 			mono_free(text);
 		}
 

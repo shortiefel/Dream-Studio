@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Engine {
 	struct IComponent {
 	public:
-		inline Entity_id GetEntityId() const { return entity_id; }
+		inline const Entity_id& GetEntityId() const { return entity_id; }
 		//inline void SetEntity(Entity ent) { entity = ent; }
 		inline void SetEntityId(Entity_id _entity_id) { entity_id = _entity_id; }
 		/*

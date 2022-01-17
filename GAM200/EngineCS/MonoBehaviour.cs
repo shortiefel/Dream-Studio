@@ -44,12 +44,12 @@ public class MonoBehaviour : IBehaviour
     public virtual void OnEnable() { }
     public virtual void OnDisable() { }
     public virtual void OnDestroy() { }
-    public virtual void OnCollisionEnter() { }
-    public virtual void OnCollisionStay() { }
-    public virtual void OnCollisionExit() { }
-    public virtual void OnTriggerEnter() { }
-    public virtual void OnTriggerStay() { }
-    public virtual void OnTriggerExit() { }
+    public virtual void OnCollisionEnter(uint id) { }
+    public virtual void OnCollisionStay(uint id) { }
+    public virtual void OnCollisionExit(uint id) { }
+    public virtual void OnTriggerEnter(uint id) { }
+    public virtual void OnTriggerStay(uint id) { }
+    public virtual void OnTriggerExit(uint id) { }
     public virtual void OnMouseEnter() { }
     //public virtual void OnMouseClick() { }
     public virtual void OnMouseOver() { }

@@ -28,7 +28,7 @@ Technology is prohibited.
 
 namespace Engine {
 	enum class SoundGrp {
-		MASTER,
+		MASTER = 0,
 		MUSIC,
 		SFX
 	};

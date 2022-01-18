@@ -46,21 +46,21 @@ public class AIDirector : MonoBehaviour
             //if(startStructure == null) Console.WriteLine("is null");
             //if(startStructure != null) Console.WriteLine("is not null");
             var startRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)startStructure).RoadPosition);
-            Console.WriteLine("after start");
+            //Console.WriteLine("after start");
             var endRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)endStructure).RoadPosition);
 
-            Debug.Log(startRoadPosition);
-            Debug.Log(endRoadPosition);
+            //Debug.Log(startRoadPosition);
+            //Debug.Log(endRoadPosition);
 
             var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
             if (path.Count == 0)
             {
-                Console.WriteLine("No path exist");
+                //Console.WriteLine("No path exist");
                 return false;
             }
             //return;
             //if (path == null) return;
-            Console.WriteLine("Set path: " + path.Count);
+            //Console.WriteLine("Set path: " + path.Count);
             //foreach (var item in path)
             //{
             //    Debug.Log(item.ToString());

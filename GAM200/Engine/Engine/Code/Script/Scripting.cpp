@@ -133,7 +133,7 @@ namespace Engine {
 
 			mono_thread_set_main(mono_thread_current());
 
-			CompileCSInternal();
+			//CompileCSInternal();
 		}
 
 		void Cleanup() {

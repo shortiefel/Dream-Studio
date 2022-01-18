@@ -58,6 +58,7 @@ public class AIDirector : MonoBehaviour
                 //Console.WriteLine("No path exist");
                 return false;
             }
+
             //return;
             //if (path == null) return;
             //Console.WriteLine("Set path: " + path.Count);
@@ -67,7 +68,7 @@ public class AIDirector : MonoBehaviour
             //}
 
             path.Reverse();
-
+            path.Add(Vector2Int.RoundToInt(endStructure.transform.position)); //Make car enter house
             //foreach (var item2 in path)
             //{
             //    Debug.Log(item2.ToString());

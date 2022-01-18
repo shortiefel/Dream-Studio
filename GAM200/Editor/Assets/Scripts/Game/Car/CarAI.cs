@@ -35,6 +35,8 @@ public class CarAI : MonoBehaviour
 
     private float power;
 
+    private float targetAngle;
+
     //private float torque = 0.5f;
     private float dotValue;
     private float turningFactor; //Slow down when turning
@@ -87,7 +89,7 @@ public class CarAI : MonoBehaviour
         maxSpeed = 3;
         power = 6;
         turningFactor = 1f;
-        movementVector = new Vector2(0, 0);
+        movementVector = new Vector2(0, 1);
         //Console.WriteLine("Testing " + rb.velocity);
 
         tlPath = null;
@@ -170,7 +172,7 @@ public class CarAI : MonoBehaviour
                 transform.angle = -180f;
             }
         }
-
+        targetAngle = transform.angle;
         tlPath = tlm.GetTrafficLightPosition(path);
     }
 
@@ -192,6 +194,7 @@ public class CarAI : MonoBehaviour
         }
         //Debug.Log(rb.inertia);
         rb.AddTorque(movementVector.x * power * 70);
+        //transform.angle = Mathf.Lerp(transform.angle, targetAngle, power * Time.deltaTime);
     }
 
     //private void CheckForCollisions()
@@ -236,7 +239,9 @@ public class CarAI : MonoBehaviour
                 rotateCar = 1;
             }*/
             //Console.WriteLine("Before Drive ");
-            Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
+
+            //------------------------Temporary remove---------------------
+            /*Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
             float value = Vector2.Dot(transform.right, relativeDirection);
             var rotateCar = 0;
             turningFactor = 1f;
@@ -244,16 +249,19 @@ public class CarAI : MonoBehaviour
             {
                 //Debug.Log("Turn right");
                 rotateCar = -1;
+                targetAngle = transform.angle - 90f;
                 turningFactor = 0.5f;
             }
             if (value < -dotValue)
             {
                 //Debug.Log("Turn left");
                 rotateCar = 1;
+                targetAngle = transform.angle + 90f;
                 turningFactor = 0.5f;
             }
             //OnDrive?.Invoke(new Vector2(rotateCar, 1));
-            movementVector = new Vector2(rotateCar, 1);
+            movementVector = new Vector2(rotateCar, 1);*/
+            //------------------------Temporary remove---------------------
             //Console.WriteLine("End drive ");
         }
     }
@@ -299,6 +307,7 @@ public class CarAI : MonoBehaviour
         else
         {
             currentTargetPosition = path[index];
+
             if (tlPath == null || tlPath.Count == 0) return;
             if (currentTargetPosition == tlPath[0])
             {

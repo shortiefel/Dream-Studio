@@ -50,6 +50,10 @@
         if (timer >= switchTimer)
         {
             timer = 0f;
+            //SwapState();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
             SwapState();
         }
     }

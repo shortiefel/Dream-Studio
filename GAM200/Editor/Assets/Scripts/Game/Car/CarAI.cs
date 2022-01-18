@@ -6,7 +6,9 @@ public class CarAI : MonoBehaviour
 {
     //[SerializeField]
     private List<Vector2Int> path;
-    private Queue<Vector2Int> tlPath;
+    //private Queue<Vector2Int> tlPath;
+    private List<Vector2Int> tlPath;
+    
     //[SerializeField]
     private float arriveDistance, lastPointArriveDistance;
     //[SerializeField]
@@ -60,21 +62,21 @@ public class CarAI : MonoBehaviour
         endPoint = null;
         path = null; 
         index = 0;
-        stop = false;
+        stop = true;
         //collisionStop = false;
 
         rb = GetComponent<Rigidbody2D>();
         GetComponent<AudioSource>().Play();
 
         //if (path == null || path.Count == 0)
-        if (path == null || path.Count == 0)
-        {
-            stop = true;
-        }
-        else
-        {
-            currentTargetPosition = path[index];
-        }
+        //if (path == null || path.Count == 0)
+        //{
+        //    stop = true;
+        //}
+        //else
+        //{
+        //    currentTargetPosition = path[index];
+        //}
 
         arriveDistance = 0.3f;
         lastPointArriveDistance = 0.1f;
@@ -88,8 +90,8 @@ public class CarAI : MonoBehaviour
         movementVector = new Vector2(0, 0);
         //Console.WriteLine("Testing " + rb.velocity);
 
+        tlPath = null;
         tlm = GameObject.Find("TrafficLightManager").GetComponent<TrafficLightManager>();
-        tlPath = tlm.GetTrafficLightPosition(path);
     }
 
     public void SetPath(List<Vector2Int> newPath, ref StructureModel endStructure)
@@ -125,7 +127,7 @@ public class CarAI : MonoBehaviour
         //    directionToFace = endStructure.transform.position;
         //    Debug.Log("end ");
         //}
-        Console.WriteLine("p3 " + index);
+        //Console.WriteLine("p3 " + index);
         //Debug.Log(currentTargetPosition);
         
         /*Vector2 relativepoint = transform.InverseTransformPoint(this.path[index + 1]);
@@ -168,6 +170,8 @@ public class CarAI : MonoBehaviour
                 transform.angle = -180f;
             }
         }
+
+        tlPath = tlm.GetTrafficLightPosition(path);
     }
 
     public override void Update()
@@ -211,7 +215,7 @@ public class CarAI : MonoBehaviour
             //OnDrive?.Invoke(Vector2.zero);
             movementVector = Vector2.zero;
 
-            stop = !tlm.GetTrafficLightState(currentTargetPosition, transform.position)
+            stop = !tlm.GetTrafficLightState(currentTargetPosition, transform.position);
         }
         else
         {
@@ -231,7 +235,7 @@ public class CarAI : MonoBehaviour
                 Debug.Log("Turn left");
                 rotateCar = 1;
             }*/
-            Console.WriteLine("Before Drive ");
+            //Console.WriteLine("Before Drive ");
             Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
             float value = Vector2.Dot(transform.right, relativeDirection);
             var rotateCar = 0;
@@ -250,7 +254,7 @@ public class CarAI : MonoBehaviour
             }
             //OnDrive?.Invoke(new Vector2(rotateCar, 1));
             movementVector = new Vector2(rotateCar, 1);
-            Console.WriteLine("End drive ");
+            //Console.WriteLine("End drive ");
         }
     }
 
@@ -260,20 +264,20 @@ public class CarAI : MonoBehaviour
         //Console.WriteLine("Before CheckIfArrived ");
         if (!stop)
         {
-            Console.WriteLine("After stop ");
+            //Console.WriteLine("After stop ");
             var distanceToCheck = arriveDistance;
             if (index == path.Count - 1)
             {
                 distanceToCheck = lastPointArriveDistance;
             }
-            Console.WriteLine("After index ");
+            //Console.WriteLine("After index ");
             if (Vector2.Distance(currentTargetPosition, transform.position) < distanceToCheck)
             {
-            Console.WriteLine("Insde Distance ");
+            //Console.WriteLine("Insde Distance ");
                 // Add the mass manager here
                 //scoreSystem.AddScore();
                 SetNextTargetIndex();
-            Console.WriteLine("After SetNextTargetIndex ");
+            //Console.WriteLine("After SetNextTargetIndex ");
                 //Debug.Log(transform.position);
             }
         }
@@ -295,9 +299,10 @@ public class CarAI : MonoBehaviour
         else
         {
             currentTargetPosition = path[index];
-            if (currentTargetPosition == tlPath.Peek())
+            if (tlPath == null || tlPath.Count == 0) return;
+            if (currentTargetPosition == tlPath[0])
             {
-                tlPath.Dequeue();
+                tlPath.RemoveAt(0);
                 //True = move so stop would false
                 stop = !tlm.GetTrafficLightState(currentTargetPosition, transform.position);
             }

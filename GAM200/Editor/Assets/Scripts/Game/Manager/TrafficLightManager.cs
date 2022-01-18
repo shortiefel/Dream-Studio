@@ -5,14 +5,43 @@ public class TrafficLightManager : MonoBehaviour
 
     private Dictionary<Vector2, uint> trafficLights;
 
+    GameObject temTL; //TO Remove
+    Camera mainCamera; //TO Remove
+
+    bool toDraw; //To Remove
+
+
     public override void Start()
     {
         trafficLights = new Dictionary<Vector2, uint>();
+
+        temTL = new GameObject(new Prefab("TrafficLight")); //To Remove
+        mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
+
+        toDraw = false; //To Remove
+    }
+
+    public override void Update()
+    {
+        //To Remove ------------------------------------------------------
+        if (toDraw && Input.GetMouseButtonDown(MouseCode.Left))
+        {
+            Vector3Int mousePos = Vector3Int.RoundToInt(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()));
+            
+            Instantiate(temTL, new Vector3(mousePos.x, mousePos.y, 0f));
+            Debug.Log("Traffic light placement");
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            toDraw = !toDraw;
+        }
+        //To Remove ------------------------------------------------------
     }
 
     public void RegisterTrafficLight(Vector2 pos, uint id)
     {
-        trafficLights.Add(pos, id);
+        if (!trafficLights.ContainsKey(pos))
+            trafficLights.Add(pos, id);
     }
 
     public void RemoveTrafficLight(Vector2 pos)
@@ -34,13 +63,13 @@ public class TrafficLightManager : MonoBehaviour
         return cState;
     }
 
-    public Queue<Vector2Int> GetTrafficLightPosition(List<Vector2Int> toCheck)
+    public List<Vector2Int> GetTrafficLightPosition(List<Vector2Int> toCheck)
     {
-        Queue<Vector2Int> tlPos = new Queue<Vector2Int>();
+        List<Vector2Int> tlPos = new List<Vector2Int>();
 
         foreach (Vector2Int pos in toCheck)
         {
-            if (trafficLights.ContainsKey(pos)) tlPos.Enqueue(pos);
+            if (trafficLights.ContainsKey(pos)) tlPos.Add(pos);
         }
 
         return tlPos;

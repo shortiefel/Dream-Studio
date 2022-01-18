@@ -39,12 +39,12 @@ public class AIDirector : MonoBehaviour
 
     private bool TrySpawninACar(StructureModel startStructure, StructureModel endStructure)
     {
-        Console.WriteLine("here but go in ?");
+        //Console.WriteLine("here but go in ?");
         if (startStructure != null && endStructure != null)
         {
-        Console.WriteLine(" actually inside ");
-            if(startStructure == null) Console.WriteLine("is null");
-            if(startStructure != null) Console.WriteLine("is not null");
+        //Console.WriteLine(" actually inside ");
+            //if(startStructure == null) Console.WriteLine("is null");
+            //if(startStructure != null) Console.WriteLine("is not null");
             var startRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)startStructure).RoadPosition);
             Console.WriteLine("after start");
             var endRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)endStructure).RoadPosition);

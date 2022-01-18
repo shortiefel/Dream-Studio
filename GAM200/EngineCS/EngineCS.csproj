@@ -62,6 +62,7 @@
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector2Int.cs" />
+    <Compile Include="Math\Vector3Int.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="Physics\Physics.cs" />
     <Compile Include="Physics\RaycastHit2D.cs" />

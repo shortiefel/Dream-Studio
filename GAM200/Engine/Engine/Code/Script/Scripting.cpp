@@ -132,6 +132,8 @@ namespace Engine {
 			domain = mono_jit_init("Root Domain");
 
 			mono_thread_set_main(mono_thread_current());
+
+			CompileCSInternal();
 		}
 
 		void Cleanup() {

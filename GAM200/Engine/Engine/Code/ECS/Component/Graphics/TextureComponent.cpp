@@ -148,6 +148,17 @@ namespace Engine
 		return true;
 	}
 
+	bool TextureComponent::DeleteAnimationState(AnimationState _state)
+	{
+		if (animationStateList.find(_state.stateName) != animationStateList.end())
+		{
+			auto itr = animationStateList.find(_state.stateName);
+			animationStateList.erase(itr);
+			return true;
+		}
+		return false;
+	}
+
 	// Function that adds/replace AnimationState to/in animationStateList;
 	// to be called by the editor if they want more states
 	bool TextureComponent::AddRefreshAnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop)

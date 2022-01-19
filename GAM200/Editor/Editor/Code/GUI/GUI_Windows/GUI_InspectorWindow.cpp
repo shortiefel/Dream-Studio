@@ -959,7 +959,11 @@ namespace Editor {
 									std::cout << "End" << animState.endX << std::endl;
 									
 								}
-
+								if (ImGui::Button("Delete State"))
+								{
+									if (!(textureComp->DeleteAnimationState(animState))) {}
+										//GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Animation state deleted" });
+								}
 								counter++;
 								ImGui::PopID();
 							}
@@ -1668,9 +1672,6 @@ namespace Editor {
 								end = animState.endX;
 
 								float diffX = 1.0f / tcols;
-								//float diffY = 1.0f / rows;
-								// col is 3 
-								// start = 1 end = 3
 								for (int i = start - 1; i < end; i++)
 								{
 									Animation2D temp;
@@ -1710,11 +1711,16 @@ namespace Editor {
 									{
 										float currf = animState.frameTime[tempc];
 										ImGui::Text("Current Duration %f", currf);
-										float tempf = currf;
+										static float tempf = 0.0f;
 										ImGui::InputFloat("##Duration", &tempf);
-										if (ImGui::Button("Save Changes", ImVec2(200, 0))) {
-											
+										if (ImGui::Button("Save Changes", ImVec2(100, 0))) {
 											animState.frameTime[tempc] = tempf;
+											tempf = 0.0f;
+											speedpopup = false;
+										}
+										ImGui::SameLine();
+										if (ImGui::Button("Cancel", ImVec2(100, 0)))
+										{
 											speedpopup = false;
 										}
 										ImGui::End();

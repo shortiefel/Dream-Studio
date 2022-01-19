@@ -73,6 +73,7 @@ namespace Engine
 		// To be called by inspector
 		bool AddRefreshAnimationState(AnimationState _state);
 		bool AddRefreshAnimationState(std::string _stateName = "Default", int _stateRow = 0, int _startX = 0, int _endX = 1, float _fTime = 0.1, bool _isLoop = true);
+		bool DeleteAnimationState(AnimationState _state);
 
 		// Animation functions (used internally)
 		void AnimationStateRename(std::string oldName, std::string newName);

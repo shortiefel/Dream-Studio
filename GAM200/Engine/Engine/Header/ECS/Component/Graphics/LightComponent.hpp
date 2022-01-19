@@ -33,7 +33,15 @@ namespace Engine
 	{
 		Math::vec4 colour;
 
+		unsigned int depthMapFBO;
+		unsigned int depthMap;
+		unsigned int shadowWidth, shadowHeight;
+
+
 		bool isActive = true;
+
+		void FBOCreate();
+
 
 		LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec4 _colour = { 1.f, 1.f, 1.f, 1.f }, bool _active = true);
 

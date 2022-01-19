@@ -21,17 +21,40 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/DSerializer.hpp"
 #include "Engine/Header/Serialize/SSerializer.hpp"
 
+#include "Engine/Header/Management/Settings.hpp"
+
 
 namespace Engine
 {
 	// Contructor for Light Component
 	LightComponent::LightComponent(Entity_id _ID, Math::vec4 _colour, bool _active) :
-		IComponent{ _ID }, colour{ _colour }, isActive{ _active } {}
+		IComponent{ _ID }, depthMapFBO{ 0 }, depthMap { 0 },
+		colour{ _colour }, shadowWidth{ Engine::Settings::windowWidth }, shadowHeight{ Engine::Settings::windowHeight }, isActive{ _active } {}
+
 
 	// Destructor for Light Component
 	LightComponent::~LightComponent()
 	{
 		// Do something here
+	}
+
+	void LightComponent::FBOCreate()
+	{
+		glGenTextures(1, &depthMap);
+
+		glBindTexture(GL_TEXTURE_2D, depthMap);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowWidth, shadowHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+		glDrawBuffer(GL_NONE);
+		glReadBuffer(GL_NONE);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	// Deserialize function for Light Component

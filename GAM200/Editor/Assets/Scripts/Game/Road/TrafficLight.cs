@@ -16,11 +16,12 @@
 
     public override void Start()
     {
-        tlm = GameObject.Find("TrafficLightManager").GetComponent<TrafficLightManager>();
+        tlm = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
         tlm.RegisterTrafficLight(transform.position, entityId);
 
         state = toState = true;
         texture = gameObject.GetComponent<Texture>();
+        texture.color = new Color(1, 0, 0, 1);
         carCounter = 0;
 
         timer = 0f;

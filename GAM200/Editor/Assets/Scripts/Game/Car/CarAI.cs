@@ -7,7 +7,7 @@ public class CarAI : MonoBehaviour
     //[SerializeField]
     private List<Vector2Int> path;
     //private Queue<Vector2Int> tlPath;
-    private List<Vector2Int> tlPath;
+    private List<uint> tlIndex;
     
     //[SerializeField]
     private float arriveDistance, lastPointArriveDistance;
@@ -47,7 +47,9 @@ public class CarAI : MonoBehaviour
 
     private StructureModel endPoint;
 
-    private TrafficLightManager tlm;
+    private TrafficManager tm;
+
+    private float raycastLength;
 
     /*public bool Stop
     {
@@ -61,6 +63,9 @@ public class CarAI : MonoBehaviour
 
     public override void Start()
     {
+        raycastLength = transform.scale.y * 2f;
+        Debug.Log(raycastLength + " lengirhteuth");
+
         endPoint = null;
         path = null; 
         index = 0;
@@ -92,8 +97,10 @@ public class CarAI : MonoBehaviour
         movementVector = new Vector2(0, 1);
         //Console.WriteLine("Testing " + rb.velocity);
 
-        tlPath = null;
-        tlm = GameObject.Find("TrafficLightManager").GetComponent<TrafficLightManager>();
+        //tlPath = null;
+        tm = GameObject.Find("TrafficManager").GetComponent<TrafficManager>();
+
+        tm.RegisterCar(transform.entityId);
     }
 
     public void SetPath(List<Vector2Int> newPath, ref StructureModel endStructure)
@@ -173,11 +180,40 @@ public class CarAI : MonoBehaviour
             }
         }
         targetAngle = transform.angle;
-        tlPath = tlm.GetTrafficLightPosition(path);
+        tlIndex = tm.GetTrafficLightIndex(path);
     }
 
     public override void Update()
     {
+        RaycastHit2D hit = Physics2D.RayCast(new Vector3(transform.position, 0f), transform.up, 0.6f, (int)transform.entityId);
+        if (Input.GetKeyDown(KeyCode.Y))
+            Debug.Log("up: " + transform.up);
+        if (hit.collider != null)
+        {
+            if (tm.IsTrafficLight(Vector2Int.RoundToInt(hit.transform.position)))
+            {
+                if (tlIndex.Contains(hit.transform.entityId))
+                {
+                    stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
+                    //stop = true;
+                    //Debug.Log("Hiting trigger");
+                }
+            }
+
+            else
+            {
+                //Stop car because might be other cars
+                stop = true;
+            }
+
+            Debug.Log("Hiting trigger");
+        }
+
+        else
+        {
+            //Start car because no hit target
+            stop = false;
+        }
         //if (path == null || path.Count == 0)
         //{
         //    Destroy(gameObject);
@@ -185,6 +221,7 @@ public class CarAI : MonoBehaviour
         CheckIfArrived();
         Drive();
         //CheckForCollisions();
+        
     }
     public override void FixedUpdate()
     {
@@ -218,7 +255,7 @@ public class CarAI : MonoBehaviour
             //OnDrive?.Invoke(Vector2.zero);
             movementVector = Vector2.zero;
 
-            stop = !tlm.GetTrafficLightState(currentTargetPosition, transform.position);
+            stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
         }
         else
         {
@@ -308,15 +345,17 @@ public class CarAI : MonoBehaviour
         {
             currentTargetPosition = path[index];
 
-            if (tlPath == null || tlPath.Count == 0) return;
+            /*if (tlPath == null || tlPath.Count == 0) return;
             if (currentTargetPosition == tlPath[0])
             {
                 tlPath.RemoveAt(0);
                 //True = move so stop would false
-                stop = !tlm.GetTrafficLightState(currentTargetPosition, transform.position);
-            }
+                stop = !tm.GetTrafficLightState(currentTargetPosition, transform.position);
+            }*/
         }
     }
+
+
 
     private void ReachToEndPoint()
     {
@@ -325,6 +364,8 @@ public class CarAI : MonoBehaviour
         Console.WriteLine("After delete ");
         endPoint.Notify();
         Console.WriteLine("After Notify ");
+
+        tm.RemoveCar(transform.entityId);
     }
 
     /*public void Move(Vector2 movementInput)
@@ -332,4 +373,8 @@ public class CarAI : MonoBehaviour
         this.movementVector = movementInput;
     }*/
 
+    public override void OnTriggerEnter(uint id)
+    {
+        if (tlIndex.Contains(id)) tlIndex.Remove(id);
+    }
 }

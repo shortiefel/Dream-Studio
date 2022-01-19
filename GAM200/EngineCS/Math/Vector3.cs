@@ -25,6 +25,13 @@ public struct Vector3
         z = _z;
     }
 
+    public Vector3(Vector2 t, float _z)
+    {
+        x = t.x;
+        y = t.y;
+        z = _z;
+    }
+
     public Vector3(Vector3 n)
     {
         x = n.x;

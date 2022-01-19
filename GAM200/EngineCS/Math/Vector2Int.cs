@@ -91,4 +91,19 @@ public struct Vector2Int
     {
         return "Vector2Int: " + x + " " + y;
     }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Vector2Int @int &&
+               x == @int.x &&
+               y == @int.y;
+    }
+
+    public override int GetHashCode()
+    {
+        int hashCode = 1502939027;
+        hashCode = hashCode * -1521134295 + x.GetHashCode();
+        hashCode = hashCode * -1521134295 + y.GetHashCode();
+        return hashCode;
+    }
 }

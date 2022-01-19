@@ -5,9 +5,12 @@ using System.Collections.Generic;
 public class AIDirector : MonoBehaviour
 {
     public PlacementManager placementManager;
-    //public GameObject[] pedestrianPrefabs;
 
     public Prefab[] carPrefabs;
+
+    AdjacencyGraph carGraph = new AdjacencyGraph();
+
+    List<Vector3> carPath = new List<Vector3>();
 
     public float carSpawnTimerInterval;
 

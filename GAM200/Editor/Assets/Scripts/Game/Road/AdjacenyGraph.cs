@@ -35,7 +35,7 @@ public class AdjacenyGraph
 
     private bool CompareVertices(Vector2 position1, Vector2 position2)
     {
-        return Vector2.SqrMagnitude(position1 - position2) < 0.0001f;
+        return Vector2.Distance(position1, position2) < 0.0001f;
     }
 
     public void AddEdge(Vector2 position1, Vector2 position2)

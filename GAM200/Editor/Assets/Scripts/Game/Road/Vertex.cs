@@ -13,7 +13,7 @@ public class Vertex : IEquatable<Vertex>
     }
     public bool Equals(Vertex other)
     {
-        return Vector2.SqrMagnitude(Position - other.Position) < 0.0001f;
+        return Vector2.Distance(Position, other.Position) < 0.0001f;
     }
 
     public override string ToString()

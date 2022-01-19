@@ -201,8 +201,8 @@ public class RoadManager : MonoBehaviour
             return;
         if (placementManager.CheckIfPositionIsFree(position) == false)
             return;
-        if (placementMode == false)
-        {
+        //if (placementMode == false)
+        //{
             temporaryPlacementPositions.Clear();
             roadPositionsToRecheck.Clear();
 
@@ -214,32 +214,32 @@ public class RoadManager : MonoBehaviour
             placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
             //Console.WriteLine("call function");
 
-        }
-        else
-        {
-            //Console.WriteLine("call function2222222222");
-            placementManager.RemoveAllTemporaryStructures();
-            temporaryPlacementPositions.Clear();
+        //}
+        //else
+        //{
+        //    //Console.WriteLine("call function2222222222");
+        //    placementManager.RemoveAllTemporaryStructures();
+        //    temporaryPlacementPositions.Clear();
 
-            foreach (var positionsToFix in roadPositionsToRecheck)
-            {
-                roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
-            }
+        //    foreach (var positionsToFix in roadPositionsToRecheck)
+        //    {
+        //        roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
+        //    }
 
-            roadPositionsToRecheck.Clear();
+        //    roadPositionsToRecheck.Clear();
 
-            temporaryPlacementPositions = placementManager.GetPathBetween(startPosition, position);
+        //    temporaryPlacementPositions = placementManager.GetPathBetween(startPosition, position);
 
-            foreach (var temporaryPosition in temporaryPlacementPositions)
-            {
-                if (placementManager.CheckIfPositionIsFree(temporaryPosition) == false)
-                {
-                    roadPositionsToRecheck.Add(temporaryPosition);
-                    continue;
-                }
-                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road, 1);
-            }
-        }
+        //    foreach (var temporaryPosition in temporaryPlacementPositions)
+        //    {
+        //        if (placementManager.CheckIfPositionIsFree(temporaryPosition) == false)
+        //        {
+        //            roadPositionsToRecheck.Add(temporaryPosition);
+        //            continue;
+        //        }
+        //        placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road, 1);
+        //    }
+        //}
 
         FixRoadPrefabs();
 

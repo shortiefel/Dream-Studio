@@ -211,6 +211,9 @@
     <ClCompile Include="Engine\Code\Serialize\Serializer.cpp">
       <Filter>Source Files\Serialize</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\LightComponent.cpp">
+      <Filter>Source Files\ECS\Component\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Application.hpp">
@@ -302,9 +305,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp">
       <Filter>Header Files\ECS\Component\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp">
-      <Filter>Header Files\ECS\Component\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Header\ECS\System\CameraSystem.hpp">
       <Filter>Header Files\ECS\System</Filter>
@@ -713,6 +713,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Serialize\Serializer.hpp">
       <Filter>Header Files\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\LightComponent.hpp">
+      <Filter>Header Files\ECS\Component\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

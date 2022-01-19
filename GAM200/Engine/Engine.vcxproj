@@ -260,6 +260,7 @@
     <ClCompile Include="Engine\Code\Application.cpp" />
     <ClCompile Include="Engine\Code\Debug Tools\Profiler.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\CameraComponent.cpp" />
+    <ClCompile Include="Engine\Code\ECS\Component\Graphics\LightComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\ParticleComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TextureComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\TransformComponent.cpp" />
@@ -401,6 +402,7 @@
     <ClInclude Include="Engine\Header\ECS\Component\ComponentList.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\ComponentManager.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\CameraComponent.hpp" />
+    <ClInclude Include="Engine\Header\ECS\Component\Graphics\LightComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TextureComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\Graphics\TransformComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\IComponent.hpp" />

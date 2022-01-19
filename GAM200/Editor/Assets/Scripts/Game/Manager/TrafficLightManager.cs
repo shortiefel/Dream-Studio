@@ -35,6 +35,15 @@ public class TrafficLightManager : MonoBehaviour
         {
             toDraw = !toDraw;
         }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Time.timeScale = 1f;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Time.timeScale = 3f;
+        }
         //To Remove ------------------------------------------------------
     }
 

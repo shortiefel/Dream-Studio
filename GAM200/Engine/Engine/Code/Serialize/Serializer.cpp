@@ -193,6 +193,11 @@ namespace Engine {
 				cserializer.SetValue("EndFrame", state.endX);
 				cserializer.SetValue("TimePerFrame", state.fTime);
 				cserializer.SetValue("IsLoop", state.isLoop);
+				size_t tempv = state.frameTime.size();
+				for (int i = 0; i < tempv; i++)
+				{
+					cserializer.SetValue("Frames", state.frameTime[i]);
+				}
 
 				_serializer.SetValueJSonArray(allAnimation, classObj);
 			}

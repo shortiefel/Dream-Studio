@@ -203,6 +203,8 @@ namespace Engine {
 
 					bool isLoop = state["IsLoop"].GetBool();
 
+					
+
 					AnimationState animstate = AnimationState(stateName, stateRow, startX, endX, fTime, isLoop);
 
 					tem.animationStateList.emplace(stateName, animstate);

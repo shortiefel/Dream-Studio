@@ -51,6 +51,8 @@ namespace Editor {
 
 	namespace GUI_Windows {
 
+		bool animation_bool = false;
+		std::string ani;
 		void HelperMarker(const char* desc)
 		{
 			ImGui::TextDisabled("(?)");
@@ -805,6 +807,7 @@ namespace Editor {
 						/*
 						*	Animation
 						*/
+						
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Is Animation");
 						ImGui::SameLine();
@@ -887,8 +890,11 @@ namespace Editor {
 							/**
 							*	ANIMATION STATE
 							*/
+							int counter = 0;
 							ImGui::PushFont(boldFont);
+							
 							for (auto& [name, animState] : textureComp->animationStateList) {
+								ImGui::PushID(counter);
 								ImGui::AlignTextToFramePadding();
 								ImGui::Text("State Name");
 								ImGui::SameLine(halfWidth);
@@ -941,9 +947,24 @@ namespace Editor {
 								DreamImGui::CheckBox_Dream(std::string{ "##AnimIsLoop" + name }.c_str(), &animState.isLoop);
 
 								ImGui::Spacing();
+
+								if (ImGui::Button("Edit Frames"))
+								{
+									animation_bool = true;
+									ani = aniDisplay;
+									//dosomething
+									std::cout << aniDisplay << std::endl;
+									std::cout << "Rows" << animState.stateRow << std::endl;
+									std::cout << "Start" << animState.startX << std::endl;
+									std::cout << "End" << animState.endX << std::endl;
+									
+								}
+
+								counter++;
+								ImGui::PopID();
 							}
 							ImGui::PopFont();
-
+							
 							ImGui::Spacing();
 #if 0
 							ImGui::AlignTextToFramePadding();
@@ -983,6 +1004,7 @@ namespace Editor {
 						*/
 						ImGui::AlignTextToFramePadding();
 						ImGui::SameLine(halfWidth);
+						
 						if (ImGui::Button("Delete Component##DeleteTexture", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::dreamECSGame->RemoveComponent<Engine::TextureComponent>(entity_selected);
 
@@ -1626,7 +1648,88 @@ namespace Editor {
 					}
 				}
 				ImGui::End();
+				if (animation_bool)
+				{
+					ImGui::Begin("Animation Editor", &animation_bool, ImGuiWindowFlags_AlwaysVerticalScrollbar);
+					{
+						
+						std::vector<Animation2D> tempVec;
+						int tcols, trows,rows,start, end;
+						ImGui::Text(ani.c_str());
+						Engine::TextureComponent* textureComponent = Engine::dreamECSGame->GetComponentPTR<Engine::TextureComponent>(entity_selected);
+						for (auto& [name, animState] : textureComponent->animationStateList)
+						{
+							if (name == ani.c_str())
+							{
+								tcols = textureComponent->totalColumns;
+								trows = textureComponent->totalRows;
+								rows = animState.stateRow;
+								start = animState.startX;
+								end = animState.endX;
+
+								float diffX = 1.0f / tcols;
+								//float diffY = 1.0f / rows;
+								// col is 3 
+								// start = 1 end = 3
+								for (int i = start - 1; i < end; i++)
+								{
+									Animation2D temp;
+									temp.Min.x = static_cast<float>(diffX * i); // 0,0.5 0.5,0,5
+									temp.Min.y = static_cast<float>((rows - 1.0) / trows); // 
+
+									temp.Max.x = static_cast<float>((diffX * i) + diffX);
+									temp.Max.y = static_cast<float>(rows / trows);
+
+									tempVec.push_back(temp);
+								}
+								GLuint frameIcon = Engine::ResourceManager::GetInstance().LoadTexture(textureComponent->filepath);
+								
+								int count{ 0 };
+								static bool speedpopup = false;
+								float slicew = 300.0f;
+								float sliceh = 100.0f;
+								static int tempc;
+								
+								ImGui::BeginChild("##scrollingregion", ImVec2(0, 160), false, ImGuiWindowFlags_HorizontalScrollbar);
+								for (int Acols{ 0 }; Acols < tempVec.size(); Acols++)
+								{
+									ImGui::PushID(count);
+									if (ImGui::ImageButton((ImTextureID)static_cast<uintptr_t>(frameIcon), ImVec2(slicew, sliceh), ImVec2(tempVec[Acols].Min.x, tempVec[Acols].Max.y), ImVec2(tempVec[Acols].Max.x, tempVec[Acols].Min.y)))
+									{
+										tempc = Acols;
+										speedpopup = true;
+									}
+									ImGui::SameLine();
+									count++;
+									ImGui::PopID();
+								}
+								
+								ImGui::EndChild();
+								if (speedpopup) {
+									if (ImGui::Begin("Sprite Inspector"), 0, ImGuiWindowFlags_NoCollapse)
+									{
+										float currf = animState.frameTime[tempc];
+										ImGui::Text("Current Duration %f", currf);
+										float tempf = currf;
+										ImGui::InputFloat("##Duration", &tempf);
+										if (ImGui::Button("Save Changes", ImVec2(200, 0))) {
+											
+											animState.frameTime[tempc] = tempf;
+											speedpopup = false;
+										}
+										ImGui::End();
+									}
+
+								}
+							}
+						}
+						
+					}
+					ImGui::End();
+				}
 			}
+
 		}
+		
 	}
 }

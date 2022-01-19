@@ -31,7 +31,14 @@ namespace Engine
 		stateName{ _stateName },
 		stateRow{ _stateRow }, startX{ _startX }, endX{ _endX }, currFrame{ _startX - 1 },
 		fTime{ _fTime }, aTime{ 0.f },
-		isLoop{ _isLoop }, aComplete{ false } {};
+		isLoop{ _isLoop }, aComplete{ false } {
+		
+		int i = endX - startX;
+		for (int j = 0; j <= i; j++)
+		{
+			frameTime.push_back(0.5f);
+		}
+	};
 
 	// Contructor for Texture Component
 	TextureComponent::TextureComponent(Entity_id _ID, const std::string _path,

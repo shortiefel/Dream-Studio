@@ -39,7 +39,7 @@ namespace Engine
 
 		float aTime; // Animation time
 		float fTime; // Time per frame
-
+		std::vector<float> frameTime;
 		bool isLoop = true;		// Is texture looping? (Animation)
 		bool aComplete = false; // Is animation completed?
 	};

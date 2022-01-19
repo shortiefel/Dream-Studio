@@ -23,5 +23,6 @@ Technology is prohibited.
 namespace Editor {
 	namespace GUI_Windows {
 		void GUI_AssetBrowser(bool* asset_bool, ImGuiWindowFlags window_flags);
+		void LoadAllAssets(const std::string& path);
 	}
 }

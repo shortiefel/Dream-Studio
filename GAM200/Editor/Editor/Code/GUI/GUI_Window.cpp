@@ -86,6 +86,7 @@ namespace Editor {
 		bool gameWin_bool = true;
 		bool sceneWin_bool = true;
 		bool asset_bool = true;
+		
 
 		/*-------------------------------------------------------------------------------------------------
 		Forward declaration (Menus to be used inside dockspace function)
@@ -241,7 +242,7 @@ namespace Editor {
 			GUI_Windows::GUI_Console_Create();
 
 			GUI_Windows::GUI_SceneSetup();
-
+			LoadAllAssets("Assets");
 			Engine::KeyPressedEvent::RegisterFunction(OnKeyEvent);
 
 			Override_Function();

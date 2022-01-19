@@ -33,6 +33,7 @@ namespace Engine {
 	struct FontComponent;
 	struct SoundComponent;
 	struct ParticleComponent;
+	struct LightComponent;
 	struct ScriptComponent;
 
 	//class DSerializer;
@@ -58,6 +59,7 @@ namespace Engine {
 		void AddData(const FontComponent* const t);
 		void AddData(const SoundComponent* const t);
 		void AddData(const ParticleComponent* const t);
+		void AddData(const LightComponent* const t);
 		void AddData(const ScriptComponent* const t);
 
 		/*void SetSerializeData(const std::string& str);

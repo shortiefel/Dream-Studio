@@ -45,6 +45,7 @@ namespace Engine
         dreamECSGame->RegisterComponent<FontComponent>();
         dreamECSGame->RegisterComponent<SoundComponent>();
         dreamECSGame->RegisterComponent<ParticleComponent>();
+        dreamECSGame->RegisterComponent<LightComponent>();
 
         CameraSystem::GetInstance().Create();
         CollisionSystem::GetInstance().Create();

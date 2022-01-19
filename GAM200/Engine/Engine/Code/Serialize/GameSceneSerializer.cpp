@@ -298,6 +298,18 @@ namespace Engine {
 			dreamECSGame->AddComponent(tem);
 		}
 
+		if (sceneSerializer.SelectDeserializeDataType("LightComponent")) {
+			LightComponent tem(entityId);
+			sceneSerializer.RetrieveData(
+				"Colour", tem.colour,
+				"IsActive", tem.isActive);
+
+			std::cout << tem.colour << std::endl;
+			std::cout << tem.isActive << std::endl;
+
+			dreamECSGame->AddComponent(tem);
+		}
+
 		if (sceneSerializer.SelectDeserializeDataType("ScriptComponent")) {
 			ScriptComponent tem(entityId);
 			for (auto& classJSon : sceneSerializer.RetrieveDataArray("")) {
@@ -444,7 +456,8 @@ namespace Engine {
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<UIComponent>(entityId));
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<FontComponent>(entityId));
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<SoundComponent>(entityId)); 
-			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ParticleComponent>(entityId)); 
+			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ParticleComponent>(entityId));
+			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<LightComponent>(entityId));
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ScriptComponent>(entityId)); 
 			sceneSerializer.EndEntitySerialize();
 		}
@@ -625,6 +638,7 @@ namespace Engine {
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<FontComponent>(entityId));
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<SoundComponent>(entityId));
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ParticleComponent>(entityId));
+		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<LightComponent>(entityId));
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ScriptComponent>(entityId));
 		sceneSerializer.EndEntitySerialize();
 

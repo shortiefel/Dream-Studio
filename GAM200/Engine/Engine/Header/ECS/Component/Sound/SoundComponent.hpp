@@ -56,7 +56,7 @@ namespace Engine {
 		std::string soundName;
 
 		float volume;
-		bool isSound, loop;
+		bool isSound, loop, isMute;
 		bool isActive = true;
 
 		SoundGrp soundType;

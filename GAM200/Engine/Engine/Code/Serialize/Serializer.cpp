@@ -248,6 +248,7 @@ namespace Engine {
 		//std::cout << "filepath: " << filepath << "\n";
 		_serializer.SetValue("volume", t->volume);
 		_serializer.SetValue("isSound", t->isSound);
+		_serializer.SetValue("IsMute", t->isMute);
 		_serializer.SetValue("SoundGroup", static_cast<int>(t->soundType));
 
 		mainObject.AddMember("SoundComponent", objType, doc.GetAllocator());

@@ -27,7 +27,8 @@ Technology is prohibited.
 namespace Engine
 {
 	// Constructor for AnimationState
-	AnimationState::AnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop) :
+	AnimationState::AnimationState(std::string _stateName, int _stateRow, int _startX, int _endX, float _fTime, bool _isLoop, std::vector<float> _frameTime) :
+		frameTime{ _frameTime},
 		stateName{ _stateName },
 		stateRow{ _stateRow }, startX{ _startX }, endX{ _endX }, currFrame{ _startX - 1 },
 		fTime{ _fTime }, aTime{ 0.f },
@@ -152,8 +153,8 @@ namespace Engine
 	{
 		if (animationStateList.find(_state.stateName) != animationStateList.end())
 		{
-			auto itr = animationStateList.find(_state.stateName);
-			animationStateList.erase(itr);
+			animationStateList.erase(_state.stateName);
+			
 			return true;
 		}
 		return false;

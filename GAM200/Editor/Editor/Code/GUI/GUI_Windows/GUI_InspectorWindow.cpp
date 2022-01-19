@@ -891,15 +891,16 @@ namespace Editor {
 							*	ANIMATION STATE
 							*/
 							int counter = 0;
+							std::string destoryState = "";
 							ImGui::PushFont(boldFont);
 							
 							for (auto& [name, animState] : textureComp->animationStateList) {
 								ImGui::PushID(counter);
+
 								ImGui::AlignTextToFramePadding();
 								ImGui::Text("State Name");
 								ImGui::SameLine(halfWidth);
 								ImGui::SetNextItemWidth(halfWidth);
-
 								char aniDisplay[100];
 								strcpy(aniDisplay, name.c_str());
 								if (ImGui::InputText(std::string{ "##displayStatename" + name }.c_str(), aniDisplay, 100)) {
@@ -961,12 +962,15 @@ namespace Editor {
 								}
 								if (ImGui::Button("Delete State"))
 								{
-									if (!(textureComp->DeleteAnimationState(animState))) {}
+									destoryState = animState.stateName;
+									//if (!(textureComp->DeleteAnimationState(animState))) {}
 										//GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Animation state deleted" });
 								}
 								counter++;
 								ImGui::PopID();
 							}
+							if (!(textureComp->DeleteAnimationState(destoryState))) {}
+							//GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ "Animation state deleted" });
 							ImGui::PopFont();
 							
 							ImGui::Spacing();

@@ -31,7 +31,7 @@ namespace Engine
 
 	struct AnimationState
 	{
-		AnimationState(std::string _stateName = "", int _stateRow = 1, int _startX = 1, int _endX = 1, float _fTime = 0.f, bool _isLoop = true);
+		AnimationState(std::string _stateName = "", int _stateRow = 1, int _startX = 1, int _endX = 1, float _fTime = 0.f, bool _isLoop = true, std::vector<float> _frameTime = std::vector<float>());
 
 		std::string stateName;
 

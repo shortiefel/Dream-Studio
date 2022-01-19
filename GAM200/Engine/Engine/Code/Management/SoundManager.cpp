@@ -107,16 +107,16 @@ namespace Engine
 			switch (soundCom->soundType)
 			{
 			case SoundGrp::MUSIC:
-				MusicGroup->setVolume(0.5f * vol);
+				MusicGroup->setVolume(vol);
 				pChannel->setChannelGroup(MusicGroup);
 				break;
 			case SoundGrp::SFX:
-				SFXGroup->setVolume(0.8f * vol);
+				SFXGroup->setVolume(vol);
 				pChannel->setChannelGroup(SFXGroup);
 				break;
 
 			default:
-				MusicGroup->setVolume(vol);
+				MasterGroup->setVolume(vol);
 				pChannel->setChannelGroup(MasterGroup);
 				break;
 			};
@@ -257,6 +257,14 @@ namespace Engine
 			break;
 
 		}
+	}
+
+	void SoundManager::VolumeChange(SoundComponent* soundCom)
+	{
+		if (soundCom->isIncrease)
+			MasterVolumeUp(soundCom);
+		if (soundCom->isDecrease)
+			MasterVolumeDown(soundCom);
 	}
 
 }

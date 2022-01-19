@@ -65,6 +65,7 @@ namespace Engine {
 		int channelID = -1;
 
 		bool isBGMMuted, isSFXMuted;
+		bool isIncrease = true, isDecrease = true;
 	};
 
 }

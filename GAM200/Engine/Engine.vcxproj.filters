@@ -211,9 +211,6 @@
     <ClCompile Include="Engine\Code\Serialize\Serializer.cpp">
       <Filter>Source Files\Serialize</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\ECS\Component\UI\VolumeBar.cpp">
-      <Filter>Source Files\ECS\Component\UI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Application.hpp">
@@ -716,9 +713,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Header\Serialize\Serializer.hpp">
       <Filter>Header Files\Serialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Header\ECS\Component\UI\VolumeBar.hpp">
-      <Filter>Header Files\ECS\Component\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

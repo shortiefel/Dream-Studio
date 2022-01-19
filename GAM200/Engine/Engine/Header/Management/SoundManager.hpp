@@ -59,6 +59,9 @@ namespace Engine {
 		float GetCurrentMasterVolume(SoundComponent* soundCom);
 		void MasterVolumeDown(SoundComponent* soundCom);
 		void MasterVolumeUp(SoundComponent* soundCom);
+		void VolumeChange(SoundComponent* soundCom);
+
+
 
 		/**
 		*		FMOD RELATED

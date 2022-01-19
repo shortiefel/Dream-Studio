@@ -270,7 +270,6 @@
     <ClCompile Include="Engine\Code\ECS\Component\UI\ButtonComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\FontComponent.cpp" />
     <ClCompile Include="Engine\Code\ECS\Component\UI\UIComponent.cpp" />
-    <ClCompile Include="Engine\Code\ECS\Component\UI\VolumeBar.cpp" />
     <ClCompile Include="Engine\Code\ECS\DreamECS.cpp" />
     <ClCompile Include="Engine\Code\ECS\Factory.cpp" />
     <ClCompile Include="Engine\Code\ECS\System\CameraSystem.cpp" />
@@ -412,7 +411,6 @@
     <ClInclude Include="Engine\Header\ECS\Component\UI\ButtonComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\FontComponent.hpp" />
     <ClInclude Include="Engine\Header\ECS\Component\UI\UIComponent.hpp" />
-    <ClInclude Include="Engine\Header\ECS\Component\UI\VolumeBar.hpp" />
     <ClInclude Include="Engine\Header\ECS\ECSGlobal.hpp" />
     <ClInclude Include="Engine\Header\ECS\DreamECS.hpp" />
     <ClInclude Include="Engine\Header\ECS\Entity\Entity.hpp" />

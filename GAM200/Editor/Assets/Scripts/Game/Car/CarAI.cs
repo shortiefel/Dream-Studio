@@ -241,7 +241,7 @@ public class CarAI : MonoBehaviour
             //Console.WriteLine("Before Drive ");
 
             //------------------------Temporary remove---------------------
-            /*Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
+            Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
             float value = Vector2.Dot(transform.right, relativeDirection);
             var rotateCar = 0;
             turningFactor = 1f;
@@ -260,7 +260,7 @@ public class CarAI : MonoBehaviour
                 turningFactor = 0.5f;
             }
             //OnDrive?.Invoke(new Vector2(rotateCar, 1));
-            movementVector = new Vector2(rotateCar, 1);*/
+            movementVector = new Vector2(rotateCar, 1);
             //------------------------Temporary remove---------------------
             //Console.WriteLine("End drive ");
         }

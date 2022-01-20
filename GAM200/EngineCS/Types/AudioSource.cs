@@ -55,4 +55,32 @@ public class AudioSource : IComponent
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetAudioSource_Engine(uint entityID, int audioType);
+
+    public float volume
+    {
+        get
+        {
+            GetSound_Volume_Engine(entityId, out float vol);
+            return vol;
+        }
+        set { SetSound_Volume_Engine(entityId, ref value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetSound_Volume_Engine(uint entityID, out float _vol);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetSound_Volume_Engine(uint entityID, ref float _vol);
+
+    public bool mute
+    {
+        get
+        {
+            GetSound_Mute_Engine(entityId, out bool _mute);
+            return _mute;
+        }
+        set { SetSound_Mute_Engine(entityId, ref value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetSound_Mute_Engine(uint entityID, out bool _mute);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetSound_Mute_Engine(uint entityID, ref bool _mute);
 }

@@ -23,13 +23,7 @@ Technology is prohibited.
 namespace Engine
 {
 
-	//std::map<std::string, FMOD::Sound*> SoundManager::_soundMap;
-	//std::map<int, FMOD::Channel*>  SoundManager::channelMap;
-	//FMOD::System* SoundManager::System = nullptr;
-	//FMOD::ChannelGroup* SoundManager::MasterGroup = nullptr;
-	//FMOD::ChannelGroup* SoundManager::MusicGroup = nullptr;
-	//FMOD::ChannelGroup* SoundManager::SFXGroup = nullptr;
-	
+
 	bool operator!(FMOD_RESULT res)
 	{
 		return res != FMOD_OK;
@@ -66,7 +60,7 @@ namespace Engine
 		{
 			bool bIsPlaying = false;
 			it->second->isPlaying(&bIsPlaying);
-			
+
 			if (!bIsPlaying)
 			{
 				StoppedChannels.push_back(it);
@@ -79,7 +73,7 @@ namespace Engine
 		}
 
 		SoundManager::System->update();
-			//throw std::runtime_error("FMOD: Failed to Update System");
+		//throw std::runtime_error("FMOD: Failed to Update System");
 
 		return true;
 	}
@@ -108,7 +102,7 @@ namespace Engine
 		auto it = SoundManager::channelMap.find(channelID);
 
 		if (it != SoundManager::channelMap.end())
-			it->second->setPaused(false);	
+			it->second->setPaused(false);
 	}
 
 	void SoundSystem::SoundStopAllSound()
@@ -136,7 +130,7 @@ namespace Engine
 		LOG_INSTANCE("Sound System destroyed");
 	}
 
-	void SoundSystem::SoundSetVolume(int channelID,float _vol)
+	void SoundSystem::SoundSetVolume(int channelID, float _vol)
 	{
 		SoundComponent SoundCom;
 
@@ -146,7 +140,7 @@ namespace Engine
 			return;
 		}
 
-		it->second->setVolume(SoundCom.VolumeDecimal(_vol));
+		it->second->setVolume(SoundCom.SetVolume(_vol));
 	}
 
 	float SoundSystem::SoundGetVolume(int channelID, float _vol)
@@ -160,11 +154,13 @@ namespace Engine
 
 		it->second->getVolume(&_vol);
 
-		return SoundCom.DecimalVolume(_vol);
+		return SoundCom.GetVolume(_vol);
 	}
 
 	void SoundSystem::SoundSetPauseAllSound(bool _paused) {
 		SoundManager::GetInstance().SetPauseAllSound(_paused);
 	}
+
+
 
 }

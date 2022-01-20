@@ -5,7 +5,7 @@
 @date		29/11/2021
 \brief
 
-This file contain the definiation for sound 
+This file contain the definiation for sound
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -50,7 +50,7 @@ namespace Engine
 		SoundManager::System->release();
 	}
 
-	FMOD::Sound* SoundManager::GetSound(SoundComponent* soundCom,std::string&,  std::string& soundName)
+	FMOD::Sound* SoundManager::GetSound(SoundComponent* soundCom, std::string&, std::string& soundName)
 	{
 
 		auto it = SoundManager::_soundMap.find(soundName);
@@ -62,15 +62,15 @@ namespace Engine
 			std::cout << soundCom->filepath << "\n";
 			SoundManager::System->createSound(soundCom->filepath.c_str(), eMode, nullptr, &pSound);
 			//throw std::runtime_error("FMOD: Unable to create sound" + _path);
-			
+
 			if (pSound)
 			{
 				SoundManager::_soundMap[soundCom->soundName] = pSound;
 				return pSound;
 			}
-			
-				return it->second;
-			
+
+			return it->second;
+
 		}
 
 		return it->second;
@@ -103,20 +103,20 @@ namespace Engine
 		pChannel->isPlaying(&(soundCom->isPlaying));
 		if (pChannel)
 		{
-			float vol = soundCom->volume / 100.f;
+			float vol = soundCom->volume;
 			switch (soundCom->soundType)
 			{
 			case SoundGrp::MUSIC:
-				MusicGroup->setVolume(0.5f * vol);
+				MusicGroup->setVolume(vol/100);
 				pChannel->setChannelGroup(MusicGroup);
 				break;
 			case SoundGrp::SFX:
-				SFXGroup->setVolume(0.8f * vol);
+				SFXGroup->setVolume(vol/100);
 				pChannel->setChannelGroup(SFXGroup);
 				break;
 
 			default:
-				MusicGroup->setVolume(vol);
+				MasterGroup->setVolume(vol / 100);
 				pChannel->setChannelGroup(MasterGroup);
 				break;
 			};
@@ -125,6 +125,35 @@ namespace Engine
 		}
 		std::cout << "channel ID Play" << ID << "\n";
 		return ID;
+	}
+
+	float SoundManager::GetCurrentMasterVolume(SoundComponent* soundCom)
+	{
+		float currentVol;
+		if (soundCom == nullptr)
+		{
+			currentVol = MasterGroup->getVolume(&soundCom->volume);
+			return currentVol;
+		}
+		else
+		{
+			switch (soundCom->soundType)
+			{
+
+			case SoundGrp::MUSIC:
+				currentVol = MusicGroup->getVolume(&soundCom->volume);
+				break;
+			case SoundGrp::SFX:
+				currentVol = SFXGroup->getVolume(&soundCom->volume);
+				break;
+			default:
+				currentVol = MasterGroup->getVolume(&soundCom->volume);
+				break;
+
+			}
+			return currentVol;
+		}
+		
 	}
 
 	int SoundManager::SetLoop(SoundComponent* soundCom)
@@ -161,6 +190,81 @@ namespace Engine
 		MasterGroup->setPaused(paused);
 		MusicGroup->setPaused(paused);
 		SFXGroup->setPaused(paused);
+	}
+
+	void SoundManager::MuteBGM(SoundComponent* soundCom)
+	{
+
+		if (soundCom->soundType == SoundGrp::MUSIC)
+		{
+			auto it = channelMap.find(soundCom->channelID);
+			it->second->setMute(soundCom->isMute);
+		}
+	}
+
+	void SoundManager::MuteSFX(SoundComponent* soundCom)
+	{
+
+		if (soundCom->soundType == SoundGrp::SFX)
+		{
+			auto it = channelMap.find(soundCom->channelID);
+			it->second->setMute(soundCom->isMute);
+		}
+
+
+	}
+
+	void SoundManager::MasterVolumeDown(SoundComponent* soundCom)
+	{
+		float newVolume = 0.f;
+		float currentMasterVol = GetCurrentMasterVolume(0);
+		newVolume -=currentMasterVol;
+
+		switch (soundCom->soundType)
+		{
+
+		case SoundGrp::MUSIC:
+			MusicGroup->setVolume(newVolume);
+			break;
+		case SoundGrp::SFX:
+			SFXGroup->setVolume(newVolume);
+			break;
+		default:
+			MasterGroup->setVolume(newVolume);
+			break;
+
+		}
+		
+	}
+
+	void SoundManager::MasterVolumeUp(SoundComponent* soundCom)
+	{
+		float newVolume = 0.f;
+		float currentMasterVol = GetCurrentMasterVolume(0);
+		newVolume += currentMasterVol;
+
+		switch (soundCom->soundType)
+		{
+
+		case SoundGrp::MUSIC:
+			MusicGroup->setVolume(newVolume);
+			break;
+		case SoundGrp::SFX:
+			SFXGroup->setVolume(newVolume);
+			break;
+		default:
+			MasterGroup->setVolume(newVolume);
+			break;
+
+		}
+	}
+
+	void SoundManager::VolumeChange(SoundComponent* soundCom)
+	{
+		if (soundCom->isIncrease)
+			MasterVolumeUp(soundCom);
+		if (soundCom->isDecrease)
+			MasterVolumeDown(soundCom);
 	}
 
 }

@@ -105,6 +105,12 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void SetAudioSource_Engine(unsigned int entityID, int audioState);
 
+		void GetSound_Volume_Engine(unsigned int entityID, float* _vol);
+		void SetSound_Volume_Engine(unsigned int entityID, float* _vol);
+
+		void GetSound_Mute_Engine(unsigned int entityID, bool* _mute);
+		void SetSound_Mute_Engine(unsigned int entityID, bool* _mute);
+
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Animation
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -178,6 +184,11 @@ namespace Engine {
 			Sound / Audio Source
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("AudioSource::SetAudioSource_Engine", SetAudioSource_Engine);
+
+			mono_add_internal_call("AudioSource::GetSound_Volume_Engine", GetSound_Volume_Engine);
+			mono_add_internal_call("AudioSource::SetSound_Volume_Engine", SetSound_Volume_Engine);
+			mono_add_internal_call("AudioSource::GetSound_Mute_Engine", GetSound_Mute_Engine);
+			mono_add_internal_call("AudioSource::SetSound_Mute_Engine", SetSound_Mute_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Animation
@@ -432,6 +443,34 @@ namespace Engine {
 			default:
 				break;
 			}
+		}
+
+		void GetSound_Volume_Engine(unsigned int entityID, float* _vol) {
+			SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
+			*_vol = 0;
+
+			if (!ctype) return;
+			*_vol = ctype->volume;
+		}
+		void SetSound_Volume_Engine(unsigned int entityID, float* _vol) {
+			SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
+
+			if (!ctype) return;
+			ctype->volume = *_vol;
+		}
+
+		void GetSound_Mute_Engine(unsigned int entityID, bool* _mute) {
+			SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
+			*_mute = false;
+
+			if (!ctype) return;
+			*_mute = ctype->isMute;
+		}
+		void SetSound_Mute_Engine(unsigned int entityID, bool* _mute){
+			SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
+
+			if (!ctype) return;
+			ctype->isMute = *_mute;
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

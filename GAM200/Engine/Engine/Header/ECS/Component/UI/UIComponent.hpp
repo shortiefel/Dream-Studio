@@ -33,7 +33,6 @@ namespace Engine
 
 		bool isActive = true;
 
-
 		UIComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "", bool _active = true);
 
 
@@ -45,5 +44,7 @@ namespace Engine
 
 		UIComponent& operator=(const UIComponent&) = default;
 	};
+
+	
 }
 #endif

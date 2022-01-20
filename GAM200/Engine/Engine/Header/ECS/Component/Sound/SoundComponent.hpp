@@ -28,7 +28,7 @@ Technology is prohibited.
 
 namespace Engine {
 	enum class SoundGrp {
-		MASTER,
+		MASTER = 0,
 		MUSIC,
 		SFX
 	};
@@ -37,9 +37,9 @@ namespace Engine {
 	class SSerializer;
 
 	struct SoundComponent : public IComponent {
-	
+
 		SoundComponent(Entity_id _ID = DEFAULT_ENTITY_ID, std::string _filepath = "Assets\\Sound\\sampleSound.wav", std::string _soundName = "sampleSound",
-			bool _isSound = false, bool _isActive = false, bool _loop = false, float _vol = 100.f, SoundGrp _soundType = SoundGrp::MASTER);
+			bool _isSound = false, bool _isActive = false, bool _loop = false, float _vol = 0.01f, SoundGrp _soundType = SoundGrp::MASTER, bool _isMute = false);
 		~SoundComponent();
 
 		SoundComponent& Deserialize(const DSerializer& _serializer);
@@ -48,21 +48,24 @@ namespace Engine {
 		/**
 		*		VOLUME
 		*/
-		float VolumeDecimal(float _vol);
-		float DecimalVolume(float _vol);
+		float GetVolume(float _vol);
+		float SetVolume(float _vol);
+
 
 		std::string filepath;
 		std::string soundName;
 
 		float volume;
-		bool isSound, loop;
+		bool isSound, loop, isMute;
 		bool isActive = true;
-		
+
 		SoundGrp soundType;
 
 		bool isPlaying = false;
 		int channelID = -1;
 
+
+		bool isIncrease = true, isDecrease = true;
 	};
 
 }

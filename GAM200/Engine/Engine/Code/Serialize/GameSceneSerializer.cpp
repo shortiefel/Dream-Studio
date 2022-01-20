@@ -250,6 +250,7 @@ namespace Engine {
 				"volume", tem.volume,
 				"isSound", tem.isSound,
 				"SoundGroup", soundGrpTem,
+				"IsMute", tem.isMute,
 				"IsActive", tem.isActive);
 
 			tem.soundName = tem.filepath.substr(tem.filepath.find_last_of("\\") + 1);

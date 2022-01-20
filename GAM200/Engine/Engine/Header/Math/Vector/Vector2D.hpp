@@ -176,11 +176,11 @@ namespace Engine {
 			/*---------------------------------------------------------------------------------------------------------------------
 			* < operator
 			---------------------------------------------------------------------------------------------------------------------*/
-			//PROBLEM TO FIX!!! EG (8, 7) vs (7, 8) issue
 			template <typename T, typename U>
 			bool operator<(const Vector2D<T>& lhs, const Vector2D<U>& rhs) {
 				T diff1 = lhs.x + lhs.y;
 				T diff2 = static_cast<T>(rhs.x) + static_cast<T>(rhs.y);
+				if (diff1 == diff2 && (lhs.x < rhs.x)) return true;
 				return (diff1 < diff2);
 			}
 

@@ -205,6 +205,19 @@ namespace Engine {
 			};
 
 			/*---------------------------------------------------------------------------------------------------------------------
+			* < operator
+			---------------------------------------------------------------------------------------------------------------------*/
+			template <typename T, typename U>
+			bool operator<(const Vector4D<T>& lhs, const Vector4D<U>& rhs) {
+				T diff1 = lhs.x + lhs.y + lhs.z + lhs.w;
+				T diff2 = static_cast<T>(rhs.x) + static_cast<T>(rhs.y) + static_cast<T>(rhs.z) + static_cast<T>(rhs.w);
+				if (diff1 == diff2 && (lhs.x < rhs.x)) return true;
+				else if (diff1 == diff2 && (lhs.y < rhs.y)) return true;
+				else if (diff1 == diff2 && (lhs.z < rhs.z)) return true;
+				return (diff1 < diff2);
+			}
+
+			/*---------------------------------------------------------------------------------------------------------------------
 			* Binary Add
 			---------------------------------------------------------------------------------------------------------------------*/
 			template <typename T, typename U>

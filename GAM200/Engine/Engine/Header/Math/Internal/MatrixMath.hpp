@@ -531,7 +531,44 @@ namespace Engine {
 
 			return pResult;
 		}
-		
+
+		/**************************************************************************/
+		/*!
+			This function calculates the LookAt projection matrix
+		*/
+		/**************************************************************************/
+		template <typename T>
+		MI::Matrix4<T> LookAt(MI::Vector3D<T> eye, MI::Vector3D<T> at, MI::Vector3D<T> up)
+		{
+			MI::Vector3D<T> tmp = eye - at;
+			MI::Vector3D<T> zaxis = DreamMath::normalize(tmp);
+			MI::Vector3D<T> yaxis = DreamMath::normalize(up);
+
+			tmp = DreamMath::cross(yaxis, zaxis);
+			MI::Vector3D<T> xaxis = DreamMath::normalize(tmp);
+
+			tmp = DreamMath::cross(zaxis, xaxis);
+			yaxis = DreamMath::normalize(tmp);
+
+			MI::Matrix4<T> mat;
+
+			mat.m[0]  = xaxis[0];
+			mat.m[1]  = yaxis[0];
+			mat.m[2]  = zaxis[0];
+			mat.m[3]  = 0.0f;
+			mat.m[4]  = xaxis[1];
+			mat.m[5]  = yaxis[1];
+			mat.m[6]  = zaxis[1];
+			mat.m[7]  = 0.0f;
+			mat.m[8]  = xaxis[2];
+			mat.m[9]  = yaxis[2];
+			mat.m[10] = zaxis[2];
+			mat.m[11] = 0.0f;
+			mat.m[12] = -DreamMath::dot(xaxis, eye);
+			mat.m[13] = -DreamMath::dot(yaxis, eye);
+			mat.m[14] = -DreamMath::dot(zaxis, eye);
+			mat.m[15] = 1.0f;
+		}
 	}
 }
 #endif

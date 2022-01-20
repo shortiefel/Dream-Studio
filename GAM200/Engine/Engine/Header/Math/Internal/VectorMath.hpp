@@ -31,17 +31,17 @@ namespace Engine {
 		-------------------------------------------------------------------------------------------------------------------*/
 		template <typename T>
 		T length(const MI::Vector2D<T>& pVec0) {
-			return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y)));
+			return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y)) + epsilon<T>());
 		}
 
 		template <typename T>
 		T length(const MI::Vector3D<T>& pVec0) {
-			return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z)));
+			return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z) + epsilon<T>()));
 		}
 
 		template <typename T>
 		T length(const MI::Vector4D<T>& pVec0) {
-			return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z) + (pVec0.w * pVec0.w)));
+			return T(sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y) + (pVec0.z * pVec0.z) + (pVec0.w * pVec0.w) + epsilon<T>()));
 		}
 
 		template <typename T>
@@ -102,6 +102,11 @@ namespace Engine {
 			return (pResult / length(pResult));
 		}
 
+		template <typename T>
+		MI::Vector2D<T> normalize(const MI::Vector2D<T>& pResult, const MI::Vector2D<T>& a) {
+			return (pResult / length(a));
+		}
+
 		/*
 		* Beware of Value becoming NaN
 		*/
@@ -110,12 +115,22 @@ namespace Engine {
 			return (pResult / length(pResult));
 		}
 
+		template <typename T>
+		MI::Vector3D<T> normalize(const MI::Vector3D<T>& pResult, const MI::Vector3D<T>& a) {
+			return (pResult / length(a));
+		}
+
 		/*
 		* Beware of Value becoming NaN
 		*/
 		template <typename T>
 		MI::Vector4D<T> normalize(const MI::Vector4D<T>& pResult) {
 			return (pResult / length(pResult));
+		}
+
+		template <typename T>
+		MI::Vector4D<T> normalize(const MI::Vector4D<T>& pResult, const MI::Vector4D<T>& a) {
+			return (pResult / length(a));
 		}
 		/*-------------------------------------------------------------------------------------------------------------------
 		Dot product

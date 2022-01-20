@@ -41,6 +41,9 @@ Technology is prohibited.
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp" //Serialize Prefab
 #include "Engine/Header/Scene/SceneManager.hpp"
 
+#include "Engine/Header/Event/WindowEvent.hpp"
+#include "Engine/Header/Event/EventDispatcher.hpp"
+
 
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>

@@ -16,7 +16,7 @@ public class PlacementManager : MonoBehaviour
     public override void Start()
     {
         //width = 20; height = 10;
-        placementGrid = new Grid(10, 5);
+        placementGrid = new Grid(20, 10);
         transform = GetComponent<Transform>();
         roadFixer = GameObject.Find("RoadManager").GetComponent<RoadFixer>();
        

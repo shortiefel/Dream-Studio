@@ -24,7 +24,7 @@ namespace Engine {
 	/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
 	//Function calls are used to link to C# (functions from Grid.hpp)
 	void CreateGrid_Engine(int width, int height);
-	void ResizeGrid_Engine(int newWidth, int newHeight);
+	void ResizeGrid_Engine(int startX, int startY, int newWidth, int newHeight);
 	int GetCellType_Engine(int x, int y);
 	void SetCellType_Engine(int x, int y, int cellType);
 	bool GetRandomRoadPoint_Engine(Math::ivec2* point);
@@ -59,8 +59,8 @@ namespace Engine {
 		Game::Grid::GetInstance().CreateGrid(width, height);
 	}
 
-	void ResizeGrid_Engine(int newWidth, int newHeight) {
-		Game::Grid::GetInstance().ResizeGrid(newWidth, newHeight);
+	void ResizeGrid_Engine(int startX, int startY, int newWidth, int newHeight) {
+		Game::Grid::GetInstance().ResizeGrid(startX, startY, newWidth, newHeight);
 	}
 
 	int GetCellType_Engine(int x, int y) {

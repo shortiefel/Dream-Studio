@@ -27,7 +27,7 @@ namespace Engine {
         }
 
         Math::ivec2 Grid::GetStartPoint() {
-            return -offset;
+            return offset;
         }
 
         void Grid::CreateGrid(int width, int height) {
@@ -37,9 +37,9 @@ namespace Engine {
             offset = { 0, 0 };
         }
 
-        void Grid::ResizeGrid(int newWidth, int newHeight) {
-            offset.x = ((newWidth - mapSize.x) / 2);
-            offset.y = ((newHeight - mapSize.y) / 2);
+        void Grid::ResizeGrid(int startX, int startY, int newWidth, int newHeight) {
+            //offset.x = ((newWidth - mapSize.x) / 2);
+            //offset.y = ((newHeight - mapSize.y) / 2);
             /*CellType* temGrid = new CellType[static_cast<size_t>(newWidth) * static_cast<size_t>(newHeight)]();
 
 
@@ -53,6 +53,7 @@ namespace Engine {
 
             delete[] grid;
             grid = temGrid;*/
+            offset = { startX, startY };
             mapSize = { newWidth, newHeight };
             
         }

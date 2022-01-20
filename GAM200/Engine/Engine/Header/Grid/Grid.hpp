@@ -52,7 +52,7 @@ namespace Engine {
 			Create grid with width and height
 			-----------------------------------------------------*/
 			void CreateGrid(int width, int height);
-			void ResizeGrid(int newWidth, int newHeight);
+			void ResizeGrid(int startX, int startY, int newWidth, int newHeight);
 			/*-----------------------------------------------------
 			Deallocate memory allocated for grid
 			-----------------------------------------------------*/

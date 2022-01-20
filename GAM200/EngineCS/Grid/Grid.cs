@@ -60,17 +60,24 @@ public class Grid
 
     private void Resize(int newWidth, int newHeight)
     {
-        int xTem = -(newWidth - _width) / 2;
-        int yTem = -(newHeight - _height) / 2;
-        int xOffset = xTem;
+        int xTem = (newWidth - _width) / 2;
+        int yTem = (newHeight - _height) / 2;
+        
+        _startX -= xTem;
+        _startY -= yTem;
+        int xOffset = _startX;
+        int yOffset = _startY;
+
+        /*int xOffset = xTem;
         int yOffset = yTem;
         xOffset -= _startX;
         yOffset -= _startY;
         _startX = xTem;
-        _startY = yTem;
+        _startY = yTem;*/
 
         CellType[,] temGrid = new CellType[newWidth, newHeight];
 
+        //Offset and store into the new grid
         for (int y = 0; y < _height; y++)
         {
             for (int x = 0; x < _width; x++)
@@ -82,11 +89,11 @@ public class Grid
         _grid = temGrid;
         _width = newWidth;
         _height = newHeight;
-        ResizeGrid_Engine(newWidth, newHeight);
+        ResizeGrid_Engine(xOffset, yOffset, newWidth, newHeight);
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void ResizeGrid_Engine(int newWidth, int newHeight);
+    internal static extern void ResizeGrid_Engine(int startX, int startY, int newWidth, int newHeight);
 
     public Vector2Int GetStartPoint()
     {

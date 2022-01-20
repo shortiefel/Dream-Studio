@@ -39,7 +39,7 @@ namespace Engine {
 	struct SoundComponent : public IComponent {
 
 		SoundComponent(Entity_id _ID = DEFAULT_ENTITY_ID, std::string _filepath = "Assets\\Sound\\sampleSound.wav", std::string _soundName = "sampleSound",
-			bool _isSound = false, bool _isActive = false, bool _loop = false, float _vol = 1.0f, SoundGrp _soundType = SoundGrp::MASTER, bool _isBGMMuted = false, bool _isSFXMuted = false);
+			bool _isSound = false, bool _isActive = false, bool _loop = false, float _vol = 0.01f, SoundGrp _soundType = SoundGrp::MASTER, bool _isMute = false);
 		~SoundComponent();
 
 		SoundComponent& Deserialize(const DSerializer& _serializer);
@@ -64,7 +64,7 @@ namespace Engine {
 		bool isPlaying = false;
 		int channelID = -1;
 
-		bool isBGMMuted, isSFXMuted;
+
 		bool isIncrease = true, isDecrease = true;
 	};
 

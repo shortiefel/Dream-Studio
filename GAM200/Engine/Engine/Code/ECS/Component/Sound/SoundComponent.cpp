@@ -19,8 +19,8 @@ Technology is prohibited.
 
 namespace Engine {
 
-	SoundComponent::SoundComponent(Entity_id _ID, std::string _filepath, std::string _soundName, bool _isSound, bool _isActive, bool _loop, float _vol, SoundGrp _soundType, bool _isBGMMuted, bool _isSFXMuted)
-		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName }, isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, volume{ _vol }, soundType{ _soundType }, isBGMMuted{ _isBGMMuted }, isSFXMuted{ _isSFXMuted }
+	SoundComponent::SoundComponent(Entity_id _ID, std::string _filepath, std::string _soundName, bool _isSound, bool _isActive, bool _loop, float _vol, SoundGrp _soundType, bool _isMute)
+		: IComponent{ _ID }, filepath{ _filepath }, soundName{ _soundName }, isSound{ _isSound }, isActive{ _isActive }, loop{ _loop }, volume{ _vol }, soundType{ _soundType }, isMute{_isMute}
 	{
 
 	}
@@ -32,14 +32,14 @@ namespace Engine {
 	}
 
 
-	float SoundComponent::GetVolume(float _vol)
+	float SoundComponent::GetVolume(float _vol) 
 	{
-		volume = _vol < 0.0f ? 0.0f : _vol;
 		return volume;
 	}
 
 	float SoundComponent::SetVolume(float _vol)
 	{
+		volume = _vol < 0.0f ? 0.0f : _vol;
 		return volume;
 	}
 
@@ -57,10 +57,8 @@ namespace Engine {
 		//SoundManager::GetInstance().GetSound(filepath, soundName);
 		volume = _serializer.GetValue<float>("volume");
 		isSound = _serializer.GetValue<bool>("isSound");
+		isMute = _serializer.GetValue<bool>("isMute");
 		soundType = static_cast<SoundGrp>(_serializer.GetValue<int>("SoundGroup"));
-
-		isBGMMuted = _serializer.GetValue<bool>("isBGMMuted");
-		isSFXMuted = _serializer.GetValue<bool>("isSFXMuted");
 
 
 		return *this;
@@ -76,9 +74,9 @@ namespace Engine {
 		//std::cout << "filepath: " << filepath << "\n";
 		_serializer.SetValue("volume", volume);
 		_serializer.SetValue("isSound", isSound);
+		_serializer.SetValue("isMute", isMute);
 		_serializer.SetValue("SoundGroup", static_cast<int>(soundType));
-		_serializer.SetValue("isBGMMuted", isBGMMuted);
-		_serializer.SetValue("isSFXMuted", isSFXMuted);
+
 
 	}
 

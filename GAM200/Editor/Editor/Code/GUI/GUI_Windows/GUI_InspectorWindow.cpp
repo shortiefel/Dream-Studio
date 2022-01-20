@@ -1147,11 +1147,15 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Volume");
 						ImGui::SameLine();
-						HelperMarker("Range: 0 - 100");
+						HelperMarker("Range: 0 - 1, eg. 0.1");
 						ImGui::SameLine(halfWidth);
 						ImGui::SetNextItemWidth(halfWidth);
 						ImGui::PushFont(boldFont);
-						ImGui::InputFloat("##SoundVolume", &soundComp->volume, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
+						//ImGui::InputFloat("##SoundVolume", &soundComp->SetVolume(soundComp->volume), 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
+						if (ImGui::InputFloat("##SoundVolume", &soundComp->volume, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue))
+						{
+							soundComp->SetVolume(soundComp->volume);
+						}
 						ImGui::PopFont();
 
 						//selection
@@ -1187,6 +1191,13 @@ namespace Editor {
 							ImGui::EndCombo();
 						}
 
+						ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Mute");
+						ImGui::SameLine(halfWidth);
+						ImGui::Checkbox("##soundMute", &soundComp->isMute);
+						
 						ImGui::Spacing();
 
 						ImGui::AlignTextToFramePadding();

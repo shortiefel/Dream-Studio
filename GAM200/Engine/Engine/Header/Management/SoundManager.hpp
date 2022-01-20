@@ -75,6 +75,7 @@ namespace Engine {
 
 		//SoundGrp SG;
 		int ChannelID;
+		bool isBGMMuted, isSFXMuted;
 
 		SINGLETON_SETUP(SoundManager);
 

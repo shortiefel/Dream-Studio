@@ -107,16 +107,16 @@ namespace Engine
 			switch (soundCom->soundType)
 			{
 			case SoundGrp::MUSIC:
-				MusicGroup->setVolume(vol);
+				MusicGroup->setVolume(vol/100);
 				pChannel->setChannelGroup(MusicGroup);
 				break;
 			case SoundGrp::SFX:
-				SFXGroup->setVolume(vol);
+				SFXGroup->setVolume(vol/100);
 				pChannel->setChannelGroup(SFXGroup);
 				break;
 
 			default:
-				MasterGroup->setVolume(vol);
+				MasterGroup->setVolume(vol / 100);
 				pChannel->setChannelGroup(MasterGroup);
 				break;
 			};
@@ -198,7 +198,7 @@ namespace Engine
 		if (soundCom->soundType == SoundGrp::MUSIC)
 		{
 			auto it = channelMap.find(soundCom->channelID);
-			it->second->setMute(soundCom->isBGMMuted);
+			it->second->setMute(soundCom->isMute);
 		}
 	}
 
@@ -208,7 +208,7 @@ namespace Engine
 		if (soundCom->soundType == SoundGrp::SFX)
 		{
 			auto it = channelMap.find(soundCom->channelID);
-			it->second->setMute(soundCom->isBGMMuted);
+			it->second->setMute(soundCom->isMute);
 		}
 
 

@@ -37,7 +37,7 @@ Technology is prohibited.
 
 namespace Engine
 {
-#define LAYER_COUNT 5 // Number of layers for game objects
+#define LAYER_COUNT 10 // Number of layers for game objects
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture

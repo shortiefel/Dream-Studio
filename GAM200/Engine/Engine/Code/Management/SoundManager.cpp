@@ -192,18 +192,52 @@ namespace Engine
 		SFXGroup->setPaused(paused);
 	}
 
-	void SoundManager::MuteSound(SoundComponent* soundCom, bool _state) {
-		soundCom->isMute = _state;
-		auto it = channelMap.find(soundCom->channelID);
-		if (it == channelMap.end()) return;
-		it->second->setMute(soundCom->isMute);
+	//void SoundManager::MuteSound(SoundComponent* soundCom, bool _state) {
+	//	soundCom->isMute = _state;
+	//	auto it = channelMap.find(soundCom->channelID);
+	//	if (it == channelMap.end()) return;
+	//	it->second->setMute(soundCom->isMute);
+	//}
+
+	void SoundManager::MuteSoundGroup(SoundGrp _sg, bool _state, float _vol) 
+	{
+		SoundComponent soundCom;
+		float originalVol = soundCom.volume;
+
+		if (_state == true)
+		{
+			switch (_sg)
+			{
+			case SoundGrp::MUSIC:
+				MusicGroup->setMute(_state);
+				break;
+			case SoundGrp::SFX:
+				SFXGroup->setMute(_state);
+				break;
+			default:
+				MasterGroup->setMute(_state);
+				break;
+			}
+		}
+		else
+		{
+			switch (_sg)
+			{
+			case SoundGrp::MUSIC:
+				MusicGroup->setVolume(originalVol);
+				break;
+			case SoundGrp::SFX:
+				SFXGroup->setMute(originalVol);
+				break;
+			default:
+				MasterGroup->setMute(originalVol);
+				break;
+			}
+		}
+		
 	}
 
-	void SoundManager::MuteSoundGroup(SoundGrp _sg, bool _state) {
-
-	}
-
-	void SoundManager::MuteBGM(SoundComponent* soundCom)
+	/*void SoundManager::MuteBGM(SoundComponent* soundCom)
 	{
 
 		if (soundCom->soundType == SoundGrp::MUSIC)
@@ -221,9 +255,7 @@ namespace Engine
 			auto it = channelMap.find(soundCom->channelID);
 			it->second->setMute(soundCom->isMute);
 		}
-
-
-	}
+	}*/
 
 	void SoundManager::MasterVolumeDown(SoundComponent* soundCom)
 	{

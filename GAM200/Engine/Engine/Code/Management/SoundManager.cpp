@@ -192,6 +192,17 @@ namespace Engine
 		SFXGroup->setPaused(paused);
 	}
 
+	void SoundManager::MuteSound(SoundComponent* soundCom, bool _state) {
+		soundCom->isMute = _state;
+		auto it = channelMap.find(soundCom->channelID);
+		if (it == channelMap.end()) return;
+		it->second->setMute(soundCom->isMute);
+	}
+
+	void SoundManager::MuteSoundGroup(SoundGrp _sg, bool _state) {
+
+	}
+
 	void SoundManager::MuteBGM(SoundComponent* soundCom)
 	{
 

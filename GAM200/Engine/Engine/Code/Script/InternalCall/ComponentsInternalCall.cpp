@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 
 #include "Engine/Header/Graphic/SpaceTransform.hpp"
+#include "Engine/Header/Management/SoundManager.hpp"
 #include "Engine/Header/ECS/System/SoundSystem.hpp"
 
 #include "Engine/Header/Management/Settings.hpp"
@@ -470,7 +471,7 @@ namespace Engine {
 			SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
 
 			if (!ctype) return;
-			ctype->isMute = *_mute;
+			SoundManager::GetInstance().MuteSound(ctype, *_mute);
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

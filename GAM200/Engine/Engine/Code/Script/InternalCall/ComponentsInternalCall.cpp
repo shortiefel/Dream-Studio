@@ -104,13 +104,15 @@ namespace Engine {
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Sound / Audio Source
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		void SetAudioSource_Engine(unsigned int entityID, int audioState);
+		void SetSound_State_Engine(unsigned int entityID, int audioState);
 
 		void GetSound_Volume_Engine(unsigned int entityID, float* _vol);
 		void SetSound_Volume_Engine(unsigned int entityID, float* _vol);
 
 		void GetSound_Mute_Engine(unsigned int entityID, bool* _mute);
 		void SetSound_Mute_Engine(unsigned int entityID, bool* _mute);
+
+		void SetSound_Group_Engine(int audioGroup, bool _state);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Animation
@@ -184,12 +186,14 @@ namespace Engine {
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Sound / Audio Source
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-			mono_add_internal_call("AudioSource::SetAudioSource_Engine", SetAudioSource_Engine);
+			mono_add_internal_call("AudioSource::SetSound_State_Engine", SetSound_State_Engine);
 
 			mono_add_internal_call("AudioSource::GetSound_Volume_Engine", GetSound_Volume_Engine);
 			mono_add_internal_call("AudioSource::SetSound_Volume_Engine", SetSound_Volume_Engine);
 			mono_add_internal_call("AudioSource::GetSound_Mute_Engine", GetSound_Mute_Engine);
 			mono_add_internal_call("AudioSource::SetSound_Mute_Engine", SetSound_Mute_Engine);
+
+			mono_add_internal_call("AudioSource::SetSound_Group_Engine", SetSound_Group_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Animation
@@ -428,7 +432,7 @@ namespace Engine {
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Sound / Audio Source
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		void SetAudioSource_Engine(unsigned int entityID, int audioState) {
+		void SetSound_State_Engine(unsigned int entityID, int audioState) {
 			SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
 
 			switch (audioState) {
@@ -472,6 +476,32 @@ namespace Engine {
 
 		/*	if (!ctype) return;
 			SoundManager::GetInstance().MuteSound(ctype, *_mute);*/
+		}
+
+		void SetSound_Group_Engine(int audioGroup, bool _state) {
+			//In AudioSource.cs
+			//Master = 0,
+			//SFX,
+			//Music
+
+			switch (audioGroup) {
+			case 0: {
+				SoundManager::GetInstance().MuteSoundGroup(SoundGrp::MASTER, _state);
+				break;
+			}
+			case 1: {
+				SoundManager::GetInstance().MuteSoundGroup(SoundGrp::SFX, _state);
+				break;
+			}
+			case 2: {
+				SoundManager::GetInstance().MuteSoundGroup(SoundGrp::MUSIC, _state);
+				break;
+			}
+			default: {
+				break;
+			}
+			}
+			
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

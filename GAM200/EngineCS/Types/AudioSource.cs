@@ -16,11 +16,20 @@ Technology is prohibited.
 
 using System.Runtime.CompilerServices; //For internal calls
 
+public enum AudioGroup
+{
+    Master = 0,
+    SFX,
+    Music
+}
+
 public class AudioSource : IComponent
 {
     //public uint entityId { get; set; }
     public AudioSource() { }
     public AudioSource(uint entity_id) { entityId = entity_id; }
+
+    
 
     enum AudioType
     {
@@ -32,7 +41,7 @@ public class AudioSource : IComponent
     public void Play()
     {
         //SetAudioSource_Play_Engine(entityId);
-        SetAudioSource_Engine(entityId, (int)AudioType.Play);
+        SetSound_State_Engine(entityId, (int)AudioType.Play);
     }
     //[MethodImpl(MethodImplOptions.InternalCall)]
     //internal static extern void SetAudioSource_Play_Engine(uint entityID);
@@ -40,7 +49,7 @@ public class AudioSource : IComponent
     public void Pause()
     {
         //SetAudioSource_Pause_Engine(entityId);
-        SetAudioSource_Engine(entityId, (int)AudioType.Pause);
+        SetSound_State_Engine(entityId, (int)AudioType.Pause);
     }
     //[MethodImpl(MethodImplOptions.InternalCall)]
     //internal static extern void SetAudioSource_Pause_Engine(uint entityID);
@@ -48,13 +57,13 @@ public class AudioSource : IComponent
     public void UnPause()
     {
         //SetAudioSource_UnPause_Engine(entityId);
-        SetAudioSource_Engine(entityId, (int)AudioType.Unpause);
+        SetSound_State_Engine(entityId, (int)AudioType.Unpause);
     }
     //[MethodImpl(MethodImplOptions.InternalCall)]
     //internal static extern void SetAudioSource_UnPause_Engine(uint entityID);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetAudioSource_Engine(uint entityID, int audioType);
+    internal static extern void SetSound_State_Engine(uint entityID, int audioType);
 
     public float volume
     {
@@ -83,4 +92,15 @@ public class AudioSource : IComponent
     internal static extern void GetSound_Mute_Engine(uint entityID, out bool _mute);
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetSound_Mute_Engine(uint entityID, ref bool _mute);
+
+    static public void MuteGroup(AudioGroup ag, bool state)
+    {
+        SetSound_Group_Engine((int)ag, state);
+    }
+    //[MethodImpl(MethodImplOptions.InternalCall)]
+    //internal static extern void SetAudioSource_UnPause_Engine(uint entityID);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetSound_Group_Engine(int audioGroup, bool _state);
+
 }

@@ -474,8 +474,8 @@ namespace Engine {
 		void SetSound_Mute_Engine(unsigned int entityID, bool* _mute){
 			SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
 
-		/*	if (!ctype) return;
-			SoundManager::GetInstance().MuteSound(ctype, *_mute);*/
+			if (!ctype) return;
+			SoundManager::GetInstance().MuteSound(ctype, *_mute);
 		}
 
 		void SetSound_Group_Engine(int audioGroup, bool _state) {

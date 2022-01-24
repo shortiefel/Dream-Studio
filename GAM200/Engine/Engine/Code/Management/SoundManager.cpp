@@ -192,17 +192,17 @@ namespace Engine
 		SFXGroup->setPaused(paused);
 	}
 
-	//void SoundManager::MuteSound(SoundComponent* soundCom, bool _state) {
-	//	soundCom->isMute = _state;
-	//	auto it = channelMap.find(soundCom->channelID);
-	//	if (it == channelMap.end()) return;
-	//	it->second->setMute(soundCom->isMute);
-	//}
+	void SoundManager::MuteSound(SoundComponent* soundCom, bool _state) {
+		soundCom->isMute = _state;
+		auto it = channelMap.find(soundCom->channelID);
+		if (it == channelMap.end()) return;
+		it->second->setMute(soundCom->isMute);
+	}
 
-	void SoundManager::MuteSoundGroup(SoundGrp _sg, bool _state, float _vol) 
+	void SoundManager::MuteSoundGroup(SoundGrp _sg, bool _state) 
 	{
 		SoundComponent soundCom;
-		float originalVol = soundCom.volume;
+		
 
 		if (_state == true)
 		{
@@ -216,21 +216,6 @@ namespace Engine
 				break;
 			default:
 				MasterGroup->setMute(_state);
-				break;
-			}
-		}
-		else
-		{
-			switch (_sg)
-			{
-			case SoundGrp::MUSIC:
-				MusicGroup->setVolume(originalVol);
-				break;
-			case SoundGrp::SFX:
-				SFXGroup->setMute(originalVol);
-				break;
-			default:
-				MasterGroup->setMute(originalVol);
 				break;
 			}
 		}

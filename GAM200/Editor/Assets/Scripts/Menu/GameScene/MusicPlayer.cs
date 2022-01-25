@@ -14,18 +14,18 @@ public class MusicPlayer : MonoBehaviour
 
     public override void Update()
     { 
-      if (Input.GetKeyDown(KeyCode.A))
-        {
-            t1.mute = true;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            t2.mute = true;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            t2.mute = false;
-        }
+      //if (Input.GetKeyDown(KeyCode.A))
+      //  {
+      //      t1.mute = true;
+      //  }
+      //  if (Input.GetKeyDown(KeyCode.S))
+      //  {
+      //      t2.mute = true;
+      //  }
+      //  if (Input.GetKeyDown(KeyCode.D))
+      //  {
+      //      t2.mute = false;
+      //  }
     }
 
 }

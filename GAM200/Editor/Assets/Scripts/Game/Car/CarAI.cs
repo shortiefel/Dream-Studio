@@ -48,6 +48,7 @@ public class CarAI : MonoBehaviour
     private StructureModel endPoint;
 
     private TrafficManager tm;
+    private CollisionManager collisionManager;
 
     private float raycastLength;
 
@@ -98,6 +99,7 @@ public class CarAI : MonoBehaviour
         //Console.WriteLine("Testing " + rb.velocity);
 
         //tlPath = null;
+        collisionManager = GameObject.Find("CollisionManager").GetComponent<CollisionManager>();
         tm = GameObject.Find("TrafficManager").GetComponent<TrafficManager>();
 
         tm.RegisterCar(transform.entityId);
@@ -190,23 +192,45 @@ public class CarAI : MonoBehaviour
             Debug.Log("up: " + transform.up);
         if (hit.collider != null)
         {
-            if (tm.IsTrafficLight(Vector2Int.RoundToInt(hit.transform.position)))
+            Vector2Int targetPos = Vector2Int.RoundToInt(hit.transform.position);
+            //if (tm.IsTrafficLight(targetPos))
+            //{
+            //    if (tlIndex.Contains(hit.transform.entityId))
+            //    {
+            //        stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
+            //        //stop = true;
+            //        //Debug.Log("Hiting trigger");
+            //    }
+            //}
+
+            //else
+            //{
+            //    //Stop car because might be other cars
+            //    stop = true;
+            //}
+
+            switch (collisionManager.CollisionTypeCheck(targetPos))
             {
-                if (tlIndex.Contains(hit.transform.entityId))
-                {
-                    stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
-                    //stop = true;
-                    //Debug.Log("Hiting trigger");
-                }
+                case CollisionType.Traffic:
+                    if (tlIndex.Contains(hit.transform.entityId))
+                    {
+                        stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
+                        //stop = true;
+                        //Debug.Log("Hiting trigger");
+                    }
+                    break;
+                case CollisionType.ERP:
+                    //Do nothing if its ERP as the logic is already in ERP
+                    break;
+                case CollisionType.Unknown:
+                    //Stop car because might be other cars
+                    stop = true;
+                    break;
+                default:
+                    break;
             }
 
-            else
-            {
-                //Stop car because might be other cars
-                stop = true;
-            }
-
-            Debug.Log("Hiting trigger");
+            //Debug.Log("Hiting trigger");
         }
 
         else

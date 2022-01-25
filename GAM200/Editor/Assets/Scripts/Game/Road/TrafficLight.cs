@@ -17,11 +17,12 @@
     public override void Start()
     {
         tlm = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
-        tlm.RegisterTrafficLight(transform.position, entityId);
+        tlm.RegisterTrafficLight(Vector2Int.RoundToInt(transform.position), entityId);
 
         state = toState = true;
         texture = gameObject.GetComponent<Texture>();
         texture.color = new Color(1, 0, 0, 1);
+        transform.angle = 0;
         carCounter = 0;
 
         timer = 0f;
@@ -38,9 +39,11 @@
     {
         toState = state = !state;
         if (state)
-            texture.color = new Color(1, 0, 0, 1);
+            transform.angle = 0;
+        //texture.color = new Color(1, 0, 0, 1);
         else
-            texture.color = new Color(0, 1, 0, 1);
+            transform.angle = 90;
+        //texture.color = new Color(0, 1, 0, 1);
     }
 
     public override void Update()
@@ -72,7 +75,7 @@
 
     public override void OnDestroy()
     {
-        tlm.RemoveTrafficLight(transform.position);
+        tlm.RemoveTrafficLight(Vector2Int.RoundToInt(transform.position));
     }
 }
 

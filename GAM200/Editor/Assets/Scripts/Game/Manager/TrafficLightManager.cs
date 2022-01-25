@@ -3,7 +3,7 @@
 public class TrafficLightManager : MonoBehaviour
 {
 
-    private Dictionary<Vector2, uint> trafficLights;
+    private Dictionary<Vector2Int, uint> trafficLights;
 
     GameObject temTL; //TO Remove
     Camera mainCamera; //TO Remove
@@ -13,7 +13,7 @@ public class TrafficLightManager : MonoBehaviour
 
     public override void Start()
     {
-        trafficLights = new Dictionary<Vector2, uint>();
+        trafficLights = new Dictionary<Vector2Int, uint>();
 
         temTL = new GameObject(new Prefab("TrafficLight")); //To Remove
         mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
@@ -49,13 +49,13 @@ public class TrafficLightManager : MonoBehaviour
         //To Remove ------------------------------------------------------
     }
 
-    public void RegisterTrafficLight(Vector2 pos, uint id)
+    public void RegisterTrafficLight(Vector2Int pos, uint id)
     {
         if (!trafficLights.ContainsKey(pos))
             trafficLights.Add(pos, id);
     }
 
-    public void RemoveTrafficLight(Vector2 pos)
+    public void RemoveTrafficLight(Vector2Int pos)
     {
         trafficLights.Remove(pos);
     }

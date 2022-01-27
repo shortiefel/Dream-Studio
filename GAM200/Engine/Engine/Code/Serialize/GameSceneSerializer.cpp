@@ -616,7 +616,7 @@ namespace Engine {
 
 		auto [entityId, entity] = *entityMap.find(entity_id);
 		entity.name = _filename;
-		sceneSerializer.StartEntitySerialize(entity);
+		sceneSerializer.StartEntitySerializePrefab(entity);
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<TransformComponent>(entityId));
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ColliderComponent>(entityId));
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<RigidBodyComponent>(entityId));
@@ -679,22 +679,41 @@ namespace Engine {
 	}
 
 	void GameSceneSerializer::DeserializePrefab(std::string _filename, unsigned int* id, Math::vec2 position, float angle, int layer) {
+#if 1
+		//NOTE: Assumes that parent is deserialized before child
+
 		std::string filename = TO_FULL_PREFAB(_filename);
 		Serializer sceneSerializer(filename);
 
 		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &position, &angle, &layer, &id, &_filename]() -> void {
+			//Prefab saved parents entity id which may not be the correct one in a new scene
+			//This map will check if an entity has 
+			static std::unordered_map<uint32_t, uint32_t> oldParentToNewParent;
 
 			Entity entity;
 			if (sceneSerializer.SelectDeserializeDataType("Entity")) {
 				std::string entityName = DEFAULT_ENTITY_NAME;
+				Entity_id entityId = DEFAULT_ENTITY_ID;
 				Entity_id parent = DEFAULT_ENTITY_ID;
 				std::unordered_set<Entity_id> child{};
 				sceneSerializer.RetrieveData(
 					"Name", entityName,
-					"Parent", parent);
+					"EntityId", entityId,
+					"Parent", parent,
+					"Child", child);
 
-				entity = dreamECSGame->CreateEntity(entityName.c_str(), child, parent);
+				entity = dreamECSGame->CreateEntity(entityName.c_str());
+
+				if (child.size() != 0) oldParentToNewParent[entityId] = entity.id;
+
+				if (parent != DEFAULT_ENTITY_ID) {
+					parent = oldParentToNewParent[parent];
+					auto& temMap = dreamECSGame->GetUsedEntityMap();
+					temMap[parent].child.insert(entity.id);
+					temMap[entity.id].parent = parent;
+				}
 			}
+
 			if (entity.id == DEFAULT_ENTITY_ID) {
 				LOG_WARNING("Deserialize entity failed\n");
 				return;
@@ -710,12 +729,13 @@ namespace Engine {
 			if (sceneSerializer.SelectDeserializeDataType("TransformComponent")) {
 				TransformComponent tem(entityId);
 				sceneSerializer.RetrieveData(
+					"Position", tem.position,
 					"Scale", tem.scale,
 					"Angle", tem.angle
 				);
 
 				dreamECSGame->AddComponent(
-					TransformComponent{ entityId, position, tem.scale, tem.angle + angle, layer }
+					TransformComponent{ entityId, tem.position + position, tem.scale, tem.angle + angle, layer }
 				);
 
 				ParentManager::GetInstance().UpdateTruePos(entityId);
@@ -726,6 +746,23 @@ namespace Engine {
 		};
 
 		sceneSerializer.DeserializeArray(deserializePrefabFP);
+#else
+		std::string filename = TO_FULL_PREFAB(_filename);
+		Serializer sceneSerializer(filename);
+
+		std::ifstream fileStream(filename);
+		rapidjson::IStreamWrapper isw(fileStream);
+
+		rapidjson::Document doc;
+		doc.ParseStream(isw);
+
+		for (auto& obj : doc.GetArray()) {
+			arrayObjType = obj;
+
+			fp();
+		}
+		fileStream.close();
+#endif
 
 #if 0
 		std::ifstream fileStream;

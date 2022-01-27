@@ -167,8 +167,8 @@ namespace Engine {
                     EventDispatcher::SendEvent(event);
                 }
             //}
-            
         }
+
 
         CameraSystem::GetInstance().Update(dt);
 

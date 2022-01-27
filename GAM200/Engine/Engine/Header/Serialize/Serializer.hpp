@@ -46,6 +46,7 @@ namespace Engine {
 		void EndSerialize();
 
 		void StartEntitySerialize(const Entity& entity);
+		void StartEntitySerializePrefab(const Entity& entity);
 		void EndEntitySerialize();
 
 		//Serialize

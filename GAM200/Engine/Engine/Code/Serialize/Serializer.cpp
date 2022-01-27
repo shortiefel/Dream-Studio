@@ -87,6 +87,22 @@ namespace Engine {
 		serializerEntity.SetValueSet("Child", entity.child);
 		mainObject.AddMember("Entity", objTypeEntity, doc.GetAllocator());
 	}
+	
+	void Serializer::StartEntitySerializePrefab(const Entity& entity) {
+		if (entCounter != 0) LOG_WARNING("Serializer: Calls to StartEntitySerialize and EndEntitySerialize does not match!");
+		entCounter++;
+
+		mainObject = rapidjson::Value{ rapidjson::kObjectType };
+
+		rapidjson::Value objTypeEntity(rapidjson::kObjectType);
+
+		SSerializer serializerEntity(doc, objTypeEntity);
+		serializerEntity.SetValue("Name", entity.name);
+		serializerEntity.SetValue("EntityId", entity.id);
+		serializerEntity.SetValue("Parent", entity.parent);
+		serializerEntity.SetValueSet("Child", entity.child);
+		mainObject.AddMember("Entity", objTypeEntity, doc.GetAllocator());
+	}
 
 	void Serializer::EndEntitySerialize() {
 		entCounter--;

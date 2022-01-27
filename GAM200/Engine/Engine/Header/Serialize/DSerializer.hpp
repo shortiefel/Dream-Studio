@@ -99,6 +99,20 @@ namespace Engine {
 				itr->value[name].GetArray()[3].GetFloat() };
 		}
 
+		template <>
+		std::unordered_set<uint32_t> GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
+			std::unordered_set<uint32_t> child{};
+			auto sz = itr->value[name].GetArray().Size();
+			auto data = itr->value[name].GetArray();
+			for (unsigned int i = 0; i < sz; i++) {
+				child.insert(data[i].GetUint());
+			}
+
+
+			return child;
+		}
+
 		/*rapidjson::Value& GetArray() const {
 			return  itr->value["ma,e"].GetString();
 		}*/

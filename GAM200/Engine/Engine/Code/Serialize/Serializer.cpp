@@ -209,6 +209,18 @@ namespace Engine {
 				cserializer.SetValue("EndFrame", state.endX);
 				cserializer.SetValue("TimePerFrame", state.fTime);
 				cserializer.SetValue("IsLoop", state.isLoop);
+				
+				rapidjson::Value frameArrayType(rapidjson::kArrayType);
+				SSerializer _framesSerializer(_serializer, frameArrayType);
+
+				size_t tempv = state.frameTime.size();
+				for (int i{ 0 }; i < tempv; i++)
+				{
+					frameArrayType.PushBack(state.frameTime[i], doc.GetAllocator());
+				}
+
+				classObj.AddMember("Frames", frameArrayType, doc.GetAllocator());
+
 
 				_serializer.SetValueJSonArray(allAnimation, classObj);
 			}

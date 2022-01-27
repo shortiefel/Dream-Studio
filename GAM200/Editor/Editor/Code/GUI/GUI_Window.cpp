@@ -86,6 +86,7 @@ namespace Editor {
 		bool gameWin_bool = true;
 		bool sceneWin_bool = true;
 		bool asset_bool = true;
+		
 
 		/*-------------------------------------------------------------------------------------------------
 		Forward declaration (Menus to be used inside dockspace function)
@@ -241,7 +242,7 @@ namespace Editor {
 			GUI_Windows::GUI_Console_Create();
 
 			GUI_Windows::GUI_SceneSetup();
-
+			LoadAllAssets("Assets");
 			Engine::KeyPressedEvent::RegisterFunction(OnKeyEvent);
 
 			Override_Function();
@@ -279,21 +280,21 @@ namespace Editor {
 			ImGui::SetNextWindowPos(viewport->Pos);
 			ImGui::SetNextWindowSize(viewport->Size);
 			ImGui::SetNextWindowViewport(viewport->ID);
-			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+			//ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+			//ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 			/*ImGui::SetNextWindowSize(ImVec2{ (float)Engine::Window::GetInstance().GetWidth(),
 											 (float)Engine::Window::GetInstance().GetHeight() });*/
 
 			ImGuiStyle& style = ImGui::GetStyle();
 			//float minWinSizeX = style.WindowMinSize.x;
-			style.WindowMinSize.x = 370.0f;
+			style.WindowMinSize.x = 170.0f;
 			ImGui::Begin("Dream Engine", &dockspace_bool, dockspace_window_flags);//, & showWindow, ImGuiWindowFlags_NoInputs);
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_dock_flags);
 
 			GUI_Menus();
 
-			ImGui::PopStyleVar(2);
+			//ImGui::PopStyleVar(2);
 			ImGui::End();
 		}
 

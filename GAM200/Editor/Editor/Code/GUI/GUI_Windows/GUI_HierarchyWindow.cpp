@@ -96,7 +96,8 @@ namespace Editor {
 						//if (entity.child.empty()) {
 						if (selected)
 							ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-
+						
+						
 						if (ImGui::Selectable(entity.name.c_str()))
 						{
 							ClickCheck(entity_selected, id);
@@ -107,14 +108,21 @@ namespace Editor {
 							ImGui::PopStyleColor();
 
 					}
-
 					else
 						setOfUI.emplace(id);
 
-
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+						{
+							const wchar_t* path = (const wchar_t*)payload->Data;
+							Engine::dreamECSGame->CreateEntity()
+						}
+						ImGui::EndDragDropTarget();
+					}
 				}
 
-
+				
 				
 				
 				if (ImGui::BeginPopupContextItem("##EntityPop"))
@@ -170,12 +178,12 @@ namespace Editor {
 					//Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 
 				}
-				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+				/*if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 				{
 					ImGui::Text("I'm Dragging.");
 					ImGui::SetDragDropPayload("GAME_OBJECT", NULL, NULL);
 					ImGui::EndDragDropSource();
-				}
+				}*/
 
 
 				ImGuiTreeNodeFlags flags =  ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
@@ -258,9 +266,6 @@ namespace Editor {
 
 					}
 				}
-
-
-
 
 				ImGui::End();
 			}

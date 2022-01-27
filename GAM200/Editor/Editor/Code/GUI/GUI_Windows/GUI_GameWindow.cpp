@@ -72,12 +72,12 @@ namespace Editor {
 				ImGui::PushItemWidth(wSize.x);
 				ASPECT_RATIO_FIX(wSize);
 
-	
+				static bool fileformat = true;
 				ImGui::Image((ImTextureID)(gameWinFBO.GetTexture()), wSize, ImVec2(0, 1), ImVec2(1, 0));
 
 				if (ImGui::BeginDragDropTarget())
 				{
-					ImGui::Text("I'm Dropping.");
+					//ImGui::Text("I'm Dropping.");
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 					{
 						const wchar_t* path = (const wchar_t*)payload->Data;
@@ -85,6 +85,7 @@ namespace Editor {
 						if (scenePath.extension().string() != ".scene")
 						{
 							std::cout << "Unable to load scene file\n";
+							fileformat = false;
 							//std::exit(EXIT_FAILURE);
 						}
 						else {
@@ -98,7 +99,25 @@ namespace Editor {
 					}
 					ImGui::EndDragDropTarget();
 				}
+				if (!fileformat)
+					ImGui::OpenPopup("Error Message!");
 
+				ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+				ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+				if (ImGui::BeginPopupModal("Error Message!", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+				{
+					ImGui::Text("Invalid File Format for Scene Please try again !\n\n");
+					ImGui::Separator();
+
+					if (ImGui::Button("OK", ImVec2(120, 0)))
+					{
+						fileformat = true;
+						ImGui::CloseCurrentPopup();
+					}
+					ImGui::SetItemDefaultFocus();
+					ImGui::EndPopup();
+				}
 				ImVec2 windowSize = ImGui::GetWindowSize();
 				ImVec2 minBound = ImGui::GetWindowPos();
 				if (windowSize.x > windowSize.y * Engine::CameraSystem::GetInstance().GetAR())

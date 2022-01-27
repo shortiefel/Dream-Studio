@@ -56,13 +56,17 @@ namespace Engine
 
 		void RefreshTexture(TextureComponent* tc);
 		void RefreshTexture(ParticleComponent* pc);
-		GLuint LoadTexture(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+
+		GLuint LoadTexture(std::string filepath);
+		GLuint LoadTexture(std::string filepath, int* x, int* y, int* channels_in_files, int desired_channel);
+
 		bool LoadFont(std::string filename);
 
 		FontContainer GetFontContainer(std::string filename) { return fontList[filename]; }
 
 	private:
 		GLuint LoadTextureInternal(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);
+		GLuint LoadTextureInternal(std::string filename);
 
 		std::unordered_map<std::string, TextureContainer> textureList;
 		std::unordered_map<std::string, FontContainer> fontList;

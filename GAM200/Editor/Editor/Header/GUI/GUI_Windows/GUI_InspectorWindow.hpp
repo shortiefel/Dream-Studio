@@ -24,5 +24,12 @@ Technology is prohibited.
 namespace Editor {
 	namespace GUI_Windows {
 		void GUI_Inspector(bool* inspector_bool, float textSize, const Engine::Entity_id& entity_selected, ImGuiWindowFlags window_flags);
+		struct Animation2D
+		{
+			Math::vec2 Min{};
+			Math::vec2 Max{};
+			float timer{ 1.0f };
+			
+		};
 	}
 }

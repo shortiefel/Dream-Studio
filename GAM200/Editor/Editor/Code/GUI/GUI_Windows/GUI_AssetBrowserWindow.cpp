@@ -32,17 +32,16 @@ namespace Editor {
 
 	namespace GUI_Windows {
 		static std::filesystem::path _currentDirectory = "Assets";
-	
 
 		void OpenScene()
 		{
-				std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0", Engine::File_Dialog_Type::Scenes);
+			std::string filePath = Engine::FileWindowDialog::OpenFile("Dream Scene (*.scene)\0*.scene\0", Engine::File_Dialog_Type::Scenes);
 
-					if (!filePath.empty()) {
-						REMOVE_FROM_FILEPATH;
+			if (!filePath.empty()) {
+				REMOVE_FROM_FILEPATH;
 
-						Engine::SceneManager::GetInstance().ChangeScene(filePath);
-					}		
+				Engine::SceneManager::GetInstance().ChangeScene(filePath);
+			}		
 		}
 
 		void OpenScene(const std::filesystem::path& path)
@@ -76,6 +75,7 @@ namespace Editor {
 				float cellSize = thumbnailSize + padding;
 				int height = 128;
 				int width = 10;
+				int counter = 0;
 
 				float panelWidth = ImGui::GetContentRegionAvail().x;
 				int columnCount = (int)(panelWidth / cellSize);
@@ -89,13 +89,38 @@ namespace Editor {
 					const auto& path = directory.path();
 					auto relative_path = std::filesystem::relative(path, _assetPath);
 					std::string file_name = relative_path.filename().string();
+					std::string final_path = "Assets/Textures/";
+					final_path += file_name;
+					if (_currentDirectory == "Assets\\Textures")
+					{
+						GLuint textureicon = Engine::ResourceManager::GetInstance().LoadTexture(final_path);
+						GLuint directory_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/DirectoryIcon.png", &height, &width, 0, 4);
+						std::string filter = file_name.substr(file_name.size() - 3, file_name.size());
+						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 
-					ImGui::PushID(file_name.c_str());
-					GLuint directory_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/DirectoryIcon.png", &height, &width, 0, 4);
-					GLuint file_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/FileIcon.png", &height, &width, 0, 4);
-					GLuint asset_icon = directory.is_directory() ? directory_icon : file_icon;
-					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-					ImGui::ImageButton((ImTextureID)static_cast<uintptr_t>(asset_icon), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
+						if (filter == "png")
+						{
+							ImGui::ImageButton((ImTextureID)static_cast<uintptr_t>(textureicon), { thumbnailSize , thumbnailSize }, { 0,1 }, { 1 , 0 });
+						}
+						else
+						{
+							ImGui::ImageButton((ImTextureID)static_cast<uintptr_t>(directory_icon), { thumbnailSize , thumbnailSize }, { 0,1 }, { 1 , 0 });
+						}
+						ImGui::PopStyleColor();
+
+					}
+					else
+					{
+						ImGui::PushID(counter);
+						GLuint directory_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/DirectoryIcon.png", &height, &width, 0, 4);
+						GLuint file_icon = Engine::ResourceManager::GetInstance().LoadTexture("Assets/Textures/FileIcon.png", &height, &width, 0, 4);
+						GLuint asset_icon = directory.is_directory() ? directory_icon : file_icon;
+						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+						ImGui::ImageButton((ImTextureID)static_cast<uintptr_t>(asset_icon), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
+						ImGui::PopStyleColor();
+						ImGui::PopID();
+						counter++;
+					}
 				
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 					{
@@ -105,7 +130,6 @@ namespace Editor {
 						ImGui::EndDragDropSource();
 					}
 
-					ImGui::PopStyleColor();
 					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 					{
 						if (directory.is_directory())
@@ -142,7 +166,6 @@ namespace Editor {
 
 					ImGui::NextColumn();
 
-					ImGui::PopID();
 
 				}
 
@@ -152,6 +175,24 @@ namespace Editor {
 				ImGui::SliderFloat("Padding", &padding, 0, 32);
 
 				ImGui::End();
+			}
+		}
+		void LoadAllAssets(const std::string& path)
+		{
+			const std::filesystem::path dir{ path };
+			for (auto& i : std::filesystem::directory_iterator{ dir })
+			{
+				if (is_directory(i))
+				{
+					LoadAllAssets(i.path().generic_string());
+				}
+				else
+				{
+					if (i.path().extension() == ".png" || i.path().extension() == ".PNG")
+					{
+						Engine::ResourceManager::GetInstance().LoadTexture(i.path().generic_string());
+					}
+				}
 			}
 		}
 	}

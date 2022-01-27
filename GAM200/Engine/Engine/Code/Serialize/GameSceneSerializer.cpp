@@ -203,7 +203,14 @@ namespace Engine {
 
 					bool isLoop = state["IsLoop"].GetBool();
 
-					AnimationState animstate = AnimationState(stateName, stateRow, startX, endX, fTime, isLoop);
+					std::vector<float> frameTimes;
+					if (state.FindMember("Frames") != state.MemberEnd()) {
+						for (auto& frameTime : state["Frames"].GetArray()) {
+							frameTimes.push_back(frameTime.GetFloat());
+						}
+					}
+
+					AnimationState animstate = AnimationState(stateName, stateRow, startX, endX, fTime, isLoop, frameTimes);
 
 					tem.animationStateList.emplace(stateName, animstate);
 				}

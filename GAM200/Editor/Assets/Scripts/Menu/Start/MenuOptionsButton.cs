@@ -11,10 +11,6 @@ public class MenuOptionsButton : MonoBehaviour
 
         text = GetComponent<Text>();
         texture = GameObject.Find("MenuOptionsBtn").GetComponent<Texture>();
-        if (texture == null)
-            Debug.Log("hello");
-        else
-            Debug.Log("goodbye");
     }
 
     public override void OnMouseEnter()

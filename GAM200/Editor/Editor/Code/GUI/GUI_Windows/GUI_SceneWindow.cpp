@@ -143,7 +143,7 @@ namespace Editor {
 				else
 					windowSize.y = windowSize.x / EditorSceneCamera::GetAR();
 
-
+				static bool fileformat = true;
 				ImGui::Image((ImTextureID)(sceneWinFBO.GetTexture()), windowSize, ImVec2(0, 1), ImVec2(1, 0));
 
 				if (ImGui::BeginDragDropTarget())
@@ -157,6 +157,7 @@ namespace Editor {
 						if (scenePath.extension().string() != ".scene")
 						{
 							std::cout << "Unable to load scene file\n";
+							fileformat = false;
 						}
 						
 						else {
@@ -175,7 +176,25 @@ namespace Editor {
 					}
 					ImGui::EndDragDropTarget();
 				}
+				if (!fileformat)
+					ImGui::OpenPopup("Error Message!");
 
+				ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+				ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+				if (ImGui::BeginPopupModal("Error Message!", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+				{
+					ImGui::Text("Invalid File Format for Scene Please try again !\n\n");
+					ImGui::Separator();
+
+					if (ImGui::Button("OK", ImVec2(120, 0)))
+					{
+						fileformat = true;
+						ImGui::CloseCurrentPopup();
+					}
+					ImGui::SetItemDefaultFocus();
+					ImGui::EndPopup();
+				}
 				
 				
 

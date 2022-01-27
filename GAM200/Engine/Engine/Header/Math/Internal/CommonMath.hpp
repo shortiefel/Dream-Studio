@@ -26,12 +26,12 @@ namespace Engine {
 		-------------------------------------------------------------------------------------------------------------------*/
         template <typename T>
         inline T sin(T deg) {
-            return static_cast<T>(std::sin(static_cast<double>(deg)));
+            return static_cast<T>(std::sin(static_cast<double>(deg) * pi<T>() / 180));
         }
 
         template <typename T>
         inline T cos(T deg) {
-            return static_cast<T>(std::cos(static_cast<double>(deg)));
+            return static_cast<T>(std::cos(static_cast<double>(deg) * pi<T>() / 180));
         }
 
         template <typename T>

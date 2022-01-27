@@ -691,8 +691,13 @@ namespace Engine {
 
 		std::string filename = TO_FULL_PREFAB(_filename);
 		Serializer sceneSerializer(filename);
-
-		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &position, &angle, &layer, &id, &_filename]() -> void {
+		
+		float cosX = Math::cos(angle);
+		float sinX = Math::sin(angle);
+		
+		Math::mat3 rotation{ cosX, sinX, 0.f, -sinX, cosX, 0.f, 0.f, 0.f, 1.f };
+		
+		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &position, &angle, &layer, &id, &_filename, &rotation]() -> void {
 			//Prefab saved parents entity id which may not be the correct one in a new scene
 			//This map will check if an entity has 
 			static std::unordered_map<uint32_t, uint32_t> oldParentToNewParent;
@@ -740,6 +745,11 @@ namespace Engine {
 					"Scale", tem.scale,
 					"Angle", tem.angle
 				);
+
+				Math::vec3 temVec{ tem.position.x, tem.position.y, 1.f };
+				temVec = rotation * temVec;
+				tem.position.x = temVec.x;
+				tem.position.y = temVec.y;
 
 				dreamECSGame->AddComponent(
 					TransformComponent{ entityId, tem.position + position, tem.scale, tem.angle + angle, layer }

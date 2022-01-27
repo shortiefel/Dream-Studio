@@ -167,6 +167,11 @@ namespace Engine {
                     EventDispatcher::SendEvent(event);
                 }
             //}
+                //auto tem = dreamECSGame->GetUsedConstEntityMap();
+                //for (auto [id, ent] : tem) {
+                //    std::cout << id << " with parent " << ent.parent << " with child count " << ent.child.size() << "\n";
+                //}
+                //std::cout << "end\n";
         }
 
 

@@ -1,46 +1,41 @@
 ﻿using System;
 public class Test : MonoBehaviour
 {
-    //public int num;
-    //RoadFixer roadFixer;
-    Text text;
-    Transform trans;
-    //bool on = true;
-    //bool forcesA = true;
-    //int dir = 1;
-    //int forceDir = 1;
+    GameObject temTL; //TO Remove
+    Camera mainCamera; //TO Remove
+
     public override void Start()
     {
-        //Debug.Log("Test start");
-        //roadFixer = GameObject.Find("RoadManager").GetComponent<RoadFixer>();
-        //Grid.GridTest();
-        //rb = GetComponent<Rigidbody2D>();
-        //trans = GetComponent<Transform>();
-        text = GetComponent<Text>();
+        temTL = new GameObject(new Prefab("Box")); //To Remove
+        mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove = GetComponent<Text>();
     }
 
     public override void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            //on = false;
-            //text.text = "New Word";
-            gameObject.AddComponent<Transform>();
-            Debug.Log("adding now");
+            Debug.Log("Instantiating ");
+            Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
+
+            Instantiate(temTL, new Vector3(mousePos.x, mousePos.y, 0f));
+
         }
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log(Vector2.Dot(new Vector2(1, 3), new Vector2(5, 3)));
+            Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
+            Transform temT = new Transform();
+            temT.position = new Vector2(mousePos.x, mousePos.y);
+            temT.angle = 90;
+            Instantiate(temTL, temT);
         }
-        if (Input.GetKeyDown(KeyCode.N))
+
+        if (Input.GetMouseButtonDown(MouseCode.Right))
         {
-            Enable(transform);
+            Debug.Log("asdasdad");
+            Console.WriteLine("asdasdad");
         }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Disable(transform);
-        }
+
         //
         //else if (Input.GetKeyDown(KeyCode.H))
         //{

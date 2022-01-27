@@ -116,7 +116,7 @@ namespace Editor {
 						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 						{
 							const wchar_t* path = (const wchar_t*)payload->Data;
-							Engine::dreamECSGame->CreateEntity()
+							Engine::dreamECSGame->CreateEntity();
 						}
 						ImGui::EndDragDropTarget();
 					}

@@ -174,20 +174,6 @@ namespace Engine {
                 //std::cout << "end\n";
         }
 
-        //auto wpComp = dreamECSGame->GetComponentArrayData<WaypointComponent>();
-        //for (auto i : wpComp) {
-        //    if (i.GetEntityId() != DEFAULT_ENTITY_ID)
-        //        std::cout << "Waypoint: " << i.GetEntityId() << "\n";
-        //}
-
-        if (Input::IsKeyPressed(Input_KeyCode::A)) {
-            std::cout << "inside dsfsfdsf \n";
-            auto ent = dreamECSGame->CreateEntity();
-            //dreamECSGame->AddComponent(WaypointComponent{ ent.id, std::list<unsigned int>{ 2, 3, 4}, std::list<Math::vec2>{ {1,2}, {3,4}} });
-            dreamECSGame->AddComponent(WaypointComponent{ ent.id });
-            dreamECSGame->AddComponent(CameraComponent{ ent.id });
-        }
-
 
         CameraSystem::GetInstance().Update(dt);
 

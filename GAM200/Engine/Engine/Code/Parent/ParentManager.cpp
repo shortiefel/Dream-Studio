@@ -23,6 +23,9 @@ Technology is prohibited.
 
 namespace Engine {
 	void ParentManager::UpdateTruePos(Entity_id entity_id) {
+		printf("ParentManager not in used \n");
+		return;
+
 		auto& transform = dreamECSGame->GetComponent<TransformComponent>(entity_id);
 		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 
@@ -36,6 +39,9 @@ namespace Engine {
 	}
 
 	void ParentManager::UpdateAllTruePos() {
+		printf("ParentManager not in used \n");
+		return;
+
 		auto& transformArray = dreamECSGame->GetComponentArrayData<TransformComponent>();
 		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 
@@ -54,6 +60,9 @@ namespace Engine {
 	}
 
 	void ParentManager::UpdateChildTruePos(Entity_id entity_id) {
+		printf("ParentManager not in used \n");
+		return;
+
 		auto& transform = dreamECSGame->GetComponent<TransformComponent>(entity_id);
 		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 
@@ -67,6 +76,9 @@ namespace Engine {
 	}
 
 	void ParentManager::UpdateAllChildTruePos() {
+		printf("ParentManager not in used \n");
+		return;
+
 		auto& transformArray = dreamECSGame->GetComponentArrayData<TransformComponent>();
 		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 
@@ -84,6 +96,9 @@ namespace Engine {
 	}
 	
 	void ParentManager::UpdateLocalPos(Entity_id entity_id) {
+		printf("ParentManager not in used \n");
+		return;
+
 		auto& transform = dreamECSGame->GetComponent<TransformComponent>(entity_id);
 		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 
@@ -97,6 +112,9 @@ namespace Engine {
 	}
 
 	void ParentManager::UpdateAllLocalPos() {
+		printf("ParentManager not in used \n");
+		return;
+
 		auto& transformArray = dreamECSGame->GetComponentArrayData<TransformComponent>();
 		auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 
@@ -115,6 +133,9 @@ namespace Engine {
 	}
 
 	void ParentManager::Parent(Entity_id _parent, Entity_id _child) {
+		printf("ParentManager not in used \n");
+		return;
+
 		auto& entityMap = dreamECSGame->GetUsedEntityMap();
 		auto& childEntity = entityMap[_child];
 		if (childEntity.parent == _parent) return;
@@ -130,6 +151,9 @@ namespace Engine {
 	}
 
 	void ParentManager::Unparent(Entity_id _target) {
+		printf("ParentManager not in used \n");
+		return;
+
 		auto& entityMap = dreamECSGame->GetUsedEntityMap();
 		Entity_id& parent = entityMap[_target].parent;
 		if (parent == DEFAULT_ENTITY_ID) return;

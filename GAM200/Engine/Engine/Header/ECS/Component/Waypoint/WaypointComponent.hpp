@@ -7,6 +7,8 @@
 #include "Engine/Header/ECS/Component/Waypoint/WaypointComponent.hpp"
 This file contains the WaypointComponent declaration
 
+The waypoints that are set will follow the rotation of the transform
+
 
 Copyright (C) 2021 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -29,6 +31,8 @@ namespace Engine {
 		std::list<unsigned int> numOfWaypoint = std::list<unsigned int>{};
 		//Stores the list of waypoints
 		std::list<Math::vec2> listOfWaypoint = std::list<Math::vec2>{};
+
+		bool isActive = true;
 
 		WaypointComponent(Entity_id _ID = DEFAULT_ENTITY_ID, std::list<unsigned int> _num = std::list<unsigned int>{},
 			std::list<Math::vec2> _list = std::list<Math::vec2>{});

@@ -101,30 +101,6 @@ namespace Engine {
 		}
 
 		template<>
-		bool AddComponent(ColliderComponent com) {
-			ColliderComponent* ptr = compManager->GetComPtr<ColliderComponent>(com.GetEntityId());
-			printf("Adding ColliderComponent \n");
-			//LOG_ASSERT(!ptr && "Unable add the same component for one entity");
-			if (ptr) {
-				printf("Acutally found one ColliderComponent \n");
-				return false;
-			}
-			return compManager->AddComponent<ColliderComponent>(std::move(com));
-		}
-
-		template<>
-		bool AddComponent(WaypointComponent com) {
-			WaypointComponent* ptr = compManager->GetComPtr<WaypointComponent>(com.GetEntityId());
-			printf("Adding waypoint \n");
-			//LOG_ASSERT(!ptr && "Unable add the same component for one entity");
-			if (ptr) {
-				printf("Acutally found one waypoint \n");
-				return false;
-			}
-			return compManager->AddComponent<WaypointComponent>(std::move(com));
-		}
-
-		template<>
 		bool AddComponent(ScriptComponent com) {
 			return compManager->AddScript(std::move(com));
 		}

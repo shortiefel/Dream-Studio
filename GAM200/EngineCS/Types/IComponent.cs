@@ -17,7 +17,7 @@ Technology is prohibited.
 //Default Component that contains entityId
 public class IComponent
 {
-    public uint entityId { get; set; }
+    public uint entityId { get; set; } = 10001;
 }
 
 

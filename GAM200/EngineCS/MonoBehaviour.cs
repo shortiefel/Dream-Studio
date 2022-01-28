@@ -309,9 +309,10 @@ public class MonoBehaviour : IBehaviour
         Instantiate_Prefab_Position_Engine(_prefab.name, pos, layer, out uint newId);
         return new GameObject(false, newId, _prefab.name);
     }
-    public GameObject Instantiate(GameObject _go, Vector3 pos, int layer = 2)
+    public GameObject Instantiate(GameObject _go, Vector3 pos, int layer = 2, float angle = 0)
     {
-        Instantiate_Prefab_Position_Engine(_go.name, pos, layer, out uint newId);
+        //Instantiate_Prefab_Position_Engine(_go.name, pos, layer, out uint newId);
+        Instantiate_Prefab_Engine(_go.name, pos, angle, new Vector2(1,1), layer, out uint newId);
         return new GameObject(false, newId, _go.name);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -319,18 +320,10 @@ public class MonoBehaviour : IBehaviour
 
 
 
-    /*public void Instantiate(string prefabName, Vector2 position, float angle = 0)
-    {
-        Instantiate_Prefab_Engine(prefabName, position, angle);
-    }*/
-
-    /*public void Instantiate(string prefabName)
-    {
-        Instantiate_Prefab_Engine(prefabName, new Vector2(0,0), 0);
-    }
-
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void Instantiate_Prefab_Engine(String prefabName, Vector2 position, float angle);*/
+    internal static extern void Instantiate_Prefab_Engine(String prefabName, Vector3 pos, float angle, Vector2 scale, int layer, out uint newId);
+
+    
 
     /*public virtual void OnEnable()
     {

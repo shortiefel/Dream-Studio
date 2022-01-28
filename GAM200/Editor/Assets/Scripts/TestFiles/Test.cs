@@ -25,9 +25,23 @@ public class Test : MonoBehaviour
         {
             Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
             Transform temT = new Transform();
-            temT.position = new Vector2(mousePos.x, mousePos.y);
-            temT.angle = 90;
-            Instantiate(temTL, temT);
+            Debug.Log("Entid " + temT.entityId);
+
+            Instantiate(temTL, new Vector3(mousePos.x, mousePos.y, 0), 2, 90);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Debug.Log("Instantiating ");
+
+            Instantiate(temTL, new Vector3(0, 0, 0));
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+
+            Instantiate(temTL, new Vector3(0, 0, 0), 2, 90);
         }
 
         if (Input.GetMouseButtonDown(MouseCode.Right))

@@ -84,6 +84,7 @@
     <Compile Include="Types\Texture.cs" />
     <Compile Include="Types\Transform.cs" />
     <Compile Include="Types\UI.cs" />
+    <Compile Include="Types\Waypoint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -209,7 +209,7 @@ namespace Engine {
 				GetEngineType(id, TransformComponent, position, *outVec2);
 			}
 			else {
-				GetEngineType(id, TransformComponent, localPosition, *outVec2);
+				GetEngineType(id, TransformComponent, position, *outVec2);
 			}
 		}
 		void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2, bool local) {
@@ -227,9 +227,9 @@ namespace Engine {
 				Entity_id parent = entity.parent;
 
 				if (parent != DEFAULT_ENTITY_ID) //TODO: Need to fix parent-child
-					ctype->localPosition -= dreamECSGame->GetComponent<TransformComponent>(parent).position;
+					ctype->position -= dreamECSGame->GetComponent<TransformComponent>(parent).position;
 				else
-					ctype->localPosition = *inVec2;
+					ctype->position = *inVec2;
 
 				for (auto& newId : entity.child) {
 					TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
@@ -243,14 +243,14 @@ namespace Engine {
 				TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 				if (!ctype) return;
 				Math::vec2 moveDis = *inVec2 - ctype->position;
-				ctype->localPosition = *inVec2;
+				ctype->position = *inVec2;
 				auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
 				const auto& itr = entityMap.find(ctype->GetEntityId());
 				const auto& entity = itr->second;
 				Entity_id parent = entity.parent;
 
 				if (parent != DEFAULT_ENTITY_ID) //TODO: Need to fix parent-child
-					ctype->position = ctype->localPosition + dreamECSGame->GetComponent<TransformComponent>(parent).position;
+					ctype->position = ctype->position + dreamECSGame->GetComponent<TransformComponent>(parent).position;
 				else
 					ctype->position = *inVec2;
 

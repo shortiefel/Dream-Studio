@@ -98,7 +98,7 @@ namespace Engine {
 		inline void ResetEntityManager() {
 			//UsedEntities2.clear();
 			usedEntities = EntityMapType{};
-			currentMaxId = 0;
+			currentMaxId = 1;
 			AliveEntityCount = 0;
 			AvailableEntities = std::queue<Entity_id>();
 		}
@@ -116,6 +116,6 @@ namespace Engine {
 		unsigned int AliveEntityCount{}; // Total living entities
 		std::queue<Entity_id> AvailableEntities{}; // Queue of unused entity IDs
 
-		uint32_t currentMaxId = 0;
+		uint32_t currentMaxId = 1;
 	};
 }

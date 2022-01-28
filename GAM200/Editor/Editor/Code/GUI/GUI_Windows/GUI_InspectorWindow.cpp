@@ -222,7 +222,7 @@ namespace Editor {
 						ImGui::Text(" X");
 						ImGui::SameLine(halfWidth * 1.120f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##TransformXPos", &transComp->localPosition.x, 0.1f, -360.0f, 360.f, "%.2f", 1))
+						if (ImGui::DragFloat("##TransformXPos", &transComp->position.x, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -248,7 +248,7 @@ namespace Editor {
 						ImGui::Text(" Y");
 						ImGui::SameLine(halfWidth * 1.820f, 0);
 						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						if (ImGui::DragFloat("##TransformYPos", &transComp->localPosition.y, 0.1f, -360.0f, 360.f, "%.2f", 1))
+						if (ImGui::DragFloat("##TransformYPos", &transComp->position.y, 0.1f, -360.0f, 360.f, "%.2f", 1))
 						{
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_selected);
 							enter = true;
@@ -395,12 +395,19 @@ namespace Editor {
 				Engine::WaypointComponent* wayComp = Engine::dreamECSGame->GetComponentPTR<Engine::WaypointComponent>(entity_selected);
 				if (wayComp != nullptr)
 				{
-					//DreamImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
+					DreamImGui::CheckBox_Dream("##WayPointctive", &(wayComp->isActive));
 					ImGui::SameLine();
-					std::cout << "have waypoint\n";
+
 					if (ImGui::CollapsingHeader("Waypoint"))
 					{
-
+						ImGui::Spacing();
+						/**
+						*	DELETE
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
+						if (ImGui::Button("Delete Component##DeleteWaypoint", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::dreamECSGame->RemoveComponent<Engine::WaypointComponent>(entity_selected);
 					}
 				}
 

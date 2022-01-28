@@ -102,6 +102,7 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void Instantiate_Prefab_Transform_Engine(MonoString* prefabName, int entityId, unsigned int* newId);
 		void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, int layer, unsigned int* newId);
+		void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec3 pos, float angle, Math::vec2 scale, int layer, unsigned int* newId);
 		//void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec2 position, float angle);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -165,6 +166,8 @@ namespace Engine {
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Transform_Engine", Instantiate_Prefab_Transform_Engine);
 			mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Position_Engine", Instantiate_Prefab_Position_Engine);
+			mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Engine", Instantiate_Prefab_Engine);
+
 			//mono_add_internal_call("MonoBehaviour::Instantiate_Prefab_Engine", Instantiate_Prefab_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -323,6 +326,12 @@ namespace Engine {
 		void Instantiate_Prefab_Position_Engine(MonoString* prefabName, Math::vec3 pos, int layer, unsigned int* newId) {
 			char* text = mono_string_to_utf8(prefabName);
 			GameSceneSerializer::DeserializePrefab(text, newId, Math::vec2{ pos.x, pos.y }, 0, layer);
+			mono_free(text);
+		}
+
+		void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec3 pos, float angle, Math::vec2 scale, int layer, unsigned int* newId) {
+			char* text = mono_string_to_utf8(prefabName);
+			GameSceneSerializer::DeserializePrefab(text, newId, Math::vec2{ pos.x, pos.y }, angle, layer);
 			mono_free(text);
 		}
 

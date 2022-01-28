@@ -216,7 +216,7 @@ namespace Editor {
 						const Math::mat4 cameraView = EditorSceneCamera::GetTransformMat4();
 						const Math::mat4 cameraProjection{};
 
-						float transArr[3]{ tc->localPosition.x, tc->localPosition.y, 0.f };
+						float transArr[3]{ tc->position.x, tc->position.y, 0.f };
 						float rotArr[3]{ 0.f, 0.f, tc->angle };
 						float scaleArr[3]{ tc->scale.x, tc->scale.y, 1.f };
 						Math::mat4 transform;
@@ -237,7 +237,7 @@ namespace Editor {
 							guizmoPressed = true;
 							ImGuizmo::DecomposeMatrixToComponents(Math::value_ptr(transform), transArr, rotArr, scaleArr);
 
-							tc->localPosition = Math::vec2{ transArr[0], transArr[1] };
+							tc->position = Math::vec2{ transArr[0], transArr[1] };
 							Engine::ParentManager::GetInstance().UpdateTruePos(entity_id);
 							//Engine::TransformCalculationSystem::GetInstance().Update();
 

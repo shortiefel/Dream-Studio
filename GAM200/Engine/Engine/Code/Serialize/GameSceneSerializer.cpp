@@ -129,10 +129,22 @@ rapidjson::Document doc;\
 doc.ParseStream(is);
 //fclose(fp);
 
-
+#include <iostream>
 
 namespace Engine {
 	void DeserializeOtherComponents(Serializer& sceneSerializer, const unsigned int& entityId) {
+		if (sceneSerializer.SelectDeserializeDataType("WaypointComponent")) {
+			WaypointComponent tem(entityId);
+			int soundGrpTem;
+			sceneSerializer.RetrieveData(
+				"Waypoints", tem.listOfWaypoint,
+				"Order", tem.numOfWaypoint);
+
+			dreamECSGame->AddComponent(tem);
+			ColliderComponent tem1(entityId);
+			dreamECSGame->AddComponent(tem1);
+		}
+
 		if (sceneSerializer.SelectDeserializeDataType("ColliderComponent")) {
 			ColliderComponent tem(entityId);
 			int colType;
@@ -452,6 +464,7 @@ namespace Engine {
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<UIComponent>(entityId));
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<FontComponent>(entityId));
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<SoundComponent>(entityId)); 
+			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<WaypointComponent>(entityId));
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ParticleComponent>(entityId)); 
 			sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ScriptComponent>(entityId)); 
 			sceneSerializer.EndEntitySerialize();
@@ -634,6 +647,7 @@ namespace Engine {
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<SoundComponent>(entityId));
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ParticleComponent>(entityId));
 		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<ScriptComponent>(entityId));
+		sceneSerializer.AddData(dreamECSGame->GetComponentPTR<WaypointComponent>(entityId));
 		sceneSerializer.EndEntitySerialize();
 
 		sceneSerializer.EndSerialize();

@@ -211,6 +211,9 @@
     <ClCompile Include="Engine\Code\Serialize\Serializer.cpp">
       <Filter>Source Files\Serialize</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Code\ECS\Component\Waypoint\WaypointComponent.cpp">
+      <Filter>Source Files\ECS\Component\Waypoint</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Application.hpp">
@@ -714,6 +717,9 @@
     <ClInclude Include="Engine\Header\Serialize\Serializer.hpp">
       <Filter>Header Files\Serialize</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Header\ECS\Component\Waypoint\WaypointComponent.hpp">
+      <Filter>Header Files\ECS\Component\Waypoint</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Resources">
@@ -889,6 +895,12 @@
     </Filter>
     <Filter Include="Source Files\Serialize">
       <UniqueIdentifier>{2aea85f9-b0d2-4481-a367-7d9ed5f5c510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Component\Waypoint">
+      <UniqueIdentifier>{ee718e27-4498-41c4-b176-b63ba43e6c39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Component\Waypoint">
+      <UniqueIdentifier>{7034fef8-5d04-4700-832f-0a59155376ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

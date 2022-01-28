@@ -282,6 +282,19 @@ namespace Engine {
 		mainObject.AddMember("SoundComponent", objType, doc.GetAllocator());
 	}
 
+	void Serializer::AddData(const WaypointComponent* const t) {
+		if (t == nullptr) return;
+		printf("adding data here \n");
+		LOG_ASSERT(t);
+		rapidjson::Value objType(rapidjson::kObjectType);
+		SSerializer _serializer(doc, objType);
+
+		_serializer.SetValue("Waypoints", t->listOfWaypoint);
+		_serializer.SetValue("Order", t->numOfWaypoint);
+
+		mainObject.AddMember("WaypointComponent", objType, doc.GetAllocator());
+	}
+
 	void Serializer::AddData(const ParticleComponent* const t) {
 		if (t == nullptr) return;
 		LOG_ASSERT(t);

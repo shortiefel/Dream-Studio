@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "Engine/Header/Math/MathLib.hpp"
 
 #include <unordered_set>
+#include <list>
 
 #include <string>
 #include <rapidjson/document.h>
@@ -41,6 +42,7 @@ namespace Engine {
 		T GetValueInternal(const char* name) const {
 			VARIABLE_CHECK;
 			LOG_WARNING("DSerializer: Unknown type");
+			return T{};
 		}
 		template <>
 		bool GetValueInternal(const char* name) const {
@@ -100,17 +102,29 @@ namespace Engine {
 		}
 
 		template <>
-		std::unordered_set<uint32_t> GetValueInternal(const char* name) const {
+		std::list<unsigned int> GetValueInternal(const char* name) const {
 			VARIABLE_CHECK;
-			std::unordered_set<uint32_t> child{};
+			std::list<unsigned int> val{};
 			auto sz = itr->value[name].GetArray().Size();
 			auto data = itr->value[name].GetArray();
 			for (unsigned int i = 0; i < sz; i++) {
-				child.insert(data[i].GetUint());
+				val.push_back(data[i].GetUint());
 			}
 
+			return val;
+		}
 
-			return child;
+		template <>
+		std::list<Math::vec2> GetValueInternal(const char* name) const {
+			VARIABLE_CHECK;
+			std::list<Math::vec2> val{};
+			auto sz = itr->value[name].GetArray().Size();
+			auto data = itr->value[name].GetArray();
+			for (unsigned int i = 0; i < sz; i += 2) {
+				val.push_back(Math::vec2{ data[i].GetFloat(), data[i + 1].GetFloat() });
+			}
+
+			return val;
 		}
 
 		/*rapidjson::Value& GetArray() const {
@@ -142,18 +156,18 @@ namespace Engine {
 		}
 		
 		//If the number of element is unknown, use this
-		template <typename T>
-		std::unordered_set<T> GetUSet(const char* name) const {
-			printf("trying this\n");
-			VARIABLE_CHECK;
-			std::unordered_set<T> holder;
-			const auto& src = itr->value[name].GetArray();
-			unsigned int sz = src.Size();
-			for (unsigned int i = 0; i < sz; i++) {
-				holder.emplace(src[i].GetUint());
-			}
-			return holder;
-		}
+		//template <typename T>
+		//std::unordered_set<T> GetUSet(const char* name) const {
+		//	printf("trying this\n");
+		//	VARIABLE_CHECK;
+		//	std::unordered_set<T> holder;
+		//	const auto& src = itr->value[name].GetArray();
+		//	unsigned int sz = src.Size();
+		//	for (unsigned int i = 0; i < sz; i++) {
+		//		holder.emplace(src[i].GetUint());
+		//	}
+		//	return holder;
+		//}
 
 		
 

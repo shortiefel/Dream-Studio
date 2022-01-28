@@ -23,6 +23,7 @@ Technology is prohibited.
 #include <rapidjson/document.h>
 
 #include <set>
+#include <list>
 
 #define ADD_MEMBER(name, data)\
 rapidjson::Value vName(name, doc.GetAllocator());\
@@ -104,6 +105,27 @@ namespace Engine {
 			pos.PushBack(_val.w, doc.GetAllocator());
 
 			ADD_MEMBER(_name, pos);
+		}
+
+		template <>
+		void SetValue(const char* _name, const std::list<unsigned int>& _val) const {
+			rapidjson::Value _store(rapidjson::kArrayType);
+			for (auto i : _val) {
+				_store.PushBack(i, doc.GetAllocator());
+			}
+
+			ADD_MEMBER(_name, _store);
+		}
+
+		template <>
+		void SetValue(const char* _name, const std::list<Math::vec2>& _val) const {
+			rapidjson::Value _store(rapidjson::kArrayType);
+			for (auto i : _val) {
+				_store.PushBack(i.x, doc.GetAllocator());
+				_store.PushBack(i.y, doc.GetAllocator());
+			}
+
+			ADD_MEMBER(_name, _store);
 		}
 
 		template <typename T>

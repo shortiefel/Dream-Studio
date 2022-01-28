@@ -28,5 +28,6 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Component/UI/FontComponent.hpp"
 #include "Engine/Header/ECS/Component/UI/ButtonComponent.hpp"
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
+#include "Engine/Header/ECS/Component/Waypoint/WaypointComponent.hpp"
 
 #endif

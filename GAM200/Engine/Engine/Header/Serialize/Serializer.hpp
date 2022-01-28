@@ -32,6 +32,7 @@ namespace Engine {
 	struct UIComponent;
 	struct FontComponent;
 	struct SoundComponent;
+	struct WaypointComponent;
 	struct ParticleComponent;
 	struct ScriptComponent;
 
@@ -58,6 +59,7 @@ namespace Engine {
 		void AddData(const UIComponent* const t);
 		void AddData(const FontComponent* const t);
 		void AddData(const SoundComponent* const t);
+		void AddData(const WaypointComponent* const t);
 		void AddData(const ParticleComponent* const t);
 		void AddData(const ScriptComponent* const t);
 

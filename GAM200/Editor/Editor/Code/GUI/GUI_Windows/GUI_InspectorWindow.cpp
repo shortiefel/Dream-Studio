@@ -178,6 +178,8 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::SoundComponent>(entity_selected);
 					if (ImGui::Selectable(" + Particle##addParticlecom"))
 						Engine::dreamECSGame->AddComponent<Engine::ParticleComponent>(entity_selected);
+					if (ImGui::Selectable(" + Waypoint##addWaypointcom"))
+						Engine::dreamECSGame->AddComponent<Engine::WaypointComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
 						std::string filePath = Engine::FileWindowDialog::OpenFile("Scripts (*.cs)\0*.cs\0", Engine::File_Dialog_Type::Scripts);
 
@@ -386,6 +388,18 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteTransform", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::dreamECSGame->RemoveComponent<Engine::TransformComponent>(entity_selected);
+
+					}
+				}
+
+				Engine::WaypointComponent* wayComp = Engine::dreamECSGame->GetComponentPTR<Engine::WaypointComponent>(entity_selected);
+				if (wayComp != nullptr)
+				{
+					//DreamImGui::CheckBox_Dream("##TransformActive", &(transComp->isActive));
+					ImGui::SameLine();
+					std::cout << "have waypoint\n";
+					if (ImGui::CollapsingHeader("Waypoint"))
+					{
 
 					}
 				}

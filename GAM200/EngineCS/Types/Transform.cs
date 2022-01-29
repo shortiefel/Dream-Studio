@@ -167,6 +167,7 @@ public class Transform : IComponent
     public Transform GetChild(int index)
     {
         Transform_GetChild_Engine(entityId, index, out uint targetId);
+        if (targetId == 0) return null;
         return new Transform(targetId);
     }
     [MethodImpl(MethodImplOptions.InternalCall)]

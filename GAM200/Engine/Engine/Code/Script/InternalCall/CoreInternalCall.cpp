@@ -47,6 +47,7 @@ namespace Engine {
 		bool HasComponent_Font_Engine(unsigned int id);
 		bool HasComponent_Sound_Engine(unsigned int id);
 		bool HasComponent_UI_Engine(unsigned int id);
+		bool HasComponent_Waypoint_Engine(unsigned int id);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Destroy
@@ -86,7 +87,8 @@ namespace Engine {
 			mono_add_internal_call("IBehaviour::HasComponent_Font_Engine", HasComponent_Font_Engine);
 			mono_add_internal_call("IBehaviour::HasComponent_Sound_Engine", HasComponent_Sound_Engine);
 			mono_add_internal_call("IBehaviour::HasComponent_UI_Engine", HasComponent_UI_Engine);
-
+			mono_add_internal_call("IBehaviour::HasComponent_Waypoint_Engine", HasComponent_Waypoint_Engine);
+			
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Destroy
@@ -157,6 +159,10 @@ namespace Engine {
 
 		bool HasComponent_UI_Engine(unsigned int id) {
 			GET_COMPONENT_PTR(UIComponent);
+		}
+
+		bool HasComponent_Waypoint_Engine(unsigned int id) {
+			GET_COMPONENT_PTR(WaypointComponent);
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

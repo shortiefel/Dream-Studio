@@ -133,18 +133,6 @@ doc.ParseStream(is);
 
 namespace Engine {
 	void DeserializeOtherComponents(Serializer& sceneSerializer, const unsigned int& entityId) {
-		if (sceneSerializer.SelectDeserializeDataType("WaypointComponent")) {
-			WaypointComponent tem(entityId);
-			int soundGrpTem;
-			sceneSerializer.RetrieveData(
-				"Waypoints", tem.listOfWaypoint,
-				"Order", tem.numOfWaypoint);
-
-			dreamECSGame->AddComponent(tem);
-			ColliderComponent tem1(entityId);
-			dreamECSGame->AddComponent(tem1);
-		}
-
 		if (sceneSerializer.SelectDeserializeDataType("ColliderComponent")) {
 			ColliderComponent tem(entityId);
 			int colType;
@@ -583,6 +571,16 @@ namespace Engine {
 				dreamECSGame->AddComponent(tem);
 			}
 
+			if (sceneSerializer.SelectDeserializeDataType("WaypointComponent")) {
+				WaypointComponent tem(entityId);
+				int soundGrpTem;
+				sceneSerializer.RetrieveData(
+					"Waypoints", tem.listOfWaypoint,
+					"Order", tem.numOfWaypoint);
+
+				dreamECSGame->AddComponent(tem);
+			}
+
 			DeserializeOtherComponents(sceneSerializer, entityId);
 		};
 
@@ -706,12 +704,12 @@ namespace Engine {
 		std::string filename = TO_FULL_PREFAB(_filename);
 		Serializer sceneSerializer(filename);
 		
-		float cosX = Math::cos(angle);
-		float sinX = Math::sin(angle);
+		float cosX = Math::cosDeg(angle);
+		float sinX = Math::sinDeg(angle);
 		
-		Math::mat3 rotation{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
+		Math::mat3 rotationAndTranslate{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
 		
-		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &position, &angle, &layer, &id, &_filename, &rotation]() -> void {
+		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &angle, &layer, &id, &_filename, &rotationAndTranslate]() -> void {
 			//Prefab saved parents entity id which may not be the correct one in a new scene
 			//This map will check if an entity has 
 			static std::unordered_map<uint32_t, uint32_t> oldParentToNewParent;
@@ -774,7 +772,7 @@ namespace Engine {
 				);
 
 				Math::vec3 temVec{ tem.position.x, tem.position.y, 1.f };
-				temVec = rotation * temVec;
+				temVec = rotationAndTranslate * temVec;
 				tem.position.x = temVec.x;
 				tem.position.y = temVec.y;
 
@@ -786,6 +784,21 @@ namespace Engine {
 				ParentManager::GetInstance().UpdateTruePos(entityId);
 			}
 
+			if (sceneSerializer.SelectDeserializeDataType("WaypointComponent")) {
+				WaypointComponent tem(entityId);
+				int soundGrpTem;
+				sceneSerializer.RetrieveData(
+					"Waypoints", tem.listOfWaypoint,
+					"Order", tem.numOfWaypoint);
+
+				for (auto& i : tem.listOfWaypoint) {
+					Math::vec3 newPos = rotationAndTranslate * Math::vec3{i.x, i.y, 1.f};
+					i.x = newPos.x;
+					i.y = newPos.y;
+				}
+
+				dreamECSGame->AddComponent(tem);
+			}
 
 			DeserializeOtherComponents(sceneSerializer, entityId);
 		};

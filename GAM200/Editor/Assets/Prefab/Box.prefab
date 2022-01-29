@@ -5,7 +5,7 @@
       "Name": "Box",
       "EntityId": 1,
       "Parent": 10001,
-      "Child": [2, 3, 4]
+      "Child": [ 2 ]
     },
     "TransformComponent": {
       "Position": [ 0.0, 0.0 ],
@@ -14,6 +14,10 @@
       "Angle": 0.0,
       "Layer": 2,
       "IsActive": true
+    },
+    "WaypointComponent": {
+      "Waypoints": [ 17, -4.0 ],
+      "Order": [ 1, 2 ]
     },
     "TextureComponent": {
       "Filepath": "Assets\\Textures\\ThreeWayRoad.png",
@@ -34,7 +38,7 @@
       "Child": []
     },
     "TransformComponent": {
-      "Position": [ 10.0, 10.0 ],
+      "Position": [ 17, -4.0 ],
       "LocalPosition": [ 0.0, 0.0 ],
       "Scale": [ 1.0, 1.0 ],
       "Angle": 0.0,

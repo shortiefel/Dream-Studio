@@ -162,6 +162,8 @@ public class IBehaviour : IComponent
                 return HasComponent_UI_Engine(id);
             case genTypes.Animation:
                 return HasComponent_Texture_Engine(id);
+            case genTypes.Waypoint:
+                return HasComponent_Waypoint_Engine(id);
             default:
                 Console.WriteLine("Type cant be found yet");
                 return false;
@@ -186,6 +188,8 @@ public class IBehaviour : IComponent
     internal static extern bool HasComponent_Sound_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_UI_Engine(uint entityId);
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool HasComponent_Waypoint_Engine(uint entityId);
 
     //-----------------------------------------------------------------------------------------------------------------
     //Destroy

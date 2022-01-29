@@ -28,7 +28,8 @@ public static class GenericTypeFinder
         { typeof(Text), genTypes.Text },
         { typeof(AudioSource), genTypes.Audio },
         { typeof(UI), genTypes.UI },
-        { typeof(Animation), genTypes.Animation }
+        { typeof(Animation), genTypes.Animation },
+        { typeof(Waypoint), genTypes.Waypoint }
     };
 }
 
@@ -42,6 +43,7 @@ public enum genTypes
     Text,
     Audio,
     UI,
-    Animation
+    Animation,
+    Waypoint
 }
 

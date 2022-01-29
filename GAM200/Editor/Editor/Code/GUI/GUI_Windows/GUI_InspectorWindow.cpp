@@ -400,7 +400,64 @@ namespace Editor {
 
 					if (ImGui::CollapsingHeader("Waypoint"))
 					{
+						ImGui::Spacing(); 
+						{
+							ImGui::Text("List of Waypoints");
+							auto& target = wayComp->listOfWaypoint;
+							int id = 0;
+							for (auto& i : target) {
+								ImGui::PushID(id);
+								ImGui::SetNextItemWidth(halfWidth * 0.375f);
+								ImGui::DragFloat("##waypointList", &(i.x), 0.1f, -360.0f, 360.f, "%.1f", 1);
+								ImGui::PopID();
+								id++;
+								ImGui::SameLine();
+								ImGui::PushID(id);
+								ImGui::SetNextItemWidth(halfWidth * 0.375f);
+								ImGui::DragFloat("##waypointList", &(i.y), 0.1f, -360.0f, 360.f, "%.1f", 1);
+								ImGui::PopID();
+								id++;
+							}
+
+							//if (ImGui::InputFloat("##camFOV", &camComp->fov, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue)) {
+							static float one = 0.f;
+							static float two = 0.f;
+							ImGui::SetNextItemWidth(halfWidth * 0.375f);
+							ImGui::InputFloat("##waypointPointInsertion1", &one, 0.f, 0.f, "%.2f");
+							ImGui::SameLine();
+							ImGui::SetNextItemWidth(halfWidth * 0.375f);
+							ImGui::InputFloat("##waypointPointInsertion2", &two, 0.f, 0.f, "%.2f");
+							ImGui::SameLine();
+							ImGui::SetNextItemWidth(halfWidth * 0.375f);
+							if (ImGui::Button("Add##AddWaypoint"))
+								wayComp->listOfWaypoint.emplace_back(Math::vec2{ one, two });
+						}
+						{
+							ImGui::Text("Order of waypoints");
+							auto& target = wayComp->numOfWaypoint;
+							int id = 0;
+							for (auto& i : target) {
+								ImGui::PushID(id);
+								int t_ = i;
+								ImGui::SetNextItemWidth(halfWidth * 0.375f);
+								ImGui::DragInt("##waypointOrder", &(t_), 0.1f, 0, 360, "%d", 1);
+								if (t_ >= 0)
+									i = t_;
+								ImGui::PopID();
+								id++;
+							}
+
+							static int num = 0;
+							ImGui::SetNextItemWidth(halfWidth * 0.375f);
+							ImGui::InputInt("##OrderInsertion", &num, 0, ImGuiInputTextFlags_EnterReturnsTrue);
+							ImGui::SameLine();
+							ImGui::SetNextItemWidth(halfWidth * 0.375f);
+							if (ImGui::Button("Add##AddOrderpoint"))
+								wayComp->numOfWaypoint.emplace_back(num);	
+						}
+
 						ImGui::Spacing();
+
 						/**
 						*	DELETE
 						*/

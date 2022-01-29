@@ -120,6 +120,13 @@ namespace Engine {
 		void SetAnimation_Engine(unsigned int entityID, MonoString* _state);
 
 
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Waypoint
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		//void Waypoint_GetNumberOfRoute_Engine(unsigned int entityID, unsigned int* num);
+		void Waypoint_GetWaypoints_Engine(unsigned int entityID, MonoArray* points, MonoArray* order);
+
+
 		/*-----------------------------------------------------
 		Called in ScriptingInternalCall
 		-----------------------------------------------------*/
@@ -199,6 +206,12 @@ namespace Engine {
 			Animation
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("Animation::SetAnimation_Engine", SetAnimation_Engine);
+
+			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+			Waypoint
+			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+			//mono_add_internal_call("Waypoint::Waypoint_GetNumberOfRoute_Engine", Waypoint_GetNumberOfRoute_Engine);
+			mono_add_internal_call("Waypoint::Waypoint_GetWaypoints_Engine", Waypoint_GetWaypoints_Engine);
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -324,7 +337,9 @@ namespace Engine {
 
 		void Transform_GetChild_Engine(unsigned int entityId, int index, unsigned int* targetId) {
 			const auto& entity = dreamECSGame->GetUsedConstEntityMap().find(entityId)->second;
-			*targetId = *(entity.child.find(index));
+			auto t_ = entity.child.find(index);
+			if (t_ == entity.child.end()) return;
+			*targetId = *(t_);
 		}
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Camera
@@ -512,5 +527,40 @@ namespace Engine {
 			SetEngineType(entityID, TextureComponent, nextAnimationState, std::string{ tempText });
 			mono_free(tempText);
 		}
+
+
+		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Waypoint
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+		//void Waypoint_GetNumberOfRoute_Engine(unsigned int entityID, unsigned int* num) {
+		//	WaypointComponent* ctype = dreamECSGame->GetComponentPTR<WaypointComponent>(entityID);
+		//	if (ctype == nullptr) return;
+		//	*num = ctype->numOfWaypoint.size();
+		//}
+
+		void Waypoint_GetWaypoints_Engine(unsigned int entityID, MonoArray* points, MonoArray* order) {
+			WaypointComponent* ctype = dreamECSGame->GetComponentPTR<WaypointComponent>(entityID);
+			if (ctype == nullptr) return;
+			{
+				const auto& target = ctype->listOfWaypoint;
+				int i = 0;
+				for (const auto& t : target) {
+					mono_array_set(points, Math::vec2, i, t);
+					++i;
+				}
+			}
+
+			{
+				const auto& target = ctype->numOfWaypoint;
+				int i = 0;
+				for (const auto& t : target) {
+					mono_array_set(order, unsigned int, i, t);
+					++i;
+				}
+			}
+
+			printf("setting the points now \n");
+		}
+
 	}
 }

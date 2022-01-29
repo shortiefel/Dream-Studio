@@ -25,12 +25,22 @@ namespace Engine {
 		Trigo
 		-------------------------------------------------------------------------------------------------------------------*/
         template <typename T>
-        inline T sin(T deg) {
+        inline T sin(T rad) {
+            return static_cast<T>(std::sin(static_cast<double>(rad)));
+        }
+
+        template <typename T>
+        inline T cos(T rad) {
+            return static_cast<T>(std::cos(static_cast<double>(rad)));
+        }
+
+        template <typename T>
+        inline T sinDeg(T deg) {
             return static_cast<T>(std::sin(static_cast<double>(deg) * pi<T>() / 180));
         }
 
         template <typename T>
-        inline T cos(T deg) {
+        inline T cosDeg(T deg) {
             return static_cast<T>(std::cos(static_cast<double>(deg) * pi<T>() / 180));
         }
 

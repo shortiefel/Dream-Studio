@@ -8,6 +8,8 @@ public class Test : MonoBehaviour
     {
         temTL = new GameObject(new Prefab("Box")); //To Remove
         mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove = GetComponent<Text>();
+        Waypoint wp = GetComponent<Waypoint>();
+        wp.GetWaypoints();
     }
 
     public override void Update()
@@ -48,14 +50,14 @@ public class Test : MonoBehaviour
         {
             Debug.Log("Instantiating ");
 
-            //Instantiate(temTL, new Vector3(5, 3, 0));
+            Instantiate(temTL, new Vector3(5, 3, 0));
 
         }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
 
-            Instantiate(temTL, new Vector3(2, 6, 0), 2, 90);
+            Instantiate(temTL, new Vector3(2, 6, 0), 2, 64);
         }
 
         if (Input.GetMouseButtonDown(MouseCode.Right))

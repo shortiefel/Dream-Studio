@@ -16,7 +16,7 @@ public class Test : MonoBehaviour
         //The list hold list of vector2 (each List<Vector2> is a possible path/route the car can take
         //The points added should be with reference to the center 0, 0
         //Order is how the list of points (shown in the inspector) will be cut 
-        //The first value currently is 1 so only 1 position is considered as one route
+        //The first value currently is 2 so only 2 position is considered as one route
         //The Console.WriteLine below will display how the route are spilt up in the console
         //The numbers in the order should add up to the number of points your have
 

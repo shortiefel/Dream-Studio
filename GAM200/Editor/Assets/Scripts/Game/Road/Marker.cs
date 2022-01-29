@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class Marker
+public class Marker : MonoBehaviour
 {
-    public Vector2 Position { get => transform.position; }
+    public Vector2 Position { get { return transform.position; } }
 
     public List<Marker> adjacentMarkers;
 

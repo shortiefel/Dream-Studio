@@ -46,17 +46,6 @@ public class Waypoint : IComponent
             }
             listOfWaypoints.Add(tem);
         }
-
-        foreach (var i in listOfWaypoints)
-        {
-            Console.WriteLine("Current set");
-            foreach (var t in i)
-            {
-                Console.WriteLine(t);
-            }
-
-            Console.WriteLine("\nNext Set \n");
-        }
         
         return listOfWaypoints;
     }

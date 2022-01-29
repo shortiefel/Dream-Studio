@@ -418,7 +418,7 @@ namespace Editor {
 								ImGui::PopID();
 								id++;
 							}
-
+							ImGui::Spacing();
 							//if (ImGui::InputFloat("##camFOV", &camComp->fov, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue)) {
 							static float one = 0.f;
 							static float two = 0.f;
@@ -432,6 +432,10 @@ namespace Editor {
 							if (ImGui::Button("Add##AddWaypoint"))
 								wayComp->listOfWaypoint.emplace_back(Math::vec2{ one, two });
 						}
+
+						ImGui::Spacing();
+						ImGui::Spacing();
+
 						{
 							ImGui::Text("Order of waypoints");
 							auto& target = wayComp->numOfWaypoint;
@@ -446,7 +450,7 @@ namespace Editor {
 								ImGui::PopID();
 								id++;
 							}
-
+							ImGui::Spacing();
 							static int num = 0;
 							ImGui::SetNextItemWidth(halfWidth * 0.375f);
 							ImGui::InputInt("##OrderInsertion", &num, 0, ImGuiInputTextFlags_EnterReturnsTrue);

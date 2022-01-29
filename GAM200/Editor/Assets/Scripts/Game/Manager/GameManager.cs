@@ -64,6 +64,8 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
         inputManager.OnMouseClick += roadManager.RemoveRoad;
+        inputManager.OnMouseHold += roadManager.RemoveRoad;
+        inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
     }
 
     internal void ClearInputActions()

@@ -709,7 +709,7 @@ namespace Engine {
 		float cosX = Math::cos(angle);
 		float sinX = Math::sin(angle);
 		
-		Math::mat3 rotation{ cosX, sinX, 0.f, -sinX, cosX, 0.f, 0.f, 0.f, 1.f };
+		Math::mat3 rotation{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
 		
 		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &position, &angle, &layer, &id, &_filename, &rotation]() -> void {
 			//Prefab saved parents entity id which may not be the correct one in a new scene
@@ -721,7 +721,7 @@ namespace Engine {
 				std::string entityName = DEFAULT_ENTITY_NAME;
 				Entity_id entityId = DEFAULT_ENTITY_ID;
 				Entity_id parent = DEFAULT_ENTITY_ID;
-				std::unordered_set<Entity_id> child{};
+				std::list<Entity_id> child{};
 				sceneSerializer.RetrieveData(
 					"Name", entityName,
 					"EntityId", entityId,
@@ -729,14 +729,27 @@ namespace Engine {
 					"Child", child);
 
 				entity = dreamECSGame->CreateEntity(entityName.c_str());
+				
+				if (child.size() != 0) 
+					oldParentToNewParent[entityId] = entity.id;
 
-				if (child.size() != 0) oldParentToNewParent[entityId] = entity.id;
 
 				if (parent != DEFAULT_ENTITY_ID) {
 					parent = oldParentToNewParent[parent];
 					auto& temMap = dreamECSGame->GetUsedEntityMap();
-					temMap[parent].child.insert(entity.id);
-					temMap[entity.id].parent = parent;
+					auto p_ = temMap.find(parent);
+					if (p_ != temMap.end())
+						p_->second.child.insert(entity.id);
+					//temMap[parent].child.insert(entity.id);
+					else
+						LOG_WARNING("DeserializePrefab: Parents not found");
+
+					auto t_ = temMap.find(entity.id);
+					if (t_ != temMap.end())
+						t_->second.parent = parent;
+						//temMap[entity.id].parent = parent;
+					else
+						LOG_WARNING("DeserializePrefab: Parents not found");
 				}
 			}
 
@@ -766,7 +779,8 @@ namespace Engine {
 				tem.position.y = temVec.y;
 
 				dreamECSGame->AddComponent(
-					TransformComponent{ entityId, tem.position + position, tem.scale, tem.angle + angle, layer }
+					//TransformComponent{ entityId, tem.position + position, tem.scale, tem.angle + angle, layer }
+					TransformComponent{ entityId, tem.position, tem.scale, tem.angle + angle, layer }
 				);
 
 				ParentManager::GetInstance().UpdateTruePos(entityId);

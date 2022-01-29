@@ -23,7 +23,7 @@ Technology is prohibited.
 
 namespace Engine {
 	void ParentManager::UpdateTruePos(Entity_id entity_id) {
-		printf("ParentManager not in used \n");
+		//printf("ParentManager not in used \n");
 		return;
 
 		auto& transform = dreamECSGame->GetComponent<TransformComponent>(entity_id);

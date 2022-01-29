@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+//This file is moved to the Gam200 solution in the EngineCS project under Grid.cs
+
 /*public class Point
 {
     public int X { get; set; }

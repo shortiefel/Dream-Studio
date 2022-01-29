@@ -38,6 +38,15 @@ public struct Vector2
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void GetLength_Engine(out float length, Vector2 vec);
+
+    public void Normalize()
+    {
+        Vector2 vec = new Vector2(x, y);
+        GetNormalised_Engine(out vec);
+        x = vec.x;
+        y = vec.y;
+    }
+
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void GetNormalised_Engine(out Vector2 vec);
 

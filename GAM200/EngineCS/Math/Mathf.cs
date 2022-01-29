@@ -47,6 +47,12 @@ public class Mathf
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void Lerp_Engine(out float num1, float num2, float t);
+
+    public static float Abs(float t)
+    {
+        if (t < 0f) return -t;
+        return t;
+    }
 }
 
 

@@ -18,6 +18,8 @@ Technology is prohibited.
 #include "Engine/Header/Script/Scripting.hpp"
 #include "Engine/Header/Scene/SceneManager.hpp"
 
+#include "Engine/Header/Script/ScriptInternalCall.hpp"
+
 #include <mono/jit/jit.h>
 #include <mono/metadata/threads.h>
 #include <mono/metadata/assembly.h>
@@ -238,6 +240,8 @@ namespace Engine {
 				LOG_ERROR("Failed loading image");
 				return;
 			}
+
+			InternalCall::RegisterTypes();
 		}
 
 		void InitScript(const Entity_id& entity_id, CSScriptInstance& csScriptInstance, MonoFunctionType type) {

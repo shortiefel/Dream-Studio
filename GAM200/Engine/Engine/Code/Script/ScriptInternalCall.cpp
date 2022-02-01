@@ -29,9 +29,28 @@ Technology is prohibited.
 
 #include "Engine/Header/Management/Settings.hpp"
 
+#include "Engine/Header/ECS/DreamECS.hpp"
+
+#include <mono/metadata/reflection.h>
+
+#define REGISTER_TYPE(Type, cStype) \
+{\
+MonoType* type = mono_reflection_type_from_name(const_cast<char*>(#cStype), Scripting::imageCore); \
+if (type) { \
+addComponentFuncs[type] = [](Entity_id entityId) { dreamECSGame->AddComponent<Type>(Type{entityId}); };\
+hasComponentFuncs[type] = [](Entity_id entityId) { return (dreamECSGame->GetComponentPTR<Type>(entityId) != nullptr); };\
+}\
+}
 
 namespace Engine {
+	namespace Scripting {
+		extern MonoImage* imageCore;
+	}
+
 	namespace InternalCall {
+
+		std::unordered_map<MonoType*, std::function<void(Entity_id)>> addComponentFuncs;
+		std::unordered_map<MonoType*, std::function<bool(Entity_id)>> hasComponentFuncs;
 
 		void SetConsoleWriteFunc(void(*fp)(std::string)) {
 			SetConsoleWriteInternalFunc(fp);
@@ -63,6 +82,20 @@ namespace Engine {
 			RegisterGameObjectInternalCall();
 			RegisterMathInternalCall();
 
+		}
+
+		void RegisterTypes() {
+			//Only called after Mono is reloaded
+			REGISTER_TYPE(TransformComponent, Transform);
+			REGISTER_TYPE(ColliderComponent, Collider);
+			REGISTER_TYPE(CameraComponent, Camera);
+			REGISTER_TYPE(RigidBodyComponent, Rigidbody2D);
+			REGISTER_TYPE(TextureComponent, Texture);
+			REGISTER_TYPE(TextureComponent, Animation); //DO note that since Animation and Texture are the same component, Animation might sometimes give false positive
+			REGISTER_TYPE(FontComponent, Text);
+			REGISTER_TYPE(SoundComponent, AudioSource);
+			REGISTER_TYPE(UIComponent, UI);
+			REGISTER_TYPE(WaypointComponent, Waypoint);
 		}
 
 

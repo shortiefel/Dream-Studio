@@ -26,6 +26,8 @@ namespace Engine {
 		//Register Internal call for C# side to use
 		void RegisterInternalCall();
 
+		void RegisterTypes();
+
 		//Set the function that will be called for Debug.Log in c#
 		void SetConsoleWriteFunc(void(*fp)(std::string));
 		//Set the function that will be called for ScreenToWorldPoint in c#

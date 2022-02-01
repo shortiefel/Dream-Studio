@@ -3,22 +3,22 @@ public class Test2 : MonoBehaviour
 {
     public override void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            transform.position += 10f * transform.up * Time.deltaTime;
+            gameObject.AddComponent<Transform>();
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            transform.position += 10f * transform.right * Time.deltaTime;
+            AddComponentInternalTem<AudioTest>(entityId);
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.E))
         {
             transform.position += 10f * -transform.up * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.R))
         {
             transform.position += 10f * -transform.right * Time.deltaTime;
         }

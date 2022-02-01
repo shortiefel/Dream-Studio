@@ -132,6 +132,9 @@ public class GameObject : IBehaviour
             }
             return AddCompState.Added;
         }
+
+        //AddComponentInternalTem<T>(entityId);
+
         switch (GenericTypeFinder.dictonary[typeof(T)])
         {
             case genTypes.Transform:
@@ -172,7 +175,7 @@ public class GameObject : IBehaviour
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool AddComponent_Camera_Engine(uint entityId);
 
-
+    
 
     public void SetActive(bool state)
     {

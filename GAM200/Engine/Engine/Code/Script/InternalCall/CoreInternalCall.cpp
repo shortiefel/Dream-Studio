@@ -35,6 +35,9 @@ if (ctype != nullptr) ctype->paramName = param;
 
 namespace Engine {
 	namespace InternalCall {
+		extern std::unordered_map<MonoType*, std::function<void(Entity_id)>> addComponentFuncs;
+		extern std::unordered_map<MonoType*, std::function<bool(Entity_id)>> hasComponentFuncs;
+
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Check if component exist
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -48,6 +51,11 @@ namespace Engine {
 		bool HasComponent_Sound_Engine(unsigned int id);
 		bool HasComponent_UI_Engine(unsigned int id);
 		bool HasComponent_Waypoint_Engine(unsigned int id);
+
+
+		void AddComponent_Engine(unsigned int entityId, void* type);
+		bool HasComponent_Engine(unsigned int entityId, void* type);
+
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Destroy
@@ -88,6 +96,10 @@ namespace Engine {
 			mono_add_internal_call("IBehaviour::HasComponent_Sound_Engine", HasComponent_Sound_Engine);
 			mono_add_internal_call("IBehaviour::HasComponent_UI_Engine", HasComponent_UI_Engine);
 			mono_add_internal_call("IBehaviour::HasComponent_Waypoint_Engine", HasComponent_Waypoint_Engine);
+
+
+			mono_add_internal_call("IBehaviour::AddComponent_Engine", AddComponent_Engine);
+			mono_add_internal_call("IBehaviour::HasComponent_Engine", HasComponent_Engine);
 			
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -163,6 +175,30 @@ namespace Engine {
 
 		bool HasComponent_Waypoint_Engine(unsigned int id) {
 			GET_COMPONENT_PTR(WaypointComponent);
+		}
+
+		void AddComponent_Engine(unsigned int entityId, void* type) {
+			MonoType* mType = mono_reflection_type_get_type((MonoReflectionType*)type);
+
+			if (addComponentFuncs.find(mType) != addComponentFuncs.end()) {
+				addComponentFuncs[mType](entityId);
+			}
+			else {
+				LOG_WARNING("AddComponent: Type (" + std::string{ mono_type_get_name(mType) } + ") could not be found");
+			}
+		}
+
+		bool HasComponent_Engine(unsigned int entityId, void* type) {
+			MonoType* mType = mono_reflection_type_get_type((MonoReflectionType*)type);
+
+			if (hasComponentFuncs.find(mType) != hasComponentFuncs.end()) {
+				return hasComponentFuncs[mType](entityId);
+			}
+			else {
+				LOG_WARNING("HasComponent: Type (" + std::string{ mono_type_get_name(mType) } + ") could not be found");
+			}
+
+			return false;
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

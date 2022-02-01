@@ -135,39 +135,41 @@ public class IBehaviour : IComponent
         return null;
     }
 
-    public bool HasComponent<T>(uint id)
+    protected bool HasComponent<T>(uint id) where T : IComponent, new()
     {
         if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
         {
             return HasComponent_Scripts_Engine(id, typeof(T).ToString());
         }
 
-        switch (GenericTypeFinder.dictonary[typeof(T)])
-        {
-            case genTypes.Transform:
-                return HasComponent_Transform_Engine(id);
-            case genTypes.Collider:
-                return HasComponent_Collider_Engine(id);
-            case genTypes.Camera:
-                return HasComponent_Camera_Engine(id);
-            case genTypes.Rigidbody2D:
-                return HasComponent_Rigidbody_Engine(id);
-            case genTypes.Texture:
-                return HasComponent_Texture_Engine(id);
-            case genTypes.Text:
-                return HasComponent_Font_Engine(id);
-            case genTypes.Audio:
-                return HasComponent_Sound_Engine(id);
-            case genTypes.UI:
-                return HasComponent_UI_Engine(id);
-            case genTypes.Animation:
-                return HasComponent_Texture_Engine(id);
-            case genTypes.Waypoint:
-                return HasComponent_Waypoint_Engine(id);
-            default:
-                Console.WriteLine("Type cant be found yet");
-                return false;
-        }
+        return HasComponentInternal<T>(id);
+
+        //switch (GenericTypeFinder.dictonary[typeof(T)])
+        //{
+        //    case genTypes.Transform:
+        //        return HasComponent_Transform_Engine(id);
+        //    case genTypes.Collider:
+        //        return HasComponent_Collider_Engine(id);
+        //    case genTypes.Camera:
+        //        return HasComponent_Camera_Engine(id);
+        //    case genTypes.Rigidbody2D:
+        //        return HasComponent_Rigidbody_Engine(id);
+        //    case genTypes.Texture:
+        //        return HasComponent_Texture_Engine(id);
+        //    case genTypes.Text:
+        //        return HasComponent_Font_Engine(id);
+        //    case genTypes.Audio:
+        //        return HasComponent_Sound_Engine(id);
+        //    case genTypes.UI:
+        //        return HasComponent_UI_Engine(id);
+        //    case genTypes.Animation:
+        //        return HasComponent_Texture_Engine(id);
+        //    case genTypes.Waypoint:
+        //        return HasComponent_Waypoint_Engine(id);
+        //    default:
+        //        Console.WriteLine("Type cant be found yet");
+        //        return false;
+        //}
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Scripts_Engine(uint entityId, string name);
@@ -190,6 +192,22 @@ public class IBehaviour : IComponent
     internal static extern bool HasComponent_UI_Engine(uint entityId);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Waypoint_Engine(uint entityId);
+
+    protected void AddComponentInternalTem<T>(uint id) where T : IComponent, new()
+    {
+        AddComponent_Engine(id, typeof(T));
+    }
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void AddComponent_Engine(uint entityId, Type type);
+
+    protected bool HasComponentInternal<T>(uint id) where T : IComponent, new()
+    {
+        return HasComponent_Engine(id, typeof(T));
+    }
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool HasComponent_Engine(uint entityId, Type type);
 
     //-----------------------------------------------------------------------------------------------------------------
     //Destroy

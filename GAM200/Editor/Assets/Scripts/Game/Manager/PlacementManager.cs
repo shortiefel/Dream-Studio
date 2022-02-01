@@ -224,6 +224,7 @@ public class PlacementManager : MonoBehaviour
     public StructureModel GetRandomHouseStructure()
     {
         var point = placementGrid.GetRandomHouseStructurePoint();
+        if (point == null) return null;
         //Debug.Log(point);
         return GetStructureAt(point);
     }

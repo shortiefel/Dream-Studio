@@ -30,6 +30,14 @@ public class AIDirector : MonoBehaviour
         }
     }
 
+    public bool SpawnToDestination(StructureModel endHouse)
+    {
+
+        if (endHouse != null)
+            return TrySpawninACar(placementManager.GetRandomHouseStructure(), endHouse);
+        return false;
+    }
+
     public bool SpawnAHouseCar(StructureModel house)
     {
         /*foreach (var house in placementManager.GetAllHouses())

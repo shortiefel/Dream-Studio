@@ -36,7 +36,7 @@ public class Notification : MonoBehaviour
     {
         lifeTime = 0f;
         notiTime = 0f;
-        showNotification = Random.Range(2, (int)(maxLifeTime / 3));
+        showNotification = Random.Range(2, 10);
         shouldShow = false;
         alreadyShowing = true;
         //animation.Play("Appear");
@@ -75,7 +75,8 @@ public class Notification : MonoBehaviour
 
     public bool NotificationUpdate()
     {
-        lifeTime += Time.deltaTime; // slowly add until maxLifeTime
+        //if (alreadyShowing) //Only increase timer when notification is shown
+            lifeTime += Time.deltaTime; // slowly add until maxLifeTime
         if (!alreadyShowing)
             notiTime += Time.deltaTime;
         //Console.WriteLine(lifeTime);
@@ -89,8 +90,9 @@ public class Notification : MonoBehaviour
         if (notiTime > showNotification)
         {
             shouldShow = true;
-            showNotification = maxLifeTime;
+            //showNotification = maxLifeTime;
         }
+        Debug.Log(lifeTime);
 
         return true;
     }

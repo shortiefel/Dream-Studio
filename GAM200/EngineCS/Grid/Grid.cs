@@ -395,10 +395,15 @@ public class Grid
 
     public Point GetRandomHouseStructurePoint()
     {
-        if (_houseStructure.Count == 0)
-        {
-            return null;
-        }
-        return _houseStructure[Random.Range(0, _houseStructure.Count)];
+        //if (_houseStructure.Count == 0)
+        //{
+        //    return null;
+        //}
+        //return _houseStructure[Random.Range(0, _houseStructure.Count)];
+        int count = _houseStructure.Count - 1;
+        if (count < 0) return null;
+
+        int n = Random.Range(0, count);
+        return _houseStructure[n];
     }
 }

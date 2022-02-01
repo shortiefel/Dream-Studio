@@ -8,6 +8,8 @@ public class CarSpawner : MonoBehaviour
     float timer;
     float maxTimer;
     StructureModel structureModel;
+
+    Notification notification;
     public override void Start()
     {
         timer = 0f;
@@ -19,22 +21,21 @@ public class CarSpawner : MonoBehaviour
 
     public override void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > maxTimer)
-        {
-            if (aiDirector.SpawnAHouseCar(structureModel))
-            {
-                maxTimer = 100000000000f; //TEMPORARY
-                //maxTimer += 3f;
-                if (maxTimer > 10f) maxTimer = 10f;
-            }
-            //maxTimer = aiDirector.carSpawnTimerInterval;
-            //spawnManager.CheckPosition();
-            Debug.Log("carspawner");
-
-            timer = 0f;
-            Debug.Log(maxTimer);
-        }
+        //timer += Time.deltaTime;
+        //if (timer > maxTimer)
+        //{
+        //    if (aiDirector.SpawnAHouseCar(structureModel))
+        //    {
+        //        maxTimer += 3f;
+        //        if (maxTimer > 10f) maxTimer = 10f;
+        //    }
+        //    //maxTimer = aiDirector.carSpawnTimerInterval;
+        //    //spawnManager.CheckPosition();
+        //    Debug.Log("carspawner");
+        //
+        //    timer = 0f;
+        //    Debug.Log(maxTimer);
+        //}
     }
     /*public Prefab[] carPrefabs;
 

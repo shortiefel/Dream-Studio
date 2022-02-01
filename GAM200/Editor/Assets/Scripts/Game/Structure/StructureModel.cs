@@ -22,6 +22,9 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     private AudioSource notificationSound;
     private AudioSource destroySound;
 
+    AIDirector aiDirector;
+    bool spawnBool;
+
     public override void Start()
     {
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
@@ -33,21 +36,27 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         notification = GetComponent<Notification>();
         //carSpawner = GetComponent<CarSpawner>();
         //animation = GetComponent<Animation>();
+        spawnBool = false;
 
         if (notification != null)
         {
             //notifiPrefab = ;
+            Console.WriteLine("come in here --------------------------------------------------------------------------------");
             Vector2 center = transform.localPosition;
             
             notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 0.7f, 0f), 4);
             //notification.SetAnimation(ref notifiSymbol.GetComponent<Animation>());
             animation = notifiSymbol.GetComponent<Animation>();
-            animation.Play("Appear");
-            notification.SetAnimation("Appear");
+            //animation.Play("Appear");
+            //notification.SetAnimation("Appear");
+            //spawnBool = true;
+            SetToSpawn();
             notificationSound = GetComponent<AudioSource>();
             destroySound = notifiSymbol.GetComponent<AudioSource>();
             //aiDirector.SpawnACar();
         }
+
+        aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
     }
 
     public override void Update()
@@ -76,14 +85,19 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
             if (notification.shouldShow == true)
             {
-                animation.Play("Appear");
-                notification.SetAnimation("Appear");
+                //animation.Play("Appear");
+                //notification.SetAnimation("Appear");
+                //spawnBool = true;
+                SetToSpawn();
                 notificationSound.Play();
                 notification.shouldShow = false;
                 notification.ResetTimer();
                 Enable<Transform>(notifiSymbol.transform);
                 
             }
+
+            if (spawnBool && aiDirector != null)
+                spawnBool = !(aiDirector.SpawnToDestination(structureModel));
         }
     }
 
@@ -130,5 +144,12 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     internal void DeleteModel()
     {
         Destroy(entityId);
+    }
+
+    void SetToSpawn()
+    {
+        animation.Play("Appear");
+        notification.SetAnimation("Appear");
+        spawnBool = true;
     }
 }

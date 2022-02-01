@@ -228,7 +228,7 @@ namespace Engine {
 		void SetTransform_Position_Engine(unsigned int id, Math::vec2* inVec2, bool local) {
 			if (!local) {
 				//SetEngineType(id, TransformComponent, position, *inVec2);
-
+				
 				TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 				if (!ctype) return;
 				Math::vec2 moveDis = *inVec2 - ctype->position;
@@ -252,7 +252,7 @@ namespace Engine {
 			}
 			else {
 				//SetEngineType(id, TransformComponent, localPosition, *inVec2);
-
+				
 				TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 				if (!ctype) return;
 				Math::vec2 moveDis = *inVec2 - ctype->position;

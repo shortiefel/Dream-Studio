@@ -65,7 +65,7 @@ public class CarAI : MonoBehaviour
     public override void Start()
     {
         raycastLength = transform.scale.y * 2f;
-        Debug.Log(raycastLength + " lengirhteuth");
+        //Debug.Log(raycastLength + " lengirhteuth");
 
         endPoint = null;
         path = null; 
@@ -74,7 +74,7 @@ public class CarAI : MonoBehaviour
         //collisionStop = false;
 
         rb = GetComponent<Rigidbody2D>();
-        GetComponent<AudioSource>().Play();
+        //GetComponent<AudioSource>().Play();
 
         //if (path == null || path.Count == 0)
         //if (path == null || path.Count == 0)
@@ -99,10 +99,15 @@ public class CarAI : MonoBehaviour
         //Console.WriteLine("Testing " + rb.velocity);
 
         //tlPath = null;
-        collisionManager = GameObject.Find("CollisionManager").GetComponent<CollisionManager>();
-        tm = GameObject.Find("TrafficManager").GetComponent<TrafficManager>();
-
-        tm.RegisterCar(transform.entityId);
+        GameObject go1 = GameObject.Find("CollisionManager");
+        if (go1 != null)
+            collisionManager = go1.GetComponent<CollisionManager>();
+        GameObject go2 = GameObject.Find("TrafficManager");
+        if (go2 != null)
+        {
+            tm = go2.GetComponent<TrafficManager>();
+            tm.RegisterCar(transform.entityId);
+        }
     }
 
     public void SetPath(List<Vector2Int> newPath, ref StructureModel endStructure)
@@ -182,7 +187,8 @@ public class CarAI : MonoBehaviour
             }
         }
         targetAngle = transform.angle;
-        tlIndex = tm.GetTrafficLightIndex(path);
+        if (tm != null)
+            tlIndex = tm.GetTrafficLightIndex(path);
     }
 
     public override void Update()
@@ -209,25 +215,28 @@ public class CarAI : MonoBehaviour
             //    stop = true;
             //}
 
-            switch (collisionManager.CollisionTypeCheck(targetPos))
+            if (collisionManager != null)
             {
-                case CollisionType.Traffic:
-                    if (tlIndex.Contains(hit.transform.entityId))
-                    {
-                        stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
-                        //stop = true;
-                        //Debug.Log("Hiting trigger");
-                    }
-                    break;
-                case CollisionType.ERP:
-                    //Do nothing if its ERP as the logic is already in ERP
-                    break;
-                case CollisionType.Unknown:
-                    //Stop car because might be other cars
-                    stop = true;
-                    break;
-                default:
-                    break;
+                switch (collisionManager.CollisionTypeCheck(targetPos))
+                {
+                    case CollisionType.Traffic:
+                        if (tlIndex.Contains(hit.transform.entityId))
+                        {
+                            stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
+                            //stop = true;
+                            //Debug.Log("Hiting trigger");
+                        }
+                        break;
+                    case CollisionType.ERP:
+                        //Do nothing if its ERP as the logic is already in ERP
+                        break;
+                    case CollisionType.Unknown:
+                        //Stop car because might be other cars
+                        stop = true;
+                        break;
+                    default:
+                        break;
+                }
             }
 
             //Debug.Log("Hiting trigger");
@@ -279,7 +288,8 @@ public class CarAI : MonoBehaviour
             //OnDrive?.Invoke(Vector2.zero);
             movementVector = Vector2.zero;
 
-            stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
+            if (tm != null)
+                stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
         }
         else
         {
@@ -389,7 +399,8 @@ public class CarAI : MonoBehaviour
         endPoint.Notify();
         Console.WriteLine("After Notify ");
 
-        tm.RemoveCar(transform.entityId);
+        if (tm != null)
+            tm.RemoveCar(transform.entityId);
     }
 
     /*public void Move(Vector2 movementInput)
@@ -399,6 +410,7 @@ public class CarAI : MonoBehaviour
 
     public override void OnTriggerEnter(uint id)
     {
-        if (tlIndex.Contains(id)) tlIndex.Remove(id);
+        if (tlIndex != null)
+            if (tlIndex.Contains(id)) tlIndex.Remove(id);
     }
 }

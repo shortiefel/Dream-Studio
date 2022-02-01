@@ -24,7 +24,8 @@ public class CarSpawner : MonoBehaviour
         {
             if (aiDirector.SpawnAHouseCar(structureModel))
             {
-                maxTimer += 3f;
+                maxTimer = 100000000000f; //TEMPORARY
+                //maxTimer += 3f;
                 if (maxTimer > 10f) maxTimer = 10f;
             }
             //maxTimer = aiDirector.carSpawnTimerInterval;

@@ -59,7 +59,8 @@ namespace Engine {
 			if (linearForcesSz == 0 && rigidBody.linearDrag > 0.f)
 				rigidBody.linearVelocity = rigidBody.linearVelocity - rigidBody.linearVelocity * dt * rigidBody.linearDrag / rigidBody.mass;
 			if (linearForcesSz >= 20) rigidBody.linearForces.clear();
-			trans.localPosition = trans.localPosition + rigidBody.linearVelocity * dt;
+			//trans.localPosition = trans.localPosition + rigidBody.linearVelocity * dt;
+			trans.position = trans.position + rigidBody.linearVelocity * dt;
 			ParentManager::GetInstance().UpdateTruePos(entity_id);
 
 			//Angular physics

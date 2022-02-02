@@ -75,7 +75,7 @@ public class TrafficLightManager : MonoBehaviour
         if (!trafficLights.ContainsKey(tlPos)) return true;
 
 
-        bool cState = GetComponentWithID<TrafficLight>(trafficLights[tlPos]).state;
+        bool cState = GetComponent<TrafficLight>(trafficLights[tlPos]).state;
         //cState == true means allows horizontal movement
         //cState == false means allow vertical movement
         //if lrState == true means moving left right (horizontally) and false means moving up down (vertically)

@@ -68,6 +68,11 @@ public class IBehaviour : IComponent
 
             //Console.WriteLine("True " +type.Name);
         }
+
+        //else
+        //{
+        //    Debug.Log("Warning: Entity already has script (" + type.Name + ")");
+        //}
     }
 
     protected void RecordComponent<T>(uint entityId) where T : IComponent, new()
@@ -86,18 +91,39 @@ public class IBehaviour : IComponent
             dictonaryOfTypes[type].Add(entityId, comp);
             //Console.WriteLine("Adding components: " + type.Name + " size: " + dictonaryOfTypes[type].Count);
         }
+
+        //else
+        //{
+        //    Debug.Log("Warning: Entity already has a " + typeof(T).ToString() + " component!");
+        //}
     }
 
-    protected void Remove_Types(uint entityId)
+
+    public T AddComponent<T>() where T : IComponent, new()
     {
-        foreach (KeyValuePair<Type, Dictionary<uint, dynamic>> entry in dictonaryOfTypes)
+        if (HasComponent<T>(entityId))
         {
-            if (entry.Value.ContainsKey(entityId))
-            {
-                entry.Value.Remove(entityId);
-            }
+            Debug.Log("Warning: Entity already have (" + typeof(T).ToString() + ")");
+            return dictonaryOfTypes[typeof(T)][entityId] as T;
         }
+
+        if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+        {
+            bool bl = AddComponent_Scripts_Engine(entityId, typeof(T).ToString());
+            RecordScript(typeof(T), entityId);
+            return dictonaryOfTypes[typeof(T)][entityId] as T;
+        }
+
+        if (AddComponentInternal<T>(entityId))
+        {
+            RecordComponent<T>(entityId);
+            return dictonaryOfTypes[typeof(T)][entityId] as T;
+        }
+
+        return null;
     }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool AddComponent_Scripts_Engine(uint entityId, string name);
 
     public T GetComponent<T>() where T : IComponent, new()
     {
@@ -117,7 +143,7 @@ public class IBehaviour : IComponent
         return null;
     }
 
-    public T GetComponentWithID<T>(uint id) where T : IComponent, new()
+    public T GetComponent<T>(uint id) where T : IComponent, new()
     {
         if (HasComponent<T>(id))
         {
@@ -134,6 +160,25 @@ public class IBehaviour : IComponent
 
         return null;
     }
+
+    //public T GetComponentWithID<T>(uint id) where T : IComponent, new()
+    //{
+    //    if (HasComponent<T>(id))
+    //    {
+    //        //Debug.Log(typeof(T));
+    //        //Console.WriteLine("First " + typeof(T));
+    //        if (GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+    //            RecordComponent<T>(id);
+    //        else
+    //            RecordScript(typeof(T), id);
+    //        //Console.WriteLine("Got " + typeof(T));
+    //
+    //        return dictonaryOfTypes[typeof(T)][id] as T;
+    //    }
+    //
+    //    return null;
+    //}
+
 
     protected bool HasComponent<T>(uint id) where T : IComponent, new()
     {
@@ -174,32 +219,34 @@ public class IBehaviour : IComponent
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool HasComponent_Scripts_Engine(uint entityId, string name);
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Transform_Engine(uint entityId);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Collider_Engine(uint entityId);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Camera_Engine(uint entityId);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Rigidbody_Engine(uint entityId);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Texture_Engine(uint entityId);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Font_Engine(uint entityId);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Sound_Engine(uint entityId);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_UI_Engine(uint entityId);
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool HasComponent_Waypoint_Engine(uint entityId);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool HasComponent_Transform_Engine(uint entityId);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool HasComponent_Collider_Engine(uint entityId);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool HasComponent_Camera_Engine(uint entityId);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool HasComponent_Rigidbody_Engine(uint entityId);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool HasComponent_Texture_Engine(uint entityId);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool HasComponent_Font_Engine(uint entityId);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool HasComponent_Sound_Engine(uint entityId);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool HasComponent_UI_Engine(uint entityId);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool HasComponent_Waypoint_Engine(uint entityId);
 
-    protected void AddComponentInternalTem<T>(uint id) where T : IComponent, new()
+
+
+    protected bool AddComponentInternal<T>(uint id) where T : IComponent, new()
     {
-        AddComponent_Engine(id, typeof(T));
+        return AddComponent_Engine(id, typeof(T));
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void AddComponent_Engine(uint entityId, Type type);
+    internal static extern bool AddComponent_Engine(uint entityId, Type type);
 
     protected bool HasComponentInternal<T>(uint id) where T : IComponent, new()
     {
@@ -215,6 +262,18 @@ public class IBehaviour : IComponent
     {
         Destroy_Entity_Engine(id);
     }
+
+    private void Remove_Types(uint entityId)
+    {
+        foreach (KeyValuePair<Type, Dictionary<uint, dynamic>> entry in dictonaryOfTypes)
+        {
+            if (entry.Value.ContainsKey(entityId))
+            {
+                entry.Value.Remove(entityId);
+            }
+        }
+    }
+
     public void Destroy(GameObject go)
     {
         Remove_Types(go.entityId);

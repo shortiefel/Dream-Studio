@@ -34,10 +34,10 @@ namespace Engine {
 		void CreateEntity_Engine(unsigned int* entityId, MonoString* str);
 		void FindEntity_Engine(int* entityId, MonoString* str);
 
-		bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name);
-		bool AddComponent_Transform_Engine(unsigned int entityId);
-		bool AddComponent_Collider_Engine(unsigned int entityId);
-		bool AddComponent_Camera_Engine(unsigned int entityId);
+		//bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name);
+		//bool AddComponent_Transform_Engine(unsigned int entityId);
+		//bool AddComponent_Collider_Engine(unsigned int entityId);
+		//bool AddComponent_Camera_Engine(unsigned int entityId);
 
 		void SetActive_GameObject_Engine(unsigned int entityId, bool state);
 
@@ -48,10 +48,10 @@ namespace Engine {
 			mono_add_internal_call("GameObject::CreateEntity_Engine", CreateEntity_Engine);
 			mono_add_internal_call("GameObject::FindEntity_Engine", FindEntity_Engine);
 
-			mono_add_internal_call("GameObject::AddComponent_Scripts_Engine", AddComponent_Scripts_Engine);
-			mono_add_internal_call("GameObject::AddComponent_Transform_Engine", AddComponent_Transform_Engine);
-			mono_add_internal_call("GameObject::AddComponent_Collider_Engine", AddComponent_Collider_Engine);
-			mono_add_internal_call("GameObject::AddComponent_Camera_Engine", AddComponent_Camera_Engine);
+			//mono_add_internal_call("GameObject::AddComponent_Scripts_Engine", AddComponent_Scripts_Engine);
+			//mono_add_internal_call("GameObject::AddComponent_Transform_Engine", AddComponent_Transform_Engine);
+			//mono_add_internal_call("GameObject::AddComponent_Collider_Engine", AddComponent_Collider_Engine);
+			//mono_add_internal_call("GameObject::AddComponent_Camera_Engine", AddComponent_Camera_Engine);
 
 			mono_add_internal_call("GameObject::SetActive_GameObject_Engine", SetActive_GameObject_Engine);
 		}
@@ -84,25 +84,25 @@ namespace Engine {
 			*entityId = -1;
 		}
 
-		bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name) {
-			//return false;
-			char* text = mono_string_to_utf8(name);
-			bool result = dreamECSGame->AddComponent<ScriptComponent>(ScriptComponent{ entityId, text });
-			mono_free(text);
-			return result;
-		}
+		//bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name) {
+		//	//return false;
+		//	char* text = mono_string_to_utf8(name);
+		//	bool result = dreamECSGame->AddComponent<ScriptComponent>(ScriptComponent{ entityId, text });
+		//	mono_free(text);
+		//	return result;
+		//}
 
-		bool AddComponent_Transform_Engine(unsigned int entityId) {
-			return dreamECSGame->AddComponent<TransformComponent>(TransformComponent{ entityId });
-		}
-
-		bool AddComponent_Collider_Engine(unsigned int entityId) {
-			return dreamECSGame->AddComponent<ColliderComponent>(ColliderComponent{ entityId });
-		}
-
-		bool AddComponent_Camera_Engine(unsigned int entityId) {
-			return dreamECSGame->AddComponent<CameraComponent>(CameraComponent{ entityId });
-		}
+		//bool AddComponent_Transform_Engine(unsigned int entityId) {
+		//	return dreamECSGame->AddComponent<TransformComponent>(TransformComponent{ entityId });
+		//}
+		//
+		//bool AddComponent_Collider_Engine(unsigned int entityId) {
+		//	return dreamECSGame->AddComponent<ColliderComponent>(ColliderComponent{ entityId });
+		//}
+		//
+		//bool AddComponent_Camera_Engine(unsigned int entityId) {
+		//	return dreamECSGame->AddComponent<CameraComponent>(CameraComponent{ entityId });
+		//}
 
 		void SetActive_GameObject_Engine(unsigned int entityId, bool state) {
 			SetEngineType(entityId, TransformComponent, isActive, state);

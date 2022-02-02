@@ -1,26 +1,30 @@
 ﻿
 public class Test2 : MonoBehaviour
 {
+    public int num;
+
+    public override void Start()
+    {
+        num = 0;
+    }
+
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            gameObject.AddComponent<Transform>();
+            gameObject.AddComponent<Collider>();
         }
-
         if (Input.GetKeyDown(KeyCode.W))
         {
-            AddComponentInternalTem<AudioTest>(entityId);
+            //gameObject.AddComponent<Test2>();
+            AddComponent<Test2>();
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            transform.position += 10f * -transform.up * Time.deltaTime;
+            //gameObject.AddComponent<Generate1500Object>();
+            AddComponent<Generate1500Object>();
         }
 
-        if (Input.GetKey(KeyCode.R))
-        {
-            transform.position += 10f * -transform.right * Time.deltaTime;
-        }
     }
 }

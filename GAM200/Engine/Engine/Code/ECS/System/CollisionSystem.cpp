@@ -91,7 +91,7 @@ namespace Engine {
 			if (!col1->isActive) continue;
 
 			TransformComponent* transform1 = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id1);
-			if (!transform1->isActive || transform1 == nullptr) continue;
+			if (transform1 == nullptr || !transform1->isActive) continue;
 
 			ColliderComponent collider1 = *col1;
 			collider1.offset_position += Math::vec2{ transform1->position };
@@ -112,7 +112,7 @@ namespace Engine {
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
 
 				TransformComponent* transform2 = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id2);
-				if (!transform2->isActive) continue;
+				if (transform2 == nullptr || !transform2->isActive) continue;
 
 				if (transform1->layer != transform2->layer) continue; //collision layer
 

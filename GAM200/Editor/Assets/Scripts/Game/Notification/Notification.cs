@@ -92,7 +92,7 @@ public class Notification : MonoBehaviour
             shouldShow = true;
             //showNotification = maxLifeTime;
         }
-        Debug.Log(lifeTime);
+        //Debug.Log(lifeTime);
 
         return true;
     }

@@ -42,18 +42,19 @@ namespace Engine {
 		Check if component exist
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		bool HasComponent_Scripts_Engine(unsigned int id, MonoString* str);
-		bool HasComponent_Transform_Engine(unsigned int id);
-		bool HasComponent_Collider_Engine(unsigned int id);
-		bool HasComponent_Camera_Engine(unsigned int id);
-		bool HasComponent_Rigidbody_Engine(unsigned int id);
-		bool HasComponent_Texture_Engine(unsigned int id);
-		bool HasComponent_Font_Engine(unsigned int id);
-		bool HasComponent_Sound_Engine(unsigned int id);
-		bool HasComponent_UI_Engine(unsigned int id);
-		bool HasComponent_Waypoint_Engine(unsigned int id);
+		//bool HasComponent_Transform_Engine(unsigned int id);
+		//bool HasComponent_Collider_Engine(unsigned int id);
+		//bool HasComponent_Camera_Engine(unsigned int id);
+		//bool HasComponent_Rigidbody_Engine(unsigned int id);
+		//bool HasComponent_Texture_Engine(unsigned int id);
+		//bool HasComponent_Font_Engine(unsigned int id);
+		//bool HasComponent_Sound_Engine(unsigned int id);
+		//bool HasComponent_UI_Engine(unsigned int id);
+		//bool HasComponent_Waypoint_Engine(unsigned int id);
 
 
-		void AddComponent_Engine(unsigned int entityId, void* type);
+		bool AddComponent_Engine(unsigned int entityId, void* type);
+		bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name);
 		bool HasComponent_Engine(unsigned int entityId, void* type);
 
 
@@ -87,18 +88,19 @@ namespace Engine {
 			Check if component exist
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("IBehaviour::HasComponent_Scripts_Engine", HasComponent_Scripts_Engine);
-			mono_add_internal_call("IBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
-			mono_add_internal_call("IBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
-			mono_add_internal_call("IBehaviour::HasComponent_Camera_Engine", HasComponent_Camera_Engine);
-			mono_add_internal_call("IBehaviour::HasComponent_Rigidbody_Engine", HasComponent_Rigidbody_Engine);
-			mono_add_internal_call("IBehaviour::HasComponent_Texture_Engine", HasComponent_Texture_Engine);
-			mono_add_internal_call("IBehaviour::HasComponent_Font_Engine", HasComponent_Font_Engine);
-			mono_add_internal_call("IBehaviour::HasComponent_Sound_Engine", HasComponent_Sound_Engine);
-			mono_add_internal_call("IBehaviour::HasComponent_UI_Engine", HasComponent_UI_Engine);
-			mono_add_internal_call("IBehaviour::HasComponent_Waypoint_Engine", HasComponent_Waypoint_Engine);
+			//mono_add_internal_call("IBehaviour::HasComponent_Transform_Engine", HasComponent_Transform_Engine);
+			//mono_add_internal_call("IBehaviour::HasComponent_Collider_Engine", HasComponent_Collider_Engine);
+			//mono_add_internal_call("IBehaviour::HasComponent_Camera_Engine", HasComponent_Camera_Engine);
+			//mono_add_internal_call("IBehaviour::HasComponent_Rigidbody_Engine", HasComponent_Rigidbody_Engine);
+			//mono_add_internal_call("IBehaviour::HasComponent_Texture_Engine", HasComponent_Texture_Engine);
+			//mono_add_internal_call("IBehaviour::HasComponent_Font_Engine", HasComponent_Font_Engine);
+			//mono_add_internal_call("IBehaviour::HasComponent_Sound_Engine", HasComponent_Sound_Engine);
+			//mono_add_internal_call("IBehaviour::HasComponent_UI_Engine", HasComponent_UI_Engine);
+			//mono_add_internal_call("IBehaviour::HasComponent_Waypoint_Engine", HasComponent_Waypoint_Engine);
 
 
 			mono_add_internal_call("IBehaviour::AddComponent_Engine", AddComponent_Engine);
+			mono_add_internal_call("IBehaviour::AddComponent_Scripts_Engine", AddComponent_Scripts_Engine);
 			mono_add_internal_call("IBehaviour::HasComponent_Engine", HasComponent_Engine);
 			
 
@@ -141,51 +143,63 @@ namespace Engine {
 			return false;
 		}
 
-		bool HasComponent_Transform_Engine(unsigned int id) {
-			GET_COMPONENT_PTR(TransformComponent);
-		}
+		//bool HasComponent_Transform_Engine(unsigned int id) {
+		//	GET_COMPONENT_PTR(TransformComponent);
+		//}
+		//
+		//bool HasComponent_Collider_Engine(unsigned int id) {
+		//	GET_COMPONENT_PTR(ColliderComponent);
+		//}
+		//
+		//bool HasComponent_Camera_Engine(unsigned int id) {
+		//	GET_COMPONENT_PTR(CameraComponent);
+		//}
+		//
+		//bool HasComponent_Rigidbody_Engine(unsigned int id) {
+		//	GET_COMPONENT_PTR(RigidBodyComponent);
+		//}
+		//
+		//bool HasComponent_Texture_Engine(unsigned int id) {
+		//	GET_COMPONENT_PTR(TextureComponent);
+		//}
+		//
+		//bool HasComponent_Font_Engine(unsigned int id) {
+		//	GET_COMPONENT_PTR(FontComponent);
+		//}
+		//
+		//bool HasComponent_Sound_Engine(unsigned int id) {
+		//	GET_COMPONENT_PTR(SoundComponent);
+		//}
+		//
+		//bool HasComponent_UI_Engine(unsigned int id) {
+		//	GET_COMPONENT_PTR(UIComponent);
+		//}
+		//
+		//bool HasComponent_Waypoint_Engine(unsigned int id) {
+		//	GET_COMPONENT_PTR(WaypointComponent);
+		//}
 
-		bool HasComponent_Collider_Engine(unsigned int id) {
-			GET_COMPONENT_PTR(ColliderComponent);
-		}
 
-		bool HasComponent_Camera_Engine(unsigned int id) {
-			GET_COMPONENT_PTR(CameraComponent);
-		}
 
-		bool HasComponent_Rigidbody_Engine(unsigned int id) {
-			GET_COMPONENT_PTR(RigidBodyComponent);
-		}
-
-		bool HasComponent_Texture_Engine(unsigned int id) {
-			GET_COMPONENT_PTR(TextureComponent);
-		}
-
-		bool HasComponent_Font_Engine(unsigned int id) {
-			GET_COMPONENT_PTR(FontComponent);
-		}
-
-		bool HasComponent_Sound_Engine(unsigned int id) {
-			GET_COMPONENT_PTR(SoundComponent);
-		}
-
-		bool HasComponent_UI_Engine(unsigned int id) {
-			GET_COMPONENT_PTR(UIComponent);
-		}
-
-		bool HasComponent_Waypoint_Engine(unsigned int id) {
-			GET_COMPONENT_PTR(WaypointComponent);
-		}
-
-		void AddComponent_Engine(unsigned int entityId, void* type) {
+		bool AddComponent_Engine(unsigned int entityId, void* type) {
 			MonoType* mType = mono_reflection_type_get_type((MonoReflectionType*)type);
 
 			if (addComponentFuncs.find(mType) != addComponentFuncs.end()) {
 				addComponentFuncs[mType](entityId);
+				return true;
 			}
 			else {
 				LOG_WARNING("AddComponent: Type (" + std::string{ mono_type_get_name(mType) } + ") could not be found");
 			}
+			return false;
+		}
+
+		bool AddComponent_Scripts_Engine(unsigned int entityId, MonoString* name) {
+			//return false;
+			char* text = mono_string_to_utf8(name);
+			bool result = dreamECSGame->AddComponent<ScriptComponent>(ScriptComponent{ entityId, text });
+			mono_free(text);
+			return result;
 		}
 
 		bool HasComponent_Engine(unsigned int entityId, void* type) {

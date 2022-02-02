@@ -31,6 +31,7 @@ Technology is prohibited.
 using System;
 using System.Runtime.CompilerServices; //For internal calls
 
+//Only inherited by Scripts
 public class MonoBehaviour : IBehaviour
 {
     public GameObject gameObject;
@@ -59,48 +60,53 @@ public class MonoBehaviour : IBehaviour
     public MonoBehaviour(uint id) : base(id)
     {
         entityId = id;
-        if (GenericTypeFinder.dictonary.ContainsKey(this.GetType()))
-        {
-            switch (GenericTypeFinder.dictonary[this.GetType()])
-            {
-                case genTypes.Transform:
-                    RecordComponent<Transform>(entityId);
-                    break;
-                case genTypes.Collider:
-                    RecordComponent<Collider>(entityId);
-                    break;
-                case genTypes.Camera:
-                    RecordComponent<Camera>(entityId);
-                    break;
-                case genTypes.Texture:
-                    RecordComponent<Texture>(entityId);
-                    break;
-                case genTypes.Rigidbody2D:
-                    RecordComponent<Rigidbody2D>(entityId);
-                    break;
-                case genTypes.Text:
-                    RecordComponent<Text>(entityId);
-                    break;
-                case genTypes.Audio:
-                    RecordComponent<AudioSource>(entityId);
-                    break;
-                case genTypes.UI:
-                    RecordComponent<UI>(entityId);
-                    break;
-                case genTypes.Animation:
-                    RecordComponent<Animation>(entityId);
-                    break;
-                default:
-                    Console.WriteLine("Type cant be recorded yet");
-                    break;
+        //if (GenericTypeFinder.dictonary.ContainsKey(this.GetType()))
+        //{
+        //    switch (GenericTypeFinder.dictonary[this.GetType()])
+        //    {
+        //        case genTypes.Transform:
+        //            RecordComponent<Transform>(entityId);
+        //            break;
+        //        case genTypes.Collider:
+        //            RecordComponent<Collider>(entityId);
+        //            break;
+        //        case genTypes.Camera:
+        //            RecordComponent<Camera>(entityId);
+        //            break;
+        //        case genTypes.Texture:
+        //            RecordComponent<Texture>(entityId);
+        //            break;
+        //        case genTypes.Rigidbody2D:
+        //            RecordComponent<Rigidbody2D>(entityId);
+        //            break;
+        //        case genTypes.Text:
+        //            RecordComponent<Text>(entityId);
+        //            break;
+        //        case genTypes.Audio:
+        //            RecordComponent<AudioSource>(entityId);
+        //            break;
+        //        case genTypes.UI:
+        //            RecordComponent<UI>(entityId);
+        //            break;
+        //        case genTypes.Animation:
+        //            RecordComponent<Animation>(entityId);
+        //            break;
+        //        default:
+        //            Console.WriteLine("Type cant be recorded yet");
+        //            break;
+        //
+        //    }
+        //
+        //}
+        //else
+        //{
+        //    RecordScript(this.GetType(), entityId);
+        //    //Debug.Log("REcording here-------------------------------------------------------------------------------------");
+        //}
 
-            }
-
-        }
-        else
-            RecordScript(this.GetType(), entityId);
+        RecordScript(this.GetType(), entityId);
         gameObject = GameObject.RetrieveGameObject(id);
-        transform = new Transform(id);
+        gameObject.transform = transform = GetComponent<Transform>();
     }
 
     public static void SetHighscore(int value, string name)
@@ -287,18 +293,20 @@ public class MonoBehaviour : IBehaviour
     //Instantiate
     public GameObject Instantiate(Prefab _prefab, Transform transform = null)
     {
-        int newEntityId = -1;
-        if (transform != null) newEntityId = (int)transform.entityId;
-        Instantiate_Prefab_Transform_Engine(_prefab.name, newEntityId, out uint newId);
-        return new GameObject(false, newId, _prefab.name);
+        int transformId = -1;
+        if (transform != null) transformId = (int)transform.entityId;
+        Instantiate_Prefab_Transform_Engine(_prefab.name, transformId, out uint newId);
+        return new GameObject(_prefab, newId);
+        //return new GameObject(false, newId, _prefab.name);
     }
 
     public GameObject Instantiate(GameObject _go, Transform transform = null)
     {
-        int newEntityId = -1;
-        if (transform != null) newEntityId = (int)transform.entityId;
-        Instantiate_Prefab_Transform_Engine(_go.name, newEntityId, out uint newId);
-        return new GameObject(false, newId, _go.name);
+        int transformId = -1;
+        if (transform != null) transformId = (int)transform.entityId;
+        Instantiate_Prefab_Transform_Engine(_go.name, transformId, out uint newId);
+        return new GameObject(new Prefab(_go.name), newId);
+        //return new GameObject(false, newId, _go.name);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Instantiate_Prefab_Transform_Engine(String prefabName, int entityID, out uint id);
@@ -307,13 +315,15 @@ public class MonoBehaviour : IBehaviour
     public GameObject Instantiate(Prefab _prefab, Vector3 pos, int layer = 2)
     {
         Instantiate_Prefab_Position_Engine(_prefab.name, pos, layer, out uint newId);
-        return new GameObject(false, newId, _prefab.name);
+        return new GameObject(_prefab, newId);
+        //return new GameObject(false, newId, _prefab.name);
     }
     public GameObject Instantiate(GameObject _go, Vector3 pos, int layer = 2, float angle = 0)
     {
         //Instantiate_Prefab_Position_Engine(_go.name, pos, layer, out uint newId);
         Instantiate_Prefab_Engine(_go.name, pos, angle, new Vector2(1,1), layer, out uint newId);
-        return new GameObject(false, newId, _go.name);
+        return new GameObject(new Prefab(_go.name), newId);
+        //return new GameObject(false, newId, _go.name);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Instantiate_Prefab_Position_Engine(String prefabName, Vector3 pos, int layer, out uint newId);

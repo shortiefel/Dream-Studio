@@ -1,26 +1,34 @@
 ﻿
 public class Generate1500Object : MonoBehaviour
 {
-    int x, y;
-    Prefab prefab;
+    Test2 test2;
 
     public override void Start()
     {
-        x = 0;
-        y = 0;
-        prefab = new Prefab("Box");
+        test2 = GameObject.Find("sdr").GetComponent<Test2>();
 
     }
     public override void Update()
     {
-        if (Input.GetKey(KeyCode.C)) {
-            Instantiate(prefab, new Vector3(x * 2f, y * 2f, 0));
-            x++;
-            if (x > 99)
-            {
-                x = 0;
-                y++;
-            }
+        if (Input.GetKeyDown(KeyCode.W)) {
+            Debug.Log(test2.num);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            test2.num++;
+        }
+
+
+
+        if (Input.GetKey(KeyCode.Z))
+        {
+            gameObject.transform.position += new Vector2(2, 0);
+        }
+
+        if (Input.GetKey(KeyCode.X))
+        {
+            transform.position -= new Vector2(2, 0);
         }
     }
 }

@@ -14,20 +14,17 @@ public class MoneySystem : MonoBehaviour
         textComp = GetComponent<Text>();
     }
 
-    public override void Update()
-    {
-        textComp.text = money.ToString();
-    }
-
     public void AddMoney(int val)
     {
         money += val;
+        textComp.text = money.ToString();
     }
 
     public void MinusMoney(int val)
     {
         money -= val;
         if (money < 0) money = 0;
+        textComp.text = money.ToString();
     }
 }
 

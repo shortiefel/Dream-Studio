@@ -58,8 +58,8 @@ namespace Engine {
 		void MuteSound(SoundComponent* soundCom, bool _state);
 		void MuteSoundGroup(SoundGrp _sg, bool _state);
 
-		void MuteBGM(SoundComponent* soundCom);
-		void MuteSFX(SoundComponent* soundCom);
+		/*void MuteBGM(SoundComponent* soundCom);
+		void MuteSFX(SoundComponent* soundCom);*/
 
 		float GetCurrentMasterVolume(SoundComponent* soundCom);
 		void MasterVolumeDown(SoundComponent* soundCom);

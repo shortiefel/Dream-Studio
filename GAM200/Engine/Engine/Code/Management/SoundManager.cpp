@@ -199,11 +199,30 @@ namespace Engine
 		it->second->setMute(soundCom->isMute);
 	}
 
-	void SoundManager::MuteSoundGroup(SoundGrp _sg, bool _state) {
+	void SoundManager::MuteSoundGroup(SoundGrp _sg, bool _state) 
+	{
+		SoundComponent soundCom;
+		
 
+		if (_state == true)
+		{
+			switch (_sg)
+			{
+			case SoundGrp::MUSIC:
+				MusicGroup->setMute(_state);
+				break;
+			case SoundGrp::SFX:
+				SFXGroup->setMute(_state);
+				break;
+			default:
+				MasterGroup->setMute(_state);
+				break;
+			}
+		}
+		
 	}
 
-	void SoundManager::MuteBGM(SoundComponent* soundCom)
+	/*void SoundManager::MuteBGM(SoundComponent* soundCom)
 	{
 
 		if (soundCom->soundType == SoundGrp::MUSIC)
@@ -221,9 +240,7 @@ namespace Engine
 			auto it = channelMap.find(soundCom->channelID);
 			it->second->setMute(soundCom->isMute);
 		}
-
-
-	}
+	}*/
 
 	void SoundManager::MasterVolumeDown(SoundComponent* soundCom)
 	{

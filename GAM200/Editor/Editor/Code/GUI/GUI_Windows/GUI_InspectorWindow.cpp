@@ -1310,7 +1310,50 @@ namespace Editor {
 						ImGui::AlignTextToFramePadding();
 						ImGui::Text("Mute");
 						ImGui::SameLine(halfWidth);
-						ImGui::Checkbox("##soundMute", &soundComp->isMute);
+						if (ImGui::Checkbox("##soundMute", &soundComp->isMute))
+						{
+							switch ((int)soundComp->soundType)
+							{
+								case 0: {
+									Engine::SoundManager::GetInstance().MuteSoundGroup(soundComp->soundType, true);
+									break;
+								}
+								case 1: {
+									Engine::SoundManager::GetInstance().MuteSoundGroup(soundComp->soundType, true);
+									break;
+								}
+								case 2: {
+									Engine::SoundManager::GetInstance().MuteSoundGroup(soundComp->soundType, true);
+									break;
+								}
+								default: {
+									break;
+								}
+
+							}
+						}
+						else
+						{
+							switch ((int)soundComp->soundType)
+							{
+							case 0: {
+								Engine::SoundManager::GetInstance().MuteSoundGroup(soundComp->soundType, false);
+								break;
+							}
+							case 1: {
+								Engine::SoundManager::GetInstance().MuteSoundGroup(soundComp->soundType, false);
+								break;
+							}
+							case 2: {
+								Engine::SoundManager::GetInstance().MuteSoundGroup(soundComp->soundType, false);
+								break;
+							}
+							default: {
+								break;
+							}
+
+							}
+						}
 						
 						ImGui::Spacing();
 

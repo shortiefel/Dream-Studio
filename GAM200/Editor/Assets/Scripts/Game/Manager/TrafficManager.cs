@@ -13,7 +13,7 @@ public class TrafficManager : MonoBehaviour
 
 
     //TrafficLightManager-------------------------------------------------------------------
-    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle)
+    public bool GetTrafficLightState(Vector2 tlPos, float _carAngle)
     {
         return tlm.GetTrafficLightState(tlPos, _carAngle);
     }

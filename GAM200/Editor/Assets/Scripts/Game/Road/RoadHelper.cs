@@ -40,17 +40,19 @@ public class RoadHelper : MonoBehaviour
             foreach (var t in i)
             {
                 //Console.WriteLine(t);
+
+                //one waypoint to pass to incoming, one waypoint to pass to outgoing
+                //for Deadend only
             }
             List<Marker> carMarkers = Marker.Vector2ToMarker(i);
 
             //Console.WriteLine("\nNext Set \n");
         }
-
     }
 
     //public virtual Marker GetpositioForPedestrianToSpwan(Vector2 structurePosition)
     //{
-    //    return GetClosestMarkeTo(structurePosition, carMarkers);
+    //    return GetClosestMarkerTo(structurePosition, carMarkers);
     //}
 
     public virtual Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)
@@ -63,7 +65,7 @@ public class RoadHelper : MonoBehaviour
         return incoming;
     }
 
-    protected Marker GetClosestMarkeTo(Vector2 structurePosition, List<Marker> carMarkers, bool isCorner = false)
+    protected Marker GetClosestMarkerTo(Vector2 structurePosition, List<Marker> carMarkers, bool isCorner = false)
     {
         if (isCorner)
         {
@@ -97,7 +99,7 @@ public class RoadHelper : MonoBehaviour
 
     public Vector2 GetClosestCarMarkerPosition(Vector2 currentPosition)
     {
-        return GetClosestMarkeTo(currentPosition, carMarkers, false).Position;
+        return GetClosestMarkerTo(currentPosition, carMarkers, false).Position;
     }
 
 

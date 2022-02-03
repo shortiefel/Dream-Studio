@@ -78,6 +78,8 @@
     <Compile Include="Game\Road\Marker.cs" />
     <Compile Include="Game\Road\RoadFixer.cs" />
     <Compile Include="Game\Road\RoadHelper.cs" />
+    <Compile Include="Game\Road\RoadHelperMultiple.cs" />
+    <Compile Include="Game\Road\RoadHelperStraight.cs" />
     <Compile Include="Game\Road\TrafficLight.cs" />
     <Compile Include="Game\Road\Vertex.cs" />
     <Compile Include="Game\Structure\StructureModel.cs" />

@@ -60,7 +60,7 @@ public class TrafficLightManager : MonoBehaviour
         trafficLights.Remove(pos);
     }
 
-    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle)
+    public bool GetTrafficLightState(Vector2 tlPos, float _carAngle)
     {
         _carAngle = _carAngle % 360;
         //angle 0/360/-360 - up, 90/-270 - right, -90/270 - left, 180/-180 - down

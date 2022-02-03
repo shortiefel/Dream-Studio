@@ -25,6 +25,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     AIDirector aiDirector;
     bool spawnBool;
 
+    public BuildingType buildingType;
+
     public override void Start()
     {
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
@@ -41,7 +43,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         if (notification != null)
         {
             //notifiPrefab = ;
-            Console.WriteLine("come in here --------------------------------------------------------------------------------");
+            //Console.WriteLine("come in here --------------------------------------------------------------------------------");
             Vector2 center = transform.localPosition;
             
             notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 0.7f, 0f), 4);
@@ -54,7 +56,34 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             notificationSound = GetComponent<AudioSource>();
             destroySound = notifiSymbol.GetComponent<AudioSource>();
             //aiDirector.SpawnACar();
+
+            //Have to be texture names without the extension
+            switch (texure.RetrieveTexture())
+            {
+                case "Office":
+                    buildingType = BuildingType.Office;
+                    break;
+
+                case "Hospital":
+                    buildingType = BuildingType.Hospital;
+                    break;
+                
+                case "Park":
+                    buildingType = BuildingType.Park;
+                    break;
+
+                case "ShoppingMall":
+                    buildingType = BuildingType.Mall;
+                    break;
+            }
         }
+
+        else
+        {
+            buildingType = BuildingType.House;
+        }
+
+        Debug.Log("This is " + buildingType + " -------------------------");
 
         aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
     }

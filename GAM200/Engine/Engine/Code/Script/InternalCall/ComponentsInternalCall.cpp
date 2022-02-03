@@ -43,6 +43,7 @@ namespace Engine {
 			GetViewportFuncPtr = fp;
 		}
 
+
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Transform
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -75,6 +76,7 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void ChangeTexture_Engine(unsigned int entityID, MonoString* name);
 		void SetTexture_Color_Engine(unsigned int entityID, Math::vec4 col);
+		void RetrieveTexture_Engine(unsigned int entityID, MonoString** name);
 
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -167,7 +169,8 @@ namespace Engine {
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("Texture::ChangeTexture_Engine", ChangeTexture_Engine);
 			mono_add_internal_call("Texture::SetTexture_Color_Engine", SetTexture_Color_Engine);
-
+			mono_add_internal_call("Texture::RetrieveTexture_Engine", RetrieveTexture_Engine);
+			
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Rigidbody2d
@@ -377,6 +380,14 @@ namespace Engine {
 
 		void SetTexture_Color_Engine(unsigned int entityID, Math::vec4 col) {
 			SetEngineType(entityID, TextureComponent, colour, col);
+		}
+
+		void RetrieveTexture_Engine(unsigned int entityID, MonoString** name) {
+			const auto& ptr = dreamECSGame->GetComponentPTR<TextureComponent>(entityID);
+
+			if (ptr != nullptr) {
+				*name = mono_string_new(mono_domain_get(), (ptr->textureName).c_str());
+			}
 		}
 
 

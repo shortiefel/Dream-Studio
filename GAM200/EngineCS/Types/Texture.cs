@@ -40,4 +40,13 @@ public class Texture : IComponent
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetTexture_Color_Engine(uint entityID, Color col);
+
+    public string RetrieveTexture()
+    {
+        RetrieveTexture_Engine(entityId, out string name);
+        return name;
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void RetrieveTexture_Engine(uint entityID, out string name);
+
 }

@@ -3,6 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+public enum BuildingType
+{
+    House = 0,
+    Hospital,
+    Office,
+    Park,
+    Mall
+}
+
+
 public class StructureManager : MonoBehaviour
 {
     public StructurePrefabWeighted[] housesPrefabs, specialPrefabs;
@@ -11,7 +21,7 @@ public class StructureManager : MonoBehaviour
 
 
     private float[] houseWeights, specialWeights;
-
+   
     //private void Start()
     public override void Start()
     {

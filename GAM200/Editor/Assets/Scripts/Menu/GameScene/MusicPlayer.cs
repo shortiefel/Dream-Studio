@@ -19,11 +19,11 @@ public class MusicPlayer : MonoBehaviour
     { 
       if (Input.GetKeyDown(KeyCode.A))
         {
-            t1.mute = true;
+            AudioSource.SetGroup_Mute(AudioGroup.Music, true);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            t2.mute = true;
+            AudioSource.SetGroup_Mute(AudioGroup.Music, false);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {

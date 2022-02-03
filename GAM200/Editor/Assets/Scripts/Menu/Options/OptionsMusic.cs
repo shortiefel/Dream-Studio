@@ -20,7 +20,8 @@ public class OptionsMusic : MonoBehaviour
 
     public enum ButtonType
     {
-        UP = 0,
+        NONE = 0,
+        UP,
         DOWN,
         BGMMute,
         SFXMute,
@@ -33,16 +34,17 @@ public class OptionsMusic : MonoBehaviour
     {
         //GetComponent<AudioSource>().Play();
         //vol = GetComponent<AudioSource>().volume;
+        type = ButtonType.NONE;
 
-        if (GameObject.Find("UpVol").transform == transform)
+        if (GameObject.Find("UpVol").entityId == entityId)
             type = ButtonType.UP;
-        else if (GameObject.Find("DownVol").transform == transform)
+        else if (GameObject.Find("DownVol").entityId == entityId)
             type = ButtonType.DOWN;
-        else if (GameObject.Find("MuteBGM").transform == transform)
+        else if (GameObject.Find("MuteBGM").entityId == entityId)
             type = ButtonType.BGMMute;
-        else if(GameObject.Find("MuteSFX").transform == transform)
+        else if(GameObject.Find("MuteSFX").entityId == entityId)
             type = ButtonType.SFXMute;
-
+        Debug.Log(type);
         muteBGM = false;
         muteSFX = false;
         muteMaster = false;
@@ -92,6 +94,7 @@ public class OptionsMusic : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
+            Debug.Log("Hit inside");
             switch(type)
             {
                 case ButtonType.UP:
@@ -105,11 +108,13 @@ public class OptionsMusic : MonoBehaviour
                 case ButtonType.BGMMute:
                     muteBGM = !muteBGM;
                     AudioSource.SetGroup_Mute(AudioGroup.Music, muteBGM);
+                    Debug.Log("Mute BGM");
                     break;
 
                 case ButtonType.SFXMute:
                     muteSFX = !muteSFX;
                     AudioSource.SetGroup_Mute(AudioGroup.SFX, muteSFX);
+                    Debug.Log("Mute SFX");
                     break;
                 case ButtonType.MasterMute:
                     muteMaster = !muteMaster;

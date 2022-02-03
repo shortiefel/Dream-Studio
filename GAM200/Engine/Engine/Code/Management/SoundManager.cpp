@@ -201,7 +201,7 @@ namespace Engine
 
 	void SoundManager::SoundGroup_Mute(SoundGrp _sg, bool _state)
 	{
-		if (_state == true)
+		//if (_state == true)
 		{
 			switch (_sg)
 			{

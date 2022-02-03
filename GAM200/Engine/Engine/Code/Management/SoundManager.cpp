@@ -221,24 +221,18 @@ namespace Engine
 
 	void SoundManager::SoundGroup_Volume(SoundGrp _sg, int _vol)
 	{
-		//SoundComponent soundCom;
-		//
-		//
-		//if (_state == true)
-		//{
-		//	switch (_sg)
-		//	{
-		//	case SoundGrp::MUSIC:
-		//		MusicGroup->setMute(_state);
-		//		break;
-		//	case SoundGrp::SFX:
-		//		SFXGroup->setMute(_state);
-		//		break;
-		//	default:
-		//		MasterGroup->setMute(_state);
-		//		break;
-		//	}
-		//}
+		switch (_sg)
+		{
+		case SoundGrp::MUSIC:
+			MusicGroup->setVolume(_vol);
+			break;
+		case SoundGrp::SFX:
+			SFXGroup->setVolume(_vol);
+			break;
+		default:
+			MasterGroup->setVolume(_vol);
+			break;
+		}
 
 	}
 

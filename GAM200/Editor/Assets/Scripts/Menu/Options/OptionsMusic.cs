@@ -104,16 +104,16 @@ public class OptionsMusic : MonoBehaviour
 
                 case ButtonType.BGMMute:
                     muteBGM = !muteBGM;
-                    AudioSource.MuteGroup(AudioGroup.Music, muteBGM);
+                    AudioSource.SetGroup_Mute(AudioGroup.Music, muteBGM);
                     break;
 
                 case ButtonType.SFXMute:
                     muteSFX = !muteSFX;
-                    AudioSource.MuteGroup(AudioGroup.SFX, muteSFX);
+                    AudioSource.SetGroup_Mute(AudioGroup.SFX, muteSFX);
                     break;
                 case ButtonType.MasterMute:
                     muteMaster = !muteMaster;
-                    AudioSource.MuteGroup(AudioGroup.Master, muteMaster);
+                    AudioSource.SetGroup_Mute(AudioGroup.Master, muteMaster);
                     break;
             }
         //    if (buttonType)

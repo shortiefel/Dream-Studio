@@ -523,23 +523,23 @@ namespace Engine {
 		}
 
 		void SetSoundGroup_Volume_Engine(int audioGroup, int vol) {
-			//switch (audioGroup) {
-			//case 0: {
-			//	SoundManager::GetInstance().MuteSoundGroup(SoundGrp::MASTER, _state);
-			//	break;
-			//}
-			//case 1: {
-			//	SoundManager::GetInstance().MuteSoundGroup(SoundGrp::SFX, _state);
-			//	break;
-			//}
-			//case 2: {
-			//	SoundManager::GetInstance().MuteSoundGroup(SoundGrp::MUSIC, _state);
-			//	break;
-			//}
-			//default: {
-			//	break;
-			//}
-			//}
+			switch (audioGroup) {
+			case 0: {
+				SoundManager::GetInstance().SoundGroup_Volume(SoundGrp::MASTER, vol);
+				break;
+			}
+			case 1: {
+				SoundManager::GetInstance().SoundGroup_Volume(SoundGrp::SFX, vol);
+				break;
+			}
+			case 2: {
+				SoundManager::GetInstance().SoundGroup_Volume(SoundGrp::MUSIC, vol);
+				break;
+			}
+			default: {
+				break;
+			}
+			}
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

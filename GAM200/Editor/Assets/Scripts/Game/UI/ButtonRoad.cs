@@ -14,6 +14,12 @@ public class ButtonRoad : MonoBehaviour
     Transform removeRoad;
     Transform removeRoadWhite;
 
+    Transform drawERP;
+    Transform drawERPWhite;
+
+    Transform drawTraffic;
+    Transform drawTrafficWhite;
+
     GameManager gameManager;
     //InputManager inputManager;
 
@@ -36,8 +42,17 @@ public class ButtonRoad : MonoBehaviour
         removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
         removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
 
+        drawERP = GameObject.Find("ERPbtn").GetComponent<Transform>();
+        drawERPWhite = GameObject.Find("ERPbtnWhite").GetComponent<Transform>();
+
+        drawTraffic = GameObject.Find("TrafficLight").GetComponent<Transform>();
+        drawTrafficWhite = GameObject.Find("TrafficLightWhite").GetComponent<Transform>();
+
+
         Disable<Transform>(drawRoadWhite);
         Disable<Transform>(removeRoadWhite);
+        Disable<Transform>(drawERPWhite);
+        Disable<Transform>(drawTrafficWhite);
 
         //drawRoadMode = false;
         //deleteRoadMode = false;
@@ -54,6 +69,18 @@ public class ButtonRoad : MonoBehaviour
             transform.entityId == GameObject.Find("RemoveRoadWhite").GetComponent<Transform>().entityId)
         {
             buttonType = false;
+        }
+        else if (transform.entityId == GameObject.Find("drawERP").GetComponent<Transform>().entityId ||
+            transform.entityId == GameObject.Find("drawERPWhite").GetComponent<Transform>().entityId)
+        {
+            buttonType = true;
+
+        }
+        else if (transform.entityId == GameObject.Find("TrafficLight").GetComponent<Transform>().entityId ||
+          transform.entityId == GameObject.Find("TrafficLightWhite").GetComponent<Transform>().entityId)
+        {
+            buttonType = true;
+
         }
 
     }
@@ -92,6 +119,11 @@ public class ButtonRoad : MonoBehaviour
                     //drawRoadMode = true;
                     Disable<Transform>(removeRoadWhite);
                     Enable<Transform>(removeRoad);
+                    Disable<Transform>(drawERP);
+                    Enable<Transform>(drawERPWhite);
+                    Disable<Transform>(drawTraffic);
+                    Enable<Transform>(drawTrafficWhite);
+
                     gameManager.RoadPlacementHandler();
                     //SwitchMode();
                     SceneManager.SetDrawMode(true);
@@ -115,6 +147,11 @@ public class ButtonRoad : MonoBehaviour
                     //deleteRoadMode = true;
                     Enable<Transform>(drawRoad);
                     Disable<Transform>(drawRoadWhite);
+                    Enable<Transform>(drawERP);
+                    Disable<Transform>(drawERPWhite);
+                    Enable<Transform>(drawTraffic);
+                    Disable<Transform>(drawTrafficWhite);
+
                     // SwitchMode();
                     gameManager.RemoveRoadHandler();
 
@@ -139,6 +176,10 @@ public class ButtonRoad : MonoBehaviour
         //drawRoadMode = false;
         Disable<Transform>(removeRoadWhite);
         Enable<Transform>(removeRoad);
+        Enable<Transform>(drawERP);
+        Disable<Transform>(drawERPWhite);
+        Enable<Transform>(drawTraffic);
+        Disable<Transform>(drawTrafficWhite);
         gameManager.ClearInputActions();
         //SwitchMode();
         SceneManager.SetDrawMode(false);

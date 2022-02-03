@@ -40,25 +40,25 @@ public class RoadHelper : MonoBehaviour
             foreach (var t in i)
             {
                 //Console.WriteLine(t);
-                List<Marker> carMarkers = t.ToList();
             }
+            List<Marker> carMarkers = Marker.Vector2ToMarker(i);
 
             //Console.WriteLine("\nNext Set \n");
         }
 
     }
 
-    public virtual Marker GetpositioForPedestrianToSpwan(Vector2 structurePosition)
-    {
-        return GetClosestMarkeTo(structurePosition, carMarkers);
-    }
+    //public virtual Marker GetpositioForPedestrianToSpwan(Vector2 structurePosition)
+    //{
+    //    return GetClosestMarkeTo(structurePosition, carMarkers);
+    //}
 
-    public virtual Marker GetPositioForCarToSpawn(Vector2 nextPathPosition)
+    public virtual Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)
     {
         return outgoing;
     }
 
-    public virtual Marker GetPositioForCarToEnd(Vector2 previousPathPosition)
+    public virtual Marker GetPositionForCarToEnd(Vector2 previousPathPosition)
     {
         return incoming;
     }

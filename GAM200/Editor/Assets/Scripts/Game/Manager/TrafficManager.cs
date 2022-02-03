@@ -18,12 +18,12 @@ public class TrafficManager : MonoBehaviour
         return tlm.GetTrafficLightState(tlPos, _carAngle);
     }
 
-    public List<uint> GetTrafficLightIndex(List<Vector2Int> toCheck)
+    public List<uint> GetTrafficLightIndex(List<Vector2> toCheck)
     {
         return tlm.GetTrafficLightIndex(toCheck);
     }
 
-    public bool IsTrafficLight(Vector2Int posToCheck)
+    public bool IsTrafficLight(Vector2 posToCheck)
     {
         return tlm.IsTrafficLight(posToCheck);
     }

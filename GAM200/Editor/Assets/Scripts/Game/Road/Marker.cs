@@ -10,6 +10,11 @@ public class Marker : MonoBehaviour
 
     private bool openForConnections;
 
+    public Marker(Vector2 tem)
+    {
+        transform.position = tem;
+    }
+
     public bool OpenForconnections
     {
         get { return openForConnections; }
@@ -18,5 +23,15 @@ public class Marker : MonoBehaviour
     public List<Vector2> GetAdjacentPositions()
     {
         return new List<Vector2>(adjacentMarkers.Select(x => x.Position).ToList());
+    }
+
+    public static List<Marker> Vector2ToMarker(List<Vector2> tem)
+    {
+        List<Marker> lom = new List<Marker>();
+        foreach (var i in tem)
+        {
+            lom.Add(new Marker(i));
+        }
+        return lom;
     }
 }

@@ -33,7 +33,7 @@ namespace Engine
 	{
 		Math::vec4 colour;
 
-		unsigned int depthMapFBO;
+		unsigned int depthFBO;
 		unsigned int depthMap;
 		unsigned int shadowWidth, shadowHeight;
 

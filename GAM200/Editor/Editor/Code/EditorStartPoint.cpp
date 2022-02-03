@@ -40,6 +40,14 @@ namespace Editor {
 	}
 
 	void EditorStartPoint::Update(float _dt) {
+		glViewport(0, 0, 1024, 1024);
+
+
+
+
+
+
+
 		Engine::GraphicSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());
 		Engine::UISystem::GetInstance().Render(GUI::GetGameFboPtr());
 		Engine::FontSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());

@@ -37,7 +37,7 @@ Technology is prohibited.
 
 namespace Engine
 {
-#define LAYER_COUNT 5 // Number of layers for game objects
+#define LAYER_COUNT 10 // Number of layers for game objects
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture
@@ -251,9 +251,13 @@ namespace Engine
 		// Looping through lines buffer; batch rendering
 		Math::ivec2 mapSize = Game::Grid::GetInstance().GetGridSize();
 		for(int xPos = 0; xPos <= mapSize.x; xPos++)
-			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, -0.5f }, { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, -0.5f }, 
+													   { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, 
+													   { 0.4f, 0.4f, 0.4f, 1.f });
 		for(int yPos = 0; yPos <= mapSize.y; yPos++)
-			GraphicImplementation::Renderer::DrawLines({ -0.5f, static_cast<float>(yPos) - 0.5f }, {  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
+			GraphicImplementation::Renderer::DrawLines({ -0.5f, static_cast<float>(yPos) - 0.5f }, 
+													   { static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f },
+													   { 0.4f, 0.4f, 0.4f, 1.f });
 
 		GraphicImplementation::Renderer::EndLinesBatch();
 
@@ -279,7 +283,7 @@ namespace Engine
 #endif
 		GraphicImplementation::Renderer::ResetStats();
 
-		// Set background
+		// Set background colour
 		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -300,6 +304,21 @@ namespace Engine
 		_fbo->Unbind();
 #endif
 	}
+
+	// Function that creates the FBO for all existing light component
+	void CreateLightFBO()
+	{
+		auto& lightArray = dreamECSGame->GetComponentArrayData<LightComponent>();
+		for (auto& light : lightArray)
+		{
+			// If element in array is not used, skip it
+			const Entity_id& entity_id = light.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			light.FBOCreate();
+		}
+	}
+
 
 	// Init function for GraphicSystem
 	bool GraphicSystem::Create()
@@ -325,6 +344,9 @@ namespace Engine
 
 		// Initialise meshes
 		GraphicImplementation::Renderer::Init();
+
+		// Initialise Light FBO
+		CreateLightFBO();
 
 		LOG_INSTANCE("Graphic System created");
 		return true;

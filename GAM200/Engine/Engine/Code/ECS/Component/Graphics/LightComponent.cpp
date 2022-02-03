@@ -28,8 +28,8 @@ namespace Engine
 {
 	// Contructor for Light Component
 	LightComponent::LightComponent(Entity_id _ID, Math::vec4 _colour, bool _active) :
-		IComponent{ _ID }, depthMapFBO{ 0 }, depthMap { 0 },
-		colour{ _colour }, shadowWidth{ Engine::Settings::windowWidth }, shadowHeight{ Engine::Settings::windowHeight }, isActive{ _active } {}
+		IComponent{ _ID }, depthFBO{ 0 }, depthMap{ 0 },
+		colour{ _colour }, shadowWidth{ 1024 }, shadowHeight{ 1024 }, isActive{ _active } {}
 
 
 	// Destructor for Light Component
@@ -38,10 +38,15 @@ namespace Engine
 		// Do something here
 	}
 
+	// Function that creates both buffer and texture and attached the texture to the buffer
 	void LightComponent::FBOCreate()
 	{
-		glGenTextures(1, &depthMap);
+		// Create framebuffer object
+		glGenFramebuffers(1, &depthFBO);
 
+
+		// Generate depth texture
+		glGenTextures(1, &depthMap);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowWidth, shadowHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -50,12 +55,21 @@ namespace Engine
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 
-		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		// Attached depth texture to depth buffer
+		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
 		glDrawBuffer(GL_NONE);
 		glReadBuffer(GL_NONE);
+			
+
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		{
+			LOG_ERROR("Error: Depth buffer is not complete");
+		}
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
+
 
 	// Deserialize function for Light Component
 	LightComponent& LightComponent::Deserialize(const DSerializer& _serializer)

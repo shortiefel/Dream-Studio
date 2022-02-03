@@ -273,7 +273,7 @@ namespace Engine
 #ifdef _GAME_BUILD
 	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 camMatrix, bool gameDraw) {
 #else
-	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw) {
+	void GraphicSystem::Render(float _dt, unsigned int* _fbo, Math::mat3 camMatrix, bool gameDraw) {
 #endif
 		PROFILER_START("Rendering");
 
@@ -308,9 +308,13 @@ namespace Engine
 	// Function that creates the FBO for all existing light component
 	void CreateLightFBO()
 	{
+		// Loops through light array
 		auto& lightArray = dreamECSGame->GetComponentArrayData<LightComponent>();
 		for (auto& light : lightArray)
 		{
+			// Option to not render individual game object
+			if (!light.isActive) continue;
+
 			// If element in array is not used, skip it
 			const Entity_id& entity_id = light.GetEntityId();
 			if (EntityId_Check(entity_id)) break;

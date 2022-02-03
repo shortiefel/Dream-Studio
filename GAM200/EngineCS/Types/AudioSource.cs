@@ -93,14 +93,24 @@ public class AudioSource : IComponent
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetSound_Mute_Engine(uint entityID, ref bool _mute);
 
-    static public void MuteGroup(AudioGroup ag, bool state)
+    static public void SetGroup_Mute(AudioGroup ag, bool state)
     {
-        SetSound_Group_Engine((int)ag, state);
+        SetSoundGroup_Mute_Engine((int)ag, state);
     }
     //[MethodImpl(MethodImplOptions.InternalCall)]
     //internal static extern void SetAudioSource_UnPause_Engine(uint entityID);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetSound_Group_Engine(int audioGroup, bool _state);
+    internal static extern void SetSoundGroup_Mute_Engine(int audioGroup, bool _state);
+
+    static public void SetGroup_Volume(AudioGroup ag, int vol)
+    {
+        SetSoundGroup_Volume_Engine((int)ag, vol);
+    }
+    //[MethodImpl(MethodImplOptions.InternalCall)]
+    //internal static extern void SetAudioSource_UnPause_Engine(uint entityID);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetSoundGroup_Volume_Engine(int audioGroup, int vol);
 
 }

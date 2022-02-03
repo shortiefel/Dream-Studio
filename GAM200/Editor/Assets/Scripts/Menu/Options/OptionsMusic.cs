@@ -14,20 +14,23 @@ public class OptionsMusic : MonoBehaviour
 
     private float vol;
 
+    private bool muteBGM;
+    private bool muteSFX;
+    private bool muteMaster;
 
     public enum ButtonType
     {
         UP = 0,
         DOWN,
         BGMMute,
-        SFXMute
+        SFXMute,
+        MasterMute
     };
 
     private ButtonType type;
 
     public override void Start()
     {
-
         //GetComponent<AudioSource>().Play();
         //vol = GetComponent<AudioSource>().volume;
 
@@ -40,53 +43,79 @@ public class OptionsMusic : MonoBehaviour
         else if(GameObject.Find("MuteSFX").transform == transform)
             type = ButtonType.SFXMute;
 
+        muteBGM = false;
+        muteSFX = false;
+        muteMaster = false;
         /**
          * VOLUMEES
          */
-            //volObject = GameObject.Find("VolumeAdjust").GetComponent<AudioSource>();
-            //textComp = GetComponent<Text>();
-            //if (textComp != null)
-            //    textComp.text = Convert.ToString(volObject.volume);
+        //volObject = GameObject.Find("VolumeAdjust").GetComponent<AudioSource>();
+        //textComp = GetComponent<Text>();
+        //if (textComp != null)
+        //    textComp.text = Convert.ToString(volObject.volume);
 
-            //VolumeUp = GameObject.Find("UpVol").GetComponent<Transform>();
-            //VolumeDown = GameObject.Find("DownVol").GetComponent<Transform>();
-
-
+        //VolumeUp = GameObject.Find("UpVol").GetComponent<Transform>();
+        //VolumeDown = GameObject.Find("DownVol").GetComponent<Transform>();
 
 
-            /**
-             * MUTINGS
-             */
-            //MuteBGMX = GameObject.Find("BGMMuteX").GetComponent<Transform>();
-            //MuteSFXX = GameObject.Find("SFXMuteX").GetComponent<Transform>();
 
-            //Disable<Transform>(MuteBGMX);
-            //Disable<Transform>(MuteSFXX);
 
-            //BGMMute = false;
-            //SFXMute = false;
+        /**
+         * MUTINGS
+         */
+        //MuteBGMX = GameObject.Find("BGMMuteX").GetComponent<Transform>();
+        //MuteSFXX = GameObject.Find("SFXMuteX").GetComponent<Transform>();
 
-            //if (transform.entityId == GameObject.Find("MuteBGM").GetComponent<Transform>().entityId ||
-            //  transform.entityId == GameObject.Find("MuteSFX").GetComponent<Transform>().entityId)
-            //{
-            //    Debug.Log("button loaded");
-            //    buttonType = true;
+        //Disable<Transform>(MuteBGMX);
+        //Disable<Transform>(MuteSFXX);
 
-            //}
+        //BGMMute = false;
+        //SFXMute = false;
 
-            //Debug.Log("start loaded");
+        //if (transform.entityId == GameObject.Find("MuteBGM").GetComponent<Transform>().entityId ||
+        //  transform.entityId == GameObject.Find("MuteSFX").GetComponent<Transform>().entityId)
+        //{
+        //    Debug.Log("button loaded");
+        //    buttonType = true;
+
+        //}
+
+        //Debug.Log("start loaded");
     }
 
     public override void Update()
     {
         //textComp.text = Convert.ToString(volObject.volume);
-
     }
 
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
+            switch(type)
+            {
+                case ButtonType.UP:
+
+                    break;
+
+                case ButtonType.DOWN:
+
+                    break;
+
+                case ButtonType.BGMMute:
+                    muteBGM = !muteBGM;
+                    AudioSource.MuteGroup(AudioGroup.Music, muteBGM);
+                    break;
+
+                case ButtonType.SFXMute:
+                    muteSFX = !muteSFX;
+                    AudioSource.MuteGroup(AudioGroup.SFX, muteSFX);
+                    break;
+                case ButtonType.MasterMute:
+                    muteMaster = !muteMaster;
+                    AudioSource.MuteGroup(AudioGroup.Master, muteMaster);
+                    break;
+            }
         //    if (buttonType)
         //    {
         //        if (BGMMute)

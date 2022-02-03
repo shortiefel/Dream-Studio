@@ -112,7 +112,8 @@ namespace Engine {
 		void GetSound_Mute_Engine(unsigned int entityID, bool* _mute);
 		void SetSound_Mute_Engine(unsigned int entityID, bool* _mute);
 
-		void SetSound_Group_Engine(int audioGroup, bool _state);
+		void SetSoundGroup_Mute_Engine(int audioGroup, bool _state);
+		void SetSoundGroup_Volume_Engine(int audioGroup, int vol);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Animation
@@ -200,7 +201,9 @@ namespace Engine {
 			mono_add_internal_call("AudioSource::GetSound_Mute_Engine", GetSound_Mute_Engine);
 			mono_add_internal_call("AudioSource::SetSound_Mute_Engine", SetSound_Mute_Engine);
 
-			mono_add_internal_call("AudioSource::SetSound_Group_Engine", SetSound_Group_Engine);
+			mono_add_internal_call("AudioSource::SetSoundGroup_Mute_Engine", SetSoundGroup_Mute_Engine);
+			mono_add_internal_call("AudioSource::SetSoundGroup_Volume_Engine", SetSoundGroup_Volume_Engine);
+
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Animation
@@ -493,7 +496,7 @@ namespace Engine {
 			SoundManager::GetInstance().MuteSound(ctype, *_mute);
 		}
 
-		void SetSound_Group_Engine(int audioGroup, bool _state) {
+		void SetSoundGroup_Mute_Engine(int audioGroup, bool _state) {
 			//In AudioSource.cs
 			//Master = 0,
 			//SFX,
@@ -501,15 +504,15 @@ namespace Engine {
 
 			switch (audioGroup) {
 			case 0: {
-				SoundManager::GetInstance().MuteSoundGroup(SoundGrp::MASTER, _state);
+				SoundManager::GetInstance().SoundGroup_Mute(SoundGrp::MASTER, _state);
 				break;
 			}
 			case 1: {
-				SoundManager::GetInstance().MuteSoundGroup(SoundGrp::SFX, _state);
+				SoundManager::GetInstance().SoundGroup_Mute(SoundGrp::SFX, _state);
 				break;
 			}
 			case 2: {
-				SoundManager::GetInstance().MuteSoundGroup(SoundGrp::MUSIC, _state);
+				SoundManager::GetInstance().SoundGroup_Mute(SoundGrp::MUSIC, _state);
 				break;
 			}
 			default: {
@@ -517,6 +520,26 @@ namespace Engine {
 			}
 			}
 			
+		}
+
+		void SetSoundGroup_Volume_Engine(int audioGroup, int vol) {
+			//switch (audioGroup) {
+			//case 0: {
+			//	SoundManager::GetInstance().MuteSoundGroup(SoundGrp::MASTER, _state);
+			//	break;
+			//}
+			//case 1: {
+			//	SoundManager::GetInstance().MuteSoundGroup(SoundGrp::SFX, _state);
+			//	break;
+			//}
+			//case 2: {
+			//	SoundManager::GetInstance().MuteSoundGroup(SoundGrp::MUSIC, _state);
+			//	break;
+			//}
+			//default: {
+			//	break;
+			//}
+			//}
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

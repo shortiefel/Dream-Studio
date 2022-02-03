@@ -199,11 +199,8 @@ namespace Engine
 		it->second->setMute(soundCom->isMute);
 	}
 
-	void SoundManager::MuteSoundGroup(SoundGrp _sg, bool _state) 
+	void SoundManager::SoundGroup_Mute(SoundGrp _sg, bool _state)
 	{
-		SoundComponent soundCom;
-		
-
 		if (_state == true)
 		{
 			switch (_sg)
@@ -220,6 +217,29 @@ namespace Engine
 			}
 		}
 		
+	}
+
+	void SoundManager::SoundGroup_Volume(SoundGrp _sg, int _vol)
+	{
+		//SoundComponent soundCom;
+		//
+		//
+		//if (_state == true)
+		//{
+		//	switch (_sg)
+		//	{
+		//	case SoundGrp::MUSIC:
+		//		MusicGroup->setMute(_state);
+		//		break;
+		//	case SoundGrp::SFX:
+		//		SFXGroup->setMute(_state);
+		//		break;
+		//	default:
+		//		MasterGroup->setMute(_state);
+		//		break;
+		//	}
+		//}
+
 	}
 
 	/*void SoundManager::MuteBGM(SoundComponent* soundCom)

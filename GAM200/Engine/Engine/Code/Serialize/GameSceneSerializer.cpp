@@ -573,7 +573,6 @@ namespace Engine {
 
 			if (sceneSerializer.SelectDeserializeDataType("WaypointComponent")) {
 				WaypointComponent tem(entityId);
-				int soundGrpTem;
 				sceneSerializer.RetrieveData(
 					"Waypoints", tem.listOfWaypoint,
 					"Order", tem.numOfWaypoint);
@@ -786,7 +785,6 @@ namespace Engine {
 
 			if (sceneSerializer.SelectDeserializeDataType("WaypointComponent")) {
 				WaypointComponent tem(entityId);
-				int soundGrpTem;
 				sceneSerializer.RetrieveData(
 					"Waypoints", tem.listOfWaypoint,
 					"Order", tem.numOfWaypoint);

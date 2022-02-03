@@ -46,8 +46,9 @@ namespace Editor {
 		void ClickCheck(std::map<int, Engine::Entity_id>& entity_selected, Engine::Entity_id _target) {
 			if (Engine::Input::IsKeyHold(Engine::Input_KeyCode::Control)) {
 				for (auto& [id, entity_id] : entity_selected) {
-					std::cout << entity_id << "\n";
-					if (_target == entity_id) return;
+					std::cout << entity_id;
+					if (_target == entity_id) std::cout << " is selected ";
+					std::cout << "\n";
 				}
 				std::cout <<  "\n";
 				entity_selected[order] = _target;

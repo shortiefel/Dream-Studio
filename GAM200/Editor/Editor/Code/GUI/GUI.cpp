@@ -49,8 +49,8 @@ namespace Editor {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         ImGuizmo::BeginFrame();
-        /*bool show_demo_window = true;
-        ImGui::ShowDemoWindow(&show_demo_window);*/
+        //bool show_demo_window = true;
+        //ImGui::ShowDemoWindow(&show_demo_window);
 
         GUI_Windows::GUI_DockSpace();
         //editor_fbo.Resize(GUI_Windows::GetSceneSizeX(), GUI_Windows::GetSceneSizeY());

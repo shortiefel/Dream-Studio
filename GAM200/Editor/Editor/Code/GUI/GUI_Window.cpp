@@ -242,7 +242,7 @@ namespace Editor {
 			GUI_Windows::GUI_Console_Create();
 
 			GUI_Windows::GUI_SceneSetup();
-			LoadAllAssets("Assets");
+			///LoadAllAssets("Assets");
 			Engine::KeyPressedEvent::RegisterFunction(OnKeyEvent);
 
 			Override_Function();
@@ -344,7 +344,7 @@ namespace Editor {
 				ImGui::EndMenu();
 			}
 		}
-
+		
 		//Menu to open windows
 		void GUI_WindowsMenu() {
 			if (ImGui::BeginMenu("Windows")) {
@@ -442,6 +442,7 @@ namespace Editor {
 			GUI_Stats(&stats_bool);
 			GUI_Profiler(&profiler_bool);
 			GUI_AssetBrowser(&asset_bool, window_flags);
+
 
 			GUI_Console(&console_bool, window_flags);
 

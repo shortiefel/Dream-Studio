@@ -57,8 +57,8 @@ public class GameObject : IBehaviour
     private GameObject(uint entId) : base(entId)
     {
         entityId = entId;
-        //transform = new Transform(entityId);
-        //RecordComponent<Transform>(entityId);
+        transform = new Transform(entityId);
+        RecordComponent<Transform>(entityId);
     }
 
     public static GameObject RetrieveGameObject(uint entId)

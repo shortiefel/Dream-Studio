@@ -106,7 +106,6 @@ namespace Engine {
         DeltaTime::GetInstance().SetTimeScale(1.f);
 
         SoundSystem::GetInstance().SoundStopAllSound();
-        std::cout << "Stop sound \n";
 
 
         CollisionSystem::GetInstance().Stop();

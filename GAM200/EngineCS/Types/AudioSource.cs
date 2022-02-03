@@ -97,20 +97,30 @@ public class AudioSource : IComponent
     {
         SetSoundGroup_Mute_Engine((int)ag, state);
     }
-    //[MethodImpl(MethodImplOptions.InternalCall)]
-    //internal static extern void SetAudioSource_UnPause_Engine(uint entityID);
-
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetSoundGroup_Mute_Engine(int audioGroup, bool _state);
+    static public bool GetGroup_Mute(AudioGroup ag)
+    {
+        return GetSoundGroup_Mute_Engine((int)ag);
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern bool GetSoundGroup_Mute_Engine(int audioGroup);
 
-    static public void SetGroup_Volume(AudioGroup ag, int vol)
+    static public void SetGroup_Volume(AudioGroup ag, float vol)
     {
         SetSoundGroup_Volume_Engine((int)ag, vol);
     }
-    //[MethodImpl(MethodImplOptions.InternalCall)]
-    //internal static extern void SetAudioSource_UnPause_Engine(uint entityID);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetSoundGroup_Volume_Engine(int audioGroup, int vol);
+    internal static extern void SetSoundGroup_Volume_Engine(int audioGroup, float vol);
+
+    static public float GetGroup_Volume(AudioGroup ag)
+    {
+        return GetSoundGroup_Volume_Engine((int)ag);
+    }
+
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern float GetSoundGroup_Volume_Engine(int audioGroup);
 
 }

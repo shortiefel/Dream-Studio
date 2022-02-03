@@ -1315,15 +1315,15 @@ namespace Editor {
 							switch ((int)soundComp->soundType)
 							{
 								case 0: {
-									Engine::SoundManager::GetInstance().SoundGroup_Mute(soundComp->soundType, true);
+									Engine::SoundManager::GetInstance().SetSoundGroup_Mute(soundComp->soundType, true);
 									break;
 								}
 								case 1: {
-									Engine::SoundManager::GetInstance().SoundGroup_Mute(soundComp->soundType, true);
+									Engine::SoundManager::GetInstance().SetSoundGroup_Mute(soundComp->soundType, true);
 									break;
 								}
 								case 2: {
-									Engine::SoundManager::GetInstance().SoundGroup_Mute(soundComp->soundType, true);
+									Engine::SoundManager::GetInstance().SetSoundGroup_Mute(soundComp->soundType, true);
 									break;
 								}
 								default: {
@@ -1337,15 +1337,15 @@ namespace Editor {
 							switch ((int)soundComp->soundType)
 							{
 							case 0: {
-								Engine::SoundManager::GetInstance().SoundGroup_Mute(soundComp->soundType, false);
+								Engine::SoundManager::GetInstance().SetSoundGroup_Mute(soundComp->soundType, false);
 								break;
 							}
 							case 1: {
-								Engine::SoundManager::GetInstance().SoundGroup_Mute(soundComp->soundType, false);
+								Engine::SoundManager::GetInstance().SetSoundGroup_Mute(soundComp->soundType, false);
 								break;
 							}
 							case 2: {
-								Engine::SoundManager::GetInstance().SoundGroup_Mute(soundComp->soundType, false);
+								Engine::SoundManager::GetInstance().SetSoundGroup_Mute(soundComp->soundType, false);
 								break;
 							}
 							default: {

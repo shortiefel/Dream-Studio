@@ -113,7 +113,9 @@ namespace Engine {
 		void SetSound_Mute_Engine(unsigned int entityID, bool* _mute);
 
 		void SetSoundGroup_Mute_Engine(int audioGroup, bool _state);
-		void SetSoundGroup_Volume_Engine(int audioGroup, int vol);
+		bool GetSoundGroup_Mute_Engine(int audioGroup);
+		void SetSoundGroup_Volume_Engine(int audioGroup, float vol);
+		float GetSoundGroup_Volume_Engine(int audioGroup);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Animation
@@ -202,8 +204,10 @@ namespace Engine {
 			mono_add_internal_call("AudioSource::SetSound_Mute_Engine", SetSound_Mute_Engine);
 
 			mono_add_internal_call("AudioSource::SetSoundGroup_Mute_Engine", SetSoundGroup_Mute_Engine);
+			mono_add_internal_call("AudioSource::GetSoundGroup_Mute_Engine", GetSoundGroup_Mute_Engine);
 			mono_add_internal_call("AudioSource::SetSoundGroup_Volume_Engine", SetSoundGroup_Volume_Engine);
-
+			mono_add_internal_call("AudioSource::GetSoundGroup_Volume_Engine", GetSoundGroup_Volume_Engine);
+			
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Animation
@@ -504,15 +508,15 @@ namespace Engine {
 
 			switch (audioGroup) {
 			case 0: {
-				SoundManager::GetInstance().SoundGroup_Mute(SoundGrp::MASTER, _state);
+				SoundManager::GetInstance().SetSoundGroup_Mute(SoundGrp::MASTER, _state);
 				break;
 			}
 			case 1: {
-				SoundManager::GetInstance().SoundGroup_Mute(SoundGrp::SFX, _state);
+				SoundManager::GetInstance().SetSoundGroup_Mute(SoundGrp::SFX, _state);
 				break;
 			}
 			case 2: {
-				SoundManager::GetInstance().SoundGroup_Mute(SoundGrp::MUSIC, _state);
+				SoundManager::GetInstance().SetSoundGroup_Mute(SoundGrp::MUSIC, _state);
 				break;
 			}
 			default: {
@@ -522,22 +526,62 @@ namespace Engine {
 			
 		}
 
-		void SetSoundGroup_Volume_Engine(int audioGroup, int vol) {
+		bool GetSoundGroup_Mute_Engine(int audioGroup) {
+			//In AudioSource.cs
+			//Master = 0,
+			//SFX,
+			//Music
+
 			switch (audioGroup) {
 			case 0: {
-				SoundManager::GetInstance().SoundGroup_Volume(SoundGrp::MASTER, vol);
+				return SoundManager::GetInstance().GetSoundGroup_Mute(SoundGrp::MASTER);
+			}
+			case 1: {
+				return SoundManager::GetInstance().GetSoundGroup_Mute(SoundGrp::SFX);
+			}
+			case 2: {
+				return SoundManager::GetInstance().GetSoundGroup_Mute(SoundGrp::MUSIC);
+			}
+			default: {
+				return false;
+			}
+			}
+
+		}
+
+		void SetSoundGroup_Volume_Engine(int audioGroup, float vol) {
+			switch (audioGroup) {
+			case 0: {
+				SoundManager::GetInstance().SetSoundGroup_Volume(SoundGrp::MASTER, vol);
 				break;
 			}
 			case 1: {
-				SoundManager::GetInstance().SoundGroup_Volume(SoundGrp::SFX, vol);
+				SoundManager::GetInstance().SetSoundGroup_Volume(SoundGrp::SFX, vol);
 				break;
 			}
 			case 2: {
-				SoundManager::GetInstance().SoundGroup_Volume(SoundGrp::MUSIC, vol);
+				SoundManager::GetInstance().SetSoundGroup_Volume(SoundGrp::MUSIC, vol);
 				break;
 			}
 			default: {
 				break;
+			}
+			}
+		}
+
+		float GetSoundGroup_Volume_Engine(int audioGroup) {
+			switch (audioGroup) {
+			case 0: {
+				return SoundManager::GetInstance().GetSoundGroup_Volume(SoundGrp::MASTER);
+			}
+			case 1: {
+				return SoundManager::GetInstance().GetSoundGroup_Volume(SoundGrp::SFX);
+			}
+			case 2: {
+				return SoundManager::GetInstance().GetSoundGroup_Volume(SoundGrp::MUSIC);
+			}
+			default: {
+				return 0;
 			}
 			}
 		}

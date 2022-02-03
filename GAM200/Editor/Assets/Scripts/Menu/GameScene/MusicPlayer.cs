@@ -9,12 +9,6 @@ public class MusicPlayer : MonoBehaviour
     {
       GetComponent<AudioSource>().Play();
 
-
-      // t1 = GetComponent<AudioSource>();
-      // t2 = GameObject.Find("Camera").GetComponent<AudioSource>();
-      //
-      //
-      // Debug.Log("oshfddosfhoidsfjhoi");
     }
 
     public override void Update()

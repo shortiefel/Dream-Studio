@@ -59,47 +59,9 @@ public class OptionsMusic : MonoBehaviour
 
         Debug.Log("Type " + type);
         
-        /**
-         * VOLUMEES
-         */
-        //volObject = GameObject.Find("VolumeAdjust").GetComponent<AudioSource>();
-        //textComp = GetComponent<Text>();
-        //if (textComp != null)
-        //    textComp.text = Convert.ToString(volObject.volume);
 
-        //VolumeUp = GameObject.Find("UpVol").GetComponent<Transform>();
-        //VolumeDown = GameObject.Find("DownVol").GetComponent<Transform>();
-
-
-
-
-        /**
-         * MUTINGS
-         */
-        //MuteBGMX = GameObject.Find("BGMMuteX").GetComponent<Transform>();
-        //MuteSFXX = GameObject.Find("SFXMuteX").GetComponent<Transform>();
-
-        //Disable<Transform>(MuteBGMX);
-        //Disable<Transform>(MuteSFXX);
-
-        //BGMMute = false;
-        //SFXMute = false;
-
-        //if (transform.entityId == GameObject.Find("MuteBGM").GetComponent<Transform>().entityId ||
-        //  transform.entityId == GameObject.Find("MuteSFX").GetComponent<Transform>().entityId)
-        //{
-        //    Debug.Log("button loaded");
-        //    buttonType = true;
-
-        //}
-
-        //Debug.Log("start loaded");
     }
 
-    //public override void Update()
-    //{
-    //    //textComp.text = Convert.ToString(volObject.volume);
-    //}
 
     public override void OnMouseOver()
     {
@@ -144,29 +106,6 @@ public class OptionsMusic : MonoBehaviour
                     AudioSource.SetGroup_Mute(AudioGroup.Master, muteMaster);
                     break;
             }
-        //    if (buttonType)
-        //    {
-        //        if (BGMMute)
-        //        {
-        //            Enable<Transform>(MuteBGMX);
-        //        }
-        //        else
-        //        {
-        //            Disable<Transform>(MuteBGMX);
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //        if (SFXMute)
-        //        {
-        //            Enable<Transform>(MuteSFXX);
-        //        }
-        //        else
-        //        {
-        //            Disable<Transform>(MuteSFXX);
-        //        }
-        //    }
           
         }
     }

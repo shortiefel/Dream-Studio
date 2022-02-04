@@ -4,7 +4,7 @@ using System.Linq;
 
 public class Marker : MonoBehaviour
 {
-    public Vector2 Position { get { return transform.position; } }
+    public Vector2 Position { set; get; }
 
     public List<Marker> adjacentMarkers;
 

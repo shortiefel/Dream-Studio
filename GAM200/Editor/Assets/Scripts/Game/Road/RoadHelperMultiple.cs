@@ -24,6 +24,11 @@ class RoadHelperMultiple : RoadHelper
             }
             List<Marker> carMarkers = Marker.Vector2ToMarker(i);
 
+            if (i == listOfWaypoints[0])
+                incomingMarkers = carMarkers;
+            else
+                outgoingMarkers = carMarkers;
+
             //Console.WriteLine("\nNext Set \n");
         }
     }

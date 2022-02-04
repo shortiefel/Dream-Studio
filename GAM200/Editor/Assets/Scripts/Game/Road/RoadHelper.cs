@@ -39,15 +39,24 @@ public class RoadHelper : MonoBehaviour
             //Console.WriteLine("Current set");
             foreach (var t in i)
             {
-                //Console.WriteLine(t);
+                Console.WriteLine(t);
 
                 //one waypoint to pass to incoming, one waypoint to pass to outgoing
                 //for Deadend only
+
+                if (t.x == i[0].x)
+                    incoming.Position = t;
+                else
+                    outgoing.Position = t;
+
+                Console.WriteLine("incoming =" + incoming.Position);
             }
             List<Marker> carMarkers = Marker.Vector2ToMarker(i);
 
             //Console.WriteLine("\nNext Set \n");
         }
+
+        
     }
 
     //public virtual Marker GetpositioForPedestrianToSpwan(Vector2 structurePosition)

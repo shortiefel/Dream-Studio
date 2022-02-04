@@ -61,6 +61,9 @@ namespace Engine {
 	std::unordered_set<Entity_id> destroySet{};
 	std::unordered_map < Entity_id, std::string > destroyScript{};
 
+	std::unordered_set<Entity_id> enableSet{};
+
+
 	std::unique_ptr<DreamECS> dreamECSGame = std::make_unique<DreamECS>();
 
 	void DreamECS::Create()
@@ -81,6 +84,12 @@ namespace Engine {
 		DUPLICATE_NAME_CHECK(entFrom.name);
 		Entity entTo = entityManager->CreateEntity(entityName.c_str());
 		compManager->DuplicateEntityAsInstance(entFrom.id, entTo.id);
+	}
+
+	void DreamECS::EnableTransform(Entity_id entity_id)
+	{
+		//destroyQueue.emplace(entity);
+		enableSet.insert(entity_id);
 	}
 
 	void DreamECS::DestroyEntity(Entity_id entity_id)
@@ -137,11 +146,18 @@ namespace Engine {
 			RemovePrefab(entity_id);
 		}
 
+		for (const auto& entity_id : enableSet) {
+
+			TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
+			if (ctype != nullptr) ctype->isActive = true;
+		}
+
 		for (auto& [entity_id, className] : destroyScript) {
 			compManager->RemoveScript(entity_id, className.c_str());
 		}
 
 		destroySet.clear();
+		enableSet.clear();
 		destroyScript.clear();
 	}
 

@@ -6,18 +6,23 @@ public class ERP : MonoBehaviour
 
     public override void Start()
     {
-        erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
+        GameObject go = GameObject.Find("ERPManager");
+        if (go != null)
+            erpManager = go.GetComponent<ERPManager>();
 
-        erpManager.RegisterERP(Vector2Int.RoundToInt(transform.position), entityId);
+        if (erpManager != null)
+            erpManager.RegisterERP(Vector2Int.RoundToInt(transform.position), entityId);
     }
 
     public override void OnDestroy()
     {
-        erpManager.RemoveERP(Vector2Int.RoundToInt(transform.position));
+        if (erpManager != null)
+            erpManager.RemoveERP(Vector2Int.RoundToInt(transform.position));
     }
 
     public override void OnTriggerEnter(uint id)
     {
-        erpManager.Notify();
+        if (erpManager != null)
+            erpManager.Notify();
     }
 }

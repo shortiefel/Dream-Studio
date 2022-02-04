@@ -5,7 +5,8 @@ public enum ButtonType
     Draw = 0,
     Remove,
     ERP,
-    TrafficLight
+    TrafficLight,
+    Display
 }
 
 public class ButtonRoad : MonoBehaviour
@@ -19,15 +20,22 @@ public class ButtonRoad : MonoBehaviour
     //bool deleteRoadMode;
     Transform drawRoadWhite;
     Transform drawRoad;
+    Vector2 drawPosition;
 
     Transform removeRoad;
     Transform removeRoadWhite;
+    Vector2 removePosition;
 
     Transform drawERP;
     Transform drawERPWhite;
+    Vector2 erpPosition;
 
     Transform drawTraffic;
     Transform drawTrafficWhite;
+    Vector2 trafficPosition;
+
+    Transform displayArrow;
+    Transform displayArrowWhite;
 
     GameManager gameManager;
     //InputManager inputManager;
@@ -36,7 +44,14 @@ public class ButtonRoad : MonoBehaviour
 
     private Camera mainCamera;
 
-    
+
+    public bool opening;
+    public bool closing;
+    float timer;
+
+    float closeXPosition;
+
+    float speedMultiply;
 
     public override void Start()
     {
@@ -53,20 +68,47 @@ public class ButtonRoad : MonoBehaviour
 
         drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
         drawRoad = GameObject.Find("DrawRoad").GetComponent<Transform>();
+        drawPosition = drawRoad.position;
+
         removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
         removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
+        removePosition = removeRoad.position;
 
         drawERP = GameObject.Find("ERPbtn").GetComponent<Transform>();
         drawERPWhite = GameObject.Find("ERPbtnWhite").GetComponent<Transform>();
+        erpPosition = drawERP.position;
 
         drawTraffic = GameObject.Find("TrafficLight").GetComponent<Transform>();
         drawTrafficWhite = GameObject.Find("TrafficLightWhite").GetComponent<Transform>();
+        trafficPosition = drawTraffic.position;
 
+        displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
+        displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
         Disable<Transform>(drawRoadWhite);
         Disable<Transform>(removeRoadWhite);
         Disable<Transform>(drawERPWhite);
         Disable<Transform>(drawTrafficWhite);
+
+        Disable<Transform>(displayArrowWhite);
+
+        opening = false;
+        closing = false;
+        timer = 0f;
+        closeXPosition = -96f;
+        speedMultiply = 5f;
+
+        drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
+        drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
+
+        removeRoad.position = new Vector2(closeXPosition, removePosition.y);
+        removeRoadWhite.position = new Vector2(closeXPosition, removePosition.y);
+
+        drawERP.position = new Vector2(closeXPosition, erpPosition.y);
+        drawERPWhite.position = new Vector2(closeXPosition, erpPosition.y);
+
+        drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
+        drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
 
         //drawRoadMode = false;
         //deleteRoadMode = false;
@@ -99,9 +141,79 @@ public class ButtonRoad : MonoBehaviour
     }
 
     //_activeType = false means u r clicking the white version
+    public void SwitchTab(bool type)
+    {
+        if (type)
+        {
+            opening = true;
+
+            Disable<Transform>(displayArrow);
+            Enable<Transform>(displayArrowWhite);
+        }
+        else
+        {
+            ResetAll();
+
+            closing = true;
+
+            Disable<Transform>(displayArrowWhite);
+            Enable<Transform>(displayArrow);
+        }
+    }
+    private void CloseTabs()
+    {
+        drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, closeXPosition, timer), drawPosition.y);
+        drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, closeXPosition, timer), drawPosition.y);
+
+        removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, closeXPosition, timer), removePosition.y);
+        removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, closeXPosition, timer), removePosition.y);
+
+        drawERP.position = new Vector2(Mathf.Lerp(drawERP.position.x, closeXPosition, timer), erpPosition.y);
+        drawERPWhite.position = new Vector2(Mathf.Lerp(drawERPWhite.position.x, closeXPosition, timer), erpPosition.y);
+
+        drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, closeXPosition, timer), trafficPosition.y);
+        drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, closeXPosition, timer), trafficPosition.y);
+
+
+        timer += speedMultiply * Time.deltaTime;
+        if (timer > 0.8f)
+        {
+            //Disable<Transform>(displayArrowWhite);
+            //Enable<Transform>(displayArrow);
+
+            timer = 0f;
+            closing = false;
+        }
+    }
+
+    private void OpenTabs()
+    {
+        drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y);
+        drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, drawPosition.x, timer), drawPosition.y);
+
+        removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, removePosition.x, timer), removePosition.y);
+        removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, removePosition.x, timer), removePosition.y);
+
+        drawERP.position = new Vector2(Mathf.Lerp(drawERP.position.x, erpPosition.x, timer), erpPosition.y);
+        drawERPWhite.position = new Vector2(Mathf.Lerp(drawERPWhite.position.x, erpPosition.x, timer), erpPosition.y);
+
+        drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, trafficPosition.x, timer), trafficPosition.y);
+        drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, trafficPosition.x, timer), trafficPosition.y);
+
+        timer += speedMultiply * Time.deltaTime;
+        if (timer > 0.8f)
+        {
+            //Disable<Transform>(displayArrow);
+            //Enable<Transform>(displayArrowWhite);
+
+            timer = 0f;
+            opening = false;
+        }
+
+    }
     public void CallFunction(ButtonType _bt, bool _activeType)
     {
-        Debug.Log("Calling " + _bt + " " + _activeType);
+        //Debug.Log("Calling " + _bt + " " + _activeType);
         DisableAll();
 
         if (_activeType)
@@ -130,7 +242,7 @@ public class ButtonRoad : MonoBehaviour
                     }
                 case ButtonType.ERP:
                     {
-                        gameManager.RemoveRoadHandler();
+                        gameManager.ERPHandler();
                         Enable<Transform>(drawERPWhite);
 
                         Enable<Transform>(drawRoad);
@@ -140,7 +252,7 @@ public class ButtonRoad : MonoBehaviour
                     }
                 case ButtonType.TrafficLight:
                     {
-                        gameManager.RemoveRoadHandler();
+                        gameManager.TrafficLightHandler();
                         Enable<Transform>(drawTrafficWhite);
 
                         Enable<Transform>(drawRoad);
@@ -173,17 +285,21 @@ public class ButtonRoad : MonoBehaviour
 
     public override void Update()
     {
-        if (Input.GetMouseButtonDown(MouseCode.Left))
-        {
-            Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
-            Vector2 startPos = placementManager.placementGrid.GetStartPoint();
-            Vector2 endPos = placementManager.placementGrid.GetGridSize() + startPos;
-            if (mousePos.x < startPos.x - 0.5 || mousePos.x > endPos.x - 0.5 ||
-                mousePos.y < startPos.y - 0.5 || mousePos.y > endPos.y - 0.5)
-            {
-                ResetAll();
-            }
-        }
+        //if (Input.GetMouseButtonDown(MouseCode.Left))
+        //{
+        //    Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
+        //    Vector2 startPos = placementManager.placementGrid.GetStartPoint();
+        //    Vector2 endPos = placementManager.placementGrid.GetGridSize() + startPos;
+        //    if (mousePos.x < startPos.x - 0.5 || mousePos.x > endPos.x - 0.5 ||
+        //        mousePos.y < startPos.y - 0.5 || mousePos.y > endPos.y - 0.5)
+        //    {
+        //        ResetAll();
+        //    }
+        //}
+        if (opening)
+            OpenTabs();
+        if (closing)
+            CloseTabs();
     }
 
     public override void OnMouseOver()

@@ -319,6 +319,7 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceTrafficLight(Vector2Int position)
     {
+        Debug.Log("Instantiating ");
         Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f));
     }
 

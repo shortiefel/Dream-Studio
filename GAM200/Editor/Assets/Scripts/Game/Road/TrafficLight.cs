@@ -16,8 +16,11 @@
 
     public override void Start()
     {
-        tlm = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
-        tlm.RegisterTrafficLight(Vector2Int.RoundToInt(transform.position), entityId);
+        GameObject go = GameObject.Find("TrafficManager");
+        if (go != null)
+            tlm = go.GetComponent<TrafficLightManager>();
+        if (tlm != null)
+            tlm.RegisterTrafficLight(Vector2Int.RoundToInt(transform.position), entityId);
 
         state = toState = true;
         texture = gameObject.GetComponent<Texture>();
@@ -75,7 +78,8 @@
 
     public override void OnDestroy()
     {
-        tlm.RemoveTrafficLight(Vector2Int.RoundToInt(transform.position));
+        if (tlm != null)
+            tlm.RemoveTrafficLight(Vector2Int.RoundToInt(transform.position));
     }
 }
 

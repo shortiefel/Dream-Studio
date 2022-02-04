@@ -266,8 +266,13 @@ namespace Engine {
 		}*/
 
 		void Active_Transform_Engine(unsigned int id, bool boolean) {
-			SetEngineType(id, TransformComponent, isActive, boolean);
+			if (boolean)
+				dreamECSGame->EnableTransform(id);
+			else {
+				SetEngineType(id, TransformComponent, isActive, boolean);
+			}
 		}
+
 
 		void Active_Collider_Engine(unsigned int id, bool boolean) {
 			SetEngineType(id, ColliderComponent, isActive, boolean);

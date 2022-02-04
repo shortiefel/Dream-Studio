@@ -47,11 +47,13 @@ public class ERPManager : MonoBehaviour
 
     public void RegisterERP(Vector2Int pos, uint id)
     {
-        erpList.Add(pos, id);
+        if (!erpList.ContainsKey(pos))
+            erpList.Add(pos, id);
     }
 
     public void RemoveERP(Vector2Int pos)
     {
+        Debug.Log("Removing");
         erpList.Remove(pos);
     }
 

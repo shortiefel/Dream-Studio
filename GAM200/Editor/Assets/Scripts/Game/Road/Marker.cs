@@ -24,7 +24,12 @@ public class Marker
             {
                 adjacentMarkers.Add(i);
             }
+
+            index++;
         }
+
+        if (index == 1 || index == 0) openForConnections = true;
+        else openForConnections = false;
     }
 
     public bool OpenForconnections

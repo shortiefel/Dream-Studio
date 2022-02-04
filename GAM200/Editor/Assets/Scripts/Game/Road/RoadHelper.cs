@@ -35,14 +35,16 @@ public class RoadHelper : MonoBehaviour
         //incoming = new Marker();
         //outgoing = new Marker();
 
-        List<List<Vector2>> listOfWaypoints = wp.GetWaypoints();
+        List<List<List<Vector2>>> listOfWaypoints = wp.GetWaypoints();
 
-        foreach (var i in listOfWaypoints)
+        List<Marker> carMarkers = new List<Marker>();
+
+        foreach (var incomingOutgoing in listOfWaypoints)
         {
             //Console.WriteLine("Current set");
-            foreach (var t in i)
+            foreach (var markerss in incomingOutgoing)
             {
-                Console.WriteLine(t);
+                //Console.WriteLine(t);
 
                 //one waypoint to pass to incoming, one waypoint to pass to outgoing
                 //for Deadend only
@@ -53,6 +55,7 @@ public class RoadHelper : MonoBehaviour
                 //    outgoing.Position = t;
                 //
                 //Console.WriteLine("incoming =" + incoming.Position);
+                carMarkers.Add(new Marker(markerss));
             }
 
  
@@ -64,7 +67,7 @@ public class RoadHelper : MonoBehaviour
             //Console.WriteLine("outgoing =" + outgoing.Position);
 
             //List<Marker> carMarkers = Marker.Vector2ToMarker(i);
-            Marker.Vector2ToMarker(i);
+            //Marker.Vector2ToMarker(i);
 
             //Console.WriteLine("\nNext Set \n");
         }

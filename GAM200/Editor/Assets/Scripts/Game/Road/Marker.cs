@@ -6,13 +6,25 @@ public class Marker
 {
     public Vector2 Position { set; get; }
 
-    public List<Marker> adjacentMarkers;
+    public List<Vector2> adjacentMarkers;
 
     private bool openForConnections;
 
-    public Marker(Vector2 tem)
+    public Marker(List<Vector2> tem)
     {
-        Position = tem;
+        adjacentMarkers = new List<Vector2>();
+        int index = 0;
+        foreach (var i in tem)
+        {
+            if (index == 0)
+            {
+                Position = i;
+            }
+            else
+            {
+                adjacentMarkers.Add(i);
+            }
+        }
     }
 
     public bool OpenForconnections
@@ -22,7 +34,8 @@ public class Marker
 
     public List<Vector2> GetAdjacentPositions()
     {
-        return new List<Vector2>(adjacentMarkers.Select(x => x.Position).ToList());
+        return adjacentMarkers;
+        //return new List<Vector2>(adjacentMarkers.Select(x => x.Position).ToList());
     }
 
     public static List<Marker> Vector2ToMarker(List<Vector2> tem)
@@ -31,8 +44,8 @@ public class Marker
         foreach (var i in tem)
         {
             Debug.Log("Position " + i);
-            new Marker(i);
-            //lom.Add(new Marker(i));
+
+            lom.Add(new Marker(i));
         }
         return lom;
     }

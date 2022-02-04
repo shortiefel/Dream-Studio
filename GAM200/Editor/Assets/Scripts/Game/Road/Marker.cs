@@ -1,8 +1,8 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Marker : MonoBehaviour
+public class Marker
 {
     public Vector2 Position { set; get; }
 
@@ -12,7 +12,7 @@ public class Marker : MonoBehaviour
 
     public Marker(Vector2 tem)
     {
-        transform.position = tem;
+        Position = tem;
     }
 
     public bool OpenForconnections
@@ -30,7 +30,9 @@ public class Marker : MonoBehaviour
         List<Marker> lom = new List<Marker>();
         foreach (var i in tem)
         {
-            lom.Add(new Marker(i));
+            Debug.Log("Position " + i);
+            new Marker(i);
+            //lom.Add(new Marker(i));
         }
         return lom;
     }

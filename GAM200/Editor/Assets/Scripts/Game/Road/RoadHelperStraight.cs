@@ -22,10 +22,10 @@ public class RoadHelperStraight : RoadHelper
                 //one waypoint to pass to leftLaneMarker90, one waypoint to pass to rightLaneMarker90
                 //for straight road only
 
-                if (t.x == 0.1)
+                if (t.x == i[0].x)
                     rightLaneMarker90.Position = t;
 
-                if (t.x == -0.1)
+                if (t.x == i[0].x)
                     leftLaneMarker90.Position = t;
             }
             List<Marker> carMarkers = Marker.Vector2ToMarker(i);
@@ -34,20 +34,20 @@ public class RoadHelperStraight : RoadHelper
         }
     }
 
-    //public override Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)
-    //{
-    //    int angle = (int)rotation;
-    //    var direction = nextPathPosition - transform.position;
-    //    return GetCorrectMarker(angle, direction);
-    //}
+    public override Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)
+    {
+        int angle = (int)transform.angle;
+        var direction = nextPathPosition - transform.position;
+        return GetCorrectMarker(angle, direction);
+    }
 
 
-    //public override Marker GetPositionForCarToEnd(Vector2 previousPathPosition)
-    //{
-    //    int angle = (int)rotation;
-    //    var direction = transform.position - previousPathPosition;
-    //    return GetCorrectMarker(angle, direction);
-    //}
+    public override Marker GetPositionForCarToEnd(Vector2 previousPathPosition)
+    {
+        int angle = (int)transform.angle;
+        var direction = transform.position - previousPathPosition;
+        return GetCorrectMarker(angle, direction);
+    }
 
 
     private Marker GetCorrectMarker(int angle, Vector2 directionVector)

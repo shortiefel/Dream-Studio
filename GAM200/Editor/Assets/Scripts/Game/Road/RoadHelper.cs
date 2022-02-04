@@ -32,6 +32,9 @@ public class RoadHelper : MonoBehaviour
         //order = how to group the points (the number of element = number of route) (the total value of all order should be = number of waypoints)
 
 
+        //incoming = new Marker();
+        //outgoing = new Marker();
+
         List<List<Vector2>> listOfWaypoints = wp.GetWaypoints();
 
         foreach (var i in listOfWaypoints)
@@ -44,14 +47,24 @@ public class RoadHelper : MonoBehaviour
                 //one waypoint to pass to incoming, one waypoint to pass to outgoing
                 //for Deadend only
 
-                if (t.x == i[0].x)
-                    incoming.Position = t;
-                else
-                    outgoing.Position = t;
-
-                Console.WriteLine("incoming =" + incoming.Position);
+                //if (t.x == i[0].x)
+                //    incoming.Position = t;
+                //else
+                //    outgoing.Position = t;
+                //
+                //Console.WriteLine("incoming =" + incoming.Position);
             }
-            List<Marker> carMarkers = Marker.Vector2ToMarker(i);
+
+ 
+                //incoming.Position = i[0];
+
+                //outgoing.Position = i[1];
+
+            //Console.WriteLine("incoming =" + incoming.Position);
+            //Console.WriteLine("outgoing =" + outgoing.Position);
+
+            //List<Marker> carMarkers = Marker.Vector2ToMarker(i);
+            Marker.Vector2ToMarker(i);
 
             //Console.WriteLine("\nNext Set \n");
         }

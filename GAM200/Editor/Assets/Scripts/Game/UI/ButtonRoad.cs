@@ -27,8 +27,19 @@ public class ButtonRoad : MonoBehaviour
 
     private Camera mainCamera;
 
+    enum ButtonType
+    {
+        Draw = 0,
+        Remove,
+        ERP,
+        TrafficLight
+    }
+
     public override void Start()
     {
+        //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
+        //disable the different effect.
+
         mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();

@@ -68,7 +68,7 @@ public class Transform : IComponent
     internal static extern void SetTransform_Scale_Engine(uint entityID, ref Vector2 inVec2);
 
     //-----------------------------------------------------------------------------------------------------------------
-    //Scale
+    //layer
     public int layer
     {
         get
@@ -208,4 +208,20 @@ public class Transform : IComponent
         GetTransform_Position_Engine(entityId, out Vector2 result, false);
         return (val - result);
     }
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //Active
+    public bool isActive
+    {
+        get
+        {
+            GetTransform_IsActive_Engine(entityId, out bool result);
+            return result;
+        }
+        set { }// SetTransform_Layer_Engine(entityId, ref value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTransform_IsActive_Engine(uint entityID, out bool result);
+    //[MethodImpl(MethodImplOptions.InternalCall)]
+    //internal static extern void SetTransform_Layer_Engine(uint entityID, ref int inLayer);
 }

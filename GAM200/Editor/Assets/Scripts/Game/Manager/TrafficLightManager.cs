@@ -5,7 +5,7 @@ public class TrafficLightManager : MonoBehaviour
 
     private Dictionary<Vector2Int, uint> trafficLights;
 
-    GameObject temTL; //TO Remove
+    GameObject trafficLightGO; //TO Remove
     Camera mainCamera; //TO Remove
 
     bool toDraw; //To Remove
@@ -15,39 +15,39 @@ public class TrafficLightManager : MonoBehaviour
     {
         trafficLights = new Dictionary<Vector2Int, uint>();
 
-        temTL = new GameObject(new Prefab("TrafficLight")); //To Remove
+        trafficLightGO = new GameObject(new Prefab("TrafficLight")); //To Remove
         mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
 
         toDraw = false; //To Remove
     }
 
-    public override void Update()
-    {
-        //To Remove ------------------------------------------------------
-        if (toDraw && Input.GetMouseButtonDown(MouseCode.Left))
-        {
-            Vector3Int mousePos = Vector3Int.RoundToInt(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()));
-            
-            Instantiate(temTL, new Vector3(mousePos.x, mousePos.y, 0f));
-            Debug.Log("Traffic light placement");
-
-            foreach (var i in trafficLights) Debug.Log(" Traffic: " + i);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            toDraw = !toDraw;
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Time.timeScale = 1f;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Time.timeScale = 3f;
-        }
-        //To Remove ------------------------------------------------------
-    }
+    //public override void Update()
+    //{
+    //    //To Remove ------------------------------------------------------
+    //    if (toDraw && Input.GetMouseButtonDown(MouseCode.Left))
+    //    {
+    //        Vector3Int mousePos = Vector3Int.RoundToInt(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()));
+    //        
+    //        Instantiate(trafficLightGO, new Vector3(mousePos.x, mousePos.y, 0f));
+    //        Debug.Log("Traffic light placement");
+    //    
+    //        //foreach (var i in trafficLights) Debug.Log(" Traffic: " + i);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.D))
+    //    {
+    //        toDraw = !toDraw;
+    //    }
+    //    
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //    {
+    //        Time.timeScale = 1f;
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.S))
+    //    {
+    //        Time.timeScale = 3f;
+    //    }
+    //    //To Remove ------------------------------------------------------
+    //}
 
     public void RegisterTrafficLight(Vector2Int pos, uint id)
     {

@@ -56,6 +56,9 @@ namespace Engine {
 		void SetTransform_Angle_Engine(unsigned int id, float* inVec2);
 		void GetTransform_Layer_Engine(unsigned int id, int* outLayer);
 		void SetTransform_Layer_Engine(unsigned int id, int* inLayer);
+
+		void GetTransform_IsActive_Engine(unsigned int entityID, bool* result);
+
 		//void GetTransform_forward_Engine(unsigned int id, Math::vec2* outVec2);
 		void GetTransform_up_Engine(unsigned int id, Math::vec2* outVec2);
 		void GetTransform_right_Engine(unsigned int id, Math::vec2* outVec2);
@@ -148,6 +151,7 @@ namespace Engine {
 			mono_add_internal_call("Transform::SetTransform_Angle_Engine", SetTransform_Angle_Engine);
 			mono_add_internal_call("Transform::GetTransform_Layer_Engine", GetTransform_Layer_Engine);
 			mono_add_internal_call("Transform::SetTransform_Layer_Engine", SetTransform_Layer_Engine);
+			mono_add_internal_call("Transform::GetTransform_IsActive_Engine", GetTransform_IsActive_Engine);
 			//mono_add_internal_call("Transform::GetTransform_forward_Engine", GetTransform_forward_Engine);
 			mono_add_internal_call("Transform::GetTransform_up_Engine", GetTransform_up_Engine);
 			mono_add_internal_call("Transform::GetTransform_right_Engine", GetTransform_right_Engine);
@@ -285,6 +289,11 @@ namespace Engine {
 			}
 
 		}
+
+		void GetTransform_IsActive_Engine(unsigned int entityID, bool* result) {
+			GetEngineType(entityID, TransformComponent, isActive, *result);
+		}
+
 		void MoveTransform_Position_Engine(unsigned int id, Math::vec2* inVec2) {
 			//call hascomponent with entityid
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(id);

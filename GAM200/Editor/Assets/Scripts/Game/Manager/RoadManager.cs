@@ -18,6 +18,9 @@ public class RoadManager : MonoBehaviour
     private AudioSource placeSound;
     private AudioSource removeSound;
 
+    private GameObject trafficLightGO;
+    private GameObject erpGO;
+
     //private void Start()
     public override void Start()
     {
@@ -31,6 +34,10 @@ public class RoadManager : MonoBehaviour
 
         placeSound = GameObject.Find("DrawRoad").GetComponent<AudioSource>();
         removeSound = GameObject.Find("RemoveRoad").GetComponent<AudioSource>();
+
+        
+        trafficLightGO = new GameObject(new Prefab("TrafficLight"));
+        erpGO = new GameObject(new Prefab("ERP"));
     }
 
     public void PlaceSpawnHouse(Vector2Int position)
@@ -308,5 +315,15 @@ public class RoadManager : MonoBehaviour
         {
             roadFixer.FixRoadAtPosition(placementManager, positionToFix);
         }
+    }
+
+    public void PlaceTrafficLight(Vector2Int position)
+    {
+        Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f));
+    }
+
+    public void PlaceERP(Vector2Int position)
+    {
+        Instantiate(erpGO, new Vector3(position.x, position.y, 0f));
     }
 }

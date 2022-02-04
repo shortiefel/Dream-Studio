@@ -68,6 +68,22 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
     }
 
+    internal void ERPHandler()
+    {
+        ClearInputActions();
+        inputManager.OnMouseClick += roadManager.PlaceERP;
+        //inputManager.OnMouseHold += roadManager.PlaceRoad;
+        //inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
+    }
+
+    internal void TrafficLightHandler()
+    {
+        ClearInputActions();
+        inputManager.OnMouseClick += roadManager.PlaceTrafficLight;
+        //inputManager.OnMouseHold += roadManager.RemoveRoad;
+        //inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
+    }
+
     internal void ClearInputActions()
     {
         inputManager.OnMouseClick = null;

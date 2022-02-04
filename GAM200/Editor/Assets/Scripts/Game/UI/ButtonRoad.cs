@@ -1,4 +1,13 @@
 ﻿using System;
+
+public enum ButtonType
+{
+    Draw = 0,
+    Remove,
+    ERP,
+    TrafficLight
+}
+
 public class ButtonRoad : MonoBehaviour
 {
     PlacementManager placementManager;
@@ -27,13 +36,7 @@ public class ButtonRoad : MonoBehaviour
 
     private Camera mainCamera;
 
-    enum ButtonType
-    {
-        Draw = 0,
-        Remove,
-        ERP,
-        TrafficLight
-    }
+    
 
     public override void Start()
     {
@@ -68,32 +71,99 @@ public class ButtonRoad : MonoBehaviour
         //drawRoadMode = false;
         //deleteRoadMode = false;
 
-        activeType = false;
+        //activeType = false;
+        //
+        //if (transform.entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId || 
+        //    transform.entityId == GameObject.Find("DrawRoadWhite").GetComponent<Transform>().entityId)
+        //{
+        //    buttonType = true;
+        //
+        //}
+        //else if (transform.entityId == GameObject.Find("RemoveRoad").GetComponent<Transform>().entityId ||
+        //    transform.entityId == GameObject.Find("RemoveRoadWhite").GetComponent<Transform>().entityId)
+        //{
+        //    buttonType = false;
+        //}
+        //else if (transform.entityId == GameObject.Find("ERPbtn").GetComponent<Transform>().entityId ||
+        //    transform.entityId == GameObject.Find("ERPbtnWhite").GetComponent<Transform>().entityId)
+        //{
+        //    buttonType = true;
+        //
+        //}
+        //else if (transform.entityId == GameObject.Find("TrafficLight").GetComponent<Transform>().entityId ||
+        //  transform.entityId == GameObject.Find("TrafficLightWhite").GetComponent<Transform>().entityId)
+        //{
+        //    buttonType = true;
+        //
+        //}
+    }
 
-        if (transform.entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId || 
-            transform.entityId == GameObject.Find("DrawRoadWhite").GetComponent<Transform>().entityId)
+    //_activeType = false means u r clicking the white version
+    public void CallFunction(ButtonType _bt, bool _activeType)
+    {
+        Debug.Log("Calling " + _bt + " " + _activeType);
+        DisableAll();
+
+        if (_activeType)
         {
-            buttonType = true;
+            switch (_bt)
+            {
+                case ButtonType.Draw:
+                    {
+                        gameManager.RoadPlacementHandler();
+                        Enable<Transform>(drawRoadWhite);
+
+                        Enable<Transform>(removeRoad);
+                        Enable<Transform>(drawERP);
+                        Enable<Transform>(drawTraffic);
+                        break;
+                    }
+                case ButtonType.Remove:
+                    {
+                        gameManager.RemoveRoadHandler();
+                        Enable<Transform>(removeRoadWhite);
+
+                        Enable<Transform>(drawRoad);
+                        Enable<Transform>(drawERP);
+                        Enable<Transform>(drawTraffic);
+                        break;
+                    }
+                case ButtonType.ERP:
+                    {
+                        gameManager.RemoveRoadHandler();
+                        Enable<Transform>(drawERPWhite);
+
+                        Enable<Transform>(drawRoad);
+                        Enable<Transform>(removeRoad);
+                        Enable<Transform>(drawTraffic);
+                        break;
+                    }
+                case ButtonType.TrafficLight:
+                    {
+                        gameManager.RemoveRoadHandler();
+                        Enable<Transform>(drawTrafficWhite);
+
+                        Enable<Transform>(drawRoad);
+                        Enable<Transform>(removeRoad);
+                        Enable<Transform>(drawERP);
+                        break;
+                    }
+            }
+
+            SceneManager.SetDrawMode(true);
+            gameState.SetDrawMode(true);
 
         }
-        else if (transform.entityId == GameObject.Find("RemoveRoad").GetComponent<Transform>().entityId ||
-            transform.entityId == GameObject.Find("RemoveRoadWhite").GetComponent<Transform>().entityId)
+        else
         {
-            buttonType = false;
-        }
-        else if (transform.entityId == GameObject.Find("ERPbtn").GetComponent<Transform>().entityId ||
-            transform.entityId == GameObject.Find("ERPbtnWhite").GetComponent<Transform>().entityId)
-        {
-            buttonType = true;
+            SceneManager.SetDrawMode(false);
+            gameState.SetDrawMode(false);
 
+            Enable<Transform>(drawRoad);
+            Enable<Transform>(removeRoad);
+            Enable<Transform>(drawERP);
+            Enable<Transform>(drawTraffic);
         }
-        else if (transform.entityId == GameObject.Find("TrafficLight").GetComponent<Transform>().entityId ||
-          transform.entityId == GameObject.Find("TrafficLightWhite").GetComponent<Transform>().entityId)
-        {
-            buttonType = true;
-
-        }
-
     }
 
     //public override void OnMouseEnter()
@@ -111,91 +181,109 @@ public class ButtonRoad : MonoBehaviour
             if (mousePos.x < startPos.x - 0.5 || mousePos.x > endPos.x - 0.5 ||
                 mousePos.y < startPos.y - 0.5 || mousePos.y > endPos.y - 0.5)
             {
-                DisableAll();
+                ResetAll();
             }
         }
     }
 
     public override void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(MouseCode.Left))
-        {
-            if (buttonType)
-            {
-                //Show draw road
-                if (!activeType)
-                {
-                    Disable<Transform>(drawRoad);
-                    Enable<Transform>(drawRoadWhite);
-                    //drawRoadMode = true;
-                    Disable<Transform>(removeRoadWhite);
-                    Enable<Transform>(removeRoad);
-                    Disable<Transform>(drawERP);
-                    Enable<Transform>(drawERPWhite);
-                    Disable<Transform>(drawTraffic);
-                    Enable<Transform>(drawTrafficWhite);
-
-                    gameManager.RoadPlacementHandler();
-                    //SwitchMode();
-                    SceneManager.SetDrawMode(true);
-                    gameState.SetDrawMode(true);
-                    activeType = true;
-                }
-                else
-                {
-                    DisableAll();
-                }
-
-            }
-
-            else
-            {
-                //Show remove road
-                if (!activeType)
-                {
-                    Disable<Transform>(removeRoad);
-                    Enable<Transform>(removeRoadWhite);
-                    //deleteRoadMode = true;
-                    Enable<Transform>(drawRoad);
-                    Disable<Transform>(drawRoadWhite);
-                    Enable<Transform>(drawERP);
-                    Disable<Transform>(drawERPWhite);
-                    Enable<Transform>(drawTraffic);
-                    Disable<Transform>(drawTrafficWhite);
-
-                    // SwitchMode();
-                    gameManager.RemoveRoadHandler();
-
-                    SceneManager.SetDrawMode(true);
-                    gameState.SetDrawMode(true);
-                    activeType = true;
-                }
-                else
-                {
-                    DisableAll();
-                }
-
-            }
-
-        }
+        //if (Input.GetMouseButtonDown(MouseCode.Left))
+        //{
+        //    if (buttonType)
+        //    {
+        //        //Show draw road
+        //        if (!activeType)
+        //        {
+        //            Disable<Transform>(drawRoad);
+        //            Enable<Transform>(drawRoadWhite);
+        //            //drawRoadMode = true;
+        //            Disable<Transform>(removeRoadWhite);
+        //            Enable<Transform>(removeRoad);
+        //            Disable<Transform>(drawERP);
+        //            Enable<Transform>(drawERPWhite);
+        //            Disable<Transform>(drawTraffic);
+        //            Enable<Transform>(drawTrafficWhite);
+        //
+        //            Enable<Transform>(drawRoadWhite);
+        //            gameManager.RoadPlacementHandler();
+        //            //SwitchMode();
+        //            SceneManager.SetDrawMode(true);
+        //            gameState.SetDrawMode(true);
+        //            activeType = true;
+        //        }
+        //        else
+        //        {
+        //            DisableAll();
+        //        }
+        //
+        //    }
+        //
+        //    else
+        //    {
+        //        //Show remove road
+        //        if (!activeType)
+        //        {
+        //            Disable<Transform>(removeRoad);
+        //            Enable<Transform>(removeRoadWhite);
+        //            //deleteRoadMode = true;
+        //            Enable<Transform>(drawRoad);
+        //            Disable<Transform>(drawRoadWhite);
+        //            Enable<Transform>(drawERP);
+        //            Disable<Transform>(drawERPWhite);
+        //            Enable<Transform>(drawTraffic);
+        //            Disable<Transform>(drawTrafficWhite);
+        //
+        //            // SwitchMode();
+        //            Enable<Transform>(removeRoadWhite);
+        //            gameManager.RemoveRoadHandler();
+        //
+        //            SceneManager.SetDrawMode(true);
+        //            gameState.SetDrawMode(true);
+        //            activeType = true;
+        //        }
+        //        else
+        //        {
+        //            DisableAll();
+        //        }
+        //
+        //    }
+        //
+        //}
     }
 
-    public void DisableAll()
+    public void ResetAll()
     {
         Enable<Transform>(drawRoad);
         Disable<Transform>(drawRoadWhite);
-        //drawRoadMode = false;
-        Disable<Transform>(removeRoadWhite);
         Enable<Transform>(removeRoad);
+        Disable<Transform>(removeRoadWhite);
         Enable<Transform>(drawERP);
         Disable<Transform>(drawERPWhite);
         Enable<Transform>(drawTraffic);
         Disable<Transform>(drawTrafficWhite);
         gameManager.ClearInputActions();
-        //SwitchMode();
+
         SceneManager.SetDrawMode(false);
         gameState.SetDrawMode(false);
-        activeType = false;
+        //activeType = false;
+    }
+
+    public void DisableAll()
+    {
+        Disable<Transform>(drawRoad);
+        Disable<Transform>(drawRoadWhite);
+        Disable<Transform>(removeRoad);
+        Disable<Transform>(removeRoadWhite);
+        Disable<Transform>(drawERP);
+        Disable<Transform>(drawERPWhite);
+        Disable<Transform>(drawTraffic);
+        Disable<Transform>(drawTrafficWhite);
+        gameManager.ClearInputActions();
+
+        SceneManager.SetDrawMode(false);
+        gameState.SetDrawMode(false);
+        //activeType = false;
     }
 
 }

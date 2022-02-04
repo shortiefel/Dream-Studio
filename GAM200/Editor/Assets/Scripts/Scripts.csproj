@@ -46,8 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="bin\**;obj\**;Properties\**" />
-    <Compile Include="Game\Car\IntroCarAI_L.cs" />
-    <Compile Include="Menu\Start\GoToMenu.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

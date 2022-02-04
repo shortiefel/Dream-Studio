@@ -269,11 +269,11 @@ namespace Engine
 		GraphicImplementation::UnUseShaderHandle();
 	}
 
-	// Update function for GraphicSystem
+	// Update function for GraphicSystem by passing in a FrameBuffer*
 #ifdef _GAME_BUILD
 	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 camMatrix, bool gameDraw) {
 #else
-	void GraphicSystem::Render(float _dt, unsigned int* _fbo, Math::mat3 camMatrix, bool gameDraw) {
+	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw) {
 #endif
 		PROFILER_START("Rendering");
 
@@ -283,9 +283,10 @@ namespace Engine
 #endif
 		GraphicImplementation::Renderer::ResetStats();
 
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		// Set background colour
 		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Enable GL_BLEND for transparency of textures
 		glEnable(GL_BLEND);
@@ -295,6 +296,35 @@ namespace Engine
 		RenderGameObjects(camMatrix, _dt);
 		RenderLines(camMatrix);
 		if (!gameDraw) RenderCollisionLines(camMatrix);
+
+		glDisable(GL_BLEND);
+
+#ifdef _GAME_BUILD
+
+#else
+		_fbo->Unbind();
+#endif
+	}
+
+	// Update function for GraphicSystem by passing in a LightComponent*
+	void GraphicSystem::Render(float _dt, LightComponent* _fbo, Math::mat3 camMatrix) {
+		PROFILER_START("Rendering");
+		_fbo->Bind();
+
+		glClear(GL_DEPTH_BUFFER_BIT);
+
+		GraphicImplementation::Renderer::ResetStats();
+
+		// Set background colour
+		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+
+		// Enable GL_BLEND for transparency of textures
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		// Render game objects and collision lines
+		RenderGameObjects(camMatrix, _dt);
+		RenderLines(camMatrix);
 
 		glDisable(GL_BLEND);
 

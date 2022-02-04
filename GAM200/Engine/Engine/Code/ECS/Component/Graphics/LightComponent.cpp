@@ -28,8 +28,8 @@ namespace Engine
 {
 	// Contructor for Light Component
 	LightComponent::LightComponent(Entity_id _ID, Math::vec4 _colour, bool _active) :
-		IComponent{ _ID }, depthFBO{ 0 }, depthMap{ 0 },
-		colour{ _colour }, shadowWidth{ 1024 }, shadowHeight{ 1024 }, isActive{ _active } {}
+		IComponent{ _ID }, depthFBO{ 0 }, depthMap{ 0 }, shadowWidth{ 1024 }, shadowHeight{ 1024 },
+		near_plane{ 0.0f }, far_plane{ 0.0f }, colour{ _colour }, isActive{ _active } {}
 
 
 	// Destructor for Light Component
@@ -70,6 +70,17 @@ namespace Engine
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
+	// Function that binds the framebuffer object to the framebuffer
+	void LightComponent::Bind()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
+	}
+
+	// Function that unbinds the framebuffer object that is attached to the framebuffer
+	void LightComponent::Unbind()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
 
 	// Deserialize function for Light Component
 	LightComponent& LightComponent::Deserialize(const DSerializer& _serializer)

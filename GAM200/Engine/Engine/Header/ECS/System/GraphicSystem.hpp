@@ -21,6 +21,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/System/CameraSystem.hpp"
 #include "Engine/Header/Graphic/FrameBuffer.hpp"
+#include "Engine/Header/ECS/Component/Graphics/LightComponent.hpp"
 
 #include "Engine/Header/Math/MathLib.hpp"
 
@@ -32,12 +33,10 @@ namespace Engine
 		bool Create();
 		void Destroy();
 
-		//If _fbo is nullptr = default draw (game scene draw) otherwise it means for editor scene
-		void Render(float _dt, unsigned int* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), bool gameDraw = true);
-		//void FadeRender(float _dt, Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform());
+		//If _fbo is nullptr = default draw (game scene draw) otherwise it is for editor scene
+		void Render(float _dt, Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), bool gameDraw = true);
+		void Render(float _dt, LightComponent* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform());
 
-		//void SetFadeToBlack();
-		//void SetFadeToClear();
 	private:
 		SINGLETON_SETUP(GraphicSystem);
 	};

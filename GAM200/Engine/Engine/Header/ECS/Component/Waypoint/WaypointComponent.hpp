@@ -32,6 +32,8 @@ namespace Engine {
 		//Stores the list of waypoints
 		std::list<Math::vec2> listOfWaypoint = std::list<Math::vec2>{};
 
+		int section = 0; //How many marker before switch between incoming and outgoing
+
 		bool isActive = true;
 
 		WaypointComponent(Entity_id _ID = DEFAULT_ENTITY_ID, std::list<unsigned int> _num = std::list<unsigned int>{},

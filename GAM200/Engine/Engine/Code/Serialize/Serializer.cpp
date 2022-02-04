@@ -291,6 +291,7 @@ namespace Engine {
 
 		_serializer.SetValue("Waypoints", t->listOfWaypoint);
 		_serializer.SetValue("Order", t->numOfWaypoint);
+		_serializer.SetValue("Section", t->section);
 
 		mainObject.AddMember("WaypointComponent", objType, doc.GetAllocator());
 	}

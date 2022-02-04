@@ -25,15 +25,17 @@ public class Waypoint : IComponent
     public Waypoint() { }
     public Waypoint(uint entity_id) { entityId = entity_id; }
 
-    public List<List<Vector2>> GetWaypoints()
+    public List<List<List<Vector2>>> GetWaypoints()
     {
-        List<List<Vector2>> listOfWaypoints = new List<List<Vector2>>();
+        List<List<List<Vector2>>> listOfWaypoints = new List<List<List<Vector2>>>();
 
         Vector2[] points = new Vector2[100];
         uint[] order = new uint[10];
-        Waypoint_GetWaypoints_Engine(entityId, points, order);
+        
+        Waypoint_GetWaypoints_Engine(entityId, points, order, out int section);
 
-        int p = 0;
+        int p = 0, sect = 0;
+        List<List<Vector2>> setionOfWaypoint = new List<List<Vector2>>();
         foreach (var i in order)
         {
             if (i == 0) break;
@@ -44,13 +46,21 @@ public class Waypoint : IComponent
                 ++p;
                 if (p - start >= i) break;
             }
-            listOfWaypoints.Add(tem);
+            setionOfWaypoint.Add(tem);
+
+            ++sect;
+            if(sect == section)
+            {
+                listOfWaypoints.Add(setionOfWaypoint);
+                setionOfWaypoint = new List<List<Vector2>>();
+            }
         }
-        
+        listOfWaypoints.Add(setionOfWaypoint);
+
         return listOfWaypoints;
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void Waypoint_GetWaypoints_Engine(uint entityId, Vector2[] points, uint[] order);
+    internal static extern void Waypoint_GetWaypoints_Engine(uint entityId, Vector2[] points, uint[] order, out int section);
 
 
     //public uint GetNumberOfRoute()

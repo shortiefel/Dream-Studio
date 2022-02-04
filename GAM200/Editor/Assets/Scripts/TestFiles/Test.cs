@@ -27,18 +27,18 @@ public class Test : MonoBehaviour
         //order = how to group the points (the number of element = number of route) (the total value of all order should be = number of waypoints)
 
 
-        List<List<Vector2>> listOfWaypoints = wp.GetWaypoints();
-
-        foreach (var i in listOfWaypoints)
-        {
-            Console.WriteLine("Current set");
-            foreach (var t in i)
-            {
-                Console.WriteLine(t);
-            }
-
-            Console.WriteLine("\nNext Set \n");
-        }
+        //List<List<Vector2>> listOfWaypoints = wp.GetWaypoints();
+        //
+        //foreach (var i in listOfWaypoints)
+        //{
+        //    Console.WriteLine("Current set");
+        //    foreach (var t in i)
+        //    {
+        //        Console.WriteLine(t);
+        //    }
+        //
+        //    Console.WriteLine("\nNext Set \n");
+        //}
 
     }
 

@@ -129,7 +129,7 @@ namespace Engine {
 		Waypoint
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		//void Waypoint_GetNumberOfRoute_Engine(unsigned int entityID, unsigned int* num);
-		void Waypoint_GetWaypoints_Engine(unsigned int entityID, MonoArray* points, MonoArray* order);
+		void Waypoint_GetWaypoints_Engine(unsigned int entityID, MonoArray* points, MonoArray* order, int* section);
 
 
 		/*-----------------------------------------------------
@@ -616,7 +616,7 @@ namespace Engine {
 		//	*num = ctype->numOfWaypoint.size();
 		//}
 
-		void Waypoint_GetWaypoints_Engine(unsigned int entityID, MonoArray* points, MonoArray* order) {
+		void Waypoint_GetWaypoints_Engine(unsigned int entityID, MonoArray* points, MonoArray* order, int* section) {
 			WaypointComponent* ctype = dreamECSGame->GetComponentPTR<WaypointComponent>(entityID);
 			if (ctype == nullptr) return;
 			{
@@ -635,6 +635,10 @@ namespace Engine {
 					mono_array_set(order, unsigned int, i, t);
 					++i;
 				}
+			}
+
+			{
+				*section = ctype->section;
 			}
 
 			printf("setting the points now \n");

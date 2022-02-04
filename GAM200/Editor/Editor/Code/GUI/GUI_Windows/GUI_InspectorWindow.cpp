@@ -457,7 +457,15 @@ namespace Editor {
 							ImGui::SameLine();
 							ImGui::SetNextItemWidth(halfWidth * 0.375f);
 							if (ImGui::Button("Add##AddOrderpoint"))
-								wayComp->numOfWaypoint.emplace_back(num);	
+								wayComp->numOfWaypoint.emplace_back(num);
+						}
+
+						ImGui::Spacing();
+
+						{
+							ImGui::Text("Section");
+							ImGui::SetNextItemWidth(halfWidth * 0.375f);
+							ImGui::DragInt("##waypointSection", &(wayComp->section), 0, 0, 360, "%d", 1);
 						}
 
 						ImGui::Spacing();

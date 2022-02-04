@@ -575,7 +575,8 @@ namespace Engine {
 				WaypointComponent tem(entityId);
 				sceneSerializer.RetrieveData(
 					"Waypoints", tem.listOfWaypoint,
-					"Order", tem.numOfWaypoint);
+					"Order", tem.numOfWaypoint,
+					"Section", tem.section);
 
 				dreamECSGame->AddComponent(tem);
 			}
@@ -787,7 +788,8 @@ namespace Engine {
 				WaypointComponent tem(entityId);
 				sceneSerializer.RetrieveData(
 					"Waypoints", tem.listOfWaypoint,
-					"Order", tem.numOfWaypoint);
+					"Order", tem.numOfWaypoint,
+					"Section", tem.section);
 
 				for (auto& i : tem.listOfWaypoint) {
 					Math::vec3 newPos = rotationAndTranslate * Math::vec3{i.x, i.y, 1.f};

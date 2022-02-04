@@ -5,11 +5,11 @@ using System.Linq;
 
 public enum BuildingType
 {
-    House = 0,
-    Hospital,
+    Hospital = 0,
     Office,
     Park,
-    Mall
+    Mall,
+    House
 }
 
 
@@ -34,11 +34,16 @@ public class StructureManager : MonoBehaviour
         housesPrefabs = new StructurePrefabWeighted[2];
         housesPrefabs[0].prefab = new GameObject(new Prefab("House")); housesPrefabs[0].weight = 1;
 
-        specialPrefabs = new StructurePrefabWeighted[2];
-        specialPrefabs[0].prefab = new GameObject(new Prefab("Destination")); specialPrefabs[0].weight = 1;
+        specialPrefabs = new StructurePrefabWeighted[5];
+        //specialPrefabs[0].prefab = new GameObject(new Prefab("Destination")); specialPrefabs[0].weight = 1;
+
+        specialPrefabs[(int)BuildingType.Hospital].prefab = new GameObject(new Prefab("HospitalDestination")); specialPrefabs[(int)BuildingType.Hospital].weight = 1;
+        specialPrefabs[(int)BuildingType.Office].prefab = new GameObject(new Prefab("OfficeDestination")); specialPrefabs[(int)BuildingType.Office].weight = 1;
+        //specialPrefabs[(int)BuildingType.Park].prefab = new GameObject(new Prefab("ParkDestination")); specialPrefabs[(int)BuildingType.Park].weight = 1;
+        //specialPrefabs[(int)BuildingType.Mall].prefab = new GameObject(new Prefab("MallDestination")); specialPrefabs[(int)BuildingType.Mall].weight = 1;
 
         houseWeights = new float[] { housesPrefabs[0].weight };
-        specialWeights = new float[] { specialPrefabs[0].weight };
+        specialWeights = new float[] { specialPrefabs[(int)BuildingType.Hospital].weight, specialPrefabs[(int)BuildingType.Office].weight };
     }
 
     //private IEnumerator waitABit(Vector2Int newPos)

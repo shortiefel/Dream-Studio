@@ -17,8 +17,11 @@ public class AIDirector : MonoBehaviour
     public override void Start()
     {
         carSpawnTimerInterval = 2f;
-        carPrefabs = new Prefab[1];
-        carPrefabs[0] = new Prefab("Car");
+        carPrefabs = new Prefab[5];
+        carPrefabs[(int)BuildingType.Hospital] = new Prefab("HospitalCar");
+        carPrefabs[(int)BuildingType.Office] = new Prefab("OfficeCar");
+        carPrefabs[(int)BuildingType.Park] = new Prefab("ParkCar");
+        carPrefabs[(int)BuildingType.Mall] = new Prefab("MallCar");
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
     }
@@ -87,7 +90,7 @@ public class AIDirector : MonoBehaviour
 
             //var car = Instantiate(SelectACarPrefab(), new Vector3(startRoadPosition.x, startRoadPosition.y, 0));
             Vector2 pos = startStructure.transform.position;
-            var car = Instantiate(SelectACarPrefab(), new Vector3(pos.x, pos.y, 0));
+            var car = Instantiate(SelectACarPrefab(endStructure.buildingType), new Vector3(pos.x, pos.y, 0));
             //var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0), Quaternion.identity);
 
             Console.WriteLine("Set path2: " + path.Count);
@@ -99,9 +102,9 @@ public class AIDirector : MonoBehaviour
         return false;
     }
 
-    private Prefab SelectACarPrefab()
+    private Prefab SelectACarPrefab(BuildingType bt)
     {
-        var randomIndex = Random.Range(0, carPrefabs.Length - 1);
-        return carPrefabs[randomIndex];
+        //var randomIndex = Random.Range(0, carPrefabs.Length - 1);
+        return carPrefabs[(int)bt];
     }
 }

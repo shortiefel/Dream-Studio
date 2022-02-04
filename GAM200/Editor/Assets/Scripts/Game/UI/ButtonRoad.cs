@@ -70,8 +70,8 @@ public class ButtonRoad : MonoBehaviour
         {
             buttonType = false;
         }
-        else if (transform.entityId == GameObject.Find("drawERP").GetComponent<Transform>().entityId ||
-            transform.entityId == GameObject.Find("drawERPWhite").GetComponent<Transform>().entityId)
+        else if (transform.entityId == GameObject.Find("ERPbtn").GetComponent<Transform>().entityId ||
+            transform.entityId == GameObject.Find("ERPbtnWhite").GetComponent<Transform>().entityId)
         {
             buttonType = true;
 

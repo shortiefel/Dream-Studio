@@ -181,4 +181,25 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         notification.SetAnimation("Appear");
         spawnBool = true;
     }
+
+    internal List<Marker> GetCarMarkers()
+    {
+        return GetComponent<RoadHelper>().GetAllCarMarkers();
+    }
+
+    public Vector2 GetNearestCarMarkerTo(Vector2 position)
+    {
+        return GetComponent<RoadHelper>().GetClosestCarMarkerPosition(position);
+    }
+
+    public Marker GetCarSpawnMarker(Vector2Int nextPathPosition)
+    {
+        return GetComponent<RoadHelper>().GetPositionForCarToSpawn(nextPathPosition);
+    }
+
+    public Marker GetCarEndMarker(Vector2Int prevPathPosition)
+    {
+        return GetComponent<RoadHelper>().GetPositionForCarToEnd(prevPathPosition);
+    }
+
 }

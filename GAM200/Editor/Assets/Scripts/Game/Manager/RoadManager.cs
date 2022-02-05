@@ -277,8 +277,10 @@ public class RoadManager : MonoBehaviour
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
 
-        trafficLightManager.RequestRemovingTrafficLight(position);
-        erpManager.RequestRemovingERP(position); 
+        if (trafficLightManager != null)
+            trafficLightManager.RequestRemovingTrafficLight(position);
+        if (erpManager != null)
+            erpManager.RequestRemovingERP(position); 
 
         if (placementManager.CheckIfPositionIsFree(position) == false)
         {
@@ -331,15 +333,15 @@ public class RoadManager : MonoBehaviour
     {
         if(!placementManager.CheckIfPositionInBound(position))
             return;
-
-        trafficLightManager.RequestPlacingTrafficLight(position);
+        if(trafficLightManager != null)
+            trafficLightManager.RequestPlacingTrafficLight(position);
     }
 
     public void PlaceERP(Vector2Int position)
     {
         if (!placementManager.CheckIfPositionInBound(position))
             return;
-
-        erpManager.RequestPlacingERP(position);
+        if (erpManager != null)
+            erpManager.RequestPlacingERP(position);
     }
 }

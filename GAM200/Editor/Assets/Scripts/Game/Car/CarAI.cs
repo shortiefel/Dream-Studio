@@ -194,8 +194,8 @@ public class CarAI : MonoBehaviour
     public override void Update()
     {
         RaycastHit2D hit = Physics2D.RayCast(new Vector3(transform.position, 0f), transform.up, 0.6f, (int)transform.entityId);
-        if (Input.GetKeyDown(KeyCode.Y))
-            Debug.Log("up: " + transform.up);
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //    Debug.Log("up: " + transform.up);
         if (hit.collider != null)
         {
             Vector2Int targetPos = Vector2Int.RoundToInt(hit.transform.position);

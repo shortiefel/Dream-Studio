@@ -4,7 +4,7 @@ using System.Linq;
 
 public class Marker
 {
-    public Vector2 Position { set; get; }
+    public Vector2 Position;
 
     public List<Vector2> adjacentMarkers;
 
@@ -43,15 +43,15 @@ public class Marker
         //return new List<Vector2>(adjacentMarkers.Select(x => x.Position).ToList());
     }
 
-    public static List<Marker> Vector2ToMarker(List<Vector2> tem)
-    {
-        List<Marker> lom = new List<Marker>();
-        foreach (var i in tem)
-        {
-            Debug.Log("Position " + i);
+    //public static List<Marker> Vector2ToMarker(List<Vector2> tem)
+    //{
+    //    List<Marker> lom = new List<Marker>();
+    //    foreach (var i in tem)
+    //    {
+    //        Debug.Log("Position " + i);
 
-            lom.Add(new Marker(i));
-        }
-        return lom;
-    }
+    //        lom.Add(new Marker(i));
+    //    }
+    //    return lom;
+    //}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class AIDirector : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class AIDirector : MonoBehaviour
 
     AdjacencyGraph carGraph = new AdjacencyGraph();
 
-    List<Vector3> carPath = new List<Vector3>();
+    List<Vector2> carPath = new List<Vector2>();
 
     public float carSpawnTimerInterval;
 
@@ -89,17 +90,117 @@ public class AIDirector : MonoBehaviour
             //}
 
             //var car = Instantiate(SelectACarPrefab(), new Vector3(startRoadPosition.x, startRoadPosition.y, 0));
-            Vector2 pos = startStructure.transform.position;
-            var car = Instantiate(SelectACarPrefab(endStructure.buildingType), new Vector3(pos.x, pos.y, 0));
-            //var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0), Quaternion.identity);
+            //Vector2 pos = startStructure.transform.position;
+            //var car = Instantiate(SelectACarPrefab(endStructure.buildingType), new Vector3(pos.x, pos.y, 0));
+            ////var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0), Quaternion.identity);
 
-            Console.WriteLine("Set path2: " + path.Count);
-            //car.GetComponent<CarAI>().SetPath(path.ConvertAll(x => (Vector2)x));
-            car.GetComponent<CarAI>().SetPath(path, ref endStructure);
-            return true;
+            //Console.WriteLine("Set path2: " + path.Count);
+            ////car.GetComponent<CarAI>().SetPath(path.ConvertAll(x => (Vector2)x));
+            //car.GetComponent<CarAI>().SetPath(path, ref endStructure);
+
+            if (path.Count == 0 && path.Count > 2)
+                return true;
+
+            var startMarkerPosition = placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]);
+
+            var endMarkerPosition = placementManager.GetStructureAt(endRoadPosition).GetCarEndMarker(path[path.Count - 2]);
+
+            carPath = GetCarPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
+
+            if (carPath.Count > 0)
+            {
+                var car = Instantiate(SelectACarPrefab(endStructure.buildingType),
+                    new Vector3(startMarkerPosition.Position.x, startMarkerPosition.Position.y, 0));
+                car.GetComponent<CarAI>().SetPath(carPath);
+            }
         }
 
         return false;
+    }
+
+    //private void TrySpawninACar(StructureModel startStructure, StructureModel endStructure)
+    //{
+    //    if (startStructure != null && endStructure != null)
+    //    {
+    //        var startRoadPosition = ((INeedingRoad)startStructure).RoadPosition;
+    //        var endRoadPosition = ((INeedingRoad)endStructure).RoadPosition;
+
+    //        var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
+    //        path.Reverse();
+
+    //        if (path.Count == 0 && path.Count > 2)
+    //            return;
+
+    //        var startMarkerPosition = placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]);
+
+    //        var endMarkerPosition = placementManager.GetStructureAt(endRoadPosition).GetCarEndMarker(path[path.Count - 2]);
+
+    //        carPath = GetCarPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
+
+    //        if (carPath.Count > 0)
+    //        {
+    //            var car = Instantiate(SelectACarPrefab(endStructure.buildingType), 
+    //                new Vector3(startMarkerPosition.Position.x, startMarkerPosition.Position.y, 0));
+    //            car.GetComponent<CarAI>().SetPath(carPath);
+    //        }
+    //    }
+    //}
+
+    private List<Vector2> GetCarPath(List<Vector2Int> path, Vector2 startPosition, Vector2 endPosition)
+    {
+        Console.WriteLine("CarGraph Start" + startPosition);
+        Console.WriteLine("Car Gatph End" + endPosition);
+
+        carGraph.ClearGraph();
+        CreatACarGraph(path);
+        Debug.Log(carGraph);
+        return AdjacencyGraph.AStarSearch(carGraph, startPosition, endPosition);
+    }
+
+    private void CreatACarGraph(List<Vector2Int> path)
+    {
+        Dictionary<Marker, Vector2> tempDictionary = new Dictionary<Marker, Vector2>();
+        for (int i = 0; i < path.Count; i++)
+        {
+            var currentPosition = path[i];
+            var roadStructure = placementManager.GetStructureAt(currentPosition);
+            var markersList = roadStructure.GetCarMarkers();
+            var limitDistance = markersList.Count > 3;
+            tempDictionary.Clear();
+
+            foreach (var marker in markersList)
+            {
+                carGraph.AddVertex(marker.Position);
+                foreach (var markerNeighbour in marker.adjacentMarkers)
+                {
+                    carGraph.AddEdge(marker.Position, markerNeighbour);
+                }
+                if (marker.OpenForconnections && i + 1 < path.Count)
+                {
+                    var nextRoadPosition = placementManager.GetStructureAt(path[i + 1]);
+                    if (limitDistance)
+                    {
+                        tempDictionary.Add(marker, nextRoadPosition.GetNearestCarMarkerTo(marker.Position));
+                    }
+                    else
+                    {
+                        carGraph.AddEdge(marker.Position, nextRoadPosition.GetNearestCarMarkerTo(marker.Position));
+                    }
+                }
+            }
+            if (limitDistance && tempDictionary.Count > 2)
+            {
+                var distanceSortedMarkers = tempDictionary.OrderBy(x => Vector2.Distance(x.Key.Position, x.Value)).ToList();
+                foreach (var item in distanceSortedMarkers)
+                {
+                    Debug.Log(Vector2.Distance(item.Key.Position, item.Value));
+                }
+                for (int j = 0; j < 2; j++)
+                {
+                    carGraph.AddEdge(distanceSortedMarkers[j].Key.Position, distanceSortedMarkers[j].Value);
+                }
+            }
+        }
     }
 
     private Prefab SelectACarPrefab(BuildingType bt)

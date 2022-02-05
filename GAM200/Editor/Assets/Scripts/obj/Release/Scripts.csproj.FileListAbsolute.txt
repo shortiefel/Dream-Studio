@@ -38,8 +38,11 @@ C:\Users\jianwen.o\Documents\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.p
 C:\Users\jianwen.o\Documents\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\Scripts.csprojResolveAssemblyReference.cache
 C:\Users\jianwen.o\Documents\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\CSScript.dll
 C:\Users\jianwen.o\Documents\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\CSScript.pdb
-C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\Scripts.csprojResolveAssemblyReference.cache
 C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\CSScript.dll
 C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\CSScript.pdb
-C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\Scripts.csproj.AssemblyReference.cache
-C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\Scripts.csproj.CoreCompileInputs.cache
+C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Release\CSScript.dll
+C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Release\CSScript.pdb
+C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Release\EngineCS.dll
+C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.dll
+C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Data\CSScript\CSScript.pdb
+C:\Users\USER\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Release\Scripts.csprojResolveAssemblyReference.cache

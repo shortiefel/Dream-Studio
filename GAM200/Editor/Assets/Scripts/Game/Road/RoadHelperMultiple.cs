@@ -6,31 +6,31 @@ class RoadHelperMultiple : RoadHelper
 {
     protected List<Marker> incomingMarkers, outgoingMarkers;
 
+    //public int num;
+    Waypoint waypoint;
+
     public override void Start()
     {
         Waypoint wp = GetComponent<Waypoint>();
 
-        List<List<Vector2>> listOfWaypoints = wp.GetWaypoints();
+        List<List<List<Vector2>>> listOfWaypoints = wp.GetWaypoints();
+        List<Marker> carMarkers = new List<Marker>();
 
-        foreach (var i in listOfWaypoints)
+        foreach (var incomingOutgoing in listOfWaypoints)
         {
-            //Console.WriteLine("Current set");
-            foreach (var t in i)
+            foreach (var markerss in incomingOutgoing)
             {
-                //Console.WriteLine(t);
+                carMarkers.Add(new Marker(markerss));
 
-                //one  set of waypoint to pass to incomingMarkers, one waypoint to pass to outgoingMarkers
-                //for corner, three-way, four-way
+                if (markerss == incomingOutgoing[0])
+                    incomingMarkers = carMarkers;
+                else
+                    outgoingMarkers = carMarkers;
             }
-            List<Marker> carMarkers = Marker.Vector2ToMarker(i);
 
-            if (i == listOfWaypoints[0])
-                incomingMarkers = carMarkers;
-            else
-                outgoingMarkers = carMarkers;
-
-            //Console.WriteLine("\nNext Set \n");
+            Console.WriteLine("Incoming/Outgoing End\n\n");
         }
+
     }
 
     public override Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)

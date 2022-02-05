@@ -6,32 +6,26 @@ public class RoadHelperStraight : RoadHelper
 {
     private Marker leftLaneMarker90, rightLaneMarker90;
 
+    //public int num;
+    Waypoint waypoint;
+
     public override void Start()
     {
         Waypoint wp = GetComponent<Waypoint>();
 
-        List<List<Vector2>> listOfWaypoints = wp.GetWaypoints();
+        List<List<List<Vector2>>> listOfWaypoints = wp.GetWaypoints();
+        List<Marker> carMarkers = new List<Marker>();
 
-        foreach (var i in listOfWaypoints)
+        foreach (var incomingOutgoing in listOfWaypoints)
         {
-            //Console.WriteLine("Current set");
-            foreach (var t in i)
+            foreach (var markerss in incomingOutgoing)
             {
-                //Console.WriteLine(t);
-
-                //one waypoint to pass to leftLaneMarker90, one waypoint to pass to rightLaneMarker90
-                //for straight road only
-
-                if (t.x == i[0].x)
-                    rightLaneMarker90.Position = t;
-
-                if (t.x == i[0].x)
-                    leftLaneMarker90.Position = t;
+                carMarkers.Add(new Marker(markerss));
             }
-            List<Marker> carMarkers = Marker.Vector2ToMarker(i);
 
-            //Console.WriteLine("\nNext Set \n");
+            Console.WriteLine("Incoming/Outgoing End\n\n");
         }
+
     }
 
     public override Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)

@@ -47,6 +47,6 @@ int main() {
 
 	Engine::Application::GetInstance().Destroy(); //Needed for game
 
-	return 1;
+	return 0;
 }
 

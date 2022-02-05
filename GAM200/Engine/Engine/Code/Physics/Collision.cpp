@@ -100,7 +100,7 @@ namespace Engine {
                     shape2 = &obj1Corner;
                 }
                 for (int a = 0; a < shape1->size(); a++) {
-                    int b = (a + (int)1) % shape1->size();
+                    int b = (a + (int)1) % (int)shape1->size();
                     Math::vec2 axisProj = { -((*shape1)[b].y - (*shape1)[a].y), (*shape1)[b].x - (*shape1)[a].x };
                     axisProj = Math::normalize(axisProj);
 
@@ -179,7 +179,7 @@ namespace Engine {
                 return false;
 
             for (int a = 0; a < obj1Corner.size(); a++) {
-                int b = (a + (int)1) % obj1Corner.size();
+                int b = (a + (int)1) % (int)obj1Corner.size();
                 Math::vec2 axisProj2 = { -(obj1Corner[b].y - obj1Corner[a].y), obj1Corner[b].x - obj1Corner[a].x };
                 axisProj2 = Math::normalize(axisProj2);
 

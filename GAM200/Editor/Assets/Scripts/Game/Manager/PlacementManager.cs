@@ -281,11 +281,11 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    //public override void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.M))
-    //    {
-    //        placementGrid.PrintGridOut();
-    //    }
-    //}
+    public override void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            placementGrid.PrintGridOut();
+        }
+    }
 }

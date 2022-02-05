@@ -62,11 +62,12 @@ public class Grid
     {
         int xTem = (newWidth - _width) / 2;
         int yTem = (newHeight - _height) / 2;
-        
+
+        //int xOffset = _startX + xTem;
+        //int yOffset = _startY + yTem;
         _startX -= xTem;
         _startY -= yTem;
-        int xOffset = _startX;
-        int yOffset = _startY;
+        
 
         /*int xOffset = xTem;
         int yOffset = yTem;
@@ -82,14 +83,14 @@ public class Grid
         {
             for (int x = 0; x < _width; x++)
             {
-                temGrid[x - xOffset, y - yOffset] = _grid[x, y];
+                temGrid[x + xTem, y + yTem] = _grid[x, y];
             }
         }
 
         _grid = temGrid;
         _width = newWidth;
         _height = newHeight;
-        ResizeGrid_Engine(xOffset, yOffset, newWidth, newHeight);
+        ResizeGrid_Engine(_startX, _startY, newWidth, newHeight);
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -104,12 +105,13 @@ public class Grid
     {
         for (int y = _height - 1; y >= 0; y--)
         {
+            string data = "";
             for (int x = 0; x < _width; x++)
             {
-                if ((int)_grid[x, y] == 0) Debug.Log("- ");
-                else Debug.Log((int)_grid[x, y] + " ");
+                if ((int)_grid[x, y] == 0) data += "- ";
+                else data += ((int)_grid[x, y] + " ");
             }
-            Debug.Log("\n");
+            Console.WriteLine(data);
         }
 
         //PrintGridOut_Engine();*/

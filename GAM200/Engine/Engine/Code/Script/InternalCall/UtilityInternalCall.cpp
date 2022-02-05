@@ -330,6 +330,7 @@ namespace Engine {
 		}
 
 		void Instantiate_Prefab_Engine(MonoString* prefabName, Math::vec3 pos, float angle, Math::vec2 scale, int layer, unsigned int* newId) {
+			scale;
 			char* text = mono_string_to_utf8(prefabName);
 			GameSceneSerializer::DeserializePrefab(text, newId, Math::vec2{ pos.x, pos.y }, angle, layer);
 			mono_free(text);

@@ -9,9 +9,9 @@ public class AIDirector : MonoBehaviour
 
     public Prefab[] carPrefabs;
 
-    AdjacencyGraph carGraph = new AdjacencyGraph();
+    AdjacencyGraph carGraph;
 
-    List<Vector2> carPath = new List<Vector2>();
+    List<Vector2> carPath;
 
     public float carSpawnTimerInterval;
 
@@ -25,6 +25,9 @@ public class AIDirector : MonoBehaviour
         carPrefabs[(int)BuildingType.Mall] = new Prefab("MallCar");
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+
+        carGraph = new AdjacencyGraph();
+        carPath = new List<Vector2>();
     }
     public void SpawnACar()
     {
@@ -152,8 +155,17 @@ public class AIDirector : MonoBehaviour
         Console.WriteLine("Car Gatph End" + endPosition);
 
         carGraph.ClearGraph();
+        //Console.WriteLine("Next part of the function");
         CreatACarGraph(path);
-        Debug.Log(carGraph);
+        //Console.WriteLine("Next part of the function");
+        //List<Vector2> tenOatg = AdjacencyGraph.AStarSearch(carGraph, startPosition, endPosition);
+        //Console.WriteLine("Starting of the path--------------------");
+        //foreach (var i in tenOatg)
+        //{
+        //    Console.WriteLine(i);
+        //}
+        //Console.WriteLine("Ending of the path--------------------");
+        //return tenOatg;
         return AdjacencyGraph.AStarSearch(carGraph, startPosition, endPosition);
     }
 

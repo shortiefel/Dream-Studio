@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 public class AdjacencyGraph
 {
-    Dictionary<Vertex, List<Vertex>> adjacencyDictionary = new Dictionary<Vertex, List<Vertex>>();
+    Dictionary<Vertex, List<Vertex>> adjacencyDictionary;
 
+    public AdjacencyGraph()
+    {
+        adjacencyDictionary = new Dictionary<Vertex, List<Vertex>>();
+    }
     public Vertex AddVertex(Vector2 position)
     {
         if (GetVertexAt(position) != null)

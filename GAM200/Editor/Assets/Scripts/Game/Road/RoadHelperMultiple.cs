@@ -14,7 +14,9 @@ class RoadHelperMultiple : RoadHelper
         Waypoint wp = GetComponent<Waypoint>();
 
         List<List<List<Vector2>>> listOfWaypoints = wp.GetWaypoints();
-        List<Marker> carMarkers = new List<Marker>();
+        carMarkers = new List<Marker>();
+        incomingMarkers = new List<Marker>();
+        outgoingMarkers = new List<Marker>();
 
         foreach (var incomingOutgoing in listOfWaypoints)
         {
@@ -28,7 +30,6 @@ class RoadHelperMultiple : RoadHelper
                     outgoingMarkers = carMarkers;
             }
 
-            Console.WriteLine("Incoming/Outgoing End\n\n");
         }
 
     }

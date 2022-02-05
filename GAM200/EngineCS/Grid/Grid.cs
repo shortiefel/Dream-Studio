@@ -265,12 +265,12 @@ public class Grid
     public List<Point> GetWakableAdjacentCells(int x, int y, bool isAgent)
     {
         List<Point> adjacentCells = GetAllAdjacentCells(x, y);
-        Console.WriteLine("Start part: " + x + " " + y);
+        //Console.WriteLine("Start part: " + x + " " + y);
         for (int i = adjacentCells.Count - 1; i >= 0; i--)
         {
             //if (IsCellWakable(GetCellType(adjacentCells[i].X, adjacentCells[i].Y), isAgent) == false)
-            Console.WriteLine("Error part: " + _width + " " + _height);
-            Console.WriteLine("Error part: " + (adjacentCells[i].X - _startX) + " " + (adjacentCells[i].Y - _startY));
+            //Console.WriteLine("Error part: " + _width + " " + _height);
+            //Console.WriteLine("Error part: " + (adjacentCells[i].X - _startX) + " " + (adjacentCells[i].Y - _startY));
             if (IsCellWakable(_grid[adjacentCells[i].X - _startX, adjacentCells[i].Y - _startY], isAgent) == false)
             {
                 adjacentCells.RemoveAt(i);

@@ -14,12 +14,17 @@ public class AdjacencyGraph
     }
     public Vertex AddVertex(Vector2 position)
     {
+        Console.WriteLine("Adding Vertex with vector2 ");
+
         if (GetVertexAt(position) != null)
         {
+            Console.WriteLine("Failed ");
             return null;
         }
 
+        Console.WriteLine("Adding Vertex with before ");
         Vertex v = new Vertex(position);
+        Console.WriteLine("Adding Vertex with before222222 ");
         AddVertex(v);
         return v;
 
@@ -27,6 +32,7 @@ public class AdjacencyGraph
 
     private void AddVertex(Vertex v)
     {
+        Console.WriteLine("Adding Vertex with Vertex");
         if (adjacencyDictionary.ContainsKey(v))
             return;
         adjacencyDictionary.Add(v, new List<Vertex>());
@@ -44,6 +50,7 @@ public class AdjacencyGraph
 
     public void AddEdge(Vector2 position1, Vector2 position2)
     {
+        Console.WriteLine("Adding edge");
         if (CompareVertices(position1, position2))
         {
             return;

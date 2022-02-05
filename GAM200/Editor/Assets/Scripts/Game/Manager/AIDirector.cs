@@ -29,6 +29,7 @@ public class AIDirector : MonoBehaviour
         carGraph = new AdjacencyGraph();
         carPath = new List<Vector2>();
     }
+
     public void SpawnACar()
     {
         foreach (var house in placementManager.GetAllHouses())
@@ -86,7 +87,7 @@ public class AIDirector : MonoBehaviour
             //}
 
             path.Reverse();
-            path.Add(Vector2Int.RoundToInt(endStructure.transform.position)); //Make car enter house
+
             //foreach (var item2 in path)
             //{
             //    Debug.Log(item2.ToString());
@@ -155,54 +156,66 @@ public class AIDirector : MonoBehaviour
         Console.WriteLine("Car Gatph End" + endPosition);
 
         carGraph.ClearGraph();
-        //Console.WriteLine("Next part of the function");
-        CreatACarGraph(path);
-        //Console.WriteLine("Next part of the function");
-        //List<Vector2> tenOatg = AdjacencyGraph.AStarSearch(carGraph, startPosition, endPosition);
-        //Console.WriteLine("Starting of the path--------------------");
-        //foreach (var i in tenOatg)
-        //{
-        //    Console.WriteLine(i);
-        //}
-        //Console.WriteLine("Ending of the path--------------------");
-        //return tenOatg;
+        Console.WriteLine("Next part of the function");
+
+        if (path == null) Console.WriteLine("Path is null     -00000000000000000000000000000000");
+        CreateACarGraph(path);
+        Console.WriteLine("Next part of the function");
         return AdjacencyGraph.AStarSearch(carGraph, startPosition, endPosition);
     }
 
-    private void CreatACarGraph(List<Vector2Int> path)
+    private void CreateACarGraph(List<Vector2Int> path)
     {
+        Console.WriteLine("\n\n\n\nStarting everything------------------------------------");
         Dictionary<Marker, Vector2> tempDictionary = new Dictionary<Marker, Vector2>();
         for (int i = 0; i < path.Count; i++)
         {
+            Console.WriteLine("Loop count " + i);
             var currentPosition = path[i];
+            if (path[i] == null) Console.WriteLine("path[i] is null        -00000000000000000000000000000000");
             var roadStructure = placementManager.GetStructureAt(currentPosition);
+            if (placementManager == null) Console.WriteLine("placementManager is null        -00000000000000000000000000000000");
+            if (roadStructure == null) Console.WriteLine("roadStructure is null        -00000000000000000000000000000000");
             var markersList = roadStructure.GetCarMarkers();
             var limitDistance = markersList.Count > 3;
             tempDictionary.Clear();
-
+        
+            if (markersList == null) Console.WriteLine("markersList is null        -00000000000000000000000000000000");
             foreach (var marker in markersList)
             {
+                Console.WriteLine("Marker count " + marker.Position);
+                if (marker == null) Console.WriteLine("marker is null        -00000000000000000000000000000000");
                 carGraph.AddVertex(marker.Position);
+                Console.WriteLine("After AddVertex");
                 foreach (var markerNeighbour in marker.adjacentMarkers)
                 {
+                    Console.WriteLine("counting ");
+                    Console.WriteLine("markerNeighbour " + markerNeighbour);
                     carGraph.AddEdge(marker.Position, markerNeighbour);
                 }
+                Console.WriteLine("Check for open for connection");
                 if (marker.OpenForconnections && i + 1 < path.Count)
                 {
+                    Console.WriteLine("inside if statement openforconnection");
                     var nextRoadPosition = placementManager.GetStructureAt(path[i + 1]);
                     if (limitDistance)
                     {
+                        Console.WriteLine("Adding to tempDictionary");
                         tempDictionary.Add(marker, nextRoadPosition.GetNearestCarMarkerTo(marker.Position));
                     }
                     else
                     {
+                        Console.WriteLine("Cargraph add edge");
                         carGraph.AddEdge(marker.Position, nextRoadPosition.GetNearestCarMarkerTo(marker.Position));
                     }
                 }
             }
+            Console.WriteLine("Check limitDistance");
             if (limitDistance && tempDictionary.Count > 2)
             {
                 var distanceSortedMarkers = tempDictionary.OrderBy(x => Vector2.Distance(x.Key.Position, x.Value)).ToList();
+                
+                if(distanceSortedMarkers == null) Console.WriteLine("distanceSortedMarkers is null        -00000000000000000000000000000000");
                 foreach (var item in distanceSortedMarkers)
                 {
                     Debug.Log(Vector2.Distance(item.Key.Position, item.Value));
@@ -212,7 +225,11 @@ public class AIDirector : MonoBehaviour
                     carGraph.AddEdge(distanceSortedMarkers[j].Key.Position, distanceSortedMarkers[j].Value);
                 }
             }
+        
+            Console.WriteLine("Actually ends one loop in path loop---------------");
         }
+
+        Console.WriteLine("Ending everything------------------------------------\n\n\n\n");
     }
 
     private Prefab SelectACarPrefab(BuildingType bt)

@@ -7,7 +7,7 @@
 
     private int carCounter;
 
-    private Texture texture;
+    //private Texture texture;
 
     private float timer;
     private float switchTimer;
@@ -23,8 +23,8 @@
             tlm.RegisterTrafficLight(Vector2Int.RoundToInt(transform.position), entityId);
 
         state = toState = true;
-        texture = gameObject.GetComponent<Texture>();
-        texture.color = new Color(1, 0, 0, 1);
+        //texture = gameObject.GetComponent<Texture>();
+        //texture.color = new Color(1, 0, 0, 1);
         transform.angle = 0;
         carCounter = 0;
 
@@ -76,10 +76,11 @@
         --carCounter;
     }
 
-    public override void OnDestroy()
-    {
-        if (tlm != null)
-            tlm.RemoveTrafficLight(Vector2Int.RoundToInt(transform.position));
-    }
+    //public override void OnDestroy()
+    //{
+    //    Debug.Log("Traffic light destroy");
+    //    if (tlm != null)
+    //        tlm.RemoveTrafficLight(Vector2Int.RoundToInt(transform.position));
+    //}
 }
 

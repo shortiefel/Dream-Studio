@@ -11,7 +11,7 @@ public enum ButtonType
 
 public class ButtonRoad : MonoBehaviour
 {
-    PlacementManager placementManager;
+    //PlacementManager placementManager;
 
     UI buttonUI;
     bool buttonType;
@@ -60,7 +60,7 @@ public class ButtonRoad : MonoBehaviour
 
         mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
 
-        placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+        //placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
         buttonUI = GetComponent<UI>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();

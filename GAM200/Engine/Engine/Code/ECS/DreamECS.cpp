@@ -28,6 +28,7 @@ Technology is prohibited.
 #include <unordered_map>
 
 #define DESTROY_ENTITY(entity)\
+if (entity == entityMap.end()) continue;\
 const auto& iter = nameCount.find(entity->second.name);\
 if (iter != nameCount.end()) nameCount.erase(iter);\
 compManager->DestroyEntity(entity->second.id);\
@@ -95,6 +96,8 @@ namespace Engine {
 	void DreamECS::DestroyEntity(Entity_id entity_id)
 	{
 		//destroyQueue.emplace(entity);
+
+		if (destroySet.find(entity_id) != destroySet.end()) return;
 		destroySet.insert(entity_id);
 	}
 
@@ -139,10 +142,10 @@ namespace Engine {
 			destroyQueue.pop();
 			--num;
 		}*/
-		const auto& enityMap = entityManager->GetUsedConstEntityMap();
+		const auto& entityMap = entityManager->GetUsedConstEntityMap();
 		for (auto& entity_id : destroySet) {
-			
-			DESTROY_ENTITY(enityMap.find(entity_id));
+			DESTROY_ENTITY(entityMap.find(entity_id));
+
 			RemovePrefab(entity_id);
 		}
 

@@ -29,6 +29,7 @@ public class PlacementManager : MonoBehaviour
         return placementGrid.GetAllAdjacentCellTypes(position.x, position.y);
     }
 
+    //True = within
     internal bool CheckIfPositionInBound(Vector2Int position)
     {
         Vector2Int startPoint = placementGrid.GetStartPoint();

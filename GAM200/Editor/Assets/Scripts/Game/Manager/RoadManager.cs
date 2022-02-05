@@ -18,8 +18,10 @@ public class RoadManager : MonoBehaviour
     private AudioSource placeSound;
     private AudioSource removeSound;
 
-    private GameObject trafficLightGO;
-    private GameObject erpGO;
+    //private GameObject trafficLightGO;
+    //private GameObject erpGO;
+    private TrafficLightManager trafficLightManager;
+    private ERPManager erpManager;
 
     //private void Start()
     public override void Start()
@@ -35,9 +37,12 @@ public class RoadManager : MonoBehaviour
         placeSound = GameObject.Find("DrawRoad").GetComponent<AudioSource>();
         removeSound = GameObject.Find("RemoveRoad").GetComponent<AudioSource>();
 
-        
-        trafficLightGO = new GameObject(new Prefab("TrafficLight"));
-        erpGO = new GameObject(new Prefab("ERP"));
+
+        //trafficLightGO = new GameObject(new Prefab("TrafficLight"));
+        //erpGO = new GameObject(new Prefab("ERP"));
+
+        trafficLightManager = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
+        erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
     }
 
     public void PlaceSpawnHouse(Vector2Int position)
@@ -268,8 +273,13 @@ public class RoadManager : MonoBehaviour
 
     public void RemoveRoad(Vector2Int position)
     {
+
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
+
+        trafficLightManager.RequestRemovingTrafficLight(position);
+        erpManager.RequestRemovingERP(position); 
+
         if (placementManager.CheckIfPositionIsFree(position) == false)
         {
             if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
@@ -319,12 +329,17 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceTrafficLight(Vector2Int position)
     {
-        Debug.Log("Instantiating ");
-        Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f));
+        if(!placementManager.CheckIfPositionInBound(position))
+            return;
+
+        trafficLightManager.RequestPlacingTrafficLight(position);
     }
 
     public void PlaceERP(Vector2Int position)
     {
-        Instantiate(erpGO, new Vector3(position.x, position.y, 0f));
+        if (!placementManager.CheckIfPositionInBound(position))
+            return;
+
+        erpManager.RequestPlacingERP(position);
     }
 }

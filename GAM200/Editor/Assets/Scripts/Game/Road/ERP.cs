@@ -14,15 +14,16 @@ public class ERP : MonoBehaviour
             erpManager.RegisterERP(Vector2Int.RoundToInt(transform.position), entityId);
     }
 
-    public override void OnDestroy()
-    {
-        if (erpManager != null)
-            erpManager.RemoveERP(Vector2Int.RoundToInt(transform.position));
-    }
-
     public override void OnTriggerEnter(uint id)
     {
         if (erpManager != null)
             erpManager.Notify();
     }
+
+    //public override void OnDestroy()
+    //{
+    //    Debug.Log("erp destroy");
+    //    if (erpManager != null)
+    //        erpManager.RemoveERP(Vector2Int.RoundToInt(transform.position));
+    //}
 }

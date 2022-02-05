@@ -6,7 +6,7 @@ public class TrafficLightManager : MonoBehaviour
     private Dictionary<Vector2Int, uint> trafficLights;
 
     GameObject trafficLightGO; //TO Remove
-    Camera mainCamera; //TO Remove
+    //Camera mainCamera; //TO Remove
 
     bool toDraw; //To Remove
 
@@ -15,8 +15,8 @@ public class TrafficLightManager : MonoBehaviour
     {
         trafficLights = new Dictionary<Vector2Int, uint>();
 
-        trafficLightGO = new GameObject(new Prefab("TrafficLight")); //To Remove
-        mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
+        trafficLightGO = new GameObject(new Prefab("TrafficLight"));
+        //mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
 
         toDraw = false; //To Remove
     }
@@ -100,6 +100,22 @@ public class TrafficLightManager : MonoBehaviour
     {
         if (trafficLights.ContainsKey(posToCheck)) return true;
         return false;
+    }
+
+    public void RequestPlacingTrafficLight(Vector2Int position)
+    {
+        if (trafficLights.ContainsKey(position)) return;
+
+        Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f));
+    }
+
+    public void RequestRemovingTrafficLight(Vector2Int position)
+    {
+        if (!trafficLights.ContainsKey(position)) return;
+
+
+        Destroy(trafficLights[position]);
+        trafficLights.Remove(position);
     }
 }
 

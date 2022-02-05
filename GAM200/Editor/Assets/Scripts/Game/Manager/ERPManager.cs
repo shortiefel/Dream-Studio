@@ -6,8 +6,8 @@ public class ERPManager : MonoBehaviour
 
     MoneySystem moneySystem;
 
-    private bool toDraw; //To Remove ------------------------------------------------------
-    GameObject erpGO; //TO Remove
+    //private bool toDraw; //To Remove ------------------------------------------------------
+    private GameObject erpGO;
     Camera mainCamera; //TO Remove
 
     private Dictionary<Vector2Int, uint> erpList;
@@ -19,7 +19,7 @@ public class ERPManager : MonoBehaviour
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
 
-        erpGO = new GameObject(new Prefab("ERP")); //To Remove
+        erpGO = new GameObject(new Prefab("ERP"));
         mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
     }
 
@@ -53,7 +53,6 @@ public class ERPManager : MonoBehaviour
 
     public void RemoveERP(Vector2Int pos)
     {
-        Debug.Log("Removing");
         erpList.Remove(pos);
     }
 
@@ -63,4 +62,19 @@ public class ERPManager : MonoBehaviour
         return false;
     }
 
+
+    public void RequestPlacingERP(Vector2Int position)
+    {
+        if (erpList.ContainsKey(position)) return;
+
+        Instantiate(erpGO, new Vector3(position.x, position.y, 0f));
+    }
+
+    public void RequestRemovingERP(Vector2Int position)
+    {
+        if (!erpList.ContainsKey(position)) return;
+
+        Destroy(erpList[position]);
+        erpList.Remove(position);
+    }
 }

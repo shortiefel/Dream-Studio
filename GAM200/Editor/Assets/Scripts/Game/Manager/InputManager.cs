@@ -36,11 +36,11 @@ public class InputManager : MonoBehaviour
 			Vector2 mousePos = Vector2Int.RoundToInt(new Vector2(mPos.x, mPos.y));
 			//Vector2 startPos = placementManager.placementGrid.GetStartPoint();
 			//Vector2 endPos = placementManager.placementGrid.GetGridSize() + startPos;
-			Console.WriteLine("Actual Mouse position: " + mousePos + " ------------------------------------------\n");
+			//Console.WriteLine("Actual Mouse position: " + mousePos + " ------------------------------------------\n");
 
 			Vector2Int offset = -placementManager.placementGrid.GetStartPoint();
-			Console.WriteLine("offset: " + (offset) + " ------------------------------------------\n");
-			Console.WriteLine("actually the Actual Mouse position: " + (offset + mousePos) + " ------------------------------------------\n");
+			//Console.WriteLine("offset: " + (offset) + " ------------------------------------------\n");
+			//Console.WriteLine("actually the Actual Mouse position: " + (offset + mousePos) + " ------------------------------------------\n");
 
 		}
 		if (Input.GetKeyDown(KeyCode.B))

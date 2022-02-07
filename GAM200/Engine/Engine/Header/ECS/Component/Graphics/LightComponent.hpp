@@ -39,6 +39,7 @@ namespace Engine
 		float near_plane, far_plane;
 		Math::mat4 lightProjection;
 		Math::mat4 lightView;
+		Math::mat4 lightSpace;
 
 
 		bool isActive = true;
@@ -47,6 +48,7 @@ namespace Engine
 
 
 		LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec4 _colour = { 1.f, 1.f, 1.f, 1.f }, bool _active = true);
+
 
 
 		void Bind();

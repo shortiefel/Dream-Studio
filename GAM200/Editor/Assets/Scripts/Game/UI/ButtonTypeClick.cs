@@ -67,14 +67,16 @@ public class ButtonTypeClick : MonoBehaviour
             //active = false;
         }
 
-        else if (entityId == GameObject.Find("Displaybtn").GetComponent<Transform>().entityId)
+       if (entityId == GameObject.Find("Displaybtn").GetComponent<Transform>().entityId)
         {
+            Debug.Log("selected1");
             bt = ButtonType.Display;
             type = true;
+            Debug.Log("selected2");
             //active = true;
         }
 
-        else if (entityId == GameObject.Find("DisplaybtnWhite").GetComponent<Transform>().entityId)
+        if (entityId == GameObject.Find("DisplaybtnWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Display;
             type = false;

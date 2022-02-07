@@ -277,25 +277,25 @@ public class CarAI : MonoBehaviour
         //rb.AddTorque(movementVector.x * power * 70);
         //transform.angle = Mathf.Lerp(transform.angle, targetAngle, power * Time.deltaTime);
 
-        //if (!stop)
-        //{
-        //    transform.position += transform.up * 0.02f;
-        //}
-        //
-        //if (toTurn)
-        //{
-        //    turnTimer += 4.9f * Time.deltaTime;
-        //    //transform.angle = Mathf.Lerp(transform.angle, targetAngle, 0.2f);
-        //    transform.angle = Mathf.Lerp(firstAngle, targetAngle, turnTimer);
-        //
-        //    if (turnTimer > 1f)
-        //    {
-        //        toTurn = false;
-        //        turnTimer = 0f;
-        //        transform.angle = targetAngle; //Hacky fix angle
-        //        Console.WriteLine("Over");
-        //    }
-        //}
+        if (!stop)
+        {
+            transform.position += transform.up * 0.02f;
+        }
+
+        if (toTurn)
+        {
+            turnTimer += 30.4f * Time.deltaTime;
+            //transform.angle = Mathf.Lerp(transform.angle, targetAngle, 0.2f);
+            transform.angle = Mathf.Lerp(firstAngle, targetAngle, turnTimer);
+
+            if (turnTimer > 1f)
+            {
+                toTurn = false;
+                turnTimer = 0f;
+                transform.angle = targetAngle; //Hacky fix angle
+                Console.WriteLine("Over");
+            }
+        }
     }
 
     //private void CheckForCollisions()
@@ -395,25 +395,25 @@ public class CarAI : MonoBehaviour
         //    }
         //}
 
-        if (!stop)
-        {
-            transform.position += transform.up * 0.02f;
-        }
+        //if (!stop)
+        //{
+        //    transform.position += transform.up * 0.02f;
+        //}
 
-        if (toTurn)
-        {
-            turnTimer += 4.9f * Time.deltaTime;
-            //transform.angle = Mathf.Lerp(transform.angle, targetAngle, 0.2f);
-            transform.angle = Mathf.Lerp(firstAngle, targetAngle, turnTimer);
+        //if (toTurn)
+        //{
+        //    turnTimer += 4.9f * Time.deltaTime;
+        //    //transform.angle = Mathf.Lerp(transform.angle, targetAngle, 0.2f);
+        //    transform.angle = Mathf.Lerp(firstAngle, targetAngle, turnTimer);
 
-            if (turnTimer > 1f)
-            {
-                turnTimer = 0f;
-                toTurn = false;
-                transform.angle = targetAngle; //Hacky fix angle
-                Debug.Log("Over");
-            }
-        }
+        //    if (turnTimer > 1f)
+        //    {
+        //        turnTimer = 0f;
+        //        toTurn = false;
+        //        transform.angle = targetAngle; //Hacky fix angle
+        //        Debug.Log("Over");
+        //    }
+        //}
     }
 
     private void CheckIfArrived()

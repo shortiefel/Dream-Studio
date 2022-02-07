@@ -49,6 +49,7 @@ namespace Engine {
 		MonoDomain* domain;
 		MonoAssembly* assem;
 		MonoImage* image;
+		MonoAssembly* assemCore;
 		MonoImage* imageCore;
 		//Does nothing in base game
 		void(*displayFuncPtr)(std::string) = [](std::string) {};
@@ -218,7 +219,43 @@ namespace Engine {
 				mono_domain_set(domain, false);
 			}
 
-			assem = mono_domain_assembly_open(domain, "Data/CSScript/CSScript.dll");
+			//assem = mono_domain_assembly_open(domain, "Data/CSScript/CSScript.dll"); 
+			{
+				std::ifstream stream("Data/CSScript/CSScript.dll", std::ios::binary | std::ios::ate);
+
+				if (!stream)
+					LOG_WARNING("Cannot open filepath");
+
+				std::streampos end = stream.tellg();
+				stream.seekg(0, std::ios::beg);
+				size_t size = std::size_t(end - stream.tellg());
+				if (size == 0) {
+					LOG_ERROR("File name does not exist");
+					return;
+				}
+
+				std::vector<char> buffer(size);
+				if (!stream.read((char*)buffer.data(), buffer.size()))
+					LOG_ERROR("Cannot read file");
+
+				
+
+				std::vector<char> fileData = buffer;
+
+				MonoImageOpenStatus status;
+				MonoImage* image = mono_image_open_from_data_full(fileData.data(), static_cast<uint32_t>(fileData.size()), 1, &status, 0);
+				if (status != MONO_IMAGE_OK)
+				{
+					LOG_ERROR("Bad MonoImage");
+					return;
+				}
+
+				assem = mono_assembly_load_from_full(image, "Data/CSScript/CSScript.dll", &status, 0);
+
+				// Free the image
+				mono_image_close(image);
+			}
+
 			if (!assem) {
 				LOG_ERROR("Failed loading assembly");
 				return;
@@ -230,7 +267,45 @@ namespace Engine {
 				return;
 			}
 
-			MonoAssembly* assemCore = mono_domain_assembly_open(domain, "Data/CSScript/EngineCS.dll");
+
+
+
+			//MonoAssembly* assemCore = mono_domain_assembly_open(domain, "Data/CSScript/EngineCS.dll");
+			{
+				std::ifstream stream("Data/CSScript/EngineCS.dll", std::ios::binary | std::ios::ate);
+
+				if (!stream)
+					LOG_WARNING("Cannot open filepath");
+
+				std::streampos end = stream.tellg();
+				stream.seekg(0, std::ios::beg);
+				size_t size = std::size_t(end - stream.tellg());
+				if (size == 0) {
+					LOG_ERROR("File name does not exist");
+					return;
+				}
+
+				std::vector<char> buffer(size);
+				if (!stream.read((char*)buffer.data(), buffer.size()))
+					LOG_ERROR("Cannot read file");
+
+
+
+				std::vector<char> fileData = buffer;
+
+				MonoImageOpenStatus status;
+				MonoImage* image = mono_image_open_from_data_full(fileData.data(), static_cast<uint32_t>(fileData.size()), 1, &status, 0);
+				if (status != MONO_IMAGE_OK)
+				{
+					LOG_ERROR("Bad MonoImage");
+					return;
+				}
+
+				assemCore = mono_assembly_load_from_full(image, "Data/CSScript/EngineCS.dll", &status, 0);
+
+				// Free the image
+				mono_image_close(image);
+			}
 			if (!assemCore) {
 				LOG_ERROR("Failed loading assembly");
 				return;
@@ -309,43 +384,43 @@ namespace Engine {
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.FixedUpdateFunc = mono_method_desc_search_in_image(description, image);
 
-			methodDesc = fullName + ":OnEnable()";
-			description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			csClass.OnEnable = mono_method_desc_search_in_image(description, image);
-
-			methodDesc = fullName + ":OnDisable()";
-			description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			csClass.OnDisable = mono_method_desc_search_in_image(description, image);
-
-			methodDesc = fullName + ":OnDestroy()";
-			description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
-
-
-			methodDesc = fullName + ":OnCollisionEnter(uint)";
-			description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			csClass.OnCollisionEnter = mono_method_desc_search_in_image(description, image);
-
-			methodDesc = fullName + ":OnCollisionStay(uint)";
-			description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			csClass.OnCollisionStay = mono_method_desc_search_in_image(description, image);
-
-			methodDesc = fullName + ":OnCollisionExit(uint)";
-			description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
-
-
-			methodDesc = fullName + ":OnTriggerEnter(uint)";
-			description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
-
-			methodDesc = fullName + ":OnTriggerStay(uint)";
-			description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			csClass.OnTriggerStay = mono_method_desc_search_in_image(description, image);
-
-			methodDesc = fullName + ":OnTriggerExit(uint)";
-			description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
+			//methodDesc = fullName + ":OnEnable()";
+			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			//csClass.OnEnable = mono_method_desc_search_in_image(description, image);
+			//
+			//methodDesc = fullName + ":OnDisable()";
+			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			//csClass.OnDisable = mono_method_desc_search_in_image(description, image);
+			//
+			//methodDesc = fullName + ":OnDestroy()";
+			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			//csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
+			//
+			//
+			//methodDesc = fullName + ":OnCollisionEnter(uint)";
+			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			//csClass.OnCollisionEnter = mono_method_desc_search_in_image(description, image);
+			//
+			//methodDesc = fullName + ":OnCollisionStay(uint)";
+			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			//csClass.OnCollisionStay = mono_method_desc_search_in_image(description, image);
+			//
+			//methodDesc = fullName + ":OnCollisionExit(uint)";
+			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			//csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
+			//
+			//
+			//methodDesc = fullName + ":OnTriggerEnter(uint)";
+			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			//csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
+			//
+			//methodDesc = fullName + ":OnTriggerStay(uint)";
+			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			//csClass.OnTriggerStay = mono_method_desc_search_in_image(description, image);
+			//
+			//methodDesc = fullName + ":OnTriggerExit(uint)";
+			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			//csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
 
 			methodDesc = fullName + ":OnMouseEnter()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);

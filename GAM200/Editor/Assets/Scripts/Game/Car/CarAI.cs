@@ -52,6 +52,12 @@ public class CarAI : MonoBehaviour
 
     private float raycastLength;
 
+    bool toTurn;
+    float turnTimer;
+    float firstAngle;
+
+    bool allowTurn;
+
     /*public bool Stop
     {
         get { return stop || collisionStop; }
@@ -90,7 +96,7 @@ public class CarAI : MonoBehaviour
         lastPointArriveDistance = 0.1f;
         //turningAngleOffset = 0.02;
 
-        dotValue = 0.06f;
+        dotValue = 0.2f;
 
         maxSpeed = 3;
         power = 6;
@@ -108,6 +114,11 @@ public class CarAI : MonoBehaviour
             tm = go2.GetComponent<TrafficManager>();
             tm.RegisterCar(transform.entityId);
         }
+
+        toTurn = false;
+        turnTimer = 0f;
+
+        allowTurn = true;
     }
 
     public void SetPath(List<Vector2Int> newPath, ref StructureModel endStructure)
@@ -258,13 +269,33 @@ public class CarAI : MonoBehaviour
     }
     public override void FixedUpdate()
     {
-        if (rb.velocity.magnitude < maxSpeed)
-        {
-            rb.AddForce(movementVector.y * transform.up * power * turningFactor);
-        }
+        //if (rb.velocity.magnitude < maxSpeed)
+        //{
+        //    rb.AddForce(movementVector.y * transform.up * power);
+        //}
         //Debug.Log(rb.inertia);
-        rb.AddTorque(movementVector.x * power * 70);
+        //rb.AddTorque(movementVector.x * power * 70);
         //transform.angle = Mathf.Lerp(transform.angle, targetAngle, power * Time.deltaTime);
+
+        //if (!stop)
+        //{
+        //    transform.position += transform.up * 0.02f;
+        //}
+        //
+        //if (toTurn)
+        //{
+        //    turnTimer += 4.9f * Time.deltaTime;
+        //    //transform.angle = Mathf.Lerp(transform.angle, targetAngle, 0.2f);
+        //    transform.angle = Mathf.Lerp(firstAngle, targetAngle, turnTimer);
+        //
+        //    if (turnTimer > 1f)
+        //    {
+        //        toTurn = false;
+        //        turnTimer = 0f;
+        //        transform.angle = targetAngle; //Hacky fix angle
+        //        Console.WriteLine("Over");
+        //    }
+        //}
     }
 
     //private void CheckForCollisions()
@@ -293,47 +324,95 @@ public class CarAI : MonoBehaviour
         }
         else
         {
-            /*Vector2 relativepoint = transform.InverseTransformPoint(currentTargetPosition);
-            Debug.Log(currentTargetPosition + " ---target");
-            Debug.Log(relativepoint);
-            float angle = Mathf.Atan2(relativepoint.x, relativepoint.y) * Mathf.Rad2Deg;
-            Debug.Log(angle + " new");
-            var rotateCar = 0;
-            if (angle > turningAngleOffset)
-            {
-                rotateCar = -1;
-                Debug.Log("Turn right");
-            }
-            else if (angle < -turningAngleOffset)
-            {
-                Debug.Log("Turn left");
-                rotateCar = 1;
-            }*/
-            //Console.WriteLine("Before Drive ");
 
-            //------------------------Temporary remove---------------------
-            Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
-            float value = Vector2.Dot(transform.right, relativeDirection);
-            var rotateCar = 0;
-            turningFactor = 1f;
-            if (value > dotValue)
+            if (allowTurn)
             {
-                //Debug.Log("Turn right");
-                rotateCar = -1;
-                targetAngle = transform.angle - 90f;
-                turningFactor = 0.5f;
+                /*Vector2 relativepoint = transform.InverseTransformPoint(currentTargetPosition);
+                Debug.Log(currentTargetPosition + " ---target");
+                Debug.Log(relativepoint);
+                float angle = Mathf.Atan2(relativepoint.x, relativepoint.y) * Mathf.Rad2Deg;
+                Debug.Log(angle + " new");
+                var rotateCar = 0;
+                if (angle > turningAngleOffset)
+                {
+                    rotateCar = -1;
+                    Debug.Log("Turn right");
+                }
+                else if (angle < -turningAngleOffset)
+                {
+                    Debug.Log("Turn left");
+                    rotateCar = 1;
+                }*/
+                //Console.WriteLine("Before Drive ");
+
+                allowTurn = false;
+
+                //------------------------Temporary remove---------------------
+                Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
+                float value = Vector2.Dot(transform.right, relativeDirection);
+                var rotateCar = 0;
+                turningFactor = 1f;
+                if (value > dotValue)
+                {
+                    Debug.Log("Turn right");
+                    rotateCar = -1;
+                    toTurn = true;
+                    turnTimer = 0f;
+                    firstAngle = transform.angle;
+
+                    targetAngle = transform.angle - 90f;
+                    turningFactor = 0.5f;
+                }
+                if (value < -dotValue)
+                {
+                    Debug.Log("Turn left");
+                    rotateCar = 1;
+                    toTurn = true;
+                    turnTimer = 0f;
+                    firstAngle = transform.angle;
+
+                    targetAngle = transform.angle + 90f;
+                    turningFactor = 0.5f;
+                }
+
+                //OnDrive?.Invoke(new Vector2(rotateCar, 1));
+                movementVector = new Vector2(rotateCar, 1);
+                //------------------------Temporary remove---------------------
+                //Console.WriteLine("End drive ");
             }
-            if (value < -dotValue)
+        }
+
+        //if (toTurn)
+        //{
+        //    turnTimer += 2.3f * Time.deltaTime;
+        //    //transform.angle = Mathf.Lerp(transform.angle, targetAngle, 0.2f);
+        //    transform.angle = Mathf.Lerp(firstAngle, targetAngle, turnTimer);
+        //
+        //    if (turnTimer > 1f)
+        //    {
+        //        toTurn = false;
+        //        turnTimer = 0f;
+        //    }
+        //}
+
+        if (!stop)
+        {
+            transform.position += transform.up * 0.02f;
+        }
+
+        if (toTurn)
+        {
+            turnTimer += 4.9f * Time.deltaTime;
+            //transform.angle = Mathf.Lerp(transform.angle, targetAngle, 0.2f);
+            transform.angle = Mathf.Lerp(firstAngle, targetAngle, turnTimer);
+
+            if (turnTimer > 1f)
             {
-                //Debug.Log("Turn left");
-                rotateCar = 1;
-                targetAngle = transform.angle + 90f;
-                turningFactor = 0.5f;
+                turnTimer = 0f;
+                toTurn = false;
+                transform.angle = targetAngle; //Hacky fix angle
+                Debug.Log("Over");
             }
-            //OnDrive?.Invoke(new Vector2(rotateCar, 1));
-            movementVector = new Vector2(rotateCar, 1);
-            //------------------------Temporary remove---------------------
-            //Console.WriteLine("End drive ");
         }
     }
 
@@ -357,7 +436,7 @@ public class CarAI : MonoBehaviour
                 //scoreSystem.AddScore();
                 SetNextTargetIndex();
             //Console.WriteLine("After SetNextTargetIndex ");
-                //Debug.Log(transform.position);
+                Debug.Log("Reach point");
             }
         }
 
@@ -378,6 +457,8 @@ public class CarAI : MonoBehaviour
         else
         {
             currentTargetPosition = path[index];
+
+            allowTurn = true;
 
             /*if (tlPath == null || tlPath.Count == 0) return;
             if (currentTargetPosition == tlPath[0])

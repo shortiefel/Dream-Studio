@@ -55,7 +55,7 @@ public class PauseMenu : MonoBehaviour
     public override void Start()
     {
         texture = GetComponent<UI>();
-        texture.color = new Color(0f, 0f, 0f);
+        //texture.color = new Color(0f, 0f, 0f);
 
         pauseBG = GameObject.Find("PauseBG");
         bgPosition = pauseBG.transform.position;

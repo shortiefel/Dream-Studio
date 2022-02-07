@@ -27,6 +27,9 @@ Technology is prohibited.
 #include <mono/metadata/debug-helpers.h> //MonoMethodDesc
 #include <mono/metadata/attrdefs.h> //Attribute
 
+#include <mono/metadata/mono-config.h>
+#include <mono/metadata/mono-gc.h>
+
 #include "Engine/Header/ECS/DreamECS.hpp"
 
 #include "Engine/Header/Management/GameState.hpp"
@@ -56,6 +59,7 @@ namespace Engine {
 
 		CSType GetCSType(MonoType* mt);
 
+		
 		void Mono_Runtime_Invoke(CSScriptInstance& _csScriptInstance, MonoFunctionType _type, void** _param) {
 			MonoObject* exception = nullptr;
 			switch (_type) {
@@ -65,7 +69,15 @@ namespace Engine {
 			case MonoFunctionType::Constructor:
 				//INVOKE_FUNCTION(ConstructorFunc);
 				if (_csScriptInstance.csClass.ConstructorFunc != nullptr) {
-					_csScriptInstance.csClass.object = mono_object_new(mono_domain_get(), _csScriptInstance.csClass.klass);
+					auto& csClass = _csScriptInstance.csClass;
+					csClass.object = (mono_object_new(mono_domain_get(), csClass.klass));
+					mono_runtime_object_init(csClass.object);
+
+					if (!(_csScriptInstance.csClass.object)) {
+						LOG_ERROR("Failed loading obj");
+					}
+					_csScriptInstance.csClass.gc_handle = mono_gchandle_new(csClass.object, true);
+		
 						mono_runtime_invoke(_csScriptInstance.csClass.ConstructorFunc, _csScriptInstance.csClass.object, _param, &exception);
 						if (exception != nullptr) {
 								char* text = mono_string_to_utf8(mono_object_to_string(exception, nullptr));
@@ -74,7 +86,6 @@ namespace Engine {
 								SceneManager::GetInstance().Stop(); 
 						}
 
-						_csScriptInstance.csClass.gc_handle = mono_gchandle_new(_csScriptInstance.csClass.object, true);
 				}
 				break;
 			case MonoFunctionType::Init:
@@ -131,6 +142,7 @@ namespace Engine {
 		void Setup() {
 			//Rlative path from exe
 			mono_set_dirs("Vendor/Mono/lib", "Vendor/Mono/etc");
+			mono_set_assemblies_path("Vendor/Mono/lib/mono/4.5");
 
 			domain = mono_jit_init("Root Domain");
 
@@ -154,6 +166,8 @@ namespace Engine {
 				}
 				mono_domain_unload(currentDomain);
 			}
+
+			mono_gc_collect(mono_gc_max_generation());
 		}
 
 		bool CheckIfCompileSuccessful() {
@@ -384,43 +398,43 @@ namespace Engine {
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.FixedUpdateFunc = mono_method_desc_search_in_image(description, image);
 
-			//methodDesc = fullName + ":OnEnable()";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.OnEnable = mono_method_desc_search_in_image(description, image);
-			//
-			//methodDesc = fullName + ":OnDisable()";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.OnDisable = mono_method_desc_search_in_image(description, image);
-			//
-			//methodDesc = fullName + ":OnDestroy()";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
-			//
-			//
-			//methodDesc = fullName + ":OnCollisionEnter(uint)";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.OnCollisionEnter = mono_method_desc_search_in_image(description, image);
-			//
-			//methodDesc = fullName + ":OnCollisionStay(uint)";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.OnCollisionStay = mono_method_desc_search_in_image(description, image);
-			//
-			//methodDesc = fullName + ":OnCollisionExit(uint)";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
-			//
-			//
-			//methodDesc = fullName + ":OnTriggerEnter(uint)";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
-			//
-			//methodDesc = fullName + ":OnTriggerStay(uint)";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.OnTriggerStay = mono_method_desc_search_in_image(description, image);
-			//
-			//methodDesc = fullName + ":OnTriggerExit(uint)";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
+			methodDesc = fullName + ":OnEnable()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnEnable = mono_method_desc_search_in_image(description, image);
+			
+			methodDesc = fullName + ":OnDisable()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnDisable = mono_method_desc_search_in_image(description, image);
+			
+			methodDesc = fullName + ":OnDestroy()";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
+			
+			
+			methodDesc = fullName + ":OnCollisionEnter(uint)";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnCollisionEnter = mono_method_desc_search_in_image(description, image);
+			
+			methodDesc = fullName + ":OnCollisionStay(uint)";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnCollisionStay = mono_method_desc_search_in_image(description, image);
+			
+			methodDesc = fullName + ":OnCollisionExit(uint)";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
+			
+			
+			methodDesc = fullName + ":OnTriggerEnter(uint)";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
+			
+			methodDesc = fullName + ":OnTriggerStay(uint)";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnTriggerStay = mono_method_desc_search_in_image(description, image);
+			
+			methodDesc = fullName + ":OnTriggerExit(uint)";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
 
 			methodDesc = fullName + ":OnMouseEnter()";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);

@@ -130,6 +130,7 @@ namespace Engine {
 		void Setup() {
 			//Rlative path from exe
 			mono_set_dirs("Vendor/Mono/lib", "Vendor/Mono/etc");
+			mono_set_assemblies_path("Vendor/Mono/lib/mono/4.5");
 
 			domain = mono_jit_init("Root Domain");
 

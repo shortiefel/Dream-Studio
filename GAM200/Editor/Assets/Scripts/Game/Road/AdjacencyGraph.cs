@@ -40,12 +40,12 @@ public class AdjacencyGraph
 
     private Vertex GetVertexAt(Vector2 position)
     {
-        foreach(var x in adjacencyDictionary.Keys)
-        {
-            if (CompareVertices(position, x.Position)) return x;
-        }
-        return null;
-        //return adjacencyDictionary.Keys.FirstOrDefault(x => CompareVertices(position, x.Position));
+        //foreach(var x in adjacencyDictionary.Keys)
+        //{
+        //    if (CompareVertices(position, x.Position)) return x;
+        //}
+        //return null;
+        return adjacencyDictionary.Keys.FirstOrDefault(x => CompareVertices(position, x.Position));
     }
 
     private bool CompareVertices(Vector2 position1, Vector2 position2)
@@ -83,21 +83,21 @@ public class AdjacencyGraph
         }
         if (adjacencyDictionary.ContainsKey(v1))
         {
-            bool found = false;
-            foreach (var x in adjacencyDictionary[v1])
-            {
-                if (x == v2)
-                {
-                    found = true;
-                    break;
-                }
-            }
-            
-            if(!found) adjacencyDictionary[v1].Add(v2);
-            //if (adjacencyDictionary[v1].FirstOrDefault(x => x == v2) == null)
+            //bool found = false;
+            //foreach (var x in adjacencyDictionary[v1])
             //{
-            //    adjacencyDictionary[v1].Add(v2);
+            //    if (x == v2)
+            //    {
+            //        found = true;
+            //        break;
+            //    }
             //}
+            //
+            //if(!found) adjacencyDictionary[v1].Add(v2);
+            if (adjacencyDictionary[v1].FirstOrDefault(x => x == v2) == null)
+            {
+                adjacencyDictionary[v1].Add(v2);
+            }
         }
         else
         {

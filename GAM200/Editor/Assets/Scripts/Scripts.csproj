@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="bin\**;obj\**;Properties\**" />
+    <Compile Include="Game\Road\RoadHelperCurve.cs" />
+    <Compile Include="Game\Road\RoadHelperFourWay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

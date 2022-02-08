@@ -68,10 +68,13 @@ public class AIDirector : MonoBehaviour
             //Console.WriteLine("after start");
             var endRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)endStructure).RoadPosition);
 
-            //Debug.Log(startRoadPosition);
-            //Debug.Log(endRoadPosition);
+            Debug.Log(startRoadPosition);
+            Debug.Log(endRoadPosition);
 
             var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
+
+            //Debug.Log("path count = " + path.Count);
+
             if (path.Count == 0)
             {
                 //Console.WriteLine("No path exist");
@@ -105,11 +108,18 @@ public class AIDirector : MonoBehaviour
             if (path.Count == 0 && path.Count > 2)
                 return true;
 
+            Console.WriteLine("Structure Type = " + placementManager.placementGrid[startRoadPosition.x, startRoadPosition.y]);
+
+            Console.WriteLine("Start Structure = " + placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]));
+
             var startMarkerPosition = placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]);
 
             var endMarkerPosition = placementManager.GetStructureAt(endRoadPosition).GetCarEndMarker(path[path.Count - 2]);
 
             carPath = GetCarPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
+
+            Debug.Log("marker start: " + startMarkerPosition.Position);
+            Debug.Log("marker end: " + endMarkerPosition.Position);
 
             if (carPath.Count > 0)
             {

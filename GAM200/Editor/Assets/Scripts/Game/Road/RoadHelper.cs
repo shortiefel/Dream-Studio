@@ -39,8 +39,8 @@ public class RoadHelper : MonoBehaviour
                 else
                     outgoing = carMarkers[0];
             }
-
         }
+        Debug.Log("Marker position = " + incoming.Position);
     }
 
     public virtual Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)

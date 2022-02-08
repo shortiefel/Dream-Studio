@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-class RoadHelperMultiple : RoadHelper
+class RoadHelperCurve : RoadHelper
 {
     protected List<Marker> incomingMarkers, outgoingMarkers;
 
@@ -12,6 +12,8 @@ class RoadHelperMultiple : RoadHelper
     public override void Start()
     {
         Waypoint wp = GetComponent<Waypoint>();
+
+        isCorner = true;
 
         List<List<List<Vector2>>> listOfWaypoints = wp.GetWaypoints();
         carMarkers = new List<Marker>();
@@ -31,7 +33,7 @@ class RoadHelperMultiple : RoadHelper
             }
 
         }
-        Debug.Log("Marker position = " + incomingMarkers[0].Position);
+        Debug.Log("Marker position = " + carMarkers[0].Position);
 
     }
 

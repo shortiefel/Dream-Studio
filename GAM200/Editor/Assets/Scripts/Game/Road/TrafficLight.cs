@@ -73,6 +73,7 @@
 
     public override void OnTriggerExit(uint id)
     {
+
         --carCounter;
     }
 

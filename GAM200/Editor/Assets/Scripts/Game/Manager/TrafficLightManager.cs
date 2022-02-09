@@ -4,7 +4,8 @@ public class TrafficLightManager : MonoBehaviour
 {
 
     private Dictionary<Vector2Int, uint> trafficLights;
-
+    private ERPManager erpManager;
+    MoneySystem moneySystem;
     GameObject trafficLightGO; //TO Remove
     //Camera mainCamera; //TO Remove
 
@@ -17,7 +18,7 @@ public class TrafficLightManager : MonoBehaviour
 
         trafficLightGO = new GameObject(new Prefab("TrafficLight"));
         //mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
-
+        moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
         toDraw = false; //To Remove
     }
 
@@ -102,20 +103,28 @@ public class TrafficLightManager : MonoBehaviour
         return false;
     }
 
-    public void RequestPlacingTrafficLight(Vector2Int position)
+    public bool RequestPlacingTrafficLight(Vector2Int position)
     {
-        if (trafficLights.ContainsKey(position)) return;
+        erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
+        if (trafficLights.ContainsKey(position)) 
+            return false;
+        if (erpManager.IsERP(position))
+            return false;
 
         Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f));
+        return true;
     }
 
-    public void RequestRemovingTrafficLight(Vector2Int position)
+    public bool RequestRemovingTrafficLight(Vector2Int position)
     {
-        if (!trafficLights.ContainsKey(position)) return;
+        if (!trafficLights.ContainsKey(position)) 
+            return false;
 
-
+        moneySystem.DestroyTL();
         Destroy(trafficLights[position]);
         trafficLights.Remove(position);
+        return true;
+        
     }
 }
 

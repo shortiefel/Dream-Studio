@@ -18,16 +18,27 @@ class RoadHelperMultiple : RoadHelper
         incomingMarkers = new List<Marker>();
         outgoingMarkers = new List<Marker>();
 
-        foreach (var incomingOutgoing in listOfWaypoints)
+        for (int i = 0; i < listOfWaypoints.Count; i++)
         {
-            foreach (var markerss in incomingOutgoing)
+            foreach (var markerss in listOfWaypoints[i])
             {
-                carMarkers.Add(new Marker(markerss));
+                Marker mark = new Marker(markerss);
+                carMarkers.Add(mark);
 
-                if (markerss == incomingOutgoing[0])
-                    incomingMarkers = carMarkers;
-                else
-                    outgoingMarkers = carMarkers;
+                if (mark.OpenForconnections == true)
+                {
+                    //Incoming
+                    if (i == 0)
+                    {
+                        incomingMarkers.Add(mark);
+                    }
+                    //Outgoing
+                    else
+                    {
+                        outgoingMarkers.Add(mark);
+                    }
+                }
+                
             }
 
         }

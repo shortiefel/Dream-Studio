@@ -28,16 +28,28 @@ public class RoadHelper : MonoBehaviour
         List<List<List<Vector2>>> listOfWaypoints = wp.GetWaypoints();
         carMarkers = new List<Marker>();
 
-        foreach (var incomingOutgoing in listOfWaypoints)
+        //foreach (var incomingOutgoing in listOfWaypoints)
+        for (int i = 0; i <listOfWaypoints.Count; i++)
         {
-            foreach (var markerss in incomingOutgoing)
+            foreach (var markerss in listOfWaypoints[i])
             {
                 carMarkers.Add(new Marker(markerss));
 
-                if (markerss == incomingOutgoing[0])
+                //if (markerss == incomingOutgoing[0])
+                //    incoming = carMarkers[0];
+                //else
+                //    outgoing = carMarkers[0];
+
+                //Incoming
+                if (i == 0)
+                {
                     incoming = carMarkers[0];
+                }
+                //Outgoing
                 else
+                {
                     outgoing = carMarkers[0];
+                }
             }
         }
         Debug.Log("Marker position = " + incoming.Position);

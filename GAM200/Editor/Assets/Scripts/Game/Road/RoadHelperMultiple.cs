@@ -27,6 +27,7 @@ class RoadHelperMultiple : RoadHelper
 
                 if (mark.OpenForconnections == true)
                 {
+                    Debug.Log("roadmarker multiple");
                     //Incoming
                     if (i == 0)
                     {

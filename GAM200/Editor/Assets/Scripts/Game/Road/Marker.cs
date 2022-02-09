@@ -14,21 +14,28 @@ public class Marker
     {
         adjacentMarkers = new List<Vector2>();
         int index = 0;
+
+        //Console.WriteLine("Outside");
+
         foreach (var i in tem)
         {
+            //Console.WriteLine("AdjacentMarker in outside loop" + adjacentMarkers.Count);
+
             if (index == 0)
             {
                 Position = i;
+                //Console.WriteLine("AdjacentMarker in Marker new" + adjacentMarkers.Count);
             }
             else
             {
                 adjacentMarkers.Add(i);
+                //Console.WriteLine("AdjacentMarker in Marker" + adjacentMarkers.Count);
             }
 
             index++;
         }
 
-        if (index == 1 || index == 0) openForConnections = true;
+        if (index == 2 || index == 0) openForConnections = true;
         else openForConnections = false;
     }
 

@@ -16,19 +16,35 @@ public class RoadHelperStraight : RoadHelper
         List<List<List<Vector2>>> listOfWaypoints = wp.GetWaypoints();
         carMarkers = new List<Marker>();
 
-        foreach (var incomingOutgoing in listOfWaypoints)
+        for (int i = 0; i < listOfWaypoints.Count; i++)
         {
-            foreach (var markerss in incomingOutgoing)
+            foreach (var markerss in listOfWaypoints[i])
             {
                 carMarkers.Add(new Marker(markerss));
-            }
 
+                //if (markerss == incomingOutgoing[0])
+                //    incoming = carMarkers[0];
+                //else
+                //    outgoing = carMarkers[0];
+
+                //Incoming
+                if (i == 0)
+                {
+                    leftLaneMarker90 = carMarkers[0];
+                }
+                //Outgoing
+                else
+                {
+                    rightLaneMarker90 = carMarkers[0];
+                }
+            }
         }
 
     }
 
     public override Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)
     {
+        Console.WriteLine("print spawn marker");
         int angle = (int)transform.angle;
         var direction = nextPathPosition - transform.position;
         return GetCorrectMarker(angle, direction);
@@ -37,9 +53,15 @@ public class RoadHelperStraight : RoadHelper
 
     public override Marker GetPositionForCarToEnd(Vector2 previousPathPosition)
     {
+        Console.WriteLine("print end marker");
         int angle = (int)transform.angle;
         var direction = transform.position - previousPathPosition;
-        return GetCorrectMarker(angle, direction);
+        Console.WriteLine("angle " + angle);
+        Console.WriteLine("direction " + direction);
+
+        Marker testMarker = GetCorrectMarker(angle, direction);
+        Console.WriteLine("Straight end marker " + testMarker.Position);
+        return testMarker;
     }
 
 
@@ -48,7 +70,7 @@ public class RoadHelperStraight : RoadHelper
         var direction = GetDirection(directionVector);
         if (angle == 0)
         {
-            if (direction == Directon.left)
+            if (direction == Direction.left)
             {
                 return rightLaneMarker90;
             }
@@ -59,18 +81,19 @@ public class RoadHelperStraight : RoadHelper
         }
         else if (angle == 90)
         {
-            if (direction == Directon.up)
+            if (direction == Direction.up)
             {
                 return rightLaneMarker90;
             }
             else
             {
+                //Console.WriteLine("HERE");
                 return leftLaneMarker90;
             }
         }
         else if (angle == 270)
         {
-            if (direction == Directon.left)
+            if (direction == Direction.left)
             {
                 return leftLaneMarker90;
             }
@@ -81,7 +104,7 @@ public class RoadHelperStraight : RoadHelper
         }
         else
         {
-            if (direction == Directon.up)
+            if (direction == Direction.up)
             {
                 return leftLaneMarker90;
             }
@@ -92,7 +115,7 @@ public class RoadHelperStraight : RoadHelper
         }
     }
 
-    public enum Directon
+    public enum Direction
     {
         up,
         down,
@@ -100,28 +123,34 @@ public class RoadHelperStraight : RoadHelper
         right
     }
 
-    public Directon GetDirection(Vector2 direction)
+    public Direction GetDirection(Vector2 direction)
     {
+        Console.WriteLine("direction check");
+
+        float absValue = Mathf.Abs(direction.y);
+
+        Console.WriteLine("abs y " + absValue);
+
         if (Mathf.Abs(direction.y) > .5f)
         {
             if (direction.y > 0.5f)
             {
-                return Directon.up;
+                return Direction.up;
             }
             else
             {
-                return Directon.down;
+                return Direction.down;
             }
         }
         else
         {
             if (direction.x > 0.5f)
             {
-                return Directon.right;
+                return Direction.right;
             }
             else
             {
-                return Directon.left;
+                return Direction.left;
             }
         }
     }

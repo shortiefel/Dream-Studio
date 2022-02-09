@@ -50,6 +50,7 @@ class RoadHelperCurve : RoadHelper
 
     public override Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)
     {
+        Console.WriteLine("print outgoing");
         return GetClosestMarkerTo(nextPathPosition, outgoingMarkers);
     }
 

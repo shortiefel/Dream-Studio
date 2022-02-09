@@ -68,8 +68,8 @@ public class AIDirector : MonoBehaviour
             //Console.WriteLine("after start");
             var endRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)endStructure).RoadPosition);
 
-            Debug.Log(startRoadPosition);
-            Debug.Log(endRoadPosition);
+            //Debug.Log(startRoadPosition);
+            //Debug.Log(endRoadPosition);
 
             var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
 
@@ -108,18 +108,25 @@ public class AIDirector : MonoBehaviour
             if (path.Count == 0 && path.Count > 2)
                 return true;
 
-            Console.WriteLine("Structure Type = " + placementManager.placementGrid[startRoadPosition.x, startRoadPosition.y]);
+            //Console.WriteLine("Structure Type = " + placementManager.placementGrid[startRoadPosition.x, startRoadPosition.y]);
 
-            Console.WriteLine("Start Structure = " + placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]));
+            
+
+            Console.WriteLine("path count " + path.Count);
+            //Console.WriteLine("Start Structure = " + placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]).Position);
 
             var startMarkerPosition = placementManager.GetStructureAt(startRoadPosition).GetCarSpawnMarker(path[1]);
 
             var endMarkerPosition = placementManager.GetStructureAt(endRoadPosition).GetCarEndMarker(path[path.Count - 2]);
 
+            Console.WriteLine("marker start: " + startMarkerPosition.Position);
+            Console.WriteLine("marker end: " + endMarkerPosition.Position);
+
             carPath = GetCarPath(path, startMarkerPosition.Position, endMarkerPosition.Position);
 
-            Debug.Log("marker start: " + startMarkerPosition.Position);
-            Debug.Log("marker end: " + endMarkerPosition.Position);
+            
+
+            Debug.Log("path count" + carPath.Count);
 
             if (carPath.Count > 0)
             {
@@ -170,7 +177,7 @@ public class AIDirector : MonoBehaviour
 
         if (path == null) Console.WriteLine("Path is null     -00000000000000000000000000000000");
         CreateACarGraph(path);
-        Console.WriteLine("Next part of the function");
+        Console.WriteLine("Next part of the function2");
         return AdjacencyGraph.AStarSearch(carGraph, startPosition, endPosition);
     }
 
@@ -197,6 +204,7 @@ public class AIDirector : MonoBehaviour
                 if (marker == null) Console.WriteLine("marker is null        -00000000000000000000000000000000");
                 carGraph.AddVertex(marker.Position);
                 Console.WriteLine("After AddVertex");
+                //Console.WriteLine("AdjacentMarker " + marker.adjacentMarkers);
                 foreach (var markerNeighbour in marker.adjacentMarkers)
                 {
                     Console.WriteLine("counting ");

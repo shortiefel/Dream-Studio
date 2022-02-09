@@ -52,11 +52,12 @@ public class RoadHelper : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Marker position = " + incoming.Position);
+        Debug.Log("Marker position = " + outgoing.Position);
     }
 
     public virtual Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)
     {
+        Console.WriteLine("print outgoing");
         return outgoing;
     }
 

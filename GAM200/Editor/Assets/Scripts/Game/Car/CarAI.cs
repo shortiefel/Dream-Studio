@@ -266,7 +266,7 @@ public class CarAI : MonoBehaviour
     {
         if (rb.velocity.magnitude < maxSpeed)
         {
-            rb.AddForce(movementVector.y * transform.up * power);
+            rb.AddForce(movementVector.y * transform.up * power * turningFactor);
         }
         //Debug.Log(rb.inertia);
         rb.AddTorque(movementVector.x * power * 70);

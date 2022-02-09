@@ -13,6 +13,9 @@ public class CameraMovement : MonoBehaviour
     Vector2 targetPosition;
     Vector2 startPosition;
 
+    Vector3 mousePosition;
+    float mouseMultiply;
+
     public override void Start()
     {
         toZoom = false;
@@ -23,10 +26,14 @@ public class CameraMovement : MonoBehaviour
         targetHeight = 4f;
         t = 0f;
         hasEnter = false;
+
+        mousePosition = Input.GetMousePosition();
+        mouseMultiply = 0.3f;
     }
 
     public override void Update()
     {
+        //For when game lose and zoom in to the target
         if (toZoom)
         {
             t += Time.unscaledDeltaTime;
@@ -41,6 +48,17 @@ public class CameraMovement : MonoBehaviour
                 SceneManager.LoadScene("GameOver");
             }
         }
+
+        else
+        {
+            if (Input.GetMouseButton(MouseCode.Right))
+            {
+                Vector3 offset = Input.GetMousePosition() - mousePosition;
+                transform.position -= new Vector2(offset.x * mouseMultiply, offset.y * mouseMultiply);
+            }
+        }
+
+        mousePosition = Input.GetMousePosition();
     }
 
     public void SetTargetPosition(Vector2 _pos)

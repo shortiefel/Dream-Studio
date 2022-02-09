@@ -42,8 +42,13 @@ public class RoadManager : MonoBehaviour
         //trafficLightGO = new GameObject(new Prefab("TrafficLight"));
         //erpGO = new GameObject(new Prefab("ERP"));
 
-        trafficLightManager = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
-        erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
+        GameObject go = GameObject.Find("TrafficManager");
+        if (go != null)
+            trafficLightManager = go.GetComponent<TrafficLightManager>();
+
+        GameObject go2 = GameObject.Find("ERPManager");
+        if (go2 != null)
+            erpManager = go2.GetComponent<ERPManager>();
     }
 
     public void PlaceSpawnHouse(Vector2Int position)

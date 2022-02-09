@@ -5,13 +5,12 @@ public class ERPManager : MonoBehaviour
     private int noOfERP;
 
     MoneySystem moneySystem;
-
+    private TrafficLightManager trafficLightManager;
     //private bool toDraw; //To Remove ------------------------------------------------------
     private GameObject erpGO;
     Camera mainCamera; //TO Remove
 
     private Dictionary<Vector2Int, uint> erpList;
-
     public override void Start()
     {
         noOfERP = 0;
@@ -42,13 +41,16 @@ public class ERPManager : MonoBehaviour
     public void Notify()
     {
         //Increase money
-        moneySystem.AddMoney(20);
+        moneySystem.AddMoney(10);
     }
 
     public void RegisterERP(Vector2Int pos, uint id)
     {
         if (!erpList.ContainsKey(pos))
+        {
             erpList.Add(pos, id);
+            Debug.Log(pos);
+        }
     }
 
     public void RemoveERP(Vector2Int pos)
@@ -63,18 +65,26 @@ public class ERPManager : MonoBehaviour
     }
 
 
-    public void RequestPlacingERP(Vector2Int position)
+    public bool RequestPlacingERP(Vector2Int position)
     {
-        if (erpList.ContainsKey(position)) return;
+        trafficLightManager = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
+        if (erpList.ContainsKey(position)) 
+            return false;
+        if (trafficLightManager.IsTrafficLight(position))
+            return false;
 
         Instantiate(erpGO, new Vector3(position.x, position.y, 0f));
+        return true;
     }
 
-    public void RequestRemovingERP(Vector2Int position)
+    public bool RequestRemovingERP(Vector2Int position)
     {
-        if (!erpList.ContainsKey(position)) return;
-
+        if (!erpList.ContainsKey(position)) 
+            return false;
+       
+        moneySystem.DestoryErp();
         Destroy(erpList[position]);
         erpList.Remove(position);
+        return true;
     }
 }

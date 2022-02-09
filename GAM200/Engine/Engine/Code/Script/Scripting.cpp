@@ -410,9 +410,9 @@ namespace Engine {
 			//csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
 			//
 			//
-			//methodDesc = fullName + ":OnTriggerEnter(uint)";
-			//description = mono_method_desc_new(methodDesc.c_str(), NULL);
-			//csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
+			methodDesc = fullName + ":OnTriggerEnter(uint)";
+			description = mono_method_desc_new(methodDesc.c_str(), NULL);
+			csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
 			//
 			//methodDesc = fullName + ":OnTriggerStay(uint)";
 			//description = mono_method_desc_new(methodDesc.c_str(), NULL);

@@ -56,7 +56,6 @@ namespace Editor {
 				order++;
 				if (order >= MAX_SELECTION) order = 0;
 			}
-
 			else {
 				entity_selected.clear();
 				order = 0;

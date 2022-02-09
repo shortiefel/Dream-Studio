@@ -92,38 +92,72 @@ namespace Editor {
 				{
 					bool selected = CheckIfExist(entity_selected, id);
 
-					if (Engine::dreamECSGame->GetComponentPTR<Engine::UIComponent>(id) == nullptr) {
-						//if (entity.child.empty()) {
+					if (Engine::dreamECSGame->GetComponentPTR<Engine::UIComponent>(id) == nullptr) 
+					{
 						if (selected)
 							ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
 						
-						
-						if (ImGui::Selectable(entity.name.c_str()))
+						//display parent
+						if (entity.child.size() != 0)
 						{
-							ClickCheck(entity_selected, id);
-			
+							
+							if (ImGui::TreeNode(entity.name.c_str()))
+							{
+								if (selected)
+								{
+									ImGui::PopStyleColor();
+									selected = false;
+								}
+								if (ImGui::IsItemClicked())
+								{
+									ClickCheck(entity_selected, id);
+								}
+								
+								for (const auto& child : entity.child)
+								{
+									int cId = Engine::dreamECSGame->GetUsedEntityMap()[child].id;
+									std::string cName = Engine::dreamECSGame->GetUsedEntityMap()[child].name;
+									ImGui::Indent();
+									bool temp = CheckIfExist(entity_selected, cId);
+									if (temp == true)
+									{
+										ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+										if (ImGui::Selectable(cName.c_str()))
+										{
+											ClickCheck(entity_selected, cId);
+										}
+										ImGui::PopStyleColor();
+									}
+									else if (ImGui::Selectable(cName.c_str()))
+									{
+										ClickCheck(entity_selected, cId);
+									}
+									ImGui::Unindent();
+									
+								}
+								ImGui::TreePop();
+							}
 						}
+						else
+						{
+							if (!EntityId_Check(entity.parent)) {}
+							else if(ImGui::TreeNodeEx((void*)(intptr_t)id, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen, entity.name.c_str(), id))
+							{
+								if (ImGui::IsItemClicked())
+								{
+									ClickCheck(entity_selected, id);
+									
+								}
+							}
+						}
+
 						ImGui::OpenPopupOnItemClick("##EntityPop", ImGuiPopupFlags_MouseButtonRight);
 						if (selected)
 							ImGui::PopStyleColor();
-
 					}
 					else
 						setOfUI.emplace(id);
-
-					if (ImGui::BeginDragDropTarget())
-					{
-						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
-						{
-							//const wchar_t* path = (const wchar_t*)payload->Data;
-							Engine::dreamECSGame->CreateEntity();
-						}
-						ImGui::EndDragDropTarget();
-					}
-				}
-
-				
-				
+				}	
 				
 				if (ImGui::BeginPopupContextItem("##EntityPop"))
 				{
@@ -148,6 +182,7 @@ namespace Editor {
 								Engine::dreamECSGame->Parent(parent, entity_id);
 
 						}
+						entity_selected.clear();
 					}
 
 					if (ImGui::Button("Unparent##UnparentGameObject", { ImGui::GetContentRegionAvail().x, 0 }))
@@ -178,73 +213,6 @@ namespace Editor {
 					//Engine::UndoRedoManager::GetInstance().RecordState(new_command);
 
 				}
-				/*if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
-				{
-					ImGui::Text("I'm Dragging.");
-					ImGui::SetDragDropPayload("GAME_OBJECT", NULL, NULL);
-					ImGui::EndDragDropSource();
-				}*/
-
-
-				ImGuiTreeNodeFlags flags =  ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
-				flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
-
-		
-				Engine::Entity_id parent = GetTarget(entity_selected);
-				for (const auto& [index, entity_id] : entity_selected)
-				{
-					if (parent == entity_id) continue;
-					bool selected = CheckIfExist(entity_selected, index);
-
-					if (selected)
-						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-						Engine::dreamECSGame->Parent(parent, entity_id);
-	
-					const auto& iterator = entity_map.find(index);
-					const auto& iterator2 = entity_map.find(parent);
-					if (iterator == entity_map.end()) continue;
-					if (iterator2 == entity_map.end()) continue;
-					bool open = ImGui::TreeNodeEx(iterator->second.name.c_str(), flags);
-
-					//if (ImGui::BeginDragDropTarget())
-					//{
-					//	ImGui::Text("I'm Dropping.");
-					//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
-					//	{
-					//		Engine::dreamECSGame->Parent(parent, entity_id);
-					//		if (open)
-					//		{
-					//			ImGui::Indent();
-					//			ImGui::Text(iterator2->second.name.c_str());
-					//			ImGui::TreePop();
-					//			ImGui::Unindent();
-					//		}
-					//	}
-					//	ImGui::EndDragDropTarget();
-					//}
-					if (open)
-					{
-						ImGui::Indent();
-						ImGui::Text(iterator2->second.name.c_str());
-						if (ImGui::BeginDragDropTarget())
-						{
-							ImGui::Text("I'm Dropping.");
-							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT"))
-							{
-								Engine::dreamECSGame->Parent(parent, entity_id);
-								ImGui::Text(iterator2->second.name.c_str());
-							}
-							ImGui::EndDragDropTarget();
-						}
-						ImGui::TreePop();
-						ImGui::Unindent();
-					}
-					ImGui::OpenPopupOnItemClick("##EntityPop", ImGuiPopupFlags_MouseButtonRight);
-					
-					if (selected)
-						ImGui::PopStyleColor();
-					}
-
 
 				if (ImGui::CollapsingHeader("Canvas")) {
 					for (auto& id : setOfUI) {

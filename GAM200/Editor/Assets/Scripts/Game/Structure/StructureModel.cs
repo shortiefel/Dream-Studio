@@ -139,19 +139,28 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         //yHeight = structure.transform.position.y;
     }*/
 
-    public void SwapModel(GameObject model, float rotation)
+    public StructureModel SwapModel(GameObject model, float rotation)
     {
         /*foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }*/
 
-        texure.ChangeTexture(model.name);
-        transform.angle = rotation;
+        //texure.ChangeTexture(model.name);
+        //transform.angle = rotation;
 
-        /*var structure = Instantiate(model, transform);
-        structure.transform.localPosition = new Vector2(0, 0);
-        structure.transform.angle = rotation;*/
+        var structure = Instantiate(model, new Vector3(transform.position, 0f));
+        //structure.transform.position = new Vector2(0, 0);
+        structure.transform.angle = rotation;
+
+        Destroy(gameObject);
+
+        //texure.color = new Color(0, 1, 0, 0.5f);
+        //texure.ChangeTexture(model.name);
+        //transform.angle = rotation;
+        //Disable<Transform>(transform);
+
+        return structure.GetComponent<StructureModel>();
     }
 
     /*

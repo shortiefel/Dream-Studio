@@ -149,6 +149,12 @@ public class ButtonRoad : MonoBehaviour
 
             Disable<Transform>(displayArrow);
             Enable<Transform>(displayArrowWhite);
+
+
+            Enable<Transform>(drawRoad);
+            Enable<Transform>(removeRoad);
+            Enable<Transform>(drawERP);
+            Enable<Transform>(drawTraffic);
         }
         else
         {
@@ -188,6 +194,7 @@ public class ButtonRoad : MonoBehaviour
 
     private void OpenTabs()
     {
+
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, drawPosition.x, timer), drawPosition.y);
 

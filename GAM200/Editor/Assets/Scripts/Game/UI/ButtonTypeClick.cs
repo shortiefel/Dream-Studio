@@ -6,11 +6,16 @@ public class ButtonTypeClick : MonoBehaviour
     bool type;
     //public bool active;
     ButtonRoad buttonRoad;
+    Text tooltipText;
+    Transform tooltipTrans;
+    Vector2 tooltipOffset;
+
 
     public override void Start()
     {
         buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
-
+        tooltipText = GameObject.Find("stringname").GetComponent<Text>();
+        tooltipTrans = GameObject.Find("stringname").GetComponent<Transform>(); 
         if (entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Draw;
@@ -80,25 +85,117 @@ public class ButtonTypeClick : MonoBehaviour
         {
             bt = ButtonType.Display;
             type = false;
+            
             //active = false;
         }
+
+        tooltipOffset = transform.position + new Vector2(-2f, 6.5f);
     }
     public override void OnMouseOver()
     {
+
         //if (!transform.isActive) return;
-        if (transform.isActive && Input.GetMouseButtonDown(MouseCode.Left))
+        if (transform.isActive)
         {
             switch (bt)
             {
                 case ButtonType.Display:
-                    buttonRoad.SwitchTab(type);
+                    if( Input.GetMouseButtonDown(MouseCode.Left))
+                    {
+                        buttonRoad.SwitchTab(type);
+                    }
+
+                    Enable<Transform>(tooltipTrans);
+                    tooltipTrans.position = tooltipOffset;
+                    tooltipText.text =  "Display buttons";
+
                     break;
+
+                case ButtonType.Draw:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                            buttonRoad.CallFunction(bt, type);
+
+                        Enable<Transform>(tooltipTrans);
+                        tooltipTrans.position = tooltipOffset;
+                        tooltipText.text = "Road";
+                        break;
+                    }
+                case ButtonType.Remove:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                            buttonRoad.CallFunction(bt, type);
+
+                        Enable<Transform>(tooltipTrans);
+                        tooltipTrans.position = tooltipOffset;
+                        tooltipText.text = "Remove ";
+                        break;
+                    }
+                case ButtonType.ERP:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                            buttonRoad.CallFunction(bt, type);
+
+                        Enable<Transform>(tooltipTrans);
+                        tooltipTrans.position = tooltipOffset;
+                        tooltipText.text = "ERP";
+                        break;
+                    }
+                case ButtonType.TrafficLight:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                            buttonRoad.CallFunction(bt, type);
+
+                        Enable<Transform>(tooltipTrans);
+                        tooltipTrans.position = tooltipOffset;
+                        tooltipText.text = "TrafficLight";
+                        break;
+                    }
                 default:
-                    buttonRoad.CallFunction(bt, type);
+                    
                     break;
             }
         //Debug.Log("Entity " + entityId + " " + transform.isActive);
             
+            //switch (bt)
+            //{
+            //    case ButtonType.Draw:
+            //        break;
+            //
+            //    case ButtonType.Remove:
+            //        break;
+            //
+            //    case ButtonType.ERP:
+            //        break;
+            //
+            //    case ButtonType.TrafficLight:
+            //        break;
+            //}
+        }
+    }
+
+    public override void OnMouseExit()
+    {
+
+        //if (!transform.isActive) return;
+        if (transform.isActive)
+        {
+            switch (bt)
+            {
+                case ButtonType.Display:
+                case ButtonType.Draw:
+                case ButtonType.Remove:
+                case ButtonType.ERP:
+                case ButtonType.TrafficLight:
+                    Disable<Transform>(tooltipTrans);
+
+                    break;
+                default:
+                    
+                    break;
+            }
+            //Debug.Log("Entity " + entityId + " " + transform.isActive);
+
             //switch (bt)
             //{
             //    case ButtonType.Draw:

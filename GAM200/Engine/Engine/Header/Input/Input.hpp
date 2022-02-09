@@ -38,6 +38,7 @@ namespace Engine {
 		static bool IsMousePressed(Input_MouseCode button);
 		static bool IsMouseHold(Input_MouseCode button);
 		static bool IsMouseReleased(Input_MouseCode button);
+		//static bool IsTooltip(Input_MouseCode button);
 
 		static void SetKeyStatus(int key, InputType status);
 		static void SetMouseStatus(int button, InputType status);

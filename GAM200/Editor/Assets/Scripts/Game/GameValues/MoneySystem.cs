@@ -64,6 +64,8 @@ public class MoneySystem : MonoBehaviour
     }
     public void DestroyTL()
     {
+        money += 25;
+        textComp.text = money.ToString();
         currTL--;
     }
 }

@@ -48,7 +48,7 @@ namespace Engine
 		bool _active) :
 		IComponent{ _ID }, filepath{ _path }, mdl_ref{ _shape }, colour{ _colour },
 		texobj_hdl{ 0 }, width{ 0 }, height{ 0 }, BPP{ 0 }, totalRows{ 1 }, totalColumns{ 1 },
-		minUV{ 0.f, 0.f }, maxUV{ 1.f, 1.f },
+		minUV{ 0.01f, 0.01f }, maxUV{ 0.99f, 0.99f },
 		isAnimation{ _animation }, currAnimationState{ _currAnimationState }, nextAnimationState{ _nextAnimationState },
 		isActive{ _active }
 	{

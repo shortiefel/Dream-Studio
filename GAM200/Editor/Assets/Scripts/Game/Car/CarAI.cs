@@ -232,7 +232,7 @@ public class CarAI : MonoBehaviour
                         break;
                     case CollisionType.Unknown:
                         //Stop car because might be other cars
-                        stop = true;
+                        //stop = true;
                         break;
                     default:
                         break;

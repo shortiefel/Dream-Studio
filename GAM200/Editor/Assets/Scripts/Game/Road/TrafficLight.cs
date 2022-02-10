@@ -1,4 +1,6 @@
-﻿public class TrafficLight : MonoBehaviour
+﻿using System;
+
+public class TrafficLight : MonoBehaviour
 {
     //True for left and right
     //False for top and bottom
@@ -11,6 +13,8 @@
 
     private float timer;
     private float switchTimer;
+
+    private float secondaryTimer;
 
     private TrafficLightManager tlm;
 
@@ -29,7 +33,9 @@
         carCounter = 0;
 
         timer = 0f;
-        switchTimer = 2f;
+        switchTimer = 5f;
+
+        secondaryTimer = 0f;
     }
 
     public void RequestSwap(bool inState)
@@ -56,13 +62,27 @@
         timer += Time.deltaTime;
         if (timer >= switchTimer)
         {
-            timer = 0f;
-            //SwapState();
+            secondaryTimer += Time.deltaTime;
+
+            if (secondaryTimer > 0.2f)
+            {
+                timer = 0f;
+                secondaryTimer = 0f;
+                SwapState();
+                Console.WriteLine("Secondary timer activated ");
+
+            }
+            if (carCounter == 0)
+            {
+                timer = 0f;
+                secondaryTimer = 0f;
+                SwapState();
+            }
         }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            SwapState();
-        }
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    SwapState();
+        //}
     }
 
     public override void OnTriggerEnter(uint id)

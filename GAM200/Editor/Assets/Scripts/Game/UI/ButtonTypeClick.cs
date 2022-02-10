@@ -9,13 +9,22 @@ public class ButtonTypeClick : MonoBehaviour
     Text tooltipText;
     Transform tooltipTrans;
     Vector2 tooltipOffset;
+    //Texture lineDivider1;
+    //Texture lineDivider2;
+    //Texture lineDivider3;
 
 
     public override void Start()
     {
         buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
         tooltipText = GameObject.Find("stringname").GetComponent<Text>();
-        tooltipTrans = GameObject.Find("stringname").GetComponent<Transform>(); 
+        tooltipTrans = GameObject.Find("stringname").GetComponent<Transform>();
+
+        //lineDivider1 = GameObject.Find("Line1").GetComponent<Texture>();
+        //lineDivider2 = GameObject.Find("Line2").GetComponent<Texture>();
+        //lineDivider3 = GameObject.Find("Line3").GetComponent<Texture>();
+
+
         if (entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Draw;

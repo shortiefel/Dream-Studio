@@ -37,6 +37,10 @@ public class ButtonRoad : MonoBehaviour
     Transform displayArrow;
     Transform displayArrowWhite;
 
+    Transform lineDivider1;
+    Vector2 line1;
+  
+
     GameManager gameManager;
     //InputManager inputManager;
 
@@ -85,6 +89,13 @@ public class ButtonRoad : MonoBehaviour
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
         displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
+        lineDivider1 = GameObject.Find("Line1").GetComponent<Transform>();
+        line1 = lineDivider1.position;
+   
+
+
+
+
         Disable<Transform>(drawRoadWhite);
         Disable<Transform>(removeRoadWhite);
         Disable<Transform>(drawERPWhite);
@@ -109,6 +120,9 @@ public class ButtonRoad : MonoBehaviour
 
         drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
         drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
+
+        lineDivider1.position = new Vector2(closeXPosition, line1.y);
+   
 
         //drawRoadMode = false;
         //deleteRoadMode = false;
@@ -155,6 +169,9 @@ public class ButtonRoad : MonoBehaviour
             Enable<Transform>(removeRoad);
             Enable<Transform>(drawERP);
             Enable<Transform>(drawTraffic);
+
+            Enable<Transform>(lineDivider1);
+      
         }
         else
         {
@@ -179,6 +196,9 @@ public class ButtonRoad : MonoBehaviour
 
         drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, closeXPosition, timer), trafficPosition.y);
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, closeXPosition, timer), trafficPosition.y);
+
+        lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, closeXPosition, timer), line1.y);
+      
 
 
         timer += speedMultiply * Time.deltaTime;
@@ -206,6 +226,9 @@ public class ButtonRoad : MonoBehaviour
 
         drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, trafficPosition.x, timer), trafficPosition.y);
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, trafficPosition.x, timer), trafficPosition.y);
+
+        lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, line1.x, timer), line1.y);
+     
 
         timer += speedMultiply * Time.deltaTime;
         if (timer > 0.8f)

@@ -552,22 +552,24 @@ namespace Engine {
 
 			MI::Matrix4<T> mat;
 
-			mat.m[0]  = xaxis[0];
-			mat.m[1]  = yaxis[0];
-			mat.m[2]  = zaxis[0];
-			mat.m[3]  = 0.0f;
-			mat.m[4]  = xaxis[1];
-			mat.m[5]  = yaxis[1];
-			mat.m[6]  = zaxis[1];
-			mat.m[7]  = 0.0f;
-			mat.m[8]  = xaxis[2];
-			mat.m[9]  = yaxis[2];
-			mat.m[10] = zaxis[2];
-			mat.m[11] = 0.0f;
+			mat.m[0]  = xaxis.x;
+			mat.m[1]  = yaxis.x;
+			mat.m[2]  = zaxis.x;
+			mat.m[3]  = T{};
+			mat.m[4]  = xaxis.y;
+			mat.m[5]  = yaxis.y;
+			mat.m[6]  = zaxis.y;
+			mat.m[7]  = T{};
+			mat.m[8]  = xaxis.z;
+			mat.m[9]  = yaxis.z;
+			mat.m[10] = zaxis.z;
+			mat.m[11] = T{};
 			mat.m[12] = -DreamMath::dot(xaxis, eye);
 			mat.m[13] = -DreamMath::dot(yaxis, eye);
 			mat.m[14] = -DreamMath::dot(zaxis, eye);
 			mat.m[15] = 1.0f;
+
+			return mat;
 		}
 	}
 }

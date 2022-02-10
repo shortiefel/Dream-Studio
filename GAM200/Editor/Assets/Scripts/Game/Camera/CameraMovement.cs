@@ -28,7 +28,7 @@ public class CameraMovement : MonoBehaviour
         hasEnter = false;
 
         mousePosition = Input.GetMousePosition();
-        mouseMultiply = 0.3f;
+        mouseMultiply = 0.15f;
     }
 
     public override void Update()

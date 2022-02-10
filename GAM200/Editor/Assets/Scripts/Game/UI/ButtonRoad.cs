@@ -57,7 +57,8 @@ public class ButtonRoad : MonoBehaviour
 
     float speedMultiply;
 
-    public bool additionalButton;
+    public bool revealERPButton;
+    public bool revealTrafficButton;
 
     public override void Start()
     {
@@ -96,8 +97,6 @@ public class ButtonRoad : MonoBehaviour
    
 
 
-
-
         Disable<Transform>(drawRoadWhite);
         Disable<Transform>(removeRoadWhite);
         Disable<Transform>(drawERPWhite);
@@ -128,9 +127,10 @@ public class ButtonRoad : MonoBehaviour
 
 
         lineDivider1.position = new Vector2(closeXPosition, line1.y);
-   
 
-        additionalButton = false;
+
+        revealERPButton = false;
+        revealTrafficButton = false;
 
 
         //drawRoadMode = false;
@@ -341,9 +341,12 @@ public class ButtonRoad : MonoBehaviour
         Enable<Transform>(drawRoad);
         Enable<Transform>(removeRoad);
 
-        if (additionalButton)
+        if (revealERPButton)
         {
             Enable<Transform>(drawERP);
+        }
+        if (revealTrafficButton)
+        {
             Enable<Transform>(drawTraffic);
         }
     }
@@ -360,9 +363,13 @@ public class ButtonRoad : MonoBehaviour
     {
         Enable<Transform>(drawRoadWhite);
         Enable<Transform>(removeRoadWhite);
-        if (additionalButton)
+
+        if (revealERPButton)
         {
             Enable<Transform>(drawERPWhite);
+        }
+        if (revealTrafficButton)
+        {
             Enable<Transform>(drawTrafficWhite);
         }
     }
@@ -401,10 +408,15 @@ public class ButtonRoad : MonoBehaviour
         //activeType = false;
     }
 
-    public void RevealAdditional()
+    public void RevealERP()
     {
-        additionalButton = true;
+        revealERPButton = true;
         Enable<Transform>(drawERP);
+    }
+
+    public void RevealTraffic()
+    {
+        revealTrafficButton = true;
         Enable<Transform>(drawTraffic);
     }
 

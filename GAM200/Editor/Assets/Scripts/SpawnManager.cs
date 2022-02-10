@@ -192,10 +192,16 @@ public class SpawnManager : MonoBehaviour
         score = gameState.GetScore();
         if (score == scoreToSpawn)
         {
-            if(score == 15)
+            if(score == 10)
             {
-                buttonRoad.RevealAdditional();
+                buttonRoad.RevealTraffic();
             }
+
+            else if (score == 15)
+            {
+                buttonRoad.RevealERP();
+            }
+
             CheckPosition();
             if (checkForNoSpawn)
             {

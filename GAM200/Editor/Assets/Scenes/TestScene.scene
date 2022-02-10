@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-[{"Entity":{"Name":"sdr","Parent":10001,"Child":[]},"WaypointComponent":{"Waypoints":[1.0,2.0,3.0,4.0,5.0,4.0,1.0,4.0,-6.800000190734863,4.0,4.0,4.0,5.0,4.0],"Order":[2,2,3],"Section":2},"ScriptComponent":[{"Class":"Test2","IsActive":true}]},{"Entity":{"Name":"Camera","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"Layer":2,"IsActive":true},"CameraComponent":{"Height":15.0,"FOV":1.0,"AR":1.7777777910232545,"IsActive":true},"WaypointComponent":{"Waypoints":[],"Order":[],"Section":0}},{"Entity":{"Name":"Entity","Parent":10001,"Child":[]},"ScriptComponent":[{"Class":"Generate1500Object","IsActive":true}]}]
-=======
+
 [
 
   {

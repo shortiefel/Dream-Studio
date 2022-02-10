@@ -333,6 +333,18 @@ namespace Engine {
 		mainObject.AddMember("ParticleComponent", objType, doc.GetAllocator());
 	}
 
+	void Serializer::AddData(const LightComponent* const t) {
+		if (t == nullptr) return;
+		LOG_ASSERT(t);
+		rapidjson::Value objType(rapidjson::kObjectType);
+		SSerializer _serializer(doc, objType);
+
+		_serializer.SetValue("Colour", t->colour);
+		_serializer.SetValue("IsActive", t->isActive);
+
+		mainObject.AddMember("ParticleComponent", objType, doc.GetAllocator());
+	}
+
 	void Serializer::AddData(const ScriptComponent* const t) {
 		if (t == nullptr) return;
 		LOG_ASSERT(t);

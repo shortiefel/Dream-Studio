@@ -32,7 +32,7 @@ namespace Engine {
 	}
 
 
-	float SoundComponent::GetVolume(float _vol) 
+	float SoundComponent::GetVolume(float) 
 	{
 		return volume;
 	}

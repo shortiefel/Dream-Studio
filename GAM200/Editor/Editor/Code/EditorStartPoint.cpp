@@ -16,6 +16,7 @@ Technology is prohibited.
 /* End Header **********************************************************************************/
 
 #include "Editor/Header/EditorStartPoint.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 #include "Editor/Header/GUI/GUI.hpp"
 #include "Editor/Header/Graphic/EditorSceneCamera.hpp"
@@ -28,6 +29,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/System/FontSystem.hpp"
 #include "Engine/Header/Window.hpp"
+#include "Engine/Header/Management/Settings.hpp"
 
 #include "Engine/Header/Debug Tools/Profiler.hpp"
 
@@ -40,10 +42,30 @@ namespace Editor {
 	}
 
 	void EditorStartPoint::Update(float _dt) {
+		// Function that render to depth map, loops through light array
+		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
+		for (auto& light : lightArray)
+		{
+			// Option to not render individual game object
+			if (!light.isActive) continue;
+
+			// If element in array is not used, skip it
+			const Engine::Entity_id& entity_id = light.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			glViewport(0, 0, light.shadowWidth, light.shadowHeight);
+
+			Engine::GraphicSystem::GetInstance().Render(_dt, &light);
+		}
+
+		glViewport(0, 0, Engine::Settings::windowWidth, Engine::Settings::windowHeight);
+
+		// Render Editor scene with shadow mapping
 		Engine::GraphicSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());
 		Engine::UISystem::GetInstance().Render(GUI::GetGameFboPtr());
 		Engine::FontSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());
 
+		// Render Game scene with shadow mapping
 		Engine::GraphicSystem::GetInstance().Render(0.f, GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
 		Engine::UISystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());
 		Engine::FontSystem::GetInstance().Render(_dt, GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());

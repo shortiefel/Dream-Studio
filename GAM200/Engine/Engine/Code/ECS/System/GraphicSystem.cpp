@@ -266,7 +266,7 @@ namespace Engine
 		GraphicImplementation::UnUseShaderHandle();
 	}
 
-	// Update function for GraphicSystem
+	// Update function for GraphicSystem by passing in a FrameBuffer*
 #ifdef _GAME_BUILD
 	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 camMatrix, bool gameDraw) {
 #else
@@ -280,9 +280,10 @@ namespace Engine
 #endif
 		GraphicImplementation::Renderer::ResetStats();
 
-		// Set background
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// Set background colour
 		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Enable GL_BLEND for transparency of textures
 		glEnable(GL_BLEND);
@@ -301,6 +302,54 @@ namespace Engine
 		_fbo->Unbind();
 #endif
 	}
+
+	// Update function for GraphicSystem by passing in a LightComponent*
+	void GraphicSystem::Render(float _dt, LightComponent* _fbo, Math::mat3 camMatrix) {
+		PROFILER_START("Rendering");
+		_fbo->Bind();
+
+		glClear(GL_DEPTH_BUFFER_BIT);
+
+		GraphicImplementation::Renderer::ResetStats();
+
+		// Set background colour
+		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+
+		// Enable GL_BLEND for transparency of textures
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		// Render game objects and collision lines
+		RenderGameObjects(camMatrix, _dt);
+		RenderLines(camMatrix);
+
+		glDisable(GL_BLEND);
+
+#ifdef _GAME_BUILD
+
+#else
+		_fbo->Unbind();
+#endif
+	}
+
+	// Function that creates the FBO for all existing light component
+	void CreateLightFBO()
+	{
+		// Loops through light array
+		auto& lightArray = dreamECSGame->GetComponentArrayData<LightComponent>();
+		for (auto& light : lightArray)
+		{
+			// Option to not render individual game object
+			if (!light.isActive) continue;
+
+			// If element in array is not used, skip it
+			const Entity_id& entity_id = light.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			light.FBOCreate();
+		}
+	}
+
 
 	// Init function for GraphicSystem
 	bool GraphicSystem::Create()
@@ -326,6 +375,9 @@ namespace Engine
 
 		// Initialise meshes
 		GraphicImplementation::Renderer::Init();
+
+		// Initialise Light FBO
+		CreateLightFBO();
 
 		LOG_INSTANCE("Graphic System created");
 		return true;

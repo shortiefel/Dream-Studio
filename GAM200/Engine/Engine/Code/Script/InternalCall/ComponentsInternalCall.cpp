@@ -115,7 +115,7 @@ namespace Engine {
 		void SetSound_Volume_Engine(unsigned int entityID, float* _vol);
 
 		void GetSound_Mute_Engine(unsigned int entityID, bool* _mute);
-		void SetSound_Mute_Engine(unsigned int entityID, bool* _mute);
+		void SetSound_Mute_Engine(unsigned int entityID, bool*);
 
 		void SetSoundGroup_Mute_Engine(int audioGroup, bool _state);
 		bool GetSoundGroup_Mute_Engine(int audioGroup);
@@ -513,7 +513,7 @@ namespace Engine {
 			if (!ctype) return;
 			*_mute = ctype->isMute;
 		}
-		void SetSound_Mute_Engine(unsigned int entityID, bool* _mute){
+		void SetSound_Mute_Engine(unsigned int entityID, bool*){
 			SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
 
 			if (!ctype) return;

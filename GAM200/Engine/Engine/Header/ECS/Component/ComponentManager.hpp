@@ -87,6 +87,8 @@ namespace Engine {
 			{ DUPLICATE_COMPONENT(RigidBodyComponent); }
 			{ DUPLICATE_COMPONENT(UIComponent); }
 			{ DUPLICATE_COMPONENT(FontComponent); }
+			{ DUPLICATE_COMPONENT(ParticleComponent); }
+			{ DUPLICATE_COMPONENT(LightComponent); }
 		}
 
 		template<typename T>

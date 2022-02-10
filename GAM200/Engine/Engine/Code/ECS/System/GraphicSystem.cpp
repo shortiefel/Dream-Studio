@@ -249,13 +249,16 @@ namespace Engine
 		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
 
 		// Looping through lines buffer; batch rendering
-		Math::ivec2 startPoint = Game::Grid::GetInstance().GetStartPoint();
-		Math::ivec2 mapSize = Game::Grid::GetInstance().GetGridSize() + startPoint;
-		for(int xPos = startPoint.x; xPos <= mapSize.x; xPos++)
-			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, static_cast<float>(startPoint.y) -0.5f }, { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
-		for(int yPos = startPoint.y; yPos <= mapSize.y; yPos++)
-			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(startPoint.x) -0.5f, static_cast<float>(yPos) - 0.5f }, {  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
-
+				Math::ivec2 mapSize = Game::Grid::GetInstance().GetGridSize();
+		for(int xPos = 0; xPos <= mapSize.x; xPos++)
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, -0.5f }, 
+													   { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, 
+													   { 0.4f, 0.4f, 0.4f, 1.f });
+		for(int yPos = 0; yPos <= mapSize.y; yPos++)
+			GraphicImplementation::Renderer::DrawLines({ -0.5f, static_cast<float>(yPos) - 0.5f }, 
+													   { static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f },
+													   { 0.4f, 0.4f, 0.4f, 1.f });
+													   
 		GraphicImplementation::Renderer::EndLinesBatch();
 
 		glLineWidth(2.5f); // Adjust line thickness here
@@ -266,7 +269,7 @@ namespace Engine
 		GraphicImplementation::UnUseShaderHandle();
 	}
 
-	// Update function for GraphicSystem
+	// Update function for GraphicSystem by passing in a FrameBuffer*
 #ifdef _GAME_BUILD
 	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 camMatrix, bool gameDraw) {
 #else
@@ -280,9 +283,10 @@ namespace Engine
 #endif
 		GraphicImplementation::Renderer::ResetStats();
 
-		// Set background
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// Set background colour
 		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Enable GL_BLEND for transparency of textures
 		glEnable(GL_BLEND);
@@ -301,6 +305,54 @@ namespace Engine
 		_fbo->Unbind();
 #endif
 	}
+
+	// Update function for GraphicSystem by passing in a LightComponent*
+	void GraphicSystem::Render(float _dt, LightComponent* _fbo, Math::mat3 camMatrix) {
+		PROFILER_START("Rendering");
+		_fbo->Bind();
+
+		glClear(GL_DEPTH_BUFFER_BIT);
+
+		GraphicImplementation::Renderer::ResetStats();
+
+		// Set background colour
+		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+
+		// Enable GL_BLEND for transparency of textures
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		// Render game objects and collision lines
+		RenderGameObjects(camMatrix, _dt);
+		RenderLines(camMatrix);
+
+		glDisable(GL_BLEND);
+
+#ifdef _GAME_BUILD
+
+#else
+		_fbo->Unbind();
+#endif
+	}
+
+	// Function that creates the FBO for all existing light component
+	void CreateLightFBO()
+	{
+		// Loops through light array
+		auto& lightArray = dreamECSGame->GetComponentArrayData<LightComponent>();
+		for (auto& light : lightArray)
+		{
+			// Option to not render individual game object
+			if (!light.isActive) continue;
+
+			// If element in array is not used, skip it
+			const Entity_id& entity_id = light.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			light.FBOCreate();
+		}
+	}
+
 
 	// Init function for GraphicSystem
 	bool GraphicSystem::Create()
@@ -326,6 +378,9 @@ namespace Engine
 
 		// Initialise meshes
 		GraphicImplementation::Renderer::Init();
+
+		// Initialise Light FBO
+		CreateLightFBO();
 
 		LOG_INSTANCE("Graphic System created");
 		return true;

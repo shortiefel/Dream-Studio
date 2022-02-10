@@ -57,6 +57,8 @@ public class ButtonRoad : MonoBehaviour
 
     float speedMultiply;
 
+    public bool additionalButton;
+
     public override void Start()
     {
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
@@ -101,6 +103,9 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(drawERPWhite);
         Disable<Transform>(drawTrafficWhite);
 
+        Disable<Transform>(drawERP);
+        Disable<Transform>(drawTraffic);
+
         Disable<Transform>(displayArrowWhite);
 
         opening = false;
@@ -121,8 +126,12 @@ public class ButtonRoad : MonoBehaviour
         drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
         drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
 
+<<<<<<< Updated upstream
         lineDivider1.position = new Vector2(closeXPosition, line1.y);
    
+=======
+        additionalButton = false;
+>>>>>>> Stashed changes
 
         //drawRoadMode = false;
         //deleteRoadMode = false;
@@ -165,6 +174,7 @@ public class ButtonRoad : MonoBehaviour
             Enable<Transform>(displayArrowWhite);
 
 
+<<<<<<< Updated upstream
             Enable<Transform>(drawRoad);
             Enable<Transform>(removeRoad);
             Enable<Transform>(drawERP);
@@ -172,6 +182,9 @@ public class ButtonRoad : MonoBehaviour
 
             Enable<Transform>(lineDivider1);
       
+=======
+            EnableAllNormal();
+>>>>>>> Stashed changes
         }
         else
         {
@@ -255,9 +268,9 @@ public class ButtonRoad : MonoBehaviour
                         gameManager.RoadPlacementHandler();
                         Enable<Transform>(drawRoadWhite);
 
-                        Enable<Transform>(removeRoad);
-                        Enable<Transform>(drawERP);
-                        Enable<Transform>(drawTraffic);
+                        EnableAllNormal();
+
+                        Disable<Transform>(drawRoad);
                         break;
                     }
                 case ButtonType.Remove:
@@ -265,9 +278,9 @@ public class ButtonRoad : MonoBehaviour
                         gameManager.RemoveRoadHandler();
                         Enable<Transform>(removeRoadWhite);
 
-                        Enable<Transform>(drawRoad);
-                        Enable<Transform>(drawERP);
-                        Enable<Transform>(drawTraffic);
+                        EnableAllNormal();
+
+                        Disable<Transform>(removeRoad);
                         break;
                     }
                 case ButtonType.ERP:
@@ -275,9 +288,9 @@ public class ButtonRoad : MonoBehaviour
                         gameManager.ERPHandler();
                         Enable<Transform>(drawERPWhite);
 
-                        Enable<Transform>(drawRoad);
-                        Enable<Transform>(removeRoad);
-                        Enable<Transform>(drawTraffic);
+                        EnableAllNormal();
+
+                        Disable<Transform>(drawERP);
                         break;
                     }
                 case ButtonType.TrafficLight:
@@ -285,9 +298,9 @@ public class ButtonRoad : MonoBehaviour
                         gameManager.TrafficLightHandler();
                         Enable<Transform>(drawTrafficWhite);
 
-                        Enable<Transform>(drawRoad);
-                        Enable<Transform>(removeRoad);
-                        Enable<Transform>(drawERP);
+                        EnableAllNormal();
+
+                        Disable<Transform>(drawTraffic);
                         break;
                     }
             }
@@ -301,10 +314,7 @@ public class ButtonRoad : MonoBehaviour
             SceneManager.SetDrawMode(false);
             gameState.SetDrawMode(false);
 
-            Enable<Transform>(drawRoad);
-            Enable<Transform>(removeRoad);
-            Enable<Transform>(drawERP);
-            Enable<Transform>(drawTraffic);
+            EnableAllNormal();
         }
     }
 
@@ -332,82 +342,52 @@ public class ButtonRoad : MonoBehaviour
             CloseTabs();
     }
 
-    public override void OnMouseOver()
+    public void EnableAllNormal()
     {
-        //if (Input.GetMouseButtonDown(MouseCode.Left))
-        //{
-        //    if (buttonType)
-        //    {
-        //        //Show draw road
-        //        if (!activeType)
-        //        {
-        //            Disable<Transform>(drawRoad);
-        //            Enable<Transform>(drawRoadWhite);
-        //            //drawRoadMode = true;
-        //            Disable<Transform>(removeRoadWhite);
-        //            Enable<Transform>(removeRoad);
-        //            Disable<Transform>(drawERP);
-        //            Enable<Transform>(drawERPWhite);
-        //            Disable<Transform>(drawTraffic);
-        //            Enable<Transform>(drawTrafficWhite);
-        //
-        //            Enable<Transform>(drawRoadWhite);
-        //            gameManager.RoadPlacementHandler();
-        //            //SwitchMode();
-        //            SceneManager.SetDrawMode(true);
-        //            gameState.SetDrawMode(true);
-        //            activeType = true;
-        //        }
-        //        else
-        //        {
-        //            DisableAll();
-        //        }
-        //
-        //    }
-        //
-        //    else
-        //    {
-        //        //Show remove road
-        //        if (!activeType)
-        //        {
-        //            Disable<Transform>(removeRoad);
-        //            Enable<Transform>(removeRoadWhite);
-        //            //deleteRoadMode = true;
-        //            Enable<Transform>(drawRoad);
-        //            Disable<Transform>(drawRoadWhite);
-        //            Enable<Transform>(drawERP);
-        //            Disable<Transform>(drawERPWhite);
-        //            Enable<Transform>(drawTraffic);
-        //            Disable<Transform>(drawTrafficWhite);
-        //
-        //            // SwitchMode();
-        //            Enable<Transform>(removeRoadWhite);
-        //            gameManager.RemoveRoadHandler();
-        //
-        //            SceneManager.SetDrawMode(true);
-        //            gameState.SetDrawMode(true);
-        //            activeType = true;
-        //        }
-        //        else
-        //        {
-        //            DisableAll();
-        //        }
-        //
-        //    }
-        //
-        //}
+        Enable<Transform>(drawRoad);
+        Enable<Transform>(removeRoad);
+
+        if (additionalButton)
+        {
+            Enable<Transform>(drawERP);
+            Enable<Transform>(drawTraffic);
+        }
     }
+
+    public void DisableAllNormal()
+    {
+        Disable<Transform>(drawRoad);
+        Disable<Transform>(removeRoad);
+        Disable<Transform>(drawERP);
+        Disable<Transform>(drawTraffic);
+    }
+
+    public void EnableAllWhite()
+    {
+        Enable<Transform>(drawRoadWhite);
+        Enable<Transform>(removeRoadWhite);
+        if (additionalButton)
+        {
+            Enable<Transform>(drawERPWhite);
+            Enable<Transform>(drawTrafficWhite);
+        }
+    }
+
+    public void DisableAllWhite()
+    {
+        Disable<Transform>(drawRoadWhite);
+        Disable<Transform>(removeRoadWhite);
+        Disable<Transform>(drawERPWhite);
+        Disable<Transform>(drawTrafficWhite);
+    }
+
 
     public void ResetAll()
     {
-        Enable<Transform>(drawRoad);
-        Disable<Transform>(drawRoadWhite);
-        Enable<Transform>(removeRoad);
-        Disable<Transform>(removeRoadWhite);
-        Enable<Transform>(drawERP);
-        Disable<Transform>(drawERPWhite);
-        Enable<Transform>(drawTraffic);
-        Disable<Transform>(drawTrafficWhite);
+        EnableAllNormal();
+        DisableAllWhite();
+
+        
         gameManager.ClearInputActions();
 
         SceneManager.SetDrawMode(false);
@@ -417,19 +397,21 @@ public class ButtonRoad : MonoBehaviour
 
     public void DisableAll()
     {
-        Disable<Transform>(drawRoad);
-        Disable<Transform>(drawRoadWhite);
-        Disable<Transform>(removeRoad);
-        Disable<Transform>(removeRoadWhite);
-        Disable<Transform>(drawERP);
-        Disable<Transform>(drawERPWhite);
-        Disable<Transform>(drawTraffic);
-        Disable<Transform>(drawTrafficWhite);
+        DisableAllNormal();
+        DisableAllWhite();
+
         gameManager.ClearInputActions();
 
         SceneManager.SetDrawMode(false);
         gameState.SetDrawMode(false);
         //activeType = false;
+    }
+
+    public void RevealAdditional()
+    {
+        additionalButton = true;
+        Enable<Transform>(drawERP);
+        Enable<Transform>(drawTraffic);
     }
 
 }

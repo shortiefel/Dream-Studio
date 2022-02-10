@@ -55,7 +55,7 @@ namespace Engine {
 		//NEW STUFF
 		//_sg - SoundComponent
 		//_state - true to mute/false to unmute
-		void MuteSound(SoundComponent* soundCom, bool _state);
+		//void MuteSound(SoundComponent* soundCom, bool _state);
 		void SetSoundGroup_Mute(SoundGrp _sg, bool _state);
 		bool GetSoundGroup_Mute(SoundGrp _sg);
 		void SetSoundGroup_Volume(SoundGrp _sg, float _vol);
@@ -64,10 +64,10 @@ namespace Engine {
 		/*void MuteBGM(SoundComponent* soundCom);
 		void MuteSFX(SoundComponent* soundCom);*/
 
-		float GetCurrentMasterVolume(SoundComponent* soundCom);
-		void MasterVolumeDown(SoundComponent* soundCom);
-		void MasterVolumeUp(SoundComponent* soundCom);
-		void VolumeChange(SoundComponent* soundCom);
+		//float GetCurrentMasterVolume(SoundComponent* soundCom);
+		//void MasterVolumeDown(SoundComponent* soundCom);
+		//void MasterVolumeUp(SoundComponent* soundCom);
+		//void VolumeChange(SoundComponent* soundCom);
 
 
 

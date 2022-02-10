@@ -20,6 +20,8 @@ public class SpawnManager : MonoBehaviour
 
     bool checkForNoSpawn;
 
+    ButtonRoad buttonRoad;
+
     public override void Start()
     {
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
@@ -34,6 +36,8 @@ public class SpawnManager : MonoBehaviour
         //maxTimer = 0.5f;
 
         checkForNoSpawn = true;
+
+        buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
         //while (checkForNoSpawn)
         //{
         //    Vector2Int roadPosition = SpawnRandomRoad();
@@ -50,14 +54,14 @@ public class SpawnManager : MonoBehaviour
         //        checkForNoSpawn = false;
         //    }
         //}
-       //Vector2Int roadPosition = new Vector2Int(5,5);
-       //Vector2Int roadPosition2 = new Vector2Int(10, 5);
-       //
-       //if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
-       //{
-       //    roadManager.PlaceSpawnHouse(roadPosition);
-       //    roadManager.PlaceSpawnDestination(roadPosition2);
-       //}
+        //Vector2Int roadPosition = new Vector2Int(5,5);
+        //Vector2Int roadPosition2 = new Vector2Int(10, 5);
+        //
+        //if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
+        //{
+        //    roadManager.PlaceSpawnHouse(roadPosition);
+        //    roadManager.PlaceSpawnDestination(roadPosition2);
+        //}
     }
 
     private Vector2Int SpawnRandomRoad()
@@ -188,6 +192,10 @@ public class SpawnManager : MonoBehaviour
         score = gameState.GetScore();
         if (score == scoreToSpawn)
         {
+            if(score == 15)
+            {
+                buttonRoad.RevealAdditional();
+            }
             CheckPosition();
             if (checkForNoSpawn)
             {

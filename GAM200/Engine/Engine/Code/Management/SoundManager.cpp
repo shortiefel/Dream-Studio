@@ -136,35 +136,35 @@ namespace Engine
 		return ID;
 	}
 
-	float SoundManager::GetCurrentMasterVolume(SoundComponent* soundCom)
-	{
-		//float currentVol;
-		//if (soundCom == nullptr)
-		//{
-		//	currentVol = MasterGroup->getVolume(&soundCom->volume);
-		//	return currentVol;
-		//}
-		//else
-		//{
-		//	switch (soundCom->soundType)
-		//	{
-		//
-		//	case SoundGrp::MUSIC:
-		//		currentVol = MusicGroup->getVolume(&soundCom->volume);
-		//		break;
-		//	case SoundGrp::SFX:
-		//		currentVol = SFXGroup->getVolume(&soundCom->volume);
-		//		break;
-		//	default:
-		//		currentVol = MasterGroup->getVolume(&soundCom->volume);
-		//		break;
-		//
-		//	}
-		//	return currentVol;
-		//}
-		return 0;
-		
-	}
+	//float SoundManager::GetCurrentMasterVolume(SoundComponent* soundCom)
+	//{
+	//	//float currentVol;
+	//	//if (soundCom == nullptr)
+	//	//{
+	//	//	currentVol = MasterGroup->getVolume(&soundCom->volume);
+	//	//	return currentVol;
+	//	//}
+	//	//else
+	//	//{
+	//	//	switch (soundCom->soundType)
+	//	//	{
+	//	//
+	//	//	case SoundGrp::MUSIC:
+	//	//		currentVol = MusicGroup->getVolume(&soundCom->volume);
+	//	//		break;
+	//	//	case SoundGrp::SFX:
+	//	//		currentVol = SFXGroup->getVolume(&soundCom->volume);
+	//	//		break;
+	//	//	default:
+	//	//		currentVol = MasterGroup->getVolume(&soundCom->volume);
+	//	//		break;
+	//	//
+	//	//	}
+	//	//	return currentVol;
+	//	//}
+	//	return 0;
+	//	
+	//}
 
 	int SoundManager::SetLoop(SoundComponent* soundCom)
 	{
@@ -202,12 +202,12 @@ namespace Engine
 		SFXGroup->setPaused(paused);
 	}
 
-	void SoundManager::MuteSound(SoundComponent* soundCom, bool _state) {
-		//soundCom->isMute = _state;
-		//auto it = channelMap.find(soundCom->channelID);
-		//if (it == channelMap.end()) return;
-		//it->second->setMute(soundCom->isMute);
-	}
+	//void SoundManager::MuteSound(SoundComponent* soundCom, bool _state) {
+	//	//soundCom->isMute = _state;
+	//	//auto it = channelMap.find(soundCom->channelID);
+	//	//if (it == channelMap.end()) return;
+	//	//it->second->setMute(soundCom->isMute);
+	//}
 
 	void SoundManager::SetSoundGroup_Mute(SoundGrp _sg, bool _state)
 	{
@@ -298,57 +298,57 @@ namespace Engine
 		}
 	}*/
 
-	void SoundManager::MasterVolumeDown(SoundComponent* soundCom)
-	{
-		//float newVolume = 0.f;
-		//float currentMasterVol = GetCurrentMasterVolume(0);
-		//newVolume -=currentMasterVol;
-		//
-		//switch (soundCom->soundType)
-		//{
-		//
-		//case SoundGrp::MUSIC:
-		//	MusicGroup->setVolume(newVolume);
-		//	break;
-		//case SoundGrp::SFX:
-		//	SFXGroup->setVolume(newVolume);
-		//	break;
-		//default:
-		//	MasterGroup->setVolume(newVolume);
-		//	break;
-		//
-		//}
-		
-	}
+	//void SoundManager::MasterVolumeDown(SoundComponent* soundCom)
+	//{
+	//	//float newVolume = 0.f;
+	//	//float currentMasterVol = GetCurrentMasterVolume(0);
+	//	//newVolume -=currentMasterVol;
+	//	//
+	//	//switch (soundCom->soundType)
+	//	//{
+	//	//
+	//	//case SoundGrp::MUSIC:
+	//	//	MusicGroup->setVolume(newVolume);
+	//	//	break;
+	//	//case SoundGrp::SFX:
+	//	//	SFXGroup->setVolume(newVolume);
+	//	//	break;
+	//	//default:
+	//	//	MasterGroup->setVolume(newVolume);
+	//	//	break;
+	//	//
+	//	//}
+	//	
+	//}
 
-	void SoundManager::MasterVolumeUp(SoundComponent* soundCom)
-	{
-		//float newVolume = 0.f;
-		//float currentMasterVol = GetCurrentMasterVolume(0);
-		//newVolume += currentMasterVol;
-		//
-		//switch (soundCom->soundType)
-		//{
-		//
-		//case SoundGrp::MUSIC:
-		//	MusicGroup->setVolume(newVolume);
-		//	break;
-		//case SoundGrp::SFX:
-		//	SFXGroup->setVolume(newVolume);
-		//	break;
-		//default:
-		//	MasterGroup->setVolume(newVolume);
-		//	break;
-		//
-		//}
-	}
+	//void SoundManager::MasterVolumeUp(SoundComponent* soundCom)
+	//{
+	//	//float newVolume = 0.f;
+	//	//float currentMasterVol = GetCurrentMasterVolume(0);
+	//	//newVolume += currentMasterVol;
+	//	//
+	//	//switch (soundCom->soundType)
+	//	//{
+	//	//
+	//	//case SoundGrp::MUSIC:
+	//	//	MusicGroup->setVolume(newVolume);
+	//	//	break;
+	//	//case SoundGrp::SFX:
+	//	//	SFXGroup->setVolume(newVolume);
+	//	//	break;
+	//	//default:
+	//	//	MasterGroup->setVolume(newVolume);
+	//	//	break;
+	//	//
+	//	//}
+	//}
 
-	void SoundManager::VolumeChange(SoundComponent* soundCom)
-	{
-		//if (soundCom->isIncrease)
-		//	MasterVolumeUp(soundCom);
-		//if (soundCom->isDecrease)
-		//	MasterVolumeDown(soundCom);
-	}
+	//void SoundManager::VolumeChange(SoundComponent* soundCom)
+	//{
+	//	//if (soundCom->isIncrease)
+	//	//	MasterVolumeUp(soundCom);
+	//	//if (soundCom->isDecrease)
+	//	//	MasterVolumeDown(soundCom);
+	//}
 
 }

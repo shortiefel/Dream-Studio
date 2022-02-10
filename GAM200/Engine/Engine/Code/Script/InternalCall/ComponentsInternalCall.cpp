@@ -517,7 +517,8 @@ namespace Engine {
 			SoundComponent* ctype = dreamECSGame->GetComponentPTR<SoundComponent>(entityID);
 
 			if (!ctype) return;
-			SoundManager::GetInstance().MuteSound(ctype, *_mute);
+			//SoundManager::GetInstance().MuteSound(ctype, *_mute);
+			std::cout << "SetSound_Mute_Engine is currently not in used\n";
 		}
 
 		void SetSoundGroup_Mute_Engine(int audioGroup, bool _state) {

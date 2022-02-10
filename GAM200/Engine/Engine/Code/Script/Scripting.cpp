@@ -257,17 +257,17 @@ namespace Engine {
 				std::vector<char> fileData = buffer;
 
 				MonoImageOpenStatus status;
-				MonoImage* image = mono_image_open_from_data_full(fileData.data(), static_cast<uint32_t>(fileData.size()), 1, &status, 0);
+				MonoImage* imageTem = mono_image_open_from_data_full(fileData.data(), static_cast<uint32_t>(fileData.size()), 1, &status, 0);
 				if (status != MONO_IMAGE_OK)
 				{
 					LOG_ERROR("Bad MonoImage");
 					return;
 				}
 
-				assem = mono_assembly_load_from_full(image, "Data/CSScript/CSScript.dll", &status, 0);
+				assem = mono_assembly_load_from_full(imageTem, "Data/CSScript/CSScript.dll", &status, 0);
 
 				// Free the image
-				mono_image_close(image);
+				mono_image_close(imageTem);
 			}
 
 			if (!assem) {
@@ -308,17 +308,17 @@ namespace Engine {
 				std::vector<char> fileData = buffer;
 
 				MonoImageOpenStatus status;
-				MonoImage* image = mono_image_open_from_data_full(fileData.data(), static_cast<uint32_t>(fileData.size()), 1, &status, 0);
+				MonoImage* imageTem = mono_image_open_from_data_full(fileData.data(), static_cast<uint32_t>(fileData.size()), 1, &status, 0);
 				if (status != MONO_IMAGE_OK)
 				{
 					LOG_ERROR("Bad MonoImage");
 					return;
 				}
 
-				assemCore = mono_assembly_load_from_full(image, "Data/CSScript/EngineCS.dll", &status, 0);
+				assemCore = mono_assembly_load_from_full(imageTem, "Data/CSScript/EngineCS.dll", &status, 0);
 
 				// Free the image
-				mono_image_close(image);
+				mono_image_close(imageTem);
 			}
 			if (!assemCore) {
 				LOG_ERROR("Failed loading assembly");

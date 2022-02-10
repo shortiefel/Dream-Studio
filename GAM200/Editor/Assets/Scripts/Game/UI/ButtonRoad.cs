@@ -126,12 +126,12 @@ public class ButtonRoad : MonoBehaviour
         drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
         drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
 
-<<<<<<< Updated upstream
+
         lineDivider1.position = new Vector2(closeXPosition, line1.y);
    
-=======
+
         additionalButton = false;
->>>>>>> Stashed changes
+
 
         //drawRoadMode = false;
         //deleteRoadMode = false;
@@ -174,17 +174,11 @@ public class ButtonRoad : MonoBehaviour
             Enable<Transform>(displayArrowWhite);
 
 
-<<<<<<< Updated upstream
-            Enable<Transform>(drawRoad);
-            Enable<Transform>(removeRoad);
-            Enable<Transform>(drawERP);
-            Enable<Transform>(drawTraffic);
+            EnableAllNormal();
 
             Enable<Transform>(lineDivider1);
       
-=======
-            EnableAllNormal();
->>>>>>> Stashed changes
+
         }
         else
         {

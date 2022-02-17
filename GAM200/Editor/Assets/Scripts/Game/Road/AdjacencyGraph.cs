@@ -6,16 +6,25 @@ using System.Threading.Tasks;
 
 public class AdjacencyGraph
 {
-    Dictionary<Vertex, List<Vertex>> adjacencyDictionary = new Dictionary<Vertex, List<Vertex>>();
+    Dictionary<Vertex, List<Vertex>> adjacencyDictionary;
 
+    public AdjacencyGraph()
+    {
+        adjacencyDictionary = new Dictionary<Vertex, List<Vertex>>();
+    }
     public Vertex AddVertex(Vector2 position)
     {
+        Console.WriteLine("Adding Vertex with vector2 ");
+
         if (GetVertexAt(position) != null)
         {
+            Console.WriteLine("Failed ");
             return null;
         }
 
+        Console.WriteLine("Adding Vertex with before ");
         Vertex v = new Vertex(position);
+        Console.WriteLine("Adding Vertex with before222222 ");
         AddVertex(v);
         return v;
 
@@ -23,6 +32,7 @@ public class AdjacencyGraph
 
     private void AddVertex(Vertex v)
     {
+        Console.WriteLine("Adding Vertex with Vertex");
         if (adjacencyDictionary.ContainsKey(v))
             return;
         adjacencyDictionary.Add(v, new List<Vertex>());
@@ -30,6 +40,11 @@ public class AdjacencyGraph
 
     private Vertex GetVertexAt(Vector2 position)
     {
+        //foreach(var x in adjacencyDictionary.Keys)
+        //{
+        //    if (CompareVertices(position, x.Position)) return x;
+        //}
+        //return null;
         return adjacencyDictionary.Keys.FirstOrDefault(x => CompareVertices(position, x.Position));
     }
 
@@ -40,6 +55,7 @@ public class AdjacencyGraph
 
     public void AddEdge(Vector2 position1, Vector2 position2)
     {
+        Console.WriteLine("Adding edge");
         if (CompareVertices(position1, position2))
         {
             return;
@@ -67,6 +83,17 @@ public class AdjacencyGraph
         }
         if (adjacencyDictionary.ContainsKey(v1))
         {
+            //bool found = false;
+            //foreach (var x in adjacencyDictionary[v1])
+            //{
+            //    if (x == v2)
+            //    {
+            //        found = true;
+            //        break;
+            //    }
+            //}
+            //
+            //if(!found) adjacencyDictionary[v1].Add(v2);
             if (adjacencyDictionary[v1].FirstOrDefault(x => x == v2) == null)
             {
                 adjacencyDictionary[v1].Add(v2);

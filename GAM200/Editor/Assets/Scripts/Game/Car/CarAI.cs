@@ -5,7 +5,7 @@ using System;
 public class CarAI : MonoBehaviour
 {
     //[SerializeField]
-    private List<Vector2Int> path;
+    private List<Vector2> path;
     //private Queue<Vector2Int> tlPath;
     private List<uint> tlIndex;
 
@@ -14,7 +14,7 @@ public class CarAI : MonoBehaviour
     //[SerializeField]
     //private float turningAngleOffset;
     //[SerializeField]
-    private Vector2Int currentTargetPosition;
+    private Vector2 currentTargetPosition;
 
     //[SerializeField]
     //private GameObject raycastStartingPoint = null;
@@ -110,10 +110,10 @@ public class CarAI : MonoBehaviour
         }
     }
 
-    public void SetPath(List<Vector2Int> newPath, ref StructureModel endStructure)
+    public void SetPath(List<Vector2> newPath)
     {
         stop = false;
-        endPoint = endStructure;
+        //endPoint = endStructure;
 
         Console.WriteLine("Set 2nd  CarAi path");
         if (newPath.Count == 0)

@@ -4,38 +4,73 @@ using System.Linq;
 
 public class RoadHelper : MonoBehaviour
 {
-    protected List<Marker> pedestrianMarkers;
-
     protected List<Marker> carMarkers;
 
     protected bool isCorner;
 
     protected bool hasCrosswalks;
 
-    float approximateThresholdCorner = 0.3f;
+    float approximateThresholdCorner;
 
-    private Marker incomming, outgoing;
+    private Marker incoming, outgoing;
+    public int num;
+    Waypoint waypoint;
 
-    public virtual Marker GetpositioForPedestrianToSpwan(Vector2 structurePosition)
+    public override void Start()
     {
-        return GetClosestMarkeTo(structurePosition, pedestrianMarkers);
+        isCorner = false;
+        hasCrosswalks = false;
+
+        approximateThresholdCorner = 0.3f;
+
+        Waypoint wp = GetComponent<Waypoint>();
+
+        List<List<List<Vector2>>> listOfWaypoints = wp.GetWaypoints();
+        carMarkers = new List<Marker>();
+
+        //foreach (var incomingOutgoing in listOfWaypoints)
+        for (int i = 0; i <listOfWaypoints.Count; i++)
+        {
+            foreach (var markerss in listOfWaypoints[i])
+            {
+                carMarkers.Add(new Marker(markerss));
+
+                //if (markerss == incomingOutgoing[0])
+                //    incoming = carMarkers[0];
+                //else
+                //    outgoing = carMarkers[0];
+
+                //Incoming
+                if (i == 0)
+                {
+                    incoming = carMarkers[0];
+                }
+                //Outgoing
+                else
+                {
+                    outgoing = carMarkers[0];
+                }
+            }
+        }
+        Debug.Log("Marker position = " + outgoing.Position);
     }
 
-    public virtual Marker GetPositioForCarToSpawn(Vector2 nextPathPosition)
+    public virtual Marker GetPositionForCarToSpawn(Vector2 nextPathPosition)
     {
+        Console.WriteLine("print outgoing");
         return outgoing;
     }
 
-    public virtual Marker GetPositioForCarToEnd(Vector2 previousPathPosition)
+    public virtual Marker GetPositionForCarToEnd(Vector2 previousPathPosition)
     {
-        return incomming;
+        return incoming;
     }
 
-    protected Marker GetClosestMarkeTo(Vector2 structurePosition, List<Marker> pedestrianMarkers, bool isCorner = false)
+    protected Marker GetClosestMarkerTo(Vector2 structurePosition, List<Marker> _carMarkers, bool isCorner = false)
     {
         if (isCorner)
         {
-            foreach (var marker in pedestrianMarkers)
+            foreach (var marker in _carMarkers)
             {
                 var direction = marker.Position - structurePosition;
                 direction.Normalize();
@@ -50,7 +85,7 @@ public class RoadHelper : MonoBehaviour
         {
             Marker closestMarker = null;
             float distance = float.MaxValue;
-            foreach (var marker in pedestrianMarkers)
+            foreach (var marker in _carMarkers)
             {
                 var markerDistance = Vector2.Distance(structurePosition, marker.Position);
                 if (distance > markerDistance)
@@ -63,21 +98,13 @@ public class RoadHelper : MonoBehaviour
         }
     }
 
-    public Vector2 GetClosestPedestrainPosition(Vector2 currentPosition)
-    {
-        return GetClosestMarkeTo(currentPosition, pedestrianMarkers, isCorner).Position;
-    }
-
     public Vector2 GetClosestCarMarkerPosition(Vector2 currentPosition)
     {
-        return GetClosestMarkeTo(currentPosition, carMarkers, false).Position;
+        if (carMarkers == null) Console.WriteLine("Getting CarMarker    In roadhelper and carmarker is null");
+        return new Vector2(0, 0);
+        //return GetClosestMarkerTo(currentPosition, carMarkers, false).Position;
     }
 
-
-    public List<Marker> GetAllPedestrianMarkers()
-    {
-        return pedestrianMarkers;
-    }
 
     public List<Marker> GetAllCarMarkers()
     {

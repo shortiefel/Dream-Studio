@@ -114,11 +114,13 @@ public class Grid
             Console.WriteLine(data);
         }
 
-        //PrintGridOut_Engine();*/
-        Console.WriteLine("-----------------------------------------");
-        Console.WriteLine(_startX + " " + _startY);
-        Console.WriteLine(_width + " " + _height);
-        Console.WriteLine("-----------------------------------------");
+
+        //Console.WriteLine("-----------------------------------------");
+        //Console.WriteLine(_startX + " " + _startY);
+        //Console.WriteLine(_width + " " + _height);
+        //Console.WriteLine("-----------------------------------------");
+
+        PrintGridOut_Engine();
 
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -167,7 +169,9 @@ public class Grid
             }*/
             
             _grid[i - _startX, j - _startY] = value;
-            //SetCellType_Engine(i, j, (int)value);
+            SetCellType_Engine(i, j, (int)value);
+
+            PrintGridOut();
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

@@ -118,6 +118,7 @@ namespace Engine {
 	}
 
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent) {
+		printf("dfisdhfudsfiusdfiusf\n\n\n\n");
 		Math::ivec2 arr[MAX_LINE];
 		Game::Grid::GetInstance().AStarSearch(arr, count, startPosition, endPosition, isAgent);
 		int loop = *count;

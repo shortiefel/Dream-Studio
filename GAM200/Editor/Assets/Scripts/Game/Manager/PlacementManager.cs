@@ -166,8 +166,8 @@ public class PlacementManager : MonoBehaviour
 
     internal List<Vector2Int> GetPathBetween(Vector2Int startPosition, Vector2Int endPosition, bool isAgent = false)
     {
+        Console.WriteLine("START OF ALL A STAR");
         var resultPath = GridSearch.AStarSearch(placementGrid, new Point(startPosition.x, startPosition.y), new Point(endPosition.x, endPosition.y), isAgent);
-        //Console.WriteLine("After a star");
         
         List<Vector2Int> path = new List<Vector2Int>();
         foreach (Point point in resultPath)

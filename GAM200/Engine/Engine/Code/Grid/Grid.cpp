@@ -35,6 +35,12 @@ namespace Engine {
             mapSize = { width, height };
             grid = new CellType[static_cast<size_t>(width) * static_cast<size_t>(height)]();
             offset = { 0, 0 };
+
+            for (int y = 0; y < mapSize.y; y++) {
+                for (int x = 0; x < mapSize.x; x++) {
+                    *(grid + (y * mapSize.x) + x) = static_cast<CellType>(0);
+                }
+            }
         }
 
         void Grid::ResizeGrid(int startX, int startY, int newWidth, int newHeight) {
@@ -55,7 +61,7 @@ namespace Engine {
             grid = temGrid;*/
             offset = { startX, startY };
             mapSize = { newWidth, newHeight };
-            
+
         }
 
         void Grid::DestroyGrid() {
@@ -67,7 +73,7 @@ namespace Engine {
         }
 
         int Grid::GetCellType(int x, int y) {
-            
+
             return static_cast<int>(*(grid + x + (static_cast<size_t>(y) * mapSize.x)));
         }
 
@@ -192,7 +198,7 @@ namespace Engine {
             *count = index;
         }
 
-        void Grid::GetAllAdjacentCellTypes(int (&arr)[4], int x, int y) {
+        void Grid::GetAllAdjacentCellTypes(int(&arr)[4], int x, int y) {
             int none = static_cast<int>(CellType::None);
             arr[0] = none; arr[1] = none; arr[2] = none; arr[3] = none;
 
@@ -235,7 +241,7 @@ namespace Engine {
         }
 
         std::list<Math::ivec2> Grid::GetAdjacentCells(Math::ivec2 cell, bool isAgent) {
-            Math::ivec2 arr[4]; 
+            Math::ivec2 arr[4];
             int count;
             GetWalkableAdjacentCells(arr, &count, cell.x, cell.y, isAgent);
             std::list<Math::ivec2> ivecList;
@@ -257,11 +263,14 @@ namespace Engine {
         }
 
         void Grid::PrintGridOut_Engine() {
-            int num = mapSize.y * mapSize.x;
-            for (int i = 0; i < num; i++) {
-                if (i % mapSize.x == 0) std::cout << "\n";
-                if ((int)(*(grid + i)) == 0) std::cout << "  ";
-                else std::cout << (int)(*(grid + i)) << " ";
+            std::cout << "C++ print map \n";
+
+            for (int y = mapSize.y - 1; y >= 0; y--) {
+                for (int x = 0; x < mapSize.x; x++) {
+                    if ((int)(*(grid + (y * mapSize.x) + x)) == 0) std::cout << "- ";
+                    else std::cout << (int)(*(grid + (y * mapSize.x) + x)) << " ";
+                }
+                std::cout << "\n";
             }
 
             std::cout << "\n";
@@ -270,10 +279,13 @@ namespace Engine {
         void Grid::AStarSearch(Math::ivec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent) {
             const auto& vlist = AStarSearchInternal(startPosition, endPosition, isAgent);
             int index = 0;
+            std::cout << "\n Starting of A Star (C++)-----------------------------------\n";
             for (auto& i : vlist) {
                 arr[index] = i;
+                std::cout << arr[index] << "\n";
                 index++;
             }
+            std::cout << "End of A Star -----------------------------------\n";
             *count = index;
         }
 

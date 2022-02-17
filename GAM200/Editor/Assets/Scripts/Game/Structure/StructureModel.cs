@@ -125,8 +125,10 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 
             }
 
-            if (spawnBool && aiDirector != null)
-                spawnBool = !(aiDirector.SpawnToDestination(structureModel));
+            //if (spawnBool && aiDirector != null)
+            //    spawnBool = !(aiDirector.SpawnToDestination(structureModel));
+            if (Input.GetKeyDown(KeyCode.C))
+                aiDirector.SpawnToDestination(structureModel);
         }
     }
 

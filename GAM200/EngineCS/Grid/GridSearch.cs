@@ -12,13 +12,16 @@ public class GridSearch
 
     public static List<Point> AStarSearch(Grid grid, Point startPosition, Point endPosition, bool isAgent = false)
     {
-        /*Vector2Int[] pos = new Vector2Int[100];
-        AStarSearch_Engine(pos, out int numOfElement, new Vector2Int(startPosition), new Vector2Int(endPosition), isAgent);
-        Console.WriteLine("New path------------------------------------------------------");
-        for (int i = 0; i < numOfElement; i++)
+        grid.PrintGridOut();
+
+        Vector2Int[] pos2 = new Vector2Int[100];
+        AStarSearch_Engine(pos2, out int numOfElement2, new Vector2Int(startPosition.X, startPosition.Y), new Vector2Int(endPosition.X, endPosition.Y), isAgent);
+        Console.WriteLine("\n Cs c++    Testing path------------------------------------------------------");
+        for (int i = 0; i < numOfElement2; i++)
         {
-            Console.WriteLine(pos[i]);
-        }*/
+            Console.WriteLine(pos2[i]);
+        }
+        
 
         List<Point> path = new List<Point>();
 
@@ -39,10 +42,11 @@ public class GridSearch
             if (current.Equals(endPosition))
             {
                 path = GeneratePath(parentsDictionary, current);
-                Console.WriteLine("Old path");
+
+                Console.WriteLine("\n CS cs     Original path-----------------------------------------------------");
                 foreach (Point pt in path)
                 {
-                    Console.WriteLine(pt);
+                    Console.WriteLine(new Vector2(pt.X, pt.Y));
                 }
                 Console.WriteLine("------------------------------------------------------------------------------------------------------------");
 
@@ -65,19 +69,6 @@ public class GridSearch
             }
         }
 
-        /*Vector2Int[] pos2 = new Vector2Int[100];
-        AStarSearch_EngineAStarSearch_Engine(pos2, out int numOfElement2, startPosition, endPosition, isAgent);
-        Console.WriteLine("end    New path------------------------------------------------------");
-        for (int i = 0; i < numOfElement2; i++)
-        {
-            Console.WriteLine(pos2[i]);
-        }
-        Console.WriteLine("end     Old path");
-        foreach (Point pt in path)
-        {
-            Console.WriteLine(pt);
-        }
-        Console.WriteLine("------------------------------------------------------------------------------------------------------------");*/
         return path;
     }
 
@@ -106,17 +97,14 @@ public class GridSearch
 
     private static List<Point> GeneratePath(Dictionary<Point, Point> parentMap, Point endState)
     {
-        Console.WriteLine("Generating path");
         List<Point> path = new List<Point>();
-        Console.WriteLine("Generating path middle " + path.Count);
         Point parent = endState;
-        Console.WriteLine("Generating path before " + path.Count);
+
         while (parent != null && parentMap.ContainsKey(parent))
         {
             path.Add(parent);
             parent = parentMap[parent];
         }
-        Console.WriteLine("Generating path ending....  " + path.Count);
         return path;
     }
 }

@@ -203,9 +203,18 @@ public class PlacementManager : MonoBehaviour
     public void ModifyStructureModel(Vector2Int position, GameObject newModel, float rotation)
     {
         if (temporaryRoadobjects.ContainsKey(position))
-            temporaryRoadobjects[position].SwapModel(newModel, rotation);
+        {
+            var structure = temporaryRoadobjects[position].SwapModel(newModel, rotation);
+            temporaryRoadobjects.Remove(position);
+            temporaryRoadobjects.Add(position, structure);
+        }
         else if (structureDictionary.ContainsKey(position))
-            structureDictionary[position].SwapModel(newModel, rotation);
+        {
+
+            var structure = structureDictionary[position].SwapModel(newModel, rotation);
+            structureDictionary.Remove(position);
+            structureDictionary.Add(position, structure);
+        }
     }
 
     public StructureModel GetRandomRoad()

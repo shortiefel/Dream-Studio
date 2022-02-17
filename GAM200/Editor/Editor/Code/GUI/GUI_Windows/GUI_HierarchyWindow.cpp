@@ -96,7 +96,7 @@ namespace Editor {
 					{
 						if (selected)
 							ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-						
+						#if 0
 						//display parent
 						if (entity.child.size() != 0)
 						{
@@ -150,6 +150,16 @@ namespace Editor {
 								}
 							}
 						}
+						#else
+						if (ImGui::TreeNodeEx((void*)(intptr_t)id, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen, entity.name.c_str(), id))
+						{
+							if (ImGui::IsItemClicked())
+							{
+								ClickCheck(entity_selected, id);
+
+							}
+						}
+						#endif
 
 						ImGui::OpenPopupOnItemClick("##EntityPop", ImGuiPopupFlags_MouseButtonRight);
 						if (selected)

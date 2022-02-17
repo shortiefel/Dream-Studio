@@ -14,7 +14,7 @@ public class TrafficLightManager : MonoBehaviour
 
     public override void Start()
     {
-        trafficLights = new Dictionary<Vector2, uint>();
+        trafficLights = new Dictionary<Vector2Int, uint>();
 
         trafficLightGO = new GameObject(new Prefab("TrafficLight"));
         //mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
@@ -61,7 +61,7 @@ public class TrafficLightManager : MonoBehaviour
         trafficLights.Remove(pos);
     }
 
-    public bool GetTrafficLightState(Vector2 tlPos, float _carAngle)
+    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle)
     {
         _carAngle = _carAngle % 360;
         //angle 0/360/-360 - up, 90/-270 - right, -90/270 - left, 180/-180 - down
@@ -85,11 +85,11 @@ public class TrafficLightManager : MonoBehaviour
         return false;
     }
 
-    public List<uint> GetTrafficLightIndex(List<Vector2> toCheck)
+    public List<uint> GetTrafficLightIndex(List<Vector2Int> toCheck)
     {
         List<uint> tlPos = new List<uint>();
 
-        foreach (Vector2 pos in toCheck)
+        foreach (Vector2Int pos in toCheck)
         {
             if (trafficLights.ContainsKey(pos)) tlPos.Add(trafficLights[pos]);
         }
@@ -97,7 +97,7 @@ public class TrafficLightManager : MonoBehaviour
         return tlPos;
     }
 
-    public bool IsTrafficLight(Vector2 posToCheck)
+    public bool IsTrafficLight(Vector2Int posToCheck)
     {
         if (trafficLights.ContainsKey(posToCheck)) return true;
         return false;

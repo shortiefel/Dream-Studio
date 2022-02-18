@@ -65,6 +65,9 @@ public class PlacementManager : MonoBehaviour
             {
                 var newPosition = position + new Vector2Int(x, y);
                 placementGrid[newPosition.x, newPosition.y] = type;
+                placementGrid.SetCellType(newPosition, type, structure.entityId);
+                Console.WriteLine(structurePrefab.name);
+                //placementGrid.SetType(newPosition, type);
                 structureDictionary.Add(newPosition, structure);
                 //DestroyNatureAt(newPosition);
             }
@@ -127,8 +130,10 @@ public class PlacementManager : MonoBehaviour
 
     internal void PlaceTemporaryStructure(Vector2Int position, GameObject structurePrefab, CellType type, int layer, bool single = false, float rotation = 0)
     {
-        placementGrid[position.x, position.y] = type;
+        Console.WriteLine(structurePrefab.name);
         StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, layer, rotation);
+        placementGrid.SetCellType(position, type, structure.entityId);
+        placementGrid[position.x, position.y] = type;
         
         //GameObject newStructure = Instantiate(roadStraight, new Vector3 (position.x, position.y, 0), Quaternion.identity);
         //Debug.Log("Placed road");
@@ -183,6 +188,7 @@ public class PlacementManager : MonoBehaviour
         foreach (var structure in temporaryRoadobjects.Values)
         {
             var position = Vector2Int.RoundToInt(structure.transform.position);
+            placementGrid.SetCellType(position, CellType.Empty);
             placementGrid[position.x, position.y] = CellType.Empty;
             Destroy(structure.gameObject);
         }
@@ -286,6 +292,7 @@ public class PlacementManager : MonoBehaviour
         {
             structureDictionary[position].DeleteModel();
             structureDictionary.Remove(position);
+            placementGrid.SetCellType(position, CellType.Empty);
             placementGrid[position.x, position.y] = CellType.Empty;
         }
     }

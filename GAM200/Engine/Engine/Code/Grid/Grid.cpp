@@ -22,6 +22,35 @@ Technology is prohibited.
 
 namespace Engine {
     namespace Game {
+        Cell** CreateCellPtr(int width, int height) {
+            //Cell* grid = new Cell[static_cast<size_t>(width) * static_cast<size_t>(height)]();
+            //
+            //for (int y = 0; y < height; y++) {
+            //    for (int x = 0; x < width; x++) {
+            //        *(grid + (y * width) + x) = Cell{};
+            //    }
+            //}
+
+            Cell** newGrid = new Cell*[static_cast<size_t>(width)]();
+            
+            for (int x = 0; x < width; x++) {
+                *(newGrid + x) = new Cell[static_cast<size_t>(height)]();
+                for (int y = 0; y < height; y++) {
+                    *(*(newGrid + x) + y) = Cell{};
+                }
+            }
+
+            return newGrid;
+        }
+
+        void DeleteCellPtr(Cell** cellPtr, int width) {
+            for (int x = 0; x < width; x++) {
+                delete[] *(cellPtr + x);
+            }
+
+            delete[] cellPtr;
+        }
+
         Math::ivec2 Grid::GetGridSize() {
             return mapSize;
         }
@@ -33,51 +62,75 @@ namespace Engine {
         void Grid::CreateGrid(int width, int height) {
             if (grid != nullptr) return;
             mapSize = { width, height };
-            grid = new CellType[static_cast<size_t>(width) * static_cast<size_t>(height)]();
             offset = { 0, 0 };
 
-            for (int y = 0; y < mapSize.y; y++) {
-                for (int x = 0; x < mapSize.x; x++) {
-                    *(grid + (y * mapSize.x) + x) = static_cast<CellType>(0);
-                }
-            }
+            grid = CreateCellPtr(width, height);
+            //grid = new Cell[static_cast<size_t>(width) * static_cast<size_t>(height)]();
+            //
+            //for (int y = 0; y < mapSize.y; y++) {
+            //    for (int x = 0; x < mapSize.x; x++) {
+            //        *(grid + (y * mapSize.x) + x) = Cell{};
+            //    }
+            //}
         }
 
-        void Grid::ResizeGrid(int startX, int startY, int newWidth, int newHeight) {
-            //offset.x = ((newWidth - mapSize.x) / 2);
-            //offset.y = ((newHeight - mapSize.y) / 2);
-            /*CellType* temGrid = new CellType[static_cast<size_t>(newWidth) * static_cast<size_t>(newHeight)]();
+        void Grid::ResizeGrid(int newWidth, int newHeight) {
+            int xTem = (newWidth - mapSize.x) / 2;
+            int yTem = (newHeight - mapSize.y) / 2;
+
+            //int xOffset = _startX + xTem;
+            //int yOffset = _startY + yTem;
+            
 
 
-            for (int y = 0; y < mapSize.y; y++)
-            {
-                for (int x = 0; x < mapSize.x; x++)
-                {
-                    temGrid[offset.x + x, offset.y + y] = grid[x, y];
+            /*int xOffset = xTem;
+            int yOffset = yTem;
+            xOffset -= _startX;
+            yOffset -= _startY;
+            _startX = xTem;
+            _startY = yTem;*/
+
+            Cell** temGrid = CreateCellPtr(newWidth, newHeight);
+
+            //Offset and store into the new grid
+            for (int y = 0; y < mapSize.y; y++) {
+                for (int x = 0; x < mapSize.x; x++) {
+                    *(*(temGrid + x + xTem) + (y + yTem)) = *(*(grid + x) + y);
                 }
             }
+            DeleteCellPtr(grid, mapSize.x);
+            grid = temGrid;
+            temGrid = nullptr;
 
-            delete[] grid;
-            grid = temGrid;*/
-            offset = { startX, startY };
+            mapSize.x = newWidth;
+            mapSize.y = newHeight;
+
+
+            offset.x -= xTem;
+            offset.y -= yTem;
+
+            std::cout << "offset " << offset.x << " " << offset.y << "-------------------------------------\n";
+            std::cout << mapSize.x << " " << mapSize.y << "\n";
             mapSize = { newWidth, newHeight };
 
         }
 
         void Grid::DestroyGrid() {
-            mapSize = { -1, -1 };
             if (grid != nullptr)
-                delete[] grid;
-
+                DeleteCellPtr(grid, mapSize.x);
             grid = nullptr;
+
+            mapSize = { -1, -1 };
         }
 
         int Grid::GetCellType(int x, int y) {
 
-            return static_cast<int>(*(grid + x + (static_cast<size_t>(y) * mapSize.x)));
+            //return static_cast<int>((grid + x + (static_cast<size_t>(y) * mapSize.x))->ct);
+            return static_cast<int>((*(grid + x ) + static_cast<size_t>(y))->ct);
         }
 
-        void Grid::SetCellType(int x, int y, int cellType) {
+        void Grid::SetCellType(int x, int y, int cellType, unsigned int entityId) {
+            //y = mapSize.y - 1 - y + offset.y;
             CellType value = static_cast<CellType>(cellType);
 
             if (value == CellType::Road)
@@ -104,7 +157,14 @@ namespace Engine {
             {
                 specialStructure.remove(Math::ivec2{ x,y });
             }*/
-            *(grid + x + (static_cast<size_t>(y) * mapSize.x)) = value;
+
+
+            //*(grid + (x - offset.x) + (static_cast<size_t>(y - offset.y) * mapSize.x)) = Cell{value, entityId };
+            *(*(grid + x - offset.x) + y - offset.y) = Cell{value, entityId };
+
+
+            //Store the entityId to the points
+            //posToId()
         }
 
         bool IsCellWalkable(CellType cellType, bool aiAgent = false) {
@@ -174,7 +234,8 @@ namespace Engine {
             int num = *count;
             int index = 0;
             for (int i = 0; i < num; i++) {
-                if (IsCellWalkable(*(grid + (temp[i].x) + (static_cast<size_t>(temp[i].y) * mapSize.x)), isAgent) == true) {
+                //if (IsCellWalkable((grid + (temp[i].x) + (static_cast<size_t>(temp[i].y) * mapSize.x))->ct, isAgent) == true) {
+                if (IsCellWalkable((*(grid + temp[i].x) + static_cast<size_t>(temp[i].y))->ct, isAgent) == true) {
                     arr[index] = temp[i];
                     index++;
                 }
@@ -189,7 +250,8 @@ namespace Engine {
             int num = *count;
             int index = 0;
             for (int i = 0; i < num; i++) {
-                if (static_cast<int>(*(grid + (temp[i].x) + (static_cast<size_t>(temp[i].y) * mapSize.x))) == _type) {
+                //if (static_cast<int>((grid + (temp[i].x) + (static_cast<size_t>(temp[i].y) * mapSize.x))->ct) == _type) {
+                if (static_cast<int>((*(grid + temp[i].x) + static_cast<size_t>(temp[i].y))->ct) == _type) {
                     arr[index] = temp[i];
                     index++;
                 }
@@ -203,17 +265,22 @@ namespace Engine {
             arr[0] = none; arr[1] = none; arr[2] = none; arr[3] = none;
 
             if (x > 0) {
-                arr[0] = static_cast<int>(*(grid + (static_cast<size_t>(x) - 1) + (static_cast<size_t>(y) * mapSize.x)));
+                //arr[0] = static_cast<int>((grid + (static_cast<size_t>(x) - 1) + (static_cast<size_t>(y) * mapSize.x))->ct);
+                arr[0] = static_cast<int>((*(grid + static_cast<size_t>(x) - 1) + static_cast<size_t>(y))->ct);
             }
             if (x < mapSize.x - 1) {
-                arr[2] = static_cast<int>(*(grid + (static_cast<size_t>(x) + 1) + (static_cast<size_t>(y) * mapSize.x)));
+                //arr[2] = static_cast<int>((grid + (static_cast<size_t>(x) + 1) + (static_cast<size_t>(y) * mapSize.x))->ct);
+                arr[2] = static_cast<int>((*(grid + static_cast<size_t>(x) + 1) + static_cast<size_t>(y))->ct);
             }
             if (y > 0) {
-                arr[3] = static_cast<int>(*(grid + x + ((static_cast<size_t>(y) - 1) * mapSize.x)));
+                //arr[3] = static_cast<int>((grid + x + ((static_cast<size_t>(y) - 1) * mapSize.x))->ct);
+                arr[3] = static_cast<int>((*(grid + x) + (static_cast<size_t>(y) - 1))->ct);
             }
             if (y < mapSize.y - 1) {
-                arr[1] = static_cast<int>(*(grid + x + ((static_cast<size_t>(y) + 1) * mapSize.x)));
+                //arr[1] = static_cast<int>((grid + x + ((static_cast<size_t>(y) + 1) * mapSize.x))->ct);
+                arr[1] = static_cast<int>((*(grid + x) + (static_cast<size_t>(y) + 1))->ct);
             }
+
         }
 
         float GetCostOfEnteringCell(Math::ivec2)
@@ -263,12 +330,14 @@ namespace Engine {
         }
 
         void Grid::PrintGridOut_Engine() {
-            std::cout << "C++ print map \n";
-
+            std::cout << "C++ print new map \n";
+            
             for (int y = mapSize.y - 1; y >= 0; y--) {
                 for (int x = 0; x < mapSize.x; x++) {
-                    if ((int)(*(grid + (y * mapSize.x) + x)) == 0) std::cout << "- ";
-                    else std::cout << (int)(*(grid + (y * mapSize.x) + x)) << " ";
+                    //if ((int)(((grid + (y * mapSize.x) + x))->ct) == 0) std::cout << "- ";
+                    //else std::cout << (int)(((grid + (y * mapSize.x) + x))->ct) << " ";
+                    if ((int)(  (*(grid + x) + y)->ct   ) == 0) std::cout << "- ";
+                    else std::cout << (int)(    (*(grid + x) + y)->ct   ) << " ";
                 }
                 std::cout << "\n";
             }

@@ -65,9 +65,6 @@ public class Grid
 
         //int xOffset = _startX + xTem;
         //int yOffset = _startY + yTem;
-        _startX -= xTem;
-        _startY -= yTem;
-        
 
         /*int xOffset = xTem;
         int yOffset = yTem;
@@ -88,13 +85,18 @@ public class Grid
         }
 
         _grid = temGrid;
+
+        _startX -= xTem;
+        _startY -= yTem;
         _width = newWidth;
         _height = newHeight;
-        ResizeGrid_Engine(_startX, _startY, newWidth, newHeight);
+        Console.WriteLine(_startX + " " + _startY + "---------------------------\n");
+        Console.WriteLine(_width + " " + _height + "\n");
+        ResizeGrid_Engine(newWidth, newHeight);
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void ResizeGrid_Engine(int startX, int startY, int newWidth, int newHeight);
+    internal static extern void ResizeGrid_Engine(int newWidth, int newHeight);
 
     public Vector2Int GetStartPoint()
     {
@@ -129,6 +131,16 @@ public class Grid
     public Vector2Int GetGridSize()
     {
         return new Vector2Int(_width, _height);
+    }
+
+    public void SetCellType(Vector2Int pos, CellType ct, uint entityId = 0)
+    {
+        //SetCellType_Engine(pos.x, pos.y, (int)ct, entityId);
+    }
+
+    public CellType GetCellType(Vector2Int pos)
+    {
+        return (CellType)GetCellType_Engine(pos.x, pos.y);
     }
 
     // Adding index operator to our Grid class so that we can use grid[][] to access specific cell from our grid. 
@@ -169,7 +181,8 @@ public class Grid
             }*/
             
             _grid[i - _startX, j - _startY] = value;
-            SetCellType_Engine(i, j, (int)value);
+            SetCellType_Engine(i, j, (int)value, 0);
+            //Console.WriteLine("\n\n\nChanging value now " + value + "        -------------------------------------------------\n\n\n");
 
             PrintGridOut();
         }
@@ -177,7 +190,7 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern int GetCellType_Engine(int x, int y);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void SetCellType_Engine(int x, int y, int cellType);
+    internal static extern void SetCellType_Engine(int x, int y, int cellType, uint entityId);
 
     public static bool IsCellWakable(CellType cellType, bool aiAgent = false)
     {

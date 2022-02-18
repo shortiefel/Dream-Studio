@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "Engine/Header/Singleton/Singleton.hpp"
 
 #include <list>
+#include <unordered_map>
 
 //Grid will never go negative 
 #define GRID_NULL_VALUE -999
@@ -41,6 +42,11 @@ namespace Engine {
 			None
 		};
 
+		struct Cell {
+			CellType ct = CellType::Empty;
+			unsigned int entityId = 0;
+		};
+
 		class Grid : public Singleton<Grid> {
 		public:
 			/*-----------------------------------------------------
@@ -52,14 +58,14 @@ namespace Engine {
 			Create grid with width and height
 			-----------------------------------------------------*/
 			void CreateGrid(int width, int height);
-			void ResizeGrid(int startX, int startY, int newWidth, int newHeight);
+			void ResizeGrid(int newWidth, int newHeight);
 			/*-----------------------------------------------------
 			Deallocate memory allocated for grid
 			-----------------------------------------------------*/
 			void DestroyGrid();
 
 			int GetCellType(int x, int y);
-			void SetCellType(int x, int y, int cellType);
+			void SetCellType(int x, int y, int cellType, unsigned int entityId);
 			/*-----------------------------------------------------
 			Randomize index of Road points to retrieve a Road position
 			-----------------------------------------------------*/
@@ -94,7 +100,7 @@ namespace Engine {
 			//Number of tiles in x and y
 			Math::ivec2 mapSize{};
 			Math::ivec2 offset{};
-			CellType* grid = nullptr;
+			Cell** grid = nullptr;
 
 			std::list<Math::ivec2> roadList;
 			std::list<Math::ivec2> houseStructure;

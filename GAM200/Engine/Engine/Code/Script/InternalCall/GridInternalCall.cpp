@@ -24,9 +24,9 @@ namespace Engine {
 	/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
 	//Function calls are used to link to C# (functions from Grid.hpp)
 	void CreateGrid_Engine(int width, int height);
-	void ResizeGrid_Engine(int startX, int startY, int newWidth, int newHeight);
+	void ResizeGrid_Engine(int newWidth, int newHeight);
 	int GetCellType_Engine(int x, int y);
-	void SetCellType_Engine(int x, int y, int cellType);
+	void SetCellType_Engine(int x, int y, int cellType, unsigned int entityId);
 	bool GetRandomRoadPoint_Engine(Math::ivec2* point);
 	bool GetRandomSpecialStructurePoint_Engine(Math::ivec2* point);
 	void GetAllAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y);
@@ -56,18 +56,20 @@ namespace Engine {
 	}
 
 	void CreateGrid_Engine(int width, int height) {
+		std::cout << " Calling first this \n";
 		Game::Grid::GetInstance().CreateGrid(width, height);
 	}
 
-	void ResizeGrid_Engine(int startX, int startY, int newWidth, int newHeight) {
-		Game::Grid::GetInstance().ResizeGrid(startX, startY, newWidth, newHeight);
+	void ResizeGrid_Engine(int newWidth, int newHeight) {
+		std::cout << " Calling this \n";
+		Game::Grid::GetInstance().ResizeGrid(newWidth, newHeight);
 	}
 
 	int GetCellType_Engine(int x, int y) {
 		return Game::Grid::GetInstance().GetCellType(x, y);
 	}
-	void SetCellType_Engine(int x, int y, int cellType) {
-		Game::Grid::GetInstance().SetCellType(x, y, cellType);
+	void SetCellType_Engine(int x, int y, int cellType, unsigned int entityId) {
+		Game::Grid::GetInstance().SetCellType(x, y, cellType, entityId);
 	}
 	bool GetRandomRoadPoint_Engine(Math::ivec2* point) {
 		return Game::Grid::GetInstance().GetRandomRoadPoint(point);

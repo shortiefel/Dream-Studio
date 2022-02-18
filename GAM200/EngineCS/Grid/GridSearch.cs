@@ -12,15 +12,15 @@ public class GridSearch
 
     public static List<Point> AStarSearch(Grid grid, Point startPosition, Point endPosition, bool isAgent = false)
     {
-        grid.PrintGridOut();
-
-        Vector2Int[] pos2 = new Vector2Int[100];
-        AStarSearch_Engine(pos2, out int numOfElement2, new Vector2Int(startPosition.X, startPosition.Y), new Vector2Int(endPosition.X, endPosition.Y), isAgent);
-        Console.WriteLine("\n Cs c++    Testing path------------------------------------------------------");
-        for (int i = 0; i < numOfElement2; i++)
-        {
-            Console.WriteLine(pos2[i]);
-        }
+        //grid.PrintGridOut();
+        //
+        //Vector2Int[] pos2 = new Vector2Int[100];
+        //AStarSearch_Engine(pos2, out int numOfElement2, new Vector2Int(startPosition.X, startPosition.Y), new Vector2Int(endPosition.X, endPosition.Y), isAgent);
+        //Console.WriteLine("\n Cs c++    Testing path------------------------------------------------------");
+        //for (int i = 0; i < numOfElement2; i++)
+        //{
+        //    Console.WriteLine(pos2[i]);
+        //}
         
 
         List<Point> path = new List<Point>();
@@ -43,12 +43,12 @@ public class GridSearch
             {
                 path = GeneratePath(parentsDictionary, current);
 
-                Console.WriteLine("\n CS cs     Original path-----------------------------------------------------");
-                foreach (Point pt in path)
-                {
-                    Console.WriteLine(new Vector2(pt.X, pt.Y));
-                }
-                Console.WriteLine("------------------------------------------------------------------------------------------------------------");
+                //Console.WriteLine("\n CS cs     Original path-----------------------------------------------------");
+                //foreach (Point pt in path)
+                //{
+                //    Console.WriteLine(new Vector2(pt.X, pt.Y));
+                //}
+                //Console.WriteLine("------------------------------------------------------------------------------------------------------------");
 
                 return path;
             }

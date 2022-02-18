@@ -147,7 +147,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
         //texure.ChangeTexture(model.name);
         //transform.angle = rotation;
-
+        Console.WriteLine("Change to " + model.name);
         var structure = Instantiate(model, new Vector3(transform.position, 0f));
         //structure.transform.position = new Vector2(0, 0);
         structure.transform.angle = rotation;

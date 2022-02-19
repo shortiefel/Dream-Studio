@@ -135,7 +135,7 @@ public class Grid
 
     public void SetCellType(Vector2Int pos, CellType ct, uint entityId = 0)
     {
-        //SetCellType_Engine(pos.x, pos.y, (int)ct, entityId);
+        SetCellType_Engine(pos.x, pos.y, (int)ct, entityId);
     }
 
     public CellType GetCellType(Vector2Int pos)
@@ -181,7 +181,7 @@ public class Grid
             }*/
             
             _grid[i - _startX, j - _startY] = value;
-            SetCellType_Engine(i, j, (int)value, 0);
+            //SetCellType_Engine(i, j, (int)value, 0);
             //Console.WriteLine("\n\n\nChanging value now " + value + "        -------------------------------------------------\n\n\n");
 
             PrintGridOut();

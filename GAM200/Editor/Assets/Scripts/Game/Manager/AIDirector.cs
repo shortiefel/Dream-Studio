@@ -66,7 +66,7 @@ public class AIDirector : MonoBehaviour
             //Debug.Log(startRoadPosition);
             //Debug.Log(endRoadPosition);
 
-            var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, true);
+            var path = placementManager.GetPathBetween(startRoadPosition, endRoadPosition, new Vector2Int(startStructure.transform.position), new Vector2Int(endStructure.transform.position), true);
             if (path.Count == 0)
             {
                 //Console.WriteLine("No path exist");
@@ -81,7 +81,7 @@ public class AIDirector : MonoBehaviour
             //    Debug.Log(item.ToString());
             //}
 
-            path.Reverse();
+            //path.Reverse();
             path.Add(Vector2Int.RoundToInt(endStructure.transform.position)); //Make car enter house
             //foreach (var item2 in path)
             //{

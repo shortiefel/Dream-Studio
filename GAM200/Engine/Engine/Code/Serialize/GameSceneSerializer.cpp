@@ -586,10 +586,12 @@ namespace Engine {
 
 			if (sceneSerializer.SelectDeserializeDataType("WaypointComponent")) {
 				WaypointComponent tem(entityId);
+				
 				sceneSerializer.RetrieveData(
 					"Waypoints", tem.listOfWaypoint,
 					"Order", tem.numOfWaypoint,
 					"Section", tem.section);
+
 
 				dreamECSGame->AddComponent(tem);
 			}
@@ -800,15 +802,42 @@ namespace Engine {
 
 			if (sceneSerializer.SelectDeserializeDataType("WaypointComponent")) {
 				WaypointComponent tem(entityId);
+				std::list<Math::vec2> _temWp = std::list<Math::vec2>{};
 				sceneSerializer.RetrieveData(
-					"Waypoints", tem.listOfWaypoint,
+					"Waypoints", _temWp,
 					"Order", tem.numOfWaypoint,
 					"Section", tem.section);
 
-				for (auto& i : tem.listOfWaypoint) {
+				tem.listOfWaypoint = _temWp;
+
+				for (auto& i : _temWp) {
 					Math::vec3 newPos = rotationAndTranslate * Math::vec3{i.x, i.y, 1.f};
 					i.x = newPos.x;
 					i.y = newPos.y;
+				}
+
+				for (auto& i : tem.numOfWaypoint) {
+					std::list<Math::vec2> t = std::list<Math::vec2>{};
+
+					WaypointSE wpSE;
+					std::list<Math::vec2> s = std::list<Math::vec2>{};
+
+					for (unsigned int p = 0; p < i; p++) {
+						if (_temWp.size() == 0) {
+							LOG_WARNING("Mismatch waypoint count and order");
+							break;
+						}
+
+						if (p == 0) wpSE.start = _temWp.front();
+						else if (p == 1) wpSE.end = _temWp.front();
+						else s.push_back(_temWp.front());
+
+						t.push_back(_temWp.front());
+						_temWp.pop_front();
+
+					}
+					tem.testingWaypoint.emplace(wpSE, s);
+					tem.temWaypoint.push_back(t);
 				}
 
 				dreamECSGame->AddComponent(tem);

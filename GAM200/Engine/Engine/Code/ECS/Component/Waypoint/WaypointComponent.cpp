@@ -20,6 +20,10 @@ Technology is prohibited.
 
 
 namespace Engine {
+	bool operator<(const WaypointSE& lhs, const WaypointSE& rhs) {
+		return (lhs.start < rhs.end);
+	}
+
 	WaypointComponent::WaypointComponent(Entity_id _ID, std::list<unsigned int> _num, std::list<Math::vec2> _list) :
 		IComponent{ _ID }, numOfWaypoint{_num }, listOfWaypoint{ _list } {}
 }

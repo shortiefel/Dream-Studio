@@ -29,33 +29,33 @@ public class Waypoint : IComponent
     {
         List<List<List<Vector2>>> listOfWaypoints = new List<List<List<Vector2>>>();
 
-        Vector2[] points = new Vector2[100];
-        uint[] order = new uint[10];
-        
-        Waypoint_GetWaypoints_Engine(entityId, points, order, out int section);
-
-        int p = 0, sect = 0;
-        List<List<Vector2>> setionOfWaypoint = new List<List<Vector2>>();
-        foreach (var i in order)
-        {
-            if (i == 0) break;
-            List<Vector2> tem = new List<Vector2>();
-            int start = p;
-            while (true) {
-                tem.Add(points[p]);
-                ++p;
-                if (p - start >= i) break;
-            }
-            setionOfWaypoint.Add(tem);
-
-            ++sect;
-            if(sect == section)
-            {
-                listOfWaypoints.Add(setionOfWaypoint);
-                setionOfWaypoint = new List<List<Vector2>>();
-            }
-        }
-        listOfWaypoints.Add(setionOfWaypoint);
+        //Vector2[] points = new Vector2[100];
+        //uint[] order = new uint[10];
+        //
+        //Waypoint_GetWaypoints_Engine(entityId, points, order, out int section);
+        //
+        //int p = 0, sect = 0;
+        //List<List<Vector2>> setionOfWaypoint = new List<List<Vector2>>();
+        //foreach (var i in order)
+        //{
+        //    if (i == 0) break;
+        //    List<Vector2> tem = new List<Vector2>();
+        //    int start = p;
+        //    while (true) {
+        //        tem.Add(points[p]);
+        //        ++p;
+        //        if (p - start >= i) break;
+        //    }
+        //    setionOfWaypoint.Add(tem);
+        //
+        //    ++sect;
+        //    if(sect == section)
+        //    {
+        //        listOfWaypoints.Add(setionOfWaypoint);
+        //        setionOfWaypoint = new List<List<Vector2>>();
+        //    }
+        //}
+        //listOfWaypoints.Add(setionOfWaypoint);
 
         return listOfWaypoints;
     }

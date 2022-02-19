@@ -18,6 +18,8 @@ Technology is prohibited.
 #include "Engine/Header/Grid/Grid.hpp"
 #include "Engine/Header/Random/Random.hpp"
 
+#include "Engine/Header/ECS/DreamECS.hpp"
+
 #include <map>
 
 namespace Engine {
@@ -345,15 +347,33 @@ namespace Engine {
             std::cout << "\n";
         }
 
-        void Grid::AStarSearch(Math::ivec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent) {
-            const auto& vlist = AStarSearchInternal(startPosition, endPosition, isAgent);
+        void Grid::AStarSearch(Math::ivec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
+            std::list<Math::ivec2> vlist = AStarSearchInternal(startPosition, endPosition, isAgent);
+            vlist.reverse();
+            
             int index = 0;
             std::cout << "\n Starting of A Star (C++)-----------------------------------\n";
+
+            //How it works vlist contains the roads the car will have to follow
+            //to get the individual routes u need to know which direction the car is going
+            //1. In each road prefab, there could be multiple route(list of list of points)
+            //2. In those route(inner list), the first position and last position are the position of where the car is coming from and where it is going to respectively
+            //Example: A B C are the prefabs in game and We are currently looking at one possible route in B 
+            //           D     Route: A 1 2 3 4 5 C are the lists of points for prefab B (first and last are the direction it would be going)
+            //                 Another possible Route: A 6 7 8 9 D are the lists of points for prefab B (first and last are the direction it would be going) (this is going right and down)
+            //3. To get the correct route, check the first prev position and the next position.
+
+            Math::ivec2 prevPosition = housePos;
             for (auto& i : vlist) {
-                arr[index] = i;
-                std::cout << arr[index] << "\n";
+                auto& pos = arr[index] = i;
+                auto& entId = (*(grid + pos.x) + pos.y)->entityId;
+
+                dreamECSGame->GetComponent<WaypointComponent>(entId);
+                //std::cout << arr[index] << "\n";
                 index++;
             }
+
+            std::cout << "Start and end " << arr[0] << " " << arr[index - 1] << "\n";
             std::cout << "End of A Star -----------------------------------\n";
             *count = index;
         }
@@ -395,7 +415,6 @@ namespace Engine {
                     }
                 }
             }
-            std::cout << "Actually ending \n";
             return path;
         }
     }

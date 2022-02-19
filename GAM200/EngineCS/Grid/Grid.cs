@@ -290,7 +290,7 @@ public class Grid
             //if (IsCellWakable(GetCellType(adjacentCells[i].X, adjacentCells[i].Y), isAgent) == false)
             //Console.WriteLine("Error part: " + _width + " " + _height);
             //Console.WriteLine("Error part: " + (adjacentCells[i].X - _startX) + " " + (adjacentCells[i].Y - _startY));
-            if (IsCellWakable(_grid[adjacentCells[i].X - _startX, adjacentCells[i].Y - _startY], isAgent) == false)
+            if (IsCellWakable(_grid[(int)adjacentCells[i].X - _startX, (int)adjacentCells[i].Y - _startY], isAgent) == false)
             {
                 adjacentCells.RemoveAt(i);
             }
@@ -323,7 +323,7 @@ public class Grid
         List<Point> adjacentCells = GetAllAdjacentCells(x, y);
         for (int i = adjacentCells.Count - 1; i >= 0; i--)
         {
-            if (_grid[adjacentCells[i].X - _startX, adjacentCells[i].Y - _startY] != type)
+            if (_grid[(int)adjacentCells[i].X - _startX, (int)adjacentCells[i].Y - _startY] != type)
             {
                 adjacentCells.RemoveAt(i);
             }

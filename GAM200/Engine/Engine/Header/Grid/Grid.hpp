@@ -87,7 +87,7 @@ namespace Engine {
 			-----------------------------------------------------*/
 			void GetAllAdjacentCellTypes(int(&arr)[4], int x, int y);
 
-			void AStarSearch(Math::ivec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
+			void AStarSearch(Math::vec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
 
 			void GetAllAdjacentCells(Math::ivec2(&arr)[4], int* count, int x, int y); // Should be private
 

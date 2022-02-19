@@ -38,8 +38,8 @@ public struct Vector2Int
     }
     public Vector2Int(Point n)
     {
-        x = n.X;
-        y = n.Y;
+        x = (int)n.X;
+        y = (int)n.Y;
     }
 
     public static implicit operator Vector2(Vector2Int val)

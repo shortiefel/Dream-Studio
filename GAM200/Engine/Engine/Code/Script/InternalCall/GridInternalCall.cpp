@@ -120,11 +120,12 @@ namespace Engine {
 	}
 
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
-		Math::ivec2 arr[MAX_LINE];
+		Math::vec2 arr[MAX_LINE];
 		Game::Grid::GetInstance().AStarSearch(arr, count, startPosition, endPosition, housePos, destPos, isAgent);
 		int loop = *count;
 		for (int i = 0; i < loop; i++) {
-			mono_array_set(monoArray, Math::ivec2, i, (arr[i]));
+			std::cout << arr[i] << " before\n";
+			mono_array_set(monoArray, Math::vec2, i, (arr[i]));
 		}
 	}
 

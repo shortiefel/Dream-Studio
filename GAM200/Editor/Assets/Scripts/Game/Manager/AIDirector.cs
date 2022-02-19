@@ -82,7 +82,7 @@ public class AIDirector : MonoBehaviour
             //}
 
             //path.Reverse();
-            path.Add(Vector2Int.RoundToInt(endStructure.transform.position)); //Make car enter house
+            //path.Add(Vector2Int.RoundToInt(endStructure.transform.position)); //Make car enter house
             //foreach (var item2 in path)
             //{
             //    Debug.Log(item2.ToString());
@@ -90,7 +90,7 @@ public class AIDirector : MonoBehaviour
 
             //var car = Instantiate(SelectACarPrefab(), new Vector3(startRoadPosition.x, startRoadPosition.y, 0));
             Vector2 pos = startStructure.transform.position;
-            var car = Instantiate(SelectACarPrefab(endStructure.buildingType), new Vector3(pos.x, pos.y, 0));
+            var car = Instantiate(SelectACarPrefab(endStructure.buildingType), new Vector3(pos.x, pos.y, 0), 2);
             //var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0), Quaternion.identity);
 
             Console.WriteLine("Set path2: " + path.Count);

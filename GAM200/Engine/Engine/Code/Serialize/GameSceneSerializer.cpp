@@ -722,7 +722,7 @@ namespace Engine {
 		
 		float cosX = Math::cosDeg(angle);
 		float sinX = Math::sinDeg(angle);
-		
+
 		Math::mat3 rotationAndTranslate{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
 		
 		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &angle, &layer, &id, &_filename, &rotationAndTranslate]() -> void {
@@ -786,7 +786,7 @@ namespace Engine {
 					"Scale", tem.scale,
 					"Angle", tem.angle
 				);
-
+				std::cout << tem.scale << " scale\n";
 				Math::vec3 temVec{ tem.position.x, tem.position.y, 1.f };
 				temVec = rotationAndTranslate * temVec;
 				tem.position.x = temVec.x;
@@ -808,18 +808,21 @@ namespace Engine {
 					"Order", tem.numOfWaypoint,
 					"Section", tem.section);
 
-				tem.listOfWaypoint = _temWp;
+				//for (auto& i : _temWp) {
+				//	Math::vec3 newPos = rotationAndTranslate * Math::vec3{i.x, i.y, 1.f};
+				//	//Math::vec3 temPos = testingRota * Math::vec3{i.x, i.y, 1.f};
+				//	i.x = newPos.x;
+				//	i.y = newPos.y;
+				//	std::cout << i << "\n";
+				//	//std::cout << temPos << "\n\n";
+				//}
+				//std::cout << "end------------------------------\n";
 
-				for (auto& i : _temWp) {
-					Math::vec3 newPos = rotationAndTranslate * Math::vec3{i.x, i.y, 1.f};
-					i.x = newPos.x;
-					i.y = newPos.y;
-				}
+				tem.listOfWaypoint = _temWp;
 
 				for (auto& i : tem.numOfWaypoint) {
 					std::list<Math::vec2> t = std::list<Math::vec2>{};
 
-					WaypointSE wpSE;
 					std::list<Math::vec2> s = std::list<Math::vec2>{};
 
 					for (unsigned int p = 0; p < i; p++) {
@@ -827,16 +830,10 @@ namespace Engine {
 							LOG_WARNING("Mismatch waypoint count and order");
 							break;
 						}
-
-						if (p == 0) wpSE.start = _temWp.front();
-						else if (p == 1) wpSE.end = _temWp.front();
-						else s.push_back(_temWp.front());
-
 						t.push_back(_temWp.front());
 						_temWp.pop_front();
 
 					}
-					tem.testingWaypoint.emplace(wpSE, s);
 					tem.temWaypoint.push_back(t);
 				}
 

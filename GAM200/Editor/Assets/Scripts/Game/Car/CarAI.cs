@@ -5,7 +5,7 @@ using System;
 public class CarAI : MonoBehaviour
 {
     //[SerializeField]
-    private List<Vector2Int> path;
+    private List<Vector2> path;
     //private Queue<Vector2Int> tlPath;
     private List<uint> tlIndex;
 
@@ -14,7 +14,7 @@ public class CarAI : MonoBehaviour
     //[SerializeField]
     //private float turningAngleOffset;
     //[SerializeField]
-    private Vector2Int currentTargetPosition;
+    private Vector2 currentTargetPosition;
 
     //[SerializeField]
     //private GameObject raycastStartingPoint = null;
@@ -110,7 +110,7 @@ public class CarAI : MonoBehaviour
         }
     }
 
-    public void SetPath(List<Vector2Int> newPath, ref StructureModel endStructure)
+    public void SetPath(List<Vector2> newPath, ref StructureModel endStructure)
     {
         stop = false;
         endPoint = endStructure;
@@ -130,6 +130,13 @@ public class CarAI : MonoBehaviour
         Console.WriteLine("p2 " + path.Count + " " + this.path.Count);
         index = 0;
         currentTargetPosition = this.path[index];
+
+        foreach(var i in path)
+        {
+            Console.WriteLine(i);
+        }
+
+        Console.WriteLine("ending in c# \n\n");
         //Vector2 directionToFace = new Vector2(0f, 0f);
         //if (this.path.Count != 1)
         //{
@@ -159,13 +166,13 @@ public class CarAI : MonoBehaviour
         float value = Vector2.Dot(transform.right, relativeDirection);
         turningFactor = 1f;
         //Console.WriteLine((int)value);
-        if ((int)value == 1)
+        if (Math.Round(value) == 1)
         {
             //Debug.Log("right");
             transform.angle = -90f;
 
         }
-        else if ((int)value == -1)
+        else if (Math.Round(value) == -1)
         {
             //Debug.Log("left");
             transform.angle = 90f;
@@ -174,13 +181,13 @@ public class CarAI : MonoBehaviour
         {
             value = Vector2.Dot(transform.up, relativeDirection);
             //Console.WriteLine((int)value);
-            if ((int)value == 1)
+            if (Math.Round(value) == 1)
             {
                 //Debug.Log("up");
                 transform.angle = 0f;
 
             }
-            else if ((int)value == -1)
+            else if (Math.Round(value) == -1)
             {
                 //Debug.Log("Down");
                 transform.angle = -180f;
@@ -222,7 +229,7 @@ public class CarAI : MonoBehaviour
                     case CollisionType.Traffic:
                         if (tlIndex.Contains(hit.transform.entityId))
                         {
-                            stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
+                            stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
                             //stop = true;
                             //Debug.Log("Hiting trigger");
                         }
@@ -289,7 +296,7 @@ public class CarAI : MonoBehaviour
             movementVector = Vector2.zero;
 
             if (tm != null)
-                stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
+                stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
         }
         else
         {

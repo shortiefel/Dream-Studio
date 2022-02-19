@@ -85,13 +85,13 @@ public class TrafficLightManager : MonoBehaviour
         return false;
     }
 
-    public List<uint> GetTrafficLightIndex(List<Vector2Int> toCheck)
+    public List<uint> GetTrafficLightIndex(List<Vector2> toCheck)
     {
         List<uint> tlPos = new List<uint>();
 
-        foreach (Vector2Int pos in toCheck)
+        foreach (Vector2 pos in toCheck)
         {
-            if (trafficLights.ContainsKey(pos)) tlPos.Add(trafficLights[pos]);
+            if (trafficLights.ContainsKey(new Vector2Int(pos))) tlPos.Add(trafficLights[new Vector2Int(pos)]);
         }
 
         return tlPos;

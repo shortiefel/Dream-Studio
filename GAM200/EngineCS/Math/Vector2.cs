@@ -64,6 +64,12 @@ public struct Vector2
         y = n.y;
     }
 
+    public Vector2(Point n)
+    {
+        x = n.X;
+        y = n.Y;
+    }
+
     public Vector2(Vector2Int n)
     {
         x = (float)n.x;

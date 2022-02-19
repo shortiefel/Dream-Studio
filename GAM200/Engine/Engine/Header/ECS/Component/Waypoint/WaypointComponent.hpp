@@ -25,13 +25,6 @@ Technology is prohibited.
 #include <list>
 
 namespace Engine {
-	struct WaypointSE {
-		Math::ivec2 start = Math::ivec2{};
-		Math::ivec2 end = Math::ivec2{};
-	};
-
-	bool operator<(const WaypointSE& lhs, const WaypointSE& rhs);
-
 	struct WaypointComponent : public IComponent {
 		//Inside of numOfWaypoint Eg. 3 4 5 3
 		//The number states that the first 3 waypoint belongs to 1 group, next 4 to another, ...
@@ -42,10 +35,8 @@ namespace Engine {
 
 		std::list< std::list<Math::vec2>> temWaypoint = std::list< std::list<Math::vec2>>{};
 
-		std::map<WaypointSE, std::list<Math::vec2>> testingWaypoint = std::map<WaypointSE, std::list<Math::vec2>>{};
-
 		int section = 0; //How many marker before switch between incoming and outgoing
-
+		bool updated = false;
 		bool isActive = true;
 
 		WaypointComponent(Entity_id _ID = DEFAULT_ENTITY_ID, std::list<unsigned int> _num = std::list<unsigned int>{},

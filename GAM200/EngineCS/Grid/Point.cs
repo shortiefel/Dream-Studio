@@ -19,16 +19,22 @@ Technology is prohibited.
 
 public class Point
 {
-    public int X { get; set; }
-    public int Y { get; set; }
+    public float X { get; set; }
+    public float Y { get; set; }
 
-    public Point(int x, int y)
+    public Point(float x, float y)
     {
         this.X = x;
         this.Y = y;
     }
 
     public Point(Vector2Int pos)
+    {
+        this.X = (float)pos.x;
+        this.Y = (float)pos.y;
+    }
+
+    public Point(Vector2 pos)
     {
         this.X = pos.x;
         this.Y = pos.y;

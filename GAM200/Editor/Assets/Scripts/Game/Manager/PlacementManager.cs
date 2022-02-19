@@ -147,7 +147,7 @@ public class PlacementManager : MonoBehaviour
         List<Vector2Int> neighbours = new List<Vector2Int>();
         foreach (var point in neighbourVertices)
         {
-            neighbours.Add(new Vector2Int(point.X, point.Y));
+            neighbours.Add(new Vector2Int(point));
         }
         return neighbours;
     }
@@ -169,15 +169,15 @@ public class PlacementManager : MonoBehaviour
         return structureModel;
     }
 
-    internal List<Vector2Int> GetPathBetween(Vector2Int startPosition, Vector2Int endPosition, Vector2Int housePos, Vector2Int destPos, bool isAgent = false)
+    internal List<Vector2> GetPathBetween(Vector2Int startPosition, Vector2Int endPosition, Vector2Int housePos, Vector2Int destPos, bool isAgent = false)
     {
         Console.WriteLine("START OF ALL A STAR");
         var resultPath = GridSearch.AStarSearch(placementGrid, new Point(startPosition.x, startPosition.y), new Point(endPosition.x, endPosition.y), housePos, destPos, isAgent);
         
-        List<Vector2Int> path = new List<Vector2Int>();
+        List<Vector2> path = new List<Vector2>();
         foreach (Point point in resultPath)
         {
-            path.Add(new Vector2Int(point.X, point.Y));
+            path.Add(new Vector2(point));
         }
         //Console.WriteLine("Path line count " + path.Count);
         return path;
@@ -251,7 +251,7 @@ public class PlacementManager : MonoBehaviour
         var housePositions = placementGrid.GetAllHouses();
         foreach (var point in housePositions)
         {
-            returnList.Add(structureDictionary[new Vector2Int(point.X, point.Y)]);
+            returnList.Add(structureDictionary[new Vector2Int(point)]);
         }
         return returnList;
     }
@@ -262,7 +262,7 @@ public class PlacementManager : MonoBehaviour
         var housePositions = placementGrid.GetAllSpecialStructure();
         foreach (var point in housePositions)
         {
-            returnList.Add(structureDictionary[new Vector2Int(point.X, point.Y)]);
+            returnList.Add(structureDictionary[new Vector2Int(point)]);
         }
         return returnList;
     }
@@ -272,7 +272,7 @@ public class PlacementManager : MonoBehaviour
     {
         if (point != null)
         {
-            return structureDictionary[new Vector2Int(point.X, point.Y)];
+            return structureDictionary[new Vector2Int(point)];
         }
         return null;
     }

@@ -148,9 +148,11 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         //texure.ChangeTexture(model.name);
         //transform.angle = rotation;
         Console.WriteLine("Change to " + model.name);
-        var structure = Instantiate(model, new Vector3(transform.position, 0f));
+        var structure = Instantiate(model, new Vector3(transform.position, 0f), 1);
         //structure.transform.position = new Vector2(0, 0);
         structure.transform.angle = rotation;
+
+        aiDirector.placementManager.placementGrid.SetCellType(new Vector2Int(transform.position), CellType.Road, structure.entityId);
 
         Destroy(gameObject);
 

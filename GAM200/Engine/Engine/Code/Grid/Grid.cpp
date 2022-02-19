@@ -347,7 +347,7 @@ namespace Engine {
             std::cout << "\n";
         }
 
-        void Grid::AStarSearch(Math::ivec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
+        void Grid::AStarSearch(Math::vec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
             std::list<Math::ivec2> vlist = AStarSearchInternal(startPosition, endPosition, isAgent);
             vlist.reverse();
             
@@ -362,19 +362,109 @@ namespace Engine {
             //           D     Route: A 1 2 3 4 5 C are the lists of points for prefab B (first and last are the direction it would be going)
             //                 Another possible Route: A 6 7 8 9 D are the lists of points for prefab B (first and last are the direction it would be going) (this is going right and down)
             //3. To get the correct route, check the first prev position and the next position.
+#if 1
+            std::array<Math::vec2, 100> path{};
+
+            //path[index] = housePos;
+            //index++;
 
             Math::ivec2 prevPosition = housePos;
-            for (auto& i : vlist) {
-                auto& pos = arr[index] = i;
+            Math::ivec2 nextPosition{};
+            while(vlist.size() > 0) {
+                Math::ivec2 pos = vlist.front();
                 auto& entId = (*(grid + pos.x) + pos.y)->entityId;
 
-                dreamECSGame->GetComponent<WaypointComponent>(entId);
-                //std::cout << arr[index] << "\n";
+                //path[index] = vlist.front();
+                //index++;
+                vlist.pop_front();
+
+                bool added = false;
+                auto& wp = dreamECSGame->GetComponent<WaypointComponent>(entId);
+                if (!wp.updated) {
+                    TransformComponent& tc = dreamECSGame->GetComponent<TransformComponent>(entId);
+                    float angle = tc.angle;
+                    Math::vec2 position = tc.position;
+                
+                    float cosX = Math::cosDeg(angle);
+                    float sinX = Math::sinDeg(angle);
+                    Math::mat3 rotationAndTranslate{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
+                
+                    for (auto& listWP : wp.temWaypoint) {
+                        int c = 0;
+                        for (auto& t : listWP) {
+                            Math::vec3 temVec{ t.x, t.y, 1.f };
+                            temVec = rotationAndTranslate * temVec;
+                            if (c == 0 || c == 1) {
+                                temVec.x = round(temVec.x);
+                                temVec.y = round(temVec.y);
+                            }
+                            t.x = temVec.x;
+                            t.y = temVec.y;
+                            c++;
+                        }
+                    }
+                
+                    wp.updated = true;
+                }
+                
+                auto wpList = std::list<std::list<Math::vec2>>{ wp.temWaypoint };
+                
+                for (auto& t : wpList) {
+                    
+                    if (prevPosition == Math::ivec2{ (int)t.front().x, (int)t.front().y }) t.pop_front();
+                    else continue;
+                    if (vlist.size() == 0)
+                        nextPosition = destPos;
+                    else
+                        nextPosition = vlist.front();
+                
+                    
+                    if(nextPosition == Math::ivec2{ (int)t.front().x, (int)t.front().y }) t.pop_front();
+                    else continue;
+                
+                    added = true;
+                    
+                    //std::cout << "for points " << path[index - 1] << "\n";
+                    for (auto& pt : t) {
+                        //Add all points in
+                        path[index] = pt;
+                        std::cout << "Adding point " << pt << "\n";
+                        index++;
+                    }
+                    std::cout << "\n\n";
+                
+                    break;
+                }
+                if (!added) LOG_WARNING("Grid.cpp waypoint is not added for ", pos);
+                
+                prevPosition = pos;
+            }
+
+            path[index] = destPos;
+            index++;
+
+            std::cout << " New start --------------------\n";
+            for (int i = 0; i < index; i++) {
+                arr[i] = path[i];
+                std::cout << arr[i] << "\n";
+            }
+            std::cout << " New end --------------------\n";
+#else
+
+            for (auto& i : vlist) {
+                arr[index] = i;
+                std::cout << arr[index] << "\n";
                 index++;
             }
 
-            std::cout << "Start and end " << arr[0] << " " << arr[index - 1] << "\n";
-            std::cout << "End of A Star -----------------------------------\n";
+            arr[index] = destPos;
+            std::cout << arr[index] << "\n";
+            index++;
+#endif
+
+
+            //std::cout << "Start and end " << arr[0] << " " << arr[index - 1] << "\n";
+            //std::cout << "End of A Star -----------------------------------\n";
             *count = index;
         }
 

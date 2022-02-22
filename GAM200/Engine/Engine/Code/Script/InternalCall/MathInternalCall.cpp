@@ -30,6 +30,7 @@ namespace Engine {
 		void GetLength_Engine(float* length, Math::vec2 vec);
 		void GetNormalised_Engine(Math::vec2* vec);
 		void DotProduct_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs);
+		void AngleBetween_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs);
 
 		void RegisterMathInternalCall() {
 			mono_add_internal_call("Mathf::Atan2_Engine", Atan2_Engine);
@@ -40,6 +41,7 @@ namespace Engine {
 			mono_add_internal_call("Vector2::GetLength_Engine", GetLength_Engine);
 			mono_add_internal_call("Vector2::GetNormalised_Engine", GetNormalised_Engine);
 			mono_add_internal_call("Vector2::DotProduct_Engine", DotProduct_Engine);
+			mono_add_internal_call("Vector2::AngleBetween_Engine", AngleBetween_Engine);
 		}
 
 		void Atan2_Engine(float* outFloat, float xVal, float yVal) {
@@ -73,6 +75,10 @@ namespace Engine {
 
 		void DotProduct_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs) {
 			*outFloat = Math::dot(lhs, rhs);
+		}
+
+		void AngleBetween_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs) {
+			*outFloat = Math::degrees(std::acos(Math::dot(Math::normalize(lhs), Math::normalize(rhs))));
 		}
 	}
 }

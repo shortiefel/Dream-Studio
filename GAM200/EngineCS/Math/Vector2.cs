@@ -119,6 +119,15 @@ public struct Vector2
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void DotProduct_Engine(out float outFloat, Vector2 lhs, Vector2 rhs);
+
+    public static float AngleBetween(Vector2 lhs, Vector2 rhs)
+    {
+        AngleBetween_Engine(out float value, lhs, rhs);
+        return value;
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void AngleBetween_Engine(out float outFloat, Vector2 lhs, Vector2 rhs);
+
     public override string ToString()
     {
         return "Vector2: " + x + " " + y;

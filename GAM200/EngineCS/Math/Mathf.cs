@@ -48,10 +48,31 @@ public class Mathf
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void Lerp_Engine(out float num1, float num2, float t);
 
-    public static float Abs(float t)
+    //public static float Abs(float t)
+    //{
+    //    if (t < 0f) return -t;
+    //    return t;
+    //}
+
+    public static float ShortestAngle(float target, float comparedTo)
     {
-        if (t < 0f) return -t;
-        return t;
+        float diff1 = System.Math.Abs(comparedTo - target);
+        float diff2;
+        float newTarget;
+        if (target < comparedTo)
+        {
+            newTarget = target + 360;
+            diff2 = System.Math.Abs(comparedTo - newTarget);
+           
+            if (diff1 < diff2) return target;
+            else return newTarget;
+        }
+
+        newTarget = target - 360;
+        diff2 = System.Math.Abs(comparedTo - newTarget);
+       
+        if (diff1 < diff2) return target;
+        return newTarget;
     }
 }
 

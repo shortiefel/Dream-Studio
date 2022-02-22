@@ -35,7 +35,6 @@ public class CarAI : MonoBehaviour
 
     private float power;
 
-    private float targetAngle;
 
     //private float torque = 0.5f;
     private float dotValue;
@@ -51,6 +50,13 @@ public class CarAI : MonoBehaviour
     private CollisionManager collisionManager;
 
     private float raycastLength;
+
+    private float targetAngle;
+
+    private bool changeTarget;
+    private Vector2 prevPos;
+    private float prevAngle;
+    private float tValue;
 
     /*public bool Stop
     {
@@ -108,6 +114,10 @@ public class CarAI : MonoBehaviour
             tm = go2.GetComponent<TrafficManager>();
             tm.RegisterCar(transform.entityId);
         }
+
+        changeTarget = false;
+        tValue = 0f;
+        prevPos = transform.position;
     }
 
     public void SetPath(List<Vector2> newPath, ref StructureModel endStructure)
@@ -193,7 +203,7 @@ public class CarAI : MonoBehaviour
                 transform.angle = -180f;
             }
         }
-        targetAngle = transform.angle;
+        prevAngle = targetAngle = transform.angle;
         if (tm != null)
             tlIndex = tm.GetTrafficLightIndex(path);
     }
@@ -265,13 +275,23 @@ public class CarAI : MonoBehaviour
     }
     public override void FixedUpdate()
     {
-        if (rb.velocity.magnitude < maxSpeed)
-        {
-            rb.AddForce(movementVector.y * transform.up * power * turningFactor);
-        }
+        //if (rb.velocity.magnitude < maxSpeed)
+        //{
+        //    rb.AddForce(movementVector.y * transform.up * power * turningFactor);
+        //}
         //Debug.Log(rb.inertia);
-        rb.AddTorque(movementVector.x * power * 70);
-        //transform.angle = Mathf.Lerp(transform.angle, targetAngle, power * Time.deltaTime);
+        //rb.AddTorque(movementVector.x * power * 70);
+
+        //transform.angle = targetAngle;
+        tValue += power * Time.deltaTime;
+        
+        transform.position = new Vector2(Mathf.Lerp(prevPos.x, currentTargetPosition.x, tValue), Mathf.Lerp(prevPos.y, currentTargetPosition.y, tValue));
+        transform.angle = Mathf.Lerp(prevAngle, targetAngle, tValue);
+        if (tValue > 0.9f)
+        {
+            tValue = 0f;
+            changeTarget = true;
+        }
     }
 
     //private void CheckForCollisions()
@@ -327,14 +347,14 @@ public class CarAI : MonoBehaviour
             {
                 //Debug.Log("Turn right");
                 rotateCar = -1;
-                targetAngle = transform.angle - 90f;
+                //targetAngle = transform.angle - 90f;
                 turningFactor = 0.5f;
             }
             if (value < -dotValue)
             {
                 //Debug.Log("Turn left");
                 rotateCar = 1;
-                targetAngle = transform.angle + 90f;
+                //targetAngle = transform.angle + 90f;
                 turningFactor = 0.5f;
             }
             //OnDrive?.Invoke(new Vector2(rotateCar, 1));
@@ -357,7 +377,8 @@ public class CarAI : MonoBehaviour
                 distanceToCheck = lastPointArriveDistance;
             }
             //Console.WriteLine("After index ");
-            if (Vector2.Distance(currentTargetPosition, transform.position) < distanceToCheck)
+            //if (Vector2.Distance(currentTargetPosition, transform.position) < distanceToCheck)
+            if (changeTarget)
             {
                 //Console.WriteLine("Insde Distance ");
                 // Add the mass manager here
@@ -374,6 +395,20 @@ public class CarAI : MonoBehaviour
 
     private void SetNextTargetIndex()
     {
+        changeTarget = false;
+        prevPos = transform.position;
+        prevAngle = transform.angle;
+        if (prevAngle > 360f)
+        {
+            prevAngle -= 360f;
+            transform.angle = prevAngle;
+        }
+        else if (prevAngle < -360f)
+        {
+            prevAngle += 360f;
+            transform.angle = prevAngle;
+        }
+
         index++;
         if (index >= path.Count)
         {
@@ -385,7 +420,14 @@ public class CarAI : MonoBehaviour
         else
         {
             currentTargetPosition = path[index];
-
+            //Debug.Log("currentTargetPosition " + currentTargetPosition + " - prevPos " + prevPos);
+            //Debug.Log(currentTargetPosition - prevPos);
+            Vector2 diff = currentTargetPosition - prevPos;
+            targetAngle = Vector2.AngleBetween(currentTargetPosition - prevPos, new Vector2(0, 1));
+            if (diff.x > 0) targetAngle *= -1;
+            Debug.Log("From " + prevAngle + " " + transform.angle + " to " + targetAngle + " old----------");
+            targetAngle = Mathf.ShortestAngle(targetAngle, transform.angle);
+            Debug.Log("From " + prevAngle + " " + transform.angle + " to " + targetAngle);
             /*if (tlPath == null || tlPath.Count == 0) return;
             if (currentTargetPosition == tlPath[0])
             {

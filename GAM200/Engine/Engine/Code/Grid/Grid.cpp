@@ -351,8 +351,10 @@ namespace Engine {
             std::list<Math::ivec2> vlist = AStarSearchInternal(startPosition, endPosition, isAgent);
             vlist.reverse();
             
-            int index = 0;
-            std::cout << "\n Starting of A Star (C++)-----------------------------------\n";
+            int index = *count = 0;
+            if (vlist.size() == 0) return;
+
+            std::cout << "\n " << vlist.size() << " Starting of A Star(C++)---------------------------------- - \n";
 
             //How it works vlist contains the roads the car will have to follow
             //to get the individual routes u need to know which direction the car is going

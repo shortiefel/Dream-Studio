@@ -82,6 +82,26 @@ namespace Engine
             }
 
             shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::Font_Draw, shdr_pgm3));
+
+
+
+            // Shader for Shadow Mapping
+            shdr_files = {
+                std::make_pair(GLSLShader::ShaderType::Vertex_Shader, "Assets/Shaders/SimpleDepth.vert"),
+                std::make_pair(GLSLShader::ShaderType::Fragment_Shader, "Assets/Shaders/SimpleDepth.frag")
+            };
+
+            GLSLShader shdr_pgm4;
+            shdr_pgm4.CompileLinkValidate(shdr_files);
+
+            if (GL_FALSE == shdr_pgm4.IsLinked())
+            {
+                std::cout << "Unable to compile/link/validate shader programs\n";
+                std::cout << shdr_pgm4.GetLog() << "\n";
+                std::exit(EXIT_FAILURE);
+            }
+
+            shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::Simple_Depth, shdr_pgm4));
         }
     }
 }

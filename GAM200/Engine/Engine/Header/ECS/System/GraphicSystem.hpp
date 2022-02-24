@@ -34,8 +34,10 @@ namespace Engine
 		void Destroy();
 
 		//If _fbo is nullptr = default draw (game scene draw) otherwise it is for editor scene
-		void Render(float _dt, Graphic::FrameBuffer* _fbo = nullptr, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), bool gameDraw = true);
-		void Render(float _dt, LightComponent* _fbo, Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform());
+		void Render(float _dt, Graphic::FrameBuffer* _fbo = nullptr,
+					Math::mat3 camMatrix = CameraSystem::GetInstance().GetTransform(), 
+					bool gameDraw = true);
+		void Render(float _dt, LightComponent* _fbo);
 
 	private:
 		SINGLETON_SETUP(GraphicSystem);

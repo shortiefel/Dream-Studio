@@ -44,7 +44,8 @@ namespace Engine
 	// Destructor for Light Component
 	LightComponent::~LightComponent()
 	{
-		// Do something here
+		glDeleteFramebuffers(1, &depthFBO);
+		glDeleteTextures(1, &depthMap);
 	}
 
 	// Function that creates both buffer and texture and attached the texture to the buffer

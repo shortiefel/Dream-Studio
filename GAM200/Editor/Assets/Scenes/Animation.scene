@@ -1,1 +1,115 @@
-[{"Entity":{"Name":"Entity","Parent":10001,"Child":[]},"TransformComponent":{"Position":[8.026941299438477,2.6482038497924806],"LocalPosition":[8.026941299438477,2.6482038497924806],"Scale":[20.0,5.0],"Angle":0.0,"Layer":2,"IsActive":true},"ColliderComponent":{"ColliderType":1,"Position":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"IsTrigger":false,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Tutorial\\Instructions1.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":true,"TotalRow":2,"TotalColumns":3,"CurrentAnimationState":"","AnimationState":[{"StateName":"Open","StateRow":2,"StartFrame":2,"EndFrame":3,"TimePerFrame":1.0,"IsLoop":true,"Frames":[1.0,0.5,0.5,0.5]},{"StateName":"hjkl","StateRow":0,"StartFrame":0,"EndFrame":1,"TimePerFrame":0.10000000149011612,"IsLoop":true,"Frames":[0.5,0.5,0.5,0.5]},{"StateName":"qweq","StateRow":0,"StartFrame":0,"EndFrame":1,"TimePerFrame":0.10000000149011612,"IsLoop":true,"Frames":[0.5,0.5,0.5,0.5]}],"IsActive":true}}]
+[
+  {
+    "Entity": {
+      "Name": "Light Source",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -19.68901824951172, 0.35948753356933596 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 2.0, 2.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Game\\Houses\\ShoppingMall.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "LightComponent": {
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Camera",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "CameraComponent": {
+      "Height": 15.0,
+      "FOV": 1.0,
+      "AR": 1.7777777910232545,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Car1",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 6.776036262512207, -4.2653374671936039 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Game\\Cars\\Ambulance.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Car2",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 7.52068567276001, 4.008557319641113 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Game\\Cars\\Ambulance.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Car3",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -0.5049924850463867, 11.372323036193848 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Game\\Cars\\Ambulance.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  }
+]

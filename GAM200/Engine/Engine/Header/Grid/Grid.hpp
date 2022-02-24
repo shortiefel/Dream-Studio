@@ -27,7 +27,7 @@ Technology is prohibited.
 //Grid will never go negative 
 #define GRID_NULL_VALUE -999
 //False = fail
-#define GRID_NULL_VALUE_CHECK(value) (!(value.x < 0) && !(value.y < 0))
+#define GRID_NULL_VALUE_CHECK(value) (!(value.x == GRID_NULL_VALUE) && !(value.y == GRID_NULL_VALUE))
 
 //How long one line can (when drawing)
 #define MAX_LINE 100

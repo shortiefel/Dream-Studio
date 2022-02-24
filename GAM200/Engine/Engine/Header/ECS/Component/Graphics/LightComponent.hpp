@@ -34,9 +34,9 @@ namespace Engine
 		Math::vec4 colour;
 
 		unsigned int depthFBO, depthMap;
-		unsigned int shadowWidth, shadowHeight;
+		unsigned int shadowWidth = 1024, shadowHeight = 1024;
 
-		float near_plane, far_plane;
+		float near_plane = -1.f, far_plane = 7.5f;
 		Math::mat4 lightProjection;
 		Math::mat4 lightView;
 		Math::mat4 lightSpace;
@@ -50,8 +50,8 @@ namespace Engine
 		LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec4 _colour = { 1.f, 1.f, 1.f, 1.f }, bool _active = true);
 
 
-
-		void Bind();
+		void BindFBO();
+		void BindTexture();
 		void Unbind();
 
 		LightComponent& Deserialize(const DSerializer& _serializer);

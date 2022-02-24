@@ -62,6 +62,7 @@ namespace Engine
 
 		bool LoadFont(std::string filename);
 
+		TextureContainer GetTextureContainer(std::string name) { return textureList[name]; }
 		FontContainer GetFontContainer(std::string filename) { return fontList[filename]; }
 
 	private:

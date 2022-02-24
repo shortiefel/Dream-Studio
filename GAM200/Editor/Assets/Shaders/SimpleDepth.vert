@@ -22,14 +22,17 @@ layout (location=4) in vec2 aTPosition;
 layout (location=5) in vec2 aTScale;
 layout (location=6) in float aTRotation;
 
-layout (location=1) out vec2 vTexture;
-
 out VS_OUT {
     vec3 fragPos;
     vec3 normal;
     vec2 texCoords;
     vec4 fragPosLightSpace;
 } vs_out;
+
+layout (location=4) out vec2 vTexture;
+layout (location=5) out float vTextureIndex;
+
+
 
 
 void main() 
@@ -62,6 +65,9 @@ void main()
     vs_out.fragPosLightSpace = uLightSpaceMatrix * vec4(vs_out.fragPos, 1.0);
 	
     gl_Position = uLightProjection * uLightView * vec4(vs_out.fragPos, 1.0);
+	
+	vTexture = aVertexTexture;
+	vTextureIndex = aTextureIndex;
 
 	//gl_Position = vec4(vec2(uLightMatrix * uModel_to_NDC * vec4(aVertexPosition, 0.f, 1.f)), 0.0, 1.0);
 }

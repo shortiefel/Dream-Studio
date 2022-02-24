@@ -33,6 +33,8 @@ Technology is prohibited.
 #include "Engine/Header/Graphic/Graphic.hpp"
 #include "Engine/Header/Graphic/GraphicOptions.hpp"
 
+#include "Engine/Header/Management/ResourceManager.hpp"
+
 #include "Engine/Header/Grid/Grid.hpp"
 
 namespace Engine
@@ -184,7 +186,7 @@ namespace Engine
 	{
 		GraphicImplementation::Renderer::BeginQuadBatch();
 
-		// Load default shader program
+		// Load Simple Depth shader program
 		const auto& shd_ref_handle = 
 			GraphicImplementation::shdrpgms[GraphicShader::Simple_Depth].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
@@ -312,11 +314,25 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Set background colour
-		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+		//glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
 
 		// Enable GL_BLEND for transparency of textures
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		// Loops through lightArray to get lightComponent's depthMap and binds it.
+		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
+		for (auto& light : lightArray)
+		{
+			// Option to not render individual game object
+			if (!light.isActive) continue;
+
+			// If element in array is not used, skip it
+			const Engine::Entity_id& entity_id = light.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			light.BindTexture();
+		}
 
 		// Render game objects and collision lines through camera perspective
 		RenderGameObjectsD(camMatrix, _dt);
@@ -335,14 +351,14 @@ namespace Engine
 	// Update function for GraphicSystem by passing in a LightComponent*
 	void GraphicSystem::Render(float _dt, LightComponent* _fbo) {
 		PROFILER_START("Rendering Shadow Mapping");
-		_fbo->Bind();
+		_fbo->BindFBO();
 
 		glClear(GL_DEPTH_BUFFER_BIT);
 
 		GraphicImplementation::Renderer::ResetStats();
 
 		// Set background colour
-		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+		//glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
 
 		// Enable GL_BLEND for transparency of textures
 		glEnable(GL_BLEND);
@@ -364,13 +380,23 @@ namespace Engine
 
 		GLSLShader::SetUniform("uViewPos", CameraSystem::GetInstance().GetPosition(), shd_ref_handle);
 		
-		
-
 		// Setting depth map
 		GLuint tex_loc = glGetUniformLocation(shd_ref_handle, "uDepthMap");
 		glUniform1i(tex_loc, _fbo->depthMap);
 		if (tex_loc < 0) {
 			std::cout << "uDepthMap uniform doesn't exist!!!\n";
+			std::exit(EXIT_FAILURE);
+		}
+
+
+		unsigned int diffuseTexture = ResourceManager::GetInstance().GetTextureContainer("Default_Square").texture_handle;
+
+
+		// Setting diffuse texture
+		GLuint tex_loc2 = glGetUniformLocation(shd_ref_handle, "uDiffuseTexture");
+		glUniform1i(tex_loc2, diffuseTexture);
+		if (tex_loc2 < 0) {
+			std::cout << "uDiffuseTexture uniform doesn't exist!!!\n";
 			std::exit(EXIT_FAILURE);
 		}
 
@@ -410,7 +436,7 @@ namespace Engine
 		// Setting up shader files
 		GraphicImplementation::setup_shdr();
 
-		// Load shader program
+		// Load Default shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
@@ -425,6 +451,36 @@ namespace Engine
 
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
+
+		// Load Simple Depth shader program
+		const auto& shd_ref_handle2 = GraphicImplementation::shdrpgms[GraphicShader::Simple_Depth].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle2);
+
+		// Uniform for game object texture shader
+		auto loc2 = glGetUniformLocation(shd_ref_handle2, "u_Textures");
+		int samplers2[32]{};
+		for (int i = 0; i < 32; i++)
+		{
+			samplers2[i] = i;
+		}
+		glUniform1iv(loc2, 32, samplers2);
+
+		// Unload shader program
+		GraphicImplementation::UnUseShaderHandle();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		// Initialise meshes
 		GraphicImplementation::Renderer::Init();

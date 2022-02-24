@@ -11,11 +11,12 @@ Used for depth calculation for Shadow Mapping (Lights and Shadows)
 #version 450 core
 
 uniform sampler2D uShadowMap;
-uniform sampler2D uDiffuseTexture;
+uniform sampler2D u_Textures[32];
 uniform vec2 uLightPos;
 uniform vec2 uViewPos;
 
-layout (location=0) in vec2 vTexture;
+layout (location=4) in vec2 vTexture;
+layout (location=5) in float vTextureIndex;
 
 in VS_OUT {
     vec3 fragPos;
@@ -50,7 +51,9 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 
 void main()
 {       
-    vec3 color = texture(uDiffuseTexture, fs_in.texCoords).rgb;
+	int index = int(vTextureIndex);
+
+    vec3 color = texture(u_Textures[index], fs_in.texCoords).rgb;
     vec3 normal = normalize(fs_in.normal);
     vec3 lightColor = vec3(1.0);
 

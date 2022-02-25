@@ -32,6 +32,8 @@ namespace Engine {
 		void DotProduct_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs);
 		void AngleBetween_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs);
 
+		void QuadraticBezier_Engine(Math::vec2 p0, Math::vec2 p1, Math::vec2 p2, float tVal, Math::vec2* vec, float* angle);
+
 		void RegisterMathInternalCall() {
 			mono_add_internal_call("Mathf::Atan2_Engine", Atan2_Engine);
 			mono_add_internal_call("Mathf::Approximately_Engine", Approximately_Engine);
@@ -42,6 +44,8 @@ namespace Engine {
 			mono_add_internal_call("Vector2::GetNormalised_Engine", GetNormalised_Engine);
 			mono_add_internal_call("Vector2::DotProduct_Engine", DotProduct_Engine);
 			mono_add_internal_call("Vector2::AngleBetween_Engine", AngleBetween_Engine);
+
+			mono_add_internal_call("Vector2::QuadraticBezier_Engine", QuadraticBezier_Engine);
 		}
 
 		void Atan2_Engine(float* outFloat, float xVal, float yVal) {
@@ -79,6 +83,19 @@ namespace Engine {
 
 		void AngleBetween_Engine(float* outFloat, Math::vec2 lhs, Math::vec2 rhs) {
 			*outFloat = Math::degrees(std::acos(Math::dot(Math::normalize(lhs), Math::normalize(rhs))));
+		}
+
+		void QuadraticBezier_Engine(Math::vec2 p0, Math::vec2 p1, Math::vec2 p2, float tVal, Math::vec2* vec, float* angle) {
+			Math::vec2 
+				fp = ((1 - tVal) * p0) + (tVal * p1),
+				sp = ((1 - tVal) * p1) + (tVal * p2);
+
+			*vec = ((1 - tVal) * fp) + (tVal * sp);
+			Math::vec2 dir = sp - fp;
+			*vec = fp + (tVal * (dir));
+			*angle = Math::degrees(std::acos(Math::dot(Math::normalize(dir), Math::vec2{ 1.f,0.f })));
+			if (dir.y < 0.f) *angle *= -1;
+
 		}
 	}
 }

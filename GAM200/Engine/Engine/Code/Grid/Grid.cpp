@@ -368,9 +368,6 @@ namespace Engine {
 #if 1
             std::array<Math::vec2, 100> path{};
 
-            //path[index] = housePos;
-            //index++;
-
             Math::ivec2 prevPosition = housePos;
             Math::ivec2 nextPosition{};
             while(vlist.size() > 0) {
@@ -421,7 +418,6 @@ namespace Engine {
                     else
                         nextPosition = vlist.front();
                 
-                    
                     if(nextPosition == Math::ivec2{ (int)t.front().x, (int)t.front().y }) t.pop_front();
                     else continue;
                 
@@ -456,12 +452,10 @@ namespace Engine {
 
             for (auto& i : vlist) {
                 arr[index] = i;
-                std::cout << arr[index] << "\n";
                 index++;
             }
 
             arr[index] = destPos;
-            std::cout << arr[index] << "\n";
             index++;
 #endif
 

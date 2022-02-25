@@ -128,6 +128,15 @@ public struct Vector2
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void AngleBetween_Engine(out float outFloat, Vector2 lhs, Vector2 rhs);
 
+
+    public static Vector2 QuadraticBezier(Vector2 p0, Vector2 p1, Vector2 p2, float tVal, out float angle)
+    {
+        QuadraticBezier_Engine(p0, p1, p2, tVal, out Vector2 pt, out angle);
+        return pt;
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void QuadraticBezier_Engine(Vector2 p0, Vector2 p1, Vector2 p2, float tVal, out Vector2 pt, out float angle);
+
     public override string ToString()
     {
         return "Vector2: " + x + " " + y;

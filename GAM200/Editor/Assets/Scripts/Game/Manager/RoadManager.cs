@@ -24,6 +24,7 @@ public class RoadManager : MonoBehaviour
     private ERPManager erpManager;
     private MoneySystem moneyManager;
 
+    public List<Vector2Int> temporaryRoadPositions;
     //private void Start()
     public override void Start()
     {
@@ -49,6 +50,8 @@ public class RoadManager : MonoBehaviour
         GameObject go2 = GameObject.Find("ERPManager");
         if (go2 != null)
             erpManager = go2.GetComponent<ERPManager>();
+
+        temporaryRoadPositions = new List<Vector2Int>();
     }
 
     public void PlaceSpawnHouse(Vector2Int position)
@@ -213,7 +216,7 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceRoad(Vector2Int position)
     {
-        //Debug.Log("here");
+        /*//Debug.Log("here");
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
         if (placementManager.CheckIfPositionIsFree(position) == false)
@@ -258,14 +261,27 @@ public class RoadManager : MonoBehaviour
         //    }
         //}
 
-        FixRoadPrefabs();
+        FixRoadPrefabs();*/
+
+
+
+
+        //placementMode = true;
+        //startPosition = position;
+        //Debug.Log(position + " -----------------\n");
+        if (placementManager.CheckIfPositionInBound(position) == false)
+            return;
+        if (temporaryRoadPositions.Count > 0 && temporaryRoadPositions[temporaryRoadPositions.Count - 1] == position) { }
+        else
+            temporaryRoadPositions.Add(position);
+        //placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
 
     }
 
     public void FinishPlacingRoad()
     {
         //Debug.Log("Something");
-        placementMode = false;
+        /*placementMode = false;
         placementManager.AddtemporaryStructuresToStructureDictionary();
         if (temporaryPlacementPositions.Count > 0)
         {
@@ -274,13 +290,26 @@ public class RoadManager : MonoBehaviour
         temporaryPlacementPositions.Clear();
         startPosition = Vector2Int.zero;
 
+        placeSound.Play();*/
+
+        //placementMode = false;
+        //placementManager.AddtemporaryStructuresToStructureDictionary();
+        //if (temporaryPlacementPositions.Count > 0)
+        //{
+        //    //AudioPlayer.instance.PlayPlacementSound();
+        //}
+        //temporaryPlacementPositions.Clear();
+        //startPosition = Vector2Int.zero;
+
+        placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        temporaryRoadPositions.Clear();
         placeSound.Play();
     }
 
     public void RemoveRoad(Vector2Int position)
     {
-        
-        if (placementManager.CheckIfPositionInBound(position) == false)
+
+        /*if (placementManager.CheckIfPositionInBound(position) == false)
             return;
         bool result = false;
         if (trafficLightManager != null)
@@ -303,15 +332,46 @@ public class RoadManager : MonoBehaviour
             }
         }
 
-        FixRoadPrefabs();
+        FixRoadPrefabs();*/
+
+        if (placementManager.CheckIfPositionInBound(position) == false)
+            return;
+        bool result = false;
+        if (trafficLightManager != null)
+            result |= trafficLightManager.RequestRemovingTrafficLight(position);
+        if (erpManager != null)
+            result |= erpManager.RequestRemovingERP(position);
+
+        if (placementManager.placementGrid.UnsetRoad(position)) removeSound.Play();
+        //if (result == true)
+        //    return;
+        //if (placementManager.CheckIfPositionIsFree(position) == false)
+        //{
+        //    if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
+        //    {
+        //        //placementManager.RemoveCurrentGrid(position);
+        //        //temporaryPlacementPositions.Add(position);
+        //
+        //        removeSound.Play();
+        //    }
+        //}
+        //
+        //FixRoadPrefabs();
     }
 
     public void FinishRemovingRoad()
     {
         //Debug.Log("Something");
-        placementMode = false;
+        /*placementMode = false;
         placementManager.AddtemporaryStructuresToStructureDictionary();
         temporaryPlacementPositions.Clear();
+
+        removeSound.Play();*/
+
+        placementMode = false;
+
+
+        //temporaryPlacementPositions.Clear();
 
         removeSound.Play();
     }

@@ -133,6 +133,33 @@ public class Grid
         return new Vector2Int(_width, _height);
     }
 
+    //setStyle true for add and false for remove
+    public void SetRoad(List<Vector2Int> roads)
+    {
+        int rCt = roads.Count;
+        if (rCt < 2)
+        {
+            Debug.Log("SetRoad require minimum of 2 road points");
+            return;
+        }
+        Vector2Int[] roadsArr = new Vector2Int[rCt];
+        for (int i = 0; i < rCt; i++)
+        {
+            roadsArr[i] = roads[i];
+        }
+        SetRoad_Engine(roadsArr, rCt);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void SetRoad_Engine(Vector2Int[] roads, int size);
+    
+    public bool UnsetRoad(Vector2Int pos)
+    {
+        return UnsetRoad_Engine(pos);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool UnsetRoad_Engine(Vector2Int pos);
+
+
     public void SetCellType(Vector2Int pos, CellType ct, uint entityId = 0)
     {
         SetCellType_Engine(pos.x, pos.y, (int)ct, entityId);
@@ -228,6 +255,21 @@ public class Grid
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool GetRandomSpecialStructurePoint_Engine(out Point point);
+
+    public Point GetRandomHouseStructurePoint()
+    {
+        if (!GetRandomHouseStructurePoint_Engine(out Vector2Int ptInt)) return null;
+        return new Point(ptInt);
+
+        //int count = _houseStructure.Count - 1;
+        //if (count < 0) return null;
+        //
+        //int n = Random.Range(0, count);
+        //return _houseStructure[n];
+    }
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool GetRandomHouseStructurePoint_Engine(out Vector2Int point);
 
     public List<Point> GetAdjacentCells(Point cell, bool isAgent)
     {
@@ -412,17 +454,5 @@ public class Grid
         return _specialStructure;
     }
 
-    public Point GetRandomHouseStructurePoint()
-    {
-        //if (_houseStructure.Count == 0)
-        //{
-        //    return null;
-        //}
-        //return _houseStructure[Random.Range(0, _houseStructure.Count)];
-        int count = _houseStructure.Count - 1;
-        if (count < 0) return null;
-
-        int n = Random.Range(0, count);
-        return _houseStructure[n];
-    }
+    
 }

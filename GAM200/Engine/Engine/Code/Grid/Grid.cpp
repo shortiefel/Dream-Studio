@@ -20,6 +20,8 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 
+#include "Engine/Header/Serialize/GameSceneSerializer.hpp" //Deserialize Prefab
+
 #include <map>
 
 namespace Engine {
@@ -206,6 +208,22 @@ namespace Engine {
             return true;
         }
 
+        bool Grid::GetRandomHouseStructurePoint(Math::ivec2* pos) {
+            std::cout << "House Count " << houseStructure.size() << "\n";
+            int count = static_cast<int>(houseStructure.size()) - 1;
+            if (count < 0) return false;
+
+            int num;
+            Random::Range(0, count, &num);
+            std::list<Math::ivec2>::iterator it = houseStructure.begin();
+            for (int i = 0; i < num; i++) {
+                it++;
+            }
+            *pos = *it;
+
+            return true;
+        }
+
         void Grid::GetAllAdjacentCells(Math::ivec2(&arr)[4], int* count, int x, int y) {
             *count = 0;
             if (x > offset.x)
@@ -348,7 +366,226 @@ namespace Engine {
             std::cout << "\n";
         }
 
-        void Grid::AStarSearch(Math::vec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
+        bool Grid::IsWithinGrid(Math::ivec2 pos) {
+            Math::ivec2 endPoint = mapSize + offset;
+            if (pos.x >= offset.x && pos.x < endPoint.x && pos.y >= offset.y && pos.y < endPoint.y)
+                return true;
+            return false;
+        }
+
+        bool CheckAddPoints(Math::ivec2 cellPos, Cell& cell, Math::ivec2 posToAdd) {
+            for (int p = 0; p < (int)CellDirection::End; p++) {
+                if (cell.adjacentCell[p] == posToAdd) return false;
+            }
+
+            //Find direction 
+            if (posToAdd.x < cellPos.x) {
+                cell.adjacentCell[(int)CellDirection::Left] = posToAdd;
+                cell.cellBinary |= (1 << (int)CellDirection::Left);
+            }
+
+            else if (posToAdd.x > cellPos.x) { 
+                cell.adjacentCell[(int)CellDirection::Right] = posToAdd;
+                cell.cellBinary |= (1 << (int)CellDirection::Right);
+            }
+
+            else if (posToAdd.y < cellPos.y) { 
+                cell.adjacentCell[(int)CellDirection::Down] = posToAdd; 
+                cell.cellBinary |= (1 << (int)CellDirection::Down);
+            }
+
+            else if (posToAdd.y > cellPos.y) { 
+                cell.adjacentCell[(int)CellDirection::Up] = posToAdd;  
+                cell.cellBinary |= (1 << (int)CellDirection::Up);
+            }
+
+            return true;
+        }
+
+        bool AllowAddPointCheck(CellType ct) {
+            if (ct == CellType::Road || ct == CellType::None || ct == CellType::Empty) return true;
+            return false;
+        }
+
+        std::string GetRoadType(const Cell& cell, float& angle) {
+            bool leftDir = (cell.cellBinary & (1 << (int)CellDirection::Left));
+            bool rightDir = (cell.cellBinary & (1 << (int)CellDirection::Right));
+            bool upDir = (cell.cellBinary & (1 << (int)CellDirection::Up));
+            bool downDir = (cell.cellBinary & (1 << (int)CellDirection::Down));
+
+            int cellCount = ((int)leftDir + (int)rightDir + (int)upDir + (int)downDir);
+
+            if (cellCount == 1) {
+                if (leftDir) angle = -90.f;
+                else if (rightDir) angle = 90.f;
+                else if (upDir) angle = 180.f;
+                else if (downDir) angle = 0.f;
+                return "EndRoad";
+            }
+
+            else if (cellCount == 2) {
+                if (leftDir && rightDir) angle = 90.f;
+                else if (upDir && downDir) angle = 0.f;
+                else {
+                    //Which curve is this?
+                    if (leftDir) {
+                        if (upDir) angle = 180.f;
+                        else if (downDir) angle = -90.f;
+                    }
+
+                    else if (rightDir) {
+                        if (upDir) angle = 90.f;
+                        else if (downDir) angle = 0.f;
+                    }
+                    return "CurveRoad";
+                }
+                //For the if and else if
+                return "StraightRoad";
+            }
+
+            else if (cellCount == 3) {
+                if (!leftDir) angle = 90.f;
+                if (!rightDir) angle = -90.f;
+                else if (!upDir) angle = 0.f;
+                else if (!downDir) angle = 180.f;
+
+                return "ThreeWayRoad";
+            }
+
+            else if (cellCount == 4) return "FourWayRoad";
+
+            std::cout << "Grid.cpp GetRoadType cellCount is not recognized\n";
+            return "";
+            
+        }
+
+        void UpdateCell(Cell& cell, const Math::ivec2& vec) {
+            if (cell.entityId != 0) dreamECSGame->DestroyEntity(cell.entityId);
+            float angle = 0.f;
+            std::string type = GetRoadType(cell, angle);
+            if (type.size() == 0) return;
+            GameSceneSerializer::DeserializePrefab(type, &(cell.entityId), Math::vec2{ (float)vec.x, (float)vec.y }, angle);
+        }
+
+        void Grid::SetRoads(Math::ivec2 posArr[MAX_LINE], int size) {
+            //Add roads
+            //All position in posArr will be added (excluding duplicates), this will be used to spawn the prefab
+            std::map<Math::ivec2, bool> instantiatePos;
+
+            for (int i = 0; i < size; i++) {
+                    
+                Cell& cellC = *(*(grid + posArr[i].x - offset.x) + posArr[i].y - offset.y);
+                Cell& cellB = i != 0         ? *(*(grid + posArr[i - 1].x - offset.x) + posArr[i - 1].y - offset.y) : cellC;
+                Cell& cellF = i != size - 1  ? *(*(grid + posArr[i + 1].x - offset.x) + posArr[i + 1].y - offset.y) : cellC;
+
+                if (cellC.ct == CellType::Structure || cellC.ct == CellType::SpecialStructure) {
+                    //house/destination already has connected point
+                    if (cellC.cellBinary != 0) continue;
+
+                    //Since points doesnt add house/destination as adjacentCell
+                    //It has to be done here when the house/destination choose which point it wants to be connected to
+                    //the lines are noted with a (*Done here*)
+                        
+                    //Always choose the position before house/destination to be the connected point
+                    if (i != 0) {
+                        //cellC.adjacentCell[cellC.cellCount] = posArr[i - 1];
+                        CheckAddPoints(posArr[i], cellC, posArr[i - 1]);
+                        bool changes = CheckAddPoints(posArr[i - 1], cellB, posArr[i]); //*Done here*
+                        instantiatePos[posArr[i - 1]] |= changes;
+                    }
+                    //But if house/destination is first, choose the point after
+                    else {
+                        //cellC.adjacentCell[cellC.cellCount] = posArr[i + 1];
+                        CheckAddPoints(posArr[i], cellC, posArr[i + 1]);
+                        bool changes = CheckAddPoints(posArr[i + 1], cellF, posArr[i]); //*Done here*
+                        instantiatePos[posArr[i + 1]] |= changes;
+                    }
+
+
+                    //Skip the other checks and add point
+                    continue; 
+                }
+
+                //Only add points if it is CellType (None, Empty, Road) 
+                //CellType (Structure and SpecialStructure) are stopped above
+                cellC.ct = CellType::Road;
+                bool changes = false;
+                if (i != 0        && AllowAddPointCheck(cellB.ct)) changes |= CheckAddPoints(posArr[i], cellC, posArr[i - 1]);
+                if (i != size - 1 && AllowAddPointCheck(cellF.ct)) changes |= CheckAddPoints(posArr[i], cellC, posArr[i + 1]);
+
+                instantiatePos[posArr[i]] |= changes;
+
+                //std::cout << posArr[i];
+            }
+
+            //std::cout << "\n";
+            for (auto& [vec, changes] : instantiatePos) {
+                Cell& cell = *(*(grid + vec.x - offset.x) + vec.y - offset.y);
+                //Destroy the previous entity
+                if (changes) {
+                    //if (cell.entityId != 0) dreamECSGame->DestroyEntity(cell.entityId);
+                    //float angle = 0.f;
+                    //std::string type = GetRoadType(cell, angle);
+                    //if (type.size() == 0) continue;
+                    //GameSceneSerializer::DeserializePrefab(type, &(cell.entityId), Math::vec2{ (float)vec.x, (float)vec.y }, angle);
+                    UpdateCell(cell, vec);
+                }
+                //std::cout << " " << vec << " " << cell.cellBinary << "\n";
+            }
+            //std::cout << "\n";
+        }
+
+        bool Grid::UnsetRoads(Math::ivec2 pos) {
+            if (!IsWithinGrid(pos)) return false;
+            std::cout << " Within the grid --------------------------------------------------------------------\n";
+            Cell& cell = *(*(grid + pos.x - offset.x) + pos.y - offset.y);
+
+            if (cell.entityId == EMPTY_ENTITY || cell.ct != CellType::Road) return false;
+            dreamECSGame->DestroyEntity(cell.entityId);
+            cell.entityId = EMPTY_ENTITY;
+            
+            bool leftDir = (cell.cellBinary & (1 << (int)CellDirection::Left));
+            bool rightDir = (cell.cellBinary & (1 << (int)CellDirection::Right));
+            bool upDir = (cell.cellBinary & (1 << (int)CellDirection::Up));
+            bool downDir = (cell.cellBinary & (1 << (int)CellDirection::Down));
+
+            Math::ivec2 removePos{};
+            if (leftDir) {
+                removePos = cell.adjacentCell[(int)CellDirection::Left];
+                Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
+                cellT.cellBinary ^= (1 << (int)CellDirection::Right);
+                if (cellT.ct == CellType::Road)
+                    UpdateCell(cellT, removePos);
+            }
+
+            if (rightDir) {
+                removePos = cell.adjacentCell[(int)CellDirection::Right];
+                Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
+                cellT.cellBinary ^= (1 << (int)CellDirection::Left);
+                if (cellT.ct == CellType::Road)
+                    UpdateCell(cellT, removePos);
+            }
+
+            if (upDir) {
+                removePos = cell.adjacentCell[(int)CellDirection::Up];
+                Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
+                cellT.cellBinary ^= (1 << (int)CellDirection::Down);
+                if (cellT.ct == CellType::Road)
+                    UpdateCell(cellT, removePos);
+            }
+
+            if (downDir) {
+                removePos = cell.adjacentCell[(int)CellDirection::Down];
+                Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
+                cellT.cellBinary ^= (1 << (int)CellDirection::Up);
+                if (cellT.ct == CellType::Road)
+                    UpdateCell(cellT, removePos);
+            }
+
+            return true;
+        }
+
+        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
             std::list<Math::ivec2> vlist = AStarSearchInternal(startPosition, endPosition, isAgent);
             vlist.reverse();
             

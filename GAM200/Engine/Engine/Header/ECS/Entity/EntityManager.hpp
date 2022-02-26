@@ -23,6 +23,8 @@ Technology is prohibited.
 
 #include <unordered_map>
 
+#define EMPTY_ENTITY 0
+
 namespace Engine {
 	using EntityMapType = std::unordered_map<Entity_id, Entity>;
 	class EntityManager

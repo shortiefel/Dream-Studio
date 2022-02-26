@@ -29,10 +29,14 @@ namespace Engine {
 	void SetCellType_Engine(int x, int y, int cellType, unsigned int entityId);
 	bool GetRandomRoadPoint_Engine(Math::ivec2* point);
 	bool GetRandomSpecialStructurePoint_Engine(Math::ivec2* point);
+	bool GetRandomHouseStructurePoint_Engine(Math::ivec2* point);
 	void GetAllAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y);
 	void GetWalkableAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y, bool isAgent);
 	void GetAdjacentCellsOfType_Engine(MonoArray* monoArray, int* count, int x, int y, int type);
 	void GetAllAdjacentCellTypes_Engine(MonoArray* monoArray, int x, int y);
+
+	void SetRoad_Engine(MonoArray* monoArray, int size);
+	bool UnsetRoad_Engine(Math::ivec2 pos);
 
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
 
@@ -46,10 +50,14 @@ namespace Engine {
 		mono_add_internal_call("Grid::SetCellType_Engine", SetCellType_Engine);
 		mono_add_internal_call("Grid::GetRandomRoadPoint_Engine", GetRandomRoadPoint_Engine);
 		mono_add_internal_call("Grid::GetRandomSpecialStructurePoint_Engine", GetRandomSpecialStructurePoint_Engine);
+		mono_add_internal_call("Grid::GetRandomHouseStructurePoint_Engine", GetRandomHouseStructurePoint_Engine);
 		mono_add_internal_call("Grid::GetAllAdjacentCells_Engine", GetAllAdjacentCells_Engine);
 		mono_add_internal_call("Grid::GetWalkableAdjacentCells_Engine", GetWalkableAdjacentCells_Engine);
 		mono_add_internal_call("Grid::GetAdjacentCellsOfType_Engine", GetAdjacentCellsOfType_Engine);
 		mono_add_internal_call("Grid::GetAllAdjacentCellTypes_Engine", GetAllAdjacentCellTypes_Engine);
+		
+		mono_add_internal_call("Grid::SetRoad_Engine", SetRoad_Engine);
+		mono_add_internal_call("Grid::UnsetRoad_Engine", UnsetRoad_Engine);
 
 		mono_add_internal_call("GridSearch::AStarSearch_Engine", AStarSearch_Engine);
 		mono_add_internal_call("Grid::PrintGridOut_Engine", PrintGridOut_Engine);
@@ -76,6 +84,10 @@ namespace Engine {
 	}
 	bool GetRandomSpecialStructurePoint_Engine(Math::ivec2* point) {
 		return Game::Grid::GetInstance().GetRandomSpecialStructurePoint(point);
+	}
+
+	bool GetRandomHouseStructurePoint_Engine(Math::ivec2* point) {
+		return Game::Grid::GetInstance().GetRandomHouseStructurePoint(point);
 	}
 	void GetAllAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y) {
 		Math::ivec2 arr[4];
@@ -119,8 +131,24 @@ namespace Engine {
 		}
 	}
 
+
+	void SetRoad_Engine(MonoArray* monoArray, int size) {
+		Math::ivec2 posArr[MAX_LINE]{};
+
+		if (size > MAX_LINE) std::cout << "SetRoad_Engine size is more than MAX_LINE\n";
+
+		for (int i = 0; i < size; i++) {
+			posArr[i] = mono_array_get(monoArray, Math::ivec2, i);
+		}
+		Game::Grid::GetInstance().SetRoads(posArr, size);
+	}
+
+	bool UnsetRoad_Engine(Math::ivec2 pos) {
+		return Game::Grid::GetInstance().UnsetRoads(pos);
+	}
+
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
-		Math::vec2 arr[MAX_LINE];
+		Math::vec2 arr[MAX_WAYPOINTS];
 		Game::Grid::GetInstance().AStarSearch(arr, count, startPosition, endPosition, housePos, destPos, isAgent);
 		int loop = *count;
 		for (int i = 0; i < loop; i++) {

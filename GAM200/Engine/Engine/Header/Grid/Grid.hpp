@@ -31,6 +31,8 @@ Technology is prohibited.
 
 //How long one line can (when drawing)
 #define MAX_LINE 100
+//The number of waypoints
+#define MAX_WAYPOINTS 100
 
 namespace Engine {
 	namespace Game {
@@ -42,9 +44,19 @@ namespace Engine {
 			None
 		};
 
+		enum class CellDirection {
+			Left = 0,
+			Right,
+			Up,
+			Down,
+			End
+		};
+
 		struct Cell {
 			CellType ct = CellType::Empty;
 			unsigned int entityId = 0;
+			Math::ivec2 adjacentCell[4] = {};
+			int cellBinary = 0;
 		};
 
 		class Grid : public Singleton<Grid> {
@@ -74,6 +86,8 @@ namespace Engine {
 			Randomize index of Road points to retrieve a Road position
 			-----------------------------------------------------*/
 			bool GetRandomSpecialStructurePoint(Math::ivec2* pos);
+
+			bool GetRandomHouseStructurePoint(Math::ivec2* pos);
 			/*-----------------------------------------------------
 			Get adjacent cells that the specific object(isAgent) can walk on
 			-----------------------------------------------------*/
@@ -87,7 +101,12 @@ namespace Engine {
 			-----------------------------------------------------*/
 			void GetAllAdjacentCellTypes(int(&arr)[4], int x, int y);
 
-			void AStarSearch(Math::vec2(&arr)[MAX_LINE], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
+			bool IsWithinGrid(Math::ivec2 pos);
+
+			void SetRoads(Math::ivec2 posArr[MAX_LINE], int size);
+			bool UnsetRoads(Math::ivec2 pos);
+
+			void AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
 
 			void GetAllAdjacentCells(Math::ivec2(&arr)[4], int* count, int x, int y); // Should be private
 

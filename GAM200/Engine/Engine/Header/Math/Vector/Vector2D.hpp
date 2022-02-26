@@ -161,6 +161,17 @@ namespace Engine {
 					os << "(" << rhs.x << ", " << rhs.y << ")";
 					return os;
 				}
+
+				//struct HashFunction
+				//{
+				//	template <typename U>
+				//	size_t operator()(const Vector2D<U>& pt) const
+				//	{
+				//		size_t xHash = std::hash<int>()(pt.x);
+				//		size_t yHash = std::hash<int>()(pt.y) << 1;
+				//		return xHash ^ yHash;
+				//	}
+				//};
 			};
 
 			/*---------------------------------------------------------------------------------------------------------------------

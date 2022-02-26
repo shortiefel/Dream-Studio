@@ -6,12 +6,18 @@ public class Test : MonoBehaviour
     //GameObject temTL; //TO Remove
     //Camera mainCamera; //TO Remove
 
+    Vector2 p0 = new Vector2(0, 0);
+    Vector2 p1 = new Vector2(0, 1);
+    Vector2 p2 = new Vector2(1, 1);
+
+    float t = 0f;
+    float angle = 0f;
     public override void Start()
     {
         //temTL = new GameObject(new Prefab("Box")); //To Remove
         //mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove = GetComponent<Text>();
 
-        Waypoint wp = GetComponent<Waypoint>();
+        //Waypoint wp = GetComponent<Waypoint>();
 
         //The list hold list of vector2 (each List<Vector2> is a possible path/route the car can take
         //The points added should be with reference to the center 0, 0
@@ -44,7 +50,11 @@ public class Test : MonoBehaviour
 
     public override void Update()
     {
-        
+        t += Time.deltaTime;
+        transform.position = Vector2.QuadraticBezier(p0, p1, p2, t, out angle);
+        transform.angle = angle;
+        Debug.Log(transform.position + " with " + angle);
+        if (t > 0.99) t = 0f;
         //if (Input.GetKeyDown(KeyCode.A))
         //{
         //    Debug.Log("Instantiating ");

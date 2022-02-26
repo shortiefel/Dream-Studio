@@ -128,7 +128,7 @@ namespace Engine {
         int Grid::GetCellType(int x, int y) {
 
             //return static_cast<int>((grid + x + (static_cast<size_t>(y) * mapSize.x))->ct);
-            return static_cast<int>((*(grid + x ) + static_cast<size_t>(y))->ct);
+            return static_cast<int>((*(grid + x - offset.x) + static_cast<size_t>(y) - offset.y)->ct);
         }
 
         void Grid::SetCellType(int x, int y, int cellType, unsigned int entityId) {
@@ -208,22 +208,22 @@ namespace Engine {
 
         void Grid::GetAllAdjacentCells(Math::ivec2(&arr)[4], int* count, int x, int y) {
             *count = 0;
-            if (x > 0)
+            if (x > offset.x)
             {
                 arr[*count] = Math::ivec2{ x - 1, y };
                 (*count)++;
             }
-            if (x < mapSize.x - 1)
+            if (x < mapSize.x + offset.x - 1)
             {
                 arr[*count] = Math::ivec2{ x + 1, y };
                 (*count)++;
             }
-            if (y > 0)
+            if (y > offset.y)
             {
                 arr[*count] = Math::ivec2{ x, y - 1 };
                 (*count)++;
             }
-            if (y < mapSize.y - 1)
+            if (y < mapSize.y + offset.y - 1)
             {
                 arr[*count] = Math::ivec2{ x, y + 1 };
                 (*count)++;
@@ -237,7 +237,8 @@ namespace Engine {
             int index = 0;
             for (int i = 0; i < num; i++) {
                 //if (IsCellWalkable((grid + (temp[i].x) + (static_cast<size_t>(temp[i].y) * mapSize.x))->ct, isAgent) == true) {
-                if (IsCellWalkable((*(grid + temp[i].x) + static_cast<size_t>(temp[i].y))->ct, isAgent) == true) {
+                auto gridPTR = *(grid + temp[i].x - offset.x) +static_cast<size_t>(temp[i].y) - offset.y;
+                if (IsCellWalkable(gridPTR->ct, isAgent) == true) {
                     arr[index] = temp[i];
                     index++;
                 }
@@ -253,7 +254,7 @@ namespace Engine {
             int index = 0;
             for (int i = 0; i < num; i++) {
                 //if (static_cast<int>((grid + (temp[i].x) + (static_cast<size_t>(temp[i].y) * mapSize.x))->ct) == _type) {
-                if (static_cast<int>((*(grid + temp[i].x) + static_cast<size_t>(temp[i].y))->ct) == _type) {
+                if (static_cast<int>((*(grid + temp[i].x - offset.x) + static_cast<size_t>(temp[i].y) - offset.y)->ct) == _type) {
                     arr[index] = temp[i];
                     index++;
                 }
@@ -266,21 +267,21 @@ namespace Engine {
             int none = static_cast<int>(CellType::None);
             arr[0] = none; arr[1] = none; arr[2] = none; arr[3] = none;
 
-            if (x > 0) {
+            if (x > offset.x) {
                 //arr[0] = static_cast<int>((grid + (static_cast<size_t>(x) - 1) + (static_cast<size_t>(y) * mapSize.x))->ct);
-                arr[0] = static_cast<int>((*(grid + static_cast<size_t>(x) - 1) + static_cast<size_t>(y))->ct);
+                arr[0] = static_cast<int>((*(grid + static_cast<size_t>(x) - offset.x - 1) + static_cast<size_t>(y) - offset.y)->ct);
             }
-            if (x < mapSize.x - 1) {
+            if (x < mapSize.x + offset.x - 1) {
                 //arr[2] = static_cast<int>((grid + (static_cast<size_t>(x) + 1) + (static_cast<size_t>(y) * mapSize.x))->ct);
-                arr[2] = static_cast<int>((*(grid + static_cast<size_t>(x) + 1) + static_cast<size_t>(y))->ct);
+                arr[2] = static_cast<int>((*(grid + static_cast<size_t>(x) - offset.x + 1) + static_cast<size_t>(y) - offset.y)->ct);
             }
-            if (y > 0) {
+            if (y > offset.y) {
                 //arr[3] = static_cast<int>((grid + x + ((static_cast<size_t>(y) - 1) * mapSize.x))->ct);
-                arr[3] = static_cast<int>((*(grid + x) + (static_cast<size_t>(y) - 1))->ct);
+                arr[3] = static_cast<int>((*(grid + x - offset.x) + (static_cast<size_t>(y) - offset.y - 1))->ct);
             }
-            if (y < mapSize.y - 1) {
+            if (y < mapSize.y + offset.y - 1) {
                 //arr[1] = static_cast<int>((grid + x + ((static_cast<size_t>(y) + 1) * mapSize.x))->ct);
-                arr[1] = static_cast<int>((*(grid + x) + (static_cast<size_t>(y) + 1))->ct);
+                arr[1] = static_cast<int>((*(grid + x - offset.x) + (static_cast<size_t>(y) - offset.y + 1))->ct);
             }
 
         }
@@ -306,7 +307,7 @@ namespace Engine {
         }
 
         float ManhattanDistance(Math::ivec2 endPos, Math::ivec2 point) {
-            return static_cast<float>(std::abs(endPos.x - point.x) + std::abs(endPos.y - point.y));
+            return static_cast<float>(std::abs(std::abs(endPos.x) - std::abs(point.x)) + std::abs(std::abs(endPos.y) - std::abs(point.y)));
         }
 
         std::list<Math::ivec2> Grid::GetAdjacentCells(Math::ivec2 cell, bool isAgent) {
@@ -351,8 +352,10 @@ namespace Engine {
             std::list<Math::ivec2> vlist = AStarSearchInternal(startPosition, endPosition, isAgent);
             vlist.reverse();
             
-            int index = 0;
-            std::cout << "\n Starting of A Star (C++)-----------------------------------\n";
+            int index = *count = 0;
+            if (vlist.size() == 0) return;
+
+            std::cout << "\n " << vlist.size() << " Starting of A Star(C++)---------------------------------- - \n";
 
             //How it works vlist contains the roads the car will have to follow
             //to get the individual routes u need to know which direction the car is going
@@ -365,14 +368,11 @@ namespace Engine {
 #if 1
             std::array<Math::vec2, 100> path{};
 
-            //path[index] = housePos;
-            //index++;
-
             Math::ivec2 prevPosition = housePos;
             Math::ivec2 nextPosition{};
             while(vlist.size() > 0) {
                 Math::ivec2 pos = vlist.front();
-                auto& entId = (*(grid + pos.x) + pos.y)->entityId;
+                auto& entId = (*(grid + pos.x - offset.x) + pos.y - offset.y)->entityId;
 
                 //path[index] = vlist.front();
                 //index++;
@@ -418,7 +418,6 @@ namespace Engine {
                     else
                         nextPosition = vlist.front();
                 
-                    
                     if(nextPosition == Math::ivec2{ (int)t.front().x, (int)t.front().y }) t.pop_front();
                     else continue;
                 
@@ -453,12 +452,10 @@ namespace Engine {
 
             for (auto& i : vlist) {
                 arr[index] = i;
-                std::cout << arr[index] << "\n";
                 index++;
             }
 
             arr[index] = destPos;
-            std::cout << arr[index] << "\n";
             index++;
 #endif
 
@@ -483,18 +480,21 @@ namespace Engine {
             while (positionsTocheck.size() > 0) {
                 Math::ivec2 current = GetClosestVertex(positionsTocheck, priorityDictionary);
                 positionsTocheck.remove(current);
-                //std::cout << "Check " << current << " " << endPosition << "\n";;
+                std::cout << "Check " << current << " " << endPosition << "\n";;
                 if (current == (endPosition)) {
+                    std::cout << "Found \n";
                     path = GeneratePath(parentsDictionary, current);
                     return path;
                 }
 
                 std::list<Math::ivec2> temp = GetAdjacentCells(current, isAgent);
                 for (Math::ivec2& neighbour : temp) {
+                   
                     float newCost = costDictionary[current] + GetCostOfEnteringCell(neighbour);
                     //if (!costDictionary.ContainsKey(neighbour) || newCost < costDictionary[neighbour])
                     if ((costDictionary.find(neighbour) == costDictionary.end()) || newCost < costDictionary[neighbour])
                     {
+                        
                         costDictionary[neighbour] = newCost;
 
                         float priority = newCost + ManhattanDistance(endPosition, neighbour);

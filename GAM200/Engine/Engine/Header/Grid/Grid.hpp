@@ -57,6 +57,8 @@ namespace Engine {
 			unsigned int entityId = 0;
 			Math::ivec2 adjacentCell[4] = {};
 			int cellBinary = 0;
+
+			std::list<Math::ivec2> GetAdjacent();
 		};
 
 		class Grid : public Singleton<Grid> {

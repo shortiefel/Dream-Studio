@@ -51,27 +51,34 @@ public class PlacementManager : MonoBehaviour
 
     internal void PlaceObjectOnTheMap(Vector2Int position, GameObject structurePrefab, CellType type, float rotation, int width = 1, int height = 1)
     {
+        Console.WriteLine("Placement in placementManager " + structurePrefab.name);
         StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, 3, rotation);
         //var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
         //if (structureNeedingRoad != null)
         //{
-        structure.RoadPosition = GetNearestRoad(position, width, height).Value;
+        //structure.RoadPosition = GetNearestRoad(position, width, height).Value;
         //Debug.Log("My nearest road position is: " + structure.RoadPosition);
         //}
 
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                var newPosition = position + new Vector2Int(x, y);
-                placementGrid[newPosition.x, newPosition.y] = type;
-                placementGrid.SetCellType(newPosition, type, structure.entityId);
-                Console.WriteLine(structurePrefab.name);
-                //placementGrid.SetType(newPosition, type);
-                structureDictionary.Add(newPosition, structure);
-                //DestroyNatureAt(newPosition);
-            }
-        }
+        //for (int x = 0; x < width; x++)
+        //{
+        //    for (int y = 0; y < height; y++)
+        //    {
+        //        var newPosition = position + new Vector2Int(x, y);
+        //        placementGrid[newPosition.x, newPosition.y] = type;
+        //        placementGrid.SetCellType(newPosition, type, structure.entityId);
+        //        Console.WriteLine(structurePrefab.name);
+        //        
+        //        structureDictionary.Add(newPosition, structure);
+        //        //DestroyNatureAt(newPosition);
+        //    }
+        //}
+
+        placementGrid[position.x, position.y] = type;
+        placementGrid.SetCellType(position, type, structure.entityId);
+        
+
+        structureDictionary.Add(position, structure);
     }
 
     private Vector2Int? GetNearestRoad(Vector2Int position, int width, int height)
@@ -155,10 +162,11 @@ public class PlacementManager : MonoBehaviour
     private StructureModel CreateANewStructureModel(Vector2Int position, GameObject structurePrefab, CellType type, int layer = 2, float rotation = 0)
     {
         //GameObject structure = new GameObject(type.ToString());
-        
+
         //GameObject structure = Instantiate(structurePrefab, transform);
+        Debug.Log("Instantiating prefab " + structurePrefab.name + " " + position);
         GameObject structure = Instantiate(structurePrefab, new Vector3(position.x, position.y, 0f), layer);
-        structure.transform.SetParent(transform);
+        //structure.transform.SetParent(transform);
         structure.transform.angle = rotation;
         //structure.transform.localPosition = new Vector2(position.x, position.y);
  

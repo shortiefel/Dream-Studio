@@ -258,14 +258,14 @@ public class Grid
 
     public Point GetRandomHouseStructurePoint()
     {
-        if (!GetRandomHouseStructurePoint_Engine(out Vector2Int ptInt)) return null;
-        return new Point(ptInt);
+        //if (!GetRandomHouseStructurePoint_Engine(out Vector2Int ptInt)) return null;
+        //return new Point(ptInt);
 
-        //int count = _houseStructure.Count - 1;
-        //if (count < 0) return null;
-        //
-        //int n = Random.Range(0, count);
-        //return _houseStructure[n];
+        int count = _houseStructure.Count - 1;
+        if (count < 0) return null;
+        
+        int n = Random.Range(0, count);
+        return _houseStructure[n];
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

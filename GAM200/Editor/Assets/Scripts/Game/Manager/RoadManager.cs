@@ -56,7 +56,7 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceSpawnHouse(Vector2Int position)
     {
-        if (placementManager.CheckIfPositionInBound(position) == false)
+        /*if (placementManager.CheckIfPositionInBound(position) == false)
             return;
         if (placementManager.CheckIfPositionIsFree(position) == false)
             return;
@@ -131,12 +131,19 @@ public class RoadManager : MonoBehaviour
         //    placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road, 1);
         //}
 
-        FixRoadPrefabs();
+        FixRoadPrefabs();*/
+
+        //if (placementManager.CheckIfPositionInBound(position) == false)
+        //    return;
+        //if (placementManager.CheckIfPositionIsFree(position) == false)
+        //    return;
+        //
+        //structureManager.PlaceHouse(randomDestinationPosition, 0);
     }
 
     public void PlaceSpawnDestination(Vector2Int position)
     {
-        if (placementManager.CheckIfPositionInBound(position) == false)
+        /*if (placementManager.CheckIfPositionInBound(position) == false)
             return;
         if (placementManager.CheckIfPositionIsFree(position) == false)
             return;
@@ -211,7 +218,15 @@ public class RoadManager : MonoBehaviour
         //    placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road, 1);
         //}
 
-        FixRoadPrefabs();
+        FixRoadPrefabs();*/
+
+
+        //if (placementManager.CheckIfPositionInBound(position) == false)
+        //    return;
+        //if (placementManager.CheckIfPositionIsFree(position) == false)
+        //    return;
+        //
+        //structureManager.PlaceSpecial(randomDestinationPosition, 0);
     }
 
     public void PlaceRoad(Vector2Int position)

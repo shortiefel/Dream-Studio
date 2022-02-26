@@ -55,19 +55,19 @@ public class StructureManager : MonoBehaviour
     //}
     public void PlaceHouse(Vector2Int position, float rotation)
     {
-        Debug.Log("here house");
+        Debug.Log("here house " + position);
         if (CheckPositionBeforePlacement(position))
         {
             int randomIndex = GetRandomWeightedIndex(houseWeights);
             placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure, rotation);
             //AudioPlayer.instance.PlayPlacementSound();
             //StartCoroutine(waitABit(position));
-            Debug.Log("place house");
         }
     }
 
     public void PlaceSpecial(Vector2Int position, float rotation)
     {
+        Debug.Log("here special " + position);
         if (CheckPositionBeforePlacement(position))
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);
@@ -111,14 +111,14 @@ public class StructureManager : MonoBehaviour
             Debug.Log("This position is not EMPTY");
             return false;
         }
-        if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0)
-        {
-            //Add road
-            Console.WriteLine("Try add road in StructureManager");
-            return placementManager.TryAddRoad(position);
-            //Debug.Log("Must be placed near a road");
-            //return false;
-        }
+        //if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0)
+        //{
+        //    //Add road
+        //    Console.WriteLine("Try add road in StructureManager");
+        //    return placementManager.TryAddRoad(position);
+        //    //Debug.Log("Must be placed near a road");
+        //    //return false;
+        //}
         return true;
     }
 }

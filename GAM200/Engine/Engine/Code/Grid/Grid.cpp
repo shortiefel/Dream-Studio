@@ -26,6 +26,21 @@ Technology is prohibited.
 
 namespace Engine {
     namespace Game {
+        std::list<Math::ivec2> Cell::GetAdjacent() {
+            bool leftDir = (cellBinary & (1 << (int)CellDirection::Left));
+            bool rightDir = (cellBinary & (1 << (int)CellDirection::Right));
+            bool upDir = (cellBinary & (1 << (int)CellDirection::Up));
+            bool downDir = (cellBinary & (1 << (int)CellDirection::Down));
+
+            std::list < Math::ivec2> listPos{};
+            if (leftDir) listPos.emplace_back(adjacentCell[(int)CellDirection::Left]);
+            if (rightDir) listPos.emplace_back(adjacentCell[(int)CellDirection::Right]);
+            if (upDir) listPos.emplace_back(adjacentCell[(int)CellDirection::Up]);
+            if (downDir) listPos.emplace_back(adjacentCell[(int)CellDirection::Down]);
+
+            return listPos;
+        }
+
         Cell** CreateCellPtr(int width, int height) {
             //Cell* grid = new Cell[static_cast<size_t>(width) * static_cast<size_t>(height)]();
             //
@@ -586,11 +601,14 @@ namespace Engine {
         }
 
         void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
-            std::list<Math::ivec2> vlist = AStarSearchInternal(startPosition, endPosition, isAgent);
+            std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos, isAgent);
             vlist.reverse();
             
             int index = *count = 0;
             if (vlist.size() == 0) return;
+
+            vlist.pop_front();
+            vlist.pop_back();
 
             std::cout << "\n " << vlist.size() << " Starting of A Star(C++)---------------------------------- - \n";
 
@@ -717,14 +735,14 @@ namespace Engine {
             while (positionsTocheck.size() > 0) {
                 Math::ivec2 current = GetClosestVertex(positionsTocheck, priorityDictionary);
                 positionsTocheck.remove(current);
-                std::cout << "Check " << current << " " << endPosition << "\n";;
                 if (current == (endPosition)) {
-                    std::cout << "Found \n";
                     path = GeneratePath(parentsDictionary, current);
                     return path;
                 }
 
-                std::list<Math::ivec2> temp = GetAdjacentCells(current, isAgent);
+                //std::list<Math::ivec2> temp = GetAdjacentCells(current, isAgent);
+                Cell& cell = *(*(grid + current.x - offset.x) + current.y - offset.y);
+                std::list<Math::ivec2> temp = cell.GetAdjacent();
                 for (Math::ivec2& neighbour : temp) {
                    
                     float newCost = costDictionary[current] + GetCostOfEnteringCell(neighbour);

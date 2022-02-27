@@ -164,7 +164,7 @@ public class PlacementManager : MonoBehaviour
         //GameObject structure = new GameObject(type.ToString());
 
         //GameObject structure = Instantiate(structurePrefab, transform);
-        Debug.Log("Instantiating prefab " + structurePrefab.name + " " + position);
+        //Debug.Log("Instantiating prefab " + structurePrefab.name + " " + position);
         GameObject structure = Instantiate(structurePrefab, new Vector3(position.x, position.y, 0f), layer);
         //structure.transform.SetParent(transform);
         structure.transform.angle = rotation;

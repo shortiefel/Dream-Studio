@@ -24,6 +24,8 @@ Technology is prohibited.
 
 #include <map>
 
+#define GET_BIN(num) (1 << (int)num)
+
 namespace Engine {
     namespace Game {
         std::list<Math::ivec2> Cell::GetAdjacent() {
@@ -389,29 +391,39 @@ namespace Engine {
         }
 
         bool CheckAddPoints(Math::ivec2 cellPos, Cell& cell, Math::ivec2 posToAdd) {
-            for (int p = 0; p < (int)CellDirection::End; p++) {
-                if (cell.adjacentCell[p] == posToAdd) return false;
-            }
+            //for (int p = 0; p < (int)CellDirection::End; p++) {
+            //    if (cell.adjacentCell[p] == posToAdd) return false;
+            //}
+
+            if (cell.cellBinary & GET_BIN(CellDirection::Left))
+                if (cell.adjacentCell[(int)CellDirection::Left] == posToAdd) return false;
+            if (cell.cellBinary & GET_BIN(CellDirection::Right))
+                if (cell.adjacentCell[(int)CellDirection::Right] == posToAdd) return false;
+            if (cell.cellBinary & GET_BIN(CellDirection::Up))
+                if (cell.adjacentCell[(int)CellDirection::Up] == posToAdd) return false;
+            if (cell.cellBinary & GET_BIN(CellDirection::Down))
+                if (cell.adjacentCell[(int)CellDirection::Down] == posToAdd) return false;
+
 
             //Find direction 
             if (posToAdd.x < cellPos.x) {
                 cell.adjacentCell[(int)CellDirection::Left] = posToAdd;
-                cell.cellBinary |= (1 << (int)CellDirection::Left);
+                cell.cellBinary |= GET_BIN(CellDirection::Left);
             }
 
             else if (posToAdd.x > cellPos.x) { 
                 cell.adjacentCell[(int)CellDirection::Right] = posToAdd;
-                cell.cellBinary |= (1 << (int)CellDirection::Right);
+                cell.cellBinary |= GET_BIN(CellDirection::Right);
             }
 
             else if (posToAdd.y < cellPos.y) { 
                 cell.adjacentCell[(int)CellDirection::Down] = posToAdd; 
-                cell.cellBinary |= (1 << (int)CellDirection::Down);
+                cell.cellBinary |= GET_BIN(CellDirection::Down);
             }
 
             else if (posToAdd.y > cellPos.y) { 
                 cell.adjacentCell[(int)CellDirection::Up] = posToAdd;  
-                cell.cellBinary |= (1 << (int)CellDirection::Up);
+                cell.cellBinary |= GET_BIN(CellDirection::Up);
             }
 
             return true;
@@ -423,10 +435,10 @@ namespace Engine {
         }
 
         std::string GetRoadType(const Cell& cell, float& angle) {
-            bool leftDir = (cell.cellBinary & (1 << (int)CellDirection::Left));
-            bool rightDir = (cell.cellBinary & (1 << (int)CellDirection::Right));
-            bool upDir = (cell.cellBinary & (1 << (int)CellDirection::Up));
-            bool downDir = (cell.cellBinary & (1 << (int)CellDirection::Down));
+            bool leftDir = (cell.cellBinary & GET_BIN(CellDirection::Left));
+            bool rightDir = (cell.cellBinary & GET_BIN(CellDirection::Right));
+            bool upDir = (cell.cellBinary & GET_BIN(CellDirection::Up));
+            bool downDir = (cell.cellBinary & GET_BIN(CellDirection::Down));
 
             int cellCount = ((int)leftDir + (int)rightDir + (int)upDir + (int)downDir);
 
@@ -552,23 +564,27 @@ namespace Engine {
 
         bool Grid::UnsetRoads(Math::ivec2 pos) {
             if (!IsWithinGrid(pos)) return false;
-            std::cout << " Within the grid --------------------------------------------------------------------\n";
+            
             Cell& cell = *(*(grid + pos.x - offset.x) + pos.y - offset.y);
 
             if (cell.entityId == EMPTY_ENTITY || cell.ct != CellType::Road) return false;
             dreamECSGame->DestroyEntity(cell.entityId);
             cell.entityId = EMPTY_ENTITY;
             
-            bool leftDir = (cell.cellBinary & (1 << (int)CellDirection::Left));
-            bool rightDir = (cell.cellBinary & (1 << (int)CellDirection::Right));
-            bool upDir = (cell.cellBinary & (1 << (int)CellDirection::Up));
-            bool downDir = (cell.cellBinary & (1 << (int)CellDirection::Down));
+            bool leftDir = (cell.cellBinary & GET_BIN(CellDirection::Left));
+            bool rightDir = (cell.cellBinary & GET_BIN(CellDirection::Right));
+            bool upDir = (cell.cellBinary & GET_BIN(CellDirection::Up));
+            bool downDir = (cell.cellBinary & GET_BIN(CellDirection::Down));
+
+            cell.ct = CellType::Empty;
+            cell.cellBinary = 0;
 
             Math::ivec2 removePos{};
             if (leftDir) {
                 removePos = cell.adjacentCell[(int)CellDirection::Left];
                 Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
-                cellT.cellBinary ^= (1 << (int)CellDirection::Right);
+                cellT.cellBinary ^= GET_BIN(CellDirection::Right);
+                //cellT.adjacentCell[(int)CellDirection::Right] = removePos; //Prevent the previous position from being the same and not adding
                 if (cellT.ct == CellType::Road)
                     UpdateCell(cellT, removePos);
             }
@@ -576,7 +592,7 @@ namespace Engine {
             if (rightDir) {
                 removePos = cell.adjacentCell[(int)CellDirection::Right];
                 Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
-                cellT.cellBinary ^= (1 << (int)CellDirection::Left);
+                cellT.cellBinary ^= GET_BIN(CellDirection::Left);
                 if (cellT.ct == CellType::Road)
                     UpdateCell(cellT, removePos);
             }
@@ -584,7 +600,7 @@ namespace Engine {
             if (upDir) {
                 removePos = cell.adjacentCell[(int)CellDirection::Up];
                 Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
-                cellT.cellBinary ^= (1 << (int)CellDirection::Down);
+                cellT.cellBinary ^= GET_BIN(CellDirection::Down);
                 if (cellT.ct == CellType::Road)
                     UpdateCell(cellT, removePos);
             }
@@ -592,7 +608,7 @@ namespace Engine {
             if (downDir) {
                 removePos = cell.adjacentCell[(int)CellDirection::Down];
                 Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
-                cellT.cellBinary ^= (1 << (int)CellDirection::Up);
+                cellT.cellBinary ^= GET_BIN(CellDirection::Up);
                 if (cellT.ct == CellType::Road)
                     UpdateCell(cellT, removePos);
             }
@@ -607,6 +623,7 @@ namespace Engine {
             int index = *count = 0;
             if (vlist.size() == 0) return;
 
+            //Remove the housePos and destPos
             vlist.pop_front();
             vlist.pop_back();
 

@@ -55,7 +55,7 @@ public class StructureManager : MonoBehaviour
     //}
     public void PlaceHouse(Vector2Int position, float rotation)
     {
-        Debug.Log("here house " + position);
+        //Debug.Log("here house " + position);
         if (CheckPositionBeforePlacement(position))
         {
             int randomIndex = GetRandomWeightedIndex(houseWeights);
@@ -67,7 +67,7 @@ public class StructureManager : MonoBehaviour
 
     public void PlaceSpecial(Vector2Int position, float rotation)
     {
-        Debug.Log("here special " + position);
+        //Debug.Log("here special " + position);
         if (CheckPositionBeforePlacement(position))
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);

@@ -356,7 +356,7 @@ public class RoadManager : MonoBehaviour
             result |= trafficLightManager.RequestRemovingTrafficLight(position);
         if (erpManager != null)
             result |= erpManager.RequestRemovingERP(position);
-
+        
         if (placementManager.placementGrid.UnsetRoad(position)) removeSound.Play();
         //if (result == true)
         //    return;

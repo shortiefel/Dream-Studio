@@ -104,6 +104,8 @@ namespace Engine {
 			void GetAllAdjacentCellTypes(int(&arr)[4], int x, int y);
 
 			bool IsWithinGrid(Math::ivec2 pos);
+			bool IsPosFree(Math::ivec2 pos);
+			bool IsSurrounded(Math::ivec2 pos);
 
 			void SetRoads(Math::ivec2 posArr[MAX_LINE], int size);
 			bool UnsetRoads(Math::ivec2 pos);

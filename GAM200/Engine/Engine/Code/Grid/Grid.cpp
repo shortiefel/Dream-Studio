@@ -15,6 +15,8 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+#include "Engine/Header/Debug Tools/Logging.hpp"
+
 #include "Engine/Header/Grid/Grid.hpp"
 #include "Engine/Header/Random/Random.hpp"
 
@@ -130,8 +132,8 @@ namespace Engine {
             offset.x -= xTem;
             offset.y -= yTem;
 
-            std::cout << "offset " << offset.x << " " << offset.y << "-------------------------------------\n";
-            std::cout << mapSize.x << " " << mapSize.y << "\n";
+            //std::cout << "offset " << offset.x << " " << offset.y << "-------------------------------------\n";
+            //std::cout << mapSize.x << " " << mapSize.y << "\n";
             mapSize = { newWidth, newHeight };
 
         }
@@ -151,6 +153,7 @@ namespace Engine {
         }
 
         void Grid::SetCellType(int x, int y, int cellType, unsigned int entityId) {
+            //std::cout << " Set cell type now \n";
             //y = mapSize.y - 1 - y + offset.y;
             CellType value = static_cast<CellType>(cellType);
 
@@ -226,7 +229,7 @@ namespace Engine {
         }
 
         bool Grid::GetRandomHouseStructurePoint(Math::ivec2* pos) {
-            std::cout << "House Count " << houseStructure.size() << "\n";
+            //std::cout << "House Count " << houseStructure.size() << "\n";
             int count = static_cast<int>(houseStructure.size()) - 1;
             if (count < 0) return false;
 
@@ -390,6 +393,30 @@ namespace Engine {
             return false;
         }
 
+        //Return true if free
+        bool Grid::IsPosFree(Math::ivec2 pos) {
+            const Cell& cell = *(*(grid + pos.x - offset.x) + pos.y - offset.y);
+            if (cell.ct == CellType::Empty || cell.ct == CellType::None) return true;
+            return false;
+        }
+
+        //Return true if position is surrounded by at least one building
+        bool Grid::IsSurrounded(Math::ivec2 pos) {
+            const Cell& cellL = *(*(grid + pos.x - 1 - offset.x) + pos.y - offset.y);
+            if (cellL.ct == CellType::SpecialStructure || cellL.ct == CellType::Structure) return true;
+
+            const Cell& cellR = *(*(grid + pos.x + 1 - offset.x) + pos.y - offset.y);
+            if (cellR.ct == CellType::SpecialStructure || cellR.ct == CellType::Structure) return true;
+
+            const Cell& cellU = *(*(grid + pos.x - offset.x) + pos.y + 1 - offset.y);
+            if (cellU.ct == CellType::SpecialStructure || cellU.ct == CellType::Structure) return true;
+
+            const Cell& cellD = *(*(grid + pos.x - offset.x) + pos.y - 1 - offset.y);
+            if (cellD.ct == CellType::SpecialStructure || cellD.ct == CellType::Structure) return true;
+
+            return false;
+        }
+
         bool CheckAddPoints(Math::ivec2 cellPos, Cell& cell, Math::ivec2 posToAdd) {
             //for (int p = 0; p < (int)CellDirection::End; p++) {
             //    if (cell.adjacentCell[p] == posToAdd) return false;
@@ -481,7 +508,7 @@ namespace Engine {
 
             else if (cellCount == 4) return "FourWayRoad";
 
-            std::cout << "Grid.cpp GetRoadType cellCount is not recognized\n";
+            LOG_WARNING("Grid.cpp GetRoadType cellCount is not recognized");
             return "";
             
         }
@@ -500,7 +527,7 @@ namespace Engine {
             std::map<Math::ivec2, bool> instantiatePos;
 
             for (int i = 0; i < size; i++) {
-                    
+                
                 Cell& cellC = *(*(grid + posArr[i].x - offset.x) + posArr[i].y - offset.y);
                 Cell& cellB = i != 0         ? *(*(grid + posArr[i - 1].x - offset.x) + posArr[i - 1].y - offset.y) : cellC;
                 Cell& cellF = i != size - 1  ? *(*(grid + posArr[i + 1].x - offset.x) + posArr[i + 1].y - offset.y) : cellC;
@@ -627,7 +654,7 @@ namespace Engine {
             vlist.pop_front();
             vlist.pop_back();
 
-            std::cout << "\n " << vlist.size() << " Starting of A Star(C++)---------------------------------- - \n";
+            //std::cout << "\n " << vlist.size() << " Starting of A Star(C++)---------------------------------- - \n";
 
             //How it works vlist contains the roads the car will have to follow
             //to get the individual routes u need to know which direction the car is going
@@ -699,10 +726,10 @@ namespace Engine {
                     for (auto& pt : t) {
                         //Add all points in
                         path[index] = pt;
-                        std::cout << "Adding point " << pt << "\n";
+                        //std::cout << "Adding point " << pt << "\n";
                         index++;
                     }
-                    std::cout << "\n\n";
+                    //std::cout << "\n\n";
                 
                     break;
                 }
@@ -714,12 +741,12 @@ namespace Engine {
             path[index] = destPos;
             index++;
 
-            std::cout << " New start --------------------\n";
+            //std::cout << " New start --------------------\n";
             for (int i = 0; i < index; i++) {
                 arr[i] = path[i];
-                std::cout << arr[i] << "\n";
+                //std::cout << arr[i] << "\n";
             }
-            std::cout << " New end --------------------\n";
+            //std::cout << " New end --------------------\n";
 #else
 
             for (auto& i : vlist) {

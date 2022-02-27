@@ -786,7 +786,7 @@ namespace Engine {
 					"Scale", tem.scale,
 					"Angle", tem.angle
 				);
-				std::cout << tem.scale << " scale\n";
+				//std::cout << tem.scale << " scale\n";
 				Math::vec3 temVec{ tem.position.x, tem.position.y, 1.f };
 				temVec = rotationAndTranslate * temVec;
 				tem.position.x = temVec.x;

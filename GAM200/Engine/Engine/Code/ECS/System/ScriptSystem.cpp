@@ -90,9 +90,12 @@ namespace Engine {
 		PROFILER_START("Scripting");
 
 		auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
+		const auto& entMap = dreamECSGame->GetUsedConstEntityMap();
+
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
+			
+			if (EntityId_Check(entity_id) || entMap.find(entity_id) == entMap.end()) break;
 
 			auto& classScriptInstances = csScript.klassInstance;
 
@@ -109,7 +112,7 @@ namespace Engine {
 
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
+			if (EntityId_Check(entity_id) || entMap.find(entity_id) == entMap.end()) break;
 
 			auto& classScriptInstances = csScript.klassInstance;
 
@@ -123,7 +126,7 @@ namespace Engine {
 
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
+			if (EntityId_Check(entity_id) || entMap.find(entity_id) == entMap.end()) break;
 
 			auto& classScriptInstances = csScript.klassInstance;
 
@@ -141,8 +144,11 @@ namespace Engine {
 		PROFILER_START("Scripting");
 
 		auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
+		const auto& entMap = dreamECSGame->GetUsedConstEntityMap();
+
 		for (auto& csScript : entScriptArray) {
-			if (EntityId_Check(csScript.GetEntityId())) break;
+			const Entity_id& entity_id = csScript.GetEntityId();
+			if (EntityId_Check(entity_id) || entMap.find(entity_id) == entMap.end()) break;
 
 			auto& classScriptInstances = csScript.klassInstance;
 			//const auto& entityId = csScript.GetEntity();

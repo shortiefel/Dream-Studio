@@ -58,6 +58,7 @@ public class StructureManager : MonoBehaviour
         //Debug.Log("here house " + position);
         if (CheckPositionBeforePlacement(position))
         {
+        //Debug.Log("place house " + position);
             int randomIndex = GetRandomWeightedIndex(houseWeights);
             placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure, rotation);
             //AudioPlayer.instance.PlayPlacementSound();
@@ -111,6 +112,13 @@ public class StructureManager : MonoBehaviour
             Debug.Log("This position is not EMPTY");
             return false;
         }
+        if (placementManager.placementGrid.IsSurrounded(position) == true)
+        {
+            Debug.Log("This surrounding already has buildings");
+            return false;
+        }
+
+
         //if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0)
         //{
         //    //Add road

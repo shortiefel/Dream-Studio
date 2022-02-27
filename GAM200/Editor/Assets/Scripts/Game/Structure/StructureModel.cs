@@ -43,9 +43,9 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         if (notification != null)
         {
             //notifiPrefab = ;
-            //Console.WriteLine("come in here --------------------------------------------------------------------------------");
             Vector2 center = transform.localPosition;
             
+            //Debug.Log("come in here --------------------------------------------------------------------------------");
             notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 0.7f, 0f), 4);
             //notification.SetAnimation(ref notifiSymbol.GetComponent<Animation>());
             animation = notifiSymbol.GetComponent<Animation>();
@@ -83,7 +83,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             buildingType = BuildingType.House;
         }
 
-        Debug.Log("This is " + buildingType + " -------------------------");
+        //Debug.Log("This is " + buildingType + " -------------------------");
 
         aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
     }
@@ -147,21 +147,21 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
         //texure.ChangeTexture(model.name);
         //transform.angle = rotation;
-        Console.WriteLine("Change to " + model.name);
-        var structure = Instantiate(model, new Vector3(transform.position, 0f), 1);
-        //structure.transform.position = new Vector2(0, 0);
-        structure.transform.angle = rotation;
-
-        aiDirector.placementManager.placementGrid.SetCellType(new Vector2Int(transform.position), CellType.Road, structure.entityId);
-
-        Destroy(gameObject);
+        Debug.Log("SwapModel not in use");
+        //var structure = Instantiate(model, new Vector3(transform.position, 0f), 1);
+        ////structure.transform.position = new Vector2(0, 0);
+        //structure.transform.angle = rotation;
+        //
+        //aiDirector.placementManager.placementGrid.SetCellType(new Vector2Int(transform.position), CellType.Road, structure.entityId);
+        //
+        //Destroy(gameObject);
 
         //texure.color = new Color(0, 1, 0, 0.5f);
         //texure.ChangeTexture(model.name);
         //transform.angle = rotation;
         //Disable<Transform>(transform);
 
-        return structure.GetComponent<StructureModel>();
+        return GetComponent<StructureModel>();
     }
 
     /*

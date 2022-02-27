@@ -17,10 +17,10 @@ public class GridSearch
         Vector2[] pos2 = new Vector2[100];
         List<Point> path = new List<Point>();
         AStarSearch_Engine(pos2, out int numOfElement2, new Vector2Int(startPosition), new Vector2Int(endPosition), housePoint, destPoint, isAgent);
-        Console.WriteLine("\n Cs c++    Testing path------------------------------------------------------"); //------------------------To  Remove
+        //Console.WriteLine("\n Cs c++    Testing path------------------------------------------------------"); //------------------------To  Remove
         for (int i = 0; i < numOfElement2; i++)
         {
-            Console.WriteLine(pos2[i]); //------------------------To  Remove
+            //Console.WriteLine(pos2[i]); //------------------------To  Remove
             path.Add(new Point(pos2[i]));
         }
 

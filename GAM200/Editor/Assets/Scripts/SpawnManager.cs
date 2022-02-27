@@ -191,7 +191,7 @@ public class SpawnManager : MonoBehaviour
                 buttonRoad.RevealERP();
             }
 
-            //CheckPosition();
+            CheckPosition();
             //if (checkForNoSpawn)
             //{
             //    while (checkForNoSpawn)

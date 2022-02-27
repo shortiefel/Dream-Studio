@@ -244,8 +244,8 @@ public class Grid
 
     public Point GetRandomSpecialStructurePoint()
     {
-        //GetRandomSpecialStructurePoint_Engine(out Point point);
-        /*return point;*/
+        //if (!GetRandomSpecialStructurePoint_Engine(out Vector2Int ptInt)) return null;
+        //return new Point(ptInt);
 
         int count = _specialStructure.Count - 1;
         if (count < 0) return null;
@@ -254,7 +254,7 @@ public class Grid
         return _specialStructure[n];
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool GetRandomSpecialStructurePoint_Engine(out Point point);
+    internal static extern bool GetRandomSpecialStructurePoint_Engine(out Vector2Int point);
 
     public Point GetRandomHouseStructurePoint()
     {
@@ -454,5 +454,30 @@ public class Grid
         return _specialStructure;
     }
 
-    
+    //Return true is position is within grid
+    public bool IsWithinGrid(Vector2Int pos)
+    {
+        return IsWithinGrid_Engine(pos);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool IsWithinGrid_Engine(Vector2Int pos);
+
+    //Return true if position is free
+    public bool IsPosFree(Vector2Int pos)
+    {
+
+        return IsPosFree_Engine(pos);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool IsPosFree_Engine(Vector2Int pos);
+
+    public bool IsSurrounded(Vector2Int pos)
+    {
+
+        return IsSurrounded_Engine(pos);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool IsSurrounded_Engine(Vector2Int pos);
+
+
 }

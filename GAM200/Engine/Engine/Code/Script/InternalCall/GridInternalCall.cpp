@@ -38,6 +38,10 @@ namespace Engine {
 	void SetRoad_Engine(MonoArray* monoArray, int size);
 	bool UnsetRoad_Engine(Math::ivec2 pos);
 
+	bool IsWithinGrid_Engine(Math::ivec2 pos);
+	bool IsPosFree_Engine(Math::ivec2 pos);
+	bool IsSurrounded_Engine(Math::ivec2 pos);
+
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
 
 	void PrintGridOut_Engine();
@@ -58,6 +62,10 @@ namespace Engine {
 		
 		mono_add_internal_call("Grid::SetRoad_Engine", SetRoad_Engine);
 		mono_add_internal_call("Grid::UnsetRoad_Engine", UnsetRoad_Engine);
+		
+		mono_add_internal_call("Grid::IsWithinGrid_Engine", IsWithinGrid_Engine);
+		mono_add_internal_call("Grid::IsPosFree_Engine", IsPosFree_Engine);
+		mono_add_internal_call("Grid::IsSurrounded_Engine", IsSurrounded_Engine);
 
 		mono_add_internal_call("GridSearch::AStarSearch_Engine", AStarSearch_Engine);
 		mono_add_internal_call("Grid::PrintGridOut_Engine", PrintGridOut_Engine);
@@ -145,6 +153,18 @@ namespace Engine {
 
 	bool UnsetRoad_Engine(Math::ivec2 pos) {
 		return Game::Grid::GetInstance().UnsetRoads(pos);
+	}
+
+	bool IsWithinGrid_Engine(Math::ivec2 pos) {
+		return Game::Grid::GetInstance().IsWithinGrid(pos);
+	}
+
+	bool IsPosFree_Engine(Math::ivec2 pos) {
+		return Game::Grid::GetInstance().IsPosFree(pos);
+	}
+
+	bool IsSurrounded_Engine(Math::ivec2 pos) {
+		return Game::Grid::GetInstance().IsSurrounded(pos);
 	}
 
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {

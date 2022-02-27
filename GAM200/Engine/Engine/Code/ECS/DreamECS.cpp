@@ -131,17 +131,9 @@ namespace Engine {
 		return mapOfPrefab;
 	}
 
-	void DreamECS::ClearDestroyQueue() {
+	void DreamECS::EndOfLoopUpdate() {
 		
-		/*size_t num = destroyQueue.size();
-		while (num > 0) {
-			Entity& entity = destroyQueue.front();
-
-			DESTROY_ENTITY(entity.id);
-			
-			destroyQueue.pop();
-			--num;
-		}*/
+		//-----------------------------------------------Clear destroy queue-----------------------------------------------
 		const auto& entityMap = entityManager->GetUsedConstEntityMap();
 		for (auto& entity_id : destroySet) {
 			DESTROY_ENTITY(entityMap.find(entity_id));
@@ -162,6 +154,9 @@ namespace Engine {
 		destroySet.clear();
 		enableSet.clear();
 		destroyScript.clear();
+		//--------------------------------------------------------------------------------------------------------------------
+
+		entityManager->EntityEndOfLoopUpdate();
 	}
 
 	void DreamECS::ResetECS() {

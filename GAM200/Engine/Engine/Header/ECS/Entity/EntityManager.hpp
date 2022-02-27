@@ -56,9 +56,18 @@ namespace Engine {
 			++AliveEntityCount;
 			Entity entity(entityId, _entityName, _parent);
 			//UsedEntities2.push_back(entity);
-			usedEntities.emplace(entityId, entity);
+			//usedEntities.emplace(entityId, entity);
+			temporaryUsedEntities.emplace(entityId, entity);
 
-			return usedEntities[entityId];
+			return temporaryUsedEntities[entityId];
+		}
+
+		void EntityEndOfLoopUpdate() {
+			for (auto& [id, ent] : temporaryUsedEntities) {
+				usedEntities.emplace(id, ent);
+			}
+
+			temporaryUsedEntities.clear();
 		}
 
 		void DestroyEntity(Entity_id entity_id)
@@ -114,6 +123,7 @@ namespace Engine {
 	private:
 		//std::vector<Entity> UsedEntities2{};
 		EntityMapType usedEntities{};
+		EntityMapType temporaryUsedEntities{};
 
 		unsigned int AliveEntityCount{}; // Total living entities
 		std::queue<Entity_id> AvailableEntities{}; // Queue of unused entity IDs

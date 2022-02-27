@@ -204,7 +204,7 @@ namespace Engine {
         //SoundSystem::GetInstance().SoundUpdate();
 
 
-        dreamECSGame->ClearDestroyQueue();
+        dreamECSGame->EndOfLoopUpdate();
 
     }
 

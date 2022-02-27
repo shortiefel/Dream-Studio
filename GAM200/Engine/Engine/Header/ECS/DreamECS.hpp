@@ -61,7 +61,7 @@ namespace Engine {
 		EntityMapType& GetUsedEntityMap();
 		uint32_t GetUsedEntitySize() const;
 		const std::unordered_map<Entity_id, Prefab>& GetConstPrefabMap() const;
-		void ClearDestroyQueue();
+		void EndOfLoopUpdate();
 		void ResetECS();
 		void DuplicateNameCheck(std::string& name);
 		void ChangeName(std::string _oldname, std::string _newname);

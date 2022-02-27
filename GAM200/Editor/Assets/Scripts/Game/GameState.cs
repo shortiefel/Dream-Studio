@@ -21,14 +21,17 @@ public class GameState : MonoBehaviour
         shouldEnd = false;
         gameOverBool = false;
 
-        highscoreText = GameObject.Find("CounterText").GetComponent<Text>();
+        GameObject go1 = GameObject.Find("CounterText");
+        if (go1 != null)
+            highscoreText = go1.GetComponent<Text>();
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
     }
 
     public override void Update()
     {
-        highscoreText.text = highscore.ToString();
+        if (highscoreText != null)
+            highscoreText.text = highscore.ToString();
         if (shouldEnd)
         {
             shouldEnd = false;

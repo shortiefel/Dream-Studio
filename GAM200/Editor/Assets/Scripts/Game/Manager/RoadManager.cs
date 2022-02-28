@@ -20,12 +20,16 @@ public class RoadManager : MonoBehaviour
 
     //private GameObject trafficLightGO;
     //private GameObject erpGO;
-    private TrafficLightManager trafficLightManager;
-    private ERPManager erpManager;
-    private MoneySystem moneyManager;
+    public TrafficLightManager trafficLightManager;
+    public ERPManager erpManager;
 
     public List<Vector2Int> temporaryRoadPositions;
-    //private void Start()
+
+    public int roadCount;
+
+    Transform RoadInfoText;
+    Transform RoadInfo;
+
     public override void Start()
     {
         roadFixer = GetComponent<RoadFixer>();
@@ -52,6 +56,14 @@ public class RoadManager : MonoBehaviour
             erpManager = go2.GetComponent<ERPManager>();
 
         temporaryRoadPositions = new List<Vector2Int>();
+
+        roadCount = 10;
+
+        RoadInfoText = GameObject.Find("RoadPopInfoText").GetComponent<Transform>();
+        RoadInfo = GameObject.Find("RoadPopInfo").GetComponent<Transform>();
+
+        Disable<Transform>(RoadInfoText);
+        Disable<Transform>(RoadInfo);
     }
 
     public void PlaceSpawnHouse(Vector2Int position)
@@ -279,16 +291,27 @@ public class RoadManager : MonoBehaviour
         FixRoadPrefabs();*/
 
 
-
+        Disable<Transform>(RoadInfoText);
+        Disable<Transform>(RoadInfo);
 
         //placementMode = true;
         //startPosition = position;
         //Debug.Log(position + " -----------------\n");
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
+        if (placementManager.CheckIfPositionIsFree(position) == false)
+            return;
+        if (roadCount < 1)
+        {
+            Enable<Transform>(RoadInfoText);
+            Enable<Transform>(RoadInfo);
+            return;
+        }
         if (temporaryRoadPositions.Count > 0 && temporaryRoadPositions[temporaryRoadPositions.Count - 1] == position) { }
         else
             temporaryRoadPositions.Add(position);
+
+        
         //placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
 
     }
@@ -356,8 +379,12 @@ public class RoadManager : MonoBehaviour
             result |= trafficLightManager.RequestRemovingTrafficLight(position);
         if (erpManager != null)
             result |= erpManager.RequestRemovingERP(position);
-        
-        if (placementManager.placementGrid.UnsetRoad(position)) removeSound.Play();
+
+        if (placementManager.placementGrid.UnsetRoad(position))
+        {
+            roadCount++;
+            removeSound.Play();
+        }
         //if (result == true)
         //    return;
         //if (placementManager.CheckIfPositionIsFree(position) == false)
@@ -414,51 +441,61 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceTrafficLight(Vector2Int position)
     {
-        moneyManager = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
-        int currMoney = moneyManager.GetMoney();
-        int tl = moneyManager.GetCurrTL();
-        bool result = false;
-        if (!placementManager.CheckIfPositionInBound(position))
-            return;
-        if (currMoney - (tl * 50 * 1.2) < 0)
-            return;
+        if (!placementManager.CheckIfPositionInBound(position)) return;
+
         if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
-        {
-            if (trafficLightManager != null)
-                result |= trafficLightManager.RequestPlacingTrafficLight(position);
-            if (result == true)
-                moneyManager.BuildTrafficLight();
-            return;
-        }
+            trafficLightManager.RequestPlacingTrafficLight(position);
+
+        //moneyManager = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+        //int currMoney = moneyManager.GetMoney();
+        //int tl = moneyManager.GetCurrTL();
+        //bool result = false;
+        //if (!placementManager.CheckIfPositionInBound(position))
+        //    return;
+        //if (currMoney - (tl * 50 * 1.2) < 0)
+        //    return;
+        //if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
+        //{
+        //    if (trafficLightManager != null)
+        //        result |= trafficLightManager.RequestPlacingTrafficLight(position);
+        //    if (result == true)
+        //        moneyManager.BuildTrafficLight();
+        //    return;
+        //}
     }
 
     public void PlaceERP(Vector2Int position)
     {
-        moneyManager = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
-        int currMoney = moneyManager.GetMoney();
-        int erp = moneyManager.GetCurrErp();
-        bool result = false;
-        if (!placementManager.CheckIfPositionInBound(position))
-            return;
-        if (currMoney - (erp * 15) < 0)
-        {
-            return;
-        }
-        else
-        {
-            if(placementManager.CheckIfPositionIsOfType(position,CellType.Road))
-            {
-                if (erpManager != null)
-                    result |= erpManager.RequestPlacingERP(position);
-                if(result == true)
-                    moneyManager.BuildErp();
-                return;
-            }
-            else
-            {
-                return;
-            }
-            
-        }
+        if (!placementManager.CheckIfPositionInBound(position)) return;
+
+        if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
+            erpManager.RequestPlacingERP(position);
+
+        //moneyManager = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+        //int currMoney = moneyManager.GetMoney();
+        //int erp = moneyManager.GetCurrErp();
+        //bool result = false;
+        //if (!placementManager.CheckIfPositionInBound(position))
+        //    return;
+        //if (currMoney - (erp * 15) < 0)
+        //{
+        //    return;
+        //}
+        //else
+        //{
+        //    if(placementManager.CheckIfPositionIsOfType(position,CellType.Road))
+        //    {
+        //        if (erpManager != null)
+        //            result |= erpManager.RequestPlacingERP(position);
+        //        if(result == true)
+        //            moneyManager.BuildErp();
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //    
+        //}
     }
 }

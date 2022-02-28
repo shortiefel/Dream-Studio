@@ -11,6 +11,7 @@ public class TrafficLightManager : MonoBehaviour
 
     bool toDraw; //To Remove
 
+    public int tlCount;
 
     public override void Start()
     {
@@ -19,7 +20,11 @@ public class TrafficLightManager : MonoBehaviour
         trafficLightGO = new GameObject(new Prefab("TrafficLight"));
         //mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+        erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
+
         toDraw = false; //To Remove
+
+        tlCount = 1;
     }
 
     //public override void Update()
@@ -56,10 +61,10 @@ public class TrafficLightManager : MonoBehaviour
             trafficLights.Add(pos, id);
     }
 
-    public void RemoveTrafficLight(Vector2Int pos)
-    {
-        trafficLights.Remove(pos);
-    }
+    //public void RemoveTrafficLight(Vector2Int pos)
+    //{
+    //    trafficLights.Remove(pos);
+    //}
 
     public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle)
     {
@@ -91,7 +96,12 @@ public class TrafficLightManager : MonoBehaviour
 
         foreach (Vector2 pos in toCheck)
         {
-            if (trafficLights.ContainsKey(new Vector2Int(pos))) tlPos.Add(trafficLights[new Vector2Int(pos)]);
+            if (trafficLights.ContainsKey(new Vector2Int(pos)))
+            {
+                if (!tlPos.Exists(x => x == trafficLights[new Vector2Int(pos)]))
+                    tlPos.Add(trafficLights[new Vector2Int(pos)]);
+            }
+            
         }
 
         return tlPos;
@@ -105,26 +115,33 @@ public class TrafficLightManager : MonoBehaviour
 
     public bool RequestPlacingTrafficLight(Vector2Int position)
     {
-        erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
-        if (trafficLights.ContainsKey(position)) 
+        if (tlCount <= 0)
+        {
+            //Add code here to display running out of tile
+            return false;
+        }
+
+        if (trafficLights.ContainsKey(position))
             return false;
         if (erpManager.IsERP(position))
             return false;
 
+        --tlCount;
         Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f));
         return true;
     }
 
     public bool RequestRemovingTrafficLight(Vector2Int position)
     {
-        if (!trafficLights.ContainsKey(position)) 
+        if (!trafficLights.ContainsKey(position))
             return false;
 
-        moneySystem.DestroyTL();
+        ++tlCount;
+        moneySystem.SellTL();
         Destroy(trafficLights[position]);
         trafficLights.Remove(position);
         return true;
-        
+
     }
 }
 

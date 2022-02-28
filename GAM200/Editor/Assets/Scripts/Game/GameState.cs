@@ -11,7 +11,7 @@ public class GameState : MonoBehaviour
 
     CameraMovement camMovement;
 
-    bool gameOverBool;
+    //bool gameOverBool;
 
     public override void Start()
     {
@@ -19,7 +19,7 @@ public class GameState : MonoBehaviour
         drawModeBool = false;
         highscore = 0;
         shouldEnd = false;
-        gameOverBool = false;
+        //gameOverBool = false;
 
         GameObject go1 = GameObject.Find("CounterText");
         if (go1 != null)

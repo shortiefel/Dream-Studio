@@ -45,7 +45,7 @@ namespace Engine {
 	bool IsPosFree_Engine(Math::ivec2 pos);
 	bool IsSurrounded_Engine(Math::ivec2 pos);
 
-	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
+	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
 
 	void PrintGridOut_Engine();
 	/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -181,9 +181,9 @@ namespace Engine {
 		return Game::Grid::GetInstance().IsSurrounded(pos);
 	}
 
-	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
+	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
 		Math::vec2 arr[MAX_WAYPOINTS];
-		Game::Grid::GetInstance().AStarSearch(arr, count, startPosition, endPosition, housePos, destPos, isAgent);
+		Game::Grid::GetInstance().AStarSearch(arr, count, housePos, destPos, isAgent);
 		int loop = *count;
 		for (int i = 0; i < loop; i++) {
 			std::cout << arr[i] << " before\n";

@@ -21,8 +21,8 @@ public class ButtonStoreClick : MonoBehaviour
     public MoneySystem moneySystem;
 
 
-    int currMoney;
-    int tl;
+    //int currMoney;
+    //int tl;
 
     public override void Start()
     {

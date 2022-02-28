@@ -2,7 +2,7 @@
 
 public class MoneySystem : MonoBehaviour
 {
-    GameState gameState;
+    //GameState gameState;
     Text textComp;
 
     public int money;

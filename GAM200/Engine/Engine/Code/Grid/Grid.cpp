@@ -559,7 +559,7 @@ namespace Engine {
             float angle = 0.f;
             std::string type = GetRoadType(cell, angle);
             if (type.size() == 0) return;
-            GameSceneSerializer::DeserializePrefab(type, &(cell.entityId), Math::vec2{ (float)vec.x, (float)vec.y }, angle);
+            GameSceneSerializer::DeserializePrefab(type, &(cell.entityId), Math::vec2{ (float)vec.x, (float)vec.y }, angle, 1);
         }
 
         int Grid::SetRoads(Math::ivec2 posArr[MAX_LINE], int size) {
@@ -710,7 +710,7 @@ namespace Engine {
             }
         }
 
-        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
+        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
             std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos, isAgent);
             vlist.reverse();
             

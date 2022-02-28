@@ -4,8 +4,8 @@ using System;
 
 public class Test2 : MonoBehaviour
 {
-    public int num;
-    Waypoint waypoint;
+    //public int num;
+    //Waypoint waypoint;
 
     public override void Start()
     {
@@ -37,9 +37,9 @@ public class Test2 : MonoBehaviour
 
     public override void Update()
     {
-        if (Input.GetMouseButtonDown(MouseCode.Left)){
-            Console.WriteLine("Inside-------");
-        }
+        //if (Input.GetMouseButtonDown(MouseCode.Left)){
+        //    Console.WriteLine("Inside-------");
+        //}
         //if (Input.GetKeyDown(KeyCode.W))
         //{
         //    //gameObject.AddComponent<Test2>();

@@ -38,14 +38,15 @@ public class CarAI : MonoBehaviour
 
 
     //private float torque = 0.5f;
-    private float dotValue;
-    private float turningFactor; //Slow down when turning
+    //private float dotValue;
+    //private float turningFactor; //Slow down when turning
 
-    private float maxSpeed;
+    //private float maxSpeed;
 
     private Vector2 movementVector;
 
     private StructureModel endPoint;
+    //private GameObject endPointGO;
 
     private TrafficManager tm;
     private CollisionManager collisionManager;
@@ -80,7 +81,7 @@ public class CarAI : MonoBehaviour
         raycastLength = transform.scale.y * 2f;
         //Debug.Log(raycastLength + " lengirhteuth");
 
-        endPoint = null;
+        //endPoint = null;
         path = null;
         index = 0;
         stop = true;
@@ -103,12 +104,12 @@ public class CarAI : MonoBehaviour
         lastPointArriveDistance = 0.1f;
         //turningAngleOffset = 0.02;
 
-        dotValue = 0.06f;
-
-        maxSpeed = 3;
+        //dotValue = 0.06f;
+        //
+        //maxSpeed = 3;
         power = 1;
         maxPower = 6;
-        turningFactor = 1f;
+        //turningFactor = 1f;
         movementVector = new Vector2(0, 1);
         //Console.WriteLine("Testing " + rb.velocity);
 
@@ -128,10 +129,11 @@ public class CarAI : MonoBehaviour
         prevPos = transform.position;
     }
 
-    public void SetPath(List<Vector2> newPath, ref StructureModel endStructure)
+    public void SetPath(List<Vector2> newPath, uint id)
     {
         stop = false;
-        endPoint = endStructure;
+        //endPoint = endStructure;
+        endPoint = GameObject.FindWithId(id).GetComponent<StructureModel>();
 
         Console.WriteLine("Set 2nd  CarAi path");
         if (newPath.Count == 0)
@@ -182,7 +184,7 @@ public class CarAI : MonoBehaviour
 
         Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
         float value = Vector2.Dot(transform.right, relativeDirection);
-        turningFactor = 1f;
+        //turningFactor = 1f;
         //Console.WriteLine((int)value);
         if (Math.Round(value) == 1)
         {
@@ -545,7 +547,9 @@ public class CarAI : MonoBehaviour
         Console.WriteLine("Before Notify ");
         Destroy(gameObject);
         Console.WriteLine("After delete ");
+
         endPoint.Notify();
+
         Console.WriteLine("After Notify ");
 
         if (tm != null)

@@ -12,6 +12,18 @@ public enum BuildingType
     House
 }
 
+public struct StartPositionSet
+{
+    public Vector2Int startPos;
+    public int pathCount;
+
+    public StartPositionSet(Vector2Int newPos, int pc)
+    {
+        startPos = newPos;
+        pathCount = pc;
+    }
+}
+
 
 public class StructureManager : MonoBehaviour
 {
@@ -21,6 +33,9 @@ public class StructureManager : MonoBehaviour
 
 
     private float[] houseWeights, specialWeights;
+
+    public Dictionary<Vector2Int, CarSpawner> houseList;
+    public Dictionary<Vector2Int, StartPositionSet> destinationList;
    
     //private void Start()
     public override void Start()
@@ -44,6 +59,9 @@ public class StructureManager : MonoBehaviour
 
         houseWeights = new float[] { housesPrefabs[0].weight };
         specialWeights = new float[] { specialPrefabs[(int)BuildingType.Hospital].weight, specialPrefabs[(int)BuildingType.Office].weight };
+
+        houseList = new Dictionary<Vector2Int, CarSpawner>();
+        destinationList = new Dictionary<Vector2Int, StartPositionSet>();
     }
 
     //private IEnumerator waitABit(Vector2Int newPos)
@@ -60,7 +78,8 @@ public class StructureManager : MonoBehaviour
         {
         //Debug.Log("place house " + position);
             int randomIndex = GetRandomWeightedIndex(houseWeights);
-            placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure, rotation);
+            GameObject go = placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure, rotation);
+            houseList.Add(position, go.GetComponent<CarSpawner>());
             //AudioPlayer.instance.PlayPlacementSound();
             //StartCoroutine(waitABit(position));
         }
@@ -73,6 +92,7 @@ public class StructureManager : MonoBehaviour
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);
             placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure, rotation);
+            destinationList.Add(position, new StartPositionSet(new Vector2Int(0,0), 0));
             //AudioPlayer.instance.PlayPlacementSound();
         }
     }

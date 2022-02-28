@@ -13,9 +13,9 @@ public class RoadManager : MonoBehaviour
     private int previousRoadCount;
     private List<Vector2Int> roadPositionsToRecheck;
 
-    private Vector2Int startPosition;
-    private Vector2Int randomDestinationPosition;
-    private bool placementMode;
+    //private Vector2Int startPosition;
+    //private Vector2Int randomDestinationPosition;
+    //private bool placementMode;
 
     private AudioSource placeSound;
     private AudioSource removeSound;
@@ -42,7 +42,7 @@ public class RoadManager : MonoBehaviour
         previousRoadCount = 0;
         roadPositionsToRecheck = new List<Vector2Int>();
 
-        placementMode = false;
+        //placementMode = false;
 
         placeSound = GameObject.Find("DrawRoad").GetComponent<AudioSource>();
         removeSound = GameObject.Find("RemoveRoad").GetComponent<AudioSource>();
@@ -61,7 +61,7 @@ public class RoadManager : MonoBehaviour
 
         temporaryRoadPositions = new List<Vector2Int>();
 
-        roadCount = 10;
+        roadCount = 20;
 
         RoadInfoText = GameObject.Find("RoadPopInfoText").GetComponent<Transform>();
         RoadInfo = GameObject.Find("RoadPopInfo").GetComponent<Transform>();
@@ -347,7 +347,7 @@ public class RoadManager : MonoBehaviour
 
         if (previousRoadCount == temporaryRoadPositions.Count) return;
 
-        placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        roadCount -= placementManager.placementGrid.SetRoad(temporaryRoadPositions);
         previousRoadCount = temporaryRoadPositions.Count;
 
 
@@ -455,7 +455,7 @@ public class RoadManager : MonoBehaviour
 
         removeSound.Play();*/
 
-        placementMode = false;
+        //placementMode = false;
 
 
         //temporaryPlacementPositions.Clear();
@@ -463,26 +463,26 @@ public class RoadManager : MonoBehaviour
         removeSound.Play();
     }
 
-    private void FixRoadPrefabs()
-    {
-        foreach (var temporaryPosition in temporaryPlacementPositions)
-        {
-            roadFixer.FixRoadAtPosition(placementManager, temporaryPosition);
-            var neighbours = placementManager.GetNeighboursOfTypeFor(temporaryPosition, CellType.Road);
-            foreach (var roadposition in neighbours)
-            {
-                if (roadPositionsToRecheck.Contains(roadposition) == false)
-                {
-                    roadPositionsToRecheck.Add(roadposition);
-                    Debug.Log(roadposition);
-                }
-            }
-        }
-        foreach (var positionToFix in roadPositionsToRecheck)
-        {
-            roadFixer.FixRoadAtPosition(placementManager, positionToFix);
-        }
-    }
+    //private void FixRoadPrefabs()
+    //{
+    //    foreach (var temporaryPosition in temporaryPlacementPositions)
+    //    {
+    //        roadFixer.FixRoadAtPosition(placementManager, temporaryPosition);
+    //        var neighbours = placementManager.GetNeighboursOfTypeFor(temporaryPosition, CellType.Road);
+    //        foreach (var roadposition in neighbours)
+    //        {
+    //            if (roadPositionsToRecheck.Contains(roadposition) == false)
+    //            {
+    //                roadPositionsToRecheck.Add(roadposition);
+    //                Debug.Log(roadposition);
+    //            }
+    //        }
+    //    }
+    //    foreach (var positionToFix in roadPositionsToRecheck)
+    //    {
+    //        roadFixer.FixRoadAtPosition(placementManager, positionToFix);
+    //    }
+    //}
 
     public void PlaceTrafficLight(Vector2Int position)
     {

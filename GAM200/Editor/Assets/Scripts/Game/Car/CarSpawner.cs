@@ -1,41 +1,74 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+
+public struct EndStruct
+{
+    public uint entityId;
+    public BuildingType bt;
+    public Vector2Int endPos;
+
+    public EndStruct(uint id, BuildingType _bt, Vector2Int ep)
+    {
+        entityId = id;
+        bt = _bt;
+        endPos = ep;
+    }
+}
 public class CarSpawner : MonoBehaviour
 {
-    AIDirector aiDirector;
-    //SpawnManager spawnManager;
-    float timer;
-    float maxTimer;
-    StructureModel structureModel;
 
-    Notification notification;
-    public override void Start()
+
+
+    Queue<EndStruct> requestLine;
+    //GameObject.FindWithId(id).GetComponent<StructureModel>()
+    public void RequestSpawn(EndStruct es)
     {
-        timer = 0f;
-        aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
-        //spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        maxTimer = aiDirector.carSpawnTimerInterval;
-        structureModel = GetComponent<StructureModel>();
+        requestLine.Enqueue(es);
     }
 
+    AIDirector aiDirector;
+    ////SpawnManager spawnManager;
+    ////float timer;
+    ////float maxTimer;
+    ////StructureModel structureModel;
+    ////
+    ////Notification notification;
+    public override void Start()
+    {
+        requestLine = new Queue<EndStruct>();
+
+        aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
+    //    //spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+    //    //maxTimer = aiDirector.carSpawnTimerInterval;
+    //    //structureModel = GetComponent<StructureModel>();
+    }
+    //
     public override void Update()
     {
-        //timer += Time.deltaTime;
-        //if (timer > maxTimer)
-        //{
-        //    if (aiDirector.SpawnAHouseCar(structureModel))
-        //    {
-        //        maxTimer += 3f;
-        //        if (maxTimer > 10f) maxTimer = 10f;
-        //    }
-        //    //maxTimer = aiDirector.carSpawnTimerInterval;
-        //    //spawnManager.CheckPosition();
-        //    Debug.Log("carspawner");
-        //
-        //    timer = 0f;
-        //    Debug.Log(maxTimer);
-        //}
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            if (requestLine.Count != 0)
+            {
+                EndStruct es = requestLine.Dequeue();
+                aiDirector.SpawnCar(es.entityId, es.bt, es.endPos);
+            }
+        }
+    //    //timer += Time.deltaTime;
+    //    //if (timer > maxTimer)
+    //    //{
+    //    //    if (aiDirector.SpawnAHouseCar(structureModel))
+    //    //    {
+    //    //        maxTimer += 3f;
+    //    //        if (maxTimer > 10f) maxTimer = 10f;
+    //    //    }
+    //    //    //maxTimer = aiDirector.carSpawnTimerInterval;
+    //    //    //spawnManager.CheckPosition();
+    //    //    Debug.Log("carspawner");
+    //    //
+    //    //    timer = 0f;
+    //    //    Debug.Log(maxTimer);
+    //    //}
     }
     /*public Prefab[] carPrefabs;
 

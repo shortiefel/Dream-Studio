@@ -6,10 +6,10 @@ public class TrafficLightManager : MonoBehaviour
     private Dictionary<Vector2Int, uint> trafficLights;
     private ERPManager erpManager;
     MoneySystem moneySystem;
-    GameObject trafficLightGO; //TO Remove
+    GameObject trafficLightGO;
     //Camera mainCamera; //TO Remove
 
-    bool toDraw; //To Remove
+    //bool toDraw; //To Remove
 
     public int tlCount;
 
@@ -22,7 +22,7 @@ public class TrafficLightManager : MonoBehaviour
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
         erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
 
-        toDraw = false; //To Remove
+        //toDraw = false; //To Remove
 
         tlCount = 1;
     }

@@ -89,7 +89,11 @@ public class GameObject : IBehaviour
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void FindEntity_Engine(out int entityID, string name);
 
-    
+    public static GameObject FindWithId(uint id)
+    {
+        return RetrieveGameObject(id);
+    }
+
     private enum AddCompState
     {
         Added,

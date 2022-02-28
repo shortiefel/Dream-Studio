@@ -13,9 +13,9 @@ public class ButtonRoad : MonoBehaviour
 {
     //PlacementManager placementManager;
 
-    UI buttonUI;
-    bool buttonType;
-    bool activeType;
+    //UI buttonUI;
+    //bool buttonType;
+    //bool activeType;
     //bool drawRoadMode;
     //bool deleteRoadMode;
     Transform drawRoadWhite;
@@ -69,7 +69,7 @@ public class ButtonRoad : MonoBehaviour
 
         //placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
-        buttonUI = GetComponent<UI>();
+        //buttonUI = GetComponent<UI>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 

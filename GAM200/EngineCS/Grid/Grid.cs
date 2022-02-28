@@ -134,23 +134,23 @@ public class Grid
     }
 
     //setStyle true for add and false for remove
-    public void SetRoad(List<Vector2Int> roads)
+    public int SetRoad(List<Vector2Int> roads)
     {
         int rCt = roads.Count;
         if (rCt < 2)
         {
             Debug.Log("SetRoad require minimum of 2 road points");
-            return;
+            return 0;
         }
         Vector2Int[] roadsArr = new Vector2Int[rCt];
         for (int i = 0; i < rCt; i++)
         {
             roadsArr[i] = roads[i];
         }
-        SetRoad_Engine(roadsArr, rCt);
+        return SetRoad_Engine(roadsArr, rCt);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void SetRoad_Engine(Vector2Int[] roads, int size);
+    internal static extern int SetRoad_Engine(Vector2Int[] roads, int size);
     
     public bool UnsetRoad(Vector2Int pos)
     {
@@ -159,6 +159,21 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool UnsetRoad_Engine(Vector2Int pos);
 
+    public void RevertGrid()
+    {
+        RevertGrid_Engine();
+    }
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void RevertGrid_Engine();
+
+    public void FinalizeGrid()
+    {
+        FinalizeGrid_Engine();
+    }
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void FinalizeGrid_Engine();
 
     public void SetCellType(Vector2Int pos, CellType ct, uint entityId = 0)
     {

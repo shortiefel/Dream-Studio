@@ -35,8 +35,11 @@ namespace Engine {
 	void GetAdjacentCellsOfType_Engine(MonoArray* monoArray, int* count, int x, int y, int type);
 	void GetAllAdjacentCellTypes_Engine(MonoArray* monoArray, int x, int y);
 
-	void SetRoad_Engine(MonoArray* monoArray, int size);
+	int SetRoad_Engine(MonoArray* monoArray, int size);
 	bool UnsetRoad_Engine(Math::ivec2 pos);
+
+	void RevertGrid_Engine();
+	void FinalizeGrid_Engine();
 
 	bool IsWithinGrid_Engine(Math::ivec2 pos);
 	bool IsPosFree_Engine(Math::ivec2 pos);
@@ -62,6 +65,9 @@ namespace Engine {
 		
 		mono_add_internal_call("Grid::SetRoad_Engine", SetRoad_Engine);
 		mono_add_internal_call("Grid::UnsetRoad_Engine", UnsetRoad_Engine);
+		
+		mono_add_internal_call("Grid::RevertGrid_Engine", RevertGrid_Engine);
+		mono_add_internal_call("Grid::FinalizeGrid_Engine", FinalizeGrid_Engine);
 		
 		mono_add_internal_call("Grid::IsWithinGrid_Engine", IsWithinGrid_Engine);
 		mono_add_internal_call("Grid::IsPosFree_Engine", IsPosFree_Engine);
@@ -140,7 +146,7 @@ namespace Engine {
 	}
 
 
-	void SetRoad_Engine(MonoArray* monoArray, int size) {
+	int SetRoad_Engine(MonoArray* monoArray, int size) {
 		Math::ivec2 posArr[MAX_LINE]{};
 
 		if (size > MAX_LINE) std::cout << "SetRoad_Engine size is more than MAX_LINE\n";
@@ -148,11 +154,19 @@ namespace Engine {
 		for (int i = 0; i < size; i++) {
 			posArr[i] = mono_array_get(monoArray, Math::ivec2, i);
 		}
-		Game::Grid::GetInstance().SetRoads(posArr, size);
+		return Game::Grid::GetInstance().SetRoads(posArr, size);
 	}
 
 	bool UnsetRoad_Engine(Math::ivec2 pos) {
 		return Game::Grid::GetInstance().UnsetRoads(pos);
+	}
+
+	void RevertGrid_Engine() {
+		Game::Grid::GetInstance().RevertGrid();
+	}
+
+	void FinalizeGrid_Engine() {
+		Game::Grid::GetInstance().FinalizeGrid();
 	}
 
 	bool IsWithinGrid_Engine(Math::ivec2 pos) {

@@ -107,8 +107,11 @@ namespace Engine {
 			bool IsPosFree(Math::ivec2 pos);
 			bool IsSurrounded(Math::ivec2 pos);
 
-			void SetRoads(Math::ivec2 posArr[MAX_LINE], int size);
+			int SetRoads(Math::ivec2 posArr[MAX_LINE], int size);
 			bool UnsetRoads(Math::ivec2 pos);
+
+			void RevertGrid();
+			void FinalizeGrid();
 
 			void AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
 
@@ -124,6 +127,7 @@ namespace Engine {
 			Math::ivec2 mapSize{};
 			Math::ivec2 offset{};
 			Cell** grid = nullptr;
+			Cell** backupGrid = nullptr;
 
 			std::list<Math::ivec2> roadList;
 			std::list<Math::ivec2> houseStructure;

@@ -9,7 +9,9 @@ public class RoadManager : MonoBehaviour
     public StructureManager structureManager;
 
     public List<Vector2Int> temporaryPlacementPositions;
-    public List<Vector2Int> roadPositionsToRecheck;
+
+    private int previousRoadCount;
+    private List<Vector2Int> roadPositionsToRecheck;
 
     private Vector2Int startPosition;
     private Vector2Int randomDestinationPosition;
@@ -36,6 +38,8 @@ public class RoadManager : MonoBehaviour
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
         structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
         temporaryPlacementPositions = new List<Vector2Int>();
+
+        previousRoadCount = 0;
         roadPositionsToRecheck = new List<Vector2Int>();
 
         placementMode = false;
@@ -297,9 +301,8 @@ public class RoadManager : MonoBehaviour
         //placementMode = true;
         //startPosition = position;
         //Debug.Log(position + " -----------------\n");
+
         if (placementManager.CheckIfPositionInBound(position) == false)
-            return;
-        if (placementManager.CheckIfPositionIsFree(position) == false)
             return;
         if (roadCount < 1)
         {
@@ -307,13 +310,53 @@ public class RoadManager : MonoBehaviour
             Enable<Transform>(RoadInfo);
             return;
         }
-        if (temporaryRoadPositions.Count > 0 && temporaryRoadPositions[temporaryRoadPositions.Count - 1] == position) { }
+        if ((temporaryRoadPositions.Count > 0 && temporaryRoadPositions[temporaryRoadPositions.Count - 1] == position) ||
+            previousRoadCount >= 20)
+            return;
+        //Remove last one if current position is the same as the second last position
+        //Require at least two road to remove one road
+        //else if (temporaryRoadPositions.Count > 1 && temporaryRoadPositions[temporaryRoadPositions.Count - 2] == position)
+        //{
+        //    //placementManager.placementGrid.UnsetRoad(temporaryRoadPositions[temporaryRoadPositions.Count - 1]);
+        //    //Revert grid
+        //    placementManager.placementGrid.RevertGrid();
+        //    temporaryRoadPositions.RemoveAt(temporaryRoadPositions.Count - 1);
+        //    //placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        //    //previousRoadCount = temporaryRoadPositions.Count;
+        //}
         else
-            temporaryRoadPositions.Add(position);
+        {
+            if (temporaryRoadPositions.Count > 0)
+            {
+                //Tile should be side by side to last tile so in the event that
+                //the user draw too quickly that it becomes diagonal, it would not be added
+                Vector2Int lp = temporaryRoadPositions[temporaryRoadPositions.Count - 1];
 
-        
+                int count = 0;
+                if (lp.x == position.x + 1 || lp.x == position.x - 1) 
+                    if (lp.y == position.y) 
+                        ++count;
+                if (lp.y == position.y + 1 || lp.y == position.y - 1)
+                    if (lp.x == position.x) 
+                        ++count;
+
+                if (count != 1) return;
+            }
+            temporaryRoadPositions.Add(position);
+        }
+
+        if (previousRoadCount == temporaryRoadPositions.Count) return;
+
+        placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        previousRoadCount = temporaryRoadPositions.Count;
+
+
         //placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
 
+    }
+    public override void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G)) placementManager.placementGrid.PrintGridOut();
     }
 
     public void FinishPlacingRoad()
@@ -339,8 +382,10 @@ public class RoadManager : MonoBehaviour
         //temporaryPlacementPositions.Clear();
         //startPosition = Vector2Int.zero;
 
-        placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        //Debug.Log("Road placed " + placementManager.placementGrid.SetRoad(temporaryRoadPositions));
+        placementManager.placementGrid.FinalizeGrid();
         temporaryRoadPositions.Clear();
+        previousRoadCount = 0;
         placeSound.Play();
     }
 

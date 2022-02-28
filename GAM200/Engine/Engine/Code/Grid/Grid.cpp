@@ -30,6 +30,9 @@ Technology is prohibited.
 
 namespace Engine {
     namespace Game {
+        std::array<Math::ivec2, 100> temporaryRoad;
+        int temporarySize;
+
         std::list<Math::ivec2> Cell::GetAdjacent() {
             bool leftDir = (cellBinary & (1 << (int)CellDirection::Left));
             bool rightDir = (cellBinary & (1 << (int)CellDirection::Right));
@@ -88,6 +91,7 @@ namespace Engine {
             offset = { 0, 0 };
 
             grid = CreateCellPtr(width, height);
+            backupGrid = CreateCellPtr(width, height);
             //grid = new Cell[static_cast<size_t>(width) * static_cast<size_t>(height)]();
             //
             //for (int y = 0; y < mapSize.y; y++) {
@@ -122,15 +126,19 @@ namespace Engine {
                 }
             }
             DeleteCellPtr(grid, mapSize.x);
+            DeleteCellPtr(backupGrid, mapSize.x);
+
             grid = temGrid;
             temGrid = nullptr;
 
             mapSize.x = newWidth;
             mapSize.y = newHeight;
 
-
             offset.x -= xTem;
             offset.y -= yTem;
+
+            backupGrid = CreateCellPtr(newWidth, newHeight);
+            FinalizeGrid();
 
             //std::cout << "offset " << offset.x << " " << offset.y << "-------------------------------------\n";
             //std::cout << mapSize.x << " " << mapSize.y << "\n";
@@ -185,6 +193,7 @@ namespace Engine {
 
             //*(grid + (x - offset.x) + (static_cast<size_t>(y - offset.y) * mapSize.x)) = Cell{value, entityId };
             *(*(grid + x - offset.x) + y - offset.y) = Cell{value, entityId };
+            *(*(backupGrid + x - offset.x) + y - offset.y) = Cell{value, entityId };
 
 
             //Store the entityId to the points
@@ -371,7 +380,7 @@ namespace Engine {
         }
 
         void Grid::PrintGridOut_Engine() {
-            std::cout << "C++ print new map \n";
+            std::cout << "C++ print new map ----------------------------------------------------\n";
             
             for (int y = mapSize.y - 1; y >= 0; y--) {
                 for (int x = 0; x < mapSize.x; x++) {
@@ -384,6 +393,20 @@ namespace Engine {
             }
 
             std::cout << "\n";
+
+            for (int y = mapSize.y - 1; y >= 0; y--) {
+                for (int x = 0; x < mapSize.x; x++) {
+                    //if ((int)(((grid + (y * mapSize.x) + x))->ct) == 0) std::cout << "- ";
+                    //else std::cout << (int)(((grid + (y * mapSize.x) + x))->ct) << " ";
+                    if ((int)((*(backupGrid + x) + y)->ct) == 0) std::cout << "- ";
+                    else std::cout << (int)((*(backupGrid + x) + y)->ct) << " ";
+                }
+                std::cout << "\n";
+            }
+
+            std::cout << "\n";
+
+            std::cout << "-----------------------------------------------------------------\n";
         }
 
         bool Grid::IsWithinGrid(Math::ivec2 pos) {
@@ -456,6 +479,20 @@ namespace Engine {
             return true;
         }
 
+        void CheckRemovePoints(Cell& cell, Math::ivec2 posToRemove) {
+            if (cell.adjacentCell[(int)CellDirection::Left] == posToRemove) 
+                cell.cellBinary ^= GET_BIN(CellDirection::Left);
+
+            if (cell.adjacentCell[(int)CellDirection::Right] == posToRemove) 
+                cell.cellBinary ^= GET_BIN(CellDirection::Right);
+ 
+            if (cell.adjacentCell[(int)CellDirection::Up] == posToRemove) 
+                cell.cellBinary ^= GET_BIN(CellDirection::Up);
+
+            if (cell.adjacentCell[(int)CellDirection::Down] == posToRemove) 
+                cell.cellBinary ^= GET_BIN(CellDirection::Down);
+        }
+
         bool AllowAddPointCheck(CellType ct) {
             if (ct == CellType::Road || ct == CellType::None || ct == CellType::Empty) return true;
             return false;
@@ -508,7 +545,8 @@ namespace Engine {
 
             else if (cellCount == 4) return "FourWayRoad";
 
-            LOG_WARNING("Grid.cpp GetRoadType cellCount is not recognized");
+            //LOG_WARNING("Grid.cpp GetRoadType cellCount is not recognized");
+            //Empty (No Road)
             return "";
             
         }
@@ -521,13 +559,16 @@ namespace Engine {
             GameSceneSerializer::DeserializePrefab(type, &(cell.entityId), Math::vec2{ (float)vec.x, (float)vec.y }, angle);
         }
 
-        void Grid::SetRoads(Math::ivec2 posArr[MAX_LINE], int size) {
+        int Grid::SetRoads(Math::ivec2 posArr[MAX_LINE], int size) {
             //Add roads
             //All position in posArr will be added (excluding duplicates), this will be used to spawn the prefab
             std::map<Math::ivec2, bool> instantiatePos;
+            int noOfRoadToAdd = 0;
+            temporarySize = size;
 
             for (int i = 0; i < size; i++) {
-                
+                temporaryRoad[i] = posArr[i];
+
                 Cell& cellC = *(*(grid + posArr[i].x - offset.x) + posArr[i].y - offset.y);
                 Cell& cellB = i != 0         ? *(*(grid + posArr[i - 1].x - offset.x) + posArr[i - 1].y - offset.y) : cellC;
                 Cell& cellF = i != size - 1  ? *(*(grid + posArr[i + 1].x - offset.x) + posArr[i + 1].y - offset.y) : cellC;
@@ -560,6 +601,8 @@ namespace Engine {
                     continue; 
                 }
 
+                if (cellC.ct == CellType::Empty || cellC.ct == CellType::None) 
+                    ++noOfRoadToAdd;
                 //Only add points if it is CellType (None, Empty, Road) 
                 //CellType (Structure and SpecialStructure) are stopped above
                 cellC.ct = CellType::Road;
@@ -568,25 +611,17 @@ namespace Engine {
                 if (i != size - 1 && AllowAddPointCheck(cellF.ct)) changes |= CheckAddPoints(posArr[i], cellC, posArr[i + 1]);
 
                 instantiatePos[posArr[i]] |= changes;
-
-                //std::cout << posArr[i];
             }
 
-            //std::cout << "\n";
             for (auto& [vec, changes] : instantiatePos) {
                 Cell& cell = *(*(grid + vec.x - offset.x) + vec.y - offset.y);
                 //Destroy the previous entity
                 if (changes) {
-                    //if (cell.entityId != 0) dreamECSGame->DestroyEntity(cell.entityId);
-                    //float angle = 0.f;
-                    //std::string type = GetRoadType(cell, angle);
-                    //if (type.size() == 0) continue;
-                    //GameSceneSerializer::DeserializePrefab(type, &(cell.entityId), Math::vec2{ (float)vec.x, (float)vec.y }, angle);
                     UpdateCell(cell, vec);
                 }
-                //std::cout << " " << vec << " " << cell.cellBinary << "\n";
             }
-            //std::cout << "\n";
+
+            return noOfRoadToAdd;
         }
 
         bool Grid::UnsetRoads(Math::ivec2 pos) {
@@ -639,8 +674,37 @@ namespace Engine {
                 if (cellT.ct == CellType::Road)
                     UpdateCell(cellT, removePos);
             }
+            FinalizeGrid();
 
             return true;
+        }
+
+        void Grid::RevertGrid() {
+            for (int i = 0; i < temporarySize; i++) {
+                Cell& cell = *(*(grid + temporaryRoad[i].x) + temporaryRoad[i].y);
+                if (i != 0) CheckRemovePoints(cell, temporaryRoad[i - 1]);
+                if (i != temporarySize - 1) CheckRemovePoints(cell, temporaryRoad[i + 1]);
+                
+                //if (cell.entityId != 0) dreamECSGame->DestroyEntity(cell.entityId);
+            } 
+            for (int i = 0; i < temporarySize; i++) {
+                Cell& cell = *(*(grid + temporaryRoad[i].x) + temporaryRoad[i].y);
+                if (cell.cellBinary == 0) cell.ct = CellType::Empty;
+                UpdateCell(cell, temporaryRoad[i]);
+            }
+
+            temporarySize = 0;
+        }
+
+        void Grid::FinalizeGrid() {
+            temporarySize = 0;
+
+            std::cout << "Finalize called -------------------------------------------------------\n";
+            for (int y = mapSize.y - 1; y >= 0; y--) {
+                for (int x = 0; x < mapSize.x; x++) {
+                    *(*(backupGrid + x) + y) = *(*(grid + x) + y);
+                }
+            }
         }
 
         void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 startPosition, Math::ivec2 endPosition, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
@@ -785,7 +849,7 @@ namespace Engine {
                 }
 
                 //std::list<Math::ivec2> temp = GetAdjacentCells(current, isAgent);
-                Cell& cell = *(*(grid + current.x - offset.x) + current.y - offset.y);
+                Cell& cell = *(*(backupGrid + current.x - offset.x) + current.y - offset.y);
                 std::list<Math::ivec2> temp = cell.GetAdjacent();
                 for (Math::ivec2& neighbour : temp) {
                    

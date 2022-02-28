@@ -53,6 +53,11 @@ public struct Vector2Int
         return new Vector2Int(lhs.x + rhs.x, lhs.y + rhs.y);
     }
 
+    public static Vector2Int operator -(Vector2Int lhs, Vector2Int rhs)
+    {
+        return new Vector2Int(lhs.x - rhs.x, lhs.y - rhs.y);
+    }
+
     public static Vector2Int operator *(Vector2Int lhs, int num)
     {
         return new Vector2Int(lhs.x * num, lhs.y * num);

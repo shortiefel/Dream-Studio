@@ -58,7 +58,7 @@ namespace Editor {
 			Engine::GraphicSystem::GetInstance().Render(_dt, &light);
 		}
 
-		glViewport(0, 0, Engine::Settings::windowWidth, Engine::Settings::windowHeight);
+		//glViewport(0, 0, Engine::Settings::windowWidth, Engine::Settings::windowHeight);
 
 		// Render Editor scene with shadow mapping
 		Engine::GraphicSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());

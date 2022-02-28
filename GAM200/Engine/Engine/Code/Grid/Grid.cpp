@@ -149,7 +149,10 @@ namespace Engine {
         void Grid::DestroyGrid() {
             if (grid != nullptr)
                 DeleteCellPtr(grid, mapSize.x);
+            if (backupGrid != nullptr)
+                DeleteCellPtr(backupGrid, mapSize.x);
             grid = nullptr;
+            backupGrid = nullptr;
 
             mapSize = { -1, -1 };
         }

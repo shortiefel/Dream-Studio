@@ -40,14 +40,14 @@ public class GameState : MonoBehaviour
         }
         else
         {
-            if (!gameOverBool)
-            {
-                if (highscore >= 80)
-                {
-                    shouldEnd = true;
-                    gameOverBool = true;
-                }
-            }
+            //if (!gameOverBool)
+            //{
+            //    if (highscore >= 80)
+            //    {
+            //        shouldEnd = true;
+            //        gameOverBool = true;
+            //    }
+            //}
         }
         //--------------------------
         //Cheat code
@@ -98,6 +98,7 @@ public class GameState : MonoBehaviour
 
     private void TrySetHighscore()
     {
+        //Debug.Log("TrySetHighscore " + highscore + " vs og: " + GetHighscore("HighScore"));
         if (highscore > GetHighscore("HighScore"))
         {
             SetHighscore(highscore, "HighScore");

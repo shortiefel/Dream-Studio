@@ -512,7 +512,7 @@ public class CarAI : MonoBehaviour
                     turning = true;
                     index++;
 
-                    Debug.Log("Turning now");
+                    //Debug.Log("Turning now");
                 }
             }
             

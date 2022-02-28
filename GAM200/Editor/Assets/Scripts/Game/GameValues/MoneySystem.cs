@@ -64,6 +64,8 @@ public class MoneySystem : MonoBehaviour
 
     public void SellRoad()
     {
+        if (roadManager.roadCount == 0) return;
+
         money = money + 10;
         textComp.text = money.ToString();
         --roadManager.roadCount;
@@ -85,6 +87,8 @@ public class MoneySystem : MonoBehaviour
     }
     public void SellErp()
     {
+        if (roadManager.erpManager.erpCount == 0) return;
+
         money = money + 10;
         textComp.text = money.ToString();
         --roadManager.erpManager.erpCount;
@@ -103,6 +107,8 @@ public class MoneySystem : MonoBehaviour
     }
     public void SellTL()
     {
+        if (roadManager.trafficLightManager.tlCount == 0) return;
+
         money += 25;
         textComp.text = money.ToString();
         --roadManager.trafficLightManager.tlCount;

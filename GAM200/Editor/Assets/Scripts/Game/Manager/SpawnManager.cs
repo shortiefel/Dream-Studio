@@ -50,6 +50,8 @@ public class SpawnManager : MonoBehaviour
                 break;
             }
         }
+
+        //scoreToSpawn = 1000;
     }
 
     private Vector2Int SpawnRandomRoad()

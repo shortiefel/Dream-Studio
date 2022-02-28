@@ -40,7 +40,7 @@ public class Notification : MonoBehaviour
         shouldShow = false;
         alreadyShowing = true;
         //animation.Play("Appear");
-        Debug.Log("Reset");
+        //Debug.Log("Reset");
     }
 
     public bool AppearCheck()

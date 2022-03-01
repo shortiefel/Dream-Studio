@@ -1,13 +1,12 @@
-﻿using System;
-
-public enum StoreButtonType
+﻿public enum StoreButtonType
 {
     RoadBuy = 1,
     RoadSell,
     TrafficBuy,
     TrafficSell,
     ERPBuy,
-    ERPSell
+    ERPSell,
+    BackToGame
 }
 
 public class ButtonStore : MonoBehaviour
@@ -35,6 +34,7 @@ public class ButtonStore : MonoBehaviour
 
     GameObject Storebtn;
     GameObject StoreBG;
+    GameObject StoreBack;
 
     Vector2 bgPosition;
     Vector2 hStorePosition;
@@ -52,10 +52,15 @@ public class ButtonStore : MonoBehaviour
     Vector2 eAddPosition;
     Vector2 eMinusPosition;
     Vector2 eNoPosition;
+    Vector2 sBackPosition;
 
-    GameState gameState;
+
     bool stopTime;
     float stopTimer;
+
+    GameState gameState;
+
+    ButtonRoad buttonRoad;
 
     UI texture;
 
@@ -65,7 +70,10 @@ public class ButtonStore : MonoBehaviour
 
         Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
+        StoreBack = GameObject.Find("BackToGame");
+
         bgPosition = StoreBG.transform.position;
+        sBackPosition = StoreBack.transform.position;
 
         StoreHeader = GameObject.Find("StoreTitle");
         ItemHeader = GameObject.Find("ItemTitle");
@@ -107,6 +115,7 @@ public class ButtonStore : MonoBehaviour
 
 
         Disable<Transform>(StoreBG.transform);
+        Disable<Transform>(StoreBack.transform);
         Disable<Transform>(StoreHeader.transform);
         Disable<Transform>(ItemHeader.transform);
         Disable<Transform>(QtyHeader.transform);
@@ -131,12 +140,16 @@ public class ButtonStore : MonoBehaviour
 
     }
 
-    public override void OnMouseOver()
+   
+
+   private void StoreAction()
     {
-        if (Input.GetMouseButtonDown(MouseCode.Left))
+        gameState.InvertPause();
+
+        if (gameState.GetPause())
         {
             Enable<Transform>(StoreBG.transform);
-            Enable<Transform>(StoreBG.transform);
+            Enable<Transform>(StoreBack.transform);
             Enable<Transform>(StoreHeader.transform);
             Enable<Transform>(ItemHeader.transform);
             Enable<Transform>(QtyHeader.transform);
@@ -153,6 +166,81 @@ public class ButtonStore : MonoBehaviour
             Enable<Transform>(ERPSell.transform);
             Enable<Transform>(ERPNo.transform);
 
+            stopTime = true;
+
+            if (buttonRoad != null)
+                buttonRoad.SwitchTab(false);
+
+            Disable<Transform>(Storebtn.transform);
+            Enable<Transform>(StoreBack.transform);
+
+        }
+        else
+        {
+            Disable<Transform>(StoreBG.transform);
+            Disable<Transform>(StoreBack.transform);
+            Disable<Transform>(StoreHeader.transform);
+            Disable<Transform>(ItemHeader.transform);
+            Disable<Transform>(QtyHeader.transform);
+            Disable<Transform>(RoadIcon.transform);
+            Disable<Transform>(RoadBuy.transform);
+            Disable<Transform>(RoadSell.transform);
+            Disable<Transform>(RoadNo.transform);
+            Disable<Transform>(TrafficIcon.transform);
+            Disable<Transform>(TrafficBuy.transform);
+            Disable<Transform>(TrafficSell.transform);
+            Disable<Transform>(TrafficNo.transform);
+            Disable<Transform>(ERPIcon.transform);
+            Disable<Transform>(ERPBuy.transform);
+            Disable<Transform>(ERPSell.transform);
+            Disable<Transform>(ERPNo.transform);
+
+            Time.timeScale = 1f;
+
+            Enable<Transform>(Storebtn.transform);
+            Disable<Transform>(StoreBack.transform);
+        }
+    }
+
+    //public override void Update()
+    //{
+    //    if (!gameState.GetDrawMode())
+    //    {
+    //        if (Input.GetKeyDown(KeyCode.Escape))
+    //        {
+    //            StoreAction();
+    //        }
+    //    }
+
+    //    if (stopTime)
+    //    {
+    //        stopTimer += Time.deltaTime;
+
+    //        float newTimer = 5f * stopTimer;
+
+    //        if (stopTimer > 0.2f)
+    //        {
+    //            stopTimer = 0f;
+    //            stopTime = false;
+
+    //            Enable<Transform>(Storebtn.transform);
+    //            Disable<Transform>(StoreBack.transform);
+    //            Time.timeScale = 0f;
+    //        }
+    //    }
+    //}
+
+
+    public override void OnMouseEnter()
+    {
+        texture.color = new Color(1f, 1f, 1f);
+    }
+
+    public override void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(MouseCode.Left))
+        {
+            StoreAction();
 
         }
     }
@@ -162,6 +250,10 @@ public class ButtonStore : MonoBehaviour
         texture.color = new Color(0f, 0f, 0f);
     }
 
+    internal void ResumeAction()
+    {
+        StoreAction();
+    }
 }
 
 

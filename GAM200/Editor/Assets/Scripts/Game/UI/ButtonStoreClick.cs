@@ -4,44 +4,15 @@ public class ButtonStoreClick : MonoBehaviour
 {
 
     StoreButtonType st;
-
-    //Text RoadNo;
-    //Text TrafficNo;
-    //Text ERPNo;
-
-
-    //Text RoadNoDisplay;
-
-
-    //public int RoadText;
-    //public int TrafficText;
-    //public int ERPText;
-
-    //RoadManager roadManager;
     public MoneySystem moneySystem;
 
-
-    //int currMoney;
-    //int tl;
+   // GameState gameState;
 
     public override void Start()
     {
 
-        //RoadText = 0;
-        //TrafficText = 0;
-        //ERPText = 0;
-
-        //RoadNoDisplay = GameObject.Find("currRoadDisplay").GetComponent<Text>();
-        //GameObject go = GameObject.Find("MoneyText");
-        //if (go != null)
-        //moneySystem = go.GetComponent<MoneySystem>();
-
-        //roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
 
-        //RoadNo = GameObject.Find("RoadQty").GetComponent<Text>();
-        //TrafficNo = GameObject.Find("TrafficQty").GetComponent<Text>();
-        //ERPNo = GameObject.Find("ERPQty").GetComponent<Text>();
 
         if (entityId == GameObject.Find("Roadadd").GetComponent<Transform>().entityId)
         {
@@ -67,6 +38,11 @@ public class ButtonStoreClick : MonoBehaviour
         {
             st = StoreButtonType.ERPBuy;
         }
+        else if (entityId == GameObject.Find("BackToGame").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.BackToGame;
+        }
+
 
     }
 
@@ -74,6 +50,16 @@ public class ButtonStoreClick : MonoBehaviour
     {
         switch (st)
         {
+            //case StoreButtonType.BackToGame:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //        {
+                        
+            //        }
+
+            //        break;
+            //    }
+
             case StoreButtonType.RoadBuy:
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))

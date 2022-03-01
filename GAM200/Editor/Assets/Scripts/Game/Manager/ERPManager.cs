@@ -12,6 +12,10 @@ public class ERPManager : MonoBehaviour
 
     public int erpCount;
 
+    Transform ERPInfoText;
+    Transform ERPInfo;
+
+
     public override void Start()
     {
         erpList = new Dictionary<Vector2Int, uint>();
@@ -24,6 +28,13 @@ public class ERPManager : MonoBehaviour
         //mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
 
         erpCount = 1;
+
+        ERPInfoText = GameObject.Find("ERPPopInfoText").GetComponent<Transform>();
+        ERPInfo = GameObject.Find("ERPPopInfo").GetComponent<Transform>();
+
+        Disable<Transform>(ERPInfoText);
+        Disable<Transform>(ERPInfo);
+
     }
 
     //public override void Update()
@@ -71,9 +82,13 @@ public class ERPManager : MonoBehaviour
 
     public bool RequestPlacingERP(Vector2Int position)
     {
+        Disable<Transform>(ERPInfoText);
+        Disable<Transform>(ERPInfo);
+
         if (erpCount <= 0)
         {
-            //Add code here to display running out of tile
+            Enable<Transform>(ERPInfoText);
+            Enable<Transform>(ERPInfo);
             return false;
         }
 
@@ -89,6 +104,9 @@ public class ERPManager : MonoBehaviour
 
     public bool RequestRemovingERP(Vector2Int position)
     {
+        Disable<Transform>(ERPInfoText);
+        Disable<Transform>(ERPInfo);
+
         if (!erpList.ContainsKey(position))
             return false;
 

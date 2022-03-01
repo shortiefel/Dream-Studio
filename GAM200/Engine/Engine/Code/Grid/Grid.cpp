@@ -426,6 +426,11 @@ namespace Engine {
             return false;
         }
 
+        bool Grid::IsPosRoad(Math::ivec2 pos) {
+            const Cell& cell = *(*(grid + pos.x - offset.x) + pos.y - offset.y);
+            return cell.ct == CellType::Road;
+        }
+
         //Return true if position is surrounded by at least one building
         bool Grid::IsSurrounded(Math::ivec2 pos) {
             const Cell& cellL = *(*(grid + pos.x - 1 - offset.x) + pos.y - offset.y);
@@ -571,7 +576,7 @@ namespace Engine {
             temporarySize = size;
 
             for (int i = 0; i < size; i++) {
-                temporaryRoad[i] = posArr[i];
+                temporaryRoad[i] = posArr[i];// TO BE DONE
 
                 Cell& cellC = *(*(grid + posArr[i].x - offset.x) + posArr[i].y - offset.y);
                 Cell& cellB = i != 0         ? *(*(grid + posArr[i - 1].x - offset.x) + posArr[i - 1].y - offset.y) : cellC;

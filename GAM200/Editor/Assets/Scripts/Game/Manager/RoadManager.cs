@@ -9,9 +9,9 @@ public class RoadManager : MonoBehaviour
     public StructureManager structureManager;
 
     public List<Vector2Int> temporaryPlacementPositions;
+    private int temporaryRoadCount;
 
-    private int previousRoadCount;
-    private List<Vector2Int> roadPositionsToRecheck;
+    //private List<Vector2Int> roadPositionsToRecheck;
 
     //private Vector2Int startPosition;
     //private Vector2Int randomDestinationPosition;
@@ -28,6 +28,7 @@ public class RoadManager : MonoBehaviour
     public List<Vector2Int> temporaryRoadPositions;
 
     public int roadCount;
+    private int previousRoadMinus;
 
     Transform RoadInfoText;
     Transform RoadInfo;
@@ -37,10 +38,11 @@ public class RoadManager : MonoBehaviour
         roadFixer = GetComponent<RoadFixer>();
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
         structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
-        temporaryPlacementPositions = new List<Vector2Int>();
 
-        previousRoadCount = 0;
-        roadPositionsToRecheck = new List<Vector2Int>();
+        temporaryPlacementPositions = new List<Vector2Int>();
+        temporaryRoadCount = 0;
+
+        //roadPositionsToRecheck = new List<Vector2Int>();
 
         //placementMode = false;
 
@@ -62,7 +64,7 @@ public class RoadManager : MonoBehaviour
         temporaryRoadPositions = new List<Vector2Int>();
 
         roadCount = 20;
-
+        previousRoadMinus = 0;
         RoadInfoText = GameObject.Find("RoadPopInfoText").GetComponent<Transform>();
         RoadInfo = GameObject.Find("RoadPopInfo").GetComponent<Transform>();
 
@@ -320,12 +322,22 @@ public class RoadManager : MonoBehaviour
             //Revert grid
             placementManager.placementGrid.RevertGrid();
             temporaryRoadPositions.RemoveAt(temporaryRoadPositions.Count - 1);
-            //placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-            //previousRoadCount = temporaryRoadPositions.Count;
+            //Debug.Log("Previous " + previousRoadMinus);
+            //roadCount += previousRoadMinus;
+
+
+            int nTmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+            roadCount += previousRoadMinus - nTmp;
+            previousRoadMinus = nTmp;
+
+            temporaryRoadCount = temporaryRoadPositions.Count;
+
+
+            return;
         }
         else
         {
-            if (previousRoadCount >= 20)
+            if (temporaryRoadCount >= 20)
             {
                 Debug.Log("Max temporary road count reached (RoadManager PlaceRoad)");
                 return;
@@ -351,11 +363,15 @@ public class RoadManager : MonoBehaviour
             //foreach (var i in temporaryRoadPositions) Console.WriteLine(i);
         }
 
-        if (previousRoadCount == temporaryRoadPositions.Count) return;
+        if (temporaryRoadCount == temporaryRoadPositions.Count) return;
 
-        //roadCount -= placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-        placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-        previousRoadCount = temporaryRoadPositions.Count;
+        int tmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        //placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        //Debug.Log("tmp " + tmp);
+        previousRoadMinus += tmp;
+        roadCount -= tmp;
+
+        temporaryRoadCount = temporaryRoadPositions.Count;
 
 
         //placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
@@ -391,7 +407,8 @@ public class RoadManager : MonoBehaviour
         //Debug.Log("Road placed " + placementManager.placementGrid.SetRoad(temporaryRoadPositions));
         placementManager.placementGrid.FinalizeGrid();
         temporaryRoadPositions.Clear();
-        previousRoadCount = 0;
+        temporaryRoadCount = 0;
+        previousRoadMinus = 0;
         placeSound.Play();
     }
 
@@ -494,7 +511,8 @@ public class RoadManager : MonoBehaviour
     {
         if (!placementManager.CheckIfPositionInBound(position)) return;
 
-        if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
+        //if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
+        if (placementManager.CheckIfPositionIsRoad(position))
             trafficLightManager.RequestPlacingTrafficLight(position);
 
         //moneyManager = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
@@ -519,7 +537,7 @@ public class RoadManager : MonoBehaviour
     {
         if (!placementManager.CheckIfPositionInBound(position)) return;
 
-        if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
+        if (placementManager.CheckIfPositionIsRoad(position))
             erpManager.RequestPlacingERP(position);
 
         //moneyManager = GameObject.Find("MoneyText").GetComponent<MoneySystem>();

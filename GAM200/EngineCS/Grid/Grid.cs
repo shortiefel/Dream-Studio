@@ -485,6 +485,14 @@ public class Grid
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool IsPosFree_Engine(Vector2Int pos);
+    
+    public bool IsPosRoad(Vector2Int pos)
+    {
+
+        return IsPosRoad_Engine(pos);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool IsPosRoad_Engine(Vector2Int pos);
 
     public bool IsSurrounded(Vector2Int pos)
     {

@@ -125,9 +125,10 @@ public class PlacementManager : MonoBehaviour
         //return CheckIfPositionIsOfType(position, CellType.Empty);
     }
 
-    internal bool CheckIfPositionIsOfType(Vector2Int position, CellType type)
+    internal bool CheckIfPositionIsRoad(Vector2Int position)
     {
-        return placementGrid[position.x, position.y] == type;
+        //return placementGrid[position.x, position.y] == type;
+        return placementGrid.IsPosRoad(position);
     }
 
     //internal bool TryAddRoad(Vector2Int position)

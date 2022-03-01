@@ -45,7 +45,7 @@ public class CarSpawner : MonoBehaviour
         //    //maxTimer = aiDirector.carSpawnTimerInterval;
         //    //structureModel = GetComponent<StructureModel>();
         spawnTimer = 0f;
-        spawnTimerMax = 0.7f;
+        spawnTimerMax = 1f;
     }
     //
     public override void Update()
@@ -61,7 +61,7 @@ public class CarSpawner : MonoBehaviour
             }
         }
         //--------------------------------------------------------
-
+        Debug.Log(requestLine.Count);
         if (requestLine.Count != 0)
         {
             spawnTimer += Time.deltaTime;

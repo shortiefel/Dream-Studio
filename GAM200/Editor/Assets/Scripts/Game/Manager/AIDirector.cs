@@ -147,6 +147,9 @@ public class AIDirector : MonoBehaviour
 
     public void SpawnCar(uint id, BuildingType bt, Vector2Int endPos)
     {
+        if (structureManager.destinationList[endPos].pathCount == 0)
+            GetNewPathList(endPos);
+
         var path = placementManager.GetPathBetween(structureManager.destinationList[endPos].startPos, new Vector2Int(endPos), true);
         //Console.WriteLine("New path is " + path.Count);
         if (path.Count == 0)

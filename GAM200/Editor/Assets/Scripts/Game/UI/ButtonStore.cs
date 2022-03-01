@@ -60,8 +60,6 @@ public class ButtonStore : MonoBehaviour
 
     GameState gameState;
 
-    ButtonRoad buttonRoad;
-
     UI texture;
 
     public override void Start()
@@ -113,6 +111,8 @@ public class ButtonStore : MonoBehaviour
         eMinusPosition = ERPSell.transform.position;
         eNoPosition = ERPNo.transform.position;
 
+        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+
 
         Disable<Transform>(StoreBG.transform);
         Disable<Transform>(StoreBack.transform);
@@ -136,7 +136,6 @@ public class ButtonStore : MonoBehaviour
         stopTime = false;
         stopTimer = 0f;
 
-        //StoreBG.transform.position = new Vector2(bgPosition.x + 200f, StoreBG.transform.position.y);
 
     }
 
@@ -168,11 +167,8 @@ public class ButtonStore : MonoBehaviour
 
             stopTime = true;
 
-            if (buttonRoad != null)
-                buttonRoad.SwitchTab(false);
-
-            Disable<Transform>(Storebtn.transform);
-            Enable<Transform>(StoreBack.transform);
+            //Disable<Transform>(Storebtn.transform);
+            //Enable<Transform>(StoreBack.transform);
 
         }
         else
@@ -197,38 +193,40 @@ public class ButtonStore : MonoBehaviour
 
             Time.timeScale = 1f;
 
-            Enable<Transform>(Storebtn.transform);
-            Disable<Transform>(StoreBack.transform);
+            //Enable<Transform>(Storebtn.transform);
+            //Disable<Transform>(StoreBack.transform);
         }
     }
 
-    //public override void Update()
-    //{
-    //    if (!gameState.GetDrawMode())
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.Escape))
-    //        {
-    //            StoreAction();
-    //        }
-    //    }
+    public override void Update()
+    {
+        if (!gameState.GetDrawMode())
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Enable<Transform>(Storebtn.transform);
+                Disable<Transform>(StoreBack.transform);
+                StoreAction();
+            }
+        }
 
-    //    if (stopTime)
-    //    {
-    //        stopTimer += Time.deltaTime;
+        if (stopTime)
+        {
+            stopTimer += Time.deltaTime;
 
-    //        float newTimer = 5f * stopTimer;
+            float newTimer = 5f * stopTimer;
 
-    //        if (stopTimer > 0.2f)
-    //        {
-    //            stopTimer = 0f;
-    //            stopTime = false;
+            if (stopTimer > 0.2f)
+            {
+                stopTimer = 0f;
+                stopTime = false;
 
-    //            Enable<Transform>(Storebtn.transform);
-    //            Disable<Transform>(StoreBack.transform);
-    //            Time.timeScale = 0f;
-    //        }
-    //    }
-    //}
+                //Enable<Transform>(Storebtn.transform);
+                //Disable<Transform>(StoreBack.transform);
+                Time.timeScale = 0f;
+            }
+        }
+    }
 
 
     public override void OnMouseEnter()

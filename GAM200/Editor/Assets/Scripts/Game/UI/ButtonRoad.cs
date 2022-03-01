@@ -39,10 +39,15 @@ public class ButtonRoad : MonoBehaviour
 
     Transform lineDivider1;
     Vector2 line1;
-  
+
+    Transform trafficIntro;
+    Transform erpIntro;
 
     GameManager gameManager;
     //InputManager inputManager;
+
+    Transform moneyText;
+    Transform counterText;
 
     GameState gameState;
 
@@ -94,7 +99,7 @@ public class ButtonRoad : MonoBehaviour
 
         lineDivider1 = GameObject.Find("Line1").GetComponent<Transform>();
         line1 = lineDivider1.position;
-   
+
 
 
         Disable<Transform>(drawRoadWhite);
@@ -132,6 +137,27 @@ public class ButtonRoad : MonoBehaviour
         revealERPButton = false;
         revealTrafficButton = false;
 
+
+        GameObject go = GameObject.Find("TrafficIntro");
+        if (go != null)
+            trafficIntro = go.GetComponent<Transform>();
+
+        GameObject go2 = GameObject.Find("ERPIntro");
+        if (go2 != null)
+            erpIntro = go2.GetComponent<Transform>();
+
+        if (trafficIntro != null)
+            Disable<Transform>(trafficIntro);
+        if (erpIntro != null)
+            Disable<Transform>(erpIntro);
+
+        GameObject go3 = GameObject.Find("MoneyText");
+        if (go3 != null)
+            moneyText = go3.GetComponent<Transform>();
+
+        GameObject go4 = GameObject.Find("CounterText");
+        if (go4 != null)
+            counterText = go4.GetComponent<Transform>();
 
         //drawRoadMode = false;
         //deleteRoadMode = false;
@@ -177,7 +203,7 @@ public class ButtonRoad : MonoBehaviour
             EnableAllNormal();
 
             Enable<Transform>(lineDivider1);
-      
+
 
         }
         else
@@ -205,7 +231,7 @@ public class ButtonRoad : MonoBehaviour
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, closeXPosition, timer), trafficPosition.y);
 
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, closeXPosition, timer), line1.y);
-      
+
 
 
         timer += speedMultiply * Time.deltaTime;
@@ -235,7 +261,7 @@ public class ButtonRoad : MonoBehaviour
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, trafficPosition.x, timer), trafficPosition.y);
 
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, line1.x, timer), line1.y);
-     
+
 
         timer += speedMultiply * Time.deltaTime;
         if (timer > 0.8f)
@@ -388,7 +414,7 @@ public class ButtonRoad : MonoBehaviour
         EnableAllNormal();
         DisableAllWhite();
 
-        
+
         gameManager.ClearInputActions();
 
         SceneManager.SetDrawMode(false);
@@ -412,12 +438,40 @@ public class ButtonRoad : MonoBehaviour
     {
         revealERPButton = true;
         Enable<Transform>(drawERP);
+
+        Disable<Transform>(moneyText);
+        Disable<Transform>(counterText);
+
+        Enable<Transform>(erpIntro);
+
+        closing = true;
+
+        Time.timeScale = 0f;
+
+        Disable<Transform>(displayArrowWhite);
+        Disable<Transform>(displayArrow);
+
+        Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }
 
     public void RevealTraffic()
     {
         revealTrafficButton = true;
         Enable<Transform>(drawTraffic);
+
+        Disable<Transform>(moneyText);
+        Disable<Transform>(counterText);
+
+        Enable<Transform>(trafficIntro);
+
+        closing = true;
+
+        Time.timeScale = 0f;
+
+        Disable<Transform>(displayArrowWhite);
+        Disable<Transform>(displayArrow);
+
+        Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }
 
 }

@@ -5,14 +5,12 @@ public class GoToMenu : MonoBehaviour
 
     public override void Start()
     {
-        Debug.Log("hellloooo");
     }
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Enter))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("hit");
             SceneManager.LoadScene("MainMenu");
         }
     }

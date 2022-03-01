@@ -13,6 +13,9 @@ public class TrafficLightManager : MonoBehaviour
 
     public int tlCount;
 
+    Transform TLInfoText;
+    Transform TLInfo;
+
     public override void Start()
     {
         trafficLights = new Dictionary<Vector2Int, uint>();
@@ -25,6 +28,12 @@ public class TrafficLightManager : MonoBehaviour
         //toDraw = false; //To Remove
 
         tlCount = 1;
+
+        TLInfoText = GameObject.Find("TLPopInfoText").GetComponent<Transform>();
+        TLInfo = GameObject.Find("TLPopInfo").GetComponent<Transform>();
+
+        Disable<Transform>(TLInfoText);
+        Disable<Transform>(TLInfo);
     }
 
     //public override void Update()
@@ -115,9 +124,13 @@ public class TrafficLightManager : MonoBehaviour
 
     public bool RequestPlacingTrafficLight(Vector2Int position)
     {
+        Disable<Transform>(TLInfoText);
+        Disable<Transform>(TLInfo);
+
         if (tlCount <= 0)
         {
-            //Add code here to display running out of tile
+            Enable<Transform>(TLInfoText);
+            Enable<Transform>(TLInfo);
             return false;
         }
 
@@ -133,6 +146,9 @@ public class TrafficLightManager : MonoBehaviour
 
     public bool RequestRemovingTrafficLight(Vector2Int position)
     {
+        Disable<Transform>(TLInfoText);
+        Disable<Transform>(TLInfo);
+
         if (!trafficLights.ContainsKey(position))
             return false;
 

@@ -34,42 +34,62 @@ public class CarSpawner : MonoBehaviour
     ////StructureModel structureModel;
     ////
     ////Notification notification;
+    float spawnTimer;
+    float spawnTimerMax;
     public override void Start()
     {
         requestLine = new Queue<EndStruct>();
 
         aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
-    //    //spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-    //    //maxTimer = aiDirector.carSpawnTimerInterval;
-    //    //structureModel = GetComponent<StructureModel>();
+        //    //spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        //    //maxTimer = aiDirector.carSpawnTimerInterval;
+        //    //structureModel = GetComponent<StructureModel>();
+        spawnTimer = 0f;
+        spawnTimerMax = 0.7f;
     }
     //
     public override void Update()
     {
+        //FOR TESTING TO BE REMOVED----------------------------
         if(Input.GetKeyDown(KeyCode.T))
         {
             if (requestLine.Count != 0)
             {
                 EndStruct es = requestLine.Dequeue();
                 aiDirector.SpawnCar(es.entityId, es.bt, es.endPos);
+                spawnTimer = 0f;
             }
         }
-    //    //timer += Time.deltaTime;
-    //    //if (timer > maxTimer)
-    //    //{
-    //    //    if (aiDirector.SpawnAHouseCar(structureModel))
-    //    //    {
-    //    //        maxTimer += 3f;
-    //    //        if (maxTimer > 10f) maxTimer = 10f;
-    //    //    }
-    //    //    //maxTimer = aiDirector.carSpawnTimerInterval;
-    //    //    //spawnManager.CheckPosition();
-    //    //    Debug.Log("carspawner");
-    //    //
-    //    //    timer = 0f;
-    //    //    Debug.Log(maxTimer);
-    //    //}
+        //--------------------------------------------------------
+
+        if (requestLine.Count != 0)
+        {
+            spawnTimer += Time.deltaTime;
+
+            if (spawnTimer >= spawnTimerMax)
+            {
+                EndStruct es = requestLine.Dequeue();
+                aiDirector.SpawnCar(es.entityId, es.bt, es.endPos);
+                spawnTimer = 0f;
+            }
+        }
+        //    //timer += Time.deltaTime;
+        //    //if (timer > maxTimer)
+        //    //{
+        //    //    if (aiDirector.SpawnAHouseCar(structureModel))
+        //    //    {
+        //    //        maxTimer += 3f;
+        //    //        if (maxTimer > 10f) maxTimer = 10f;
+        //    //    }
+        //    //    //maxTimer = aiDirector.carSpawnTimerInterval;
+        //    //    //spawnManager.CheckPosition();
+        //    //    Debug.Log("carspawner");
+        //    //
+        //    //    timer = 0f;
+        //    //    Debug.Log(maxTimer);
+        //    //}
     }
+
     /*public Prefab[] carPrefabs;
 
     public override void Awake()

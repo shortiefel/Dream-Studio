@@ -11,6 +11,7 @@ public class BackToStartMenu : MonoBehaviour
 
     public override void OnMouseEnter()
     {
+        if (backButtonUI == null) Debug.Log("This is actually null");
         backButtonUI.color = new Color(1f, 1f, 1f);
     }
 
@@ -24,6 +25,7 @@ public class BackToStartMenu : MonoBehaviour
 
     public override void OnMouseExit()
     {
+        if (backButtonUI == null) Debug.Log("This is actually null");
         backButtonUI.color = new Color(0f, 0f, 0f); 
     }
 }

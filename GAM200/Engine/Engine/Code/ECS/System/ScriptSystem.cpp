@@ -95,7 +95,8 @@ namespace Engine {
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
 			
-			if (EntityId_Check(entity_id) || entMap.find(entity_id) == entMap.end()) break;
+			if (EntityId_Check(entity_id)) break;
+			if (entMap.find(entity_id) == entMap.end()) continue;
 
 			auto& classScriptInstances = csScript.klassInstance;
 
@@ -112,7 +113,8 @@ namespace Engine {
 
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
-			if (EntityId_Check(entity_id) || entMap.find(entity_id) == entMap.end()) break;
+			if (EntityId_Check(entity_id)) break;
+			if (entMap.find(entity_id) == entMap.end()) continue;
 
 			auto& classScriptInstances = csScript.klassInstance;
 
@@ -126,7 +128,8 @@ namespace Engine {
 
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
-			if (EntityId_Check(entity_id) || entMap.find(entity_id) == entMap.end()) break;
+			if (EntityId_Check(entity_id)) break;
+			if (entMap.find(entity_id) == entMap.end()) continue;
 
 			auto& classScriptInstances = csScript.klassInstance;
 
@@ -148,7 +151,8 @@ namespace Engine {
 
 		for (auto& csScript : entScriptArray) {
 			const Entity_id& entity_id = csScript.GetEntityId();
-			if (EntityId_Check(entity_id) || entMap.find(entity_id) == entMap.end()) break;
+			if (EntityId_Check(entity_id)) break;
+			if (entMap.find(entity_id) == entMap.end()) continue;
 
 			auto& classScriptInstances = csScript.klassInstance;
 			//const auto& entityId = csScript.GetEntity();

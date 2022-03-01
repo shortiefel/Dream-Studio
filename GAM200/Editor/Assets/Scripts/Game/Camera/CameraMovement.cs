@@ -1,10 +1,16 @@
 ﻿using System;
+
+enum ZoomType
+{
+    In = 0,
+    Out
+}
 public class CameraMovement : MonoBehaviour
 {
     
     Camera cam;
 
-    public bool toZoom;
+    public bool toZoomLose;
 
     bool hasEnter;
     float targetHeight, startHeight;
@@ -16,9 +22,14 @@ public class CameraMovement : MonoBehaviour
     Vector3 mousePosition;
     float mouseMultiply;
 
+    bool gameZoom;
+    float minZoom;
+    float maxZoom;
+    ZoomType zt;
+
     public override void Start()
     {
-        toZoom = false;
+        toZoomLose = false;
 
         cam = GetComponent<Camera>();
         startHeight = cam.height;
@@ -29,21 +40,24 @@ public class CameraMovement : MonoBehaviour
 
         mousePosition = Input.GetMousePosition();
         mouseMultiply = 0.15f;
+
+        gameZoom = false;
+        zt = ZoomType.Out;
     }
 
-    public override void Update()
+    public override void FixedUpdate()
     {
         //For when game lose and zoom in to the target
-        if (toZoom)
+        if (toZoomLose)
         {
             t += Time.unscaledDeltaTime;
             if (t > 1f) t = 1f;
             float h = cam.height = Mathf.Lerp(startHeight, targetHeight, t);
             transform.position = new Vector2(Mathf.Lerp(startPosition.x, targetPosition.x, t), Mathf.Lerp(startPosition.y, targetPosition.y, t));
-            Debug.Log(h);
+            //Debug.Log(h);
             if (h < targetHeight + 0.2)
             {
-                toZoom = false;
+                toZoomLose = false;
                 Time.timeScale = 1f;
                 SceneManager.LoadScene("GameOver");
             }
@@ -59,6 +73,11 @@ public class CameraMovement : MonoBehaviour
         }
 
         mousePosition = Input.GetMousePosition();
+
+        if (gameZoom)
+        {
+
+        }
     }
 
     public void SetTargetPosition(Vector2 _pos)
@@ -69,4 +88,8 @@ public class CameraMovement : MonoBehaviour
         hasEnter = true;
     }
 
+    public void SetZoom()
+    {
+        gameZoom = true;
+    }
 }

@@ -61,7 +61,7 @@ public class CarSpawner : MonoBehaviour
             }
         }
         //--------------------------------------------------------
-        Debug.Log(requestLine.Count);
+        //Debug.Log(requestLine.Count);
         if (requestLine.Count != 0)
         {
             spawnTimer += Time.deltaTime;

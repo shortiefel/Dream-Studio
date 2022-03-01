@@ -62,12 +62,14 @@ namespace Engine {
         else {
             GameSceneSerializer::DeserializeScene("temporary");
         }
+        dreamECSGame->EndOfLoopUpdate();
 
         DeltaTime::GetInstance().SetTimeScale(1.f);
         CameraSystem::GetInstance().Update(0.f);
 
         ScriptSystem::GetInstance().UpdateMapData();
         if (GameState::GetInstance().GetPlaying()) {
+            std::cout << "ScriptSystem PlayInit\n";
             ScriptSystem::GetInstance().PlayInit();
         }
         //AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });

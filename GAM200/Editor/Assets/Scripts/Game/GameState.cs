@@ -65,8 +65,8 @@ public class GameState : MonoBehaviour
     void GameOver ()
     {
         //SceneManager.LoadScene("GameOver");
-        if (camMovement.toZoom) return;
-        camMovement.toZoom = true;
+        if (camMovement.toZoomLose) return;
+        camMovement.toZoomLose = true;
 
         Time.timeScale = 0f;
         TrySetHighscore();
@@ -98,7 +98,7 @@ public class GameState : MonoBehaviour
 
     private void TrySetHighscore()
     {
-        //Debug.Log("TrySetHighscore " + highscore + " vs og: " + GetHighscore("HighScore"));
+        Debug.Log("TrySetHighscore " + highscore + " vs og: " + GetHighscore("HighScore"));
         if (highscore > GetHighscore("HighScore"))
         {
             SetHighscore(highscore, "HighScore");

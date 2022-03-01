@@ -306,12 +306,7 @@ public class RoadManager : MonoBehaviour
 
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
-        if (roadCount < 1)
-        {
-            Enable<Transform>(RoadInfoText);
-            Enable<Transform>(RoadInfo);
-            return;
-        }
+        
         if (temporaryRoadPositions.Count > 0 && temporaryRoadPositions[temporaryRoadPositions.Count - 1] == position)
             return;
         //Remove last one if current position is the same as the second last position
@@ -342,6 +337,13 @@ public class RoadManager : MonoBehaviour
                 Debug.Log("Max temporary road count reached (RoadManager PlaceRoad)");
                 return;
             }
+            if (roadCount < 1)
+            {
+                Enable<Transform>(RoadInfoText);
+                Enable<Transform>(RoadInfo);
+                return;
+            }
+
             if (temporaryRoadPositions.Count > 0)
             {
                 //Tile should be side by side to last tile so in the event that

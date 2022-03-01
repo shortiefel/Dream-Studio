@@ -310,22 +310,26 @@ public class RoadManager : MonoBehaviour
             Enable<Transform>(RoadInfo);
             return;
         }
-        if ((temporaryRoadPositions.Count > 0 && temporaryRoadPositions[temporaryRoadPositions.Count - 1] == position) ||
-            previousRoadCount >= 20)
+        if (temporaryRoadPositions.Count > 0 && temporaryRoadPositions[temporaryRoadPositions.Count - 1] == position)
             return;
         //Remove last one if current position is the same as the second last position
         //Require at least two road to remove one road
-        //else if (temporaryRoadPositions.Count > 1 && temporaryRoadPositions[temporaryRoadPositions.Count - 2] == position)
-        //{
-        //    //placementManager.placementGrid.UnsetRoad(temporaryRoadPositions[temporaryRoadPositions.Count - 1]);
-        //    //Revert grid
-        //    placementManager.placementGrid.RevertGrid();
-        //    temporaryRoadPositions.RemoveAt(temporaryRoadPositions.Count - 1);
-        //    //placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-        //    //previousRoadCount = temporaryRoadPositions.Count;
-        //}
+        else if (temporaryRoadPositions.Count > 1 && temporaryRoadPositions[temporaryRoadPositions.Count - 2] == position)
+        {
+            //placementManager.placementGrid.UnsetRoad(temporaryRoadPositions[temporaryRoadPositions.Count - 1]);
+            //Revert grid
+            placementManager.placementGrid.RevertGrid();
+            temporaryRoadPositions.RemoveAt(temporaryRoadPositions.Count - 1);
+            //placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+            //previousRoadCount = temporaryRoadPositions.Count;
+        }
         else
         {
+            if (previousRoadCount >= 20)
+            {
+                Debug.Log("Max temporary road count reached (RoadManager PlaceRoad)");
+                return;
+            }
             if (temporaryRoadPositions.Count > 0)
             {
                 //Tile should be side by side to last tile so in the event that
@@ -342,12 +346,15 @@ public class RoadManager : MonoBehaviour
 
                 if (count != 1) return;
             }
+            //Console.WriteLine("Adding ");
             temporaryRoadPositions.Add(position);
+            //foreach (var i in temporaryRoadPositions) Console.WriteLine(i);
         }
 
         if (previousRoadCount == temporaryRoadPositions.Count) return;
 
-        roadCount -= placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        //roadCount -= placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        placementManager.placementGrid.SetRoad(temporaryRoadPositions);
         previousRoadCount = temporaryRoadPositions.Count;
 
 
@@ -361,7 +368,6 @@ public class RoadManager : MonoBehaviour
 
     public void FinishPlacingRoad()
     {
-        //Debug.Log("Something");
         /*placementMode = false;
         placementManager.AddtemporaryStructuresToStructureDictionary();
         if (temporaryPlacementPositions.Count > 0)

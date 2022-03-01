@@ -494,9 +494,10 @@ namespace Engine {
 
             if (cell.adjacentCell[(int)CellDirection::Down] == posToRemove) 
                 cell.cellBinary ^= GET_BIN(CellDirection::Down);
+            //std::cout << "Cell binary " << cell.cellBinary << "\n";
         }
 
-        bool AllowAddPointCheck(CellType ct) {
+        bool AllowDeletableCheck(CellType ct) {
             if (ct == CellType::Road || ct == CellType::None || ct == CellType::Empty) return true;
             return false;
         }
@@ -610,8 +611,8 @@ namespace Engine {
                 //CellType (Structure and SpecialStructure) are stopped above
                 cellC.ct = CellType::Road;
                 bool changes = false;
-                if (i != 0        && AllowAddPointCheck(cellB.ct)) changes |= CheckAddPoints(posArr[i], cellC, posArr[i - 1]);
-                if (i != size - 1 && AllowAddPointCheck(cellF.ct)) changes |= CheckAddPoints(posArr[i], cellC, posArr[i + 1]);
+                if (i != 0        && AllowDeletableCheck(cellB.ct)) changes |= CheckAddPoints(posArr[i], cellC, posArr[i - 1]);
+                if (i != size - 1 && AllowDeletableCheck(cellF.ct)) changes |= CheckAddPoints(posArr[i], cellC, posArr[i + 1]);
 
                 instantiatePos[posArr[i]] |= changes;
             }
@@ -677,21 +678,26 @@ namespace Engine {
                 if (cellT.ct == CellType::Road)
                     UpdateCell(cellT, removePos);
             }
+
             FinalizeGrid();
 
             return true;
         }
 
         void Grid::RevertGrid() {
+            //std::cout << "Count " << temporarySize << "\n";
             for (int i = 0; i < temporarySize; i++) {
                 Cell& cell = *(*(grid + temporaryRoad[i].x) + temporaryRoad[i].y);
                 if (i != 0) CheckRemovePoints(cell, temporaryRoad[i - 1]);
                 if (i != temporarySize - 1) CheckRemovePoints(cell, temporaryRoad[i + 1]);
                 
+                //std::cout << "Current cell " << cell.cellBinary << "\n";
                 //if (cell.entityId != 0) dreamECSGame->DestroyEntity(cell.entityId);
             } 
+            //std::cout << "\n";
             for (int i = 0; i < temporarySize; i++) {
                 Cell& cell = *(*(grid + temporaryRoad[i].x) + temporaryRoad[i].y);
+                if (!AllowDeletableCheck(cell.ct)) continue;
                 if (cell.cellBinary == 0) cell.ct = CellType::Empty;
                 UpdateCell(cell, temporaryRoad[i]);
             }
@@ -702,7 +708,7 @@ namespace Engine {
         void Grid::FinalizeGrid() {
             temporarySize = 0;
 
-            std::cout << "Finalize called -------------------------------------------------------\n";
+            //std::cout << "Finalize called -------------------------------------------------------\n";
             for (int y = mapSize.y - 1; y >= 0; y--) {
                 for (int x = 0; x < mapSize.x; x++) {
                     *(*(backupGrid + x) + y) = *(*(grid + x) + y);

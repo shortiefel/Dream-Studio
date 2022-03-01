@@ -132,7 +132,8 @@ namespace Engine {
 	}
 
 	void DreamECS::EndOfLoopUpdate() {
-		
+		entityManager->EntityEndOfLoopUpdate();
+
 		//-----------------------------------------------Clear destroy queue-----------------------------------------------
 		const auto& entityMap = entityManager->GetUsedConstEntityMap();
 		for (auto& entity_id : destroySet) {
@@ -155,8 +156,6 @@ namespace Engine {
 		enableSet.clear();
 		destroyScript.clear();
 		//--------------------------------------------------------------------------------------------------------------------
-
-		entityManager->EntityEndOfLoopUpdate();
 	}
 
 	void DreamECS::ResetECS() {

@@ -37,21 +37,24 @@ namespace Engine {
 			if (AliveEntityCount >= MAX_ENTITIES) {
 				Entity entity{};
 				//Print to console
+				LOG_WARNING("EntityManager CreateEntity Ran out of entity");
 				return entity; 
 			}
 			//LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
 
 			Entity_id entityId;
 
-			if (AvailableEntities.size()) {
+			if (currentMaxId < MAX_ENTITIES) {
+				entityId = currentMaxId;
+				++currentMaxId;
+			}
+
+			else if (AvailableEntities.size()) {
 				entityId = AvailableEntities.front();
 				AvailableEntities.pop();
 			}
 
-			else {
-				entityId = currentMaxId;
-				++currentMaxId;
-			}
+			
 
 			++AliveEntityCount;
 			Entity entity(entityId, _entityName, _parent);

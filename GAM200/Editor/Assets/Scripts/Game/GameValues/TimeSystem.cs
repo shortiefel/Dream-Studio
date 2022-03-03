@@ -7,19 +7,35 @@ public class TimeSystem : MonoBehaviour
 {
     public override void Update()
     {
+        //Normal time
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Time.timeScale = 1f;
+            NormalTime();
         }
-
+        //Stop time
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Time.timeScale = 0f;
+            StopTime();
         }
-
+        //Speed up time
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Time.timeScale = 3f;
+            SpeedUpTime();
         }
+    }
+
+    public void NormalTime()
+    {
+        Time.timeScale = 1f;
+    }
+
+    public void StopTime()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void SpeedUpTime()
+    {
+        Time.timeScale = 1.5f;
     }
 }

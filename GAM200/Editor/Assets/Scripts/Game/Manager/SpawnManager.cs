@@ -2,6 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum SpawnRequestType
+{
+    Both,
+    House,
+    Destination
+}
 public class SpawnManager : MonoBehaviour
 {
     public PlacementManager placementManager;
@@ -11,16 +17,18 @@ public class SpawnManager : MonoBehaviour
 
     private Vector2Int randomRoadPosition;
 
-    private int scoreToSpawn;
+    private float spawnTimer;
+    private float spawnTimerMax;
     int score;
     //float timer;
     //float maxTimer;
 
     GameState gameState;
 
-    
+    SpawnRequestType spawnRequestType;
 
-    ButtonRoad buttonRoad;
+
+    //ButtonRoad buttonRoad;
 
     public override void Start()
     {
@@ -29,8 +37,9 @@ public class SpawnManager : MonoBehaviour
         roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
-        scoreToSpawn = 0;
-        buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
+        spawnTimer = 0f;
+        spawnTimerMax = 15f;
+        //buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
 
 
         bool checkForNoSpawn = true;
@@ -46,12 +55,12 @@ public class SpawnManager : MonoBehaviour
             {
 
                 checkForNoSpawn = false;
-                scoreToSpawn += 5;
                 break;
             }
         }
 
         //scoreToSpawn = 1000;
+        spawnRequestType = SpawnRequestType.House;
     }
 
     private Vector2Int SpawnRandomRoad()
@@ -137,7 +146,8 @@ public class SpawnManager : MonoBehaviour
     //    return randomHousePosition;
     //}
 
-    public void CheckPosition()
+    //Spawn Houses and destinations
+    public void CheckPosition(SpawnRequestType srt = SpawnRequestType.Both)
     {
         Vector2Int roadPosition = SpawnRandomRoad();
         //Vector2Int housePosition = SpawnRandomHouse(roadPosition);
@@ -146,16 +156,27 @@ public class SpawnManager : MonoBehaviour
         //Debug.Log("Randomised position is " + roadPosition2);
         //if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
         //{
-            //if (score == scoreToSpawn)
-            //{
-            //Debug.Log(housePosition.x);
-            //Debug.Log(housePosition.y);
-
-            structureManager.PlaceHouse(roadPosition, 0);
-            structureManager.PlaceSpecial(roadPosition2, 0);
+        //if (score == scoreToSpawn)
+        //{
+        //Debug.Log(housePosition.x);
+        //Debug.Log(housePosition.y);
+        switch (srt) {
+            case SpawnRequestType.Both:
+                structureManager.PlaceHouse(roadPosition, 0);
+                structureManager.PlaceSpecial(roadPosition2, 0);
+                break;
+            case SpawnRequestType.House:
+                structureManager.PlaceHouse(roadPosition, 0);
+                spawnRequestType = SpawnRequestType.Destination;
+                break;
+            case SpawnRequestType.Destination:
+                structureManager.PlaceSpecial(roadPosition2, 0);
+                spawnRequestType = SpawnRequestType.House;
+                break;
+        }
 
                 //structureManager.PlaceHouse(housePosition);
-                scoreToSpawn += 5;
+                //scoreToSpawn += 5;
             //}
         //}
 
@@ -181,41 +202,49 @@ public class SpawnManager : MonoBehaviour
             CheckPosition();
         }
         score = gameState.GetScore();
-        if (score == scoreToSpawn)
+
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer > spawnTimerMax)
         {
-            if(score == 10)
-            {
-                buttonRoad.RevealTraffic();
-            }
-
-            else if (score == 15)
-            {
-                buttonRoad.RevealERP();
-            }
-
-            CheckPosition();
-            //if (checkForNoSpawn)
-            //{
-            //    while (checkForNoSpawn)
-            //    {
-            //        if (placementManager.placementGrid.GetAllHouses().Count != 0 && placementManager.placementGrid.GetAllSpecialStructure().Count != 0)
-            //        {
-            //            checkForNoSpawn = false;
-            //            break;
-            //        }
-            //
-            //        Vector2Int roadPosition = SpawnRandomRoad();
-            //        //Vector2Int housePosition = SpawnRandomHouse(roadPosition);
-            //        Vector2Int roadPosition2 = SpawnRandomRoad();
-            //
-            //        if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
-            //        {
-            //            roadManager.PlaceSpawnHouse(roadPosition);
-            //            roadManager.PlaceSpawnDestination(roadPosition2);
-            //        }
-            //        
-            //    }
-            //}
+            Debug.Log("Spawn");
+            CheckPosition(spawnRequestType);
+            spawnTimer = 0f;
         }
+        //if (score == scoreToSpawn)
+        //{
+        //    //if(score == 10)
+        //    //{
+        //    //    buttonRoad.RevealTraffic();
+        //    //}
+        //    //
+        //    //else if (score == 15)
+        //    //{
+        //    //    buttonRoad.RevealERP();
+        //    //}
+        //
+        //    CheckPosition();
+        //    //if (checkForNoSpawn)
+        //    //{
+        //    //    while (checkForNoSpawn)
+        //    //    {
+        //    //        if (placementManager.placementGrid.GetAllHouses().Count != 0 && placementManager.placementGrid.GetAllSpecialStructure().Count != 0)
+        //    //        {
+        //    //            checkForNoSpawn = false;
+        //    //            break;
+        //    //        }
+        //    //
+        //    //        Vector2Int roadPosition = SpawnRandomRoad();
+        //    //        //Vector2Int housePosition = SpawnRandomHouse(roadPosition);
+        //    //        Vector2Int roadPosition2 = SpawnRandomRoad();
+        //    //
+        //    //        if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
+        //    //        {
+        //    //            roadManager.PlaceSpawnHouse(roadPosition);
+        //    //            roadManager.PlaceSpawnDestination(roadPosition2);
+        //    //        }
+        //    //        
+        //    //    }
+        //    //}
+        //}
     }
 }

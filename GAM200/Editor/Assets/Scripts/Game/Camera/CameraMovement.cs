@@ -1,6 +1,6 @@
 ﻿using System;
 
-enum ZoomType
+public enum ZoomType
 {
     In = 0,
     Out
@@ -43,6 +43,9 @@ public class CameraMovement : MonoBehaviour
 
         gameZoom = false;
         zt = ZoomType.Out;
+
+        minZoom = 5f;
+        maxZoom = 15f;
     }
 
     public override void FixedUpdate()
@@ -74,10 +77,12 @@ public class CameraMovement : MonoBehaviour
 
         mousePosition = Input.GetMousePosition();
 
-        if (gameZoom)
-        {
-
-        }
+        //if (gameZoom)
+        //{
+        //    t += 5f * Time.unscaledDeltaTime;
+        //    if (t > 1f) t = 1f;
+        //    cam.height = Mathf.Lerp(startHeight, targetHeight, t);
+        //}
     }
 
     public void SetTargetPosition(Vector2 _pos)
@@ -85,11 +90,29 @@ public class CameraMovement : MonoBehaviour
         if (hasEnter) return;
         targetPosition = _pos;
         startPosition = transform.position;
+        startHeight = cam.height;
+        t = 0f;
         hasEnter = true;
     }
 
-    public void SetZoom()
+    public void SetZoom(ZoomType _zoomType)
     {
-        gameZoom = true;
+        zt = _zoomType;
+        switch (zt)
+        {
+            case ZoomType.In:
+                //zt = ZoomType.In;
+                //targetHeight = minZoom;
+                cam.height = minZoom;
+                break;
+            case ZoomType.Out:
+                //zt = ZoomType.Out;
+                //targetHeight = maxZoom;
+                cam.height = maxZoom;
+                break;
+        }
+        //startHeight = cam.height;
+        //t = 0f;
+        //gameZoom = true;
     }
 }

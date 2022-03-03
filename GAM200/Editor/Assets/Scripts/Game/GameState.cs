@@ -10,6 +10,7 @@ public class GameState : MonoBehaviour
     Text highscoreText;
 
     CameraMovement camMovement;
+    ButtonRoad buttonRoad;
 
     //bool gameOverBool;
 
@@ -26,6 +27,7 @@ public class GameState : MonoBehaviour
             highscoreText = go1.GetComponent<Text>();
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
+        buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
     }
 
     public override void Update()
@@ -81,6 +83,16 @@ public class GameState : MonoBehaviour
     public void IncrementScore()
     {
         highscore++;
+
+        if (highscore == 10)
+        {
+            buttonRoad.RevealTraffic();
+        }
+
+        else if (highscore == 15)
+        {
+            buttonRoad.RevealERP();
+        }
     }
     public int GetScore()
     {

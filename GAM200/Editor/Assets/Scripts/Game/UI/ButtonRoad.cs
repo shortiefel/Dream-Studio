@@ -65,6 +65,8 @@ public class ButtonRoad : MonoBehaviour
     public bool revealERPButton;
     public bool revealTrafficButton;
 
+    CameraMovement cameraMovement;
+
     public override void Start()
     {
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
@@ -159,6 +161,9 @@ public class ButtonRoad : MonoBehaviour
         if (go4 != null)
             counterText = go4.GetComponent<Transform>();
 
+
+        cameraMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
+
         //drawRoadMode = false;
         //deleteRoadMode = false;
 
@@ -203,8 +208,6 @@ public class ButtonRoad : MonoBehaviour
             EnableAllNormal();
 
             Enable<Transform>(lineDivider1);
-
-
         }
         else
         {
@@ -214,6 +217,8 @@ public class ButtonRoad : MonoBehaviour
 
             Disable<Transform>(displayArrowWhite);
             Enable<Transform>(displayArrow);
+
+            cameraMovement.SetZoom(ZoomType.Out);
         }
     }
     private void CloseTabs()
@@ -276,6 +281,7 @@ public class ButtonRoad : MonoBehaviour
     }
     public void CallFunction(ButtonType _bt, bool _activeType)
     {
+        cameraMovement.SetZoom(ZoomType.In);
         //Debug.Log("Calling " + _bt + " " + _activeType);
         DisableAll();
 

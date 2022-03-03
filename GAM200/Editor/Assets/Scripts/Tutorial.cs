@@ -37,6 +37,7 @@ public class Tutorial : MonoBehaviour
 
     public void CheckPosition()
     {
+        //Console.WriteLine("Spawning ");
         roadPosition.x = 7;
         roadPosition.y = 4;
         roadPosition2.x = 12;
@@ -49,8 +50,10 @@ public class Tutorial : MonoBehaviour
             //Debug.Log(housePosition.x);
             //Debug.Log(housePosition.y);
 
-            roadManager.PlaceSpawnHouse(roadPosition);
-            roadManager.PlaceSpawnDestination(roadPosition2);
+            //roadManager.PlaceSpawnHouse(roadPosition);
+            //roadManager.PlaceSpawnDestination(roadPosition2);
+            structureManager.PlaceHouse(roadPosition, 0);
+            structureManager.PlaceSpecial(roadPosition2, 0);
         }
 
     }

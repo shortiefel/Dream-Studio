@@ -65,8 +65,14 @@ public class RoadManager : MonoBehaviour
 
         roadCount = 20;
         previousRoadMinus = 0;
-        RoadInfoText = GameObject.Find("RoadPopInfoText").GetComponent<Transform>();
-        RoadInfo = GameObject.Find("RoadPopInfo").GetComponent<Transform>();
+
+        GameObject go3 = GameObject.Find("RoadPopInfoText");
+        if (go3 != null)
+            RoadInfoText = go3.GetComponent<Transform>();
+
+        GameObject go4 = GameObject.Find("RoadPopInfo");
+        if (go4 != null)
+            RoadInfo = go4.GetComponent<Transform>();
 
         Disable<Transform>(RoadInfoText);
         Disable<Transform>(RoadInfo);

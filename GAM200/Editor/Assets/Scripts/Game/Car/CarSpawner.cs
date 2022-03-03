@@ -45,7 +45,7 @@ public class CarSpawner : MonoBehaviour
         //    //maxTimer = aiDirector.carSpawnTimerInterval;
         //    //structureModel = GetComponent<StructureModel>();
         spawnTimer = 0f;
-        spawnTimerMax = 1f;
+        spawnTimerMax = 0.6f;
     }
     //
     public override void Update()

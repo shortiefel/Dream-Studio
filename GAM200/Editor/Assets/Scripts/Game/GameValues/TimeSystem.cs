@@ -5,6 +5,9 @@ using System.Linq;
 
 public class TimeSystem : MonoBehaviour
 {
+
+    //Btw this is found in the GameManager entity in game scene
+    //probably use this -> GameObject.Find("GameManager").GetComponent<TimeSystem>()
     public override void Update()
     {
         //Normal time

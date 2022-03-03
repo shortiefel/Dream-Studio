@@ -16,8 +16,9 @@ public class InstructionsMain : MonoBehaviour
     GameObject go6;
 
     Tutorial tutorial;
+    RoadManager roadManager;
 
-    int stages;
+    int stages,count;
     float timer;
     bool stateCheck;
 
@@ -41,7 +42,7 @@ public class InstructionsMain : MonoBehaviour
 
 
         tutorial = GameObject.Find("TutorialManager").GetComponent<Tutorial>();
-
+        roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
 
         stages = 0;
         timer = 0;
@@ -88,23 +89,26 @@ public class InstructionsMain : MonoBehaviour
         {
             if (instructions2Script.state)
             {
-                if (stateCheck)
-                {
-                    instructions2Script.animation.Play("Close");
-                    stateCheck = false;
-                }
-                if (CheckTimer())
-                {
-                    Disable<Transform>(go2.GetComponent<Transform>());
+                
+                    if (stateCheck)
+                    {
+                        instructions2Script.animation.Play("Close");
+                        stateCheck = false;
+                    }
+                    if (CheckTimer())
+                    {
+                        Disable<Transform>(go2.GetComponent<Transform>());
 
-                    instructions3Script.animation.Play("Open");
-                    Enable<Transform>(go3.GetComponent<Transform>());
-                    stages++;
-                    stateCheck = true;
-                    instructions2Script.state = false;
+                        instructions3Script.animation.Play("Open");
+                        Enable<Transform>(go3.GetComponent<Transform>());
+                        stages++;
+                        stateCheck = true;
+                        instructions2Script.state = false;
 
-                    tutorial.CheckPosition();
-                }
+                        tutorial.CheckPosition();
+                        count = roadManager.roadCount;
+                    }
+                
             }
 
         }
@@ -112,42 +116,51 @@ public class InstructionsMain : MonoBehaviour
         {
             if (instructions3Script.state)
             {
-                if (stateCheck)
+                if(roadManager.roadCount< 20)
                 {
-                    instructions3Script.animation.Play("Close");
-                    stateCheck = false;
-                }
-                if (CheckTimer())
-                {
-                    Disable<Transform>(go3.GetComponent<Transform>());
+                    if (stateCheck)
+                    {
+                        instructions3Script.animation.Play("Close");
+                        stateCheck = false;
+                    }
+                    if (CheckTimer())
+                    {
+                        Disable<Transform>(go3.GetComponent<Transform>());
 
-                    instructions4Script.animation.Play("Open");
-                    Enable<Transform>(go4.GetComponent<Transform>());
-                    stages++;
-                    stateCheck = true;
-                    instructions3Script.state = false;
+                        instructions4Script.animation.Play("Open");
+                        Enable<Transform>(go4.GetComponent<Transform>());
+                        stages++;
+                        stateCheck = true;
+                        instructions3Script.state = false;
+                        count = roadManager.roadCount;
+                    }
                 }
+
             }
         }
         else if (stages == 3)
         {
             if (instructions4Script.state)
             {
-                if (stateCheck)
+                if(roadManager.roadCount > count)
                 {
-                    instructions4Script.animation.Play("Close");
-                    stateCheck = false;
-                }
-                if (CheckTimer())
-                {
-                    Disable<Transform>(go4.GetComponent<Transform>());
+                    if (stateCheck)
+                    {
+                        instructions4Script.animation.Play("Close");
+                        stateCheck = false;
+                    }
+                    if (CheckTimer())
+                    {
+                        Disable<Transform>(go4.GetComponent<Transform>());
 
-                    instructions5Script.animation.Play("Open");
-                    Enable<Transform>(go5.GetComponent<Transform>());
-                    stages++;
-                    stateCheck = true;
-                    instructions4Script.state = false;
+                        instructions5Script.animation.Play("Open");
+                        Enable<Transform>(go5.GetComponent<Transform>());
+                        stages++;
+                        stateCheck = true;
+                        instructions4Script.state = false;
+                    }
                 }
+                
             }
         }
         else if (stages == 4)

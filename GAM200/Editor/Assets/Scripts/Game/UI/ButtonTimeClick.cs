@@ -1,12 +1,4 @@
-﻿public enum TimerType
-{
-    Timer = 1,
-    TimerStop,
-    TimerNormal,
-    TimerFast,
-    TimerWhite
-}
-
+﻿
 public class ButtonTimeClick : MonoBehaviour
 {
     bool TimerTypeButton;
@@ -21,188 +13,131 @@ public class ButtonTimeClick : MonoBehaviour
     Transform TimerFastWhite;
 
     // Vector2 timerPosition;
-    Vector2 tStopPosition;
-    Vector2 tNormalPosition;
-    Vector2 tFastPosition;
-
-    UI texture;
-
-    GameState gameState;
-    GameManager gameManager;
-
     TimerType tt;
 
+    GameState gameState;
     TimeSystem timeSystem;
 
-    public bool opening;
-    public bool closing;
-    float timer;
+    bool type;
 
-    float closeYPosition;
-    float closeYPosition1;
-    float closeYPosition2;
-
-    float speedMultiply;
 
     public override void Start()
     {
-        texture = GetComponent<UI>();
+        Debug.Log("Button Time clixk start");
 
         timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        Timer = GameObject.Find("TimerIcon").GetComponent<Transform>();
-        TimerWhite = GameObject.Find("TimerIconWhite").GetComponent<Transform>();
-
-        TimerStop = GameObject.Find("TimerStop").GetComponent<Transform>();
-        TimerStop = GameObject.Find("TimerStopWhite").GetComponent<Transform>();
-        tStopPosition = TimerStop.position;
-
-        TimerNormal = GameObject.Find("TimerNormal").GetComponent<Transform>();
-        TimerNormal = GameObject.Find("TimerNormalWhite").GetComponent<Transform>();
-        tNormalPosition = TimerNormal.position;
-
-        TimerFast = GameObject.Find("TimerForward").GetComponent<Transform>();
-        TimerFast = GameObject.Find("TimerForwardWhite").GetComponent<Transform>();
-        tFastPosition = TimerFast.position;
-
-        Enable<Transform>(Timer);
-        Disable<Transform>(TimerStop);
-        Disable<Transform>(TimerNormal);
-        Disable<Transform>(TimerFast);
-        Disable<Transform>(TimerWhite);
-        Disable<Transform>(TimerStopWhite);
-        Disable<Transform>(TimerNormalWhite);
-        Disable<Transform>(TimerFastWhite);
-
-
-
-        opening = false;
-        closing = false;
-        timer = 0f;
-        closeYPosition = 34f;
-        closeYPosition1 = 27f;
-        closeYPosition2 = 20.8f;
-       speedMultiply = 5f;
-
-
-        TimerStop.position = new Vector2(tStopPosition.x, closeYPosition);
-        TimerStopWhite.position = new Vector2(tStopPosition.x, closeYPosition);
-        TimerNormal.position = new Vector2(tNormalPosition.x, closeYPosition1);
-        TimerNormalWhite.position = new Vector2(tStopPosition.x, closeYPosition1);
-        TimerFast.position = new Vector2(tFastPosition.x, closeYPosition2);
-        TimerFastWhite.position = new Vector2(tFastPosition.x, closeYPosition2);
-
-    }
-
-    public void SwitchTab(bool type)
-    {
-        if (type)
+        if (entityId == GameObject.Find("TimerIcon").GetComponent<Transform>().entityId)
         {
-            opening = true;
-
-            Disable<Transform>(Timer);
-            Enable<Transform>(TimerStop);
-            Enable<Transform>(TimerNormal);
-            Enable<Transform>(TimerFast);
-            Enable<Transform>(TimerFastWhite);
-
-
-
+            tt = TimerType.Timer;
+            type = true;
         }
-        else
+        else if (entityId == GameObject.Find("TimerStop").GetComponent<Transform>().entityId)
         {
-
-            closing = true;
-
-            Enable<Transform>(Timer);
-            Disable<Transform>(TimerFastWhite);
-            Disable<Transform>(TimerStop);
-            Disable<Transform>(TimerNormal);
-            Disable<Transform>(TimerFast);
+            tt = TimerType.TimerStop;
+            type = true;
+        }
+        else if (entityId == GameObject.Find("TimerNormal").GetComponent<Transform>().entityId)
+        {
+            tt = TimerType.TimerNormal;
+            type = true;
+        }
+        else if (entityId == GameObject.Find("TimerForward").GetComponent<Transform>().entityId)
+        {
+            tt = TimerType.TimerFast;
+            type = true;
+        }
+        else if (entityId == GameObject.Find("TimerStopWhite").GetComponent<Transform>().entityId)
+        {
+            tt = TimerType.TimerStop;
+            type = false;
+        }
+        else if (entityId == GameObject.Find("TimerNormalWhite").GetComponent<Transform>().entityId)
+        {
+            tt = TimerType.TimerNormal;
+            type = false;
+        }
+        else if (entityId == GameObject.Find("TimerForwardWhite").GetComponent<Transform>().entityId)
+        {
+            tt = TimerType.TimerFast;
+            type = false;
+        }
+        else if (entityId == GameObject.Find("TimerIconWhite").GetComponent<Transform>().entityId)
+        {
+            tt = TimerType.Timer;
+            type = false;
         }
     }
 
-    private void CloseTabs()
+
+
+    public override void OnMouseOver()
     {
-        TimerStop.position = new Vector2 (tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition, timer)));
-        TimerStopWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition, timer)));
+        Debug.Log("I's here");
 
-        TimerNormal.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition1, timer)));
-        TimerNormalWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
-
-        TimerFast.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
-        TimerFastWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
-
-        timer += speedMultiply * Time.deltaTime;
-        if (timer > 0.8f)
+        if (transform.isActive)
         {
-            timer = 0f;
-            closing = false;
-        }
-    }
-
-    private void OpenTabs()
-    {
-        TimerStop.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition, timer)));
-        TimerStopWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition, timer)));
-
-        TimerNormal.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition1, timer)));
-        TimerNormalWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
-
-        TimerFast.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
-        TimerFastWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
-
-        timer += speedMultiply * Time.deltaTime;
-        if (timer > 0.8f)
-        {
-            timer = 0f;
-            opening = false;
-        }
-    }
-
-    public void CallFunction(ButtonType _bt, bool _activeType)
-    {
-        Disable<Transform>(TimerStop);
-        Disable<Transform>(TimerNormal);
-        Disable<Transform>(TimerFast);
-        Disable<Transform>(TimerWhite);
-        Disable<Transform>(TimerStopWhite);
-        Disable<Transform>(TimerNormalWhite);
-        Disable<Transform>(TimerFastWhite);
-
-
-        if (_activeType)
-        {
-            switch(tt)
+            switch (tt)
             {
+                case TimerType.Timer:
+                    {
+                        Debug.Log("peeka");
+
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            timeSystem.SwitchTabTimer(type);
+                        }
+
+                        break;
+                    }
+
                 case TimerType.TimerStop:
-                {
-                        Enable<Transform>(TimerStopWhite);
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            timeSystem.CallFunctionTimer(tt, type);
+                        }
+
                         break;
-                }
-               case TimerType.TimerNormal:
-                {
-                        Enable<Transform>(TimerNormalWhite);
+                    }
+
+                case TimerType.TimerNormal:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            timeSystem.CallFunctionTimer(tt, type);
+                        }
+
                         break;
-                }
+                    }
+
                 case TimerType.TimerFast:
-                {
-                        Enable<Transform>(TimerFastWhite);
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+
+                            timeSystem.CallFunctionTimer(tt, type);
+                        }
+
                         break;
-                }
+                    }
+
+                default:
+
+                    break;
             }
         }
+
+
+
     }
 
-    public override void Update()
+    public override void OnEnable()
     {
-        if (opening)
-            OpenTabs();
-        if (closing)
-            CloseTabs();
+        Debug.Log("Enabling \n");
     }
+
 
 }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public enum TimerType
 {
-    Timer = 0,
+    Timer = 1,
     TimerStop,
     TimerNormal,
     TimerFast,
@@ -101,10 +101,12 @@ public class TimeSystem : MonoBehaviour
 
     public void SwitchTabTimer(bool type)
     {
+        Debug.Log("in switch tab"); 
+
         if (type)
         {
             opening = true;
-
+            Debug.Log("in open");
             Disable<Transform>(Timer);
             Enable<Transform>(TimerStop);
             Enable<Transform>(TimerNormal);
@@ -185,12 +187,15 @@ public class TimeSystem : MonoBehaviour
                         Enable<Transform>(TimerStopWhite);
                         Time.timeScale = 0f;
                         StopTime();
+
+                        Disable<Transform>(TimerStop);
                         break;
                     }
                 case TimerType.TimerNormal:
                     {
                         Enable<Transform>(TimerNormalWhite);
                         NormalTime();
+                        Disable<Transform>(TimerNormal);
                         break;
                     }
                 case TimerType.TimerFast:
@@ -198,6 +203,7 @@ public class TimeSystem : MonoBehaviour
                         Enable<Transform>(TimerFastWhite);
                         Time.timeScale = 3f;
                         SpeedUpTime();
+                        Disable<Transform>(TimerFast);
                         break;
                     }
             }

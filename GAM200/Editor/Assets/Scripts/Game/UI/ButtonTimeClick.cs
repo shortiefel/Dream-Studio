@@ -3,15 +3,6 @@ public class ButtonTimeClick : MonoBehaviour
 {
     bool TimerTypeButton;
 
-    Transform Timer;
-    Transform TimerWhite;
-    Transform TimerStop;
-    Transform TimerNormal;
-    Transform TimerFast;
-    Transform TimerStopWhite;
-    Transform TimerNormalWhite;
-    Transform TimerFastWhite;
-
     // Vector2 timerPosition;
     TimerType tt;
 
@@ -23,17 +14,24 @@ public class ButtonTimeClick : MonoBehaviour
 
     public override void Start()
     {
-        Debug.Log("Button Time clixk start");
-
-        timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
-        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+        //timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
+        //gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         if (entityId == GameObject.Find("TimerIcon").GetComponent<Transform>().entityId)
         {
+            Debug.Log("selected1");
             tt = TimerType.Timer;
             type = true;
+            Debug.Log("selected2");
         }
-        else if (entityId == GameObject.Find("TimerStop").GetComponent<Transform>().entityId)
+
+        if (entityId == GameObject.Find("TimerIconWhite").GetComponent<Transform>().entityId)
+        {
+            tt = TimerType.Timer;
+            type = false;
+        }
+
+        if (entityId == GameObject.Find("TimerStop").GetComponent<Transform>().entityId)
         {
             tt = TimerType.TimerStop;
             type = true;
@@ -63,11 +61,7 @@ public class ButtonTimeClick : MonoBehaviour
             tt = TimerType.TimerFast;
             type = false;
         }
-        else if (entityId == GameObject.Find("TimerIconWhite").GetComponent<Transform>().entityId)
-        {
-            tt = TimerType.Timer;
-            type = false;
-        }
+      
     }
 
 
@@ -82,11 +76,13 @@ public class ButtonTimeClick : MonoBehaviour
             {
                 case TimerType.Timer:
                     {
-                        Debug.Log("peeka");
-
+                        Debug.Log("in timer");
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
+                            Debug.Log("Click in timer");
+                            Debug.Log("Entity " + entityId + " " + transform.isActive);
                             timeSystem.SwitchTabTimer(type);
+                            Debug.Log("out");
                         }
 
                         break;

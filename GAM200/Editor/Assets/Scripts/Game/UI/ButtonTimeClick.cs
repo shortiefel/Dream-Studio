@@ -14,15 +14,15 @@ public class ButtonTimeClick : MonoBehaviour
 
     public override void Start()
     {
-        //timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
+        timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
         //gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         if (entityId == GameObject.Find("TimerIcon").GetComponent<Transform>().entityId)
         {
-            Debug.Log("selected1");
+           // Debug.Log("selected1");
             tt = TimerType.Timer;
             type = true;
-            Debug.Log("selected2");
+           // Debug.Log("selected2");
         }
 
         if (entityId == GameObject.Find("TimerIconWhite").GetComponent<Transform>().entityId)
@@ -68,7 +68,7 @@ public class ButtonTimeClick : MonoBehaviour
 
     public override void OnMouseOver()
     {
-        Debug.Log("I's here");
+        //Debug.Log("I's here");
 
         if (transform.isActive)
         {
@@ -76,13 +76,13 @@ public class ButtonTimeClick : MonoBehaviour
             {
                 case TimerType.Timer:
                     {
-                        Debug.Log("in timer");
+                        //Debug.Log("in timer");
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            Debug.Log("Click in timer");
-                            Debug.Log("Entity " + entityId + " " + transform.isActive);
+                            //Debug.Log("Click in timer");
+                           // Debug.Log("Entity " + entityId + " " + transform.isActive);
                             timeSystem.SwitchTabTimer(type);
-                            Debug.Log("out");
+                           // Debug.Log("out");
                         }
 
                         break;

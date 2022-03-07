@@ -50,15 +50,7 @@ public class ButtonStoreClick : MonoBehaviour
     {
         switch (st)
         {
-            //case StoreButtonType.BackToGame:
-            //    {
-            //        if (Input.GetMouseButtonDown(MouseCode.Left))
-            //        {
-                        
-            //        }
 
-            //        break;
-            //    }
 
             case StoreButtonType.RoadBuy:
                 {
@@ -66,8 +58,7 @@ public class ButtonStoreClick : MonoBehaviour
                     {
 
                         moneySystem.BuyRoad();
-                        //++roadManager.roadCount;
-                        //RoadNo.text = roadManager.currRoad.ToString();
+                    
                     }
 
                     break;
@@ -78,8 +69,7 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                         moneySystem.SellRoad();
-                        //--roadManager.roadCount;
-                        //RoadNo.text = roadManager.currRoad.ToString();
+                   
                     }
 
                     break;
@@ -90,8 +80,6 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                         moneySystem.BuyErp();
-                        //++roadManager.erpManager.erpCount;
-                        //ERPNo.text = ERPText.ToString();
                     }
 
                     break;
@@ -103,8 +91,7 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                         moneySystem.SellErp();
-                        //--roadManager.erpManager.erpCount;
-                        //ERPNo.text = ERPText.ToString();
+         
                     }
 
                     break;
@@ -116,8 +103,7 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                         moneySystem.BuyTrafficLight();
-                        //++roadManager.trafficLightManager.tlCount;
-                        //TrafficNo.text = TrafficText.ToString();
+
                     }
 
                     break;
@@ -129,8 +115,7 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                         moneySystem.SellTL();
-                        //--roadManager.trafficLightManager.tlCount;
-                        //TrafficNo.text = TrafficText.ToString();
+
                     }
 
                     break;

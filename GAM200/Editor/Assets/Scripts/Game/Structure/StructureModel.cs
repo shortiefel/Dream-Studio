@@ -111,13 +111,29 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 notification.alreadyShowing = false;
                 animation.Play("Stay");
             }
-
+            if(notification.TickerAppearCheck())
+            {
+                animation.Play("TickingAppear");
+            }
+            if(notification.TickerDestroyCheck())
+            {
+                Disable<Transform>(notifiSymbol.transform);
+                notification.alreadyShowing = false;
+                animation.Play("TickingClose");
+            }
             if (notification.shouldShow == true)
             {
                 //animation.Play("Appear");
                 //notification.SetAnimation("Appear");
                 //spawnBool = true;
-                SetToSpawn();
+                if(notification.timerShow == true)
+                {
+                    SetToSpawn2();
+                }
+                else
+                {
+                    SetToSpawn();
+                }
                 notificationSound.Play();
                 notification.shouldShow = false;
                 notification.ResetTimer();
@@ -193,6 +209,13 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     {
         animation.Play("Appear");
         notification.SetAnimation("Appear");
+        //spawnBool = true;
+    }
+
+    void SetToSpawn2()
+    {
+        animation.Play("Ticking");
+        notification.SetAnimation("Ticking");
         //spawnBool = true;
     }
 

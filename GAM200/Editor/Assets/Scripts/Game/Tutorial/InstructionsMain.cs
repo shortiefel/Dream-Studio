@@ -18,6 +18,8 @@ public class InstructionsMain : MonoBehaviour
     Tutorial tutorial;
     RoadManager roadManager;
 
+    
+
     int stages, count;
     float timer;
     bool stateCheck;

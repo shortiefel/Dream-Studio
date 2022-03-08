@@ -32,6 +32,7 @@ public class Notification : MonoBehaviour
         maxLifeTime = 80f;
         showNotification = 0f;
         shouldShow = false;
+        timerShow = false;
         alreadyShowing = false;
 
         countDownTimer = 0f;
@@ -48,7 +49,6 @@ public class Notification : MonoBehaviour
         notiTime = 0f;
         showNotification = Random.Range(2, 10);
         shouldShow = false;
-        timerShow = false;
         alreadyShowing = true;
         //animation.Play("Appear");
         //Debug.Log("Reset");
@@ -117,12 +117,10 @@ public class Notification : MonoBehaviour
             lifeTime += Time.deltaTime; // slowly add until maxLifeTime
         if (!alreadyShowing)
             notiTime += Time.deltaTime;
-        Console.WriteLine(lifeTime);
-        if (lifeTime > 70.0f)
+        //Console.WriteLine(lifeTime);
+        if (lifeTime > 65.0f)
         {
             timerShow = true;
-            animation = notifiSymbol.GetComponent<Animation>();
-            animation.Play("Appear");
         }
         if (lifeTime > maxLifeTime)
         {
@@ -133,6 +131,7 @@ public class Notification : MonoBehaviour
         }
         if (notiTime > showNotification)
         {
+            Console.WriteLine("Enter here once");
             shouldShow = true;
             //showNotification = maxLifeTime;
         }
@@ -151,7 +150,7 @@ public class Notification : MonoBehaviour
             destroyBool = true;
         if (state == "TickingAppear")
             tappearBool = true;
-        if (state == "TickingDestroy")
+        if (state == "TickingClose")
             tdestroyBool = true;
 
     }

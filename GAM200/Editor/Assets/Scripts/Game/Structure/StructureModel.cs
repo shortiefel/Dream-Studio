@@ -103,7 +103,10 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             {
                 animation.Play("Stay");
             }
-
+            if (notification.TickerAppearCheck())
+            {
+                animation.Play("TickingAppear");
+            }
             if (notification.DestroyCheck())
             {
                 Disable<Transform>(notifiSymbol.transform);
@@ -111,29 +114,21 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 notification.alreadyShowing = false;
                 animation.Play("Stay");
             }
-            if(notification.TickerAppearCheck())
-            {
-                animation.Play("TickingAppear");
-            }
             if(notification.TickerDestroyCheck())
             {
                 Disable<Transform>(notifiSymbol.transform);
                 notification.alreadyShowing = false;
                 animation.Play("TickingClose");
             }
+            if (notification.timerShow == true)
+            {
+                SetToSpawn2();
+                notification.ResetTimer();
+                Enable<Transform>(notifiSymbol.transform);
+            }
             if (notification.shouldShow == true)
             {
-                //animation.Play("Appear");
-                //notification.SetAnimation("Appear");
-                //spawnBool = true;
-                if(notification.timerShow == true)
-                {
-                    SetToSpawn2();
-                }
-                else
-                {
-                    SetToSpawn();
-                }
+                SetToSpawn();
                 notificationSound.Play();
                 notification.shouldShow = false;
                 notification.ResetTimer();
@@ -191,8 +186,19 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             //if (notification != null)
             if (notification.alreadyShowing)
             {
-                animation.Play("Destroy");
-                notification.SetAnimation("Destroy");
+                if (notification.timerShow)
+                {
+                    Console.WriteLine("Timer Destroy");
+                    animation.Play("TickingClose");
+                    notification.SetAnimation("TickingClose");
+                    notification.timerShow = false;
+                }
+                else
+                {
+                    animation.Play("Destroy");
+                    notification.SetAnimation("Destroy");
+                }
+                
             }
             //notification.transform.
             gameState.IncrementScore();
@@ -214,8 +220,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     void SetToSpawn2()
     {
-        animation.Play("Ticking");
-        notification.SetAnimation("Ticking");
+        animation.Play("TickingAppear");
+        notification.SetAnimation("TickingAppear");
         //spawnBool = true;
     }
 

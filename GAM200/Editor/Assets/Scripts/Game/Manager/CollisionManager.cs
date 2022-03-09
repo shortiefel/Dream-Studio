@@ -29,7 +29,6 @@ public class CollisionManager : MonoBehaviour
 
         else if (em.IsERP(targetPos))
         {
-            Debug.Log("ERP!!");
             return CollisionType.ERP;
         }
 

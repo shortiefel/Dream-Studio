@@ -81,9 +81,9 @@ public class TrafficLightManager : MonoBehaviour
         //angle 0/360/-360 - up, 90/-270 - right, -90/270 - left, 180/-180 - down
         //+-45 degree for range
         //if left or right
-        bool lrState = false;
+        bool lrState = true;
         if ((45f < _carAngle && _carAngle < 135f) || (-315f < _carAngle && _carAngle < -225f) ||
-            (225f < _carAngle && _carAngle < 315f) || (-135f < _carAngle && _carAngle < -45f)) lrState = true;
+            (225f < _carAngle && _carAngle < 315f) || (-135f < _carAngle && _carAngle < -45f)) lrState = false;
 
         //Vector2Int carPos = new Vector2Int(_carPos);
 
@@ -95,7 +95,9 @@ public class TrafficLightManager : MonoBehaviour
         //cState == false means allow vertical movement
         //if lrState == true means moving left right (horizontally) and false means moving up down (vertically)
         //It means that when they are the same then they are allowed to move
-        if (lrState == cState) return true;
+
+        Debug.Log("Reach");
+        //if (lrState == cState) return true;
         return false;
     }
 

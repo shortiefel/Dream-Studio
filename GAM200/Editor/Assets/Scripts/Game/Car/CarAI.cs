@@ -66,6 +66,9 @@ public class CarAI : MonoBehaviour
     private float angle;
     private bool turning;
 
+    private List<Vector2Int> pastTrafficLight;
+
+    private bool testBool = true;
     /*public bool Stop
     {
         get { return stop || collisionStop; }
@@ -78,7 +81,7 @@ public class CarAI : MonoBehaviour
 
     public override void Start()
     {
-        raycastLength = transform.scale.y * 2f;
+        raycastLength = transform.scale.x * 2f;
         //Debug.Log(raycastLength + " lengirhteuth");
 
         //endPoint = null;
@@ -109,6 +112,7 @@ public class CarAI : MonoBehaviour
         //maxSpeed = 3;
         power = 1;
         maxPower = 6;
+        //maxPower = 1;
         //turningFactor = 1f;
         movementVector = new Vector2(0, 1);
         //Console.WriteLine("Testing " + rb.velocity);
@@ -127,6 +131,8 @@ public class CarAI : MonoBehaviour
         changeTarget = false;
         tValue = 0f;
         prevPos = transform.position;
+
+        pastTrafficLight = new List<Vector2Int>();
     }
 
     public void SetPath(List<Vector2> newPath, uint id)
@@ -230,9 +236,8 @@ public class CarAI : MonoBehaviour
 
     public override void Update()
     {
-        RaycastHit2D hit = Physics2D.RayCast(new Vector3(transform.position, 0f), transform.up, 0.6f, (int)transform.entityId);
-        if (Input.GetKeyDown(KeyCode.Y))
-            Debug.Log("up: " + transform.up);
+        RaycastHit2D hit = Physics2D.RayCast(new Vector3(transform.position, 0f), -transform.right, raycastLength * power, (int)transform.entityId);
+
         if (hit.collider != null)
         {
             Vector2Int targetPos = Vector2Int.RoundToInt(hit.transform.position);
@@ -251,25 +256,30 @@ public class CarAI : MonoBehaviour
             //    //Stop car because might be other cars
             //    stop = true;
             //}
-
+            //Debug.Log("PreHit");
             if (collisionManager != null)
             {
+                //stop = false;
                 switch (collisionManager.CollisionTypeCheck(targetPos))
                 {
                     case CollisionType.Traffic:
-                        if (tlIndex.Contains(hit.transform.entityId))
-                        {
-                            stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
-                            //stop = true;
-                            //Debug.Log("Hiting trigger");
-                        }
+                        stop = !tm.GetTrafficLightState(new Vector2Int(hit.transform.position), transform.angle);
+                        Debug.Log("Hiting trigger " + stop);
+                        //if (tlIndex.Contains(hit.transform.entityId))
+                        //{
+                        //    stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
+                        //    //stop = true;
+                        //    Debug.Log("Hiting trigger " + stop);
+                        //}
+                        power = 1f;
                         break;
                     case CollisionType.ERP:
-                        //Do nothing if its ERP as the logic is already in ERP
+                        //Do nothing much if its ERP as the logic is already in ERP
                         break;
                     case CollisionType.Unknown:
                         //Stop car because might be other cars
                         //stop = true;
+                        Debug.Log("Hit");
                         break;
                     default:
                         break;
@@ -288,9 +298,18 @@ public class CarAI : MonoBehaviour
         //{
         //    Destroy(gameObject);
         //}
+        //Console.WriteLine("CarAI: " + stop);
+        //stop = true;
+        if (Input.GetKeyDown(KeyCode.T)) testBool = !testBool;
+        if (Input.GetKeyDown(KeyCode.R)) stop = false;
+
+        if (!testBool) stop = true;
+        if (stop) return;
+
         CheckIfArrived();
         Drive();
         //CheckForCollisions();
+        
 
         if (power < maxPower)
         {
@@ -561,9 +580,9 @@ public class CarAI : MonoBehaviour
         this.movementVector = movementInput;
     }*/
 
-    public override void OnTriggerEnter(uint id)
+    public override void OnTriggerEnter(Transform trans)
     {
         if (tlIndex != null)
-            if (tlIndex.Contains(id)) tlIndex.Remove(id);
+            if (tlIndex.Contains(trans.entityId)) tlIndex.Remove(trans.entityId);
     }
 }

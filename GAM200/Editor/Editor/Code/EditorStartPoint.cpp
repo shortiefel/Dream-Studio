@@ -42,6 +42,8 @@ namespace Editor {
 	}
 
 	void EditorStartPoint::Update(float _dt) {
+
+		/*
 		// Loops through lightArray to get object that has a lightComponent, render to lightComponent's FBO
 		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
 		for (auto& light : lightArray)
@@ -57,8 +59,9 @@ namespace Editor {
 
 			Engine::GraphicSystem::GetInstance().Render(_dt, &light);
 		}
+		*/
 
-		glViewport(0, 0, Engine::Settings::windowWidth, Engine::Settings::windowHeight);
+		//glViewport(0, 0, Engine::Settings::windowWidth, Engine::Settings::windowHeight);
 
 		// Render Editor scene with shadow mapping
 		Engine::GraphicSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());

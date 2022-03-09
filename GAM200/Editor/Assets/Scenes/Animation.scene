@@ -21,7 +21,7 @@
       "IsActive": true
     },
     "LightComponent": {
-      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "Colour": [ 1.0, 0.0, 0.0, 1.0 ],
       "IsActive": true
     }
   },

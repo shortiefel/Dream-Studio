@@ -31,8 +31,6 @@ namespace Engine
 
 	struct LightComponent : public IComponent
 	{
-		Math::vec4 colour;
-
 		unsigned int depthFBO, depthMap;
 		unsigned int shadowWidth = 1024, shadowHeight = 1024;
 
@@ -41,6 +39,11 @@ namespace Engine
 		Math::mat4 lightView;
 		Math::mat4 lightSpace;
 
+		//Math::vec3 direction;
+		Math::vec4 colour;
+		Math::vec3 ambient;
+		Math::vec3 diffuse;
+		Math::vec3 specular;
 
 		bool isActive = true;
 

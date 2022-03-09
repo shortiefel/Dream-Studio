@@ -29,7 +29,7 @@ namespace Engine
 	// Contructor for Light Component
 	LightComponent::LightComponent(Entity_id _ID, Math::vec4 _colour, bool _active) :
 		IComponent{ _ID }, depthFBO{ 0 }, depthMap{ 0 }, shadowWidth{ 1024 }, shadowHeight{ 1024 },
-		near_plane{ -1.0f }, far_plane{ 7.5f }, colour{ _colour }, isActive{ _active }
+		colour{ _colour }, near_plane{ -1.0f }, far_plane{ 7.5f }, isActive{ _active }
 	{
 		lightProjection = Math::OrthoGraphic(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 		lightView = Math::LookAt(Math::vec3(-2.0f, 4.0f, -1.0f),

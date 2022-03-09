@@ -41,6 +41,8 @@ namespace Engine
 {
 #define LAYER_COUNT 10 // Number of layers for game objects
 
+LightComponent* lightSource = nullptr;
+
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture
 	void RenderTextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, int layer, float _dt)
@@ -314,11 +316,13 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Set background colour
-		//glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
 
 		// Enable GL_BLEND for transparency of textures
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		/*
 
 		// Loops through lightArray to get lightComponent's depthMap and binds it.
 		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
@@ -333,6 +337,8 @@ namespace Engine
 
 			light.BindTexture();
 		}
+
+		*/
 
 		// Render game objects and collision lines through camera perspective
 		RenderGameObjectsD(camMatrix, _dt);
@@ -448,6 +454,28 @@ namespace Engine
 			samplers[i] = i;
 		}
 		glUniform1iv(loc, 32, samplers);
+
+
+
+		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
+		for (auto& light : lightArray)
+		{
+			// Option to not render individual game object
+			if (!light.isActive) continue;
+
+			// If element in array is not used, skip it
+			const Engine::Entity_id& entity_id = light.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			lightSource = &light;
+		}
+
+		if (lightSource) {
+			GLSLShader::SetUniform("u_LightColour", lightSource->colour, shd_ref_handle);
+		}
+		else {
+			GLSLShader::SetUniform("u_LightColour", { 1.0f, 1.0f, 1.0f, 1.0f }, shd_ref_handle);
+		}
 
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();

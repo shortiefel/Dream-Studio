@@ -23,7 +23,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     private AudioSource destroySound;
 
     AIDirector aiDirector;
-    //bool spawnBool;
+    bool spawnBool;
 
     public BuildingType buildingType;
 
@@ -38,7 +38,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         notification = GetComponent<Notification>();
         //carSpawner = GetComponent<CarSpawner>();
         //animation = GetComponent<Animation>();
-        //spawnBool = false;
+        spawnBool = false;
 
         if (notification != null)
         {
@@ -51,7 +51,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             animation = notifiSymbol.GetComponent<Animation>();
             //animation.Play("Appear");
             //notification.SetAnimation("Appear");
-            //spawnBool = true;
+            spawnBool = true;
             SetToSpawn();
             notificationSound = GetComponent<AudioSource>();
             destroySound = notifiSymbol.GetComponent<AudioSource>();
@@ -125,8 +125,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 
             }
 
-            //if (spawnBool && aiDirector != null)
-            //    spawnBool = !(aiDirector.SpawnToDestination(structureModel));
+            if (spawnBool && aiDirector != null)
+                spawnBool = !(aiDirector.SpawnToDestination(structureModel));
             if (Input.GetKeyDown(KeyCode.C))
                 aiDirector.SpawnToDestination(structureModel);
         }
@@ -193,7 +193,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     {
         animation.Play("Appear");
         notification.SetAnimation("Appear");
-        //spawnBool = true;
+        spawnBool = true;
     }
 
     //internal List<Marker> GetCarMarkers()

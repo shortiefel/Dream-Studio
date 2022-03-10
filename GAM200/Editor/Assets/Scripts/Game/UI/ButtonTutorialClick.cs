@@ -48,6 +48,18 @@ public class ButtonTutorialClick : MonoBehaviour
             type = false;
             //active = false;
         }
+        //else if (entityId == GameObject.Find("RemoveRoadGlow").GetComponent<Transform>().entityId)
+        //{
+        //    tbt = TutButtonType.Remove;
+        //    type = false;
+        //    //active = false;
+        //}
+        //else if (entityId == GameObject.Find("DrawRoadGlow").GetComponent<Transform>().entityId)
+        //{
+        //    tbt = TutButtonType.Draw;
+        //    type = false;
+        //    //active = false;
+        //}
 
 
         if (entityId == GameObject.Find("Displaybtn").GetComponent<Transform>().entityId)
@@ -58,6 +70,15 @@ public class ButtonTutorialClick : MonoBehaviour
             //Debug.Log("selected2");
             //active = true;
         }
+
+        //if (entityId == GameObject.Find("DisplayGlow").GetComponent<Transform>().entityId)
+        //{
+        //    //Debug.Log("selected1");
+        //    tbt = TutButtonType.Display;
+        //    type = true;
+        //    //Debug.Log("selected2");
+        //    //active = true;
+        //}
 
         if (entityId == GameObject.Find("DisplaybtnWhite").GetComponent<Transform>().entityId)
         {

@@ -18,7 +18,9 @@ public class InstructionsMain : MonoBehaviour
     Tutorial tutorial;
     RoadManager roadManager;
 
-    
+    Transform displayArrowGlow;
+    Transform drawRoadGlow;
+    Transform removeRoadGlow;
 
     int stages, count;
     float timer;
@@ -40,11 +42,16 @@ public class InstructionsMain : MonoBehaviour
         go5 = GameObject.Find("Instructions5");
         go6 = GameObject.Find("Instructions6");
 
+
         go1.GetComponent<Animation>().Play("Open");
 
 
         tutorial = GameObject.Find("TutorialManager").GetComponent<Tutorial>();
         roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
+
+        displayArrowGlow = GameObject.Find("DisplayGlow").GetComponent<Transform>();
+        drawRoadGlow = GameObject.Find("DrawRoadGlow").GetComponent<Transform>();
+        removeRoadGlow = GameObject.Find("RemoveRoadGlow").GetComponent<Transform>();
 
         stages = 0;
         timer = 0;
@@ -83,6 +90,8 @@ public class InstructionsMain : MonoBehaviour
                     stages++;
                     stateCheck = true;
                     instructions1Script.state = false;
+
+                    Enable<Transform>(displayArrowGlow);
                 }
             }
         }
@@ -94,12 +103,15 @@ public class InstructionsMain : MonoBehaviour
 
                 if (stateCheck)
                 {
+
+                    
                     instructions2Script.animation.Play("Close");
                     stateCheck = false;
                 }
                 if (CheckTimer())
                 {
                     Disable<Transform>(go2.GetComponent<Transform>());
+                    
 
                     instructions3Script.animation.Play("Open");
                     Enable<Transform>(go3.GetComponent<Transform>());
@@ -109,6 +121,11 @@ public class InstructionsMain : MonoBehaviour
 
                     tutorial.CheckPosition();
                     count = roadManager.roadCount;
+
+                    Disable<Transform>(displayArrowGlow);
+                    Enable<Transform>(drawRoadGlow);
+
+
                 }
 
             }
@@ -118,15 +135,21 @@ public class InstructionsMain : MonoBehaviour
         {
             if (instructions3Script.state)
             {
+
                 if (roadManager.roadCount < 20)
                 {
                     if (stateCheck)
                     {
                         instructions3Script.animation.Play("Close");
                         stateCheck = false;
+                       // Enable<Transform>(drawRoadGlow);
+
+
+
                     }
                     if (CheckTimer())
                     {
+
                         Disable<Transform>(go3.GetComponent<Transform>());
 
                         instructions4Script.animation.Play("Open");
@@ -135,12 +158,15 @@ public class InstructionsMain : MonoBehaviour
                         stateCheck = true;
                         instructions3Script.state = false;
                         count = roadManager.roadCount;
+
+                        Disable<Transform>(drawRoadGlow);
+                        Enable<Transform>(removeRoadGlow);
                     }
                 }
 
             }
         }
-        else if (stages == 3)
+        else if (stages == 3) 
         {
             if (instructions4Script.state)
             {
@@ -153,6 +179,9 @@ public class InstructionsMain : MonoBehaviour
                     }
                     if (CheckTimer())
                     {
+
+                        Disable<Transform>(removeRoadGlow);
+
                         Disable<Transform>(go4.GetComponent<Transform>());
 
                         instructions5Script.animation.Play("Open");
@@ -176,6 +205,7 @@ public class InstructionsMain : MonoBehaviour
                 }
                 if (CheckTimer())
                 {
+                   
                     Disable<Transform>(go5.GetComponent<Transform>());
 
                     instructions6Script.animation.Play("Open");

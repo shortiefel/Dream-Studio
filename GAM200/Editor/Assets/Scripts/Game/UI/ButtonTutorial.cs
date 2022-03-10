@@ -13,16 +13,20 @@ public class ButtonTutorial : MonoBehaviour
     Transform drawRoadWhite;
     Transform drawRoad;
     Transform roadCount;
+   // Transform drawRoadGlow;
+
     Vector2 drawPosition;
     Vector2 drawRoadCount;
 
     Transform removeRoad;
     Transform removeRoadWhite;
+   // Transform removeRoadGlow;
     Transform trafficCount;
     Vector2 removePosition;
 
     Transform displayArrow;
     Transform displayArrowWhite;
+    //Transform displayArrowGlow;
 
     GameManager gameManager;
 
@@ -52,22 +56,27 @@ public class ButtonTutorial : MonoBehaviour
         //buttonTutSys = GameObject.Find("Displaybtn").GetComponent<ButtonTutorial>();
 
         drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
+       // drawRoadGlow = GameObject.Find("DrawRoadGlow").GetComponent<Transform>();
         drawRoad = GameObject.Find("DrawRoad").GetComponent<Transform>();
         roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
         drawPosition = drawRoad.position;
         drawRoadCount = roadCount.position;
 
         removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
+        //drawRoadGlow = GameObject.Find("RemoveRoadGlow").GetComponent<Transform>();
         removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
         removePosition = removeRoad.position;
 
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
+        //displayArrowGlow = GameObject.Find("DisplayGlow").GetComponent<Transform>();
         displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
 
         Disable<Transform>(drawRoadWhite);
         Disable<Transform>(removeRoadWhite);
         Disable<Transform>(displayArrowWhite);
+        Disable<Transform>(drawRoad);
+        Disable<Transform>(removeRoad);
 
 
         opening = false;
@@ -76,10 +85,12 @@ public class ButtonTutorial : MonoBehaviour
         closeXPosition = -96f;
         speedMultiply = 5f;
 
+        //drawRoadGlow.position = new Vector2(closeXPosition, drawPosition.y);
         drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
         drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
         roadCount.position = new Vector2(closeXPosition, drawPosition.y);
 
+       // removeRoadGlow.position = new Vector2(closeXPosition, drawPosition.y);
         removeRoad.position = new Vector2(closeXPosition, removePosition.y);
         removeRoadWhite.position = new Vector2(closeXPosition, removePosition.y);
 
@@ -96,12 +107,14 @@ public class ButtonTutorial : MonoBehaviour
     private void OpenTab()
     {
         //Debug.Log("im lerpiong");
-        drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x , drawPosition.x, timer), drawPosition.y);
-        Debug.Log(drawPosition.x );
+        drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y); ;
 
+        //drawRoadGlow.position = new Vector2(Mathf.Lerp(drawRoadGlow.position.x, drawPosition.x, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, drawPosition.x, timer), drawPosition.y);
         roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, drawRoadCount.x, timer), drawRoadCount.y + 2.0f);
 
+
+       // removeRoadGlow.position = new Vector2(Mathf.Lerp(removeRoadGlow.position.x, removePosition.x, timer), removePosition.y);
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, removePosition.x, timer), removePosition.y);
         removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, removePosition.x, timer), removePosition.y);
 
@@ -122,9 +135,11 @@ public class ButtonTutorial : MonoBehaviour
     {
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, closeXPosition, timer), drawPosition.y);
 
+        //drawRoadGlow.position = new Vector2(Mathf.Lerp(drawRoadGlow.position.x, drawPosition.x, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, closeXPosition, timer), drawPosition.y);
         roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, closeXPosition, timer), drawRoadCount.y + 2.0f);
 
+       // removeRoadGlow.position = new Vector2(Mathf.Lerp(removeRoadGlow.position.x, removePosition.x, timer), removePosition.y);
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, closeXPosition, timer), removePosition.y);
         removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, closeXPosition, timer), removePosition.y);
 
@@ -207,6 +222,7 @@ public class ButtonTutorial : MonoBehaviour
 
             closing = true;
 
+
             Disable<Transform>(displayArrowWhite);
             Enable<Transform>(displayArrow);
         }
@@ -236,6 +252,23 @@ public class ButtonTutorial : MonoBehaviour
         Enable<Transform>(roadCount);
         Enable<Transform>(trafficCount);
     }
+
+    //public void EnableAllGlow()
+    //{
+    //    Enable<Transform>(drawRoadGlow);
+    //    Enable<Transform>(removeRoadGlow);
+
+    //}
+
+
+    //public void DisableAllGlow()
+    //{
+    //    Disable<Transform>(drawRoadGlow);
+    //    Disable<Transform>(removeRoadGlow);
+    //    Enable<Transform>(roadCount);
+    //    Enable<Transform>(trafficCount);
+    //}
+        
 
     public void EnableAllWhite()
     {

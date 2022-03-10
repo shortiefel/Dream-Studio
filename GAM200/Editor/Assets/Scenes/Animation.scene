@@ -21,7 +21,7 @@
       "IsActive": true
     },
     "LightComponent": {
-      "Direction": [ 1.0, 1.0, 1.0 ],
+      "Direction": [ -0.2, -1.0, -1.0 ],
       "Ambient": [ 1.0, 1.0, 1.0 ],
       "Diffuse": [ 1.0, 1.0, 1.0 ],
       "Specular": [ 1.0, 1.0, 1.0 ],

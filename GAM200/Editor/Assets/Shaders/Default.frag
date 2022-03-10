@@ -15,7 +15,7 @@ struct Light
 
     float ambient;
     vec3 diffuse;
-    vec3 specular;
+    float specular;
 
     vec3 colour;
 };
@@ -40,8 +40,7 @@ void main ()
     vec3 ViewPosition = {0.0f, 0.0f, 1.0f};
 
     // Ambient
-    float ambientStrength = 0.2f;
-    vec3 ambient = ambientStrength * light.colour;
+    vec3 ambient = light.ambient * light.colour;
     
     // Diffuse
     vec3 normal = normalize(vNormal);
@@ -50,11 +49,10 @@ void main ()
     vec3 diffuse = diff * light.colour;
 
     // Specular
-    float specularStrength = 0.5f;
     vec3 viewDir = normalize(ViewPosition - vFragPosition);
     vec3 reflectDir = reflect(-lightDirection, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 specular = specularStrength * spec * light.colour;
+    vec3 specular = light.specular * spec * light.colour;
 
     
 	// Object colour, with lighting

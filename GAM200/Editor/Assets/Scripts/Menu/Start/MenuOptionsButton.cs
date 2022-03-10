@@ -2,35 +2,34 @@
 
 public class MenuOptionsButton : MonoBehaviour
 {
-    Text text;
-    Texture texture;
+
+    UI MenuOptionsBtn;
 
     public override void Start()
     {
-        Console.WriteLine("going into options scene");
+        MenuOptionsBtn = GetComponent<UI>();
+        MenuOptionsBtn.color = new Color(0f, 0f, 0f);
 
-        text = GetComponent<Text>();
-        texture = GameObject.Find("MenuOptionsBtn").GetComponent<Texture>();
     }
 
     public override void OnMouseEnter()
     {
-        text.color = new Color(0f, 0f, 0f);
-        texture.color = new Color(1f, 1f, 1f);
+        if (MenuOptionsBtn == null) Debug.Log("This is actually null");
+        MenuOptionsBtn.color = new Color(1f, 1f, 1f);
     }
 
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            Console.WriteLine("Options selected");
+           
             SceneManager.LoadScene("Options");
         }
     }
 
     public override void OnMouseExit()
     {
-        text.color = new Color(1f, 1f, 1f);
-        texture.color = new Color(0f, 0f, 0f);
+        if (MenuOptionsBtn == null) Debug.Log("This is actually null");
+        MenuOptionsBtn.color = new Color(0f, 0f, 0f);
     }
 }

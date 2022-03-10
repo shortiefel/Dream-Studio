@@ -18,7 +18,7 @@ public class IntroCarAI : MonoBehaviour
             type = false;
 
         if (type)
-            startPosition = new Vector2(-12, -4.2f);
+            startPosition = new Vector2(-12, 0f);
         else
             startPosition = new Vector2(0,0);
     }
@@ -26,7 +26,7 @@ public class IntroCarAI : MonoBehaviour
 
     public override void Update()
     {
-        transform.position += transform.up * 20f * Time.deltaTime;
+        transform.position += transform.right * 20f * Time.deltaTime;
 
         if (type && transform.position.x > 30f)
             transform.position = startPosition;

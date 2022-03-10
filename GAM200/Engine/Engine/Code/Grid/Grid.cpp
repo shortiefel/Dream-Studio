@@ -209,10 +209,11 @@ namespace Engine {
                 auto& downCell = (*(grid + xVal) + yVal + 1)->adjacentCell; //3
                 auto& downRightCell = (*(grid + xVal + 1) + yVal + 1)->adjacentCell; //4
                 currentCell[(int)CellDirection::Right] = Math::ivec2{ xVal + 1, yVal };
+
                 rightCell[(int)CellDirection::Left] = Math::ivec2{ xVal, yVal };
                 rightCell[(int)CellDirection::Down] = Math::ivec2{ xVal + 1, yVal };
-                downCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal };
 
+                downCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal };
                 downCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal };
             }
             //Store the entityId to the points

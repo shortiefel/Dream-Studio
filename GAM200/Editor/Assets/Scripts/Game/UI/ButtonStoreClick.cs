@@ -13,7 +13,6 @@ public class ButtonStoreClick : MonoBehaviour
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
 
-
         if (entityId == GameObject.Find("Roadadd").GetComponent<Transform>().entityId)
         {
             st = StoreButtonType.RoadBuy;
@@ -64,8 +63,10 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-
-                        moneySystem.BuyRoad();
+                        if (moneySystem.GetMoney() >= 10)
+                        {
+                            moneySystem.BuyRoad();
+                        }
                         //++roadManager.roadCount;
                         //RoadNo.text = roadManager.currRoad.ToString();
                     }
@@ -89,7 +90,10 @@ public class ButtonStoreClick : MonoBehaviour
 
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        moneySystem.BuyErp();
+                        if(moneySystem.GetMoney() >= moneySystem.GetErpCost())
+                        {
+                            moneySystem.BuyErp();
+                        }
                         //++roadManager.erpManager.erpCount;
                         //ERPNo.text = ERPText.ToString();
                     }
@@ -115,7 +119,11 @@ public class ButtonStoreClick : MonoBehaviour
 
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        moneySystem.BuyTrafficLight();
+                        if (moneySystem.GetMoney() >= moneySystem.GetTLCost())
+                        {
+                            moneySystem.BuyTrafficLight();
+
+                        }
                         //++roadManager.trafficLightManager.tlCount;
                         //TrafficNo.text = TrafficText.ToString();
                     }

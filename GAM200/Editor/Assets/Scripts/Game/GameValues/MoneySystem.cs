@@ -72,12 +72,10 @@ public class MoneySystem : MonoBehaviour
         --roadManager.roadCount;
     }
 
-
-    //public int GetCurrErp()
-    //{
-    //    return currErp;
-    //}
-
+    public int GetErpCost()
+    {
+        return erpCost;
+    }
     public void BuyErp()
     {
         money -= erpCost;
@@ -94,10 +92,11 @@ public class MoneySystem : MonoBehaviour
         textComp.text = money.ToString();
         --roadManager.erpManager.erpCount;
     }
-    //public int GetCurrTL()
-    //{
-    //    return currTL;
-    //}
+
+    public int GetTLCost()
+    {
+        return tlCost;
+    }
     public void BuyTrafficLight()
     {
         money -= tlCost;

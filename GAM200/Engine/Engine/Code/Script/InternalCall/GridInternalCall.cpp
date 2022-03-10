@@ -44,7 +44,7 @@ namespace Engine {
 	bool IsWithinGrid_Engine(Math::ivec2 pos);
 	bool IsPosFree_Engine(Math::ivec2 pos);
 	bool IsPosRoad_Engine(Math::ivec2 pos);
-	bool IsSurrounded_Engine(Math::ivec2 pos);
+	bool IsSurrounded_Engine(Math::ivec2 pos, int type);
 
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
 
@@ -183,8 +183,8 @@ namespace Engine {
 		return Game::Grid::GetInstance().IsPosRoad(pos);
 	}
 
-	bool IsSurrounded_Engine(Math::ivec2 pos) {
-		return Game::Grid::GetInstance().IsSurrounded(pos);
+	bool IsSurrounded_Engine(Math::ivec2 pos, int type) {
+		return Game::Grid::GetInstance().IsSurrounded(pos, type);
 	}
 
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {

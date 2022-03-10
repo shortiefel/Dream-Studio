@@ -106,7 +106,7 @@ namespace Engine {
 			bool IsWithinGrid(Math::ivec2 pos);
 			bool IsPosFree(Math::ivec2 pos);
 			bool IsPosRoad(Math::ivec2 pos);
-			bool IsSurrounded(Math::ivec2 pos);
+			bool IsSurrounded(Math::ivec2 pos, int type);
 
 			int SetRoads(Math::ivec2 posArr[MAX_LINE], int size);
 			bool UnsetRoads(Math::ivec2 pos);

@@ -54,8 +54,9 @@ public class PlacementManager : MonoBehaviour
     {
         //Debug.Log("Placement in placementManager " + structurePrefab.name);
         //StructureModel structure = CreateANewStructureModel(position, structurePrefab, type, 3, rotation);
-
-        GameObject structure = Instantiate(structurePrefab, new Vector3(position.x, position.y, 0f), 3);
+        Vector2 pos = new Vector2(position.x, position.y);
+        if (type == CellType.SpecialStructure) pos += new Vector2(0.5f, 0.5f);
+        GameObject structure = Instantiate(structurePrefab, new Vector3(pos.x, pos.y, 0f), 3);
         {
             //var structureNeedingRoad = structure.GetComponent<INeedingRoad>();
             //if (structureNeedingRoad != null)

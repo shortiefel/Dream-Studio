@@ -494,13 +494,13 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool IsPosRoad_Engine(Vector2Int pos);
 
-    public bool IsSurrounded(Vector2Int pos)
+    public bool IsSurrounded(Vector2Int pos, CellType cellType)
     {
 
-        return IsSurrounded_Engine(pos);
+        return IsSurrounded_Engine(pos, (int)cellType);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool IsSurrounded_Engine(Vector2Int pos);
+    internal static extern bool IsSurrounded_Engine(Vector2Int pos, int cellType);
 
 
 }

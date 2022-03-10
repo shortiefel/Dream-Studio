@@ -74,7 +74,7 @@ public class StructureManager : MonoBehaviour
     public void PlaceHouse(Vector2Int position, float rotation)
     {
         //Debug.Log("here house " + position);
-        if (CheckPositionBeforePlacement(position))
+        if (CheckPositionBeforePlacement(position, CellType.Structure))
         {
         //Debug.Log("place house " + position);
             int randomIndex = GetRandomWeightedIndex(houseWeights);
@@ -88,7 +88,7 @@ public class StructureManager : MonoBehaviour
     public void PlaceSpecial(Vector2Int position, float rotation)
     {
         //Debug.Log("here special " + position);
-        if (CheckPositionBeforePlacement(position))
+        if (CheckPositionBeforePlacement(position, CellType.SpecialStructure))
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);
             placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure, rotation);
@@ -120,7 +120,7 @@ public class StructureManager : MonoBehaviour
     }
 
     // change to public cause jiayi needs to use in notification manager
-    public bool CheckPositionBeforePlacement(Vector2Int position)
+    public bool CheckPositionBeforePlacement(Vector2Int position, CellType cellType)
     {
         if (placementManager.CheckIfPositionInBound(position) == false)
         {
@@ -132,7 +132,7 @@ public class StructureManager : MonoBehaviour
             Debug.Log("This position is not EMPTY");
             return false;
         }
-        if (placementManager.placementGrid.IsSurrounded(position) == true)
+        if (placementManager.placementGrid.IsSurrounded(position, cellType) == true)
         {
             Debug.Log("This surrounding already has buildings");
             return false;

@@ -204,17 +204,28 @@ namespace Engine {
                 //1 2
                 //3 4
                 specialStructure.emplace_back(Math::ivec2{ x,y });
-                auto& currentCell = (*(grid + xVal) + yVal)->adjacentCell;
-                auto& rightCell = (*(grid + xVal + 1) + yVal)->adjacentCell; //2
-                auto& downCell = (*(grid + xVal) + yVal + 1)->adjacentCell; //3
-                auto& downRightCell = (*(grid + xVal + 1) + yVal + 1)->adjacentCell; //4
-                currentCell[(int)CellDirection::Right] = Math::ivec2{ xVal + 1, yVal };
+                auto& currentCell = *(*(grid + xVal) + yVal);
+                auto& rightCell = *(*(grid + xVal + 1) + yVal); //2
+                auto& downCell = *(*(grid + xVal) + yVal + 1); //3
+                auto& downRightCell = *(*(grid + xVal + 1) + yVal + 1); //4
 
-                rightCell[(int)CellDirection::Left] = Math::ivec2{ xVal, yVal };
-                rightCell[(int)CellDirection::Down] = Math::ivec2{ xVal + 1, yVal };
+                currentCell.adjacentCell[(int)CellDirection::Right] = Math::ivec2{ xVal + 1, yVal };
+                currentCell.adjacentCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal + 1 };
 
-                downCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal };
-                downCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal };
+                rightCell.ct = value;
+                rightCell.entityId = entityId;
+                rightCell.adjacentCell[(int)CellDirection::Left] = Math::ivec2{ xVal, yVal };
+                rightCell.adjacentCell[(int)CellDirection::Down] = Math::ivec2{ xVal + 1, yVal + 1 };
+
+                downCell.ct = value;
+                downCell.entityId = entityId;
+                downCell.adjacentCell[(int)CellDirection::Up] = Math::ivec2{ xVal, yVal };
+                downCell.adjacentCell[(int)CellDirection::Right] = Math::ivec2{ xVal + 1, yVal + 1 };
+
+                downRightCell.ct = value;
+                downRightCell.entityId = entityId;
+                downRightCell.adjacentCell[(int)CellDirection::Up] = Math::ivec2{ xVal + 1, yVal };
+                downRightCell.adjacentCell[(int)CellDirection::Left] = Math::ivec2{ xVal, yVal + 1};
             }
             //Store the entityId to the points
             //posToId()

@@ -260,6 +260,10 @@ public class IBehaviour : IComponent
     //Destroy
     public void Destroy(uint id)
     {
+        foreach(var i in dictonaryOfTypes)
+        {
+            if (i.Value.ContainsKey(id)) i.Value.Remove(id);
+        }
         Destroy_Entity_Engine(id);
     }
 

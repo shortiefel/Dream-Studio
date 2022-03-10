@@ -3,7 +3,7 @@
 public class TrafficLightManager : MonoBehaviour
 {
 
-    private Dictionary<Vector2Int, uint> trafficLights;
+    private Dictionary<Vector2Int, TrafficLight> trafficLights;
     private ERPManager erpManager;
     MoneySystem moneySystem;
     GameObject trafficLightGO;
@@ -18,7 +18,7 @@ public class TrafficLightManager : MonoBehaviour
 
     public override void Start()
     {
-        trafficLights = new Dictionary<Vector2Int, uint>();
+        trafficLights = new Dictionary<Vector2Int, TrafficLight>();
 
         trafficLightGO = new GameObject(new Prefab("TrafficLight"));
         //mainCamera = GameObject.Find("Camera").GetComponent<Camera>(); //To Remove
@@ -67,7 +67,11 @@ public class TrafficLightManager : MonoBehaviour
     public void RegisterTrafficLight(Vector2Int pos, uint id)
     {
         if (!trafficLights.ContainsKey(pos))
-            trafficLights.Add(pos, id);
+        {
+            TrafficLight tl = new TrafficLight();
+            tl.entityId = id;
+            trafficLights.Add(pos, tl);
+        }
     }
 
     //public void RemoveTrafficLight(Vector2Int pos)
@@ -90,7 +94,7 @@ public class TrafficLightManager : MonoBehaviour
         if (!trafficLights.ContainsKey(tlPos)) return true;
 
 
-        bool cState = GetComponent<TrafficLight>(trafficLights[tlPos]).state;
+        bool cState = GetComponent<TrafficLight>(trafficLights[tlPos].entityId).state;
         //cState == true means allows horizontal movement
         //cState == false means allow vertical movement
         //if lrState == true means moving left right (horizontally) and false means moving up down (vertically)
@@ -109,8 +113,8 @@ public class TrafficLightManager : MonoBehaviour
         {
             if (trafficLights.ContainsKey(new Vector2Int(pos)))
             {
-                if (!tlPos.Exists(x => x == trafficLights[new Vector2Int(pos)]))
-                    tlPos.Add(trafficLights[new Vector2Int(pos)]);
+                if (!tlPos.Exists(x => x == trafficLights[new Vector2Int(pos)].entityId))
+                    tlPos.Add(trafficLights[new Vector2Int(pos)].entityId);
             }
             
         }

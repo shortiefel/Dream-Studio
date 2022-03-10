@@ -77,6 +77,8 @@ public class AIDirector : MonoBehaviour
                     //Console.WriteLine("Setting the path " + list.Count + " " + structureManager.destinationList[endPos].pathCount );
 
                 }
+
+                //else if (list.Count == pc)
             }
         }
 

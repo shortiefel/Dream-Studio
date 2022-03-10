@@ -184,10 +184,10 @@ namespace Engine {
             {
                 houseStructure.remove(Math::ivec2{ x,y });
             }*/
-            if (value == CellType::SpecialStructure)
-            {
-                specialStructure.emplace_back(Math::ivec2{ x,y });
-            }
+            //if (value == CellType::SpecialStructure)
+            //{
+            //    specialStructure.emplace_back(Math::ivec2{ x,y });
+            //}
             /*else
             {
                 specialStructure.remove(Math::ivec2{ x,y });
@@ -195,10 +195,26 @@ namespace Engine {
 
 
             //*(grid + (x - offset.x) + (static_cast<size_t>(y - offset.y) * mapSize.x)) = Cell{value, entityId };
-            *(*(grid + x - offset.x) + y - offset.y) = Cell{value, entityId };
-            *(*(backupGrid + x - offset.x) + y - offset.y) = Cell{value, entityId };
+            int xVal = x - offset.x, yVal = y - offset.y;
+            *(*(grid + xVal) + yVal) = Cell{value, entityId };
+            *(*(backupGrid + xVal) + yVal) = Cell{value, entityId };
 
+            if (value == CellType::SpecialStructure)
+            {
+                //1 2
+                //3 4
+                specialStructure.emplace_back(Math::ivec2{ x,y });
+                auto& currentCell = (*(grid + xVal) + yVal)->adjacentCell;
+                auto& rightCell = (*(grid + xVal + 1) + yVal)->adjacentCell; //2
+                auto& downCell = (*(grid + xVal) + yVal + 1)->adjacentCell; //3
+                auto& downRightCell = (*(grid + xVal + 1) + yVal + 1)->adjacentCell; //4
+                currentCell[(int)CellDirection::Right] = Math::ivec2{ xVal + 1, yVal };
+                rightCell[(int)CellDirection::Left] = Math::ivec2{ xVal, yVal };
+                rightCell[(int)CellDirection::Down] = Math::ivec2{ xVal + 1, yVal };
+                downCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal };
 
+                downCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal };
+            }
             //Store the entityId to the points
             //posToId()
         }

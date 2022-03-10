@@ -43,7 +43,7 @@ public class CarAI : MonoBehaviour
 
     //private float maxSpeed;
 
-    private Vector2 movementVector;
+    //private Vector2 movementVector;
 
     private StructureModel endPoint;
     //private GameObject endPointGO;
@@ -81,7 +81,7 @@ public class CarAI : MonoBehaviour
 
     public override void Start()
     {
-        raycastLength = transform.scale.x * 2f;
+        raycastLength = transform.scale.x * 1.5f;
         //Debug.Log(raycastLength + " lengirhteuth");
 
         //endPoint = null;
@@ -114,7 +114,7 @@ public class CarAI : MonoBehaviour
         maxPower = 6;
         //maxPower = 1;
         //turningFactor = 1f;
-        movementVector = new Vector2(0, 1);
+        //movementVector = new Vector2(0, 1);
         //Console.WriteLine("Testing " + rb.velocity);
 
         //tlPath = null;
@@ -236,7 +236,7 @@ public class CarAI : MonoBehaviour
 
     public override void Update()
     {
-        RaycastHit2D hit = Physics2D.RayCast(new Vector3(transform.position, 0f), -transform.right, raycastLength * power, (int)transform.entityId);
+        RaycastHit2D hit = Physics2D.RayCast(new Vector3(transform.position, 0f), transform.right, raycastLength, (int)transform.entityId);
 
         if (hit.collider != null)
         {
@@ -300,10 +300,11 @@ public class CarAI : MonoBehaviour
         //}
         //Console.WriteLine("CarAI: " + stop);
         //stop = true;
-        if (Input.GetKeyDown(KeyCode.T)) testBool = !testBool;
-        if (Input.GetKeyDown(KeyCode.R)) stop = false;
-
-        if (!testBool) stop = true;
+        if (Input.GetKeyDown(KeyCode.T)) power = 6f;
+        //Debug.Log(power);
+        //if (testBool) 
+        //stop = true;
+        //if (!testBool) stop = true;
         if (stop) return;
 
         CheckIfArrived();
@@ -402,7 +403,7 @@ public class CarAI : MonoBehaviour
             //Console.WriteLine("stopping ");
             //if (path == null) Console.WriteLine("stopping2222222 ");
             //OnDrive?.Invoke(Vector2.zero);
-            movementVector = Vector2.zero;
+            //movementVector = Vector2.zero;
 
             if (tm != null)
                 stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);

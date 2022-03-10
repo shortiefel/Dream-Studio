@@ -62,16 +62,16 @@ public class TrafficLight : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= switchTimer)
         {
-            secondaryTimer += Time.deltaTime;
-
-            if (secondaryTimer > 0.2f)
-            {
-                timer = 0f;
-                secondaryTimer = 0f;
-                SwapState();
-                Console.WriteLine("Secondary timer activated ");
-
-            }
+            //secondaryTimer += Time.deltaTime;
+            //
+            //if (secondaryTimer > 0.2f)
+            //{
+            //    timer = 0f;
+            //    secondaryTimer = 0f;
+            //    SwapState();
+            //    Console.WriteLine("Secondary timer activated ");
+            //
+            //}
             if (carCounter == 0)
             {
                 timer = 0f;

@@ -6,7 +6,7 @@
       "Child": []
     },
     "TransformComponent": {
-      "Position": [ -19.68901824951172, 0.35948753356933596 ],
+      "Position": [ -0.27959728240966799, 6.313841819763184 ],
       "LocalPosition": [ 0.0, 0.0 ],
       "Scale": [ 2.0, 2.0 ],
       "Angle": 0.0,
@@ -21,7 +21,11 @@
       "IsActive": true
     },
     "LightComponent": {
-      "Colour": [ 1.0, 0.0, 0.0, 1.0 ],
+      "Direction": [ 1.0, 1.0, 1.0 ],
+      "Ambient": [ 1.0, 1.0, 1.0 ],
+      "Diffuse": [ 1.0, 1.0, 1.0 ],
+      "Specular": [ 1.0, 1.0, 1.0 ],
+      "Colour": [ 1.0, 1.0, 1.0 ],
       "IsActive": true
     }
   },
@@ -48,7 +52,7 @@
   },
   {
     "Entity": {
-      "Name": "Car1",
+      "Name": "Circle",
       "Parent": 10001,
       "Child": []
     },
@@ -61,7 +65,7 @@
       "IsActive": true
     },
     "TextureComponent": {
-      "Filepath": "Assets\\Textures\\Game\\Cars\\Ambulance.png",
+      "Filepath": "Assets\\Textures\\Default_Circle.png",
       "Shape": 0,
       "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,

@@ -27,9 +27,12 @@ Technology is prohibited.
 namespace Engine
 {
 	// Contructor for Light Component
-	LightComponent::LightComponent(Entity_id _ID, Math::vec4 _colour, bool _active) :
+	LightComponent::LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID,
+		Math::vec3 _direction, Math::vec3 _ambient, Math::vec3 _diffuse, Math::vec3 _specular, Math::vec3 _colour,
+		bool _active) :
 		IComponent{ _ID }, depthFBO{ 0 }, depthMap{ 0 }, shadowWidth{ 1024 }, shadowHeight{ 1024 },
-		colour{ _colour }, near_plane{ -1.0f }, far_plane{ 7.5f }, isActive{ _active }
+		direction{ _direction }, ambient{ _ambient }, diffuse{ _diffuse }, specular{ _specular }, colour{ _colour },
+		near_plane{ -1.0f }, far_plane{ 7.5f }, isActive{ _active }
 	{
 		lightProjection = Math::OrthoGraphic(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 		lightView = Math::LookAt(Math::vec3(-2.0f, 4.0f, -1.0f),
@@ -38,6 +41,7 @@ namespace Engine
 
 		lightSpace = lightProjection * lightView;
 	}
+
 
 
 	// Destructor for Light Component
@@ -103,7 +107,12 @@ namespace Engine
 	// Deserialize function for Light Component
 	LightComponent& LightComponent::Deserialize(const DSerializer& _serializer)
 	{
-		colour = _serializer.GetValue<Math::vec4>("Colour");
+		direction = _serializer.GetValue<Math::vec3>("Direction");
+		ambient = _serializer.GetValue<Math::vec3>("Ambient");
+		diffuse = _serializer.GetValue<Math::vec3>("Diffuse");
+		specular = _serializer.GetValue<Math::vec3>("Specular");
+		colour = _serializer.GetValue<Math::vec3>("Colour");
+
 		isActive = _serializer.GetValue<bool>("IsActive");
 
 		return *this;
@@ -112,6 +121,10 @@ namespace Engine
 	// Serialize function for Light Component
 	void LightComponent::Serialize(const SSerializer& _serializer)
 	{
+		_serializer.SetValue("Direction", direction);
+		_serializer.SetValue("Ambient", ambient);
+		_serializer.SetValue("Diffuse", diffuse);
+		_serializer.SetValue("Specular", specular);
 		_serializer.SetValue("Colour", colour);
 		_serializer.SetValue("IsActive", isActive);
 	}

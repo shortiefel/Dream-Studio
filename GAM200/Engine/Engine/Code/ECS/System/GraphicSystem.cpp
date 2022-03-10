@@ -163,6 +163,37 @@ LightComponent* lightSource = nullptr;
 		// Set uniform
 		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
 
+
+		/*
+		GLSLShader::SetUniform("u_LightPosition", { 0, 0 }, shd_ref_handle);
+
+		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
+		for (auto& light : lightArray)
+		{
+			// Option to not render individual game object
+			if (!light.isActive) continue;
+
+			// If element in array is not used, skip it
+			const Engine::Entity_id& entity_id = light.GetEntityId();
+			if (EntityId_Check(entity_id)) break;
+
+			// Set uniform for Light's Position
+			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
+			GLSLShader::SetUniform("u_LightPosition", transform->position, shd_ref_handle);
+
+			lightSource = &light;
+			break;
+		}
+
+		// Set uniform for Light's Colour
+		if (lightSource) {
+			GLSLShader::SetUniform("u_LightColour", lightSource->colour, shd_ref_handle);
+		}
+		else {
+			GLSLShader::SetUniform("u_LightColour", { 1.0f, 1.0f, 1.0f }, shd_ref_handle);
+		}
+		*/
+
 		// Get texture array for entities
 		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
 		auto& particleArray = dreamECSGame->GetComponentArrayData<ParticleComponent>();
@@ -316,7 +347,8 @@ LightComponent* lightSource = nullptr;
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Set background colour
-		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+		//glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+		glClearColor(0.f, 0.f, 0.f, 1.0f);
 
 		// Enable GL_BLEND for transparency of textures
 		glEnable(GL_BLEND);
@@ -457,25 +489,7 @@ LightComponent* lightSource = nullptr;
 
 
 
-		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
-		for (auto& light : lightArray)
-		{
-			// Option to not render individual game object
-			if (!light.isActive) continue;
-
-			// If element in array is not used, skip it
-			const Engine::Entity_id& entity_id = light.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
-
-			lightSource = &light;
-		}
-
-		if (lightSource) {
-			GLSLShader::SetUniform("u_LightColour", lightSource->colour, shd_ref_handle);
-		}
-		else {
-			GLSLShader::SetUniform("u_LightColour", { 1.0f, 1.0f, 1.0f, 1.0f }, shd_ref_handle);
-		}
+		
 
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();

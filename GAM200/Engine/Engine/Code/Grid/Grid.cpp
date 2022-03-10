@@ -28,6 +28,8 @@ Technology is prohibited.
 
 #define GET_BIN(num) (1 << (int)num)
 
+#define SET_VALUE(type1, type2, var, value) type1.var = type2.var = value;
+
 namespace Engine {
     namespace Game {
         std::array<Math::ivec2, 100> temporaryRoad;
@@ -209,23 +211,55 @@ namespace Engine {
                 auto& downCell = *(*(grid + xVal) + yVal + 1); //3
                 auto& downRightCell = *(*(grid + xVal + 1) + yVal + 1); //4
 
-                currentCell.adjacentCell[(int)CellDirection::Right] = Math::ivec2{ xVal + 1, yVal };
-                currentCell.adjacentCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal + 1 };
+                auto& currentCellBU = *(*(backupGrid + xVal) + yVal);
+                auto& rightCellBU = *(*(backupGrid + xVal + 1) + yVal); //2
+                auto& downCellBU = *(*(backupGrid + xVal) + yVal + 1); //3
+                auto& downRightCellBU = *(*(backupGrid + xVal + 1) + yVal + 1); //4
 
-                rightCell.ct = value;
-                rightCell.entityId = entityId;
-                rightCell.adjacentCell[(int)CellDirection::Left] = Math::ivec2{ xVal, yVal };
-                rightCell.adjacentCell[(int)CellDirection::Down] = Math::ivec2{ xVal + 1, yVal + 1 };
+#if 0
+                currentCellBU.adjacentCell[(int)CellDirection::Right] = currentCell.adjacentCell[(int)CellDirection::Right] = Math::ivec2{ xVal + 1, yVal };
+                currentCellBU.adjacentCell[(int)CellDirection::Down] = currentCell.adjacentCell[(int)CellDirection::Down] = Math::ivec2{ xVal, yVal + 1 };
 
-                downCell.ct = value;
-                downCell.entityId = entityId;
-                downCell.adjacentCell[(int)CellDirection::Up] = Math::ivec2{ xVal, yVal };
-                downCell.adjacentCell[(int)CellDirection::Right] = Math::ivec2{ xVal + 1, yVal + 1 };
+                rightCellBU.ct = rightCell.ct = value;
+                rightCellBU.entityId = rightCell.entityId = entityId;
+                rightCellBU.adjacentCell[(int)CellDirection::Left] = rightCell.adjacentCell[(int)CellDirection::Left] = Math::ivec2{ xVal, yVal };
+                rightCellBU.adjacentCell[(int)CellDirection::Down] = rightCell.adjacentCell[(int)CellDirection::Down] = Math::ivec2{ xVal + 1, yVal + 1 };
 
-                downRightCell.ct = value;
-                downRightCell.entityId = entityId;
-                downRightCell.adjacentCell[(int)CellDirection::Up] = Math::ivec2{ xVal + 1, yVal };
-                downRightCell.adjacentCell[(int)CellDirection::Left] = Math::ivec2{ xVal, yVal + 1};
+                downCellBU.ct = downCell.ct = value;
+                downCellBU.entityId = downCell.entityId = entityId;
+                downCellBU.adjacentCell[(int)CellDirection::Up] = downCell.adjacentCell[(int)CellDirection::Up] = Math::ivec2{ xVal, yVal };
+                downCellBU.adjacentCell[(int)CellDirection::Right] = downCell.adjacentCell[(int)CellDirection::Right] = Math::ivec2{ xVal + 1, yVal + 1 };
+
+                downRightCellBU.ct = downRightCell.ct = value;
+                downRightCellBU.entityId = downRightCell.entityId = entityId;
+                downRightCellBU.adjacentCell[(int)CellDirection::Up] = downRightCell.adjacentCell[(int)CellDirection::Up] = Math::ivec2{ xVal + 1, yVal };
+                downRightCellBU.adjacentCell[(int)CellDirection::Left] = downRightCell.adjacentCell[(int)CellDirection::Left] = Math::ivec2{ xVal, yVal + 1};
+#else
+                //SET_VALUE(currentCellBU, currentCell, cellBinary, GET_BIN(CellDirection::Right) | GET_BIN(CellDirection::Down));
+                //SET_VALUE(currentCellBU, currentCell, adjacentCell[(int)CellDirection::Right], (Math::ivec2{ xVal + 1, yVal }));
+                //SET_VALUE(currentCellBU, currentCell, adjacentCell[(int)CellDirection::Down], (Math::ivec2{ xVal, yVal + 1 }));
+
+
+                SET_VALUE(rightCellBU, rightCell, ct, value);
+                SET_VALUE(rightCellBU, rightCell, entityId, entityId);
+                //SET_VALUE(rightCellBU, rightCell, cellBinary, GET_BIN(CellDirection::Left) | GET_BIN(CellDirection::Down));
+                //SET_VALUE(rightCellBU, rightCell, adjacentCell[(int)CellDirection::Left], (Math::ivec2{ xVal, yVal }));
+                //SET_VALUE(rightCellBU, rightCell, adjacentCell[(int)CellDirection::Down], (Math::ivec2{ xVal + 1, yVal + 1 }));
+                
+                SET_VALUE(downCellBU, downCell, ct, value);
+                SET_VALUE(downCellBU, downCell, entityId, entityId);
+                //SET_VALUE(downCellBU, downCell, cellBinary, GET_BIN(CellDirection::Up) | GET_BIN(CellDirection::Right));
+                //SET_VALUE(downCellBU, downCell, adjacentCell[(int)CellDirection::Up], (Math::ivec2{ xVal, yVal }));
+                //SET_VALUE(downCellBU, downCell, adjacentCell[(int)CellDirection::Right], (Math::ivec2{ xVal + 1, yVal + 1 }));
+
+                SET_VALUE(downRightCellBU, downRightCell, ct, value);
+                SET_VALUE(downRightCellBU, downRightCell, entityId, entityId);
+                //SET_VALUE(downRightCellBU, downRightCell, cellBinary, GET_BIN(CellDirection::Up) | GET_BIN(CellDirection::Left));
+                //SET_VALUE(downRightCellBU, downRightCell, adjacentCell[(int)CellDirection::Up], (Math::ivec2{ xVal + 1, yVal }));
+                //SET_VALUE(downRightCellBU, downRightCell, adjacentCell[(int)CellDirection::Left], (Math::ivec2{ xVal, yVal + 1 }));
+#endif
+
+
             }
             //Store the entityId to the points
             //posToId()
@@ -411,28 +445,69 @@ namespace Engine {
         }
 
         void Grid::PrintGridOut_Engine() {
-            std::cout << "C++ print new map ----------------------------------------------------\n";
-            
+            std::cout << "C++ grid print new map ----------------------------------------------------\n";
+            std::vector<Math::ivec2> fv;
+            std::vector<int> fg;
+            std::vector<Math::ivec2> fp;
             for (int y = mapSize.y - 1; y >= 0; y--) {
                 for (int x = 0; x < mapSize.x; x++) {
                     //if ((int)(((grid + (y * mapSize.x) + x))->ct) == 0) std::cout << "- ";
                     //else std::cout << (int)(((grid + (y * mapSize.x) + x))->ct) << " ";
                     if ((int)(  (*(grid + x) + y)->ct   ) == 0) std::cout << "- ";
-                    else std::cout << (int)(    (*(grid + x) + y)->ct   ) << " ";
+                    else {
+                        std::cout << (int)((*(grid + x) + y)->ct) << " ";
+                        if (((*(grid + x) + y)->ct) == CellType::SpecialStructure) {
+                            auto& tem = *(*(grid + x) + y);
+                            fv.push_back({ x, y });
+
+                            fg.push_back(tem.cellBinary);
+                            
+                            fp.push_back(tem.adjacentCell[(int)CellDirection::Left]);
+                            fp.push_back(tem.adjacentCell[(int)CellDirection::Right]);
+                            fp.push_back(tem.adjacentCell[(int)CellDirection::Up]);
+                            fp.push_back(tem.adjacentCell[(int)CellDirection::Down]);
+                        }
+                    }
                 }
                 std::cout << "\n";
             }
 
-            std::cout << "\n";
+            for (int i = 0; i < fv.size(); i++) {
+                int t = 4 * i;
+                std::cout << fv[i] << " with " << fg[i] << "     " << fp[t] << fp[t + 1] << fp[t + 2] << fp[t + 3] << "\n";
+            }
 
+            fv.clear(); fg.clear(); fp.clear();
+
+            std::cout << "\n";
+            std::cout << "C++ backup grid print new map ----------------------------------------------------\n";
             for (int y = mapSize.y - 1; y >= 0; y--) {
                 for (int x = 0; x < mapSize.x; x++) {
                     //if ((int)(((grid + (y * mapSize.x) + x))->ct) == 0) std::cout << "- ";
                     //else std::cout << (int)(((grid + (y * mapSize.x) + x))->ct) << " ";
                     if ((int)((*(backupGrid + x) + y)->ct) == 0) std::cout << "- ";
-                    else std::cout << (int)((*(backupGrid + x) + y)->ct) << " ";
+                    //else std::cout << (int)((*(backupGrid + x) + y)->ct) << " ";
+                    else {
+                        std::cout << (int)((*(backupGrid + x) + y)->ct) << " ";
+                        if (((*(backupGrid + x) + y)->ct) == CellType::SpecialStructure) {
+                            auto& tem = *(*(backupGrid + x) + y);
+                            fv.push_back({ x, y });
+
+                            fg.push_back(tem.cellBinary);
+
+                            fp.push_back(tem.adjacentCell[(int)CellDirection::Left]);
+                            fp.push_back(tem.adjacentCell[(int)CellDirection::Right]);
+                            fp.push_back(tem.adjacentCell[(int)CellDirection::Up]);
+                            fp.push_back(tem.adjacentCell[(int)CellDirection::Down]);
+                        }
+                    }
                 }
                 std::cout << "\n";
+            }
+
+            for (int i = 0; i < fv.size(); i++) {
+                int t = 4 * i;
+                std::cout << fv[i] << " with " << fg[i] << "     " << fp[t] << fp[t + 1] << fp[t + 2] << fp[t + 3] << "\n";
             }
 
             std::cout << "\n";
@@ -623,6 +698,67 @@ namespace Engine {
                     //house/destination already has connected point
                     if (cellC.cellBinary != 0) continue;
 
+                    if (cellC.ct == CellType::SpecialStructure) {
+                        int xVal = posArr[i].x - offset.x;
+                        int yVal = posArr[i].y - offset.y;
+                        //Check a 2x2 box around current point for the other parts of the special structure
+                        Cell& cellL = *(*(grid + xVal - 1) + yVal);
+                        //Do Note that in the first if and else, we do not know whether it is on top or below
+                        //If L = cellL, S = special structure, C = cellC, - = ignore
+                        //SS
+                        //LC //L is part of the special structure
+                        if (cellL.ct == CellType::SpecialStructure) {
+                            if (cellL.cellBinary != 0) continue;
+                            //U = cellU
+                            //SU
+                            //LC //U is part of the special structure
+                            Cell& cellU = *(*(grid + xVal) + yVal + 1);
+                            if (cellU.ct == CellType::SpecialStructure) {
+                                if (cellU.cellBinary != 0) continue;
+
+                                //Check Up Left
+                                Cell& cellUL = *(*(grid + xVal - 1) + yVal + 1);
+                                if (cellUL.cellBinary != 0) continue;
+                            }
+                            //-U
+                            //LC //U is not part of the special structure
+                            //SS
+                            else {
+                                Cell& cellD = *(*(grid + xVal) + yVal - 1);
+                                if (cellD.cellBinary != 0) continue;
+                                //Check Down Left
+                                Cell& cellDL = *(*(grid + xVal - 1) + yVal - 1);
+                                if (cellDL.cellBinary != 0) continue;
+                            }
+                        }
+                        //If L = cellL, S = special structure and C = cellC
+                        //-SS
+                        //LCS //L is not part of the special structure
+                        else {
+                            Cell& cellR = *(*(grid + xVal + 1) + yVal);
+                            if (cellR.cellBinary != 0) continue;
+                            //U = cellU
+                            //-US
+                            //LCS   //U is part of the special structure
+                            Cell& cellU = *(*(grid + xVal) + yVal + 1);
+                            if (cellU.ct == CellType::SpecialStructure) {
+                                if (cellU.cellBinary != 0) continue;
+                                //Check Up Right
+                                Cell& cellUR = *(*(grid + xVal + 1) + yVal + 1);
+                                if (cellUR.cellBinary != 0) continue;
+                            }
+                            //-U-
+                            //LCS   //U is not part of the special structure
+                            //-SS
+                            else {
+                                Cell& cellD = *(*(grid + xVal) + yVal - 1);
+                                if (cellD.cellBinary != 0) continue;
+                                //Check Down Right
+                                Cell& cellDR = *(*(grid + xVal + 1) + yVal - 1);
+                                if (cellDR.cellBinary != 0) continue;
+                            }
+                        }
+                    }
                     //Since points doesnt add house/destination as adjacentCell
                     //It has to be done here when the house/destination choose which point it wants to be connected to
                     //the lines are noted with a (*Done here*)
@@ -774,14 +910,14 @@ namespace Engine {
 
         void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
             std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos, isAgent);
-            vlist.reverse();
+            //vlist.reverse();
             
             int index = *count = 0;
             if (vlist.size() == 0) return;
 
-            //Remove the housePos and destPos
-            vlist.pop_front();
-            vlist.pop_back();
+            ////Remove the housePos and destPos
+            //vlist.pop_front();
+            //vlist.pop_back();
 
             //std::cout << "\n " << vlist.size() << " Starting of A Star(C++)---------------------------------- - \n";
 
@@ -893,7 +1029,11 @@ namespace Engine {
             *count = index;
         }
 
-        std::list<Math::ivec2> Grid::AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent) {
+        std::list<Math::ivec2> Grid::AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition, bool isAgent) {
+            Math::ivec2 endRight = endPosition + Math::ivec2{ 1,0 };
+            Math::ivec2 endUp = endPosition + Math::ivec2{ 0,1 };
+            Math::ivec2 endUpRight = endPosition + Math::ivec2{ 1,1 };
+
             std::list<Math::ivec2> path;
             std::list<Math::ivec2> positionsTocheck;
             std::map<Math::ivec2, float> costDictionary;
@@ -908,13 +1048,24 @@ namespace Engine {
             while (positionsTocheck.size() > 0) {
                 Math::ivec2 current = GetClosestVertex(positionsTocheck, priorityDictionary);
                 positionsTocheck.remove(current);
-                if (current == (endPosition)) {
+                Cell& cell = *(*(backupGrid + current.x - offset.x) + current.y - offset.y);
+                if (cell.ct == CellType::SpecialStructure && 
+                    (current == endPosition || current == endRight || current == endUp || current == endUpRight)) {
                     path = GeneratePath(parentsDictionary, current);
+                    path.reverse();
+
+                    //Remove the housePos and destPos
+                    path.pop_front();
+                    path.pop_back();
+
+                    if (current == endRight) endPosition = endRight;
+                    else if (current == endUp) endPosition = endUp;
+                    else if (current == endUpRight) endPosition = endUpRight;
+
                     return path;
                 }
 
                 //std::list<Math::ivec2> temp = GetAdjacentCells(current, isAgent);
-                Cell& cell = *(*(backupGrid + current.x - offset.x) + current.y - offset.y);
                 std::list<Math::ivec2> temp = cell.GetAdjacent();
                 for (Math::ivec2& neighbour : temp) {
                    

@@ -105,16 +105,16 @@ public class Grid
 
     public void PrintGridOut()
     {
-        for (int y = _height - 1; y >= 0; y--)
-        {
-            string data = "";
-            for (int x = 0; x < _width; x++)
-            {
-                if ((int)_grid[x, y] == 0) data += "- ";
-                else data += ((int)_grid[x, y] + " ");
-            }
-            Console.WriteLine(data);
-        }
+        //for (int y = _height - 1; y >= 0; y--)
+        //{
+        //    string data = "";
+        //    for (int x = 0; x < _width; x++)
+        //    {
+        //        if ((int)_grid[x, y] == 0) data += "- ";
+        //        else data += ((int)_grid[x, y] + " ");
+        //    }
+        //    Console.WriteLine(data);
+        //}
 
 
         //Console.WriteLine("-----------------------------------------");

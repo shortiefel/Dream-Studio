@@ -121,7 +121,7 @@ namespace Engine {
 			void PrintGridOut_Engine();
 
 		private:
-			std::list<Math::ivec2> AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2 endPosition, bool isAgent);
+			std::list<Math::ivec2> AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition, bool isAgent);
 			std::list<Math::ivec2> GetAdjacentCells(Math::ivec2 cell, bool isAgent);
 
 			//Number of tiles in x and y

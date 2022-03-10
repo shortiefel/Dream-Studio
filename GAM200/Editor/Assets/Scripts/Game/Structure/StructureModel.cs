@@ -109,16 +109,18 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             }
             if (notification.DestroyCheck())
             {
+                Console.Write("Enter normal destroy");
                 Disable<Transform>(notifiSymbol.transform);
                 destroySound.Play();
                 notification.alreadyShowing = false;
-                animation.Play("Stay");
+               
             }
             if(notification.TickerDestroyCheck())
             {
+                Console.Write("Enter timer destroy");
                 Disable<Transform>(notifiSymbol.transform);
                 notification.alreadyShowing = false;
-                animation.Play("TickingClose");
+               
             }
             if (notification.timerShow == true)
             {

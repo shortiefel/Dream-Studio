@@ -39,6 +39,7 @@ public class MoneySystem : MonoBehaviour
 
     public void MinusMoney(int val)
     {
+
         money -= val;
         if (money < 1)
             money = 0;

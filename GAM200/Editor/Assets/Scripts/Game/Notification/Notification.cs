@@ -88,7 +88,7 @@ public class Notification : MonoBehaviour
         if (tappearBool)
         {
             countDownTimer += Time.deltaTime;
-            if (countDownTimer > 0.5f)
+            if (countDownTimer > 0.4f)
             {
                 countDownTimer = 0f;
                 tappearBool = false;

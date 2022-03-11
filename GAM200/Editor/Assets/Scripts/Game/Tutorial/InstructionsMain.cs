@@ -123,7 +123,7 @@ public class InstructionsMain : MonoBehaviour
                     count = roadManager.roadCount;
 
                     Disable<Transform>(displayArrowGlow);
-                    Enable<Transform>(drawRoadGlow);
+                    //Enable<Transform>(drawRoadGlow);
 
 
                 }

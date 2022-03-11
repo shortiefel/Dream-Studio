@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -41,6 +39,9 @@ public class PauseMenu : MonoBehaviour
 
     Transform displayArrow;
     Transform displayArrowWhite;
+
+    Transform timerButton;
+    Transform storeButton;
 
     bool stopTime;
     float stopTimer;
@@ -115,6 +116,11 @@ public class PauseMenu : MonoBehaviour
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
         displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
+
+        timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
+        storeButton = GameObject.Find("Storebtn").GetComponent<Transform>();
+
+
         stopTime = false;
         stopTimer = 0f;
 
@@ -188,6 +194,8 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 1f;
 
             Enable<Transform>(displayArrow);
+            Enable<Transform>(timerButton);
+            Enable<Transform>(storeButton);
 
             pauseBG.transform.position = new Vector2(bgPosition.x - 200f, pauseBG.transform.position.y);
 
@@ -230,13 +238,17 @@ public class PauseMenu : MonoBehaviour
             howToPlayBtn.transform.position = new Vector2(Mathf.Lerp(howToPlayBtn.transform.position.x, htpPosition.x, newTimer), howToPlayBtn.transform.position.y);
             pauseQuitBtn.transform.position = new Vector2(Mathf.Lerp(pauseQuitBtn.transform.position.x, quitPosition.x, newTimer), pauseQuitBtn.transform.position.y);
 
-            if (stopTimer > 0.2f)
+            if (stopTimer > 0.1f)
             {
                 stopTimer = 0f;
                 stopTime = false;
 
                 Disable<Transform>(displayArrow);
                 Disable<Transform>(displayArrowWhite);
+
+                Disable<Transform>(timerButton);
+                Disable<Transform>(storeButton);
+
                 Time.timeScale = 0f;
             }
         }

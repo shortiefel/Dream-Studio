@@ -20,7 +20,7 @@ public class CarSpawner : MonoBehaviour
 
 
 
-    Queue<EndStruct> requestLine;
+    public Queue<EndStruct> requestLine;
     //GameObject.FindWithId(id).GetComponent<StructureModel>()
     public void RequestSpawn(EndStruct es)
     {
@@ -46,17 +46,19 @@ public class CarSpawner : MonoBehaviour
         //    //structureModel = GetComponent<StructureModel>();
         spawnTimer = 0f;
         spawnTimerMax = 0.6f;
+        spawnTimerMax = 1f;
     }
     //
     public override void Update()
     {
+        //Debug.Log("Count " + requestLine.Count);
         //FOR TESTING TO BE REMOVED----------------------------
         if(Input.GetKeyDown(KeyCode.T))
         {
             if (requestLine.Count != 0)
             {
                 EndStruct es = requestLine.Dequeue();
-                aiDirector.SpawnCar(es.entityId, es.bt, es.endPos);
+                aiDirector.SpawnCar(transform.position, es.entityId, es.bt, es.endPos);
                 spawnTimer = 0f;
             }
         }
@@ -68,8 +70,10 @@ public class CarSpawner : MonoBehaviour
 
             if (spawnTimer >= spawnTimerMax)
             {
+                //Debug.Log("True Spawn");
+                //Debug.Log("Spawn at " +  entityId + " line " + requestLine.Count);
                 EndStruct es = requestLine.Dequeue();
-                aiDirector.SpawnCar(es.entityId, es.bt, es.endPos);
+                aiDirector.SpawnCar(transform.position, es.entityId, es.bt, es.endPos);
                 spawnTimer = 0f;
             }
         }

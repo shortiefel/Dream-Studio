@@ -114,14 +114,14 @@ namespace Engine {
 			void RevertGrid();
 			void FinalizeGrid();
 
-			void AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent);
+			void AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 housePos, Math::ivec2 destPos, int* roadCount);
 
 			void GetAllAdjacentCells(Math::ivec2(&arr)[4], int* count, int x, int y); // Should be private
 
 			void PrintGridOut_Engine();
 
 		private:
-			std::list<Math::ivec2> AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition, bool isAgent);
+			std::list<Math::ivec2> AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition, int* roadCount);
 			std::list<Math::ivec2> GetAdjacentCells(Math::ivec2 cell, bool isAgent);
 
 			//Number of tiles in x and y

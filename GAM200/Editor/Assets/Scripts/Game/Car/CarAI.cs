@@ -279,7 +279,7 @@ public class CarAI : MonoBehaviour
                     case CollisionType.Unknown:
                         //Stop car because might be other cars
                         //stop = true;
-                        Debug.Log("Hit");
+                        //Debug.Log("Hit");
                         break;
                     default:
                         break;

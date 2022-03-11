@@ -940,8 +940,8 @@ namespace Engine {
             }
         }
 
-        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 housePos, Math::ivec2 destPos, bool isAgent) {
-            std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos, isAgent);
+        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 housePos, Math::ivec2 destPos, int* roadCount) {
+            std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos, roadCount);
             //vlist.reverse();
             
             int index = *count = 0;
@@ -1006,7 +1006,7 @@ namespace Engine {
                 auto wpList = std::list<std::list<Math::vec2>>{ wp.temWaypoint };
                 
                 for (auto& t : wpList) {
-                    
+                    if (t.size() == 0) return; //If road was deleted while points are added
                     if (prevPosition == Math::ivec2{ (int)t.front().x, (int)t.front().y }) t.pop_front();
                     else continue;
                     if (vlist.size() == 0)
@@ -1061,7 +1061,8 @@ namespace Engine {
             *count = index;
         }
 
-        std::list<Math::ivec2> Grid::AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition, bool isAgent) {
+        std::list<Math::ivec2> Grid::AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition, int* roadCount) {
+            *roadCount = 0;
             Math::ivec2 endRight = endPosition + Math::ivec2{ 1,0 };
             Math::ivec2 endUp = endPosition + Math::ivec2{ 0,1 };
             Math::ivec2 endUpRight = endPosition + Math::ivec2{ 1,1 };
@@ -1093,6 +1094,7 @@ namespace Engine {
                     if (current == endRight) endPosition = endRight;
                     else if (current == endUp) endPosition = endUp;
                     else if (current == endUpRight) endPosition = endUpRight;
+                    *roadCount = path.size();
 
                     return path;
                 }

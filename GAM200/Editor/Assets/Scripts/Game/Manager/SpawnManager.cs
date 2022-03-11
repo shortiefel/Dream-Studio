@@ -48,6 +48,11 @@ public class SpawnManager : MonoBehaviour
             Vector2Int roadPosition = SpawnRandomRoad();
             Vector2Int roadPosition2 = SpawnRandomRoad();
 
+            //Vector2Int roadPosition = new Vector2Int(7, 7);
+            //Vector2Int roadPositionT = new Vector2Int(3, 7);
+            //structureManager.PlaceHouse(roadPositionT, 0);
+            //Vector2Int roadPosition2 = new Vector2Int(5, 2);
+
             structureManager.PlaceHouse(roadPosition, 0);
             structureManager.PlaceSpecial(roadPosition2, 0);
  
@@ -206,8 +211,7 @@ public class SpawnManager : MonoBehaviour
         spawnTimer += Time.deltaTime;
         if (spawnTimer > spawnTimerMax)
         {
-            Debug.Log("Spawn");
-            CheckPosition(spawnRequestType);
+            //CheckPosition(spawnRequestType);
             spawnTimer = 0f;
         }
         //if (score == scoreToSpawn)

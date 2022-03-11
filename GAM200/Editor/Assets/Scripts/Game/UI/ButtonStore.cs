@@ -34,7 +34,12 @@ public class ButtonStore : MonoBehaviour
 
     GameObject Storebtn;
     GameObject StoreBG;
-    GameObject StoreBack;
+    //GameObject StoreBack;
+
+    GameObject CostTitle;
+    GameObject RoadCost;
+    GameObject TLCost;
+    GameObject ERPCost;
 
     Vector2 bgPosition;
     Vector2 hStorePosition;
@@ -52,13 +57,23 @@ public class ButtonStore : MonoBehaviour
     Vector2 eAddPosition;
     Vector2 eMinusPosition;
     Vector2 eNoPosition;
-    Vector2 sBackPosition;
+    //Vector2 sBackPosition;
 
+    Vector2 hCostPosition;
+    Vector2 roadCostPosition;
+    Vector2 tlCostPosition;
+    Vector2 erpCostPosition;
 
     bool stopTime;
     float stopTimer;
 
     GameState gameState;
+
+
+    Transform displayArrow;
+    Transform displayArrowWhite;
+    Transform timerButton;
+    Transform pauseIcon;
 
     UI texture;
 
@@ -66,12 +81,12 @@ public class ButtonStore : MonoBehaviour
     {
         texture = GetComponent<UI>();
 
-        Storebtn = GameObject.Find("Storebtn");
+        //Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
-        StoreBack = GameObject.Find("BackToGame");
+        //StoreBack = GameObject.Find("BackToGame");
 
         bgPosition = StoreBG.transform.position;
-        sBackPosition = StoreBack.transform.position;
+        //sBackPosition = StoreBack.transform.position;
 
         StoreHeader = GameObject.Find("StoreTitle");
         ItemHeader = GameObject.Find("ItemTitle");
@@ -114,8 +129,26 @@ public class ButtonStore : MonoBehaviour
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
 
+        displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
+        displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
+        timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
+        pauseIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
+
+
+
+        CostTitle = GameObject.Find("CostTitle");
+        hCostPosition = CostTitle.transform.position;
+
+        RoadCost = GameObject.Find("RoadCost");
+        TLCost = GameObject.Find("TrafficCost");
+        ERPCost = GameObject.Find("ERPCost");
+
+        roadCostPosition = RoadCost.transform.position;
+        tlCostPosition = TLCost.transform.position;
+        erpCostPosition = ERPCost.transform.position;
+
         Disable<Transform>(StoreBG.transform);
-        Disable<Transform>(StoreBack.transform);
+        //Disable<Transform>(StoreBack.transform);
         Disable<Transform>(StoreHeader.transform);
         Disable<Transform>(ItemHeader.transform);
         Disable<Transform>(QtyHeader.transform);
@@ -131,6 +164,10 @@ public class ButtonStore : MonoBehaviour
         Disable<Transform>(ERPBuy.transform);
         Disable<Transform>(ERPSell.transform);
         Disable<Transform>(ERPNo.transform);
+
+        Disable<Transform>(RoadCost.transform);
+        Disable<Transform>(TLCost.transform);
+        Disable<Transform>(ERPCost.transform);
 
 
         stopTime = false;
@@ -148,7 +185,7 @@ public class ButtonStore : MonoBehaviour
         if (gameState.GetPause())
         {
             Enable<Transform>(StoreBG.transform);
-            Enable<Transform>(StoreBack.transform);
+            //Enable<Transform>(StoreBack.transform);
             Enable<Transform>(StoreHeader.transform);
             Enable<Transform>(ItemHeader.transform);
             Enable<Transform>(QtyHeader.transform);
@@ -165,6 +202,11 @@ public class ButtonStore : MonoBehaviour
             Enable<Transform>(ERPSell.transform);
             Enable<Transform>(ERPNo.transform);
 
+            Enable<Transform>(CostTitle.transform);
+            Enable<Transform>(RoadCost.transform);
+            Enable<Transform>(TLCost.transform);
+            Enable<Transform>(ERPCost.transform);
+
             stopTime = true;
 
             //Disable<Transform>(Storebtn.transform);
@@ -174,7 +216,7 @@ public class ButtonStore : MonoBehaviour
         else
         {
             Disable<Transform>(StoreBG.transform);
-            Disable<Transform>(StoreBack.transform);
+            //Disable<Transform>(StoreBack.transform);
             Disable<Transform>(StoreHeader.transform);
             Disable<Transform>(ItemHeader.transform);
             Disable<Transform>(QtyHeader.transform);
@@ -191,6 +233,16 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(ERPSell.transform);
             Disable<Transform>(ERPNo.transform);
 
+            Enable<Transform>(displayArrow);
+            Enable<Transform>(timerButton);
+            Enable<Transform>(pauseIcon);
+
+            Disable<Transform>(CostTitle.transform);
+            Disable<Transform>(RoadCost.transform);
+            Disable<Transform>(TLCost.transform);
+            Disable<Transform>(ERPCost.transform);
+
+
             Time.timeScale = 1f;
 
             //Enable<Transform>(Storebtn.transform);
@@ -204,8 +256,8 @@ public class ButtonStore : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Enable<Transform>(Storebtn.transform);
-                Disable<Transform>(StoreBack.transform);
+                //Enable<Transform>(Storebtn.transform);
+                //Disable<Transform>(StoreBack.transform);
                 StoreAction();
             }
         }
@@ -216,13 +268,19 @@ public class ButtonStore : MonoBehaviour
 
             float newTimer = 5f * stopTimer;
 
-            if (stopTimer > 0.2f)
+            if (stopTimer > 0.1f)
             {
                 stopTimer = 0f;
                 stopTime = false;
 
                 //Enable<Transform>(Storebtn.transform);
                 //Disable<Transform>(StoreBack.transform);
+                Disable<Transform>(displayArrow);
+                Disable<Transform>(displayArrowWhite);
+                Disable<Transform>(pauseIcon);
+
+                Disable<Transform>(timerButton);
+
                 Time.timeScale = 0f;
             }
         }

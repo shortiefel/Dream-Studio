@@ -6,13 +6,20 @@ public class ButtonStoreClick : MonoBehaviour
     StoreButtonType st;
     public MoneySystem moneySystem;
 
-   // GameState gameState;
+    // GameState gameState;
+
+    Text CostRoad;
+    Text CostTL;
+    Text CostERP;
 
     public override void Start()
     {
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
 
+        CostRoad = GameObject.Find("RoadCost").GetComponent<Text>();
+        CostTL = GameObject.Find("TrafficCost").GetComponent<Text>();
+        CostERP = GameObject.Find("ERPCost").GetComponent<Text>();
 
         if (entityId == GameObject.Find("Roadadd").GetComponent<Transform>().entityId)
         {
@@ -43,6 +50,9 @@ public class ButtonStoreClick : MonoBehaviour
             st = StoreButtonType.BackToGame;
         }
 
+        CostRoad.text = moneySystem.roadCost.ToString();
+        CostERP.text = moneySystem.erpCost.ToString();
+        CostTL.text = moneySystem.tlCost.ToString();
 
     }
 
@@ -58,7 +68,8 @@ public class ButtonStoreClick : MonoBehaviour
                     {
 
                         moneySystem.BuyRoad();
-                    
+                        CostRoad.text = moneySystem.roadCost.ToString();
+
                     }
 
                     break;
@@ -80,6 +91,8 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                         moneySystem.BuyErp();
+                        CostERP.text = moneySystem.erpCost.ToString();
+                   
                     }
 
                     break;
@@ -103,6 +116,7 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                         moneySystem.BuyTrafficLight();
+                        CostTL.text = moneySystem.tlCost.ToString();
 
                     }
 

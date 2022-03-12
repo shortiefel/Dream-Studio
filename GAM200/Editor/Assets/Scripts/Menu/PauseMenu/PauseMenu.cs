@@ -22,15 +22,15 @@ public class PauseMenu : MonoBehaviour
     GameObject quitYes;
     GameObject quitNo;
 
-    Vector2 resumePosition;
-    Vector2 resumeTextPosition;
-    Vector2 htpPosition;
-    Vector2 htpTextPosition;
-    Vector2 quitPosition;
-    Vector2 quitTextPosition;
-    Vector2 bgPosition;
-
-    Vector2 outsidePosition;
+    //Vector2 resumePosition;
+    //Vector2 resumeTextPosition;
+    //Vector2 htpPosition;
+    //Vector2 htpTextPosition;
+    //Vector2 quitPosition;
+    //Vector2 quitTextPosition;
+    //Vector2 bgPosition;
+    //
+    //Vector2 outsidePosition;
 
     //bool pauseState;
     GameState gameState;
@@ -43,15 +43,18 @@ public class PauseMenu : MonoBehaviour
     Transform timerButton;
     Transform storeButton;
 
-    bool stopTime;
-    float stopTimer;
+    //bool stopTime;
+    //float stopTimer;
 
     ButtonRoad buttonRoad;
+    ButtonStore buttonStore;
 
     /*public bool GetPause()
     {
         return pauseState;
     }*/
+
+    CombinedUI combinedUI;
 
     public override void Start()
     {
@@ -59,7 +62,7 @@ public class PauseMenu : MonoBehaviour
         //texture.color = new Color(0f, 0f, 0f);
 
         pauseBG = GameObject.Find("PauseBG");
-        bgPosition = pauseBG.transform.position;
+        //bgPosition = pauseBG.transform.position;
         HowToBG = GameObject.Find("HowToBG");
 
         resume = GameObject.Find("ResumeText");
@@ -68,9 +71,9 @@ public class PauseMenu : MonoBehaviour
         //options = GameObject.Find("OptionText");
         pauseQuit = GameObject.Find("QuitText");
 
-        resumeTextPosition = resume.transform.position;
-        htpTextPosition = howToPlay.transform.position;
-        quitTextPosition = pauseQuit.transform.position;
+        //resumeTextPosition = resume.transform.position;
+        //htpTextPosition = howToPlay.transform.position;
+        //quitTextPosition = pauseQuit.transform.position;
 
         resumeBtn = GameObject.Find("ResumeBtn");
         //menuBtn = GameObject.Find("MenuBtn");
@@ -78,15 +81,15 @@ public class PauseMenu : MonoBehaviour
         howToPlayBtn = GameObject.Find("howToPlayBtn");
         pauseQuitBtn = GameObject.Find("QuitBtn");
 
-        resumePosition = resumeBtn.transform.position;
-        htpPosition = howToPlayBtn.transform.position;
-        quitPosition = pauseQuitBtn.transform.position;
+        //resumePosition = resumeBtn.transform.position;
+        //htpPosition = howToPlayBtn.transform.position;
+        //quitPosition = pauseQuitBtn.transform.position;
 
         areYouSure = GameObject.Find("AreYouSureText");
         quitYes = GameObject.Find("YesText");
         quitNo = GameObject.Find("NoText");
 
-        outsidePosition = new Vector2(-200, 0);
+        //outsidePosition = new Vector2(-200, 0);
 
 
         Disable<Transform>(pauseBG.transform);
@@ -111,6 +114,7 @@ public class PauseMenu : MonoBehaviour
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
+        buttonStore = GameObject.Find("Storebtn").GetComponent<ButtonStore>();
 
 
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
@@ -120,28 +124,27 @@ public class PauseMenu : MonoBehaviour
         timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
         storeButton = GameObject.Find("Storebtn").GetComponent<Transform>();
 
-
-        stopTime = false;
-        stopTimer = 0f;
+        combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
 
 
+        //stopTime = false;
+        //stopTimer = 0f;
 
-        pauseBG.transform.position = new Vector2(bgPosition.x - 200f, pauseBG.transform.position.y);
 
-        resume.transform.position = new Vector2(resumeTextPosition.x - 200f, resume.transform.position.y);
-        howToPlay.transform.position = new Vector2(htpTextPosition.x - 200f, howToPlay.transform.position.y);
-        pauseQuit.transform.position = new Vector2(quitTextPosition.x - 200f, pauseQuit.transform.position.y);
-
-        resumeBtn.transform.position = new Vector2(resumePosition.x - 200f, resumeBtn.transform.position.y);
-        howToPlayBtn.transform.position = new Vector2(htpPosition.x - 200f, howToPlayBtn.transform.position.y);
-        pauseQuitBtn.transform.position = new Vector2(quitPosition.x - 200f, pauseQuitBtn.transform.position.y);
+        //pauseBG.transform.position = new Vector2(bgPosition.x - 200f, pauseBG.transform.position.y);
+        //
+        //resume.transform.position = new Vector2(resumeTextPosition.x - 200f, resume.transform.position.y);
+        //howToPlay.transform.position = new Vector2(htpTextPosition.x - 200f, howToPlay.transform.position.y);
+        //pauseQuit.transform.position = new Vector2(quitTextPosition.x - 200f, pauseQuit.transform.position.y);
+        //
+        //resumeBtn.transform.position = new Vector2(resumePosition.x - 200f, resumeBtn.transform.position.y);
+        //howToPlayBtn.transform.position = new Vector2(htpPosition.x - 200f, howToPlayBtn.transform.position.y);
+        //pauseQuitBtn.transform.position = new Vector2(quitPosition.x - 200f, pauseQuitBtn.transform.position.y);
     }
 
-    private void PauseAction()
+    public void SwitchTabPause(bool type, bool reenable = true)
     {
-        gameState.InvertPause();
-
-        if (gameState.GetPause())
+        if (type)
         {
             //Console.WriteLine("Pausing now");
             Enable<Transform>(pauseBG.transform);
@@ -162,10 +165,13 @@ public class PauseMenu : MonoBehaviour
             //Application.SetPause(true);
             //Time.timeScale = 0f;
 
-            stopTime = true;
+            Time.timeScale = 0f;
 
-            if (buttonRoad != null)
-                buttonRoad.SwitchTab(false);
+            if (combinedUI != null)
+                combinedUI.CloseAllUIExcept(UIType.Pause);
+
+            Disable<Transform>(displayArrow);
+            Disable<Transform>(displayArrowWhite);
 
         }
         else
@@ -191,24 +197,31 @@ public class PauseMenu : MonoBehaviour
             Disable<Transform>(quitNo.transform);
 
             //Application.SetPause(false);
-            Time.timeScale = 1f;
 
-            Enable<Transform>(displayArrow);
-            Enable<Transform>(timerButton);
-            Enable<Transform>(storeButton);
+            if (reenable)
+            {
+                Time.timeScale = 1f;
 
-            pauseBG.transform.position = new Vector2(bgPosition.x - 200f, pauseBG.transform.position.y);
+                if (combinedUI != null)
+                    combinedUI.EnableAllMasterButton();
+            }
 
-            resume.transform.position = new Vector2(resumeTextPosition.x - 200f, resume.transform.position.y);
-            howToPlay.transform.position = new Vector2(htpTextPosition.x - 200f, howToPlay.transform.position.y);
-            pauseQuit.transform.position = new Vector2(quitTextPosition.x - 200f, pauseQuit.transform.position.y);
-
-            resumeBtn.transform.position = new Vector2(resumePosition.x - 200f, resumeBtn.transform.position.y);
-            howToPlayBtn.transform.position = new Vector2(htpPosition.x - 200f, howToPlayBtn.transform.position.y);
-            pauseQuitBtn.transform.position = new Vector2(quitPosition.x - 200f, pauseQuitBtn.transform.position.y);
+            //pauseBG.transform.position = new Vector2(bgPosition.x, pauseBG.transform.position.y);
+            //
+            //resume.transform.position = new Vector2(resumeTextPosition.x - 200f, resume.transform.position.y);
+            //howToPlay.transform.position = new Vector2(htpTextPosition.x - 200f, howToPlay.transform.position.y);
+            //pauseQuit.transform.position = new Vector2(quitTextPosition.x - 200f, pauseQuit.transform.position.y);
+            //
+            //resumeBtn.transform.position = new Vector2(resumePosition.x - 200f, resumeBtn.transform.position.y);
+            //howToPlayBtn.transform.position = new Vector2(htpPosition.x - 200f, howToPlayBtn.transform.position.y);
+            //pauseQuitBtn.transform.position = new Vector2(quitPosition.x - 200f, pauseQuitBtn.transform.position.y);
         }
+    }
+    private void PauseAction()
+    {
+        gameState.InvertPause();
 
-
+        SwitchTabPause(gameState.GetPause());
 
     }
 
@@ -222,38 +235,37 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        if (stopTime)
-        {
-            stopTimer += Time.deltaTime;
-
-            float newTimer = 5f * stopTimer;
-
-            pauseBG.transform.position = new Vector2(Mathf.Lerp(pauseBG.transform.position.x, bgPosition.x, newTimer), pauseBG.transform.position.y);
-            
-            resume.transform.position = new Vector2(Mathf.Lerp(resume.transform.position.x, resumeTextPosition.x, newTimer), resume.transform.position.y);
-            howToPlay.transform.position = new Vector2(Mathf.Lerp(howToPlay.transform.position.x, htpTextPosition.x, newTimer), howToPlay.transform.position.y);
-            pauseQuit.transform.position = new Vector2(Mathf.Lerp(pauseQuit.transform.position.x, quitTextPosition.x, newTimer), pauseQuit.transform.position.y);
-            
-            resumeBtn.transform.position = new Vector2(Mathf.Lerp(resumeBtn.transform.position.x, resumePosition.x, newTimer), resumeBtn.transform.position.y);
-            howToPlayBtn.transform.position = new Vector2(Mathf.Lerp(howToPlayBtn.transform.position.x, htpPosition.x, newTimer), howToPlayBtn.transform.position.y);
-            pauseQuitBtn.transform.position = new Vector2(Mathf.Lerp(pauseQuitBtn.transform.position.x, quitPosition.x, newTimer), pauseQuitBtn.transform.position.y);
-
-            if (stopTimer > 0.1f)
-            {
-                stopTimer = 0f;
-                stopTime = false;
-
-                Disable<Transform>(displayArrow);
-                Disable<Transform>(displayArrowWhite);
-
-                Disable<Transform>(timerButton);
-                Disable<Transform>(storeButton);
-
-                Time.timeScale = 0f;
-            }
-        }
+        //if (stopTime)
+        //{
+        //    stopTimer += Time.deltaTime;
+        //
+        //    float newTimer = 5f * stopTimer;
+        //
+        //    pauseBG.transform.position = new Vector2(Mathf.Lerp(pauseBG.transform.position.x, bgPosition.x, newTimer), pauseBG.transform.position.y);
+        //    
+        //    resume.transform.position = new Vector2(Mathf.Lerp(resume.transform.position.x, resumeTextPosition.x, newTimer), resume.transform.position.y);
+        //    howToPlay.transform.position = new Vector2(Mathf.Lerp(howToPlay.transform.position.x, htpTextPosition.x, newTimer), howToPlay.transform.position.y);
+        //    pauseQuit.transform.position = new Vector2(Mathf.Lerp(pauseQuit.transform.position.x, quitTextPosition.x, newTimer), pauseQuit.transform.position.y);
+        //    
+        //    resumeBtn.transform.position = new Vector2(Mathf.Lerp(resumeBtn.transform.position.x, resumePosition.x, newTimer), resumeBtn.transform.position.y);
+        //    howToPlayBtn.transform.position = new Vector2(Mathf.Lerp(howToPlayBtn.transform.position.x, htpPosition.x, newTimer), howToPlayBtn.transform.position.y);
+        //    pauseQuitBtn.transform.position = new Vector2(Mathf.Lerp(pauseQuitBtn.transform.position.x, quitPosition.x, newTimer), pauseQuitBtn.transform.position.y);
+        //
+        //    if (stopTimer > 0.1f)
+        //    {
+        //        stopTimer = 0f;
+        //        stopTime = false;
+        //
+        //        Disable<Transform>(displayArrow);
+        //        Disable<Transform>(displayArrowWhite);
+        //
+        //        Disable<Transform>(timerButton);
+        //        Disable<Transform>(storeButton);
+        //
+        //        Time.timeScale = 0f;
+        //    }
+        //}
     }
-
     public override void OnMouseEnter()
     {
         texture.color = new Color(1f, 1f, 1f);

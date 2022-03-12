@@ -101,7 +101,7 @@ public class TimeSystem : MonoBehaviour
         Time.timeScale = timeScale;
     }
 
-    public void SwitchTabTimer(bool type)
+    public void SwitchTabTimer(bool type, bool reenable = true)
     {
         //Debug.Log("in switch tab"); 
 
@@ -138,7 +138,8 @@ public class TimeSystem : MonoBehaviour
             //Debug.Log("in close");
             closing = true;
             Disable<Transform>(TimerWhite);
-            Enable<Transform>(Timer);
+            if (reenable)
+                Enable<Transform>(Timer);
             
         }
     }

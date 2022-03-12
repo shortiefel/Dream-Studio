@@ -55,7 +55,7 @@ public class ButtonRoad : MonoBehaviour
     //InputManager inputManager;
 
     Transform moneyText;
-    Transform counterText;
+    //Transform counterText;
 
     GameState gameState;
 
@@ -107,7 +107,7 @@ public class ButtonRoad : MonoBehaviour
         drawTrafficWhite = GameObject.Find("TrafficLightWhite").GetComponent<Transform>();
         trafficCount = GameObject.Find("currTrafficDisplay").GetComponent<Transform>();
         trafficPosition = drawTraffic.position;
-        drawTrafficCount = ERPCount.position;
+        drawTrafficCount = trafficCount.position;
 
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
         displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
@@ -134,7 +134,7 @@ public class ButtonRoad : MonoBehaviour
         closing = false;
         timer = 0f;
         closeXPosition = -96f;
-        speedMultiply = 5f;
+        speedMultiply = 10f;
 
         drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
         drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
@@ -176,9 +176,9 @@ public class ButtonRoad : MonoBehaviour
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
 
-        GameObject go4 = GameObject.Find("CounterText");
-        if (go4 != null)
-            counterText = go4.GetComponent<Transform>();
+        //GameObject go4 = GameObject.Find("CounterText");
+        //if (go4 != null)
+        //    counterText = go4.GetComponent<Transform>();
 
 
         cameraMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
@@ -214,7 +214,7 @@ public class ButtonRoad : MonoBehaviour
     }
 
     //_activeType = false means u r clicking the white version
-    public void SwitchTab(bool type)
+    public void SwitchTabRoad(bool type, bool reenable = true)
     {
         if (type)
         {
@@ -235,7 +235,8 @@ public class ButtonRoad : MonoBehaviour
             closing = true;
 
             Disable<Transform>(displayArrowWhite);
-            Enable<Transform>(displayArrow);
+            //if (reenable)
+                //Enable<Transform>(displayArrow);
 
             cameraMovement.SetZoom(ZoomType.Out);
         }
@@ -261,8 +262,8 @@ public class ButtonRoad : MonoBehaviour
 
 
 
-        timer += speedMultiply * Time.deltaTime;
-        if (timer > 0.8f)
+        timer += speedMultiply * Time.fixedDeltaTime;
+        if (timer >= 1f)
         {
             //Disable<Transform>(displayArrowWhite);
             //Enable<Transform>(displayArrow);
@@ -293,8 +294,8 @@ public class ButtonRoad : MonoBehaviour
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, line1.x, timer), line1.y);
 
 
-        timer += speedMultiply * Time.deltaTime;
-        if (timer > 0.8f)
+        timer += speedMultiply * Time.fixedDeltaTime;
+        if (timer >= 1f)
         {
             //Disable<Transform>(displayArrow);
             //Enable<Transform>(displayArrowWhite);
@@ -390,7 +391,7 @@ public class ButtonRoad : MonoBehaviour
     //    buttonUI.color = new Color(1f, 0f, 0f);
     //}
 
-    public override void Update()
+    public override void FixedUpdate()
     {
         //if (Input.GetMouseButtonDown(MouseCode.Left))
         //{
@@ -420,14 +421,18 @@ public class ButtonRoad : MonoBehaviour
         if (revealERPButton)
         {
             if (bt != ButtonType.ERP)
+            {
                 Enable<Transform>(drawERP);
-            Enable<Transform>(ERPCount);
+                Enable<Transform>(ERPCount);
+            }
         }
         if (revealTrafficButton)
         {
             if (bt != ButtonType.TrafficLight)
+            {
                 Enable<Transform>(drawTraffic);
-            Enable<Transform>(trafficCount);
+                Enable<Transform>(trafficCount);
+            }
         }
     }
 
@@ -437,9 +442,9 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(removeRoad);
         Disable<Transform>(drawERP);
         Disable<Transform>(drawTraffic);
-        Enable<Transform>(roadCount);
-        Enable<Transform>(ERPCount);
-        Enable<Transform>(trafficCount);
+        Disable<Transform>(roadCount);
+        Disable<Transform>(ERPCount);
+        Disable<Transform>(trafficCount);
     }
 
     public void EnableAllWhite()
@@ -471,7 +476,6 @@ public class ButtonRoad : MonoBehaviour
         EnableAllNormalExcept();
         DisableAllWhite();
 
-
         gameManager.ClearInputActions();
 
         SceneManager.SetDrawMode(false);
@@ -497,7 +501,7 @@ public class ButtonRoad : MonoBehaviour
         Enable<Transform>(drawERP);
 
         Disable<Transform>(moneyText);
-        Disable<Transform>(counterText);
+        //Disable<Transform>(counterText);
         Disable<Transform>(roadCount);
         Disable<Transform>(trafficCount);
 
@@ -519,9 +523,9 @@ public class ButtonRoad : MonoBehaviour
         Enable<Transform>(drawTraffic);
 
         Disable<Transform>(moneyText);
-        Disable<Transform>(counterText);
+        //Disable<Transform>(counterText);
         Disable<Transform>(roadCount);
-
+        Debug.Log("Revealing traffic ");
         Enable<Transform>(trafficIntro);
 
         closing = true;

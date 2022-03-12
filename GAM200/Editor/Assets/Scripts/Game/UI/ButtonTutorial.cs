@@ -31,7 +31,7 @@ public class ButtonTutorial : MonoBehaviour
     GameManager gameManager;
 
     Transform moneyText;
-    Transform counterText;
+    //Transform counterText;
 
     GameState gameState;
 
@@ -98,9 +98,9 @@ public class ButtonTutorial : MonoBehaviour
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
 
-        GameObject go4 = GameObject.Find("CounterText");
-        if (go4 != null)
-            counterText = go4.GetComponent<Transform>();
+        //GameObject go4 = GameObject.Find("CounterText");
+        //if (go4 != null)
+        //    counterText = go4.GetComponent<Transform>();
 
     }
 
@@ -120,7 +120,7 @@ public class ButtonTutorial : MonoBehaviour
 
 
         timer += speedMultiply * Time.deltaTime;
-        if (timer > 0.8f)
+        if (timer >= 1f)
         {
             //Disable<Transform>(displayArrow);
             //Enable<Transform>(displayArrowWhite);
@@ -144,7 +144,7 @@ public class ButtonTutorial : MonoBehaviour
         removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, closeXPosition, timer), removePosition.y);
 
         timer += speedMultiply * Time.deltaTime;
-        if (timer > 0.8f)
+        if (timer >= 1f)
         {
             //Disable<Transform>(displayArrowWhite);
             //Enable<Transform>(displayArrow);

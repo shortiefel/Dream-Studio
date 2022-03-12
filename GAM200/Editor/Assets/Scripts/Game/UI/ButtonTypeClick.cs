@@ -111,7 +111,7 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.Display:
                     if( Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        buttonRoad.SwitchTab(type);
+                        buttonRoad.SwitchTabRoad(type);
                     }
 
                     Enable<Transform>(tooltipTrans);

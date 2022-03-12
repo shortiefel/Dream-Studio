@@ -19,7 +19,7 @@ public class SpawnManager : MonoBehaviour
 
     private float spawnTimer;
     private float spawnTimerMax;
-    int score;
+    //int score;
     //float timer;
     //float maxTimer;
 
@@ -217,7 +217,7 @@ public class SpawnManager : MonoBehaviour
         {
             CheckPosition();
         }
-        score = gameState.GetScore();
+        //score = gameState.GetScore();
 
         spawnTimer += Time.deltaTime;
         if (spawnTimer > spawnTimerMax)

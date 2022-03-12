@@ -64,8 +64,8 @@ public class ButtonStore : MonoBehaviour
     Vector2 tlCostPosition;
     Vector2 erpCostPosition;
 
-    bool stopTime;
-    float stopTimer;
+    //bool stopTime;
+    //float stopTimer;
 
     GameState gameState;
 
@@ -76,6 +76,8 @@ public class ButtonStore : MonoBehaviour
     Transform pauseIcon;
 
     UI texture;
+
+    CombinedUI combinedUI;
 
     public override void Start()
     {
@@ -170,19 +172,16 @@ public class ButtonStore : MonoBehaviour
         Disable<Transform>(ERPCost.transform);
 
 
-        stopTime = false;
-        stopTimer = 0f;
+        //stopTime = false;
+        //stopTimer = 0f;
 
 
+        combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
     }
 
-   
-
-   private void StoreAction()
+    public void SwitchTabStore(bool type, bool reenable = true)
     {
-        gameState.InvertPause();
-
-        if (gameState.GetPause())
+        if (type)
         {
             Enable<Transform>(StoreBG.transform);
             //Enable<Transform>(StoreBack.transform);
@@ -207,11 +206,21 @@ public class ButtonStore : MonoBehaviour
             Enable<Transform>(TLCost.transform);
             Enable<Transform>(ERPCost.transform);
 
-            stopTime = true;
+            //stopTime = true;
 
             //Disable<Transform>(Storebtn.transform);
             //Enable<Transform>(StoreBack.transform);
 
+            //Disable<Transform>(displayArrow);
+            //Disable<Transform>(displayArrowWhite);
+            //Disable<Transform>(pauseIcon);
+            //
+            //Disable<Transform>(timerButton);
+            //
+            //Time.timeScale = 0f;
+
+            if (combinedUI != null)
+                combinedUI.CloseAllUIExcept(UIType.Store);
         }
         else
         {
@@ -233,21 +242,37 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(ERPSell.transform);
             Disable<Transform>(ERPNo.transform);
 
-            Enable<Transform>(displayArrow);
-            Enable<Transform>(timerButton);
-            Enable<Transform>(pauseIcon);
+            if (reenable)
+            {
+                Enable<Transform>(displayArrow);
+                Enable<Transform>(timerButton);
+                Enable<Transform>(pauseIcon);
+
+                if (combinedUI != null)
+                    combinedUI.EnableAllMasterButton();
+
+                Time.timeScale = 1f;
+            }
 
             Disable<Transform>(CostTitle.transform);
             Disable<Transform>(RoadCost.transform);
             Disable<Transform>(TLCost.transform);
             Disable<Transform>(ERPCost.transform);
 
-
-            Time.timeScale = 1f;
+            
+            
 
             //Enable<Transform>(Storebtn.transform);
             //Disable<Transform>(StoreBack.transform);
         }
+    }
+   
+
+   private void StoreAction()
+    {
+        gameState.InvertPause();
+
+        SwitchTabStore(gameState.GetPause());
     }
 
     public override void Update()
@@ -262,28 +287,28 @@ public class ButtonStore : MonoBehaviour
             }
         }
 
-        if (stopTime)
-        {
-            stopTimer += Time.deltaTime;
-
-            float newTimer = 5f * stopTimer;
-
-            if (stopTimer > 0.1f)
-            {
-                stopTimer = 0f;
-                stopTime = false;
-
-                //Enable<Transform>(Storebtn.transform);
-                //Disable<Transform>(StoreBack.transform);
-                Disable<Transform>(displayArrow);
-                Disable<Transform>(displayArrowWhite);
-                Disable<Transform>(pauseIcon);
-
-                Disable<Transform>(timerButton);
-
-                Time.timeScale = 0f;
-            }
-        }
+        //if (stopTime)
+        //{
+        //    stopTimer += Time.deltaTime;
+        //
+        //    float newTimer = 5f * stopTimer;
+        //
+        //    if (stopTimer > 0.1f)
+        //    {
+        //        stopTimer = 0f;
+        //        stopTime = false;
+        //
+        //        //Enable<Transform>(Storebtn.transform);
+        //        //Disable<Transform>(StoreBack.transform);
+        //        Disable<Transform>(displayArrow);
+        //        Disable<Transform>(displayArrowWhite);
+        //        Disable<Transform>(pauseIcon);
+        //
+        //        Disable<Transform>(timerButton);
+        //
+        //        Time.timeScale = 0f;
+        //    }
+        //}
     }
 
 

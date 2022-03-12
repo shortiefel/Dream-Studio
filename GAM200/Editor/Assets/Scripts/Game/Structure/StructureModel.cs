@@ -130,7 +130,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
             if (spawnBool && aiDirector != null)
                 spawnBool = !(aiDirector.SpawnToDestination(structureModel));
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.Shift))
                 aiDirector.SpawnToDestination(structureModel);
         }
     }

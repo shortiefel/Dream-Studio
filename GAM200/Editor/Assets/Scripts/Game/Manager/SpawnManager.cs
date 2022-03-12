@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public enum SpawnRequestType
 {
-    Both,
+    Both = 0,
     House,
     Destination
 }
@@ -25,8 +25,12 @@ public class SpawnManager : MonoBehaviour
 
     GameState gameState;
 
-    SpawnRequestType spawnRequestType;
+    //SpawnRequestType spawnRequestType;
+    SpawnRequestType[] spawnRequestOrder;
+    int spawnRequestIndex;
+    int noOfSpawnRequestOrder;
 
+    //int attemptLoopCount;
 
     //ButtonRoad buttonRoad;
 
@@ -39,6 +43,7 @@ public class SpawnManager : MonoBehaviour
 
         spawnTimer = 0f;
         spawnTimerMax = 15f;
+        //spawnTimerMax = 3f;
         //buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
 
 
@@ -64,7 +69,14 @@ public class SpawnManager : MonoBehaviour
         }
 
         //scoreToSpawn = 1000;
-        spawnRequestType = SpawnRequestType.House;
+        //spawnRequestType = SpawnRequestType.House;
+
+        noOfSpawnRequestOrder = 3;
+        spawnRequestOrder = new SpawnRequestType[noOfSpawnRequestOrder];
+        spawnRequestOrder[0] = SpawnRequestType.Destination;
+        spawnRequestOrder[1] = SpawnRequestType.House;
+        spawnRequestOrder[2] = SpawnRequestType.Destination;
+        spawnRequestIndex = 0;
     }
 
     private Vector2Int SpawnRandomRoad()
@@ -151,7 +163,7 @@ public class SpawnManager : MonoBehaviour
     //}
 
     //Spawn Houses and destinations
-    public void CheckPosition(SpawnRequestType srt = SpawnRequestType.Both)
+    public bool CheckPosition(SpawnRequestType srt = SpawnRequestType.Both)
     {
         Vector2Int roadPosition = SpawnRandomRoad();
         //Vector2Int housePosition = SpawnRandomHouse(roadPosition);
@@ -166,19 +178,19 @@ public class SpawnManager : MonoBehaviour
         //Debug.Log(housePosition.y);
         switch (srt) {
             case SpawnRequestType.Both:
-                structureManager.PlaceHouse(roadPosition, 0);
-                structureManager.PlaceSpecial(roadPosition2, 0);
-                break;
+                return structureManager.PlaceHouse(roadPosition, 0) && structureManager.PlaceSpecial(roadPosition2, 0);
+
             case SpawnRequestType.House:
-                structureManager.PlaceHouse(roadPosition, 0);
-                spawnRequestType = SpawnRequestType.Destination;
-                break;
+                //spawnRequestType = SpawnRequestType.Destination;
+                return structureManager.PlaceHouse(roadPosition, 0);
+
             case SpawnRequestType.Destination:
-                structureManager.PlaceSpecial(roadPosition2, 0);
-                spawnRequestType = SpawnRequestType.House;
-                break;
+                //spawnRequestType = SpawnRequestType.House;
+                return structureManager.PlaceSpecial(roadPosition2, 0);
         }
 
+        //If cant find just end, as there is a chance of infinite loop
+        return true;
                 //structureManager.PlaceHouse(housePosition);
                 //scoreToSpawn += 5;
             //}
@@ -201,7 +213,7 @@ public class SpawnManager : MonoBehaviour
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.N) && Input.GetKey(KeyCode.Shift))
         {
             CheckPosition();
         }
@@ -210,8 +222,13 @@ public class SpawnManager : MonoBehaviour
         spawnTimer += Time.deltaTime;
         if (spawnTimer > spawnTimerMax)
         {
-            CheckPosition(spawnRequestType);
-            spawnTimer = 0f;
+            if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))
+            {
+                ++spawnRequestIndex;
+                spawnRequestIndex = spawnRequestIndex % noOfSpawnRequestOrder;
+                Debug.Log("Next index is " + spawnRequestIndex);
+                spawnTimer = 0f;
+            }
         }
         //if (score == scoreToSpawn)
         //{

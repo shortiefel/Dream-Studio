@@ -53,7 +53,7 @@ public class CarSpawner : MonoBehaviour
     {
         //Debug.Log("Count " + carCounter);
         //FOR TESTING TO BE REMOVED----------------------------
-        if(Input.GetKeyDown(KeyCode.T))
+        if(Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.Shift))
         {
             if (requestLine.Count != 0)
             {

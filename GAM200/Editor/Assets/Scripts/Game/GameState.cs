@@ -53,11 +53,11 @@ public class GameState : MonoBehaviour
         }
         //--------------------------
         //Cheat code
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            GameOver();
-        }
-        if (Input.GetKeyDown(KeyCode.P))
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    GameOver();
+        //}
+        if (Input.GetKeyDown(KeyCode.P) && Input.GetKey(KeyCode.Shift))
         {
             IncrementScore();
         }

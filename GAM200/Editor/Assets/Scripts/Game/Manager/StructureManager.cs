@@ -71,7 +71,7 @@ public class StructureManager : MonoBehaviour
     //    notificationManager.CreateNotificationModel(newPos);
 
     //}
-    public void PlaceHouse(Vector2Int position, float rotation)
+    public bool PlaceHouse(Vector2Int position, float rotation)
     {
         //Debug.Log("here house " + position);
         if (CheckPositionBeforePlacement(position, CellType.Structure))
@@ -82,19 +82,24 @@ public class StructureManager : MonoBehaviour
             houseList.Add(position, go.GetComponent<CarSpawner>());
             //AudioPlayer.instance.PlayPlacementSound();
             //StartCoroutine(waitABit(position));
+            return true;
         }
+
+        return false;
     }
 
-    public void PlaceSpecial(Vector2Int position, float rotation)
+    public bool PlaceSpecial(Vector2Int position, float rotation)
     {
-        //Debug.Log("here special " + position);
         if (CheckPositionBeforePlacement(position, CellType.SpecialStructure))
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);
             placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure, rotation);
             destinationList.Add(position, new StartPositionSet(new Vector2Int(0,0), 0));
             //AudioPlayer.instance.PlayPlacementSound();
+            return true;
         }
+
+        return false;
     }
 
     private int GetRandomWeightedIndex(float[] weights)

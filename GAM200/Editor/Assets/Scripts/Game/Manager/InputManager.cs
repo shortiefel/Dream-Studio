@@ -43,7 +43,7 @@ public class InputManager : MonoBehaviour
 			//Console.WriteLine("actually the Actual Mouse position: " + (offset + mousePos) + " ------------------------------------------\n");
 
 		}
-		if (Input.GetKeyDown(KeyCode.M))
+		if (Input.GetKeyDown(KeyCode.M) && Input.GetKey(KeyCode.Shift))
 		{
 			placementManager.placementGrid.Expand();
 		}

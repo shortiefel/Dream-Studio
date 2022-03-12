@@ -1,12 +1,14 @@
 ﻿using System;
 
+//The U behind means its being used = button is white
 public enum ButtonType
 {
     Draw = 0,
     Remove,
     ERP,
     TrafficLight,
-    Display
+    Display,
+    Ignore
 }
 
 public class ButtonRoad : MonoBehaviour
@@ -222,7 +224,7 @@ public class ButtonRoad : MonoBehaviour
             Enable<Transform>(displayArrowWhite);
 
 
-            EnableAllNormal();
+            EnableAllNormalExcept();
 
             Enable<Transform>(lineDivider1);
         }
@@ -317,9 +319,25 @@ public class ButtonRoad : MonoBehaviour
                         gameManager.RoadPlacementHandler();
                         Enable<Transform>(drawRoadWhite);
 
-                        EnableAllNormal();
+                        EnableAllNormalExcept(ButtonType.Draw);
+                        //Disable<Transform>(drawRoad);
 
-                        Disable<Transform>(drawRoad);
+
+                        //Enable<Transform>(removeRoad);
+                        //Enable<Transform>(roadCount);
+                        //
+                        //if (revealERPButton)
+                        //{
+                        //    Enable<Transform>(drawERP);
+                        //    Enable<Transform>(ERPCount);
+                        //}
+                        //if (revealTrafficButton)
+                        //{
+                        //    Enable<Transform>(drawTraffic);
+                        //    Enable<Transform>(trafficCount);
+                        //}
+
+                        
                         break;
                     }
                 case ButtonType.Remove:
@@ -327,9 +345,9 @@ public class ButtonRoad : MonoBehaviour
                         gameManager.RemoveRoadHandler();
                         Enable<Transform>(removeRoadWhite);
 
-                        EnableAllNormal();
+                        EnableAllNormalExcept(ButtonType.Remove);
 
-                        Disable<Transform>(removeRoad);
+                        //Disable<Transform>(removeRoad);
                         break;
                     }
                 case ButtonType.ERP:
@@ -337,9 +355,9 @@ public class ButtonRoad : MonoBehaviour
                         gameManager.ERPHandler();
                         Enable<Transform>(drawERPWhite);
 
-                        EnableAllNormal();
+                        EnableAllNormalExcept(ButtonType.ERP);
 
-                        Disable<Transform>(drawERP);
+                        //Disable<Transform>(drawERP);
                         break;
                     }
                 case ButtonType.TrafficLight:
@@ -347,9 +365,9 @@ public class ButtonRoad : MonoBehaviour
                         gameManager.TrafficLightHandler();
                         Enable<Transform>(drawTrafficWhite);
 
-                        EnableAllNormal();
+                        EnableAllNormalExcept(ButtonType.TrafficLight);
 
-                        Disable<Transform>(drawTraffic);
+                        //Disable<Transform>(drawTraffic);
                         break;
                     }
             }
@@ -363,7 +381,7 @@ public class ButtonRoad : MonoBehaviour
             SceneManager.SetDrawMode(false);
             gameState.SetDrawMode(false);
 
-            EnableAllNormal();
+            EnableAllNormalExcept();
         }
     }
 
@@ -391,20 +409,24 @@ public class ButtonRoad : MonoBehaviour
             CloseTabs();
     }
 
-    public void EnableAllNormal()
+    public void EnableAllNormalExcept(ButtonType bt = ButtonType.Ignore)
     {
-        Enable<Transform>(drawRoad);
-        Enable<Transform>(removeRoad);
+        if (bt != ButtonType.Draw)
+            Enable<Transform>(drawRoad);
+        if (bt != ButtonType.Remove)
+            Enable<Transform>(removeRoad);
         Enable<Transform>(roadCount);
 
         if (revealERPButton)
         {
-            Enable<Transform>(drawERP);
+            if (bt != ButtonType.ERP)
+                Enable<Transform>(drawERP);
             Enable<Transform>(ERPCount);
         }
         if (revealTrafficButton)
         {
-            Enable<Transform>(drawTraffic);
+            if (bt != ButtonType.TrafficLight)
+                Enable<Transform>(drawTraffic);
             Enable<Transform>(trafficCount);
         }
     }
@@ -446,7 +468,7 @@ public class ButtonRoad : MonoBehaviour
 
     public void ResetAll()
     {
-        EnableAllNormal();
+        EnableAllNormalExcept();
         DisableAllWhite();
 
 

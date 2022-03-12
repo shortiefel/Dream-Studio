@@ -210,7 +210,7 @@ public class SpawnManager : MonoBehaviour
         spawnTimer += Time.deltaTime;
         if (spawnTimer > spawnTimerMax)
         {
-            //CheckPosition(spawnRequestType);
+            CheckPosition(spawnRequestType);
             spawnTimer = 0f;
         }
         //if (score == scoreToSpawn)

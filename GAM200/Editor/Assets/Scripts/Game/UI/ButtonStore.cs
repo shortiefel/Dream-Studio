@@ -158,10 +158,12 @@ public class ButtonStore : MonoBehaviour
         Disable<Transform>(RoadBuy.transform);
         Disable<Transform>(RoadSell.transform);
         Disable<Transform>(RoadNo.transform);
+
         Disable<Transform>(TrafficIcon.transform);
         Disable<Transform>(TrafficBuy.transform);
         Disable<Transform>(TrafficSell.transform);
         Disable<Transform>(TrafficNo.transform);
+
         Disable<Transform>(ERPIcon.transform);
         Disable<Transform>(ERPBuy.transform);
         Disable<Transform>(ERPSell.transform);
@@ -192,19 +194,28 @@ public class ButtonStore : MonoBehaviour
             Enable<Transform>(RoadBuy.transform);
             Enable<Transform>(RoadSell.transform);
             Enable<Transform>(RoadNo.transform);
-            Enable<Transform>(TrafficIcon.transform);
-            Enable<Transform>(TrafficBuy.transform);
-            Enable<Transform>(TrafficSell.transform);
-            Enable<Transform>(TrafficNo.transform);
-            Enable<Transform>(ERPIcon.transform);
-            Enable<Transform>(ERPBuy.transform);
-            Enable<Transform>(ERPSell.transform);
-            Enable<Transform>(ERPNo.transform);
+
+            if (combinedUI.buttonRoad.revealTrafficButton)
+            {
+                Enable<Transform>(TrafficIcon.transform);
+                Enable<Transform>(TrafficBuy.transform);
+                Enable<Transform>(TrafficSell.transform);
+                Enable<Transform>(TrafficNo.transform);
+                Enable<Transform>(TLCost.transform);
+            }
+
+            if (combinedUI.buttonRoad.revealERPButton)
+            {
+                Enable<Transform>(ERPIcon.transform);
+                Enable<Transform>(ERPBuy.transform);
+                Enable<Transform>(ERPSell.transform);
+                Enable<Transform>(ERPNo.transform);
+                Enable<Transform>(ERPCost.transform);
+            }
 
             Enable<Transform>(CostTitle.transform);
             Enable<Transform>(RoadCost.transform);
-            Enable<Transform>(TLCost.transform);
-            Enable<Transform>(ERPCost.transform);
+            
 
             //stopTime = true;
 
@@ -233,10 +244,12 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(RoadBuy.transform);
             Disable<Transform>(RoadSell.transform);
             Disable<Transform>(RoadNo.transform);
+
             Disable<Transform>(TrafficIcon.transform);
             Disable<Transform>(TrafficBuy.transform);
             Disable<Transform>(TrafficSell.transform);
             Disable<Transform>(TrafficNo.transform);
+
             Disable<Transform>(ERPIcon.transform);
             Disable<Transform>(ERPBuy.transform);
             Disable<Transform>(ERPSell.transform);

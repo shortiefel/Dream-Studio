@@ -12,7 +12,7 @@ public class CombinedUI : MonoBehaviour
     PauseMenu pauseMenu;
     TimeSystem timeSystem;
     ButtonStore buttonStore;
-    ButtonRoad buttonRoad;
+    public ButtonRoad buttonRoad;
 
 
     Transform pauseIcon;

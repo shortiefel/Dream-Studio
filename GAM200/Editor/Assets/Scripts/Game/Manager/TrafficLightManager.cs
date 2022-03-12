@@ -87,12 +87,12 @@ public class TrafficLightManager : MonoBehaviour
         //+-45 degree for range
         //if left or right
         DirectionState ds = DirectionState.Horizontal;
-        bool lrState = true;
+        //bool lrState = true;
         if ((45f < _carAngle && _carAngle < 135f) || (-315f < _carAngle && _carAngle < -225f) ||
             (225f < _carAngle && _carAngle < 315f) || (-135f < _carAngle && _carAngle < -45f))
         {
             ds = DirectionState.Vertical;
-            lrState = false;
+            //lrState = false;
         }
 
         //Vector2Int carPos = new Vector2Int(_carPos);

@@ -18,7 +18,7 @@ public struct EndStruct
 public class CarSpawner : MonoBehaviour
 {
 
-
+    int carCounter = 0;
 
     public Queue<EndStruct> requestLine;
     //GameObject.FindWithId(id).GetComponent<StructureModel>()
@@ -51,7 +51,7 @@ public class CarSpawner : MonoBehaviour
     //
     public override void Update()
     {
-        //Debug.Log("Count " + requestLine.Count);
+        //Debug.Log("Count " + carCounter);
         //FOR TESTING TO BE REMOVED----------------------------
         if(Input.GetKeyDown(KeyCode.T))
         {
@@ -68,7 +68,7 @@ public class CarSpawner : MonoBehaviour
         {
             spawnTimer += Time.deltaTime;
 
-            if (spawnTimer >= spawnTimerMax)
+            if (spawnTimer >= spawnTimerMax && carCounter == 0)
             {
                 //Debug.Log("True Spawn");
                 //Debug.Log("Spawn at " +  entityId + " line " + requestLine.Count);
@@ -92,6 +92,16 @@ public class CarSpawner : MonoBehaviour
         //    //    timer = 0f;
         //    //    Debug.Log(maxTimer);
         //    //}
+    }
+
+    public override void OnTriggerEnter(Transform trans)
+    {
+        ++carCounter;
+    }
+
+    public override void OnTriggerExit(Transform trans)
+    {
+        --carCounter;
     }
 
     /*public Prefab[] carPrefabs;

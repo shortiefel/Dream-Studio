@@ -94,15 +94,22 @@ public class GameState : MonoBehaviour
             buttonRoad.RevealERP();
         }
     }
+
+    public void MissedDestinationTime()
+    {
+        //highscore--;
+        Debug.Log("Missed a destination ");
+    }
+
     public int GetScore()
     {
         return highscore;
     }
 
-    public void IncrementHighscore()
-    {
-        highscore++;
-    }
+    //public void IncrementHighscore()
+    //{
+    //    highscore++;
+    //}
     public int GetHighscore()
     {
         return highscore;

@@ -110,23 +110,23 @@ namespace Engine {
 				bool ent1IsMoveable = (rb1 != nullptr) && rb1->isActive,
 					ent2IsMoveable = (rb2 != nullptr) && rb2->isActive;
 				if (!ent1IsMoveable && !ent2IsMoveable) continue;
-
+				
 				TransformComponent* transform2 = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id2);
 				if (transform2 == nullptr || !transform2->isActive) continue;
 
-				if (transform1->layer != transform2->layer) continue; //collision layer
+				//if (transform1->layer != transform2->layer) continue; //collision layer
 
 				ColliderComponent collider2 = *col2;
 				collider2.offset_position += Math::vec2{ transform2->position };
 				collider2.offset_scale *= transform2->scale;
 				collider2.angle += transform2->angle;
-
+				
 				//Direction from collider2 towards collider1
 				Math::vec2 dir = Math::vec2{};
 
 				if (CollisionImplementation::isColliding(dir, collider1, ent1IsMoveable,
 					collider2, ent2IsMoveable)) {
-
+					//std::cout << collider1.offset_position << " and " << collider2.offset_position << " with result collided "<< entity_id1 << " vs " << entity_id2 << "\n";
 					AddOverlap(entity_id1, collider1.isTrigger, entity_id2, collider2.isTrigger);
 					AddOverlap(entity_id2, collider2.isTrigger, entity_id1, collider1.isTrigger);
 
@@ -151,6 +151,7 @@ namespace Engine {
 				}
 
 				else {
+					//std::cout << entity_id1 << " vs " << entity_id2 << " not collided \n";
 					const auto& iter1 = overlapMap.find(entity_id1);
 					if (iter1 != overlapMap.end()) {
 						size_t size1 = iter1->second.size();

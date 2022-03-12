@@ -1,1 +1,56 @@
-[{"Entity":{"Name":"HospitalCar","EntityId":54,"Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[0.12999999523162843,0.05000000074505806],"Angle":0.0,"Layer":2,"IsActive":true},"ColliderComponent":{"ColliderType":1,"Position":[0.0,0.0],"Scale":[0.8999999761581421,1.0],"Angle":0.0,"IsTrigger":true,"IsActive":true},"RigidBodyComponent":{"Speed":0.0,"Mass":5,"LinearDrag":10.0,"AngularDrag":60.0,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Game\\Cars\\Ambulance.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true},"SoundComponent":{"IsActive":true,"IsLoop":false,"filepath":"Assets\\Sound\\CarBeep.wav","volume":30.0,"isSound":true,"IsMute":false,"SoundGroup":2},"ScriptComponent":[{"Class":"CarAI","IsActive":true}]}]
+[
+  
+  {
+    "Entity": {
+      "Name": "HospitalCar",
+      "EntityId": 54,
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 0.12999999523162843, 0.05000000074505806 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 0.8999999761581421, 1.0 ],
+      "Angle": 0.0,
+      "IsTrigger": true,
+      "IsActive": true
+    },
+    "RigidBodyComponent": {
+      "Speed": 0.0,
+      "Mass": 5,
+      "LinearDrag": 10.0,
+      "AngularDrag": 60.0,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Game\\Cars\\Ambulance.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "SoundComponent": {
+      "IsActive": true,
+      "IsLoop": false,
+      "filepath": "Assets\\Sound\\CarBeep.wav",
+      "volume": 30.0,
+      "isSound": true,
+      "IsMute": false,
+      "SoundGroup": 2
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CarAI",
+        "IsActive": true
+      }
+    ]
+  }
+]

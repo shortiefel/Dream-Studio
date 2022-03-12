@@ -91,7 +91,7 @@ public class TrafficLight : MonoBehaviour
         Console.WriteLine("State " + directionState);
         if (Input.GetKeyDown(KeyCode.V))
             SwapState();
-        //timer += deltaTime;
+        timer += deltaTime;
         if (timer >= switchTimer)
         {
             //secondaryTimer += Time.deltaTime;
@@ -104,7 +104,9 @@ public class TrafficLight : MonoBehaviour
             //    Console.WriteLine("Secondary timer activated ");
             //
             //}
-            if (carCounter == 0)
+            //Might have problem where car move too fast and enter but doesnt move
+            //Check timer to 1.5 of switchTimer to prevent infinite waiting to change direction
+            if (carCounter == 0 || timer >= switchTimer * 1.5f)
             {
                 timer = 0f;
                 SwapState();

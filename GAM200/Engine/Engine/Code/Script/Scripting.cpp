@@ -411,28 +411,28 @@ namespace Engine {
 			csClass.DestroyFunc = mono_method_desc_search_in_image(description, image);
 			
 			
-			methodDesc = fullName + ":OnCollisionEnter(uint)";
+			methodDesc = fullName + ":OnCollisionEnter(Transform)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnCollisionEnter = mono_method_desc_search_in_image(description, image);
 			
-			methodDesc = fullName + ":OnCollisionStay(uint)";
+			methodDesc = fullName + ":OnCollisionStay(Transform)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnCollisionStay = mono_method_desc_search_in_image(description, image);
 			
-			methodDesc = fullName + ":OnCollisionExit(uint)";
+			methodDesc = fullName + ":OnCollisionExit(Transform)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnCollisionExit = mono_method_desc_search_in_image(description, image);
 			
 			
-			methodDesc = fullName + ":OnTriggerEnter(uint)";
+			methodDesc = fullName + ":OnTriggerEnter(Transform)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerEnter = mono_method_desc_search_in_image(description, image);
 			
-			methodDesc = fullName + ":OnTriggerStay(uint)";
+			methodDesc = fullName + ":OnTriggerStay(Transform)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerStay = mono_method_desc_search_in_image(description, image);
 			
-			methodDesc = fullName + ":OnTriggerExit(uint)";
+			methodDesc = fullName + ":OnTriggerExit(Transform)";
 			description = mono_method_desc_new(methodDesc.c_str(), NULL);
 			csClass.OnTriggerExit = mono_method_desc_search_in_image(description, image);
 

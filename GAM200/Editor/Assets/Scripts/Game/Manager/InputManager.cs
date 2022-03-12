@@ -95,22 +95,18 @@ public class InputManager : MonoBehaviour
 
 	private Vector2Int? RaycastGround()
 	{
-		//RaycastHit2D hit;
-		//Ray2D ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-		//Debug.Log(ray);
-		//if (Physics2D.Raycast(ray, out hit, Mathf.Infinity, groundMask))
+		//RaycastHit2D hit = Physics2D.RayCast(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()), Vector2.zero);
+		//
+		//if (hit.collider != null)
+		//{
+		//	Vector2Int positionInt = Vector2Int.RoundToInt(hit.point);
+		//	return positionInt;
+		//}
+		//
+		//return null;
 
-		RaycastHit2D hit = Physics2D.RayCast(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()), Vector2.zero);
-
-		if (hit.collider != null)
-		{
-			Vector2Int positionInt = Vector2Int.RoundToInt(hit.point);
-			//Debug.Log(positionInt);
-			return positionInt;
-		}
-		//else
-			//Debug.Log("did not hit");
-		return null;
+		Vector3 vec3 = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
+		return Vector2Int.RoundToInt(new Vector2(vec3.x, vec3.y));
 	}
 
 	//private void CheckArrowInput()

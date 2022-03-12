@@ -95,8 +95,11 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         {
             if (!notification.NotificationUpdate())
             {
-                gameState.shouldEnd = true;
-                gameState.SetLoseHouse(transform.position);
+                //gameState.shouldEnd = true;
+                //gameState.SetLoseHouse(transform.position);
+
+                //Lose points instead of lose game
+                gameState.MissedDestinationTime();
             }
 
             if (notification.AppearCheck())

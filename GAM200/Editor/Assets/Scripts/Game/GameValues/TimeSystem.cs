@@ -8,7 +8,7 @@ public enum TimerType
     TimerStop,
     TimerNormal,
     TimerFast,
-    TimerWhite
+    None
 }
 
 
@@ -37,6 +37,8 @@ public class TimeSystem : MonoBehaviour
     float closeYPosition2;
 
     float speedMultiply;
+
+    float timeScale;
 
 
     //UI texture;
@@ -79,8 +81,6 @@ public class TimeSystem : MonoBehaviour
         Disable<Transform>(TimerNormalWhite);
         Disable<Transform>(TimerFastWhite);
 
-
-
         opening = false;
         closing = false;
         timer = 0f;
@@ -97,6 +97,8 @@ public class TimeSystem : MonoBehaviour
         TimerFast.position = new Vector2(tFastPosition.x, closeYPosition2);
         TimerFastWhite.position = new Vector2(tFastPosition.x, closeYPosition2);
 
+        timeScale = 1f;
+        Time.timeScale = timeScale;
     }
 
     public void SwitchTabTimer(bool type)
@@ -108,11 +110,25 @@ public class TimeSystem : MonoBehaviour
             opening = true;
             //Debug.Log("in open");
             Disable<Transform>(Timer);
-            
             Enable<Transform>(TimerWhite);
 
-            EnableAllNormal();
+            //EnableAllNormal();
 
+            if (timeScale == 0f)
+                Enable<Transform>(TimerStopWhite);
+            else
+                Enable<Transform>(TimerStop);
+
+            if (timeScale == 1f)
+                Enable<Transform>(TimerNormalWhite);
+
+            else
+                Enable<Transform>(TimerNormal);
+
+            if (timeScale == 1.5f)
+                Enable<Transform>(TimerFastWhite);
+            else
+                Enable<Transform>(TimerFast);
 
         }
         else
@@ -138,7 +154,8 @@ public class TimeSystem : MonoBehaviour
         TimerFast.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
         TimerFastWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
 
-        timer += speedMultiply * Time.deltaTime;
+        timer += speedMultiply * Time.fixedDeltaTime;
+        //Debug.Log("C Timer " + timer + " delta time " + Time.fixedDeltaTime);
         if (timer > 0.8f)
         {
             timer = 0f;
@@ -157,7 +174,9 @@ public class TimeSystem : MonoBehaviour
         TimerFast.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
         TimerFastWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
 
-        timer += speedMultiply * Time.deltaTime;
+        timer += speedMultiply * Time.fixedDeltaTime;
+        //Debug.Log("O Timer " + timer + " delta time " + Time.fixedDeltaTime);
+
         if (timer > 0.8f)
         {
             timer = 0f;
@@ -176,12 +195,9 @@ public class TimeSystem : MonoBehaviour
                 case TimerType.TimerStop:
                     {
                         Enable<Transform>(TimerStopWhite);
-                        Time.timeScale = 0f;
                         StopTime();
 
-                        EnableAllNormal();
-
-                        Disable<Transform>(TimerStop);
+                        EnableAllNormalExcept(TimerType.TimerStop);
                         break;
                     }
                 case TimerType.TimerNormal:
@@ -189,32 +205,27 @@ public class TimeSystem : MonoBehaviour
                         Enable<Transform>(TimerNormalWhite);
                         NormalTime();
 
-                        EnableAllNormal();
-
-                        Disable<Transform>(TimerNormal);
+                        EnableAllNormalExcept(TimerType.TimerNormal);
                         break;
                     }
                 case TimerType.TimerFast:
                     {
                         Enable<Transform>(TimerFastWhite);
-                        Time.timeScale = 3f;
                         SpeedUpTime();
 
-                        EnableAllNormal();
-
-                        Disable<Transform>(TimerFast);
+                        EnableAllNormalExcept(TimerType.TimerFast);
                         break;
                     }
             }
         }
-        else
-        {
-            EnableAllNormal();
-        }
+        //else
+        //{
+        //    EnableAllNormal();
+        //}
     }
 
 
-    public override void Update()
+    public override void FixedUpdate()
     {
         if (opening)
             OpenTabs();
@@ -222,11 +233,14 @@ public class TimeSystem : MonoBehaviour
             CloseTabs();
     }
 
-    public void EnableAllNormal()
+    public void EnableAllNormalExcept(TimerType tt = TimerType.None)
     {
-        Enable<Transform>(TimerStop);
-        Enable<Transform>(TimerNormal);
-        Enable<Transform>(TimerFast);
+        if (tt != TimerType.TimerStop)
+            Enable<Transform>(TimerStop);
+        if (tt != TimerType.TimerNormal)
+            Enable<Transform>(TimerNormal);
+        if (tt != TimerType.TimerFast)
+            Enable<Transform>(TimerFast);
     }
 
     public void DisableAllNormal()
@@ -266,16 +280,19 @@ public class TimeSystem : MonoBehaviour
 
     public void NormalTime()
     {
-        Time.timeScale = 1f;
+        timeScale = 1f;
+        Time.timeScale = timeScale;
     }
 
     public void StopTime()
     {
-        Time.timeScale = 0f;
+        timeScale = 0f;
+        Time.timeScale = timeScale;
     }
 
     public void SpeedUpTime()
     {
-        Time.timeScale = 1.5f;
+        timeScale = 1.5f;
+        Time.timeScale = timeScale;
     }
 }

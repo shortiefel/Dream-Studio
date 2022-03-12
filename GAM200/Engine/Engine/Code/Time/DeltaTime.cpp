@@ -48,6 +48,6 @@ namespace Engine {
 		//++loopCount;
 	}
 
-	float DeltaTime::GetFixedDeltaTime() { return fixedDeltaTime * timeScale; }
+	float DeltaTime::GetFixedDeltaTime() { return fixedDeltaTime * fixedTimeScale; }
 	int DeltaTime::GetNumberOfSteps() { return currentNumberOfSteps; }
 }

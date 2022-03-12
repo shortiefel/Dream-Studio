@@ -38,6 +38,7 @@ namespace Engine {
 		float dt = 1/60.0f;
 		float fps = 60.f;
 		float timeScale = 1.f;
+		float fixedTimeScale = 1.f;
 
 		static float accumulatedTime;
 		static int currentNumberOfSteps;

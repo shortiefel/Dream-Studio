@@ -46,21 +46,21 @@ public class ButtonTimeClick : MonoBehaviour
             tt = TimerType.TimerFast;
             type = true;
         }
-        else if (entityId == GameObject.Find("TimerStopWhite").GetComponent<Transform>().entityId)
-        {
-            tt = TimerType.TimerStop;
-            type = false;
-        }
-        else if (entityId == GameObject.Find("TimerNormalWhite").GetComponent<Transform>().entityId)
-        {
-            tt = TimerType.TimerNormal;
-            type = false;
-        }
-        else if (entityId == GameObject.Find("TimerForwardWhite").GetComponent<Transform>().entityId)
-        {
-            tt = TimerType.TimerFast;
-            type = false;
-        }
+        //else if (entityId == GameObject.Find("TimerStopWhite").GetComponent<Transform>().entityId)
+        //{
+        //    tt = TimerType.TimerStop;
+        //    type = false;
+        //}
+        //else if (entityId == GameObject.Find("TimerNormalWhite").GetComponent<Transform>().entityId)
+        //{
+        //    tt = TimerType.TimerNormal;
+        //    type = false;
+        //}
+        //else if (entityId == GameObject.Find("TimerForwardWhite").GetComponent<Transform>().entityId)
+        //{
+        //    tt = TimerType.TimerFast;
+        //    type = false;
+        //}
       
     }
 
@@ -129,10 +129,10 @@ public class ButtonTimeClick : MonoBehaviour
 
     }
 
-    public override void OnEnable()
-    {
-        Debug.Log("Enabling \n");
-    }
+    //public override void OnEnable()
+    //{
+    //    Debug.Log("Enabling \n");
+    //}
 
 
 }

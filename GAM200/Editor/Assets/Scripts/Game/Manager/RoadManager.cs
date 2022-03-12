@@ -8,7 +8,7 @@ public class RoadManager : MonoBehaviour
     public RoadFixer roadFixer;
     public StructureManager structureManager;
 
-    public List<Vector2Int> temporaryPlacementPositions;
+    //public List<Vector2Int> temporaryPlacementPositions;
     private int temporaryRoadCount;
 
     //private List<Vector2Int> roadPositionsToRecheck;
@@ -39,7 +39,7 @@ public class RoadManager : MonoBehaviour
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
         structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
 
-        temporaryPlacementPositions = new List<Vector2Int>();
+        //temporaryPlacementPositions = new List<Vector2Int>();
         temporaryRoadCount = 0;
 
         //roadPositionsToRecheck = new List<Vector2Int>();
@@ -255,6 +255,11 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceRoad(Vector2Int position)
     {
+        //Debug.Log(temporaryRoadPositions.Count);
+        //foreach (var i in temporaryRoadPositions)
+        //{
+        //    Debug.Log(i);
+        //}
         /*//Debug.Log("here");
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
@@ -387,6 +392,7 @@ public class RoadManager : MonoBehaviour
     }
     public override void Update()
     {
+        //Debug.Log(temporaryRoadPositions.Count);
         if (Input.GetKeyDown(KeyCode.G)) placementManager.placementGrid.PrintGridOut();
     }
 
@@ -418,6 +424,11 @@ public class RoadManager : MonoBehaviour
         temporaryRoadCount = 0;
         previousRoadMinus = 0;
         placeSound.Play();
+    }
+
+    public void ClearTemporaryRoad()
+    {
+        temporaryRoadPositions.Clear();
     }
 
     public void RemoveRoad(Vector2Int position)
@@ -456,9 +467,15 @@ public class RoadManager : MonoBehaviour
         if (erpManager != null)
             result |= erpManager.RequestRemovingERP(position);
 
-        if (placementManager.placementGrid.UnsetRoad(position))
+        //if (placementManager.placementGrid.UnsetRoad(position))
+        //{
+        //    roadCount++;
+        //    removeSound.Play();
+        //}
+        int roadInc = placementManager.placementGrid.UnsetRoad(position);
+        if (roadInc > 0)
         {
-            roadCount++;
+            roadCount += roadInc;
             removeSound.Play();
         }
         //if (result == true)
@@ -487,9 +504,6 @@ public class RoadManager : MonoBehaviour
         removeSound.Play();*/
 
         //placementMode = false;
-
-
-        //temporaryPlacementPositions.Clear();
 
         removeSound.Play();
     }

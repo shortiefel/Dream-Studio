@@ -695,13 +695,18 @@ namespace Engine {
             
         }
 
-        void UpdateCell(Cell& cell, const Math::ivec2& vec) {
+        //Return false if no cell is replacing it = removing road tile completely
+        bool UpdateCell(Cell& cell, const Math::ivec2& vec) {
             if (cell.entityId != 0) dreamECSGame->DestroyEntity(cell.entityId);
             cell.entityId = 0;
             float angle = 0.f;
             std::string type = GetRoadType(cell, angle);
-            if (type.size() == 0) return;
+            if (type.size() == 0) {
+                cell.ct = CellType::Empty;
+                return false;
+            }
             GameSceneSerializer::DeserializePrefab(type, &(cell.entityId), Math::vec2{ (float)vec.x, (float)vec.y }, angle, 1);
+            return true;
         }
 
         void UpdateCellWithCell(Cell& cell, Cell& oldCell, const Math::ivec2& vec) {
@@ -747,7 +752,7 @@ namespace Engine {
                             Cell& cellU = *(*(grid + xVal) + yVal + 1);
                             if (cellU.ct == CellType::SpecialStructure) {
                                 if (cellU.cellBinary != 0) continue;
-
+                    
                                 //Check Up Left
                                 Cell& cellUL = *(*(grid + xVal - 1) + yVal + 1);
                                 if (cellUL.cellBinary != 0) continue;
@@ -841,15 +846,16 @@ namespace Engine {
             return noOfRoadToAdd;
         }
 
-        bool Grid::UnsetRoads(Math::ivec2 pos) {
+        int Grid::UnsetRoads(Math::ivec2 pos) {
             if (!IsWithinGrid(pos)) return false;
             
             Cell& cell = *(*(grid + pos.x - offset.x) + pos.y - offset.y);
 
-            if (cell.entityId == EMPTY_ENTITY || cell.ct != CellType::Road) return false;
+            if (cell.entityId == EMPTY_ENTITY || cell.ct != CellType::Road) return 0;
             dreamECSGame->DestroyEntity(cell.entityId);
             cell.entityId = EMPTY_ENTITY;
             
+            int roadRemoved = 1;
             bool leftDir = (cell.cellBinary & GET_BIN(CellDirection::Left));
             bool rightDir = (cell.cellBinary & GET_BIN(CellDirection::Right));
             bool upDir = (cell.cellBinary & GET_BIN(CellDirection::Up));
@@ -865,7 +871,8 @@ namespace Engine {
                 cellT.cellBinary ^= GET_BIN(CellDirection::Right);
                 //cellT.adjacentCell[(int)CellDirection::Right] = removePos; //Prevent the previous position from being the same and not adding
                 if (cellT.ct == CellType::Road)
-                    UpdateCell(cellT, removePos);
+                    //UpdateCell(cellT, removePos);
+                    if (!UpdateCell(cellT, removePos)) ++roadRemoved;
             }
 
             if (rightDir) {
@@ -873,7 +880,8 @@ namespace Engine {
                 Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
                 cellT.cellBinary ^= GET_BIN(CellDirection::Left);
                 if (cellT.ct == CellType::Road)
-                    UpdateCell(cellT, removePos);
+                    //UpdateCell(cellT, removePos);
+                    if (!UpdateCell(cellT, removePos)) ++roadRemoved;
             }
 
             if (upDir) {
@@ -881,7 +889,8 @@ namespace Engine {
                 Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
                 cellT.cellBinary ^= GET_BIN(CellDirection::Down);
                 if (cellT.ct == CellType::Road)
-                    UpdateCell(cellT, removePos);
+                    //UpdateCell(cellT, removePos);
+                    if (!UpdateCell(cellT, removePos)) ++roadRemoved;
             }
 
             if (downDir) {
@@ -889,12 +898,13 @@ namespace Engine {
                 Cell& cellT = *(*(grid + removePos.x - offset.x) + removePos.y - offset.y);
                 cellT.cellBinary ^= GET_BIN(CellDirection::Up);
                 if (cellT.ct == CellType::Road)
-                    UpdateCell(cellT, removePos);
+                    //UpdateCell(cellT, removePos);
+                    if (!UpdateCell(cellT, removePos)) ++roadRemoved;
             }
 
             FinalizeGrid();
 
-            return true;
+            return roadRemoved;
         }
 
         void Grid::RevertGrid() {
@@ -1094,7 +1104,7 @@ namespace Engine {
                     if (current == endRight) endPosition = endRight;
                     else if (current == endUp) endPosition = endUp;
                     else if (current == endUpRight) endPosition = endUpRight;
-                    *roadCount = path.size();
+                    *roadCount = (int)path.size();
 
                     return path;
                 }

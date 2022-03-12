@@ -1,11 +1,21 @@
 ﻿using System;
 
+public enum DirectionState
+{
+    Horizontal,
+    Vertical,
+    None
+}
+
 public class TrafficLight : MonoBehaviour
 {
     //True for left and right
     //False for top and bottom
     public bool state;
     private bool toState;
+
+    public DirectionState directionState;
+    public DirectionState nextState;
 
     private int carCounter;
 
@@ -14,12 +24,17 @@ public class TrafficLight : MonoBehaviour
     private float timer;
     private float switchTimer;
 
-    private float secondaryTimer;
+    private float inBetweenTimer;
+
+    //private float secondaryTimer;
 
     private TrafficLightManager tlm;
 
     public override void Start()
     {
+        Debug.Log("Making new start -----------------------------------");
+        directionState = DirectionState.Horizontal;
+
         GameObject go = GameObject.Find("TrafficManager");
         if (go != null)
             tlm = go.GetComponent<TrafficLightManager>();
@@ -35,7 +50,7 @@ public class TrafficLight : MonoBehaviour
         timer = 0f;
         switchTimer = 5f;
 
-        secondaryTimer = 0f;
+        inBetweenTimer = 0f;
     }
 
     public void RequestSwap(bool inState)
@@ -44,22 +59,39 @@ public class TrafficLight : MonoBehaviour
             toState = inState;
     }
 
+    //public DirectionState GetTrafficLightState()
+    //{
+    //    if (Input.GetKey(KeyCode.B))
+    //        Debug.Log(directionState + " Getting from " + entityId);
+    //    return directionState;
+    //}
+
     private void SwapState()
     {
-        toState = state = !state;
-        if (state)
-            transform.angle = 0;
-        //texture.color = new Color(1, 0, 0, 1);
-        else
-            transform.angle = 90;
+        //toState = state = !state;
+        //if (state)
+        //    transform.angle = 0;
+        ////texture.color = new Color(1, 0, 0, 1);
+        //else
+        //    transform.angle = 90;
         //texture.color = new Color(0, 1, 0, 1);
+        //Debug.Log("Change State " + directionState);
+        //Test
+
+        //directionState = nextState;
+        if (directionState == DirectionState.Horizontal) nextState = DirectionState.Vertical;
+        else if (directionState == DirectionState.Vertical) nextState = DirectionState.Horizontal;
+        directionState = DirectionState.None;
+        //Debug.Log("After " + directionState + " " + entityId);
     }
 
     public override void Update()
     {
-        //if (carCounter == 0 && state != toState)
-        //    SwapState();
-        timer += Time.deltaTime;
+        float deltaTime = Time.deltaTime;
+        Console.WriteLine("State " + directionState);
+        if (Input.GetKeyDown(KeyCode.V))
+            SwapState();
+        //timer += deltaTime;
         if (timer >= switchTimer)
         {
             //secondaryTimer += Time.deltaTime;
@@ -75,8 +107,25 @@ public class TrafficLight : MonoBehaviour
             if (carCounter == 0)
             {
                 timer = 0f;
-                secondaryTimer = 0f;
                 SwapState();
+            }
+        }
+
+        //Put traffic light in a state where cars are not allowed to go for both direction
+        if (directionState == DirectionState.None)
+        {
+            inBetweenTimer += deltaTime;
+            if (inBetweenTimer >= 0.5f)
+            {
+                toState = state = !state;
+                if (state)
+                    transform.angle = 0;
+                //texture.color = new Color(1, 0, 0, 1);
+                else
+                    transform.angle = 90;
+
+                directionState = nextState;
+                inBetweenTimer = 0f;
             }
         }
         //if (Input.GetKeyDown(KeyCode.C))

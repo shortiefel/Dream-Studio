@@ -52,9 +52,10 @@ public class GameManager : MonoBehaviour
 
     internal void RoadPlacementHandler()
     {
-        Debug.Log("Call Road");
+        //Debug.Log("Call Road");
         ClearInputActions();
 
+        roadManager.ClearTemporaryRoad();
         inputManager.OnMouseClick += roadManager.PlaceRoad;
         inputManager.OnMouseHold += roadManager.PlaceRoad;
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;

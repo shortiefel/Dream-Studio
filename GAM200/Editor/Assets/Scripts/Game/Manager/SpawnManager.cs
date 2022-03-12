@@ -58,7 +58,6 @@ public class SpawnManager : MonoBehaviour
  
             if (placementManager.placementGrid.GetAllHouses().Count != 0 && placementManager.placementGrid.GetAllSpecialStructure().Count != 0)
             {
-
                 checkForNoSpawn = false;
                 break;
             }

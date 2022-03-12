@@ -220,6 +220,7 @@ public class AIDirector : MonoBehaviour
         //    GetNewPathList(endPos);
         //}
         Vector2Int spawnPosInt = new Vector2Int(spawnPos);
+        Debug.Log(spawnPosInt);
         //var path = placementManager.GetPathBetween(structureManager.destinationList[endPos].startPos, new Vector2Int(endPos), true);
         int roadCount;
         var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), out roadCount);

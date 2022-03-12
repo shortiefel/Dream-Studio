@@ -36,7 +36,7 @@ namespace Engine {
 	void GetAllAdjacentCellTypes_Engine(MonoArray* monoArray, int x, int y);
 
 	int SetRoad_Engine(MonoArray* monoArray, int size);
-	bool UnsetRoad_Engine(Math::ivec2 pos);
+	int UnsetRoad_Engine(Math::ivec2 pos);
 
 	void RevertGrid_Engine();
 	void FinalizeGrid_Engine();
@@ -159,7 +159,7 @@ namespace Engine {
 		return Game::Grid::GetInstance().SetRoads(posArr, size);
 	}
 
-	bool UnsetRoad_Engine(Math::ivec2 pos) {
+	int UnsetRoad_Engine(Math::ivec2 pos) {
 		return Game::Grid::GetInstance().UnsetRoads(pos);
 	}
 

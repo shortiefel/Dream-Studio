@@ -141,28 +141,28 @@ public class CarAI : MonoBehaviour
         //endPoint = endStructure;
         endPoint = GameObject.FindWithId(id).GetComponent<StructureModel>();
 
-        Console.WriteLine("Set 2nd  CarAi path");
+        //Console.WriteLine("Set 2nd  CarAi path");
         if (newPath.Count == 0)
         {
             Destroy(gameObject);
             return;
         }
-        Console.WriteLine("p1 " + newPath.Count);
+        //Console.WriteLine("p1 " + newPath.Count);
         this.path = newPath;
         //foreach (var item in path)
         //{
         //    Debug.Log(item.ToString());
         //}
-        Console.WriteLine("p2 " + path.Count + " " + this.path.Count);
+        //Console.WriteLine("p2 " + path.Count + " " + this.path.Count);
         index = 0;
         currentTargetPosition = this.path[index];
 
-        foreach(var i in path)
-        {
-            Console.WriteLine(i);
-        }
+        //foreach(var i in path)
+        //{
+        //    Console.WriteLine(i);
+        //}
 
-        Console.WriteLine("ending in c# \n\n");
+        //Console.WriteLine("ending in c# \n\n");
         //Vector2 directionToFace = new Vector2(0f, 0f);
         //if (this.path.Count != 1)
         //{
@@ -263,15 +263,19 @@ public class CarAI : MonoBehaviour
                 switch (collisionManager.CollisionTypeCheck(targetPos))
                 {
                     case CollisionType.Traffic:
-                        stop = !tm.GetTrafficLightState(new Vector2Int(hit.transform.position), transform.angle);
-                        Debug.Log("Hiting trigger " + stop);
+                        Vector2Int hitPos = new Vector2Int(hit.transform.position);
+                        if (pastTrafficLight.Contains(hitPos)) break;
+                        stop = !tm.GetTrafficLightState(hitPos, transform.angle);
+                        if (!stop) pastTrafficLight.Add(hitPos);
+                        //Debug.Log("Hiting trigger " + stop);
                         //if (tlIndex.Contains(hit.transform.entityId))
                         //{
                         //    stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
                         //    //stop = true;
                         //    Debug.Log("Hiting trigger " + stop);
                         //}
-                        power = 1f;
+                        //if (stop)
+                        //power = 2f;
                         break;
                     case CollisionType.ERP:
                         //Do nothing much if its ERP as the logic is already in ERP
@@ -300,10 +304,10 @@ public class CarAI : MonoBehaviour
         //}
         //Console.WriteLine("CarAI: " + stop);
         //stop = true;
-        if (Input.GetKeyDown(KeyCode.T)) power = 6f;
+        if (Input.GetKey(KeyCode.T)) stop = true;
         //Debug.Log(power);
         //if (testBool) 
-        //stop = true;
+
         //if (!testBool) stop = true;
         if (stop) return;
 

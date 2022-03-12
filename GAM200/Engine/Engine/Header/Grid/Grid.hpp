@@ -109,7 +109,7 @@ namespace Engine {
 			bool IsSurrounded(Math::ivec2 pos, int type);
 
 			int SetRoads(Math::ivec2 posArr[MAX_LINE], int size);
-			bool UnsetRoads(Math::ivec2 pos);
+			int UnsetRoads(Math::ivec2 pos);
 
 			void RevertGrid();
 			void FinalizeGrid();

@@ -17,7 +17,9 @@ public class GameState : MonoBehaviour
     PlacementManager placementManager;
 
     private float dayTimer;
-    private flaot dayCycle;
+    private float dayCycle;
+
+    GameObject receipt;
 
     //bool gameOverBool;
 
@@ -59,10 +61,10 @@ public class GameState : MonoBehaviour
 
         dayTimer += Time.deltaTime;
 
-        if (dayTimer == dayCycle)
+        if (dayTimer >= dayCycle)
         {
-            TimeSystem.StopTime();
             Enable<Transform>(receipt.transform);
+            SetPause(true);
         }
 
         if (shouldEnd)

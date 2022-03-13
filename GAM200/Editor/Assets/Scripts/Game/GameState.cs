@@ -100,7 +100,7 @@ public class GameState : MonoBehaviour
         //}
         //--------------------------
         //Cheat code
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) && Input.GetKey(KeyCode.Shift))
         {
             GameOver();
         }
@@ -120,13 +120,15 @@ public class GameState : MonoBehaviour
 
     void GameOver ()
     {
-        SceneManager.LoadScene("GameOver");
         //if (camMovement.toZoomLose) return;
         //camMovement.toZoomLose = true;
 
 
         Time.timeScale = 0f;
         TrySetHighscore();
+
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("GameOver");
     }
 
     public void SetLoseHouse(Vector2 _pos)

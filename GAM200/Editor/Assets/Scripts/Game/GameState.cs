@@ -38,9 +38,13 @@ public class GameState : MonoBehaviour
         //    highscoreText = go1.GetComponent<Text>();
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
-        buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
+        GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
+        if (buttonRoadGO != null)
+            buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
 
-        moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+        GameObject moneySystemGO = GameObject.Find("MoneyText");
+        if (moneySystemGO != null)
+            moneySystem = moneySystemGO.GetComponent<MoneySystem>();
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
@@ -50,8 +54,10 @@ public class GameState : MonoBehaviour
         dayCycle = 60f;
 
         receipt = GameObject.Find("Receipt");
-
-        Disable<Transform>(receipt.transform);
+        if (receipt != null)
+        {
+            Disable<Transform>(receipt.transform);
+        }
     }
 
     public override void Update()
@@ -59,12 +65,15 @@ public class GameState : MonoBehaviour
         //if (highscoreText != null)
         //    highscoreText.text = highscore.ToString();
 
-        dayTimer += Time.deltaTime;
-
-        if (dayTimer >= dayCycle)
+        if (receipt != null)
         {
-            Enable<Transform>(receipt.transform);
-            SetPause(true);
+            dayTimer += Time.deltaTime;
+
+            if (dayTimer >= dayCycle)
+            {
+                Enable<Transform>(receipt.transform);
+                SetPause(true);
+            }
         }
 
         if (shouldEnd)
@@ -73,17 +82,17 @@ public class GameState : MonoBehaviour
 
             GameOver();
         }
-        else
-        {
-            //if (!gameOverBool)
-            //{
-            //    if (highscore >= 80)
-            //    {
-            //        shouldEnd = true;
-            //        gameOverBool = true;
-            //    }
-            //}
-        }
+        //else
+        //{
+        //    //if (!gameOverBool)
+        //    //{
+        //    //    if (highscore >= 80)
+        //    //    {
+        //    //        shouldEnd = true;
+        //    //        gameOverBool = true;
+        //    //    }
+        //    //}
+        //}
         //--------------------------
         //Cheat code
         //if (Input.GetKeyDown(KeyCode.L))

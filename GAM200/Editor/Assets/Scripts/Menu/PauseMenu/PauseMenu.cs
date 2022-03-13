@@ -113,18 +113,27 @@ public class PauseMenu : MonoBehaviour
 
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
-        buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
-        buttonStore = GameObject.Find("Storebtn").GetComponent<ButtonStore>();
+        GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
+        if (buttonRoadGO != null)
+            buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
+        GameObject buttonStoreGO = GameObject.Find("Storebtn");
+        if (buttonStoreGO != null)
+            buttonStore = buttonStoreGO.GetComponent<ButtonStore>();
 
 
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
         displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
+        GameObject timerButtonGO = GameObject.Find("TimerIcon");
+        if (timerButtonGO != null)
+            timerButton = timerButtonGO.GetComponent<Transform>();
+        GameObject storeButtonGO = GameObject.Find("Storebtn");
+        if (storeButtonGO != null)
+            storeButton = storeButtonGO.GetComponent<Transform>();
 
-        timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
-        storeButton = GameObject.Find("Storebtn").GetComponent<Transform>();
-
-        combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
+        GameObject combinedUIGO = GameObject.Find("CombinedUI");
+        if (combinedUIGO != null)
+            combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
 
 
         //stopTime = false;

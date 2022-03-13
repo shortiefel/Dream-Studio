@@ -86,7 +86,7 @@ public class GameState : MonoBehaviour
     }
 
 
-    public void IncrementScore()
+    private void IncrementScore()
     {
         highscore++;
 
@@ -99,6 +99,12 @@ public class GameState : MonoBehaviour
         {
             buttonRoad.RevealERP();
         }
+    }
+
+    public void ReachedDestination()
+    {
+        Debug.Log("Reached destination ");
+        IncrementScore();
     }
 
     public void MissedDestinationTime()

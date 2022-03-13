@@ -569,13 +569,13 @@ public class CarAI : MonoBehaviour
 
     private void ReachToEndPoint()
     {
-        Console.WriteLine("Before Notify ");
+        //Console.WriteLine("Before Notify ");
         Destroy(gameObject);
-        Console.WriteLine("After delete ");
+        //Console.WriteLine("After delete ");
 
         endPoint.Notify();
 
-        Console.WriteLine("After Notify ");
+        //Console.WriteLine("After Notify ");
 
         if (tm != null)
             tm.RemoveCar(transform.entityId);

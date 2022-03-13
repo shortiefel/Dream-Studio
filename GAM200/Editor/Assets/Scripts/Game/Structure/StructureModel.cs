@@ -206,7 +206,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 
             }
             //notification.transform.
-            gameState.IncrementScore();
+            gameState.ReachedDestination();
             notification.ResetTimer();
         }
     }

@@ -311,12 +311,14 @@ public class ButtonRoad : MonoBehaviour
     }
     public void CallFunction(ButtonType _bt, bool _activeType)
     {
-        cameraMovement.SetZoom(ZoomType.In);
+        
         //Debug.Log("Calling " + _bt + " " + _activeType);
         DisableAll();
 
         if (_activeType)
         {
+            cameraMovement.SetZoom(ZoomType.In);
+
             switch (_bt)
             {
                 case ButtonType.Draw:
@@ -383,6 +385,8 @@ public class ButtonRoad : MonoBehaviour
         }
         else
         {
+            cameraMovement.SetZoom(ZoomType.Out);
+
             SceneManager.SetDrawMode(false);
             gameState.SetDrawMode(false);
 

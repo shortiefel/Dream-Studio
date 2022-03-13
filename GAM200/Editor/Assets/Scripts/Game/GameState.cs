@@ -12,9 +12,10 @@ public class GameState : MonoBehaviour
     CameraMovement camMovement;
     ButtonRoad buttonRoad;
 
+
     //bool gameOverBool;
 
-    float previousTimeScale;
+    //float previousTimeScale;
 
     public override void Start()
     {
@@ -31,7 +32,7 @@ public class GameState : MonoBehaviour
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
         buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
 
-        previousTimeScale = 1f;
+        //previousTimeScale = 1f;
     }
 
     public override void Update()
@@ -132,7 +133,7 @@ public class GameState : MonoBehaviour
 
     public float GetTimeScaleToRestore()
     {
-        return previousTimeScale;
+        return TimeSystem.previousTimeScale;
     }
     public void InvertPause()
     {
@@ -144,14 +145,9 @@ public class GameState : MonoBehaviour
 
     public void SetPause(bool state)
     {
-        Debug.Log("Setting to " + state);
         pauseState = state;
-
-        if (state) {
-            previousTimeScale = Time.timeScale;
-            Time.timeScale = 0f;
-        }
-        else Time.timeScale = previousTimeScale;
+        if (state) Time.timeScale = 0f;
+        else Time.timeScale = TimeSystem.previousTimeScale;
     }
     public bool GetPause()
     {

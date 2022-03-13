@@ -132,11 +132,36 @@ public class StructureManager : MonoBehaviour
             Debug.Log("This position is out of bounds");
             return false;
         }
+
         if (placementManager.CheckIfPositionIsFree(position) == false)
         {
             Debug.Log("This position is not EMPTY");
             return false;
         }
+
+        if (cellType == CellType.SpecialStructure)
+        {
+            Vector2Int rightPos = new Vector2Int(position.x + 1, position.y);
+            Vector2Int upPos = new Vector2Int(position.x, position.y + 1);
+            Vector2Int rightUpPos = new Vector2Int(position.x + 1, position.y + 1);
+
+            if (placementManager.CheckIfPositionInBound(rightPos) == false ||
+                placementManager.CheckIfPositionInBound(upPos) == false ||
+                placementManager.CheckIfPositionInBound(rightUpPos) == false)
+            {
+                Debug.Log("This position is out of bounds");
+                return false;
+            }
+
+            if (placementManager.CheckIfPositionIsFree(rightPos) == false ||
+               placementManager.CheckIfPositionIsFree(upPos) == false ||
+               placementManager.CheckIfPositionIsFree(rightUpPos) == false)
+            {
+                Debug.Log("This position is not EMPTY");
+                return false;
+            }
+        }
+
         if (placementManager.placementGrid.IsSurrounded(position, cellType) == true)
         {
             Debug.Log("This surrounding already has buildings");

@@ -47,11 +47,14 @@ public class TimeSystem : MonoBehaviour
 
     //TimeSystem timeSystem;
 
+    public static float previousTimeScale;
+
 
     public override void Start()
     {
+        previousTimeScale = 1f;
         //texture = GetComponent<UI>();
-        
+
         //timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
 
         //gameState = GameObject.Find("GameManager").GetComponent<GameState>();
@@ -282,18 +285,21 @@ public class TimeSystem : MonoBehaviour
     public void NormalTime()
     {
         timeScale = 1f;
+        previousTimeScale = timeScale;
         Time.timeScale = timeScale;
     }
 
     public void StopTime()
     {
         timeScale = 0f;
+        previousTimeScale = timeScale;
         Time.timeScale = timeScale;
     }
 
     public void SpeedUpTime()
     {
         timeScale = 1.5f;
+        previousTimeScale = timeScale;
         Time.timeScale = timeScale;
     }
 }

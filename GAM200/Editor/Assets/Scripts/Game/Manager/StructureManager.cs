@@ -54,11 +54,16 @@ public class StructureManager : MonoBehaviour
 
         specialPrefabs[(int)BuildingType.Hospital].prefab = new GameObject(new Prefab("HospitalDestination")); specialPrefabs[(int)BuildingType.Hospital].weight = 1;
         specialPrefabs[(int)BuildingType.Office].prefab = new GameObject(new Prefab("OfficeDestination")); specialPrefabs[(int)BuildingType.Office].weight = 1;
-        //specialPrefabs[(int)BuildingType.Park].prefab = new GameObject(new Prefab("ParkDestination")); specialPrefabs[(int)BuildingType.Park].weight = 1;
-        //specialPrefabs[(int)BuildingType.Mall].prefab = new GameObject(new Prefab("MallDestination")); specialPrefabs[(int)BuildingType.Mall].weight = 1;
+        specialPrefabs[(int)BuildingType.Park].prefab = new GameObject(new Prefab("ParkDestination")); specialPrefabs[(int)BuildingType.Park].weight = 1;
+        specialPrefabs[(int)BuildingType.Mall].prefab = new GameObject(new Prefab("MallDestination")); specialPrefabs[(int)BuildingType.Mall].weight = 1;
 
         houseWeights = new float[] { housesPrefabs[0].weight };
-        specialWeights = new float[] { specialPrefabs[(int)BuildingType.Hospital].weight, specialPrefabs[(int)BuildingType.Office].weight };
+        specialWeights = new float[] 
+        { specialPrefabs[(int)BuildingType.Hospital].weight
+        , specialPrefabs[(int)BuildingType.Office].weight 
+        , specialPrefabs[(int)BuildingType.Park].weight 
+        , specialPrefabs[(int)BuildingType.Mall].weight 
+        };
 
         houseList = new Dictionary<Vector2Int, CarSpawner>();
         destinationList = new Dictionary<Vector2Int, StartPositionSet>();

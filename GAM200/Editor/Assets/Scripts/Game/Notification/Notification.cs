@@ -2,17 +2,26 @@
 
 public class Notification : MonoBehaviour
 {
+    InstructionsClick timerNoti;
+    GameObject go1;
+    Animation animation;
+
     private float lifeTime;
     private float notiTime;
     private float maxLifeTime;
     private float showNotification;
+    private GameObject notifiSymbol;
     public bool shouldShow;
+    public bool timerShow;
     public bool alreadyShowing;
 
     //Animation animation;
 
+    Vector2 center;
     bool appearBool;
     bool destroyBool;
+    bool tappearBool;
+    bool tdestroyBool;
     float countDownTimer;
 
 
@@ -20,16 +29,18 @@ public class Notification : MonoBehaviour
     {
         lifeTime = 0f;
         notiTime = 0f;
-        maxLifeTime =80f;
+        maxLifeTime = 80f;
         showNotification = 0f;
         shouldShow = false;
+        timerShow = false;
         alreadyShowing = false;
 
-        //animation = GetComponent<Animation>();
         countDownTimer = 0f;
 
         appearBool = true;
         destroyBool = false;
+        tappearBool = false;
+        tdestroyBool = false;
     }
 
     public void ResetTimer()
@@ -72,7 +83,34 @@ public class Notification : MonoBehaviour
         }
         return false;
     }
-
+    public bool TickerAppearCheck()
+    {
+        if (tappearBool)
+        {
+            countDownTimer += Time.deltaTime;
+            if (countDownTimer > 0.4f)
+            {
+                countDownTimer = 0f;
+                tappearBool = false;
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool TickerDestroyCheck()
+    {
+        if (tdestroyBool)
+        {
+            countDownTimer += Time.deltaTime;
+            if (countDownTimer > 0.5f)
+            {
+                countDownTimer = 0f;
+                tdestroyBool = false;
+                return true;
+            }
+        }
+        return false;
+    }
     public bool NotificationUpdate()
     {
         //if (alreadyShowing) //Only increase timer when notification is shown
@@ -80,6 +118,10 @@ public class Notification : MonoBehaviour
         if (!alreadyShowing)
             notiTime += Time.deltaTime;
         //Console.WriteLine(lifeTime);
+        if (lifeTime > 65.0f)
+        {
+            timerShow = true;
+        }
         if (lifeTime > maxLifeTime)
         {
             //GameOver();
@@ -89,6 +131,7 @@ public class Notification : MonoBehaviour
         }
         if (notiTime > showNotification)
         {
+            Console.WriteLine("Enter here once");
             shouldShow = true;
             //showNotification = maxLifeTime;
         }
@@ -105,5 +148,10 @@ public class Notification : MonoBehaviour
             appearBool = true;
         if (state == "Destroy")
             destroyBool = true;
+        if (state == "TickingAppear")
+            tappearBool = true;
+        if (state == "TickingClose")
+            tdestroyBool = true;
+
     }
 }

@@ -106,20 +106,33 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             {
                 animation.Play("Stay");
             }
-
+            if (notification.TickerAppearCheck())
+            {
+                animation.Play("TickingAppear");
+            }
             if (notification.DestroyCheck())
             {
+                Console.Write("Enter normal destroy");
                 Disable<Transform>(notifiSymbol.transform);
                 destroySound.Play();
                 notification.alreadyShowing = false;
-                animation.Play("Stay");
+               
             }
-
+            if(notification.TickerDestroyCheck())
+            {
+                Console.Write("Enter timer destroy");
+                Disable<Transform>(notifiSymbol.transform);
+                notification.alreadyShowing = false;
+               
+            }
+            if (notification.timerShow == true)
+            {
+                SetToSpawn2();
+                notification.ResetTimer();
+                Enable<Transform>(notifiSymbol.transform);
+            }
             if (notification.shouldShow == true)
             {
-                //animation.Play("Appear");
-                //notification.SetAnimation("Appear");
-                //spawnBool = true;
                 SetToSpawn();
                 notificationSound.Play();
                 notification.shouldShow = false;
@@ -178,8 +191,19 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             //if (notification != null)
             if (notification.alreadyShowing)
             {
-                animation.Play("Destroy");
-                notification.SetAnimation("Destroy");
+                if (notification.timerShow)
+                {
+                    Console.WriteLine("Timer Destroy");
+                    animation.Play("TickingClose");
+                    notification.SetAnimation("TickingClose");
+                    notification.timerShow = false;
+                }
+                else
+                {
+                    animation.Play("Destroy");
+                    notification.SetAnimation("Destroy");
+                }
+                
             }
             //notification.transform.
             gameState.IncrementScore();
@@ -197,6 +221,13 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         animation.Play("Appear");
         notification.SetAnimation("Appear");
         spawnBool = true;
+    }
+
+    void SetToSpawn2()
+    {
+        animation.Play("TickingAppear");
+        notification.SetAnimation("TickingAppear");
+        //spawnBool = true;
     }
 
     //internal List<Marker> GetCarMarkers()

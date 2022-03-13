@@ -100,34 +100,26 @@ public class InstructionsMain : MonoBehaviour
         {
             if (instructions2Script.state)
             {
+                
+                    if (stateCheck)
+                    {
+                        instructions2Script.animation.Play("Close");
+                        stateCheck = false;
+                    }
+                    if (CheckTimer())
+                    {
+                        Disable<Transform>(go2.GetComponent<Transform>());
 
-                if (stateCheck)
-                {
+                        instructions3Script.animation.Play("Open");
+                        Enable<Transform>(go3.GetComponent<Transform>());
+                        stages++;
+                        stateCheck = true;
+                        instructions2Script.state = false;
 
-                    
-                    instructions2Script.animation.Play("Close");
-                    stateCheck = false;
-                }
-                if (CheckTimer())
-                {
-                    Disable<Transform>(go2.GetComponent<Transform>());
-                    
-
-                    instructions3Script.animation.Play("Open");
-                    Enable<Transform>(go3.GetComponent<Transform>());
-                    stages++;
-                    stateCheck = true;
-                    instructions2Script.state = false;
-
-                    tutorial.CheckPosition();
-                    count = roadManager.roadCount;
-
-                    Disable<Transform>(displayArrowGlow);
-                    //Enable<Transform>(drawRoadGlow);
-
-
-                }
-
+                        tutorial.CheckPosition();
+                        count = roadManager.roadCount;
+                    }
+                
             }
 
         }
@@ -135,8 +127,7 @@ public class InstructionsMain : MonoBehaviour
         {
             if (instructions3Script.state)
             {
-
-                if (roadManager.roadCount < 20)
+                if(roadManager.roadCount< 20)
                 {
                     if (stateCheck)
                     {
@@ -170,7 +161,7 @@ public class InstructionsMain : MonoBehaviour
         {
             if (instructions4Script.state)
             {
-                if (roadManager.roadCount > count)
+                if(roadManager.roadCount > count)
                 {
                     if (stateCheck)
                     {
@@ -191,7 +182,7 @@ public class InstructionsMain : MonoBehaviour
                         instructions4Script.state = false;
                     }
                 }
-
+                
             }
         }
         else if (stages == 4)

@@ -39,6 +39,7 @@ public class MoneySystem : MonoBehaviour
 
     public void MinusMoney(int val)
     {
+
         money -= val;
         if (money < 1)
             money = 0;
@@ -71,12 +72,10 @@ public class MoneySystem : MonoBehaviour
         --roadManager.roadCount;
     }
 
-
-    //public int GetCurrErp()
-    //{
-    //    return currErp;
-    //}
-
+    public int GetErpCost()
+    {
+        return erpCost;
+    }
     public void BuyErp()
     {
         money -= erpCost;
@@ -93,10 +92,11 @@ public class MoneySystem : MonoBehaviour
         textComp.text = money.ToString();
         --roadManager.erpManager.erpCount;
     }
-    //public int GetCurrTL()
-    //{
-    //    return currTL;
-    //}
+
+    public int GetTLCost()
+    {
+        return tlCost;
+    }
     public void BuyTrafficLight()
     {
         money -= tlCost;

@@ -67,9 +67,15 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
 
-                        moneySystem.BuyRoad();
+                        //moneySystem.BuyRoad();
                         CostRoad.text = moneySystem.roadCost.ToString();
 
+                        if (moneySystem.GetMoney() >= 10)
+                        {
+                            moneySystem.BuyRoad();
+                        }
+                        //++roadManager.roadCount;
+                        //RoadNo.text = roadManager.currRoad.ToString();
                     }
 
                     break;
@@ -90,9 +96,15 @@ public class ButtonStoreClick : MonoBehaviour
 
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        moneySystem.BuyErp();
+                        //moneySystem.BuyErp();
                         CostERP.text = moneySystem.erpCost.ToString();
                    
+                        if(moneySystem.GetMoney() >= moneySystem.GetErpCost())
+                        {
+                            moneySystem.BuyErp();
+                        }
+                        //++roadManager.erpManager.erpCount;
+                        //ERPNo.text = ERPText.ToString();
                     }
 
                     break;
@@ -115,9 +127,16 @@ public class ButtonStoreClick : MonoBehaviour
 
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        moneySystem.BuyTrafficLight();
+                        //moneySystem.BuyTrafficLight();
                         CostTL.text = moneySystem.tlCost.ToString();
 
+                        if (moneySystem.GetMoney() >= moneySystem.GetTLCost())
+                        {
+                            moneySystem.BuyTrafficLight();
+
+                        }
+                        //++roadManager.trafficLightManager.tlCount;
+                        //TrafficNo.text = TrafficText.ToString();
                     }
 
                     break;

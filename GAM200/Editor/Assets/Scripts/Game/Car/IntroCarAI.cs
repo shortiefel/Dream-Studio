@@ -10,17 +10,17 @@ public class IntroCarAI : MonoBehaviour
 
     public override void Start()
     {
-        //rb = GetComponent<Rigidbody2D>();
+        ////rb = GetComponent<Rigidbody2D>();
       
-        if(transform.position.x < -270)
-            type = true;
-        else
-            type = false;
+        //if(transform.position.x < -270)
+        //    type = true;
+        //else
+        //    type = false;
 
-        if (type)
-            startPosition = new Vector2(-12, 0f);
-        else
-            startPosition = new Vector2(0,0);
+        //if (type)
+        //    startPosition = new Vector2(-12, -5.2f);
+        //else
+        startPosition = new Vector2(-15, -1.2f);
     }
 
 
@@ -28,11 +28,10 @@ public class IntroCarAI : MonoBehaviour
     {
         transform.position += transform.right * 20f * Time.deltaTime;
 
-        if (type && transform.position.x > 30f)
+        //if (type && transform.position.x > 30f)
+        //    transform.position = startPosition;
+        if (transform.position.x > 30f)
             transform.position = startPosition;
-
-
-
     }
 
 

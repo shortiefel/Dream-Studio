@@ -70,6 +70,8 @@ namespace Engine
 
         while (app_run_bool)
         {
+            glfwPollEvents(); //Moved from window
+
             Timer timer("Total", std::move([&](ProfilerResult&& result)
                 {
                     float sec = static_cast<float>(result.time) * 0.001f;

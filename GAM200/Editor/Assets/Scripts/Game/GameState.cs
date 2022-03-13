@@ -143,9 +143,12 @@ public class GameState : MonoBehaviour
 
     public void ExpandGrid()
     {
+        //Debug.Log("Haoneienri");
         placementManager.placementGrid.Expand();
-        camMovement.maxZoom *= 1;
-        camMovement.minZoom *= 0.5f;
+        camMovement.maxZoom *= 2f;
+        //camMovement.minZoom *= 0.5f;
+
+        buttonRoad.SwitchTabRoad(false);
     }
 
     public int GetScore()
@@ -204,8 +207,8 @@ public class GameState : MonoBehaviour
         return drawModeBool;
     }
 
-    public bool ShouldDraw()
-    {
-        return !pauseState && drawModeBool;
-    }
+    //public bool ShouldDraw()
+    //{
+    //    return !pauseState && drawModeBool;
+    //}
 }

@@ -430,18 +430,14 @@ public class ButtonRoad : MonoBehaviour
         if (revealERPButton)
         {
             if (bt != ButtonType.ERP)
-            {
                 Enable<Transform>(drawERP);
-                Enable<Transform>(ERPCount);
-            }
+            Enable<Transform>(ERPCount);
         }
         if (revealTrafficButton)
         {
             if (bt != ButtonType.TrafficLight)
-            {
                 Enable<Transform>(drawTraffic);
-                Enable<Transform>(trafficCount);
-            }
+            Enable<Transform>(trafficCount);
         }
     }
 

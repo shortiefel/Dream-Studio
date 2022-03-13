@@ -470,6 +470,9 @@ public class RoadManager : MonoBehaviour
         if (erpManager != null)
             result |= erpManager.RequestRemovingERP(position);
 
+        //if (result == true)
+        //    return;
+
         //if (placementManager.placementGrid.UnsetRoad(position))
         //{
         //    roadCount++;

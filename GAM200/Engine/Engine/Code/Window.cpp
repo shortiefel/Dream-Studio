@@ -59,7 +59,7 @@ namespace Engine {
 
 		Input::UpdateMouseStatus();
 
-		glfwPollEvents();
+		//glfwPollEvents(); //Moved to application
 		glfwSwapBuffers(glfw_window);
 	}
 

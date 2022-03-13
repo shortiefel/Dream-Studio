@@ -178,7 +178,7 @@ public class TrafficLightManager : MonoBehaviour
 
         ++tlCount;
         moneySystem.SellTL();
-        Destroy(trafficLights[position]);
+        Destroy(trafficLights[position].entityId);
         trafficLights.Remove(position);
         return true;
 

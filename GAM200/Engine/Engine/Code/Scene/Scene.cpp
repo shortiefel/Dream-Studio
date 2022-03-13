@@ -56,7 +56,7 @@ namespace Engine {
 
     Scene::Scene(std::string _sceneName, bool _deserializeState) : sceneName{ _sceneName } {
         if (_deserializeState) {
-            std::cout << "Recreate scene\n";
+            //std::cout << "Recreate scene\n";
             GameSceneSerializer::DeserializeScene(sceneName);
         }
         else {
@@ -69,7 +69,7 @@ namespace Engine {
 
         ScriptSystem::GetInstance().UpdateMapData();
         if (GameState::GetInstance().GetPlaying()) {
-            std::cout << "ScriptSystem PlayInit\n";
+            //std::cout << "ScriptSystem PlayInit\n";
             ScriptSystem::GetInstance().PlayInit();
         }
         //AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });

@@ -39,7 +39,10 @@ public class TrafficLight : MonoBehaviour
         if (go != null)
             tlm = go.GetComponent<TrafficLightManager>();
         if (tlm != null)
+        {
+            Debug.Log("Not null");
             tlm.RegisterTrafficLight(Vector2Int.RoundToInt(transform.position), entityId);
+        }
 
         state = toState = true;
         //texture = gameObject.GetComponent<Texture>();
@@ -88,7 +91,7 @@ public class TrafficLight : MonoBehaviour
     public override void Update()
     {
         float deltaTime = Time.deltaTime;
-        Console.WriteLine("State " + directionState);
+        //Console.WriteLine("State " + directionState);
         if (Input.GetKeyDown(KeyCode.V))
             SwapState();
         timer += deltaTime;

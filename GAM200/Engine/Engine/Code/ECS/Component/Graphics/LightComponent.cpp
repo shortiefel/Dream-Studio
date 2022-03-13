@@ -27,9 +27,14 @@ Technology is prohibited.
 namespace Engine
 {
 	// Contructor for Light Component
-	LightComponent::LightComponent(Entity_id _ID, Math::vec4 _colour, bool _active) :
+
+	/*
+	LightComponent::LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID,
+		Math::vec3 _direction, Math::vec3 _ambient, Math::vec3 _diffuse, Math::vec3 _specular, Math::vec3 _colour,
+		bool _active) :
 		IComponent{ _ID }, depthFBO{ 0 }, depthMap{ 0 }, shadowWidth{ 1024 }, shadowHeight{ 1024 },
-		near_plane{ 1.0f }, far_plane{ 7.5f }, colour{ _colour }, isActive{ _active }
+		direction{ _direction }, ambient{ _ambient }, diffuse{ _diffuse }, specular{ _specular }, colour{ _colour },
+		near_plane{ -1.0f }, far_plane{ 7.5f }, isActive{ _active }
 	{
 		lightProjection = Math::OrthoGraphic(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 		lightView = Math::LookAt(Math::vec3(-2.0f, 4.0f, -1.0f),
@@ -37,14 +42,17 @@ namespace Engine
 								 Math::vec3(0.0f, 1.0f, 0.0f));
 
 		lightSpace = lightProjection * lightView;
-
 	}
+	*/
+
+	LightComponent::LightComponent(Entity_id _ID, Math::vec3 _colour, bool _active) {};
 
 
 	// Destructor for Light Component
 	LightComponent::~LightComponent()
 	{
-		// Do something here
+		glDeleteFramebuffers(1, &depthFBO);
+		glDeleteTextures(1, &depthMap);
 	}
 
 	// Function that creates both buffer and texture and attached the texture to the buffer
@@ -52,23 +60,26 @@ namespace Engine
 	{
 		// Create framebuffer object
 		glGenFramebuffers(1, &depthFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
 
 
 		// Generate depth texture
 		glGenTextures(1, &depthMap);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowWidth, shadowHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowWidth, shadowHeight, 0, 
+			GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
 
 
 		// Attached depth texture to depth buffer
-		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+		//glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthMap, 0);
 		glDrawBuffer(GL_NONE);
-		glReadBuffer(GL_NONE);
+		//glReadBuffer(GL_NONE);
 			
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -80,9 +91,15 @@ namespace Engine
 	}
 
 	// Function that binds the framebuffer object to the framebuffer
-	void LightComponent::Bind()
+	void LightComponent::BindFBO()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
+	}
+
+	// Function that binds the depthMap
+	void LightComponent::BindTexture()
+	{
+		glBindTexture(GL_TEXTURE_2D, depthMap);
 	}
 
 	// Function that unbinds the framebuffer object that is attached to the framebuffer
@@ -94,7 +111,12 @@ namespace Engine
 	// Deserialize function for Light Component
 	LightComponent& LightComponent::Deserialize(const DSerializer& _serializer)
 	{
-		colour = _serializer.GetValue<Math::vec4>("Colour");
+		direction = _serializer.GetValue<Math::vec3>("Direction");
+		ambient = _serializer.GetValue<Math::vec3>("Ambient");
+		diffuse = _serializer.GetValue<Math::vec3>("Diffuse");
+		specular = _serializer.GetValue<Math::vec3>("Specular");
+		colour = _serializer.GetValue<Math::vec3>("Colour");
+
 		isActive = _serializer.GetValue<bool>("IsActive");
 
 		return *this;
@@ -103,6 +125,10 @@ namespace Engine
 	// Serialize function for Light Component
 	void LightComponent::Serialize(const SSerializer& _serializer)
 	{
+		_serializer.SetValue("Direction", direction);
+		_serializer.SetValue("Ambient", ambient);
+		_serializer.SetValue("Diffuse", diffuse);
+		_serializer.SetValue("Specular", specular);
 		_serializer.SetValue("Colour", colour);
 		_serializer.SetValue("IsActive", isActive);
 	}

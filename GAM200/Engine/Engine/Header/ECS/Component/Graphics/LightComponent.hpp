@@ -31,27 +31,39 @@ namespace Engine
 
 	struct LightComponent : public IComponent
 	{
-		Math::vec4 colour;
-
 		unsigned int depthFBO, depthMap;
-		unsigned int shadowWidth, shadowHeight;
+		unsigned int shadowWidth = 1024, shadowHeight = 1024;
 
-		float near_plane, far_plane;
+		float near_plane = -1.f, far_plane = 7.5f;
 		Math::mat4 lightProjection;
 		Math::mat4 lightView;
 		Math::mat4 lightSpace;
+
+		Math::vec3 direction;
+		Math::vec3 position;
+
+		Math::vec3 ambient;
+		Math::vec3 diffuse;
+		Math::vec3 specular;
+
+		Math::vec3 colour;
 
 
 		bool isActive = true;
 
 		void FBOCreate();
 
+		/*
+		LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID, 
+			Math::vec3 _direction, Math::vec3 _ambient, Math::vec3 _diffuse, Math::vec3 _specular, Math::vec3 _colour = { 1.f, 1.f, 1.f }, 
+			bool _active = true);
+		*/
 
-		LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec4 _colour = { 1.f, 1.f, 1.f, 1.f }, bool _active = true);
+		LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec3 _colour = { 1.f, 1.f, 1.f },
+			bool _active = true);
 
-
-
-		void Bind();
+		void BindFBO();
+		void BindTexture();
 		void Unbind();
 
 		LightComponent& Deserialize(const DSerializer& _serializer);

@@ -10,7 +10,9 @@ Used for depth calculation for Shadow Mapping (Lights and Shadows)
  
 #version 450 core
 
-uniform mat3 uCamMatrix;
+uniform mat4 uLightSpaceMatrix;
+uniform mat4 uLightProjection;
+uniform mat4 uLightView;
 
 layout (location=0) in vec2 aVertexPosition;
 layout (location=1) in vec4 aVertexColor;
@@ -20,27 +22,52 @@ layout (location=4) in vec2 aTPosition;
 layout (location=5) in vec2 aTScale;
 layout (location=6) in float aTRotation;
 
+out VS_OUT {
+    vec3 fragPos;
+    vec3 normal;
+    vec2 texCoords;
+    vec4 fragPosLightSpace;
+} vs_out;
+
+layout (location=4) out vec2 vTexture;
+layout (location=5) out float vTextureIndex;
+
+
+
 
 void main() 
 {
 	// Compute uModel_to_NDC matrix
-	mat3 uModel_to_NDC = mat3(
+	mat4 uModel_to_NDC = mat4(
 		// Translate
-		mat3(vec3(1.f, 0, 0),
-			 vec3(0, 1.f, 0),
-			 vec3(aTPosition.x, aTPosition.y, 1.f))
+		mat4(vec4(1.f, 0.f, 0.f, 0.f),
+			 vec4(0, 1.f, 0.f, 0.f),
+			 vec4(0, 0.f, 1.f, 0.f),
+			 vec4(aTPosition.x, aTPosition.y, 0.0f, 1.f))
 		*
 		// Rotate
-		mat3(vec3(cos(aTRotation), sin(aTRotation), 0.f),
-			 vec3(-sin(aTRotation), cos(aTRotation), 0.f),
-			 vec3(0.f, 0.f, 1.f))
+		mat4(vec4(cos(aTRotation), sin(aTRotation), 0.f, 0.f),
+			 vec4(-sin(aTRotation), cos(aTRotation), 0.f, 0.f),
+			 vec4(0.f, 0.f, 1.f, 0.f),
+			 vec4(0.f, 0.f, 0.f, 1.f))
 		*
 		// Scale
-		mat3(vec3(aTScale.x, 0, 0),
-			 vec3(0, aTScale.y, 0),
-			 vec3(0, 0, 1.f))
+		mat4(vec4(aTScale.x, 0.f, 0.f, 0.f),
+			 vec4(0.f, aTScale.y, 0.f, 0.f),
+			 vec4(0.f, 0.f, 1.f, 0.f),
+			 vec4(0.f, 0.f, 0.f, 1.f))
 		);
 
-	// object position
-	gl_Position = vec4(vec2(uCamMatrix * uModel_to_NDC * vec3(aVertexPosition, 1.f)), 0.0, 1.0);
+
+	vs_out.fragPos = vec3(uModel_to_NDC * vec4(aVertexPosition, 0.f, 1.f));
+    vs_out.normal = transpose(inverse(mat3(uModel_to_NDC))) * vec3(0.f, 1.f, 0.f);
+    vs_out.texCoords = aVertexTexture;
+    vs_out.fragPosLightSpace = uLightSpaceMatrix * vec4(vs_out.fragPos, 1.0);
+	
+    gl_Position = uLightProjection * uLightView * vec4(vs_out.fragPos, 1.0);
+	
+	vTexture = aVertexTexture;
+	vTextureIndex = aTextureIndex;
+
+	//gl_Position = vec4(vec2(uLightMatrix * uModel_to_NDC * vec4(aVertexPosition, 0.f, 1.f)), 0.0, 1.0);
 }

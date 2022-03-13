@@ -42,7 +42,9 @@ namespace Editor {
 	}
 
 	void EditorStartPoint::Update(float _dt) {
-		// Function that render to depth map, loops through light array
+
+		/*
+		// Loops through lightArray to get object that has a lightComponent, render to lightComponent's FBO
 		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
 		for (auto& light : lightArray)
 		{
@@ -57,6 +59,7 @@ namespace Editor {
 
 			Engine::GraphicSystem::GetInstance().Render(_dt, &light);
 		}
+		*/
 
 		//glViewport(0, 0, Engine::Settings::windowWidth, Engine::Settings::windowHeight);
 
@@ -69,7 +72,6 @@ namespace Editor {
 		Engine::GraphicSystem::GetInstance().Render(0.f, GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
 		Engine::UISystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());
 		Engine::FontSystem::GetInstance().Render(_dt, GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());
-
 		
 
 		//The system already added the time taken

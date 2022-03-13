@@ -11,10 +11,14 @@ public class MoneySystem : MonoBehaviour
     public int tlCost;
     public int roadCost;
 
+    public int roadNum;
+    public int tlNum;
+    public int erpNum;
     public int roadTax;
     public int erpTax;
     public int trafficTax;
     public int totalTax;
+    public int balance;
 
     private int erpBuyCount;
     private int tlBuyCount;
@@ -23,6 +27,7 @@ public class MoneySystem : MonoBehaviour
     ERPManager erpManager;
     TrafficLightManager trafficLightManager;
     GameState gameState;
+    Receipt receipt;
 
     public override void Start()
     {
@@ -30,6 +35,7 @@ public class MoneySystem : MonoBehaviour
         erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
         trafficLightManager = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+        receipt = GameObject.Find("Receipt").GetComponent<Receipt>();
         money = 1000;
         textComp = GetComponent<Text>();
         textComp.text = money.ToString();
@@ -55,6 +61,8 @@ public class MoneySystem : MonoBehaviour
         if (money < 1)
             money = 0;
         textComp.text = money.ToString();
+
+        balance = money;
     }
 
     public int GetMoney()
@@ -64,18 +72,25 @@ public class MoneySystem : MonoBehaviour
 
     public void TaxMoney()
     {
-        roadTax = roadManager.taxRoadCount * 3;
-        erpTax = erpManager.erpTaxCount() * 5;
-        trafficTax = trafficLightManager.trafficlightTaxCount() * 4;
+        roadNum = roadManager.taxRoadCount;
+        tlNum = trafficLightManager.trafficlightTaxCount();
+        erpNum = erpManager.erpTaxCount();
+
+        roadTax =  roadNum* 3;
+        trafficTax = tlNum * 4;
+        erpTax = erpNum * 5;
+        
 
         totalTax = roadTax + erpTax + trafficTax;
 
         MinusMoney(totalTax);
 
-        if (money < 0)
+        if (balance < 0)
         {
             gameState.shouldEnd = true;
         }
+
+        receipt.ShowReceipt();
     }
 
     //public int GetCurrRoad()

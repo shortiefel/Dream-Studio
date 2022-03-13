@@ -73,6 +73,8 @@ public class GameState : MonoBehaviour
             {
                 Enable<Transform>(receipt.transform);
                 SetPause(true);
+                moneySystem.TaxMoney();
+                dayTimer = 0f;
             }
         }
 

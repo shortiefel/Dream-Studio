@@ -51,7 +51,7 @@ public class GameState : MonoBehaviour
         //previousTimeScale = 1f;
 
         dayTimer = 0f;
-        dayCycle = 60f;
+        dayCycle = 360f;
 
         receipt = GameObject.Find("Receipt");
         if (receipt != null)

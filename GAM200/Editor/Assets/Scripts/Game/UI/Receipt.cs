@@ -14,6 +14,8 @@ public class Receipt : MonoBehaviour
     GameObject totalTax;
     GameObject balance;
 
+    GameObject closeReceipt;
+
     Text roadNumberText;
     Text tlNumberText;
     Text erpNumberText;
@@ -61,6 +63,9 @@ public class Receipt : MonoBehaviour
         balanceText = balance.GetComponent<Text>();
         Disable<Transform>(balance.transform);
 
+        closeReceipt = GameObject.Find("CloseReceipt");
+        Disable<Transform>(closeReceipt.transform);
+
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
     }
 
@@ -84,5 +89,7 @@ public class Receipt : MonoBehaviour
         Enable<Transform>(totalTax.transform);
         balanceText.text = moneySystem.balance.ToString();
         Enable<Transform>(balance.transform);
+
+        Enable<Transform>(closeReceipt.transform);
     }
 }

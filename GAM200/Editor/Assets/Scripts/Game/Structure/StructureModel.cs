@@ -46,7 +46,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             Vector2 center = transform.localPosition;
             
             //Debug.Log("come in here --------------------------------------------------------------------------------");
-            notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 0.7f, 0f), 4);
+            notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 1.5f, 0f), 4);
             //notification.SetAnimation(ref notifiSymbol.GetComponent<Animation>());
             animation = notifiSymbol.GetComponent<Animation>();
             //animation.Play("Appear");

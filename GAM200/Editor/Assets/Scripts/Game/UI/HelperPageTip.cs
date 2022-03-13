@@ -11,7 +11,7 @@ public class HelperPageTip : MonoBehaviour
             Time.timeScale = 1f;
 
             Enable<Transform>(GameObject.Find("MoneyText").GetComponent<Transform>());
-            Enable<Transform>(GameObject.Find("CounterText").GetComponent<Transform>());
+            //Enable<Transform>(GameObject.Find("CounterText").GetComponent<Transform>());
             Enable<Transform>(GameObject.Find("Displaybtn").GetComponent<Transform>());
         }
     }

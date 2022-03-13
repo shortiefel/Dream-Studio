@@ -284,6 +284,7 @@ public class CarAI : MonoBehaviour
                         //Stop car because might be other cars
                         //stop = true;
                         //Debug.Log("Hit");
+                        //collisionManager.AddRaycastCollision(entityId, hit.transform.entityId);
                         break;
                     default:
                         break;
@@ -350,44 +351,44 @@ public class CarAI : MonoBehaviour
         }
 
     }
-    public override void FixedUpdate()
-    {
-        //if (rb.velocity.magnitude < maxSpeed)
-        //{
-        //    rb.AddForce(movementVector.y * transform.up * power * turningFactor);
-        //}
-        //Debug.Log(rb.inertia);
-        //rb.AddTorque(movementVector.x * power * 70);
-
-        //transform.angle = targetAngle;
-        //tValue += power * Time.deltaTime;
-
-
-        //if (turning)
-        //{
-        //    tValue += 0.5f * power * Time.deltaTime;
-        //    transform.position = Vector2.QuadraticBezier(p0, p1, p2, tValue, out angle);
-        //    transform.angle = angle;
-        //
-        //    //if (tValue > 0.9f)
-        //    //{
-        //    //    tValue = 0f;
-        //    //    changeTarget = true;
-        //    //}
-        //}
-        //else
-        //{
-        //    tValue += power * Time.deltaTime;
-        //    transform.position = new Vector2(Mathf.Lerp(prevPos.x, currentTargetPosition.x, tValue), Mathf.Lerp(prevPos.y, currentTargetPosition.y, tValue));
-        //    //transform.angle = Mathf.Lerp(prevAngle, targetAngle, tValue);
-        //}
-        //
-        //if (tValue > 0.95f)
-        //{
-        //    tValue = 0f;
-        //    changeTarget = true;
-        //}
-    }
+    //public override void FixedUpdate()
+    //{
+    //    //if (rb.velocity.magnitude < maxSpeed)
+    //    //{
+    //    //    rb.AddForce(movementVector.y * transform.up * power * turningFactor);
+    //    //}
+    //    //Debug.Log(rb.inertia);
+    //    //rb.AddTorque(movementVector.x * power * 70);
+    //
+    //    //transform.angle = targetAngle;
+    //    //tValue += power * Time.deltaTime;
+    //
+    //
+    //    //if (turning)
+    //    //{
+    //    //    tValue += 0.5f * power * Time.deltaTime;
+    //    //    transform.position = Vector2.QuadraticBezier(p0, p1, p2, tValue, out angle);
+    //    //    transform.angle = angle;
+    //    //
+    //    //    //if (tValue > 0.9f)
+    //    //    //{
+    //    //    //    tValue = 0f;
+    //    //    //    changeTarget = true;
+    //    //    //}
+    //    //}
+    //    //else
+    //    //{
+    //    //    tValue += power * Time.deltaTime;
+    //    //    transform.position = new Vector2(Mathf.Lerp(prevPos.x, currentTargetPosition.x, tValue), Mathf.Lerp(prevPos.y, currentTargetPosition.y, tValue));
+    //    //    //transform.angle = Mathf.Lerp(prevAngle, targetAngle, tValue);
+    //    //}
+    //    //
+    //    //if (tValue > 0.95f)
+    //    //{
+    //    //    tValue = 0f;
+    //    //    changeTarget = true;
+    //    //}
+    //}
 
     //private void CheckForCollisions()
     //{

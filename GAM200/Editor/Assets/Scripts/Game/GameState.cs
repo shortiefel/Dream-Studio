@@ -14,6 +14,8 @@ public class GameState : MonoBehaviour
 
     MoneySystem moneySystem;
 
+    PlacementManager placementManager;
+
 
     //bool gameOverBool;
 
@@ -35,6 +37,8 @@ public class GameState : MonoBehaviour
         buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+
+        placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
         //previousTimeScale = 1f;
     }
@@ -116,6 +120,11 @@ public class GameState : MonoBehaviour
         //highscore--;
         moneySystem.MinusMoney(100);
         Debug.Log("Missed a destination ");
+    }
+
+    public void ExpandGrid()
+    {
+        placementManager.placementGrid.Expand();
     }
 
     public int GetScore()

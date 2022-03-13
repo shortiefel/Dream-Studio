@@ -239,7 +239,8 @@ public class SpawnManager : MonoBehaviour
                 if (attemptLoopCount > 10)
                 {
                     Debug.Log("Expand grid");
-                    placementManager.placementGrid.Expand();
+                    //placementManager.placementGrid.Expand();
+                    gameState.ExpandGrid();
                 }
             }
         }

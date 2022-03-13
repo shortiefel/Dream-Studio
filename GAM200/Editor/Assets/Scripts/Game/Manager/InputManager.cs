@@ -45,7 +45,8 @@ public class InputManager : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.M) && Input.GetKey(KeyCode.Shift))
 		{
-			placementManager.placementGrid.Expand();
+			//placementManager.placementGrid.Expand();
+			gameState.ExpandGrid();
 		}
 		
 		//if (!gameState.GetPause())

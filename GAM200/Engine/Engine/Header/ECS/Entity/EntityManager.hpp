@@ -42,7 +42,7 @@ namespace Engine {
 			}
 			//LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
 
-			Entity_id entityId;
+			Entity_id entityId = 0;
 
 			if (currentMaxId < MAX_ENTITIES) {
 				entityId = currentMaxId;

@@ -206,12 +206,12 @@ namespace Engine {
                 //1 2
                 //3 4
                 specialStructure.emplace_back(Math::ivec2{ x,y });
-                auto& currentCell = *(*(grid + xVal) + yVal);
+                //auto& currentCell = *(*(grid + xVal) + yVal);
                 auto& rightCell = *(*(grid + xVal + 1) + yVal); //2
                 auto& downCell = *(*(grid + xVal) + yVal + 1); //3
                 auto& downRightCell = *(*(grid + xVal + 1) + yVal + 1); //4
 
-                auto& currentCellBU = *(*(backupGrid + xVal) + yVal);
+                //auto& currentCellBU = *(*(backupGrid + xVal) + yVal);
                 auto& rightCellBU = *(*(backupGrid + xVal + 1) + yVal); //2
                 auto& downCellBU = *(*(backupGrid + xVal) + yVal + 1); //3
                 auto& downRightCellBU = *(*(backupGrid + xVal + 1) + yVal + 1); //4

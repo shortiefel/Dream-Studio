@@ -10,6 +10,7 @@ public class RoadManager : MonoBehaviour
 
     //public List<Vector2Int> temporaryPlacementPositions;
     private int temporaryRoadCount;
+    public int taxRoadCount;
 
     //private List<Vector2Int> roadPositionsToRecheck;
 
@@ -338,6 +339,7 @@ public class RoadManager : MonoBehaviour
 
             temporaryRoadCount = temporaryRoadPositions.Count;
 
+            taxRoadCount++;
 
             return;
         }
@@ -386,6 +388,7 @@ public class RoadManager : MonoBehaviour
 
         temporaryRoadCount = temporaryRoadPositions.Count;
 
+        taxRoadCount++;
 
         //placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
 
@@ -477,6 +480,8 @@ public class RoadManager : MonoBehaviour
         {
             roadCount += roadInc;
             removeSound.Play();
+
+            taxRoadCount--;
         }
         //if (result == true)
         //    return;

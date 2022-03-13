@@ -16,6 +16,8 @@ public class GameState : MonoBehaviour
 
     PlacementManager placementManager;
 
+    private float dayTimer;
+    private flaot dayCycle;
 
     //bool gameOverBool;
 
@@ -41,12 +43,27 @@ public class GameState : MonoBehaviour
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
         //previousTimeScale = 1f;
+
+        dayTimer = 0f;
+        dayCycle = 60f;
+
+        receipt = GameObject.Find("Receipt");
+
+        Disable<Transform>(receipt.transform);
     }
 
     public override void Update()
     {
         //if (highscoreText != null)
         //    highscoreText.text = highscore.ToString();
+
+        dayTimer += Time.deltaTime;
+
+        if (dayTimer == dayCycle)
+        {
+            TimeSystem.StopTime();
+            Enable<Transform>(receipt.transform);
+        }
 
         if (shouldEnd)
         {

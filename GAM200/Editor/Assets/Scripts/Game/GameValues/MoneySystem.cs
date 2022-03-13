@@ -11,14 +11,25 @@ public class MoneySystem : MonoBehaviour
     public int tlCost;
     public int roadCost;
 
+    public int roadTax;
+    public int erpTax;
+    public int trafficTax;
+    public int totalTax;
+
     private int erpBuyCount;
     private int tlBuyCount;
 
     RoadManager roadManager;
+    ERPManager erpManager;
+    TrafficLightManager trafficLightManager;
+    GameState gameState;
 
     public override void Start()
     {
         roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
+        erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
+        trafficLightManager = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
+        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
         money = 1000;
         textComp = GetComponent<Text>();
         textComp.text = money.ToString();
@@ -49,6 +60,22 @@ public class MoneySystem : MonoBehaviour
     public int GetMoney()
     {
         return money;
+    }
+
+    public void TaxMoney()
+    {
+        roadTax = roadManager.taxRoadCount * 3;
+        erpTax = erpManager.erpTaxCount() * 5;
+        trafficTax = trafficLightManager.trafficlightTaxCount() * 4;
+
+        totalTax = roadTax + erpTax + trafficTax;
+
+        MinusMoney(totalTax);
+
+        if (money < 0)
+        {
+            gameState.shouldEnd = true;
+        }
     }
 
     //public int GetCurrRoad()

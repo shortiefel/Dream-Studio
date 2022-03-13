@@ -36,6 +36,11 @@ public class TrafficLightManager : MonoBehaviour
         Disable<Transform>(TLInfo);
     }
 
+    public int trafficlightTaxCount()
+    {
+        return trafficLights.Count;
+    }
+
     //public override void Update()
     //{
     //    //To Remove ------------------------------------------------------

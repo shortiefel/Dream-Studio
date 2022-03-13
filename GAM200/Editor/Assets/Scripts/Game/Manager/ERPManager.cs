@@ -79,6 +79,10 @@ public class ERPManager : MonoBehaviour
         return false;
     }
 
+    public int erpTaxCount()
+    {
+        return erpList.Count;
+    }
 
     public bool RequestPlacingERP(Vector2Int position)
     {

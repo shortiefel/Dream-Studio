@@ -403,11 +403,13 @@ LightComponent* lightSource = nullptr;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
+		/*
+		
 		// Load shader program
 		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Simple_Depth].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
-		// Set uniforms
+		// Set uniforms for Light
 		GLSLShader::SetUniform("uLightSpaceMatrix", _fbo->lightSpace, shd_ref_handle);
 		GLSLShader::SetUniform("uLightProjection", _fbo->lightProjection, shd_ref_handle);
 		GLSLShader::SetUniform("uLightView", _fbo->lightView, shd_ref_handle);
@@ -428,7 +430,7 @@ LightComponent* lightSource = nullptr;
 
 
 		unsigned int diffuseTexture = ResourceManager::GetInstance().GetTextureContainer("Default_Square").texture_handle;
-
+		
 
 		// Setting diffuse texture
 		GLuint tex_loc2 = glGetUniformLocation(shd_ref_handle, "uDiffuseTexture");
@@ -437,9 +439,11 @@ LightComponent* lightSource = nullptr;
 			std::cout << "uDiffuseTexture uniform doesn't exist!!!\n";
 			std::exit(EXIT_FAILURE);
 		}
+		
 
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
+		*/
 
 		// Render game objects through light's perspective
 		RenderGameObjectsLS(_dt);
@@ -494,6 +498,8 @@ LightComponent* lightSource = nullptr;
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
+		/*
+
 		// Load Simple Depth shader program
 		const auto& shd_ref_handle2 = GraphicImplementation::shdrpgms[GraphicShader::Simple_Depth].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle2);
@@ -510,19 +516,7 @@ LightComponent* lightSource = nullptr;
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+		*/
 
 		// Initialise meshes
 		GraphicImplementation::Renderer::Init();

@@ -27,6 +27,8 @@ Technology is prohibited.
 namespace Engine
 {
 	// Contructor for Light Component
+
+	/*
 	LightComponent::LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID,
 		Math::vec3 _direction, Math::vec3 _ambient, Math::vec3 _diffuse, Math::vec3 _specular, Math::vec3 _colour,
 		bool _active) :
@@ -41,7 +43,9 @@ namespace Engine
 
 		lightSpace = lightProjection * lightView;
 	}
+	*/
 
+	LightComponent::LightComponent(Entity_id _ID, Math::vec3 _colour, bool _active) {};
 
 
 	// Destructor for Light Component

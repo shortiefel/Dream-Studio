@@ -30,7 +30,8 @@ namespace Engine
 		Default = 0, // Game objects
 		Collision,
 		Font_Draw,
-		Simple_Depth
+		Simple_Depth,
+		Light
 	};
 }
 

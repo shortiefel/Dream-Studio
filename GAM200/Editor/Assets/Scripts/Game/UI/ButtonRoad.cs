@@ -74,8 +74,12 @@ public class ButtonRoad : MonoBehaviour
 
     CameraMovement cameraMovement;
 
+    CombinedUI combinedUI;
+
     public override void Start()
     {
+        combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
+
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
         //disable the different effect.
 
@@ -235,8 +239,8 @@ public class ButtonRoad : MonoBehaviour
             closing = true;
 
             Disable<Transform>(displayArrowWhite);
-            //if (reenable)
-                //Enable<Transform>(displayArrow);
+            if (reenable)
+                Enable<Transform>(displayArrow);
 
             cameraMovement.SetZoom(ZoomType.Out);
         }
@@ -511,8 +515,9 @@ public class ButtonRoad : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        Disable<Transform>(displayArrowWhite);
-        Disable<Transform>(displayArrow);
+        //Disable<Transform>(displayArrowWhite);
+        //Disable<Transform>(displayArrow);
+        combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }
@@ -532,8 +537,9 @@ public class ButtonRoad : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        Disable<Transform>(displayArrowWhite);
-        Disable<Transform>(displayArrow);
+        //Disable<Transform>(displayArrowWhite);
+        //Disable<Transform>(displayArrow);
+        combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }

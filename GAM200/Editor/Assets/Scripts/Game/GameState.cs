@@ -14,6 +14,8 @@ public class GameState : MonoBehaviour
 
     //bool gameOverBool;
 
+    float previousTimeScale;
+
     public override void Start()
     {
         pauseState = false;
@@ -28,6 +30,8 @@ public class GameState : MonoBehaviour
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
         buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
+
+        previousTimeScale = 1f;
     }
 
     public override void Update()
@@ -126,9 +130,28 @@ public class GameState : MonoBehaviour
         SetHighscore(highscore, "CurrentScore");
     }
 
+    public float GetTimeScaleToRestore()
+    {
+        return previousTimeScale;
+    }
     public void InvertPause()
     {
         pauseState = !pauseState;
+
+        if (pauseState) Time.timeScale = 0f;
+        else Time.timeScale = 1f;
+    }
+
+    public void SetPause(bool state)
+    {
+        Debug.Log("Setting to " + state);
+        pauseState = state;
+
+        if (state) {
+            previousTimeScale = Time.timeScale;
+            Time.timeScale = 0f;
+        }
+        else Time.timeScale = previousTimeScale;
     }
     public bool GetPause()
     {

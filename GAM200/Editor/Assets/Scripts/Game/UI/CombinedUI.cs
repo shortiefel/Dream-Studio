@@ -4,7 +4,8 @@ public enum UIType
     Pause = 0,
     Time,
     Store,
-    Road //Bottom left button that build road and stuff
+    Road, //Bottom left button that build road and stuff
+    None
 }
 public class CombinedUI : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class CombinedUI : MonoBehaviour
                 }
             case UIType.Time:
                 {
-                    pauseMenu.SwitchTabPause(false);
+                    pauseMenu.SwitchTabPause(false, false);
                     buttonStore.SwitchTabStore(false, false);
                     buttonRoad.SwitchTabRoad(false, false);
 
@@ -73,13 +74,26 @@ public class CombinedUI : MonoBehaviour
                 }
             case UIType.Road:
                 {
-                    pauseMenu.SwitchTabPause(false);
-                    timeSystem.SwitchTabTimer(false);
+                    pauseMenu.SwitchTabPause(false, false);
+                    timeSystem.SwitchTabTimer(false, false);
                     buttonStore.SwitchTabStore(false, false);
 
                     Disable<Transform>(pauseIcon);
                     Disable<Transform>(timerButton);
                     Disable<Transform>(storeButton);
+                    break;
+                }
+            case UIType.None:
+                {
+                    pauseMenu.SwitchTabPause(false, false);
+                    timeSystem.SwitchTabTimer(false, false);
+                    buttonStore.SwitchTabStore(false, false);
+                    buttonRoad.SwitchTabRoad(false, false);
+
+                    Disable<Transform>(pauseIcon);
+                    Disable<Transform>(timerButton);
+                    Disable<Transform>(storeButton);
+                    Disable<Transform>(displayArrow);
                     break;
                 }
         }

@@ -82,6 +82,7 @@ public class ButtonStore : MonoBehaviour
     public override void Start()
     {
         texture = GetComponent<UI>();
+        texture.color = new Color(0f, 0f, 0f);
 
         //Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
@@ -263,8 +264,6 @@ public class ButtonStore : MonoBehaviour
 
                 if (combinedUI != null)
                     combinedUI.EnableAllMasterButton();
-
-                Time.timeScale = 1f;
             }
 
             Disable<Transform>(CostTitle.transform);
@@ -283,9 +282,11 @@ public class ButtonStore : MonoBehaviour
 
    private void StoreAction()
     {
-        gameState.InvertPause();
-
-        SwitchTabStore(gameState.GetPause());
+        //Debug.Log("Store");
+        //gameState.InvertPause();
+        bool state = !gameState.GetPause();
+        gameState.SetPause(state);
+        SwitchTabStore(state);
     }
 
     public override void Update()

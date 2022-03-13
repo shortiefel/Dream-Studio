@@ -43,18 +43,18 @@ public class TimeSystem : MonoBehaviour
 
     //UI texture;
     GameManager gameManager;
-    GameState gameState;
+    //GameState gameState;
 
-    TimeSystem timeSystem;
+    //TimeSystem timeSystem;
 
 
     public override void Start()
     {
         //texture = GetComponent<UI>();
         
-        timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
+        //timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
 
-        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+        //gameState = GameObject.Find("GameManager").GetComponent<GameState>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         Timer = GameObject.Find("TimerIcon").GetComponent<Transform>();

@@ -59,7 +59,7 @@ public class PauseMenu : MonoBehaviour
     public override void Start()
     {
         texture = GetComponent<UI>();
-        //texture.color = new Color(0f, 0f, 0f);
+        texture.color = new Color(0f, 0f, 0f);
 
         pauseBG = GameObject.Find("PauseBG");
         //bgPosition = pauseBG.transform.position;
@@ -165,7 +165,7 @@ public class PauseMenu : MonoBehaviour
             //Application.SetPause(true);
             //Time.timeScale = 0f;
 
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
 
             if (combinedUI != null)
                 combinedUI.CloseAllUIExcept(UIType.Pause);
@@ -200,7 +200,7 @@ public class PauseMenu : MonoBehaviour
 
             if (reenable)
             {
-                Time.timeScale = 1f;
+                //Time.timeScale = 1f;
 
                 if (combinedUI != null)
                     combinedUI.EnableAllMasterButton();
@@ -219,9 +219,11 @@ public class PauseMenu : MonoBehaviour
     }
     private void PauseAction()
     {
-        gameState.InvertPause();
+        //gameState.InvertPause();
 
-        SwitchTabPause(gameState.GetPause());
+        bool state = !gameState.GetPause();
+        gameState.SetPause(state);
+        SwitchTabPause(state);
 
     }
 

@@ -18,6 +18,8 @@ public class GameState : MonoBehaviour
 
     private float dayTimer;
     private float dayCycle;
+    private int dayCounter;
+
 
     GameObject receipt;
 
@@ -75,6 +77,7 @@ public class GameState : MonoBehaviour
                 SetPause(true);
                 moneySystem.TaxMoney();
                 dayTimer = 0f;
+                dayCounter++;
             }
         }
 
@@ -97,22 +100,30 @@ public class GameState : MonoBehaviour
         //}
         //--------------------------
         //Cheat code
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    GameOver();
-        //}
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            GameOver();
+        }
         if (Input.GetKeyDown(KeyCode.P) && Input.GetKey(KeyCode.Shift))
         {
             IncrementScore();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.Shift))
+        {
+            Enable<Transform>(receipt.transform);
+            SetPause(true);
+            moneySystem.TaxMoney();
         }
         //-------------------------
     }
 
     void GameOver ()
     {
-        //SceneManager.LoadScene("GameOver");
-        if (camMovement.toZoomLose) return;
-        camMovement.toZoomLose = true;
+        SceneManager.LoadScene("GameOver");
+        //if (camMovement.toZoomLose) return;
+        //camMovement.toZoomLose = true;
+
 
         Time.timeScale = 0f;
         TrySetHighscore();
@@ -178,12 +189,12 @@ public class GameState : MonoBehaviour
 
     private void TrySetHighscore()
     {
-        Debug.Log("TrySetHighscore " + highscore + " vs og: " + GetHighscore("HighScore"));
-        if (highscore > GetHighscore("HighScore"))
+        Debug.Log("TrySetHighscore " + dayCounter + " vs og: " + GetHighscore("HighScore"));
+        if (dayCounter > GetHighscore("HighScore"))
         {
-            SetHighscore(highscore, "HighScore");
+            SetHighscore(dayCounter, "HighScore");
         }
-        SetHighscore(highscore, "CurrentScore");
+        SetHighscore(dayCounter, "CurrentScore");
     }
 
     public float GetTimeScaleToRestore()

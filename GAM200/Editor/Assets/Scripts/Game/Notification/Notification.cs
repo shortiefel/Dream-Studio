@@ -136,7 +136,7 @@ public class Notification : MonoBehaviour
             //showNotification = maxLifeTime;
         }
         //Debug.Log(lifeTime);
-
+        //if (Input.GetKeyDown(KeyCode.H)) Debug.Log(lifeTime + " " + entityId);
         return true;
     }
 

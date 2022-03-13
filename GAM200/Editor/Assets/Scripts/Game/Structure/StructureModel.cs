@@ -128,8 +128,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             if (notification.timerShow == true)
             {
                 SetToSpawn2();
-                notification.ResetTimer();
-                Enable<Transform>(notifiSymbol.transform);
+                //notification.ResetTimer();
+                //Enable<Transform>(notifiSymbol.transform);
             }
             if (notification.shouldShow == true)
             {

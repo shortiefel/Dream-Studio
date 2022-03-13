@@ -30,7 +30,7 @@ public class SpawnManager : MonoBehaviour
     int spawnRequestIndex;
     int noOfSpawnRequestOrder;
 
-    //int attemptLoopCount;
+    int attemptLoopCount;
 
     //ButtonRoad buttonRoad;
 
@@ -77,6 +77,8 @@ public class SpawnManager : MonoBehaviour
         spawnRequestOrder[1] = SpawnRequestType.House;
         spawnRequestOrder[2] = SpawnRequestType.Destination;
         spawnRequestIndex = 0;
+
+        attemptLoopCount = 0;
     }
 
     private Vector2Int SpawnRandomRoad()
@@ -226,8 +228,19 @@ public class SpawnManager : MonoBehaviour
             {
                 ++spawnRequestIndex;
                 spawnRequestIndex = spawnRequestIndex % noOfSpawnRequestOrder;
-                Debug.Log("Next index is " + spawnRequestIndex);
+                //Debug.Log("Next index is " + spawnRequestIndex);
                 spawnTimer = 0f;
+                attemptLoopCount = 0;
+            }
+            else
+            {
+                ++attemptLoopCount;
+
+                if (attemptLoopCount > 10)
+                {
+                    Debug.Log("Expand grid");
+                    placementManager.placementGrid.Expand();
+                }
             }
         }
         //if (score == scoreToSpawn)

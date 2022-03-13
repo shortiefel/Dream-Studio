@@ -67,7 +67,7 @@ public class GameState : MonoBehaviour
 
         if (receipt != null)
         {
-            dayTimer += Time.deltaTime;
+          //  dayTimer += Time.deltaTime;
 
             if (dayTimer >= dayCycle)
             {

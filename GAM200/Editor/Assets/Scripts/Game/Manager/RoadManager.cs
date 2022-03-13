@@ -34,6 +34,9 @@ public class RoadManager : MonoBehaviour
     Transform RoadInfoText;
     Transform RoadInfo;
 
+    float timer;
+    bool addToTime;
+
     public override void Start()
     {
         roadFixer = GetComponent<RoadFixer>();
@@ -77,6 +80,27 @@ public class RoadManager : MonoBehaviour
 
         Disable<Transform>(RoadInfoText);
         Disable<Transform>(RoadInfo);
+
+        timer = 0f;
+        addToTime = false;
+    }
+
+    public override void FixedUpdate()
+    {
+        if (addToTime == true)
+        {
+            timer += Time.fixedDeltaTime;
+
+            if (timer > 2f)
+            {
+                Disable<Transform>(RoadInfoText);
+                Disable<Transform>(RoadInfo);
+
+                timer = 0f;
+                addToTime = false;
+            }
+        }
+
     }
 
     public void PlaceSpawnHouse(Vector2Int position)
@@ -309,8 +333,6 @@ public class RoadManager : MonoBehaviour
         FixRoadPrefabs();*/
 
 
-        Disable<Transform>(RoadInfoText);
-        Disable<Transform>(RoadInfo);
 
         //placementMode = true;
         //startPosition = position;
@@ -354,6 +376,8 @@ public class RoadManager : MonoBehaviour
             {
                 Enable<Transform>(RoadInfoText);
                 Enable<Transform>(RoadInfo);
+
+                addToTime = true;
                 return;
             }
 

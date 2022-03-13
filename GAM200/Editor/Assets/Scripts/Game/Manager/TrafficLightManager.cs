@@ -16,6 +16,9 @@ public class TrafficLightManager : MonoBehaviour
     Transform TLInfoText;
     Transform TLInfo;
 
+    float timer;
+    bool addToTime;
+
     public override void Start()
     {
         trafficLights = new Dictionary<Vector2Int, TrafficLight>();
@@ -34,11 +37,32 @@ public class TrafficLightManager : MonoBehaviour
 
         Disable<Transform>(TLInfoText);
         Disable<Transform>(TLInfo);
+
+        timer = 0f;
+        addToTime = false;
     }
 
     public int trafficlightTaxCount()
     {
         return trafficLights.Count;
+    }
+
+    public override void FixedUpdate()
+    {
+        if (addToTime == true)
+        {
+            timer += Time.fixedDeltaTime;
+
+            if (timer > 2f)
+            {
+                Disable<Transform>(TLInfoText);
+                Disable<Transform>(TLInfo);
+
+                timer = 0f;
+                addToTime = false;
+            }
+        }
+           
     }
 
     //public override void Update()
@@ -148,13 +172,14 @@ public class TrafficLightManager : MonoBehaviour
 
     public bool RequestPlacingTrafficLight(Vector2Int position)
     {
-        Disable<Transform>(TLInfoText);
-        Disable<Transform>(TLInfo);
 
         if (tlCount <= 0)
         {
             Enable<Transform>(TLInfoText);
             Enable<Transform>(TLInfo);
+
+            addToTime = true;
+
             return false;
         }
 
@@ -170,8 +195,7 @@ public class TrafficLightManager : MonoBehaviour
 
     public bool RequestRemovingTrafficLight(Vector2Int position)
     {
-        Disable<Transform>(TLInfoText);
-        Disable<Transform>(TLInfo);
+
 
         if (!trafficLights.ContainsKey(position))
             return false;

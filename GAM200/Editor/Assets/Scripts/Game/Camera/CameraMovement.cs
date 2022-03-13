@@ -9,8 +9,11 @@ public class CameraMovement : MonoBehaviour
 {
     
     Camera cam;
+    PlacementManager placementManager;
 
     public bool toZoomLose;
+
+    public bool drawMode;
 
     bool hasEnter;
     float targetHeight, startHeight;
@@ -31,6 +34,8 @@ public class CameraMovement : MonoBehaviour
     {
         toZoomLose = false;
 
+        placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+
         cam = GetComponent<Camera>();
         startHeight = cam.height;
 
@@ -45,7 +50,7 @@ public class CameraMovement : MonoBehaviour
         zt = ZoomType.Out;
 
         minZoom = 8f;
-        maxZoom = 15f;
+        maxZoom = 8f;
     }
 
     public override void FixedUpdate()
@@ -66,12 +71,13 @@ public class CameraMovement : MonoBehaviour
             }
         }
 
-        else
+        else if (drawMode)
         {
             if (Input.GetMouseButton(MouseCode.Right))
             {
                 Vector3 offset = Input.GetMousePosition() - mousePosition;
                 transform.position -= new Vector2(offset.x * mouseMultiply, offset.y * mouseMultiply);
+                
             }
         }
 

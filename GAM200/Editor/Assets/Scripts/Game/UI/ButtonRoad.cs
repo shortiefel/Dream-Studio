@@ -317,7 +317,8 @@ public class ButtonRoad : MonoBehaviour
 
         if (_activeType)
         {
-            cameraMovement.SetZoom(ZoomType.In);
+            if (Input.GetMouseButtonDown(MouseCode.Left))
+                cameraMovement.SetZoom(ZoomType.In);
 
             switch (_bt)
             {
@@ -381,7 +382,7 @@ public class ButtonRoad : MonoBehaviour
 
             SceneManager.SetDrawMode(true);
             gameState.SetDrawMode(true);
-
+            cameraMovement.drawMode = true;
         }
         else
         {

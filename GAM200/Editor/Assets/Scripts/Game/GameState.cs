@@ -12,6 +12,8 @@ public class GameState : MonoBehaviour
     CameraMovement camMovement;
     ButtonRoad buttonRoad;
 
+    MoneySystem moneySystem;
+
 
     //bool gameOverBool;
 
@@ -31,6 +33,8 @@ public class GameState : MonoBehaviour
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
         buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
+
+        moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
 
         //previousTimeScale = 1f;
     }
@@ -110,6 +114,7 @@ public class GameState : MonoBehaviour
     public void MissedDestinationTime()
     {
         //highscore--;
+        moneySystem.MinusMoney(100);
         Debug.Log("Missed a destination ");
     }
 

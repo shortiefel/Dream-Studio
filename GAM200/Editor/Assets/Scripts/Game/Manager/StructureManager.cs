@@ -16,11 +16,13 @@ public struct StartPositionSet
 {
     public Vector2Int startPos;
     public int pathCount;
+    public uint entityId;
 
-    public StartPositionSet(Vector2Int newPos, int pc)
+    public StartPositionSet(Vector2Int newPos, int pc, uint entId)
     {
         startPos = newPos;
         pathCount = pc;
+        entityId = entId;
     }
 }
 
@@ -99,7 +101,7 @@ public class StructureManager : MonoBehaviour
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);
             placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure, rotation);
-            destinationList.Add(position, new StartPositionSet(new Vector2Int(0,0), 0));
+            destinationList.Add(position, new StartPositionSet(new Vector2Int(0,0), 0, 0));
             //AudioPlayer.instance.PlayPlacementSound();
             return true;
         }

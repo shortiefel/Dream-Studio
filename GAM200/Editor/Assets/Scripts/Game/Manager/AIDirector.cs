@@ -64,7 +64,7 @@ public class AIDirector : MonoBehaviour
     //    //}
     //}
 
-    private bool GetNewPathList(Vector2Int endPos)
+    private bool GetNewPathList(Vector2Int endPos, uint entId)
     {
         //foreach(var i in structureManager.destinationList)
         //{
@@ -120,7 +120,7 @@ public class AIDirector : MonoBehaviour
                 
                 pc = roadCount;
                 
-                StartPositionSet sps = new StartPositionSet(startHouse.Key, pc);
+                StartPositionSet sps = new StartPositionSet(startHouse.Key, pc, entId);
                 structureManager.destinationList[endPos] = sps;
                 chosenHouseRequestCount = startHouse.Value.requestLine.Count;
                 //Debug.Log("Chosen count " + chosenHouseRequestCount);
@@ -173,7 +173,7 @@ public class AIDirector : MonoBehaviour
         //Debug.Log(startRoadPosition);
         //Debug.Log(endRoadPosition);
         Vector2Int endPos = new Vector2Int(endStructure.transform.position);
-        if (!GetNewPathList(endPos)) return false;
+        if (!GetNewPathList(endPos, endStructure.entityId)) return false;
 
         //Debug.Log(GameObject.FindWithId(endStructure.entityId).entityId + " " + endStructure.entityId);
 
@@ -234,7 +234,8 @@ public class AIDirector : MonoBehaviour
         //Console.WriteLine("New path is " + path.Count);
         if (path.Count == 0)
         {
-            structureManager.destinationList[endPos] = new StartPositionSet(new Vector2Int(0, 0), 0);
+            GetComponent<StructureModel>(structureManager.destinationList[endPos].entityId).SetSpawnBool(true);
+            structureManager.destinationList[endPos] = new StartPositionSet(new Vector2Int(0, 0), 0, 0);
             return;
         }
        

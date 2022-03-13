@@ -154,6 +154,11 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         //yHeight = structure.transform.position.y;
     }*/
 
+    public void SetSpawnBool(bool state)
+    {
+        spawnBool = state;
+    }
+
     public StructureModel SwapModel(GameObject model, float rotation)
     {
         /*foreach (Transform child in transform)

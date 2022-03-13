@@ -44,7 +44,7 @@ public class CameraMovement : MonoBehaviour
         gameZoom = false;
         zt = ZoomType.Out;
 
-        minZoom = 5f;
+        minZoom = 8f;
         maxZoom = 15f;
     }
 

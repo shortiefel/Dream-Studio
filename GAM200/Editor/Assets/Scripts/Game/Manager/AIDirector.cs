@@ -66,7 +66,14 @@ public class AIDirector : MonoBehaviour
 
     private bool GetNewPathList(Vector2Int endPos)
     {
-        //Debug.Log("Get new ");
+        //foreach(var i in structureManager.destinationList)
+        //{
+        //    Debug.Log(i.Key);
+        //}
+        //Debug.Log("End-----------------");
+        ////Debug.Log("Get new ");
+        //Debug.Log(endPos);
+        //Debug.Log("End22222222222222222-----------------");
         Dictionary<Vector2Int, int> decisionContainer = new Dictionary<Vector2Int, int>();
         int pc = structureManager.destinationList[endPos].pathCount;
         Vector2Int ogStart = structureManager.destinationList[endPos].startPos;
@@ -172,7 +179,7 @@ public class AIDirector : MonoBehaviour
 
         //var path = placementManager.GetPathBetween(new Vector2Int(startStructure.transform.position), new Vector2Int(endPos), true);
         CarSpawner cs = structureManager.houseList[structureManager.destinationList[endPos].startPos];
-        if (cs == null) Console.WriteLine("Cs is null");
+        //if (cs == null) Console.WriteLine("Cs is null");
         cs.RequestSpawn(new EndStruct(endStructure.entityId, endStructure.buildingType, endPos));
 
 
@@ -220,7 +227,7 @@ public class AIDirector : MonoBehaviour
         //    GetNewPathList(endPos);
         //}
         Vector2Int spawnPosInt = new Vector2Int(spawnPos);
-        Debug.Log(spawnPosInt);
+        //Debug.Log(spawnPosInt);
         //var path = placementManager.GetPathBetween(structureManager.destinationList[endPos].startPos, new Vector2Int(endPos), true);
         int roadCount;
         var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), out roadCount);

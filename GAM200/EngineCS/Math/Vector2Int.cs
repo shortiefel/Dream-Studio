@@ -14,6 +14,8 @@ Technology is prohibited.
 */
 /* End Header **********************************************************************************/
 
+using System;
+
 public struct Vector2Int
 {
     public int x, y;
@@ -27,8 +29,8 @@ public struct Vector2Int
 
     public Vector2Int(Vector2 n)
     {
-        x = (int)n.x;
-        y = (int)n.y;
+        x = (int)Math.Floor(n.x);
+        y = (int)Math.Floor(n.y);
     }
 
     public Vector2Int(Vector2Int n)

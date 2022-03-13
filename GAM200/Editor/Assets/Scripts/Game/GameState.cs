@@ -125,6 +125,8 @@ public class GameState : MonoBehaviour
     public void ExpandGrid()
     {
         placementManager.placementGrid.Expand();
+        camMovement.maxZoom *= 1;
+        camMovement.minZoom *= 0.5f;
     }
 
     public int GetScore()

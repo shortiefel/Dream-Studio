@@ -26,8 +26,8 @@ public class CameraMovement : MonoBehaviour
     float mouseMultiply;
 
     bool gameZoom;
-    float minZoom;
-    float maxZoom;
+    public float minZoom;
+    public float maxZoom;
     ZoomType zt;
 
     public override void Start()

@@ -350,27 +350,27 @@ public class RoadManager : MonoBehaviour
             return;
         //Remove last one if current position is the same as the second last position
         //Require at least two road to remove one road
-        else if (temporaryRoadPositions.Count > 1 && temporaryRoadPositions[temporaryRoadPositions.Count - 2] == position)
-        {
-            //placementManager.placementGrid.UnsetRoad(temporaryRoadPositions[temporaryRoadPositions.Count - 1]);
-            //Revert grid
-            placementManager.placementGrid.RevertGrid();
-            temporaryRoadPositions.RemoveAt(temporaryRoadPositions.Count - 1);
-            //Debug.Log("Previous " + previousRoadMinus);
-            //roadCount += previousRoadMinus;
-
-
-            int nTmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-            roadCount += previousRoadMinus - nTmp;
-            previousRoadMinus = nTmp;
-
-            temporaryRoadCount = temporaryRoadPositions.Count;
-
-            taxRoadCount++;
-
-            return;
-        }
-        else
+        //else if (temporaryRoadPositions.Count > 1 && temporaryRoadPositions[temporaryRoadPositions.Count - 2] == position)
+        //{
+        //    //placementManager.placementGrid.UnsetRoad(temporaryRoadPositions[temporaryRoadPositions.Count - 1]);
+        //    //Revert grid
+        //    placementManager.placementGrid.RevertGrid();
+        //    temporaryRoadPositions.RemoveAt(temporaryRoadPositions.Count - 1);
+        //    //Debug.Log("Previous " + previousRoadMinus);
+        //    //roadCount += previousRoadMinus;
+        //
+        //
+        //    int nTmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        //    roadCount += previousRoadMinus - nTmp;
+        //    previousRoadMinus = nTmp;
+        //
+        //    temporaryRoadCount = temporaryRoadPositions.Count;
+        //
+        //    taxRoadCount++;
+        //
+        //    return;
+        //}
+        //else
         {
             if (temporaryRoadCount >= 20)
             {
@@ -410,14 +410,17 @@ public class RoadManager : MonoBehaviour
         if (temporaryRoadCount == temporaryRoadPositions.Count) return;
 
         int tmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+
+        roadCount -= tmp;
+        taxRoadCount += tmp;
         //placementManager.placementGrid.SetRoad(temporaryRoadPositions);
         //Debug.Log("tmp " + tmp);
-        previousRoadMinus += tmp;
-        roadCount -= tmp;
+        //previousRoadMinus += tmp;
+        //roadCount -= tmp;
 
         temporaryRoadCount = temporaryRoadPositions.Count;
 
-        taxRoadCount++;
+        //taxRoadCount++;
 
         //placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
 
@@ -451,6 +454,8 @@ public class RoadManager : MonoBehaviour
         //startPosition = Vector2Int.zero;
 
         //Debug.Log("Road placed " + placementManager.placementGrid.SetRoad(temporaryRoadPositions));
+
+
         placementManager.placementGrid.FinalizeGrid();
         temporaryRoadPositions.Clear();
         temporaryRoadCount = 0;
@@ -513,7 +518,7 @@ public class RoadManager : MonoBehaviour
             roadCount += roadInc;
             removeSound.Play();
 
-            taxRoadCount--;
+            taxRoadCount -= roadInc;
         }
         //if (result == true)
         //    return;

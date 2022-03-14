@@ -199,7 +199,7 @@ public class GameState : MonoBehaviour
         {
             SetSavedData(dayCounter, "HighScore");
         }
-        SetSavedData(5, "CurrentScore");
+        SetSavedData(dayCounter, "CurrentScore");
     }
 
     public float GetTimeScaleToRestore()

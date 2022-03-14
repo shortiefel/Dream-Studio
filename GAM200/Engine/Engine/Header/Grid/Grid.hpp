@@ -128,7 +128,7 @@ namespace Engine {
 			Math::ivec2 mapSize{};
 			Math::ivec2 offset{};
 			Cell** grid = nullptr;
-			Cell** backupGrid = nullptr;
+			//Cell** backupGrid = nullptr;
 
 			std::list<Math::ivec2> roadList;
 			std::list<Math::ivec2> houseStructure;

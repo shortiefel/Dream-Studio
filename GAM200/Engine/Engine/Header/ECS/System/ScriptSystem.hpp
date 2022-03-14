@@ -63,6 +63,9 @@ namespace Engine {
 		-----------------------------------------------------*/
 		void Destroy();
 
+		//If user request to save certain data, it will be saved here
+		void SaveCSData();
+
 	private:
 		SINGLETON_SETUP(ScriptSystem);
 	};

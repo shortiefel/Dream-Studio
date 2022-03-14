@@ -57,6 +57,11 @@ public class RoadManager : MonoBehaviour
         //trafficLightGO = new GameObject(new Prefab("TrafficLight"));
         //erpGO = new GameObject(new Prefab("ERP"));
 
+        //GameObject trafficLightManagerGO = GameObject.Find("TrafficManager");
+        //if (trafficLightManagerGO != null)
+        //{
+        //    trafficLightManager = trafficLightManagerGO.GetComponent<TrafficLightManager>();
+        //}
         GameObject go = GameObject.Find("TrafficManager");
         if (go != null)
             trafficLightManager = go.GetComponent<TrafficLightManager>();

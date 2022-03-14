@@ -215,7 +215,7 @@ namespace Engine {
 			CloseHandle(pi.hThread);
 
 			bool result = CheckIfCompileSuccessful();
-			std::cout << result << " -------------------------------\n";
+			//std::cout << "Result in scripting.cpp " << result << "\n";
 			return result;
 #endif
 		}

@@ -34,6 +34,9 @@ namespace Engine {
 		void SetGetViewportFunc(Math::mat3(*fp)());
 		//Set the function that will be called for GetMousePosition in c#
 		void SetGetMousePositionFunc(Math::vec2(*fp)());
+
+		void InitializeSavedData();
+		void StoreSavedData();
 	}
 }
 

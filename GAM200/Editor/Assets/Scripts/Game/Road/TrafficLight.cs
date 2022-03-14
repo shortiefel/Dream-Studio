@@ -32,7 +32,7 @@ public class TrafficLight : MonoBehaviour
 
     public override void Start()
     {
-        Debug.Log("Making new start -----------------------------------");
+        //Debug.Log("Making new start -----------------------------------");
         directionState = DirectionState.Horizontal;
 
         GameObject go = GameObject.Find("TrafficManager");
@@ -40,7 +40,7 @@ public class TrafficLight : MonoBehaviour
             tlm = go.GetComponent<TrafficLightManager>();
         if (tlm != null)
         {
-            Debug.Log("Not null");
+            //Debug.Log("Not null");
             tlm.RegisterTrafficLight(Vector2Int.RoundToInt(transform.position), entityId);
         }
 

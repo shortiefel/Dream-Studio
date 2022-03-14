@@ -30,6 +30,9 @@ namespace Engine {
 		void SetConsoleWriteInternalFunc(void(*fp)(std::string));
 		//Set the function that will be called for GetMousePosition in c#
 		void SetGetMousePositionInternalFunc(Math::vec2(*fp)());
+
+		void InitializeSavedDataInternal();
+		void StoreSavedDataInternal();
 	}
 }
 

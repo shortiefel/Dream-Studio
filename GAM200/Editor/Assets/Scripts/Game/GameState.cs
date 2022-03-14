@@ -191,12 +191,12 @@ public class GameState : MonoBehaviour
 
     private void TrySetHighscore()
     {
-        Debug.Log("TrySetHighscore " + dayCounter + " vs og: " + GetHighscore("HighScore"));
-        if (dayCounter > GetHighscore("HighScore"))
+        //Debug.Log("TrySetHighscore " + dayCounter + " vs og: " + GetSavedData("HighScore"));
+        if (dayCounter > GetSavedData("HighScore"))
         {
-            SetHighscore(dayCounter, "HighScore");
+            SetSavedData(dayCounter, "HighScore");
         }
-        SetHighscore(dayCounter, "CurrentScore");
+        SetSavedData(5, "CurrentScore");
     }
 
     public float GetTimeScaleToRestore()

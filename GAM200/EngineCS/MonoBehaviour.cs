@@ -109,20 +109,37 @@ public class MonoBehaviour : IBehaviour
         gameObject.transform = transform = GetComponent<Transform>();
     }
 
-    public static void SetHighscore(int value, string name)
+    //public static void SetHighscore(int value, string name)
+    //{
+    //    SetHighscore_Engine(value, name);
+    //}
+    //[MethodImpl(MethodImplOptions.InternalCall)]
+    //internal static extern void SetHighscore_Engine(int value, string name);
+    //
+    //public static int GetHighscore(string name)
+    //{
+    //    GetHighscore_Engine(out int value, name);
+    //    return value;
+    //}
+    //[MethodImpl(MethodImplOptions.InternalCall)]
+    //internal static extern void GetHighscore_Engine(out int value, string name);
+
+
+    public static void SetSavedData(int value, string name)
     {
-        SetHighscore_Engine(value, name);
+        SetSavedData_Engine(value, name);
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetHighscore_Engine(int value, string name);
+    internal static extern void SetSavedData_Engine(int value, string name);
 
-    public static int GetHighscore(string name)
+    public static int GetSavedData(string name)
     {
-        GetHighscore_Engine(out int value, name);
+        GetSavedData_Engine(out int value, name);
         return value;
     }
+
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void GetHighscore_Engine(out int value, string name);
+    internal static extern void GetSavedData_Engine(out int value, string name);
 
     /*public T GetComponent<T>() where T : class, IComponent, new()
     {

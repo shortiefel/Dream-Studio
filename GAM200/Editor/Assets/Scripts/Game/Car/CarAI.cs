@@ -68,7 +68,7 @@ public class CarAI : MonoBehaviour
 
     private List<Vector2Int> pastTrafficLight;
 
-    private bool testBool = true;
+    //private bool testBool = true;
     /*public bool Stop
     {
         get { return stop || collisionStop; }

@@ -126,7 +126,7 @@ public class ERPManager : MonoBehaviour
             return false;
 
         --erpCount;
-        Instantiate(erpGO, new Vector3(position.x, position.y, 0f));
+        Instantiate(erpGO, new Vector3(position.x, position.y, 0f), 3);
         return true;
     }
 

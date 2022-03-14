@@ -89,6 +89,8 @@ namespace Engine {
 	void ScriptSystem::PlayInit() {
 		PROFILER_START("Scripting");
 
+		InternalCall::InitializeSavedData();
+
 		auto& entScriptArray = dreamECSGame->GetComponentArrayData<ScriptComponent>();
 		const auto& entMap = dreamECSGame->GetUsedConstEntityMap();
 
@@ -238,5 +240,9 @@ namespace Engine {
 		Scripting::ReloadMono();
 		Scripting::InitAllCSClass();
 		Scripting::InitAllPublicVariable();
+	}
+
+	void ScriptSystem::SaveCSData() {
+		InternalCall::StoreSavedData();
 	}
 }

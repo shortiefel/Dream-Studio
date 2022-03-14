@@ -189,24 +189,27 @@ public class TrafficLightManager : MonoBehaviour
             return false;
 
         --tlCount;
-        Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f));
+
+        Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f), 3);
         return true;
     }
 
     public bool RequestRemovingTrafficLight(Vector2Int position)
     {
-
-
         if (!trafficLights.ContainsKey(position))
             return false;
 
         ++tlCount;
-        moneySystem.SellTL();
         Destroy(trafficLights[position].entityId);
         trafficLights.Remove(position);
         return true;
 
     }
+    //public override void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.F))
+    //        ++tlCount;
+    //}
 }
 
 

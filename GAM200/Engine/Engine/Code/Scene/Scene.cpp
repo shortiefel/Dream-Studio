@@ -81,6 +81,8 @@ namespace Engine {
     }
 
     Scene::~Scene() {
+        ScriptSystem::GetInstance().SaveCSData();
+
         ScriptSystem::GetInstance().DestroyChildDomain();
 
         Game::Grid::GetInstance().DestroyGrid();
@@ -104,6 +106,8 @@ namespace Engine {
     }
 
     void Scene::Stop(bool deserialize) {
+        ScriptSystem::GetInstance().SaveCSData();
+
         ScriptSystem::GetInstance().DestroyChildDomain();
         DeltaTime::GetInstance().SetTimeScale(1.f);
 

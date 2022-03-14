@@ -86,6 +86,8 @@ namespace Engine {
 		bool GetMouseDown_Engine(Input_MouseCode button);
 		bool GetMouseUp_Engine(Input_MouseCode button);
 
+		void GetMouseScroll_Engine(Math::vec2* outPosition);
+
 		void GetMousePosition_Engine(Math::vec2* outPosition);
 
 
@@ -155,6 +157,7 @@ namespace Engine {
 			mono_add_internal_call("Input::GetMouse_Engine", GetMouse_Engine);
 			mono_add_internal_call("Input::GetMouseDown_Engine", GetMouseDown_Engine);
 			mono_add_internal_call("Input::GetMouseUp_Engine", GetMouseUp_Engine);
+			mono_add_internal_call("Input::GetMouseScroll_Engine", GetMouseScroll_Engine);
 			mono_add_internal_call("Input::GetMousePosition_Engine", GetMousePosition_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -225,9 +228,15 @@ namespace Engine {
 		bool GetMouseDown_Engine(Input_MouseCode button) { return Input::IsMousePressed(button); }
 		bool GetMouseUp_Engine(Input_MouseCode button) { return Input::IsMouseReleased(button); }
 
+		void GetMouseScroll_Engine(Math::vec2* outPosition) {
+			*outPosition = Input::GetMouseScroll();
+		}
+
 		void GetMousePosition_Engine(Math::vec2* outPosition) {
 			*outPosition = GetMousePositionFuncPtr();
 		}
+
+
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Save Values

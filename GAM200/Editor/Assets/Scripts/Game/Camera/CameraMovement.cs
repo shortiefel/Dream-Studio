@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour
 
     public bool toZoomLose;
 
-    public bool drawMode;
+    //public bool drawMode;
 
     bool hasEnter;
     float targetHeight, startHeight;
@@ -29,6 +29,10 @@ public class CameraMovement : MonoBehaviour
     public float minZoom;
     public float maxZoom;
     ZoomType zt;
+
+    private float zoomHeight;
+
+    public float speed;
 
     private Vector2 moveUpSpeed;
     private Vector2 moveRightSpeed;
@@ -54,6 +58,10 @@ public class CameraMovement : MonoBehaviour
 
         gameZoom = false;
         zt = ZoomType.Out;
+
+        zoomHeight = cam.height;
+
+        speed = 1f;
 
         minZoom = 8f;
         maxZoom = 8f;
@@ -92,6 +100,18 @@ public class CameraMovement : MonoBehaviour
             //    transform.position -= new Vector2(offset.x * mouseMultiply, offset.y * mouseMultiply);
             //    
             //}
+
+            //if (Input.GetMouseButton(MouseCode.Middle))
+            //{
+            //    //Vector3 offset = Input.GetMousePosition() - mousePosition;
+            //    //transform.position -= new Vector2(offset.x * mouseMultiply, offset.y * mouseMultiply);
+            //    
+            //}
+
+            zoomHeight -= speed * Input.GetMouseScroll().y;
+            if (zoomHeight < minZoom) zoomHeight = minZoom;
+            else if (zoomHeight > maxZoom) zoomHeight = maxZoom;
+            cam.height = zoomHeight;
 
             if (Input.GetKey(KeyCode.W))
             {
@@ -164,12 +184,12 @@ public class CameraMovement : MonoBehaviour
             case ZoomType.In:
                 //zt = ZoomType.In;
                 //targetHeight = minZoom;
-                cam.height = minZoom;
+                zoomHeight = minZoom;
                 break;
             case ZoomType.Out:
                 //zt = ZoomType.Out;
                 //targetHeight = maxZoom;
-                cam.height = maxZoom;
+                zoomHeight = maxZoom;
                 break;
         }
         //startHeight = cam.height;

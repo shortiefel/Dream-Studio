@@ -26,7 +26,7 @@ Technology is prohibited.
 
 namespace Engine {
 	Math::vec2 Input::mousePosition;
-	//Math::vec2 Input::mouseScroll;
+	Math::vec2 Input::mouseScroll;
 
 	bool keyChange = false;
 
@@ -349,6 +349,8 @@ namespace Engine {
 				if (stat == InputType::PRESS) stat = InputType::REPEAT;
 			}
 		}
+
+		mouseScroll = { 0.f, 0.f };
 	}
 
 	bool Input::IsMousePressed(Input_MouseCode button) {
@@ -395,6 +397,14 @@ namespace Engine {
 	}
 	Math::vec2 Input::GetMousePosition() {
 		return mousePosition;
+	}
+
+	void Input::SetMouseScroll(float xScroll, float yScroll) {
+		mouseScroll = { xScroll, yScroll };
+	}
+
+	Math::vec2 Input::GetMouseScroll() {
+		return mouseScroll;
 	}
 
 }

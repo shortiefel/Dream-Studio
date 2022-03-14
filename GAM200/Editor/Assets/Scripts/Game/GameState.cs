@@ -170,7 +170,10 @@ public class GameState : MonoBehaviour
         //Debug.Log("Haoneienri");
         placementManager.placementGrid.Expand();
         camMovement.maxZoom *= 2f;
+        camMovement.speed *= 2f;
         //camMovement.minZoom *= 0.5f;
+
+        camMovement.SetZoom(ZoomType.Out);
 
         buttonRoad.SwitchTabRoad(false);
     }

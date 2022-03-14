@@ -308,6 +308,7 @@ namespace Engine {
 	void ScrollCallback(GLFWwindow*, double xoffset, double yoffset) {
 		MouseScrolledEvent event((float)xoffset, (float)yoffset);
 		EventDispatcher::SendEvent(event);
+		Input::SetMouseScroll((float)xoffset, (float)yoffset);
 		//w_data.eventCallBack(event);
 	}
 

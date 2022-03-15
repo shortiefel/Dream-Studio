@@ -96,10 +96,11 @@ public class ERPManager : MonoBehaviour
     //    erpList.Remove(pos);
     //}
 
-    public bool IsERP(Vector2Int posToCheck)
+    public bool IsERP(Vector2Int targetPos, uint entId = 0)
     {
-        if (erpList.ContainsKey(posToCheck)) return true;
-        return false;
+        if (entId == 0) return erpList.ContainsKey(targetPos);
+        if (!erpList.ContainsKey(targetPos)) return false;
+        return erpList[targetPos] == entId;
     }
 
     public int erpTaxCount()

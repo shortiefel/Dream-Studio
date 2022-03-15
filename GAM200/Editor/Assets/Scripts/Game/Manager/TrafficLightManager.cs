@@ -124,7 +124,9 @@ public class TrafficLightManager : MonoBehaviour
             //lrState = false;
         }
 
-        //Vector2Int carPos = new Vector2Int(_carPos);
+        
+        //if (Input.GetKey(KeyCode.B)) return true;
+        //return false;
 
         if (!trafficLights.ContainsKey(tlPos)) return true;
 
@@ -133,7 +135,8 @@ public class TrafficLightManager : MonoBehaviour
         //if (Input.GetKey(KeyCode.B))
         //    Debug.Log("TLM" + tem + " " + trafficLights[tlPos].entityId);
         //Debug.Log("ds " + ds + "  tem " + tem);
-        return ds == tem || tem == DirectionState.None;
+        return ds == tem;
+
         //return ds == trafficLights[tlPos].GetTrafficLightState();
 
         //bool cState = GetComponent<TrafficLight>(trafficLights[tlPos].entityId).state;
@@ -163,11 +166,11 @@ public class TrafficLightManager : MonoBehaviour
 
         return tlPos;
     }
-
-    public bool IsTrafficLight(Vector2Int posToCheck)
+    public bool IsTrafficLight(Vector2Int targetPos, uint entId = 0)
     {
-        if (trafficLights.ContainsKey(posToCheck)) return true;
-        return false;
+        if (entId == 0) return trafficLights.ContainsKey(targetPos);
+        if (!trafficLights.ContainsKey(targetPos)) return false;
+        return trafficLights[targetPos].entityId == entId;
     }
 
     public bool RequestPlacingTrafficLight(Vector2Int position)

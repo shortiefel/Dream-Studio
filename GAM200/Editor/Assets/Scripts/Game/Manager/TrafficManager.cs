@@ -23,9 +23,9 @@ public class TrafficManager : MonoBehaviour
         return tlm.GetTrafficLightIndex(toCheck);
     }
 
-    public bool IsTrafficLight(Vector2Int posToCheck)
+    public bool IsTrafficLight(Vector2Int posToCheck, uint entityId)
     {
-        return tlm.IsTrafficLight(posToCheck);
+        return tlm.IsTrafficLight(posToCheck, entityId);
     }
 
 

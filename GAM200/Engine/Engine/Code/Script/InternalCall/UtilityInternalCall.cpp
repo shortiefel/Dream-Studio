@@ -138,6 +138,7 @@ namespace Engine {
 		Physics
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		bool RayCast_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, unsigned int* entity_id, float* hitDistance, Math::vec2* hitPoint);
+		bool RayCastGroup_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, int* count, MonoArray* entityArray, MonoArray* hitDisArray, MonoArray* hitPointArray);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Application
@@ -209,6 +210,7 @@ namespace Engine {
 			Physics
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("Physics2D::RayCast_Engine", RayCast_Engine);
+			mono_add_internal_call("Physics2D::RayCastGroup_Engine", RayCastGroup_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Application
@@ -499,6 +501,29 @@ namespace Engine {
 			*entity_id = hitCast.entity_id;
 
 			if (hitCast.entity_id < 0) return false;
+			return true;
+		}
+
+		bool RayCastGroup_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, int* count, MonoArray* entityArray, MonoArray* hitDisArray, MonoArray* hitPointArray) {
+			RaycastHit hitCast[10];
+			int num = 0;
+			//if (distance < 0) distance = RAY_LENGTH;
+			std::uint32_t ignored = ignoreTarget < 0 ? DEFAULT_ENTITY_ID : ignoreTarget;
+			CollisionSystem::GetInstance().RayCastGroup(Engine::Ray{ Math::vec2 {pos.x, pos.y}, dir, distance }, hitCast, &num, ignored);
+
+			//*hitDistance = hitCast.distance;
+			//*hitPoint = hitCast.point;
+			//*entity_id = hitCast.entity_id;
+
+			for (int i = 0; i < num; i++) {
+				mono_array_set(entityArray, unsigned int, i, (hitCast[i].entity_id));
+				mono_array_set(hitDisArray, float, i, (hitCast[i].distance));
+				mono_array_set(hitPointArray, Math::vec2, i, (hitCast[i].point));
+			}
+
+			*count = num;
+
+			//if (hitCast.entity_id < 0) return false;
 			return true;
 		}
 

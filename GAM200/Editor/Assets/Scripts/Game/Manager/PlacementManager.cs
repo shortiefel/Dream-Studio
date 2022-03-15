@@ -32,6 +32,12 @@ public class PlacementManager : MonoBehaviour
         return placementGrid.GetAllAdjacentCellTypes(position.x, position.y);
     }
 
+    public bool IsBuilding(Vector2Int targetPos, uint entId)
+    {
+        if (!structureDictionary.ContainsKey(targetPos)) return false;
+        return structureDictionary[targetPos].entityId == entId;
+    }
+
     //True = within
     internal bool CheckIfPositionInBound(Vector2Int position)
     {

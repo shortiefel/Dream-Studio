@@ -66,7 +66,7 @@ public class CarAI : MonoBehaviour
     private float angle;
     private bool turning;
 
-    private List<Vector2Int> pastTrafficLight;
+    private List<uint> pastTrafficLight;
 
     //private bool testBool = true;
     /*public bool Stop
@@ -132,7 +132,7 @@ public class CarAI : MonoBehaviour
         tValue = 0f;
         prevPos = transform.position;
 
-        pastTrafficLight = new List<Vector2Int>();
+        pastTrafficLight = new List<uint>();
     }
 
     public void SetPath(List<Vector2> newPath, uint id)
@@ -236,38 +236,91 @@ public class CarAI : MonoBehaviour
 
     public override void Update()
     {
-        RaycastHit2D hit = Physics2D.RayCast(new Vector3(transform.position, 0f), transform.right, raycastLength, (int)transform.entityId);
+        //RaycastHit2D hit = Physics2D.RayCast(new Vector3(transform.position, 0f), transform.right, raycastLength, (int)transform.entityId);
+        //
+        //stop = false;
+        //
+        //if (hit.collider != null)
+        //{
+        //    Vector2Int targetPos = Vector2Int.RoundToInt(hit.transform.position);
+        //
+        //    if (collisionManager != null)
+        //    {
+        //        switch (collisionManager.CollisionTypeCheck(targetPos))
+        //        {
+        //            case CollisionType.Traffic:
+        //                Vector2Int hitPos = new Vector2Int(hit.transform.position);
+        //                uint entId = hit.transform.entityId;
+        //                //if (!stop && pastTrafficLight.Contains(entId))
+        //                //{
+        //                //    //Debug.Log("Already past");
+        //                //    break;
+        //                //}
+        //                stop |= !tm.GetTrafficLightState(hitPos, transform.angle);
+        //                pastTrafficLight.Add(entId);
+        //                //Debug.Log("Hiting trigger " + stop);
+        //                //if (tlIndex.Contains(hit.transform.entityId))
+        //                //{
+        //                //    stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
+        //                //    //stop = true;
+        //                //    Debug.Log("Hiting trigger " + stop);
+        //                //}
+        //                //if (stop)
+        //                //power = 2f;
+        //                break;
+        //            case CollisionType.ERP:
+        //                //Do nothing much if its ERP as the logic is already in ERP
+        //                break;
+        //            case CollisionType.Unknown:
+        //                //Stop car because might be other cars
+        //                stop |= true;
+        //                //Debug.Log("Hit");
+        //                //collisionManager.AddRaycastCollision(entityId, hit.transform.entityId);
+        //                break;
+        //            case CollisionType.Building:
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //}
 
-        if (hit.collider != null)
+        //else
+        //{
+        //    //Start car because no hit target
+        //    stop = false;
+        //}
+
+        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(transform.position, 0f), transform.right, raycastLength, (int)transform.entityId);
+
+        stop = false;
+
+        if (hit.count != 0 && collisionManager != null)
         {
-            Vector2Int targetPos = Vector2Int.RoundToInt(hit.transform.position);
-            //if (tm.IsTrafficLight(targetPos))
-            //{
-            //    if (tlIndex.Contains(hit.transform.entityId))
-            //    {
-            //        stop = !tm.GetTrafficLightState(currentTargetPosition, transform.angle);
-            //        //stop = true;
-            //        //Debug.Log("Hiting trigger");
-            //    }
-            //}
-
-            //else
-            //{
-            //    //Stop car because might be other cars
-            //    stop = true;
-            //}
-            //Debug.Log("PreHit");
-            if (collisionManager != null)
+            //if (hit.count > 1)
+                //Debug.Log(entityId + " Hit target " + hit.count);
+            for (int i = 0; i < hit.count; i++)
             {
-                //stop = false;
-                switch (collisionManager.CollisionTypeCheck(targetPos))
+                //if (hit.transform[i].entityId != 126)
+                    //Debug.Log(entityId + " Hit target " + hit.count + " at " + hit.transform[i].entityId);
+                Vector2Int targetPos = Vector2Int.RoundToInt(hit.transform[i].position);
+                uint entId = hit.transform[i].entityId;
+                switch (collisionManager.CollisionTypeCheck(targetPos, entId))
                 {
                     case CollisionType.Traffic:
-                        Vector2Int hitPos = new Vector2Int(hit.transform.position);
-                        if (pastTrafficLight.Contains(hitPos)) break;
-                        stop = !tm.GetTrafficLightState(hitPos, transform.angle);
-                        if (!stop) pastTrafficLight.Add(hitPos);
-                        //Debug.Log("Hiting trigger " + stop);
+                        //Vector2Int hitPos = new Vector2Int(hit.transform[i].position);
+                        //Debug.Log("Enter count");
+                        
+                        if (!stop && pastTrafficLight.Contains(entId))
+                        {
+                            break;
+                        }
+
+                        bool state = !tm.GetTrafficLightState(targetPos, transform.angle);
+                        stop |= state;
+                        if (state == false)
+                            pastTrafficLight.Add(entId);
+                        //Debug.Log(stop + " TL");
                         //if (tlIndex.Contains(hit.transform.entityId))
                         //{
                         //    stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
@@ -282,23 +335,23 @@ public class CarAI : MonoBehaviour
                         break;
                     case CollisionType.Unknown:
                         //Stop car because might be other cars
-                        //stop = true;
-                        //Debug.Log("Hit");
+                        Debug.Log(stop);
+                        stop |= true;
+                        Debug.Log(stop);
                         //collisionManager.AddRaycastCollision(entityId, hit.transform.entityId);
+                        break;
+                    case CollisionType.Building:
                         break;
                     default:
                         break;
                 }
             }
-
-            //Debug.Log("Hiting trigger");
+            //Debug.Log("------------------------------");
         }
 
-        else
-        {
-            //Start car because no hit target
-            stop = false;
-        }
+        //Debug.Log(entityId + " " + stop + " status");
+
+
         //if (path == null || path.Count == 0)
         //{
         //    Destroy(gameObject);

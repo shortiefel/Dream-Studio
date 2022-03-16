@@ -226,7 +226,7 @@ public class Grid
             //SetCellType_Engine(i, j, (int)value, 0);
             //Console.WriteLine("\n\n\nChanging value now " + value + "        -------------------------------------------------\n\n\n");
 
-            PrintGridOut();
+            //PrintGridOut();
         }
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

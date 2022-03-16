@@ -123,8 +123,9 @@ public class MoneySystem : MonoBehaviour
         money -= erpCost;
         textComp.text = money.ToString();
         ++roadManager.erpManager.erpCount;
-        erpCost += (erpBuyCount * 10);
         ++erpBuyCount;
+        erpCost += (erpBuyCount * 10);
+       
     }
     public void SellErp()
     {
@@ -144,8 +145,9 @@ public class MoneySystem : MonoBehaviour
         money -= tlCost;
         textComp.text = money.ToString();
         ++roadManager.trafficLightManager.tlCount;
-        tlCost += (int)(tlBuyCount * 10);
         ++tlBuyCount;
+        tlCost += (int)(tlBuyCount * 10);
+       
     }
     public void SellTL()
     {
@@ -155,5 +157,6 @@ public class MoneySystem : MonoBehaviour
         textComp.text = money.ToString();
         --roadManager.trafficLightManager.tlCount;
     }
+
 }
 

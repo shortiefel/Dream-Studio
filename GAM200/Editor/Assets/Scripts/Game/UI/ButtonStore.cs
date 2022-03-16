@@ -75,6 +75,9 @@ public class ButtonStore : MonoBehaviour
     Transform timerButton;
     Transform pauseIcon;
 
+    Transform moneyText;
+    Transform roadCount;
+
     UI texture;
 
     CombinedUI combinedUI;
@@ -86,21 +89,27 @@ public class ButtonStore : MonoBehaviour
 
     public override void Start()
     {
+        roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
+
+        GameObject go3 = GameObject.Find("MoneyText");
+        if (go3 != null)
+            moneyText = go3.GetComponent<Transform>();
+
         revealCartButton = false;
-        //GameObject go = GameObject.Find("StoreIntro");
-        //if (go != null)
-        //    storeIntro = go.GetComponent<Transform>();
+        GameObject go = GameObject.Find("StoreIntro");
+        if (go != null)
+            storeIntro = go.GetComponent<Transform>();
 
-        //if (storeIntro != null)
-        //    Disable<Transform>(storeIntro);
+        if (storeIntro != null)
+            Disable<Transform>(storeIntro);
 
-        //closing = false;
+        closing = false;
 
 
         texture = GetComponent<UI>();
         texture.color = new Color(0f, 0f, 0f);
 
-        //Storebtn = GameObject.Find("Storebtn");
+        Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
         //StoreBack = GameObject.Find("BackToGame");
 
@@ -376,10 +385,11 @@ public class ButtonStore : MonoBehaviour
         Enable<Transform>(Storebtn.transform);
         Enable<Transform>(storeIntro);
 
-
+        Disable<Transform>(moneyText);
+        Disable<Transform>(roadCount);
         Debug.Log("Revealing store ");
 
-        //closing = true;
+        closing = true;
         Time.timeScale = 0f;
 
         combinedUI.CloseAllUIExcept(UIType.None);

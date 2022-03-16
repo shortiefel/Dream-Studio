@@ -33,7 +33,7 @@ public class ButtonTutorial : MonoBehaviour
     Transform moneyText;
     //Transform counterText;
 
-    GameState gameState;
+    //GameState gameState;
 
     private Camera mainCamera;
 
@@ -52,7 +52,7 @@ public class ButtonTutorial : MonoBehaviour
         mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+       // gameState = GameObject.Find("GameManager").GetComponent<GameState>();
         //buttonTutSys = GameObject.Find("Displaybtn").GetComponent<ButtonTutorial>();
 
         drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
@@ -189,13 +189,13 @@ public class ButtonTutorial : MonoBehaviour
             }
 
             SceneManager.SetDrawMode(true);
-            gameState.SetDrawMode(true);
+            //gameState.SetDrawMode(true);
 
         }
         else
         {
             SceneManager.SetDrawMode(false);
-            gameState.SetDrawMode(false);
+            //gameState.SetDrawMode(false);
 
             EnableAllNormal();
         }
@@ -291,7 +291,7 @@ public class ButtonTutorial : MonoBehaviour
         gameManager.ClearInputActions();
 
         SceneManager.SetDrawMode(false);
-        gameState.SetDrawMode(false);
+        //gameState.SetDrawMode(false);
         //activeType = false;
     }
 
@@ -303,7 +303,7 @@ public class ButtonTutorial : MonoBehaviour
         gameManager.ClearInputActions();
 
         SceneManager.SetDrawMode(false);
-        gameState.SetDrawMode(false);
+       // gameState.SetDrawMode(false);
         //activeType = false;
     }
 

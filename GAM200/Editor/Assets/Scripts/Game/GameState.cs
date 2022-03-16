@@ -40,6 +40,7 @@ public class GameState : MonoBehaviour
         //    highscoreText = go1.GetComponent<Text>();
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
+
         GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
         if (buttonRoadGO != null)
             buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
@@ -49,6 +50,10 @@ public class GameState : MonoBehaviour
             moneySystem = moneySystemGO.GetComponent<MoneySystem>();
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+
+        GameObject buttonStoreGo = GameObject.Find("Storebtn");
+        if (buttonStoreGo != null)
+            store = buttonStoreGo.GetComponent<ButtonStore>();
 
         //previousTimeScale = 1f;
 

@@ -86,13 +86,13 @@ namespace Engine
 		GraphicImplementation::UnUseShaderHandle();
 
 		if (fadeToBlack) {
-			fadeToBlack = GraphicImplementation::FadeScene(1.5f, _dt, camMatrix);
+			fadeToBlack = GraphicImplementation::FadeScene(3.f, _dt, camMatrix);
 			if (!fadeToBlack)
 				SceneManager::GetInstance().ChangeScene(sceneToChangeTo);
 	}
 
 		if (fadeToClear)
-			fadeToClear = GraphicImplementation::FadeScene(1.5f, _dt, camMatrix, Math::vec4{ 0.0f, 0.0f, 0.0f, 1.0f }, Math::vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
+			fadeToClear = GraphicImplementation::FadeScene(3.f, _dt, camMatrix, Math::vec4{ 0.0f, 0.0f, 0.0f, 1.0f }, Math::vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
 
 		glDisable(GL_BLEND);
 

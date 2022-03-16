@@ -20,7 +20,7 @@ public class GameState : MonoBehaviour
     private float dayCycle;
     private int dayCounter;
 
-    ButtonStore store;
+
     GameObject receipt;
 
     //bool gameOverBool;
@@ -140,11 +140,6 @@ public class GameState : MonoBehaviour
     private void IncrementScore()
     {
         highscore++;
-
-        if (highscore == 1)
-        {
-            store.RevealStore();
-        }
 
         if (highscore == 10)
         {

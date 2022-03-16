@@ -42,27 +42,6 @@ namespace Editor {
 	}
 
 	void EditorStartPoint::Update(float _dt) {
-
-		/*
-		// Loops through lightArray to get object that has a lightComponent, render to lightComponent's FBO
-		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
-		for (auto& light : lightArray)
-		{
-			// Option to not render individual game object
-			if (!light.isActive) continue;
-
-			// If element in array is not used, skip it
-			const Engine::Entity_id& entity_id = light.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
-
-			glViewport(0, 0, light.shadowWidth, light.shadowHeight);
-
-			Engine::GraphicSystem::GetInstance().Render(_dt, &light);
-		}
-		*/
-
-		//glViewport(0, 0, Engine::Settings::windowWidth, Engine::Settings::windowHeight);
-
 		// Render Editor scene with shadow mapping
 		Engine::GraphicSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());
 		Engine::UISystem::GetInstance().Render(GUI::GetGameFboPtr());

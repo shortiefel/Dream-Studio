@@ -41,17 +41,23 @@ namespace Engine
 {
 #define LAYER_COUNT 10 // Number of layers for game objects
 
-LightComponent* lightSource = nullptr;
-
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture
 	void RenderTextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, int layer, float _dt)
 	{
+		/*
+		// Load Default shader program
+		const auto& shd_ref_handle =
+			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle);
+		*/
+
 		for (auto& texture : arr)
 		{
 			// Option to not render individual game object
 			if (!texture.isActive) continue;
 
+			// If element in array is not used, skip it
 			const Entity_id& entity_id = texture.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
 
@@ -82,21 +88,34 @@ LightComponent* lightSource = nullptr;
 						texture.AnimationUpdate(_dt, state);
 					}
 				}
+
+
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
 					texture.texobj_hdl, texture.colour, texture.minUV, texture.maxUV);
 			}
 		}
+
+		// Unload shader program
+		//GraphicImplementation::UnUseShaderHandle();
 	}
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with particles
 	void RenderParticleLayer(std::array<ParticleComponent, MAX_ENTITIES>& arr, int layer, float _dt)
 	{
+		/*
+		// Load Default shader program
+		const auto& shd_ref_handle =
+			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle);
+		*/
+
 		for (auto& particle : arr)
 		{
 			// Option to not render individual game object
 			if (!particle.isActive) continue;
 
+			// If element in array is not used, skip it
 			const Entity_id& entity_id = particle.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
 
@@ -147,28 +166,23 @@ LightComponent* lightSource = nullptr;
 				}
 			}
 		}
+
+		// Unload shader program
+		//GraphicImplementation::UnUseShaderHandle();
 	}
 
-	// Function will loop through texture array of game objects and render game objects based on layer; 
-	// 0 will be rendered first, followed by 1, 2 ...
-	void RenderGameObjectsD(Math::mat3 _camMatrix, float _dt) 
+	// Function will fill the batch render with vertices and required attributes of game objects
+	// Called by RenderGameObjects function -  to render all game objects with light
+	void RenderLightLayer(std::array<LightComponent, MAX_ENTITIES>& arr)
 	{
-		GraphicImplementation::Renderer::BeginQuadBatch();
-
-		// Load default shader program
-		const auto& shd_ref_handle = 
-			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle);
-
-		// Set uniform
-		GLSLShader::SetUniform("uCamMatrix", _camMatrix, shd_ref_handle);
-
-
 		/*
-		GLSLShader::SetUniform("u_LightPosition", { 0, 0 }, shd_ref_handle);
+		// Load Light shader program
+		const auto& shd_ref_handle =
+			GraphicImplementation::shdrpgms[GraphicShader::Light].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle);
+		*/
 
-		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
-		for (auto& light : lightArray)
+		for (auto& light : arr)
 		{
 			// Option to not render individual game object
 			if (!light.isActive) continue;
@@ -177,26 +191,34 @@ LightComponent* lightSource = nullptr;
 			const Engine::Entity_id& entity_id = light.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
 
-			// Set uniform for Light's Position
+			// Get transformation component
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
-			GLSLShader::SetUniform("u_LightPosition", transform->position, shd_ref_handle);
+			if (!transform || !transform->isActive) continue;
 
-			lightSource = &light;
-			break;
+			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
+				light.texobj_hdl, light.colour);
 		}
 
-		// Set uniform for Light's Colour
-		if (lightSource) {
-			GLSLShader::SetUniform("u_LightColour", lightSource->colour, shd_ref_handle);
-		}
-		else {
-			GLSLShader::SetUniform("u_LightColour", { 1.0f, 1.0f, 1.0f }, shd_ref_handle);
-		}
-		*/
+		// Unload shader program
+		//GraphicImplementation::UnUseShaderHandle();
+	}
+
+	// Function will loop through texture array of game objects and render game objects based on layer; 
+	// 0 will be rendered first, followed by 1, 2 ...
+	void RenderGameObjectsD(Math::mat3 _camMatrix, float _dt)
+	{
+		GraphicImplementation::Renderer::BeginQuadBatch();
 
 		// Get texture array for entities
 		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
 		auto& particleArray = dreamECSGame->GetComponentArrayData<ParticleComponent>();
+		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
+
+
+		// Load Light shader program
+		const auto& shd_ref_handle =
+			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Looping through all layers for game objects; batch rendering
 		int layerCount = LAYER_COUNT;
@@ -209,37 +231,22 @@ LightComponent* lightSource = nullptr;
 		GraphicImplementation::Renderer::EndQuadBatch();
 		GraphicImplementation::Renderer::FlushQuad();
 
-		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
-	}
 
-	// Overload function for RenderGameObjects
-	// param of mat4 for Light Source Perspective Matrix
-	void RenderGameObjectsLS(float _dt)
-	{
-		GraphicImplementation::Renderer::BeginQuadBatch();
+		// Load Default shader program
+		const auto& shd_ref_handle2 =
+			GraphicImplementation::shdrpgms[GraphicShader::Light].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle2);
 
-		// Load Simple Depth shader program
-		const auto& shd_ref_handle = 
-			GraphicImplementation::shdrpgms[GraphicShader::Simple_Depth].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle);
-
-		// Get texture array for entities
-		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
-
-		// Looping through all layers for game objects; batch rendering
-		int layerCount = LAYER_COUNT;
-		for (int i = 0; i < layerCount; i++)
-		{
-			RenderTextureLayer(textureArray, i, _dt);
-		}
+		RenderLightLayer(lightArray);
 
 		GraphicImplementation::Renderer::EndQuadBatch();
 		GraphicImplementation::Renderer::FlushQuad();
 
-		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 	}
+
+
 
 	// Function will loop through collision array of game objects and render out the collision lines
 	void RenderCollisionLines(Math::mat3 _camMatrix)
@@ -344,33 +351,34 @@ LightComponent* lightSource = nullptr;
 #endif
 		GraphicImplementation::Renderer::ResetStats();
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Set background colour
-		//glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
-		glClearColor(0.f, 0.f, 0.f, 1.0f);
+		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
 
 		// Enable GL_BLEND for transparency of textures
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		/*
 
-		// Loops through lightArray to get lightComponent's depthMap and binds it.
-		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
-		for (auto& light : lightArray)
-		{
-			// Option to not render individual game object
-			if (!light.isActive) continue;
+		// Load Default shader program
+		const auto& shd_ref_handle =
+			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle);
+		// Setting uniform
+		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
+		// Unload shader program
+		GraphicImplementation::UnUseShaderHandle();
 
-			// If element in array is not used, skip it
-			const Engine::Entity_id& entity_id = light.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
 
-			light.BindTexture();
-		}
+		// Load Light shader program
+		const auto& shd_ref_handle2 = GraphicImplementation::shdrpgms[GraphicShader::Light].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle2);
+		// Setting uniform
+		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle2);
+		// Unload shader program
+		GraphicImplementation::UnUseShaderHandle();
 
-		*/
 
 		// Render game objects and collision lines through camera perspective
 		RenderGameObjectsD(camMatrix, _dt);
@@ -386,92 +394,6 @@ LightComponent* lightSource = nullptr;
 #endif
 	}
 
-	// Update function for GraphicSystem by passing in a LightComponent*
-	void GraphicSystem::Render(float _dt, LightComponent* _fbo) {
-		PROFILER_START("Rendering Shadow Mapping");
-		_fbo->BindFBO();
-
-		glClear(GL_DEPTH_BUFFER_BIT);
-
-		GraphicImplementation::Renderer::ResetStats();
-
-		// Set background colour
-		//glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
-
-		// Enable GL_BLEND for transparency of textures
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-
-		/*
-		
-		// Load shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Simple_Depth].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle);
-
-		// Set uniforms for Light
-		GLSLShader::SetUniform("uLightSpaceMatrix", _fbo->lightSpace, shd_ref_handle);
-		GLSLShader::SetUniform("uLightProjection", _fbo->lightProjection, shd_ref_handle);
-		GLSLShader::SetUniform("uLightView", _fbo->lightView, shd_ref_handle);
-
-		const Engine::Entity_id& lightEntity_id = _fbo->GetEntityId();
-		TransformComponent* lightTransform = dreamECSGame->GetComponentPTR<TransformComponent>(lightEntity_id);
-		GLSLShader::SetUniform("uLightPos", lightTransform->position, shd_ref_handle);
-
-		GLSLShader::SetUniform("uViewPos", CameraSystem::GetInstance().GetPosition(), shd_ref_handle);
-		
-		// Setting depth map
-		GLuint tex_loc = glGetUniformLocation(shd_ref_handle, "uDepthMap");
-		glUniform1i(tex_loc, _fbo->depthMap);
-		if (tex_loc < 0) {
-			std::cout << "uDepthMap uniform doesn't exist!!!\n";
-			std::exit(EXIT_FAILURE);
-		}
-
-
-		unsigned int diffuseTexture = ResourceManager::GetInstance().GetTextureContainer("Default_Square").texture_handle;
-		
-
-		// Setting diffuse texture
-		GLuint tex_loc2 = glGetUniformLocation(shd_ref_handle, "uDiffuseTexture");
-		glUniform1i(tex_loc2, diffuseTexture);
-		if (tex_loc2 < 0) {
-			std::cout << "uDiffuseTexture uniform doesn't exist!!!\n";
-			std::exit(EXIT_FAILURE);
-		}
-		
-
-		// Unload shader program
-		GraphicImplementation::UnUseShaderHandle();
-		*/
-
-		// Render game objects through light's perspective
-		RenderGameObjectsLS(_dt);
-
-		glDisable(GL_BLEND);
-		
-		_fbo->Unbind();
-	}
-
-	// Function that creates the FBO for all existing light componenets
-	void CreateLightFBO()
-	{
-		// Loops through light array
-		auto& lightArray = dreamECSGame->GetComponentArrayData<LightComponent>();
-		for (auto& light : lightArray)
-		{
-			// Option to not render individual game object
-			if (!light.isActive) continue;
-
-			// If element in array is not used, skip it
-			const Entity_id& entity_id = light.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
-
-			light.FBOCreate();
-		}
-	}
-
-
 	// Init function for GraphicSystem
 	bool GraphicSystem::Create()
 	{
@@ -483,7 +405,7 @@ LightComponent* lightSource = nullptr;
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Uniform for game object texture shader
-		auto loc = glGetUniformLocation(shd_ref_handle, "u_Textures");
+		auto loc = glGetUniformLocation(shd_ref_handle, "uTextures");
 		int samplers[32]{};
 		for (int i = 0; i < 32; i++)
 		{
@@ -491,38 +413,26 @@ LightComponent* lightSource = nullptr;
 		}
 		glUniform1iv(loc, 32, samplers);
 
-
-
-		
-
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-		/*
 
-		// Load Simple Depth shader program
-		const auto& shd_ref_handle2 = GraphicImplementation::shdrpgms[GraphicShader::Simple_Depth].GetHandle();
+		// Load Light shader program
+		const auto& shd_ref_handle2 = GraphicImplementation::shdrpgms[GraphicShader::Light].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle2);
 
 		// Uniform for game object texture shader
 		auto loc2 = glGetUniformLocation(shd_ref_handle2, "u_Textures");
-		int samplers2[32]{};
-		for (int i = 0; i < 32; i++)
-		{
-			samplers2[i] = i;
-		}
-		glUniform1iv(loc2, 32, samplers2);
+		glUniform1iv(loc2, 32, samplers);
 
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
-
-		*/
 
 		// Initialise meshes
 		GraphicImplementation::Renderer::Init();
 
 		// Initialise Light Source FBO
-		CreateLightFBO();
+		//CreateLightFBO();
 
 		LOG_INSTANCE("Graphic System created");
 		return true;
@@ -536,3 +446,120 @@ LightComponent* lightSource = nullptr;
 		LOG_INSTANCE("Graphic System destroyed");
 	}
 }
+
+
+
+#if 0
+// Overload function for RenderGameObjects
+// param of mat4 for Light Source Perspective Matrix
+void RenderGameObjectsLS(float _dt)
+{
+	GraphicImplementation::Renderer::BeginQuadBatch();
+
+	// Load Simple Depth shader program
+	const auto& shd_ref_handle =
+		GraphicImplementation::shdrpgms[GraphicShader::Simple_Depth].GetHandle();
+	GraphicImplementation::UseShaderHandle(shd_ref_handle);
+
+	// Get texture array for entities
+	auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
+
+	// Looping through all layers for game objects; batch rendering
+	int layerCount = LAYER_COUNT;
+	for (int i = 0; i < layerCount; i++)
+	{
+		RenderTextureLayer(textureArray, i, _dt);
+	}
+
+	GraphicImplementation::Renderer::EndQuadBatch();
+	GraphicImplementation::Renderer::FlushQuad();
+
+	// Unload shader program
+	GraphicImplementation::UnUseShaderHandle();
+}
+
+
+// Update function for GraphicSystem by passing in a LightComponent*
+void GraphicSystem::Render(float _dt, LightComponent* _fbo) {
+	PROFILER_START("Rendering Shadow Mapping");
+	_fbo->BindFBO();
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	GraphicImplementation::Renderer::ResetStats();
+
+	// Set background colour
+	//glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+
+	// Enable GL_BLEND for transparency of textures
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+	// Load shader program
+	const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Simple_Depth].GetHandle();
+	GraphicImplementation::UseShaderHandle(shd_ref_handle);
+
+	// Set uniforms for Light
+	GLSLShader::SetUniform("uLightSpaceMatrix", _fbo->lightSpace, shd_ref_handle);
+	GLSLShader::SetUniform("uLightProjection", _fbo->lightProjection, shd_ref_handle);
+	GLSLShader::SetUniform("uLightView", _fbo->lightView, shd_ref_handle);
+
+	const Engine::Entity_id& lightEntity_id = _fbo->GetEntityId();
+	TransformComponent* lightTransform = dreamECSGame->GetComponentPTR<TransformComponent>(lightEntity_id);
+	GLSLShader::SetUniform("uLightPos", lightTransform->position, shd_ref_handle);
+
+	GLSLShader::SetUniform("uViewPos", CameraSystem::GetInstance().GetPosition(), shd_ref_handle);
+
+	// Setting depth map
+	GLuint tex_loc = glGetUniformLocation(shd_ref_handle, "uDepthMap");
+	glUniform1i(tex_loc, _fbo->depthMap);
+	if (tex_loc < 0) {
+		std::cout << "uDepthMap uniform doesn't exist!!!\n";
+		std::exit(EXIT_FAILURE);
+	}
+
+
+	unsigned int diffuseTexture = ResourceManager::GetInstance().GetTextureContainer("Default_Square").texture_handle;
+
+
+	// Setting diffuse texture
+	GLuint tex_loc2 = glGetUniformLocation(shd_ref_handle, "uDiffuseTexture");
+	glUniform1i(tex_loc2, diffuseTexture);
+	if (tex_loc2 < 0) {
+		std::cout << "uDiffuseTexture uniform doesn't exist!!!\n";
+		std::exit(EXIT_FAILURE);
+	}
+
+
+	// Unload shader program
+	GraphicImplementation::UnUseShaderHandle();
+
+	// Render game objects through light's perspective
+	RenderGameObjectsLS(_dt);
+
+	glDisable(GL_BLEND);
+
+	_fbo->Unbind();
+}
+
+
+// Function that creates the FBO for all existing light componenets
+void CreateLightFBO()
+{
+	// Loops through light array
+	auto& lightArray = dreamECSGame->GetComponentArrayData<LightComponent>();
+	for (auto& light : lightArray)
+	{
+		// Option to not render individual game object
+		if (!light.isActive) continue;
+
+		// If element in array is not used, skip it
+		const Entity_id& entity_id = light.GetEntityId();
+		if (EntityId_Check(entity_id)) break;
+
+		light.FBOCreate();
+	}
+}
+
+#endif

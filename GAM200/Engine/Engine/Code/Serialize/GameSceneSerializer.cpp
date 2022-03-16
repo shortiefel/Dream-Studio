@@ -309,6 +309,7 @@ namespace Engine {
 		if (sceneSerializer.SelectDeserializeDataType("LightComponent")) {
 			LightComponent tem(entityId);
 			sceneSerializer.RetrieveData(
+				"Ambient", tem.ambient,
 				"Colour", tem.colour,
 				"IsActive", tem.isActive);
 
@@ -514,6 +515,7 @@ namespace Engine {
 			SERIALIZE(FontComponent);
 			SERIALIZE(SoundComponent);
 			SERIALIZE(ParticleComponent);
+			SERIALIZE(LightComponent);
 
 			ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(entityId);
 			if (csScript != nullptr) {
@@ -626,6 +628,7 @@ namespace Engine {
 			DESERIALIZE(FontComponent);
 			DESERIALIZE(SoundComponent);
 			DESERIALIZE(ParticleComponent);
+			DESERIALIZE(LightComponent);
 
 			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {
@@ -690,6 +693,7 @@ namespace Engine {
 		SERIALIZE(FontComponent);
 		SERIALIZE(SoundComponent);
 		SERIALIZE(ParticleComponent);
+		SERIALIZE(LightComponent);
 
 		ScriptComponent* csScript = dreamECSGame->GetComponentPTR<ScriptComponent>(entityId);
 		if (csScript != nullptr) {
@@ -899,6 +903,7 @@ namespace Engine {
 			DESERIALIZE(FontComponent);
 			DESERIALIZE(SoundComponent);
 			DESERIALIZE(ParticleComponent);
+			DESERIALIZE(LightComponent);
 
 			itr = obj.FindMember("ScriptComponent");
 			if (itr != obj.MemberEnd()) {

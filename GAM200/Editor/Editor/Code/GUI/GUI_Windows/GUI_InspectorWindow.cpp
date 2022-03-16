@@ -29,6 +29,7 @@ Technology is prohibited.
 #include "Engine/Header/ECS/System/SoundSystem.hpp"
 #include "Engine/Header/Management/SoundManager.hpp"
 #include "Engine/Header/ECS/Component/Graphics/ParticleComponent.hpp"
+#include "Engine/Header/ECS/Component/Graphics/LightComponent.hpp"
 
 #include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
@@ -178,6 +179,8 @@ namespace Editor {
 						Engine::dreamECSGame->AddComponent<Engine::SoundComponent>(entity_selected);
 					if (ImGui::Selectable(" + Particle##addParticlecom"))
 						Engine::dreamECSGame->AddComponent<Engine::ParticleComponent>(entity_selected);
+					if (ImGui::Selectable(" + Light##addLightcom"))
+						Engine::dreamECSGame->AddComponent<Engine::LightComponent>(entity_selected);
 					if (ImGui::Selectable(" + Waypoint##addWaypointcom"))
 						Engine::dreamECSGame->AddComponent<Engine::WaypointComponent>(entity_selected);
 					if (ImGui::Selectable(" + Scripts##addScriptcom")) {
@@ -1782,6 +1785,55 @@ namespace Editor {
 					}
 				}
 
+
+
+				/**
+				*	LIGHT
+				*/
+				Engine::LightComponent* lightComp = Engine::dreamECSGame->GetComponentPTR<Engine::LightComponent>(entity_selected);
+				if (lightComp != nullptr) {
+
+					DreamImGui::CheckBox_Dream("##LightActive", &(lightComp->isActive));
+					ImGui::SameLine();
+
+					if (ImGui::CollapsingHeader("Light"))
+					{
+						/**
+						*	Ambient
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Ambient");
+						ImGui::SameLine();
+						HelperMarker("Brightness of light being emitted");
+						ImGui::SameLine(halfWidth);	
+						ImGui::SetNextItemWidth(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::InputFloat("##lightAmbient", &lightComp->ambient, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+						/**
+						*	LIGHT COLOR
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Color");
+						ImGui::SameLine();
+						HelperMarker("Color of light being emitted");
+						ImGui::SameLine(halfWidth);
+						ImGui::ColorPicker4("Color", (float*)&lightComp->colour, ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_DisplayRGB);
+
+						ImGui::Spacing();
+
+						/**
+						*	DELETE
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::SameLine(halfWidth);
+						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
+							Engine::dreamECSGame->RemoveComponent<Engine::LightComponent>(entity_selected);
+					}
+				}
 
 				/**
 				*	Prefab

@@ -77,8 +77,6 @@ namespace Engine
             Math::vec2 tposition{};
             Math::vec2 tscale{};
             float trotation{};
-
-            Math::vec3 normal{};
         };
 
         struct RendererData
@@ -145,9 +143,6 @@ namespace Engine
 
             glEnableVertexArrayAttrib(s_QuadData.va, 6);
             glVertexAttribPointer(6, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
-
-            glEnableVertexArrayAttrib(s_QuadData.va, 7);
-            glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, normal));
 
             /*
             example of indices loop; 2 triangles to form a quad:
@@ -709,7 +704,6 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
-            s_QuadData.vertexbufferptr->normal = { 0.0f, 0.0f, 1.0f };
 
             s_QuadData.vertexbufferptr++;
 
@@ -720,7 +714,6 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
-            s_QuadData.vertexbufferptr->normal = { 0.0f, 0.0f, 1.0f };
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
@@ -730,7 +723,6 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
-            s_QuadData.vertexbufferptr->normal = { 0.0f, 0.0f, 1.0f };
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
@@ -740,7 +732,6 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
-            s_QuadData.vertexbufferptr->normal = { 0.0f, 0.0f, 1.0f };
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.indexcount += stOneQuadIndex;
@@ -785,7 +776,6 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
-            s_QuadData.vertexbufferptr->normal = { 0.0f, -1.0f, 0.0f };
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y };
@@ -795,7 +785,6 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
-            s_QuadData.vertexbufferptr->normal = { 1.0f, 0.0f, 0.0f };
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
@@ -805,7 +794,6 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
-            s_QuadData.vertexbufferptr->normal = { 0.0f, 1.0f, 0.0f };
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
@@ -815,7 +803,6 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
-            s_QuadData.vertexbufferptr->normal = { -1.0f, 0.0f, 0.0f };
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.indexcount += stOneQuadIndex;

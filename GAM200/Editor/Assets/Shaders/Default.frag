@@ -8,7 +8,7 @@
 
 #version 450 core
 
-uniform sampler2D u_Textures[32];
+uniform sampler2D uTextures[32];
 
 layout (location=0) in vec4 vColor;
 layout (location=1) in vec2 vTexture;
@@ -21,6 +21,6 @@ void main ()
 {
 	// object - texture colour
 	int index = int(vTextureIndex);
-	vec4 texColor = texture(u_Textures[index], vTexture) * vColor;
+	vec4 texColor = texture(uTextures[index], vTexture) * vColor;
 	fColor = texColor;
 }

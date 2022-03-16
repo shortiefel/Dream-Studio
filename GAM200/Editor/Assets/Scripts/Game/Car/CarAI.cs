@@ -341,9 +341,9 @@ public class CarAI : MonoBehaviour
                         break;
                     case CollisionType.Unknown:
                         //Stop car because might be other cars
-                        Debug.Log(stop);
+                        //Debug.Log(stop);
                         stop |= true;
-                        Debug.Log(stop);
+                        //Debug.Log(stop);
                         //collisionManager.AddRaycastCollision(entityId, hit.transform.entityId);
                         break;
                     case CollisionType.Building:

@@ -152,12 +152,18 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern int SetRoad_Engine(Vector2Int[] roads, int size);
     
-    public int UnsetRoad(Vector2Int pos)
+    public int UnsetRoad(Vector2Int pos, ref List<Vector2Int> roadRemoved)
     {
-        return UnsetRoad_Engine(pos);
+        Vector2Int[] roadPos = new Vector2Int[5];
+        int count = UnsetRoad_Engine(pos, roadPos);
+
+        for (int i = 0; i < count; i++)
+            roadRemoved.Add(roadPos[i]);
+
+        return count;
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern int UnsetRoad_Engine(Vector2Int pos);
+    internal static extern int UnsetRoad_Engine(Vector2Int pos, Vector2Int[] roadRemoved);
 
     public void RevertGrid()
     {

@@ -80,12 +80,12 @@ namespace Engine {
 	}
 
 	void CreateGrid_Engine(int width, int height) {
-		std::cout << " Calling first this \n";
+		//std::cout << " Calling first this \n";
 		Game::Grid::GetInstance().CreateGrid(width, height);
 	}
 
 	void ResizeGrid_Engine(int newWidth, int newHeight) {
-		std::cout << " Calling this \n";
+		//std::cout << " Calling this \n";
 		Game::Grid::GetInstance().ResizeGrid(newWidth, newHeight);
 	}
 

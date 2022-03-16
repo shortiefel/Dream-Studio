@@ -196,4 +196,13 @@ public class CameraMovement : MonoBehaviour
         //t = 0f;
         //gameZoom = true;
     }
+
+    public void Expand()
+    {
+        maxZoom += 6f;
+        speed *= 1.5f;
+        minZoom *= 0.5f;
+
+        SetZoom(ZoomType.Out);
+    }
 }

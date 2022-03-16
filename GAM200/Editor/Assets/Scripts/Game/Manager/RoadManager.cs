@@ -428,7 +428,7 @@ public class RoadManager : MonoBehaviour
     public override void Update()
     {
         //Debug.Log(temporaryRoadPositions.Count);
-        if (Input.GetKeyDown(KeyCode.G)) placementManager.placementGrid.PrintGridOut();
+        if (Input.GetKeyDown(KeyCode.O)) placementManager.placementGrid.PrintGridOut();
     }
 
     public void FinishPlacingRoad()

@@ -328,12 +328,4 @@ public class PlacementManager : MonoBehaviour
     //    //    placementGrid[position.x, position.y] = CellType.Empty;
     //    //}
     //}
-
-    public override void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            placementGrid.PrintGridOut();
-        }
-    }
 }

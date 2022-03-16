@@ -7,6 +7,11 @@ public class InstructionsMain : MonoBehaviour
     InstructionsClick instructions4Script;
     InstructionsClick instructions5Script;
     InstructionsClick instructions6Script;
+    InstructionsClick instructions7Script;
+    InstructionsClick instructions8Script;
+    InstructionsClick instructions9Script;
+    InstructionsClick instructions10Script;
+    InstructionsClick instructions11Script;
 
     GameObject go1;
     GameObject go2;
@@ -14,6 +19,11 @@ public class InstructionsMain : MonoBehaviour
     GameObject go4;
     GameObject go5;
     GameObject go6;
+    GameObject go7;
+    GameObject go8;
+    GameObject go9;
+    GameObject go10;
+    GameObject go11;
 
     Tutorial tutorial;
     RoadManager roadManager;
@@ -34,6 +44,11 @@ public class InstructionsMain : MonoBehaviour
         instructions4Script = GameObject.Find("Instructions4").GetComponent<InstructionsClick>();
         instructions5Script = GameObject.Find("Instructions5").GetComponent<InstructionsClick>();
         instructions6Script = GameObject.Find("Instructions6").GetComponent<InstructionsClick>();
+        instructions7Script = GameObject.Find("Instructions7").GetComponent<InstructionsClick>();
+        instructions8Script = GameObject.Find("Instructions8").GetComponent<InstructionsClick>();
+        instructions9Script = GameObject.Find("Instructions9").GetComponent<InstructionsClick>();
+        instructions10Script = GameObject.Find("Instructions10").GetComponent<InstructionsClick>();
+        instructions11Script = GameObject.Find("Instructions11").GetComponent<InstructionsClick>();
 
         go1 = GameObject.Find("Instructions1");
         go2 = GameObject.Find("Instructions2");
@@ -41,6 +56,11 @@ public class InstructionsMain : MonoBehaviour
         go4 = GameObject.Find("Instructions4");
         go5 = GameObject.Find("Instructions5");
         go6 = GameObject.Find("Instructions6");
+        go7 = GameObject.Find("Instructions7");
+        go8 = GameObject.Find("Instructions8");
+        go9 = GameObject.Find("Instructions9");
+        go10 = GameObject.Find("Instructions10");
+        go11 = GameObject.Find("Instructions11");
 
 
         go1.GetComponent<Animation>().Play("Open");
@@ -68,6 +88,20 @@ public class InstructionsMain : MonoBehaviour
         }
         return false;
     }
+
+
+    /**
+     *     1. intro game (1 , 2) 
+            2. teach user how to move camera (8)
+            3. teach user how to zoom in (9)
+            4. Click Display button (7)
+            5. Show that road counter = 0 
+            6. Click store (10)
+            7. Buy road 
+            8. draw road (3)
+            9. Timer (11)
+            10. Lets play (6) 
+     */
 
     public override void Update()
     {

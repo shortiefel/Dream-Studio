@@ -79,8 +79,23 @@ public class ButtonStore : MonoBehaviour
 
     CombinedUI combinedUI;
 
+    public bool revealCartButton;
+    public bool closing;
+
+    Transform storeIntro;
+
     public override void Start()
     {
+        revealCartButton = false;
+        //GameObject go = GameObject.Find("StoreIntro");
+        //if (go != null)
+        //    storeIntro = go.GetComponent<Transform>();
+
+        //if (storeIntro != null)
+        //    Disable<Transform>(storeIntro);
+
+        //closing = false;
+
         texture = GetComponent<UI>();
         texture.color = new Color(0f, 0f, 0f);
 
@@ -150,8 +165,10 @@ public class ButtonStore : MonoBehaviour
         tlCostPosition = TLCost.transform.position;
         erpCostPosition = ERPCost.transform.position;
 
+
+        Disable<Transform>(Storebtn.transform);
         Disable<Transform>(StoreBG.transform);
-        //Disable<Transform>(StoreBack.transform);
+
         Disable<Transform>(StoreHeader.transform);
         Disable<Transform>(ItemHeader.transform);
         Disable<Transform>(QtyHeader.transform);
@@ -179,6 +196,7 @@ public class ButtonStore : MonoBehaviour
         //stopTimer = 0f;
 
 
+
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
     }
 
@@ -186,15 +204,19 @@ public class ButtonStore : MonoBehaviour
     {
         if (type)
         {
-            Enable<Transform>(StoreBG.transform);
-            //Enable<Transform>(StoreBack.transform);
-            Enable<Transform>(StoreHeader.transform);
-            Enable<Transform>(ItemHeader.transform);
-            Enable<Transform>(QtyHeader.transform);
-            Enable<Transform>(RoadIcon.transform);
-            Enable<Transform>(RoadBuy.transform);
-            Enable<Transform>(RoadSell.transform);
-            Enable<Transform>(RoadNo.transform);
+           if (revealCartButton == true)
+            {
+                Enable<Transform>(StoreBG.transform);
+                //Enable<Transform>(StoreBack.transform);
+                Enable<Transform>(StoreHeader.transform);
+                Enable<Transform>(ItemHeader.transform);
+                Enable<Transform>(QtyHeader.transform);
+                Enable<Transform>(RoadIcon.transform);
+                Enable<Transform>(RoadBuy.transform);
+                Enable<Transform>(RoadSell.transform);
+                Enable<Transform>(RoadNo.transform);
+            }
+           
 
             if (combinedUI.buttonRoad.revealTrafficButton)
             {
@@ -216,20 +238,7 @@ public class ButtonStore : MonoBehaviour
 
             Enable<Transform>(CostTitle.transform);
             Enable<Transform>(RoadCost.transform);
-            
-
-            //stopTime = true;
-
-            //Disable<Transform>(Storebtn.transform);
-            //Enable<Transform>(StoreBack.transform);
-
-            //Disable<Transform>(displayArrow);
-            //Disable<Transform>(displayArrowWhite);
-            //Disable<Transform>(pauseIcon);
-            //
-            //Disable<Transform>(timerButton);
-            //
-            //Time.timeScale = 0f;
+           
 
             if (combinedUI != null)
                 combinedUI.CloseAllUIExcept(UIType.Store);
@@ -272,10 +281,6 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(ERPCost.transform);
 
             
-            
-
-            //Enable<Transform>(Storebtn.transform);
-            //Disable<Transform>(StoreBack.transform);
         }
     }
    
@@ -301,28 +306,7 @@ public class ButtonStore : MonoBehaviour
             }
         }
 
-        //if (stopTime)
-        //{
-        //    stopTimer += Time.deltaTime;
-        //
-        //    float newTimer = 5f * stopTimer;
-        //
-        //    if (stopTimer > 0.1f)
-        //    {
-        //        stopTimer = 0f;
-        //        stopTime = false;
-        //
-        //        //Enable<Transform>(Storebtn.transform);
-        //        //Disable<Transform>(StoreBack.transform);
-        //        Disable<Transform>(displayArrow);
-        //        Disable<Transform>(displayArrowWhite);
-        //        Disable<Transform>(pauseIcon);
-        //
-        //        Disable<Transform>(timerButton);
-        //
-        //        Time.timeScale = 0f;
-        //    }
-        //}
+      
     }
 
 
@@ -348,6 +332,22 @@ public class ButtonStore : MonoBehaviour
     internal void ResumeAction()
     {
         StoreAction();
+    }
+
+    public void RevealStore()
+    {
+        revealCartButton = true;
+        Enable<Transform>(Storebtn.transform);
+        Enable<Transform>(storeIntro);
+
+
+        Debug.Log("Revealing store ");
+
+        //closing = true;
+        Time.timeScale = 0f; 
+        
+        combinedUI.CloseAllUIExcept(UIType.None);
+        Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }
 }
 

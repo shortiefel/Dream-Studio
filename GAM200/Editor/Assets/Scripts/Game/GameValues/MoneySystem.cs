@@ -29,13 +29,35 @@ public class MoneySystem : MonoBehaviour
     GameState gameState;
     Receipt receipt;
 
+    GameObject go;
+    GameObject go2;
+    GameObject go3;
+    GameObject go4;
+    GameObject go5;
+
     public override void Start()
     {
-        roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
-        erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
-        trafficLightManager = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
-        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
-        receipt = GameObject.Find("Receipt").GetComponent<Receipt>();
+        GameObject go = GameObject.Find("RoadManager");
+        if (go != null)
+            roadManager = go.GetComponent<RoadManager>();
+
+        GameObject go2 = GameObject.Find("ERPManager");
+        if (go2 != null)
+            erpManager = go2.GetComponent<ERPManager>();
+
+        GameObject go3 = GameObject.Find("TrafficManager");
+        if (go3 != null)
+            trafficLightManager = go3.GetComponent<TrafficLightManager>();
+
+        GameObject go4 = GameObject.Find("GameManager");
+        if (go4 != null)
+            gameState = go4.GetComponent<GameState>();
+
+        GameObject go5 = GameObject.Find("Receipt");
+        if (go5 != null)
+            receipt = go5.GetComponent<Receipt>();
+
+    
         money = 1000;
         textComp = GetComponent<Text>();
         textComp.text = money.ToString();

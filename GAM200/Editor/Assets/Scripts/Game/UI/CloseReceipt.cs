@@ -70,6 +70,7 @@ public class CloseReceipt : MonoBehaviour
             Disable<Transform>(closeTransform);
 
             gameState.SetPause(false);
+            gameState.GameOver();
         }
     }
 }

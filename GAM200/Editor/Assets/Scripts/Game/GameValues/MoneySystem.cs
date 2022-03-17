@@ -73,8 +73,6 @@ public class MoneySystem : MonoBehaviour
     {
 
         money -= val;
-        if (money < 1)
-            money = 0;
         textComp.text = money.ToString();
 
         balance = money;
@@ -91,9 +89,9 @@ public class MoneySystem : MonoBehaviour
         tlNum = trafficLightManager.trafficlightTaxCount();
         erpNum = erpManager.erpTaxCount();
 
-        roadTax =  roadNum* 3;
-        trafficTax = tlNum * 4;
-        erpTax = erpNum * 5;
+        roadTax =  roadNum* 25;
+        trafficTax = tlNum * 50;
+        erpTax = erpNum * 100;
         
 
         totalTax = roadTax + erpTax + trafficTax;

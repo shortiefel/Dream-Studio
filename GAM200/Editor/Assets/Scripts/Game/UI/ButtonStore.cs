@@ -144,8 +144,8 @@ public class ButtonStore : MonoBehaviour
         hQtyPosition = QtyHeader.transform.position;
 
         RoadIcon = GameObject.Find("RoadCart");
-        RoadBuy = GameObject.Find("Roadadd");
-        RoadSell = GameObject.Find("Roadminus");
+        RoadBuy = GameObject.Find("RoadPlus");
+        RoadSell = GameObject.Find("RoadMinus");
         RoadNo = GameObject.Find("RoadQty");
 
         rIconPosition = RoadIcon.transform.position;
@@ -154,8 +154,8 @@ public class ButtonStore : MonoBehaviour
         rNoPosition = RoadNo.transform.position;
 
         TrafficIcon = GameObject.Find("TrafficCart");
-        TrafficBuy = GameObject.Find("Trafficadd");
-        TrafficSell = GameObject.Find("Trafficminus");
+        TrafficBuy = GameObject.Find("TrafficPlus");
+        TrafficSell = GameObject.Find("TrafficMinus");
         TrafficNo = GameObject.Find("TrafficQty");
 
         tIconPosition = TrafficIcon.transform.position;
@@ -164,8 +164,8 @@ public class ButtonStore : MonoBehaviour
         tNoPosition = TrafficNo.transform.position;
 
         ERPIcon = GameObject.Find("ERPCart");
-        ERPBuy = GameObject.Find("ERPadd");
-        ERPSell = GameObject.Find("ERPminus");
+        ERPBuy = GameObject.Find("ERPPlus");
+        ERPSell = GameObject.Find("ERPMinus");
         ERPNo = GameObject.Find("ERPQty");
 
         eIconPosition = ERPIcon.transform.position;
@@ -239,10 +239,10 @@ public class ButtonStore : MonoBehaviour
             {
                 Enable<Transform>(StoreBG.transform);
                 //Enable<Transform>(StoreBack.transform);
-                Enable<Transform>(StoreHeader.transform);
-                Enable<Transform>(ItemHeader.transform);
-                Enable<Transform>(QtyHeader.transform);
-                Enable<Transform>(RoadIcon.transform);
+                //Enable<Transform>(StoreHeader.transform);
+                //Enable<Transform>(ItemHeader.transform);
+                //Enable<Transform>(QtyHeader.transform);
+                //Enable<Transform>(RoadIcon.transform);
                 Enable<Transform>(RoadBuy.transform);
                 Enable<Transform>(RoadSell.transform);
                 Enable<Transform>(RoadNo.transform);
@@ -254,19 +254,19 @@ public class ButtonStore : MonoBehaviour
                 Enable<Transform>(TrafficBuy.transform);
                 Enable<Transform>(TrafficSell.transform);
                 Enable<Transform>(TrafficNo.transform);
-                Enable<Transform>(TLCost.transform);
+                //Enable<Transform>(TLCost.transform);
             }
 
             if (combinedUI.buttonRoad.revealERPButton)
             {
-                Enable<Transform>(ERPIcon.transform);
+                //Enable<Transform>(ERPIcon.transform);
                 Enable<Transform>(ERPBuy.transform);
                 Enable<Transform>(ERPSell.transform);
                 Enable<Transform>(ERPNo.transform);
-                Enable<Transform>(ERPCost.transform);
+                //Enable<Transform>(ERPCost.transform);
             }
 
-            Enable<Transform>(CostTitle.transform);
+            //Enable<Transform>(CostTitle.transform);
             Enable<Transform>(RoadCost.transform);
             
 

@@ -238,11 +238,11 @@ public class ButtonStore : MonoBehaviour
 
             if (combinedUI.buttonRoad.revealTrafficButton)
             {
-                Enable<Transform>(TrafficIcon.transform);
+                //Enable<Transform>(TrafficIcon.transform);
                 Enable<Transform>(TrafficBuy.transform);
                 Enable<Transform>(TrafficSell.transform);
                 Enable<Transform>(TrafficNo.transform);
-                //Enable<Transform>(TLCost.transform);
+                Enable<Transform>(TLCost.transform);
             }
 
             if (combinedUI.buttonRoad.revealERPButton)
@@ -251,7 +251,7 @@ public class ButtonStore : MonoBehaviour
                 Enable<Transform>(ERPBuy.transform);
                 Enable<Transform>(ERPSell.transform);
                 Enable<Transform>(ERPNo.transform);
-                //Enable<Transform>(ERPCost.transform);
+                Enable<Transform>(ERPCost.transform);
             }
 
             //Enable<Transform>(CostTitle.transform);

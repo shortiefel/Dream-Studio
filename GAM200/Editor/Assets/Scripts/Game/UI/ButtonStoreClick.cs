@@ -50,9 +50,9 @@ public class ButtonStoreClick : MonoBehaviour
         {
             st = StoreButtonType.ERPBuy;
         }
-        else if (entityId == GameObject.Find("BackToGame").GetComponent<Transform>().entityId)
+        else if (entityId == GameObject.Find("closeBtn").GetComponent<Transform>().entityId)
         {
-            st = StoreButtonType.BackToGame;
+            st = StoreButtonType.closeBtn;
         }
 
         CostRoad.text = moneySystem.roadCost.ToString();
@@ -65,6 +65,16 @@ public class ButtonStoreClick : MonoBehaviour
     {
         switch (st)
         {
+            case StoreButtonType.closeBtn:
+                {
+                    if (Input.GetMouseButtonDown(MouseCode.Left))
+                    {
+
+                    }
+
+                    break;
+                }
+
             case StoreButtonType.RoadBuy:
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))

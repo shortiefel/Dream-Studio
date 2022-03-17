@@ -6,7 +6,7 @@
     TrafficSell,
     ERPBuy,
     ERPSell,
-    BackToGame
+    closeBtn
 }
 
 public class ButtonStore : MonoBehaviour
@@ -87,6 +87,8 @@ public class ButtonStore : MonoBehaviour
     Transform moneyText;
     Transform roadCount;
 
+    Transform closeBtn;
+
     UI texture;
 
     CombinedUI combinedUI;
@@ -98,15 +100,7 @@ public class ButtonStore : MonoBehaviour
 
     public override void Start()
     {
-
-        //Roadbuy = GameObject.Find("Roadbuy");
-        //Trafficbuy = GameObject.Find("Trafficbuy");
-        //ERPbuy = GameObject.Find("ERPbuy");
-        //
-        //roadBuyPosition = Roadbuy.transform.position;
-        //trafficBuyPosition = Trafficbuy.transform.position;
-        //ERPBuyPosition = ERPbuy.transform.position;
-
+        closeBtn = GameObject.Find("Closebtn").GetComponent<Transform>();
 
         roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
 
@@ -194,6 +188,7 @@ public class ButtonStore : MonoBehaviour
         tlCostPosition = TLCost.transform.position;
         erpCostPosition = ERPCost.transform.position;
 
+        Disable<Transform>(closeBtn);
         Disable<Transform>(Storebtn.transform);
         Disable<Transform>(StoreBG.transform);
         //Disable<Transform>(StoreBack.transform);
@@ -219,13 +214,7 @@ public class ButtonStore : MonoBehaviour
         Disable<Transform>(TLCost.transform);
         Disable<Transform>(ERPCost.transform);
 
-        //Disable<Transform>(Roadbuy.transform);
-        //Disable<Transform>(Trafficbuy.transform);
-        //Disable<Transform>(ERPbuy.transform);
 
-
-        //stopTime = false;
-        //stopTimer = 0f;
 
 
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
@@ -239,10 +228,6 @@ public class ButtonStore : MonoBehaviour
             {
                 Enable<Transform>(StoreBG.transform);
                 //Enable<Transform>(StoreBack.transform);
-                //Enable<Transform>(StoreHeader.transform);
-                //Enable<Transform>(ItemHeader.transform);
-                //Enable<Transform>(QtyHeader.transform);
-                //Enable<Transform>(RoadIcon.transform);
                 Enable<Transform>(RoadBuy.transform);
                 Enable<Transform>(RoadSell.transform);
                 Enable<Transform>(RoadNo.transform);
@@ -268,6 +253,7 @@ public class ButtonStore : MonoBehaviour
 
             //Enable<Transform>(CostTitle.transform);
             Enable<Transform>(RoadCost.transform);
+            Enable<Transform>(closeBtn);
             
 
             //stopTime = true;
@@ -289,7 +275,6 @@ public class ButtonStore : MonoBehaviour
         else
         {
             Disable<Transform>(StoreBG.transform);
-            //Disable<Transform>(StoreBack.transform);
             Disable<Transform>(StoreHeader.transform);
             Disable<Transform>(ItemHeader.transform);
             Disable<Transform>(QtyHeader.transform);
@@ -323,7 +308,7 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(TLCost.transform);
             Disable<Transform>(ERPCost.transform);
 
-            
+            Disable<Transform>(closeBtn);
             
 
             //Enable<Transform>(Storebtn.transform);

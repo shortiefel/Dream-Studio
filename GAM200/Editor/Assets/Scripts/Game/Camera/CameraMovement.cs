@@ -64,7 +64,7 @@ public class CameraMovement : MonoBehaviour
         speed = 1f;
 
         minZoom = 8f;
-        maxZoom = 8f;
+        maxZoom = 10f;
 
         moveUpSpeed = 0.5f * transform.up;
         moveRightSpeed = 0.5f * transform.right;

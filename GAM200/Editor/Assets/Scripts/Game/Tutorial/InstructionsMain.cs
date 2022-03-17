@@ -32,14 +32,19 @@ public class InstructionsMain : MonoBehaviour
     Transform drawRoadGlow;
     Transform removeRoadGlow;
 
-
+    Transform roadCount;
 
     int stages, count;
     float timer;
     bool stateCheck;
 
+    bool clickCheck;
+
     public override void Start()
     {
+        clickCheck = false;
+        roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
+
         instructions1Script = GameObject.Find("Instructions1").GetComponent<InstructionsClick>();
         instructions2Script = GameObject.Find("Instructions2").GetComponent<InstructionsClick>();
         instructions3Script = GameObject.Find("Instructions3").GetComponent<InstructionsClick>();
@@ -51,7 +56,6 @@ public class InstructionsMain : MonoBehaviour
         instructions9Script = GameObject.Find("Instructions9").GetComponent<InstructionsClick>();
         instructions10Script = GameObject.Find("Instructions10").GetComponent<InstructionsClick>();
         instructions11Script = GameObject.Find("Instructions11").GetComponent<InstructionsClick>();
-
 
         go1 = GameObject.Find("Instructions1");
         go2 = GameObject.Find("Instructions2");
@@ -79,6 +83,8 @@ public class InstructionsMain : MonoBehaviour
         stages = 0;
         timer = 0;
         stateCheck = true;
+
+        Disable<Transform>(roadCount);
 
     }
 
@@ -154,6 +160,9 @@ public class InstructionsMain : MonoBehaviour
                     stages++;
                     stateCheck = true;
                     instructions2Script.state = false;
+
+                   
+
                 }
             }
         }
@@ -161,10 +170,17 @@ public class InstructionsMain : MonoBehaviour
         /****************************************************************** SCROLL WHEEL  ******************************************************************************/
         else if (stages == 2)
         {
-            if (instructions8Script.state)
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A)
+                      || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+            {
+                clickCheck = true;
+            }
+
+            if (clickCheck && instructions8Script.state)
             {
                 if (stateCheck)
                 {
+
                     instructions8Script.animation.Play("Close");
                     stateCheck = false;
                 }
@@ -177,7 +193,10 @@ public class InstructionsMain : MonoBehaviour
                     stateCheck = true;
                     instructions8Script.state = false;
                 }
+
+                
             }
+
         }
 
         /****************************************************************** DISPLAY BUTTON  ******************************************************************************/
@@ -228,7 +247,7 @@ public class InstructionsMain : MonoBehaviour
                     stateCheck = true;
                     instructions3Script.state = false;
 
-                    Enable<Transform>(drawRoadGlow);
+                    //Enable<Transform>(drawRoadGlow);
                 }
             }
         }
@@ -245,7 +264,7 @@ public class InstructionsMain : MonoBehaviour
                         instructions3Script.animation.Play("Close");
                         stateCheck = false;
 
-                       Disable<Transform>(drawRoadGlow);
+                       ///Disable<Transform>(drawRoadGlow);
                     }
                     if (CheckTimer())
                     {
@@ -281,7 +300,7 @@ public class InstructionsMain : MonoBehaviour
                     instructions4Script.state = false;
                     count = roadManager.roadCount;
 
-                    Enable<Transform>(removeRoadGlow);
+                    //Enable<Transform>(removeRoadGlow);
 
                 }
             }
@@ -299,7 +318,7 @@ public class InstructionsMain : MonoBehaviour
                         instructions4Script.animation.Play("Close");
                         stateCheck = false;
 
-                        Disable<Transform>(removeRoadGlow);
+                        //Disable<Transform>(removeRoadGlow);
                     }
                     if (CheckTimer())
                     {

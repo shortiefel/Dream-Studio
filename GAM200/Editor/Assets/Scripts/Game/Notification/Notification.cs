@@ -4,7 +4,6 @@ public class Notification : MonoBehaviour
 {
     InstructionsClick timerNoti;
     GameObject go1;
-    Animation animation;
 
     private float lifeTime;
     private float notiTime;
@@ -14,6 +13,7 @@ public class Notification : MonoBehaviour
     public bool shouldShow;
     public bool timerShow;
     public bool alreadyShowing;
+    public bool expirebool;
 
     //Animation animation;
 
@@ -22,6 +22,7 @@ public class Notification : MonoBehaviour
     bool destroyBool;
     bool tappearBool;
     bool tdestroyBool;
+    
     float countDownTimer;
 
 
@@ -41,6 +42,8 @@ public class Notification : MonoBehaviour
         destroyBool = false;
         tappearBool = false;
         tdestroyBool = false;
+        expirebool = false;
+
     }
 
     public void ResetTimer()
@@ -125,7 +128,8 @@ public class Notification : MonoBehaviour
         if (lifeTime > maxLifeTime)
         {
             //GameOver();
-            //Debug.Log("Lose");
+            Debug.Log("BREAK HERE");
+            expirebool = true;
             lifeTime = 0f;
             return false;
         }

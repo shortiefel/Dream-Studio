@@ -6,7 +6,7 @@
     TrafficSell,
     ERPBuy,
     ERPSell,
-    BackToGame
+    CloseStore
 }
 
 public class ButtonStore : MonoBehaviour
@@ -32,7 +32,7 @@ public class ButtonStore : MonoBehaviour
     GameObject ERPSell;
     GameObject ERPNo;
 
-    GameObject Storebtn;
+    //GameObject Storebtn;
     GameObject StoreBG;
     //GameObject StoreBack;
 
@@ -40,6 +40,15 @@ public class ButtonStore : MonoBehaviour
     GameObject RoadCost;
     GameObject TLCost;
     GameObject ERPCost;
+
+    //GameObject Roadbuy;
+    //GameObject Trafficbuy;
+    //GameObject ERPbuy;
+
+    //Vector2 roadBuyPosition;
+    //Vector2 trafficBuyPosition;
+    //Vector2 ERPBuyPosition;
+
 
     Vector2 bgPosition;
     Vector2 hStorePosition;
@@ -87,8 +96,13 @@ public class ButtonStore : MonoBehaviour
 
     Transform storeIntro;
 
+    Transform storeClose;
+
     public override void Start()
     {
+
+        storeClose = GameObject.Find("StoreCloseButton").GetComponent<Transform>();
+
         roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
 
         GameObject go3 = GameObject.Find("MoneyText");
@@ -109,7 +123,7 @@ public class ButtonStore : MonoBehaviour
         texture = GetComponent<UI>();
         texture.color = new Color(0f, 0f, 0f);
 
-        Storebtn = GameObject.Find("Storebtn");
+        //Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
         //StoreBack = GameObject.Find("BackToGame");
 
@@ -125,8 +139,8 @@ public class ButtonStore : MonoBehaviour
         hQtyPosition = QtyHeader.transform.position;
 
         RoadIcon = GameObject.Find("RoadCart");
-        RoadBuy = GameObject.Find("Roadadd");
-        RoadSell = GameObject.Find("Roadminus");
+        RoadBuy = GameObject.Find("RoadPlus");
+        RoadSell = GameObject.Find("RoadMinus");
         RoadNo = GameObject.Find("RoadQty");
 
         rIconPosition = RoadIcon.transform.position;
@@ -135,8 +149,8 @@ public class ButtonStore : MonoBehaviour
         rNoPosition = RoadNo.transform.position;
 
         TrafficIcon = GameObject.Find("TrafficCart");
-        TrafficBuy = GameObject.Find("Trafficadd");
-        TrafficSell = GameObject.Find("Trafficminus");
+        TrafficBuy = GameObject.Find("TrafficPlus");
+        TrafficSell = GameObject.Find("TrafficMinus");
         TrafficNo = GameObject.Find("TrafficQty");
 
         tIconPosition = TrafficIcon.transform.position;
@@ -145,8 +159,8 @@ public class ButtonStore : MonoBehaviour
         tNoPosition = TrafficNo.transform.position;
 
         ERPIcon = GameObject.Find("ERPCart");
-        ERPBuy = GameObject.Find("ERPadd");
-        ERPSell = GameObject.Find("ERPminus");
+        ERPBuy = GameObject.Find("ERPPlus");
+        ERPSell = GameObject.Find("ERPMinus");
         ERPNo = GameObject.Find("ERPQty");
 
         eIconPosition = ERPIcon.transform.position;
@@ -175,7 +189,9 @@ public class ButtonStore : MonoBehaviour
         tlCostPosition = TLCost.transform.position;
         erpCostPosition = ERPCost.transform.position;
 
-        Disable<Transform>(Storebtn.transform);
+        Disable<Transform>(storeClose);
+
+        //Disable<Transform>(Storebtn.transform);
         Disable<Transform>(StoreBG.transform);
         //Disable<Transform>(StoreBack.transform);
         Disable<Transform>(StoreHeader.transform);
@@ -201,8 +217,6 @@ public class ButtonStore : MonoBehaviour
         Disable<Transform>(ERPCost.transform);
 
 
-        //stopTime = false;
-        //stopTimer = 0f;
 
 
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
@@ -212,14 +226,11 @@ public class ButtonStore : MonoBehaviour
     {
         if (type)
         {
-            if (revealCartButton == true)
+            gameState.SetAllowPause(false);
+            //if (revealCartButton == true)
             {
                 Enable<Transform>(StoreBG.transform);
                 //Enable<Transform>(StoreBack.transform);
-                Enable<Transform>(StoreHeader.transform);
-                Enable<Transform>(ItemHeader.transform);
-                Enable<Transform>(QtyHeader.transform);
-                Enable<Transform>(RoadIcon.transform);
                 Enable<Transform>(RoadBuy.transform);
                 Enable<Transform>(RoadSell.transform);
                 Enable<Transform>(RoadNo.transform);
@@ -227,7 +238,7 @@ public class ButtonStore : MonoBehaviour
 
             if (combinedUI.buttonRoad.revealTrafficButton)
             {
-                Enable<Transform>(TrafficIcon.transform);
+                //Enable<Transform>(TrafficIcon.transform);
                 Enable<Transform>(TrafficBuy.transform);
                 Enable<Transform>(TrafficSell.transform);
                 Enable<Transform>(TrafficNo.transform);
@@ -236,17 +247,20 @@ public class ButtonStore : MonoBehaviour
 
             if (combinedUI.buttonRoad.revealERPButton)
             {
-                Enable<Transform>(ERPIcon.transform);
+                //Enable<Transform>(ERPIcon.transform);
                 Enable<Transform>(ERPBuy.transform);
                 Enable<Transform>(ERPSell.transform);
                 Enable<Transform>(ERPNo.transform);
                 Enable<Transform>(ERPCost.transform);
             }
 
-            Enable<Transform>(CostTitle.transform);
+            //Enable<Transform>(CostTitle.transform);
             Enable<Transform>(RoadCost.transform);
-            
 
+
+
+            Enable<Transform>(storeClose);
+            Disable<Transform>(transform);
             //stopTime = true;
 
             //Disable<Transform>(Storebtn.transform);
@@ -265,8 +279,9 @@ public class ButtonStore : MonoBehaviour
         }
         else
         {
+            gameState.SetAllowPause(true);
+
             Disable<Transform>(StoreBG.transform);
-            //Disable<Transform>(StoreBack.transform);
             Disable<Transform>(StoreHeader.transform);
             Disable<Transform>(ItemHeader.transform);
             Disable<Transform>(QtyHeader.transform);
@@ -293,6 +308,8 @@ public class ButtonStore : MonoBehaviour
 
                 if (combinedUI != null)
                     combinedUI.EnableAllMasterButton();
+
+                Enable<Transform>(transform);
             }
 
             Disable<Transform>(CostTitle.transform);
@@ -300,59 +317,58 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(TLCost.transform);
             Disable<Transform>(ERPCost.transform);
 
+            Disable<Transform>(storeClose);
             
-            
-
             //Enable<Transform>(Storebtn.transform);
             //Disable<Transform>(StoreBack.transform);
         }
     }
    
 
-   private void StoreAction()
+    public void StoreAction()
     {
-        //Debug.Log("Store");
-        //gameState.InvertPause();
-        bool state = !gameState.GetPause();
-        gameState.SetPause(state);
-        SwitchTabStore(state);
+         //Debug.Log("Store");
+         //gameState.InvertPause();
+         bool state = !gameState.GetPause();
+         gameState.SetPause(state);
+         SwitchTabStore(state);
     }
 
-    public override void Update()
-    {
-        if (!gameState.GetDrawMode())
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                //Enable<Transform>(Storebtn.transform);
-                //Disable<Transform>(StoreBack.transform);
-                StoreAction();
-            }
-        }
-
-        //if (stopTime)
-        //{
-        //    stopTimer += Time.deltaTime;
-        //
-        //    float newTimer = 5f * stopTimer;
-        //
-        //    if (stopTimer > 0.1f)
-        //    {
-        //        stopTimer = 0f;
-        //        stopTime = false;
-        //
-        //        //Enable<Transform>(Storebtn.transform);
-        //        //Disable<Transform>(StoreBack.transform);
-        //        Disable<Transform>(displayArrow);
-        //        Disable<Transform>(displayArrowWhite);
-        //        Disable<Transform>(pauseIcon);
-        //
-        //        Disable<Transform>(timerButton);
-        //
-        //        Time.timeScale = 0f;
-        //    }
-        //}
-    }
+    //public override void Update()
+    //{
+    //    //if (!gameState.GetDrawMode())
+    //    //{
+    //    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    //    {
+    //    //        //Enable<Transform>(Storebtn.transform);
+    //    //        //Disable<Transform>(StoreBack.transform);
+    //    //        StoreAction();
+    //    //    }
+    //    //}
+    //
+    //    //if (stopTime)
+    //    //{
+    //    //    stopTimer += Time.deltaTime;
+    //    //
+    //    //    float newTimer = 5f * stopTimer;
+    //    //
+    //    //    if (stopTimer > 0.1f)
+    //    //    {
+    //    //        stopTimer = 0f;
+    //    //        stopTime = false;
+    //    //
+    //    //        //Enable<Transform>(Storebtn.transform);
+    //    //        //Disable<Transform>(StoreBack.transform);
+    //    //        Disable<Transform>(displayArrow);
+    //    //        Disable<Transform>(displayArrowWhite);
+    //    //        Disable<Transform>(pauseIcon);
+    //    //
+    //    //        Disable<Transform>(timerButton);
+    //    //
+    //    //        Time.timeScale = 0f;
+    //    //    }
+    //    //}
+    //}
 
 
     public override void OnMouseEnter()
@@ -382,7 +398,7 @@ public class ButtonStore : MonoBehaviour
     public void RevealStore()
     {
         revealCartButton = true;
-        Enable<Transform>(Storebtn.transform);
+        //Enable<Transform>(Storebtn.transform);
         Enable<Transform>(storeIntro);
 
         Disable<Transform>(moneyText);

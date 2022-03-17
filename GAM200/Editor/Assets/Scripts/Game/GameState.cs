@@ -8,7 +8,7 @@ public class GameState : MonoBehaviour
     public bool shouldEnd;
 
     //Text highscoreText;
-
+    Text dayText;
     CameraMovement camMovement;
     ButtonRoad buttonRoad;
 
@@ -26,6 +26,8 @@ public class GameState : MonoBehaviour
     //bool gameOverBool;
 
     //float previousTimeScale;
+
+    bool allowPause;
 
     public override void Start()
     {
@@ -56,15 +58,20 @@ public class GameState : MonoBehaviour
             store = buttonStoreGo.GetComponent<ButtonStore>();
 
         //previousTimeScale = 1f;
+        dayCounter = 1;
+        dayText = GameObject.Find("DayClock").GetComponent<Text>();
+        dayText.text = "Day " +dayCounter.ToString();
 
         dayTimer = 0f;
-        dayCycle = 360f;
+        dayCycle = 120f;
 
         receipt = GameObject.Find("Receipt");
         if (receipt != null)
         {
             Disable<Transform>(receipt.transform);
         }
+
+        allowPause = true;
     }
 
     public override void Update()
@@ -74,7 +81,7 @@ public class GameState : MonoBehaviour
 
         if (receipt != null)
         {
-          //  dayTimer += Time.deltaTime;
+            dayTimer += Time.deltaTime;
 
             if (dayTimer >= dayCycle)
             {
@@ -83,15 +90,16 @@ public class GameState : MonoBehaviour
                 moneySystem.TaxMoney();
                 dayTimer = 0f;
                 dayCounter++;
+                dayText.text = "Day " + dayCounter.ToString();
             }
         }
 
-        if (shouldEnd)
-        {
-            shouldEnd = false;
+        //if (shouldEnd)
+        //{
+        //    shouldEnd = false;
 
-            GameOver();
-        }
+        //    GameOver();
+        //}
         //else
         //{
         //    //if (!gameOverBool)
@@ -123,17 +131,20 @@ public class GameState : MonoBehaviour
         //-------------------------
     }
 
-    void GameOver ()
+    public void GameOver ()
     {
         //if (camMovement.toZoomLose) return;
         //camMovement.toZoomLose = true;
 
+        if (shouldEnd)
+        {
+            Time.timeScale = 0f;
+            TrySetHighscore();
 
-        Time.timeScale = 0f;
-        TrySetHighscore();
-
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("GameOver");
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("GameOver");
+        }
+            
     }
 
     public void SetLoseHouse(Vector2 _pos)
@@ -165,6 +176,7 @@ public class GameState : MonoBehaviour
     public void ReachedDestination()
     {
         Debug.Log("Reached destination ");
+        moneySystem.AddMoney(25);
         IncrementScore();
     }
 
@@ -229,6 +241,16 @@ public class GameState : MonoBehaviour
     public bool GetPause()
     {
         return pauseState;
+    }
+
+    public bool AllowPause()
+    {
+        return allowPause;
+    }
+
+    public void SetAllowPause(bool type)
+    {
+        allowPause = type;
     }
 
     public void SetDrawMode(bool _state)

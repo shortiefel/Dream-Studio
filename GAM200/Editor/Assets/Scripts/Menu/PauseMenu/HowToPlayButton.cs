@@ -15,6 +15,8 @@ public class HowToPlayButton : MonoBehaviour
     Transform quitYesTransform;
     Transform quitNoTransform;
 
+    Transform moneyText;
+
     UI backButtonUI;
 
     bool htw;
@@ -23,6 +25,10 @@ public class HowToPlayButton : MonoBehaviour
     public override void Start()
     {
         htw = false;
+
+        GameObject go3 = GameObject.Find("MoneyText");
+        if (go3 != null)
+            moneyText = go3.GetComponent<Transform>();
 
         pauseMenuBackIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
         howToPlayBGTransform = GameObject.Find("HowToBG").GetComponent<Transform>();
@@ -83,6 +89,7 @@ public class HowToPlayButton : MonoBehaviour
                 Disable<Transform>(howToPlayTransform);
                 Disable<Transform>(resumeTransform);
                 Disable<Transform>(quitTransform);
+                Disable<Transform>(moneyText);
 
                 Disable<Transform>(pauseMenuBackIcon);
 
@@ -96,6 +103,7 @@ public class HowToPlayButton : MonoBehaviour
                 Disable<Transform>(howToPlayBGTransform);
                 Disable<Transform>(newBackTransform);
 
+                Enable<Transform>(moneyText);
                 Enable<Transform>(howToPlayTransform);
                 Enable<Transform>(resumeTransform);
                 Enable<Transform>(quitTransform);

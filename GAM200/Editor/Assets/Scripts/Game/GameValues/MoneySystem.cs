@@ -51,11 +51,11 @@ public class MoneySystem : MonoBehaviour
         if (go5 != null)
             receipt = go5.GetComponent<Receipt>();
 
-        money = 1000;
+        money = 100;
         textComp = GetComponent<Text>();
         textComp.text = money.ToString();
 
-        roadCost = 10;
+        roadCost = 20;
         tlCost = 50;
         erpCost = 50;
 
@@ -73,8 +73,6 @@ public class MoneySystem : MonoBehaviour
     {
 
         money -= val;
-        if (money < 1)
-            money = 0;
         textComp.text = money.ToString();
 
         balance = money;
@@ -91,21 +89,21 @@ public class MoneySystem : MonoBehaviour
         tlNum = trafficLightManager.trafficlightTaxCount();
         erpNum = erpManager.erpTaxCount();
 
-        roadTax =  roadNum* 3;
-        trafficTax = tlNum * 4;
-        erpTax = erpNum * 5;
+        roadTax =  roadNum* 25;
+        trafficTax = tlNum * 50;
+        erpTax = erpNum * 75;
         
 
         totalTax = roadTax + erpTax + trafficTax;
 
         MinusMoney(totalTax);
-
+        receipt.ShowReceipt();
         if (balance < 0)
         {
             gameState.shouldEnd = true;
         }
 
-        receipt.ShowReceipt();
+        
     }
 
     //public int GetCurrRoad()

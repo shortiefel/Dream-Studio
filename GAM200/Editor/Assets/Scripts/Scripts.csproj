@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="bin\**;obj\**;Properties\**" />
+    <Compile Include="Menu\PauseMenu\PauseMusicButton.cs" />
+    <Compile Include="Menu\PauseMenu\PauseMusicClick.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

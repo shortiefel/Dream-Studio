@@ -60,8 +60,6 @@ public class ButtonStoreClick : MonoBehaviour
     {
         switch (st)
         {
-
-
             case StoreButtonType.RoadBuy:
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))

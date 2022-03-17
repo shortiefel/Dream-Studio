@@ -84,6 +84,7 @@ namespace Engine
             shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::Font_Draw, shdr_pgm3));
 
 
+            /*
             // Shader for Light
             shdr_files = {
                 std::make_pair(GLSLShader::ShaderType::Vertex_Shader, "Assets/Shaders/Light.vert"),
@@ -103,7 +104,6 @@ namespace Engine
             shdrpgms.insert(std::pair<GraphicShader, GLSLShader>(GraphicShader::Light, shdr_pgm4));
 
 
-            /*
             // Shader for Shadow Mapping
             shdr_files = {
                 std::make_pair(GLSLShader::ShaderType::Vertex_Shader, "Assets/Shaders/SimpleDepth.vert"),

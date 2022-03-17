@@ -45,13 +45,6 @@ namespace Engine
 	// Called by RenderGameObjects function -  to render all game objects with texture
 	void RenderTextureLayer(std::array<TextureComponent, MAX_ENTITIES>& arr, int layer, float _dt)
 	{
-		/*
-		// Load Default shader program
-		const auto& shd_ref_handle =
-			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle);
-		*/
-
 		for (auto& texture : arr)
 		{
 			// Option to not render individual game object
@@ -89,27 +82,16 @@ namespace Engine
 					}
 				}
 
-
 				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
-					texture.texobj_hdl, texture.colour, texture.minUV, texture.maxUV);
+					texture.texobj_hdl, 0.f, texture.colour, texture.minUV, texture.maxUV);
 			}
 		}
-
-		// Unload shader program
-		//GraphicImplementation::UnUseShaderHandle();
 	}
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with particles
 	void RenderParticleLayer(std::array<ParticleComponent, MAX_ENTITIES>& arr, int layer, float _dt)
 	{
-		/*
-		// Load Default shader program
-		const auto& shd_ref_handle =
-			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle);
-		*/
-
 		for (auto& particle : arr)
 		{
 			// Option to not render individual game object
@@ -161,47 +143,39 @@ namespace Engine
 																			1.0f);
 						Math::vec2 v2position = { v3position.x, v3position.y };
 						
-						GraphicImplementation::Renderer::DrawQuad(v2position, size, p.angle, particle.texobj_hdl, color);
+						GraphicImplementation::Renderer::DrawQuad(v2position, size, p.angle, particle.texobj_hdl, 0.f, color);
 					}
 				}
 			}
 		}
-
-		// Unload shader program
-		//GraphicImplementation::UnUseShaderHandle();
 	}
 
-	// Function will fill the batch render with vertices and required attributes of game objects
-	// Called by RenderGameObjects function -  to render all game objects with light
-	void RenderLightLayer(std::array<LightComponent, MAX_ENTITIES>& arr)
-	{
-		/*
-		// Load Light shader program
-		const auto& shd_ref_handle =
-			GraphicImplementation::shdrpgms[GraphicShader::Light].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle);
-		*/
 
+	// Function will fill the batch render with vertices and required attributes of game objects
+	// Called by RenderGameObjects function -  to render all game objects with texture
+	void RenderTextureLayer(std::array<LightComponent, MAX_ENTITIES>& arr, int layer)
+	{
 		for (auto& light : arr)
 		{
 			// Option to not render individual game object
 			if (!light.isActive) continue;
 
 			// If element in array is not used, skip it
-			const Engine::Entity_id& entity_id = light.GetEntityId();
+			const Entity_id& entity_id = light.GetEntityId();
 			if (EntityId_Check(entity_id)) break;
 
 			// Get transformation component
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
-				light.texobj_hdl, light.colour);
+			if (transform->layer == layer)
+			{
+				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
+					light.texobj_hdl, 1.f, light.colour);
+			}
 		}
-
-		// Unload shader program
-		//GraphicImplementation::UnUseShaderHandle();
 	}
+
 
 	// Function will loop through texture array of game objects and render game objects based on layer; 
 	// 0 will be rendered first, followed by 1, 2 ...
@@ -212,13 +186,13 @@ namespace Engine
 		// Get texture array for entities
 		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
 		auto& particleArray = dreamECSGame->GetComponentArrayData<ParticleComponent>();
-		auto& lightArray = Engine::dreamECSGame->GetComponentArrayData<Engine::LightComponent>();
+		auto& lightArray = dreamECSGame->GetComponentArrayData<LightComponent>();
 
-
-		// Load Light shader program
+		// Load Default shader program
 		const auto& shd_ref_handle =
 			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
+
 
 		// Looping through all layers for game objects; batch rendering
 		int layerCount = LAYER_COUNT;
@@ -226,26 +200,15 @@ namespace Engine
 		{
 			RenderTextureLayer(textureArray, i, _dt);
 			RenderParticleLayer(particleArray, i, _dt);
+			RenderTextureLayer(lightArray, i);
 		}
 
 		GraphicImplementation::Renderer::EndQuadBatch();
 		GraphicImplementation::Renderer::FlushQuad();
 
-		GraphicImplementation::UnUseShaderHandle();
-
-		// Load Default shader program
-		const auto& shd_ref_handle2 =
-			GraphicImplementation::shdrpgms[GraphicShader::Light].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle2);
-
-		RenderLightLayer(lightArray);
-
-		GraphicImplementation::Renderer::EndQuadBatch();
-		GraphicImplementation::Renderer::FlushQuad();
-
+		// Unload Default shader program
 		GraphicImplementation::UnUseShaderHandle();
 	}
-
 
 
 	// Function will loop through collision array of game objects and render out the collision lines
@@ -322,10 +285,14 @@ namespace Engine
 		// Looping through lines buffer; batch rendering
 		Math::ivec2 startPoint = Game::Grid::GetInstance().GetStartPoint();
 		Math::ivec2 mapSize = Game::Grid::GetInstance().GetGridSize() + startPoint;
+
 		for(int xPos = startPoint.x; xPos <= mapSize.x; xPos++)
-			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, static_cast<float>(startPoint.y) -0.5f }, { static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, static_cast<float>(startPoint.y) -0.5f }, 
+				{ static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
+
 		for(int yPos = startPoint.y; yPos <= mapSize.y; yPos++)
-			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(startPoint.x) -0.5f, static_cast<float>(yPos) - 0.5f }, {  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(startPoint.x) -0.5f, static_cast<float>(yPos) - 0.5f }, 
+				{  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
 
 		GraphicImplementation::Renderer::EndLinesBatch();
 
@@ -370,16 +337,6 @@ namespace Engine
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-
-		// Load Light shader program
-		const auto& shd_ref_handle2 = GraphicImplementation::shdrpgms[GraphicShader::Light].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle2);
-		// Setting uniform
-		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle2);
-		// Unload shader program
-		GraphicImplementation::UnUseShaderHandle();
-
-
 		// Render game objects and collision lines through camera perspective
 		RenderGameObjectsD(camMatrix, _dt);
 		RenderLines(camMatrix);
@@ -416,23 +373,8 @@ namespace Engine
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
-
-		// Load Light shader program
-		const auto& shd_ref_handle2 = GraphicImplementation::shdrpgms[GraphicShader::Light].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle2);
-
-		// Uniform for game object texture shader
-		auto loc2 = glGetUniformLocation(shd_ref_handle2, "u_Textures");
-		glUniform1iv(loc2, 32, samplers);
-
-		// Unload shader program
-		GraphicImplementation::UnUseShaderHandle();
-
 		// Initialise meshes
 		GraphicImplementation::Renderer::Init();
-
-		// Initialise Light Source FBO
-		//CreateLightFBO();
 
 		LOG_INSTANCE("Graphic System created");
 		return true;

@@ -77,6 +77,8 @@ namespace Engine
             Math::vec2 tposition{};
             Math::vec2 tscale{};
             float trotation{};
+
+            float isLight;
         };
 
         struct RendererData
@@ -143,6 +145,9 @@ namespace Engine
 
             glEnableVertexArrayAttrib(s_QuadData.va, 6);
             glVertexAttribPointer(6, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, trotation));
+
+            glEnableVertexArrayAttrib(s_QuadData.va, 7);
+            glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(GLMesh), (const void*)offsetof(GLMesh, isLight));
 
             /*
             example of indices loop; 2 triangles to form a quad:
@@ -683,7 +688,7 @@ namespace Engine
         }
 
         // Function that adds to the vertex buffer pointer for the quad fill (without texture) mesh
-        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color)
+        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color, const float isLight)
         {
             if (s_QuadData.indexcount >= stMaxQuadIndexCount)
             {
@@ -692,7 +697,6 @@ namespace Engine
                 BeginQuadBatch();
             }
 
-            
 
             Math::vec2 position = { -1.f, -1.f };
             Math::vec2 size = { 2.f, 2.f };
@@ -704,7 +708,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
-
+            s_QuadData.vertexbufferptr->isLight = isLight;
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y };
@@ -714,6 +718,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr->isLight = isLight;
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
@@ -723,6 +728,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr->isLight = isLight;
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
@@ -732,6 +738,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr->isLight = isLight;
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.indexcount += stOneQuadIndex;
@@ -739,7 +746,7 @@ namespace Engine
         }
 
         // Function that adds to the vertex buffer pointer for the quad fill (with texture and colour) mesh
-        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, const Math::vec4 color,
+        void Renderer::DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, const float isLight, const Math::vec4 color,
             Math::vec2 _min, Math::vec2 _max)
         {
             if (s_QuadData.indexcount >= stMaxQuadIndexCount || s_QuadData.uiTextureSlotIndex > 31)
@@ -776,6 +783,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr->isLight = isLight;
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y };
@@ -785,6 +793,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr->isLight = isLight;
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x + size.x, position.y + size.y };
@@ -794,6 +803,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr->isLight = isLight;
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.vertexbufferptr->position = { position.x, position.y + size.y };
@@ -803,6 +813,7 @@ namespace Engine
             s_QuadData.vertexbufferptr->tposition = tposition;
             s_QuadData.vertexbufferptr->tscale = tscale;
             s_QuadData.vertexbufferptr->trotation = Math::radians(trotation);
+            s_QuadData.vertexbufferptr->isLight = isLight;
             s_QuadData.vertexbufferptr++;
 
             s_QuadData.indexcount += stOneQuadIndex;

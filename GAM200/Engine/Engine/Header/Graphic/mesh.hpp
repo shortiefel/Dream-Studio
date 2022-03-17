@@ -31,8 +31,8 @@ namespace Engine
             static void Init();
             static void Shutdown();
 
-            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color);
-            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, 
+            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const Math::vec4 color, const float isLight);
+            static void DrawQuad(const Math::vec2& tposition, const Math::vec2 tscale, const float trotation, const uint32_t textureID, const float isLight,
                 const Math::vec4 color = {1.0f, 1.0f, 1.0f, 1.0f},
                 Math::vec2 _min = { 0.01f, 0.01f }, Math::vec2 _max = { 0.99f, 0.99f });
 

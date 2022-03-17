@@ -313,9 +313,6 @@ namespace Engine {
 				"Colour", tem.colour,
 				"IsActive", tem.isActive);
 
-			std::cout << tem.colour << std::endl;
-			std::cout << tem.isActive << std::endl;
-
 			dreamECSGame->AddComponent(tem);
 		}
 

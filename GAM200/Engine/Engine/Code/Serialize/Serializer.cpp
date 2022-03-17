@@ -339,10 +339,11 @@ namespace Engine {
 		rapidjson::Value objType(rapidjson::kObjectType);
 		SSerializer _serializer(doc, objType);
 
+		_serializer.SetValue("Ambient", t->ambient);
 		_serializer.SetValue("Colour", t->colour);
 		_serializer.SetValue("IsActive", t->isActive);
 
-		mainObject.AddMember("ParticleComponent", objType, doc.GetAllocator());
+		mainObject.AddMember("LightComponent", objType, doc.GetAllocator());
 	}
 
 	void Serializer::AddData(const ScriptComponent* const t) {

@@ -70,7 +70,7 @@ namespace Engine {
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl, ui.colour);
+			GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle, ui.texobj_hdl, 0.f, ui.colour);
 		}
 
 		GraphicImplementation::Renderer::EndQuadBatch();

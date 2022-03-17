@@ -21,6 +21,12 @@ void main ()
 {
 	// object - texture colour
     fColor = vColor;
+
+
+
+
+
+
 }
 
 
@@ -34,5 +40,4 @@ void main ()
 
 	int index = int(vTextureIndex);
 	vec4 texColor = texture(u_Textures[0], vTexture) * vColor;
-
 */

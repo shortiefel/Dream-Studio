@@ -82,7 +82,7 @@ namespace Engine
                 float life = fadeStruct.lifeRemaining / fadeStruct.lifeTime;
                 Math::vec4 colour = Math::Lerp(fadeStruct.colourEnd, fadeStruct.colourBegin, life);
 
-                GraphicImplementation::Renderer::DrawQuad({ 0.0f, 0.0f }, { 200.0f, 200.0f }, 0.0f, colour);
+                GraphicImplementation::Renderer::DrawQuad({ 0.0f, 0.0f }, { 200.0f, 200.0f }, 0.0f, colour, 0.0f);
 
                 if (fadeStruct.lifeRemaining <= 0.0f) fadeStruct.flagFade = false;
             }

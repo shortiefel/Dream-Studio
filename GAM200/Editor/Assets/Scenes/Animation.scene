@@ -19,14 +19,6 @@
       "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsActive": true
-    },
-    "LightComponent": {
-      "Direction": [ -0.2, -1.0, -1.0 ],
-      "Ambient": [ 1.0, 1.0, 1.0 ],
-      "Diffuse": [ 1.0, 1.0, 1.0 ],
-      "Specular": [ 1.0, 1.0, 1.0 ],
-      "Colour": [ 1.0, 1.0, 1.0 ],
-      "IsActive": true
     }
   },
   {
@@ -92,6 +84,11 @@
       "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
       "IsActive": true
+    },
+    "LightComponent": {
+      "Ambient": 1.0,
+      "Colour": [ 0.5333080291748047, 0.2554193437099457, 0.2554193437099457, 1.0 ],
+      "IsActive": true
     }
   },
   {
@@ -113,6 +110,11 @@
       "Shape": 0,
       "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
       "IsAnimation": false,
+      "IsActive": true
+    },
+    "LightComponent": {
+      "Ambient": 0.0,
+      "Colour": [ 0.0638953447341919, 0.00778535520657897, 0.00778535520657897, 1.0 ],
       "IsActive": true
     }
   }

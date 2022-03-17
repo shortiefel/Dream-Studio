@@ -43,8 +43,6 @@ namespace Engine
 		ambient = _serializer.GetValue<float>("Ambient");
 		colour = _serializer.GetValue<Math::vec4>("Colour");
 
-		std::cout << colour << std::endl;
-
 		isActive = _serializer.GetValue<bool>("IsActive");
 
 		return *this;

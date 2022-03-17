@@ -15,11 +15,14 @@ public class CombinedUI : MonoBehaviour
     ButtonStore buttonStore;
     public ButtonRoad buttonRoad;
 
-
     Transform pauseIcon;
     Transform timerButton;
     Transform storeButton;
     Transform displayArrow;
+
+    Transform moneyText;
+    Transform coinSymbol;
+    Transform dayClock;
 
     public override void Start()
     {
@@ -33,6 +36,10 @@ public class CombinedUI : MonoBehaviour
         storeButton = GameObject.Find("Storebtn").GetComponent<Transform>();
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
 
+
+        moneyText = GameObject.Find("MoneyText").GetComponent<Transform>();
+        coinSymbol = GameObject.Find("CoinBag").GetComponent<Transform>();
+        dayClock = GameObject.Find("DayClock").GetComponent<Transform>();
     }
 
     public void CloseAllUIExcept(UIType uitype)
@@ -48,6 +55,10 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(timerButton);
                     Disable<Transform>(storeButton);
                     Disable<Transform>(displayArrow);
+
+                    Disable<Transform>(moneyText);
+                    Disable<Transform>(coinSymbol);
+                    Disable<Transform>(dayClock);
                     break;
                 }
             case UIType.Time:
@@ -105,6 +116,10 @@ public class CombinedUI : MonoBehaviour
         Enable<Transform>(timerButton);
         Enable<Transform>(storeButton);
         Enable<Transform>(displayArrow);
+
+        Enable<Transform>(moneyText);
+        Enable<Transform>(coinSymbol);
+        Enable<Transform>(dayClock);
     }
 
 

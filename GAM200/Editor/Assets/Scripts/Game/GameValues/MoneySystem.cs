@@ -91,19 +91,19 @@ public class MoneySystem : MonoBehaviour
 
         roadTax =  roadNum* 25;
         trafficTax = tlNum * 50;
-        erpTax = erpNum * 100;
+        erpTax = erpNum * 75;
         
 
         totalTax = roadTax + erpTax + trafficTax;
 
         MinusMoney(totalTax);
-
+        receipt.ShowReceipt();
         if (balance < 0)
         {
             gameState.shouldEnd = true;
         }
 
-        receipt.ShowReceipt();
+        
     }
 
     //public int GetCurrRoad()

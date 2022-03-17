@@ -94,12 +94,12 @@ public class GameState : MonoBehaviour
             }
         }
 
-        if (shouldEnd)
-        {
-            shouldEnd = false;
+        //if (shouldEnd)
+        //{
+        //    shouldEnd = false;
 
-            GameOver();
-        }
+        //    GameOver();
+        //}
         //else
         //{
         //    //if (!gameOverBool)
@@ -131,17 +131,20 @@ public class GameState : MonoBehaviour
         //-------------------------
     }
 
-    void GameOver ()
+    public void GameOver ()
     {
         //if (camMovement.toZoomLose) return;
         //camMovement.toZoomLose = true;
 
+        if (shouldEnd)
+        {
+            Time.timeScale = 0f;
+            TrySetHighscore();
 
-        Time.timeScale = 0f;
-        TrySetHighscore();
-
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("GameOver");
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("GameOver");
+        }
+            
     }
 
     public void SetLoseHouse(Vector2 _pos)

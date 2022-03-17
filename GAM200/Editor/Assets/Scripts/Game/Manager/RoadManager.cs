@@ -376,7 +376,7 @@ public class RoadManager : MonoBehaviour
                 Debug.Log("Max temporary road count reached (RoadManager PlaceRoad)");
                 return;
             }
-            if (roadCount == 0)
+            if (roadCount < 1)
             {
                 Enable<Transform>(RoadInfoText);
                 Enable<Transform>(RoadInfo);
@@ -406,8 +406,14 @@ public class RoadManager : MonoBehaviour
         }
 
         if (temporaryRoadCount == temporaryRoadPositions.Count) return;
-
+        if(roadCount == 1 && temporaryRoadPositions.Count > 1)
+        {
+            if (placementManager.placementGrid.IsPosFree(temporaryRoadPositions[0])
+                && placementManager.placementGrid.IsPosFree(temporaryRoadPositions[1]))
+                return;
+        }
         int tmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
+        
         roadCount -= tmp;
         taxRoadCount += tmp;
         //placementManager.placementGrid.SetRoad(temporaryRoadPositions);

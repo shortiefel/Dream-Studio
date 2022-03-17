@@ -41,6 +41,15 @@ public class ButtonStore : MonoBehaviour
     GameObject TLCost;
     GameObject ERPCost;
 
+    GameObject Roadbuy;
+    GameObject Trafficbuy;
+    GameObject ERPbuy;
+
+    Vector2 roadBuyPosition;
+    Vector2 trafficBuyPosition;
+    Vector2 ERPBuyPosition;
+
+
     Vector2 bgPosition;
     Vector2 hStorePosition;
     Vector2 hItemPosition;
@@ -89,6 +98,16 @@ public class ButtonStore : MonoBehaviour
 
     public override void Start()
     {
+
+        Roadbuy = GameObject.Find("Roadbuy");
+        Trafficbuy = GameObject.Find("Trafficbuy");
+        ERPbuy = GameObject.Find("ERPbuy");
+
+        roadBuyPosition = Roadbuy.transform.position;
+        trafficBuyPosition = Trafficbuy.transform.position;
+        ERPBuyPosition = ERPbuy.transform.position;
+
+
         roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
 
         GameObject go3 = GameObject.Find("MoneyText");
@@ -199,6 +218,10 @@ public class ButtonStore : MonoBehaviour
         Disable<Transform>(RoadCost.transform);
         Disable<Transform>(TLCost.transform);
         Disable<Transform>(ERPCost.transform);
+
+        Disable<Transform>(Roadbuy.transform);
+        Disable<Transform>(Trafficbuy.transform);
+        Disable<Transform>(ERPbuy.transform);
 
 
         //stopTime = false;

@@ -192,7 +192,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            Console.WriteLine("Unpausing now");
+            //Console.WriteLine("Unpausing now");
             Enable<Transform>(moneyText);
             Disable<Transform>(pauseBG.transform);
             Disable<Transform>(HowToBG.transform);

@@ -7,20 +7,22 @@ public class ButtonStoreClick : MonoBehaviour
     public MoneySystem moneySystem;
 
     public bool state;
-    public Animation animation;
+    //public Animation animation;
     // GameState gameState;
 
     Text CostRoad;
     Text CostTL;
     Text CostERP;
 
+    ButtonStore buttonStore;
+
     public override void Start()
     {
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
 
-         state = false;
-        animation = GetComponent<Animation>();
+        state = false;
+        //animation = GetComponent<Animation>();
 
         CostRoad = GameObject.Find("RoadCost").GetComponent<Text>();
         CostTL = GameObject.Find("TrafficCost").GetComponent<Text>();
@@ -50,26 +52,27 @@ public class ButtonStoreClick : MonoBehaviour
         {
             st = StoreButtonType.ERPBuy;
         }
-        else if (entityId == GameObject.Find("closeBtn").GetComponent<Transform>().entityId)
+        else if (entityId == GameObject.Find("StoreCloseButton").GetComponent<Transform>().entityId)
         {
-            st = StoreButtonType.closeBtn;
+            st = StoreButtonType.CloseStore;
         }
 
         CostRoad.text = moneySystem.roadCost.ToString();
         CostERP.text = moneySystem.erpCost.ToString();
         CostTL.text = moneySystem.tlCost.ToString();
 
+        buttonStore = GameObject.Find("Storebtn").GetComponent<ButtonStore>();
     }
 
     public override void OnMouseOver()
     {
         switch (st)
         {
-            case StoreButtonType.closeBtn:
+            case StoreButtonType.CloseStore:
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-
+                        buttonStore.StoreAction();
                     }
 
                     break;

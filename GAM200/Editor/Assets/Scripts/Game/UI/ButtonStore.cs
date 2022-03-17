@@ -6,7 +6,7 @@
     TrafficSell,
     ERPBuy,
     ERPSell,
-    closeBtn
+    CloseStore
 }
 
 public class ButtonStore : MonoBehaviour
@@ -87,8 +87,6 @@ public class ButtonStore : MonoBehaviour
     Transform moneyText;
     Transform roadCount;
 
-    Transform closeBtn;
-
     UI texture;
 
     CombinedUI combinedUI;
@@ -98,9 +96,12 @@ public class ButtonStore : MonoBehaviour
 
     Transform storeIntro;
 
+    Transform storeClose;
+
     public override void Start()
     {
-        closeBtn = GameObject.Find("Closebtn").GetComponent<Transform>();
+
+        storeClose = GameObject.Find("StoreCloseButton").GetComponent<Transform>();
 
         roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
 
@@ -188,7 +189,8 @@ public class ButtonStore : MonoBehaviour
         tlCostPosition = TLCost.transform.position;
         erpCostPosition = ERPCost.transform.position;
 
-        Disable<Transform>(closeBtn);
+        Disable<Transform>(storeClose);
+
         Disable<Transform>(Storebtn.transform);
         Disable<Transform>(StoreBG.transform);
         //Disable<Transform>(StoreBack.transform);
@@ -253,9 +255,11 @@ public class ButtonStore : MonoBehaviour
 
             //Enable<Transform>(CostTitle.transform);
             Enable<Transform>(RoadCost.transform);
-            Enable<Transform>(closeBtn);
-            
 
+
+
+            Enable<Transform>(storeClose);
+            Disable<Transform>(transform);
             //stopTime = true;
 
             //Disable<Transform>(Storebtn.transform);
@@ -308,35 +312,34 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(TLCost.transform);
             Disable<Transform>(ERPCost.transform);
 
-            Disable<Transform>(closeBtn);
-            
-
+            Disable<Transform>(storeClose);
+            Enable<Transform>(transform);
             //Enable<Transform>(Storebtn.transform);
             //Disable<Transform>(StoreBack.transform);
         }
     }
    
 
-   private void StoreAction()
+    public void StoreAction()
     {
-        //Debug.Log("Store");
-        //gameState.InvertPause();
-        bool state = !gameState.GetPause();
-        gameState.SetPause(state);
-        SwitchTabStore(state);
+         //Debug.Log("Store");
+         //gameState.InvertPause();
+         bool state = !gameState.GetPause();
+         gameState.SetPause(state);
+         SwitchTabStore(state);
     }
 
     public override void Update()
     {
-        if (!gameState.GetDrawMode())
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                //Enable<Transform>(Storebtn.transform);
-                //Disable<Transform>(StoreBack.transform);
-                StoreAction();
-            }
-        }
+        //if (!gameState.GetDrawMode())
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Escape))
+        //    {
+        //        //Enable<Transform>(Storebtn.transform);
+        //        //Disable<Transform>(StoreBack.transform);
+        //        StoreAction();
+        //    }
+        //}
 
         //if (stopTime)
         //{

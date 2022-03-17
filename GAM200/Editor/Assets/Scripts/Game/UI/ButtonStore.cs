@@ -75,16 +75,41 @@ public class ButtonStore : MonoBehaviour
     Transform timerButton;
     Transform pauseIcon;
 
+    Transform moneyText;
+    Transform roadCount;
+
     UI texture;
 
     CombinedUI combinedUI;
 
+    public bool revealCartButton;
+    public bool closing;
+
+    Transform storeIntro;
+
     public override void Start()
     {
+        roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
+
+        GameObject go3 = GameObject.Find("MoneyText");
+        if (go3 != null)
+            moneyText = go3.GetComponent<Transform>();
+
+        revealCartButton = false;
+        GameObject go = GameObject.Find("StoreIntro");
+        if (go != null)
+            storeIntro = go.GetComponent<Transform>();
+
+        if (storeIntro != null)
+            Disable<Transform>(storeIntro);
+
+        closing = false;
+
+
         texture = GetComponent<UI>();
         texture.color = new Color(0f, 0f, 0f);
 
-        //Storebtn = GameObject.Find("Storebtn");
+        Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
         //StoreBack = GameObject.Find("BackToGame");
 
@@ -150,6 +175,7 @@ public class ButtonStore : MonoBehaviour
         tlCostPosition = TLCost.transform.position;
         erpCostPosition = ERPCost.transform.position;
 
+        Disable<Transform>(Storebtn.transform);
         Disable<Transform>(StoreBG.transform);
         //Disable<Transform>(StoreBack.transform);
         Disable<Transform>(StoreHeader.transform);
@@ -186,15 +212,18 @@ public class ButtonStore : MonoBehaviour
     {
         if (type)
         {
-            Enable<Transform>(StoreBG.transform);
-            //Enable<Transform>(StoreBack.transform);
-            Enable<Transform>(StoreHeader.transform);
-            Enable<Transform>(ItemHeader.transform);
-            Enable<Transform>(QtyHeader.transform);
-            Enable<Transform>(RoadIcon.transform);
-            Enable<Transform>(RoadBuy.transform);
-            Enable<Transform>(RoadSell.transform);
-            Enable<Transform>(RoadNo.transform);
+            if (revealCartButton == true)
+            {
+                Enable<Transform>(StoreBG.transform);
+                //Enable<Transform>(StoreBack.transform);
+                Enable<Transform>(StoreHeader.transform);
+                Enable<Transform>(ItemHeader.transform);
+                Enable<Transform>(QtyHeader.transform);
+                Enable<Transform>(RoadIcon.transform);
+                Enable<Transform>(RoadBuy.transform);
+                Enable<Transform>(RoadSell.transform);
+                Enable<Transform>(RoadNo.transform);
+            }
 
             if (combinedUI.buttonRoad.revealTrafficButton)
             {
@@ -348,6 +377,23 @@ public class ButtonStore : MonoBehaviour
     internal void ResumeAction()
     {
         StoreAction();
+    }
+
+    public void RevealStore()
+    {
+        revealCartButton = true;
+        Enable<Transform>(Storebtn.transform);
+        Enable<Transform>(storeIntro);
+
+        Disable<Transform>(moneyText);
+        Disable<Transform>(roadCount);
+        Debug.Log("Revealing store ");
+
+        closing = true;
+        Time.timeScale = 0f;
+
+        combinedUI.CloseAllUIExcept(UIType.None);
+        Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }
 }
 

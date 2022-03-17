@@ -52,6 +52,7 @@ public class CarAI : MonoBehaviour
     private CollisionManager collisionManager;
 
     private float raycastLength;
+    private float carLength;
 
     private float targetAngle;
 
@@ -81,7 +82,9 @@ public class CarAI : MonoBehaviour
 
     public override void Start()
     {
-        raycastLength = transform.scale.x * 1.5f;
+        carLength = transform.scale.x;
+        raycastLength = carLength * 0.5f;
+        
         //Debug.Log(raycastLength + " lengirhteuth");
 
         //endPoint = null;
@@ -291,7 +294,10 @@ public class CarAI : MonoBehaviour
         //    stop = false;
         //}
 
-        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(transform.position, 0f), transform.right, raycastLength, (int)transform.entityId);
+        Vector2 headOfCar = transform.position + transform.right * carLength;
+        //Vector2 headOfCar = transform.position;
+
+        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, raycastLength, (int)transform.entityId);
 
         stop = false;
 
@@ -335,9 +341,9 @@ public class CarAI : MonoBehaviour
                         break;
                     case CollisionType.Unknown:
                         //Stop car because might be other cars
-                        Debug.Log(stop);
+                        //Debug.Log(stop);
                         stop |= true;
-                        Debug.Log(stop);
+                        //Debug.Log(stop);
                         //collisionManager.AddRaycastCollision(entityId, hit.transform.entityId);
                         break;
                     case CollisionType.Building:

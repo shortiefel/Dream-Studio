@@ -53,9 +53,11 @@ public class Grid
     internal static extern void CreateGrid_Engine(int width, int height);
 
     //Size of grid is expanded by 2 (Default) times
-    public void Expand(int xMul = 2, int yMul = 2)
+    //public void Expand(int xMul = 2, int yMul = 2)
+    public void Expand(int increaseX = 6, int increaseY = 6)
     {
-        Resize(_width * xMul, _height * yMul);
+        //Resize(_width * xMul, _height * yMul);
+        Resize(_width + increaseX, _height + increaseY);
     }
 
     private void Resize(int newWidth, int newHeight)
@@ -90,8 +92,8 @@ public class Grid
         _startY -= yTem;
         _width = newWidth;
         _height = newHeight;
-        Console.WriteLine(_startX + " " + _startY + "---------------------------\n");
-        Console.WriteLine(_width + " " + _height + "\n");
+        //Console.WriteLine(_startX + " " + _startY + "---------------------------\n");
+        //Console.WriteLine(_width + " " + _height + "\n");
         ResizeGrid_Engine(newWidth, newHeight);
     }
 
@@ -152,12 +154,18 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern int SetRoad_Engine(Vector2Int[] roads, int size);
     
-    public int UnsetRoad(Vector2Int pos)
+    public int UnsetRoad(Vector2Int pos, ref List<Vector2Int> roadRemoved)
     {
-        return UnsetRoad_Engine(pos);
+        Vector2Int[] roadPos = new Vector2Int[5];
+        int count = UnsetRoad_Engine(pos, roadPos);
+
+        for (int i = 0; i < count; i++)
+            roadRemoved.Add(roadPos[i]);
+
+        return count;
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern int UnsetRoad_Engine(Vector2Int pos);
+    internal static extern int UnsetRoad_Engine(Vector2Int pos, Vector2Int[] roadRemoved);
 
     public void RevertGrid()
     {
@@ -175,15 +183,7 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void FinalizeGrid_Engine();
 
-    public void SetCellType(Vector2Int pos, CellType ct, uint entityId = 0)
-    {
-        SetCellType_Engine(pos.x, pos.y, (int)ct, entityId);
-    }
-
-    public CellType GetCellType(Vector2Int pos)
-    {
-        return (CellType)GetCellType_Engine(pos.x, pos.y);
-    }
+   
 
     // Adding index operator to our Grid class so that we can use grid[][] to access specific cell from our grid. 
     public CellType this[int i, int j]
@@ -226,70 +226,105 @@ public class Grid
             //SetCellType_Engine(i, j, (int)value, 0);
             //Console.WriteLine("\n\n\nChanging value now " + value + "        -------------------------------------------------\n\n\n");
 
-            PrintGridOut();
+            //PrintGridOut();
         }
+    }
+
+    public CellType GetCellType(Vector2Int pos)
+    {
+        return (CellType)GetCellType_Engine(pos.x, pos.y);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern int GetCellType_Engine(int x, int y);
+
+    public void SetCellType(Vector2Int pos, CellType ct, uint entityId = 0)
+    {
+        Point pt = new Point(pos.x, pos.y);
+
+        if (ct == CellType.Road)
+        {
+            _roadList.Add(pt);
+        }
+
+        else if (ct == CellType.Structure)
+        {
+            _houseStructure.Add(pt);
+        }
+
+        else if (ct == CellType.SpecialStructure)
+        {
+            _specialStructure.Add(pt);
+        }
+
+        else if (ct == CellType.Empty || ct == CellType.None)
+        {
+            if (_roadList.Contains(pt)) _roadList.Remove(pt);
+            else if (_houseStructure.Contains(pt)) _houseStructure.Remove(pt);
+            else if (_specialStructure.Contains(pt)) _specialStructure.Remove(pt);
+        }
+
+
+        SetCellType_Engine(pos.x, pos.y, (int)ct, entityId);
+    }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void SetCellType_Engine(int x, int y, int cellType, uint entityId);
 
-    public static bool IsCellWakable(CellType cellType, bool aiAgent = false)
-    {
-        if (aiAgent)
-        {
-            return cellType == CellType.Road;
-        }
-        return cellType == CellType.Empty || cellType == CellType.Road;
-    }
+    //public static bool IsCellWakable(CellType cellType, bool aiAgent = false)
+    //{
+    //    if (aiAgent)
+    //    {
+    //        return cellType == CellType.Road;
+    //    }
+    //    return cellType == CellType.Empty || cellType == CellType.Road;
+    //}
 
-    public Point GetRandomRoadPoint()
-    {
-        //GetRandomRoadPoint_Engine(out Point point);
-        /*return point;*/
-
-        int count = _roadList.Count - 1;
-        if (count < 0) return null;
-
-        int n = Random.Range(0, count);
-        return _roadList[n];
-    }
+    //public Point GetRandomRoadPoint()
+    //{
+    //    //GetRandomRoadPoint_Engine(out Point point);
+    //    /*return point;*/
+    //
+    //    int count = _roadList.Count - 1;
+    //    if (count < 0) return null;
+    //
+    //    int n = Random.Range(0, count);
+    //    return _roadList[n];
+    //}
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool GetRandomRoadPoint_Engine(out Point point);
 
-    public Point GetRandomSpecialStructurePoint()
-    {
-        //if (!GetRandomSpecialStructurePoint_Engine(out Vector2Int ptInt)) return null;
-        //return new Point(ptInt);
-
-        int count = _specialStructure.Count - 1;
-        if (count < 0) return null;
- 
-        int n = Random.Range(0, count);
-        return _specialStructure[n];
-    }
+    //public Point GetRandomSpecialStructurePoint()
+    //{
+    //    //if (!GetRandomSpecialStructurePoint_Engine(out Vector2Int ptInt)) return null;
+    //    //return new Point(ptInt);
+    //
+    //    int count = _specialStructure.Count - 1;
+    //    if (count < 0) return null;
+    //
+    //    int n = Random.Range(0, count);
+    //    return _specialStructure[n];
+    //}
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool GetRandomSpecialStructurePoint_Engine(out Vector2Int point);
 
-    public Point GetRandomHouseStructurePoint()
-    {
-        //if (!GetRandomHouseStructurePoint_Engine(out Vector2Int ptInt)) return null;
-        //return new Point(ptInt);
-
-        int count = _houseStructure.Count - 1;
-        if (count < 0) return null;
-        
-        int n = Random.Range(0, count);
-        return _houseStructure[n];
-    }
+    //public Point GetRandomHouseStructurePoint()
+    //{
+    //    //if (!GetRandomHouseStructurePoint_Engine(out Vector2Int ptInt)) return null;
+    //    //return new Point(ptInt);
+    //
+    //    int count = _houseStructure.Count - 1;
+    //    if (count < 0) return null;
+    //    
+    //    int n = Random.Range(0, count);
+    //    return _houseStructure[n];
+    //}
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern bool GetRandomHouseStructurePoint_Engine(out Vector2Int point);
 
-    public List<Point> GetAdjacentCells(Point cell, bool isAgent)
-    {
-        return GetWakableAdjacentCells((int)cell.X, (int)cell.Y, isAgent);
-    }
+    //public List<Point> GetAdjacentCells(Point cell, bool isAgent)
+    //{
+    //    return GetWakableAdjacentCells((int)cell.X, (int)cell.Y, isAgent);
+    //}
 
     public float GetCostOfEnteringCell(Point cell)
     {
@@ -338,40 +373,40 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void GetAllAdjacentCells_Engine(Vector2Int[] pos, out int count, int x, int y);
 
-    public List<Point> GetWakableAdjacentCells(int x, int y, bool isAgent)
-    {
-        List<Point> adjacentCells = GetAllAdjacentCells(x, y);
-        //Console.WriteLine("Start part: " + x + " " + y);
-        for (int i = adjacentCells.Count - 1; i >= 0; i--)
-        {
-            //if (IsCellWakable(GetCellType(adjacentCells[i].X, adjacentCells[i].Y), isAgent) == false)
-            //Console.WriteLine("Error part: " + _width + " " + _height);
-            //Console.WriteLine("Error part: " + (adjacentCells[i].X - _startX) + " " + (adjacentCells[i].Y - _startY));
-            if (IsCellWakable(_grid[(int)adjacentCells[i].X - _startX, (int)adjacentCells[i].Y - _startY], isAgent) == false)
-            {
-                adjacentCells.RemoveAt(i);
-            }
-        }
-        //Console.WriteLine("walkableadjacentCells: ----------------------------");
-        //---------------------------------------------------------------------------------WORKING----------------------------------------------------------------------------------
-        /*Vector2Int[] pos = new Vector2Int[4];
-        GetWalkableAdjacentCells_Engine(pos, out int count, x, y, isAgent);
-        List<Point> adjacentCellsTest = new List<Point>();
-        for (int i = 0; i < count; i++)
-        {
-            adjacentCellsTest.Add(new Point(pos[i]));
-            //Console.WriteLine(adjacentCellsTest[i]);
-        }*/
-
-        /*Console.WriteLine("Old walkableadjacentCells ");
-
-        for (int i = 0; i < count; i++)
-        {
-            Console.WriteLine(adjacentCells[i]);
-        }
-        Console.WriteLine("----------------------------");*/
-        return adjacentCells;
-    }
+    //public List<Point> GetWakableAdjacentCells(int x, int y, bool isAgent)
+    //{
+    //    List<Point> adjacentCells = GetAllAdjacentCells(x, y);
+    //    //Console.WriteLine("Start part: " + x + " " + y);
+    //    for (int i = adjacentCells.Count - 1; i >= 0; i--)
+    //    {
+    //        //if (IsCellWakable(GetCellType(adjacentCells[i].X, adjacentCells[i].Y), isAgent) == false)
+    //        //Console.WriteLine("Error part: " + _width + " " + _height);
+    //        //Console.WriteLine("Error part: " + (adjacentCells[i].X - _startX) + " " + (adjacentCells[i].Y - _startY));
+    //        if (IsCellWakable(_grid[(int)adjacentCells[i].X - _startX, (int)adjacentCells[i].Y - _startY], isAgent) == false)
+    //        {
+    //            adjacentCells.RemoveAt(i);
+    //        }
+    //    }
+    //    //Console.WriteLine("walkableadjacentCells: ----------------------------");
+    //    //---------------------------------------------------------------------------------WORKING----------------------------------------------------------------------------------
+    //    /*Vector2Int[] pos = new Vector2Int[4];
+    //    GetWalkableAdjacentCells_Engine(pos, out int count, x, y, isAgent);
+    //    List<Point> adjacentCellsTest = new List<Point>();
+    //    for (int i = 0; i < count; i++)
+    //    {
+    //        adjacentCellsTest.Add(new Point(pos[i]));
+    //        //Console.WriteLine(adjacentCellsTest[i]);
+    //    }*/
+    //
+    //    /*Console.WriteLine("Old walkableadjacentCells ");
+    //
+    //    for (int i = 0; i < count; i++)
+    //    {
+    //        Console.WriteLine(adjacentCells[i]);
+    //    }
+    //    Console.WriteLine("----------------------------");*/
+    //    return adjacentCells;
+    //}
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void GetWalkableAdjacentCells_Engine(Vector2Int[] pos, out int count, int x, int y, bool isAgent);
 
@@ -415,47 +450,47 @@ public class Grid
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    public CellType[] GetAllAdjacentCellTypes(int x, int y)
-    {
-        CellType[] neighbours = { CellType.None, CellType.None, CellType.None, CellType.None };
-        if (x > _startX)
-        {
-            neighbours[0] = _grid[x - 1 - _startX, y - _startY];
-        }
-        if (x < _width + _startX - 1)
-        {
-
-            neighbours[2] = _grid[x + 1 - _startX, y - _startY];
-        }
-        if (y > _startY)
-        {
-            neighbours[3] = _grid[x - _startX, y - 1 - _startY];
-        }
-        if (y < _height + _startY - 1)
-        {
-            neighbours[1] = _grid[x - _startX, y + 1 - _startY];
-        }
-
-        //Console.WriteLine("Neighbour: ----------------------------");
-        //---------------------------------------------------------------------------------WORKING----------------------------------------------------------------------------------
-        /*int[] pos = new int[4];
-        GetAllAdjacentCellTypes_Engine(pos, x, y);
-        CellType[] neighboursTest = { CellType.None, CellType.None, CellType.None, CellType.None };
-        for (int i = 0; i < 4; i++)
-        {
-            neighboursTest[i] = (CellType)(pos[i]);
-            //Console.WriteLine((int)neighboursTest[i] + " " + pos[i]);
-        }*/
-
-        /*Console.WriteLine("Old Neighbour ");
-
-        for (int i = 0; i < 4; i++)
-        {
-            Console.WriteLine((int)neighbours[i]);
-        }
-        Console.WriteLine("----------------------------");*/
-        return neighbours;
-    }
+    //public CellType[] GetAllAdjacentCellTypes(int x, int y)
+    //{
+    //    CellType[] neighbours = { CellType.None, CellType.None, CellType.None, CellType.None };
+    //    if (x > _startX)
+    //    {
+    //        neighbours[0] = _grid[x - 1 - _startX, y - _startY];
+    //    }
+    //    if (x < _width + _startX - 1)
+    //    {
+    //
+    //        neighbours[2] = _grid[x + 1 - _startX, y - _startY];
+    //    }
+    //    if (y > _startY)
+    //    {
+    //        neighbours[3] = _grid[x - _startX, y - 1 - _startY];
+    //    }
+    //    if (y < _height + _startY - 1)
+    //    {
+    //        neighbours[1] = _grid[x - _startX, y + 1 - _startY];
+    //    }
+    //
+    //    //Console.WriteLine("Neighbour: ----------------------------");
+    //    //---------------------------------------------------------------------------------WORKING----------------------------------------------------------------------------------
+    //    /*int[] pos = new int[4];
+    //    GetAllAdjacentCellTypes_Engine(pos, x, y);
+    //    CellType[] neighboursTest = { CellType.None, CellType.None, CellType.None, CellType.None };
+    //    for (int i = 0; i < 4; i++)
+    //    {
+    //        neighboursTest[i] = (CellType)(pos[i]);
+    //        //Console.WriteLine((int)neighboursTest[i] + " " + pos[i]);
+    //    }*/
+    //
+    //    /*Console.WriteLine("Old Neighbour ");
+    //
+    //    for (int i = 0; i < 4; i++)
+    //    {
+    //        Console.WriteLine((int)neighbours[i]);
+    //    }
+    //    Console.WriteLine("----------------------------");*/
+    //    return neighbours;
+    //}
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void GetAllAdjacentCellTypes_Engine(int[] pos, int x, int y);
 

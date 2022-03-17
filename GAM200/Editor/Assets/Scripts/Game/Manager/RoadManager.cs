@@ -425,7 +425,7 @@ public class RoadManager : MonoBehaviour
     public override void Update()
     {
         //Debug.Log(temporaryRoadPositions.Count);
-        if (Input.GetKeyDown(KeyCode.G)) placementManager.placementGrid.PrintGridOut();
+        if (Input.GetKeyDown(KeyCode.O)) placementManager.placementGrid.PrintGridOut();
     }
 
     public void FinishPlacingRoad()
@@ -495,11 +495,11 @@ public class RoadManager : MonoBehaviour
 
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
-        bool result = false;
-        if (trafficLightManager != null)
-            result |= trafficLightManager.RequestRemovingTrafficLight(position);
-        if (erpManager != null)
-            result |= erpManager.RequestRemovingERP(position);
+        //bool result = false;
+        //if (trafficLightManager != null)
+        //    result |= trafficLightManager.RequestRemovingTrafficLight(position);
+        //if (erpManager != null)
+        //    result |= erpManager.RequestRemovingERP(position);
 
         //if (result == true)
         //    return;
@@ -509,7 +509,18 @@ public class RoadManager : MonoBehaviour
         //    roadCount++;
         //    removeSound.Play();
         //}
-        int roadInc = placementManager.placementGrid.UnsetRoad(position);
+        List<Vector2Int> roadRemoved = new List<Vector2Int>();
+        int roadInc = placementManager.placementGrid.UnsetRoad(position, ref roadRemoved);
+        //Debug.Log("Road removed " + roadInc);
+        foreach (var pos in roadRemoved)
+        {
+            if (trafficLightManager != null)
+                trafficLightManager.RequestRemovingTrafficLight(pos);
+            if (erpManager != null)
+                erpManager.RequestRemovingERP(pos);
+        }
+
+
         if (roadInc > 0)
         {
             roadCount += roadInc;

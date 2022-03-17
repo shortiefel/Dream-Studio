@@ -29,6 +29,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     public override void Start()
     {
+
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
         //aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
         structureModel = GetComponent<StructureModel>();
@@ -99,7 +100,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 //gameState.SetLoseHouse(transform.position);
 
                 //Lose points instead of lose game
-                gameState.MissedDestinationTime();
+                if (gameState != null)
+                    gameState.MissedDestinationTime();
             }
 
             if (notification.AppearCheck())
@@ -209,7 +211,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 
             }
             //notification.transform.
-            gameState.ReachedDestination();
+            if (gameState != null)
+                gameState.ReachedDestination();
             notification.ResetTimer();
         }
     }

@@ -20,7 +20,7 @@ public class GameState : MonoBehaviour
     private float dayCycle;
     private int dayCounter;
 
-
+    ButtonStore store;
     GameObject receipt;
 
     //bool gameOverBool;
@@ -40,6 +40,7 @@ public class GameState : MonoBehaviour
         //    highscoreText = go1.GetComponent<Text>();
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
+
         GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
         if (buttonRoadGO != null)
             buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
@@ -49,6 +50,10 @@ public class GameState : MonoBehaviour
             moneySystem = moneySystemGO.GetComponent<MoneySystem>();
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
+
+        GameObject buttonStoreGo = GameObject.Find("Storebtn");
+        if (buttonStoreGo != null)
+            store = buttonStoreGo.GetComponent<ButtonStore>();
 
         //previousTimeScale = 1f;
 
@@ -141,6 +146,11 @@ public class GameState : MonoBehaviour
     {
         highscore++;
 
+        if (highscore == 1)
+        {
+            store.RevealStore();
+        }
+
         if (highscore == 10)
         {
             buttonRoad.RevealTraffic();
@@ -169,11 +179,7 @@ public class GameState : MonoBehaviour
     {
         //Debug.Log("Haoneienri");
         placementManager.placementGrid.Expand();
-        camMovement.maxZoom *= 2f;
-        camMovement.speed *= 2f;
-        //camMovement.minZoom *= 0.5f;
-
-        camMovement.SetZoom(ZoomType.Out);
+        camMovement.Expand();
 
         buttonRoad.SwitchTabRoad(false);
     }

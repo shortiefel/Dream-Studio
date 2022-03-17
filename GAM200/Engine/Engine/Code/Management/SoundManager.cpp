@@ -32,9 +32,9 @@ namespace Engine
 	bool muteSFX = false;
 	bool muteMaster = false;
 
-	int volBGM = 50;
-	int volSFX = 50;
-	int volMaster = 50;
+	int volBGM = 30;
+	int volSFX = 30;
+	int volMaster = 30;
 
 	void SoundManager::Create()
 	{

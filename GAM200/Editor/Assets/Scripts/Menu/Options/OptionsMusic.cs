@@ -79,9 +79,9 @@ public class OptionsMusic : MonoBehaviour
         else if (GameObject.Find("DownBGMVol").entityId == entityId)
             type = ButtonType.BGMDOWN;
         else if (GameObject.Find("UpSFXVol").entityId == entityId)
-            type = ButtonType.BGMUP;
+            type = ButtonType.SFXUP;
         else if (GameObject.Find("DownSFXVol").entityId == entityId)
-            type = ButtonType.BGMDOWN;
+            type = ButtonType.SFXDOWN;
 
         Debug.Log("Type " + type);
         
@@ -133,7 +133,7 @@ public class OptionsMusic : MonoBehaviour
                     break;
 
                 case ButtonType.BGMUP:
-                    volMaster += 10;
+                    volBGM += 10;
                     Debug.Log(volBGM);
                     if (volBGM > 100) volBGM = 100;
                     BGMVolume.text = Convert.ToString(volBGM);
@@ -153,7 +153,7 @@ public class OptionsMusic : MonoBehaviour
                     Debug.Log(volSFX);
                     if (volSFX > 100) volSFX = 100;
                     SFXVolume.text = Convert.ToString(volSFX);
-                    AudioSource.SetGroup_Volume(AudioGroup.Music, volSFX);
+                    AudioSource.SetGroup_Volume(AudioGroup.SFX, volSFX);
                     break;
 
                 case ButtonType.SFXDOWN:
@@ -161,7 +161,7 @@ public class OptionsMusic : MonoBehaviour
                     Debug.Log(volSFX);
                     if (volSFX < 0) volSFX = 0;
                     SFXVolume.text = Convert.ToString(volSFX);
-                    AudioSource.SetGroup_Volume(AudioGroup.Music, volSFX);
+                    AudioSource.SetGroup_Volume(AudioGroup.SFX, volSFX);
                     break;
             }
           

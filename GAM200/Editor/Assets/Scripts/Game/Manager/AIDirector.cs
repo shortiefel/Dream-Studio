@@ -260,11 +260,14 @@ public class AIDirector : MonoBehaviour
         //Debug.Log(spawnPosInt);
         //var path = placementManager.GetPathBetween(structureManager.destinationList[endPos].startPos, new Vector2Int(endPos), true);
         int roadCount;
+        uint prevEntId = structureManager.destinationList[endPos].entityId;
+
         var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), out roadCount);
         //Console.WriteLine("New path is " + path.Count);
-        if (path.Count == 0)
+        if (path.Count == 0 || prevEntId != structureManager.destinationList[endPos].entityId)
         {
-            GetComponent<StructureModel>(structureManager.destinationList[endPos].entityId).SetSpawnBool(true);
+            //GetComponent<StructureModel>(structureManager.destinationList[endPos].entityId).SetSpawnBool(true);
+            GetComponent<StructureModel>(prevEntId).SetSpawnBool(true);
             structureManager.destinationList[endPos] = new StartPositionSet(new Vector2Int(0, 0), 0, 0);
             return;
         }

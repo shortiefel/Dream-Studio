@@ -102,7 +102,7 @@ public class ButtonStore : MonoBehaviour
         //Roadbuy = GameObject.Find("Roadbuy");
         //Trafficbuy = GameObject.Find("Trafficbuy");
         //ERPbuy = GameObject.Find("ERPbuy");
-
+        //
         //roadBuyPosition = Roadbuy.transform.position;
         //trafficBuyPosition = Trafficbuy.transform.position;
         //ERPBuyPosition = ERPbuy.transform.position;

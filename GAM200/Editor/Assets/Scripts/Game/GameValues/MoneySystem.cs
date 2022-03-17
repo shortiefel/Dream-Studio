@@ -51,7 +51,7 @@ public class MoneySystem : MonoBehaviour
         if (go5 != null)
             receipt = go5.GetComponent<Receipt>();
 
-        money = 500;
+        money = 100;
         textComp = GetComponent<Text>();
         textComp.text = money.ToString();
 

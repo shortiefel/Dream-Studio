@@ -58,7 +58,7 @@ public class GameState : MonoBehaviour
         //previousTimeScale = 1f;
 
         dayTimer = 0f;
-        dayCycle = 360f;
+        dayCycle = 120f;
 
         receipt = GameObject.Find("Receipt");
         if (receipt != null)
@@ -74,7 +74,7 @@ public class GameState : MonoBehaviour
 
         if (receipt != null)
         {
-          //  dayTimer += Time.deltaTime;
+            dayTimer += Time.deltaTime;
 
             if (dayTimer >= dayCycle)
             {
@@ -165,6 +165,7 @@ public class GameState : MonoBehaviour
     public void ReachedDestination()
     {
         Debug.Log("Reached destination ");
+        moneySystem.AddMoney(25);
         IncrementScore();
     }
 

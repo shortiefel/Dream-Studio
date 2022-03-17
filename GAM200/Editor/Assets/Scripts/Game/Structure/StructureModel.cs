@@ -126,6 +126,12 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 notification.alreadyShowing = false;
                
             }
+            if(notification.expirebool == true)
+            {
+                Debug.Log("destory Timer");
+                Disable<Transform>(notifiSymbol.transform);
+                notification.expirebool = false;
+            }
             if (notification.timerShow == true)
             {
                 SetToSpawn2();

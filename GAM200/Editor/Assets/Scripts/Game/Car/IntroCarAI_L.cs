@@ -19,7 +19,7 @@ public class IntroCarAI_L : MonoBehaviour
         //    startPosition = new Vector2(-12, -4.2f);
         //else
         //    startPosition = new Vector2(0, 0);
-        startPosition = new Vector2(15, +1.2f);
+        startPosition = new Vector2(15, 0f);
     }
 
 

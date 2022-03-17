@@ -27,6 +27,8 @@ public class GameState : MonoBehaviour
 
     //float previousTimeScale;
 
+    bool allowPause;
+
     public override void Start()
     {
         pauseState = false;
@@ -65,6 +67,8 @@ public class GameState : MonoBehaviour
         {
             Disable<Transform>(receipt.transform);
         }
+
+        allowPause = true;
     }
 
     public override void Update()
@@ -230,6 +234,16 @@ public class GameState : MonoBehaviour
     public bool GetPause()
     {
         return pauseState;
+    }
+
+    public bool AllowPause()
+    {
+        return allowPause;
+    }
+
+    public void SetAllowPause(bool type)
+    {
+        allowPause = type;
     }
 
     public void SetDrawMode(bool _state)

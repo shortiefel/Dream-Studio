@@ -40,14 +40,14 @@ public class PauseMenu : MonoBehaviour
     Transform displayArrow;
     Transform displayArrowWhite;
 
-    Transform timerButton;
-    Transform storeButton;
+    //Transform timerButton;
+    //Transform storeButton;
 
     //bool stopTime;
     //float stopTimer;
 
-    ButtonRoad buttonRoad;
-    ButtonStore buttonStore;
+    //ButtonRoad buttonRoad;
+    //ButtonStore buttonStore;
 
     /*public bool GetPause()
     {
@@ -57,12 +57,15 @@ public class PauseMenu : MonoBehaviour
     CombinedUI combinedUI;
 
     Transform moneyText;
+    Transform coinSymbol;
 
     public override void Start()
     {
         GameObject go3 = GameObject.Find("MoneyText");
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
+
+        coinSymbol = GameObject.Find("CoinBag").GetComponent<Transform>();
 
         texture = GetComponent<UI>();
         texture.color = new Color(0f, 0f, 0f);
@@ -119,23 +122,23 @@ public class PauseMenu : MonoBehaviour
 
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
-        GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
-        if (buttonRoadGO != null)
-            buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
-        GameObject buttonStoreGO = GameObject.Find("Storebtn");
-        if (buttonStoreGO != null)
-            buttonStore = buttonStoreGO.GetComponent<ButtonStore>();
+        //GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
+        //if (buttonRoadGO != null)
+        //    buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
+        //GameObject buttonStoreGO = GameObject.Find("Storebtn");
+        //if (buttonStoreGO != null)
+        //    buttonStoreSymbol = buttonStoreGO.GetComponent<Tranform>();
 
 
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
         displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
-        GameObject timerButtonGO = GameObject.Find("TimerIcon");
-        if (timerButtonGO != null)
-            timerButton = timerButtonGO.GetComponent<Transform>();
-        GameObject storeButtonGO = GameObject.Find("Storebtn");
-        if (storeButtonGO != null)
-            storeButton = storeButtonGO.GetComponent<Transform>();
+        //GameObject timerButtonGO = GameObject.Find("TimerIcon");
+        //if (timerButtonGO != null)
+        //    timerButton = timerButtonGO.GetComponent<Transform>();
+        //GameObject storeButtonGO = GameObject.Find("Storebtn");
+        //if (storeButtonGO != null)
+        //    storeButton = storeButtonGO.GetComponent<Transform>();
 
         GameObject combinedUIGO = GameObject.Find("CombinedUI");
         if (combinedUIGO != null)
@@ -178,6 +181,7 @@ public class PauseMenu : MonoBehaviour
 
             Enable<Transform>(pauseQuit.transform);
             Disable<Transform>(moneyText);
+            Disable<Transform>(coinSymbol);
             //Application.SetPause(true);
             //Time.timeScale = 0f;
 
@@ -194,6 +198,7 @@ public class PauseMenu : MonoBehaviour
         {
             //Console.WriteLine("Unpausing now");
             Enable<Transform>(moneyText);
+            Enable<Transform>(coinSymbol);
             Disable<Transform>(pauseBG.transform);
             Disable<Transform>(HowToBG.transform);
 
@@ -238,9 +243,12 @@ public class PauseMenu : MonoBehaviour
     {
         //gameState.InvertPause();
 
-        bool state = !gameState.GetPause();
-        gameState.SetPause(state);
-        SwitchTabPause(state);
+        if (gameState.AllowPause())
+        {
+            bool state = !gameState.GetPause();
+            gameState.SetPause(state);
+            SwitchTabPause(state);
+        }
 
     }
 

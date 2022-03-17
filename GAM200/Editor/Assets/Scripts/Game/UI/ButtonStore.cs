@@ -32,7 +32,7 @@ public class ButtonStore : MonoBehaviour
     GameObject ERPSell;
     GameObject ERPNo;
 
-    GameObject Storebtn;
+    //GameObject Storebtn;
     GameObject StoreBG;
     //GameObject StoreBack;
 
@@ -123,7 +123,7 @@ public class ButtonStore : MonoBehaviour
         texture = GetComponent<UI>();
         texture.color = new Color(0f, 0f, 0f);
 
-        Storebtn = GameObject.Find("Storebtn");
+        //Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
         //StoreBack = GameObject.Find("BackToGame");
 
@@ -191,7 +191,7 @@ public class ButtonStore : MonoBehaviour
 
         Disable<Transform>(storeClose);
 
-        Disable<Transform>(Storebtn.transform);
+        //Disable<Transform>(Storebtn.transform);
         Disable<Transform>(StoreBG.transform);
         //Disable<Transform>(StoreBack.transform);
         Disable<Transform>(StoreHeader.transform);
@@ -226,7 +226,8 @@ public class ButtonStore : MonoBehaviour
     {
         if (type)
         {
-            if (revealCartButton == true)
+            gameState.SetAllowPause(false);
+            //if (revealCartButton == true)
             {
                 Enable<Transform>(StoreBG.transform);
                 //Enable<Transform>(StoreBack.transform);
@@ -278,6 +279,8 @@ public class ButtonStore : MonoBehaviour
         }
         else
         {
+            gameState.SetAllowPause(true);
+
             Disable<Transform>(StoreBG.transform);
             Disable<Transform>(StoreHeader.transform);
             Disable<Transform>(ItemHeader.transform);
@@ -305,6 +308,8 @@ public class ButtonStore : MonoBehaviour
 
                 if (combinedUI != null)
                     combinedUI.EnableAllMasterButton();
+
+                Enable<Transform>(transform);
             }
 
             Disable<Transform>(CostTitle.transform);
@@ -313,7 +318,7 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(ERPCost.transform);
 
             Disable<Transform>(storeClose);
-            Enable<Transform>(transform);
+            
             //Enable<Transform>(Storebtn.transform);
             //Disable<Transform>(StoreBack.transform);
         }
@@ -329,41 +334,41 @@ public class ButtonStore : MonoBehaviour
          SwitchTabStore(state);
     }
 
-    public override void Update()
-    {
-        //if (!gameState.GetDrawMode())
-        //{
-        //    if (Input.GetKeyDown(KeyCode.Escape))
-        //    {
-        //        //Enable<Transform>(Storebtn.transform);
-        //        //Disable<Transform>(StoreBack.transform);
-        //        StoreAction();
-        //    }
-        //}
-
-        //if (stopTime)
-        //{
-        //    stopTimer += Time.deltaTime;
-        //
-        //    float newTimer = 5f * stopTimer;
-        //
-        //    if (stopTimer > 0.1f)
-        //    {
-        //        stopTimer = 0f;
-        //        stopTime = false;
-        //
-        //        //Enable<Transform>(Storebtn.transform);
-        //        //Disable<Transform>(StoreBack.transform);
-        //        Disable<Transform>(displayArrow);
-        //        Disable<Transform>(displayArrowWhite);
-        //        Disable<Transform>(pauseIcon);
-        //
-        //        Disable<Transform>(timerButton);
-        //
-        //        Time.timeScale = 0f;
-        //    }
-        //}
-    }
+    //public override void Update()
+    //{
+    //    //if (!gameState.GetDrawMode())
+    //    //{
+    //    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    //    {
+    //    //        //Enable<Transform>(Storebtn.transform);
+    //    //        //Disable<Transform>(StoreBack.transform);
+    //    //        StoreAction();
+    //    //    }
+    //    //}
+    //
+    //    //if (stopTime)
+    //    //{
+    //    //    stopTimer += Time.deltaTime;
+    //    //
+    //    //    float newTimer = 5f * stopTimer;
+    //    //
+    //    //    if (stopTimer > 0.1f)
+    //    //    {
+    //    //        stopTimer = 0f;
+    //    //        stopTime = false;
+    //    //
+    //    //        //Enable<Transform>(Storebtn.transform);
+    //    //        //Disable<Transform>(StoreBack.transform);
+    //    //        Disable<Transform>(displayArrow);
+    //    //        Disable<Transform>(displayArrowWhite);
+    //    //        Disable<Transform>(pauseIcon);
+    //    //
+    //    //        Disable<Transform>(timerButton);
+    //    //
+    //    //        Time.timeScale = 0f;
+    //    //    }
+    //    //}
+    //}
 
 
     public override void OnMouseEnter()
@@ -393,7 +398,7 @@ public class ButtonStore : MonoBehaviour
     public void RevealStore()
     {
         revealCartButton = true;
-        Enable<Transform>(Storebtn.transform);
+        //Enable<Transform>(Storebtn.transform);
         Enable<Transform>(storeIntro);
 
         Disable<Transform>(moneyText);

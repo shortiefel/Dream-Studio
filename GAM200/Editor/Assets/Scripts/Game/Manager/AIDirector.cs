@@ -266,7 +266,8 @@ public class AIDirector : MonoBehaviour
         //Console.WriteLine("New path is " + path.Count);
         if (path.Count == 0 || prevEntId != structureManager.destinationList[endPos].entityId)
         {
-            GetComponent<StructureModel>(structureManager.destinationList[endPos].entityId).SetSpawnBool(true);
+            //GetComponent<StructureModel>(structureManager.destinationList[endPos].entityId).SetSpawnBool(true);
+            GetComponent<StructureModel>(prevEntId).SetSpawnBool(true);
             structureManager.destinationList[endPos] = new StartPositionSet(new Vector2Int(0, 0), 0, 0);
             return;
         }

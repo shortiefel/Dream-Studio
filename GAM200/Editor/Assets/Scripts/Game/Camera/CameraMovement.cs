@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour
 
     public bool toZoomLose;
 
-    public bool drawMode;
+    //public bool drawMode;
 
     bool hasEnter;
     float targetHeight, startHeight;
@@ -22,14 +22,24 @@ public class CameraMovement : MonoBehaviour
     Vector2 targetPosition;
     Vector2 startPosition;
 
-    Vector3 mousePosition;
-    float mouseMultiply;
+    //Vector3 mousePosition;
+    //float mouseMultiply;
 
     bool gameZoom;
     public float minZoom;
     public float maxZoom;
     ZoomType zt;
 
+    private float zoomHeight;
+
+    public float speed;
+
+    private Vector2 moveUpSpeed;
+    private Vector2 moveRightSpeed;
+
+    private Vector2 cameraPosition;
+
+    private bool positionChange;
     public override void Start()
     {
         toZoomLose = false;
@@ -43,14 +53,25 @@ public class CameraMovement : MonoBehaviour
         t = 0f;
         hasEnter = false;
 
-        mousePosition = Input.GetMousePosition();
-        mouseMultiply = 0.15f;
+        //mousePosition = Input.GetMousePosition();
+        //mouseMultiply = 0.15f;
 
         gameZoom = false;
         zt = ZoomType.Out;
 
+        zoomHeight = cam.height;
+
+        speed = 1f;
+
         minZoom = 8f;
         maxZoom = 8f;
+
+        moveUpSpeed = 0.5f * transform.up;
+        moveRightSpeed = 0.5f * transform.right;
+
+        cameraPosition = transform.position;
+
+        positionChange = false;
     }
 
     public override void FixedUpdate()
@@ -71,17 +92,71 @@ public class CameraMovement : MonoBehaviour
             }
         }
 
-        else if (drawMode)
+        //else if (drawMode)
         {
-            if (Input.GetMouseButton(MouseCode.Right))
+            //if (Input.GetMouseButton(MouseCode.Right))
+            //{
+            //    Vector3 offset = Input.GetMousePosition() - mousePosition;
+            //    transform.position -= new Vector2(offset.x * mouseMultiply, offset.y * mouseMultiply);
+            //    
+            //}
+
+            //if (Input.GetMouseButton(MouseCode.Middle))
+            //{
+            //    //Vector3 offset = Input.GetMousePosition() - mousePosition;
+            //    //transform.position -= new Vector2(offset.x * mouseMultiply, offset.y * mouseMultiply);
+            //    
+            //}
+
+            zoomHeight -= speed * Input.GetMouseScroll().y;
+            if (zoomHeight < minZoom) zoomHeight = minZoom;
+            else if (zoomHeight > maxZoom) zoomHeight = maxZoom;
+            cam.height = zoomHeight;
+
+            if (Input.GetKey(KeyCode.W))
             {
-                Vector3 offset = Input.GetMousePosition() - mousePosition;
-                transform.position -= new Vector2(offset.x * mouseMultiply, offset.y * mouseMultiply);
-                
+                cameraPosition += moveUpSpeed;
+                positionChange = true;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                cameraPosition -= moveUpSpeed;
+                positionChange = true;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                cameraPosition -= moveRightSpeed;
+                positionChange = true;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                cameraPosition += moveRightSpeed;
+                positionChange = true;
+            }
+
+            if (positionChange)
+            {
+                //Check position before set (with the border)
+                if (placementManager != null)
+                {
+                    Vector2Int sp = placementManager.placementGrid.GetStartPoint();
+                    Vector2Int ep = placementManager.placementGrid.GetGridSize();
+                    ep += sp;
+
+                    if (cameraPosition.x < sp.x) cameraPosition.x = sp.x;
+                    else if (cameraPosition.x > ep.x) cameraPosition.x = ep.x;
+
+                    if (cameraPosition.y < sp.y) cameraPosition.y = sp.y;
+                    else if (cameraPosition.y > ep.y) cameraPosition.y = ep.y;
+                }
+
+
+                transform.position = cameraPosition;
+                positionChange = false;
             }
         }
 
-        mousePosition = Input.GetMousePosition();
+        //mousePosition = Input.GetMousePosition();
 
         //if (gameZoom)
         //{
@@ -109,16 +184,25 @@ public class CameraMovement : MonoBehaviour
             case ZoomType.In:
                 //zt = ZoomType.In;
                 //targetHeight = minZoom;
-                cam.height = minZoom;
+                zoomHeight = minZoom;
                 break;
             case ZoomType.Out:
                 //zt = ZoomType.Out;
                 //targetHeight = maxZoom;
-                cam.height = maxZoom;
+                zoomHeight = maxZoom;
                 break;
         }
         //startHeight = cam.height;
         //t = 0f;
         //gameZoom = true;
+    }
+
+    public void Expand()
+    {
+        maxZoom += 6f;
+        speed *= 1.5f;
+        minZoom *= 0.5f;
+
+        SetZoom(ZoomType.Out);
     }
 }

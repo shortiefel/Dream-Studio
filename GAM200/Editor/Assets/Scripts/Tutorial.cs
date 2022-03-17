@@ -38,13 +38,13 @@ public class Tutorial : MonoBehaviour
     public void CheckPosition()
     {
         //Console.WriteLine("Spawning ");
-        roadPosition.x = 7;
-        roadPosition.y = 4;
-        roadPosition2.x = 12;
-        roadPosition2.y = 4;
+        roadPosition.x = 3;
+        roadPosition.y = 2;
+        roadPosition2.x = 7;
+        roadPosition2.y = 2;
 
-        if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
-        {
+        //if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
+        //{
             //if (score == scoreToSpawn)
             //{
             //Debug.Log(housePosition.x);
@@ -54,7 +54,7 @@ public class Tutorial : MonoBehaviour
             //roadManager.PlaceSpawnDestination(roadPosition2);
             structureManager.PlaceHouse(roadPosition, 0);
             structureManager.PlaceSpecial(roadPosition2, 0);
-        }
+        //}
 
     }
 

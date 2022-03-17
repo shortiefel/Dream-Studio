@@ -6,13 +6,15 @@ public enum CollisionType
 {
     Unknown = 0,
     ERP,
-    Traffic
+    Traffic,
+    Building
 }
 
 public class CollisionManager : MonoBehaviour
 {
     private TrafficManager tm;
     private ERPManager em;
+    private PlacementManager pm;
 
     private Dictionary<uint, uint> raycastCollisionRecord;
 
@@ -20,20 +22,26 @@ public class CollisionManager : MonoBehaviour
     {
         tm = GameObject.Find("TrafficManager").GetComponent<TrafficManager>();
         em = GameObject.Find("ERPManager").GetComponent<ERPManager>();
+        pm = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
         raycastCollisionRecord = new Dictionary<uint, uint>();
     }
 
-    public CollisionType CollisionTypeCheck(Vector2Int targetPos)
+    public CollisionType CollisionTypeCheck(Vector2Int targetPos, uint entId)
     {
-        if (tm.IsTrafficLight(targetPos))
+        if (tm.IsTrafficLight(targetPos, entId))
         {
             return CollisionType.Traffic;
         }
 
-        else if (em.IsERP(targetPos))
+        else if (em.IsERP(targetPos, entId))
         {
             return CollisionType.ERP;
+        }
+
+        else if (pm.IsBuilding(targetPos, entId))
+        {
+            return CollisionType.Building;
         }
 
 

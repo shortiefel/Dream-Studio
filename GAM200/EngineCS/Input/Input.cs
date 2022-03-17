@@ -52,6 +52,15 @@ public class Input
     internal static extern bool GetMouseUp_Engine(MouseCode button);
 
 
+    public static Vector2 GetMouseScroll()
+    {
+        GetMouseScroll_Engine(out Vector2 position);
+        return position;
+    }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetMouseScroll_Engine(out Vector2 pos);
+    
 
     public static Vector3 GetMousePosition()
     {
@@ -60,5 +69,5 @@ public class Input
     }
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern bool GetMousePosition_Engine(out Vector2 pos);
+    internal static extern void GetMousePosition_Engine(out Vector2 pos);
 }

@@ -27,9 +27,15 @@ public class PlacementManager : MonoBehaviour
         structureDictionary = new Dictionary<Vector2Int, StructureModel>();
     }
 
-    internal CellType[] GetNeighbourTypesFor(Vector2Int position)
+    //internal CellType[] GetNeighbourTypesFor(Vector2Int position)
+    //{
+    //    return placementGrid.GetAllAdjacentCellTypes(position.x, position.y);
+    //}
+
+    public bool IsBuilding(Vector2Int targetPos, uint entId)
     {
-        return placementGrid.GetAllAdjacentCellTypes(position.x, position.y);
+        if (!structureDictionary.ContainsKey(targetPos)) return false;
+        return structureDictionary[targetPos].entityId == entId;
     }
 
     //True = within
@@ -262,13 +268,13 @@ public class PlacementManager : MonoBehaviour
     //    return GetStructureAt(point);
     //}
 
-    public StructureModel GetRandomHouseStructure()
-    {
-        var point = placementGrid.GetRandomHouseStructurePoint();
-        if (point == null) return null;
-        //Debug.Log(point);
-        return GetStructureAt(point);
-    }
+    //public StructureModel GetRandomHouseStructure()
+    //{
+    //    var point = placementGrid.GetRandomHouseStructurePoint();
+    //    if (point == null) return null;
+    //    //Debug.Log(point);
+    //    return GetStructureAt(point);
+    //}
 
     //public List<StructureModel> GetAllHouses()
     //{
@@ -322,12 +328,4 @@ public class PlacementManager : MonoBehaviour
     //    //    placementGrid[position.x, position.y] = CellType.Empty;
     //    //}
     //}
-
-    public override void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            placementGrid.PrintGridOut();
-        }
-    }
 }

@@ -59,7 +59,7 @@ public class ButtonRoad : MonoBehaviour
 
     GameState gameState;
 
-    private Camera mainCamera;
+    //private Camera mainCamera;
 
     public bool opening;
     public bool closing;
@@ -72,7 +72,7 @@ public class ButtonRoad : MonoBehaviour
     public bool revealERPButton;
     public bool revealTrafficButton;
 
-    CameraMovement cameraMovement;
+    //CameraMovement cameraMovement;
 
     CombinedUI combinedUI;
 
@@ -83,7 +83,7 @@ public class ButtonRoad : MonoBehaviour
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
         //disable the different effect.
 
-        mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
+        //mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
 
         //placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
@@ -185,7 +185,7 @@ public class ButtonRoad : MonoBehaviour
         //    counterText = go4.GetComponent<Transform>();
 
 
-        cameraMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
+        //cameraMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
 
         //drawRoadMode = false;
         //deleteRoadMode = false;
@@ -242,7 +242,7 @@ public class ButtonRoad : MonoBehaviour
             if (reenable)
                 Enable<Transform>(displayArrow);
 
-            cameraMovement.SetZoom(ZoomType.Out);
+            //cameraMovement.SetZoom(ZoomType.Out);
         }
     }
     private void CloseTabs()
@@ -317,8 +317,8 @@ public class ButtonRoad : MonoBehaviour
 
         if (_activeType)
         {
-            if (Input.GetMouseButtonDown(MouseCode.Left))
-                cameraMovement.SetZoom(ZoomType.In);
+            //if (Input.GetMouseButtonDown(MouseCode.Left))
+            //    cameraMovement.SetZoom(ZoomType.In);
 
             switch (_bt)
             {
@@ -382,11 +382,11 @@ public class ButtonRoad : MonoBehaviour
 
             SceneManager.SetDrawMode(true);
             gameState.SetDrawMode(true);
-            cameraMovement.drawMode = true;
+            //cameraMovement.drawMode = true;
         }
         else
         {
-            cameraMovement.SetZoom(ZoomType.Out);
+            //cameraMovement.SetZoom(ZoomType.Out);
 
             SceneManager.SetDrawMode(false);
             gameState.SetDrawMode(false);

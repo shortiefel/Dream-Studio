@@ -12,7 +12,7 @@ public class TrafficLight : MonoBehaviour
     //True for left and right
     //False for top and bottom
     public bool state;
-    private bool toState;
+    //private bool toState;
 
     public DirectionState directionState;
     public DirectionState nextState;
@@ -32,7 +32,7 @@ public class TrafficLight : MonoBehaviour
 
     public override void Start()
     {
-        Debug.Log("Making new start -----------------------------------");
+        //Debug.Log("Making new start -----------------------------------");
         directionState = DirectionState.Horizontal;
 
         GameObject go = GameObject.Find("TrafficManager");
@@ -40,11 +40,12 @@ public class TrafficLight : MonoBehaviour
             tlm = go.GetComponent<TrafficLightManager>();
         if (tlm != null)
         {
-            Debug.Log("Not null");
+            //Debug.Log("Not null");
             tlm.RegisterTrafficLight(Vector2Int.RoundToInt(transform.position), entityId);
         }
 
-        state = toState = true;
+        //state = toState = true;
+        state = true;
         //texture = gameObject.GetComponent<Texture>();
         //texture.color = new Color(1, 0, 0, 1);
         transform.angle = 0;
@@ -56,11 +57,11 @@ public class TrafficLight : MonoBehaviour
         inBetweenTimer = 0f;
     }
 
-    public void RequestSwap(bool inState)
-    {
-        if (state != inState)
-            toState = inState;
-    }
+    //public void RequestSwap(bool inState)
+    //{
+    //    if (state != inState)
+    //        toState = inState;
+    //}
 
     //public DirectionState GetTrafficLightState()
     //{
@@ -85,6 +86,8 @@ public class TrafficLight : MonoBehaviour
         if (directionState == DirectionState.Horizontal) nextState = DirectionState.Vertical;
         else if (directionState == DirectionState.Vertical) nextState = DirectionState.Horizontal;
         directionState = DirectionState.None;
+
+        
         //Debug.Log("After " + directionState + " " + entityId);
     }
 
@@ -122,7 +125,8 @@ public class TrafficLight : MonoBehaviour
             inBetweenTimer += deltaTime;
             if (inBetweenTimer >= 0.5f)
             {
-                toState = state = !state;
+                //toState = state = !state;
+                state = !state;
                 if (state)
                     transform.angle = 0;
                 //texture.color = new Color(1, 0, 0, 1);

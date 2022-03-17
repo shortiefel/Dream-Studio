@@ -15,6 +15,8 @@ public class ERPManager : MonoBehaviour
     Transform ERPInfoText;
     Transform ERPInfo;
 
+    float timer;
+    bool addToTime;
 
     public override void Start()
     {
@@ -34,6 +36,27 @@ public class ERPManager : MonoBehaviour
 
         Disable<Transform>(ERPInfoText);
         Disable<Transform>(ERPInfo);
+
+        timer = 0f;
+        addToTime = false;
+
+    }
+
+    public override void FixedUpdate()
+    {
+        if (addToTime == true)
+        {
+            timer += Time.fixedDeltaTime;
+
+            if (timer > 2f)
+            {
+                Disable<Transform>(ERPInfoText);
+                Disable<Transform>(ERPInfo);
+
+                timer = 0f;
+                addToTime = false;
+            }
+        }
 
     }
 
@@ -73,10 +96,11 @@ public class ERPManager : MonoBehaviour
     //    erpList.Remove(pos);
     //}
 
-    public bool IsERP(Vector2Int posToCheck)
+    public bool IsERP(Vector2Int targetPos, uint entId = 0)
     {
-        if (erpList.ContainsKey(posToCheck)) return true;
-        return false;
+        if (entId == 0) return erpList.ContainsKey(targetPos);
+        if (!erpList.ContainsKey(targetPos)) return false;
+        return erpList[targetPos] == entId;
     }
 
     public int erpTaxCount()
@@ -86,13 +110,14 @@ public class ERPManager : MonoBehaviour
 
     public bool RequestPlacingERP(Vector2Int position)
     {
-        Disable<Transform>(ERPInfoText);
-        Disable<Transform>(ERPInfo);
 
         if (erpCount <= 0)
         {
             Enable<Transform>(ERPInfoText);
             Enable<Transform>(ERPInfo);
+
+            addToTime = true;
+
             return false;
         }
 
@@ -102,14 +127,12 @@ public class ERPManager : MonoBehaviour
             return false;
 
         --erpCount;
-        Instantiate(erpGO, new Vector3(position.x, position.y, 0f));
+        Instantiate(erpGO, new Vector3(position.x, position.y, 0f), 3);
         return true;
     }
 
     public bool RequestRemovingERP(Vector2Int position)
     {
-        Disable<Transform>(ERPInfoText);
-        Disable<Transform>(ERPInfo);
 
         if (!erpList.ContainsKey(position))
             return false;

@@ -46,25 +46,44 @@ public class SpawnManager : MonoBehaviour
         //spawnTimerMax = 3f;
         //buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
 
+        Vector2Int roadPosition = SpawnRandomRoad();
+        Vector2Int roadPosition2 = SpawnRandomRoad();
 
-        bool checkForNoSpawn = true;
-        while (checkForNoSpawn)
+
+        //For testing traffic
+        //Vector2Int roadPositionT = new Vector2Int(1, 3);
+        //structureManager.PlaceHouse(roadPositionT, 0);
+        //Vector2Int roadPositionS = new Vector2Int(5, 3);
+        //structureManager.PlaceSpecial(roadPositionS, 0);
+        //
+        //Vector2Int roadPosition = new Vector2Int(3, 0);
+        //Vector2Int roadPosition2 = new Vector2Int(3, 5);
+
+        structureManager.PlaceHouse(roadPosition, 0);
+        structureManager.PlaceSpecial(roadPosition2, 0);
+
+        //Check if have 1 house and 1 destination to start off
+        while (true)
         {
-            Vector2Int roadPosition = SpawnRandomRoad();
-            Vector2Int roadPosition2 = SpawnRandomRoad();
 
-            //Vector2Int roadPosition = new Vector2Int(7, 7);
-            //Vector2Int roadPositionT = new Vector2Int(3, 7);
-            //structureManager.PlaceHouse(roadPositionT, 0);
-            //Vector2Int roadPosition2 = new Vector2Int(5, 2);
-
-            structureManager.PlaceHouse(roadPosition, 0);
-            structureManager.PlaceSpecial(roadPosition2, 0);
- 
             if (placementManager.placementGrid.GetAllHouses().Count != 0 && placementManager.placementGrid.GetAllSpecialStructure().Count != 0)
             {
-                checkForNoSpawn = false;
                 break;
+            }
+            //Debug.Log("Failed full spawn");
+
+            if (placementManager.placementGrid.GetAllHouses().Count == 0)
+            {
+                //Debug.Log("Spawn Fix House");
+                roadPosition = SpawnRandomRoad();
+                structureManager.PlaceHouse(roadPosition, 0);
+            }
+
+            if (placementManager.placementGrid.GetAllSpecialStructure().Count == 0)
+            {
+                //Debug.Log("Spawn Fix Destination");
+                roadPosition2 = SpawnRandomRoad();
+                structureManager.PlaceSpecial(roadPosition2, 0);
             }
         }
 

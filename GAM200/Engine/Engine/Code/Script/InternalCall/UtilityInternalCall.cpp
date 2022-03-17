@@ -86,16 +86,20 @@ namespace Engine {
 		bool GetMouseDown_Engine(Input_MouseCode button);
 		bool GetMouseUp_Engine(Input_MouseCode button);
 
+		void GetMouseScroll_Engine(Math::vec2* outPosition);
+
 		void GetMousePosition_Engine(Math::vec2* outPosition);
 
 
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
-		Save highscore
+		Save Data
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		void ScoreSetUp();
-		void SetHighscore_Engine(int value, MonoString* str);
-		void GetHighscore_Engine(int* value, MonoString* str);
+		//void SetHighscore_Engine(int value, MonoString* str);
+		//void GetHighscore_Engine(int* value, MonoString* str);
+
+		void SetSavedData_Engine(int value, MonoString* str);
+		void GetSavedData_Engine(int* value, MonoString* str);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Prefab
@@ -134,6 +138,7 @@ namespace Engine {
 		Physics
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		bool RayCast_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, unsigned int* entity_id, float* hitDistance, Math::vec2* hitPoint);
+		bool RayCastGroup_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, int* count, MonoArray* entityArray, MonoArray* hitDisArray, MonoArray* hitPointArray);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Application
@@ -153,13 +158,19 @@ namespace Engine {
 			mono_add_internal_call("Input::GetMouse_Engine", GetMouse_Engine);
 			mono_add_internal_call("Input::GetMouseDown_Engine", GetMouseDown_Engine);
 			mono_add_internal_call("Input::GetMouseUp_Engine", GetMouseUp_Engine);
+			mono_add_internal_call("Input::GetMouseScroll_Engine", GetMouseScroll_Engine);
 			mono_add_internal_call("Input::GetMousePosition_Engine", GetMousePosition_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
-			Save highscore
+			Save Data
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-			mono_add_internal_call("MonoBehaviour::SetHighscore_Engine", SetHighscore_Engine);
-			mono_add_internal_call("MonoBehaviour::GetHighscore_Engine", GetHighscore_Engine);
+			//mono_add_internal_call("MonoBehaviour::SetHighscore_Engine", SetHighscore_Engine);
+			//mono_add_internal_call("MonoBehaviour::GetHighscore_Engine", GetHighscore_Engine);
+
+			mono_add_internal_call("MonoBehaviour::SetSavedData_Engine", SetSavedData_Engine);
+			mono_add_internal_call("MonoBehaviour::GetSavedData_Engine", GetSavedData_Engine);
+
+			
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Prefab
@@ -199,13 +210,14 @@ namespace Engine {
 			Physics
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("Physics2D::RayCast_Engine", RayCast_Engine);
+			mono_add_internal_call("Physics2D::RayCastGroup_Engine", RayCastGroup_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Application
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("Application::Quit_Engine", Quit_Engine);
 
-			ScoreSetUp();
+			InitializeSavedDataInternal();
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -219,92 +231,166 @@ namespace Engine {
 		bool GetMouseDown_Engine(Input_MouseCode button) { return Input::IsMousePressed(button); }
 		bool GetMouseUp_Engine(Input_MouseCode button) { return Input::IsMouseReleased(button); }
 
+		void GetMouseScroll_Engine(Math::vec2* outPosition) {
+			*outPosition = Input::GetMouseScroll();
+		}
+
 		void GetMousePosition_Engine(Math::vec2* outPosition) {
 			*outPosition = GetMousePositionFuncPtr();
 		}
 
+
+
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
-		Save highscore
+		Save Values
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		int highScore = 0;
-		int currentScore = 0;
-		void ScoreSetUp() {
+		std::map<std::string, int> intSavedData;
+
+		//int highScore = 0;
+		//int currentScore = 0;
+		void InitializeSavedDataInternal() {
 			std::ifstream fileStream;
 			rapidjson::Document doc;
 
-			fileStream.open("Data/highscore.json");
+			fileStream.open("Data/SavedData.json");
 			rapidjson::IStreamWrapper isw(fileStream);
 
 			doc.ParseStream(isw);
 
-			rapidjson::Value::ConstMemberIterator itr = doc.GetArray()[0].FindMember("Score");
-			if (itr != doc.GetArray()[0].MemberEnd()) {
-				highScore = itr->value["HighScore"].GetInt();
-				currentScore = itr->value["CurrentScore"].GetInt();
+			//{
+			//	rapidjson::Value::ConstMemberIterator itr = doc.GetArray()[0].FindMember("Score");
+			//	if (itr != doc.GetArray()[0].MemberEnd()) {
+			//		//intSavedData["HighScore"] = highScore = itr->value["HighScore"].GetInt();
+			//		//intSavedData["CurrentScore"] = currentScore = itr->value["CurrentScore"].GetInt();
+			//		intSavedData["HighScore"] = itr->value["HighScore"].GetInt();
+			//		intSavedData["CurrentScore"] = itr->value["CurrentScore"].GetInt();
+			//	}
+			//}
+			{
+
+				doc.GetArray()[0];
+				doc.GetArray()[0]["Name"];
+				auto itrName = doc.GetArray()[0]["Name"].GetArray();
+				auto itrData = doc.GetArray()[0]["Data"].GetArray();
+
+				for (unsigned int i = 0; i < itrName.Size(); i++) {
+					//std::cout << itrName[i].GetString() << " " << itrData[i].GetInt() << "-----------------------------------------\n";
+					intSavedData[itrName[i].GetString()] = itrData[i].GetInt();
+				}
+
 			}
+
+			
 		}
-		void SetHighscore_Engine(int value, MonoString* str) {
+		//void SetHighscore_Engine(int value, MonoString* str) {
+		//	//char* text = mono_string_to_utf8(str);
+		//	//
+		//	//rapidjson::Document doc(rapidjson::kArrayType);
+		//	//rapidjson::Value entityObject(rapidjson::kObjectType);
+		//	//
+		//	//rapidjson::Value objTypeEntity(rapidjson::kObjectType);
+		//	//SSerializer serializerEntity(doc, objTypeEntity);
+		//	//if (strcmp(text, "HighScore") == 0) {
+		//	//	highScore = value;
+		//	//	serializerEntity.SetValue("HighScore", value);
+		//	//}
+		//	//else
+		//	//	serializerEntity.SetValue("HighScore", highScore);
+		//	//
+		//	//if (strcmp(text, "CurrentScore") == 0) {
+		//	//	currentScore = value;
+		//	//	serializerEntity.SetValue("CurrentScore", value);
+		//	//}
+		//	//else
+		//	//	serializerEntity.SetValue("CurrentScore", currentScore);
+		//	//
+		//	//entityObject.AddMember("Score", objTypeEntity, doc.GetAllocator());
+		//	//
+		//	//doc.PushBack(entityObject, doc.GetAllocator());
+		//	//
+		//	//
+		//	//std::ofstream fileStream("Data/SavedData.json");
+		//	//rapidjson::OStreamWrapper osw(fileStream);
+		//	//
+		//	//rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+		//	//doc.Accept(writer);
+		//	//
+		//	//fileStream.close();
+		//	//mono_free(text);
+		//}
+		//
+		//void GetHighscore_Engine(int* value, MonoString* str) {
+		//	//char* text = mono_string_to_utf8(str);
+		//	//
+		//	////std::ifstream fileStream;
+		//	////rapidjson::Document doc;
+		//	////
+		//	////fileStream.open("Data/highscore.json");
+		//	////rapidjson::IStreamWrapper isw(fileStream);
+		//	////
+		//	////doc.ParseStream(isw);
+		//	////
+		//	////rapidjson::Value::ConstMemberIterator itr = doc.GetArray()[0].FindMember("Score");
+		//	////if (itr != doc.GetArray()[0].MemberEnd()) {
+		//	////	*value = itr->value[text].GetInt();
+		//	////}
+		//	//if (strcmp(text, "HighScore") == 0) {
+		//	//	*value = highScore;
+		//	//}
+		//	//
+		//	//if (strcmp(text, "CurrentScore") == 0) {
+		//	//	std::cout << "Current " << currentScore << "\n";
+		//	//	*value = currentScore;
+		//	//}
+		//	//
+		//	//mono_free(text);
+		//}
+
+		void SetSavedData_Engine(int value, MonoString* str) {
 			char* text = mono_string_to_utf8(str);
 
+			intSavedData[text] = value;
+			
+			mono_free(text);
+		}
+
+		void GetSavedData_Engine(int* value, MonoString* str) {
+			char* text = mono_string_to_utf8(str);
+
+			*value = intSavedData[text];
+
+			mono_free(text);
+		}
+
+		void StoreSavedDataInternal() {
 			rapidjson::Document doc(rapidjson::kArrayType);
+
+			rapidjson::Value nameType(rapidjson::kArrayType);
+			rapidjson::Value objType(rapidjson::kArrayType);
+
 			rapidjson::Value entityObject(rapidjson::kObjectType);
 
-			rapidjson::Value objTypeEntity(rapidjson::kObjectType);
-			SSerializer serializerEntity(doc, objTypeEntity);
-			if (strcmp(text, "HighScore") == 0) {
-				highScore = value;
-				serializerEntity.SetValue("HighScore", value);
-			}
-			else
-				serializerEntity.SetValue("HighScore", highScore);
+			for (auto& [name, data] : intSavedData) {
+				rapidjson::Value valName;
+				valName.SetString(name.c_str(), rapidjson::SizeType(name.size()), doc.GetAllocator());
 
-			if (strcmp(text, "CurrentScore") == 0) {
-				currentScore = value;
-				serializerEntity.SetValue("CurrentScore", value);
+				nameType.PushBack(valName, doc.GetAllocator());
+				objType.PushBack(data, doc.GetAllocator());
 			}
-			else
-				serializerEntity.SetValue("CurrentScore", currentScore);
 
-			entityObject.AddMember("Score", objTypeEntity, doc.GetAllocator());
+			entityObject.AddMember("Name", nameType, doc.GetAllocator());
+			entityObject.AddMember("Data", objType, doc.GetAllocator());
 
 			doc.PushBack(entityObject, doc.GetAllocator());
 
 
-			std::ofstream fileStream("Data/highscore.json");
+			std::ofstream fileStream("Data/SavedData.json");
 			rapidjson::OStreamWrapper osw(fileStream);
 
 			rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
 			doc.Accept(writer);
 
 			fileStream.close();
-			mono_free(text);
-		}
-
-		void GetHighscore_Engine(int* value, MonoString* str) {
-			char* text = mono_string_to_utf8(str);
-
-			//std::ifstream fileStream;
-			//rapidjson::Document doc;
-			//
-			//fileStream.open("Data/highscore.json");
-			//rapidjson::IStreamWrapper isw(fileStream);
-			//
-			//doc.ParseStream(isw);
-			//
-			//rapidjson::Value::ConstMemberIterator itr = doc.GetArray()[0].FindMember("Score");
-			//if (itr != doc.GetArray()[0].MemberEnd()) {
-			//	*value = itr->value[text].GetInt();
-			//}
-			if (strcmp(text, "HighScore") == 0) {
-				*value = highScore;
-			}
-
-			if (strcmp(text, "CurrentScore") == 0) {
-				std::cout << "Current " << currentScore << "\n";
-				*value = currentScore;
-			}
-
-			mono_free(text);
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -367,7 +453,7 @@ namespace Engine {
 		}
 
 		void WaitForSeconds_Engine(float) {
-
+			std::cout << "WaitForSeconds_Engine not done yet \n";
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -415,6 +501,29 @@ namespace Engine {
 			*entity_id = hitCast.entity_id;
 
 			if (hitCast.entity_id < 0) return false;
+			return true;
+		}
+
+		bool RayCastGroup_Engine(Math::vec3 pos, Math::vec2 dir, int ignoreTarget, float distance, int* count, MonoArray* entityArray, MonoArray* hitDisArray, MonoArray* hitPointArray) {
+			RaycastHit hitCast[10];
+			int num = 0;
+			//if (distance < 0) distance = RAY_LENGTH;
+			std::uint32_t ignored = ignoreTarget < 0 ? DEFAULT_ENTITY_ID : ignoreTarget;
+			CollisionSystem::GetInstance().RayCastGroup(Engine::Ray{ Math::vec2 {pos.x, pos.y}, dir, distance }, hitCast, &num, ignored);
+
+			//*hitDistance = hitCast.distance;
+			//*hitPoint = hitCast.point;
+			//*entity_id = hitCast.entity_id;
+
+			for (int i = 0; i < num; i++) {
+				mono_array_set(entityArray, unsigned int, i, (hitCast[i].entity_id));
+				mono_array_set(hitDisArray, float, i, (hitCast[i].distance));
+				mono_array_set(hitPointArray, Math::vec2, i, (hitCast[i].point));
+			}
+
+			*count = num;
+
+			//if (hitCast.entity_id < 0) return false;
 			return true;
 		}
 

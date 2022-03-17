@@ -18,7 +18,9 @@ public class GameState : MonoBehaviour
 
     private float dayTimer;
     private float dayCycle;
+    private int dayCounter;
 
+    ButtonStore store;
     GameObject receipt;
 
     //bool gameOverBool;
@@ -38,6 +40,7 @@ public class GameState : MonoBehaviour
         //    highscoreText = go1.GetComponent<Text>();
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
+
         GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
         if (buttonRoadGO != null)
             buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
@@ -48,10 +51,14 @@ public class GameState : MonoBehaviour
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
+        GameObject buttonStoreGo = GameObject.Find("Storebtn");
+        if (buttonStoreGo != null)
+            store = buttonStoreGo.GetComponent<ButtonStore>();
+
         //previousTimeScale = 1f;
 
         dayTimer = 0f;
-        dayCycle = 60f;
+        dayCycle = 360f;
 
         receipt = GameObject.Find("Receipt");
         if (receipt != null)
@@ -67,7 +74,7 @@ public class GameState : MonoBehaviour
 
         if (receipt != null)
         {
-            dayTimer += Time.deltaTime;
+          //  dayTimer += Time.deltaTime;
 
             if (dayTimer >= dayCycle)
             {
@@ -75,6 +82,7 @@ public class GameState : MonoBehaviour
                 SetPause(true);
                 moneySystem.TaxMoney();
                 dayTimer = 0f;
+                dayCounter++;
             }
         }
 
@@ -97,25 +105,35 @@ public class GameState : MonoBehaviour
         //}
         //--------------------------
         //Cheat code
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    GameOver();
-        //}
+        if (Input.GetKeyDown(KeyCode.L) && Input.GetKey(KeyCode.Shift))
+        {
+            GameOver();
+        }
         if (Input.GetKeyDown(KeyCode.P) && Input.GetKey(KeyCode.Shift))
         {
             IncrementScore();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.Shift))
+        {
+            Enable<Transform>(receipt.transform);
+            SetPause(true);
+            moneySystem.TaxMoney();
         }
         //-------------------------
     }
 
     void GameOver ()
     {
-        //SceneManager.LoadScene("GameOver");
-        if (camMovement.toZoomLose) return;
-        camMovement.toZoomLose = true;
+        //if (camMovement.toZoomLose) return;
+        //camMovement.toZoomLose = true;
+
 
         Time.timeScale = 0f;
         TrySetHighscore();
+
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("GameOver");
     }
 
     public void SetLoseHouse(Vector2 _pos)
@@ -127,6 +145,11 @@ public class GameState : MonoBehaviour
     private void IncrementScore()
     {
         highscore++;
+
+        if (highscore == 1)
+        {
+            store.RevealStore();
+        }
 
         if (highscore == 10)
         {
@@ -156,8 +179,7 @@ public class GameState : MonoBehaviour
     {
         //Debug.Log("Haoneienri");
         placementManager.placementGrid.Expand();
-        camMovement.maxZoom *= 2f;
-        //camMovement.minZoom *= 0.5f;
+        camMovement.Expand();
 
         buttonRoad.SwitchTabRoad(false);
     }
@@ -178,12 +200,12 @@ public class GameState : MonoBehaviour
 
     private void TrySetHighscore()
     {
-        Debug.Log("TrySetHighscore " + highscore + " vs og: " + GetHighscore("HighScore"));
-        if (highscore > GetHighscore("HighScore"))
+        //Debug.Log("TrySetHighscore " + dayCounter + " vs og: " + GetSavedData("HighScore"));
+        if (dayCounter > GetSavedData("HighScore"))
         {
-            SetHighscore(highscore, "HighScore");
+            SetSavedData(dayCounter, "HighScore");
         }
-        SetHighscore(highscore, "CurrentScore");
+        SetSavedData(dayCounter, "CurrentScore");
     }
 
     public float GetTimeScaleToRestore()

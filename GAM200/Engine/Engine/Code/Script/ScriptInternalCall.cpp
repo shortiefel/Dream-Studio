@@ -71,6 +71,14 @@ namespace Engine {
 			SetGetViewportInternalFunc(fp);
 		}
 
+		void InitializeSavedData() {
+			InitializeSavedDataInternal();
+		}
+
+		void StoreSavedData() {
+			StoreSavedDataInternal();
+		}
+
 		void RegisterInternalCall() {
 			//Register Event callback
 			WindowResizeEvent::RegisterFunction(gameViewportCallBack);

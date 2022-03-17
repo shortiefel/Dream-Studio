@@ -4,8 +4,8 @@ public class CurrentScore : MonoBehaviour
 {
     public override void Start()
     {
-        GetComponent<Text>().text = GetHighscore("CurrentScore").ToString();
-        SetHighscore(0, "CurrentScore");
+        GetComponent<Text>().text = GetSavedData("CurrentScore").ToString();
+        SetSavedData(0, "CurrentScore");
     }
 
 }

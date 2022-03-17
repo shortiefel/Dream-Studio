@@ -33,6 +33,7 @@ namespace Engine {
 		void Destroy();
 
 		bool RayCast(const Ray& ray, RaycastHit* hit, std::uint32_t ignoreTarget);
+		bool RayCastGroup(const Ray& ray, RaycastHit(&rayCastHit)[10], int* count, std::uint32_t ignoreTarget);
 
 		void Stop();
 		void Update(float dt);

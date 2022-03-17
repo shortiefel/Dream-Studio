@@ -9,7 +9,7 @@ public class GoToMenu : MonoBehaviour
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if(Input.GetMouseButtonDown(MouseCode.Left))
         {
             SceneManager.LoadScene("MainMenu");
         }

@@ -31,11 +31,26 @@ public class MoneySystem : MonoBehaviour
 
     public override void Start()
     {
-        roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
-        erpManager = GameObject.Find("ERPManager").GetComponent<ERPManager>();
-        trafficLightManager = GameObject.Find("TrafficManager").GetComponent<TrafficLightManager>();
-        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
-        receipt = GameObject.Find("Receipt").GetComponent<Receipt>();
+        GameObject go = GameObject.Find("RoadManager");
+        if (go != null)
+            roadManager = go.GetComponent<RoadManager>();
+
+        GameObject go2 = GameObject.Find("ERPManager");
+        if (go2 != null)
+            erpManager = go2.GetComponent<ERPManager>();
+
+        GameObject go3 = GameObject.Find("TrafficManager");
+        if (go3 != null)
+            trafficLightManager = go3.GetComponent<TrafficLightManager>();
+
+        GameObject go4 = GameObject.Find("GameManager");
+        if (go4 != null)
+            gameState = go4.GetComponent<GameState>();
+
+        GameObject go5 = GameObject.Find("Receipt");
+        if (go5 != null)
+            receipt = go5.GetComponent<Receipt>();
+
         money = 1000;
         textComp = GetComponent<Text>();
         textComp.text = money.ToString();
@@ -123,8 +138,9 @@ public class MoneySystem : MonoBehaviour
         money -= erpCost;
         textComp.text = money.ToString();
         ++roadManager.erpManager.erpCount;
-        erpCost += (erpBuyCount * 10);
         ++erpBuyCount;
+        erpCost += (erpBuyCount * 10);
+       
     }
     public void SellErp()
     {
@@ -144,8 +160,9 @@ public class MoneySystem : MonoBehaviour
         money -= tlCost;
         textComp.text = money.ToString();
         ++roadManager.trafficLightManager.tlCount;
-        tlCost += (int)(tlBuyCount * 10);
         ++tlBuyCount;
+        tlCost += (int)(tlBuyCount * 10);
+       
     }
     public void SellTL()
     {
@@ -155,5 +172,6 @@ public class MoneySystem : MonoBehaviour
         textComp.text = money.ToString();
         --roadManager.trafficLightManager.tlCount;
     }
+
 }
 

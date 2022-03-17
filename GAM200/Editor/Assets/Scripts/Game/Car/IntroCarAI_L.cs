@@ -6,8 +6,6 @@ public class IntroCarAI_L : MonoBehaviour
 {
     private Vector2 startPosition;
 
-    private bool type;
-
     public override void Start()
     {
         //rb = GetComponent<Rigidbody2D>();

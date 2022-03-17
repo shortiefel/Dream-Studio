@@ -12,7 +12,6 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     public Vector2Int RoadPosition { get; set; }
 
     GameState gameState;
-    //AIDirector aiDirector;
 
     Animation animation;
     StructureModel structureModel;
@@ -27,10 +26,12 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     public BuildingType buildingType;
 
+    private float pathTimer;
+
     public override void Start()
     {
+
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
-        //aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
         structureModel = GetComponent<StructureModel>();
 
         transform = GetComponent<Transform>();
@@ -55,7 +56,6 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             SetToSpawn();
             notificationSound = GetComponent<AudioSource>();
             destroySound = notifiSymbol.GetComponent<AudioSource>();
-            //aiDirector.SpawnACar();
 
             //Have to be texture names without the extension
             switch (texure.RetrieveTexture())
@@ -83,9 +83,9 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             buildingType = BuildingType.House;
         }
 
-        //Debug.Log("This is " + buildingType + " -------------------------");
-
         aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
+
+        pathTimer = 0f;
     }
 
     public override void Update()
@@ -99,7 +99,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 //gameState.SetLoseHouse(transform.position);
 
                 //Lose points instead of lose game
-                gameState.MissedDestinationTime();
+                if (gameState != null)
+                    gameState.MissedDestinationTime();
             }
 
             if (notification.AppearCheck())
@@ -128,8 +129,6 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             if (notification.timerShow == true)
             {
                 SetToSpawn2();
-                //notification.ResetTimer();
-                //Enable<Transform>(notifiSymbol.transform);
             }
             if (notification.shouldShow == true)
             {
@@ -139,6 +138,13 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 notification.ResetTimer();
                 Enable<Transform>(notifiSymbol.transform);
                 
+            }
+
+            pathTimer += Time.deltaTime;
+            if (pathTimer >= aiDirector.pathTimerMax)
+            {
+                aiDirector.GetNewPathList(new Vector2Int(transform.position), entityId, true);
+                pathTimer = 0f;
             }
 
             if (spawnBool && aiDirector != null)
@@ -211,7 +217,8 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 
             }
             //notification.transform.
-            gameState.ReachedDestination();
+            if (gameState != null)
+                gameState.ReachedDestination();
             notification.ResetTimer();
         }
     }

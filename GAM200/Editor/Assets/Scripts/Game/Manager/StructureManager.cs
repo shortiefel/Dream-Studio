@@ -38,6 +38,8 @@ public class StructureManager : MonoBehaviour
 
     public Dictionary<Vector2Int, CarSpawner> houseList;
     public Dictionary<Vector2Int, StartPositionSet> destinationList;
+
+    private float pathTimerMax;
    
     //private void Start()
     public override void Start()
@@ -69,6 +71,8 @@ public class StructureManager : MonoBehaviour
 
         houseList = new Dictionary<Vector2Int, CarSpawner>();
         destinationList = new Dictionary<Vector2Int, StartPositionSet>();
+
+        pathTimerMax = 15f;
     }
 
     //private IEnumerator waitABit(Vector2Int newPos)

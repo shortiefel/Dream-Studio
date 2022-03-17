@@ -43,11 +43,11 @@ Technology is prohibited.
 namespace Engine {
 	std::unordered_map<Entity_id, std::vector<Entity>> overlapMap;
 
-	void AddOverlap(Entity_id lhs, bool lhsTrigger, Entity_id rhs, bool rhsTrigger) {
+	bool AddOverlap(Entity_id lhs, bool lhsTrigger, Entity_id rhs, bool rhsTrigger) {
 		PROFILER_START("Collision");
 
 		//if self is collision and other is trigger, OnCollisionEnter is not called
-		if (!lhsTrigger && rhsTrigger) return;
+		if (!lhsTrigger && rhsTrigger) return false;
 
 		const auto& iter = overlapMap.find(lhs);
 		if (iter != overlapMap.end()) {
@@ -62,7 +62,7 @@ namespace Engine {
 
 					OverlapColliderEvent event(lhs, rhs, type);
 					EventDispatcher::SendEvent(event);
-					return;
+					return true;
 				}
 			}
 		}
@@ -76,6 +76,8 @@ namespace Engine {
 
 		OverlapColliderEvent event(lhs, rhs, type);
 		EventDispatcher::SendEvent(event);
+
+		return true;
 	}
 
 	void CollisionSystem::Update(float) {
@@ -109,7 +111,8 @@ namespace Engine {
 				const RigidBodyComponent* rb2 = dreamECSGame->GetComponentPTR<RigidBodyComponent>(entity_id2);
 				bool ent1IsMoveable = (rb1 != nullptr) && rb1->isActive,
 					ent2IsMoveable = (rb2 != nullptr) && rb2->isActive;
-				if (!ent1IsMoveable && !ent2IsMoveable) continue;
+
+				
 				
 				TransformComponent* transform2 = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id2);
 				if (transform2 == nullptr || !transform2->isActive) continue;
@@ -120,15 +123,19 @@ namespace Engine {
 				collider2.offset_position += Math::vec2{ transform2->position };
 				collider2.offset_scale *= transform2->scale;
 				collider2.angle += transform2->angle;
+
+				//If one of it is trigger then rigidbody is not needed
+				if (!(collider1.isTrigger) && !(collider2.isTrigger))
+					if (!ent1IsMoveable && !ent2IsMoveable) continue;
 				
-				//Direction from collider2 towards collider1
+				//Direction from collider2 towards collider1 (Set by isColliding
 				Math::vec2 dir = Math::vec2{};
 
 				if (CollisionImplementation::isColliding(dir, collider1, ent1IsMoveable,
 					collider2, ent2IsMoveable)) {
 					//std::cout << collider1.offset_position << " and " << collider2.offset_position << " with result collided "<< entity_id1 << " vs " << entity_id2 << "\n";
-					AddOverlap(entity_id1, collider1.isTrigger, entity_id2, collider2.isTrigger);
-					AddOverlap(entity_id2, collider2.isTrigger, entity_id1, collider1.isTrigger);
+					if (!AddOverlap(entity_id1, collider1.isTrigger, entity_id2, collider2.isTrigger)) continue;
+					if (!AddOverlap(entity_id2, collider2.isTrigger, entity_id1, collider1.isTrigger)) continue;
 
 					if (collider1.isTrigger || collider2.isTrigger) {
 						LOG_INFO("Trigger");
@@ -216,6 +223,44 @@ namespace Engine {
 			}
 		}
 
+		return false;
+	}
+
+	bool CollisionSystem::RayCastGroup(const Ray& ray, RaycastHit(&rayCastHit)[10], int* count, std::uint32_t ignoreTarget) {
+		PROFILER_START("Collision");
+
+		*count = 0;
+		auto& colliderArray = dreamECSGame->GetComponentArrayData<ColliderComponent>();
+		for (const auto& col : colliderArray) {
+			const Entity_id& entity_id = col.GetEntityId();
+			if (entity_id == ignoreTarget) continue;
+			if (EntityId_Check(entity_id)) break;
+			if (!col.isActive) continue;
+
+			auto& transform = dreamECSGame->GetComponent<TransformComponent>(entity_id);
+			if (!transform.isActive) continue;
+
+			RaycastHit hitTarget;
+			if (CollisionImplementation::RayCast_Internal(ray, transform, col, &hitTarget)) {
+				RaycastHit& rch = rayCastHit[*count];
+				rch = hitTarget;
+				rch.entity_id = entity_id;
+				++(*count);
+				if ((*count) == 10) break;
+
+			}
+		}
+
+		//if (*count > 0) {
+		//	std::cout << "hit " << *count << " ";
+		//	for (int i = 0; i < *count; i++) {
+		//		std::cout << rayCastHit[i].entity_id << " ";
+		//	}
+		//	std::cout << "\n-----------------------------------------------\n\n";
+		//}
+
+
+		if ((*count) > 0) return true;
 		return false;
 	}
 

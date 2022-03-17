@@ -16,6 +16,9 @@ public class TrafficLightManager : MonoBehaviour
     Transform TLInfoText;
     Transform TLInfo;
 
+    float timer;
+    bool addToTime;
+
     public override void Start()
     {
         trafficLights = new Dictionary<Vector2Int, TrafficLight>();
@@ -34,11 +37,32 @@ public class TrafficLightManager : MonoBehaviour
 
         Disable<Transform>(TLInfoText);
         Disable<Transform>(TLInfo);
+
+        timer = 0f;
+        addToTime = false;
     }
 
     public int trafficlightTaxCount()
     {
         return trafficLights.Count;
+    }
+
+    public override void FixedUpdate()
+    {
+        if (addToTime == true)
+        {
+            timer += Time.fixedDeltaTime;
+
+            if (timer > 2f)
+            {
+                Disable<Transform>(TLInfoText);
+                Disable<Transform>(TLInfo);
+
+                timer = 0f;
+                addToTime = false;
+            }
+        }
+           
     }
 
     //public override void Update()
@@ -100,7 +124,9 @@ public class TrafficLightManager : MonoBehaviour
             //lrState = false;
         }
 
-        //Vector2Int carPos = new Vector2Int(_carPos);
+        
+        //if (Input.GetKey(KeyCode.B)) return true;
+        //return false;
 
         if (!trafficLights.ContainsKey(tlPos)) return true;
 
@@ -109,7 +135,8 @@ public class TrafficLightManager : MonoBehaviour
         //if (Input.GetKey(KeyCode.B))
         //    Debug.Log("TLM" + tem + " " + trafficLights[tlPos].entityId);
         //Debug.Log("ds " + ds + "  tem " + tem);
-        return ds == tem || tem == DirectionState.None;
+        return ds == tem;
+
         //return ds == trafficLights[tlPos].GetTrafficLightState();
 
         //bool cState = GetComponent<TrafficLight>(trafficLights[tlPos].entityId).state;
@@ -139,22 +166,23 @@ public class TrafficLightManager : MonoBehaviour
 
         return tlPos;
     }
-
-    public bool IsTrafficLight(Vector2Int posToCheck)
+    public bool IsTrafficLight(Vector2Int targetPos, uint entId = 0)
     {
-        if (trafficLights.ContainsKey(posToCheck)) return true;
-        return false;
+        if (entId == 0) return trafficLights.ContainsKey(targetPos);
+        if (!trafficLights.ContainsKey(targetPos)) return false;
+        return trafficLights[targetPos].entityId == entId;
     }
 
     public bool RequestPlacingTrafficLight(Vector2Int position)
     {
-        Disable<Transform>(TLInfoText);
-        Disable<Transform>(TLInfo);
 
         if (tlCount <= 0)
         {
             Enable<Transform>(TLInfoText);
             Enable<Transform>(TLInfo);
+
+            addToTime = true;
+
             return false;
         }
 
@@ -164,25 +192,27 @@ public class TrafficLightManager : MonoBehaviour
             return false;
 
         --tlCount;
-        Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f));
+
+        Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f), 3);
         return true;
     }
 
     public bool RequestRemovingTrafficLight(Vector2Int position)
     {
-        Disable<Transform>(TLInfoText);
-        Disable<Transform>(TLInfo);
-
         if (!trafficLights.ContainsKey(position))
             return false;
 
         ++tlCount;
-        moneySystem.SellTL();
         Destroy(trafficLights[position].entityId);
         trafficLights.Remove(position);
         return true;
 
     }
+    //public override void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.F))
+    //        ++tlCount;
+    //}
 }
 
 

@@ -36,7 +36,7 @@ namespace Engine {
 	void GetAllAdjacentCellTypes_Engine(MonoArray* monoArray, int x, int y);
 
 	int SetRoad_Engine(MonoArray* monoArray, int size);
-	int UnsetRoad_Engine(Math::ivec2 pos);
+	int UnsetRoad_Engine(Math::ivec2 pos, MonoArray* monoArray);
 
 	void RevertGrid_Engine();
 	void FinalizeGrid_Engine();
@@ -80,12 +80,12 @@ namespace Engine {
 	}
 
 	void CreateGrid_Engine(int width, int height) {
-		std::cout << " Calling first this \n";
+		//std::cout << " Calling first this \n";
 		Game::Grid::GetInstance().CreateGrid(width, height);
 	}
 
 	void ResizeGrid_Engine(int newWidth, int newHeight) {
-		std::cout << " Calling this \n";
+		//std::cout << " Calling this \n";
 		Game::Grid::GetInstance().ResizeGrid(newWidth, newHeight);
 	}
 
@@ -159,8 +159,13 @@ namespace Engine {
 		return Game::Grid::GetInstance().SetRoads(posArr, size);
 	}
 
-	int UnsetRoad_Engine(Math::ivec2 pos) {
-		return Game::Grid::GetInstance().UnsetRoads(pos);
+	int UnsetRoad_Engine(Math::ivec2 pos, MonoArray* monoArray) {
+		std::vector<Math::ivec2> arr;
+		int loop = Game::Grid::GetInstance().UnsetRoads(pos, &arr);
+		for (int i = 0; i < loop; i++) {
+			mono_array_set(monoArray, Math::ivec2, i, (arr[i]));
+		}
+		return loop;
 	}
 
 	void RevertGrid_Engine() {
@@ -192,7 +197,7 @@ namespace Engine {
 		Game::Grid::GetInstance().AStarSearch(arr, count, housePos, destPos, roadCount);
 		int loop = *count;
 		for (int i = 0; i < loop; i++) {
-			std::cout << arr[i] << " before\n";
+			//std::cout << arr[i] << " before\n";
 			mono_array_set(monoArray, Math::vec2, i, (arr[i]));
 		}
 	}

@@ -109,7 +109,7 @@ namespace Engine {
 			bool IsSurrounded(Math::ivec2 pos, int type);
 
 			int SetRoads(Math::ivec2 posArr[MAX_LINE], int size);
-			int UnsetRoads(Math::ivec2 pos);
+			int UnsetRoads(Math::ivec2 pos, std::vector<Math::ivec2>* roadRemoved);
 
 			void RevertGrid();
 			void FinalizeGrid();
@@ -128,7 +128,7 @@ namespace Engine {
 			Math::ivec2 mapSize{};
 			Math::ivec2 offset{};
 			Cell** grid = nullptr;
-			Cell** backupGrid = nullptr;
+			//Cell** backupGrid = nullptr;
 
 			std::list<Math::ivec2> roadList;
 			std::list<Math::ivec2> houseStructure;

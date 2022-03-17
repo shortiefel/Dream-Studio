@@ -60,8 +60,6 @@ public class ButtonStoreClick : MonoBehaviour
     {
         switch (st)
         {
-
-
             case StoreButtonType.RoadBuy:
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
@@ -97,12 +95,13 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                         //moneySystem.BuyErp();
-                        CostERP.text = moneySystem.erpCost.ToString();
                    
                         if(moneySystem.GetMoney() >= moneySystem.GetErpCost())
                         {
                             moneySystem.BuyErp();
                         }
+                        CostERP.text = moneySystem.erpCost.ToString();
+
                         //++roadManager.erpManager.erpCount;
                         //ERPNo.text = ERPText.ToString();
                     }
@@ -128,13 +127,14 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                         //moneySystem.BuyTrafficLight();
-                        CostTL.text = moneySystem.tlCost.ToString();
 
                         if (moneySystem.GetMoney() >= moneySystem.GetTLCost())
                         {
                             moneySystem.BuyTrafficLight();
 
                         }
+                        CostTL.text = moneySystem.tlCost.ToString();
+
                         //++roadManager.trafficLightManager.tlCount;
                         //TrafficNo.text = TrafficText.ToString();
                     }

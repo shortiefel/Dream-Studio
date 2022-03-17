@@ -86,7 +86,7 @@ public class ButtonStoreClick : MonoBehaviour
                         //moneySystem.BuyRoad();
                         CostRoad.text = moneySystem.roadCost.ToString();
 
-                        if (moneySystem.GetMoney() >= 10)
+                        if (moneySystem.GetMoney() >= 20)
                         {
                             moneySystem.BuyRoad();
                         }

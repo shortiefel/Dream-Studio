@@ -8,7 +8,7 @@ public class GameState : MonoBehaviour
     public bool shouldEnd;
 
     //Text highscoreText;
-
+    Text dayText;
     CameraMovement camMovement;
     ButtonRoad buttonRoad;
 
@@ -56,6 +56,9 @@ public class GameState : MonoBehaviour
             store = buttonStoreGo.GetComponent<ButtonStore>();
 
         //previousTimeScale = 1f;
+        dayCounter = 1;
+        dayText = GameObject.Find("DayClock").GetComponent<Text>();
+        dayText.text = "Day " +dayCounter.ToString();
 
         dayTimer = 0f;
         dayCycle = 120f;
@@ -83,6 +86,7 @@ public class GameState : MonoBehaviour
                 moneySystem.TaxMoney();
                 dayTimer = 0f;
                 dayCounter++;
+                dayText.text = "Day " + dayCounter.ToString();
             }
         }
 

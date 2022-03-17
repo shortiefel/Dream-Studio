@@ -51,11 +51,11 @@ public class MoneySystem : MonoBehaviour
         if (go5 != null)
             receipt = go5.GetComponent<Receipt>();
 
-        money = 1000;
+        money = 500;
         textComp = GetComponent<Text>();
         textComp.text = money.ToString();
 
-        roadCost = 10;
+        roadCost = 20;
         tlCost = 50;
         erpCost = 50;
 

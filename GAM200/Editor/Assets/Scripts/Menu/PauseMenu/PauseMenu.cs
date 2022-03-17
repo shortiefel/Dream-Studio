@@ -56,8 +56,14 @@ public class PauseMenu : MonoBehaviour
 
     CombinedUI combinedUI;
 
+    Transform moneyText;
+
     public override void Start()
     {
+        GameObject go3 = GameObject.Find("MoneyText");
+        if (go3 != null)
+            moneyText = go3.GetComponent<Transform>();
+
         texture = GetComponent<UI>();
         texture.color = new Color(0f, 0f, 0f);
 
@@ -171,6 +177,7 @@ public class PauseMenu : MonoBehaviour
             Enable<Transform>(pauseQuitBtn.transform);
 
             Enable<Transform>(pauseQuit.transform);
+            Disable<Transform>(moneyText);
             //Application.SetPause(true);
             //Time.timeScale = 0f;
 
@@ -186,6 +193,7 @@ public class PauseMenu : MonoBehaviour
         else
         {
             Console.WriteLine("Unpausing now");
+            Enable<Transform>(moneyText);
             Disable<Transform>(pauseBG.transform);
             Disable<Transform>(HowToBG.transform);
 

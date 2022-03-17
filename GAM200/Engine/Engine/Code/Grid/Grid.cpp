@@ -541,25 +541,32 @@ namespace Engine {
             CellType cellType = (CellType)type;
             int xVal = pos.x - offset.x;
             int yVal = pos.y - offset.y;
+            //std::cout << xVal << " " << yVal <<  "     " << mapSize.x << " " << mapSize.y << "\n";
             if (xVal > 0) {
                 const Cell& cellL = *(*(grid + xVal - 1) + yVal);
+                //std::cout << "Left " << (int)cellL.ct << "\n";
                 if (cellL.ct == CellType::SpecialStructure || cellL.ct == CellType::Structure) return true;
             }
 
-            if (xVal < offset.x) {
+            if (xVal < mapSize.x - 1) {
                 const Cell& cellR = *(*(grid + xVal + 1) + yVal);
+                //std::cout << "Right " << (int)cellR.ct << "\n";
                 if (cellR.ct == CellType::SpecialStructure || cellR.ct == CellType::Structure) return true;
             }
 
-            if (yVal < offset.y) {
+            if (yVal < mapSize.y - 1) {
                 const Cell& cellU = *(*(grid + xVal) + yVal + 1);
+                //std::cout << "Up " << (int)cellU.ct << "\n";
                 if (cellU.ct == CellType::SpecialStructure || cellU.ct == CellType::Structure) return true;
             }
 
             if (yVal > 0) {
                 const Cell& cellD = *(*(grid + xVal) + yVal - 1);
+                //std::cout << "Down " << (int)cellD.ct << "\n";
                 if (cellD.ct == CellType::SpecialStructure || cellD.ct == CellType::Structure) return true;
             }
+
+            //std::cout << "------------------------------------\n";
 
             //if (cellType == CellType::SpecialStructure) {
             //    //C = Math::ivec2 pos (parameter)

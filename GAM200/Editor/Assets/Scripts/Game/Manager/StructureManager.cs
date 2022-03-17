@@ -150,6 +150,12 @@ public class StructureManager : MonoBehaviour
             return false;
         }
 
+        if (placementManager.placementGrid.IsSurrounded(position, cellType) == true)
+        {
+            Debug.Log("This surrounding already has buildings");
+            return false;
+        }
+
         if (cellType == CellType.SpecialStructure)
         {
             Vector2Int rightPos = new Vector2Int(position.x + 1, position.y);
@@ -171,13 +177,18 @@ public class StructureManager : MonoBehaviour
                 Debug.Log("This position is not EMPTY");
                 return false;
             }
+
+
+            if (placementManager.placementGrid.IsSurrounded(rightPos, cellType) == true ||
+               placementManager.placementGrid.IsSurrounded(upPos, cellType) == true ||
+               placementManager.placementGrid.IsSurrounded(rightUpPos, cellType) == true)
+            {
+                Debug.Log("This surrounding already has buildings");
+                return false;
+            }
         }
 
-        if (placementManager.placementGrid.IsSurrounded(position, cellType) == true)
-        {
-            Debug.Log("This surrounding already has buildings");
-            return false;
-        }
+       
 
 
         //if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0)

@@ -541,46 +541,54 @@ namespace Engine {
             CellType cellType = (CellType)type;
             int xVal = pos.x - offset.x;
             int yVal = pos.y - offset.y;
-            const Cell& cellL = *(*(grid + xVal - 1) + yVal);
-            if (cellL.ct == CellType::SpecialStructure || cellL.ct == CellType::Structure) return true;
-
-            const Cell& cellR = *(*(grid + xVal + 1) + yVal);
-            if (cellR.ct == CellType::SpecialStructure || cellR.ct == CellType::Structure) return true;
-
-            const Cell& cellU = *(*(grid + xVal) + yVal + 1);
-            if (cellU.ct == CellType::SpecialStructure || cellU.ct == CellType::Structure) return true;
-
-            const Cell& cellD = *(*(grid + xVal) + yVal - 1);
-            if (cellD.ct == CellType::SpecialStructure || cellD.ct == CellType::Structure) return true;
-
-            if (cellType == CellType::SpecialStructure) {
-                //C = Math::ivec2 pos (parameter)
-                //() letter inside is one tile
-                //(   ) ( UU) (RUU) (   ) 
-                //( LU) (  U) ( RU) (RRU)
-                //(  L) (  C) (  R) ( RR)
-                //(   ) (  D) ( RD) (   )
-                //Original checks L, R, U, D but actual tile size is 2x2 if its Special structure
-                //So need to check LU, UU, RUU, RU, RRU, RR, RD
-                const Cell& cellLU = *(*(grid + xVal - 1) + yVal + 1);
-                if (cellLU.ct == CellType::SpecialStructure || cellLU.ct == CellType::Structure) return true;
-                if (yVal + 2 < offset.y + mapSize.y) {
-                    const Cell& cellUU = *(*(grid + xVal) + yVal + 2);
-                    if (cellUU.ct == CellType::SpecialStructure || cellUU.ct == CellType::Structure) return true;
-                    const Cell& cellRUU = *(*(grid + xVal + 1) + yVal + 2);
-                    if (cellRUU.ct == CellType::SpecialStructure || cellRUU.ct == CellType::Structure) return true;
-                }
-                const Cell& cellRU = *(*(grid + xVal + 1) + yVal + 1);
-                if (cellRU.ct == CellType::SpecialStructure || cellRU.ct == CellType::Structure) return true;
-                if (xVal + 2 < offset.x + mapSize.x) {
-                    const Cell& cellRRU = *(*(grid + xVal + 2) + yVal + 1);
-                    if (cellRRU.ct == CellType::SpecialStructure || cellRRU.ct == CellType::Structure) return true;
-                    const Cell& cellRR = *(*(grid + xVal + 2) + yVal);
-                    if (cellRR.ct == CellType::SpecialStructure || cellRR.ct == CellType::Structure) return true;
-                }
-                const Cell& cellRD = *(*(grid + xVal + 1) + yVal - 1);
-                if (cellRD.ct == CellType::SpecialStructure || cellRD.ct == CellType::Structure) return true;
+            if (xVal > 0) {
+                const Cell& cellL = *(*(grid + xVal - 1) + yVal);
+                if (cellL.ct == CellType::SpecialStructure || cellL.ct == CellType::Structure) return true;
             }
+
+            if (xVal < offset.x) {
+                const Cell& cellR = *(*(grid + xVal + 1) + yVal);
+                if (cellR.ct == CellType::SpecialStructure || cellR.ct == CellType::Structure) return true;
+            }
+
+            if (yVal < offset.y) {
+                const Cell& cellU = *(*(grid + xVal) + yVal + 1);
+                if (cellU.ct == CellType::SpecialStructure || cellU.ct == CellType::Structure) return true;
+            }
+
+            if (yVal > 0) {
+                const Cell& cellD = *(*(grid + xVal) + yVal - 1);
+                if (cellD.ct == CellType::SpecialStructure || cellD.ct == CellType::Structure) return true;
+            }
+
+            //if (cellType == CellType::SpecialStructure) {
+            //    //C = Math::ivec2 pos (parameter)
+            //    //() letter inside is one tile
+            //    //(   ) ( UU) (RUU) (   ) 
+            //    //( LU) (  U) ( RU) (RRU)
+            //    //(  L) (  C) (  R) ( RR)
+            //    //(   ) (  D) ( RD) (   )
+            //    //Original checks L, R, U, D but actual tile size is 2x2 if its Special structure
+            //    //So need to check LU, UU, RUU, RU, RRU, RR, RD
+            //    const Cell& cellLU = *(*(grid + xVal - 1) + yVal + 1);
+            //    if (cellLU.ct == CellType::SpecialStructure || cellLU.ct == CellType::Structure) return true;
+            //    if (yVal + 2 < offset.y + mapSize.y) {
+            //        const Cell& cellUU = *(*(grid + xVal) + yVal + 2);
+            //        if (cellUU.ct == CellType::SpecialStructure || cellUU.ct == CellType::Structure) return true;
+            //        const Cell& cellRUU = *(*(grid + xVal + 1) + yVal + 2);
+            //        if (cellRUU.ct == CellType::SpecialStructure || cellRUU.ct == CellType::Structure) return true;
+            //    }
+            //    const Cell& cellRU = *(*(grid + xVal + 1) + yVal + 1);
+            //    if (cellRU.ct == CellType::SpecialStructure || cellRU.ct == CellType::Structure) return true;
+            //    if (xVal + 2 < offset.x + mapSize.x) {
+            //        const Cell& cellRRU = *(*(grid + xVal + 2) + yVal + 1);
+            //        if (cellRRU.ct == CellType::SpecialStructure || cellRRU.ct == CellType::Structure) return true;
+            //        const Cell& cellRR = *(*(grid + xVal + 2) + yVal);
+            //        if (cellRR.ct == CellType::SpecialStructure || cellRR.ct == CellType::Structure) return true;
+            //    }
+            //    const Cell& cellRD = *(*(grid + xVal + 1) + yVal - 1);
+            //    if (cellRD.ct == CellType::SpecialStructure || cellRD.ct == CellType::Structure) return true;
+            //}
 
             return false;
         }

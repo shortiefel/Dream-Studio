@@ -105,6 +105,8 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(timerButton);
                     Disable<Transform>(storeButton);
                     Disable<Transform>(displayArrow);
+
+                    Disable<Transform>(dayClock);
                     break;
                 }
         }

@@ -537,8 +537,8 @@ namespace Engine {
         }
 
         //Return true if position is surrounded by at least one building
-        bool Grid::IsSurrounded(Math::ivec2 pos, int type) {
-            CellType cellType = (CellType)type;
+        bool Grid::IsSurrounded(Math::ivec2 pos, int) {
+            //CellType cellType = (CellType)type;
             int xVal = pos.x - offset.x;
             int yVal = pos.y - offset.y;
             //std::cout << xVal << " " << yVal <<  "     " << mapSize.x << " " << mapSize.y << "\n";

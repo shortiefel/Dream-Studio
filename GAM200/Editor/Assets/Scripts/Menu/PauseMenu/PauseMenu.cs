@@ -22,6 +22,8 @@ public class PauseMenu : MonoBehaviour
     GameObject quitYes;
     GameObject quitNo;
 
+    Transform settingBtn;
+
     //Vector2 resumePosition;
     //Vector2 resumeTextPosition;
     //Vector2 htpPosition;
@@ -39,6 +41,7 @@ public class PauseMenu : MonoBehaviour
 
     Transform displayArrow;
     Transform displayArrowWhite;
+
 
     //Transform timerButton;
     //Transform storeButton;
@@ -97,6 +100,9 @@ public class PauseMenu : MonoBehaviour
         areYouSure = GameObject.Find("AreYouSureText");
         quitYes = GameObject.Find("YesText");
         quitNo = GameObject.Find("NoText");
+
+
+        settingBtn = GameObject.Find("settingBtn").GetComponent<Transform>();
 
         //outsidePosition = new Vector2(-200, 0);
 
@@ -180,6 +186,8 @@ public class PauseMenu : MonoBehaviour
             Enable<Transform>(pauseQuitBtn.transform);
 
             Enable<Transform>(pauseQuit.transform);
+
+            Enable<Transform>(settingBtn);
             //Disable<Transform>(moneyText);
             //Disable<Transform>(coinSymbol);
             //Application.SetPause(true);
@@ -217,6 +225,8 @@ public class PauseMenu : MonoBehaviour
             Disable<Transform>(areYouSure.transform);
             Disable<Transform>(quitYes.transform);
             Disable<Transform>(quitNo.transform);
+
+            Disable<Transform>(settingBtn);
 
             //Application.SetPause(false);
 

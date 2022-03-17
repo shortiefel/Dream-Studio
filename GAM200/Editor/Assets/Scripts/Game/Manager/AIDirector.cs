@@ -20,6 +20,9 @@ public class AIDirector : MonoBehaviour
     //The number of lesser car that allow the house to be chosen
     int maxCarSpawn;
 
+    //The timer to check for new path (periodically check if shorter path exist)
+    public float pathTimerMax;
+
     public override void Start()
     {
         maxTileAway = 4;
@@ -35,6 +38,8 @@ public class AIDirector : MonoBehaviour
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
         structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
+
+        pathTimerMax = 17f;
     }
     //public void SpawnACar()
     //{
@@ -64,92 +69,117 @@ public class AIDirector : MonoBehaviour
     //    //}
     //}
 
-    private bool GetNewPathList(Vector2Int endPos, uint entId)
+    public bool GetNewPathList(Vector2Int endPos, uint entId, bool reset = false)
     {
-        //foreach(var i in structureManager.destinationList)
+
+        //Dictionary<Vector2Int, int> decisionContainer = new Dictionary<Vector2Int, int>();
+        //int pc = structureManager.destinationList[endPos].pathCount;
+        //Vector2Int ogStart = structureManager.destinationList[endPos].startPos;
+        //int chosenHouseRequestCount = 999;
+        //if (structureManager.houseList.ContainsKey(ogStart))
         //{
-        //    Debug.Log(i.Key);
+        //    chosenHouseRequestCount = structureManager.houseList[ogStart].requestLine.Count;
+        //
+        //    //Reset pc to recalulate for a nearer path when too maxCarSpawn amount of car in queue
+        //    if (chosenHouseRequestCount > maxCarSpawn) pc = 0;
         //}
-        //Debug.Log("End-----------------");
-        ////Debug.Log("Get new ");
-        //Debug.Log(endPos);
-        //Debug.Log("End22222222222222222-----------------");
-        Dictionary<Vector2Int, int> decisionContainer = new Dictionary<Vector2Int, int>();
+        //
+        //if (pc == 0)
+        //{
+        //    foreach (var startHouse in structureManager.houseList)
+        //    {
+        //       //Debug.Log("StartHouse " + startHouse.Value.requestLine.Count);
+        //
+        //        if (pc != 0 && startHouse.Key == structureManager.destinationList[endPos].startPos) continue;
+        //
+        //        int roadCount;
+        //        List<Vector2> list = placementManager.GetPathBetween(startHouse.Key, new Vector2Int(endPos), out roadCount);
+        //        if (list.Count == 0) continue;
+        //
+        //        //The algorithm example:
+        //        //low ----------------A----pc----A------ high (list.Count/pc)
+        //        //Case 1: Anything to the left of the first A will be chosen as the new path
+        //        //Case 2: Anything between the two A will be decided based on the queue size
+        //        //Case 3: Anything to the right of 2nd A will not be considered
+        //
+        //        
+        //        if (pc != 0)
+        //        {
+        //            //Case 3
+        //            //Debug.Log(roadCount + " another " + pc + " plus " + maxTileAway);
+        //            if (roadCount > pc + maxTileAway) continue;
+        //            //if (list.Count > pc) continue;
+        //
+        //            //Case 2
+        //            if ((roadCount >= pc - maxTileAway) && startHouse.Value.requestLine.Count >= maxCarSpawn + chosenHouseRequestCount) continue;
+        //            //Debug.Log(startHouse.Value.requestLine.Count + " vs " + chosenHouseRequestCount + " plus " + maxCarSpawn);
+        //        }
+        //        
+        //        
+        //        pc = roadCount;
+        //        
+        //        StartPositionSet sps = new StartPositionSet(startHouse.Key, pc, entId);
+        //        structureManager.destinationList[endPos] = sps;
+        //        chosenHouseRequestCount = startHouse.Value.requestLine.Count;
+        //        //Debug.Log("Chosen count " + chosenHouseRequestCount);
+        //       
+        //
+        //
+        //
+        //
+        //        ////if (list.Count < pc || list.Count < pc + maxTileAway || pc == 0)
+        //        //if (list.Count < pc || pc == 0)
+        //        //{
+        //        //    //If a house that is about maxTileAway tiles away, has maxCarSpawn lesser
+        //        //    //if (pc - list.Count < maxTileAway)
+        //        //    //{
+        //        //    //    if (startHouse.Value.requestLine.Count >= maxCarSpawn + chosenHouseRequestCount)
+        //        //    //    {
+        //        //    //        continue;
+        //        //    //    }
+        //        //    //}
+        //        //    //Debug.Log(list.Count + " vs old: " + pc);
+        //        //    pc = list.Count;
+        //        //    //structureManager.destinationList[endPos].SetPath(i.Key, pc, list);
+        //        //    StartPositionSet sps = new StartPositionSet(startHouse.Key, pc);
+        //        //    structureManager.destinationList[endPos] = sps;
+        //        //    chosenHouseRequestCount = startHouse.Value.requestLine.Count;
+        //        //    //Console.WriteLine("Setting the path " + list.Count + " " + structureManager.destinationList[endPos].pathCount );
+        //        //}
+        //
+        //
+        //    }
+        //}
+        //
+        //if (pc == 0) return false;
+        //return true;
+
+
+        //-----------------------------------------------------------------------
         int pc = structureManager.destinationList[endPos].pathCount;
-        Vector2Int ogStart = structureManager.destinationList[endPos].startPos;
-        int chosenHouseRequestCount = 999;
-        if (structureManager.houseList.ContainsKey(ogStart))
-        {
-            chosenHouseRequestCount = structureManager.houseList[ogStart].requestLine.Count;
-
-            //Reset pc to recalulate for a nearer path when too maxCarSpawn amount of car in queue
-            if (chosenHouseRequestCount > maxCarSpawn) pc = 0;
-        }
-
-        if (pc == 0)
+        if (pc == 0 || reset)
         {
             foreach (var startHouse in structureManager.houseList)
             {
-               //Debug.Log("StartHouse " + startHouse.Value.requestLine.Count);
-
                 if (pc != 0 && startHouse.Key == structureManager.destinationList[endPos].startPos) continue;
 
-                int roadCount;
-                List<Vector2> list = placementManager.GetPathBetween(startHouse.Key, new Vector2Int(endPos), out roadCount);
+                int roadNum;
+                List<Vector2> list = placementManager.GetPathBetween(startHouse.Key, new Vector2Int(endPos), out roadNum);
                 if (list.Count == 0) continue;
 
-                //The algorithm example:
-                //low ----------------A----pc----A------ high (list.Count/pc)
-                //Case 1: Anything to the left of the first A will be chosen as the new path
-                //Case 2: Anything between the two A will be decided based on the queue size
-                //Case 3: Anything to the right of 2nd A will not be considered
-
-                
-                if (pc != 0)
+                if (list.Count < pc || pc == 0)
                 {
-                    //Case 3
-                    //Debug.Log(roadCount + " another " + pc + " plus " + maxTileAway);
-                    if (roadCount > pc + maxTileAway) continue;
-                    //if (list.Count > pc) continue;
+                    pc = list.Count;
+                    //structureManager.destinationList[endPos].SetPath(i.Key, pc, list);
 
-                    //Case 2
-                    if ((roadCount >= pc - maxTileAway) && startHouse.Value.requestLine.Count >= maxCarSpawn + chosenHouseRequestCount) continue;
-                    //Debug.Log(startHouse.Value.requestLine.Count + " vs " + chosenHouseRequestCount + " plus " + maxCarSpawn);
+                    StartPositionSet sps = new StartPositionSet(startHouse.Key, pc, entId);
+
+                    structureManager.destinationList[endPos] = sps;
+                    //Console.WriteLine("Setting the path " + list.Count + " " + structureManager.destinationList[endPos].pathCount );
+
                 }
-                
-                
-                pc = roadCount;
-                
-                StartPositionSet sps = new StartPositionSet(startHouse.Key, pc, entId);
-                structureManager.destinationList[endPos] = sps;
-                chosenHouseRequestCount = startHouse.Value.requestLine.Count;
-                //Debug.Log("Chosen count " + chosenHouseRequestCount);
-               
 
-
-
-
-                ////if (list.Count < pc || list.Count < pc + maxTileAway || pc == 0)
-                //if (list.Count < pc || pc == 0)
-                //{
-                //    //If a house that is about maxTileAway tiles away, has maxCarSpawn lesser
-                //    //if (pc - list.Count < maxTileAway)
-                //    //{
-                //    //    if (startHouse.Value.requestLine.Count >= maxCarSpawn + chosenHouseRequestCount)
-                //    //    {
-                //    //        continue;
-                //    //    }
-                //    //}
-                //    //Debug.Log(list.Count + " vs old: " + pc);
-                //    pc = list.Count;
-                //    //structureManager.destinationList[endPos].SetPath(i.Key, pc, list);
-                //    StartPositionSet sps = new StartPositionSet(startHouse.Key, pc);
-                //    structureManager.destinationList[endPos] = sps;
-                //    chosenHouseRequestCount = startHouse.Value.requestLine.Count;
-                //    //Console.WriteLine("Setting the path " + list.Count + " " + structureManager.destinationList[endPos].pathCount );
-                //}
-
-
+                //else if (list.Count == pc)
             }
         }
 

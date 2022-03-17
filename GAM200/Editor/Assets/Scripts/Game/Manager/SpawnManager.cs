@@ -240,7 +240,7 @@ public class SpawnManager : MonoBehaviour
         }
         //score = gameState.GetScore();
 
-        //spawnTimer += Time.deltaTime;
+        spawnTimer += Time.deltaTime;
         if (spawnTimer > spawnTimerMax)
         {
             if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))

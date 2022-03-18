@@ -179,7 +179,7 @@ namespace Engine
 
 	// Function will loop through texture array of game objects and render game objects based on layer; 
 	// 0 will be rendered first, followed by 1, 2 ...
-	void RenderGameObjectsD(Math::mat3 _camMatrix, float _dt)
+	void RenderGameObjectsD(Math::mat3, float _dt)
 	{
 		GraphicImplementation::Renderer::BeginQuadBatch();
 

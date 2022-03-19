@@ -153,7 +153,7 @@ namespace Engine
 
 	// Function will fill the batch render with vertices and required attributes of game objects
 	// Called by RenderGameObjects function -  to render all game objects with texture
-	void RenderTextureLayer(std::array<LightComponent, MAX_ENTITIES>& arr, int layer)
+	void RenderLightLayer(std::array<LightComponent, MAX_ENTITIES>& arr, int layer)
 	{
 		for (auto& light : arr)
 		{
@@ -168,9 +168,13 @@ namespace Engine
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
+			// Check texture component
+			TextureComponent* texture = dreamECSGame->GetComponentPTR<TextureComponent>(entity_id);
+			//if (!texture || !texture->isActive) continue;
+
 			if (transform->layer == layer)
 			{
-				GraphicImplementation::Renderer::DrawQuad(transform->position, transform->scale, transform->angle,
+				GraphicImplementation::Renderer::DrawQuad(transform->position, light.scale, transform->angle,
 					light.texobj_hdl, 1.f, light.colour);
 			}
 		}
@@ -193,14 +197,19 @@ namespace Engine
 			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
+		// Enable GL_BLEND for transparency of textures
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
 
 		// Looping through all layers for game objects; batch rendering
 		int layerCount = LAYER_COUNT;
 		for (int i = 0; i < layerCount; i++)
 		{
+			RenderLightLayer(lightArray, i);
 			RenderTextureLayer(textureArray, i, _dt);
 			RenderParticleLayer(particleArray, i, _dt);
-			RenderTextureLayer(lightArray, i);
 		}
 
 		GraphicImplementation::Renderer::EndQuadBatch();
@@ -208,6 +217,8 @@ namespace Engine
 
 		// Unload Default shader program
 		GraphicImplementation::UnUseShaderHandle();
+
+		glDisable(GL_BLEND);
 	}
 
 
@@ -321,11 +332,9 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Set background colour
-		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+		//glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+		glClearColor(0, 0, 0, 1.0f);
 
-		// Enable GL_BLEND for transparency of textures
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
 		// Load Default shader program
@@ -341,8 +350,6 @@ namespace Engine
 		RenderGameObjectsD(camMatrix, _dt);
 		RenderLines(camMatrix);
 		if (!gameDraw) RenderCollisionLines(camMatrix);
-
-		glDisable(GL_BLEND);
 
 #ifdef _GAME_BUILD
 

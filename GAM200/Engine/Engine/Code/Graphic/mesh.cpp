@@ -776,7 +776,15 @@ namespace Engine
                 s_QuadData.uiTextureSlotIndex++;
             }
 
-            s_QuadData.vertexbufferptr->position = { position.x, position.y };
+            // For drawing of a circle light, uses [-1, -1] to [1, 1] as UV coords
+            if (isLight)
+            {
+                _min = { -1.f, -1.f };
+                _max = { 1.f, 1.f };
+            }
+
+
+            s_QuadData.vertexbufferptr->position = { position.x, position.y };  
             s_QuadData.vertexbufferptr->color = color;
             s_QuadData.vertexbufferptr->texCoords = { _min.x, _min.y };
             s_QuadData.vertexbufferptr->texID = textureIndex;

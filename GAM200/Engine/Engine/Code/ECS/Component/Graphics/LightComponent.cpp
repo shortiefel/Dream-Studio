@@ -27,8 +27,8 @@ Technology is prohibited.
 namespace Engine
 {
 	// Contructor for Light Component
-	LightComponent::LightComponent(Entity_id _ID, float _ambient, Math::vec4 _colour, bool _active) : 
-		IComponent{ _ID }, texobj_hdl{ 0 }, ambient{ _ambient }, colour{ _colour }, isActive{ _active } {};
+	LightComponent::LightComponent(Entity_id _ID, Math::vec2 _scale, Math::vec4 _colour, bool _active) :
+		IComponent{ _ID }, texobj_hdl{ 0 }, scale{ _scale }, colour{ _colour }, isActive{ _active } {};
 
 	// Destructor for Light Component
 	LightComponent::~LightComponent()
@@ -40,9 +40,8 @@ namespace Engine
 	// Deserialize function for Light Component
 	LightComponent& LightComponent::Deserialize(const DSerializer& _serializer)
 	{
-		ambient = _serializer.GetValue<float>("Ambient");
+		scale = _serializer.GetValue<Math::vec2>("Scale");
 		colour = _serializer.GetValue<Math::vec4>("Colour");
-
 		isActive = _serializer.GetValue<bool>("IsActive");
 
 		return *this;
@@ -51,7 +50,7 @@ namespace Engine
 	// Serialize function for Light Component
 	void LightComponent::Serialize(const SSerializer& _serializer)
 	{
-		_serializer.SetValue("Ambient", ambient);
+		_serializer.SetValue("Scale", scale);
 		_serializer.SetValue("Colour", colour);
 		_serializer.SetValue("IsActive", isActive);
 	}

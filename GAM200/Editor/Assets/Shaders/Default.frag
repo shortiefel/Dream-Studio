@@ -21,14 +21,21 @@ layout (location=0) out vec4 fColor;
 void main ()
 {
 	// Light object
-	if (vIsLight > 0.5f) {
+	if (vIsLight > 0.5f) 
+	{
 		float distance = length(vTexture);
-		vec4 lightColor = vec4(vColor.rgb, vColor.a * (1.0 - distance));
-		//vec4 lightColor = vec4(vColor.rgb, vColor.a * (pow(0.01, distance) - 0.01));
+
+		// Constant slope for alpha
+		//vec4 lightColor = vec4(vColor.rgb, vColor.a * (1.0 - distance));
+
+		// More natural curve for alpha
+		vec4 lightColor = vec4(vColor.rgb, vColor.a * (pow(0.01, distance) - 0.01));
+
 		fColor = lightColor;
 	}
 	// Game object (Texture)
-	else {
+	else 
+	{
 		int index = int(vTextureIndex);
 		vec4 texColor = texture(uTextures[index], vTexture) * vColor;
 

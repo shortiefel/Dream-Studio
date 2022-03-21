@@ -101,7 +101,6 @@ public class SpawnManager : MonoBehaviour
 
             if (placementManager.placementGrid.GetAllSpecialStructure().Count == 0)
             {
-                //Debug.Log("Spawn Fix Destination");
                 roadPosition2 = SpawnRandomRoad();
                 structureManager.PlaceSpecial(roadPosition2, 0);
             }

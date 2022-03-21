@@ -27,9 +27,9 @@ namespace Engine {
 	void ResizeGrid_Engine(int newWidth, int newHeight);
 	int GetCellType_Engine(int x, int y);
 	void SetCellType_Engine(int x, int y, int cellType, unsigned int entityId);
-	bool GetRandomRoadPoint_Engine(Math::ivec2* point);
-	bool GetRandomSpecialStructurePoint_Engine(Math::ivec2* point);
-	bool GetRandomHouseStructurePoint_Engine(Math::ivec2* point);
+	//bool GetRandomRoadPoint_Engine(Math::ivec2* point);
+	//bool GetRandomSpecialStructurePoint_Engine(Math::ivec2* point);
+	//bool GetRandomHouseStructurePoint_Engine(Math::ivec2* point);
 	void GetAllAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y);
 	void GetWalkableAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y, bool isAgent);
 	void GetAdjacentCellsOfType_Engine(MonoArray* monoArray, int* count, int x, int y, int type);
@@ -56,9 +56,9 @@ namespace Engine {
 		mono_add_internal_call("Grid::ResizeGrid_Engine", ResizeGrid_Engine);
 		mono_add_internal_call("Grid::GetCellType_Engine", GetCellType_Engine);
 		mono_add_internal_call("Grid::SetCellType_Engine", SetCellType_Engine);
-		mono_add_internal_call("Grid::GetRandomRoadPoint_Engine", GetRandomRoadPoint_Engine);
-		mono_add_internal_call("Grid::GetRandomSpecialStructurePoint_Engine", GetRandomSpecialStructurePoint_Engine);
-		mono_add_internal_call("Grid::GetRandomHouseStructurePoint_Engine", GetRandomHouseStructurePoint_Engine);
+		//mono_add_internal_call("Grid::GetRandomRoadPoint_Engine", GetRandomRoadPoint_Engine);
+		//mono_add_internal_call("Grid::GetRandomSpecialStructurePoint_Engine", GetRandomSpecialStructurePoint_Engine);
+		//mono_add_internal_call("Grid::GetRandomHouseStructurePoint_Engine", GetRandomHouseStructurePoint_Engine);
 		mono_add_internal_call("Grid::GetAllAdjacentCells_Engine", GetAllAdjacentCells_Engine);
 		mono_add_internal_call("Grid::GetWalkableAdjacentCells_Engine", GetWalkableAdjacentCells_Engine);
 		mono_add_internal_call("Grid::GetAdjacentCellsOfType_Engine", GetAdjacentCellsOfType_Engine);
@@ -95,16 +95,16 @@ namespace Engine {
 	void SetCellType_Engine(int x, int y, int cellType, unsigned int entityId) {
 		Game::Grid::GetInstance().SetCellType(x, y, cellType, entityId);
 	}
-	bool GetRandomRoadPoint_Engine(Math::ivec2* point) {
-		return Game::Grid::GetInstance().GetRandomRoadPoint(point);
-	}
-	bool GetRandomSpecialStructurePoint_Engine(Math::ivec2* point) {
-		return Game::Grid::GetInstance().GetRandomSpecialStructurePoint(point);
-	}
+	//bool GetRandomRoadPoint_Engine(Math::ivec2* point) {
+	//	return Game::Grid::GetInstance().GetRandomRoadPoint(point);
+	//}
+	//bool GetRandomSpecialStructurePoint_Engine(Math::ivec2* point) {
+	//	return Game::Grid::GetInstance().GetRandomSpecialStructurePoint(point);
+	//}
 
-	bool GetRandomHouseStructurePoint_Engine(Math::ivec2* point) {
-		return Game::Grid::GetInstance().GetRandomHouseStructurePoint(point);
-	}
+	//bool GetRandomHouseStructurePoint_Engine(Math::ivec2* point) {
+	//	return Game::Grid::GetInstance().GetRandomHouseStructurePoint(point);
+	//}
 	void GetAllAdjacentCells_Engine(MonoArray* monoArray, int* count, int x, int y) {
 		Math::ivec2 arr[4];
 		Game::Grid::GetInstance().GetAllAdjacentCells(arr, count, x, y);

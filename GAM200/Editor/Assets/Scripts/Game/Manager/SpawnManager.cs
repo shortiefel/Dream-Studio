@@ -8,6 +8,13 @@ public enum SpawnRequestType
     House,
     Destination
 }
+
+enum SpawnState
+{
+    Peak = 0,
+    Relax,
+    BuildUp
+}
 public class SpawnManager : MonoBehaviour
 {
     public PlacementManager placementManager;
@@ -19,6 +26,14 @@ public class SpawnManager : MonoBehaviour
 
     private float spawnTimer;
     private float spawnTimerMax;
+
+    private float spawnTimerPeak;
+    private float spawnTimerRelax;
+
+    private float stateChangeTimer;
+    private float stateChangeMax;
+    SpawnState spawnState;
+
     //int score;
     //float timer;
     //float maxTimer;
@@ -32,6 +47,8 @@ public class SpawnManager : MonoBehaviour
 
     int attemptLoopCount;
 
+    float dt;
+
     //ButtonRoad buttonRoad;
 
     public override void Start()
@@ -42,13 +59,16 @@ public class SpawnManager : MonoBehaviour
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         spawnTimer = 0f;
-        spawnTimerMax = 15f;
-        //spawnTimerMax = 3f;
-        //buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
+        spawnTimerMax = spawnTimerRelax = 15f;
+        spawnTimerPeak = 5f;
+
+        stateChangeTimer = 0f;
+        stateChangeMax = 20f;
 
         Vector2Int roadPosition = SpawnRandomRoad();
         Vector2Int roadPosition2 = SpawnRandomRoad();
 
+        spawnState = SpawnState.BuildUp;
 
         //For testing traffic
         //Vector2Int roadPositionT = new Vector2Int(1, 3);
@@ -238,9 +258,26 @@ public class SpawnManager : MonoBehaviour
         {
             CheckPosition();
         }
-        //score = gameState.GetScore();
 
-        spawnTimer += Time.deltaTime;
+        dt = Time.deltaTime;
+
+        stateChangeTimer += dt;
+        if (stateChangeTimer > stateChangeMax)
+        {
+            stateChangeTimer = 0f;
+            SwapSpawnState();
+        }
+
+        if (spawnState == SpawnState.BuildUp)
+        {
+            spawnTimerMax -= dt;
+            if (spawnTimerMax < spawnTimerPeak)
+            {
+                spawnTimerMax = spawnTimerPeak;
+            }
+        }
+
+        spawnTimer += dt;
         if (spawnTimer > spawnTimerMax)
         {
             if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))
@@ -265,6 +302,8 @@ public class SpawnManager : MonoBehaviour
                 }
             }
         }
+
+        //Debug.Log(spawnState + " state change from " + stateChangeTimer + " til " + stateChangeMax + " Spawn " + spawnTimer + " til " + spawnTimerMax);
         //if (score == scoreToSpawn)
         //{
         //    //if(score == 10)
@@ -301,5 +340,32 @@ public class SpawnManager : MonoBehaviour
         //    //    }
         //    //}
         //}
+    }
+
+    void SwapSpawnState()
+    {
+        switch (spawnState)
+        {
+            case SpawnState.BuildUp:
+                {
+                    spawnTimerMax = spawnTimerPeak;
+                    spawnState = SpawnState.Peak;
+                    //Debug.Log("SpawnManager SpawnState: BuildUp change to Peak");
+                    break;
+                }
+            case SpawnState.Peak:
+                {
+                    spawnTimerMax = spawnTimerRelax;
+                    spawnState = SpawnState.Relax;
+                    //Debug.Log("SpawnManager SpawnState: Peak change to Relax");
+                    break;
+                }
+            case SpawnState.Relax:
+                {
+                    spawnState = SpawnState.BuildUp;
+                    //Debug.Log("SpawnManager SpawnState: Relax change to BuildUp");
+                    break;
+                }
+        }
     }
 }

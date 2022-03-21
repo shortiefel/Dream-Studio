@@ -43,12 +43,12 @@ namespace Engine
 
 		GLuint texobj_hdl{};
 		Math::vec4 colour;
-		float ambient;
+		Math::vec2 scale;
 
 		bool isActive = true;
 
 
-		LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID, float _ambient = 1.0f, Math::vec4 _colour = { 1.f, 1.f, 1.f, 1.f },
+		LightComponent(Entity_id _ID = DEFAULT_ENTITY_ID, Math::vec2 _scale = { 1.f, 1.f }, Math::vec4 _colour = { 1.f, 1.f, 1.f, 1.f },
 			bool _active = true);
 		
 		/*

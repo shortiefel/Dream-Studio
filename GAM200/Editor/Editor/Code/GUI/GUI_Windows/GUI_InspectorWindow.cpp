@@ -1799,20 +1799,29 @@ namespace Editor {
 					if (ImGui::CollapsingHeader("Light"))
 					{
 						/**
-						*	Ambient
+						*	Scale
 						*/
 						ImGui::AlignTextToFramePadding();
-						ImGui::Text("Ambient");
+						ImGui::Text("Scale");
 						ImGui::SameLine();
-						HelperMarker("Brightness of light being emitted");
-						ImGui::SameLine(halfWidth);	
-						ImGui::SetNextItemWidth(halfWidth);
+						HelperMarker("Scale of light");
+						ImGui::SameLine(halfWidth);
 						ImGui::PushFont(boldFont);
-						ImGui::InputFloat("##lightAmbient", &lightComp->ambient, 0.f, 0.f, "%.2f", ImGuiInputTextFlags_EnterReturnsTrue);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##lightScaleX", &lightComp->scale.x, 0.f, 0.f, "%.2f", 1);
+
+						ImGui::SameLine(halfWidth * 1.7f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.820f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##lightScaleY", &lightComp->scale.y, 0.f, 0.f, "%.2f", 1);
+
 						ImGui::PopFont();
 
 						ImGui::Spacing();
-
+						
 						/**
 						*	LIGHT COLOR
 						*/

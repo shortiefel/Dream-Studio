@@ -18,16 +18,24 @@ layout (location=3) in float vIsLight;
 layout (location=0) out vec4 fColor;
 
 
-void main () 
+void main ()
 {
-	// Draw call is drawing light, use light colour
-	if (vIsLight > 0.5f) {
-		vec4 texColor = texture(uTextures[0], vTexture) * vColor;
+	// Light object
+	if (vIsLight > 0.5f) 
+	{
+		float distance = length(vTexture);
 
-		fColor = texColor;
+		// Constant slope for alpha
+		//vec4 lightColor = vec4(vColor.rgb, vColor.a * (1.0 - distance));
+
+		// More natural curve for alpha
+		vec4 lightColor = vec4(vColor.rgb, vColor.a * (pow(0.01, distance) - 0.01));
+
+		fColor = lightColor;
 	}
-	// Draw call is drawing texture object, use texture colour
-	else {
+	// Game object (Texture)
+	else 
+	{
 		int index = int(vTextureIndex);
 		vec4 texColor = texture(uTextures[index], vTexture) * vColor;
 

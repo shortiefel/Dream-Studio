@@ -413,7 +413,9 @@ public class RoadManager : MonoBehaviour
                 return;
         }
         int tmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-        
+
+        if (tmp > 0) placeSound.Play();
+
         roadCount -= tmp;
         taxRoadCount += tmp;
         //placementManager.placementGrid.SetRoad(temporaryRoadPositions);
@@ -458,12 +460,10 @@ public class RoadManager : MonoBehaviour
 
         //Debug.Log("Road placed " + placementManager.placementGrid.SetRoad(temporaryRoadPositions));
 
-
         placementManager.placementGrid.FinalizeGrid();
         temporaryRoadPositions.Clear();
         temporaryRoadCount = 0;
         previousRoadMinus = 0;
-        placeSound.Play();
     }
 
     public void ClearTemporaryRoad()
@@ -561,7 +561,7 @@ public class RoadManager : MonoBehaviour
 
         //placementMode = false;
 
-        removeSound.Play();
+        //removeSound.Play();
     }
 
     //private void FixRoadPrefabs()

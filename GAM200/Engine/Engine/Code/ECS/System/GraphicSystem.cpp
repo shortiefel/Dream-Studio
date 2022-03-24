@@ -174,7 +174,7 @@ namespace Engine
 
 			if (transform->layer == layer)
 			{
-				GraphicImplementation::Renderer::DrawQuad(transform->position, light.scale, transform->angle,
+				GraphicImplementation::Renderer::DrawQuad(transform->position + light.offsetPosition, light.scale, transform->angle,
 					light.texobj_hdl, 1.f, light.colour);
 			}
 		}

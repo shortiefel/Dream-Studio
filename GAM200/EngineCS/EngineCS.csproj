@@ -78,6 +78,7 @@
     <Compile Include="Types\IComponent.cs" />
     <Compile Include="Types\GameObject.cs" />
     <Compile Include="Types\GenericTypesDictonary.cs" />
+    <Compile Include="Types\Light.cs" />
     <Compile Include="Types\Prefab.cs" />
     <Compile Include="Types\Rigidbody2D.cs" />
     <Compile Include="Types\Text.cs" />

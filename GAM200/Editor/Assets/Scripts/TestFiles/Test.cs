@@ -12,6 +12,8 @@ public class Test : MonoBehaviour
 
     float t = 0f;
     float angle = 0f;
+
+    Light light;
     public override void Start()
     {
         //temTL = new GameObject(new Prefab("Box")); //To Remove
@@ -46,15 +48,16 @@ public class Test : MonoBehaviour
         //    Console.WriteLine("\nNext Set \n");
         //}
 
+        light = GetComponent<Light>();
     }
 
     public override void Update()
     {
-        t += Time.deltaTime;
-        transform.position = Vector2.QuadraticBezier(p0, p1, p2, t, out angle);
-        transform.angle = angle;
-        Debug.Log(transform.position + " with " + angle);
-        if (t > 0.99) t = 0f;
+        //t += Time.deltaTime;
+        //transform.position = Vector2.QuadraticBezier(p0, p1, p2, t, out angle);
+        //transform.angle = angle;
+        //Debug.Log(transform.position + " with " + angle);
+        //if (t > 0.99) t = 0f;
         //if (Input.GetKeyDown(KeyCode.A))
         //{
         //    Debug.Log("Instantiating ");
@@ -141,6 +144,16 @@ public class Test : MonoBehaviour
         //    forceDir = -1;
         //    Debug.Log("start " + forceDir);
         //}
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("Disable light");
+            Disable<Light>(light);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("Enable light");
+            Enable<Light>(light);
+        }
     }
 
     public override void FixedUpdate()

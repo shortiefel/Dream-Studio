@@ -22,6 +22,9 @@ public class QuitButton : MonoBehaviour
         quitNo = GameObject.Find("NoText").GetComponent<Transform>();
         quitOverlay = GameObject.Find("QuitOverlay").GetComponent<Transform>();
 
+        text.color = new Color(0f, 0f, 0f);
+        texture.color = new Color(1f, 1f, 1f);
+
         Disable<Transform>(areYouSure);
         Disable<Transform>(quitYes);
         Disable<Transform>(quitNo);
@@ -32,8 +35,8 @@ public class QuitButton : MonoBehaviour
 
     public override void OnMouseEnter()
     {
-        text.color = new Color(0f, 0f, 0f);
-        texture.color = new Color(1f, 1f, 1f);
+        text.color = new Color(1f, 1f, 1f);
+        texture.color = new Color(1f, 0.5f, 0f);
     }
 
     public override void OnMouseOver()
@@ -50,7 +53,7 @@ public class QuitButton : MonoBehaviour
 
     public override void OnMouseExit()
     {
-        text.color = new Color(1f, 1f, 1f);
-        texture.color = new Color(0f, 0f, 0f);
+        text.color = new Color(0f, 0f, 0f);
+        texture.color = new Color(1f, 1f, 1f);
     }
 }

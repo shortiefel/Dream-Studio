@@ -13,7 +13,7 @@ public class Test : MonoBehaviour
     float t = 0f;
     float angle = 0f;
 
-    Light light;
+    Texture texture;
     public override void Start()
     {
         //temTL = new GameObject(new Prefab("Box")); //To Remove
@@ -48,7 +48,7 @@ public class Test : MonoBehaviour
         //    Console.WriteLine("\nNext Set \n");
         //}
 
-        light = GetComponent<Light>();
+        texture = GetComponent<Texture>();
     }
 
     public override void Update()
@@ -144,15 +144,13 @@ public class Test : MonoBehaviour
         //    forceDir = -1;
         //    Debug.Log("start " + forceDir);
         //}
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKey(KeyCode.F))
         {
-            Debug.Log("Disable light");
-            Disable<Light>(light);
+            texture.alpha -= 0.01f;
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKey(KeyCode.R))
         {
-            Debug.Log("Enable light");
-            Enable<Light>(light);
+            texture.alpha += 0.01f;
         }
     }
 

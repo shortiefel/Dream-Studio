@@ -33,13 +33,27 @@ public class Texture : IComponent
     {
         // get
         // {
-        //     GetFont_Text_Engine(entityId, out string text);
+        //     GetTexture_Color_Engine(entityId, out string text);
         //     return text;
         // }
         set { SetTexture_Color_Engine(entityId, value); }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetTexture_Color_Engine(uint entityID, Color col);
+
+    public float alpha
+    {
+        get
+        {
+            GetTexture_Alpha_Engine(entityId, out float alpha);
+            return alpha;
+        }
+        set { SetTexture_Alpha_Engine(entityId, value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetTexture_Alpha_Engine(uint entityID, out float alpha);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetTexture_Alpha_Engine(uint entityID, float alpha);
 
     public string RetrieveTexture()
     {

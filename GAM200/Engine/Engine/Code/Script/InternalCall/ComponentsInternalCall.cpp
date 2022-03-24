@@ -79,6 +79,8 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void ChangeTexture_Engine(unsigned int entityID, MonoString* name);
 		void SetTexture_Color_Engine(unsigned int entityID, Math::vec4 col);
+		void GetTexture_Alpha_Engine(unsigned int entityID, float* alpha);
+		void SetTexture_Alpha_Engine(unsigned int entityID, float alpha);
 		void RetrieveTexture_Engine(unsigned int entityID, MonoString** name);
 
 
@@ -173,6 +175,8 @@ namespace Engine {
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("Texture::ChangeTexture_Engine", ChangeTexture_Engine);
 			mono_add_internal_call("Texture::SetTexture_Color_Engine", SetTexture_Color_Engine);
+			mono_add_internal_call("Texture::GetTexture_Alpha_Engine", GetTexture_Alpha_Engine);
+			mono_add_internal_call("Texture::SetTexture_Alpha_Engine", SetTexture_Alpha_Engine);
 			mono_add_internal_call("Texture::RetrieveTexture_Engine", RetrieveTexture_Engine);
 			
 
@@ -389,6 +393,16 @@ namespace Engine {
 
 		void SetTexture_Color_Engine(unsigned int entityID, Math::vec4 col) {
 			SetEngineType(entityID, TextureComponent, colour, col);
+		}
+
+		void GetTexture_Alpha_Engine(unsigned int entityID, float* alpha) {
+			GetEngineType(entityID, TextureComponent, colour.a, *alpha);
+		}
+
+		void SetTexture_Alpha_Engine(unsigned int entityID, float alpha) {
+			if (alpha < 0.f) alpha = 0.f;
+			else if (alpha > 1.f) alpha = 1.f;
+			SetEngineType(entityID, TextureComponent, colour.a, alpha);
 		}
 
 		void RetrieveTexture_Engine(unsigned int entityID, MonoString** name) {

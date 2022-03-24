@@ -2,21 +2,17 @@
 public class PauseQuitYes : MonoBehaviour
 {
     PauseMenu pauseMenu;
-    //Text text;
-    UI texture;
+    Text text;
     public override void Start()
     {
         pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
 
-       // text = GetComponent<Text>();
-        texture = GameObject.Find("QuitYesBtn").GetComponent<UI>();
-        texture.color = new Color(1f, 1f, 1f);
+        text = GetComponent<Text>();
     }
 
     public override void OnMouseEnter()
     {
-        //text.color = new Color(0f, 0f, 0f);
-        texture.color = new Color(1f, 1f, 1f);
+        text.color = new Color(0f, 0f, 0f);
     }
 
     public override void OnMouseOver()
@@ -29,7 +25,6 @@ public class PauseQuitYes : MonoBehaviour
 
     public override void OnMouseExit()
     {
-        //text.color = new Color(1f, 1f, 1f);
-        texture.color = new Color(1f, 1f, 1f);
+        text.color = new Color(1f, 1f, 1f);
     }
 }

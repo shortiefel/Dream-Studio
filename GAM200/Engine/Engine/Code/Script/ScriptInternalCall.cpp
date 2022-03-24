@@ -104,6 +104,7 @@ namespace Engine {
 			REGISTER_TYPE(SoundComponent, AudioSource);
 			REGISTER_TYPE(UIComponent, UI);
 			REGISTER_TYPE(WaypointComponent, Waypoint);
+			REGISTER_TYPE(LightComponent, Light);
 		}
 
 

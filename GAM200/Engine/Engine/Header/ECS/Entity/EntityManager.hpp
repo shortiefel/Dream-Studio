@@ -33,6 +33,7 @@ namespace Engine {
 
 		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, Entity_id _parent = MAX_ENTITIES + 1)
 		{
+			//printf("Creating entity \n");
 			//error checking
 			if (AliveEntityCount >= MAX_ENTITIES) {
 				Entity entity{};

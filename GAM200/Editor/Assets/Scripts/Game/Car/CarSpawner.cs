@@ -89,7 +89,7 @@ public class CarSpawner : MonoBehaviour
         }
         //--------------------------------------------------------
 
-        Debug.Log(requestLine.Count + " backlog " + backlog.Count);
+        //Debug.Log(requestLine.Count + " backlog " + backlog.Count);
         if (requestLine.Count != 0 || backlog.Count != 0)
         {
             spawnTimer += dt;

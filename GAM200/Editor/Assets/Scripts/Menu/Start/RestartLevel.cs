@@ -1,4 +1,5 @@
-﻿public class GoToMenu : MonoBehaviour
+﻿
+public class RestartLevel : MonoBehaviour
 {
     Text text;
     public override void Start()
@@ -15,7 +16,7 @@
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
             Time.timeScale = 1;
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("NewGame");
         }
     }
     public override void OnMouseExit()

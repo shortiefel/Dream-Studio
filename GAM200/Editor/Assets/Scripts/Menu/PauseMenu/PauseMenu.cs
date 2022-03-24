@@ -4,14 +4,15 @@ public class PauseMenu : MonoBehaviour
 {
     GameObject resume;
     GameObject howToPlay;
+    GameObject menuText;
     
     //GameObject options;
     GameObject pauseQuit;
     
 
     GameObject resumeBtn;
-    //GameObject menuBtn;
-    //GameObject optionsBtn;
+    GameObject menuBtn;
+    //GameObject restartBtn;
     GameObject howToPlayBtn;
     GameObject pauseQuitBtn;
 
@@ -79,7 +80,7 @@ public class PauseMenu : MonoBehaviour
 
         resume = GameObject.Find("ResumeText");
         howToPlay = GameObject.Find("HowToText");
-        //menuText = GameObject.Find("MenuText");
+        menuText = GameObject.Find("MenuText");
         //options = GameObject.Find("OptionText");
         pauseQuit = GameObject.Find("QuitText");
 
@@ -112,7 +113,7 @@ public class PauseMenu : MonoBehaviour
 
         Disable<Transform>(resume.transform);
         Disable<Transform>(howToPlay.transform);
-       // Disable<Transform>(menuText.transform);
+        Disable<Transform>(menuText.transform);
         //Disable<Transform>(options.transform);
         Disable<Transform>(pauseQuit.transform);
 
@@ -175,7 +176,7 @@ public class PauseMenu : MonoBehaviour
 
             Enable<Transform>(resume.transform);
             Enable<Transform>(howToPlay.transform);
-            //Enable<Transform>(menuText.transform);
+            Enable<Transform>(menuText.transform);
             //Enable<Transform>(options.transform);
             Enable<Transform>(pauseQuit.transform);
 
@@ -212,7 +213,7 @@ public class PauseMenu : MonoBehaviour
 
             Disable<Transform>(resume.transform);
             Disable<Transform>(howToPlay.transform);
-            //Disable<Transform>(menuText.transform);
+            Disable<Transform>(menuText.transform);
             //Disable<Transform>(options.transform);
             Disable<Transform>(pauseQuit.transform);
 
@@ -324,6 +325,11 @@ public class PauseMenu : MonoBehaviour
     internal void ResumeAction()
     {
         PauseAction();
+    }
+
+    internal void MenuAction()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     internal void QuitAction()

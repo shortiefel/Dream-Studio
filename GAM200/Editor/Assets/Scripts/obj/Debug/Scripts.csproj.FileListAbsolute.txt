@@ -18,3 +18,11 @@ C:\Users\jonat\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\De
 C:\Users\jonat\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CopyComplete
 C:\Users\jonat\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
 C:\Users\jonat\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb
+C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.dll
+C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.pdb
+C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\EngineCS.dll
+C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.AssemblyReference.cache
+C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CoreCompileInputs.cache
+C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CopyComplete
+C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
+C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb

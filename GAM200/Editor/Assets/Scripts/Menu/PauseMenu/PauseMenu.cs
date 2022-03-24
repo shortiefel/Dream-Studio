@@ -19,6 +19,7 @@ public class PauseMenu : MonoBehaviour
     GameObject pauseBG;
     GameObject HowToBG;
 
+    GameObject quitBG;
     GameObject areYouSure;
     GameObject quitYes;
     GameObject quitNo;
@@ -98,9 +99,10 @@ public class PauseMenu : MonoBehaviour
         //htpPosition = howToPlayBtn.transform.position;
         //quitPosition = pauseQuitBtn.transform.position;
 
+        quitBG = GameObject.Find("QuitBG");
         areYouSure = GameObject.Find("AreYouSureText");
-        quitYes = GameObject.Find("YesText");
-        quitNo = GameObject.Find("NoText");
+        quitYes = GameObject.Find("QuitYesBtn");
+        quitNo = GameObject.Find("QuitNoBtn");
 
 
         settingBtn = GameObject.Find("settingBtn").GetComponent<Transform>();
@@ -123,6 +125,7 @@ public class PauseMenu : MonoBehaviour
         Disable<Transform>(howToPlayBtn.transform);
         Disable<Transform>(pauseQuitBtn.transform);
 
+        Disable<Transform>(quitBG.transform);
         Disable<Transform>(areYouSure.transform);
         Disable<Transform>(quitYes.transform);
         Disable<Transform>(quitNo.transform);
@@ -223,6 +226,7 @@ public class PauseMenu : MonoBehaviour
             Disable<Transform>(howToPlayBtn.transform);
             Disable<Transform>(pauseQuitBtn.transform);
 
+            Disable<Transform>(quitBG.transform);
             Disable<Transform>(areYouSure.transform);
             Disable<Transform>(quitYes.transform);
             Disable<Transform>(quitNo.transform);
@@ -335,6 +339,7 @@ public class PauseMenu : MonoBehaviour
     internal void QuitAction()
     {
         Console.WriteLine("Quit selected");
+        Enable<Transform>(quitBG.transform);
         Enable<Transform>(areYouSure.transform);
         Enable<Transform>(quitYes.transform);
         Enable<Transform>(quitNo.transform);
@@ -349,6 +354,7 @@ public class PauseMenu : MonoBehaviour
     internal void QuitNoAction()
     {
         Console.WriteLine("Quit stopped");
+        Disable<Transform>(quitBG.transform);
         Disable<Transform>(areYouSure.transform);
         Disable<Transform>(quitYes.transform);
         Disable<Transform>(quitNo.transform);

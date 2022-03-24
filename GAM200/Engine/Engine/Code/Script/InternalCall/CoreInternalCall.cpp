@@ -281,15 +281,7 @@ namespace Engine {
 		}
 		
 		void Active_Light_Engine(unsigned int id, bool boolean) {
-			//SetEngineType(id, LightComponent, isActive, boolean);
-			LightComponent* ctype = dreamECSGame->GetComponentPTR<LightComponent>(id);
-			if (ctype != nullptr) {
-				std::cout << "not null\n";
-				ctype->isActive = boolean;
-			}
-			else {
-				std::cout << "it is  null\n";
-			}
+			SetEngineType(id, LightComponent, isActive, boolean);
 		}
 
 		void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {

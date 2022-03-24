@@ -33,7 +33,6 @@ public class HowToPlayButton : MonoBehaviour
         pauseMenuBackIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
         howToPlayBGTransform = GameObject.Find("HowToBG").GetComponent<Transform>();
         newBackTransform = GameObject.Find("HowToPlayBack").GetComponent<Transform>();
-
         howToPlayTransform = GameObject.Find("HowToText").GetComponent<Transform>();
         resumeTransform = GameObject.Find("ResumeText").GetComponent<Transform>();
         quitTransform = GameObject.Find("QuitText").GetComponent<Transform>();
@@ -51,13 +50,13 @@ public class HowToPlayButton : MonoBehaviour
         //Is actually How to play button
         if (text != null)
         {
-            
-            texture.color = new Color(0f, 0f, 0f);
+
+            texture.color = new Color(1f, 1f, 1f);
             htw = true;
         }
         else
         {
-            backButtonUI.color = new Color(0f, 0f, 0f);
+            backButtonUI.color = new Color(1f, 1f, 1f);
         }
 
 
@@ -67,8 +66,8 @@ public class HowToPlayButton : MonoBehaviour
     {
         if (htw)
         {
-            text.color = new Color(0f, 0f, 0f);
-            texture.color = new Color(1f, 1f, 1f);
+            text.color = new Color(1f, 1f, 1f);
+            texture.color = new Color(1f, 0.5f, 0f);
         }
 
         else
@@ -85,6 +84,7 @@ public class HowToPlayButton : MonoBehaviour
             {
                 Enable<Transform>(howToPlayBGTransform);
                 Enable<Transform>(newBackTransform);
+
 
                 Disable<Transform>(howToPlayTransform);
                 Disable<Transform>(resumeTransform);
@@ -117,8 +117,8 @@ public class HowToPlayButton : MonoBehaviour
     {
         if (htw)
         {
-            text.color = new Color(1f, 1f, 1f);
-            texture.color = new Color(0f, 0f, 0f);
+            text.color = new Color(0f, 0f, 0f);
+            texture.color = new Color(1f, 1f, 1f);
         }
         else
         {

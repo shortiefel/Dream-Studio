@@ -72,7 +72,7 @@ public class PauseMenu : MonoBehaviour
         //coinSymbol = GameObject.Find("CoinBag").GetComponent<Transform>();
 
         texture = GetComponent<UI>();
-        texture.color = new Color(0f, 0f, 0f);
+        texture.color = new Color(1f, 1f, 1f);
 
         pauseBG = GameObject.Find("PauseBG");
         //bgPosition = pauseBG.transform.position;
@@ -322,7 +322,7 @@ public class PauseMenu : MonoBehaviour
 
     public override void OnMouseExit()
     {
-        texture.color = new Color(0f, 0f, 0f);
+        texture.color = new Color(1f, 1f, 1f);
     }
 
     internal void ResumeAction()

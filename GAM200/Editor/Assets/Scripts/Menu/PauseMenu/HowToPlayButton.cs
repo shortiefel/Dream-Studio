@@ -10,6 +10,7 @@ public class HowToPlayButton : MonoBehaviour
     Transform howToPlayTransform;
     Transform resumeTransform;
     Transform quitTransform;
+    Transform mainMenuTransform;
 
     Transform areYouSureTransform;
     Transform quitYesTransform;
@@ -36,12 +37,12 @@ public class HowToPlayButton : MonoBehaviour
         howToPlayTransform = GameObject.Find("HowToText").GetComponent<Transform>();
         resumeTransform = GameObject.Find("ResumeText").GetComponent<Transform>();
         quitTransform = GameObject.Find("QuitText").GetComponent<Transform>();
+        mainMenuTransform = GameObject.Find("MenuText").GetComponent<Transform>();
         texture = GameObject.Find("howToPlayBtn").GetComponent<UI>();
 
         areYouSureTransform = GameObject.Find("AreYouSureText").GetComponent<Transform>();
         quitYesTransform = GameObject.Find("YesText").GetComponent<Transform>();
         quitNoTransform = GameObject.Find("NoText").GetComponent<Transform>();
-
         backButtonUI = GetComponent<UI>();
 
 
@@ -90,12 +91,13 @@ public class HowToPlayButton : MonoBehaviour
                 Disable<Transform>(resumeTransform);
                 Disable<Transform>(quitTransform);
                 Disable<Transform>(moneyText);
-
+                Disable<Transform>(mainMenuTransform);
                 Disable<Transform>(pauseMenuBackIcon);
 
                 Disable<Transform>(areYouSureTransform);
                 Disable<Transform>(quitYesTransform);
                 Disable<Transform>(quitNoTransform);
+                
             }
 
             else
@@ -107,7 +109,7 @@ public class HowToPlayButton : MonoBehaviour
                 Enable<Transform>(howToPlayTransform);
                 Enable<Transform>(resumeTransform);
                 Enable<Transform>(quitTransform);
-
+                Enable<Transform>(mainMenuTransform);
                 Enable<Transform>(pauseMenuBackIcon);
             }
         }

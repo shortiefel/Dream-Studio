@@ -6,8 +6,9 @@ public class ButtonStoreClick : MonoBehaviour
     StoreButtonType st;
     public MoneySystem moneySystem;
 
-    public bool state;
-    //public Animation animation;
+    public bool buttonstate;
+    public Animation animation;
+    ButtonStoreClick roadPlus;
     // GameState gameState;
 
     Text CostRoad;
@@ -21,16 +22,18 @@ public class ButtonStoreClick : MonoBehaviour
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
 
-        state = false;
-        //animation = GetComponent<Animation>();
+        buttonstate = false;
+        animation = GetComponent<Animation>();
 
+        roadPlus = GameObject.Find("RoadPlus").GetComponent<ButtonStoreClick>();
         CostRoad = GameObject.Find("RoadCost").GetComponent<Text>();
         CostTL = GameObject.Find("TrafficCost").GetComponent<Text>();
         CostERP = GameObject.Find("ERPCost").GetComponent<Text>();
 
+
         if (entityId == GameObject.Find("RoadPlus").GetComponent<Transform>().entityId)
         {
-            st = StoreButtonType.RoadBuy;
+            st = StoreButtonType.RoadBuy;    
         }
         else if (entityId == GameObject.Find("RoadMinus").GetComponent<Transform>().entityId)
         {
@@ -82,7 +85,6 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-
                         //moneySystem.BuyRoad();
                         CostRoad.text = moneySystem.roadCost.ToString();
 
@@ -92,6 +94,9 @@ public class ButtonStoreClick : MonoBehaviour
                         }
                         //++roadManager.roadCount;
                         //RoadNo.text = roadManager.currRoad.ToString();
+                        buttonstate = true;
+                        roadPlus.animation.Play("Click");
+                        Console.WriteLine("click");
                     }
 
                     break;
@@ -101,6 +106,9 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
+                        buttonstate = true;
+                        animation.Play("Click");
+                        Console.WriteLine("click");
                         moneySystem.SellRoad();
                    
                     }

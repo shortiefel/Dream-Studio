@@ -190,97 +190,44 @@ public class AIDirector : MonoBehaviour
     //private bool TrySpawninACar(StructureModel startStructure, StructureModel endStructure)
     private bool TrySpawninACar(StructureModel endStructure)
     {
-        //Console.WriteLine("here but go in ?");
         if (endStructure == null) return false;
 
-        //Console.WriteLine(" actually inside ");
-        //if(startStructure == null) Console.WriteLine("is null");
-        //if(startStructure != null) Console.WriteLine("is not null");
-        //var startRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)startStructure).RoadPosition);
-        ////Console.WriteLine("after start");
-        //var endRoadPosition = Vector2Int.RoundToInt(((INeedingRoad)endStructure).RoadPosition);
-
-        //Debug.Log(startRoadPosition);
-        //Debug.Log(endRoadPosition);
         Vector2Int endPos = new Vector2Int(endStructure.transform.position);
-        if (!GetNewPathList(endPos, endStructure.entityId)) return false;
 
-        //Debug.Log(GameObject.FindWithId(endStructure.entityId).entityId + " " + endStructure.entityId);
+        Vector2Int randomPoint = new Vector2Int(placementManager.placementGrid.GetRandomHouseStructurePoint());
+        StartPositionSet sps = new StartPositionSet(randomPoint, 0, endStructure.entityId); //PathCount (the 0) here is ignored for now
+        structureManager.destinationList[endPos] = sps;
 
-        //var path = placementManager.GetPathBetween(new Vector2Int(startStructure.transform.position), new Vector2Int(endPos), true);
         CarSpawner cs = structureManager.houseList[structureManager.destinationList[endPos].startPos];
-        //if (cs == null) Console.WriteLine("Cs is null");
         cs.RequestSpawn(new EndStruct(endStructure.entityId, endStructure.buildingType, endPos));
+        
 
-
-        //var path = placementManager.GetPathBetween(structureManager.destinationList[endPos].startPos, new Vector2Int(endPos), true);
-        ////Console.WriteLine("New path is " + path.Count);
-        //if (path.Count == 0)
-        //{
-        //    structureManager.destinationList[endPos] = new StartPositionSet(new Vector2Int(0, 0), 0);
-        //    return false;
-        //}
-        //
-        ////return;
-        ////if (path == null) return;
-        ////Console.WriteLine("Set path: " + path.Count);
-        ////foreach (var item in path)
-        ////{
-        ////    Debug.Log(item.ToString());
-        ////}
-        //
-        ////path.Reverse();
-        ////path.Add(Vector2Int.RoundToInt(endStructure.transform.position)); //Make car enter house
-        ////foreach (var item2 in path)
-        ////{
-        ////    Debug.Log(item2.ToString());
-        ////}
-        //
-        ////var car = Instantiate(SelectACarPrefab(), new Vector3(startRoadPosition.x, startRoadPosition.y, 0));
-        ////Vector2 pos = startStructure.transform.position;
-        //Vector2 pos = structureManager.destinationList[endPos].startPos;
-        //var car = Instantiate(SelectACarPrefab(endStructure.buildingType), new Vector3(pos.x, pos.y, 0), 2);
-        ////var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0), Quaternion.identity);
-        //
-        ////Console.WriteLine("Set path2: " + path.Count);
-        ////car.GetComponent<CarAI>().SetPath(path.ConvertAll(x => (Vector2)x));
-        //car.GetComponent<CarAI>().SetPath(path, ref endStructure);
         return true;
     }
 
     //Actually spawning it called by CarSpawner
-    public void SpawnCar(Vector2 spawnPos, uint id, BuildingType bt, Vector2Int endPos)
+    public bool SpawnCar(Vector2 spawnPos, uint id, BuildingType bt, Vector2Int endPos)
     {
-        //if (structureManager.destinationList[endPos].pathCount == 0)
-        //{
-        //
-        //    GetNewPathList(endPos);
-        //}
+
         Vector2Int spawnPosInt = new Vector2Int(spawnPos);
-        //Debug.Log(spawnPosInt);
-        //var path = placementManager.GetPathBetween(structureManager.destinationList[endPos].startPos, new Vector2Int(endPos), true);
+        
         int roadCount;
         uint prevEntId = structureManager.destinationList[endPos].entityId;
 
         var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), out roadCount);
-        //Console.WriteLine("New path is " + path.Count);
-        if (path.Count == 0 || prevEntId != structureManager.destinationList[endPos].entityId)
+        
+        //if (path.Count == 0 || prevEntId != structureManager.destinationList[endPos].entityId)
+        if (path.Count == 0)
         {
-            //GetComponent<StructureModel>(structureManager.destinationList[endPos].entityId).SetSpawnBool(true);
-            GetComponent<StructureModel>(prevEntId).SetSpawnBool(true);
-            structureManager.destinationList[endPos] = new StartPositionSet(new Vector2Int(0, 0), 0, 0);
-            return;
+            //GetComponent<StructureModel>(prevEntId).SetSpawnBool(true);
+            //structureManager.destinationList[endPos] = new StartPositionSet(new Vector2Int(0, 0), 0, 0);
+            return false;
         }
-       
-        //Vector2 pos = structureManager.destinationList[endPos].startPos;
 
-        //var car = Instantiate(SelectACarPrefab(bt), new Vector3(pos.x, pos.y, 0), 2);
         var car = Instantiate(SelectACarPrefab(bt), new Vector3(spawnPosInt.x, spawnPosInt.y, 0), 2);
-        //var car = Instantiate(carPrefab, new Vector3(startRoadPosition.x, startRoadPosition.y, 0), Quaternion.identity);
-       
-        //Console.WriteLine("Set path2: " + path.Count);
-        //car.GetComponent<CarAI>().SetPath(path.ConvertAll(x => (Vector2)x));
         car.GetComponent<CarAI>().SetPath(path, id);
+
+        return true;
     }
 
     private Prefab SelectACarPrefab(BuildingType bt)

@@ -256,6 +256,9 @@ public class MonoBehaviour : IBehaviour
             case genTypes.Collider:
                 Active_Collider_Engine(type.entityId, true);
                 break;
+            case genTypes.Light:
+                Active_Light_Engine(type.entityId, true);
+                break;
             default:
                 Console.WriteLine("Enable not yet done");
                 return;
@@ -289,6 +292,9 @@ public class MonoBehaviour : IBehaviour
             case genTypes.Collider:
                 Active_Collider_Engine(type.entityId, false);
                 break;
+            case genTypes.Light:
+                Active_Light_Engine(type.entityId, false);
+                break;
             default:
                 Console.WriteLine("Disable not yet done");
                 return;
@@ -303,7 +309,12 @@ public class MonoBehaviour : IBehaviour
     internal static extern void Active_Collider_Engine(uint entityID, bool active);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern void Active_Light_Engine(uint entityID, bool active);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Active_Script_Engine(uint entityID, bool active, String className);
+
+    
 
 
     //-----------------------------------------------------------------------------------------------------------------

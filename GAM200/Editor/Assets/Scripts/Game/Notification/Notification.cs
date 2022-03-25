@@ -25,6 +25,8 @@ public class Notification : MonoBehaviour
     
     float countDownTimer;
 
+    float dt;
+
 
     public override void Start()
     {
@@ -43,7 +45,6 @@ public class Notification : MonoBehaviour
         tappearBool = false;
         tdestroyBool = false;
         expirebool = false;
-
     }
 
     public void ResetTimer()
@@ -53,8 +54,6 @@ public class Notification : MonoBehaviour
         showNotification = Random.Range(2, 10);
         shouldShow = false;
         alreadyShowing = true;
-        //animation.Play("Appear");
-        //Debug.Log("Reset");
     }
 
     public bool AppearCheck()
@@ -116,10 +115,12 @@ public class Notification : MonoBehaviour
     }
     public bool NotificationUpdate()
     {
+        dt = Time.deltaTime;
         //if (alreadyShowing) //Only increase timer when notification is shown
-            lifeTime += Time.deltaTime; // slowly add until maxLifeTime
+            lifeTime += dt; // slowly add until maxLifeTime
         if (!alreadyShowing)
-            notiTime += Time.deltaTime;
+            notiTime += dt;
+
         //Console.WriteLine(lifeTime);
         if (lifeTime > 65.0f)
         {
@@ -128,14 +129,14 @@ public class Notification : MonoBehaviour
         if (lifeTime > maxLifeTime)
         {
             //GameOver();
-            Debug.Log("BREAK HERE");
+            //Debug.Log("BREAK HERE");
             expirebool = true;
             lifeTime = 0f;
             return false;
         }
         if (notiTime > showNotification)
         {
-            Console.WriteLine("Enter here once");
+            Debug.Log("Enter here once");
             shouldShow = true;
             //showNotification = maxLifeTime;
         }

@@ -1448,36 +1448,6 @@ namespace Editor {
 					}
 				}
 
-
-				/**
-				*	Scripts for each component
-				*/
-				Engine::ScriptComponent* scriptComp = Engine::dreamECSGame->GetComponentPTR<Engine::ScriptComponent>(entity_selected);
-				if (scriptComp != nullptr) {
-					//if (ImGui::TreeNode("Script")) {
-					auto& scriptsList = scriptComp->klassInstance;
-
-					for (auto& [className, csScriptInstance] : scriptsList) {
-						//ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
-						DreamImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
-						ImGui::SameLine();
-						HelperMarker("Insert the script you have coded\n To edit the script, go to Editor->Assets->Script and select solution");
-						ImGui::SameLine();
-						if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str()))
-						{
-
-							/**
-							*	DELETE
-							*/
-							ImGui::AlignTextToFramePadding();
-							//ImGui::SameLine(halfWidth);
-							if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
-								Engine::dreamECSGame->RemoveScript(entity_selected, className.c_str());
-
-						}
-					}
-				}
-
 				/**
 				*		PARTICLE
 				*/
@@ -1799,6 +1769,31 @@ namespace Editor {
 					if (ImGui::CollapsingHeader("Light"))
 					{
 						/**
+						*	Offset Position
+						*/
+
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Offset Position");
+						ImGui::SameLine();
+						HelperMarker("Light Position from Object");
+						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##offsetPosX", &lightComp->offsetPosition.x, 0.f, 0.f, "%.2f", 1);
+
+						ImGui::SameLine(halfWidth * 1.7f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.820f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::InputFloat("##offsetPosY", &lightComp->offsetPosition.y, 0.f, 0.f, "%.2f", 1);
+
+						ImGui::PopFont();
+
+						ImGui::Spacing();
+
+						/**
 						*	Scale
 						*/
 						ImGui::AlignTextToFramePadding();
@@ -1841,6 +1836,35 @@ namespace Editor {
 						ImGui::SameLine(halfWidth);
 						if (ImGui::Button("Delete Component##DeleteCamera", { ImGui::GetContentRegionAvail().x, 0 }))
 							Engine::dreamECSGame->RemoveComponent<Engine::LightComponent>(entity_selected);
+					}
+				}
+
+				/**
+				*	Scripts for each component
+				*/
+				Engine::ScriptComponent* scriptComp = Engine::dreamECSGame->GetComponentPTR<Engine::ScriptComponent>(entity_selected);
+				if (scriptComp != nullptr) {
+					//if (ImGui::TreeNode("Script")) {
+					auto& scriptsList = scriptComp->klassInstance;
+
+					for (auto& [className, csScriptInstance] : scriptsList) {
+						//ImGui::Checkbox(className.c_str(), &(csScriptInstance.isActive));
+						DreamImGui::CheckBox_Dream(std::string{ "##ScriptActive" + className }.c_str(), &(csScriptInstance.isActive));
+						ImGui::SameLine();
+						HelperMarker("Insert the script you have coded\n To edit the script, go to Editor->Assets->Script and select solution");
+						ImGui::SameLine();
+						if (ImGui::CollapsingHeader(std::string{ className + " (Script)" }.c_str()))
+						{
+
+							/**
+							*	DELETE
+							*/
+							ImGui::AlignTextToFramePadding();
+							//ImGui::SameLine(halfWidth);
+							if (ImGui::Button("Delete Component##DeleteScript", { ImGui::GetContentRegionAvail().x, 0 }))
+								Engine::dreamECSGame->RemoveScript(entity_selected, className.c_str());
+
+						}
 					}
 				}
 

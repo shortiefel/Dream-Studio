@@ -169,12 +169,12 @@ namespace Engine
 			if (!transform || !transform->isActive) continue;
 
 			// Check texture component
-			TextureComponent* texture = dreamECSGame->GetComponentPTR<TextureComponent>(entity_id);
+			//TextureComponent* texture = dreamECSGame->GetComponentPTR<TextureComponent>(entity_id);
 			//if (!texture || !texture->isActive) continue;
 
 			if (transform->layer == layer)
 			{
-				GraphicImplementation::Renderer::DrawQuad(transform->position, light.scale, transform->angle,
+				GraphicImplementation::Renderer::DrawQuad(transform->position + light.offsetPosition, light.scale, transform->angle,
 					light.texobj_hdl, 1.f, light.colour);
 			}
 		}
@@ -332,8 +332,8 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Set background colour
-		//glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
-		glClearColor(0, 0, 0, 1.0f);
+		glClearColor(0.906f, 0.882f, 0.839f, 1.0f);
+		//glClearColor(0, 0, 0, 1.0f);
 
 
 

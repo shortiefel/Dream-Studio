@@ -67,45 +67,46 @@ public class SpawnManager : MonoBehaviour
 
         Vector2Int roadPosition = SpawnRandomRoad();
         Vector2Int roadPosition2 = SpawnRandomRoad();
-
-        spawnState = SpawnState.BuildUp;
-
-        //For testing traffic
-        //Vector2Int roadPositionT = new Vector2Int(1, 3);
-        //structureManager.PlaceHouse(roadPositionT, 0);
-        //Vector2Int roadPositionS = new Vector2Int(5, 3);
-        //structureManager.PlaceSpecial(roadPositionS, 0);
         //
-        //Vector2Int roadPosition = new Vector2Int(3, 0);
-        //Vector2Int roadPosition2 = new Vector2Int(3, 5);
-
+        //spawnState = SpawnState.BuildUp;
+        //
         structureManager.PlaceHouse(roadPosition, 0);
         structureManager.PlaceSpecial(roadPosition2, 0);
 
         //-------------------------------
-        placementManager.placementGrid.Expand();
-        while (true)
-        {
-        
-            if (placementManager.placementGrid.GetAllHouses().Count >= 2 && placementManager.placementGrid.GetAllSpecialStructure().Count >= 5)
-            {
-                break;
-            }
-            //Debug.Log("Failed full spawn");
-        
-            if (placementManager.placementGrid.GetAllHouses().Count < 3)
-            {
-                //Debug.Log("Spawn Fix House");
-                roadPosition = SpawnRandomRoad();
-                structureManager.PlaceHouse(roadPosition, 0);
-            }
-        
-            if (placementManager.placementGrid.GetAllSpecialStructure().Count < 6)
-            {
-                roadPosition2 = SpawnRandomRoad();
-                structureManager.PlaceSpecial(roadPosition2, 0);
-            }
-        }
+        //placementManager.placementGrid.Expand();
+        //
+        //Vector2Int roadPositionT = new Vector2Int(7, 0);
+        //structureManager.PlaceHouse(roadPositionT, 0);
+        //roadPositionT = new Vector2Int(9, 4);
+        //structureManager.PlaceHouse(roadPositionT, 0);
+        //
+        //roadPositionT = new Vector2Int(7, 7);
+        //structureManager.PlaceSpecial(roadPositionT, 0);
+        //roadPositionT = new Vector2Int(4, 4);
+        //structureManager.PlaceSpecial(roadPositionT, 0);
+        //while (true)
+        //{
+        //
+        //    if (placementManager.placementGrid.GetAllHouses().Count >= 2 && placementManager.placementGrid.GetAllSpecialStructure().Count >= 5)
+        //    {
+        //        break;
+        //    }
+        //    //Debug.Log("Failed full spawn");
+        //
+        //    if (placementManager.placementGrid.GetAllHouses().Count < 3)
+        //    {
+        //        //Debug.Log("Spawn Fix House");
+        //        roadPosition = SpawnRandomRoad();
+        //        structureManager.PlaceHouse(roadPosition, 0);
+        //    }
+        //
+        //    if (placementManager.placementGrid.GetAllSpecialStructure().Count < 6)
+        //    {
+        //        roadPosition2 = SpawnRandomRoad();
+        //        structureManager.PlaceSpecial(roadPosition2, 0);
+        //    }
+        //}
         //-------------------------------
 
         //Check if have 1 house and 1 destination to start off
@@ -303,7 +304,7 @@ public class SpawnManager : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.R)) return;
-        //spawnTimer += dt;
+        spawnTimer += dt;
         if (spawnTimer > spawnTimerMax)
         {
             if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))

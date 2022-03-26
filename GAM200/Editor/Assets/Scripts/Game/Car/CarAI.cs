@@ -243,6 +243,7 @@ public class CarAI : MonoBehaviour
                         //Stop car because might be other cars
                         //Debug.Log(stop);
                         collisionManager.AddRaycastCollision(entityId, hit.transform[i].entityId);
+                        //Console.WriteLine("Ray " + entityId + " to " + hit.transform[i].entityId);
                         if (collisionManager.CheckStopRaycastCollision(entityId, hit.transform[i].entityId))
                         {
                             stop |= true;

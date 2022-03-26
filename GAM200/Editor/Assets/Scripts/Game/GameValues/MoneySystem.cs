@@ -60,11 +60,12 @@ public class MoneySystem : MonoBehaviour
     Text listOfCostTimerText;
     bool requireFading;
     Vector2 textStartPosition;
-    float yFinalPosition;
+    float textYFinalPosition;
 
     MoneySource currentSource;
 
     Vector2 imageStartPosition;
+    float imageYFinalPosition;
 
     Transform infoStore;
     Transform infoERP;
@@ -122,9 +123,10 @@ public class MoneySystem : MonoBehaviour
         }
         requireFading = false;
         textStartPosition = new Vector2(62f, 41.1f);
-        yFinalPosition = 35.5f;
+        textYFinalPosition = 34.9f;
 
         imageStartPosition = new Vector2(56.7f, 41.1f);
+        imageYFinalPosition = 35.5f;
 
         GameObject goImageStore = GameObject.Find("ListOfCostImageStore");
         if (goImageStore != null)
@@ -171,107 +173,167 @@ public class MoneySystem : MonoBehaviour
 
         //To add to scene file
         {
-            //{
-            //  "Entity": {
-            //    "Name": "ListOfCostText",
-            //    "Parent": 10001,
-            //    "Child": []
-            //  },
-            //  "TransformComponent": {
-            //    "Position": [ 62.0, 35.5 ],
-            //    "LocalPosition": [ 0.0, 0.0 ],
-            //    "Scale": [ 1.5, 1.5 ],
-            //    "Angle": 0.0,
-            //    "Layer": 2,
-            //    "IsActive": true
-            //  },
-            //  "FontComponent": {
-            //    "Filepath": "Assets\\Fonts\\arial.ttf",
-            //    "Text": "-100",
-            //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-            //    "IsActive": true
-            //  }
-            //},
-            //{
-            //  "Entity": {
-            //    "Name": "ListOfCostImageStore",
-            //    "Parent": 10001,
-            //    "Child": []
-            //  },
-            //  "TransformComponent": {
-            //    "Position": [ 56.70000076293945, 35.5 ],
-            //    "LocalPosition": [ 0.0, 0.0 ],
-            //    "Scale": [ 2.0, 2.0 ],
-            //    "Angle": 0.0,
-            //    "Layer": 2,
-            //    "IsActive": false
-            //  },
-            //  "UIComponent": {
-            //    "Filepath": "Assets\\Textures\\Game\\UI\\ShoppingCart.png",
-            //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-            //    "IsActive": true
-            //  }
-            //},
-            //{
-            //  "Entity": {
-            //    "Name": "ListOfCostDestination",
-            //    "Parent": 10001,
-            //    "Child": []
-            //  },
-            //  "TransformComponent": {
-            //    "Position": [ 56.70000076293945, 35.5 ],
-            //    "LocalPosition": [ 0.0, 0.0 ],
-            //    "Scale": [ 2.0, 2.0 ],
-            //    "Angle": 0.0,
-            //    "Layer": 2,
-            //    "IsActive": false
-            //  },
-            //  "UIComponent": {
-            //    "Filepath": "Assets\\Textures\\Game\\Houses\\HDB.png",
-            //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-            //    "IsActive": true
-            //  }
-            //},
-            //{
-            //  "Entity": {
-            //    "Name": "ListOfCostERP",
-            //    "Parent": 10001,
-            //    "Child": []
-            //  },
-            //  "TransformComponent": {
-            //    "Position": [ 56.70000076293945, 35.5 ],
-            //    "LocalPosition": [ 0.0, 0.0 ],
-            //    "Scale": [ 2.0, 2.0 ],
-            //    "Angle": 0.0,
-            //    "Layer": 2,
-            //    "IsActive": false
-            //  },
-            //  "UIComponent": {
-            //    "Filepath": "Assets\\Textures\\Game\\ERP.png",
-            //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-            //    "IsActive": true
-            //  }
-            //},
-            //{
-            //  "Entity": {
-            //    "Name": "ListOfCostTax",
-            //    "Parent": 10001,
-            //    "Child": []
-            //  },
-            //  "TransformComponent": {
-            //    "Position": [ 56.70000076293945, 35.5 ],
-            //    "LocalPosition": [ 0.0, 0.0 ],
-            //    "Scale": [ 2.0, 2.0 ],
-            //    "Angle": 0.0,
-            //    "Layer": 2,
-            //    "IsActive": false
-            //  },
-            //  "UIComponent": {
-            //    "Filepath": "Assets\\Textures\\Game\\UI\\New_BAG-01-08.png",
-            //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-            //    "IsActive": true
-            //  }
-            //}
+          //{
+          //    "Entity": {
+          //    "Name": "ListOfCostText",
+          //    "Parent": 10001,
+          //    "Child": []
+          //  },
+          //  "TransformComponent": {
+          //    "Position": [ 62.0, 34.9 ],
+          //    "LocalPosition": [ 0.0, 0.0 ],
+          //    "Scale": [ 1.5, 1.5 ],
+          //    "Angle": 0.0,
+          //    "Layer": 2,
+          //    "IsActive": true
+          //  },
+          //  "FontComponent": {
+          //                  "Filepath": "Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf",
+          //    "Text": "-100",
+          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+          //    "IsActive": true
+          //  }
+          //},
+          //{
+          //              "Entity": {
+          //                  "Name": "ListOfCostImageStore",
+          //    "Parent": 10001,
+          //    "Child": []
+          //  },
+          //  "TransformComponent": {
+          //                  "Position": [ 56.70000076293945, 35.5 ],
+          //    "LocalPosition": [ 0.0, 0.0 ],
+          //    "Scale": [ 2.0, 2.0 ],
+          //    "Angle": 0.0,
+          //    "Layer": 2,
+          //    "IsActive": false
+          //  },
+          //  "UIComponent": {
+          //                  "Filepath": "Assets\\Textures\\Game\\UI\\ShoppingCart.png",
+          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+          //    "IsActive": true
+          //  }
+          //          },
+          //{
+          //              "Entity": {
+          //                  "Name": "ListOfCostERP",
+          //    "Parent": 10001,
+          //    "Child": []
+          //  },
+          //  "TransformComponent": {
+          //                  "Position": [ 56.70000076293945, 35.5 ],
+          //    "LocalPosition": [ 0.0, 0.0 ],
+          //    "Scale": [ 2.0, 2.0 ],
+          //    "Angle": 0.0,
+          //    "Layer": 2,
+          //    "IsActive": false
+          //  },
+          //  "UIComponent": {
+          //                  "Filepath": "Assets\\Textures\\Game\\ERP.png",
+          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+          //    "IsActive": true
+          //  }
+          //          },
+          //{
+          //              "Entity": {
+          //                  "Name": "ListOfCostTax",
+          //    "Parent": 10001,
+          //    "Child": []
+          //  },
+          //  "TransformComponent": {
+          //                  "Position": [ 56.70000076293945, 35.5 ],
+          //    "LocalPosition": [ 0.0, 0.0 ],
+          //    "Scale": [ 2.0, 2.0 ],
+          //    "Angle": 0.0,
+          //    "Layer": 2,
+          //    "IsActive": false
+          //  },
+          //  "UIComponent": {
+          //                  "Filepath": "Assets\\Textures\\Game\\UI\\New_BAG-01-08.png",
+          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+          //    "IsActive": true
+          //  }
+          //          },
+          //{
+          //              "Entity": {
+          //                  "Name": "ListOfCostDestHospital",
+          //    "Parent": 10001,
+          //    "Child": []
+          //  },
+          //  "TransformComponent": {
+          //                  "Position": [ 56.70000076293945, 35.5 ],
+          //    "LocalPosition": [ 0.0, 0.0 ],
+          //    "Scale": [ 2.0, 2.0 ],
+          //    "Angle": 0.0,
+          //    "Layer": 2,
+          //    "IsActive": false
+          //  },
+          //  "UIComponent": {
+          //                  "Filepath": "Assets\\Textures\\Game\\Houses\\Hospital.png",
+          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+          //    "IsActive": true
+          //  }
+          //          },
+          //{
+          //              "Entity": {
+          //                  "Name": "ListOfCostDestOffice",
+          //    "Parent": 10001,
+          //    "Child": []
+          //  },
+          //  "TransformComponent": {
+          //                  "Position": [ 56.70000076293945, 35.5 ],
+          //    "LocalPosition": [ 0.0, 0.0 ],
+          //    "Scale": [ 2.0, 2.0 ],
+          //    "Angle": 0.0,
+          //    "Layer": 2,
+          //    "IsActive": false
+          //  },
+          //  "UIComponent": {
+          //                  "Filepath": "Assets\\Textures\\Game\\Houses\\Office.png",
+          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+          //    "IsActive": true
+          //  }
+          //          },
+          //{
+          //              "Entity": {
+          //                  "Name": "ListOfCostDestPark",
+          //    "Parent": 10001,
+          //    "Child": []
+          //  },
+          //  "TransformComponent": {
+          //                  "Position": [ 56.70000076293945, 35.5 ],
+          //    "LocalPosition": [ 0.0, 0.0 ],
+          //    "Scale": [ 2.0, 2.0 ],
+          //    "Angle": 0.0,
+          //    "Layer": 2,
+          //    "IsActive": false
+          //  },
+          //  "UIComponent": {
+          //                  "Filepath": "Assets\\Textures\\Game\\Houses\\Park.png",
+          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+          //    "IsActive": true
+          //  }
+          //          },
+          //{
+          //              "Entity": {
+          //                  "Name": "ListOfCostDestMall",
+          //    "Parent": 10001,
+          //    "Child": []
+          //  },
+          //  "TransformComponent": {
+          //                  "Position": [ 56.70000076293945, 35.5 ],
+          //    "LocalPosition": [ 0.0, 0.0 ],
+          //    "Scale": [ 2.0, 2.0 ],
+          //    "Angle": 0.0,
+          //    "Layer": 2,
+          //    "IsActive": false
+          //  },
+          //  "UIComponent": {
+          //                  "Filepath": "Assets\\Textures\\Game\\Houses\\ShoppingMall.png",
+          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+          //    "IsActive": true
+          //  }
+          //}
         }
     }
 
@@ -282,43 +344,43 @@ public class MoneySystem : MonoBehaviour
         if (requireFading)
         {
             listOfCostFadeTimer += Time.fixedDeltaTime;
-            listOfCostTimerTransform.position = new Vector2(listOfCostTimerTransform.position.x, Mathf.Lerp(listOfCostTimerTransform.position.y, yFinalPosition, listOfCostFadeTimer));
+            listOfCostTimerTransform.position = new Vector2(listOfCostTimerTransform.position.x, Mathf.Lerp(listOfCostTimerTransform.position.y, textYFinalPosition, listOfCostFadeTimer));
             switch (currentSource)
             {
                 case MoneySource.Store:
                     {
-                        infoStore.position = new Vector2(infoStore.position.x, Mathf.Lerp(infoStore.position.y, yFinalPosition, listOfCostFadeTimer));
+                        infoStore.position = new Vector2(infoStore.position.x, Mathf.Lerp(infoStore.position.y, imageYFinalPosition, listOfCostFadeTimer));
                         break;
                     }
                 case MoneySource.ERP:
                     {
-                        infoERP.position = new Vector2(infoERP.position.x, Mathf.Lerp(infoERP.position.y, yFinalPosition, listOfCostFadeTimer));
+                        infoERP.position = new Vector2(infoERP.position.x, Mathf.Lerp(infoERP.position.y, imageYFinalPosition, listOfCostFadeTimer));
                         break;
                     }
                 case MoneySource.Tax:
                     {
-                        infoTax.position = new Vector2(infoTax.position.x, Mathf.Lerp(infoTax.position.y, yFinalPosition, listOfCostFadeTimer));
+                        infoTax.position = new Vector2(infoTax.position.x, Mathf.Lerp(infoTax.position.y, imageYFinalPosition, listOfCostFadeTimer));
                         break;
                     }
 
                 case MoneySource.DestHospital:
                     {
-                        infoDestHospital.position = new Vector2(infoDestHospital.position.x, Mathf.Lerp(infoDestHospital.position.y, yFinalPosition, listOfCostFadeTimer));
+                        infoDestHospital.position = new Vector2(infoDestHospital.position.x, Mathf.Lerp(infoDestHospital.position.y, imageYFinalPosition, listOfCostFadeTimer));
                         break;
                     }
                 case MoneySource.DestOffice:
                     {
-                        infoDestOffice.position = new Vector2(infoDestOffice.position.x, Mathf.Lerp(infoDestOffice.position.y, yFinalPosition, listOfCostFadeTimer));
+                        infoDestOffice.position = new Vector2(infoDestOffice.position.x, Mathf.Lerp(infoDestOffice.position.y, imageYFinalPosition, listOfCostFadeTimer));
                         break;
                     }
                 case MoneySource.DestPark:
                     {
-                        infoDestPark.position = new Vector2(infoDestPark.position.x, Mathf.Lerp(infoDestPark.position.y, yFinalPosition, listOfCostFadeTimer));
+                        infoDestPark.position = new Vector2(infoDestPark.position.x, Mathf.Lerp(infoDestPark.position.y, imageYFinalPosition, listOfCostFadeTimer));
                         break;
                     }
                 case MoneySource.DestMall:
                     {
-                        infoDestMall.position = new Vector2(infoDestMall.position.x, Mathf.Lerp(infoDestMall.position.y, yFinalPosition, listOfCostFadeTimer));
+                        infoDestMall.position = new Vector2(infoDestMall.position.x, Mathf.Lerp(infoDestMall.position.y, imageYFinalPosition, listOfCostFadeTimer));
                         break;
                     }
             }
@@ -451,10 +513,10 @@ public class MoneySystem : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.F))
-        {
-            TimeSystem.NormalTime();
-        }
+        //if (Input.GetKey(KeyCode.F))
+        //{
+        //    TimeSystem.NormalTime();
+        //}
 
     }
 

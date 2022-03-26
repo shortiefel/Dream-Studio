@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System;
 //Car is not included as checking for Cars might be too expensive
 //Considering that it could go 5 times higher than the other things
 public enum CollisionType
@@ -50,7 +50,8 @@ public class CollisionManager : MonoBehaviour
 
     public override void Update()
     {
-        if (Input.GetKey(KeyCode.Y)) Debug.Log(raycastCollisionRecord.Count);
+        //if (Input.GetKey(KeyCode.Y)) Debug.Log(raycastCollisionRecord.Count);
+        //Console.WriteLine("Resetting---------------------------------------------------");
         raycastCollisionRecord.Clear();
     }
 
@@ -86,9 +87,9 @@ public class CollisionManager : MonoBehaviour
                 {
                     //-----------------
                     //if (Input.GetKey(KeyCode.F) && owner > target)
-                    if (owner > target)
+                    //if (owner > target)
                     {
-                        Debug.Log("Olrder taget--------------------------------");
+                        //Debug.Log("Olrder taget--------------------------------");
                         if (Input.GetKey(KeyCode.C) )
                         {
                             TimeSystem.StopTime();
@@ -96,11 +97,13 @@ public class CollisionManager : MonoBehaviour
                         }
                     }
                     //-----------------
-                    //Let the newer entity pass
-                    //Logic behind it: Because the newer entity will have its' CarAi run later, it means that it will add to raycastCollisionRecord later
-                    //And when two car raycast into each other, only the newer entity will detect in raycastCollisionRecord that raycastCollisionRecord[owner] = target and raycastCollisionRecord[target] = owner,
-                    //Which is why the newer entity will be allowed to go
-                    return !(owner > target);
+
+                    
+
+                    //Return false everytime raycastCollisionRecord[owner] has target and raycastCollisionRecord[target] has owner
+                    //Logic behind it is that, each entity's script get run 1 after another, if 2 cars were to raycast each other,
+                    //the first car would not find the other entityId, while the second car would find the other entityId
+                    return false;
                 }
             }
         }

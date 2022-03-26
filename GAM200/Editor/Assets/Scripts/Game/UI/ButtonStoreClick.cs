@@ -28,7 +28,6 @@ public class ButtonStoreClick : MonoBehaviour
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
         state = false;
 
-        roadPlus = GameObject.Find("RoadPlus").GetComponent<ButtonStoreClick>();
         CostRoad = GameObject.Find("RoadCost").GetComponent<Text>();
         CostTL = GameObject.Find("TrafficCost").GetComponent<Text>();
         CostERP = GameObject.Find("ERPCost").GetComponent<Text>();

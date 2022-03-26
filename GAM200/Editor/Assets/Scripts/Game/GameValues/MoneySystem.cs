@@ -19,6 +19,13 @@ public class MoneySystem : MonoBehaviour
     public int trafficTax;
     public int totalTax;
     public int balance;
+    public int road_counter;
+    public int traffic_counter;
+    public int erp_counter;
+
+    public bool road_bool;
+    public bool traffic_bool;
+    public bool erp_bool;
 
     private int erpBuyCount;
     private int tlBuyCount;
@@ -58,9 +65,16 @@ public class MoneySystem : MonoBehaviour
         roadCost = 20;
         tlCost = 50;
         erpCost = 50;
+        road_counter = 0;
+        traffic_counter = 0;
+        erp_counter = 0;
 
         erpBuyCount = 0;
         tlBuyCount = 0;
+
+        road_bool = false;
+        traffic_bool = false;
+        erp_bool = false;
     }
 
     public void AddMoney(int val)
@@ -106,70 +120,117 @@ public class MoneySystem : MonoBehaviour
         
     }
 
-    //public int GetCurrRoad()
-    //{
-    //    return currRoad;
-    //}
-
-    public void BuyRoad()
+    public void BuyRoad(int count)
     {
-        money -= roadCost;
+        money -= count * 20;
         textComp.text = money.ToString();
-        ++roadManager.roadCount;
+        roadManager.roadCount += count;
     }
 
-    public void SellRoad()
+    public void SellRoad(int count)
     {
-        if (roadManager.roadCount == 0) return;
-
-        money = money + 10;
+        money += count * 10;
         textComp.text = money.ToString();
-        --roadManager.roadCount;
+        roadManager.roadCount -= count;
     }
 
     public int GetErpCost()
     {
         return erpCost;
     }
-    public void BuyErp()
+    public void BuyErp(int count)
     {
-        money -= erpCost;
+        for (int i = 0; i < count; i++)
+        {
+            money -= erpCost;
+            erpBuyCount++;
+            erpCost = 50 + erpBuyCount * 10;
+        }
         textComp.text = money.ToString();
-        ++roadManager.erpManager.erpCount;
-        ++erpBuyCount;
-        erpCost += (erpBuyCount * 10);
-       
-    }
-    public void SellErp()
-    {
-        if (roadManager.erpManager.erpCount == 0) return;
+        roadManager.erpManager.erpCount += count;
 
-        money = money + 10;
-        textComp.text = money.ToString();
-        --roadManager.erpManager.erpCount;
     }
-
-    public int GetTLCost()
+    public void SellErp(int count)
     {
-        return tlCost;
-    }
-    public void BuyTrafficLight()
-    {
-        money -= tlCost;
+        money += count * (int)(erpCost + 0.5);
         textComp.text = money.ToString();
-        ++roadManager.trafficLightManager.tlCount;
-        ++tlBuyCount;
-        tlCost += (int)(tlBuyCount * 10);
-       
+        roadManager.erpManager.erpCount -= count;
     }
-    public void SellTL()
+    public void BuyTrafficLight(int count)
     {
-        if (roadManager.trafficLightManager.tlCount == 0) return;
-
-        money += 25;
+        for (int i = 0; i < count; i++)
+        {
+            money -= tlCost;
+            tlBuyCount++;
+            tlCost = 50 + tlBuyCount * 10;
+        }
         textComp.text = money.ToString();
-        --roadManager.trafficLightManager.tlCount;
+        roadManager.trafficLightManager.tlCount += count;
+    }
+    public void SellTL(int count)
+    {
+        money += count * (int)(tlCost * 0.5);
+        textComp.text = money.ToString();
+        roadManager.trafficLightManager.tlCount -= count;
     }
 
+    public int road_count()
+    {
+        return road_counter;
+    }
+
+    public int tl_count()
+    {
+        return traffic_counter;
+    }
+
+    public int erp_count()
+    {
+        return erp_counter;
+    }
+
+    public int erpbuy_count()
+    {
+        return erpBuyCount;
+    }
+
+    public int calculatetl_cost()
+    {
+        int total_amount = 0;
+        int buyc = tlBuyCount ;
+        for (int i = 0; i < traffic_counter; i++)
+        {
+            total_amount += 50 + buyc * 10;
+            buyc++;
+        }
+        return total_amount;
+    }
+
+    public int calculateerp_cost()
+    {
+        int total_amount = 0;
+        int buyc = erpBuyCount;
+        for (int i = 0; i < erp_counter; i++)
+        {
+            total_amount += 50 + buyc * 10;
+            buyc++;
+        }
+        return total_amount;
+    }
+
+    public bool get_r_bool()
+    {
+        return road_bool;
+    }
+
+    public bool get_tl_bool()
+    {
+        return traffic_bool;
+    }
+
+    public bool get_erp_bool()
+    {
+        return erp_bool;
+    }
 }
 

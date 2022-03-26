@@ -133,10 +133,12 @@ public class ButtonStore : MonoBehaviour
     Transform storeIntro;
 
     Transform storeClose;
+    public MoneySystem moneySystem;
 
     public override void Start()
     {
 
+        moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
         storeClose = GameObject.Find("StoreCloseButton").GetComponent<Transform>();
 
         roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
@@ -430,41 +432,41 @@ public class ButtonStore : MonoBehaviour
          SwitchTabStore(state);
     }
 
-    //public override void Update()
-    //{
-    //    //if (!gameState.GetDrawMode())
-    //    //{
-    //    //    if (Input.GetKeyDown(KeyCode.Escape))
-    //    //    {
-    //    //        //Enable<Transform>(Storebtn.transform);
-    //    //        //Disable<Transform>(StoreBack.transform);
-    //    //        StoreAction();
-    //    //    }
-    //    //}
-    //
-    //    //if (stopTime)
-    //    //{
-    //    //    stopTimer += Time.deltaTime;
-    //    //
-    //    //    float newTimer = 5f * stopTimer;
-    //    //
-    //    //    if (stopTimer > 0.1f)
-    //    //    {
-    //    //        stopTimer = 0f;
-    //    //        stopTime = false;
-    //    //
-    //    //        //Enable<Transform>(Storebtn.transform);
-    //    //        //Disable<Transform>(StoreBack.transform);
-    //    //        Disable<Transform>(displayArrow);
-    //    //        Disable<Transform>(displayArrowWhite);
-    //    //        Disable<Transform>(pauseIcon);
-    //    //
-    //    //        Disable<Transform>(timerButton);
-    //    //
-    //    //        Time.timeScale = 0f;
-    //    //    }
-    //    //}
-    //}
+    public override void Update()
+    {
+
+        if(!moneySystem.get_r_bool())
+        {
+            Roadx1.GetComponent<UI>().ChangeTexture("Game/Store/x1Btn_Dark");
+            Roadx10.GetComponent<UI>().ChangeTexture("Game/Store/x10Btn");
+        }
+        else
+        {
+            Roadx1.GetComponent<UI>().ChangeTexture("Game/Store/x1Btn");
+            Roadx10.GetComponent<UI>().ChangeTexture("Game/Store/x10Btn_Dark");
+        }
+        if(!moneySystem.get_tl_bool())
+        {
+            Trafficx1.GetComponent<UI>().ChangeTexture("Game/Store/x1Btn_Dark");
+            Trafficx10.GetComponent<UI>().ChangeTexture("Game/Store/x10Btn");
+        }
+        else
+        {
+            Trafficx1.GetComponent<UI>().ChangeTexture("Game/Store/x1Btn");
+            Trafficx10.GetComponent<UI>().ChangeTexture("Game/Store/x10Btn_Dark");
+        }
+        if(!moneySystem.get_erp_bool())
+        {
+            ERPx1.GetComponent<UI>().ChangeTexture("Game/Store/x1Btn_Dark");
+            ERPx10.GetComponent<UI>().ChangeTexture("Game/Store/x10Btn");
+        }
+        else
+        {
+            ERPx1.GetComponent<UI>().ChangeTexture("Game/Store/x1Btn");
+            ERPx10.GetComponent<UI>().ChangeTexture("Game/Store/x10Btn_Dark");
+        }
+
+    }
 
 
     public override void OnMouseEnter()

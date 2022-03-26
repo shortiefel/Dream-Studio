@@ -4,32 +4,19 @@ using System;
 
 public class CarAI : MonoBehaviour
 {
-    //[SerializeField]
     private List<Vector2> path;
-    //private Queue<Vector2Int> tlPath;
     private List<uint> tlIndex;
 
-    //[SerializeField]
+    
     private float arriveDistance, lastPointArriveDistance;
-    //[SerializeField]
-    //private float turningAngleOffset;
-    //[SerializeField]
+
     private Vector2 currentTargetPosition;
 
-    //[SerializeField]
-    //private GameObject raycastStartingPoint = null;
-    //[SerializeField]
-    //private float collisionRaycastLength = 0.1f;
 
-    //internal bool IsThisLastPathIndex()
-    //{
-    //    return index >= path.Count - 1;
-    //}
 
     private int index;
 
     private bool stop;
-    //private bool collisionStop;
 
     private Rigidbody2D rb;
 
@@ -37,16 +24,7 @@ public class CarAI : MonoBehaviour
     private float maxPower;
 
 
-    //private float torque = 0.5f;
-    //private float dotValue;
-    //private float turningFactor; //Slow down when turning
-
-    //private float maxSpeed;
-
-    //private Vector2 movementVector;
-
     private StructureModel endPoint;
-    //private GameObject endPointGO;
 
     private TrafficManager tm;
     private CollisionManager collisionManager;
@@ -69,56 +47,27 @@ public class CarAI : MonoBehaviour
 
     private List<uint> pastTrafficLight;
 
-    //private bool testBool = true;
-    /*public bool Stop
-    {
-        get { return stop || collisionStop; }
-        set { stop = value; }
-    }*/
-
-    //[field: SerializeField]
-    //public UnityEvent<Vector2> OnDrive { get; set; }
-    //public Action<Vector2> OnDrive;
+    
 
     public override void Start()
     {
         carLength = transform.scale.x;
         raycastLength = carLength * 0.5f;
         
-        //Debug.Log(raycastLength + " lengirhteuth");
-
-        //endPoint = null;
         path = null;
         index = 0;
         stop = true;
-        //collisionStop = false;
 
         rb = GetComponent<Rigidbody2D>();
-        //GetComponent<AudioSource>().Play();
-
-        //if (path == null || path.Count == 0)
-        //if (path == null || path.Count == 0)
-        //{
-        //    stop = true;
-        //}
-        //else
-        //{
-        //    currentTargetPosition = path[index];
-        //}
+        
 
         arriveDistance = 0.3f;
         lastPointArriveDistance = 0.1f;
-        //turningAngleOffset = 0.02;
 
-        //dotValue = 0.06f;
-        //
-        //maxSpeed = 3;
+       
         power = 1;
         maxPower = 6;
-        //maxPower = 1;
-        //turningFactor = 1f;
-        //movementVector = new Vector2(0, 1);
-        //Console.WriteLine("Testing " + rb.velocity);
+        
 
         //tlPath = null;
         GameObject go1 = GameObject.Find("CollisionManager");
@@ -152,44 +101,10 @@ public class CarAI : MonoBehaviour
         }
         //Console.WriteLine("p1 " + newPath.Count);
         this.path = newPath;
-        //foreach (var item in path)
-        //{
-        //    Debug.Log(item.ToString());
-        //}
-        //Console.WriteLine("p2 " + path.Count + " " + this.path.Count);
+       
         index = 0;
         currentTargetPosition = this.path[index];
-
-        //foreach(var i in path)
-        //{
-        //    Console.WriteLine(i);
-        //}
-
-        //Console.WriteLine("ending in c# \n\n");
-        //Vector2 directionToFace = new Vector2(0f, 0f);
-        //if (this.path.Count != 1)
-        //{
-        //    directionToFace = currentTargetPosition = this.path[index];
-        //}
-        //
-        //
-        //else
-        //{
-        //    currentTargetPosition = this.path[0];
-        //    directionToFace = endStructure.transform.position;
-        //    Debug.Log("end ");
-        //}
-        //Console.WriteLine("p3 " + index);
-        //Debug.Log(currentTargetPosition);
-
-        /*Vector2 relativepoint = transform.InverseTransformPoint(this.path[index + 1]);
-        //Debug.Log(relativepoint);
-        float angle = Mathf.Atan2(relativepoint.x, relativepoint.y) * Mathf.Rad2Deg;
-        Debug.Log(angle);
-
-        //transform.rotation = Quaternion.Euler(0, 0, -angle);
-        transform.angle = -angle;
-        Console.WriteLine(angle);*/
+        
 
         Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
         float value = Vector2.Dot(transform.right, relativeDirection);
@@ -226,14 +141,7 @@ public class CarAI : MonoBehaviour
         if (tm != null)
             tlIndex = tm.GetTrafficLightIndex(path);
 
-        //p0 = transform.position;
-        //p1 = path[index];
-        //if (index + 1 == path.Count)
-        //    p2 = p1;
-        //else
-        //    p2 = path[index + 1];
-        //
-        //turning = false;
+        
         SetNextTargetIndex();
     }
 
@@ -314,8 +222,7 @@ public class CarAI : MonoBehaviour
                 switch (collisionManager.CollisionTypeCheck(targetPos, entId))
                 {
                     case CollisionType.Traffic:
-                        //Vector2Int hitPos = new Vector2Int(hit.transform[i].position);
-                        //Debug.Log("Enter count");
+                        
                         
                         if (!stop && pastTrafficLight.Contains(entId))
                         {
@@ -324,17 +231,10 @@ public class CarAI : MonoBehaviour
 
                         bool state = !tm.GetTrafficLightState(targetPos, transform.angle);
                         stop |= state;
+                        if (stop) power = 1;
                         if (state == false)
                             pastTrafficLight.Add(entId);
-                        //Debug.Log(stop + " TL");
-                        //if (tlIndex.Contains(hit.transform.entityId))
-                        //{
-                        //    stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
-                        //    //stop = true;
-                        //    Debug.Log("Hiting trigger " + stop);
-                        //}
-                        //if (stop)
-                        //power = 2f;
+                        
                         break;
                     case CollisionType.ERP:
                         //Do nothing much if its ERP as the logic is already in ERP
@@ -342,9 +242,13 @@ public class CarAI : MonoBehaviour
                     case CollisionType.Unknown:
                         //Stop car because might be other cars
                         //Debug.Log(stop);
-                        stop |= true;
-                        //Debug.Log(stop);
-                        //collisionManager.AddRaycastCollision(entityId, hit.transform.entityId);
+                        collisionManager.AddRaycastCollision(entityId, hit.transform[i].entityId);
+                        if (collisionManager.CheckStopRaycastCollision(entityId, hit.transform[i].entityId))
+                        {
+                            stop |= true;
+                            power = power > 2f ? power / 2f : 1f;
+                        }
+                        //Debug.Log("hit");
                         break;
                     case CollisionType.Building:
                         break;
@@ -369,13 +273,16 @@ public class CarAI : MonoBehaviour
         //Debug.Log(power);
         //if (testBool) 
 
-        //if (!testBool) stop = true;
+        //if (!testBool)
+        //stop = true;
         if (stop) return;
 
         CheckIfArrived();
-        Drive();
-        //CheckForCollisions();
-        
+        //Drive();
+        if (stop) {
+            if (tm != null)
+                stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
+        }
 
         if (power < maxPower)
         {
@@ -390,11 +297,7 @@ public class CarAI : MonoBehaviour
             transform.position = Vector2.QuadraticBezier(p0, p1, p2, tValue, out angle);
             transform.angle = angle;
 
-            //if (tValue > 0.9f)
-            //{
-            //    tValue = 0f;
-            //    changeTarget = true;
-            //}
+           
         }
         else
         {
@@ -449,102 +352,36 @@ public class CarAI : MonoBehaviour
     //    //}
     //}
 
-    //private void CheckForCollisions()
+    //private void Drive()
     //{
-    //    if (Physics.Raycast(raycastStartingPoint.transform.position, transform.forward, collisionRaycastLength, 1 << gameObject.layer))
+    //    if (stop)
     //    {
-    //        collisionStop = true;
-    //    }
-    //    else
-    //    {
-    //        collisionStop = false;
+    //     
+    //
+    //        if (tm != null)
+    //            stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
     //    }
     //}
 
-    private void Drive()
-    {
-        if (stop)
-        {
-            //Console.WriteLine("stopping ");
-            //if (path == null) Console.WriteLine("stopping2222222 ");
-            //OnDrive?.Invoke(Vector2.zero);
-            //movementVector = Vector2.zero;
-
-            if (tm != null)
-                stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
-        }
-        else
-        {
-            /*Vector2 relativepoint = transform.InverseTransformPoint(currentTargetPosition);
-            Debug.Log(currentTargetPosition + " ---target");
-            Debug.Log(relativepoint);
-            float angle = Mathf.Atan2(relativepoint.x, relativepoint.y) * Mathf.Rad2Deg;
-            Debug.Log(angle + " new");
-            var rotateCar = 0;
-            if (angle > turningAngleOffset)
-            {
-                rotateCar = -1;
-                Debug.Log("Turn right");
-            }
-            else if (angle < -turningAngleOffset)
-            {
-                Debug.Log("Turn left");
-                rotateCar = 1;
-            }*/
-            //Console.WriteLine("Before Drive ");
-
-            //------------------------Temporary remove---------------------
-            //Vector2 relativeDirection = transform.InverseTransformPoint(currentTargetPosition);
-            //float value = Vector2.Dot(transform.right, relativeDirection);
-            //var rotateCar = 0;
-            //turningFactor = 1f;
-            //if (value > dotValue)
-            //{
-            //    //Debug.Log("Turn right");
-            //    rotateCar = -1;
-            //    //targetAngle = transform.angle - 90f;
-            //    turningFactor = 0.5f;
-            //}
-            //if (value < -dotValue)
-            //{
-            //    //Debug.Log("Turn left");
-            //    rotateCar = 1;
-            //    //targetAngle = transform.angle + 90f;
-            //    turningFactor = 0.5f;
-            //}
-            ////OnDrive?.Invoke(new Vector2(rotateCar, 1));
-            //movementVector = new Vector2(rotateCar, 1);
-            //------------------------Temporary remove---------------------
-            //Console.WriteLine("End drive ");
-        }
-    }
-
     private void CheckIfArrived()
     {
-        //if (stop == false)
-        //Console.WriteLine("Before CheckIfArrived ");
+
         if (!stop)
         {
-            //Console.WriteLine("After stop ");
+           
             var distanceToCheck = arriveDistance;
             if (index == path.Count - 1)
             {
                 distanceToCheck = lastPointArriveDistance;
             }
-            //Console.WriteLine("After index ");
-            //if (Vector2.Distance(currentTargetPosition, transform.position) < distanceToCheck)
+            
             if (changeTarget)
             {
-                //Console.WriteLine("Insde Distance ");
-                // Add the mass manager here
-                //scoreSystem.AddScore();
+
                 SetNextTargetIndex();
-                //Console.WriteLine("After SetNextTargetIndex ");
-                //Debug.Log(transform.position);
+                
             }
         }
-
-        //Console.WriteLine("After CheckIfArrived ");
 
     }
 
@@ -552,17 +389,7 @@ public class CarAI : MonoBehaviour
     {
         changeTarget = false;
         prevPos = transform.position;
-        //prevAngle = transform.angle;
-        //if (prevAngle > 360f)
-        //{
-        //    prevAngle -= 360f;
-        //    transform.angle = prevAngle;
-        //}
-        //else if (prevAngle < -360f)
-        //{
-        //    prevAngle += 360f;
-        //    transform.angle = prevAngle;
-        //}
+        
 
         
         //index++;
@@ -602,26 +429,6 @@ public class CarAI : MonoBehaviour
                     //Debug.Log("Turning now");
                 }
             }
-            
-
-
-
-            
-            //Debug.Log("currentTargetPosition " + currentTargetPosition + " - prevPos " + prevPos);
-            //Debug.Log(currentTargetPosition - prevPos);
-            //Vector2 diff = currentTargetPosition - prevPos;
-            //targetAngle = Vector2.AngleBetween(currentTargetPosition - prevPos, new Vector2(0, 1));
-            //if (diff.x > 0) targetAngle *= -1;
-            //Debug.Log("From " + prevAngle + " " + transform.angle + " to " + targetAngle + " old----------");
-            //targetAngle = Mathf.ShortestAngle(targetAngle, transform.angle);
-            //Debug.Log("From " + prevAngle + " " + transform.angle + " to " + targetAngle);
-            /*if (tlPath == null || tlPath.Count == 0) return;
-            if (currentTargetPosition == tlPath[0])
-            {
-                tlPath.RemoveAt(0);
-                //True = move so stop would false
-                stop = !tm.GetTrafficLightState(currentTargetPosition, transform.position);
-            }*/
         }
     }
 
@@ -646,9 +453,10 @@ public class CarAI : MonoBehaviour
         this.movementVector = movementInput;
     }*/
 
-    public override void OnTriggerEnter(Transform trans)
+    public override void OnTriggerEnter(uint entId)
     {
+        //Debug.Log(entId);
         if (tlIndex != null)
-            if (tlIndex.Contains(trans.entityId)) tlIndex.Remove(trans.entityId);
+            if (tlIndex.Contains(entId)) tlIndex.Remove(entId);
     }
 }

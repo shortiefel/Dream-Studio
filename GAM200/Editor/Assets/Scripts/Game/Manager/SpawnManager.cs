@@ -82,6 +82,32 @@ public class SpawnManager : MonoBehaviour
         structureManager.PlaceHouse(roadPosition, 0);
         structureManager.PlaceSpecial(roadPosition2, 0);
 
+        //-------------------------------
+        placementManager.placementGrid.Expand();
+        while (true)
+        {
+        
+            if (placementManager.placementGrid.GetAllHouses().Count >= 2 && placementManager.placementGrid.GetAllSpecialStructure().Count >= 5)
+            {
+                break;
+            }
+            //Debug.Log("Failed full spawn");
+        
+            if (placementManager.placementGrid.GetAllHouses().Count < 3)
+            {
+                //Debug.Log("Spawn Fix House");
+                roadPosition = SpawnRandomRoad();
+                structureManager.PlaceHouse(roadPosition, 0);
+            }
+        
+            if (placementManager.placementGrid.GetAllSpecialStructure().Count < 6)
+            {
+                roadPosition2 = SpawnRandomRoad();
+                structureManager.PlaceSpecial(roadPosition2, 0);
+            }
+        }
+        //-------------------------------
+
         //Check if have 1 house and 1 destination to start off
         while (true)
         {
@@ -276,7 +302,8 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-        spawnTimer += dt;
+        if (Input.GetKey(KeyCode.R)) return;
+        //spawnTimer += dt;
         if (spawnTimer > spawnTimerMax)
         {
             if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))

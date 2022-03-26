@@ -105,6 +105,7 @@ namespace Engine {
 		UI color
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void SetUI_Color_Engine(unsigned int entityID, Math::vec4 col);
+		void ChangeTexture_UI_Engine(unsigned int entityID, MonoString* name);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Sound / Audio Source
@@ -199,6 +200,7 @@ namespace Engine {
 			UI color
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("UI::SetUI_Color_Engine", SetUI_Color_Engine);
+			mono_add_internal_call("UI::ChangeTexture_UI_Engine", ChangeTexture_UI_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Sound / Audio Source
@@ -467,6 +469,15 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void SetUI_Color_Engine(unsigned int entityID, Math::vec4 col) {
 			SetEngineType(entityID, UIComponent, colour, col);
+		}
+
+		void ChangeTexture_UI_Engine(unsigned int entityID, MonoString* name) {
+			const auto ptr = dreamECSGame->GetComponentPTR<UIComponent>(entityID);
+			if (ptr != nullptr) {
+				char* text = mono_string_to_utf8(name);
+				GraphicImplementation::SetTexture(ptr, "Assets\\Textures\\" + std::string{ text } + ".png");
+				mono_free(text);
+			}
 		}
 
 

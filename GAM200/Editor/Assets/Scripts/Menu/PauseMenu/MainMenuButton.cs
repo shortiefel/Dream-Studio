@@ -9,6 +9,7 @@
         text = GetComponent<Text>();
         texture = GameObject.Find("BackToMenuBtn").GetComponent<UI>();
         texture.color = new Color(1f, 1f, 1f);
+        text.color = new Color(0f, 0f, 0f);
     }
     public override void OnMouseEnter()
     {
@@ -21,7 +22,6 @@
         {
             Time.timeScale = 1;
             SceneManager.LoadScene("MainMenu");
-            //pauseMenu.MenuAction();
         }
     }
     public override void OnMouseExit()

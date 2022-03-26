@@ -13,6 +13,7 @@ public class PauseQuitButton : MonoBehaviour
         text = GetComponent<Text>();
         texture = GameObject.Find("QuitBtn").GetComponent<UI>();
         texture.color = new Color(1f, 1f, 1f);
+        text.color = new Color(0f, 0f, 0f);
     }
 
 

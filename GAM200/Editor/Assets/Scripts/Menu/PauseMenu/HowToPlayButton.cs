@@ -51,7 +51,7 @@ public class HowToPlayButton : MonoBehaviour
         //Is actually How to play button
         if (text != null)
         {
-
+            text.color = new Color(0f, 0f, 0f);
             texture.color = new Color(1f, 1f, 1f);
             htw = true;
         }

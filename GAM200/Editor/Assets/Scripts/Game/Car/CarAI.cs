@@ -47,7 +47,7 @@ public class CarAI : MonoBehaviour
 
     private List<uint> pastTrafficLight;
 
-    
+    Vector2Int nextDestination;
 
     public override void Start()
     {
@@ -85,13 +85,19 @@ public class CarAI : MonoBehaviour
         prevPos = transform.position;
 
         pastTrafficLight = new List<uint>();
+
+        //The next destination (the house spawn / where the car spawn) will be the returning position
+        nextDestination = new Vector2Int(transform.position);
     }
 
-    public void SetPath(List<Vector2> newPath, uint id)
+    public void SetPath(List<Vector2> newPath, uint destinationID)
     {
         stop = false;
         //endPoint = endStructure;
-        endPoint = GameObject.FindWithId(id).GetComponent<StructureModel>();
+
+        if (destinationID == 0) endPoint = null;
+        else
+            endPoint = GameObject.FindWithId(destinationID).GetComponent<StructureModel>();
 
         //Console.WriteLine("Set 2nd  CarAi path");
         if (newPath.Count == 0)
@@ -307,7 +313,7 @@ public class CarAI : MonoBehaviour
             //transform.angle = Mathf.Lerp(prevAngle, targetAngle, tValue);
         }
 
-        if (tValue > 0.95f)
+        if (tValue > 1f)
         {
             tValue = 0f;
             changeTarget = true;
@@ -437,11 +443,12 @@ public class CarAI : MonoBehaviour
 
     private void ReachToEndPoint()
     {
-        //Console.WriteLine("Before Notify ");
         Destroy(gameObject);
-        //Console.WriteLine("After delete ");
 
-        endPoint.Notify();
+        if (endPoint != null)
+            endPoint.Notify(nextDestination, path);
+
+
 
         //Console.WriteLine("After Notify ");
 

@@ -1117,8 +1117,12 @@ namespace Engine {
                 positionsTocheck.remove(current);
                 //Cell& cell = *(*(backupGrid + current.x - offset.x) + current.y - offset.y);
                 Cell& cell = *(*(grid + current.x - offset.x) + current.y - offset.y);
-                if (cell.ct == CellType::SpecialStructure && 
-                    (current == endPosition || current == endRight || current == endUp || current == endUpRight)) {
+                if (
+                    //For House to destination travel
+                    (cell.ct == CellType::SpecialStructure && (current == endPosition || current == endRight || current == endUp || current == endUpRight)) ||
+                    //For destination to house travel
+                    (cell.ct == CellType::Structure && current == endPosition)
+                    ) {
                     path = GeneratePath(parentsDictionary, current);
                     path.reverse();
 

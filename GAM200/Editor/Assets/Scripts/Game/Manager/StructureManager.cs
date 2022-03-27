@@ -9,7 +9,10 @@ public enum BuildingType
     Office,
     Park,
     Mall,
-    House
+    //Destination must be above this
+    House,
+    COUNT,
+    None
 }
 
 public struct StartPositionSet
@@ -26,6 +29,17 @@ public struct StartPositionSet
     }
 }
 
+public struct PosIdSet
+{
+    public uint entityId;
+    public Vector2Int pos;
+
+    public PosIdSet(uint id, Vector2Int ep)
+    {
+        entityId = id;
+        pos = ep;
+    }
+}
 
 public class StructureManager : MonoBehaviour
 {
@@ -38,8 +52,9 @@ public class StructureManager : MonoBehaviour
 
     public Dictionary<Vector2Int, CarSpawner> houseList;
     public Dictionary<Vector2Int, StartPositionSet> destinationList;
+    public List<PosIdSet>[] destinationListNew;
 
-    private float pathTimerMax;
+    //private float pathTimerMax;
    
     //private void Start()
     public override void Start()
@@ -53,7 +68,7 @@ public class StructureManager : MonoBehaviour
         housesPrefabs = new StructurePrefabWeighted[2];
         housesPrefabs[0].prefab = new GameObject(new Prefab("House")); housesPrefabs[0].weight = 1;
 
-        specialPrefabs = new StructurePrefabWeighted[5];
+        specialPrefabs = new StructurePrefabWeighted[(int)BuildingType.COUNT];
         //specialPrefabs[0].prefab = new GameObject(new Prefab("Destination")); specialPrefabs[0].weight = 1;
 
         specialPrefabs[(int)BuildingType.Hospital].prefab = new GameObject(new Prefab("HospitalDestination")); specialPrefabs[(int)BuildingType.Hospital].weight = 1;
@@ -72,9 +87,37 @@ public class StructureManager : MonoBehaviour
         houseList = new Dictionary<Vector2Int, CarSpawner>();
         destinationList = new Dictionary<Vector2Int, StartPositionSet>();
 
-        pathTimerMax = 15f;
+        //Use House because everything before are destination buildings
+        destinationListNew = new List<PosIdSet>[(int)BuildingType.House];
+        destinationListNew[(int)BuildingType.Hospital] = new List<PosIdSet>();
+        destinationListNew[(int)BuildingType.Office] = new List<PosIdSet>();
+        destinationListNew[(int)BuildingType.Park] = new List<PosIdSet>();
+        destinationListNew[(int)BuildingType.Mall] = new List<PosIdSet>();
+
+        //Debug.Log(destinationListNew[(int)BuildingType.Hospital].Count);
+        //Debug.Log(destinationListNew[(int)BuildingType.Office].Count);
+        //Debug.Log(destinationListNew[(int)BuildingType.Park].Count);
+        //Debug.Log(destinationListNew[(int)BuildingType.Mall].Count);
+        //pathTimerMax = 15f;
+
     }
 
+    public override void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log("Start----------------");
+            Debug.Log(destinationListNew[(int)BuildingType.Hospital].Count);
+            Debug.Log(destinationListNew[(int)BuildingType.Office].Count);
+            Debug.Log(destinationListNew[(int)BuildingType.Park].Count);
+            Debug.Log(destinationListNew[(int)BuildingType.Mall].Count);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Debug.Log("Got the building " + GetRandomBuildingType());
+        }
+    }
     //private IEnumerator waitABit(Vector2Int newPos)
     //{
     //    Debug.Log("got wait until");
@@ -82,6 +125,20 @@ public class StructureManager : MonoBehaviour
     //    notificationManager.CreateNotificationModel(newPos);
 
     //}
+
+    public BuildingType GetRandomBuildingType()
+    {
+        List<int> tempBt = new List<int>();
+        for(int i = 0; i < (int)BuildingType.House; i++)
+        {
+            if (destinationListNew[i].Count > 0) tempBt.Add(i);
+        }
+
+        if (tempBt.Count == 0) return BuildingType.None;
+
+        return (BuildingType)(tempBt[Random.Range(0, tempBt.Count - 1)]);
+
+    }
     public bool PlaceHouse(Vector2Int position, float rotation)
     {
         //Debug.Log("here house " + position);
@@ -104,8 +161,10 @@ public class StructureManager : MonoBehaviour
         if (CheckPositionBeforePlacement(position, CellType.SpecialStructure))
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);
-            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure, rotation);
+            uint id = placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure, rotation).entityId;
             destinationList.Add(position, new StartPositionSet(new Vector2Int(0,0), 0, 0));
+            destinationListNew[randomIndex].Add(new PosIdSet(id, position));
+            Debug.Log("Created special with id " + id);
             //AudioPlayer.instance.PlayPlacementSound();
             return true;
         }

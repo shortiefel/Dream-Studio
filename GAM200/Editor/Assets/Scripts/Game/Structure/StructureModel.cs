@@ -6,158 +6,180 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 {
     //float yHeight = 0;
     //private Transform transform;
-    Texture texure;
-    Notification notification;
+    
+    //Notification notification;
     //CarSpawner carSpawner;
     public Vector2Int RoadPosition { get; set; }
 
     GameState gameState;
 
-    Animation animation;
-    StructureModel structureModel;
+    //ReturnCar returnCar;
+
+    //Animation animation;
+    //StructureModel structureModel;
 
     //private Prefab notifiPrefab;
-    private GameObject notifiSymbol;
-    private AudioSource notificationSound;
-    private AudioSource destroySound;
+    //private GameObject notifiSymbol;
+    //private AudioSource notificationSound;
+    //private AudioSource destroySound;
 
     AIDirector aiDirector;
-    bool spawnBool;
+    //bool spawnBool;
 
     public BuildingType buildingType;
 
-    private float pathTimer;
+    //private float pathTimer;
 
     public override void Start()
     {
 
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
-        structureModel = GetComponent<StructureModel>();
+        //returnCar = GetComponent<ReturnCar>();
 
-        transform = GetComponent<Transform>();
-        texure = GetComponent<Texture>();
-        notification = GetComponent<Notification>();
+        //structureModel = GetComponent<StructureModel>();
+
+        //notification = GetComponent<Notification>();
         //carSpawner = GetComponent<CarSpawner>();
         //animation = GetComponent<Animation>();
-        spawnBool = false;
-
-        if (notification != null)
-        {
-            //notifiPrefab = ;
-            Vector2 center = transform.localPosition;
-            
-            //Debug.Log("come in here --------------------------------------------------------------------------------");
-            notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 1.5f, 0f), 4);
-            //notification.SetAnimation(ref notifiSymbol.GetComponent<Animation>());
-            animation = notifiSymbol.GetComponent<Animation>();
-            //animation.Play("Appear");
-            //notification.SetAnimation("Appear");
-            spawnBool = true;
-            SetToSpawn();
-            notificationSound = GetComponent<AudioSource>();
-            destroySound = notifiSymbol.GetComponent<AudioSource>();
-
-            //Have to be texture names without the extension
-            switch (texure.RetrieveTexture())
-            {
-                case "Office":
-                    buildingType = BuildingType.Office;
-                    break;
-
-                case "Hospital":
-                    buildingType = BuildingType.Hospital;
-                    break;
-                
-                case "Park":
-                    buildingType = BuildingType.Park;
-                    break;
-
-                case "ShoppingMall":
-                    buildingType = BuildingType.Mall;
-                    break;
-            }
-        }
-
-        else
-        {
-            buildingType = BuildingType.House;
-        }
+        //spawnBool = false;
+        //
+        //if (notification != null)
+        //{
+        //    //notifiPrefab = ;
+        //    Vector2 center = transform.localPosition;
+        //    
+        //    //Debug.Log("come in here --------------------------------------------------------------------------------");
+        //    notifiSymbol = Instantiate(new Prefab("Notification"), new Vector3(center.x, center.y + 1.5f, 0f), 4);
+        //    //notification.SetAnimation(ref notifiSymbol.GetComponent<Animation>());
+        //    animation = notifiSymbol.GetComponent<Animation>();
+        //    //animation.Play("Appear");
+        //    //notification.SetAnimation("Appear");
+        //    spawnBool = true;
+        //    SetToSpawn();
+        //    notificationSound = GetComponent<AudioSource>();
+        //    destroySound = notifiSymbol.GetComponent<AudioSource>();
+        //
+        //    //Have to be texture names without the extension
+        //    switch (texure.RetrieveTexture())
+        //    {
+        //        case "Office":
+        //            buildingType = BuildingType.Office;
+        //            break;
+        //
+        //        case "Hospital":
+        //            buildingType = BuildingType.Hospital;
+        //            break;
+        //        
+        //        case "Park":
+        //            buildingType = BuildingType.Park;
+        //            break;
+        //
+        //        case "ShoppingMall":
+        //            buildingType = BuildingType.Mall;
+        //            break;
+        //    }
+        //}
+        //
+        //else
+        //{
+        //    buildingType = BuildingType.House;
+        //}
 
         aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
 
-        pathTimer = 0f;
+        //pathTimer = 0f;
+
+        Texture texure = GetComponent<Texture>();
+        switch (texure.RetrieveTexture())
+        {
+            case "Office":
+                buildingType = BuildingType.Office;
+                break;
+
+            case "Hospital":
+                buildingType = BuildingType.Hospital;
+                break;
+
+            case "Park":
+                buildingType = BuildingType.Park;
+                break;
+
+            case "ShoppingMall":
+                buildingType = BuildingType.Mall;
+                break;
+        }
     }
 
     public override void Update()
     {
         
-        if (notification != null)
-        {
-            if (!notification.NotificationUpdate())
-            {
-                //gameState.shouldEnd = true;
-                //gameState.SetLoseHouse(transform.position);
-
-                //Lose points instead of lose game
-                if (gameState != null)
-                    gameState.MissedDestinationTime(buildingType);
-            }
-
-            if (notification.AppearCheck())
-            {
-                animation.Play("Stay");
-            }
-            if (notification.TickerAppearCheck())
-            {
-                animation.Play("TickingAppear");
-            }
-            if (notification.DestroyCheck())
-            {
-                Console.Write("Enter normal destroy");
-                Disable<Transform>(notifiSymbol.transform);
-                destroySound.Play();
-                notification.alreadyShowing = false;
-               
-            }
-            if(notification.TickerDestroyCheck())
-            {
-                Console.Write("Enter timer destroy");
-                Disable<Transform>(notifiSymbol.transform);
-                notification.alreadyShowing = false;
-               
-            }
-            if(notification.expirebool == true)
-            {
-                Debug.Log("destory Timer");
-                Disable<Transform>(notifiSymbol.transform);
-                notification.expirebool = false;
-            }
-            if (notification.timerShow == true)
-            {
-                SetToSpawn2();
-            }
-            if (notification.shouldShow == true)
-            {
-                SetToSpawn();
-                notificationSound.Play();
-                notification.shouldShow = false;
-                notification.ResetTimer();
-                Enable<Transform>(notifiSymbol.transform);
-                
-            }
-
-            pathTimer += Time.deltaTime;
-            if (pathTimer >= aiDirector.pathTimerMax)
-            {
-                aiDirector.GetNewPathList(new Vector2Int(transform.position), entityId, true);
-                pathTimer = 0f;
-            }
-
-            if (spawnBool && aiDirector != null)
-                spawnBool = !(aiDirector.SpawnToDestination(structureModel));
-            if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.Shift))
-                aiDirector.SpawnToDestination(structureModel);
-        }
+        //if (notification != null)
+        //{
+        //    if (!notification.NotificationUpdate())
+        //    {
+        //        //gameState.shouldEnd = true;
+        //        //gameState.SetLoseHouse(transform.position);
+        //
+        //        //Lose points instead of lose game
+        //        if (gameState != null)
+        //            gameState.MissedDestinationTime(buildingType);
+        //    }
+        //
+        //    if (notification.AppearCheck())
+        //    {
+        //        animation.Play("Stay");
+        //    }
+        //    if (notification.TickerAppearCheck())
+        //    {
+        //        animation.Play("TickingAppear");
+        //    }
+        //    if (notification.DestroyCheck())
+        //    {
+        //        Console.Write("Enter normal destroy");
+        //        Disable<Transform>(notifiSymbol.transform);
+        //        destroySound.Play();
+        //        notification.alreadyShowing = false;
+        //       
+        //    }
+        //    if(notification.TickerDestroyCheck())
+        //    {
+        //        Console.Write("Enter timer destroy");
+        //        Disable<Transform>(notifiSymbol.transform);
+        //        notification.alreadyShowing = false;
+        //       
+        //    }
+        //    if(notification.expirebool == true)
+        //    {
+        //        Debug.Log("destory Timer");
+        //        Disable<Transform>(notifiSymbol.transform);
+        //        notification.expirebool = false;
+        //    }
+        //    if (notification.timerShow == true)
+        //    {
+        //        SetToSpawn2();
+        //    }
+        //    if (notification.shouldShow == true)
+        //    {
+        //        SetToSpawn();
+        //        notificationSound.Play();
+        //        notification.shouldShow = false;
+        //        notification.ResetTimer();
+        //        Enable<Transform>(notifiSymbol.transform);
+        //        
+        //    }
+        //
+        //    pathTimer += Time.deltaTime;
+        //    if (pathTimer >= aiDirector.pathTimerMax)
+        //    {
+        //        aiDirector.GetNewPathList(new Vector2Int(transform.position), entityId, true);
+        //        pathTimer = 0f;
+        //    }
+        //
+        //    //if (spawnBool && aiDirector != null)
+        //    //    spawnBool = !(aiDirector.SpawnToDestination(structureModel));
+        //    if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.Shift))
+        //        aiDirector.SpawnToDestination(structureModel);
+        //}
     }
 
     /*public void CreateModel(Prefab model)
@@ -166,67 +188,76 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         //yHeight = structure.transform.position.y;
     }*/
 
-    public void SetSpawnBool(bool state)
-    {
-        spawnBool = state;
-    }
+    //public void SetSpawnBool(bool state)
+    //{
+    //    spawnBool = state;
+    //}
 
-    public StructureModel SwapModel(GameObject model, float rotation)
-    {
-        /*foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }*/
-
-        //texure.ChangeTexture(model.name);
-        //transform.angle = rotation;
-        Debug.Log("SwapModel not in use");
-        //var structure = Instantiate(model, new Vector3(transform.position, 0f), 1);
-        ////structure.transform.position = new Vector2(0, 0);
-        //structure.transform.angle = rotation;
-        //
-        //aiDirector.placementManager.placementGrid.SetCellType(new Vector2Int(transform.position), CellType.Road, structure.entityId);
-        //
-        //Destroy(gameObject);
-
-        //texure.color = new Color(0, 1, 0, 0.5f);
-        //texure.ChangeTexture(model.name);
-        //transform.angle = rotation;
-        //Disable<Transform>(transform);
-
-        return GetComponent<StructureModel>();
-    }
+    //public StructureModel SwapModel(GameObject model, float rotation)
+    //{
+    //    /*foreach (Transform child in transform)
+    //    {
+    //        Destroy(child.gameObject);
+    //    }*/
+    //
+    //    //texure.ChangeTexture(model.name);
+    //    //transform.angle = rotation;
+    //    Debug.Log("SwapModel not in use");
+    //    //var structure = Instantiate(model, new Vector3(transform.position, 0f), 1);
+    //    ////structure.transform.position = new Vector2(0, 0);
+    //    //structure.transform.angle = rotation;
+    //    //
+    //    //aiDirector.placementManager.placementGrid.SetCellType(new Vector2Int(transform.position), CellType.Road, structure.entityId);
+    //    //
+    //    //Destroy(gameObject);
+    //
+    //    //texure.color = new Color(0, 1, 0, 0.5f);
+    //    //texure.ChangeTexture(model.name);
+    //    //transform.angle = rotation;
+    //    //Disable<Transform>(transform);
+    //
+    //    return GetComponent<StructureModel>();
+    //}
 
     /*
      * Notify house that a car has reached it
     */
-    public void Notify()
+    public void Notify(Vector2Int nextDest, List<Vector2> newPath)
     {
-        if (notification != null)
-        {
-            //Disable<Transform>(notifiSymbol.transform);
-            //if (notification != null)
-            if (notification.alreadyShowing)
-            {
-                if (notification.timerShow)
-                {
-                    Console.WriteLine("Timer Destroy");
-                    animation.Play("TickingClose");
-                    notification.SetAnimation("TickingClose");
-                    notification.timerShow = false;
-                }
-                else
-                {
-                    animation.Play("Destroy");
-                    notification.SetAnimation("Destroy");
-                }
-                
-            }
-            //notification.transform.
-            if (gameState != null)
-                gameState.ReachedDestination(buildingType);
-            notification.ResetTimer();
-        }
+        gameState.ReachedDestination(buildingType);
+
+        Debug.Log("Try spawn to house ------ " + transform.position + " to " + nextDest);
+        aiDirector.SpawnCar(transform.position, 0, buildingType, nextDest);
+
+        //if (returnCar != null)
+        //{
+        //
+        //}
+        //if (notification != null)
+        //{
+        //    //Disable<Transform>(notifiSymbol.transform);
+        //    //if (notification != null)
+        //    if (notification.alreadyShowing)
+        //    {
+        //        if (notification.timerShow)
+        //        {
+        //            Console.WriteLine("Timer Destroy");
+        //            animation.Play("TickingClose");
+        //            notification.SetAnimation("TickingClose");
+        //            notification.timerShow = false;
+        //        }
+        //        else
+        //        {
+        //            animation.Play("Destroy");
+        //            notification.SetAnimation("Destroy");
+        //        }
+        //        
+        //    }
+        //    //notification.transform.
+        //    if (gameState != null)
+        //        gameState.ReachedDestination(buildingType);
+        //    notification.ResetTimer();
+        //}
     }
 
     internal void DeleteModel()
@@ -234,19 +265,19 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         Destroy(entityId);
     }
 
-    void SetToSpawn()
-    {
-        animation.Play("Appear");
-        notification.SetAnimation("Appear");
-        spawnBool = true;
-    }
-
-    void SetToSpawn2()
-    {
-        animation.Play("TickingAppear");
-        notification.SetAnimation("TickingAppear");
-        //spawnBool = true;
-    }
+    //void SetToSpawn()
+    //{
+    //    animation.Play("Appear");
+    //    notification.SetAnimation("Appear");
+    //    spawnBool = true;
+    //}
+    //
+    //void SetToSpawn2()
+    //{
+    //    animation.Play("TickingAppear");
+    //    notification.SetAnimation("TickingAppear");
+    //    //spawnBool = true;
+    //}
 
     //internal List<Marker> GetCarMarkers()
     //{

@@ -56,7 +56,7 @@ public class ButtonStore : MonoBehaviour
     GameObject ERPx1;
     GameObject ERPx10;
 
-    //GameObject Storebtn;
+    GameObject Storebtn;
     GameObject StoreBG;
     //GameObject StoreBack;
 
@@ -125,6 +125,7 @@ public class ButtonStore : MonoBehaviour
 
     UI texture;
 
+
     CombinedUI combinedUI;
 
     public bool revealCartButton;
@@ -159,9 +160,9 @@ public class ButtonStore : MonoBehaviour
 
 
         texture = GetComponent<UI>();
-        texture.color = new Color(0f, 0f, 0f);
+        texture.color = new Color(1f, 1f, 1f);
 
-        //Storebtn = GameObject.Find("Storebtn");
+        Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
         //StoreBack = GameObject.Find("BackToGame");
 
@@ -472,6 +473,7 @@ public class ButtonStore : MonoBehaviour
     public override void OnMouseEnter()
     {
         texture.color = new Color(1f, 1f, 1f);
+        Storebtn.GetComponent<UI>().ChangeTexture("Game/Store/Shop_Hover");
     }
 
     public override void OnMouseOver()
@@ -485,7 +487,8 @@ public class ButtonStore : MonoBehaviour
 
     public override void OnMouseExit()
     {
-        texture.color = new Color(0f, 0f, 0f);
+        texture.color = new Color(1f, 1f, 1f);
+        Storebtn.GetComponent<UI>().ChangeTexture("Game/Store/Shop");
     }
 
     internal void ResumeAction()

@@ -77,7 +77,7 @@ public class PauseMenu : MonoBehaviour
         texture.color = new Color(1f, 1f, 1f);
 
         pauseBG = GameObject.Find("PauseBG");
-        pause_BG = GameObject.Find("Pause_BG");
+        //pause_BG = GameObject.Find("Pause_BG");
         //bgPosition = pauseBG.transform.position;
         HowToBG = GameObject.Find("HowToBG");
 
@@ -113,7 +113,7 @@ public class PauseMenu : MonoBehaviour
 
 
         Disable<Transform>(pauseBG.transform);
-        Disable<Transform>(pause_BG.transform);
+        //Disable<Transform>(pause_BG.transform);
         Disable<Transform>(HowToBG.transform);
 
         Disable<Transform>(resume.transform);
@@ -216,7 +216,7 @@ public class PauseMenu : MonoBehaviour
             //Enable<Transform>(moneyText);
             //Enable<Transform>(coinSymbol);
             Disable<Transform>(pauseBG.transform);
-            Disable<Transform>(pause_BG.transform);
+            //Disable<Transform>(pause_BG.transform);
             Disable<Transform>(HowToBG.transform);
 
             Disable<Transform>(resume.transform);

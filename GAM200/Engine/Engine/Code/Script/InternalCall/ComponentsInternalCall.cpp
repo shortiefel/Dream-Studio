@@ -109,6 +109,8 @@ namespace Engine {
 		UI color
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void SetUI_Color_Engine(unsigned int entityID, Math::vec4 col);
+		void GetUI_Alpha_Engine(unsigned int entityID, float* alpha);
+		void SetUI_Alpha_Engine(unsigned int entityID, float alpha);
 		void ChangeTexture_UI_Engine(unsigned int entityID, MonoString* name);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -208,6 +210,8 @@ namespace Engine {
 			UI color
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("UI::SetUI_Color_Engine", SetUI_Color_Engine);
+			mono_add_internal_call("UI::GetUI_Alpha_Engine", GetUI_Alpha_Engine);
+			mono_add_internal_call("UI::SetUI_Alpha_Engine", SetUI_Alpha_Engine);
 			mono_add_internal_call("UI::ChangeTexture_UI_Engine", ChangeTexture_UI_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -497,6 +501,16 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void SetUI_Color_Engine(unsigned int entityID, Math::vec4 col) {
 			SetEngineType(entityID, UIComponent, colour, col);
+		}
+
+		void GetUI_Alpha_Engine(unsigned int entityID, float* alpha) {
+			GetEngineType(entityID, UIComponent, colour.a, *alpha);
+		}
+
+		void SetUI_Alpha_Engine(unsigned int entityID, float alpha) {
+			if (alpha < 0.f) alpha = 0.f;
+			else if (alpha > 1.f) alpha = 1.f;
+			SetEngineType(entityID, UIComponent, colour.a, alpha);
 		}
 
 		void ChangeTexture_UI_Engine(unsigned int entityID, MonoString* name) {

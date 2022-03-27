@@ -148,7 +148,7 @@ public class IBehaviour : IComponent
         if (HasComponent<T>(id))
         {
             //Debug.Log(typeof(T));
-            //Console.WriteLine("First " + typeof(T));
+            Console.WriteLine("First " + typeof(T));
             if (GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
                 RecordComponent<T>(id);
             else

@@ -292,7 +292,7 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        if (moneySystem.calculateerp_cost() <= moneySystem.money)
+                        if (moneySystem.calculateerp_cost() <= moneySystem.GetMoney())
                         {
                             moneySystem.BuyErp(moneySystem.erp_count());
                             moneySystem.erp_counter = 0;
@@ -379,7 +379,7 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        if (moneySystem.calculatetl_cost() <= moneySystem.money)
+                        if (moneySystem.calculatetl_cost() <= moneySystem.GetMoney())
                         {
                             moneySystem.BuyTrafficLight(moneySystem.tl_count());
                             moneySystem.traffic_counter = 0;

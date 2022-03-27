@@ -14,7 +14,7 @@ public class ERP : MonoBehaviour
             erpManager.RegisterERP(Vector2Int.RoundToInt(transform.position), entityId);
     }
 
-    public override void OnTriggerEnter(Transform trans)
+    public override void OnTriggerEnter(uint entId)
     {
         if (erpManager != null)
             erpManager.Notify();

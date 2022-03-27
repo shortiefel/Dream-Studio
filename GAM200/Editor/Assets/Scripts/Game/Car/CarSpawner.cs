@@ -58,7 +58,7 @@ public class CarSpawner : MonoBehaviour
     public override void Update()
     {
         dt = Time.deltaTime;
-
+        //Debug.Log(entityId + " " + requestLine.Count + " " + backlog.Count);
         //If previous car spawn fails, try again in 2 second)
         //if (!prevSpawnStatus) {
         //    secondaryTimer += dt;
@@ -127,12 +127,12 @@ public class CarSpawner : MonoBehaviour
         return false;
     }
 
-    public override void OnTriggerEnter(Transform trans)
+    public override void OnTriggerEnter(uint entId)
     {
         ++carCounter;
     }
 
-    public override void OnTriggerExit(Transform trans)
+    public override void OnTriggerExit(uint entId)
     {
         --carCounter;
     }

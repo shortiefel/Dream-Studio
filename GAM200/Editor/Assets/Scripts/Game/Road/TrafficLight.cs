@@ -143,13 +143,13 @@ public class TrafficLight : MonoBehaviour
         //}
     }
 
-    public override void OnTriggerEnter(Transform trans)
+    public override void OnTriggerEnter(uint entId)
     {
         ++carCounter;
         //Debug.Log("The id is " + id);
     }
 
-    public override void OnTriggerExit(Transform trans)
+    public override void OnTriggerExit(uint entId)
     {
 
         --carCounter;

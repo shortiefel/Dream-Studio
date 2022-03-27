@@ -4,14 +4,15 @@ public class PauseMenu : MonoBehaviour
 {
     GameObject resume;
     GameObject howToPlay;
+    GameObject menuText;
     
     //GameObject options;
     GameObject pauseQuit;
     
 
     GameObject resumeBtn;
-    //GameObject menuBtn;
-    //GameObject optionsBtn;
+    GameObject menuBtn;
+    //GameObject restartBtn;
     GameObject howToPlayBtn;
     GameObject pauseQuitBtn;
 
@@ -82,7 +83,7 @@ public class PauseMenu : MonoBehaviour
 
         resume = GameObject.Find("ResumeText");
         howToPlay = GameObject.Find("HowToText");
-        //menuText = GameObject.Find("MenuText");
+        menuText = GameObject.Find("MenuText");
         //options = GameObject.Find("OptionText");
         pauseQuit = GameObject.Find("QuitText");
 
@@ -91,7 +92,7 @@ public class PauseMenu : MonoBehaviour
         //quitTextPosition = pauseQuit.transform.position;
 
         resumeBtn = GameObject.Find("ResumeBtn");
-        //menuBtn = GameObject.Find("MenuBtn");
+        menuBtn = GameObject.Find("BackToMenuBtn");
         //optionsBtn = GameObject.Find("Optionsbtn");
         howToPlayBtn = GameObject.Find("howToPlayBtn");
         pauseQuitBtn = GameObject.Find("QuitBtn");
@@ -117,12 +118,12 @@ public class PauseMenu : MonoBehaviour
 
         Disable<Transform>(resume.transform);
         Disable<Transform>(howToPlay.transform);
-       // Disable<Transform>(menuText.transform);
+        Disable<Transform>(menuText.transform);
         //Disable<Transform>(options.transform);
         Disable<Transform>(pauseQuit.transform);
 
         Disable<Transform>(resumeBtn.transform);
-        //Disable<Transform>(menuBtn.transform);
+        Disable<Transform>(menuBtn.transform);
         //Disable<Transform>(optionsBtn.transform);
         Disable<Transform>(howToPlayBtn.transform);
         Disable<Transform>(pauseQuitBtn.transform);
@@ -182,12 +183,12 @@ public class PauseMenu : MonoBehaviour
 
             Enable<Transform>(resume.transform);
             Enable<Transform>(howToPlay.transform);
-            //Enable<Transform>(menuText.transform);
+            Enable<Transform>(menuText.transform);
             //Enable<Transform>(options.transform);
             Enable<Transform>(pauseQuit.transform);
 
             Enable<Transform>(resumeBtn.transform);
-            //Enable<Transform>(menuBtn.transform);
+            Enable<Transform>(menuBtn.transform);
             //Enable<Transform>(optionsBtn.transform);
             Enable<Transform>(howToPlayBtn.transform);
             Enable<Transform>(pauseQuitBtn.transform);
@@ -220,12 +221,12 @@ public class PauseMenu : MonoBehaviour
 
             Disable<Transform>(resume.transform);
             Disable<Transform>(howToPlay.transform);
-            //Disable<Transform>(menuText.transform);
+            Disable<Transform>(menuText.transform);
             //Disable<Transform>(options.transform);
             Disable<Transform>(pauseQuit.transform);
 
             Disable<Transform>(resumeBtn.transform);
-            //Disable<Transform>(menuBtn.transform);
+            Disable<Transform>(menuBtn.transform);
             //Disable<Transform>(optionsBtn.transform);
             Disable<Transform>(howToPlayBtn.transform);
             Disable<Transform>(pauseQuitBtn.transform);
@@ -333,6 +334,11 @@ public class PauseMenu : MonoBehaviour
     internal void ResumeAction()
     {
         PauseAction();
+    }
+
+    internal void MenuAction()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     internal void QuitAction()

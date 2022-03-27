@@ -34,4 +34,11 @@ public class UI: IComponent
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetUI_Color_Engine(uint entityID, Color col);
 
+    public void ChangeTexture(string name)
+    {
+        ChangeTexture_UI_Engine(entityId, name);
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void ChangeTexture_UI_Engine(uint entityID, string name);
+
 }

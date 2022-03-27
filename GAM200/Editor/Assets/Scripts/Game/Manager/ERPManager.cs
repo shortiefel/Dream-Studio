@@ -79,7 +79,7 @@ public class ERPManager : MonoBehaviour
     public void Notify()
     {
         //Increase money
-        moneySystem.AddMoney(10);
+        moneySystem.AddMoney(10, MoneySource.ERP);
     }
 
     public void RegisterERP(Vector2Int pos, uint id)

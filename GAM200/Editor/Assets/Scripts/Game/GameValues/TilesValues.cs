@@ -7,9 +7,7 @@ public class TilesValues : MonoBehaviour
     Text buttonTrafficCountText;
     Text buttonERPCountText;
 
-    Text storeRoadText;
-    Text storeTrafficText;
-    Text storeERPText;
+    
 
     public override void Start()
     {
@@ -19,9 +17,7 @@ public class TilesValues : MonoBehaviour
         buttonTrafficCountText = GameObject.Find("currTrafficDisplay").GetComponent<Text>();
         buttonERPCountText = GameObject.Find("currERPDisplay").GetComponent<Text>();
 
-        storeRoadText = GameObject.Find("RoadQty").GetComponent<Text>();
-        storeTrafficText = GameObject.Find("TrafficQty").GetComponent<Text>();
-        storeERPText = GameObject.Find("ERPQty").GetComponent<Text>();
+
     }
 
     public override void Update()
@@ -29,10 +25,6 @@ public class TilesValues : MonoBehaviour
         buttonRoadCountText.text = roadManager.roadCount.ToString();
         buttonTrafficCountText.text = roadManager.trafficLightManager.tlCount.ToString();
         buttonERPCountText.text = roadManager.erpManager.erpCount.ToString();
-
-        storeRoadText.text = roadManager.roadCount.ToString();
-        storeTrafficText.text = roadManager.trafficLightManager.tlCount.ToString();
-        storeERPText.text = roadManager.erpManager.erpCount.ToString();
     }
 }
 

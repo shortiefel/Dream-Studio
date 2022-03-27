@@ -102,11 +102,14 @@ namespace Engine {
 		void SetFont_Text_Engine(unsigned int entityID, MonoString* _text);
 		//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text);
 		void SetFont_Color_Engine(unsigned int entityID, Math::vec4 col);
+		void GetText_Alpha_Engine(unsigned int entityID, float* alpha);
+		void SetText_Alpha_Engine(unsigned int entityID, float alpha);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		UI color
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void SetUI_Color_Engine(unsigned int entityID, Math::vec4 col);
+		void ChangeTexture_UI_Engine(unsigned int entityID, MonoString* name);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Sound / Audio Source
@@ -197,12 +200,15 @@ namespace Engine {
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("Text::SetFont_Text_Engine", SetFont_Text_Engine);
 			mono_add_internal_call("Text::SetFont_Color_Engine", SetFont_Color_Engine);
+			mono_add_internal_call("Text::GetText_Alpha_Engine", GetText_Alpha_Engine);
+			mono_add_internal_call("Text::SetText_Alpha_Engine", SetText_Alpha_Engine);
 
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			UI color
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("UI::SetUI_Color_Engine", SetUI_Color_Engine);
+			mono_add_internal_call("UI::ChangeTexture_UI_Engine", ChangeTexture_UI_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Sound / Audio Source
@@ -474,6 +480,16 @@ namespace Engine {
 			SetEngineType(entityID, FontComponent, colour, col);
 		}
 
+		void GetText_Alpha_Engine(unsigned int entityID, float* alpha) {
+			GetEngineType(entityID, FontComponent, colour.a, *alpha);
+		}
+
+		void SetText_Alpha_Engine(unsigned int entityID, float alpha) {
+			if (alpha < 0.f) alpha = 0.f;
+			else if (alpha > 1.f) alpha = 1.f;
+			SetEngineType(entityID, FontComponent, colour.a, alpha);
+		}
+
 		//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text) {}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -481,6 +497,15 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void SetUI_Color_Engine(unsigned int entityID, Math::vec4 col) {
 			SetEngineType(entityID, UIComponent, colour, col);
+		}
+
+		void ChangeTexture_UI_Engine(unsigned int entityID, MonoString* name) {
+			const auto ptr = dreamECSGame->GetComponentPTR<UIComponent>(entityID);
+			if (ptr != nullptr) {
+				char* text = mono_string_to_utf8(name);
+				GraphicImplementation::SetTexture(ptr, "Assets\\Textures\\" + std::string{ text } + ".png");
+				mono_free(text);
+			}
 		}
 
 

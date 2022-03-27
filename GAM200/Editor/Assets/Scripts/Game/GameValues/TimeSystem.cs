@@ -38,7 +38,7 @@ public class TimeSystem : MonoBehaviour
 
     float speedMultiply;
 
-    float timeScale;
+    static float timeScale;
 
 
     //UI texture;
@@ -282,21 +282,21 @@ public class TimeSystem : MonoBehaviour
         DisableAllWhite();
     }
 
-    public void NormalTime()
+    static public void NormalTime()
     {
         timeScale = 1f;
         previousTimeScale = timeScale;
         Time.timeScale = timeScale;
     }
 
-    public void StopTime()
+    static public void StopTime()
     {
         timeScale = 0f;
         previousTimeScale = timeScale;
         Time.timeScale = timeScale;
     }
 
-    public void SpeedUpTime()
+    static public void SpeedUpTime()
     {
         timeScale = 1.5f;
         previousTimeScale = timeScale;

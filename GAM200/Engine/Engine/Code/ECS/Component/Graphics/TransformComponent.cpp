@@ -31,7 +31,7 @@ namespace Engine
 	TransformComponent::TransformComponent(Entity_id _ID, Math::vec2 _pos, Math::vec2 _scale,
 		float _angle, int _layer, bool _active) :
 		IComponent{ _ID }, position{ _pos }, localPosition{ _pos }, scale{ _scale },
-		angle{ _angle }, layer{ _layer }, isActive{ _active } {}
+		angle{ _angle }, layer{ _layer }, isActive{ _active } { }//printf("Creating transform \n"); }
 
 	// Operator overloading += for Transform Component
 	TransformComponent& TransformComponent::operator+= (const TransformComponent& _rhs)

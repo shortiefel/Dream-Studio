@@ -89,8 +89,9 @@ public class GameState : MonoBehaviour
                 SetPause(true);
                 moneySystem.TaxMoney();
                 dayTimer = 0f;
-                dayCounter++;
-                dayText.text = "Day " + dayCounter.ToString();
+                //dayCounter++;
+                //dayText.text = "Day " + dayCounter.ToString();
+                //Moved to gameState gameover
             }
         }
 
@@ -135,6 +136,8 @@ public class GameState : MonoBehaviour
     {
         //if (camMovement.toZoomLose) return;
         //camMovement.toZoomLose = true;
+        dayCounter++;
+        dayText.text = "Day " + dayCounter.ToString();
 
         if (shouldEnd)
         {
@@ -173,17 +176,53 @@ public class GameState : MonoBehaviour
         }
     }
 
-    public void ReachedDestination()
+    public void ReachedDestination(BuildingType bt)
     {
-        Debug.Log("Reached destination ");
-        moneySystem.AddMoney(25);
+        //Debug.Log("Reached destination ");
+        switch (bt)
+        {
+            case BuildingType.Office:
+                moneySystem.AddMoney(25, MoneySource.DestOffice);
+                break;
+
+            case BuildingType.Hospital:
+                moneySystem.AddMoney(25, MoneySource.DestHospital);
+                break;
+
+            case BuildingType.Park:
+                moneySystem.AddMoney(25, MoneySource.DestPark);
+                break;
+
+            case BuildingType.Mall:
+                moneySystem.AddMoney(25, MoneySource.DestMall);
+                break;
+        }
+        
         IncrementScore();
     }
 
-    public void MissedDestinationTime()
+    public void MissedDestinationTime(BuildingType bt)
     {
         //highscore--;
-        moneySystem.MinusMoney(100);
+        switch (bt)
+        {
+            case BuildingType.Office:
+                moneySystem.MinusMoney(100, MoneySource.DestOffice);
+                break;
+
+            case BuildingType.Hospital:
+                moneySystem.MinusMoney(100, MoneySource.DestHospital);
+                break;
+
+            case BuildingType.Park:
+                moneySystem.MinusMoney(100, MoneySource.DestPark);
+                break;
+
+            case BuildingType.Mall:
+                moneySystem.MinusMoney(100, MoneySource.DestMall);
+                break;
+        }
+        
         Debug.Log("Missed a destination ");
     }
 

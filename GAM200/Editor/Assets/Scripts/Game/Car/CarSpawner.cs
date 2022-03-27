@@ -19,8 +19,14 @@ public class CarSpawner : MonoBehaviour
 {
 
     int carCounter = 0;
+    bool prevSpawnStatus;
+    EndStruct spawnTarget;
+
+    float secondaryTimer; //The secondary timer is for when the spawning fails and so it doesnt spam the spawncar
 
     public Queue<EndStruct> requestLine;
+    public Queue<EndStruct> backlog; //For unsuccessful spawn
+
     //GameObject.FindWithId(id).GetComponent<StructureModel>()
     public void RequestSpawn(EndStruct es)
     {
@@ -28,78 +34,105 @@ public class CarSpawner : MonoBehaviour
     }
 
     AIDirector aiDirector;
-    ////SpawnManager spawnManager;
-    ////float timer;
-    ////float maxTimer;
-    ////StructureModel structureModel;
-    ////
-    ////Notification notification;
+
     float spawnTimer;
     float spawnTimerMax;
+
+    float dt;
     public override void Start()
     {
         requestLine = new Queue<EndStruct>();
+        backlog = new Queue<EndStruct>();
 
         aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
         //    //spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         //    //maxTimer = aiDirector.carSpawnTimerInterval;
         //    //structureModel = GetComponent<StructureModel>();
         spawnTimer = 0f;
-        spawnTimerMax = 0.6f;
         spawnTimerMax = 1f;
+
+        prevSpawnStatus = true;
+        secondaryTimer = 0f;
     }
     //
     public override void Update()
     {
+        dt = Time.deltaTime;
+        //Debug.Log(entityId + " " + requestLine.Count + " " + backlog.Count);
+        //If previous car spawn fails, try again in 2 second)
+        //if (!prevSpawnStatus) {
+        //    secondaryTimer += dt;
+        //    if (secondaryTimer < 2f)
+        //        return;
+        //    secondaryTimer = 0f;
+        //    Debug.Log("Retrying again");
+        //}
+
         //Debug.Log("Count " + carCounter);
         //FOR TESTING TO BE REMOVED----------------------------
-        if(Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.Shift))
+        if (Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.Shift))
         {
+            if (backlog.Count != 0)
+            {
+                spawnTarget = backlog.Dequeue();
+
+                if (SpawnCurrentSpawnTarget()) return;
+                //Debug.Log("Try main queue");
+            }
+
             if (requestLine.Count != 0)
             {
-                EndStruct es = requestLine.Dequeue();
-                aiDirector.SpawnCar(transform.position, es.entityId, es.bt, es.endPos);
-                spawnTimer = 0f;
+                spawnTarget = requestLine.Dequeue();
+
+                SpawnCurrentSpawnTarget();
             }
         }
         //--------------------------------------------------------
-        //Debug.Log(requestLine.Count);
-        if (requestLine.Count != 0)
+
+        //Debug.Log(requestLine.Count + " backlog " + backlog.Count);
+        if (requestLine.Count != 0 || backlog.Count != 0)
         {
-            spawnTimer += Time.deltaTime;
+            spawnTimer += dt;
 
             if (spawnTimer >= spawnTimerMax && carCounter == 0)
             {
-                //Debug.Log("True Spawn");
-                //Debug.Log("Spawn at " +  entityId + " line " + requestLine.Count);
-                EndStruct es = requestLine.Dequeue();
-                aiDirector.SpawnCar(transform.position, es.entityId, es.bt, es.endPos);
-                spawnTimer = 0f;
+
+                if (backlog.Count != 0) {
+                    spawnTarget = backlog.Dequeue();
+
+                    if (SpawnCurrentSpawnTarget()) return;
+                }
+
+                if (requestLine.Count != 0)
+                {
+                    spawnTarget = requestLine.Dequeue();
+
+                    SpawnCurrentSpawnTarget();
+                }
             }
         }
-        //    //timer += Time.deltaTime;
-        //    //if (timer > maxTimer)
-        //    //{
-        //    //    if (aiDirector.SpawnAHouseCar(structureModel))
-        //    //    {
-        //    //        maxTimer += 3f;
-        //    //        if (maxTimer > 10f) maxTimer = 10f;
-        //    //    }
-        //    //    //maxTimer = aiDirector.carSpawnTimerInterval;
-        //    //    //spawnManager.CheckPosition();
-        //    //    Debug.Log("carspawner");
-        //    //
-        //    //    timer = 0f;
-        //    //    Debug.Log(maxTimer);
-        //    //}
     }
 
-    public override void OnTriggerEnter(Transform trans)
+    bool SpawnCurrentSpawnTarget()
+    {
+        prevSpawnStatus = aiDirector.SpawnCar(transform.position, spawnTarget.entityId, spawnTarget.bt, spawnTarget.endPos);
+        if (prevSpawnStatus)
+        {
+            spawnTimer = 0f;
+            return true;
+        }
+
+        backlog.Enqueue(spawnTarget);
+
+        return false;
+    }
+
+    public override void OnTriggerEnter(uint entId)
     {
         ++carCounter;
     }
 
-    public override void OnTriggerExit(Transform trans)
+    public override void OnTriggerExit(uint entId)
     {
         --carCounter;
     }

@@ -100,7 +100,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
                 //Lose points instead of lose game
                 if (gameState != null)
-                    gameState.MissedDestinationTime();
+                    gameState.MissedDestinationTime(buildingType);
             }
 
             if (notification.AppearCheck())
@@ -224,7 +224,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             }
             //notification.transform.
             if (gameState != null)
-                gameState.ReachedDestination();
+                gameState.ReachedDestination(buildingType);
             notification.ResetTimer();
         }
     }

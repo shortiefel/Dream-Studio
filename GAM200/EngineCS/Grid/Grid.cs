@@ -289,8 +289,8 @@ public class Grid
     //    int n = Random.Range(0, count);
     //    return _roadList[n];
     //}
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool GetRandomRoadPoint_Engine(out Point point);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool GetRandomRoadPoint_Engine(out Point point);
 
     //public Point GetRandomSpecialStructurePoint()
     //{
@@ -303,23 +303,23 @@ public class Grid
     //    int n = Random.Range(0, count);
     //    return _specialStructure[n];
     //}
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool GetRandomSpecialStructurePoint_Engine(out Vector2Int point);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool GetRandomSpecialStructurePoint_Engine(out Vector2Int point);
 
-    //public Point GetRandomHouseStructurePoint()
-    //{
-    //    //if (!GetRandomHouseStructurePoint_Engine(out Vector2Int ptInt)) return null;
-    //    //return new Point(ptInt);
-    //
-    //    int count = _houseStructure.Count - 1;
-    //    if (count < 0) return null;
-    //    
-    //    int n = Random.Range(0, count);
-    //    return _houseStructure[n];
-    //}
+    public Point GetRandomHouseStructurePoint()
+    {
+        //if (!GetRandomHouseStructurePoint_Engine(out Vector2Int ptInt)) return null;
+        //return new Point(ptInt);
+    
+        int count = _houseStructure.Count - 1;
+        if (count < 0) return null;
+        
+        int n = Random.Range(0, count);
+        return _houseStructure[n];
+    }
 
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern bool GetRandomHouseStructurePoint_Engine(out Vector2Int point);
+    //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+    //internal static extern bool GetRandomHouseStructurePoint_Engine(out Vector2Int point);
 
     //public List<Point> GetAdjacentCells(Point cell, bool isAgent)
     //{

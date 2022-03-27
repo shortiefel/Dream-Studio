@@ -48,4 +48,18 @@ public class Text : IComponent
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetFont_Color_Engine(uint entityID, Color col);
 
+    public float alpha
+    {
+        get
+        {
+            GetText_Alpha_Engine(entityId, out float alpha);
+            return alpha;
+        }
+        set { SetText_Alpha_Engine(entityId, value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetText_Alpha_Engine(uint entityID, out float alpha);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetText_Alpha_Engine(uint entityID, float alpha);
+
 }

@@ -83,16 +83,16 @@ public class CarSpawner : MonoBehaviour
     {
         dt = Time.deltaTime;
 
-        lifeTime += dt;
-        if (lifeTime > maxLifeTime)
-        {
-            lifeTime = 0f;
-            Debug.Log("CarSpawner lose lifetime");
-            gameState.MissedDestinationTime(BuildingType.House);
-        }
+        //lifeTime += dt;
+        //if (lifeTime > maxLifeTime)
+        //{
+        //    lifeTime = 0f;
+        //    Debug.Log("CarSpawner lose lifetime");
+        //    gameState.MissedDestinationTime(BuildingType.House);
+        //}
 
+        //Use Queue peek to show notification of the one that is needed
         spawnTimer += dt;
-        //Debug.Log("Spawning " + spawnTimer + "   " + spawnTimerMax);
         if (spawnTimer >= spawnTimerMax && carCounter == 0)
         {
             
@@ -152,7 +152,7 @@ public class CarSpawner : MonoBehaviour
 
     bool SpawnCurrentSpawnTarget()
     {
-        prevSpawnStatus = aiDirector.SpawnCar(transform.position, spawnTarget.entityId, spawnTarget.bt, spawnTarget.endPos);
+        prevSpawnStatus = aiDirector.SpawnCar(transform.position, spawnTarget.entityId, spawnTarget.bt, spawnTarget.endPos, RouteType.HouseToDest);
         if (prevSpawnStatus)
         {
             spawnTimer = 0f;
@@ -171,7 +171,7 @@ public class CarSpawner : MonoBehaviour
 
     public override void OnTriggerExit(uint entId)
     {
-        Debug.Log("trigger exited ");
+        //Debug.Log("trigger exited ");
         --carCounter;
     }
 

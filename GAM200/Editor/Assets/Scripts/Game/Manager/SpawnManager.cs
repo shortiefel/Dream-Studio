@@ -69,7 +69,7 @@ public class SpawnManager : MonoBehaviour
         Vector2Int roadPosition2 = SpawnRandomRoad();
 
         //roadPosition = new Vector2Int(1, 1);
-        //roadPosition2 = new Vector2Int(4, 1);
+        //roadPosition2 = new Vector2Int(7, 3);
         //
         //spawnState = SpawnState.BuildUp;
         //
@@ -307,7 +307,7 @@ public class SpawnManager : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.R)) return;
-        //spawnTimer += dt;
+        spawnTimer += dt;
         if (spawnTimer > spawnTimerMax)
         {
             if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))

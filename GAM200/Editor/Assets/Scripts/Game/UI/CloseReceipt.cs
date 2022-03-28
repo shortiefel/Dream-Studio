@@ -69,6 +69,7 @@ public class CloseReceipt : MonoBehaviour
             Disable<Transform>(receipt.transform);
             Disable<Transform>(closeTransform);
 
+            gameState.ResetDay();
             gameState.SetPause(false);
             gameState.GameOver();
         }

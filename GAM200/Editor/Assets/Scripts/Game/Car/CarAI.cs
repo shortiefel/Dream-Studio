@@ -446,7 +446,7 @@ public class CarAI : MonoBehaviour
         Destroy(gameObject);
 
         if (endPoint != null)
-            endPoint.Notify(nextDestination, path);
+            endPoint.Notify(new Vector2Int(path[path.Count-1]), nextDestination);
 
 
 

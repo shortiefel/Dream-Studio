@@ -974,8 +974,13 @@ namespace Engine {
             //}
         }
 
-        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 housePos, Math::ivec2 destPos, int* roadCount) {
-            std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos, roadCount);
+        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 housePos, Math::ivec2 destPos, int routeType) {
+            std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+
+            if (vlist.empty() && (RouteType)routeType == RouteType::DestToHouse) {
+                std::cout << " Its actually empty --------------------------------------------------\n";
+                
+            }
             //vlist.reverse();
             
             int index = *count = 0;
@@ -1095,8 +1100,11 @@ namespace Engine {
             *count = index;
         }
 
-        std::list<Math::ivec2> Grid::AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition, int* roadCount) {
-            *roadCount = 0;
+        std::list<Math::ivec2> Grid::AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition) {
+            //*roadCount = 0;
+
+            //Using routeType to decide whether to check the other position of startPosition (if its DestToHouse)
+
             Math::ivec2 endRight = endPosition + Math::ivec2{ 1,0 };
             Math::ivec2 endUp = endPosition + Math::ivec2{ 0,1 };
             Math::ivec2 endUpRight = endPosition + Math::ivec2{ 1,1 };
@@ -1119,9 +1127,10 @@ namespace Engine {
                 Cell& cell = *(*(grid + current.x - offset.x) + current.y - offset.y);
                 if (
                     //For House to destination travel
-                    (cell.ct == CellType::SpecialStructure && (current == endPosition || current == endRight || current == endUp || current == endUpRight)) ||
+                    ((current == endPosition || current == endRight || current == endUp || current == endUpRight) && 
+                        cell.ct == CellType::SpecialStructure) ||
                     //For destination to house travel
-                    (cell.ct == CellType::Structure && current == endPosition)
+                    (current == endPosition && cell.ct == CellType::Structure)
                     ) {
                     path = GeneratePath(parentsDictionary, current);
                     path.reverse();
@@ -1133,7 +1142,7 @@ namespace Engine {
                     if (current == endRight) endPosition = endRight;
                     else if (current == endUp) endPosition = endUp;
                     else if (current == endUpRight) endPosition = endUpRight;
-                    *roadCount = (int)path.size();
+                    //*roadCount = (int)path.size();
 
                     return path;
                 }

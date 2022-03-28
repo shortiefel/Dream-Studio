@@ -2,6 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum RouteType
+{
+    HouseToDest = 0,
+    DestToHouse
+}
 public class AIDirector : MonoBehaviour
 {
     public PlacementManager placementManager;
@@ -69,7 +74,7 @@ public class AIDirector : MonoBehaviour
     //    //}
     //}
 
-    public bool GetNewPathList(Vector2Int endPos, uint entId, bool reset = false)
+    public bool GetNewPathList(Vector2Int endPos, uint entId, RouteType rt, bool reset = false)
     {
 
         //Dictionary<Vector2Int, int> decisionContainer = new Dictionary<Vector2Int, int>();
@@ -163,8 +168,9 @@ public class AIDirector : MonoBehaviour
             {
                 if (pc != 0 && startHouse.Key == structureManager.destinationList[endPos].startPos) continue;
 
-                int roadNum;
-                List<Vector2> list = placementManager.GetPathBetween(startHouse.Key, new Vector2Int(endPos), out roadNum);
+                //int roadNum;
+                //List<Vector2> list = placementManager.GetPathBetween(startHouse.Key, new Vector2Int(endPos), out roadNum);
+                List<Vector2> list = placementManager.GetPathBetween(startHouse.Key, new Vector2Int(endPos), rt);
                 if (list.Count == 0) continue;
 
                 if (list.Count < pc || pc == 0)
@@ -206,15 +212,16 @@ public class AIDirector : MonoBehaviour
     }
 
     //Actually spawning it called by CarSpawner
-    public bool SpawnCar(Vector2 spawnPos, uint id, BuildingType bt, Vector2Int endPos)
+    public bool SpawnCar(Vector2 spawnPos, uint id, BuildingType bt, Vector2Int endPos, RouteType rt)
     {
 
         Vector2Int spawnPosInt = new Vector2Int(spawnPos);
         
-        int roadCount;
+        //int roadCount;
         //uint prevEntId = structureManager.destinationList[endPos].entityId;
 
-        var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), out roadCount);
+        //var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), rt, out roadCount);
+        var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), rt);
         
         //if (path.Count == 0 || prevEntId != structureManager.destinationList[endPos].entityId)
         if (path.Count == 0)
@@ -244,8 +251,9 @@ public class AIDirector : MonoBehaviour
 
         if (possibleDest[(int)bt].pos != startPos)
         {
-            int roadNum;
-            List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, out roadNum);
+            //int roadNum;
+            //List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, out roadNum);
+            List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, RouteType.HouseToDest);
 
             if (list.Count != 0)
             {
@@ -263,8 +271,9 @@ public class AIDirector : MonoBehaviour
         uint newId = 0;
         foreach (var endDestination in structureManager.destinationListNew[(int)bt])
         {
-            int roadNum;
-            List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
+            //int roadNum;
+            List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, RouteType.HouseToDest);
+            //List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
             if (list.Count == 0) continue;
 
             if (list.Count < count || count == 0)
@@ -294,8 +303,9 @@ public class AIDirector : MonoBehaviour
         uint newId = 0;
         foreach (var endDestination in structureManager.destinationListNew[(int)bt])
         {
-            int roadNum;
-            List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
+            //int roadNum;
+            //List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
+            List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, RouteType.HouseToDest);
             if (list.Count == 0) continue;
 
             if (list.Count < count || count == 0)

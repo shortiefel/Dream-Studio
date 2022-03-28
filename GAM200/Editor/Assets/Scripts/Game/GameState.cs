@@ -1,4 +1,9 @@
 ﻿
+enum Cycle
+{
+    Day = 0,
+    Night
+}
 public class GameState : MonoBehaviour
 {
     bool pauseState;
@@ -18,7 +23,13 @@ public class GameState : MonoBehaviour
 
     private float dayTimer;
     private float dayCycle;
+    private float nightCycle;
     private int dayCounter;
+
+    UI overlayNightTexture;
+    float overlayAlpha;
+
+    Cycle cycle;
 
     ButtonStore store;
     GameObject receipt;
@@ -65,6 +76,13 @@ public class GameState : MonoBehaviour
         dayTimer = 0f;
         dayCycle = 120f;
 
+        nightCycle = 100f;
+
+        cycle = Cycle.Day;
+
+        overlayAlpha = 0f;
+        overlayNightTexture = GameObject.Find("OverlayNight").GetComponent<UI>();
+
         receipt = GameObject.Find("Receipt");
         if (receipt != null)
         {
@@ -82,6 +100,17 @@ public class GameState : MonoBehaviour
         if (receipt != null)
         {
             dayTimer += Time.deltaTime;
+
+            if (dayTimer >= nightCycle)
+            {
+                overlayAlpha += 0.01f;
+                if (overlayAlpha > 0.5f) overlayAlpha = 0.7f;
+                else
+                    overlayNightTexture.alpha = overlayAlpha;
+
+                if (cycle == Cycle.Day)
+                    cycle = Cycle.Night;
+            }
 
             if (dayTimer >= dayCycle)
             {
@@ -305,4 +334,17 @@ public class GameState : MonoBehaviour
     //{
     //    return !pauseState && drawModeBool;
     //}
+
+    //Return true if night
+    public bool GetNight()
+    {
+        return cycle == Cycle.Night;
+    }
+
+    public void ResetDay()
+    {
+        cycle = Cycle.Day;
+        overlayAlpha = 0.0f;
+        overlayNightTexture.alpha = overlayAlpha;
+    }
 }

@@ -26,7 +26,13 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     AIDirector aiDirector;
     //bool spawnBool;
 
+    Light light;
+
     public BuildingType buildingType;
+
+    //If true means its waiting for day
+    bool waitForDayChange = false;
+    bool nightStatus;
 
     //private float pathTimer;
 
@@ -34,6 +40,22 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     {
 
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+
+        light = GetComponent<Light>();
+        if (light != null)
+        {
+
+            if (gameState.GetNight())
+            {
+                waitForDayChange = true;
+            }
+            else
+            {
+                waitForDayChange = false;
+                Disable<Light>(light);
+            }
+        }
+
         //returnCar = GetComponent<ReturnCar>();
 
         //structureModel = GetComponent<StructureModel>();
@@ -112,7 +134,23 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     public override void Update()
     {
-        
+        if (light != null)
+        {
+            nightStatus = gameState.GetNight();
+            if (!waitForDayChange && nightStatus)
+            {
+                //Debug.Log("Change to turn on light");
+                Enable<Light>(light);
+                waitForDayChange = true;
+            }
+
+            else if (waitForDayChange && !nightStatus)
+            {
+                //Debug.Log("Change to turn off light");
+                Disable<Light>(light);
+                waitForDayChange = false;
+            }
+        }
         //if (notification != null)
         //{
         //    if (!notification.NotificationUpdate())
@@ -222,12 +260,12 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     /*
      * Notify house that a car has reached it
     */
-    public void Notify(Vector2Int nextDest, List<Vector2> newPath)
+    public void Notify(Vector2Int spawnPoint, Vector2Int nextDest)
     {
         gameState.ReachedDestination(buildingType);
 
-        Debug.Log("Try spawn to house ------ " + transform.position + " to " + nextDest);
-        aiDirector.SpawnCar(transform.position, 0, buildingType, nextDest);
+        //Debug.Log("Try spawn to house ------ " + spawnPoint + " to " + nextDest);
+        aiDirector.SpawnCar(spawnPoint, 0, buildingType, nextDest, RouteType.DestToHouse);
 
         //if (returnCar != null)
         //{

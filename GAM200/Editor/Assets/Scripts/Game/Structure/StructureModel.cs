@@ -2,6 +2,19 @@
 using System.Collections.Generic;
 using System;
 
+struct DestToHouseSet
+{
+    public Vector2Int startPos;
+    public Vector2Int endPos;
+    public BuildingType bt;
+
+    public DestToHouseSet(Vector2Int _startPos, Vector2Int _endPos, BuildingType _bt)
+    {
+        startPos = _startPos;
+        endPos = _endPos;
+        bt = _bt;
+    }
+}
 public class StructureModel : MonoBehaviour, INeedingRoad
 {
     //float yHeight = 0;
@@ -36,9 +49,16 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     //private float pathTimer;
 
+    Queue<DestToHouseSet> destToHouseQueue;
+
+
+    DestToHouseSet toberemoved;
+
+    int carCounter = 0;
+    float carSpawnTime;
+    float carSpawnTimeMax;
     public override void Start()
     {
-
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         light = GetComponent<Light>();
@@ -56,6 +76,11 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             }
         }
 
+
+        destToHouseQueue = new Queue<DestToHouseSet>();
+
+        carSpawnTime = 0f;
+        carSpawnTimeMax = 0.2f;
         //returnCar = GetComponent<ReturnCar>();
 
         //structureModel = GetComponent<StructureModel>();
@@ -151,6 +176,29 @@ public class StructureModel : MonoBehaviour, INeedingRoad
                 waitForDayChange = false;
             }
         }
+
+        carSpawnTime += Time.deltaTime;
+            Debug.Log("Current " + entityId + " " + carCounter);
+        if (destToHouseQueue.Count != 0 && carSpawnTime > carSpawnTimeMax && carCounter == 0)
+        {
+            carSpawnTime = 0f;
+            DestToHouseSet dts = destToHouseQueue.Dequeue();
+            toberemoved = new DestToHouseSet(dts.startPos, dts.endPos, dts.bt); //-----------------------------------
+            aiDirector.SpawnCar(dts.startPos, 0, dts.bt, dts.endPos, RouteType.DestToHouse);
+            //++carCounter;
+        }
+
+        //-----------------------------------------------------
+        if (GetComponent<Light>() != null)
+        {
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                destToHouseQueue.Enqueue(new DestToHouseSet(toberemoved.startPos, toberemoved.endPos, toberemoved.bt));
+                //aiDirector.SpawnCar(toberemoved.startPos, 0, toberemoved.bt, toberemoved.endPos, RouteType.DestToHouse);
+            }
+        }
+        //-----------------------------------------------------
+
         //if (notification != null)
         //{
         //    if (!notification.NotificationUpdate())
@@ -220,6 +268,17 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         //}
     }
 
+
+    public override void OnTriggerEnter(uint entId)
+    {
+        ++carCounter;
+    }
+
+    public override void OnTriggerExit(uint entId)
+    {
+        --carCounter;
+    }
+
     /*public void CreateModel(Prefab model)
     {
         //var structure = Instantiate(model, transform);
@@ -265,7 +324,9 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         gameState.ReachedDestination(buildingType);
 
         //Debug.Log("Try spawn to house ------ " + spawnPoint + " to " + nextDest);
-        aiDirector.SpawnCar(spawnPoint, 0, buildingType, nextDest, RouteType.DestToHouse);
+        //aiDirector.SpawnCar(spawnPoint, 0, buildingType, nextDest, RouteType.DestToHouse);
+
+        destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
 
         //if (returnCar != null)
         //{

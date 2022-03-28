@@ -113,10 +113,10 @@ public class StructureManager : MonoBehaviour
             Debug.Log(destinationListNew[(int)BuildingType.Mall].Count);
         }
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Debug.Log("Got the building " + GetRandomBuildingType());
-        }
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    Debug.Log("Got the building " + GetRandomBuildingType());
+        //}
     }
     //private IEnumerator waitABit(Vector2Int newPos)
     //{

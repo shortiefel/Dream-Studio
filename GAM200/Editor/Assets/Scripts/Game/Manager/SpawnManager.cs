@@ -69,7 +69,7 @@ public class SpawnManager : MonoBehaviour
         Vector2Int roadPosition2 = SpawnRandomRoad();
 
         //roadPosition = new Vector2Int(1, 1);
-        //roadPosition2 = new Vector2Int(7, 3);
+        //roadPosition2 = new Vector2Int(2, 2);
         //
         //spawnState = SpawnState.BuildUp;
         //

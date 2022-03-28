@@ -89,12 +89,13 @@ namespace Engine {
 		for (auto& [id, vecId] : overlapMap) {
 			if (emt.find(id) == emt.end()) {
 				for (auto& entId : vecId) {
-					//const auto& iter1 = overlapMap.find(entId.id);
-					//if (iter1 != overlapMap.end()) {
-						//size_t size1 = iter1->second.size();
-						//for (size_t i = 0; i < size1; i++) {
-							//if (iter1->second[i].id == id) {
-								//overlapMap[entId.id].erase(iter1->second.begin() + i);
+					//----------------------Potential Lag
+					const auto& iter1 = overlapMap.find(entId.id);
+					if (iter1 != overlapMap.end()) {
+						size_t size1 = iter1->second.size();
+						for (size_t i = 0; i < size1; i++) {
+							if (iter1->second[i].id == id) {
+								overlapMap[entId.id].erase(iter1->second.begin() + i);
 
 								MonoFunctionType type;
 								ColliderComponent* cc = dreamECSGame->GetComponentPTR<ColliderComponent>(entId.id);
@@ -107,9 +108,9 @@ namespace Engine {
 								OverlapColliderEvent event(entId.id, id, type);
 								EventDispatcher::SendEvent(event);
 								//break;
-							//}
-						//}
-					//}
+							}
+						}
+					}
 				}
 
 				removeSet.insert(id);

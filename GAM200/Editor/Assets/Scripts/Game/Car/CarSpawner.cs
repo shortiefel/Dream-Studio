@@ -74,6 +74,7 @@ public class CarSpawner : MonoBehaviour
         //    //structureModel = GetComponent<StructureModel>();
         spawnTimer = 0f;
         spawnTimerMax = 4f;
+        //spawnTimerMax = 10f;
 
         prevSpawnStatus = true;
         secondaryTimer = 0f;
@@ -93,6 +94,7 @@ public class CarSpawner : MonoBehaviour
 
         //Use Queue peek to show notification of the one that is needed
         spawnTimer += dt;
+        //Debug.Log(spawnTimer);
         if (spawnTimer >= spawnTimerMax && carCounter == 0)
         {
             
@@ -150,19 +152,19 @@ public class CarSpawner : MonoBehaviour
         //}
     }
 
-    bool SpawnCurrentSpawnTarget()
-    {
-        prevSpawnStatus = aiDirector.SpawnCar(transform.position, spawnTarget.entityId, spawnTarget.bt, spawnTarget.endPos, RouteType.HouseToDest);
-        if (prevSpawnStatus)
-        {
-            spawnTimer = 0f;
-            return true;
-        }
-
-        backlog.Enqueue(spawnTarget);
-
-        return false;
-    }
+    //bool SpawnCurrentSpawnTarget()
+    //{
+    //    prevSpawnStatus = aiDirector.SpawnCar(transform.position, spawnTarget.entityId, spawnTarget.bt, spawnTarget.endPos, RouteType.HouseToDest);
+    //    if (prevSpawnStatus)
+    //    {
+    //        spawnTimer = 0f;
+    //        return true;
+    //    }
+    //
+    //    backlog.Enqueue(spawnTarget);
+    //
+    //    return false;
+    //}
 
     public override void OnTriggerEnter(uint entId)
     {
@@ -171,7 +173,6 @@ public class CarSpawner : MonoBehaviour
 
     public override void OnTriggerExit(uint entId)
     {
-        //Debug.Log("trigger exited ");
         --carCounter;
     }
 

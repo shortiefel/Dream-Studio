@@ -90,9 +90,19 @@ public class PlacementManager : MonoBehaviour
 
         placementGrid[position.x, position.y] = type;
         placementGrid.SetCellType(position, type, structure.entityId);
-        
 
-        structureDictionary.Add(position, structure.GetComponent<StructureModel>());
+        if (type == CellType.SpecialStructure)
+        {
+            StructureModel sm = structure.GetComponent<StructureModel>();
+            structureDictionary.Add(position, sm);
+            structureDictionary.Add(new Vector2Int(position.x + 1, position.y    ), sm); //Right
+            structureDictionary.Add(new Vector2Int(position.x    , position.y + 1), sm); //Up
+            structureDictionary.Add(new Vector2Int(position.x + 1, position.y + 1), sm); //Up Right
+        }
+        else
+        {
+            structureDictionary.Add(position, structure.GetComponent<StructureModel>());
+        }
 
         return structure;
     }

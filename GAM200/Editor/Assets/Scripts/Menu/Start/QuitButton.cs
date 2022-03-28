@@ -28,7 +28,6 @@ public class QuitButton : MonoBehaviour
         Disable<Transform>(areYouSure);
         Disable<Transform>(quitYes);
         Disable<Transform>(quitNo);
-        Disable<Transform>(quitNo);
         Disable<Transform>(quitOverlay);
 
     }

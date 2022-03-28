@@ -307,7 +307,7 @@ public class SpawnManager : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.R)) return;
-        spawnTimer += dt;
+        //spawnTimer += dt;
         if (spawnTimer > spawnTimerMax)
         {
             if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))

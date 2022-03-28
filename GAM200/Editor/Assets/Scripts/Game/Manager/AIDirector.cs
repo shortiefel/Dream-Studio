@@ -170,7 +170,8 @@ public class AIDirector : MonoBehaviour
 
                 //int roadNum;
                 //List<Vector2> list = placementManager.GetPathBetween(startHouse.Key, new Vector2Int(endPos), out roadNum);
-                List<Vector2> list = placementManager.GetPathBetween(startHouse.Key, new Vector2Int(endPos), rt);
+                Vector2Int startPos = startHouse.Key;
+                List<Vector2> list = placementManager.GetPathBetween(out startPos, new Vector2Int(endPos), rt);
                 if (list.Count == 0) continue;
 
                 if (list.Count < pc || pc == 0)
@@ -221,7 +222,7 @@ public class AIDirector : MonoBehaviour
         //uint prevEntId = structureManager.destinationList[endPos].entityId;
 
         //var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), rt, out roadCount);
-        var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), rt);
+        var path = placementManager.GetPathBetween(out spawnPosInt, new Vector2Int(endPos), rt);
         
         //if (path.Count == 0 || prevEntId != structureManager.destinationList[endPos].entityId)
         if (path.Count == 0)
@@ -253,7 +254,7 @@ public class AIDirector : MonoBehaviour
         {
             //int roadNum;
             //List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, out roadNum);
-            List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, RouteType.HouseToDest);
+            List<Vector2> list = placementManager.GetPathBetween(out startPos, possibleDest[(int)bt].pos, RouteType.HouseToDest);
 
             if (list.Count != 0)
             {
@@ -272,7 +273,7 @@ public class AIDirector : MonoBehaviour
         foreach (var endDestination in structureManager.destinationListNew[(int)bt])
         {
             //int roadNum;
-            List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, RouteType.HouseToDest);
+            List<Vector2> list = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest);
             //List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
             if (list.Count == 0) continue;
 
@@ -305,7 +306,7 @@ public class AIDirector : MonoBehaviour
         {
             //int roadNum;
             //List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
-            List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, RouteType.HouseToDest);
+            List<Vector2> list = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest);
             if (list.Count == 0) continue;
 
             if (list.Count < count || count == 0)

@@ -974,12 +974,97 @@ namespace Engine {
             //}
         }
 
-        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2 housePos, Math::ivec2 destPos, int routeType) {
-            std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+        std::list<Math::ivec2> Grid::RetryAStar(Math::ivec2& housePos, Math::ivec2 destPos) {
+            bool left = false;
+            bool up = false;
+
+            int xVal = housePos.x - offset.x;
+            int yVal = housePos.y - offset.y;
+
+            Math::ivec2 tempHousePos = housePos;
+
+            if (xVal > 0) {
+                const Cell& cellL = *(*(grid + xVal - 1) + yVal);
+
+                if (cellL.ct == CellType::SpecialStructure) {
+                    left = true;
+
+                    housePos = Math::ivec2(tempHousePos.x - 1, tempHousePos.y);
+                    std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+                    if (!vlist.empty()) return vlist;
+                }
+            }
+
+            if (xVal < mapSize.x - 1) {
+                const Cell& cellR = *(*(grid + xVal + 1) + yVal);
+                //std::cout << "Right " << (int)cellR.ct << "\n";
+                if (cellR.ct == CellType::SpecialStructure) {
+
+                    housePos = Math::ivec2(tempHousePos.x + 1, tempHousePos.y);
+                    std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+                    if (!vlist.empty()) return vlist;
+                }
+            }
+
+            if (yVal < mapSize.y - 1) {
+                const Cell& cellU = *(*(grid + xVal) + yVal + 1);
+                //std::cout << "Up " << (int)cellU.ct << "\n";
+                if (cellU.ct == CellType::SpecialStructure) {
+                    up = true;
+
+                    housePos = Math::ivec2(tempHousePos.x, tempHousePos.y + 1);
+                    std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+                    if (!vlist.empty()) return vlist;
+                }
+            }
+
+            if (yVal > 0) {
+                const Cell& cellD = *(*(grid + xVal) + yVal - 1);
+                //std::cout << "Down " << (int)cellD.ct << "\n";
+                if (cellD.ct == CellType::SpecialStructure) {
+
+                    housePos = Math::ivec2(tempHousePos.x, tempHousePos.y - 1);
+                    std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+                    if (!vlist.empty()) return vlist;
+                }
+            }
+
+
+            if (left) {
+                if (up) {
+                    housePos = Math::ivec2(tempHousePos.x - 1, tempHousePos.y + 1);
+                    std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+                    if (!vlist.empty()) return vlist;
+                }
+                else {
+                    housePos = Math::ivec2(tempHousePos.x - 1, tempHousePos.y - 1);
+                    std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+                    if (!vlist.empty()) return vlist;
+                }
+            }
+            else {
+                if (up) {
+                    housePos = Math::ivec2(tempHousePos.x + 1, tempHousePos.y + 1);
+                    std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+                    if (!vlist.empty()) return vlist;
+                }
+                else {
+                    housePos = Math::ivec2(tempHousePos.x + 1, tempHousePos.y - 1);
+                    std::list<Math::ivec2> vlist = AStarSearchInternal(housePos, destPos);
+                    if (!vlist.empty()) return vlist;
+                }
+            }
+
+            return std::list<Math::ivec2>{};
+        }
+
+        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2* housePos, Math::ivec2 destPos, int routeType) {
+            std::list<Math::ivec2> vlist = AStarSearchInternal(*housePos, destPos);
 
             if (vlist.empty() && (RouteType)routeType == RouteType::DestToHouse) {
-                std::cout << " Its actually empty --------------------------------------------------\n";
-                
+                //std::cout << " Its actually empty --------------------------------------------------\n";
+
+                vlist = RetryAStar(*housePos, destPos);
             }
             //vlist.reverse();
             
@@ -1003,7 +1088,7 @@ namespace Engine {
 #if 1
             std::array<Math::vec2, 100> path{};
 
-            Math::ivec2 prevPosition = housePos;
+            Math::ivec2 prevPosition = *housePos;
             Math::ivec2 nextPosition{};
             while(vlist.size() > 0) {
                 Math::ivec2 pos = vlist.front();

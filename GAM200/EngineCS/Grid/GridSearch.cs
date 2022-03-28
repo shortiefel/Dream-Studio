@@ -10,13 +10,13 @@ public class GridSearch
         public List<Point> Path { get; set; }
     }
 
-    public static List<Point> AStarSearch(Grid grid, Vector2Int housePoint, Vector2Int destPoint, int routeType)
+    public static List<Point> AStarSearch(Grid grid, out Vector2Int housePoint, Vector2Int destPoint, int routeType)
     {
         //grid.PrintGridOut();
         //
         Vector2[] pos2 = new Vector2[100];
         List<Point> path = new List<Point>();
-        AStarSearch_Engine(pos2, out int numOfElement2, housePoint, destPoint, routeType);
+        AStarSearch_Engine(pos2, out int numOfElement2, out housePoint, destPoint, routeType);
         //Console.WriteLine("\n Cs c++    Testing path------------------------------------------------------"); //------------------------To  Remove
         for (int i = 0; i < numOfElement2; i++)
         {
@@ -77,7 +77,7 @@ public class GridSearch
     }
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal static extern void AStarSearch_Engine(Vector2[] pos, out int count, Vector2Int housePosition, Vector2Int destPosition, int routeType);
+    internal static extern void AStarSearch_Engine(Vector2[] pos, out int count, out Vector2Int housePosition, Vector2Int destPosition, int routeType);
 
     private static Point GetClosestVertex(List<Point> list, Dictionary<Point, float> distanceMap)
     {

@@ -1,1 +1,155 @@
-[{"Entity":{"Name":"Digipen","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[4.976744174957275,2.0],"Angle":0.0,"Layer":2,"IsActive":false},"TextureComponent":{"Filepath":"Assets\\Textures\\Logo\\DigiPen_White.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true}},{"Entity":{"Name":"OpenGL","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[4.807453632354736,2.0],"Angle":0.0,"Layer":2,"IsActive":false},"TextureComponent":{"Filepath":"Assets\\Textures\\Logo\\OpenGL.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true}},{"Entity":{"Name":"Mono","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[4.5,3.0],"Angle":0.0,"Layer":2,"IsActive":false},"TextureComponent":{"Filepath":"Assets\\Textures\\Logo\\Mono.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true}},{"Entity":{"Name":"Fmod","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Logo\\FMOD_Black.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true}},{"Entity":{"Name":"Camera","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"Layer":2,"IsActive":true},"CameraComponent":{"Height":10.0,"FOV":1.0,"AR":1.7777777910232545,"IsActive":true}},{"Entity":{"Name":"Background","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[100.0,100.0],"Angle":0.0,"Layer":0,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\DestinationColour.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true}},{"Entity":{"Name":"Adobe","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[7.667731761932373,2.0],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Logo\\Adobe.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":false}}]
+[
+  {
+    "Entity": {
+      "Name": "Digipen",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 4.976744174957275, 2.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Logo\\DigiPen_Black.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "OpenGL",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 4.807453632354736, 2.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": false
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Logo\\OpenGL.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Mono",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 4.5, 3.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": false
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Logo\\Mono.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Camera",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "CameraComponent": {
+      "Height": 10.0,
+      "FOV": 1.0,
+      "AR": 1.7777777910232545,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Background",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 100.0, 100.0 ],
+      "Angle": 0.0,
+      "Layer": 0,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\DestinationColour.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Adobe",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 5.0, 5.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": false
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Logo\\Adobe.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Fmod",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 3.7035884857177736, 2.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": false
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Logo\\FMod.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  }
+]

@@ -10,25 +10,9 @@ public class IntroScene : MonoBehaviour
         logos = GameObject.Find("Logos").GetComponent<Texture>();
         Console.WriteLine("Enter Intro Start");
         logos.alpha = 1.0f;
-        fadespeed = 0.002f;
+        fadespeed = 0.003f;
         fading = false;
         counter = 0;
-    }
-    public override void OnMouseEnter()
-    {
-        
-    }
-    public override void OnMouseOver()
-    {
-        if (Input.GetMouseButtonDown(MouseCode.Left))
-        {
-            Console.WriteLine("Intro Skip");
-            //Time.timeScale = 1;
-            SceneManager.LoadScene("MainMenu");
-        }
-    }
-    public override void OnMouseExit()
-    {
     }
     public override void Update()
     {
@@ -49,14 +33,31 @@ public class IntroScene : MonoBehaviour
         {
             if(counter == 0)
             {
-                logos.ChangeTexture("DeleteRoad");
+                logos.ChangeTexture("Logo//Adobe");
             }
             if(counter == 1)
             {
-                logos.ChangeTexture("EndRoad");
+                logos.ChangeTexture("Logo//FMod");
+            }
+            if(counter == 2)
+            {
+                logos.ChangeTexture("Logo//Mono");
+            }
+            if (counter == 3)
+            {
+                logos.ChangeTexture("Logo//OpenGL");
+            }
+            if (counter == 4)
+            {
+                logos.ChangeTexture("Logo//Dream_Studio_Logo");
             }
             counter++;
             fading = true;
-        }        
+        }
+        if (Input.GetMouseButtonDown(MouseCode.Left))
+        {
+            Console.WriteLine("Intro Skip");
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

@@ -205,7 +205,7 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        if((moneySystem.road_count() > 0 ) && (moneySystem.road_count() * 20) < moneySystem.GetMoney())
+                        if((moneySystem.road_count() > 0 ) && (moneySystem.road_count() * 20) <= moneySystem.GetMoney())
                         {
                             moneySystem.BuyRoad(moneySystem.road_count());
                             moneySystem.road_counter = 0;

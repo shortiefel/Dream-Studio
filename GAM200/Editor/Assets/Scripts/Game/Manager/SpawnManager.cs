@@ -285,7 +285,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N) && Input.GetKey(KeyCode.Shift))
         {
-            CheckPosition();
+            CheckPosition(SpawnRequestType.Destination);
         }
 
         dt = Time.deltaTime;

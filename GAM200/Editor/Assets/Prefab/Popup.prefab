@@ -1,0 +1,1 @@
+[{"Entity":{"Name":"Popup","EntityId":147,"Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[0.25999999046325686,0.25999999046325686],"Angle":0.0,"Layer":4,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Game\\Houses\\Hospital.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true}}]

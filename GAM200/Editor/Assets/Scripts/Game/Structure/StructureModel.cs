@@ -154,6 +154,9 @@ public class StructureModel : MonoBehaviour, INeedingRoad
             case "ShoppingMall":
                 buildingType = BuildingType.Mall;
                 break;
+            case "PoliceStation":
+                buildingType = BuildingType.PoliceStation;
+                break;
         }
     }
 
@@ -178,7 +181,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
         }
 
         carSpawnTime += Time.deltaTime;
-            Debug.Log("Current " + entityId + " " + carCounter);
+            //Debug.Log("Current " + entityId + " " + carCounter);
         if (destToHouseQueue.Count != 0 && carSpawnTime > carSpawnTimeMax && carCounter == 0)
         {
             carSpawnTime = 0f;

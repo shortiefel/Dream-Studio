@@ -9,8 +9,10 @@ public enum BuildingType
     Office,
     Park,
     Mall,
-    //Destination must be above this
-    House,
+    PoliceStation,
+    //Destination must be above this line------------------
+    //Dont add anything between the previous comment and House
+    House, 
     COUNT,
     None
 }
@@ -75,6 +77,7 @@ public class StructureManager : MonoBehaviour
         specialPrefabs[(int)BuildingType.Office].prefab = new GameObject(new Prefab("OfficeDestination")); specialPrefabs[(int)BuildingType.Office].weight = 1;
         specialPrefabs[(int)BuildingType.Park].prefab = new GameObject(new Prefab("ParkDestination")); specialPrefabs[(int)BuildingType.Park].weight = 1;
         specialPrefabs[(int)BuildingType.Mall].prefab = new GameObject(new Prefab("MallDestination")); specialPrefabs[(int)BuildingType.Mall].weight = 1;
+        specialPrefabs[(int)BuildingType.PoliceStation].prefab = new GameObject(new Prefab("PoliceStationDestination")); specialPrefabs[(int)BuildingType.PoliceStation].weight = 1;
 
         houseWeights = new float[] { housesPrefabs[0].weight };
         specialWeights = new float[] 
@@ -82,6 +85,7 @@ public class StructureManager : MonoBehaviour
         , specialPrefabs[(int)BuildingType.Office].weight 
         , specialPrefabs[(int)BuildingType.Park].weight 
         , specialPrefabs[(int)BuildingType.Mall].weight 
+        , specialPrefabs[(int)BuildingType.PoliceStation].weight 
         };
 
         houseList = new Dictionary<Vector2Int, CarSpawner>();
@@ -93,38 +97,11 @@ public class StructureManager : MonoBehaviour
         destinationListNew[(int)BuildingType.Office] = new List<PosIdSet>();
         destinationListNew[(int)BuildingType.Park] = new List<PosIdSet>();
         destinationListNew[(int)BuildingType.Mall] = new List<PosIdSet>();
+        destinationListNew[(int)BuildingType.PoliceStation] = new List<PosIdSet>();
 
-        //Debug.Log(destinationListNew[(int)BuildingType.Hospital].Count);
-        //Debug.Log(destinationListNew[(int)BuildingType.Office].Count);
-        //Debug.Log(destinationListNew[(int)BuildingType.Park].Count);
-        //Debug.Log(destinationListNew[(int)BuildingType.Mall].Count);
-        //pathTimerMax = 15f;
 
     }
 
-    public override void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.Log("Start----------------");
-            Debug.Log(destinationListNew[(int)BuildingType.Hospital].Count);
-            Debug.Log(destinationListNew[(int)BuildingType.Office].Count);
-            Debug.Log(destinationListNew[(int)BuildingType.Park].Count);
-            Debug.Log(destinationListNew[(int)BuildingType.Mall].Count);
-        }
-
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    Debug.Log("Got the building " + GetRandomBuildingType());
-        //}
-    }
-    //private IEnumerator waitABit(Vector2Int newPos)
-    //{
-    //    Debug.Log("got wait until");
-    //    yield return new WaitForSeconds(notificationManager.GetRandomNumber()); //tell unity to wait!!
-    //    notificationManager.CreateNotificationModel(newPos);
-
-    //}
 
     public BuildingType GetRandomBuildingType()
     {

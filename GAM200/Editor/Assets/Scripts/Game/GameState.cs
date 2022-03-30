@@ -225,6 +225,10 @@ public class GameState : MonoBehaviour
             case BuildingType.Mall:
                 moneySystem.AddMoney(25, MoneySource.DestMall);
                 break;
+
+            case BuildingType.PoliceStation:
+                moneySystem.AddMoney(25, MoneySource.DestPolice);
+                break;
         }
         
         IncrementScore();
@@ -249,6 +253,10 @@ public class GameState : MonoBehaviour
 
             case BuildingType.Mall:
                 moneySystem.MinusMoney(100, MoneySource.DestMall);
+                break;
+
+            case BuildingType.PoliceStation:
+                moneySystem.MinusMoney(100, MoneySource.DestPolice);
                 break;
         }
         

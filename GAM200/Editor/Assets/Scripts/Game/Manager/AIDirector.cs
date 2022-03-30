@@ -34,11 +34,12 @@ public class AIDirector : MonoBehaviour
         maxCarSpawn = 2;
 
         //carSpawnTimerInterval = 2f;
-        carPrefabs = new Prefab[5];
+        carPrefabs = new Prefab[(int)BuildingType.House];
         carPrefabs[(int)BuildingType.Hospital] = new Prefab("HospitalCar");
         carPrefabs[(int)BuildingType.Office] = new Prefab("OfficeCar");
         carPrefabs[(int)BuildingType.Park] = new Prefab("ParkCar");
         carPrefabs[(int)BuildingType.Mall] = new Prefab("MallCar");
+        carPrefabs[(int)BuildingType.PoliceStation] = new Prefab("PoliceCar");
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
@@ -244,6 +245,7 @@ public class AIDirector : MonoBehaviour
     public bool SelectADestAndSpawn(Vector2Int startPos, PosIdSet[] possibleDest, out BuildingType outBt, out PosIdSet posIdSet)
     {
         BuildingType bt = structureManager.GetRandomBuildingType();
+
         outBt = bt;
         posIdSet = new PosIdSet(0, startPos);
 
@@ -252,6 +254,7 @@ public class AIDirector : MonoBehaviour
 
         if (possibleDest[(int)bt].pos != startPos)
         {
+            Debug.Log("Using this");
             //int roadNum;
             //List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, out roadNum);
             List<Vector2> list = placementManager.GetPathBetween(out startPos, possibleDest[(int)bt].pos, RouteType.HouseToDest);
@@ -265,6 +268,7 @@ public class AIDirector : MonoBehaviour
                 return true;
                 //Skip the major check
             }
+            //Debug.Log("Unsuccessful " + list.Count + "  " + bt  + "   "+ possibleDest[(int)bt].pos);
         }
 
         List<Vector2> path = new List<Vector2>();
@@ -289,7 +293,8 @@ public class AIDirector : MonoBehaviour
         {
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
             car.GetComponent<CarAI>().SetPath(path, newId);
-            posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, possibleDest[(int)bt].pos);
+            posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, startPos);
+
             return true;
         }
         return false;

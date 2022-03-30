@@ -10,6 +10,7 @@ public enum MoneySource
     DestOffice,
     DestPark,
     DestMall,
+    DestPolice
 }
 
 struct MoneyInfoTextStruct {
@@ -74,14 +75,17 @@ public class MoneySystem : MonoBehaviour
     Vector2 imageStartPosition;
     float imageYFinalPosition;
 
-    Transform infoStore;
-    Transform infoERP;
-    Transform infoTax;
+    //Transform infoStore;
+    //Transform infoERP;
+    //Transform infoTax;
 
+    //Transform infoDest;
     Transform infoDestHospital;
-    Transform infoDestOffice;
-    Transform infoDestPark;
-    Transform infoDestMall;
+    //Transform infoDestOffice;
+    //Transform infoDestPark;
+    //Transform infoDestMall;
+
+    UI infoDestTexture;
 
 
     public override void Start()
@@ -141,213 +145,56 @@ public class MoneySystem : MonoBehaviour
         imageStartPosition = new Vector2(56.7f, 41.1f);
         imageYFinalPosition = 35.5f;
 
-        GameObject goImageStore = GameObject.Find("ListOfCostImageStore");
-        if (goImageStore != null)
-        {
-            infoStore = goImageStore.GetComponent<Transform>();
-        }
+        //GameObject goImageStore = GameObject.Find("ListOfCostImageStore");
+        //if (goImageStore != null)
+        //{
+        //    infoStore = goImageStore.GetComponent<Transform>();
+        //}
+        //
+        //GameObject goImageERP = GameObject.Find("ListOfCostERP");
+        //if (goImageERP != null)
+        //{
+        //    infoERP = goImageERP.GetComponent<Transform>();
+        //}
+        //
+        //GameObject goImageTax = GameObject.Find("ListOfCostTax");
+        //if (goImageTax != null)
+        //{
+        //    infoTax = goImageTax.GetComponent<Transform>();
+        //}
 
-        GameObject goImageERP = GameObject.Find("ListOfCostERP");
-        if (goImageERP != null)
-        {
-            infoERP = goImageERP.GetComponent<Transform>();
-        }
-
-        GameObject goImageTax = GameObject.Find("ListOfCostTax");
-        if (goImageTax != null)
-        {
-            infoTax = goImageTax.GetComponent<Transform>();
-        }
-
+        //GameObject goImageDest = GameObject.Find("ListOfCostDest");
+        //if (goImageDest != null)
+        //{
+        //    infoDest = goImageDest.GetComponent<Transform>();
+        //}
 
         GameObject goImageDestHospital = GameObject.Find("ListOfCostDestHospital");
         if (goImageDestHospital != null)
         {
             infoDestHospital = goImageDestHospital.GetComponent<Transform>();
+            infoDestTexture = goImageDestHospital.GetComponent<UI>();
         }
 
-        GameObject goImageDestOffice = GameObject.Find("ListOfCostDestOffice");
-        if (goImageDestOffice != null)
-        {
-            infoDestOffice = goImageDestOffice.GetComponent<Transform>();
-        }
+        //GameObject goImageDestOffice = GameObject.Find("ListOfCostDestOffice");
+        //if (goImageDestOffice != null)
+        //{
+        //    infoDestOffice = goImageDestOffice.GetComponent<Transform>();
+        //}
+        //
+        //GameObject goImageDestPark = GameObject.Find("ListOfCostDestPark");
+        //if (goImageDestPark != null)
+        //{
+        //    infoDestPark = goImageDestPark.GetComponent<Transform>();
+        //}
+        //
+        //GameObject goImageDestMall = GameObject.Find("ListOfCostDestMall");
+        //if (goImageDestMall != null)
+        //{
+        //    infoDestMall = goImageDestMall.GetComponent<Transform>();
+        //}
 
-        GameObject goImageDestPark = GameObject.Find("ListOfCostDestPark");
-        if (goImageDestPark != null)
-        {
-            infoDestPark = goImageDestPark.GetComponent<Transform>();
-        }
-
-        GameObject goImageDestMall = GameObject.Find("ListOfCostDestMall");
-        if (goImageDestMall != null)
-        {
-            infoDestMall = goImageDestMall.GetComponent<Transform>();
-        }
-
-        //To add to scene file
-        {
-          //{
-          //    "Entity": {
-          //    "Name": "ListOfCostText",
-          //    "Parent": 10001,
-          //    "Child": []
-          //  },
-          //  "TransformComponent": {
-          //    "Position": [ 62.0, 34.9 ],
-          //    "LocalPosition": [ 0.0, 0.0 ],
-          //    "Scale": [ 1.5, 1.5 ],
-          //    "Angle": 0.0,
-          //    "Layer": 2,
-          //    "IsActive": true
-          //  },
-          //  "FontComponent": {
-          //                  "Filepath": "Assets\\Fonts\\LemonMilkMedium-mLZYV.ttf",
-          //    "Text": "-100",
-          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-          //    "IsActive": true
-          //  }
-          //},
-          //{
-          //              "Entity": {
-          //                  "Name": "ListOfCostImageStore",
-          //    "Parent": 10001,
-          //    "Child": []
-          //  },
-          //  "TransformComponent": {
-          //                  "Position": [ 56.70000076293945, 35.5 ],
-          //    "LocalPosition": [ 0.0, 0.0 ],
-          //    "Scale": [ 2.0, 2.0 ],
-          //    "Angle": 0.0,
-          //    "Layer": 2,
-          //    "IsActive": false
-          //  },
-          //  "UIComponent": {
-          //                  "Filepath": "Assets\\Textures\\Game\\UI\\ShoppingCart.png",
-          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-          //    "IsActive": true
-          //  }
-          //          },
-          //{
-          //              "Entity": {
-          //                  "Name": "ListOfCostERP",
-          //    "Parent": 10001,
-          //    "Child": []
-          //  },
-          //  "TransformComponent": {
-          //                  "Position": [ 56.70000076293945, 35.5 ],
-          //    "LocalPosition": [ 0.0, 0.0 ],
-          //    "Scale": [ 2.0, 2.0 ],
-          //    "Angle": 0.0,
-          //    "Layer": 2,
-          //    "IsActive": false
-          //  },
-          //  "UIComponent": {
-          //                  "Filepath": "Assets\\Textures\\Game\\ERP.png",
-          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-          //    "IsActive": true
-          //  }
-          //          },
-          //{
-          //              "Entity": {
-          //                  "Name": "ListOfCostTax",
-          //    "Parent": 10001,
-          //    "Child": []
-          //  },
-          //  "TransformComponent": {
-          //                  "Position": [ 56.70000076293945, 35.5 ],
-          //    "LocalPosition": [ 0.0, 0.0 ],
-          //    "Scale": [ 2.0, 2.0 ],
-          //    "Angle": 0.0,
-          //    "Layer": 2,
-          //    "IsActive": false
-          //  },
-          //  "UIComponent": {
-          //                  "Filepath": "Assets\\Textures\\Game\\UI\\New_BAG-01-08.png",
-          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-          //    "IsActive": true
-          //  }
-          //          },
-          //{
-          //              "Entity": {
-          //                  "Name": "ListOfCostDestHospital",
-          //    "Parent": 10001,
-          //    "Child": []
-          //  },
-          //  "TransformComponent": {
-          //                  "Position": [ 56.70000076293945, 35.5 ],
-          //    "LocalPosition": [ 0.0, 0.0 ],
-          //    "Scale": [ 2.0, 2.0 ],
-          //    "Angle": 0.0,
-          //    "Layer": 2,
-          //    "IsActive": false
-          //  },
-          //  "UIComponent": {
-          //                  "Filepath": "Assets\\Textures\\Game\\Houses\\Hospital.png",
-          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-          //    "IsActive": true
-          //  }
-          //          },
-          //{
-          //              "Entity": {
-          //                  "Name": "ListOfCostDestOffice",
-          //    "Parent": 10001,
-          //    "Child": []
-          //  },
-          //  "TransformComponent": {
-          //                  "Position": [ 56.70000076293945, 35.5 ],
-          //    "LocalPosition": [ 0.0, 0.0 ],
-          //    "Scale": [ 2.0, 2.0 ],
-          //    "Angle": 0.0,
-          //    "Layer": 2,
-          //    "IsActive": false
-          //  },
-          //  "UIComponent": {
-          //                  "Filepath": "Assets\\Textures\\Game\\Houses\\Office.png",
-          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-          //    "IsActive": true
-          //  }
-          //          },
-          //{
-          //              "Entity": {
-          //                  "Name": "ListOfCostDestPark",
-          //    "Parent": 10001,
-          //    "Child": []
-          //  },
-          //  "TransformComponent": {
-          //                  "Position": [ 56.70000076293945, 35.5 ],
-          //    "LocalPosition": [ 0.0, 0.0 ],
-          //    "Scale": [ 2.0, 2.0 ],
-          //    "Angle": 0.0,
-          //    "Layer": 2,
-          //    "IsActive": false
-          //  },
-          //  "UIComponent": {
-          //                  "Filepath": "Assets\\Textures\\Game\\Houses\\Park.png",
-          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-          //    "IsActive": true
-          //  }
-          //          },
-          //{
-          //              "Entity": {
-          //                  "Name": "ListOfCostDestMall",
-          //    "Parent": 10001,
-          //    "Child": []
-          //  },
-          //  "TransformComponent": {
-          //                  "Position": [ 56.70000076293945, 35.5 ],
-          //    "LocalPosition": [ 0.0, 0.0 ],
-          //    "Scale": [ 2.0, 2.0 ],
-          //    "Angle": 0.0,
-          //    "Layer": 2,
-          //    "IsActive": false
-          //  },
-          //  "UIComponent": {
-          //                  "Filepath": "Assets\\Textures\\Game\\Houses\\ShoppingMall.png",
-          //    "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-          //    "IsActive": true
-          //  }
-          //}
-        }
+        //NOTE: REMOVE THE OTHER GAME OBJECT (ListOfCost...)
     }
 
 
@@ -358,90 +205,94 @@ public class MoneySystem : MonoBehaviour
         {
             listOfCostFadeTimer += Time.fixedDeltaTime;
             listOfCostTimerTransform.position = new Vector2(listOfCostTimerTransform.position.x, Mathf.Lerp(listOfCostTimerTransform.position.y, textYFinalPosition, listOfCostFadeTimer));
-            switch (currentSource)
-            {
-                case MoneySource.Store:
-                    {
-                        infoStore.position = new Vector2(infoStore.position.x, Mathf.Lerp(infoStore.position.y, imageYFinalPosition, listOfCostFadeTimer));
-                        break;
-                    }
-                case MoneySource.ERP:
-                    {
-                        infoERP.position = new Vector2(infoERP.position.x, Mathf.Lerp(infoERP.position.y, imageYFinalPosition, listOfCostFadeTimer));
-                        break;
-                    }
-                case MoneySource.Tax:
-                    {
-                        infoTax.position = new Vector2(infoTax.position.x, Mathf.Lerp(infoTax.position.y, imageYFinalPosition, listOfCostFadeTimer));
-                        break;
-                    }
 
-                case MoneySource.DestHospital:
-                    {
-                        infoDestHospital.position = new Vector2(infoDestHospital.position.x, Mathf.Lerp(infoDestHospital.position.y, imageYFinalPosition, listOfCostFadeTimer));
-                        break;
-                    }
-                case MoneySource.DestOffice:
-                    {
-                        infoDestOffice.position = new Vector2(infoDestOffice.position.x, Mathf.Lerp(infoDestOffice.position.y, imageYFinalPosition, listOfCostFadeTimer));
-                        break;
-                    }
-                case MoneySource.DestPark:
-                    {
-                        infoDestPark.position = new Vector2(infoDestPark.position.x, Mathf.Lerp(infoDestPark.position.y, imageYFinalPosition, listOfCostFadeTimer));
-                        break;
-                    }
-                case MoneySource.DestMall:
-                    {
-                        infoDestMall.position = new Vector2(infoDestMall.position.x, Mathf.Lerp(infoDestMall.position.y, imageYFinalPosition, listOfCostFadeTimer));
-                        break;
-                    }
-            }
+            infoDestHospital.position = new Vector2(infoDestHospital.position.x, Mathf.Lerp(infoDestHospital.position.y, imageYFinalPosition, listOfCostFadeTimer));
+
+            //switch (currentSource)
+            //{
+            //    case MoneySource.Store:
+            //        {
+            //            infoStore.position = new Vector2(infoStore.position.x, Mathf.Lerp(infoStore.position.y, imageYFinalPosition, listOfCostFadeTimer));
+            //            break;
+            //        }
+            //    case MoneySource.ERP:
+            //        {
+            //            infoERP.position = new Vector2(infoERP.position.x, Mathf.Lerp(infoERP.position.y, imageYFinalPosition, listOfCostFadeTimer));
+            //            break;
+            //        }
+            //    case MoneySource.Tax:
+            //        {
+            //            infoTax.position = new Vector2(infoTax.position.x, Mathf.Lerp(infoTax.position.y, imageYFinalPosition, listOfCostFadeTimer));
+            //            break;
+            //        }
+            //
+            //    //case MoneySource.DestHospital:
+            //    //    {
+            //    //        infoDestHospital.position = new Vector2(infoDestHospital.position.x, Mathf.Lerp(infoDestHospital.position.y, imageYFinalPosition, listOfCostFadeTimer));
+            //    //        break;
+            //    //    }
+            //    case MoneySource.DestOffice:
+            //        {
+            //            infoDestOffice.position = new Vector2(infoDestOffice.position.x, Mathf.Lerp(infoDestOffice.position.y, imageYFinalPosition, listOfCostFadeTimer));
+            //            break;
+            //        }
+            //    case MoneySource.DestPark:
+            //        {
+            //            infoDestPark.position = new Vector2(infoDestPark.position.x, Mathf.Lerp(infoDestPark.position.y, imageYFinalPosition, listOfCostFadeTimer));
+            //            break;
+            //        }
+            //    case MoneySource.DestMall:
+            //        {
+            //            infoDestMall.position = new Vector2(infoDestMall.position.x, Mathf.Lerp(infoDestMall.position.y, imageYFinalPosition, listOfCostFadeTimer));
+            //            break;
+            //        }
+            //}
 
             if (listOfCostFadeTimer > listOfCostTimerFadeTimeMax)
             {
                 listOfCostTimerText.alpha -= 0.1f;
                 if (listOfCostTimerText.alpha <= 0f)
                 {
-                    switch (currentSource)
-                    {
-                        case MoneySource.Store:
-                            {
-                                Disable<Transform>(infoStore);
-                                break;
-                            }
-                        case MoneySource.ERP:
-                            {
-                                Disable<Transform>(infoERP);
-                                break;
-                            }
-                        case MoneySource.Tax:
-                            {
-                                Disable<Transform>(infoTax);
-                                break;
-                            }
-
-                        case MoneySource.DestHospital:
-                            {
-                                Disable<Transform>(infoDestHospital);
-                                break;
-                            }
-                        case MoneySource.DestOffice:
-                            {
-                                Disable<Transform>(infoDestOffice);
-                                break;
-                            }
-                        case MoneySource.DestPark:
-                            {
-                                Disable<Transform>(infoDestPark);
-                                break;
-                            }
-                        case MoneySource.DestMall:
-                            {
-                                Disable<Transform>(infoDestMall);
-                                break;
-                            }
-                    }
+                    Disable<Transform>(infoDestHospital);
+                    //switch (currentSource)
+                    //{
+                    //    case MoneySource.Store:
+                    //        {
+                    //            Disable<Transform>(infoStore);
+                    //            break;
+                    //        }
+                    //    case MoneySource.ERP:
+                    //        {
+                    //            Disable<Transform>(infoERP);
+                    //            break;
+                    //        }
+                    //    case MoneySource.Tax:
+                    //        {
+                    //            Disable<Transform>(infoTax);
+                    //            break;
+                    //        }
+                    //
+                    //    //case MoneySource.DestHospital:
+                    //    //    {
+                    //    //        Disable<Transform>(infoDestHospital);
+                    //    //        break;
+                    //    //    }
+                    //    case MoneySource.DestOffice:
+                    //        {
+                    //            Disable<Transform>(infoDestOffice);
+                    //            break;
+                    //        }
+                    //    case MoneySource.DestPark:
+                    //        {
+                    //            Disable<Transform>(infoDestPark);
+                    //            break;
+                    //        }
+                    //    case MoneySource.DestMall:
+                    //        {
+                    //            Disable<Transform>(infoDestMall);
+                    //            break;
+                    //        }
+                    //}
                     listOfCostFadeTimer = 0f;
                     requireFading = false;
                 }
@@ -477,49 +328,50 @@ public class MoneySystem : MonoBehaviour
                 listOfCostTimerTransform.position = textStartPosition;
                 currentSource = info.source;
 
-                switch(currentSource)
+                Enable<Transform>(infoDestHospital);
+                infoDestHospital.position = imageStartPosition;
+
+                switch (currentSource)
                 {
                     case MoneySource.Store:
                         {
-                            Enable<Transform>(infoStore);
-                            infoStore.position = imageStartPosition;
+                            infoDestTexture.ChangeTexture("Game/UI/ShoppingCart");
                             break;
                         }
                     case MoneySource.ERP:
                         {
-                            Enable<Transform>(infoERP);
-                            infoERP.position = imageStartPosition;
+                            infoDestTexture.ChangeTexture("Game/ERP");
                             break;
                         }
                     case MoneySource.Tax:
                         {
-                            Enable<Transform>(infoTax);
-                            infoTax.position = imageStartPosition;
+                            infoDestTexture.ChangeTexture("Game/UI/New_BAG-01-08");
                             break;
                         }
 
                     case MoneySource.DestHospital:
                         {
-                            Enable<Transform>(infoDestHospital);
-                            infoDestHospital.position = imageStartPosition;
+                            infoDestTexture.ChangeTexture("Game/Houses/Hospital");
                             break;
                         }
                     case MoneySource.DestOffice:
                         {
-                            Enable<Transform>(infoDestOffice);
-                            infoDestOffice.position = imageStartPosition;
+                            infoDestTexture.ChangeTexture("Game/Houses/Office");
                             break;
                         }
                     case MoneySource.DestPark:
                         {
-                            Enable<Transform>(infoDestPark);
-                            infoDestPark.position = imageStartPosition;
+                            infoDestTexture.ChangeTexture("Game/Houses/Park");
                             break;
                         }
                     case MoneySource.DestMall:
                         {
-                            Enable<Transform>(infoDestMall);
-                            infoDestMall.position = imageStartPosition;
+                            infoDestTexture.ChangeTexture("Game/Houses/ShoppingMall");
+                            break;
+                        }
+                    case MoneySource.DestPolice:
+                        {
+                            infoDestTexture.ChangeTexture("Game/Houses/PoliceStation");
                             break;
                         }
                 }

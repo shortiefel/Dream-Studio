@@ -1129,6 +1129,64 @@ namespace Editor {
 					if (ImGui::CollapsingHeader("Text"))
 					{
 						/**
+						*	Position
+						*/
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text("Position");
+						ImGui::SameLine();
+						HelperMarker("Font position");
+						ImGui::SameLine(halfWidth);
+
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.375f);
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::DragFloat("##TextXPos", &textComp->position.x, 0.1f, -360.0f, 360.f, "%.2f", 1);
+
+						ImGui::SameLine(halfWidth * 1.7f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.820f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::DragFloat("##TextYPos", &textComp->position.y, 0.1f, -360.0f, 360.f, "%.2f", 1);
+						ImGui::PopFont();
+
+
+						/**
+						*	Scale
+						*/
+						ImGui::Spacing();
+
+						ImGui::AlignTextToFramePadding();
+
+						ImGui::Text("Scale");
+						ImGui::SameLine();
+						HelperMarker("Font scale");
+						ImGui::SameLine(halfWidth);
+						ImGui::PushFont(boldFont);
+						ImGui::Text(" X");
+						ImGui::SameLine(halfWidth * 1.120f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::DragFloat("##TextXscale", &textComp->scale.x, 0.1f, -360.0f, 360.f, "%.2f", 1);
+
+						ImGui::SameLine(halfWidth * 1.7f);
+						ImGui::Text(" Y");
+						ImGui::SameLine(halfWidth * 1.820f, 0);
+						ImGui::SetNextItemWidth(halfWidth * 0.5f);
+						ImGui::DragFloat("##TextYscale", &textComp->scale.y, 0.1f, -360.0f, 360.f, "%.2f", 1);
+						
+
+
+						ImGui::Text("UI");
+						ImGui::SameLine();
+						HelperMarker("Is the Font a UI");
+						ImGui::SameLine(halfWidth);
+						ImGui::Checkbox("##FontIsUI", &textComp->isUI);
+
+						ImGui::PopFont();
+
+						/**
 						*	INPUT TEXT
 						*/
 						std::string& textStuff = textComp->text;

@@ -79,6 +79,7 @@ namespace Engine {
 		void Active_Transform_Engine(unsigned int id, bool boolean);
 		void Active_Collider_Engine(unsigned int id, bool boolean);
 		void Active_Light_Engine(unsigned int id, bool boolean);
+		void Active_Text_Engine(unsigned int id, bool boolean);
 		void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str);
 
 		/*-----------------------------------------------------
@@ -126,6 +127,7 @@ namespace Engine {
 			mono_add_internal_call("MonoBehaviour::Active_Transform_Engine", Active_Transform_Engine);
 			mono_add_internal_call("MonoBehaviour::Active_Collider_Engine", Active_Collider_Engine);
 			mono_add_internal_call("MonoBehaviour::Active_Light_Engine", Active_Light_Engine);
+			mono_add_internal_call("MonoBehaviour::Active_Text_Engine", Active_Text_Engine);
 			mono_add_internal_call("MonoBehaviour::Active_Script_Engine", Active_Script_Engine);
 		}
 
@@ -282,6 +284,10 @@ namespace Engine {
 		
 		void Active_Light_Engine(unsigned int id, bool boolean) {
 			SetEngineType(id, LightComponent, isActive, boolean);
+		}
+		
+		void Active_Text_Engine(unsigned int id, bool boolean) {
+			SetEngineType(id, FontComponent, isActive, boolean);
 		}
 
 		void Active_Script_Engine(unsigned int id, bool boolean, MonoString* str) {

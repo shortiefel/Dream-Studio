@@ -99,11 +99,16 @@ namespace Engine {
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Text/Font
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		void SetFont_Text_Engine(unsigned int entityID, MonoString* _text);
+		void SetText_Text_Engine(unsigned int entityID, MonoString* _text);
 		//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text);
-		void SetFont_Color_Engine(unsigned int entityID, Math::vec4 col);
+		void SetText_Color_Engine(unsigned int entityID, Math::vec4 col);
 		void GetText_Alpha_Engine(unsigned int entityID, float* alpha);
 		void SetText_Alpha_Engine(unsigned int entityID, float alpha);
+
+		void GetText_Position_Engine(unsigned int id, Math::vec2* outVec2);
+		void SetText_Position_Engine(unsigned int id, Math::vec2* inVec2);
+		void GetText_Scale_Engine(unsigned int id, Math::vec2* outVec2);
+		void SetText_Scale_Engine(unsigned int id, Math::vec2* inVec2);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		UI color
@@ -200,10 +205,15 @@ namespace Engine {
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Text/Font
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-			mono_add_internal_call("Text::SetFont_Text_Engine", SetFont_Text_Engine);
-			mono_add_internal_call("Text::SetFont_Color_Engine", SetFont_Color_Engine);
+			mono_add_internal_call("Text::SetText_Text_Engine", SetText_Text_Engine);
+			mono_add_internal_call("Text::SetText_Color_Engine", SetText_Color_Engine);
 			mono_add_internal_call("Text::GetText_Alpha_Engine", GetText_Alpha_Engine);
 			mono_add_internal_call("Text::SetText_Alpha_Engine", SetText_Alpha_Engine);
+
+			mono_add_internal_call("Text::GetText_Position_Engine", GetText_Position_Engine);
+			mono_add_internal_call("Text::SetText_Position_Engine", SetText_Position_Engine);
+			mono_add_internal_call("Text::GetText_Scale_Engine", GetText_Scale_Engine);
+			mono_add_internal_call("Text::SetText_Scale_Engine", SetText_Scale_Engine);
 
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -474,13 +484,13 @@ namespace Engine {
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Text/Font
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-		void SetFont_Text_Engine(unsigned int entityID, MonoString* _text) {
+		void SetText_Text_Engine(unsigned int entityID, MonoString* _text) {
 			char* tempText = mono_string_to_utf8(_text);
 			SetEngineType(entityID, FontComponent, text, std::string{ tempText });
 			mono_free(tempText);
 		}
 
-		void SetFont_Color_Engine(unsigned int entityID, Math::vec4 col) {
+		void SetText_Color_Engine(unsigned int entityID, Math::vec4 col) {
 			SetEngineType(entityID, FontComponent, colour, col);
 		}
 
@@ -495,6 +505,22 @@ namespace Engine {
 		}
 
 		//void GetFont_Text_Engine(unsigned int entityID, MonoString** _text) {}
+
+		void GetText_Position_Engine(unsigned int id, Math::vec2* outVec2) {
+			GetEngineType(id, FontComponent, position, *outVec2);
+		}
+
+		void SetText_Position_Engine(unsigned int id, Math::vec2* inVec2) {
+			SetEngineType(id, FontComponent, position, *inVec2);
+		}
+
+		void GetText_Scale_Engine(unsigned int id, Math::vec2* outVec2) {
+			GetEngineType(id, FontComponent, scale, *outVec2);
+		}
+
+		void SetText_Scale_Engine(unsigned int id, Math::vec2* inVec2) {
+			SetEngineType(id, FontComponent, scale, *inVec2);
+		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		UI color

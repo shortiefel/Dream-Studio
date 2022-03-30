@@ -123,6 +123,7 @@ namespace Engine {
 		----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 		void LoadScene_Engine(MonoString* sceneName);
 		void SetDrawMode_Engine(bool state);
+		void SetFont_DrawNonUI_Engine(bool state);
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 		Console Write
@@ -195,6 +196,7 @@ namespace Engine {
 			----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 			mono_add_internal_call("SceneManager::LoadScene_Engine", LoadScene_Engine);
 			mono_add_internal_call("SceneManager::SetDrawMode_Engine", SetDrawMode_Engine);
+			mono_add_internal_call("SceneManager::SetFont_DrawNonUI_Engine", SetFont_DrawNonUI_Engine);
 
 			/*----------------------------------------------------------------------------------------------------------------------------------------------------------------
 			Console Write
@@ -468,6 +470,10 @@ namespace Engine {
 
 		void SetDrawMode_Engine(bool state) {
 			GameState::GetInstance().SetShouldDraw(state);
+		}
+
+		void SetFont_DrawNonUI_Engine(bool state) {
+			FontSystem::GetInstance().drawNonUIFonts = state;
 		}
 
 		/*----------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -2,19 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-struct DestToHouseSet
-{
-    public Vector2Int startPos;
-    public Vector2Int endPos;
-    public BuildingType bt;
 
-    public DestToHouseSet(Vector2Int _startPos, Vector2Int _endPos, BuildingType _bt)
-    {
-        startPos = _startPos;
-        endPos = _endPos;
-        bt = _bt;
-    }
-}
 public class StructureModel : MonoBehaviour, INeedingRoad
 {
     //float yHeight = 0;
@@ -41,7 +29,7 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
     Light light;
 
-    public BuildingType buildingType;
+    //public BuildingType buildingType;
 
     //If true means its waiting for day
     bool waitForDayChange = false;
@@ -136,28 +124,28 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
         //pathTimer = 0f;
 
-        Texture texure = GetComponent<Texture>();
-        switch (texure.RetrieveTexture())
-        {
-            case "Office":
-                buildingType = BuildingType.Office;
-                break;
-
-            case "Hospital":
-                buildingType = BuildingType.Hospital;
-                break;
-
-            case "Park":
-                buildingType = BuildingType.Park;
-                break;
-
-            case "ShoppingMall":
-                buildingType = BuildingType.Mall;
-                break;
-            case "PoliceStation":
-                buildingType = BuildingType.PoliceStation;
-                break;
-        }
+        //Texture texure = GetComponent<Texture>();
+        //switch (texure.RetrieveTexture())
+        //{
+        //    case "Office":
+        //        buildingType = BuildingType.Office;
+        //        break;
+        //
+        //    case "Hospital":
+        //        buildingType = BuildingType.Hospital;
+        //        break;
+        //
+        //    case "Park":
+        //        buildingType = BuildingType.Park;
+        //        break;
+        //
+        //    case "ShoppingMall":
+        //        buildingType = BuildingType.Mall;
+        //        break;
+        //    case "PoliceStation":
+        //        buildingType = BuildingType.PoliceStation;
+        //        break;
+        //}
     }
 
     public override void Update()
@@ -182,24 +170,24 @@ public class StructureModel : MonoBehaviour, INeedingRoad
 
         carSpawnTime += Time.deltaTime;
             //Debug.Log("Current " + entityId + " " + carCounter);
-        if (destToHouseQueue.Count != 0 && carSpawnTime > carSpawnTimeMax && carCounter == 0)
-        {
-            carSpawnTime = 0f;
-            DestToHouseSet dts = destToHouseQueue.Dequeue();
-            toberemoved = new DestToHouseSet(dts.startPos, dts.endPos, dts.bt); //-----------------------------------
-            aiDirector.SpawnCar(dts.startPos, 0, dts.bt, dts.endPos, RouteType.DestToHouse);
-            //++carCounter;
-        }
+        //if (destToHouseQueue.Count != 0 && carSpawnTime > carSpawnTimeMax && carCounter == 0)
+        //{
+        //    carSpawnTime = 0f;
+        //    DestToHouseSet dts = destToHouseQueue.Dequeue();
+        //    toberemoved = new DestToHouseSet(dts.startPos, dts.endPos, dts.bt); //-----------------------------------
+        //    aiDirector.SpawnCar(dts.startPos, 0, dts.bt, dts.endPos, RouteType.DestToHouse);
+        //    //++carCounter;
+        //}
 
         //-----------------------------------------------------
-        if (GetComponent<Light>() != null)
-        {
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                destToHouseQueue.Enqueue(new DestToHouseSet(toberemoved.startPos, toberemoved.endPos, toberemoved.bt));
-                //aiDirector.SpawnCar(toberemoved.startPos, 0, toberemoved.bt, toberemoved.endPos, RouteType.DestToHouse);
-            }
-        }
+        //if (GetComponent<Light>() != null)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.B))
+        //    {
+        //        destToHouseQueue.Enqueue(new DestToHouseSet(toberemoved.startPos, toberemoved.endPos, toberemoved.bt));
+        //        //aiDirector.SpawnCar(toberemoved.startPos, 0, toberemoved.bt, toberemoved.endPos, RouteType.DestToHouse);
+        //    }
+        //}
         //-----------------------------------------------------
 
         //if (notification != null)
@@ -322,45 +310,45 @@ public class StructureModel : MonoBehaviour, INeedingRoad
     /*
      * Notify house that a car has reached it
     */
-    public void Notify(Vector2Int spawnPoint, Vector2Int nextDest)
-    {
-        gameState.ReachedDestination(buildingType);
-
-        //Debug.Log("Try spawn to house ------ " + spawnPoint + " to " + nextDest);
-        //aiDirector.SpawnCar(spawnPoint, 0, buildingType, nextDest, RouteType.DestToHouse);
-
-        destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
-
-        //if (returnCar != null)
-        //{
-        //
-        //}
-        //if (notification != null)
-        //{
-        //    //Disable<Transform>(notifiSymbol.transform);
-        //    //if (notification != null)
-        //    if (notification.alreadyShowing)
-        //    {
-        //        if (notification.timerShow)
-        //        {
-        //            Console.WriteLine("Timer Destroy");
-        //            animation.Play("TickingClose");
-        //            notification.SetAnimation("TickingClose");
-        //            notification.timerShow = false;
-        //        }
-        //        else
-        //        {
-        //            animation.Play("Destroy");
-        //            notification.SetAnimation("Destroy");
-        //        }
-        //        
-        //    }
-        //    //notification.transform.
-        //    if (gameState != null)
-        //        gameState.ReachedDestination(buildingType);
-        //    notification.ResetTimer();
-        //}
-    }
+    //public void Notify(Vector2Int spawnPoint, Vector2Int nextDest)
+    //{
+    //    gameState.ReachedDestination(buildingType);
+    //
+    //    //Debug.Log("Try spawn to house ------ " + spawnPoint + " to " + nextDest);
+    //    //aiDirector.SpawnCar(spawnPoint, 0, buildingType, nextDest, RouteType.DestToHouse);
+    //
+    //    destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
+    //
+    //    //if (returnCar != null)
+    //    //{
+    //    //
+    //    //}
+    //    //if (notification != null)
+    //    //{
+    //    //    //Disable<Transform>(notifiSymbol.transform);
+    //    //    //if (notification != null)
+    //    //    if (notification.alreadyShowing)
+    //    //    {
+    //    //        if (notification.timerShow)
+    //    //        {
+    //    //            Console.WriteLine("Timer Destroy");
+    //    //            animation.Play("TickingClose");
+    //    //            notification.SetAnimation("TickingClose");
+    //    //            notification.timerShow = false;
+    //    //        }
+    //    //        else
+    //    //        {
+    //    //            animation.Play("Destroy");
+    //    //            notification.SetAnimation("Destroy");
+    //    //        }
+    //    //        
+    //    //    }
+    //    //    //notification.transform.
+    //    //    if (gameState != null)
+    //    //        gameState.ReachedDestination(buildingType);
+    //    //    notification.ResetTimer();
+    //    //}
+    //}
 
     internal void DeleteModel()
     {

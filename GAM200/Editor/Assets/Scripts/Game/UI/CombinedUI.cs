@@ -67,6 +67,8 @@ public class CombinedUI : MonoBehaviour
         {
             case UIType.Pause:
                 {
+                    SceneManager.drawNonUI = false;
+
                     timeSystem.SwitchTabTimer(false, false);
                     buttonStore.SwitchTabStore(false, false);
                     buttonRoad.SwitchTabRoad(false, false);
@@ -102,6 +104,8 @@ public class CombinedUI : MonoBehaviour
                 }
             case UIType.Store:
                 {
+                    SceneManager.drawNonUI = false;
+
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
                     buttonRoad.SwitchTabRoad(false, false);
@@ -124,6 +128,8 @@ public class CombinedUI : MonoBehaviour
                 }
             case UIType.None:
                 {
+                    SceneManager.drawNonUI = false;
+
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
                     buttonStore.SwitchTabStore(false, false);
@@ -151,6 +157,8 @@ public class CombinedUI : MonoBehaviour
 
     public void EnableAllMasterButton()
     {
+        SceneManager.drawNonUI = true;
+
         Enable<Transform>(pauseIcon);
         Enable<Transform>(timerButton);
         Enable<Transform>(storeButton);

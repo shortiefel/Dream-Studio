@@ -33,7 +33,11 @@ namespace Engine
 
 		Math::vec4 colour{};
 
+		Math::vec2 position{ 0.f, 0.f };
+		Math::vec2 scale{ 1.f, 1.f };
+
 		bool isFont;
+		bool isUI = true;
 
 		bool isActive = true;
 

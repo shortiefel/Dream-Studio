@@ -257,6 +257,10 @@ namespace Engine {
 
 		_serializer.SetValue("Colour", t->colour);
 
+		_serializer.SetValue("Position", t->position);
+		_serializer.SetValue("Scale", t->scale);
+		_serializer.SetValue("IsUI", t->isUI);
+
 		_serializer.SetValue("IsActive", t->isActive);
 
 		mainObject.AddMember("FontComponent", objType, doc.GetAllocator());

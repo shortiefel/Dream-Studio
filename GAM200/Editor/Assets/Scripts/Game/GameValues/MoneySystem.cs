@@ -208,91 +208,12 @@ public class MoneySystem : MonoBehaviour
 
             infoDestHospital.position = new Vector2(infoDestHospital.position.x, Mathf.Lerp(infoDestHospital.position.y, imageYFinalPosition, listOfCostFadeTimer));
 
-            //switch (currentSource)
-            //{
-            //    case MoneySource.Store:
-            //        {
-            //            infoStore.position = new Vector2(infoStore.position.x, Mathf.Lerp(infoStore.position.y, imageYFinalPosition, listOfCostFadeTimer));
-            //            break;
-            //        }
-            //    case MoneySource.ERP:
-            //        {
-            //            infoERP.position = new Vector2(infoERP.position.x, Mathf.Lerp(infoERP.position.y, imageYFinalPosition, listOfCostFadeTimer));
-            //            break;
-            //        }
-            //    case MoneySource.Tax:
-            //        {
-            //            infoTax.position = new Vector2(infoTax.position.x, Mathf.Lerp(infoTax.position.y, imageYFinalPosition, listOfCostFadeTimer));
-            //            break;
-            //        }
-            //
-            //    //case MoneySource.DestHospital:
-            //    //    {
-            //    //        infoDestHospital.position = new Vector2(infoDestHospital.position.x, Mathf.Lerp(infoDestHospital.position.y, imageYFinalPosition, listOfCostFadeTimer));
-            //    //        break;
-            //    //    }
-            //    case MoneySource.DestOffice:
-            //        {
-            //            infoDestOffice.position = new Vector2(infoDestOffice.position.x, Mathf.Lerp(infoDestOffice.position.y, imageYFinalPosition, listOfCostFadeTimer));
-            //            break;
-            //        }
-            //    case MoneySource.DestPark:
-            //        {
-            //            infoDestPark.position = new Vector2(infoDestPark.position.x, Mathf.Lerp(infoDestPark.position.y, imageYFinalPosition, listOfCostFadeTimer));
-            //            break;
-            //        }
-            //    case MoneySource.DestMall:
-            //        {
-            //            infoDestMall.position = new Vector2(infoDestMall.position.x, Mathf.Lerp(infoDestMall.position.y, imageYFinalPosition, listOfCostFadeTimer));
-            //            break;
-            //        }
-            //}
-
             if (listOfCostFadeTimer > listOfCostTimerFadeTimeMax)
             {
                 listOfCostTimerText.alpha -= 0.1f;
                 if (listOfCostTimerText.alpha <= 0f)
                 {
                     Disable<Transform>(infoDestHospital);
-                    //switch (currentSource)
-                    //{
-                    //    case MoneySource.Store:
-                    //        {
-                    //            Disable<Transform>(infoStore);
-                    //            break;
-                    //        }
-                    //    case MoneySource.ERP:
-                    //        {
-                    //            Disable<Transform>(infoERP);
-                    //            break;
-                    //        }
-                    //    case MoneySource.Tax:
-                    //        {
-                    //            Disable<Transform>(infoTax);
-                    //            break;
-                    //        }
-                    //
-                    //    //case MoneySource.DestHospital:
-                    //    //    {
-                    //    //        Disable<Transform>(infoDestHospital);
-                    //    //        break;
-                    //    //    }
-                    //    case MoneySource.DestOffice:
-                    //        {
-                    //            Disable<Transform>(infoDestOffice);
-                    //            break;
-                    //        }
-                    //    case MoneySource.DestPark:
-                    //        {
-                    //            Disable<Transform>(infoDestPark);
-                    //            break;
-                    //        }
-                    //    case MoneySource.DestMall:
-                    //        {
-                    //            Disable<Transform>(infoDestMall);
-                    //            break;
-                    //        }
-                    //}
                     listOfCostFadeTimer = 0f;
                     requireFading = false;
                 }
@@ -310,16 +231,16 @@ public class MoneySystem : MonoBehaviour
 
                 listOfCostTimerText.alpha = 1f;
                 
-                if (info.cost < 0)
+                if (info.cost > 0)
                 {
-                    listOfCostTimerText.text = info.cost.ToString();
-                    listOfCostTimerText.color = new Color(1f, 0f, 0f);
+                    listOfCostTimerText.text = "+" + info.cost.ToString();
+                    listOfCostTimerText.color = new Color(0f, 1f, 0f);
                 }
 
                 else
                 {
-                    listOfCostTimerText.text = "+" + info.cost.ToString();
-                    listOfCostTimerText.color = new Color(0f, 1f, 0f);
+                    listOfCostTimerText.text = info.cost.ToString();
+                    listOfCostTimerText.color = new Color(1f, 0f, 0f);
                 }
 
                 requireFading = true;

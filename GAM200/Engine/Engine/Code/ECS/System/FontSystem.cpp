@@ -35,9 +35,9 @@ namespace Engine
 	std::string sceneToChangeTo;
 
 #ifdef _GAME_BUILD
-	void FontSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 camMatrix)
+	void FontSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 , Math::mat3 )
 #else
-	void FontSystem::Render(float _dt, Graphic::FrameBuffer * _fbo, Math::mat3 camMatrix)
+	void FontSystem::Render(float _dt, Graphic::FrameBuffer* _fbo, Math::mat3 camUIMatrix, Math::mat3 camMatrix)
 #endif
 	{
 		PROFILER_START("Rendering");
@@ -58,13 +58,13 @@ namespace Engine
 		GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
 		// Set uniform
-		GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
+		GLSLShader::SetUniform("uCamMatrix", camUIMatrix, shd_ref_handle);
 
 		//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
 		const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
 		for (const auto& text : fontArray)
 		{
-			if (!text.isFont) continue;
+			if (!text.isUI) continue;
 
 			// Option to not render glyph
 			if (!text.isActive) continue;
@@ -76,7 +76,7 @@ namespace Engine
 			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
 			if (!transform || !transform->isActive) continue;
 
-			GraphicImplementation::Renderer::DrawString(transform->position, transform->scale, transform->angle, text.filepath, text.text, text.colour);
+			GraphicImplementation::Renderer::DrawString(transform->position + text.position, transform->scale * text.scale, transform->angle, text.filepath, text.text, text.colour);
 		}
 
 		GraphicImplementation::Renderer::EndFontBatch();
@@ -85,14 +85,53 @@ namespace Engine
 		// Unload shader program
 		GraphicImplementation::UnUseShaderHandle();
 
+
+		//----------------Non UI fonts-----------------------------------
+		if (drawNonUIFonts) {
+			GraphicImplementation::Renderer::BeginFontBatch();
+
+			// Load font shader program
+			const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Font_Draw].GetHandle();
+			GraphicImplementation::UseShaderHandle(shd_ref_handle);
+
+			// Set uniform
+			GLSLShader::SetUniform("uCamMatrix", camMatrix, shd_ref_handle);
+
+			//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+			const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
+			for (const auto& text : fontArray)
+			{
+				if (text.isUI) continue;
+
+				// Option to not render glyph
+				if (!text.isActive) continue;
+
+				const Entity_id& entity_id = text.GetEntityId();
+				if (EntityId_Check(entity_id)) break;
+
+				// Get transformation component
+				TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
+				if (!transform || !transform->isActive) continue;
+
+				GraphicImplementation::Renderer::DrawString(transform->position + text.position, transform->scale * text.scale, transform->angle, text.filepath, text.text, text.colour);
+			}
+
+			GraphicImplementation::Renderer::EndFontBatch();
+			GraphicImplementation::Renderer::FlushFont();
+
+			// Unload shader program
+			GraphicImplementation::UnUseShaderHandle();
+		}
+		//-------------------------------------------------------
+
 		if (fadeToBlack) {
-			fadeToBlack = GraphicImplementation::FadeScene(1.5f, _dt, camMatrix);
+			fadeToBlack = GraphicImplementation::FadeScene(1.5f, _dt, camUIMatrix);
 			if (!fadeToBlack)
 				SceneManager::GetInstance().ChangeScene(sceneToChangeTo);
 	}
 
 		if (fadeToClear)
-			fadeToClear = GraphicImplementation::FadeScene(1.5f, _dt, camMatrix, Math::vec4{ 0.0f, 0.0f, 0.0f, 1.0f }, Math::vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
+			fadeToClear = GraphicImplementation::FadeScene(1.5f, _dt, camUIMatrix, Math::vec4{ 0.0f, 0.0f, 0.0f, 1.0f }, Math::vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
 
 		glDisable(GL_BLEND);
 

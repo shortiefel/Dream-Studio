@@ -243,6 +243,9 @@ namespace Engine {
 			sceneSerializer.RetrieveData(
 				"Text", tem.text,
 				"Colour", tem.colour,
+				"Position", tem.position,
+				"Scale", tem.scale,
+				"IsUI", tem.isUI,
 				"IsActive", tem.isActive);
 
 			dreamECSGame->AddComponent(tem);

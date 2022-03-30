@@ -56,14 +56,14 @@ public class AIDirector : MonoBehaviour
     //}
 
     //public bool SpawnToDestination(StructureModel endHouse)
-    public bool SpawnToDestination(StructureModel endHouse)
-    {
-
-        //if (endHouse != null)
-            return TrySpawninACar(endHouse);
-            //return TrySpawninACar(placementManager.GetRandomHouseStructure(), endHouse);
-        //return false;
-    }
+    //public bool SpawnToDestination(StructureModel endHouse)
+    //{
+    //
+    //    //if (endHouse != null)
+    //        return TrySpawninACar(endHouse);
+    //        //return TrySpawninACar(placementManager.GetRandomHouseStructure(), endHouse);
+    //    //return false;
+    //}
 
     //public bool SpawnAHouseCar(StructureModel house)
     //{
@@ -196,25 +196,25 @@ public class AIDirector : MonoBehaviour
     }
 
     //private bool TrySpawninACar(StructureModel startStructure, StructureModel endStructure)
-    private bool TrySpawninACar(StructureModel endStructure)
-    {
-        if (endStructure == null) return false;
+    //private bool TrySpawninACar(StructureModel endStructure)
+    //{
+    //    if (endStructure == null) return false;
+    //
+    //    Vector2Int endPos = new Vector2Int(endStructure.transform.position);
+    //
+    //    Vector2Int randomPoint = new Vector2Int(placementManager.placementGrid.GetRandomHouseStructurePoint());
+    //    StartPositionSet sps = new StartPositionSet(randomPoint, 0, endStructure.entityId); //PathCount (the 0) here is ignored for now
+    //    structureManager.destinationList[endPos] = sps;
+    //
+    //    CarSpawner cs = structureManager.houseList[structureManager.destinationList[endPos].startPos];
+    //    cs.RequestSpawn(new EndStruct(endStructure.entityId, endStructure.buildingType, endPos));
+    //    
+    //
+    //    return true;
+    //}
 
-        Vector2Int endPos = new Vector2Int(endStructure.transform.position);
-
-        Vector2Int randomPoint = new Vector2Int(placementManager.placementGrid.GetRandomHouseStructurePoint());
-        StartPositionSet sps = new StartPositionSet(randomPoint, 0, endStructure.entityId); //PathCount (the 0) here is ignored for now
-        structureManager.destinationList[endPos] = sps;
-
-        CarSpawner cs = structureManager.houseList[structureManager.destinationList[endPos].startPos];
-        cs.RequestSpawn(new EndStruct(endStructure.entityId, endStructure.buildingType, endPos));
-        
-
-        return true;
-    }
-
-    //Actually spawning it called by CarSpawner
-    public bool SpawnCar(Vector2 spawnPos, uint id, BuildingType bt, Vector2Int endPos, RouteType rt)
+    //Spawning Car with position
+    public bool SpawnCar(Vector2 spawnPos, uint startId, BuildingType bt, Vector2Int endPos, RouteType rt)
     {
 
         Vector2Int spawnPosInt = new Vector2Int(spawnPos);
@@ -234,7 +234,7 @@ public class AIDirector : MonoBehaviour
         }
 
         var car = Instantiate(SelectACarPrefab(bt), new Vector3(spawnPosInt.x, spawnPosInt.y, 0), 2);
-        car.GetComponent<CarAI>().SetPath(path, id);
+        car.GetComponent<CarAI>().SetPath(path, 0, 0);
 
         return true;
     }
@@ -242,7 +242,7 @@ public class AIDirector : MonoBehaviour
     //Return true if spawn
     //possibleDest is when the house previously spawned in that place
     //If return false, then it will retry spawn at a later time
-    public bool SelectADestAndSpawn(Vector2Int startPos, PosIdSet[] possibleDest, out BuildingType outBt, out PosIdSet posIdSet)
+    public bool SelectADestAndSpawn(Vector2Int startPos, uint startId, PosIdSet[] possibleDest, out BuildingType outBt, out PosIdSet posIdSet)
     {
         BuildingType bt = structureManager.GetRandomBuildingType();
 
@@ -254,7 +254,7 @@ public class AIDirector : MonoBehaviour
 
         if (possibleDest[(int)bt].pos != startPos)
         {
-            Debug.Log("Using this");
+            //Debug.Log("Using this");
             //int roadNum;
             //List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, out roadNum);
             List<Vector2> list = placementManager.GetPathBetween(out startPos, possibleDest[(int)bt].pos, RouteType.HouseToDest);
@@ -262,7 +262,7 @@ public class AIDirector : MonoBehaviour
             if (list.Count != 0)
             {
                 var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
-                car.GetComponent<CarAI>().SetPath(list, possibleDest[(int)bt].entityId);
+                car.GetComponent<CarAI>().SetPath(list, possibleDest[(int)bt].entityId, startId);
 
                 posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, possibleDest[(int)bt].pos);
                 return true;
@@ -292,7 +292,7 @@ public class AIDirector : MonoBehaviour
         if (count != 0)
         {
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
-            car.GetComponent<CarAI>().SetPath(path, newId);
+            car.GetComponent<CarAI>().SetPath(path, newId, startId);
             posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, startPos);
 
             return true;
@@ -302,7 +302,7 @@ public class AIDirector : MonoBehaviour
 
 
     //Used to retry spawn
-    public bool SpawnAtTypeDest(Vector2Int startPos, BuildingType bt)
+    public bool SpawnRetryWithType(Vector2Int startPos, BuildingType bt, uint startId)
     {
         List<Vector2> path = new List<Vector2>();
         int count = 0;
@@ -325,7 +325,7 @@ public class AIDirector : MonoBehaviour
         if (count != 0)
         {
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
-            car.GetComponent<CarAI>().SetPath(path, newId);
+            car.GetComponent<CarAI>().SetPath(path, newId, startId);
             return true;
         }
         return false;

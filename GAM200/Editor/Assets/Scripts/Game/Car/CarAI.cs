@@ -24,7 +24,8 @@ public class CarAI : MonoBehaviour
     private float maxPower;
 
 
-    private StructureModel endPoint;
+    private CarSpawner endPoint;
+    private CarSpawner startPoint;
 
     private TrafficManager tm;
     private CollisionManager collisionManager;
@@ -90,14 +91,21 @@ public class CarAI : MonoBehaviour
         nextDestination = new Vector2Int(transform.position);
     }
 
-    public void SetPath(List<Vector2> newPath, uint destinationID)
+    public void SetPath(List<Vector2> newPath, uint destinationID, uint houseId)
     {
         stop = false;
-        //endPoint = endStructure;
-
-        if (destinationID == 0) endPoint = null;
+       
+        //Currently both will be 0 at the same time
+        if (destinationID == 0)
+        {
+            endPoint = null;
+            startPoint = null;
+        }
         else
-            endPoint = GameObject.FindWithId(destinationID).GetComponent<StructureModel>();
+        {
+            endPoint = GameObject.FindWithId(destinationID).GetComponent<CarSpawner>();
+            startPoint = GameObject.FindWithId(houseId).GetComponent<CarSpawner>();
+        }
 
         //Console.WriteLine("Set 2nd  CarAi path");
         if (newPath.Count == 0)
@@ -447,6 +455,8 @@ public class CarAI : MonoBehaviour
 
         if (endPoint != null)
             endPoint.Notify(new Vector2Int(path[path.Count-1]), nextDestination);
+        if (startPoint != null)
+            startPoint.DisplayPopup();
 
 
 

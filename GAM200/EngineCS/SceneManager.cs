@@ -32,4 +32,12 @@ public class SceneManager
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetDrawMode_Engine(bool state);
+
+    public static bool drawNonUI
+    {
+
+        set { SetFont_DrawNonUI_Engine(value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetFont_DrawNonUI_Engine(bool state);
 }

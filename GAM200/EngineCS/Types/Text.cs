@@ -29,12 +29,12 @@ public class Text : IComponent
        //     GetFont_Text_Engine(entityId, out string text);
        //     return text;
        // }
-        set { SetFont_Text_Engine(entityId, value); }
+        set { SetText_Text_Engine(entityId, value); }
     }
    //[MethodImpl(MethodImplOptions.InternalCall)]
    //internal static extern void GetFont_Text_Engine(uint entityID, out string text);
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetFont_Text_Engine(uint entityID, string text);
+    internal static extern void SetText_Text_Engine(uint entityID, string text);
 
     public Color color
     {
@@ -43,10 +43,10 @@ public class Text : IComponent
         //     GetFont_Text_Engine(entityId, out string text);
         //     return text;
         // }
-        set { SetFont_Color_Engine(entityId, value); }
+        set { SetText_Color_Engine(entityId, value); }
     }
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal static extern void SetFont_Color_Engine(uint entityID, Color col);
+    internal static extern void SetText_Color_Engine(uint entityID, Color col);
 
     public float alpha
     {
@@ -61,5 +61,36 @@ public class Text : IComponent
     internal static extern void GetText_Alpha_Engine(uint entityID, out float alpha);
     [MethodImpl(MethodImplOptions.InternalCall)]
     internal static extern void SetText_Alpha_Engine(uint entityID, float alpha);
+
+
+
+    public Vector2 position
+    {
+        get
+        {
+            GetText_Position_Engine(entityId, out Vector2 result);
+            return result;
+        }
+        set { SetText_Position_Engine(entityId, ref value); }
+    }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetText_Position_Engine(uint entityID, out Vector2 outVec2);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetText_Position_Engine(uint entityID, ref Vector2 inVec2);
+
+    public Vector2 scale
+    {
+        get
+        {
+            GetText_Scale_Engine(entityId, out Vector2 result);
+            return result;
+        }
+        set { SetText_Scale_Engine(entityId, ref value); }
+    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void GetText_Scale_Engine(uint entityID, out Vector2 outVec2);
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal static extern void SetText_Scale_Engine(uint entityID, ref Vector2 inVec2);
 
 }

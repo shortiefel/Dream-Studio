@@ -2,17 +2,31 @@
 using System.Collections.Generic;
 using System;
 
-public struct EndStruct
-{
-    public uint entityId;
-    public BuildingType bt;
-    public Vector2Int endPos;
+//public struct EndStruct
+//{
+//    public uint entityId;
+//    public BuildingType bt;
+//    public Vector2Int endPos;
+//
+//    public EndStruct(uint id, BuildingType _bt, Vector2Int ep)
+//    {
+//        entityId = id;
+//        bt = _bt;
+//        endPos = ep;
+//    }
+//}
 
-    public EndStruct(uint id, BuildingType _bt, Vector2Int ep)
+struct DestToHouseSet
+{
+    public Vector2Int startPos;
+    public Vector2Int endPos;
+    public BuildingType bt;
+
+    public DestToHouseSet(Vector2Int _startPos, Vector2Int _endPos, BuildingType _bt)
     {
-        entityId = id;
+        startPos = _startPos;
+        endPos = _endPos;
         bt = _bt;
-        endPos = ep;
     }
 }
 
@@ -31,21 +45,18 @@ struct TimerGroup
 }
 public class CarSpawner : MonoBehaviour
 {
-    GameState gameState;
+    //-------------Only in House-----------------
+    Text popupText;
+    float popupTextTimer;
+    float popupTextTimerMax;
+    Queue<int> popupTextQueue;
 
-    float warningLifeTime;
-    float maxLifeTime;
+    Vector2 popupTextStartPos;
+    float popupTextEndYPos;
 
-    PosIdSet[] possibleDest; //Contains previously spawned dest (for efficency)
-    Vector2Int selfPos;
-
-    BuildingType outBt;
-    PosIdSet posIdSet;
-
-    int carCounter = 0;
-
-    //bool prevSpawnStatus;
-    //EndStruct spawnTarget;
+    bool requireFading;
+    float fadeTimer;
+    float fadeTimerMax;
 
     private GameObject notifiSymbol;
     private Texture notifiTexture;
@@ -54,69 +65,125 @@ public class CarSpawner : MonoBehaviour
     private float notifiFlashTimer;
     private bool notifiFlashDirection; //true = minus, false = plus
 
-    public Queue<EndStruct> requestLine;
-    public Queue<EndStruct> backlog; //For unsuccessful spawn
+    Queue<BuildingType> backlog; //For unsuccessful spawn
 
-    public Queue<BuildingType> backlogNew; //For unsuccessful spawn
-    //Dictionary<BuildingType, int> backlogCounter; //For unsuccessful spawn
+    float warningLifeTime;
+    float maxLifeTime;
 
-    //GameObject.FindWithId(id).GetComponent<StructureModel>()
-    public void RequestSpawn(EndStruct es)
-    {
-        requestLine.Enqueue(es);
-    }
+    PosIdSet[] possibleDest; //Contains previously spawned dest (for efficency)
+    TimerGroup[] lifeTimeArray;
 
+    BuildingType outBt;
+    PosIdSet posIdSet;
+
+    //-------------------------------------------
+
+    //-------------Only in Destination-----------------
+    BuildingType buildingType;
+
+    Queue<DestToHouseSet> destToHouseQueue;
+    DestToHouseSet toberemoved;
+    //-------------------------------------------------
+
+
+    GameState gameState;
     AIDirector aiDirector;
 
+    Vector2Int selfPos;
+    
+
+    int carCounter = 0;
     float spawnTimer;
     float spawnTimerMax;
 
     float dt;
 
-    TimerGroup[] lifeTimeArray;
 
     public override void Start()
     {
+        //-------------Only in House-----------------
+        popupText = GetComponent<Text>();
+
+        if (popupText != null)
+        {
+            popupText.alpha = 0f;
+            popupTextTimer = 0f;
+            popupTextTimerMax = 1f;
+            popupTextQueue = new Queue<int>();
+
+            popupTextStartPos = new Vector2(-0.29f, 0f);
+            popupTextEndYPos = 0.8f;
+
+            requireFading = false;
+            fadeTimer = 0f;
+            fadeTimerMax = 0.8f * popupTextTimerMax;
+
+            notifiSymbol = Instantiate(new Prefab("Popup"), new Vector3(transform.position.x, transform.position.y + 1f, 0f), 4);
+            notifiTexture = notifiSymbol.GetComponent<Texture>();
+            Disable<Transform>(notifiSymbol.transform);
+            isNotifiActive = false;
+            currentNotifiType = BuildingType.Hospital;
+            notifiFlashTimer = 1f;
+            notifiFlashDirection = true;
+
+            backlog = new Queue<BuildingType>();
+
+            maxLifeTime = 80f;
+            //maxLifeTime = 20f;
+            warningLifeTime = 0.7f * maxLifeTime;
+
+            possibleDest = new PosIdSet[(int)BuildingType.House];
+
+            lifeTimeArray = new TimerGroup[(int)BuildingType.House];
+            lifeTimeArray[(int)BuildingType.Hospital] = new TimerGroup(0f, false);
+            lifeTimeArray[(int)BuildingType.Mall] = new TimerGroup(0f, false);
+            lifeTimeArray[(int)BuildingType.Office] = new TimerGroup(0f, false);
+            lifeTimeArray[(int)BuildingType.Park] = new TimerGroup(0f, false);
+            lifeTimeArray[(int)BuildingType.PoliceStation] = new TimerGroup(0f, false);
+
+        }
+        //-------------------------------------------
+        else
+        {
+            destToHouseQueue = new Queue<DestToHouseSet>();
+
+            Texture texure = GetComponent<Texture>();
+            switch (texure.RetrieveTexture())
+            {
+                case "Office":
+                    buildingType = BuildingType.Office;
+                    break;
+
+                case "Hospital":
+                    buildingType = BuildingType.Hospital;
+                    break;
+
+                case "Park":
+                    buildingType = BuildingType.Park;
+                    break;
+
+                case "ShoppingMall":
+                    buildingType = BuildingType.Mall;
+                    break;
+                case "PoliceStation":
+                    buildingType = BuildingType.PoliceStation;
+                    break;
+            }
+        }
+        //-------------------------------------------
+
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
-
-        maxLifeTime = 80f;
-        //maxLifeTime = 20f;
-        warningLifeTime = 0.7f * maxLifeTime;
-
-        possibleDest = new PosIdSet[(int)BuildingType.House];
-        selfPos = new Vector2Int(transform.position);
-
-        requestLine = new Queue<EndStruct>();
-        backlog = new Queue<EndStruct>();
-
-        backlogNew = new Queue<BuildingType>();
-        //backlogCounter = new Dictionary<BuildingType, int>();
-
         aiDirector = GameObject.Find("AIDirector").GetComponent<AIDirector>();
-        //    //spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        //    //maxTimer = aiDirector.carSpawnTimerInterval;
-        //    //structureModel = GetComponent<StructureModel>();
+
+        selfPos = new Vector2Int(transform.position);
+        
         spawnTimer = 0f;
-        spawnTimerMax = 4f;
-        //spawnTimerMax = 10f;
-
-        //prevSpawnStatus = true;
-
-        notifiSymbol = Instantiate(new Prefab("Popup"), new Vector3(transform.position.x, transform.position.y + 1f, 0f), 4);
-        notifiTexture = notifiSymbol.GetComponent<Texture>();
-        Disable<Transform>(notifiSymbol.transform);
-        isNotifiActive = false;
-        currentNotifiType = BuildingType.Hospital;
-        notifiFlashTimer = 1f;
-        notifiFlashDirection = true;
+        if (popupText != null)
+            spawnTimerMax = 4f;
+        else
+            spawnTimerMax = 0.2f;
 
 
-        lifeTimeArray = new TimerGroup[(int)BuildingType.House];
-        lifeTimeArray[(int)BuildingType.Hospital] = new TimerGroup(0f, false);
-        lifeTimeArray[(int)BuildingType.Mall] = new TimerGroup(0f, false);
-        lifeTimeArray[(int)BuildingType.Office] = new TimerGroup(0f, false);
-        lifeTimeArray[(int)BuildingType.Park] = new TimerGroup(0f, false);
-        lifeTimeArray[(int)BuildingType.PoliceStation] = new TimerGroup(0f, false);
 
     }
     //
@@ -124,72 +191,92 @@ public class CarSpawner : MonoBehaviour
     {
         dt = Time.deltaTime;
 
-        CheckLifetime(dt);
-
-        if (Input.GetKey(KeyCode.X))
-            for (int i = 0; i < (int)BuildingType.House; i++)
-            {
-                Debug.Log((BuildingType)i + " " + lifeTimeArray[i].timer);
-            }
-        //lifeTime += dt;
-        //if (lifeTime > maxLifeTime)
-        //{
-        //    lifeTime = 0f;
-        //    Debug.Log("CarSpawner lose lifetime");
-        //    gameState.MissedDestinationTime(BuildingType.House);
-        //}
-
-        //Use Queue peek to show notification of the one that is needed
-        spawnTimer += dt;
-        //Debug.Log(spawnTimer);
-        if (spawnTimer >= spawnTimerMax && carCounter == 0)
+        //-----------------------------------------Only in House-------------------------------------
+        //Only House has popupText
+        if (popupText != null)
         {
-            
-            if (backlogNew.Count != 0)
+            //if (Input.GetKey(KeyCode.X))
+            //    for (int i = 0; i < (int)BuildingType.House; i++)
+            //    {
+            //        Debug.Log((BuildingType)i + " " + lifeTimeArray[i].timer);
+            //    }
+
+            if (Input.GetKeyDown(KeyCode.B))
             {
-                BuildingType _bt = backlogNew.Peek();
-                //Debug.Log("Trying to s")
-                if (aiDirector.SpawnAtTypeDest(selfPos, _bt))
+                popupTextQueue.Enqueue(-100);
+
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                popupTextQueue.Enqueue(100);
+
+            }
+
+            PopupText();
+
+            CheckLifetime(dt);
+            spawnTimer += dt;
+            if (spawnTimer >= spawnTimerMax && carCounter == 0)
+            {
+                if (backlog.Count != 0)
                 {
-                    backlogNew.Dequeue();
-                    DisableNotification(_bt);
+                    BuildingType _bt = backlog.Peek();
+                    //Debug.Log("Trying to s")
+                    if (aiDirector.SpawnRetryWithType(selfPos, _bt, entityId))
+                    {
+                        backlog.Dequeue();
+                        DisableNotification(_bt);
+
+                        spawnTimer = 0f;
+                        return;
+                    }
+
+                    else
+                    {
+                        EnableNotification(_bt);
+                    }
+                }
+
+                if (aiDirector.SelectADestAndSpawn(selfPos, entityId, possibleDest, out outBt, out posIdSet))
+                {
+                    //Debug.Log("    " + posIdSet.pos);
+                    possibleDest[(int)outBt] = posIdSet;
+                    //Debug.Log(" aaaa " + possibleDest[(int)outBt].pos);
+
+                    lifeTimeArray[(int)outBt].timer = 0f;
+                    lifeTimeArray[(int)outBt].active = false;
 
                     spawnTimer = 0f;
-                    return;
                 }
 
                 else
                 {
-                    EnableNotification(_bt);
+                    if (outBt != BuildingType.None)
+                    {
+                        if (lifeTimeArray[(int)outBt].active) return;
+                        backlog.Enqueue(outBt);
+                        EnableNotification(outBt);
+                    }
+
+                    Debug.Log("Enqueue " + outBt);
+                    spawnTimer = 0f;
                 }
-            }
-
-            if (aiDirector.SelectADestAndSpawn(selfPos, possibleDest, out outBt, out posIdSet))
-            {
-                //Debug.Log("    " + posIdSet.pos);
-                possibleDest[(int)outBt] = posIdSet;
-                //Debug.Log(" aaaa " + possibleDest[(int)outBt].pos);
-
-                lifeTimeArray[(int)outBt].timer = 0f;
-                lifeTimeArray[(int)outBt].active = false;
-
-                spawnTimer = 0f;
-            }
-
-            else
-            {
-                if (outBt != BuildingType.None)
-                {
-                    if (lifeTimeArray[(int)outBt].active) return;
-                    backlogNew.Enqueue(outBt);
-                    EnableNotification(outBt);
-                }
-
-                Debug.Log("Enqueue " + outBt);
-                spawnTimer = 0f;
             }
         }
-
+        //-----------------------------------------Only in Destination-------------------------------
+        else
+        {
+            spawnTimer += Time.deltaTime;
+            if (destToHouseQueue.Count != 0 && spawnTimer > spawnTimerMax && carCounter == 0)
+            {
+                spawnTimer = 0f;
+                DestToHouseSet dts = destToHouseQueue.Dequeue();
+                toberemoved = new DestToHouseSet(dts.startPos, dts.endPos, dts.bt);
+                aiDirector.SpawnCar(dts.startPos, 0, dts.bt, dts.endPos, RouteType.DestToHouse);
+            }
+        }
     }
 
     public override void OnTriggerEnter(uint entId)
@@ -202,6 +289,51 @@ public class CarSpawner : MonoBehaviour
         --carCounter;
     }
 
+    //-----------------------------------------Only in House-------------------------------------
+
+    private void PopupText()
+    {
+        popupTextTimer += dt;
+        if (popupTextQueue.Count != 0 && popupTextTimer > popupTextTimerMax)
+        {
+            popupTextTimer = 0f;
+
+            popupText.alpha = 1f;
+
+            int value = popupTextQueue.Dequeue();
+            if (value > 0)
+            {
+                popupText.text = "+" + value.ToString();
+                popupText.color = new Color(0f, 1f, 0f);
+            }
+            else
+            {
+                popupText.text = value.ToString();
+                popupText.color = new Color(1f, 0f, 0f);
+            }
+
+            requireFading = true;
+            fadeTimer = 0f;
+            popupText.position = popupTextStartPos;
+        }
+
+        if (requireFading)
+        {
+            fadeTimer += Time.fixedDeltaTime;
+
+            popupText.position = new Vector2(popupText.position.x, Mathf.Lerp(popupText.position.y, popupTextEndYPos, fadeTimer));
+
+            if (fadeTimer > fadeTimerMax)
+            {
+                popupText.alpha -= 0.1f;
+                if (popupText.alpha <= 0f)
+                {
+                    fadeTimer = 0f;
+                    requireFading = false;
+                }
+            }
+        }
+    }
     private void EnableNotification(BuildingType _bt)
     {
         //lifeTimeArray[(int)_bt].count = 1;
@@ -267,6 +399,8 @@ public class CarSpawner : MonoBehaviour
 
             if (lifeTimeArray[i].timer > maxLifeTime)
             {
+                popupTextQueue.Enqueue(-100);
+
                 lifeTimeArray[i].timer = 0f;
                 gameState.MissedDestinationTime((BuildingType)i);
 
@@ -294,28 +428,18 @@ public class CarSpawner : MonoBehaviour
         }
     }
 
-    /*public Prefab[] carPrefabs;
-
-    public override void Awake()
+    public void DisplayPopup()
     {
-        carPrefabs = new Prefab[1];
-        carPrefabs[0] = new Prefab("Car");
-
+        popupTextQueue.Enqueue(+100);
     }
+    //-------------------------------------------------------------------------------------------
 
-    public override void Start()
+    //-----------------------------------------Only in Destination-------------------------------
+    public void Notify(Vector2Int spawnPoint, Vector2Int nextDest)
     {
-        if (transform == null) Console.WriteLine("Stuff");
-        //if (SelectACarPrefab() == null) Console.WriteLine("Stuff2222");
-        //Console.WriteLine(SelectACarPrefab().name);
-        Instantiate(SelectACarPrefab(), transform);
+        gameState.ReachedDestination(buildingType);
 
-
+        destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
     }
-
-    private Prefab SelectACarPrefab()
-    {
-        var randomIndex = Random.Range(0, carPrefabs.Length);
-        return carPrefabs[randomIndex];
-    }*/
+    //-------------------------------------------------------------------------------------------
 }

@@ -42,15 +42,15 @@ namespace Editor {
 	}
 
 	void EditorStartPoint::Update(float _dt) {
-		// Render Editor scene with shadow mapping
+		// Render Game scene with shadow mapping
 		Engine::GraphicSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());
 		Engine::UISystem::GetInstance().Render(GUI::GetGameFboPtr());
 		Engine::FontSystem::GetInstance().Render(_dt, GUI::GetGameFboPtr());
 
-		// Render Game scene with shadow mapping
+		// Render Editor scene with shadow mapping
 		Engine::GraphicSystem::GetInstance().Render(0.f, GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), false);
 		Engine::UISystem::GetInstance().Render(GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());
-		Engine::FontSystem::GetInstance().Render(_dt, GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform());
+		Engine::FontSystem::GetInstance().Render(_dt, GUI::GetEditorFboPtr(), EditorSceneCamera::GetTransform(), EditorSceneCamera::GetTransform());
 		
 
 		//The system already added the time taken

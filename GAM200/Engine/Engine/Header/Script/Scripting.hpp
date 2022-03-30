@@ -22,8 +22,12 @@ Technology is prohibited.
 #include "Engine/Header/Script/MonoFunctionType.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 
+#include <functional>
+
 namespace Engine {
 	namespace Scripting {
+		extern std::function<void(const char*)> fn_callback;
+
 		/*-----------------------------------------------------
 		Invoke Mono functions in CSClass
 		-----------------------------------------------------*/

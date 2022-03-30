@@ -35,6 +35,7 @@ Technology is prohibited.
 #include "Engine/Header/Management/GameState.hpp"
 
 
+
 #define INVOKE_FUNCTION(name)\
 if (_csScriptInstance.csClass.name != nullptr) {\
 	mono_runtime_invoke(_csScriptInstance.csClass.name, _csScriptInstance.csClass.object, _param, &exception);\
@@ -49,6 +50,7 @@ if (_csScriptInstance.csClass.name != nullptr) {\
 
 namespace Engine {
 	namespace Scripting {
+		std::function<void(const char*)> fn_callback;
 		MonoDomain* domain;
 		MonoAssembly* assem;
 		MonoImage* image;
@@ -174,7 +176,7 @@ namespace Engine {
 			bool result = false;
 			std::ifstream fs{ "Data/msbuild.log" };
 			if (!fs.is_open()) {
-				std::cout << "Unabled to check compilation state\n";
+				LOG_ERROR("Unable to check compilation state");
 				return false;
 			}
 
@@ -182,6 +184,7 @@ namespace Engine {
 			buffer << fs.rdbuf();
 			if (buffer.str().find("FAILED") == std::string::npos) result = true;
 
+			fn_callback(buffer.str().c_str());
 			fs.close();
 
 			return result;

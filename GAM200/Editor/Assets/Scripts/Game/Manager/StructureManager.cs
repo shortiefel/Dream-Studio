@@ -53,17 +53,13 @@ public class StructureManager : MonoBehaviour
     private float[] houseWeights, specialWeights;
 
     public Dictionary<Vector2Int, CarSpawner> houseList;
-    public Dictionary<Vector2Int, StartPositionSet> destinationList;
-    public List<PosIdSet>[] destinationListNew;
+    public List<PosIdSet>[] destinationList;
 
     //private float pathTimerMax;
    
     //private void Start()
     public override void Start()
     {
-        /*houseWeights = housesPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-        specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-        placementManager = GetComponent<Pl_roadListacementManager>();*/
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
@@ -89,15 +85,15 @@ public class StructureManager : MonoBehaviour
         };
 
         houseList = new Dictionary<Vector2Int, CarSpawner>();
-        destinationList = new Dictionary<Vector2Int, StartPositionSet>();
+        //destinationList = new Dictionary<Vector2Int, StartPositionSet>();
 
         //Use House because everything before are destination buildings
-        destinationListNew = new List<PosIdSet>[(int)BuildingType.House];
-        destinationListNew[(int)BuildingType.Hospital] = new List<PosIdSet>();
-        destinationListNew[(int)BuildingType.Office] = new List<PosIdSet>();
-        destinationListNew[(int)BuildingType.Park] = new List<PosIdSet>();
-        destinationListNew[(int)BuildingType.Mall] = new List<PosIdSet>();
-        destinationListNew[(int)BuildingType.PoliceStation] = new List<PosIdSet>();
+        destinationList = new List<PosIdSet>[(int)BuildingType.House];
+        destinationList[(int)BuildingType.Hospital] = new List<PosIdSet>();
+        destinationList[(int)BuildingType.Office] = new List<PosIdSet>();
+        destinationList[(int)BuildingType.Park] = new List<PosIdSet>();
+        destinationList[(int)BuildingType.Mall] = new List<PosIdSet>();
+        destinationList[(int)BuildingType.PoliceStation] = new List<PosIdSet>();
 
 
     }
@@ -108,7 +104,7 @@ public class StructureManager : MonoBehaviour
         List<int> tempBt = new List<int>();
         for(int i = 0; i < (int)BuildingType.House; i++)
         {
-            if (destinationListNew[i].Count > 0) tempBt.Add(i);
+            if (destinationList[i].Count > 0) tempBt.Add(i);
         }
 
         if (tempBt.Count == 0) return BuildingType.None;
@@ -139,8 +135,7 @@ public class StructureManager : MonoBehaviour
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);
             uint id = placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure, rotation).entityId;
-            destinationList.Add(position, new StartPositionSet(new Vector2Int(0,0), 0, 0));
-            destinationListNew[randomIndex].Add(new PosIdSet(id, position));
+            destinationList[randomIndex].Add(new PosIdSet(id, position));
             Debug.Log("Created special with id " + id);
             //AudioPlayer.instance.PlayPlacementSound();
             return true;

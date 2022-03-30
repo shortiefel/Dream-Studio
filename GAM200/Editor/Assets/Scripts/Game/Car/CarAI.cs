@@ -161,60 +161,6 @@ public class CarAI : MonoBehaviour
 
     public override void Update()
     {
-        //RaycastHit2D hit = Physics2D.RayCast(new Vector3(transform.position, 0f), transform.right, raycastLength, (int)transform.entityId);
-        //
-        //stop = false;
-        //
-        //if (hit.collider != null)
-        //{
-        //    Vector2Int targetPos = Vector2Int.RoundToInt(hit.transform.position);
-        //
-        //    if (collisionManager != null)
-        //    {
-        //        switch (collisionManager.CollisionTypeCheck(targetPos))
-        //        {
-        //            case CollisionType.Traffic:
-        //                Vector2Int hitPos = new Vector2Int(hit.transform.position);
-        //                uint entId = hit.transform.entityId;
-        //                //if (!stop && pastTrafficLight.Contains(entId))
-        //                //{
-        //                //    //Debug.Log("Already past");
-        //                //    break;
-        //                //}
-        //                stop |= !tm.GetTrafficLightState(hitPos, transform.angle);
-        //                pastTrafficLight.Add(entId);
-        //                //Debug.Log("Hiting trigger " + stop);
-        //                //if (tlIndex.Contains(hit.transform.entityId))
-        //                //{
-        //                //    stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
-        //                //    //stop = true;
-        //                //    Debug.Log("Hiting trigger " + stop);
-        //                //}
-        //                //if (stop)
-        //                //power = 2f;
-        //                break;
-        //            case CollisionType.ERP:
-        //                //Do nothing much if its ERP as the logic is already in ERP
-        //                break;
-        //            case CollisionType.Unknown:
-        //                //Stop car because might be other cars
-        //                stop |= true;
-        //                //Debug.Log("Hit");
-        //                //collisionManager.AddRaycastCollision(entityId, hit.transform.entityId);
-        //                break;
-        //            case CollisionType.Building:
-        //                break;
-        //            default:
-        //                break;
-        //        }
-        //    }
-        //}
-
-        //else
-        //{
-        //    //Start car because no hit target
-        //    stop = false;
-        //}
 
         Vector2 headOfCar = transform.position + transform.right * carLength;
         //Vector2 headOfCar = transform.position;
@@ -282,7 +228,7 @@ public class CarAI : MonoBehaviour
         //    Destroy(gameObject);
         //}
         //Console.WriteLine("CarAI: " + stop);
-        //stop = true;
+        stop = true;
         if (Input.GetKey(KeyCode.T)) stop = true;
         //stop = true;
         //Debug.Log(power);

@@ -93,9 +93,11 @@ namespace Engine {
 					const auto& iter1 = overlapMap.find(entId.id);
 					if (iter1 != overlapMap.end()) {
 						size_t size1 = iter1->second.size();
+						std::set<size_t> removeCount{};
 						for (size_t i = 0; i < size1; i++) {
 							if (iter1->second[i].id == id) {
-								overlapMap[entId.id].erase(iter1->second.begin() + i);
+								removeCount.insert(i);
+								//overlapMap[entId.id].erase(iter1->second.begin() + i);
 
 								MonoFunctionType type;
 								ColliderComponent* cc = dreamECSGame->GetComponentPTR<ColliderComponent>(entId.id);
@@ -109,6 +111,10 @@ namespace Engine {
 								EventDispatcher::SendEvent(event);
 								//break;
 							}
+						}
+
+						for (auto i : removeCount) {
+							overlapMap[entId.id].erase(iter1->second.begin() + i);
 						}
 					}
 				}
@@ -204,9 +210,11 @@ namespace Engine {
 					const auto& iter1 = overlapMap.find(entity_id1);
 					if (iter1 != overlapMap.end()) {
 						size_t size1 = iter1->second.size();
+						std::set<size_t> removeCount{};
 						for (size_t i = 0; i < size1; i++) {
 							if (iter1->second[i].id == entity_id2) {
-								overlapMap[entity_id1].erase(iter1->second.begin() + i);
+								removeCount.insert(i);
+								//overlapMap[entity_id1].erase(iter1->second.begin() + i);
 
 								MonoFunctionType type;
 								if (collider1.isTrigger)
@@ -219,13 +227,19 @@ namespace Engine {
 								break;
 							}
 						}
+
+						for (auto i : removeCount) {
+							overlapMap[entity_id1].erase(iter1->second.begin() + i);
+						}
 					}
 					const auto& iter2 = overlapMap.find(entity_id2);
 					if (iter2 != overlapMap.end()) {
 						size_t size2 = iter2->second.size();
+						std::set<size_t> removeCount{};
 						for (size_t i = 0; i < size2; i++) {
 							if (iter2->second[i].id == entity_id1) {
-								overlapMap[entity_id2].erase(iter2->second.begin() + i);
+								removeCount.insert(i);
+								//overlapMap[entity_id2].erase(iter2->second.begin() + i);
 
 								MonoFunctionType type;
 								if (collider2.isTrigger)
@@ -237,6 +251,10 @@ namespace Engine {
 								EventDispatcher::SendEvent(event);
 								break;
 							}
+						}
+
+						for (auto i : removeCount) {
+							overlapMap[entity_id2].erase(iter2->second.begin() + i);
 						}
 					}
 				}

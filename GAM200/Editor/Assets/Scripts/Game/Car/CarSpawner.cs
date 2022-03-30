@@ -2,19 +2,6 @@
 using System.Collections.Generic;
 using System;
 
-//public struct EndStruct
-//{
-//    public uint entityId;
-//    public BuildingType bt;
-//    public Vector2Int endPos;
-//
-//    public EndStruct(uint id, BuildingType _bt, Vector2Int ep)
-//    {
-//        entityId = id;
-//        bt = _bt;
-//        endPos = ep;
-//    }
-//}
 
 struct DestToHouseSet
 {
@@ -34,13 +21,11 @@ struct TimerGroup
 {
     public float timer;
     public bool active;
-    //public int count;
 
     public TimerGroup(float _timer, bool _active)
     {
         timer = _timer;
         active = _active;
-        //count = 0;
     }
 }
 public class CarSpawner : MonoBehaviour
@@ -82,7 +67,6 @@ public class CarSpawner : MonoBehaviour
     BuildingType buildingType;
 
     Queue<DestToHouseSet> destToHouseQueue;
-    DestToHouseSet toberemoved;
     //-------------------------------------------------
 
 
@@ -204,9 +188,7 @@ public class CarSpawner : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.B))
             {
                 popupTextQueue.Enqueue(-100);
-
             }
-
 
             if (Input.GetKeyDown(KeyCode.V))
             {
@@ -273,7 +255,6 @@ public class CarSpawner : MonoBehaviour
             {
                 spawnTimer = 0f;
                 DestToHouseSet dts = destToHouseQueue.Dequeue();
-                toberemoved = new DestToHouseSet(dts.startPos, dts.endPos, dts.bt);
                 aiDirector.SpawnCar(dts.startPos, 0, dts.bt, dts.endPos, RouteType.DestToHouse);
             }
         }

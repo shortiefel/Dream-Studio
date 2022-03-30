@@ -35,6 +35,7 @@ Technology is prohibited.
 
 #include "Editor/Header/FunctionOverride.hpp"
 #include "Editor/Header/Scene/EditorSceneManager.hpp"
+#include "Engine/Header/Script/Scripting.hpp"
 
 #include <Imgui/imgui_internal.h>
 #include <map>
@@ -244,6 +245,8 @@ namespace Editor {
 			GUI_Windows::GUI_SceneSetup();
 			///LoadAllAssets("Assets");
 			Engine::KeyPressedEvent::RegisterFunction(OnKeyEvent);
+
+			Engine::Scripting::fn_callback = GUI_Windows::GUI_Console_Add;
 
 			Override_Function();
 

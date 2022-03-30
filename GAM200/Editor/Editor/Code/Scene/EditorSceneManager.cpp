@@ -38,16 +38,16 @@ namespace Editor {
     bool EditorSceneManager::Play() {
         GUI_Windows::GUI_Console_Clear();
         
-        std::ifstream fs{ "Data/msbuild.log" };
-        if (fs.is_open()) {
-            std::ostringstream buffer;
-            buffer << fs.rdbuf();
+        //std::ifstream fs{ "Data/msbuild.log" };
+        //if (fs.is_open()) {
+        //    std::ostringstream buffer;
+        //    buffer << fs.rdbuf();
+        //
+        //    GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
+        //}
+        //fs.close();
 
-            GUI_Windows::GUI_Console_Add(GUI_Windows::ConsoleString{ buffer.str().c_str() });
-        }
-        fs.close();
-
-
+        
         //Engine::GameState::GetInstance().SetPlaying(true);
         bool result = !Engine::SceneManager::GetInstance().Play();
         if (result)

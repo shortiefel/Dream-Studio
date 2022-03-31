@@ -67,7 +67,7 @@ public class CarAI : MonoBehaviour
 
        
         power = 1;
-        maxPower = 6;
+        maxPower = 4.5f;
         
 
         //tlPath = null;

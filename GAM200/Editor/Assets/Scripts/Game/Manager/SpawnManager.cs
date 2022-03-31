@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour
     float dt;
 
     //ButtonRoad buttonRoad;
-
+    bool testTobeDeletedBool = false;
     public override void Start()
     {
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
@@ -308,8 +308,14 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.R)) return;
-        //spawnTimer += dt;
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            testTobeDeletedBool = !testTobeDeletedBool;
+            if (testTobeDeletedBool) Debug.Log("Spawn Disable");
+            else if (!testTobeDeletedBool) Debug.Log("Spawn Enable");
+        }
+        if (!testTobeDeletedBool)
+           spawnTimer += dt;
         if (spawnTimer > spawnTimerMax)
         {
             if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))

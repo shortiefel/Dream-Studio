@@ -75,7 +75,7 @@ public class GameState : MonoBehaviour
 
         dayTimer = 0f;
         dayCycle = 120f;
-        dayCycle = 10f;
+        //dayCycle = 10f;
 
         nightCycle = 100f;
 
@@ -97,7 +97,7 @@ public class GameState : MonoBehaviour
     {
         //if (highscoreText != null)
         //    highscoreText.text = highscore.ToString();
-        Debug.Log(allowPause);
+        //Debug.Log(allowPause);
         if (receipt != null)
         {
             dayTimer += Time.deltaTime;

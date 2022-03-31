@@ -88,7 +88,7 @@ public class ButtonTutorialClick : MonoBehaviour
             //active = false;
         }
 
-        tooltipOffset = transform.position + new Vector2(-2f, 6.5f);
+        tooltipOffset = transform.position + new Vector2(-5f, 7f);
 
     }
     public override void OnMouseOver()
@@ -108,7 +108,7 @@ public class ButtonTutorialClick : MonoBehaviour
 
                     Enable<Transform>(tooltipTrans);
                     tooltipTrans.position = tooltipOffset;
-                    tooltipText.text = "Display buttons";
+                    tooltipText.text = "Display";
 
                     break;
 
@@ -129,7 +129,7 @@ public class ButtonTutorialClick : MonoBehaviour
 
                         Enable<Transform>(tooltipTrans);
                         tooltipTrans.position = tooltipOffset;
-                        tooltipText.text = "Remove ";
+                        tooltipText.text = "Remove";
                         break;
                     }
 

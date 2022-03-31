@@ -312,6 +312,7 @@ namespace Engine {
 		if (sceneSerializer.SelectDeserializeDataType("LightComponent")) {
 			LightComponent tem(entityId);
 			sceneSerializer.RetrieveData(
+				"OffsetPosition", tem.offsetPosition,
 				"Scale", tem.scale,
 				"Colour", tem.colour,
 				"IsActive", tem.isActive);

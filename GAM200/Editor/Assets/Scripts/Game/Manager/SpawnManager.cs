@@ -290,6 +290,11 @@ public class SpawnManager : MonoBehaviour
             CheckPosition(SpawnRequestType.Destination);
         }
 
+        if (Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.Shift))
+        {
+            CheckPosition(SpawnRequestType.House);
+        }
+
         dt = Time.deltaTime;
 
         stateChangeTimer += dt;

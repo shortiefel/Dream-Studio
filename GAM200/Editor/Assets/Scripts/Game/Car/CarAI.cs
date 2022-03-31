@@ -74,12 +74,12 @@ public class CarAI : MonoBehaviour
         GameObject go1 = GameObject.Find("CollisionManager");
         if (go1 != null)
             collisionManager = go1.GetComponent<CollisionManager>();
-        GameObject go2 = GameObject.Find("TrafficManager");
-        if (go2 != null)
-        {
-            tm = go2.GetComponent<TrafficManager>();
-            tm.RegisterCar(transform.entityId);
-        }
+        //GameObject go2 = GameObject.Find("TrafficManager");
+        //if (go2 != null)
+        //{
+        //    tm = go2.GetComponent<TrafficManager>();
+        //    tm.RegisterCar(transform.entityId);
+        //}
 
         changeTarget = false;
         tValue = 0f;
@@ -176,7 +176,7 @@ public class CarAI : MonoBehaviour
 
                 Vector2Int targetPos = Vector2Int.RoundToInt(hit.transform[i].position);
                 uint entId = hit.transform[i].entityId;
-                switch (collisionManager.CollisionTypeCheck(targetPos, entId))
+                switch (collisionManager.RayTypeCheck(targetPos, entId))
                 {
                     case CollisionType.Traffic:
                         
@@ -349,8 +349,8 @@ public class CarAI : MonoBehaviour
 
         //Console.WriteLine("After Notify ");
 
-        if (tm != null)
-            tm.RemoveCar(transform.entityId);
+        //if (tm != null)
+        //    tm.RemoveCar(transform.entityId);
     }
 
 
@@ -358,5 +358,7 @@ public class CarAI : MonoBehaviour
     {
         if (tlIndex != null)
             if (tlIndex.Contains(entId)) tlIndex.Remove(entId);
+
+        if (collisionManager.ShouldRemoveCar(entId)) Destroy(gameObject);
     }
 }

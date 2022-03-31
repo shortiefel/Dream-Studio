@@ -165,6 +165,9 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
+                        moneySystem.road_bool = false;
+                        moneySystem.erp_bool = false;
+                        moneySystem.traffic_bool = false;
                         buttonStore.StoreAction();
                     }
 

@@ -269,7 +269,7 @@ public class PauseMenu : MonoBehaviour
 
     public override void Update()
     {
-        if (!gameState.GetDrawMode())
+        //if (!gameState.GetDrawMode())
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {

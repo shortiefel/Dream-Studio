@@ -75,6 +75,7 @@ public class GameState : MonoBehaviour
 
         dayTimer = 0f;
         dayCycle = 120f;
+        dayCycle = 10f;
 
         nightCycle = 100f;
 
@@ -96,7 +97,7 @@ public class GameState : MonoBehaviour
     {
         //if (highscoreText != null)
         //    highscoreText.text = highscore.ToString();
-
+        Debug.Log(allowPause);
         if (receipt != null)
         {
             dayTimer += Time.deltaTime;
@@ -161,7 +162,7 @@ public class GameState : MonoBehaviour
         //-------------------------
     }
 
-    public void GameOver ()
+    public bool GameOver ()
     {
         //if (camMovement.toZoomLose) return;
         //camMovement.toZoomLose = true;
@@ -175,8 +176,11 @@ public class GameState : MonoBehaviour
 
             Time.timeScale = 1f;
             SceneManager.LoadScene("GameOver");
+
+            return true;
         }
-            
+
+        return false;
     }
 
     public void SetLoseHouse(Vector2 _pos)
@@ -192,16 +196,19 @@ public class GameState : MonoBehaviour
         if (highscore == 1)
         {
             store.RevealStore();
+            SetAllowPause(false);
         }
 
         if (highscore == 10)
         {
             buttonRoad.RevealTraffic();
+            SetAllowPause(false);
         }
 
         else if (highscore == 15)
         {
             buttonRoad.RevealERP();
+            SetAllowPause(false);
         }
     }
 
@@ -296,23 +303,23 @@ public class GameState : MonoBehaviour
         SetSavedData(dayCounter, "CurrentScore");
     }
 
-    public float GetTimeScaleToRestore()
-    {
-        return TimeSystem.previousTimeScale;
-    }
-    public void InvertPause()
-    {
-        pauseState = !pauseState;
-
-        if (pauseState) Time.timeScale = 0f;
-        else Time.timeScale = 1f;
-    }
+    //public float GetTimeScaleToRestore()
+    //{
+    //    return TimeSystem.previousTimeScale;
+    //}
+    //public void InvertPause()
+    //{
+    //    pauseState = !pauseState;
+    //
+    //    if (pauseState) Time.timeScale = 0f;
+    //    else Time.timeScale = 1f;
+    //}
 
     public void SetPause(bool state)
     {
         pauseState = state;
-        if (state) Time.timeScale = 0f;
-        else Time.timeScale = TimeSystem.previousTimeScale;
+        if (state) TimeSystem.PauseTime();
+        else TimeSystem.ResumeTime();
     }
     public bool GetPause()
     {

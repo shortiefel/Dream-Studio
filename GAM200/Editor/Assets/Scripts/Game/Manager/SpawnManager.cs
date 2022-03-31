@@ -68,8 +68,8 @@ public class SpawnManager : MonoBehaviour
         Vector2Int roadPosition = SpawnRandomRoad();
         Vector2Int roadPosition2 = SpawnRandomRoad();
 
-        roadPosition = new Vector2Int(4, 3);
-        roadPosition2 = new Vector2Int(1, 3);
+        //roadPosition = new Vector2Int(4, 3);
+        //roadPosition2 = new Vector2Int(1, 3);
         //
         //spawnState = SpawnState.BuildUp;
         //
@@ -77,8 +77,8 @@ public class SpawnManager : MonoBehaviour
         structureManager.PlaceSpecial(roadPosition2, 0);
 
         //-------------------------------
-        roadPosition2 = new Vector2Int(3, 2);
-        structureManager.PlaceHouse(roadPosition2, 0);
+        //roadPosition2 = new Vector2Int(3, 2);
+        //structureManager.PlaceHouse(roadPosition2, 0);
         //placementManager.placementGrid.Expand();
         //
         //Vector2Int roadPositionT = new Vector2Int(7, 0);

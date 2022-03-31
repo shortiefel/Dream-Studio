@@ -104,7 +104,7 @@ public class GameState : MonoBehaviour
             if (dayTimer >= nightCycle)
             {
                 overlayAlpha += 0.01f;
-                if (overlayAlpha > 0.5f) overlayAlpha = 0.7f;
+                if (overlayAlpha > 0.8f) overlayAlpha = 0.8f;
                 else
                     overlayNightTexture.alpha = overlayAlpha;
 

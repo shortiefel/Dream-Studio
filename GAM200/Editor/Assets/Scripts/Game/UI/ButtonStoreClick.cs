@@ -6,8 +6,10 @@ public class ButtonStoreClick : MonoBehaviour
     StoreButtonType st;
     public MoneySystem moneySystem;
 
-    public bool state;
-
+    public bool state,displayText;
+    float timer;
+    Transform storePopText;
+    Transform storePopInfo;
 
     Text CostRoad;
     Text CostTL;
@@ -27,6 +29,8 @@ public class ButtonStoreClick : MonoBehaviour
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
         state = false;
+        displayText = false;
+        timer = 0.0f;
 
         CostRoad = GameObject.Find("RoadCost").GetComponent<Text>();
         CostTL = GameObject.Find("TrafficCost").GetComponent<Text>();
@@ -35,6 +39,11 @@ public class ButtonStoreClick : MonoBehaviour
         storeRoadText = GameObject.Find("RoadQty").GetComponent<Text>();
         storeTrafficText = GameObject.Find("TrafficQty").GetComponent<Text>();
         storeERPText = GameObject.Find("ERPQty").GetComponent<Text>();
+
+        storePopText = GameObject.Find("ShopPopText").GetComponent<Transform>();
+        storePopInfo = GameObject.Find("ShopPopInfo").GetComponent<Transform>();
+        Disable<Transform>(storePopText);
+        Disable<Transform>(storePopInfo);
 
         if (entityId == GameObject.Find("RoadPlus").GetComponent<Transform>().entityId)
         {
@@ -131,6 +140,23 @@ public class ButtonStoreClick : MonoBehaviour
             trafficLightManager = go3.GetComponent<TrafficLightManager>();
     }
 
+    public override void FixedUpdate()
+    {
+        if (displayText == true)
+        {
+            timer += Time.fixedDeltaTime;
+
+            if (timer > 1.5f)
+            {
+                Disable<Transform>(storePopText);
+                Disable<Transform>(storePopInfo);
+
+                timer = 0f;
+                displayText = false;
+            }
+        }
+
+    }
     public override void OnMouseOver()
     {
         switch (st)
@@ -209,6 +235,13 @@ public class ButtonStoreClick : MonoBehaviour
                         {
                             moneySystem.BuyRoad(moneySystem.road_count());
                             moneySystem.road_counter = 0;
+                        }
+                        else
+                        {
+                            Enable<Transform>(storePopText);
+                            Enable<Transform>(storePopInfo);
+
+                            displayText = true;
                         }
                         CostRoad.text = (moneySystem.road_count() * 20).ToString();
 
@@ -296,6 +329,13 @@ public class ButtonStoreClick : MonoBehaviour
                         {
                             moneySystem.BuyErp(moneySystem.erp_count());
                             moneySystem.erp_counter = 0;
+                        }
+                        else
+                        {
+                            Enable<Transform>(storePopText);
+                            Enable<Transform>(storePopInfo);
+
+                            displayText = true;
                         }
                         CostERP.text = moneySystem.calculateerp_cost().ToString();
                     }
@@ -385,6 +425,13 @@ public class ButtonStoreClick : MonoBehaviour
                             moneySystem.traffic_counter = 0;
                         }
                         CostTL.text = moneySystem.calculatetl_cost().ToString();
+                    }
+                    else
+                    {
+                        Enable<Transform>(storePopText);
+                        Enable<Transform>(storePopInfo);
+
+                        displayText = true;
                     }
                     storeTrafficText.text = moneySystem.tl_count().ToString();
                     

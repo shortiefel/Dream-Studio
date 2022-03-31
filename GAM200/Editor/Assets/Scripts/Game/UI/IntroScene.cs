@@ -32,6 +32,8 @@ public class IntroScene : MonoBehaviour
         if(fading == false)
         {
             logos.alpha -= fadespeed;
+            if(counter == 5 && logos.alpha <= 0.0f)
+                SceneManager.LoadScene("MainMenu");
         }
         else
         {

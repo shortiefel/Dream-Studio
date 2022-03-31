@@ -53,7 +53,7 @@ public class CarAI : MonoBehaviour
     public override void Start()
     {
         carLength = transform.scale.x;
-        raycastLength = carLength * 0.5f;
+        raycastLength = carLength * 0.7f;
         
         path = null;
         index = 0;
@@ -164,7 +164,7 @@ public class CarAI : MonoBehaviour
 
         Vector2 headOfCar = transform.position + transform.right * carLength;
 
-        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, raycastLength, (int)transform.entityId);
+        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, raycastLength * power, (int)transform.entityId);
 
         stop = false;
 
@@ -198,7 +198,7 @@ public class CarAI : MonoBehaviour
                         break;
                     case CollisionType.Unknown:
                         //Stop car because might be other cars
-                        //Debug.Log(stop);
+                        //Debug.Log("Hit Car " + power + " " + (carLength * power));
                         collisionManager.AddRaycastCollision(entityId, hit.transform[i].entityId);
                         //Console.WriteLine("Ray " + entityId + " to " + hit.transform[i].entityId);
                         if (collisionManager.CheckStopRaycastCollision(entityId, hit.transform[i].entityId))
@@ -242,7 +242,7 @@ public class CarAI : MonoBehaviour
 
         if (turning)
         {
-            tValue += 0.5f * power * Time.deltaTime;
+            tValue += 0.6f * power * Time.deltaTime;
             transform.position = Vector2.QuadraticBezier(p0, p1, p2, tValue, out angle);
             transform.angle = angle;
 

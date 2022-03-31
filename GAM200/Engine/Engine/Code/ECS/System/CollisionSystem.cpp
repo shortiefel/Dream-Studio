@@ -43,6 +43,50 @@ Technology is prohibited.
 namespace Engine {
 	std::unordered_map<Entity_id, std::vector<Entity>> overlapMap;
 
+	//Called when removing dead entities
+	void CollisionSystem::RemoveDeadEntity(Entity_id deadEntity) {
+		//---------------Check for dead entity / Disabled collider-------------------
+		const EntityMapType& emt = dreamECSGame->GetUsedConstEntityMap();
+		//std::set<Entity_id> removeSet{};
+		if (overlapMap.find(deadEntity) == overlapMap.end()) return;
+
+		auto& vecId = overlapMap[deadEntity];
+		for (auto& entId : vecId) {
+			const auto& iter1 = overlapMap.find(entId.id);
+			if (iter1 == overlapMap.end()) continue;
+
+			size_t size1 = iter1->second.size();
+			std::set<size_t> removeCount{};
+			for (size_t i = 0; i < size1; i++) {
+				if (iter1->second[i].id != deadEntity) continue;
+
+				removeCount.insert(i);
+
+				MonoFunctionType type;
+				ColliderComponent* cc = dreamECSGame->GetComponentPTR<ColliderComponent>(entId.id);
+				if (cc == nullptr) continue;
+				if (cc->isTrigger)
+					type = MonoFunctionType::Trigger_Exit;
+				else
+					type = MonoFunctionType::Collision_Exit;
+
+				OverlapColliderEvent event(entId.id, deadEntity, type);
+				EventDispatcher::SendEvent(event);
+
+				break;
+			}
+
+			for (auto i : removeCount) {
+				overlapMap[entId.id].erase(iter1->second.begin() + i);
+			}
+		}
+
+		overlapMap.erase(deadEntity);
+		//for (auto& i : removeSet) {
+		//	overlapMap.erase(i);
+		//}
+	}
+
 	bool AddOverlap(Entity_id lhs, bool lhsTrigger, Entity_id rhs, bool rhsTrigger) {
 		PROFILER_START("Collision");
 
@@ -82,55 +126,6 @@ namespace Engine {
 
 	void CollisionSystem::Update(float) {
 		PROFILER_START("Collision");
-
-		//---------------Check for dead entity / Disabled collider-------------------
-		const EntityMapType& emt = dreamECSGame->GetUsedConstEntityMap();
-		std::set<Entity_id> removeSet{};
-		for (auto& [id, vecId] : overlapMap) {
-			if (emt.find(id) == emt.end()) {
-				for (auto& entId : vecId) {
-					//----------------------Potential Lag
-					const auto& iter1 = overlapMap.find(entId.id);
-					if (iter1 != overlapMap.end()) {
-						size_t size1 = iter1->second.size();
-						std::set<size_t> removeCount{};
-						for (size_t i = 0; i < size1; i++) {
-							if (iter1->second[i].id == id) {
-								removeCount.insert(i);
-								//overlapMap[entId.id].erase(iter1->second.begin() + i);
-
-								MonoFunctionType type;
-								ColliderComponent* cc = dreamECSGame->GetComponentPTR<ColliderComponent>(entId.id);
-								if (cc == nullptr) continue;
-								if (cc->isTrigger)
-									type = MonoFunctionType::Trigger_Exit;
-								else
-									type = MonoFunctionType::Collision_Exit;
-
-								OverlapColliderEvent event(entId.id, id, type);
-								EventDispatcher::SendEvent(event);
-								//break;
-							}
-						}
-
-						for (auto i : removeCount) {
-							overlapMap[entId.id].erase(iter1->second.begin() + i);
-						}
-					}
-				}
-
-				removeSet.insert(id);
-			}
-		}
-
-		for (auto& i : removeSet) {
-			overlapMap.erase(i);
-		}
-
-
-		
-
-
 
 		auto& colliderArray = dreamECSGame->GetComponentArrayData<ColliderComponent>();
 		auto colliderStart = colliderArray.begin(),

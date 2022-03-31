@@ -21,7 +21,7 @@ Technology is prohibited.
 #include "Engine/Header/pch.hpp"
 
 #include "Engine/Header/Singleton/Singleton.hpp"
-
+#include "Engine/Header/ECS/ECSGlobal.hpp"
 
 namespace Engine {
 	struct Ray;
@@ -31,6 +31,8 @@ namespace Engine {
 	public:
 		bool Create();
 		void Destroy();
+
+		void RemoveDeadEntity(Entity_id deadEntity);
 
 		bool RayCast(const Ray& ray, RaycastHit* hit, std::uint32_t ignoreTarget);
 		bool RayCastGroup(const Ray& ray, RaycastHit(&rayCastHit)[10], int* count, std::uint32_t ignoreTarget);

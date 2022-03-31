@@ -33,6 +33,8 @@ public class CombinedUI : MonoBehaviour
     UI listOfCostDestPark;
     UI listOfCostDestMall;
 
+    bool isBuildOpen;
+
     public override void Start()
     {
         pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
@@ -59,10 +61,15 @@ public class CombinedUI : MonoBehaviour
         listOfCostDestOffice = GameObject.Find("ListOfCostDestOffice").GetComponent<UI>();
         listOfCostDestPark = GameObject.Find("ListOfCostDestPark").GetComponent<UI>();
         listOfCostDestMall = GameObject.Find("ListOfCostDestMall").GetComponent<UI>();
+
+        isBuildOpen = false;
     }
 
     public void CloseAllUIExcept(UIType uitype)
     {
+        if (buttonRoad.isOn) isBuildOpen = true;
+        else isBuildOpen = false;
+
         switch (uitype)
         {
             case UIType.Pause:
@@ -91,17 +98,17 @@ public class CombinedUI : MonoBehaviour
                     listOfCostDestMall.alpha = 0f;
                     break;             
                 }
-            case UIType.Time:
-                {
-                    pauseMenu.SwitchTabPause(false, false);
-                    buttonStore.SwitchTabStore(false, false);
-                    buttonRoad.SwitchTabRoad(false, false);
-
-                    Disable<Transform>(pauseIcon);
-                    Disable<Transform>(storeButton);
-                    Disable<Transform>(displayArrow);
-                    break;
-                }
+            //case UIType.Time:
+            //    {
+            //        pauseMenu.SwitchTabPause(false, false);
+            //        buttonStore.SwitchTabStore(false, false);
+            //        buttonRoad.SwitchTabRoad(false, false);
+            //
+            //        Disable<Transform>(pauseIcon);
+            //        Disable<Transform>(storeButton);
+            //        Disable<Transform>(displayArrow);
+            //        break;
+            //    }
             case UIType.Store:
                 {
                     SceneManager.drawNonUI = false;
@@ -115,17 +122,17 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(displayArrow);
                     break;
                 }
-            case UIType.Road:
-                {
-                    pauseMenu.SwitchTabPause(false, false);
-                    timeSystem.SwitchTabTimer(false, false);
-                    buttonStore.SwitchTabStore(false, false);
-
-                    Disable<Transform>(pauseIcon);
-                    Disable<Transform>(timerButton);
-                    Disable<Transform>(storeButton);
-                    break;
-                }
+            //case UIType.Road:
+            //    {
+            //        pauseMenu.SwitchTabPause(false, false);
+            //        timeSystem.SwitchTabTimer(false, false);
+            //        buttonStore.SwitchTabStore(false, false);
+            //
+            //        Disable<Transform>(pauseIcon);
+            //        Disable<Transform>(timerButton);
+            //        Disable<Transform>(storeButton);
+            //        break;
+            //    }
             case UIType.None:
                 {
                     SceneManager.drawNonUI = false;
@@ -160,10 +167,14 @@ public class CombinedUI : MonoBehaviour
     {
         SceneManager.drawNonUI = true;
 
+        
+
         Enable<Transform>(pauseIcon);
         Enable<Transform>(timerButton);
         Enable<Transform>(storeButton);
-        Enable<Transform>(displayArrow);
+
+        if (isBuildOpen) buttonRoad.SwitchTabRoad(true);
+        else Enable<Transform>(displayArrow);
 
         Enable<Transform>(moneyText);
         Enable<Transform>(coinSymbol);

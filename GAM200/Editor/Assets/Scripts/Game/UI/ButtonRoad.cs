@@ -76,6 +76,8 @@ public class ButtonRoad : MonoBehaviour
 
     CombinedUI combinedUI;
 
+    public bool isOn;
+
     public override void Start()
     {
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
@@ -180,6 +182,8 @@ public class ButtonRoad : MonoBehaviour
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
 
+
+        isOn = false;
         //GameObject go4 = GameObject.Find("CounterText");
         //if (go4 != null)
         //    counterText = go4.GetComponent<Transform>();
@@ -231,6 +235,8 @@ public class ButtonRoad : MonoBehaviour
             EnableAllNormalExcept();
 
             Enable<Transform>(lineDivider1);
+
+            isOn = true;
         }
         else
         {
@@ -243,6 +249,7 @@ public class ButtonRoad : MonoBehaviour
                 Enable<Transform>(displayArrow);
 
             //cameraMovement.SetZoom(ZoomType.Out);
+            isOn = false;
         }
     }
     private void CloseTabs()
@@ -269,8 +276,7 @@ public class ButtonRoad : MonoBehaviour
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
         {
-            //Disable<Transform>(displayArrowWhite);
-            //Enable<Transform>(displayArrow);
+
 
             timer = 0f;
             closing = false;
@@ -301,8 +307,7 @@ public class ButtonRoad : MonoBehaviour
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
         {
-            //Disable<Transform>(displayArrow);
-            //Enable<Transform>(displayArrowWhite);
+
 
             timer = 0f;
             opening = false;
@@ -516,8 +521,7 @@ public class ButtonRoad : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        //Disable<Transform>(displayArrowWhite);
-        //Disable<Transform>(displayArrow);
+
         combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
@@ -538,8 +542,6 @@ public class ButtonRoad : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        //Disable<Transform>(displayArrowWhite);
-        //Disable<Transform>(displayArrow);
         combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());

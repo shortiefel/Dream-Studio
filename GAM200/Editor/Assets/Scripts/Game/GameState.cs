@@ -275,8 +275,6 @@ public class GameState : MonoBehaviour
         //Debug.Log("Haoneienri");
         placementManager.placementGrid.Expand();
         camMovement.Expand();
-
-        buttonRoad.SwitchTabRoad(false);
     }
 
     public int GetScore()

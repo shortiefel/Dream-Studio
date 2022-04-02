@@ -272,6 +272,7 @@ public class CarAI : MonoBehaviour
         {
            
             var distanceToCheck = arriveDistance;
+            //if (path == null) Debug.Log("path is null");
             if (index == path.Count - 1)
             {
                 distanceToCheck = lastPointArriveDistance;

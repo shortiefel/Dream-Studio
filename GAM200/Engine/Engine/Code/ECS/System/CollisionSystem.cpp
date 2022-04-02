@@ -46,7 +46,7 @@ namespace Engine {
 	//Called when removing dead entities
 	void CollisionSystem::RemoveDeadEntity(Entity_id deadEntity) {
 		//---------------Check for dead entity / Disabled collider-------------------
-		const EntityMapType& emt = dreamECSGame->GetUsedConstEntityMap();
+		//const EntityMapType& emt = dreamECSGame->GetUsedConstEntityMap();
 		//std::set<Entity_id> removeSet{};
 		if (overlapMap.find(deadEntity) == overlapMap.end()) return;
 

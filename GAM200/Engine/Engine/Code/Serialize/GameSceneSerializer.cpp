@@ -792,11 +792,24 @@ namespace Engine {
 
 	void GameSceneSerializer::DeserializePrefab(std::string _filename, unsigned int* id, Math::vec2 position, float angle, int layer) {
 #if 1
+		float cosX = Math::cosDeg(angle);
+		float sinX = Math::sinDeg(angle);
+
+		Math::mat3 rotationAndTranslate{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
+
 		if (deserializePool.find(_filename) != deserializePool.end()) {
-			//std::cout << "Found an existing deserialized target \n";
+		//if (false) {
+
 			EntitySet& entitySet = deserializePool[_filename];
 			Entity_id entId = dreamECSGame->CreateEntity(entitySet.entity.name.c_str()).id;
-			dreamECSGame->AddComponent(TransformComponent{ entId, entitySet.transform });
+			if (id != nullptr)
+				*id = entId;
+
+			Math::vec3 temVec{ entitySet.transform.position.x, entitySet.transform.position.y, 1.f };
+			temVec = rotationAndTranslate * temVec;
+			std::cout << _filename << " " << entitySet.transform.position << "\n";
+			dreamECSGame->AddComponent(TransformComponent{ entId, Math::vec2{temVec.x, temVec.y},
+				entitySet.transform.scale, entitySet.transform.angle + angle, layer });
 
 			if (entitySet.texture != nullptr) {
 				dreamECSGame->AddComponent(TextureComponent{ entId, *entitySet.texture });
@@ -850,11 +863,6 @@ namespace Engine {
 		//NOTE: Assumes that parent is deserialized before child
 		std::string filename = TO_FULL_PREFAB(_filename);
 		Serializer sceneSerializer(filename);
-		
-		float cosX = Math::cosDeg(angle);
-		float sinX = Math::sinDeg(angle);
-
-		Math::mat3 rotationAndTranslate{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
 		
 		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &angle, &layer, &id, &_filename, &rotationAndTranslate]() -> void {
 			//Prefab saved parents entity id which may not be the correct one in a new scene
@@ -922,6 +930,11 @@ namespace Engine {
 					"Scale", tem.scale,
 					"Angle", tem.angle
 				);
+
+				entitySet.transform.position = tem.position;
+				entitySet.transform.scale = tem.scale;
+				entitySet.transform.angle = tem.angle;
+
 				//std::cout << tem.scale << " scale\n";
 				Math::vec3 temVec{ tem.position.x, tem.position.y, 1.f };
 				temVec = rotationAndTranslate * temVec;
@@ -929,10 +942,7 @@ namespace Engine {
 				tem.position.y = temVec.y;
 				tem.angle += angle;
 
-				entitySet.transform.position = tem.position;
-				entitySet.transform.scale = tem.scale;
-				entitySet.transform.angle = tem.angle;
-				entitySet.transform.layer = tem.layer;
+				
 
 				dreamECSGame->AddComponent(
 					//TransformComponent{ entityId, tem.position + position, tem.scale, tem.angle + angle, layer }

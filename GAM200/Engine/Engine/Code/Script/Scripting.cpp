@@ -184,7 +184,8 @@ namespace Engine {
 			buffer << fs.rdbuf();
 			if (buffer.str().find("FAILED") == std::string::npos) result = true;
 
-			fn_callback(buffer.str().c_str());
+			if (fn_callback != nullptr)
+				fn_callback(buffer.str().c_str());
 			fs.close();
 
 			return result;

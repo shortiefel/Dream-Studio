@@ -26,7 +26,8 @@ public class GameState : MonoBehaviour
     private float nightCycle;
     private int dayCounter;
 
-    UI overlayNightTexture;
+    Texture overlayNightTexture;
+   // Transform overlayNight;
     float overlayAlpha;
 
     Cycle cycle;
@@ -53,6 +54,10 @@ public class GameState : MonoBehaviour
         //    highscoreText = go1.GetComponent<Text>();
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
+
+        //GameObject overlayNightGo = GameObject.Find("OverlayNight");
+        //if (overlayNightGo != null)
+        //    overlayNight = overlayNightGo.GetComponent<Transform>();
 
         GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
         if (buttonRoadGO != null)
@@ -82,7 +87,9 @@ public class GameState : MonoBehaviour
         cycle = Cycle.Day;
 
         overlayAlpha = 0f;
-        overlayNightTexture = GameObject.Find("OverlayNight").GetComponent<UI>();
+        overlayNightTexture = GameObject.Find("OverlayNight").GetComponent<Texture>();
+        overlayNightTexture.alpha = 0;
+
 
         receipt = GameObject.Find("Receipt");
         if (receipt != null)
@@ -91,6 +98,8 @@ public class GameState : MonoBehaviour
         }
 
         allowPause = true;
+
+        
     }
 
     public override void Update()
@@ -105,7 +114,7 @@ public class GameState : MonoBehaviour
             if (dayTimer >= nightCycle)
             {
                 overlayAlpha += 0.01f;
-                if (overlayAlpha > 0.5f) overlayAlpha = 0.7f;
+                if (overlayAlpha > 0.8f) overlayAlpha = 0.8f;
                 else
                     overlayNightTexture.alpha = overlayAlpha;
 

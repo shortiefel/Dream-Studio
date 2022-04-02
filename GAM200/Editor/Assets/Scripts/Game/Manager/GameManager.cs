@@ -93,6 +93,12 @@ public class GameManager : MonoBehaviour
         //inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
     }
 
+    internal void PlaceDestinationHandler()
+    {
+        ClearInputActions();
+        inputManager.OnMouseClick += structureManager.PlaceDestinationClick;
+    }
+
     internal void ClearInputActions()
     {
         inputManager.OnMouseClick = null;

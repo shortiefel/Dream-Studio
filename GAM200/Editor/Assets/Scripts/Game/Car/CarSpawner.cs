@@ -240,9 +240,11 @@ public class CarSpawner : MonoBehaviour
                         if (lifeTimeArray[(int)outBt].active) return;
                         backlog.Enqueue(outBt);
                         EnableNotification(outBt);
+
+                        Debug.Log("Enqueue " + outBt);
                     }
 
-                    Debug.Log("Enqueue " + outBt);
+                    
                     spawnTimer = 0f;
                 }
             }

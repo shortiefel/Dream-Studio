@@ -43,6 +43,13 @@ public struct PosIdSet
     }
 }
 
+public struct StructurePrefabWeighted
+{
+    public GameObject prefab;
+    //[Range(0, 1)]
+    public float weight;
+}
+
 public class StructureManager : MonoBehaviour
 {
     public StructurePrefabWeighted[] housesPrefabs, specialPrefabs;
@@ -85,7 +92,6 @@ public class StructureManager : MonoBehaviour
         };
 
         houseList = new Dictionary<Vector2Int, CarSpawner>();
-        //destinationList = new Dictionary<Vector2Int, StartPositionSet>();
 
         //Use House because everything before are destination buildings
         destinationList = new List<PosIdSet>[(int)BuildingType.House];
@@ -94,23 +100,29 @@ public class StructureManager : MonoBehaviour
         destinationList[(int)BuildingType.Park] = new List<PosIdSet>();
         destinationList[(int)BuildingType.Mall] = new List<PosIdSet>();
         destinationList[(int)BuildingType.PoliceStation] = new List<PosIdSet>();
-
-
     }
 
 
     public BuildingType GetRandomBuildingType()
     {
-        List<int> tempBt = new List<int>();
-        for(int i = 0; i < (int)BuildingType.House; i++)
+        
+        //For randomly spawning Destination (This algorithm randomly selects destination that exists in game)
         {
-            if (destinationList[i].Count > 0) tempBt.Add(i);
+            //List<int> tempBt = new List<int>();
+            //for (int i = 0; i < (int)BuildingType.House; i++)
+            //{
+            //    if (destinationList[i].Count > 0) tempBt.Add(i);
+            //}
+            //
+            //if (tempBt.Count == 0) { Debug.Log("No Destination detected"); return BuildingType.None; }
+            //
+            //return (BuildingType)(tempBt[Random.Range(0, tempBt.Count - 1)]);
         }
 
-        if (tempBt.Count == 0) return BuildingType.None;
-
-        return (BuildingType)(tempBt[Random.Range(0, tempBt.Count - 1)]);
-
+        //For player controlled spawning Destination (This algorithm randomly selects destination from all destination)
+        {
+            return (BuildingType)(Random.Range(0, (int)BuildingType.House - 1));
+        }
     }
     public bool PlaceHouse(Vector2Int position, float rotation)
     {
@@ -144,6 +156,11 @@ public class StructureManager : MonoBehaviour
         return false;
     }
 
+    public void PlaceDestinationClick(Vector2Int position)
+    {
+        PlaceSpecial(position, 0);
+    }
+
     private int GetRandomWeightedIndex(float[] weights)
     {
         float sum = 0f;
@@ -169,31 +186,35 @@ public class StructureManager : MonoBehaviour
     // change to public cause jiayi needs to use in notification manager
     public bool CheckPositionBeforePlacement(Vector2Int position, CellType cellType)
     {
-        if (placementManager.CheckIfPositionInBound(position) == false)
+        if (cellType == CellType.Structure) 
         {
-            Debug.Log("This position is out of bounds");
-            return false;
+            if (placementManager.CheckIfPositionInBound(position) == false)
+            {
+                Debug.Log("This position is out of bounds");
+                return false;
+            }
+
+            if (placementManager.CheckIfPositionIsFree(position) == false)
+            {
+                Debug.Log("This position is not EMPTY");
+                return false;
+            }
+
+            if (placementManager.placementGrid.IsSurrounded(position, cellType) == true)
+            {
+                Debug.Log("This surrounding already has buildings");
+                return false;
+            }
         }
 
-        if (placementManager.CheckIfPositionIsFree(position) == false)
-        {
-            Debug.Log("This position is not EMPTY");
-            return false;
-        }
-
-        if (placementManager.placementGrid.IsSurrounded(position, cellType) == true)
-        {
-            Debug.Log("This surrounding already has buildings");
-            return false;
-        }
-
-        if (cellType == CellType.SpecialStructure)
+        else if (cellType == CellType.SpecialStructure)
         {
             Vector2Int rightPos = new Vector2Int(position.x + 1, position.y);
             Vector2Int upPos = new Vector2Int(position.x, position.y + 1);
             Vector2Int rightUpPos = new Vector2Int(position.x + 1, position.y + 1);
 
-            if (placementManager.CheckIfPositionInBound(rightPos) == false ||
+            if (placementManager.CheckIfPositionInBound(position) == false ||
+                placementManager.CheckIfPositionInBound(rightPos) == false ||
                 placementManager.CheckIfPositionInBound(upPos) == false ||
                 placementManager.CheckIfPositionInBound(rightUpPos) == false)
             {
@@ -201,7 +222,8 @@ public class StructureManager : MonoBehaviour
                 return false;
             }
 
-            if (placementManager.CheckIfPositionIsFree(rightPos) == false ||
+            if (placementManager.CheckIfPositionIsFree(position) == false ||
+                placementManager.CheckIfPositionIsFree(rightPos) == false ||
                placementManager.CheckIfPositionIsFree(upPos) == false ||
                placementManager.CheckIfPositionIsFree(rightUpPos) == false)
             {
@@ -210,34 +232,17 @@ public class StructureManager : MonoBehaviour
             }
 
 
-            if (placementManager.placementGrid.IsSurrounded(rightPos, cellType) == true ||
-               placementManager.placementGrid.IsSurrounded(upPos, cellType) == true ||
-               placementManager.placementGrid.IsSurrounded(rightUpPos, cellType) == true)
-            {
-                Debug.Log("This surrounding already has buildings");
-                return false;
-            }
+            //Comment this to allow destination to spawn beside each other--------------------------------------------------------------------
+            //if (placementManager.placementGrid.IsSurrounded(position, cellType) == true ||
+            //   placementManager.placementGrid.IsSurrounded(rightPos, cellType) == true ||
+            //   placementManager.placementGrid.IsSurrounded(upPos, cellType) == true ||
+            //   placementManager.placementGrid.IsSurrounded(rightUpPos, cellType) == true)
+            //{
+            //    Debug.Log("This surrounding already has buildings");
+            //    return false;
+            //}
         }
 
-       
-
-
-        //if (placementManager.GetNeighboursOfTypeFor(position, CellType.Road).Count <= 0)
-        //{
-        //    //Add road
-        //    Console.WriteLine("Try add road in StructureManager");
-        //    return placementManager.TryAddRoad(position);
-        //    //Debug.Log("Must be placed near a road");
-        //    //return false;
-        //}
         return true;
     }
-}
-
-[Serializable]
-public struct StructurePrefabWeighted
-{
-    public GameObject prefab;
-    //[Range(0, 1)]
-    public float weight;
 }

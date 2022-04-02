@@ -393,7 +393,8 @@ public class ButtonRoad : MonoBehaviour
                     }
                 case ButtonType.RemoveCar:
                     {
-                        gameManager.RemoveCarHandler();
+                        //gameManager.RemoveCarHandler();
+                        gameManager.PlaceDestinationHandler();
                         Enable<Transform>(drawRemoveCarWhite);
 
                         EnableAllNormalExcept(ButtonType.RemoveCar);

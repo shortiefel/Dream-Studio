@@ -106,6 +106,8 @@ namespace Engine {
     }
 
     void Scene::Stop(bool deserialize) {
+        GameSceneSerializer::ClearDeserializePool();
+
         ScriptSystem::GetInstance().SaveCSData();
 
         ScriptSystem::GetInstance().DestroyChildDomain();

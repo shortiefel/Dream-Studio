@@ -86,9 +86,10 @@ namespace Engine
 						  bool _active = true);
 
 
-		ParticleComponent& Deserialize(const DSerializer& _serializer);
-		void Serialize(const SSerializer& _serializer);
+		//ParticleComponent& Deserialize(const DSerializer& _serializer);
+		//void Serialize(const SSerializer& _serializer);
 
+		ParticleComponent(Entity_id entId, const ParticleComponent& rhs);
 		ParticleComponent(const ParticleComponent&) = default;
 
 		ParticleComponent& operator=(const ParticleComponent&) = default;

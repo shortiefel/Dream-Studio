@@ -41,5 +41,6 @@ namespace Engine {
 
 		WaypointComponent(Entity_id _ID = DEFAULT_ENTITY_ID, std::list<unsigned int> _num = std::list<unsigned int>{},
 			std::list<Math::vec2> _list = std::list<Math::vec2>{});
+		WaypointComponent(Entity_id entId, const WaypointComponent& rhs);
 	};
 }

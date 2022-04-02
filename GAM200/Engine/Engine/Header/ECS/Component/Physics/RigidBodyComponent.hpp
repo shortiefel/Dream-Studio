@@ -47,10 +47,12 @@ namespace Engine {
 		std::list<LinearForces> linearForces;
 		std::list<RotationForces> rotationForces;
 
-		RigidBodyComponent& Deserialize(const DSerializer& _serializer);
-		void Serialize(const SSerializer& _serializer);
+		//RigidBodyComponent& Deserialize(const DSerializer& _serializer);
+		//void Serialize(const SSerializer& _serializer);
 
 		RigidBodyComponent(Entity_id _ID = DEFAULT_ENTITY_ID, bool _active = true);
+
+		RigidBodyComponent(Entity_id entId, const RigidBodyComponent& rhs);
 	};
 }
 

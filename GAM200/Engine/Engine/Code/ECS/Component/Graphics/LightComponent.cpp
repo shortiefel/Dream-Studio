@@ -30,6 +30,11 @@ namespace Engine
 	LightComponent::LightComponent(Entity_id _ID, Math::vec2 _scale, Math::vec4 _colour, bool _active) :
 		IComponent{ _ID }, texobj_hdl{ 0 }, scale{ _scale }, colour{ _colour }, isActive{ _active } {};
 
+	LightComponent::LightComponent(Entity_id entId, const LightComponent& rhs) :
+		IComponent{ entId }, texobj_hdl{ rhs.texobj_hdl }, scale{ rhs.scale }, colour{ rhs.colour }, isActive{ rhs.isActive }{
+
+	}
+
 	// Destructor for Light Component
 	LightComponent::~LightComponent()
 	{
@@ -37,23 +42,23 @@ namespace Engine
 		//glDeleteTextures(1, &depthMap);
 	}
 
-	// Deserialize function for Light Component
-	LightComponent& LightComponent::Deserialize(const DSerializer& _serializer)
-	{
-		scale = _serializer.GetValue<Math::vec2>("Scale");
-		colour = _serializer.GetValue<Math::vec4>("Colour");
-		isActive = _serializer.GetValue<bool>("IsActive");
-
-		return *this;
-	}
-
-	// Serialize function for Light Component
-	void LightComponent::Serialize(const SSerializer& _serializer)
-	{
-		_serializer.SetValue("Scale", scale);
-		_serializer.SetValue("Colour", colour);
-		_serializer.SetValue("IsActive", isActive);
-	}
+	//// Deserialize function for Light Component
+	//LightComponent& LightComponent::Deserialize(const DSerializer& _serializer)
+	//{
+	//	scale = _serializer.GetValue<Math::vec2>("Scale");
+	//	colour = _serializer.GetValue<Math::vec4>("Colour");
+	//	isActive = _serializer.GetValue<bool>("IsActive");
+	//
+	//	return *this;
+	//}
+	//
+	//// Serialize function for Light Component
+	//void LightComponent::Serialize(const SSerializer& _serializer)
+	//{
+	//	_serializer.SetValue("Scale", scale);
+	//	_serializer.SetValue("Colour", colour);
+	//	_serializer.SetValue("IsActive", isActive);
+	//}
 }
 
 

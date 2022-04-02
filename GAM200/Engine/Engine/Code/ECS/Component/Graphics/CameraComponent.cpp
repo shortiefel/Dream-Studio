@@ -26,25 +26,29 @@ namespace Engine
     CameraComponent::CameraComponent(Entity_id _ID, float _height, float _fov, float _ar, bool _active) :
         IComponent{ _ID }, height{ _height }, fov{ _fov }, ar{ _ar }, isActive{ _active } {}
 
-    // Deserialize function for Camera Component
-    CameraComponent& CameraComponent::Deserialize(const DSerializer& _serializer)
-    {
-        height = _serializer.GetValue<float>("Height");
-        fov = _serializer.GetValue<float>("FOV");
-        ar = _serializer.GetValue<float>("AR");
-
-        isActive = _serializer.GetValue<bool>("IsActive");
-
-        return *this;
+    CameraComponent::CameraComponent(Entity_id entId, const CameraComponent& rhs) :
+        IComponent{ entId }, height{ rhs.height }, fov{ rhs.fov }, ar{ rhs.ar }, isActive{ rhs.isActive } {
     }
 
-    // Serialize function for Camera Component
-    void CameraComponent::Serialize(const SSerializer& _serializer)
-    {
-        _serializer.SetValue("Height", height);
-        _serializer.SetValue("FOV", fov);
-        _serializer.SetValue("AR", ar);
-
-        _serializer.SetValue("IsActive", isActive);
-    }
+    //// Deserialize function for Camera Component
+    //CameraComponent& CameraComponent::Deserialize(const DSerializer& _serializer)
+    //{
+    //    height = _serializer.GetValue<float>("Height");
+    //    fov = _serializer.GetValue<float>("FOV");
+    //    ar = _serializer.GetValue<float>("AR");
+    //
+    //    isActive = _serializer.GetValue<bool>("IsActive");
+    //
+    //    return *this;
+    //}
+    //
+    //// Serialize function for Camera Component
+    //void CameraComponent::Serialize(const SSerializer& _serializer)
+    //{
+    //    _serializer.SetValue("Height", height);
+    //    _serializer.SetValue("FOV", fov);
+    //    _serializer.SetValue("AR", ar);
+    //
+    //    _serializer.SetValue("IsActive", isActive);
+    //}
 }

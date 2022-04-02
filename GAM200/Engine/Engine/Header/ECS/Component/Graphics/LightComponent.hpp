@@ -58,9 +58,10 @@ namespace Engine
 		void Unbind();
 		*/
 
-		LightComponent& Deserialize(const DSerializer& _serializer);
-		void Serialize(const SSerializer& _serializer);
+		//LightComponent& Deserialize(const DSerializer& _serializer);
+		//void Serialize(const SSerializer& _serializer);
 
+		LightComponent(Entity_id entId, const LightComponent& rhs);
 		LightComponent(const LightComponent&) = default;
 		~LightComponent();
 

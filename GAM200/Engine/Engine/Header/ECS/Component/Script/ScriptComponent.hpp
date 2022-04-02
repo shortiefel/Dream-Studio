@@ -28,8 +28,8 @@ namespace Engine {
 		CSClassInstance klassInstance;
 		//std::unordered_map<std::string, CSScriptInstance> tem;
 
-		ScriptComponent& Deserialize(const DSerializer& _serializer);
-		void Serialize(const SSerializer& _serializer);
+		//ScriptComponent& Deserialize(const DSerializer& _serializer);
+		//void Serialize(const SSerializer& _serializer);
 
 		bool AddScript(ScriptComponent& comp);
 		//Return true if no more scripts left
@@ -39,8 +39,9 @@ namespace Engine {
 		ScriptComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const char* _className = nullptr);
 		ScriptComponent(ScriptComponent&& rhs) noexcept;
 		ScriptComponent& operator=(ScriptComponent&& rhs) noexcept;
-		ScriptComponent(const ScriptComponent&) = delete;
-		ScriptComponent& operator=(const ScriptComponent& rhs) = delete;
+		ScriptComponent(Entity_id entId, const ScriptComponent& rhs);
+		ScriptComponent(const ScriptComponent&) = default;
+		ScriptComponent& operator=(const ScriptComponent& rhs) = default;
 
 	private:
 		//void AddSpecial();

@@ -798,8 +798,6 @@ namespace Engine {
 		Math::mat3 rotationAndTranslate{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
 
 		if (deserializePool.find(_filename) != deserializePool.end()) {
-		//if (false) {
-
 			EntitySet& entitySet = deserializePool[_filename];
 			Entity_id entId = dreamECSGame->CreateEntity(entitySet.entity.name.c_str()).id;
 			if (id != nullptr)
@@ -807,7 +805,7 @@ namespace Engine {
 
 			Math::vec3 temVec{ entitySet.transform.position.x, entitySet.transform.position.y, 1.f };
 			temVec = rotationAndTranslate * temVec;
-			std::cout << _filename << " " << entitySet.transform.position << "\n";
+			
 			dreamECSGame->AddComponent(TransformComponent{ entId, Math::vec2{temVec.x, temVec.y},
 				entitySet.transform.scale, entitySet.transform.angle + angle, layer });
 

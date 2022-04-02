@@ -121,11 +121,12 @@ public class ButtonRoad : MonoBehaviour
         trafficPosition = drawTraffic.position;
         drawTrafficCount = trafficCount.position;
 
-        drawRemoveCar = GameObject.Find("TrafficLight").GetComponent<Transform>();
-        drawRemoveCarWhite = GameObject.Find("TrafficLightWhite").GetComponent<Transform>();
+        drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
+        drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
         //drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
         //drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
-        drawRemoveCarPosition = drawTraffic.position;
+        drawRemoveCarPosition = drawRemoveCar.position;
+        Debug.Log(drawRemoveCar.position);
 
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
         displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();

@@ -25,13 +25,7 @@ public class CombinedUI : MonoBehaviour
     Transform dayClock;
 
     Transform listOfCostText;
-    UI listOfCostImageStore;
-    UI listOfCostERP;
-    UI listOfCostTax;
-    UI listOfCostDestHospital;
-    UI listOfCostDestOffice;
-    UI listOfCostDestPark;
-    UI listOfCostDestMall;
+    UI listOfCostDestUI;
 
     bool isBuildOpen;
 
@@ -52,15 +46,8 @@ public class CombinedUI : MonoBehaviour
         coinSymbol = GameObject.Find("CoinBag").GetComponent<Transform>();
         dayClock = GameObject.Find("DayClock").GetComponent<Transform>();
 
-
         listOfCostText = GameObject.Find("ListOfCostText").GetComponent<Transform>();
-        listOfCostImageStore = GameObject.Find("ListOfCostImageStore").GetComponent<UI>();
-        listOfCostERP = GameObject.Find("ListOfCostERP").GetComponent<UI>();
-        listOfCostTax = GameObject.Find("ListOfCostTax").GetComponent<UI>();
-        listOfCostDestHospital = GameObject.Find("ListOfCostDestHospital").GetComponent<UI>();
-        listOfCostDestOffice = GameObject.Find("ListOfCostDestOffice").GetComponent<UI>();
-        listOfCostDestPark = GameObject.Find("ListOfCostDestPark").GetComponent<UI>();
-        listOfCostDestMall = GameObject.Find("ListOfCostDestMall").GetComponent<UI>();
+        listOfCostDestUI = GameObject.Find("ListOfCostDest").GetComponent<UI>();
 
         isBuildOpen = false;
     }
@@ -89,13 +76,7 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(dayClock);
 
                     Disable<Transform>(listOfCostText);
-                    listOfCostImageStore.alpha = 0f;
-                    listOfCostERP.alpha = 0f;
-                    listOfCostTax.alpha = 0f;
-                    listOfCostDestHospital.alpha = 0f;
-                    listOfCostDestOffice.alpha = 0f;
-                    listOfCostDestPark.alpha = 0f;
-                    listOfCostDestMall.alpha = 0f;
+                    listOfCostDestUI.alpha = 0f;
                     break;             
                 }
             //case UIType.Time:
@@ -151,13 +132,7 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(dayClock);
 
                     Disable<Transform>(listOfCostText);
-                    listOfCostImageStore.alpha = 0f;
-                    listOfCostERP.alpha = 0f;
-                    listOfCostTax.alpha = 0f;
-                    listOfCostDestHospital.alpha = 0f;
-                    listOfCostDestOffice.alpha = 0f;
-                    listOfCostDestPark.alpha = 0f;
-                    listOfCostDestMall.alpha = 0f;
+                    listOfCostDestUI.alpha = 0f;
                     break;
                 }
         }
@@ -181,13 +156,7 @@ public class CombinedUI : MonoBehaviour
         Enable<Transform>(dayClock);
 
         Enable<Transform>(listOfCostText);
-        listOfCostImageStore.alpha = 1f;
-        listOfCostERP.alpha = 1f;
-        listOfCostTax.alpha = 1f;
-        listOfCostDestHospital.alpha = 1f;
-        listOfCostDestOffice.alpha = 1f;
-        listOfCostDestPark.alpha = 1f;
-        listOfCostDestMall.alpha = 1f;
+        listOfCostDestUI.alpha = 1f;
     }
 
 

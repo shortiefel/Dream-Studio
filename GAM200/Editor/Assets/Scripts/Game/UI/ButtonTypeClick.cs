@@ -82,17 +82,17 @@ public class ButtonTypeClick : MonoBehaviour
             //active = false;
         }
 
-        //else if (entityId == GameObject.Find("RemoveCar").GetComponent<Transform>().entityId)
-        //{
-        //    bt = ButtonType.RemoveCar;
-        //    type = true;
-        //}
-        //
-        //else if (entityId == GameObject.Find("RemoveCarWhite").GetComponent<Transform>().entityId)
-        //{
-        //    bt = ButtonType.RemoveCar;
-        //    type = false;
-        //}
+        else if (entityId == GameObject.Find("RemoveCar").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.RemoveCar;
+            type = true;
+        }
+        
+        else if (entityId == GameObject.Find("RemoveCarWhite").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.RemoveCar;
+            type = false;
+        }
 
         else if (entityId == GameObject.Find("Displaybtn").GetComponent<Transform>().entityId)
         {

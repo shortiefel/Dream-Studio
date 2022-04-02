@@ -26,7 +26,7 @@ public class GameState : MonoBehaviour
     private float nightCycle;
     private int dayCounter;
 
-    Texture overlayNightTexture;
+    UI overlayNightUI;
    // Transform overlayNight;
     float overlayAlpha;
 
@@ -87,8 +87,8 @@ public class GameState : MonoBehaviour
         cycle = Cycle.Day;
 
         overlayAlpha = 0f;
-        overlayNightTexture = GameObject.Find("OverlayNight").GetComponent<Texture>();
-        overlayNightTexture.alpha = 0;
+        overlayNightUI = GameObject.Find("OverlayNight").GetComponent<UI>();
+        overlayNightUI.alpha = 0;
 
 
         receipt = GameObject.Find("Receipt");
@@ -116,7 +116,7 @@ public class GameState : MonoBehaviour
                 overlayAlpha += 0.01f;
                 if (overlayAlpha > 0.8f) overlayAlpha = 0.8f;
                 else
-                    overlayNightTexture.alpha = overlayAlpha;
+                    overlayNightUI.alpha = overlayAlpha;
 
                 if (cycle == Cycle.Day)
                     cycle = Cycle.Night;
@@ -367,6 +367,6 @@ public class GameState : MonoBehaviour
     {
         cycle = Cycle.Day;
         overlayAlpha = 0.0f;
-        overlayNightTexture.alpha = overlayAlpha;
+        overlayNightUI.alpha = overlayAlpha;
     }
 }

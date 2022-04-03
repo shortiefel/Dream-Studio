@@ -88,8 +88,8 @@ public class TimeSystem : MonoBehaviour
         closing = false;
         timer = 0f;
         closeYPosition = 28f;
-        closeYPosition1 = 20f;
-        closeYPosition2 = 12f;
+        closeYPosition1 = 18f;
+        closeYPosition2 = 8f;
         speedMultiply = 5f;
 
 

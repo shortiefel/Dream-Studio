@@ -3,7 +3,6 @@ public class ButtonTimeClick : MonoBehaviour
 {
     bool TimerTypeButton;
 
-    // Vector2 timerPosition;
     TimerType tt;
 
     GameState gameState;
@@ -128,12 +127,6 @@ public class ButtonTimeClick : MonoBehaviour
 
 
     }
-
-    //public override void OnEnable()
-    //{
-    //    Debug.Log("Enabling \n");
-    //}
-
 
 }
 

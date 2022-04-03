@@ -820,7 +820,7 @@ namespace Engine {
                         
                     //Always choose the position before house/destination to be the connected point
                     if (i != 0) {
-                        if (cellB.ct == CellType::SpecialStructure) continue; //Prevent drawing within the destination
+                        if (cellB.ct == CellType::SpecialStructure || cellB.ct == CellType::Structure) continue; //Prevent drawing within the destination
 
                         //cellC.adjacentCell[cellC.cellCount] = posArr[i - 1];
                         CheckAddPoints(posArr[i], cellC, posArr[i - 1]);
@@ -829,7 +829,7 @@ namespace Engine {
                     }
                     //But if house/destination is first, choose the point after
                     else {
-                        if (cellF.ct == CellType::SpecialStructure) continue; //Prevent drawing within the destination
+                        if (cellF.ct == CellType::SpecialStructure || cellF.ct == CellType::Structure) continue; //Prevent drawing within the destination
                          
                         //cellC.adjacentCell[cellC.cellCount] = posArr[i + 1];
                         CheckAddPoints(posArr[i], cellC, posArr[i + 1]);

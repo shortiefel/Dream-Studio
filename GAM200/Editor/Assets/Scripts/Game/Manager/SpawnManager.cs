@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour
     float dt;
 
     //ButtonRoad buttonRoad;
-
+    bool testTobeDeletedBool = false;
     public override void Start()
     {
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
@@ -65,79 +65,38 @@ public class SpawnManager : MonoBehaviour
         stateChangeTimer = 0f;
         stateChangeMax = 20f;
 
+        spawnState = SpawnState.BuildUp;
+
         Vector2Int roadPosition = SpawnRandomRoad();
-        Vector2Int roadPosition2 = SpawnRandomRoad();
+        //Vector2Int roadPosition2 = SpawnRandomRoad(); //For random destination spawn
 
-        //roadPosition = new Vector2Int(1, 1);
-        //roadPosition2 = new Vector2Int(2, 2);
-        //
-        //spawnState = SpawnState.BuildUp;
-        //
         structureManager.PlaceHouse(roadPosition, 0);
-        structureManager.PlaceSpecial(roadPosition2, 0);
+        //structureManager.PlaceSpecial(roadPosition2, 0); //For random destination spawn
 
-        //-------------------------------
-        //placementManager.placementGrid.Expand();
-        //
-        //Vector2Int roadPositionT = new Vector2Int(7, 0);
-        //structureManager.PlaceHouse(roadPositionT, 0);
-        //roadPositionT = new Vector2Int(9, 4);
-        //structureManager.PlaceHouse(roadPositionT, 0);
-        //
-        //roadPositionT = new Vector2Int(7, 7);
-        //structureManager.PlaceSpecial(roadPositionT, 0);
-        //roadPositionT = new Vector2Int(4, 4);
-        //structureManager.PlaceSpecial(roadPositionT, 0);
-        //while (true)
-        //{
-        //
-        //    if (placementManager.placementGrid.GetAllHouses().Count >= 2 && placementManager.placementGrid.GetAllSpecialStructure().Count >= 5)
-        //    {
-        //        break;
-        //    }
-        //    //Debug.Log("Failed full spawn");
-        //
-        //    if (placementManager.placementGrid.GetAllHouses().Count < 3)
-        //    {
-        //        //Debug.Log("Spawn Fix House");
-        //        roadPosition = SpawnRandomRoad();
-        //        structureManager.PlaceHouse(roadPosition, 0);
-        //    }
-        //
-        //    if (placementManager.placementGrid.GetAllSpecialStructure().Count < 6)
-        //    {
-        //        roadPosition2 = SpawnRandomRoad();
-        //        structureManager.PlaceSpecial(roadPosition2, 0);
-        //    }
-        //}
-        //-------------------------------
 
         //Check if have 1 house and 1 destination to start off
         while (true)
         {
 
-            if (placementManager.placementGrid.GetAllHouses().Count != 0 && placementManager.placementGrid.GetAllSpecialStructure().Count != 0)
+            //if (placementManager.placementGrid.GetAllHouses().Count != 0 && placementManager.placementGrid.GetAllSpecialStructure().Count != 0) //For random destination spawn
+            if (placementManager.placementGrid.GetAllHouses().Count != 0) //For Controlled destination spawn
             {
                 break;
             }
-            //Debug.Log("Failed full spawn");
 
             if (placementManager.placementGrid.GetAllHouses().Count == 0)
             {
-                //Debug.Log("Spawn Fix House");
                 roadPosition = SpawnRandomRoad();
                 structureManager.PlaceHouse(roadPosition, 0);
             }
 
-            if (placementManager.placementGrid.GetAllSpecialStructure().Count == 0)
-            {
-                roadPosition2 = SpawnRandomRoad();
-                structureManager.PlaceSpecial(roadPosition2, 0);
-            }
+            //For random destination spawn
+            //if (placementManager.placementGrid.GetAllSpecialStructure().Count == 0)
+            //{
+            //    roadPosition2 = SpawnRandomRoad();
+            //    structureManager.PlaceSpecial(roadPosition2, 0);
+            //}
         }
-
-        //scoreToSpawn = 1000;
-        //spawnRequestType = SpawnRequestType.House;
 
         noOfSpawnRequestOrder = 3;
         spawnRequestOrder = new SpawnRequestType[noOfSpawnRequestOrder];
@@ -151,16 +110,6 @@ public class SpawnManager : MonoBehaviour
 
     private Vector2Int SpawnRandomRoad()
     {
-        /*int width = placementManager.width;
-        int height = placementManager.height;
-
-        int randomX = Random.Range(1, width - 2);
-        int randomY = Random.Range(1, height - 2);
-
-        randomRoadPosition.x = randomX;
-        randomRoadPosition.y = randomY;
-
-        return randomRoadPosition;*/
 
         Vector2Int startPoint = placementManager.placementGrid.GetStartPoint();
         Vector2Int endPoint = placementManager.placementGrid.GetGridSize() + startPoint;
@@ -174,118 +123,40 @@ public class SpawnManager : MonoBehaviour
         return randomRoadPosition;
     }
 
-    //private Vector2Int SpawnRandomHouse(Vector2Int roadPosition)
-    //{
-    //    //float roadRotation = roadManager.rotate;
-
-    //    //use boolean
-
-    //    //Debug.Log(roadRotation);
-
-    //    //int randomX = UnityEngine.Random.Range(roadPosition.x - 1, roadPosition.x + 1);
-    //    ////int randomX = UnityEngine.Random.Range(0, 2) == 0 ? roadPosition.x - 1 : roadPosition.x + 1;
-    //    ////int randomY = UnityEngine.Random.Range(roadPosition.y - 1, roadPosition.y + 1);
-    //    ////int randomY = UnityEngine.Random.Range(0, 2) == 0 ? roadPosition.y - 1 : roadPosition.y + 1;
-    //    //int randomY = roadPosition.y;
-
-    //    //if (randomX == roadPosition.x)
-    //    //{
-    //    //    randomY = UnityEngine.Random.Range(0, 1) == 0 ? roadPosition.y - 1 : roadPosition.y + 1;
-    //    //}
-    //    //else if (randomX == roadPosition.x - 1)
-    //    //{
-    //    //    randomY = roadPosition.y;
-    //    //}
-    //    //else if (randomX == roadPosition.x + 1)
-    //    //{
-    //    //    randomY = roadPosition.y;
-    //    //}
-
-    //    //randomHousePosition.x = randomX;
-    //    //randomHousePosition.y = randomY;
-
-    //    int randomX = roadPosition.x;
-    //    int randomY = roadPosition.y;
-
-    //    //if (roadRotation == 0)
-    //    //{
-    //    //    randomHousePosition.x = randomX;
-    //    //    randomHousePosition.y = randomY + 1;
-    //    //}
-    //    //else if (roadRotation == 90)
-    //    //{
-    //    //    randomHousePosition.x = randomX - 1;
-    //    //    randomHousePosition.y = randomY;
-    //    //}
-    //    //else if (roadRotation == 180)
-    //    //{
-    //    //    randomHousePosition.x = randomX;
-    //    //    randomHousePosition.y = randomY - 1;
-    //    //}
-    //    //else if (roadRotation == 270)
-    //    //{
-    //    //    randomHousePosition.x = randomX + 1;
-    //    //    randomHousePosition.y = randomY;
-    //    //}
-
-
-    //    return randomHousePosition;
-    //}
 
     //Spawn Houses and destinations
     public bool CheckPosition(SpawnRequestType srt = SpawnRequestType.Both)
     {
         Vector2Int roadPosition = SpawnRandomRoad();
-        //Vector2Int housePosition = SpawnRandomHouse(roadPosition);
         Vector2Int roadPosition2 = SpawnRandomRoad();
-        //Debug.Log("Randomised position is " + roadPosition);
-        //Debug.Log("Randomised position is " + roadPosition2);
-        //if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
-        //{
-        //if (score == scoreToSpawn)
-        //{
-        //Debug.Log(housePosition.x);
-        //Debug.Log(housePosition.y);
+     
         switch (srt) {
             case SpawnRequestType.Both:
                 return structureManager.PlaceHouse(roadPosition, 0) && structureManager.PlaceSpecial(roadPosition2, 0);
 
             case SpawnRequestType.House:
-                //spawnRequestType = SpawnRequestType.Destination;
                 return structureManager.PlaceHouse(roadPosition, 0);
 
             case SpawnRequestType.Destination:
-                //spawnRequestType = SpawnRequestType.House;
                 return structureManager.PlaceSpecial(roadPosition2, 0);
         }
 
         //If cant find just end, as there is a chance of infinite loop
         return true;
-                //structureManager.PlaceHouse(housePosition);
-                //scoreToSpawn += 5;
-            //}
-        //}
+
 
     }
-
-    //public override void Update()
-    //{
-    //    timer += Time.deltaTime;
-    //    if (timer > maxTimer)
-    //    {
-
-    //        CheckPosition();
-    //        Debug.Log("hous espawner");
-
-    //        timer = 0f;
-    //    }
-    //}
 
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.N) && Input.GetKey(KeyCode.Shift))
         {
             CheckPosition(SpawnRequestType.Destination);
+        }
+
+        if (Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.Shift))
+        {
+            CheckPosition(SpawnRequestType.House);
         }
 
         dt = Time.deltaTime;
@@ -306,8 +177,14 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.R)) return;
-        //spawnTimer += dt;
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            testTobeDeletedBool = !testTobeDeletedBool;
+            if (testTobeDeletedBool) Debug.Log("Spawn Disable");
+            else if (!testTobeDeletedBool) Debug.Log("Spawn Enable");
+        }
+        if (!testTobeDeletedBool)
+           spawnTimer += dt;
         if (spawnTimer > spawnTimerMax)
         {
             if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))

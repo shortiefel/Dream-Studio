@@ -5,55 +5,30 @@
       "Name": "Box",
       "EntityId": 1,
       "Parent": 10001,
-      "Child": [ 2 ]
+      "Child": [ 0 ]
     },
     "TransformComponent": {
-      "Position": [ 0.0, 0.0 ],
+      "Position": [ 3.0, 2.0 ],
       "LocalPosition": [ 0.0, 0.0 ],
-      "Scale": [ 1.0, 1.0 ],
+      "Scale": [ 2.0, 1.5 ],
       "Angle": 0.0,
-      "Layer": 2,
+      "Layer": 4,
       "IsActive": true
     },
-    "WaypointComponent": {
-      "Waypoints": [ 17, -4.0 ],
-      "Order": [ 1, 2 ]
-    },
-    "TextureComponent": {
-      "Filepath": "Assets\\Textures\\ThreeWayRoad.png",
-      "Shape": 0,
-      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-      "IsAnimation": false,
-      "IsLoop": false,
-      "EndFrame": 0,
-      "TimePerFrame": 0.0,
-      "IsActive": true
-    }
-  },
-  {
-    "Entity": {
-      "Name": "Boxing",
-      "EntityId": 2,
-      "Parent": 1,
-      "Child": []
-    },
-    "TransformComponent": {
-      "Position": [ 17, -4.0 ],
-      "LocalPosition": [ 0.0, 0.0 ],
-      "Scale": [ 1.0, 1.0 ],
-      "Angle": 0.0,
-      "Layer": 2,
+    "FontComponent": {
+      "Filepath": "Assets\\Fonts\\arial.ttf",
+      "Text": "435fft",
+      "Colour": [ 0.6622061133384705, 0.3031746447086334, 0.3031746447086334, 1.0 ],
+      "Position": [ -9.800000190734864, -2.0 ],
+      "Scale": [ 2.5, 5.599999904632568 ],
+      "IsUI": true,
       "IsActive": true
     },
-    "TextureComponent": {
-      "Filepath": "Assets\\Textures\\ThreeWayRoad.png",
-      "Shape": 0,
-      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-      "IsAnimation": false,
-      "IsLoop": false,
-      "EndFrame": 0,
-      "TimePerFrame": 0.0,
-      "IsActive": true
-    }
+    "ScriptComponent": [
+      {
+        "Class": "Test2",
+        "IsActive": true
+      }
+    ]
   }
 ]

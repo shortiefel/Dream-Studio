@@ -29,6 +29,10 @@ public class Receipt : MonoBehaviour
 
     MoneySystem moneySystem;
 
+    GameState gameState;
+
+    CombinedUI combinedUI;
+
     public override void Start()
     {
         roadNumber = GameObject.Find("RoadNum");
@@ -67,6 +71,10 @@ public class Receipt : MonoBehaviour
         Disable<Transform>(closeReceipt.transform);
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+
+        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+
+        combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
     }
 
     public void ShowReceipt()
@@ -91,5 +99,9 @@ public class Receipt : MonoBehaviour
         Enable<Transform>(balance.transform);
 
         Enable<Transform>(closeReceipt.transform);
+
+        combinedUI.CloseAllUIExcept(UIType.None);
+        gameState.SetAllowPause(false);
+
     }
 }

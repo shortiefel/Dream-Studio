@@ -317,6 +317,7 @@
     <ClCompile Include="Engine\Code\Script\InternalCall\GridInternalCall.cpp" />
     <ClCompile Include="Engine\Code\Script\InternalCall\MathInternalCall.cpp" />
     <ClCompile Include="Engine\Code\Script\InternalCall\UtilityInternalCall.cpp" />
+    <ClCompile Include="Engine\Code\Script\ScriptClass.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptClassVariable.cpp" />
     <ClCompile Include="Engine\Code\Script\Scripting.cpp" />
     <ClCompile Include="Engine\Code\Script\ScriptInternalCall.cpp" />

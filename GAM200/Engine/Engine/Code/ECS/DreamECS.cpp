@@ -19,6 +19,7 @@ Technology is prohibited.
 
 #include "Engine/Header/ECS/DreamECS.hpp"
 #include "Engine/Header/ECS/System/ScriptSystem.hpp"
+#include "Engine/Header/ECS/System/CollisionSystem.hpp"
 #include "Engine/Header/Parent/ParentManager.hpp"
 #include "Engine/Header/ECS/Factory.hpp"
 
@@ -138,7 +139,7 @@ namespace Engine {
 		const auto& entityMap = entityManager->GetUsedConstEntityMap();
 		for (auto& entity_id : destroySet) {
 			DESTROY_ENTITY(entityMap.find(entity_id));
-
+			CollisionSystem::GetInstance().RemoveDeadEntity(entity_id);
 			RemovePrefab(entity_id);
 		}
 

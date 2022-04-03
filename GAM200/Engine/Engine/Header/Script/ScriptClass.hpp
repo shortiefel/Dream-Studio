@@ -32,19 +32,15 @@ namespace Engine {
 		std::string className = std::string{};
 
 		CSClass() = default;
-		CSClass(std::string cn) : fullName{ cn } {
-			if (fullName.find('.') != std::string::npos) {
-				namespaceName = fullName.substr(0, fullName.find_last_of('.'));
-				className = fullName.substr(fullName.find_last_of('.') + 1);
-			}
-			else {
-				className = fullName;
-			}
-		}
+		CSClass(std::string cn);
 
-		~CSClass() {
-			mono_gchandle_free(gc_handle);
-		}
+		CSClass(const CSClass& rhs);
+		CSClass& operator=(const CSClass& rhs);
+
+		CSClass(CSClass&& rhs) noexcept;
+		CSClass& operator=(CSClass&& rhs) noexcept;
+
+		~CSClass();
 
 		uint32_t gc_handle = 0;
 
@@ -79,22 +75,16 @@ namespace Engine {
 	struct CSScriptInstance {
 		CSClass csClass;
 		//map(variableName, variableData)
-		std::unordered_map<std::string, CSPublicVariable> csVariableMap;
+		//std::unordered_map<std::string, CSPublicVariable> csVariableMap;
 		bool isActive = true;
 
-		CSScriptInstance(std::string cn = "", bool active = true) : csClass(cn), isActive{ active }{}
+		CSScriptInstance(std::string cn = "", bool active = true);
 
-		CSScriptInstance(CSScriptInstance&& rhs) noexcept {
-			csClass = std::move(rhs.csClass);
-			csVariableMap = std::move(rhs.csVariableMap);
-		}
-		CSScriptInstance& operator=(CSScriptInstance&& rhs) noexcept {
-			if (this == &rhs) return *this;
-			std::swap(csClass, rhs.csClass);
-			std::swap(csVariableMap, rhs.csVariableMap);
-			return *this;
-		}
-		CSScriptInstance(const CSScriptInstance&) = delete;
+		CSScriptInstance(CSScriptInstance&& rhs) noexcept;
+		CSScriptInstance& operator=(CSScriptInstance&& rhs) noexcept;
+
+		CSScriptInstance(const CSScriptInstance& rhs);
+		CSScriptInstance& operator=(const CSScriptInstance& rhs);
 	};
 
 	//Map of string(Class name) and CSScriptInstance

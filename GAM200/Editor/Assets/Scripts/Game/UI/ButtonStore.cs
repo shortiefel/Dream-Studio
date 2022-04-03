@@ -353,8 +353,7 @@ public class ButtonStore : MonoBehaviour
             //Disable<Transform>(Storebtn.transform);
             //Enable<Transform>(StoreBack.transform);
 
-            //Disable<Transform>(displayArrow);
-            //Disable<Transform>(displayArrowWhite);
+
             //Disable<Transform>(pauseIcon);
             //
             //Disable<Transform>(timerButton);

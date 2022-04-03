@@ -106,6 +106,8 @@ namespace Engine {
     }
 
     void Scene::Stop(bool deserialize) {
+        GameSceneSerializer::ClearDeserializePool();
+
         ScriptSystem::GetInstance().SaveCSData();
 
         ScriptSystem::GetInstance().DestroyChildDomain();
@@ -186,13 +188,13 @@ namespace Engine {
         //GraphicImplementation::FadeScene(3.f, dt, camMatrix);
 
         
-        //if (Input::IsKeyPressed(Input_KeyCode::F)) {
-        //    std::cout << "List of all entities \n";
-        //    for (auto& [id, ent] : dreamECSGame->GetUsedEntityMap()) {
-        //        std::cout << id << " " << ent.name << "\n";
-        //    }
-        //    std::cout << " \n\n\n";
-        //}
+        if (Input::IsKeyPressed(Input_KeyCode::F)) {
+            std::cout << "List of all entities \n";
+            for (auto& [id, ent] : dreamECSGame->GetUsedEntityMap()) {
+                std::cout << id << " " << ent.name << "\n";
+            }
+            std::cout << " \n\n\n";
+        }
         
 #ifdef _GAME_BUILD
         //Default 2d picking

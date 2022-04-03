@@ -3,12 +3,12 @@
 public class TrafficManager : MonoBehaviour
 {
     private TrafficLightManager tlm;
-    private CarManager cm;
+    //private CarManager cm;
 
     public override void Start()
     {
         tlm = GetComponent<TrafficLightManager>();
-        cm = GetComponent<CarManager>();
+        //cm = GetComponent<CarManager>();
     }
 
 
@@ -31,18 +31,18 @@ public class TrafficManager : MonoBehaviour
 
 
     //CarManager-------------------------------------------------------------------
-    public void RegisterCar(uint id)
-    {
-        cm.RegisterCar(id);
-    }
-
-    public void RemoveCar(uint id)
-    {
-        cm.RemoveCar(id);
-    }
-
-    public bool IsCar(uint id)
-    {
-        return IsCar(id);
-    }
+    //public void RegisterCar(uint id)
+    //{
+    //    cm.RegisterCar(id);
+    //}
+    //
+    //public void RemoveCar(uint id)
+    //{
+    //    cm.RemoveCar(id);
+    //}
+    //
+    //public bool IsCar(uint id)
+    //{
+    //    return IsCar(id);
+    //}
 }

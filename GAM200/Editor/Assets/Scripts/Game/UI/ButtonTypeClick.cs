@@ -17,8 +17,9 @@ public class ButtonTypeClick : MonoBehaviour
     public override void Start()
     {
         buttonRoad = GameObject.Find("ButtonRoad").GetComponent<ButtonRoad>();
-        tooltipText = GameObject.Find("stringname").GetComponent<Text>();
-        tooltipTrans = GameObject.Find("stringname").GetComponent<Transform>();
+        GameObject stringNameGo = GameObject.Find("stringname");
+        tooltipText = stringNameGo.GetComponent<Text>();
+        tooltipTrans = stringNameGo.GetComponent<Transform>();
 
         //lineDivider1 = GameObject.Find("Line1").GetComponent<Texture>();
         //lineDivider2 = GameObject.Find("Line2").GetComponent<Texture>();
@@ -29,76 +30,86 @@ public class ButtonTypeClick : MonoBehaviour
         {
             bt = ButtonType.Draw;
             type = true;
-            //active = true;
+            tooltipOffset = new Vector2(-3.60f, 7.70f);
         }
 
         else if(entityId == GameObject.Find("DrawRoadWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Draw;
             type = false;
-            //active = false;
+            tooltipOffset = new Vector2(-3.60f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("RemoveRoad").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Remove;
             type = true;
-            //active = true;
+            tooltipOffset = new Vector2(-6.00f, 7.70f);
         }
 
         else if(entityId == GameObject.Find("RemoveRoadWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Remove;
             type = false;
-            //active = false;
+            tooltipOffset = new Vector2(-6.00f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("ERPbtn").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.ERP;
             type = true;
-            //active = true;
+            tooltipOffset =  new Vector2(-2.40f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("ERPbtnWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.ERP;
             type = false;
-            //active = false;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("TrafficLight").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.TrafficLight;
             type = true;
-            //active = true;
+            tooltipOffset = new Vector2(-10.10f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("TrafficLightWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.TrafficLight;
             type = false;
-            //active = false;
+            tooltipOffset = new Vector2(-10.10f, 7.70f);
         }
 
-       if (entityId == GameObject.Find("Displaybtn").GetComponent<Transform>().entityId)
+        else if (entityId == GameObject.Find("RemoveCar").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.RemoveCar;
+            type = true;
+            tooltipOffset = new Vector2(-8.80f, 7.70f);
+        }
+        
+        else if (entityId == GameObject.Find("RemoveCarWhite").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.RemoveCar;
+            type = false;
+            tooltipOffset = new Vector2(-8.80f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("Displaybtn").GetComponent<Transform>().entityId)
         {
             //Debug.Log("selected1");
             bt = ButtonType.Display;
             type = true;
-            //Debug.Log("selected2");
-            //active = true;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
         }
 
-        if (entityId == GameObject.Find("DisplaybtnWhite").GetComponent<Transform>().entityId)
+        else if(entityId == GameObject.Find("DisplaybtnWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Display;
             type = false;
-            
-            //active = false;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
         }
-
-        tooltipOffset = transform.position + new Vector2(-2f, 8.5f);
     }
     public override void OnMouseOver()
     {
@@ -106,6 +117,9 @@ public class ButtonTypeClick : MonoBehaviour
         //if (!transform.isActive) return;
         if (transform.isActive)
         {
+            tooltipTrans.position = transform.position;
+            tooltipText.position = tooltipOffset;
+
             switch (bt)
             {
                 case ButtonType.Display:
@@ -115,7 +129,6 @@ public class ButtonTypeClick : MonoBehaviour
                     }
 
                     Enable<Transform>(tooltipTrans);
-                    tooltipTrans.position = tooltipOffset;
                     tooltipText.text =  "Display buttons";
 
                     break;
@@ -126,7 +139,6 @@ public class ButtonTypeClick : MonoBehaviour
                             buttonRoad.CallFunction(bt, type);
 
                         Enable<Transform>(tooltipTrans);
-                        tooltipTrans.position = tooltipOffset;
                         tooltipText.text = "Road";
                         break;
                     }
@@ -136,7 +148,6 @@ public class ButtonTypeClick : MonoBehaviour
                             buttonRoad.CallFunction(bt, type);
 
                         Enable<Transform>(tooltipTrans);
-                        tooltipTrans.position = tooltipOffset;
                         tooltipText.text = "Remove ";
                         break;
                     }
@@ -146,7 +157,6 @@ public class ButtonTypeClick : MonoBehaviour
                             buttonRoad.CallFunction(bt, type);
 
                         Enable<Transform>(tooltipTrans);
-                        tooltipTrans.position = tooltipOffset;
                         tooltipText.text = "ERP";
                         break;
                     }
@@ -156,30 +166,23 @@ public class ButtonTypeClick : MonoBehaviour
                             buttonRoad.CallFunction(bt, type);
 
                         Enable<Transform>(tooltipTrans);
-                        tooltipTrans.position = tooltipOffset;
                         tooltipText.text = "TrafficLight";
+                        break;
+                    }
+                case ButtonType.RemoveCar:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                            buttonRoad.CallFunction(bt, type);
+                        
+                        Enable<Transform>(tooltipTrans);
+                        tooltipText.text = "Remove Car";
                         break;
                     }
                 default:
                     
                     break;
             }
-        //Debug.Log("Entity " + entityId + " " + transform.isActive);
-            
-            //switch (bt)
-            //{
-            //    case ButtonType.Draw:
-            //        break;
-            //
-            //    case ButtonType.Remove:
-            //        break;
-            //
-            //    case ButtonType.ERP:
-            //        break;
-            //
-            //    case ButtonType.TrafficLight:
-            //        break;
-            //}
+
         }
     }
 
@@ -196,6 +199,7 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.Remove:
                 case ButtonType.ERP:
                 case ButtonType.TrafficLight:
+                case ButtonType.RemoveCar:
                     Disable<Transform>(tooltipTrans);
 
                     break;
@@ -203,22 +207,7 @@ public class ButtonTypeClick : MonoBehaviour
                     
                     break;
             }
-            //Debug.Log("Entity " + entityId + " " + transform.isActive);
 
-            //switch (bt)
-            //{
-            //    case ButtonType.Draw:
-            //        break;
-            //
-            //    case ButtonType.Remove:
-            //        break;
-            //
-            //    case ButtonType.ERP:
-            //        break;
-            //
-            //    case ButtonType.TrafficLight:
-            //        break;
-            //}
         }
     }
 

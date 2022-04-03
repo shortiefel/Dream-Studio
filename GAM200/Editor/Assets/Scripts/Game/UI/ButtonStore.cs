@@ -159,7 +159,7 @@ public class ButtonStore : MonoBehaviour
 
 
         texture = GetComponent<UI>();
-        texture.color = new Color(0f, 0f, 0f);
+        //texture.color = new Color(0f, 0f, 0f);
 
         //Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");

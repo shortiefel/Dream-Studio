@@ -32,6 +32,7 @@ public class GameState : MonoBehaviour
 
     Cycle cycle;
 
+    UI TimerIcon;
     ButtonStore store;
     GameObject receipt;
 
@@ -58,6 +59,7 @@ public class GameState : MonoBehaviour
         //GameObject overlayNightGo = GameObject.Find("OverlayNight");
         //if (overlayNightGo != null)
         //    overlayNight = overlayNightGo.GetComponent<Transform>();
+        TimerIcon = GameObject.Find("TimerIcon").GetComponent<UI>();
 
         GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
         if (buttonRoadGO != null)
@@ -113,6 +115,7 @@ public class GameState : MonoBehaviour
 
             if (dayTimer >= nightCycle)
             {
+                TimerIcon.ChangeTexture("Game/UI/Clock_Night");
                 overlayAlpha += 0.01f;
                 if (overlayAlpha > 0.8f) overlayAlpha = 0.8f;
                 else
@@ -128,6 +131,7 @@ public class GameState : MonoBehaviour
                 SetPause(true);
                 moneySystem.TaxMoney();
                 dayTimer = 0f;
+                TimerIcon.ChangeTexture("Game/UI/Clock_Day");
                 //dayCounter++;
                 //dayText.text = "Day " + dayCounter.ToString();
                 //Moved to gameState gameover

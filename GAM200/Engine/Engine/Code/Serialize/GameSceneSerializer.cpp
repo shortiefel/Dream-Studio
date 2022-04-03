@@ -815,66 +815,66 @@ namespace Engine {
 
 		Math::mat3 rotationAndTranslate{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
 
-		//if (deserializePool.find(_filename) != deserializePool.end()) {
-		//	EntitySet& entitySet = deserializePool[_filename];
-		//	Entity_id entId = dreamECSGame->CreateEntity(entitySet.entity.name.c_str()).id;
-		//	if (id != nullptr)
-		//		*id = entId;
-		//
-		//	Math::vec3 temVec{ entitySet.transform.position.x, entitySet.transform.position.y, 1.f };
-		//	temVec = rotationAndTranslate * temVec;
-		//	
-		//	dreamECSGame->AddComponent(TransformComponent{ entId, Math::vec2{temVec.x, temVec.y},
-		//		entitySet.transform.scale, entitySet.transform.angle + angle, layer });
-		//
-		//	if (entitySet.texture != nullptr) {
-		//		dreamECSGame->AddComponent(TextureComponent{ entId, *entitySet.texture });
-		//	}
-		//
-		//	if (entitySet.collider != nullptr) {
-		//		dreamECSGame->AddComponent(ColliderComponent{ entId, *entitySet.collider });
-		//	}
-		//
-		//	if (entitySet.camera != nullptr) {
-		//		dreamECSGame->AddComponent(CameraComponent{ entId, *entitySet.camera });
-		//	}
-		//
-		//	if (entitySet.rigidbody != nullptr) {
-		//		dreamECSGame->AddComponent(RigidBodyComponent{ entId, *entitySet.rigidbody });
-		//	}
-		//
-		//	if (entitySet.font != nullptr) {
-		//		dreamECSGame->AddComponent(FontComponent{ entId, *entitySet.font });
-		//	}
-		//
-		//	if (entitySet.sound != nullptr) {
-		//		dreamECSGame->AddComponent(SoundComponent{ entId, *entitySet.sound });
-		//	}
-		//
-		//	if (entitySet.ui != nullptr) {
-		//		dreamECSGame->AddComponent(UIComponent{ entId, *entitySet.ui });
-		//	}
-		//
-		//	if (entitySet.waypoint != nullptr) {
-		//		dreamECSGame->AddComponent(WaypointComponent{ entId, *entitySet.waypoint });
-		//	}
-		//
-		//	if (entitySet.particle != nullptr) {
-		//		dreamECSGame->AddComponent(ParticleComponent{ entId, *entitySet.particle });
-		//	}
-		//
-		//	if (entitySet.light != nullptr) {
-		//		dreamECSGame->AddComponent(LightComponent{ entId, *entitySet.light });
-		//	}
-		//
-		//	if (entitySet.script != nullptr) {
-		//		dreamECSGame->AddComponent(ScriptComponent{ entId, *entitySet.script });
-		//	}
-		//
-		//	return;
-		//}
-		//
-		//deserializePool[_filename] = EntitySet();
+		if (deserializePool.find(_filename) != deserializePool.end()) {
+			EntitySet& entitySet = deserializePool[_filename];
+			Entity_id entId = dreamECSGame->CreateEntity(entitySet.entity.name.c_str()).id;
+			if (id != nullptr)
+				*id = entId;
+		
+			Math::vec3 temVec{ entitySet.transform.position.x, entitySet.transform.position.y, 1.f };
+			temVec = rotationAndTranslate * temVec;
+			
+			dreamECSGame->AddComponent(TransformComponent{ entId, Math::vec2{temVec.x, temVec.y},
+				entitySet.transform.scale, entitySet.transform.angle + angle, layer });
+		
+			if (entitySet.texture != nullptr) {
+				dreamECSGame->AddComponent(TextureComponent{ entId, *entitySet.texture });
+			}
+		
+			if (entitySet.collider != nullptr) {
+				dreamECSGame->AddComponent(ColliderComponent{ entId, *entitySet.collider });
+			}
+		
+			if (entitySet.camera != nullptr) {
+				dreamECSGame->AddComponent(CameraComponent{ entId, *entitySet.camera });
+			}
+		
+			if (entitySet.rigidbody != nullptr) {
+				dreamECSGame->AddComponent(RigidBodyComponent{ entId, *entitySet.rigidbody });
+			}
+		
+			if (entitySet.font != nullptr) {
+				dreamECSGame->AddComponent(FontComponent{ entId, *entitySet.font });
+			}
+		
+			if (entitySet.sound != nullptr) {
+				dreamECSGame->AddComponent(SoundComponent{ entId, *entitySet.sound });
+			}
+		
+			if (entitySet.ui != nullptr) {
+				dreamECSGame->AddComponent(UIComponent{ entId, *entitySet.ui });
+			}
+		
+			if (entitySet.waypoint != nullptr) {
+				dreamECSGame->AddComponent(WaypointComponent{ entId, *entitySet.waypoint });
+			}
+		
+			if (entitySet.particle != nullptr) {
+				dreamECSGame->AddComponent(ParticleComponent{ entId, *entitySet.particle });
+			}
+		
+			if (entitySet.light != nullptr) {
+				dreamECSGame->AddComponent(LightComponent{ entId, *entitySet.light });
+			}
+		
+			if (entitySet.script != nullptr) {
+				dreamECSGame->AddComponent(ScriptComponent{ entId, *entitySet.script });
+			}
+		
+			return;
+		}
+		
+		deserializePool[_filename] = EntitySet();
 
 		//NOTE: Assumes that parent is deserialized before child
 		std::string filename = TO_FULL_PREFAB(_filename);
@@ -1010,8 +1010,8 @@ namespace Engine {
 				entitySet.waypoint = new WaypointComponent(tem);
 			}
 
-			//DeserializeOtherComponents(sceneSerializer, entityId, dreamECSGame, &entitySet);
-			DeserializeOtherComponents(sceneSerializer, entityId, dreamECSGame, nullptr);
+			DeserializeOtherComponents(sceneSerializer, entityId, dreamECSGame, &entitySet);
+			//DeserializeOtherComponents(sceneSerializer, entityId, dreamECSGame, nullptr);
 		};
 
 		sceneSerializer.DeserializeArray(deserializePrefabFP);

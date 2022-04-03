@@ -31,6 +31,29 @@ namespace Engine {
 	{
 	public:
 
+		bool ignoredSafePlacement = false;
+
+		EntityManager& operator=(EntityManager&& rhs) noexcept {
+			usedEntities = std::move(rhs.usedEntities);
+			temporaryUsedEntities = std::move(temporaryUsedEntities);
+
+			AliveEntityCount = rhs.AliveEntityCount;
+			AvailableEntities = std::move(rhs.AvailableEntities);
+
+			currentMaxId = rhs.currentMaxId;
+
+
+			rhs.usedEntities = EntityMapType{};
+			rhs.temporaryUsedEntities = EntityMapType{};
+
+			rhs.AliveEntityCount = unsigned int{};
+			rhs.AvailableEntities = std::queue<Entity_id>{};
+
+			rhs.currentMaxId = 1;
+
+			return *this;
+		}
+
 		Entity CreateEntity(const char* _entityName = DEFAULT_ENTITY_NAME, Entity_id _parent = MAX_ENTITIES + 1)
 		{
 			//printf("Creating entity \n");
@@ -42,7 +65,7 @@ namespace Engine {
 				return entity; 
 			}
 			//LOG_ASSERT(AliveEntityCount < MAX_ENTITIES && "Too many entities");
-
+			
 			Entity_id entityId = 0;
 
 			if (currentMaxId < MAX_ENTITIES) {
@@ -55,12 +78,19 @@ namespace Engine {
 				AvailableEntities.pop();
 			}
 
-			
+			else {
+				LOG_ERROR("EntityManager CreateEntity Out of entities");
+			}
 
 			++AliveEntityCount;
 			Entity entity(entityId, _entityName, _parent);
 			//UsedEntities2.push_back(entity);
 			//usedEntities.emplace(entityId, entity);
+
+			if (ignoredSafePlacement) {
+				usedEntities.emplace(entityId, entity);
+				return usedEntities[entityId];
+			}
 			temporaryUsedEntities.emplace(entityId, entity);
 
 			return temporaryUsedEntities[entityId];

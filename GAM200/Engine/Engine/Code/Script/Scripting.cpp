@@ -72,7 +72,7 @@ namespace Engine {
 				//INVOKE_FUNCTION(ConstructorFunc);
 				if (_csScriptInstance.csClass.ConstructorFunc != nullptr) {
 					auto& csClass = _csScriptInstance.csClass;
-					csClass.object = (mono_object_new(mono_domain_get(), csClass.klass));
+					//csClass.object = (mono_object_new(mono_domain_get(), csClass.klass));
 					mono_runtime_object_init(csClass.object);
 
 					if (!(_csScriptInstance.csClass.object)) {
@@ -91,7 +91,17 @@ namespace Engine {
 				}
 				break;
 			case MonoFunctionType::Init:
-				INVOKE_FUNCTION(InitFunc);
+				//INVOKE_FUNCTION(InitFunc);
+				if (_csScriptInstance.csClass.InitFunc != nullptr) {
+					
+						mono_runtime_invoke(_csScriptInstance.csClass.InitFunc, _csScriptInstance.csClass.object, _param, &exception); 
+						if (exception != nullptr) {
+								char* text = mono_string_to_utf8(mono_object_to_string(exception, nullptr)); 
+								displayFuncPtr(std::string{ text }); 
+								mono_free(text); 
+								SceneManager::GetInstance().Stop(); 
+						}
+				}
 				break;
 			case MonoFunctionType::Update:
 				INVOKE_FUNCTION(UpdateFunc);

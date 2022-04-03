@@ -49,6 +49,7 @@ namespace Engine {
 		klassInstance = std::move(rhs.klassInstance);
 		SetEntityId(rhs.GetEntityId());
 		rhs.SetEntityId(DEFAULT_ENTITY_ID);
+
 		return *this;
 	}
 
@@ -91,13 +92,14 @@ namespace Engine {
 	//	}
 	//}
 
-	bool ScriptComponent::AddScript(ScriptComponent& comp) {
+	bool ScriptComponent::AddScript(ScriptComponent& comp, bool ignoreRun) {
 		//Add scripts first
 		for (auto& [className, csScriptInstance] : comp.klassInstance) {
 			if (klassInstance.find(className) == klassInstance.end()) {
 				klassInstance.emplace(className, std::move(csScriptInstance));
 			}
 		}
+		if (ignoreRun) return true;
 
 		//Initialize constructor, awake and init (InitScript has checks for whether it is in play mode)
 		//Mainly for initializing when Scripts are added during game runtime

@@ -43,11 +43,18 @@ namespace Engine {
 	class DreamECS;
 	struct Prefab;
 
-	extern std::unique_ptr<DreamECS> dreamECSGame;
+	//extern std::unique_ptr<DreamECS> dreamECSGame;
+	//extern std::unique_ptr<DreamECS> dreamECSLoader;
+
+	extern DreamECS* dreamECSGame;
+	extern DreamECS* dreamECSLoader;
 
 	//class DreamECS : public Singleton<DreamECS> {
 	class DreamECS {
 	public:
+		DreamECS& operator=(DreamECS&& rhs) noexcept;
+		~DreamECS();
+
 		void Create();
 		/*--------------------------------------------------------------------------------------------------------------
 		Entity related functions
@@ -56,6 +63,7 @@ namespace Engine {
 		void DuplicateEntityAsInstance(Entity ent);
 		void EnableTransform(Entity_id entity_id);
 		void DestroyEntity(Entity_id entity_id);
+		void RemoveScript(Entity_id entity_id, const char* className);
 		//const std::vector<Entity>& GetUsedEntitySet();
 		const EntityMapType& GetUsedConstEntityMap() const;
 		EntityMapType& GetUsedEntityMap();
@@ -66,8 +74,8 @@ namespace Engine {
 		void DuplicateNameCheck(std::string& name);
 		void ChangeName(std::string _oldname, std::string _newname);
 
-		void CreateSquare(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f });
-		void CreateCircle(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 20.f, 20.f });
+		void CreateSquare(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 1.f, 1.f });
+		void CreateCircle(Math::vec2 pos = Math::vec2{ 0.f, 0.f }, Math::vec2 scale = Math::vec2{ 1.f, 1.f });
 
 		void Parent(Entity_id _parent, Entity_id _child);
 		void Unparent(Entity_id _target);
@@ -88,6 +96,7 @@ namespace Engine {
 		/*--------------------------------------------------------------------------------------------------------------
 		Component related functions
 		--------------------------------------------------------------------------------------------------------------*/
+#if 0 //For pointer type
 		template<typename T>
 		void RegisterComponent() {
 			compManager->RegisterCom<T>();
@@ -113,8 +122,6 @@ namespace Engine {
 			if (!ptr) return;
 			compManager->RemoveCom<T>(entity_id);
 		}
-
-		void RemoveScript(Entity_id entity_id, const char* className);
 
 		/*
 		* Get component by reference
@@ -154,6 +161,73 @@ namespace Engine {
 		size_t GetComponentArraySize() {
 			return compManager->GetComponentArraySize<T>();
 		}
+#else
+		template<typename T>
+		void RegisterComponent() {
+			compManager.RegisterCom<T>();
+		}
+
+		template<typename T>
+		bool AddComponent(T com) {
+			auto ptr = compManager.GetComPtr<T>(com.GetEntityId());
+			//LOG_ASSERT(!ptr && "Unable add the same component for one entity");
+			if (ptr) return false;
+			return compManager.AddComponent<T>(std::move(com));
+		}
+
+		template<>
+		bool AddComponent(ScriptComponent com) {
+			if (this == dreamECSLoader) return compManager.AddScript(std::move(com), true);
+			return compManager.AddScript(std::move(com));
+		}
+
+		template<typename T>
+		void RemoveComponent(Entity_id entity_id) {
+			auto ptr = compManager.GetComPtr<T>(entity_id);
+			//LOG_ASSERT(ptr && "Unable remove an entity that does not exist");
+			if (!ptr) return;
+			compManager.RemoveCom<T>(entity_id);
+		}
+
+		/*
+		* Get component by reference
+		*/
+		template <typename T>
+		T& GetComponent(Entity_id entity_id) {
+			return compManager.GetCom<T>(entity_id);
+		}
+		/*
+		* Get component by pointer
+		* For nullptr checks
+		*/
+		template <typename T>
+		T* GetComponentPTR(Entity_id entity_id) {
+			return compManager.GetComPtr<T>(entity_id);
+		}
+		/*
+		* Check only (data is not given)
+		*/
+		template<typename T>
+		bool HasComponentCheck(Entity_id entity_id) {
+			T* com;
+			return compManager.HasCom<T>(com, entity_id);
+		}
+
+		template<typename T>
+		ComponentType GetComponentType() {
+			return compManager.GetterComType<T>();
+		}
+
+		template<typename T>
+		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
+			return compManager.GetComponentArrayData<T>();
+		}
+
+		template<typename T>
+		size_t GetComponentArraySize() {
+			return compManager.GetComponentArraySize<T>();
+		}
+#endif
 
 		/*--------------------------------------------------------------------------------------------------------------
 		System related functions
@@ -170,15 +244,20 @@ namespace Engine {
 
 	private:
 
-		std::unique_ptr<ComponentManager>compManager;
-		std::unique_ptr<EntityManager>entityManager;
-		//std::unique_ptr<SystemManager>sysManager;
+		//std::unique_ptr<ComponentManager>compManager;
+		//std::unique_ptr<EntityManager>entityManager;
 
-		//static Coordinator gCoordinator;
-		
+		ComponentManager compManager{};
+		EntityManager entityManager{};
 
+		//Track the number of the same name and give index to them
+		std::unordered_map <std::string, int> nameCount{};
+		std::unordered_map<Entity_id, Prefab> mapOfPrefab{};
 
-		//SINGLETON_SETUP(DreamECS);
+		std::unordered_set<Entity_id> destroySet{};
+		std::unordered_map < Entity_id, std::string> destroyScript{};
+
+		std::unordered_set<Entity_id> enableSet{};
 	};
 }
 

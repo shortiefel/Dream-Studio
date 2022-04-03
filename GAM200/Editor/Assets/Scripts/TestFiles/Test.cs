@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Test : MonoBehaviour
 {
-
+    bool left = false;
 
     public override void Start()
     {
@@ -11,11 +11,19 @@ public class Test : MonoBehaviour
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        
+       if (left)
         {
-            Instantiate(new GameObject(new Prefab("Box")));
+            transform.position += new Vector2(-0.1f, 0f);
+
+            if (transform.position.x < -11f) left = false;
         }
-       
+       else
+        {
+            transform.position += new Vector2(0.1f, 0f);
+
+            if (transform.position.x > 11f) left = true;
+        }
     }
 
     

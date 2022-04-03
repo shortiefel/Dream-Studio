@@ -69,8 +69,8 @@ namespace Engine {
 			return GetComArray<T>()->AddComponent(std::move(component));
 		}
 
-		bool AddScript(ScriptComponent component) {
-			return GetComArray<ScriptComponent>()->AddScriptComponent(std::move(component));
+		bool AddScript(ScriptComponent component, bool ignore = false) {
+			return GetComArray<ScriptComponent>()->AddScriptComponent(std::move(component), ignore);
 		}
 
 		/*template<typename T>
@@ -136,6 +136,12 @@ namespace Engine {
 			for (auto const& [name, compArray] : mComponentArrayInter) {
 				compArray->EntityDestroyed(entity_id);
 			}
+		}
+
+		ComponentManager& operator=(ComponentManager&& rhs) noexcept {
+			mComponentArrayInter = std::move(rhs.mComponentArrayInter);
+
+			return *this;
 		}
 
 	private:

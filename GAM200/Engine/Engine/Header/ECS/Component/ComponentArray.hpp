@@ -53,7 +53,7 @@ namespace Engine {
 			return true;
 		}
 
-		bool AddScriptComponent(T component) {
+		bool AddScriptComponent(T component, bool ignore = false) {
 			Entity_id entity_id = component.GetEntityId();
 			size_t index{};
 			
@@ -73,7 +73,7 @@ namespace Engine {
 				//componentArray[index].AddScript(component);
 			}
 
-			return componentArray[index].AddScript(component);
+			return componentArray[index].AddScript(component, ignore);
 		}
 
 

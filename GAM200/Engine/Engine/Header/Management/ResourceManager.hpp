@@ -21,6 +21,9 @@ Technology is prohibited.
 #include "Engine/Header/Singleton/Singleton.hpp"
 #include "Engine/Header/Math/MathLib.hpp"
 
+#include "Engine/Header/ECS/Component/UI/UIComponent.hpp"
+#include "Engine/Header/ECS/Component/UI/FontComponent.hpp"
+
 #include "ft2build.h"
 #include FT_FREETYPE_H
 
@@ -64,6 +67,17 @@ namespace Engine
 
 		TextureContainer GetTextureContainer(std::string name) { return textureList[name]; }
 		FontContainer GetFontContainer(std::string filename) { return fontList[filename]; }
+
+
+
+		void TextureStbiLoad(TextureComponent& tc, std::string _filepath);
+		void TextureStbiLoad(UIComponent& tc, std::string _filepath);
+		void TextureStbiLoad(ParticleComponent& tc, std::string _filepath);
+		//void FontFTLoad(FontComponent& fc, std::string _filepath);
+		void TextureGlfwCreate(TextureComponent& tc);
+		void TextureGlfwCreate(UIComponent& tc);
+		void TextureGlfwCreate(ParticleComponent& tc);
+		//void FontGlfwCreate(FontComponent& tc);
 
 	private:
 		GLuint LoadTextureInternal(std::string filename, int* x, int* y, int* channels_in_files, int desired_channel);

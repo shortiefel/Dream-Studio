@@ -20,6 +20,7 @@ Technology is prohibited.
 #include <string>
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 namespace Engine {
 	class GameSceneSerializer {
@@ -30,7 +31,7 @@ namespace Engine {
 		//From scene to a file
 		static void SerializeScene(std::string filename);
 		//From file to a scene
-		static void DeserializeScene(std::string filename);
+		static void DeserializeScene(std::string filename, DreamECS* dreamECS = dreamECSGame, bool ignore = false);
 		//From scene to prefab
 		static void SerializePrefab(std::string filename, Entity_id entity_id);
 

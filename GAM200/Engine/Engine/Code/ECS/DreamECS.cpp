@@ -32,8 +32,8 @@ Technology is prohibited.
 if (entity == entityMap.end()) continue;\
 const auto& iter = nameCount.find(entity->second.name);\
 if (iter != nameCount.end()) nameCount.erase(iter);\
-compManager->DestroyEntity(entity->second.id);\
-entityManager->DestroyEntity(entity->second.id);
+compManager.DestroyEntity(entity->second.id);\
+entityManager.DestroyEntity(entity->second.id);
 
 
 //systemManager->EntityDestroyed(entity);
@@ -56,36 +56,56 @@ namespace Engine {
 	//Coordinator DreamECS::gCoordinator;
 	//std::queue<Entity> DreamECS::destroyQueue;
 	// 
-	//Track the number of the same name and give index to them
-	std::unordered_map <std::string, int> nameCount;
-	std::unordered_map<Entity_id, Prefab> mapOfPrefab;
 	
-	std::unordered_set<Entity_id> destroySet{};
-	std::unordered_map < Entity_id, std::string > destroyScript{};
-
-	std::unordered_set<Entity_id> enableSet{};
 
 
-	std::unique_ptr<DreamECS> dreamECSGame = std::make_unique<DreamECS>();
+	//std::unique_ptr<DreamECS> dreamECSGame = std::make_unique<DreamECS>();
+	//std::unique_ptr<DreamECS> dreamECSLoader = std::make_unique<DreamECS>();
 
-	void DreamECS::Create()
-	{
-		//gCoordinator.Init();
-		compManager = std::make_unique<ComponentManager>();
-		entityManager = std::make_unique<EntityManager>();
-		//sysManager = std::make_unique<SystemManager>();
+	DreamECS* dreamECSGame = new DreamECS();
+	DreamECS* dreamECSLoader = new DreamECS();
+
+	DreamECS& DreamECS::operator=(DreamECS&& rhs) noexcept {
+		compManager = std::move(rhs.compManager);
+		entityManager = std::move(rhs.entityManager);
+
+		nameCount = std::move(rhs.nameCount);
+		mapOfPrefab = std::move(rhs.mapOfPrefab);
+
+		destroySet = std::move(rhs.destroySet);
+		destroyScript = std::move(rhs.destroyScript);
+
+		enableSet = std::move(rhs.enableSet);
+
+
+		return *this;
+	}
+
+	DreamECS::~DreamECS() {
+		delete dreamECSGame;
+		delete dreamECSLoader;
+	}
+
+	void DreamECS::Create() {
+		//compManager = std::make_unique<ComponentManager>();
+		//entityManager = std::make_unique<EntityManager>();
+
+		dreamECSLoader->entityManager.ignoredSafePlacement = true;
 	}
 
 	Entity DreamECS::CreateEntity(const char* _entityName, std::unordered_set<Entity_id> _child, Entity_id _parent) {
 		DUPLICATE_NAME_CHECK(_entityName);
 
-		return entityManager->CreateEntity(entityName.c_str(), _parent);
+		//return entityManager->CreateEntity(entityName.c_str(), _parent);
+		return entityManager.CreateEntity(entityName.c_str(), _parent);
 	}
 
 	void DreamECS::DuplicateEntityAsInstance(Entity entFrom) {
 		DUPLICATE_NAME_CHECK(entFrom.name);
-		Entity entTo = entityManager->CreateEntity(entityName.c_str());
-		compManager->DuplicateEntityAsInstance(entFrom.id, entTo.id);
+		//Entity entTo = entityManager->CreateEntity(entityName.c_str());
+		//compManager->DuplicateEntityAsInstance(entFrom.id, entTo.id);
+		Entity entTo = entityManager.CreateEntity(entityName.c_str());
+		compManager.DuplicateEntityAsInstance(entFrom.id, entTo.id);
 	}
 
 	void DreamECS::EnableTransform(Entity_id entity_id)
@@ -117,15 +137,18 @@ namespace Engine {
 	}*/
 
 	const EntityMapType& DreamECS::GetUsedConstEntityMap() const {
-		return entityManager->GetUsedConstEntityMap();
+		//return entityManager->GetUsedConstEntityMap();
+		return entityManager.GetUsedConstEntityMap();
 	}
 
 	EntityMapType& DreamECS::GetUsedEntityMap() {
-		return entityManager->GetUsedEntityMap();
+		//return entityManager->GetUsedEntityMap();
+		return entityManager.GetUsedEntityMap();
 	}
 
 	uint32_t DreamECS::GetUsedEntitySize() const {
-		return entityManager->GetUsedEntitySize();
+		//return entityManager->GetUsedEntitySize();
+		return entityManager.GetUsedEntitySize();
 	}
 
 	const std::unordered_map<Entity_id, Prefab>& DreamECS::GetConstPrefabMap() const {
@@ -133,10 +156,12 @@ namespace Engine {
 	}
 
 	void DreamECS::EndOfLoopUpdate() {
-		entityManager->EntityEndOfLoopUpdate();
+		//entityManager->EntityEndOfLoopUpdate();
+		entityManager.EntityEndOfLoopUpdate();
 
 		//-----------------------------------------------Clear destroy queue-----------------------------------------------
-		const auto& entityMap = entityManager->GetUsedConstEntityMap();
+		//const auto& entityMap = entityManager->GetUsedConstEntityMap();
+		const auto& entityMap = entityManager.GetUsedConstEntityMap();
 		for (auto& entity_id : destroySet) {
 			DESTROY_ENTITY(entityMap.find(entity_id));
 			CollisionSystem::GetInstance().RemoveDeadEntity(entity_id);
@@ -150,7 +175,8 @@ namespace Engine {
 		}
 
 		for (auto& [entity_id, className] : destroyScript) {
-			compManager->RemoveScript(entity_id, className.c_str());
+			//compManager->RemoveScript(entity_id, className.c_str());
+			compManager.RemoveScript(entity_id, className.c_str());
 		}
 
 		destroySet.clear();
@@ -163,13 +189,16 @@ namespace Engine {
 		nameCount.clear();
 		mapOfPrefab.clear();
 
-		auto& entityMap = entityManager->GetUsedConstEntityMap();
+		//auto& entityMap = entityManager->GetUsedConstEntityMap();
+		auto& entityMap = entityManager.GetUsedConstEntityMap();
 		for (auto& [entity_id, entity] : entityMap) {
 				//entityManager->DestroyEntity(entity_id);
-				compManager->DestroyEntity(entity_id);
+				//compManager->DestroyEntity(entity_id);
+				compManager.DestroyEntity(entity_id);
 		}
 
-		entityManager->ResetEntityManager();
+		//entityManager->ResetEntityManager();
+		entityManager.ResetEntityManager();
 	}
 
 	void DreamECS::Parent(Entity_id _parent, Entity_id _child) {
@@ -192,11 +221,11 @@ namespace Engine {
 
 
 	void DreamECS::CreateSquare(Math::vec2 pos, Math::vec2 scale) {
-		Factory::InstantiateSquare(pos, scale);
+		Factory::InstantiateSquare(pos, scale, this);
 	}
 
 	void DreamECS::CreateCircle(Math::vec2 pos, Math::vec2 scale) {
-		Factory::InstantiateCircle(pos, scale);
+		Factory::InstantiateCircle(pos, scale, this);
 	}
 
 	void DreamECS::AddPrefab(const Prefab& _prefab) {

@@ -50,14 +50,37 @@ Technology is prohibited.
 #include "Engine/Header/Management/SoundManager.hpp"
 #include "Engine/Header/ECS/Component/Sound/SoundComponent.hpp"
 
+#include <thread>
+#include <chrono>
+
 namespace Engine {
 
     bool previousFocusState = true;
 
+    std::string toLoad;
+    bool loadFinish = true;
+    std::future_status status;
+
+    bool AsyncSceneLoading() {
+        GameSceneSerializer::DeserializeScene(toLoad, dreamECSLoader, true);
+
+        return true;
+    }
+
     Scene::Scene(std::string _sceneName, bool _deserializeState) : sceneName{ _sceneName } {
         if (_deserializeState) {
-            //std::cout << "Recreate scene\n";
-            GameSceneSerializer::DeserializeScene(sceneName);
+            //if (sceneName != "Intro") 
+            //if (!ignore) 
+            //{
+                loadFinish = false;
+                toLoad = sceneName;
+                GameSceneSerializer::DeserializeScene("Loading");
+                asyncSceneThread = std::async(std::launch::async, AsyncSceneLoading);
+            //}
+            //else 
+            //{
+            //    GameSceneSerializer::DeserializeScene(sceneName);
+            //}
         }
         else {
             GameSceneSerializer::DeserializeScene("temporary");
@@ -69,7 +92,6 @@ namespace Engine {
 
         ScriptSystem::GetInstance().UpdateMapData();
         if (GameState::GetInstance().GetPlaying()) {
-            //std::cout << "ScriptSystem PlayInit\n";
             ScriptSystem::GetInstance().PlayInit();
         }
         //AI::AISystem::GetInstance().CreateGrid(Math::ivec2{ 20, 10 }, Math::ivec2{ 15, 15 });
@@ -141,6 +163,60 @@ namespace Engine {
 #else
     void Scene::Update(float dt, bool playing, Math::vec2) {
 #endif
+        if (!loadFinish) {
+            status = asyncSceneThread.wait_for(std::chrono::milliseconds(1));
+
+            if (status == std::future_status::ready) {
+                loadFinish = true;
+                std::cout << "------------------Load finish-------------------------------\n";
+
+                *dreamECSGame = std::move(*dreamECSLoader);
+
+                {
+                    auto& tem = dreamECSGame->GetComponentArrayData<TextureComponent>();
+                    for (auto& i : tem) {
+                        if (EntityId_Check(i.GetEntityId())) break;
+                        ResourceManager::GetInstance().TextureGlfwCreate(i);
+                    }
+                }
+                {
+                    auto& tem = dreamECSGame->GetComponentArrayData<UIComponent>();
+                    for (auto& i : tem) {
+                        if (EntityId_Check(i.GetEntityId())) break;
+                        ResourceManager::GetInstance().TextureGlfwCreate(i);
+                    }
+                }
+                {
+                    auto& tem = dreamECSGame->GetComponentArrayData<FontComponent>();
+                    for (auto& i : tem) {
+                        if (EntityId_Check(i.GetEntityId())) break;
+                        GraphicImplementation::SetFont(&i, i.filepath);
+                    }
+                }
+
+                if (GameState::GetInstance().GetPlaying()) {
+                    ScriptSystem::GetInstance().UpdateMapData();
+                    ScriptSystem::GetInstance().PlayInit();
+
+
+                    DeltaTime::GetInstance().SetTimeScale(1.f);
+                }
+
+                dreamECSLoader->RegisterComponent<CameraComponent>();
+                dreamECSLoader->RegisterComponent<TransformComponent>();
+                dreamECSLoader->RegisterComponent<ColliderComponent>();
+                dreamECSLoader->RegisterComponent<TextureComponent>();
+                dreamECSLoader->RegisterComponent<RigidBodyComponent>();
+                dreamECSLoader->RegisterComponent<ScriptComponent>();
+                dreamECSLoader->RegisterComponent<UIComponent>();
+                dreamECSLoader->RegisterComponent<FontComponent>();
+                dreamECSLoader->RegisterComponent<SoundComponent>();
+                dreamECSLoader->RegisterComponent<ParticleComponent>();
+                dreamECSLoader->RegisterComponent<WaypointComponent>();
+                dreamECSLoader->RegisterComponent<LightComponent>();
+            }
+        }
+
         bool focusState = Window::GetInstance().GetFocusStatus();
         if (!focusState) {
 #ifdef _GAME_BUILD
@@ -194,7 +270,57 @@ namespace Engine {
                 std::cout << id << " " << ent.name << "\n";
             }
             std::cout << " \n\n\n";
+
+            std::cout << "List of all entities \n";
+            for (auto& [id, ent] : dreamECSLoader->GetUsedEntityMap()) {
+                std::cout << id << " " << ent.name << "\n";
+            }
+            std::cout << " \n\n\n";
         }
+
+        //if (Input::IsKeyPressed(Input_KeyCode::E)) {
+        //    //Deserialize will be async and once done do the rest below
+        //    GameSceneSerializer::DeserializeScene("NewGame", dreamECSLoader, true);
+        //    //GameSceneSerializer::DeserializeScene("NewGame", dreamECSLoader, true);
+        //
+        //    *dreamECSGame = std::move(*dreamECSLoader);
+        //
+        //    {
+        //        auto& tem = dreamECSGame->GetComponentArrayData<TextureComponent>();
+        //        for (auto& i : tem) {
+        //            if (EntityId_Check(i.GetEntityId())) break;
+        //            ResourceManager::GetInstance().TextureGlfwCreate(i);
+        //        }
+        //    }
+        //    {
+        //        auto& tem = dreamECSGame->GetComponentArrayData<UIComponent>();
+        //        for (auto& i : tem) {
+        //            if (EntityId_Check(i.GetEntityId())) break;
+        //            ResourceManager::GetInstance().TextureGlfwCreate(i);
+        //        }
+        //    }
+        //
+        //    if (GameState::GetInstance().GetPlaying()) {
+        //        ScriptSystem::GetInstance().UpdateMapData();
+        //        ScriptSystem::GetInstance().PlayInit();
+        //
+        //
+        //        DeltaTime::GetInstance().SetTimeScale(1.f);
+        //    }
+        //
+        //    dreamECSLoader->RegisterComponent<CameraComponent>();
+        //    dreamECSLoader->RegisterComponent<TransformComponent>();
+        //    dreamECSLoader->RegisterComponent<ColliderComponent>();
+        //    dreamECSLoader->RegisterComponent<TextureComponent>();
+        //    dreamECSLoader->RegisterComponent<RigidBodyComponent>();
+        //    dreamECSLoader->RegisterComponent<ScriptComponent>();
+        //    dreamECSLoader->RegisterComponent<UIComponent>();
+        //    dreamECSLoader->RegisterComponent<FontComponent>();
+        //    dreamECSLoader->RegisterComponent<SoundComponent>();
+        //    dreamECSLoader->RegisterComponent<ParticleComponent>();
+        //    dreamECSLoader->RegisterComponent<WaypointComponent>();
+        //    dreamECSLoader->RegisterComponent<LightComponent>();
+        //}
         
 #ifdef _GAME_BUILD
         //Default 2d picking

@@ -18,6 +18,7 @@ Technology is prohibited.
 #define SCENE_HPP
 
 #include <string>
+#include <future>
 #include "Engine/Header/Math/MathLib.hpp"
 
 namespace Engine {
@@ -55,6 +56,7 @@ namespace Engine {
 	private:
 		//Path + scene name
 		std::string sceneName;
+		std::future<bool> asyncSceneThread;
 	};
 }
 

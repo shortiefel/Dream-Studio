@@ -25,11 +25,6 @@ namespace Engine {
 
 	}
 
-	SoundComponent::SoundComponent(Entity_id entId, const SoundComponent& rhs) : 
-		IComponent{ entId }, filepath{ rhs.filepath }, soundName{ rhs.soundName }, isSound{ rhs.isSound }, isActive{ rhs.isActive },
-		loop{ rhs.loop }, volume{ rhs.volume }, soundType{ rhs.soundType }, isMute{ rhs.isMute }{
-
-	}
 
 	SoundComponent::~SoundComponent()
 	{
@@ -49,40 +44,40 @@ namespace Engine {
 	}
 
 
-	//SoundComponent& SoundComponent::Deserialize(const DSerializer& _serializer)
-	//{
-	//	//SoundGrp(_serializer.GetValue<int>("SoundGrpType"));
-	//	isActive = _serializer.GetValue<bool>("IsActive");
-	//	loop = _serializer.GetValue<bool>("IsLoop");
-	//	//Pause = _serializer.GetValue<bool>("IsPause");
-	//	filepath = _serializer.GetValue<std::string>("filepath");
-	//	soundName = filepath.substr(filepath.find_last_of("\\") + 1);
-	//	soundName = soundName.substr(0, soundName.find_last_of("."));
-	//
-	//	//SoundManager::GetInstance().GetSound(filepath, soundName);
-	//	volume = _serializer.GetValue<float>("volume");
-	//	isSound = _serializer.GetValue<bool>("isSound");
-	//	isMute = _serializer.GetValue<bool>("isMute");
-	//	soundType = static_cast<SoundGrp>(_serializer.GetValue<int>("SoundGroup"));
-	//
-	//
-	//	return *this;
-	//}
-	//
-	//void SoundComponent::Serialize(const SSerializer& _serializer)
-	//{
-	//	//_serializer.SetValue("SoundGrpType", (int)_SG);
-	//	_serializer.SetValue("IsActive", isActive);
-	//	_serializer.SetValue("IsLoop", loop);
-	//	//_serializer.SetValue("IsPause", Pause);
-	//	_serializer.SetValue("filepath", filepath);
-	//	//std::cout << "filepath: " << filepath << "\n";
-	//	_serializer.SetValue("volume", volume);
-	//	_serializer.SetValue("isSound", isSound);
-	//	_serializer.SetValue("isMute", isMute);
-	//	_serializer.SetValue("SoundGroup", static_cast<int>(soundType));
-	//
-	//
-	//}
+	SoundComponent& SoundComponent::Deserialize(const DSerializer& _serializer)
+	{
+		//SoundGrp(_serializer.GetValue<int>("SoundGrpType"));
+		isActive = _serializer.GetValue<bool>("IsActive");
+		loop = _serializer.GetValue<bool>("IsLoop");
+		//Pause = _serializer.GetValue<bool>("IsPause");
+		filepath = _serializer.GetValue<std::string>("filepath");
+		soundName = filepath.substr(filepath.find_last_of("\\") + 1);
+		soundName = soundName.substr(0, soundName.find_last_of("."));
+
+		//SoundManager::GetInstance().GetSound(filepath, soundName);
+		volume = _serializer.GetValue<float>("volume");
+		isSound = _serializer.GetValue<bool>("isSound");
+		isMute = _serializer.GetValue<bool>("isMute");
+		soundType = static_cast<SoundGrp>(_serializer.GetValue<int>("SoundGroup"));
+
+
+		return *this;
+	}
+
+	void SoundComponent::Serialize(const SSerializer& _serializer)
+	{
+		//_serializer.SetValue("SoundGrpType", (int)_SG);
+		_serializer.SetValue("IsActive", isActive);
+		_serializer.SetValue("IsLoop", loop);
+		//_serializer.SetValue("IsPause", Pause);
+		_serializer.SetValue("filepath", filepath);
+		//std::cout << "filepath: " << filepath << "\n";
+		_serializer.SetValue("volume", volume);
+		_serializer.SetValue("isSound", isSound);
+		_serializer.SetValue("isMute", isMute);
+		_serializer.SetValue("SoundGroup", static_cast<int>(soundType));
+
+
+	}
 
 }

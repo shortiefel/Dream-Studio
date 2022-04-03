@@ -36,10 +36,9 @@ namespace Engine
 		UIComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "", bool _active = true);
 
 
-		//UIComponent& Deserialize(const DSerializer& _serializer);
-		//void Serialize(const SSerializer& _serializer);
+		UIComponent& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
-		UIComponent(Entity_id entId, const UIComponent& rhs);
 		UIComponent(const UIComponent&) = default;
 		~UIComponent();
 

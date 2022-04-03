@@ -1,6 +1,6 @@
 ﻿
-//public class PopupBounce : MonoBehaviour
-//{
-//
-//}
+public class PopupBounce : MonoBehaviour
+{
+
+}
 

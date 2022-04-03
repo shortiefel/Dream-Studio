@@ -127,7 +127,7 @@ namespace Engine {
 
 		private:
 			std::list<Math::ivec2> RetryAStar(Math::ivec2& housePos, Math::ivec2 destPos);
-			std::list<Math::ivec2> AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition, RouteType routeType);
+			std::list<Math::ivec2> AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition);
 			std::list<Math::ivec2> GetAdjacentCells(Math::ivec2 cell, bool isAgent);
 
 			//Number of tiles in x and y

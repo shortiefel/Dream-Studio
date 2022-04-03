@@ -7,7 +7,6 @@ public enum ButtonType
     Remove,
     ERP,
     TrafficLight,
-    RemoveCar,
     Display,
     Ignore
 }
@@ -43,13 +42,8 @@ public class ButtonRoad : MonoBehaviour
     Vector2 trafficPosition;
     Vector2 drawTrafficCount;
 
-    Transform drawRemoveCar;
-    Transform drawRemoveCarWhite;
-    Vector2 drawRemoveCarPosition;
-
     Transform displayArrow;
     Transform displayArrowWhite;
-
 
     Transform lineDivider1;
     Vector2 line1;
@@ -81,8 +75,6 @@ public class ButtonRoad : MonoBehaviour
     //CameraMovement cameraMovement;
 
     CombinedUI combinedUI;
-
-    public bool isOn;
 
     public override void Start()
     {
@@ -121,13 +113,6 @@ public class ButtonRoad : MonoBehaviour
         trafficPosition = drawTraffic.position;
         drawTrafficCount = trafficCount.position;
 
-        drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
-        drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
-        //drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
-        //drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
-        drawRemoveCarPosition = drawRemoveCar.position;
-        Debug.Log(drawRemoveCar.position);
-
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
         displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
@@ -140,7 +125,6 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(removeRoadWhite);
         Disable<Transform>(drawERPWhite);
         Disable<Transform>(drawTrafficWhite);
-        Disable<Transform>(drawRemoveCarWhite);
         Disable<Transform>(roadCount);
         Disable<Transform>(ERPCount);
         Disable<Transform>(trafficCount);
@@ -171,8 +155,6 @@ public class ButtonRoad : MonoBehaviour
         drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
         trafficCount.position = new Vector2(closeXPosition, drawPosition.y);
 
-        drawRemoveCar.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
-        drawRemoveCarWhite.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
 
         lineDivider1.position = new Vector2(closeXPosition, line1.y);
 
@@ -198,8 +180,6 @@ public class ButtonRoad : MonoBehaviour
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
 
-
-        isOn = false;
         //GameObject go4 = GameObject.Find("CounterText");
         //if (go4 != null)
         //    counterText = go4.GetComponent<Transform>();
@@ -251,8 +231,6 @@ public class ButtonRoad : MonoBehaviour
             EnableAllNormalExcept();
 
             Enable<Transform>(lineDivider1);
-
-            isOn = true;
         }
         else
         {
@@ -265,7 +243,6 @@ public class ButtonRoad : MonoBehaviour
                 Enable<Transform>(displayArrow);
 
             //cameraMovement.SetZoom(ZoomType.Out);
-            isOn = false;
         }
     }
     private void CloseTabs()
@@ -285,10 +262,6 @@ public class ButtonRoad : MonoBehaviour
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, closeXPosition, timer), trafficPosition.y);
         trafficCount.position = new Vector2(Mathf.Lerp(trafficCount.position.x, closeXPosition, timer), drawTrafficCount.y );
 
-        drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
-        drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
-        
-
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, closeXPosition, timer), line1.y);
 
 
@@ -296,7 +269,8 @@ public class ButtonRoad : MonoBehaviour
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
         {
-
+            //Disable<Transform>(displayArrowWhite);
+            //Enable<Transform>(displayArrow);
 
             timer = 0f;
             closing = false;
@@ -321,16 +295,14 @@ public class ButtonRoad : MonoBehaviour
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, trafficPosition.x, timer), trafficPosition.y);
         trafficCount.position = new Vector2(Mathf.Lerp(trafficCount.position.x, drawTrafficCount.x, timer), drawTrafficCount.y);
 
-        drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
-        drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
-
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, line1.x, timer), line1.y);
 
 
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
         {
-
+            //Disable<Transform>(displayArrow);
+            //Enable<Transform>(displayArrowWhite);
 
             timer = 0f;
             opening = false;
@@ -356,7 +328,22 @@ public class ButtonRoad : MonoBehaviour
                         Enable<Transform>(drawRoadWhite);
 
                         EnableAllNormalExcept(ButtonType.Draw);
+                        //Disable<Transform>(drawRoad);
 
+
+                        //Enable<Transform>(removeRoad);
+                        //Enable<Transform>(roadCount);
+                        //
+                        //if (revealERPButton)
+                        //{
+                        //    Enable<Transform>(drawERP);
+                        //    Enable<Transform>(ERPCount);
+                        //}
+                        //if (revealTrafficButton)
+                        //{
+                        //    Enable<Transform>(drawTraffic);
+                        //    Enable<Transform>(trafficCount);
+                        //}
 
                         
                         break;
@@ -391,16 +378,6 @@ public class ButtonRoad : MonoBehaviour
                         //Disable<Transform>(drawTraffic);
                         break;
                     }
-                case ButtonType.RemoveCar:
-                    {
-                        //gameManager.RemoveCarHandler();
-                        gameManager.PlaceDestinationHandler();
-                        Enable<Transform>(drawRemoveCarWhite);
-
-                        EnableAllNormalExcept(ButtonType.RemoveCar);
-
-                        break;
-                    }
             }
 
             SceneManager.SetDrawMode(true);
@@ -418,16 +395,28 @@ public class ButtonRoad : MonoBehaviour
         }
     }
 
+    //public override void OnMouseEnter()
+    //{
+    //    buttonUI.color = new Color(1f, 0f, 0f);
+    //}
 
     public override void FixedUpdate()
     {
- 
+        //if (Input.GetMouseButtonDown(MouseCode.Left))
+        //{
+        //    Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
+        //    Vector2 startPos = placementManager.placementGrid.GetStartPoint();
+        //    Vector2 endPos = placementManager.placementGrid.GetGridSize() + startPos;
+        //    if (mousePos.x < startPos.x - 0.5 || mousePos.x > endPos.x - 0.5 ||
+        //        mousePos.y < startPos.y - 0.5 || mousePos.y > endPos.y - 0.5)
+        //    {
+        //        ResetAll();
+        //    }
+        //}
         if (opening)
             OpenTabs();
         if (closing)
             CloseTabs();
-
-        if (Input.GetKeyDown(KeyCode.H)) CallFunction(ButtonType.RemoveCar, true);
     }
 
     public void EnableAllNormalExcept(ButtonType bt = ButtonType.Ignore)
@@ -437,9 +426,6 @@ public class ButtonRoad : MonoBehaviour
         if (bt != ButtonType.Remove)
             Enable<Transform>(removeRoad);
         Enable<Transform>(roadCount);
-
-        if (bt != ButtonType.RemoveCar)
-            Enable<Transform>(drawRemoveCar);
 
         if (revealERPButton)
         {
@@ -461,7 +447,6 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(removeRoad);
         Disable<Transform>(drawERP);
         Disable<Transform>(drawTraffic);
-        Disable<Transform>(drawRemoveCar);
         Disable<Transform>(roadCount);
         Disable<Transform>(ERPCount);
         Disable<Transform>(trafficCount);
@@ -471,7 +456,6 @@ public class ButtonRoad : MonoBehaviour
     {
         Enable<Transform>(drawRoadWhite);
         Enable<Transform>(removeRoadWhite);
-        Enable<Transform>(drawRemoveCarWhite);
 
         if (revealERPButton)
         {
@@ -489,7 +473,6 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(removeRoadWhite);
         Disable<Transform>(drawERPWhite);
         Disable<Transform>(drawTrafficWhite);
-        Disable<Transform>(drawRemoveCarWhite);
     }
 
 
@@ -520,7 +503,7 @@ public class ButtonRoad : MonoBehaviour
     public void RevealERP()
     {
         revealERPButton = true;
-        //Enable<Transform>(drawERP);
+        Enable<Transform>(drawERP);
 
         Disable<Transform>(moneyText);
         //Disable<Transform>(counterText);
@@ -533,7 +516,8 @@ public class ButtonRoad : MonoBehaviour
 
         Time.timeScale = 0f;
 
-
+        //Disable<Transform>(displayArrowWhite);
+        //Disable<Transform>(displayArrow);
         combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
@@ -542,18 +526,20 @@ public class ButtonRoad : MonoBehaviour
     public void RevealTraffic()
     {
         revealTrafficButton = true;
-        //Enable<Transform>(drawTraffic);
+        Enable<Transform>(drawTraffic);
 
         Disable<Transform>(moneyText);
         //Disable<Transform>(counterText);
         Disable<Transform>(roadCount);
-        //Debug.Log("Revealing traffic ");
+        Debug.Log("Revealing traffic ");
         Enable<Transform>(trafficIntro);
 
         closing = true;
 
         Time.timeScale = 0f;
 
+        //Disable<Transform>(displayArrowWhite);
+        //Disable<Transform>(displayArrow);
         combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());

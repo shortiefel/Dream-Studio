@@ -26,8 +26,7 @@ public class GameState : MonoBehaviour
     private float nightCycle;
     private int dayCounter;
 
-    UI overlayNightUI;
-   // Transform overlayNight;
+    UI overlayNightTexture;
     float overlayAlpha;
 
     Cycle cycle;
@@ -55,10 +54,6 @@ public class GameState : MonoBehaviour
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
 
-        //GameObject overlayNightGo = GameObject.Find("OverlayNight");
-        //if (overlayNightGo != null)
-        //    overlayNight = overlayNightGo.GetComponent<Transform>();
-
         GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
         if (buttonRoadGO != null)
             buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
@@ -80,16 +75,13 @@ public class GameState : MonoBehaviour
 
         dayTimer = 0f;
         dayCycle = 120f;
-        //dayCycle = 10f;
 
         nightCycle = 100f;
 
         cycle = Cycle.Day;
 
         overlayAlpha = 0f;
-        overlayNightUI = GameObject.Find("OverlayNight").GetComponent<UI>();
-        overlayNightUI.alpha = 0;
-
+        overlayNightTexture = GameObject.Find("OverlayNight").GetComponent<UI>();
 
         receipt = GameObject.Find("Receipt");
         if (receipt != null)
@@ -98,15 +90,13 @@ public class GameState : MonoBehaviour
         }
 
         allowPause = true;
-
-        
     }
 
     public override void Update()
     {
         //if (highscoreText != null)
         //    highscoreText.text = highscore.ToString();
-        //Debug.Log(allowPause);
+
         if (receipt != null)
         {
             dayTimer += Time.deltaTime;
@@ -114,9 +104,9 @@ public class GameState : MonoBehaviour
             if (dayTimer >= nightCycle)
             {
                 overlayAlpha += 0.01f;
-                if (overlayAlpha > 0.8f) overlayAlpha = 0.8f;
+                if (overlayAlpha > 0.5f) overlayAlpha = 0.7f;
                 else
-                    overlayNightUI.alpha = overlayAlpha;
+                    overlayNightTexture.alpha = overlayAlpha;
 
                 if (cycle == Cycle.Day)
                     cycle = Cycle.Night;
@@ -171,7 +161,7 @@ public class GameState : MonoBehaviour
         //-------------------------
     }
 
-    public bool GameOver ()
+    public void GameOver ()
     {
         //if (camMovement.toZoomLose) return;
         //camMovement.toZoomLose = true;
@@ -185,11 +175,8 @@ public class GameState : MonoBehaviour
 
             Time.timeScale = 1f;
             SceneManager.LoadScene("GameOver");
-
-            return true;
         }
-
-        return false;
+            
     }
 
     public void SetLoseHouse(Vector2 _pos)
@@ -205,19 +192,16 @@ public class GameState : MonoBehaviour
         if (highscore == 1)
         {
             store.RevealStore();
-            SetAllowPause(false);
         }
 
         if (highscore == 10)
         {
             buttonRoad.RevealTraffic();
-            SetAllowPause(false);
         }
 
         else if (highscore == 15)
         {
             buttonRoad.RevealERP();
-            SetAllowPause(false);
         }
     }
 
@@ -284,6 +268,8 @@ public class GameState : MonoBehaviour
         //Debug.Log("Haoneienri");
         placementManager.placementGrid.Expand();
         camMovement.Expand();
+
+        buttonRoad.SwitchTabRoad(false);
     }
 
     public int GetScore()
@@ -310,23 +296,23 @@ public class GameState : MonoBehaviour
         SetSavedData(dayCounter, "CurrentScore");
     }
 
-    //public float GetTimeScaleToRestore()
-    //{
-    //    return TimeSystem.previousTimeScale;
-    //}
-    //public void InvertPause()
-    //{
-    //    pauseState = !pauseState;
-    //
-    //    if (pauseState) Time.timeScale = 0f;
-    //    else Time.timeScale = 1f;
-    //}
+    public float GetTimeScaleToRestore()
+    {
+        return TimeSystem.previousTimeScale;
+    }
+    public void InvertPause()
+    {
+        pauseState = !pauseState;
+
+        if (pauseState) Time.timeScale = 0f;
+        else Time.timeScale = 1f;
+    }
 
     public void SetPause(bool state)
     {
         pauseState = state;
-        if (state) TimeSystem.PauseTime();
-        else TimeSystem.ResumeTime();
+        if (state) Time.timeScale = 0f;
+        else Time.timeScale = TimeSystem.previousTimeScale;
     }
     public bool GetPause()
     {
@@ -367,6 +353,6 @@ public class GameState : MonoBehaviour
     {
         cycle = Cycle.Day;
         overlayAlpha = 0.0f;
-        overlayNightUI.alpha = overlayAlpha;
+        overlayNightTexture.alpha = overlayAlpha;
     }
 }

@@ -217,9 +217,6 @@
     <ClCompile Include="Engine\Code\ECS\Component\Graphics\LightComponent.cpp">
       <Filter>Source Files\ECS\Component\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Code\Script\ScriptClass.cpp">
-      <Filter>Source Files\Scripting</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Application.hpp">

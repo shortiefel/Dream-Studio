@@ -10,9 +10,3 @@ C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\Engine
 C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.CoreCompileInputs.cache
 C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.dll
 C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.pdb
-C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.dll
-C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.pdb
-C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.AssemblyReference.cache
-C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.CoreCompileInputs.cache
-C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.dll
-C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.pdb

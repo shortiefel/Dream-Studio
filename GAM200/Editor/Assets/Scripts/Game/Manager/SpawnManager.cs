@@ -98,12 +98,11 @@ public class SpawnManager : MonoBehaviour
             //}
         }
 
-        noOfSpawnRequestOrder = 3;
+        noOfSpawnRequestOrder = 1;
         spawnRequestOrder = new SpawnRequestType[noOfSpawnRequestOrder];
         //spawnRequestOrder[0] = SpawnRequestType.Destination;
         spawnRequestOrder[0] = SpawnRequestType.House;
-        spawnRequestOrder[1] = SpawnRequestType.House;
-        spawnRequestOrder[2] = SpawnRequestType.House;
+
         spawnRequestIndex = 0;
 
         attemptLoopCount = 0;

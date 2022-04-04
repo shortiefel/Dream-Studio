@@ -27,7 +27,6 @@ public class GameState : MonoBehaviour
     private int dayCounter;
 
     Texture overlayNightUI;
-   // Transform overlayNight;
     float overlayAlpha;
 
     Cycle cycle;

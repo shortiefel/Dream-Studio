@@ -177,6 +177,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             testTobeDeletedBool = !testTobeDeletedBool;
@@ -185,6 +186,7 @@ public class SpawnManager : MonoBehaviour
         }
         if (!testTobeDeletedBool)
            spawnTimer += dt;
+
         if (spawnTimer > spawnTimerMax)
         {
             if (CheckPosition(spawnRequestOrder[spawnRequestIndex]))

@@ -9,6 +9,7 @@ public class PauseMusicClick: MonoBehaviour
 
     Transform howToPlayTransform;
     Transform resumeTransform;
+    Transform menuTransform;
     Transform quitTransform;
 
     Transform moneyText;
@@ -50,6 +51,7 @@ public class PauseMusicClick: MonoBehaviour
         howToPlayTransform = GameObject.Find("HowToText").GetComponent<Transform>();
         resumeTransform = GameObject.Find("ResumeText").GetComponent<Transform>();
         quitTransform = GameObject.Find("QuitText").GetComponent<Transform>();
+        menuTransform = GameObject.Find("MenuText").GetComponent<Transform>();
 
 
 
@@ -104,6 +106,7 @@ public class PauseMusicClick: MonoBehaviour
 
                 Enable<Transform>(howToPlayTransform);
                 Enable<Transform>(resumeTransform);
+                Enable<Transform>(menuTransform);
                 Enable<Transform>(quitTransform);
                 Enable<Transform>(moneyText);
 
@@ -136,6 +139,7 @@ public class PauseMusicClick: MonoBehaviour
             {
                 Disable<Transform>(howToPlayTransform);
                 Disable<Transform>(resumeTransform);
+                Disable<Transform>(menuTransform);
                 Disable<Transform>(quitTransform);
                 Disable<Transform>(moneyText);
 

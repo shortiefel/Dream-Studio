@@ -159,7 +159,7 @@ public class ButtonStore : MonoBehaviour
 
 
         texture = GetComponent<UI>();
-        texture.color = new Color(0f, 0f, 0f);
+        //texture.color = new Color(0f, 0f, 0f);
 
         //Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
@@ -294,6 +294,8 @@ public class ButtonStore : MonoBehaviour
 
 
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
+
+        texture.color = new Color(1f, 1f, 1f);
     }
 
     public void SwitchTabStore(bool type, bool reenable = true)
@@ -470,7 +472,7 @@ public class ButtonStore : MonoBehaviour
 
     public override void OnMouseEnter()
     {
-        texture.color = new Color(1f, 1f, 1f);
+        texture.ChangeTexture("Game/Store/Store_Hover");
     }
 
     public override void OnMouseOver()
@@ -484,7 +486,7 @@ public class ButtonStore : MonoBehaviour
 
     public override void OnMouseExit()
     {
-        texture.color = new Color(0f, 0f, 0f);
+        texture.ChangeTexture("Game/Store/Store");
     }
 
     internal void ResumeAction()

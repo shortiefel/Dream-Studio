@@ -4,13 +4,20 @@ public enum TutButtonType
 {
     Display = 1,
     Draw,
-    Remove
-    
+    Remove,
+    RemoveCar,
+    PlaceHospital,
+    PlaceOffice,
+    PlacePark,
+    PlaceMall,
+    PlacePoliceStation,
+    None
+
 }
 
 public class ButtonTutorial : MonoBehaviour
 {
-    Transform drawRoadWhite;
+    //Transform drawRoadWhite;
     Transform drawRoad;
     Transform roadCount;
    // Transform drawRoadGlow;
@@ -19,21 +26,26 @@ public class ButtonTutorial : MonoBehaviour
     Vector2 drawRoadCount;
 
     Transform removeRoad;
-    Transform removeRoadWhite;
-   // Transform removeRoadGlow;
-    Transform trafficCount;
     Vector2 removePosition;
 
     Transform displayArrow;
-    Transform displayArrowWhite;
-    //Transform displayArrowGlow;
+    UI displayArrowUI;
+
+
+    Transform drawRemoveCar;
+    Transform drawRemoveCarWhite;
+    Vector2 drawRemoveCarPosition;
+
+    Transform placeHospital;
+    UI placeHospitalUI;
+    Vector2 placeHospitalPos;
 
     GameManager gameManager;
 
     Transform moneyText;
-    //Transform counterText;
 
-    //GameState gameState;
+    Transform lineDivider1;
+    Vector2 line1;
 
     private Camera mainCamera;
 
@@ -47,34 +59,56 @@ public class ButtonTutorial : MonoBehaviour
 
     ButtonTutorial buttonTutSys;
 
+    TutButtonType choosenButton = TutButtonType.None;
+
+    public bool isOn;
+    bool displayState = false;
+
+    Text tooltipText;
+    Transform tooltipTrans;
+    Vector2 toolTipsDisplayPosition;
+
     public override void Start()
     {
         mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-       // gameState = GameObject.Find("GameManager").GetComponent<GameState>();
-        //buttonTutSys = GameObject.Find("Displaybtn").GetComponent<ButtonTutorial>();
 
-        drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
-       // drawRoadGlow = GameObject.Find("DrawRoadGlow").GetComponent<Transform>();
+
+        /*********************************** DRAWING ************************************/
         drawRoad = GameObject.Find("DrawRoad").GetComponent<Transform>();
         roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
         drawPosition = drawRoad.position;
         drawRoadCount = roadCount.position;
 
         removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
-        //drawRoadGlow = GameObject.Find("RemoveRoadGlow").GetComponent<Transform>();
-        removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
         removePosition = removeRoad.position;
 
-        displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
-        //displayArrowGlow = GameObject.Find("DisplayGlow").GetComponent<Transform>();
-        displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
+        drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
+        drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
+        drawRemoveCarPosition = drawRemoveCar.position;
+
+        GameObject displayGO = GameObject.Find("Displaybtn");
+        displayArrow = displayGO.GetComponent<Transform>();
+        displayArrowUI = displayGO.GetComponent<UI>();
+       
+
+        GameObject hopitalGO = GameObject.Find("PlaceHospital");
+        placeHospital = hopitalGO.GetComponent<Transform>();
+        placeHospitalUI = hopitalGO.GetComponent<UI>();
+
+        placeHospitalPos = placeHospital.position;
+
+        lineDivider1 = GameObject.Find("Line1").GetComponent<Transform>();
+        line1 = lineDivider1.position;
 
 
-        Disable<Transform>(drawRoadWhite);
-        Disable<Transform>(removeRoadWhite);
-        Disable<Transform>(displayArrowWhite);
+        GameObject stringNameGo = GameObject.Find("stringname");
+        tooltipText = stringNameGo.GetComponent<Text>();
+        tooltipTrans = stringNameGo.GetComponent<Transform>();
+        toolTipsDisplayPosition = transform.position + new Vector2(-2.40f, 7.70f);
+
+
         Disable<Transform>(drawRoad);
         Disable<Transform>(removeRoad);
 
@@ -85,38 +119,34 @@ public class ButtonTutorial : MonoBehaviour
         closeXPosition = -96f;
         speedMultiply = 5f;
 
-        //drawRoadGlow.position = new Vector2(closeXPosition, drawPosition.y);
-        drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
+        /*********************************** Position ************************************/
+
+
         drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
         roadCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-       // removeRoadGlow.position = new Vector2(closeXPosition, drawPosition.y);
         removeRoad.position = new Vector2(closeXPosition, removePosition.y);
-        removeRoadWhite.position = new Vector2(closeXPosition, removePosition.y);
+        drawRemoveCar.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
+        drawRemoveCarWhite.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
 
+
+        /*********************************** Game Objects ************************************/
         GameObject go3 = GameObject.Find("MoneyText");
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
 
-        //GameObject go4 = GameObject.Find("CounterText");
-        //if (go4 != null)
-        //    counterText = go4.GetComponent<Transform>();
+   
 
     }
 
     private void OpenTab()
     {
         //Debug.Log("im lerpiong");
-        drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y); ;
-
-        //drawRoadGlow.position = new Vector2(Mathf.Lerp(drawRoadGlow.position.x, drawPosition.x, timer), drawPosition.y);
-        drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, drawPosition.x, timer), drawPosition.y);
-        roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, drawRoadCount.x, timer), drawRoadCount.y + 2.0f);
-
-
-       // removeRoadGlow.position = new Vector2(Mathf.Lerp(removeRoadGlow.position.x, removePosition.x, timer), removePosition.y);
+        drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y);
+        roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, drawRoadCount.x, timer), drawRoadCount.y);
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, removePosition.x, timer), removePosition.y);
-        removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, removePosition.x, timer), removePosition.y);
+        drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
+        drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
+        placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, placeHospitalPos.x, timer), placeHospitalPos.y);
 
 
         timer += speedMultiply * Time.deltaTime;
@@ -134,20 +164,14 @@ public class ButtonTutorial : MonoBehaviour
     private void CloseTab()
     {
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, closeXPosition, timer), drawPosition.y);
-
-        //drawRoadGlow.position = new Vector2(Mathf.Lerp(drawRoadGlow.position.x, drawPosition.x, timer), drawPosition.y);
-        drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, closeXPosition, timer), drawPosition.y);
-        roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, closeXPosition, timer), drawRoadCount.y + 2.0f);
-
-       // removeRoadGlow.position = new Vector2(Mathf.Lerp(removeRoadGlow.position.x, removePosition.x, timer), removePosition.y);
+        roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, closeXPosition, timer), drawRoadCount.y);
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, closeXPosition, timer), removePosition.y);
-        removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, closeXPosition, timer), removePosition.y);
+        drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
+        placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, closeXPosition, timer), placeHospitalPos.y);
 
         timer += speedMultiply * Time.deltaTime;
         if (timer >= 1f)
         {
-            //Disable<Transform>(displayArrowWhite);
-            //Enable<Transform>(displayArrow);
 
             timer = 0f;
             closing = false;
@@ -156,9 +180,38 @@ public class ButtonTutorial : MonoBehaviour
 
    
 
-    public void CallFunctionTut(TutButtonType _tbt, bool _activeType)
+    public void CallFunctionTut(TutButtonType _tbt)
     {
         //Debug.Log("Calling " + _bt + " " + _activeType);
+        bool _activeType = true;
+
+        if (_tbt == choosenButton) _activeType = false;
+
+        switch (choosenButton)
+        {
+            case TutButtonType.Draw:
+                {
+
+                    break;
+                }
+            case TutButtonType.Remove:
+                {
+
+                    break;
+                }
+            case TutButtonType.RemoveCar:
+                {
+
+                    break;
+                }
+
+            case TutButtonType.PlaceHospital:
+                {
+                    placeHospitalUI.ChangeTexture("Game/UI/ERP");
+                    break;
+                }
+        }
+
         DisableAll();
 
         if (_activeType)
@@ -168,7 +221,7 @@ public class ButtonTutorial : MonoBehaviour
                 case TutButtonType.Draw:
                     {
                         gameManager.RoadPlacementHandler();
-                        Enable<Transform>(drawRoadWhite);
+                        //Enable<Transform>(drawRoadWhite);
 
                         EnableAllNormal();
 
@@ -178,7 +231,7 @@ public class ButtonTutorial : MonoBehaviour
                 case TutButtonType.Remove:
                     {
                         gameManager.RemoveRoadHandler();
-                        Enable<Transform>(removeRoadWhite);
+                        //Enable<Transform>(removeRoadWhite);
 
                         EnableAllNormal();
 
@@ -199,6 +252,24 @@ public class ButtonTutorial : MonoBehaviour
 
             EnableAllNormal();
         }
+
+        if (_tbt == choosenButton) _tbt = TutButtonType.None;
+        choosenButton = _tbt;
+    }
+
+    public override void OnMouseOver()
+    {
+        SetToolTips(true, toolTipsDisplayPosition, "Display buttons");
+
+        if (Input.GetMouseButtonDown(MouseCode.Left))
+        {
+            SwitchTabTut(!displayState);
+        }
+    }
+
+    public override void OnMouseExit()
+    {
+        SetToolTips(false, Vector2.zero);
     }
 
     public void SwitchTabTut(bool type)
@@ -209,11 +280,13 @@ public class ButtonTutorial : MonoBehaviour
             Debug.Log("opening");
             opening = true;
 
-            Disable<Transform>(displayArrow);
-            Enable<Transform>(displayArrowWhite);
-
+            displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
+            //Enable<Transform>(displayArrowWhite);
+            Enable<Transform>(lineDivider1);
 
             EnableAllNormal();
+
+            isOn = true;
         }
         else
         {
@@ -223,12 +296,26 @@ public class ButtonTutorial : MonoBehaviour
             closing = true;
 
 
-            Disable<Transform>(displayArrowWhite);
-            Enable<Transform>(displayArrow);
+            //Disable<Transform>(displayArrowWhite);
+            displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
+            isOn = false;
         }
+
+        displayState = type;
     }
 
+    public void SetToolTips(bool state, Vector2 position, string textToPut = "")
+    {
+        if (state)
+        {
+            Enable<Transform>(tooltipTrans);
+            tooltipTrans.position = position;
+            tooltipText.text = textToPut;
+        }
+        else Disable<Transform>(tooltipTrans);
 
+
+    }
 
     public override void Update()
     {
@@ -250,44 +337,14 @@ public class ButtonTutorial : MonoBehaviour
         Disable<Transform>(drawRoad);
         Disable<Transform>(removeRoad);
         Enable<Transform>(roadCount);
-        Enable<Transform>(trafficCount);
+       // Enable<Transform>(trafficCount);
     }
 
-    //public void EnableAllGlow()
-    //{
-    //    Enable<Transform>(drawRoadGlow);
-    //    Enable<Transform>(removeRoadGlow);
-
-    //}
-
-
-    //public void DisableAllGlow()
-    //{
-    //    Disable<Transform>(drawRoadGlow);
-    //    Disable<Transform>(removeRoadGlow);
-    //    Enable<Transform>(roadCount);
-    //    Enable<Transform>(trafficCount);
-    //}
-        
-
-    public void EnableAllWhite()
-    {
-        Enable<Transform>(drawRoadWhite);
-        Enable<Transform>(removeRoadWhite);
-    }
-
-    public void DisableAllWhite()
-    {
-        Disable<Transform>(drawRoadWhite);
-        Disable<Transform>(removeRoadWhite);
-    }
-
+ 
     public void ResetAll()
     {
         EnableAllNormal();
-        DisableAllWhite();
-
-
+ 
         gameManager.ClearInputActions();
 
         SceneManager.SetDrawMode(false);
@@ -298,7 +355,6 @@ public class ButtonTutorial : MonoBehaviour
     public void DisableAll()
     {
         DisableAllNormal();
-        DisableAllWhite();
 
         gameManager.ClearInputActions();
 

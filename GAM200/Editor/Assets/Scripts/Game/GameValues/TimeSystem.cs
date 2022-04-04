@@ -16,7 +16,7 @@ public class TimeSystem : MonoBehaviour
 { 
 
     Transform Timer;
-    Transform TimerWhite;
+    //Transform TimerWhite;
     Transform TimerStop;
     Transform TimerNormal;
     Transform TimerFast;
@@ -61,7 +61,7 @@ public class TimeSystem : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         Timer = GameObject.Find("TimerIcon").GetComponent<Transform>();
-        TimerWhite = GameObject.Find("TimerIconWhite").GetComponent<Transform>();
+        //TimerWhite = GameObject.Find("TimerIconWhite").GetComponent<Transform>();
 
         TimerStop = GameObject.Find("TimerStop").GetComponent<Transform>();
         TimerStopWhite = GameObject.Find("TimerStopWhite").GetComponent<Transform>();
@@ -79,7 +79,7 @@ public class TimeSystem : MonoBehaviour
         Disable<Transform>(TimerStop);
         Disable<Transform>(TimerNormal);
         Disable<Transform>(TimerFast);
-        Disable<Transform>(TimerWhite);
+        //Disable<Transform>(TimerWhite);
         Disable<Transform>(TimerStopWhite);
         Disable<Transform>(TimerNormalWhite);
         Disable<Transform>(TimerFastWhite);
@@ -112,8 +112,8 @@ public class TimeSystem : MonoBehaviour
         {
             opening = true;
             //Debug.Log("in open");
-            Disable<Transform>(Timer);
-            Enable<Transform>(TimerWhite);
+            //Disable<Transform>(Timer);
+            //Enable<Transform>(TimerWhite);
 
             //EnableAllNormal();
 
@@ -140,9 +140,9 @@ public class TimeSystem : MonoBehaviour
 
             //Debug.Log("in close");
             closing = true;
-            Disable<Transform>(TimerWhite);
-            if (reenable)
-                Enable<Transform>(Timer);
+            //Disable<Transform>(TimerWhite);
+            //if (reenable)
+            //    Enable<Transform>(Timer);
             
         }
     }

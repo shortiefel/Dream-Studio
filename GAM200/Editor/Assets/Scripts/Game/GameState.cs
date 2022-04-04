@@ -26,7 +26,7 @@ public class GameState : MonoBehaviour
     private float nightCycle;
     private int dayCounter;
 
-    UI overlayNightUI;
+    Texture overlayNightUI;
    // Transform overlayNight;
     float overlayAlpha;
 
@@ -82,14 +82,14 @@ public class GameState : MonoBehaviour
 
         dayTimer = 0f;
         dayCycle = 120f;
-        //dayCycle = 10f;
 
         nightCycle = 100f;
+        //nightCycle = 10f;
 
         cycle = Cycle.Day;
 
         overlayAlpha = 0f;
-        overlayNightUI = GameObject.Find("OverlayNight").GetComponent<UI>();
+        overlayNightUI = GameObject.Find("OverlayNight").GetComponent<Texture>();
         overlayNightUI.alpha = 0;
 
 
@@ -117,7 +117,7 @@ public class GameState : MonoBehaviour
             {
                 TimerIcon.ChangeTexture("Game/UI/Clock_Night");
                 overlayAlpha += 0.01f;
-                if (overlayAlpha > 0.8f) overlayAlpha = 0.8f;
+                if (overlayAlpha > 0.6f) overlayAlpha = 0.6f;
                 else
                     overlayNightUI.alpha = overlayAlpha;
 

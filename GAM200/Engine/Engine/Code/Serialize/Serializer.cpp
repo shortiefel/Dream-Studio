@@ -343,7 +343,6 @@ namespace Engine {
 		rapidjson::Value objType(rapidjson::kObjectType);
 		SSerializer _serializer(doc, objType);
 
-		_serializer.SetValue("OffsetPosition", t->offsetPosition);
 		_serializer.SetValue("Scale", t->scale);
 		_serializer.SetValue("Colour", t->colour);
 		_serializer.SetValue("IsActive", t->isActive);

@@ -1827,31 +1827,6 @@ namespace Editor {
 					if (ImGui::CollapsingHeader("Light"))
 					{
 						/**
-						*	Offset Position
-						*/
-
-						ImGui::AlignTextToFramePadding();
-						ImGui::Text("Offset Position");
-						ImGui::SameLine();
-						HelperMarker("Light Position from Object");
-						ImGui::SameLine(halfWidth);
-						ImGui::PushFont(boldFont);
-						ImGui::Text(" X");
-						ImGui::SameLine(halfWidth * 1.120f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##offsetPosX", &lightComp->offsetPosition.x, 0.f, 0.f, "%.2f", 1);
-
-						ImGui::SameLine(halfWidth * 1.7f);
-						ImGui::Text(" Y");
-						ImGui::SameLine(halfWidth * 1.820f, 0);
-						ImGui::SetNextItemWidth(halfWidth * 0.5f);
-						ImGui::InputFloat("##offsetPosY", &lightComp->offsetPosition.y, 0.f, 0.f, "%.2f", 1);
-
-						ImGui::PopFont();
-
-						ImGui::Spacing();
-
-						/**
 						*	Scale
 						*/
 						ImGui::AlignTextToFramePadding();

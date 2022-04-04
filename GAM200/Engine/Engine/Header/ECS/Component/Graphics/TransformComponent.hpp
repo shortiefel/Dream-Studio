@@ -42,10 +42,11 @@ namespace Engine
 			int _layer = 2, bool _active = true);
 
 
-		TransformComponent& Deserialize(const DSerializer& _serializer);
-		void Serialize(const SSerializer& _serializer);
+		//TransformComponent& Deserialize(const DSerializer& _serializer);
+		//void Serialize(const SSerializer& _serializer);
 
 		TransformComponent(const TransformComponent&) = default;
+		TransformComponent(Entity_id entId, const TransformComponent& rhs);
 
 		TransformComponent& operator=(const TransformComponent&) = default;
 		TransformComponent& operator+=(const TransformComponent& _rhs);

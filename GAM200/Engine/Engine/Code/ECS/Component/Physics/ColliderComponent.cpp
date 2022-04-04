@@ -29,22 +29,28 @@ namespace Engine {
 	ColliderComponent::ColliderComponent(Entity_id _ID, ColliderType _c, Math::vec2 _pos, Math::vec2 _scale, float _rotation, bool _trigger, bool _active) :
 		IComponent{ _ID }, cType{ _c }, offset_position{ _pos }, offset_scale{ _scale }, angle{ _rotation }, isTrigger{ _trigger }, isActive{ _active } {}
 
-	ColliderComponent& ColliderComponent::Deserialize(const DSerializer& _serializer) {
-		cType = ColliderType(_serializer.GetValue<int>("ColliderType"));
-		offset_position = _serializer.GetValue<Math::vec2>("Position");
-		offset_scale = _serializer.GetValue<Math::vec2>("Scale");
-		angle = _serializer.GetValue<float>("Angle");
-		isTrigger = _serializer.GetValue<bool>("IsTrigger");
-		isActive = _serializer.GetValue<bool>("IsActive");
-		return *this;
+	ColliderComponent::ColliderComponent(Entity_id entId, const ColliderComponent& rhs) :
+		IComponent{ entId }, cType{ rhs.cType }, offset_position{ rhs.offset_position }, 
+		offset_scale{ rhs.offset_scale }, angle{ rhs.angle }, isTrigger{ rhs.isTrigger }, isActive{ rhs.isActive } {
+
 	}
 
-	void ColliderComponent::Serialize(const SSerializer& _serializer) {
-		_serializer.SetValue("ColliderType", (int)cType);
-		_serializer.SetValue("Position", offset_position);
-		_serializer.SetValue("Scale", offset_scale);
-		_serializer.SetValue("Angle", angle);
-		_serializer.SetValue("IsTrigger", isTrigger);
-		_serializer.SetValue("IsActive", isActive);
-	}
+	//ColliderComponent& ColliderComponent::Deserialize(const DSerializer& _serializer) {
+	//	cType = ColliderType(_serializer.GetValue<int>("ColliderType"));
+	//	offset_position = _serializer.GetValue<Math::vec2>("Position");
+	//	offset_scale = _serializer.GetValue<Math::vec2>("Scale");
+	//	angle = _serializer.GetValue<float>("Angle");
+	//	isTrigger = _serializer.GetValue<bool>("IsTrigger");
+	//	isActive = _serializer.GetValue<bool>("IsActive");
+	//	return *this;
+	//}
+	//
+	//void ColliderComponent::Serialize(const SSerializer& _serializer) {
+	//	_serializer.SetValue("ColliderType", (int)cType);
+	//	_serializer.SetValue("Position", offset_position);
+	//	_serializer.SetValue("Scale", offset_scale);
+	//	_serializer.SetValue("Angle", angle);
+	//	_serializer.SetValue("IsTrigger", isTrigger);
+	//	_serializer.SetValue("IsActive", isActive);
+	//}
 }

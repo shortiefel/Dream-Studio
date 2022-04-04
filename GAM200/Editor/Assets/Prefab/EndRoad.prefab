@@ -1,1 +1,31 @@
-[{"Entity":{"Name":"EndRoad","EntityId":148,"Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[0.5,0.5],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\EndRoad.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true},"WaypointComponent":{"Waypoints":[0.0,-1.0,0.0,1.0,0.1899999976158142,0.0,0.0,1.0,0.0,-1.0,-0.1899999976158142,0.0],"Order":[3,3],"Section":1}}]
+[
+  
+  {
+    "Entity": {
+      "Name": "EndRoad",
+      "EntityId": 148,
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 0.5, 0.5 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\EndRoad.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "WaypointComponent": {
+      "Waypoints": [ 0.0, -1.0, 0.0, 1.0, 0.1899999976158142, 0.0, 0.0, 1.0, 0.0, -1.0, -0.1899999976158142, 0.0 ],
+      "Order": [ 3, 3 ],
+      "Section": 1
+    }
+  }
+]

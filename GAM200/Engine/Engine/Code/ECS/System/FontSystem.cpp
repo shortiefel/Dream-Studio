@@ -35,7 +35,7 @@ namespace Engine
 	std::string sceneToChangeTo;
 
 #ifdef _GAME_BUILD
-	void FontSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 , Math::mat3 )
+	void FontSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 camUIMatrix, Math::mat3 camMatrix)
 #else
 	void FontSystem::Render(float _dt, Graphic::FrameBuffer* _fbo, Math::mat3 camUIMatrix, Math::mat3 camMatrix)
 #endif
@@ -53,38 +53,39 @@ namespace Engine
 		GraphicImplementation::Renderer::ResetFontStats();
 		GraphicImplementation::Renderer::BeginFontBatch();
 
-		// Load font shader program
-		const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Font_Draw].GetHandle();
-		GraphicImplementation::UseShaderHandle(shd_ref_handle);
-
-		// Set uniform
-		GLSLShader::SetUniform("uCamMatrix", camUIMatrix, shd_ref_handle);
-
-		//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
-		const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
-		for (const auto& text : fontArray)
 		{
-			if (!text.isUI) continue;
+			// Load font shader program
+			const auto& shd_ref_handle = GraphicImplementation::shdrpgms[GraphicShader::Font_Draw].GetHandle();
+			GraphicImplementation::UseShaderHandle(shd_ref_handle);
 
-			// Option to not render glyph
-			if (!text.isActive) continue;
+			// Set uniform
+			GLSLShader::SetUniform("uCamMatrix", camUIMatrix, shd_ref_handle);
 
-			const Entity_id& entity_id = text.GetEntityId();
-			if (EntityId_Check(entity_id)) break;
+			//Math::vec2 camPos = CameraSystem::GetInstance().GetPosition();
+			const auto& fontArray = dreamECSGame->GetComponentArrayData<FontComponent>();
+			for (const auto& text : fontArray)
+			{
+				if (!text.isUI) continue;
 
-			// Get transformation component
-			TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
-			if (!transform || !transform->isActive) continue;
+				// Option to not render glyph
+				if (!text.isActive) continue;
 
-			GraphicImplementation::Renderer::DrawString(transform->position + text.position, transform->scale * text.scale, transform->angle, text.filepath, text.text, text.colour);
+				const Entity_id& entity_id = text.GetEntityId();
+				if (EntityId_Check(entity_id)) break;
+
+				// Get transformation component
+				TransformComponent* transform = dreamECSGame->GetComponentPTR<TransformComponent>(entity_id);
+				if (!transform || !transform->isActive) continue;
+
+				GraphicImplementation::Renderer::DrawString(transform->position + text.position, transform->scale * text.scale, transform->angle, text.filepath, text.text, text.colour);
+			}
+
+			GraphicImplementation::Renderer::EndFontBatch();
+			GraphicImplementation::Renderer::FlushFont();
+
+			// Unload shader program
+			GraphicImplementation::UnUseShaderHandle();
 		}
-
-		GraphicImplementation::Renderer::EndFontBatch();
-		GraphicImplementation::Renderer::FlushFont();
-
-		// Unload shader program
-		GraphicImplementation::UnUseShaderHandle();
-
 
 		//----------------Non UI fonts-----------------------------------
 		if (drawNonUIFonts) {

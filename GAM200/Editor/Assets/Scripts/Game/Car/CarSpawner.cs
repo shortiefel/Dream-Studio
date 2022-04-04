@@ -112,8 +112,8 @@ public class CarSpawner : MonoBehaviour
 
             backlog = new Queue<BuildingType>();
 
-            maxLifeTime = 80f;
-            //maxLifeTime = 20f;
+            //maxLifeTime = 80f;
+            maxLifeTime = 30f;
             warningLifeTime = 0.7f * maxLifeTime;
 
             possibleDest = new PosIdSet[(int)BuildingType.House];
@@ -179,22 +179,22 @@ public class CarSpawner : MonoBehaviour
         //Only House has popupText
         if (popupText != null)
         {
-            //if (Input.GetKey(KeyCode.X))
-            //    for (int i = 0; i < (int)BuildingType.House; i++)
-            //    {
-            //        Debug.Log((BuildingType)i + " " + lifeTimeArray[i].timer);
-            //    }
+            if (Input.GetKeyDown(KeyCode.C))
+                for (int i = 0; i < (int)BuildingType.House; i++)
+                {
+                    Debug.Log(entityId + " " + (BuildingType)i + " " + lifeTimeArray[i].active + " time: " + lifeTimeArray[i].timer);
+                }
 
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                popupTextQueue.Enqueue(-100);
-            }
-
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                popupTextQueue.Enqueue(100);
-
-            }
+            //if (Input.GetKeyDown(KeyCode.B))
+            //{
+            //    popupTextQueue.Enqueue(-100);
+            //}
+            //
+            //if (Input.GetKeyDown(KeyCode.V))
+            //{
+            //    popupTextQueue.Enqueue(100);
+            //
+            //}
 
             PopupText();
 
@@ -240,9 +240,11 @@ public class CarSpawner : MonoBehaviour
                         if (lifeTimeArray[(int)outBt].active) return;
                         backlog.Enqueue(outBt);
                         EnableNotification(outBt);
+
+                        Debug.Log("Enqueue " + outBt);
                     }
 
-                    Debug.Log("Enqueue " + outBt);
+                    
                     spawnTimer = 0f;
                 }
             }

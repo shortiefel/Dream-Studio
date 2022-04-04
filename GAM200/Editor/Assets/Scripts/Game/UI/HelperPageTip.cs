@@ -16,13 +16,15 @@ public class HelperPageTip : MonoBehaviour
         if (transform.isActive && Input.GetMouseButtonDown(MouseCode.Left))
         {
             Disable<Transform>(transform);
-            Time.timeScale = gameState.GetTimeScaleToRestore();
+            TimeSystem.ResumeTime();
 
             Enable<Transform>(GameObject.Find("MoneyText").GetComponent<Transform>());
             //Enable<Transform>(GameObject.Find("CounterText").GetComponent<Transform>());
             //Enable<Transform>(GameObject.Find("Displaybtn").GetComponent<Transform>());
 
             combinedUI.EnableAllMasterButton();
+
+            gameState.SetAllowPause(true);
         }
     }
 }

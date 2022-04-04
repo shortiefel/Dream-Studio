@@ -148,7 +148,12 @@ public class CombinedUI : MonoBehaviour
         Enable<Transform>(timerButton);
         Enable<Transform>(storeButton);
 
-        if (isBuildOpen) buttonRoad.SwitchTabRoad(true);
+        if (isBuildOpen)
+        {
+            buttonRoad.SwitchTabRoad(true);
+            buttonRoad.CallFunction(ButtonType.Latest);
+
+        }
         else Enable<Transform>(displayArrow);
 
         Enable<Transform>(moneyText);

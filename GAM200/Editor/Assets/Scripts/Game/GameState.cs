@@ -7,7 +7,7 @@ enum Cycle
 public class GameState : MonoBehaviour
 {
     bool pauseState;
-    bool drawModeBool;
+    //bool drawModeBool;
     int highscore;
 
     public bool shouldEnd;
@@ -44,7 +44,7 @@ public class GameState : MonoBehaviour
     public override void Start()
     {
         pauseState = false;
-        drawModeBool = false;
+        //drawModeBool = false;
         highscore = 0;
         shouldEnd = false;
         //gameOverBool = false;
@@ -346,14 +346,14 @@ public class GameState : MonoBehaviour
         allowPause = type;
     }
 
-    public void SetDrawMode(bool _state)
-    {
-        drawModeBool = _state;
-    }
-    public bool GetDrawMode()
-    {
-        return drawModeBool;
-    }
+    //public void SetDrawMode(bool _state)
+    //{
+    //    drawModeBool = _state;
+    //}
+    //public bool GetDrawMode()
+    //{
+    //    return drawModeBool;
+    //}
 
     //public bool ShouldDraw()
     //{

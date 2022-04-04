@@ -194,8 +194,7 @@ namespace Engine {
 			buffer << fs.rdbuf();
 			if (buffer.str().find("FAILED") == std::string::npos) result = true;
 
-			if (fn_callback != nullptr)
-				fn_callback(buffer.str().c_str());
+			fn_callback(buffer.str().c_str());
 			fs.close();
 
 			return result;
@@ -370,7 +369,7 @@ namespace Engine {
 			}
 		}
 
-		bool InitCSClass(CSScriptInstance& _csScriptInstance) {
+		bool InitCSClass(CSScriptInstance& _csScriptInstance, const Entity_id&) {
 			//If no child domain the klass doesnt exist
 			MonoDomain* currentDomain = mono_domain_get();
 			if (!currentDomain || currentDomain == mono_get_root_domain()) return true;
@@ -478,7 +477,7 @@ namespace Engine {
 
 				std::set<std::string> classToDelete;
 				for (auto& [className, csScriptInstance] : classScriptInstances) {
-					if (!InitCSClass(csScriptInstance)) {
+					if (!InitCSClass(csScriptInstance, csScript.GetEntityId())) {
 						classToDelete.emplace(className);
 					}
 				}

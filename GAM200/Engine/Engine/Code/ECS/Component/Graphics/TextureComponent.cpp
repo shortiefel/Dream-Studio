@@ -57,17 +57,6 @@ namespace Engine
 		cellHeight = static_cast<float>(height) / totalRows;
 	}
 
-
-	TextureComponent::TextureComponent(Entity_id entId, const TextureComponent& rhs) :
-		IComponent{ entId }, filepath{ rhs.filepath }, mdl_ref{ rhs.mdl_ref }, colour{ rhs.colour },
-		texobj_hdl{ rhs.texobj_hdl }, width{ rhs.width }, height{ rhs.height }, BPP{ rhs.BPP }, totalRows{ rhs.totalRows }, totalColumns{ rhs.totalColumns },
-		minUV{ rhs.minUV }, maxUV{ rhs.maxUV },
-		isAnimation{ rhs.isAnimation }, currAnimationState{ rhs.currAnimationState }, nextAnimationState{ rhs.nextAnimationState },
-		isActive{ rhs.isActive }, cellHeight{ rhs.cellHeight }, cellWidth{ rhs.cellWidth },
-		textureName{ rhs.textureName }, animationStateList{ rhs.animationStateList } {
-
-	}
-
 	// Destructor for Texture Component
 	TextureComponent::~TextureComponent()
 	{
@@ -178,91 +167,91 @@ namespace Engine
 		return AddRefreshAnimationState(AnimationState{ _stateName, _stateRow, _startX, _endX, _fTime, _isLoop });
 	}
 
-	//// Deserialize function for Texture Component
-	//TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer)
-	//{
-	//	GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
-	//
-	//	mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
-	//
-	//	colour = _serializer.GetValue<Math::vec4>("Colour");
-	//
-	//	// For animation
-	//	isAnimation = _serializer.GetValue<bool>("IsAnimation");
-	//	
-	//	if (isAnimation)
-	//	{
-	//		totalRows = _serializer.GetValue<int>("TotalRow");
-	//		totalColumns = _serializer.GetValue<int>("TotalColumns");
-	//
-	//		cellWidth = static_cast<float>(width) / totalColumns;
-	//		cellHeight = static_cast<float>(height) / totalRows;
-	//
-	//		currAnimationState = _serializer.GetValue<std::string>("CurrentAnimationState");
-	//
-	//		auto animationStates = _serializer.GetValueArray("AnimationState");
-	//
-	//		for (auto& state : animationStates) 
-	//		{
-	//			std::string stateName = state["StateName"].GetString();
-	//
-	//			int stateRow = state["StateRow"].GetInt();
-	//
-	//			int startX = state["StartFrame"].GetInt();
-	//			int endX = state["EndFrame"].GetInt();
-	//
-	//			float fTime = state["TimePerFrame"].GetFloat();
-	//
-	//			bool isLoop = state["IsLoop"].GetBool();
-	//
-	//			AnimationState animstate = AnimationState(stateName, stateRow, startX, endX, fTime, isLoop);
-	//
-	//			animationStateList.emplace(stateName, animstate);
-	//		}
-	//	}
-	//
-	//	isActive = _serializer.GetValue<bool>("IsActive");
-	//	return *this;
-	//}
-	//
-	//// Serialize function for Texture Component
-	//void TextureComponent::Serialize(const SSerializer& _serializer)
-	//{
-	//
-	//	_serializer.SetValue("Filepath", filepath);
-	//	_serializer.SetValue("Shape", int(mdl_ref));
-	//
-	//	_serializer.SetValue("Colour", colour);
-	//
-	//	_serializer.SetValue("IsAnimation", isAnimation);
-	//
-	//	if (isAnimation)
-	//	{
-	//		_serializer.SetValue("TotalRow", totalRows);
-	//		_serializer.SetValue("TotalColumns", totalColumns);
-	//
-	//		_serializer.SetValue("CurrentAnimationState", currAnimationState);
-	//
-	//		rapidjson::Value allAnimation(rapidjson::kArrayType);
-	//
-	//		for (auto& [name, state] : animationStateList) 
-	//		{
-	//			rapidjson::Value classObj(rapidjson::kObjectType);
-	//			SSerializer cserializer(_serializer, classObj);
-	//
-	//			cserializer.SetValue("StateName", state.stateName);
-	//			cserializer.SetValue("StateRow", state.stateRow);
-	//			cserializer.SetValue("StartFrame", state.startX);
-	//			cserializer.SetValue("EndFrame", state.endX);
-	//			cserializer.SetValue("TimePerFrame", state.fTime);
-	//			cserializer.SetValue("IsLoop", state.isLoop);
-	//
-	//			_serializer.SetValueJSonArray(allAnimation, classObj);
-	//		}
-	//
-	//		_serializer.SetValueJSonArray("AnimationState", allAnimation);
-	//	}
-	//
-	//	_serializer.SetValue("IsActive", isActive);
-	//}
+	// Deserialize function for Texture Component
+	TextureComponent& TextureComponent::Deserialize(const DSerializer& _serializer)
+	{
+		GraphicImplementation::SetTexture(this, std::move(_serializer.GetValue<std::string>("Filepath")));
+
+		mdl_ref = GraphicShape(_serializer.GetValue<int>("Shape"));
+
+		colour = _serializer.GetValue<Math::vec4>("Colour");
+
+		// For animation
+		isAnimation = _serializer.GetValue<bool>("IsAnimation");
+		
+		if (isAnimation)
+		{
+			totalRows = _serializer.GetValue<int>("TotalRow");
+			totalColumns = _serializer.GetValue<int>("TotalColumns");
+
+			cellWidth = static_cast<float>(width) / totalColumns;
+			cellHeight = static_cast<float>(height) / totalRows;
+
+			currAnimationState = _serializer.GetValue<std::string>("CurrentAnimationState");
+
+			auto animationStates = _serializer.GetValueArray("AnimationState");
+
+			for (auto& state : animationStates) 
+			{
+				std::string stateName = state["StateName"].GetString();
+
+				int stateRow = state["StateRow"].GetInt();
+
+				int startX = state["StartFrame"].GetInt();
+				int endX = state["EndFrame"].GetInt();
+
+				float fTime = state["TimePerFrame"].GetFloat();
+
+				bool isLoop = state["IsLoop"].GetBool();
+
+				AnimationState animstate = AnimationState(stateName, stateRow, startX, endX, fTime, isLoop);
+
+				animationStateList.emplace(stateName, animstate);
+			}
+		}
+
+		isActive = _serializer.GetValue<bool>("IsActive");
+		return *this;
+	}
+
+	// Serialize function for Texture Component
+	void TextureComponent::Serialize(const SSerializer& _serializer)
+	{
+
+		_serializer.SetValue("Filepath", filepath);
+		_serializer.SetValue("Shape", int(mdl_ref));
+
+		_serializer.SetValue("Colour", colour);
+
+		_serializer.SetValue("IsAnimation", isAnimation);
+
+		if (isAnimation)
+		{
+			_serializer.SetValue("TotalRow", totalRows);
+			_serializer.SetValue("TotalColumns", totalColumns);
+
+			_serializer.SetValue("CurrentAnimationState", currAnimationState);
+
+			rapidjson::Value allAnimation(rapidjson::kArrayType);
+
+			for (auto& [name, state] : animationStateList) 
+			{
+				rapidjson::Value classObj(rapidjson::kObjectType);
+				SSerializer cserializer(_serializer, classObj);
+
+				cserializer.SetValue("StateName", state.stateName);
+				cserializer.SetValue("StateRow", state.stateRow);
+				cserializer.SetValue("StartFrame", state.startX);
+				cserializer.SetValue("EndFrame", state.endX);
+				cserializer.SetValue("TimePerFrame", state.fTime);
+				cserializer.SetValue("IsLoop", state.isLoop);
+
+				_serializer.SetValueJSonArray(allAnimation, classObj);
+			}
+
+			_serializer.SetValueJSonArray("AnimationState", allAnimation);
+		}
+
+		_serializer.SetValue("IsActive", isActive);
+	}
 }

@@ -34,8 +34,6 @@ namespace Engine {
 		static void DeserializeScene(std::string filename, DreamECS* dreamECS = dreamECSGame, bool ignore = false);
 		//From scene to prefab
 		static void SerializePrefab(std::string filename, Entity_id entity_id);
-
-		static void ClearDeserializePool();
 		//From prefab to scene
 		static void DeserializePrefab(std::string filename, unsigned int* id = nullptr, Math::vec2 position = Math::vec2{}, float angle = 0.f, int layer = 2);
 		static void RefreshPrefab(std::string filename, Entity_id id);

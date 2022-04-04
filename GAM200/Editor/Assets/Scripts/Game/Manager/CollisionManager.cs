@@ -7,8 +7,7 @@ public enum CollisionType
     Unknown = 0,
     ERP,
     Traffic,
-    Building,
-    RemoveCar
+    Building
 }
 
 public class CollisionManager : MonoBehaviour
@@ -16,8 +15,6 @@ public class CollisionManager : MonoBehaviour
     private TrafficManager tm;
     private ERPManager em;
     private PlacementManager pm;
-
-    uint removeCarUint;
 
     private Dictionary<uint, SortedSet<uint>> raycastCollisionRecord;
 
@@ -27,17 +24,10 @@ public class CollisionManager : MonoBehaviour
         em = GameObject.Find("ERPManager").GetComponent<ERPManager>();
         pm = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
-        removeCarUint = GameObject.Find("RemoveCarCollider").GetComponent<Transform>().entityId;
-
         raycastCollisionRecord = new Dictionary<uint, SortedSet<uint>>();
     }
 
-    public bool ShouldRemoveCar(uint id)
-    {
-        return id == removeCarUint;
-    }
-
-    public CollisionType RayTypeCheck(Vector2Int targetPos, uint entId)
+    public CollisionType CollisionTypeCheck(Vector2Int targetPos, uint entId)
     {
         if (tm.IsTrafficLight(targetPos, entId))
         {
@@ -54,15 +44,14 @@ public class CollisionManager : MonoBehaviour
             return CollisionType.Building;
         }
 
-        else if (entId == removeCarUint) return CollisionType.RemoveCar;
-
 
         return CollisionType.Unknown;
     }
 
     public override void Update()
     {
-
+        //if (Input.GetKey(KeyCode.Y)) Debug.Log(raycastCollisionRecord.Count);
+        //Console.WriteLine("Resetting---------------------------------------------------");
         raycastCollisionRecord.Clear();
     }
 
@@ -81,10 +70,10 @@ public class CollisionManager : MonoBehaviour
         }
     }
 
-    //public void RemoveRaycastCollision(uint owner)
-    //{
-    //    raycastCollisionRecord.Remove(owner);
-    //}
+    public void RemoveRaycastCollision(uint owner)
+    {
+        raycastCollisionRecord.Remove(owner);
+    }
 
     //Decide which car to go first
     public bool CheckStopRaycastCollision(uint owner, uint target)
@@ -92,10 +81,24 @@ public class CollisionManager : MonoBehaviour
         if (raycastCollisionRecord.ContainsKey(target))
         {
             foreach (var t in raycastCollisionRecord[target])
-
+            //if (raycastCollisionRecord[target] == owner)
             {
                 if (t == owner)
                 {
+                    //-----------------
+                    //if (Input.GetKey(KeyCode.F) && owner > target)
+                    //if (owner > target)
+                    {
+                        //Debug.Log("Olrder taget--------------------------------");
+                        if (Input.GetKey(KeyCode.C) )
+                        {
+                            TimeSystem.StopTime();
+                            //GameObject.Find("GameManager").GetComponent<GameState>().SetPause(true);
+                        }
+                    }
+                    //-----------------
+
+                    
 
                     //Return false everytime raycastCollisionRecord[owner] has target and raycastCollisionRecord[target] has owner
                     //Logic behind it is that, each entity's script get run 1 after another, if 2 cars were to raycast each other,

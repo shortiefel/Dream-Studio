@@ -53,8 +53,8 @@ namespace Engine {
 
 		bool isTrigger = false, isActive = true;
 
-		//ColliderComponent& Deserialize(const DSerializer& _serializer);
-		//void Serialize(const SSerializer& _serializer);
+		ColliderComponent& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
 		//offsetPosition -> how far away from the transform center
 		//offsetScale -> how much it changes the transform scale
@@ -74,7 +74,6 @@ namespace Engine {
 		/*Collider(Entity ID, ColliderType c, bool trigger = false);*/
 		ColliderComponent(Entity_id _ID = DEFAULT_ENTITY_ID, ColliderType _c = ColliderType::Square, Math::vec2 _pos = Math::vec2{},
 			Math::vec2 _scale = Math::vec2{1.f, 1.f}, float _rotation = float{}, bool _trigger = false, bool _active = true);
-		ColliderComponent(Entity_id entId, const ColliderComponent& rhs);
 		ColliderComponent(const ColliderComponent&) = default;
 		ColliderComponent& operator=(const ColliderComponent&) = default;
 	};

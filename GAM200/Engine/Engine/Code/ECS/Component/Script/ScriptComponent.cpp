@@ -29,7 +29,7 @@ namespace Engine {
 		IComponent{ _ID } {
 		if (_className) {
 			CSScriptInstance csScriptInstance{ _className };
-			Scripting::InitCSClass(csScriptInstance);
+			Scripting::InitCSClass(csScriptInstance, _ID);
 			//Scripting::InitVariable(csScriptInstance);
 
 			klassInstance.emplace(_className, std::move(csScriptInstance));
@@ -51,10 +51,6 @@ namespace Engine {
 		rhs.SetEntityId(DEFAULT_ENTITY_ID);
 
 		return *this;
-	}
-
-	ScriptComponent::ScriptComponent(Entity_id entId, const ScriptComponent& rhs) : IComponent{ entId }, klassInstance{ rhs.klassInstance } {
-
 	}
 
 	//void ScriptComponent::CopyComponentAsInstance(const ScriptComponent& target) {
@@ -125,126 +121,126 @@ namespace Engine {
 		return true;
 	}
 
-	//ScriptComponent& ScriptComponent::Deserialize(const DSerializer& _serializer) {
-	//	for (auto& classJSon : _serializer.GetArray()) {
-	//		const auto& fullName = classJSon["Class"].GetString();
-	//
-	//		CSScriptInstance csScriptInstance{
-	//			fullName,
-	//			classJSon["IsActive"].GetBool() };
-	//
-	//		rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
-	//		if (!Scripting::InitCSClass(csScriptInstance, GetEntityId())) { continue; }
-	//#if 0
-	//		if (variableItr != classJSon.MemberEnd()) {
-	//			for (auto& variableData : variableItr->value.GetArray()) {
-	//				const auto& variableName = variableData["Name"].GetString();
-	//				const auto& variableType = CSType{ variableData["Type"].GetInt() };
-	//
-	//
-	//				CSPublicVariable csPublicvariable{ variableName, variableType };
-	//
-	//				if (variableType == CSType::CHAR) {
-	//					char charData = static_cast<char>(variableData["Data"].GetInt());
-	//					csPublicvariable.SetVariableData(&charData);
-	//				}
-	//
-	//				else if (variableType == CSType::BOOL) {
-	//					bool boolData = variableData["Data"].GetBool();
-	//					csPublicvariable.SetVariableData(&boolData);
-	//				}
-	//
-	//				else if (variableType == CSType::FLOAT) {
-	//					float floatData = variableData["Data"].GetFloat();
-	//					csPublicvariable.SetVariableData(&floatData);
-	//				}
-	//				else if (variableType == CSType::INT) {
-	//					int intData = variableData["Data"].GetInt();
-	//					csPublicvariable.SetVariableData(&intData);
-	//				}
-	//				else if (variableType == CSType::UINT) {
-	//					unsigned int uinData = variableData["Data"].GetUint();
-	//					csPublicvariable.SetVariableData(&uinData);
-	//				}
-	//
-	//				else if (variableType == CSType::VEC2) {
-	//					Math::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
-	//										variableData["Data"].GetArray()[1].GetFloat() };
-	//					csPublicvariable.SetVariableData(&vec2Data);
-	//				}
-	//				/*else if (variableType == CSType::GAMEOBJECT) {
-	//					const char* tem = variableData["Data"].GetString();
-	//					csPublicvariable.SetVariableData(const_cast<char*>(tem));
-	//				}*/
-	//
-	//				csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
-	//			}
-	//
-	//		}
-	//	#endif
-	//		//klassInstance[csScriptInstance.csClass.className] = std::move(csScriptInstance);
-	//		//Scripting::InitVariable(csScriptInstance);
-	//		//Scripting::InitScript(GetEntityId(), csScriptInstance);
-	//
-	//		klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
-	//	}
-	//	//AddScript(sc);
-	//
-	//	return *this;
-	//}
+	ScriptComponent& ScriptComponent::Deserialize(const DSerializer& _serializer) {
+		for (auto& classJSon : _serializer.GetArray()) {
+			const auto& fullName = classJSon["Class"].GetString();
 
-	//void ScriptComponent::Serialize(const SSerializer& _serializer) {
-	//	for (const auto& [className, scriptInstance] : klassInstance) {
-	//		rapidjson::Value classObj(rapidjson::kObjectType);
-	//		SSerializer cserializer(_serializer, classObj);
-	//
-	//		cserializer.SetValue("Class", scriptInstance.csClass.fullName);
-	//		cserializer.SetValue("IsActive", scriptInstance.isActive);
-	//
-	//#if 0
-	//		if (scriptInstance.csVariableMap.size()) {
-	//			rapidjson::Value variableArray(rapidjson::kArrayType);
-	//
-	//			SSerializer serializer(cserializer, variableArray);
-	//			for (const auto& [variableName, variableInstance] : scriptInstance.csVariableMap) {
-	//				rapidjson::Value variableObject(rapidjson::kObjectType);
-	//				SSerializer vserializer(serializer, variableObject);
-	//
-	//				vserializer.SetValue("Name", variableName);
-	//				vserializer.SetValue("Type", (int)variableInstance.variableType);
-	//
-	//				switch (variableInstance.variableType) {
-	//				case CSType::CHAR:
-	//					vserializer.SetValue("Data", variableInstance.GetVariableData<char>());
-	//					break;
-	//				case CSType::BOOL:
-	//					vserializer.SetValue("Data", variableInstance.GetVariableData<bool>());
-	//					break;
-	//				case CSType::FLOAT:
-	//					vserializer.SetValue("Data", variableInstance.GetVariableData<float>());
-	//					break;
-	//				case CSType::INT:
-	//					vserializer.SetValue("Data", variableInstance.GetVariableData<int>());
-	//					break;
-	//				case CSType::UINT:
-	//					vserializer.SetValue("Data", variableInstance.GetVariableData<unsigned int>());
-	//					break;
-	//				case CSType::VEC2:
-	//					vserializer.SetValue("Data", variableInstance.GetVariableData<Math::vec2>());
-	//					break;
-	//				/*case CSType::GAMEOBJECT:
-	//					vserializer.SetValue("Data", variableInstance.GetVariableData<char*>());
-	//					break;*/
-	//				}
-	//
-	//				serializer.SetValueJSonArray(variableObject);
-	//			}
-	//
-	//			cserializer.SetValueJSon("Variable", variableArray);
-	//		}
-	//#endif
-	//
-	//		_serializer.SetValueJSonArray(classObj);
-	//	}
-	//}
+			CSScriptInstance csScriptInstance{
+				fullName,
+				classJSon["IsActive"].GetBool() };
+
+			rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
+			if (!Scripting::InitCSClass(csScriptInstance, GetEntityId())) { continue; }
+#if 0
+			if (variableItr != classJSon.MemberEnd()) {
+				for (auto& variableData : variableItr->value.GetArray()) {
+					const auto& variableName = variableData["Name"].GetString();
+					const auto& variableType = CSType{ variableData["Type"].GetInt() };
+
+
+					CSPublicVariable csPublicvariable{ variableName, variableType };
+
+					if (variableType == CSType::CHAR) {
+						char charData = static_cast<char>(variableData["Data"].GetInt());
+						csPublicvariable.SetVariableData(&charData);
+					}
+
+					else if (variableType == CSType::BOOL) {
+						bool boolData = variableData["Data"].GetBool();
+						csPublicvariable.SetVariableData(&boolData);
+					}
+
+					else if (variableType == CSType::FLOAT) {
+						float floatData = variableData["Data"].GetFloat();
+						csPublicvariable.SetVariableData(&floatData);
+					}
+					else if (variableType == CSType::INT) {
+						int intData = variableData["Data"].GetInt();
+						csPublicvariable.SetVariableData(&intData);
+					}
+					else if (variableType == CSType::UINT) {
+						unsigned int uinData = variableData["Data"].GetUint();
+						csPublicvariable.SetVariableData(&uinData);
+					}
+
+					else if (variableType == CSType::VEC2) {
+						Math::vec2 vec2Data{ variableData["Data"].GetArray()[0].GetFloat(),
+											variableData["Data"].GetArray()[1].GetFloat() };
+						csPublicvariable.SetVariableData(&vec2Data);
+					}
+					/*else if (variableType == CSType::GAMEOBJECT) {
+						const char* tem = variableData["Data"].GetString();
+						csPublicvariable.SetVariableData(const_cast<char*>(tem));
+					}*/
+
+					csScriptInstance.csVariableMap.emplace(variableName, std::move(csPublicvariable));
+				}
+
+			}
+#endif
+			//klassInstance[csScriptInstance.csClass.className] = std::move(csScriptInstance);
+			//Scripting::InitVariable(csScriptInstance);
+			//Scripting::InitScript(GetEntityId(), csScriptInstance);
+
+			klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
+		}
+		//AddScript(sc);
+
+		return *this;
+	}
+
+	void ScriptComponent::Serialize(const SSerializer& _serializer) {
+		for (const auto& [className, scriptInstance] : klassInstance) {
+			rapidjson::Value classObj(rapidjson::kObjectType);
+			SSerializer cserializer(_serializer, classObj);
+
+			cserializer.SetValue("Class", scriptInstance.csClass.fullName);
+			cserializer.SetValue("IsActive", scriptInstance.isActive);
+
+#if 0
+			if (scriptInstance.csVariableMap.size()) {
+				rapidjson::Value variableArray(rapidjson::kArrayType);
+
+				SSerializer serializer(cserializer, variableArray);
+				for (const auto& [variableName, variableInstance] : scriptInstance.csVariableMap) {
+					rapidjson::Value variableObject(rapidjson::kObjectType);
+					SSerializer vserializer(serializer, variableObject);
+
+					vserializer.SetValue("Name", variableName);
+					vserializer.SetValue("Type", (int)variableInstance.variableType);
+
+					switch (variableInstance.variableType) {
+					case CSType::CHAR:
+						vserializer.SetValue("Data", variableInstance.GetVariableData<char>());
+						break;
+					case CSType::BOOL:
+						vserializer.SetValue("Data", variableInstance.GetVariableData<bool>());
+						break;
+					case CSType::FLOAT:
+						vserializer.SetValue("Data", variableInstance.GetVariableData<float>());
+						break;
+					case CSType::INT:
+						vserializer.SetValue("Data", variableInstance.GetVariableData<int>());
+						break;
+					case CSType::UINT:
+						vserializer.SetValue("Data", variableInstance.GetVariableData<unsigned int>());
+						break;
+					case CSType::VEC2:
+						vserializer.SetValue("Data", variableInstance.GetVariableData<Math::vec2>());
+						break;
+					/*case CSType::GAMEOBJECT:
+						vserializer.SetValue("Data", variableInstance.GetVariableData<char*>());
+						break;*/
+					}
+
+					serializer.SetValueJSonArray(variableObject);
+				}
+
+				cserializer.SetValueJSon("Variable", variableArray);
+			}
+#endif
+
+			_serializer.SetValueJSonArray(classObj);
+		}
+	}
 }

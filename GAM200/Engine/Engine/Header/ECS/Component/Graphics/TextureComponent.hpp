@@ -88,10 +88,9 @@ namespace Engine
 			bool _active = true);
 
 
-		//TextureComponent& Deserialize(const DSerializer& _serializer);
-		//void Serialize(const SSerializer& _serializer);
+		TextureComponent& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
-		TextureComponent(Entity_id entId, const TextureComponent& rhs);
 		TextureComponent(const TextureComponent&) = default;
 		~TextureComponent();
 

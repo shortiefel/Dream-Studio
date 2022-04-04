@@ -40,15 +40,17 @@ public class Test2 : MonoBehaviour
         //if (Input.GetMouseButtonDown(MouseCode.Left)){
         //    Console.WriteLine("Inside-------");
         //}
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.position += new Vector2(0f, 1f);
-        }
-        
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position += new Vector2(0f, -1f);
-        }
+        //if (Input.GetKeyDown(KeyCode.W))
+        //{
+        //    //gameObject.AddComponent<Test2>();
+        //    AddComponent<Test2>();
+        //}
+        //
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    //gameObject.AddComponent<Generate1500Object>();
+        //    AddComponent<Generate1500Object>();
+        //}
 
     }
 }

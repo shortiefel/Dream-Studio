@@ -19,8 +19,6 @@ public class CloseReceipt : MonoBehaviour
 
     GameState gameState;
 
-    CombinedUI combinedUI;
-
     public override void Start()
     {
         roadNumber = GameObject.Find("RoadNum");
@@ -51,8 +49,6 @@ public class CloseReceipt : MonoBehaviour
         closeTransform = GetComponent<Transform>();
 
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
-
-        combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
     }
 
     public override void OnMouseOver()
@@ -74,11 +70,8 @@ public class CloseReceipt : MonoBehaviour
             Disable<Transform>(closeTransform);
 
             gameState.ResetDay();
-            if (!gameState.GameOver())
-                gameState.SetAllowPause(true); //Doesnt allow pause when its loading into the Next scene
             gameState.SetPause(false);
-
-            combinedUI.EnableAllMasterButton();
+            gameState.GameOver();
         }
     }
 }

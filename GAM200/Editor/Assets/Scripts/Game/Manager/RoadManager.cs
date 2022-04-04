@@ -37,10 +37,6 @@ public class RoadManager : MonoBehaviour
     float timer;
     bool addToTime;
 
-    Transform removeCarCollider;
-    bool removeCarBool;
-    float removeCarTimer;
-
     public override void Start()
     {
         roadFixer = GetComponent<RoadFixer>();
@@ -92,10 +88,6 @@ public class RoadManager : MonoBehaviour
 
         timer = 0f;
         addToTime = false;
-
-        removeCarCollider = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
-        removeCarBool = false;
-        removeCarTimer = 0f;
     }
 
     public override void FixedUpdate()
@@ -442,17 +434,6 @@ public class RoadManager : MonoBehaviour
     {
         //Debug.Log(temporaryRoadPositions.Count);
         if (Input.GetKeyDown(KeyCode.O)) placementManager.placementGrid.PrintGridOut();
-
-        if (removeCarBool)
-        {
-            removeCarTimer += Time.deltaTime;
-            if (removeCarTimer >= 0.3f)
-            {
-                removeCarTimer = 0f;
-                removeCarBool = false;
-                Disable<Transform>(removeCarCollider);
-            }
-        }
     }
 
     public void FinishPlacingRoad()
@@ -611,6 +592,23 @@ public class RoadManager : MonoBehaviour
         //if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
         if (placementManager.CheckIfPositionIsRoad(position))
             trafficLightManager.RequestPlacingTrafficLight(position);
+
+        //moneyManager = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+        //int currMoney = moneyManager.GetMoney();
+        //int tl = moneyManager.GetCurrTL();
+        //bool result = false;
+        //if (!placementManager.CheckIfPositionInBound(position))
+        //    return;
+        //if (currMoney - (tl * 50 * 1.2) < 0)
+        //    return;
+        //if (placementManager.CheckIfPositionIsOfType(position, CellType.Road))
+        //{
+        //    if (trafficLightManager != null)
+        //        result |= trafficLightManager.RequestPlacingTrafficLight(position);
+        //    if (result == true)
+        //        moneyManager.BuildTrafficLight();
+        //    return;
+        //}
     }
 
     public void PlaceERP(Vector2Int position)
@@ -620,15 +618,31 @@ public class RoadManager : MonoBehaviour
         if (placementManager.CheckIfPositionIsRoad(position))
             erpManager.RequestPlacingERP(position);
 
+        //moneyManager = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+        //int currMoney = moneyManager.GetMoney();
+        //int erp = moneyManager.GetCurrErp();
+        //bool result = false;
+        //if (!placementManager.CheckIfPositionInBound(position))
+        //    return;
+        //if (currMoney - (erp * 15) < 0)
+        //{
+        //    return;
+        //}
+        //else
+        //{
+        //    if(placementManager.CheckIfPositionIsOfType(position,CellType.Road))
+        //    {
+        //        if (erpManager != null)
+        //            result |= erpManager.RequestPlacingERP(position);
+        //        if(result == true)
+        //            moneyManager.BuildErp();
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //    
+        //}
     }
-    
-    public void RemoveCarGrid(Vector2Int position)
-    {
-        removeCarBool = true;
-        removeCarTimer = 0f;
-
-        removeCarCollider.position = position;
-        Enable<Transform>(removeCarCollider);
-    }
-
 }

@@ -41,13 +41,12 @@ namespace Engine
 
 		bool isActive = true;
 
-		//FontComponent& Deserialize(const DSerializer& _serializer);
-		//void Serialize(const SSerializer& _serializer);
+		FontComponent& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
 		FontComponent(Entity_id _ID = DEFAULT_ENTITY_ID, const std::string _path = "Assets\\Fonts\\arial.ttf", std::string _text = "", bool _isFont = false,
 			float _red = 1.0f, float _green = 1.0f, float _blue = 1.0f, bool _active = true);
 
-		FontComponent(Entity_id entId, const FontComponent& rhs);
 		FontComponent(const FontComponent&) = default;
 		FontComponent& operator=(const FontComponent&) = default;
 		~FontComponent();

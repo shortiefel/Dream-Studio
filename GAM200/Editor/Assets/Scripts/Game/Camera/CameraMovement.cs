@@ -157,13 +157,20 @@ public class CameraMovement : MonoBehaviour
                     Vector2Int sp = placementManager.placementGrid.GetStartPoint();
                     Vector2Int ep = placementManager.placementGrid.GetGridSize();
                     ep += sp;
+
                     //Debug.Log("cam Pos:" + cameraPosition.x.ToString() + " " + cameraPosition.y.ToString());
                     //Debug.Log("end pos " + ep.y.ToString());
-                    if (cameraPosition.x < (ep.x / 2.0f) - 1.0f) cameraPosition.x = (ep.x / 2.0f) - 1.0f;
-                    else if (cameraPosition.x > (ep.x / 2.0f) + 1.0f) cameraPosition.x = (ep.x / 2.0f) + 1.0f;
+                    //if (cameraPosition.x < (ep.x / 2.0f) - 1.0f) cameraPosition.x = (ep.x / 2.0f) - 1.0f;
+                    //else if (cameraPosition.x > (ep.x / 2.0f) + 1.0f) cameraPosition.x = (ep.x / 2.0f) + 1.0f;
+                    //
+                    //if (cameraPosition.y < (ep.y / 2.0f) - 2.0f) cameraPosition.y = (ep.y / 2.0f) - 2.0f;
+                    //else if (cameraPosition.y > (ep.y / 2.0f)) cameraPosition.y = (ep.y / 2.0f);
 
-                    if (cameraPosition.y < (ep.y / 2.0f) - 2.0f) cameraPosition.y = (ep.y / 2.0f) - 2.0f;
-                    else if (cameraPosition.y > (ep.y / 2.0f)) cameraPosition.y = (ep.y / 2.0f);
+                    if (cameraPosition.x < sp.x) cameraPosition.x = sp.x;
+                    else if (cameraPosition.x > ep.x) cameraPosition.x = ep.x;
+
+                    if (cameraPosition.y < sp.y) cameraPosition.y = sp.y;
+                    else if (cameraPosition.y > ep.y) cameraPosition.y = ep.y;
                 }
 
 

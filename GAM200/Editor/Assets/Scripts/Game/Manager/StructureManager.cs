@@ -141,13 +141,13 @@ public class StructureManager : MonoBehaviour
         return false;
     }
 
-    public bool PlaceSpecial(Vector2Int position, float rotation)
+    public bool PlaceSpecial(Vector2Int position, BuildingType _bt,  float rotation = 0)
     {
         if (CheckPositionBeforePlacement(position, CellType.SpecialStructure))
         {
-            int randomIndex = GetRandomWeightedIndex(specialWeights);
-            uint id = placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure, rotation).entityId;
-            destinationList[randomIndex].Add(new PosIdSet(id, position));
+            //int randomIndex = GetRandomWeightedIndex(specialWeights);
+            uint id = placementManager.PlaceObjectOnTheMap(position, specialPrefabs[(int)_bt].prefab, CellType.SpecialStructure, rotation).entityId;
+            destinationList[(int)_bt].Add(new PosIdSet(id, position));
             Debug.Log("Created special with id " + id);
             //AudioPlayer.instance.PlayPlacementSound();
             return true;
@@ -156,9 +156,26 @@ public class StructureManager : MonoBehaviour
         return false;
     }
 
-    public void PlaceDestinationClick(Vector2Int position)
+    public void PlaceDestHospital(Vector2Int position)
     {
-        PlaceSpecial(position, 0);
+        PlaceSpecial(position, BuildingType.Hospital, 0);
+    }
+    public void PlaceDestOffice(Vector2Int position)
+    {
+        PlaceSpecial(position, BuildingType.Office, 0);
+    }
+    public void PlaceDestPark(Vector2Int position)
+    {
+        PlaceSpecial(position, BuildingType.Park, 0);
+    }
+    public void PlaceDestMall(Vector2Int position)
+    {
+        PlaceSpecial(position, BuildingType.Mall, 0);
+    }
+
+    public void PlaceDestPoliceStation(Vector2Int position)
+    {
+        PlaceSpecial(position, BuildingType.PoliceStation, 0);
     }
 
     private int GetRandomWeightedIndex(float[] weights)

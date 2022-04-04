@@ -8,9 +8,15 @@ public enum ButtonType
     ERP,
     TrafficLight,
     RemoveCar,
+    PlaceHospital,
+    PlaceOffice,
+    PlacePark,
+    PlaceMall,
+    PlacePoliceStation,
     Display,
     Ignore
 }
+
 
 public class ButtonRoad : MonoBehaviour
 {
@@ -49,6 +55,18 @@ public class ButtonRoad : MonoBehaviour
 
     Transform displayArrow;
     Transform displayArrowWhite;
+
+    Transform placeHospital;
+    Transform placeOffice;
+    Transform placePark;
+    Transform placeMall;
+    Transform placePoliceStation;
+
+    Transform placeHospitalWhite;
+    Transform placeOfficeWhite;
+    Transform placeParkWhite;
+    Transform placeMallWhite;
+    Transform placePoliceStationWhite;
 
 
     Transform lineDivider1;
@@ -131,6 +149,18 @@ public class ButtonRoad : MonoBehaviour
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
         displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
+        placeHospital = GameObject.Find("PlaceHospital").GetComponent<Transform>();
+        placeOffice = GameObject.Find("PlaceOffice").GetComponent<Transform>();
+        placePark = GameObject.Find("PlacePark").GetComponent<Transform>();
+        placeMall = GameObject.Find("PlaceMall").GetComponent<Transform>();
+        placePoliceStation = GameObject.Find("PlacePoliceStation").GetComponent<Transform>();
+
+        placeHospitalWhite = GameObject.Find("PlaceHospitalWhite").GetComponent<Transform>();
+        placeOfficeWhite = GameObject.Find("PlaceOfficeWhite").GetComponent<Transform>();
+        placeParkWhite = GameObject.Find("PlaceParkWhite").GetComponent<Transform>();
+        placeMallWhite = GameObject.Find("PlaceMallWhite").GetComponent<Transform>();
+        placePoliceStationWhite = GameObject.Find("PlacePoliceStationWhite").GetComponent<Transform>();
+
         lineDivider1 = GameObject.Find("Line1").GetComponent<Transform>();
         line1 = lineDivider1.position;
 
@@ -149,6 +179,13 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(drawTraffic);
 
         Disable<Transform>(displayArrowWhite);
+
+        Disable<Transform>(placeHospitalWhite);
+        Disable<Transform>(placeOfficeWhite);
+        Disable<Transform>(placeParkWhite);
+        Disable<Transform>(placeMallWhite);
+        Disable<Transform>(placePoliceStationWhite);
+
 
         opening = false;
         closing = false;
@@ -391,11 +428,37 @@ public class ButtonRoad : MonoBehaviour
                     }
                 case ButtonType.RemoveCar:
                     {
-                        //gameManager.RemoveCarHandler();
-                        gameManager.PlaceDestinationHandler();
+                        gameManager.RemoveCarHandler();
+                        
                         Enable<Transform>(drawRemoveCarWhite);
 
                         EnableAllNormalExcept(ButtonType.RemoveCar);
+
+                        break;
+                    }
+
+                case ButtonType.PlaceHospital:
+                    {
+
+                        break;
+                    }
+                case ButtonType.PlaceOffice:
+                    {
+
+                        break;
+                    }
+                case ButtonType.PlacePark:
+                    {
+
+                        break;
+                    }
+                case ButtonType.PlaceMall:
+                    {
+
+                        break;
+                    }
+                case ButtonType.PlacePoliceStation:
+                    {
 
                         break;
                     }

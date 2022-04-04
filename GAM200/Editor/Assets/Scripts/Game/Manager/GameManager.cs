@@ -93,10 +93,34 @@ public class GameManager : MonoBehaviour
         //inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
     }
 
-    internal void PlaceDestinationHandler()
+    internal void PlaceDestHospitalHandler()
     {
         ClearInputActions();
-        inputManager.OnMouseClick += structureManager.PlaceDestinationClick;
+        inputManager.OnMouseClick += structureManager.PlaceDestHospital;
+    }
+
+    internal void PlaceDestOfficeHandler()
+    {
+        ClearInputActions();
+        inputManager.OnMouseClick += structureManager.PlaceDestOffice;
+    }
+
+    internal void PlaceDestParkHandler()
+    {
+        ClearInputActions();
+        inputManager.OnMouseClick += structureManager.PlaceDestPark;
+    }
+
+    internal void PlaceDestMallHandler()
+    {
+        ClearInputActions();
+        inputManager.OnMouseClick += structureManager.PlaceDestMall;
+    }
+
+    internal void PlaceDestPoliceStationHandler()
+    {
+        ClearInputActions();
+        inputManager.OnMouseClick += structureManager.PlaceDestPoliceStation;
     }
 
     internal void ClearInputActions()

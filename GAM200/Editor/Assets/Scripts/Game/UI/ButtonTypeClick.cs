@@ -110,6 +110,79 @@ public class ButtonTypeClick : MonoBehaviour
             type = false;
             tooltipOffset = new Vector2(-2.40f, 7.70f);
         }
+
+        else if (entityId == GameObject.Find("PlaceHospital").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlaceHospital;
+            type = true;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("PlaceOffice").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlaceOffice;
+            type = true;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("PlacePark").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlacePark;
+            type = true;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("PlaceMall").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlaceMall;
+            type = true;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("PlacePoliceStation").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlacePoliceStation;
+            type = true;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
+
+
+
+
+        else if (entityId == GameObject.Find("PlaceHospitalWhite").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlaceHospital;
+            type = false;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("PlaceOfficeWhite").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlaceOffice;
+            type = false;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("PlaceParkWhite").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlacePark;
+            type = false;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("PlaceMallWhite").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlaceMall;
+            type = false;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("PlacePoliceStationWhite").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.PlacePoliceStation;
+            type = false;
+            tooltipOffset = new Vector2(-2.40f, 7.70f);
+        }
     }
     public override void OnMouseOver()
     {
@@ -176,6 +249,67 @@ public class ButtonTypeClick : MonoBehaviour
                         
                         Enable<Transform>(tooltipTrans);
                         tooltipText.text = "Remove Car";
+                        break;
+                    }
+
+                case ButtonType.PlaceHospital:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            buttonRoad.CallFunction(bt, type);
+                        }
+
+                        Enable<Transform>(tooltipTrans);
+                        tooltipText.text = "Place Hospital";
+
+                        break;
+                    }
+                case ButtonType.PlaceOffice:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            buttonRoad.CallFunction(bt, type);
+                        }
+
+                        Enable<Transform>(tooltipTrans);
+                        tooltipText.text = "Place Office";
+
+                        break;
+                    }
+                case ButtonType.PlacePark:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            buttonRoad.CallFunction(bt, type);
+                        }
+
+                        Enable<Transform>(tooltipTrans);
+                        tooltipText.text = "Place Park";
+
+                        break;
+                    }
+                case ButtonType.PlaceMall:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            buttonRoad.CallFunction(bt, type);
+                        }
+
+                        Enable<Transform>(tooltipTrans);
+                        tooltipText.text = "Place Mall";
+
+                        break;
+                    }
+                case ButtonType.PlacePoliceStation:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            buttonRoad.CallFunction(bt, type);
+                        }
+
+                        Enable<Transform>(tooltipTrans);
+                        tooltipText.text = "Place Police Station";
+
                         break;
                     }
                 default:

@@ -12,11 +12,13 @@ public class CameraMovement : MonoBehaviour
     PlacementManager placementManager;
 
     public bool toZoomLose;
+    public bool toZoomExpand;
 
     //public bool drawMode;
 
     bool hasEnter;
     float targetHeight, startHeight;
+    float tempZoomHeight;
     float t;
 
     Vector2 targetPosition;
@@ -43,12 +45,12 @@ public class CameraMovement : MonoBehaviour
     public override void Start()
     {
         toZoomLose = false;
-
+        toZoomExpand = false;
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
         cam = GetComponent<Camera>();
         startHeight = cam.height;
-
+        tempZoomHeight = cam.height;
         targetHeight = 4f;
         t = 0f;
         hasEnter = false;
@@ -91,6 +93,20 @@ public class CameraMovement : MonoBehaviour
                 SceneManager.LoadScene("GameOver");
             }
         }
+        if(toZoomExpand)
+        {
+            t += Time.unscaledDeltaTime;
+            if (t > 1f) t = 1f;
+            float ExpandZoomSpeed = cam.height =  Mathf.Lerp(tempZoomHeight, maxZoom, t);
+            zoomHeight = ExpandZoomSpeed;
+            if (ExpandZoomSpeed == maxZoom )
+            {
+                tempZoomHeight = cam.height;
+                Debug.Log("Expanded");
+                t = 0.0f;
+                toZoomExpand = false;
+            }
+        }
 
         //else if (drawMode)
         {
@@ -107,7 +123,6 @@ public class CameraMovement : MonoBehaviour
             //    //transform.position -= new Vector2(offset.x * mouseMultiply, offset.y * mouseMultiply);
             //    
             //}
-
             zoomHeight -= speed * Input.GetMouseScroll().y;
             if (zoomHeight < minZoom) zoomHeight = minZoom;
             else if (zoomHeight > maxZoom) zoomHeight = maxZoom;
@@ -142,12 +157,13 @@ public class CameraMovement : MonoBehaviour
                     Vector2Int sp = placementManager.placementGrid.GetStartPoint();
                     Vector2Int ep = placementManager.placementGrid.GetGridSize();
                     ep += sp;
+                    //Debug.Log("cam Pos:" + cameraPosition.x.ToString() + " " + cameraPosition.y.ToString());
+                    //Debug.Log("end pos " + ep.y.ToString());
+                    if (cameraPosition.x < (ep.x / 2.0f) - 1.0f) cameraPosition.x = (ep.x / 2.0f) -1.0f;
+                    else if (cameraPosition.x > (ep.x / 2.0f) + 1.0f) cameraPosition.x = (ep.x / 2.0f) + 1.0f;
 
-                    if (cameraPosition.x < sp.x) cameraPosition.x = sp.x;
-                    else if (cameraPosition.x > ep.x) cameraPosition.x = ep.x;
-
-                    if (cameraPosition.y < sp.y) cameraPosition.y = sp.y;
-                    else if (cameraPosition.y > ep.y) cameraPosition.y = ep.y;
+                    if (cameraPosition.y < (ep.y / 2.0f) - 2.0f) cameraPosition.y = (ep.y / 2.0f) - 2.0f;
+                    else if (cameraPosition.y > (ep.y / 2.0f)) cameraPosition.y = (ep.y / 2.0f);
                 }
 
 
@@ -189,7 +205,7 @@ public class CameraMovement : MonoBehaviour
             case ZoomType.Out:
                 //zt = ZoomType.Out;
                 //targetHeight = maxZoom;
-                zoomHeight = maxZoom;
+                //zoomHeight = maxZoom;
                 break;
         }
         //startHeight = cam.height;
@@ -202,7 +218,7 @@ public class CameraMovement : MonoBehaviour
         maxZoom += 6f;
         speed *= 1.5f;
         minZoom *= 0.5f;
-
-        SetZoom(ZoomType.Out);
+        toZoomExpand = true;
+        //SetZoom(ZoomType.Out);
     }
 }

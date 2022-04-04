@@ -132,44 +132,7 @@ doc.ParseStream(is);
 #include <iostream>
 
 namespace Engine {
-
-	struct EntitySet {
-		Entity entity;
-		TransformComponent transform;
-		//Everything above will be needed so not pointer
-
-		TextureComponent* texture = nullptr;
-		ColliderComponent* collider = nullptr;
-		CameraComponent* camera = nullptr;
-		RigidBodyComponent* rigidbody = nullptr;
-		FontComponent* font = nullptr;
-		SoundComponent* sound = nullptr;
-		UIComponent* ui = nullptr;
-		WaypointComponent* waypoint = nullptr;
-		ParticleComponent* particle = nullptr;
-		LightComponent* light = nullptr;
-		ScriptComponent* script = nullptr;
-
-
-		~EntitySet() {
-			//delete transform;
-			delete texture;
-			delete collider;
-			delete camera;
-			delete rigidbody;
-			delete font;
-			delete sound;
-			delete ui;
-			delete waypoint;
-			delete particle;
-			delete light;
-			delete script;
-		}
-	};
-
-	void DeserializeOtherComponents(Serializer& sceneSerializer, const unsigned int& entityId, EntitySet* _entitySet = nullptr) {
-		EntitySet& entitySet = *_entitySet;
-
+	void DeserializeOtherComponents(Serializer& sceneSerializer, const unsigned int& entityId) {
 		if (sceneSerializer.SelectDeserializeDataType("ColliderComponent")) {
 			ColliderComponent tem(entityId);
 			int colType;
@@ -183,9 +146,6 @@ namespace Engine {
 
 			tem.cType = ColliderType(colType);
 			dreamECSGame->AddComponent(tem);
-
-			if (_entitySet != nullptr)
-				entitySet.collider = new ColliderComponent(tem);
 		}
 
 		if (sceneSerializer.SelectDeserializeDataType("RigidBodyComponent")) {
@@ -198,9 +158,6 @@ namespace Engine {
 				"IsActive", tem.isActive);
 
 			dreamECSGame->AddComponent(tem);
-
-			if (_entitySet != nullptr)
-				entitySet.rigidbody = new RigidBodyComponent(tem);
 		}
 
 		if (sceneSerializer.SelectDeserializeDataType("CameraComponent")) {
@@ -212,9 +169,6 @@ namespace Engine {
 				"IsActive", tem.isActive);
 
 			dreamECSGame->AddComponent(tem);
-
-			if (_entitySet != nullptr)
-				entitySet.camera = new CameraComponent(tem);
 		}
 
 		if (sceneSerializer.SelectDeserializeDataType("TextureComponent")) {
@@ -266,9 +220,6 @@ namespace Engine {
 			tem.cellHeight = static_cast<float>(tem.height) / tem.totalRows;
 			tem.mdl_ref = GraphicShape(shapeType);
 			dreamECSGame->AddComponent(tem);
-			
-			if (_entitySet != nullptr)
-				entitySet.texture = new TextureComponent(tem);
 		}
 
 		if (sceneSerializer.SelectDeserializeDataType("UIComponent")) {
@@ -281,9 +232,6 @@ namespace Engine {
 				"IsActive", tem.isActive);
 
 			dreamECSGame->AddComponent(tem);
-
-			if (_entitySet != nullptr)
-				entitySet.ui = new UIComponent(tem);
 		}
 
 
@@ -301,9 +249,6 @@ namespace Engine {
 				"IsActive", tem.isActive);
 
 			dreamECSGame->AddComponent(tem);
-
-			if (_entitySet != nullptr)
-				entitySet.font = new FontComponent(tem);
 		}
 
 		if (sceneSerializer.SelectDeserializeDataType("SoundComponent")) {
@@ -324,9 +269,6 @@ namespace Engine {
 			tem.soundType = static_cast<SoundGrp>(soundGrpTem);
 
 			dreamECSGame->AddComponent(tem);
-
-			if (_entitySet != nullptr)
-				entitySet.sound = new SoundComponent(tem);
 		}
 
 		if (sceneSerializer.SelectDeserializeDataType("ParticleComponent")) {
@@ -365,22 +307,17 @@ namespace Engine {
 						 lifeTime };
 
 			dreamECSGame->AddComponent(tem);
-
-			if (_entitySet != nullptr)
-				entitySet.particle = new ParticleComponent(tem);
 		}
 
 		if (sceneSerializer.SelectDeserializeDataType("LightComponent")) {
 			LightComponent tem(entityId);
 			sceneSerializer.RetrieveData(
+				"OffsetPosition", tem.offsetPosition,
 				"Scale", tem.scale,
 				"Colour", tem.colour,
 				"IsActive", tem.isActive);
 
 			dreamECSGame->AddComponent(tem);
-
-			if (_entitySet != nullptr)
-				entitySet.light = new LightComponent(tem);
 		}
 
 		if (sceneSerializer.SelectDeserializeDataType("ScriptComponent")) {
@@ -392,8 +329,8 @@ namespace Engine {
 					fullName,
 					classJSon["IsActive"].GetBool());
 
-				//rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
-				if (!Scripting::InitCSClass(csScriptInstance)) { continue; }
+				rapidjson::Value::ConstMemberIterator variableItr = classJSon.FindMember("Variable");
+				if (!Scripting::InitCSClass(csScriptInstance, entityId)) { continue; }
 #if 0
 				if (variableItr != classJSon.MemberEnd()) {
 					for (auto& variableData : variableItr->value.GetArray()) {
@@ -445,12 +382,9 @@ namespace Engine {
 				//Scripting::InitVariable(csScriptInstance);
 				//Scripting::InitScript(GetEntityId(), csScriptInstance);
 
-				//tem.klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 				tem.klassInstance.emplace(csScriptInstance.csClass.className, std::move(csScriptInstance));
 			}
 
-			if (_entitySet != nullptr)
-				entitySet.script = new ScriptComponent(tem);
 
 			dreamECSGame->AddComponent(std::move(tem));
 		}
@@ -784,90 +718,22 @@ namespace Engine {
 #endif
 	}
 
-	std::unordered_map<std::string, EntitySet> deserializePool;
-
-	void GameSceneSerializer::ClearDeserializePool() {
-		deserializePool.clear();
-	}
-
 	void GameSceneSerializer::DeserializePrefab(std::string _filename, unsigned int* id, Math::vec2 position, float angle, int layer) {
 #if 1
+		//NOTE: Assumes that parent is deserialized before child
+
+		std::string filename = TO_FULL_PREFAB(_filename);
+		Serializer sceneSerializer(filename);
+		
 		float cosX = Math::cosDeg(angle);
 		float sinX = Math::sinDeg(angle);
 
 		Math::mat3 rotationAndTranslate{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
-
-		if (deserializePool.find(_filename) != deserializePool.end()) {
-			EntitySet& entitySet = deserializePool[_filename];
-			Entity_id entId = dreamECSGame->CreateEntity(entitySet.entity.name.c_str()).id;
-			if (id != nullptr)
-				*id = entId;
-
-			Math::vec3 temVec{ entitySet.transform.position.x, entitySet.transform.position.y, 1.f };
-			temVec = rotationAndTranslate * temVec;
-			
-			dreamECSGame->AddComponent(TransformComponent{ entId, Math::vec2{temVec.x, temVec.y},
-				entitySet.transform.scale, entitySet.transform.angle + angle, layer });
-
-			if (entitySet.texture != nullptr) {
-				dreamECSGame->AddComponent(TextureComponent{ entId, *entitySet.texture });
-			}
-
-			if (entitySet.collider != nullptr) {
-				dreamECSGame->AddComponent(ColliderComponent{ entId, *entitySet.collider });
-			}
-
-			if (entitySet.camera != nullptr) {
-				dreamECSGame->AddComponent(CameraComponent{ entId, *entitySet.camera });
-			}
-
-			if (entitySet.rigidbody != nullptr) {
-				dreamECSGame->AddComponent(RigidBodyComponent{ entId, *entitySet.rigidbody });
-			}
-
-			if (entitySet.font != nullptr) {
-				dreamECSGame->AddComponent(FontComponent{ entId, *entitySet.font });
-			}
-
-			if (entitySet.sound != nullptr) {
-				dreamECSGame->AddComponent(SoundComponent{ entId, *entitySet.sound });
-			}
-
-			if (entitySet.ui != nullptr) {
-				dreamECSGame->AddComponent(UIComponent{ entId, *entitySet.ui });
-			}
-
-			if (entitySet.waypoint != nullptr) {
-				dreamECSGame->AddComponent(WaypointComponent{ entId, *entitySet.waypoint });
-			}
-
-			if (entitySet.particle != nullptr) {
-				dreamECSGame->AddComponent(ParticleComponent{ entId, *entitySet.particle });
-			}
-
-			if (entitySet.light != nullptr) {
-				dreamECSGame->AddComponent(LightComponent{ entId, *entitySet.light });
-			}
-
-			if (entitySet.script != nullptr) {
-				dreamECSGame->AddComponent(ScriptComponent{ entId, *entitySet.script });
-			}
-
-			return;
-		}
-
-		deserializePool[_filename] = EntitySet();
-
-		//NOTE: Assumes that parent is deserialized before child
-		std::string filename = TO_FULL_PREFAB(_filename);
-		Serializer sceneSerializer(filename);
 		
 		std::function<void(void)> deserializePrefabFP = [&sceneSerializer, &angle, &layer, &id, &_filename, &rotationAndTranslate]() -> void {
 			//Prefab saved parents entity id which may not be the correct one in a new scene
 			//This map will check if an entity has 
 			static std::unordered_map<uint32_t, uint32_t> oldParentToNewParent;
-
-			EntitySet& entitySet = deserializePool[_filename];
 
 			Entity entity;
 			if (sceneSerializer.SelectDeserializeDataType("Entity")) {
@@ -880,33 +746,30 @@ namespace Engine {
 					"EntityId", entityId,
 					"Parent", parent,
 					"Child", child);
-				
+
 				entity = dreamECSGame->CreateEntity(entityName.c_str());
 				
-				
-				entitySet.entity.name = entityName;
+				if (child.size() != 0) 
+					oldParentToNewParent[entityId] = entity.id;
 
-				//if (child.size() != 0) 
-				//	oldParentToNewParent[entityId] = entity.id;
-				//
-				//
-				//if (parent != DEFAULT_ENTITY_ID) {
-				//	parent = oldParentToNewParent[parent];
-				//	auto& temMap = dreamECSGame->GetUsedEntityMap();
-				//	auto p_ = temMap.find(parent);
-				//	if (p_ != temMap.end())
-				//		p_->second.child.insert(entity.id);
-				//	//temMap[parent].child.insert(entity.id);
-				//	else
-				//		LOG_WARNING("DeserializePrefab: Parents not found");
-				//
-				//	auto t_ = temMap.find(entity.id);
-				//	if (t_ != temMap.end())
-				//		t_->second.parent = parent;
-				//		//temMap[entity.id].parent = parent;
-				//	else
-				//		LOG_WARNING("DeserializePrefab: Parents not found");
-				//}
+
+				if (parent != DEFAULT_ENTITY_ID) {
+					parent = oldParentToNewParent[parent];
+					auto& temMap = dreamECSGame->GetUsedEntityMap();
+					auto p_ = temMap.find(parent);
+					if (p_ != temMap.end())
+						p_->second.child.insert(entity.id);
+					//temMap[parent].child.insert(entity.id);
+					else
+						LOG_WARNING("DeserializePrefab: Parents not found");
+
+					auto t_ = temMap.find(entity.id);
+					if (t_ != temMap.end())
+						t_->second.parent = parent;
+						//temMap[entity.id].parent = parent;
+					else
+						LOG_WARNING("DeserializePrefab: Parents not found");
+				}
 			}
 
 			if (entity.id == DEFAULT_ENTITY_ID) {
@@ -928,23 +791,15 @@ namespace Engine {
 					"Scale", tem.scale,
 					"Angle", tem.angle
 				);
-
-				entitySet.transform.position = tem.position;
-				entitySet.transform.scale = tem.scale;
-				entitySet.transform.angle = tem.angle;
-
 				//std::cout << tem.scale << " scale\n";
 				Math::vec3 temVec{ tem.position.x, tem.position.y, 1.f };
 				temVec = rotationAndTranslate * temVec;
 				tem.position.x = temVec.x;
 				tem.position.y = temVec.y;
-				tem.angle += angle;
-
-				
 
 				dreamECSGame->AddComponent(
 					//TransformComponent{ entityId, tem.position + position, tem.scale, tem.angle + angle, layer }
-					TransformComponent{ entityId, tem.position, tem.scale, tem.angle, layer }
+					TransformComponent{ entityId, tem.position, tem.scale, tem.angle + angle, layer }
 				);
 
 				ParentManager::GetInstance().UpdateTruePos(entityId);
@@ -988,11 +843,9 @@ namespace Engine {
 				}
 
 				dreamECSGame->AddComponent(tem);
-
-				entitySet.waypoint = new WaypointComponent(tem);
 			}
 
-			DeserializeOtherComponents(sceneSerializer, entityId, &entitySet);
+			DeserializeOtherComponents(sceneSerializer, entityId);
 		};
 
 		sceneSerializer.DeserializeArray(deserializePrefabFP);

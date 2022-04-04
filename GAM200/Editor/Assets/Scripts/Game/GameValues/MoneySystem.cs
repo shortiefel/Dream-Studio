@@ -80,7 +80,7 @@ public class MoneySystem : MonoBehaviour
     //Transform infoTax;
 
     //Transform infoDest;
-    Transform infoDestTransform;
+    Transform infoDestHospital;
     //Transform infoDestOffice;
     //Transform infoDestPark;
     //Transform infoDestMall;
@@ -145,36 +145,75 @@ public class MoneySystem : MonoBehaviour
         imageStartPosition = new Vector2(56.7f, 41.1f);
         imageYFinalPosition = 35.5f;
 
+        //GameObject goImageStore = GameObject.Find("ListOfCostImageStore");
+        //if (goImageStore != null)
+        //{
+        //    infoStore = goImageStore.GetComponent<Transform>();
+        //}
+        //
+        //GameObject goImageERP = GameObject.Find("ListOfCostERP");
+        //if (goImageERP != null)
+        //{
+        //    infoERP = goImageERP.GetComponent<Transform>();
+        //}
+        //
+        //GameObject goImageTax = GameObject.Find("ListOfCostTax");
+        //if (goImageTax != null)
+        //{
+        //    infoTax = goImageTax.GetComponent<Transform>();
+        //}
 
-        GameObject goImageDestImage = GameObject.Find("ListOfCostDest");
-        if (goImageDestImage != null)
+        //GameObject goImageDest = GameObject.Find("ListOfCostDest");
+        //if (goImageDest != null)
+        //{
+        //    infoDest = goImageDest.GetComponent<Transform>();
+        //}
+
+        GameObject goImageDestHospital = GameObject.Find("ListOfCostDestHospital");
+        if (goImageDestHospital != null)
         {
-            infoDestTransform = goImageDestImage.GetComponent<Transform>();
-            infoDestTexture = goImageDestImage.GetComponent<UI>();
+            infoDestHospital = goImageDestHospital.GetComponent<Transform>();
+            infoDestTexture = goImageDestHospital.GetComponent<UI>();
         }
+
+        //GameObject goImageDestOffice = GameObject.Find("ListOfCostDestOffice");
+        //if (goImageDestOffice != null)
+        //{
+        //    infoDestOffice = goImageDestOffice.GetComponent<Transform>();
+        //}
+        //
+        //GameObject goImageDestPark = GameObject.Find("ListOfCostDestPark");
+        //if (goImageDestPark != null)
+        //{
+        //    infoDestPark = goImageDestPark.GetComponent<Transform>();
+        //}
+        //
+        //GameObject goImageDestMall = GameObject.Find("ListOfCostDestMall");
+        //if (goImageDestMall != null)
+        //{
+        //    infoDestMall = goImageDestMall.GetComponent<Transform>();
+        //}
+
+        //NOTE: REMOVE THE OTHER GAME OBJECT (ListOfCost...)
     }
 
 
     public override void FixedUpdate()
     {
-        //if (Input.GetKeyDown(KeyCode.H))
-        //{
-        //    AddMoney(100, MoneySource.DestHospital);
-        //}
         //Debug.Log(listOfCost.Count);
         if (requireFading)
         {
             listOfCostFadeTimer += Time.fixedDeltaTime;
             listOfCostTimerTransform.position = new Vector2(listOfCostTimerTransform.position.x, Mathf.Lerp(listOfCostTimerTransform.position.y, textYFinalPosition, listOfCostFadeTimer));
 
-            infoDestTransform.position = new Vector2(infoDestTransform.position.x, Mathf.Lerp(infoDestTransform.position.y, imageYFinalPosition, listOfCostFadeTimer));
+            infoDestHospital.position = new Vector2(infoDestHospital.position.x, Mathf.Lerp(infoDestHospital.position.y, imageYFinalPosition, listOfCostFadeTimer));
 
             if (listOfCostFadeTimer > listOfCostTimerFadeTimeMax)
             {
                 listOfCostTimerText.alpha -= 0.1f;
                 if (listOfCostTimerText.alpha <= 0f)
                 {
-                    Disable<Transform>(infoDestTransform);
+                    Disable<Transform>(infoDestHospital);
                     listOfCostFadeTimer = 0f;
                     requireFading = false;
                 }
@@ -210,8 +249,8 @@ public class MoneySystem : MonoBehaviour
                 listOfCostTimerTransform.position = textStartPosition;
                 currentSource = info.source;
 
-                Enable<Transform>(infoDestTransform);
-                infoDestTransform.position = imageStartPosition;
+                Enable<Transform>(infoDestHospital);
+                infoDestHospital.position = imageStartPosition;
 
                 switch (currentSource)
                 {

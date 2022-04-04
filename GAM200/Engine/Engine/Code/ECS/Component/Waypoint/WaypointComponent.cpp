@@ -22,10 +22,4 @@ Technology is prohibited.
 namespace Engine {
 	WaypointComponent::WaypointComponent(Entity_id _ID, std::list<unsigned int> _num, std::list<Math::vec2> _list) :
 		IComponent{ _ID }, numOfWaypoint{_num }, listOfWaypoint{ _list } {}
-
-	WaypointComponent::WaypointComponent(Entity_id entId, const WaypointComponent& rhs) :
-		IComponent{ entId }, numOfWaypoint{ rhs.numOfWaypoint }, listOfWaypoint{ rhs.listOfWaypoint }, 
-		temWaypoint{ rhs.temWaypoint }, section{ rhs.section }, updated{ rhs.updated }, isActive{ rhs.isActive } {
-										
-	}								    
 }

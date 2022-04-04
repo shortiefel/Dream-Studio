@@ -43,38 +43,33 @@ namespace Engine
 		return *this;
 	}
 
-	TransformComponent::TransformComponent(Entity_id entId, const TransformComponent& rhs) :
-		IComponent{ entId }, position { rhs.position }, localPosition{ rhs.localPosition }, scale{ rhs.scale }, angle{ rhs.angle }, layer{ rhs.layer }, isActive{ rhs.isActive } {
-		
+	// Deserialize function for Transform Component
+	TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer)
+	{
+		position = _serializer.GetValue<Math::vec2>("Position");
+		localPosition = _serializer.GetValue<Math::vec2>("LocalPosition");
+
+		scale = _serializer.GetValue<Math::vec2>("Scale");
+		angle = _serializer.GetValue<float>("Angle");
+
+		layer = _serializer.GetValue<int>("Layer");
+		isActive = _serializer.GetValue<bool>("IsActive");
+
+		return *this;
 	}
-	
-	//// Deserialize function for Transform Component
-	//TransformComponent& TransformComponent::Deserialize(const DSerializer& _serializer)
-	//{
-	//	position = _serializer.GetValue<Math::vec2>("Position");
-	//	localPosition = _serializer.GetValue<Math::vec2>("LocalPosition");
-	//
-	//	scale = _serializer.GetValue<Math::vec2>("Scale");
-	//	angle = _serializer.GetValue<float>("Angle");
-	//
-	//	layer = _serializer.GetValue<int>("Layer");
-	//	isActive = _serializer.GetValue<bool>("IsActive");
-	//
-	//	return *this;
-	//}
-	//
-	//// Serialize function for Transform Component
-	//void TransformComponent::Serialize(const SSerializer& _serializer)
-	//{
-	//	_serializer.SetValue("Position", position);
-	//	_serializer.SetValue("LocalPosition", localPosition);
-	//
-	//	_serializer.SetValue("Scale", scale);
-	//	_serializer.SetValue("Angle", angle);
-	//
-	//	_serializer.SetValue("Layer", layer);
-	//	_serializer.SetValue("IsActive", isActive);
-	//}
+
+	// Serialize function for Transform Component
+	void TransformComponent::Serialize(const SSerializer& _serializer)
+	{
+		_serializer.SetValue("Position", position);
+		_serializer.SetValue("LocalPosition", localPosition);
+
+		_serializer.SetValue("Scale", scale);
+		_serializer.SetValue("Angle", angle);
+
+		_serializer.SetValue("Layer", layer);
+		_serializer.SetValue("IsActive", isActive);
+	}
 }
 
 // Code that might be used for the future

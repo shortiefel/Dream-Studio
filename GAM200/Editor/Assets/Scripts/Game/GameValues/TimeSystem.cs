@@ -49,7 +49,7 @@ public class TimeSystem : MonoBehaviour
 
     public static float previousTimeScale;
 
-    //private static bool pauseOrUnpause = false;
+
     public override void Start()
     {
         previousTimeScale = 1f;
@@ -301,15 +301,5 @@ public class TimeSystem : MonoBehaviour
         timeScale = 1.5f;
         previousTimeScale = timeScale;
         Time.timeScale = timeScale;
-    }
-
-    static public void ResumeTime()
-    {
-        Time.timeScale = timeScale;
-    }
-
-    static public void PauseTime()
-    {
-        Time.timeScale = 0f;
     }
 }

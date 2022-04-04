@@ -40,11 +40,10 @@ namespace Engine {
 
 		SoundComponent(Entity_id _ID = DEFAULT_ENTITY_ID, std::string _filepath = "Assets\\Sound\\sampleSound.wav", std::string _soundName = "sampleSound",
 			bool _isSound = false, bool _isActive = false, bool _loop = false, float _vol = 0.01f, SoundGrp _soundType = SoundGrp::MASTER, bool _isMute = false);
-		SoundComponent(Entity_id entId, const SoundComponent& rhs);
 		~SoundComponent();
 
-		//SoundComponent& Deserialize(const DSerializer& _serializer);
-		//void Serialize(const SSerializer& _serializer);
+		SoundComponent& Deserialize(const DSerializer& _serializer);
+		void Serialize(const SSerializer& _serializer);
 
 		/**
 		*		VOLUME

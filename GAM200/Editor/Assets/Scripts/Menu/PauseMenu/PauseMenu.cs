@@ -43,7 +43,7 @@ public class PauseMenu : MonoBehaviour
     UI texture;
 
     Transform displayArrow;
-    Transform displayArrowWhite;
+    //Transform displayArrowWhite;
 
 
     //Transform timerButton;
@@ -135,16 +135,9 @@ public class PauseMenu : MonoBehaviour
 
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
-        //GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
-        //if (buttonRoadGO != null)
-        //    buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
-        //GameObject buttonStoreGO = GameObject.Find("Storebtn");
-        //if (buttonStoreGO != null)
-        //    buttonStoreSymbol = buttonStoreGO.GetComponent<Tranform>();
-
 
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
-        displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
+        //displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
         //GameObject timerButtonGO = GameObject.Find("TimerIcon");
         //if (timerButtonGO != null)
@@ -207,7 +200,7 @@ public class PauseMenu : MonoBehaviour
                 combinedUI.CloseAllUIExcept(UIType.Pause);
 
             Disable<Transform>(displayArrow);
-            Disable<Transform>(displayArrowWhite);
+            //Disable<Transform>(displayArrowWhite);
 
         }
         else
@@ -238,6 +231,7 @@ public class PauseMenu : MonoBehaviour
 
             Disable<Transform>(settingBtn);
 
+            Enable<Transform>(displayArrow);
             //Application.SetPause(false);
 
             if (reenable)
@@ -282,36 +276,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        //if (stopTime)
-        //{
-        //    stopTimer += Time.deltaTime;
-        //
-        //    float newTimer = 5f * stopTimer;
-        //
-        //    pauseBG.transform.position = new Vector2(Mathf.Lerp(pauseBG.transform.position.x, bgPosition.x, newTimer), pauseBG.transform.position.y);
-        //    
-        //    resume.transform.position = new Vector2(Mathf.Lerp(resume.transform.position.x, resumeTextPosition.x, newTimer), resume.transform.position.y);
-        //    howToPlay.transform.position = new Vector2(Mathf.Lerp(howToPlay.transform.position.x, htpTextPosition.x, newTimer), howToPlay.transform.position.y);
-        //    pauseQuit.transform.position = new Vector2(Mathf.Lerp(pauseQuit.transform.position.x, quitTextPosition.x, newTimer), pauseQuit.transform.position.y);
-        //    
-        //    resumeBtn.transform.position = new Vector2(Mathf.Lerp(resumeBtn.transform.position.x, resumePosition.x, newTimer), resumeBtn.transform.position.y);
-        //    howToPlayBtn.transform.position = new Vector2(Mathf.Lerp(howToPlayBtn.transform.position.x, htpPosition.x, newTimer), howToPlayBtn.transform.position.y);
-        //    pauseQuitBtn.transform.position = new Vector2(Mathf.Lerp(pauseQuitBtn.transform.position.x, quitPosition.x, newTimer), pauseQuitBtn.transform.position.y);
-        //
-        //    if (stopTimer > 0.1f)
-        //    {
-        //        stopTimer = 0f;
-        //        stopTime = false;
-        //
-        //        Disable<Transform>(displayArrow);
-        //        Disable<Transform>(displayArrowWhite);
-        //
-        //        Disable<Transform>(timerButton);
-        //        Disable<Transform>(storeButton);
-        //
-        //        Time.timeScale = 0f;
-        //    }
-        //}
+        
     }
     public override void OnMouseEnter()
     {

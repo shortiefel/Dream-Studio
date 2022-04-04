@@ -116,7 +116,7 @@ public class ButtonStore : MonoBehaviour
 
 
     Transform displayArrow;
-    Transform displayArrowWhite;
+    //Transform displayArrowWhite;
     Transform timerButton;
     Transform pauseIcon;
 
@@ -234,7 +234,7 @@ public class ButtonStore : MonoBehaviour
 
 
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
-        displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
+        //displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
         timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
         pauseIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
 

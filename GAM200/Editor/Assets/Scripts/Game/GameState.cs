@@ -60,7 +60,7 @@ public class GameState : MonoBehaviour
         //    overlayNight = overlayNightGo.GetComponent<Transform>();
         TimerIcon = GameObject.Find("TimerIcon").GetComponent<UI>();
 
-        GameObject buttonRoadGO = GameObject.Find("ButtonRoad");
+        GameObject buttonRoadGO = GameObject.Find("Displaybtn");
         if (buttonRoadGO != null)
             buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
 

@@ -14,7 +14,8 @@ public enum ButtonType
     PlaceMall,
     PlacePoliceStation,
     Display,
-    Ignore
+    Ignore,
+    None
 }
 
 
@@ -54,7 +55,8 @@ public class ButtonRoad : MonoBehaviour
     Vector2 drawRemoveCarPosition;
 
     Transform displayArrow;
-    Transform displayArrowWhite;
+    UI displayArrowUI;
+    //Transform displayArrowWhite;
 
     Transform placeHospital;
     Transform placeOffice;
@@ -62,12 +64,27 @@ public class ButtonRoad : MonoBehaviour
     Transform placeMall;
     Transform placePoliceStation;
 
-    Transform placeHospitalWhite;
-    Transform placeOfficeWhite;
-    Transform placeParkWhite;
-    Transform placeMallWhite;
-    Transform placePoliceStationWhite;
+    UI placeHospitalUI;
+    UI placeOfficeUI;
+    UI placeParkUI;
+    UI placeMallUI;
+    UI placePoliceStationUI;
 
+    Vector2 placeHospitalPos;
+    Vector2 placeOfficePos;
+    Vector2 placeParkPos;
+    Vector2 placeMallPos;
+    Vector2 placePoliceStationPos;
+
+    //Transform placeHospitalWhite;
+    //Transform placeOfficeWhite;
+    //Transform placeParkWhite;
+    //Transform placeMallWhite;
+    //Transform placePoliceStationWhite;
+
+    Text tooltipText;
+    Transform tooltipTrans;
+    Vector2 toolTipsDisplayPosition;
 
     Transform lineDivider1;
     Vector2 line1;
@@ -101,6 +118,10 @@ public class ButtonRoad : MonoBehaviour
     CombinedUI combinedUI;
 
     public bool isOn;
+
+    ButtonType choosenButton = ButtonType.None;
+    bool displayState = false;
+    
 
     public override void Start()
     {
@@ -144,22 +165,50 @@ public class ButtonRoad : MonoBehaviour
         //drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
         //drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
         drawRemoveCarPosition = drawRemoveCar.position;
-        Debug.Log(drawRemoveCar.position);
 
-        displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
-        displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
+        GameObject displayGO = GameObject.Find("Displaybtn");
+        displayArrow = displayGO.GetComponent<Transform>();
+        displayArrowUI = displayGO.GetComponent<UI>();
+        //displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
-        placeHospital = GameObject.Find("PlaceHospital").GetComponent<Transform>();
-        placeOffice = GameObject.Find("PlaceOffice").GetComponent<Transform>();
-        placePark = GameObject.Find("PlacePark").GetComponent<Transform>();
-        placeMall = GameObject.Find("PlaceMall").GetComponent<Transform>();
-        placePoliceStation = GameObject.Find("PlacePoliceStation").GetComponent<Transform>();
+        GameObject hopitalGO = GameObject.Find("PlaceHospital");
+        placeHospital = hopitalGO.GetComponent<Transform>();
+        placeHospitalUI = hopitalGO.GetComponent<UI>();
 
-        placeHospitalWhite = GameObject.Find("PlaceHospitalWhite").GetComponent<Transform>();
-        placeOfficeWhite = GameObject.Find("PlaceOfficeWhite").GetComponent<Transform>();
-        placeParkWhite = GameObject.Find("PlaceParkWhite").GetComponent<Transform>();
-        placeMallWhite = GameObject.Find("PlaceMallWhite").GetComponent<Transform>();
-        placePoliceStationWhite = GameObject.Find("PlacePoliceStationWhite").GetComponent<Transform>();
+        GameObject officeGO = GameObject.Find("PlaceOffice");
+        placeOffice = officeGO.GetComponent<Transform>();
+        placeOfficeUI = officeGO.GetComponent<UI>();
+
+        GameObject parkGO = GameObject.Find("PlacePark");
+        placePark = parkGO.GetComponent<Transform>();
+        placeParkUI = parkGO.GetComponent<UI>();
+
+        GameObject mallGO = GameObject.Find("PlaceMall");
+        placeMall = mallGO.GetComponent<Transform>();
+        placeMallUI = mallGO.GetComponent<UI>();
+
+        GameObject psGO = GameObject.Find("PlacePoliceStation");
+        placePoliceStation = psGO.GetComponent<Transform>();
+        placePoliceStationUI = psGO.GetComponent<UI>();
+
+
+
+        placeHospitalPos = placeHospital.position;
+        placeOfficePos = placeOffice.position;
+        placeParkPos = placePark.position;
+        placeMallPos = placeMall.position;
+        placePoliceStationPos = placePoliceStation.position;
+
+        //placeHospitalWhite = GameObject.Find("PlaceHospitalWhite").GetComponent<Transform>();
+        //placeOfficeWhite = GameObject.Find("PlaceOfficeWhite").GetComponent<Transform>();
+        //placeParkWhite = GameObject.Find("PlaceParkWhite").GetComponent<Transform>();
+        //placeMallWhite = GameObject.Find("PlaceMallWhite").GetComponent<Transform>();
+        //placePoliceStationWhite = GameObject.Find("PlacePoliceStationWhite").GetComponent<Transform>();
+
+        GameObject stringNameGo = GameObject.Find("stringname");
+        tooltipText = stringNameGo.GetComponent<Text>();
+        tooltipTrans = stringNameGo.GetComponent<Transform>();
+        toolTipsDisplayPosition = transform.position + new Vector2(-2.40f, 7.70f);
 
         lineDivider1 = GameObject.Find("Line1").GetComponent<Transform>();
         line1 = lineDivider1.position;
@@ -178,13 +227,13 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(drawERP);
         Disable<Transform>(drawTraffic);
 
-        Disable<Transform>(displayArrowWhite);
+        //Disable<Transform>(displayArrowWhite);
 
-        Disable<Transform>(placeHospitalWhite);
-        Disable<Transform>(placeOfficeWhite);
-        Disable<Transform>(placeParkWhite);
-        Disable<Transform>(placeMallWhite);
-        Disable<Transform>(placePoliceStationWhite);
+        //Disable<Transform>(placeHospitalWhite);
+        //Disable<Transform>(placeOfficeWhite);
+        //Disable<Transform>(placeParkWhite);
+        //Disable<Transform>(placeMallWhite);
+        //Disable<Transform>(placePoliceStationWhite);
 
 
         opening = false;
@@ -211,6 +260,12 @@ public class ButtonRoad : MonoBehaviour
         drawRemoveCar.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
 
+        placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
+        placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
+        placePark.position = new Vector2(closeXPosition, placeParkPos.y);
+        placeMall.position = new Vector2(closeXPosition, placeMallPos.y);
+        placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
+
         lineDivider1.position = new Vector2(closeXPosition, line1.y);
 
 
@@ -234,7 +289,6 @@ public class ButtonRoad : MonoBehaviour
         GameObject go3 = GameObject.Find("MoneyText");
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
-
 
         isOn = false;
         //GameObject go4 = GameObject.Find("CounterText");
@@ -274,6 +328,21 @@ public class ButtonRoad : MonoBehaviour
         //}
     }
 
+    public override void OnMouseOver()
+    {
+        SetToolTips(true, toolTipsDisplayPosition, "Display buttons");
+
+        if (Input.GetMouseButtonDown(MouseCode.Left))
+        {
+            SwitchTabRoad(!displayState);
+        }
+    }
+
+    public override void OnMouseExit()
+    {
+        SetToolTips(false, Vector2.zero);
+    }
+
     //_activeType = false means u r clicking the white version
     public void SwitchTabRoad(bool type, bool reenable = true)
     {
@@ -281,9 +350,9 @@ public class ButtonRoad : MonoBehaviour
         {
             opening = true;
 
-            Disable<Transform>(displayArrow);
-            Enable<Transform>(displayArrowWhite);
-
+            //Disable<Transform>(displayArrow);
+            //Enable<Transform>(displayArrowWhite);
+            displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
 
             EnableAllNormalExcept();
 
@@ -297,13 +366,27 @@ public class ButtonRoad : MonoBehaviour
 
             closing = true;
 
-            Disable<Transform>(displayArrowWhite);
-            if (reenable)
-                Enable<Transform>(displayArrow);
+            //Disable<Transform>(displayArrowWhite);
+            //if (reenable)
+            //    Enable<Transform>(displayArrow);
+
+            displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
+            //if (reenable)
+            //{
+            //    Debug.Log("Enaalsaksd");
+            //    Enable<Transform>(displayArrow);
+            //}
+            //else
+            //{
+            //    Debug.Log("Disabling 3231323132131333333333333");
+            //    Disable<Transform>(displayArrow);
+            //}
 
             //cameraMovement.SetZoom(ZoomType.Out);
             isOn = false;
         }
+
+        displayState = type;
     }
     private void CloseTabs()
     {
@@ -324,7 +407,14 @@ public class ButtonRoad : MonoBehaviour
 
         drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
-        
+
+
+        placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, closeXPosition, timer), placeHospitalPos.y);
+        placeOffice.position = new Vector2(Mathf.Lerp(placeOffice.position.x, closeXPosition, timer), placeOfficePos.y);
+        placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, closeXPosition, timer), placeParkPos.y);
+        placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, closeXPosition, timer), placeMallPos.y);
+        placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, closeXPosition, timer), placePoliceStationPos.y);
+
 
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, closeXPosition, timer), line1.y);
 
@@ -361,6 +451,12 @@ public class ButtonRoad : MonoBehaviour
         drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
 
+        placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, placeHospitalPos.x, timer), placeHospitalPos.y);
+        placeOffice.position = new Vector2(Mathf.Lerp(placeOffice.position.x, placeOfficePos.x, timer), placeOfficePos.y);
+        placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, placeParkPos.x, timer), placeParkPos.y);
+        placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, placeMallPos.x, timer), placeMallPos.y);
+        placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, placePoliceStationPos.x, timer), placePoliceStationPos.y);
+
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, line1.x, timer), line1.y);
 
 
@@ -374,9 +470,67 @@ public class ButtonRoad : MonoBehaviour
         }
 
     }
-    public void CallFunction(ButtonType _bt, bool _activeType)
+    public void CallFunction(ButtonType _bt)
     {
-        
+        bool _activeType = true;
+
+        if (_bt == choosenButton) _activeType = false;
+
+        switch (choosenButton)
+        {
+            case ButtonType.Draw:
+                {
+
+                    break;
+                }
+            case ButtonType.Remove:
+                {
+
+                    break;
+                }
+            case ButtonType.ERP:
+                {
+
+                    break;
+                }
+            case ButtonType.TrafficLight:
+                {
+
+                    break;
+                }
+            case ButtonType.RemoveCar:
+                {
+
+                    break;
+                }
+
+            case ButtonType.PlaceHospital:
+                {
+                    placeHospitalUI.ChangeTexture("Game/UI/ERP");
+                    break;
+                }
+            case ButtonType.PlaceOffice:
+                {
+                    placeOfficeUI.ChangeTexture("Game/UI/ERP");
+                    break;
+                }
+            case ButtonType.PlacePark:
+                {
+                    placeParkUI.ChangeTexture("Game/UI/ERP");
+                    break;
+                }
+            case ButtonType.PlaceMall:
+                {
+                    placeMallUI.ChangeTexture("Game/UI/ERP");
+                    break;
+                }
+            case ButtonType.PlacePoliceStation:
+                {
+                    placePoliceStationUI.ChangeTexture("Game/UI/ERP");
+                    break;
+                }
+        }
+
         //Debug.Log("Calling " + _bt + " " + _activeType);
         DisableAll();
 
@@ -439,44 +593,63 @@ public class ButtonRoad : MonoBehaviour
 
                 case ButtonType.PlaceHospital:
                     {
+                        gameManager.PlaceDestHospitalHandler();
+                        placeHospitalUI.ChangeTexture("Game/UI/Arrow_L");
 
+                        EnableAllNormalExcept();
                         break;
                     }
                 case ButtonType.PlaceOffice:
                     {
+                        gameManager.PlaceDestOfficeHandler();
+                        placeOfficeUI.ChangeTexture("Game/UI/Arrow_L");
 
+                        EnableAllNormalExcept();
                         break;
                     }
                 case ButtonType.PlacePark:
                     {
+                        gameManager.PlaceDestParkHandler();
+                        
+                        placeParkUI.ChangeTexture("Game/UI/Arrow_L");
 
+                        EnableAllNormalExcept();
                         break;
                     }
                 case ButtonType.PlaceMall:
                     {
+                        gameManager.PlaceDestMallHandler();
+                        placeMallUI.ChangeTexture("Game/UI/Arrow_L");
 
+                        EnableAllNormalExcept();
                         break;
                     }
                 case ButtonType.PlacePoliceStation:
                     {
+                        gameManager.PlaceDestPoliceStationHandler();
+                        placePoliceStationUI.ChangeTexture("Game/UI/Arrow_L");
 
+                        EnableAllNormalExcept();
                         break;
                     }
             }
-
+            
             SceneManager.SetDrawMode(true);
             gameState.SetDrawMode(true);
             //cameraMovement.drawMode = true;
         }
         else
         {
-            //cameraMovement.SetZoom(ZoomType.Out);
 
             SceneManager.SetDrawMode(false);
             gameState.SetDrawMode(false);
 
             EnableAllNormalExcept();
         }
+
+
+        if (_bt == choosenButton) _bt = ButtonType.None;
+        choosenButton = _bt;
     }
 
 
@@ -488,7 +661,20 @@ public class ButtonRoad : MonoBehaviour
         if (closing)
             CloseTabs();
 
-        if (Input.GetKeyDown(KeyCode.H)) CallFunction(ButtonType.RemoveCar, true);
+        if (Input.GetKeyDown(KeyCode.H)) CallFunction(ButtonType.PlaceHospital);
+    }
+
+    public void SetToolTips(bool state, Vector2 position, string textToPut = "")
+    {
+        if (state)
+        {
+            Enable<Transform>(tooltipTrans);
+            tooltipTrans.position = position;
+            tooltipText.text = textToPut;
+        }
+        else Disable<Transform>(tooltipTrans);
+
+            
     }
 
     public void EnableAllNormalExcept(ButtonType bt = ButtonType.Ignore)

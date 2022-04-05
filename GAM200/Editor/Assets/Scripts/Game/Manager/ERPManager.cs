@@ -2,7 +2,7 @@
 
 public class ERPManager : MonoBehaviour
 {
-    MoneySystem moneySystem;
+    //MoneySystem moneySystem;
     private TrafficLightManager trafficLightManager;
     //private bool toDraw; //To Remove ------------------------------------------------------
     private GameObject erpGO;
@@ -22,7 +22,7 @@ public class ERPManager : MonoBehaviour
     {
         erpList = new Dictionary<Vector2Int, uint>();
 
-        moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+        //moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
 
         erpGO = new GameObject(new Prefab("ERP"));
 
@@ -79,7 +79,7 @@ public class ERPManager : MonoBehaviour
     public void Notify()
     {
         //Increase money
-        moneySystem.AddMoney(10, MoneySource.ERP);
+        MoneySystem.AddMoney(10, MoneySource.ERP);
     }
 
     public void RegisterERP(Vector2Int pos, uint id)

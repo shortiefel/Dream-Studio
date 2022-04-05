@@ -19,6 +19,9 @@ public class InputManager : MonoBehaviour
 
 	static public bool allowBuilding = true;
 
+	public bool removeCarBool = false;
+	public Transform removeCarCursor;
+
 	public override void Start()
 	{
 		gameState = GameObject.Find("GameManager").GetComponent<GameState>();
@@ -27,24 +30,33 @@ public class InputManager : MonoBehaviour
 		placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
 		OverGameObject = false;
+
+		removeCarCursor = GameObject.Find("RemoveCarCursor").GetComponent<Transform>();
 	}
 
 	//private void Update()
 	public override void Update()
 	{
-		if (Input.GetMouseButtonDown(MouseCode.Left))
-		{
-			Vector3 mPos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
-			Vector2 mousePos = Vector2Int.RoundToInt(new Vector2(mPos.x, mPos.y));
-			//Vector2 startPos = placementManager.placementGrid.GetStartPoint();
-			//Vector2 endPos = placementManager.placementGrid.GetGridSize() + startPos;
-			//Console.WriteLine("Actual Mouse position: " + mousePos + " ------------------------------------------\n");
-
-			Vector2Int offset = -placementManager.placementGrid.GetStartPoint();
-			//Console.WriteLine("offset: " + (offset) + " ------------------------------------------\n");
-			//Console.WriteLine("actually the Actual Mouse position: " + (offset + mousePos) + " ------------------------------------------\n");
+		if (removeCarBool)
+        {
+			Vector2Int pos = RaycastGround();
+			if (placementManager.CheckIfPositionInBound(pos))
+				removeCarCursor.position = new Vector2(pos);
 
 		}
+		//if (Input.GetMouseButtonDown(MouseCode.Left))
+		//{
+		//	Vector3 mPos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
+		//	Vector2 mousePos = Vector2Int.RoundToInt(new Vector2(mPos.x, mPos.y));
+		//	//Vector2 startPos = placementManager.placementGrid.GetStartPoint();
+		//	//Vector2 endPos = placementManager.placementGrid.GetGridSize() + startPos;
+		//	//Console.WriteLine("Actual Mouse position: " + mousePos + " ------------------------------------------\n");
+		//
+		//	Vector2Int offset = -placementManager.placementGrid.GetStartPoint();
+		//	//Console.WriteLine("offset: " + (offset) + " ------------------------------------------\n");
+		//	//Console.WriteLine("actually the Actual Mouse position: " + (offset + mousePos) + " ------------------------------------------\n");
+		//
+		//}
 		if (Input.GetKeyDown(KeyCode.M) && Input.GetKey(KeyCode.Shift))
 		{
 			//placementManager.placementGrid.Expand();
@@ -96,7 +108,7 @@ public class InputManager : MonoBehaviour
 	//	get { return cameraMovementVector; }
 	//}
 
-	private Vector2Int? RaycastGround()
+	private Vector2Int RaycastGround()
 	{
 		//RaycastHit2D hit = Physics2D.RayCast(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()), Vector2.zero);
 		//
@@ -125,10 +137,11 @@ public class InputManager : MonoBehaviour
 			var position = RaycastGround();
 			/*if (position != null)
 				OnMouseHold?.Invoke(position.Value);*/
-			if (position != null) {
+			//if (position != null) {
 				if (OnMouseHold != null)
-					OnMouseHold.Invoke(position.Value); 
-			}
+					OnMouseHold.Invoke(position); 
+					//OnMouseHold.Invoke(position.value); 
+			//}
 		}
 	}
 
@@ -155,11 +168,11 @@ public class InputManager : MonoBehaviour
 			var position = RaycastGround();
 			/*if (position != null)
 				OnMouseClick?.Invoke(position.Value);*/
-			if (position != null)
-			{
+			//if (position != null) {
 				if (OnMouseClick != null)
-					OnMouseClick.Invoke(position.Value);
-			}
+					OnMouseClick.Invoke(position);
+					//OnMouseClick.Invoke(position.Value);
+			//}
 		}
 	}
 

@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public StructureManager structureManager;
     public KeysController keysController;
 
+
+
     //private void Start()
     public override void Start()
     {
@@ -28,7 +30,6 @@ public class GameManager : MonoBehaviour
         keysController.OnRoadPlacement += RoadPlacementHandler;
         //keysController.OnHousePlacement += HousePlacementHandler;
         //keysController.OnSpecialPlacement += SpecialPlacementHandler;
-
     }
 
     //private void SpecialPlacementHandler()
@@ -89,6 +90,9 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
         inputManager.OnMouseClick += roadManager.RemoveCarGrid;
+        Enable<Transform>(inputManager.removeCarCursor);
+
+        inputManager.removeCarBool = true;
         //inputManager.OnMouseHold += roadManager.RemoveRoad;
         //inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
     }
@@ -128,6 +132,10 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick = null;
         inputManager.OnMouseHold = null;
         inputManager.OnMouseUp = null;
+
+        if (inputManager.removeCarBool) Disable<Transform>(inputManager.removeCarCursor);
+
+        inputManager.removeCarBool = false;
     }
 
     //private void Update()

@@ -95,7 +95,7 @@ public class Receipt : MonoBehaviour
 
         totalTaxText.text = moneySystem.totalTax.ToString();
         Enable<Transform>(totalTax.transform);
-        balanceText.text = moneySystem.balance.ToString();
+        balanceText.text = MoneySystem.balance.ToString();
         Enable<Transform>(balance.transform);
 
         Enable<Transform>(closeReceipt.transform);

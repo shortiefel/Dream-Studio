@@ -11,6 +11,7 @@ public enum MoneySource
     DestPark,
     DestMall,
     DestPolice,
+    RemoveCar,
     Ignore
 }
 
@@ -27,9 +28,8 @@ struct MoneyInfoTextStruct {
 public class MoneySystem : MonoBehaviour
 {
     //GameState gameState;
-    Text textComp;
-
-    int money;
+    static Text textComp;
+    static int money;
 
     public int erpCost;
     public int tlCost;
@@ -42,7 +42,7 @@ public class MoneySystem : MonoBehaviour
     public int erpTax;
     public int trafficTax;
     public int totalTax;
-    public int balance;
+    static public int balance;
     public int road_counter;
     public int traffic_counter;
     public int erp_counter;
@@ -60,13 +60,13 @@ public class MoneySystem : MonoBehaviour
     GameState gameState;
     Receipt receipt;
 
-    Queue<MoneyInfoTextStruct> listOfCost;
+    static Queue<MoneyInfoTextStruct> listOfCost;
     float listOfCostTimer;
     float listOfCostFadeTimer;
     float listOfCostTimerFadeTimeMax;
     float listOfCostTimerMax;
-    Transform listOfCostTimerTransform;
-    Text listOfCostTimerText;
+    Transform listOfCostTransform;
+    Text listOfCostText;
     bool requireFading;
     Vector2 textStartPosition;
     float textYFinalPosition;
@@ -88,6 +88,7 @@ public class MoneySystem : MonoBehaviour
 
     UI infoDestTexture;
 
+    float dt;
 
     public override void Start()
     {
@@ -136,8 +137,8 @@ public class MoneySystem : MonoBehaviour
         GameObject goListCost = GameObject.Find("ListOfCostText");
         if (goListCost != null)
         {
-            listOfCostTimerTransform = goListCost.GetComponent<Transform>();
-            listOfCostTimerText = goListCost.GetComponent<Text>();
+            listOfCostTransform = goListCost.GetComponent<Transform>();
+            listOfCostText = goListCost.GetComponent<Text>();
         }
         requireFading = false;
         textStartPosition = new Vector2(62f, 41.1f);
@@ -163,17 +164,20 @@ public class MoneySystem : MonoBehaviour
         //    AddMoney(100, MoneySource.DestHospital);
         //}
         //Debug.Log(listOfCost.Count);
+
+        dt = Time.fixedDeltaTime;
+
         if (requireFading)
         {
-            listOfCostFadeTimer += Time.fixedDeltaTime;
-            listOfCostTimerTransform.position = new Vector2(listOfCostTimerTransform.position.x, Mathf.Lerp(listOfCostTimerTransform.position.y, textYFinalPosition, listOfCostFadeTimer));
+            listOfCostFadeTimer += dt;
+            listOfCostTransform.position = new Vector2(listOfCostTransform.position.x, Mathf.Lerp(listOfCostTransform.position.y, textYFinalPosition, listOfCostFadeTimer));
 
             infoDestTransform.position = new Vector2(infoDestTransform.position.x, Mathf.Lerp(infoDestTransform.position.y, imageYFinalPosition, listOfCostFadeTimer));
 
             if (listOfCostFadeTimer > listOfCostTimerFadeTimeMax)
             {
-                listOfCostTimerText.alpha -= 0.1f;
-                if (listOfCostTimerText.alpha <= 0f)
+                listOfCostText.alpha -= 0.1f;
+                if (listOfCostText.alpha <= 0f)
                 {
                     Disable<Transform>(infoDestTransform);
                     listOfCostFadeTimer = 0f;
@@ -184,31 +188,31 @@ public class MoneySystem : MonoBehaviour
 
         if (listOfCost.Count != 0)
         {
-            listOfCostTimer += Time.fixedDeltaTime;
+            listOfCostTimer += dt * 2f;
 
             if (listOfCostTimer > listOfCostTimerMax)
             {
                 listOfCostTimer = 0f;
                 MoneyInfoTextStruct info = listOfCost.Dequeue();
 
-                listOfCostTimerText.alpha = 1f;
+                listOfCostText.alpha = 1f;
                 
                 if (info.cost > 0)
                 {
-                    listOfCostTimerText.text = "+" + info.cost.ToString();
-                    listOfCostTimerText.color = new Color(0f, 1f, 0f);
+                    listOfCostText.text = "+" + info.cost.ToString();
+                    listOfCostText.color = new Color(0f, 1f, 0f);
                 }
 
                 else
                 {
-                    listOfCostTimerText.text = info.cost.ToString();
-                    listOfCostTimerText.color = new Color(1f, 0f, 0f);
+                    listOfCostText.text = info.cost.ToString();
+                    listOfCostText.color = new Color(1f, 0f, 0f);
                 }
 
                 requireFading = true;
                 listOfCostFadeTimer = 0f;
 
-                listOfCostTimerTransform.position = textStartPosition;
+                listOfCostTransform.position = textStartPosition;
                 currentSource = info.source;
 
                 Enable<Transform>(infoDestTransform);
@@ -257,6 +261,11 @@ public class MoneySystem : MonoBehaviour
                             infoDestTexture.ChangeTexture("Game/Houses/PoliceStation");
                             break;
                         }
+                    case MoneySource.RemoveCar:
+                        {
+                            infoDestTexture.ChangeTexture("CarIcon");
+                            break;
+                        }
                 }
             }
         }
@@ -268,7 +277,7 @@ public class MoneySystem : MonoBehaviour
 
     }
 
-    public void AddMoney(int val, MoneySource ms)
+    static public void AddMoney(int val, MoneySource ms)
     {
         money += val;
         textComp.text = money.ToString();
@@ -278,7 +287,7 @@ public class MoneySystem : MonoBehaviour
             listOfCost.Enqueue(new MoneyInfoTextStruct(val, ms));
     }
 
-    public void MinusMoney(int val, MoneySource ms)
+    static public void MinusMoney(int val, MoneySource ms)
     {
 
         money -= val;
@@ -294,6 +303,11 @@ public class MoneySystem : MonoBehaviour
     public int GetMoney()
     {
         return money;
+    }
+
+    static public void RemoveCarMoney()
+    {
+        MinusMoney(20, MoneySource.RemoveCar);
     }
 
     public void TaxMoney()
@@ -315,8 +329,6 @@ public class MoneySystem : MonoBehaviour
         {
             gameState.shouldEnd = true;
         }
-
-        
     }
 
     public void BuyRoad(int count)

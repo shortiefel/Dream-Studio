@@ -238,27 +238,27 @@ public class GameState : MonoBehaviour
         {
             case BuildingType.Office:
                 //moneySystem.AddMoney(addMoneyValue, MoneySource.DestOffice);
-                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
+                MoneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Hospital:
                 //moneySystem.AddMoney(addMoneyValue, MoneySource.DestHospital);
-                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
+                MoneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Park:
                 //moneySystem.AddMoney(addMoneyValue, MoneySource.DestPark);
-                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
+                MoneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Mall:
                 //moneySystem.AddMoney(addMoneyValue, MoneySource.DestMall);
-                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
+                MoneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.PoliceStation:
                 //moneySystem.AddMoney(addMoneyValue, MoneySource.DestPolice);
-                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
+                MoneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
         }
         
@@ -272,27 +272,27 @@ public class GameState : MonoBehaviour
         {
             case BuildingType.Office:
                 //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestOffice);
-                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
+                MoneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Hospital:
                 //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestHospital);
-                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
+                MoneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Park:
                 //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestPark);
-                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
+                MoneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Mall:
                 //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestMall);
-                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
+                MoneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.PoliceStation:
                 //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestPolice);
-                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
+                MoneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
         }
         

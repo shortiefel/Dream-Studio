@@ -629,6 +629,8 @@ public class RoadManager : MonoBehaviour
 
         removeCarCollider.position = position;
         Enable<Transform>(removeCarCollider);
+
+        MoneySystem.RemoveCarMoney();
     }
 
 }

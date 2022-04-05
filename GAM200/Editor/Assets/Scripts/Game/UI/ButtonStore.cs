@@ -18,6 +18,28 @@
     ERPSell,
     ERPx1,
     ERPx10,
+    ParkPlus,
+    ParkMinus,
+    ParkBuy,
+    ParkSell,
+    HospitalPlus,
+    HospitalMinus,
+    HospitalBuy,
+    HospitalSell,
+    OfficePlus,
+    OfficeMinus,
+    OfficeBuy,
+    OfficeSell,
+    ShoppingMallPlus,
+    ShoppingMallMinus,
+    ShoppingMallBuy,
+    ShoppingMallSell,
+    PoliceStationPlus,
+    PoliceStationMinus,
+    PoliceStationBuy,
+    PoliceStationSell,
+    RoadTab,
+    BuildingTab,
     CloseStore
 }
 
@@ -56,14 +78,55 @@ public class ButtonStore : MonoBehaviour
     GameObject ERPx1;
     GameObject ERPx10;
 
+    GameObject ParkPlus;
+    GameObject ParkMinus;
+    GameObject ParkNo;
+    GameObject ParkBuy;
+    GameObject ParkSell;
+
+    GameObject HospitalPlus;
+    GameObject HospitalMinus;
+    GameObject HospitalNo;
+    GameObject HospitalBuy;
+    GameObject HospitalSell;
+
+    GameObject OfficePlus;
+    GameObject OfficeMinus;
+    GameObject OfficeNo;
+    GameObject OfficeBuy;
+    GameObject OfficeSell;
+
+    GameObject ShoppingMallPlus;
+    GameObject ShoppingMallMinus;
+    GameObject ShoppingMallNo;
+    GameObject ShoppingMallBuy;
+    GameObject ShoppingMallSell;
+
+    GameObject PoliceStationPlus;
+    GameObject PoliceStationMinus;
+    GameObject PoliceStationNo;
+    GameObject PoliceStationBuy;
+    GameObject PoliceStationSell;
+
     //GameObject Storebtn;
     GameObject StoreBG;
+    GameObject StoreBuildingBG;
+    GameObject RoadTab;
+    GameObject BuildingTab;
+
+    GameObject RoadTabText;
+    GameObject BuildingTabText;
     //GameObject StoreBack;
 
     GameObject CostTitle;
     GameObject RoadCost;
     GameObject TLCost;
     GameObject ERPCost;
+    GameObject ParkCost;
+    GameObject HospitalCost;
+    GameObject OfficeCost;
+    GameObject ShoppingMallCost;
+    GameObject PoliceStationCost;
 
     //GameObject Roadbuy;
     //GameObject Trafficbuy;
@@ -105,9 +168,6 @@ public class ButtonStore : MonoBehaviour
     //Vector2 sBackPosition;
 
     Vector2 hCostPosition;
-    Vector2 roadCostPosition;
-    Vector2 tlCostPosition;
-    Vector2 erpCostPosition;
 
     //bool stopTime;
     //float stopTimer;
@@ -129,6 +189,8 @@ public class ButtonStore : MonoBehaviour
 
     public bool revealCartButton;
     public bool closing;
+    public bool buildTabBool;
+    public bool roadTabBool;
 
     Transform storeIntro;
 
@@ -137,6 +199,8 @@ public class ButtonStore : MonoBehaviour
 
     public override void Start()
     {
+        RoadTabText = GameObject.Find("RoadText");
+        BuildingTabText = GameObject.Find("BuildingText");
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
         storeClose = GameObject.Find("StoreCloseButton").GetComponent<Transform>();
@@ -156,13 +220,17 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(storeIntro);
 
         closing = false;
-
+        buildTabBool = false;
+        roadTabBool = true;
 
         texture = GetComponent<UI>();
         //texture.color = new Color(0f, 0f, 0f);
 
         //Storebtn = GameObject.Find("Storebtn");
         StoreBG = GameObject.Find("StoreBG");
+        StoreBuildingBG = GameObject.Find("StoreBuildingBG");
+        RoadTab = GameObject.Find("RoadTab");
+        BuildingTab = GameObject.Find("BuildingTab");
         //StoreBack = GameObject.Find("BackToGame");
 
         bgPosition = StoreBG.transform.position;
@@ -230,6 +298,36 @@ public class ButtonStore : MonoBehaviour
         ex1Position = ERPx1.transform.position;
         ex10Position = ERPx10.transform.position;
 
+        ParkPlus = GameObject.Find("ParkPlus");
+        ParkMinus = GameObject.Find("ParkMinus");
+        ParkNo = GameObject.Find("ParkQty");
+        ParkBuy = GameObject.Find("ParkBuy");
+        ParkSell = GameObject.Find("ParkSell");
+
+        HospitalPlus = GameObject.Find("HospitalPlus");
+        HospitalMinus = GameObject.Find("HospitalMinus");
+        HospitalNo = GameObject.Find("HospitalQty");
+        HospitalBuy = GameObject.Find("HospitalBuy");
+        HospitalSell = GameObject.Find("HospitalSell");
+
+        OfficePlus = GameObject.Find("OfficePlus");
+        OfficeMinus = GameObject.Find("OfficeMinus");
+        OfficeNo = GameObject.Find("OfficeQty");
+        OfficeBuy = GameObject.Find("OfficeBuy");
+        OfficeSell = GameObject.Find("OfficeSell");
+
+        ShoppingMallPlus = GameObject.Find("ShoppingMallPlus");
+        ShoppingMallMinus = GameObject.Find("ShoppingMallMinus");
+        ShoppingMallNo = GameObject.Find("ShoppingMallQty");
+        ShoppingMallBuy = GameObject.Find("ShoppingMallBuy");
+        ShoppingMallSell = GameObject.Find("ShoppingMallSell");
+
+        PoliceStationPlus = GameObject.Find("PoliceStationPlus");
+        PoliceStationMinus = GameObject.Find("PoliceStationMinus");
+        PoliceStationNo = GameObject.Find("PoliceStationQty");
+        PoliceStationBuy = GameObject.Find("PoliceStationBuy");
+        PoliceStationSell = GameObject.Find("PoliceStationSell");
+
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
 
@@ -246,15 +344,21 @@ public class ButtonStore : MonoBehaviour
         RoadCost = GameObject.Find("RoadCost");
         TLCost = GameObject.Find("TrafficCost");
         ERPCost = GameObject.Find("ERPCost");
-
-        roadCostPosition = RoadCost.transform.position;
-        tlCostPosition = TLCost.transform.position;
-        erpCostPosition = ERPCost.transform.position;
+        ParkCost = GameObject.Find("ParkCost");
+        HospitalCost = GameObject.Find("HospitalCost");
+        OfficeCost = GameObject.Find("OfficeCost");
+        ShoppingMallCost = GameObject.Find("ShoppingMallCost");
+        PoliceStationCost = GameObject.Find("PoliceStationCost");
 
         Disable<Transform>(storeClose);
 
         //Disable<Transform>(Storebtn.transform);
         Disable<Transform>(StoreBG.transform);
+        Disable<Transform>(StoreBuildingBG.transform);
+        Disable<Transform>(RoadTab.transform);
+        Disable<Transform>(BuildingTab.transform);
+        Disable<Transform>(RoadTabText.transform);
+        Disable<Transform>(BuildingTabText.transform);
         //Disable<Transform>(StoreBack.transform);
         Disable<Transform>(StoreHeader.transform);
         Disable<Transform>(ItemHeader.transform);
@@ -286,12 +390,44 @@ public class ButtonStore : MonoBehaviour
         Disable<Transform>(ERPx1.transform);
         Disable<Transform>(ERPx10.transform);
 
+        Disable<Transform>(ParkPlus.transform);
+        Disable<Transform>(ParkMinus.transform);
+        Disable<Transform>(ParkNo.transform);
+        Disable<Transform>(ParkBuy.transform);
+        Disable<Transform>(ParkSell.transform);
+
+        Disable<Transform>(HospitalPlus.transform);
+        Disable<Transform>(HospitalMinus.transform);
+        Disable<Transform>(HospitalNo.transform);
+        Disable<Transform>(HospitalBuy.transform);
+        Disable<Transform>(HospitalSell.transform);
+
+        Disable<Transform>(OfficePlus.transform);
+        Disable<Transform>(OfficeMinus.transform);
+        Disable<Transform>(OfficeNo.transform);
+        Disable<Transform>(OfficeBuy.transform);
+        Disable<Transform>(OfficeSell.transform);
+
+        Disable<Transform>(ShoppingMallPlus.transform);
+        Disable<Transform>(ShoppingMallMinus.transform);
+        Disable<Transform>(ShoppingMallNo.transform);
+        Disable<Transform>(ShoppingMallBuy.transform);
+        Disable<Transform>(ShoppingMallSell.transform);
+
+        Disable<Transform>(PoliceStationPlus.transform);
+        Disable<Transform>(PoliceStationMinus.transform);
+        Disable<Transform>(PoliceStationNo.transform);
+        Disable<Transform>(PoliceStationBuy.transform);
+        Disable<Transform>(PoliceStationSell.transform);
+
         Disable<Transform>(RoadCost.transform);
         Disable<Transform>(TLCost.transform);
         Disable<Transform>(ERPCost.transform);
-
-
-
+        Disable<Transform>(ParkCost.transform);
+        Disable<Transform>(HospitalCost.transform);
+        Disable<Transform>(OfficeCost.transform);
+        Disable<Transform>(ShoppingMallCost.transform);
+        Disable<Transform>(PoliceStationCost.transform);
 
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
 
@@ -314,6 +450,10 @@ public class ButtonStore : MonoBehaviour
                 Enable<Transform>(RoadSell.transform);
                 Enable<Transform>(Roadx1.transform);
                 Enable<Transform>(Roadx10.transform);
+                Enable<Transform>(RoadTab.transform);
+                Enable<Transform>(BuildingTab.transform);
+                Enable<Transform>(RoadTabText.transform);
+                Enable<Transform>(BuildingTabText.transform);
             }
 
             if (combinedUI.buttonRoad.revealTrafficButton)
@@ -344,9 +484,6 @@ public class ButtonStore : MonoBehaviour
 
             //Enable<Transform>(CostTitle.transform);
             Enable<Transform>(RoadCost.transform);
-
-
-
             Enable<Transform>(storeClose);
             Disable<Transform>(transform);
             //stopTime = true;
@@ -369,6 +506,7 @@ public class ButtonStore : MonoBehaviour
             gameState.SetAllowPause(true);
 
             Disable<Transform>(StoreBG.transform);
+            Disable<Transform>(StoreBuildingBG.transform);
             Disable<Transform>(StoreHeader.transform);
             Disable<Transform>(ItemHeader.transform);
             Disable<Transform>(QtyHeader.transform);
@@ -399,6 +537,36 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(ERPx1.transform);
             Disable<Transform>(ERPx10.transform);
 
+            Disable<Transform>(ParkPlus.transform);
+            Disable<Transform>(ParkMinus.transform);
+            Disable<Transform>(ParkNo.transform);
+            Disable<Transform>(ParkBuy.transform);
+            Disable<Transform>(ParkSell.transform);
+
+            Disable<Transform>(HospitalPlus.transform);
+            Disable<Transform>(HospitalMinus.transform);
+            Disable<Transform>(HospitalNo.transform);
+            Disable<Transform>(HospitalBuy.transform);
+            Disable<Transform>(HospitalSell.transform);
+
+            Disable<Transform>(OfficePlus.transform);
+            Disable<Transform>(OfficeMinus.transform);
+            Disable<Transform>(OfficeNo.transform);
+            Disable<Transform>(OfficeBuy.transform);
+            Disable<Transform>(OfficeSell.transform);
+
+            Disable<Transform>(ShoppingMallPlus.transform);
+            Disable<Transform>(ShoppingMallMinus.transform);
+            Disable<Transform>(ShoppingMallNo.transform);
+            Disable<Transform>(ShoppingMallBuy.transform);
+            Disable<Transform>(ShoppingMallSell.transform);
+
+            Disable<Transform>(PoliceStationPlus.transform);
+            Disable<Transform>(PoliceStationMinus.transform);
+            Disable<Transform>(PoliceStationNo.transform);
+            Disable<Transform>(PoliceStationBuy.transform);
+            Disable<Transform>(PoliceStationSell.transform);
+
             if (reenable)
             {
                 Enable<Transform>(displayArrow);
@@ -415,6 +583,16 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(RoadCost.transform);
             Disable<Transform>(TLCost.transform);
             Disable<Transform>(ERPCost.transform);
+            Disable<Transform>(ParkCost.transform);
+            Disable<Transform>(HospitalCost.transform);
+            Disable<Transform>(OfficeCost.transform);
+            Disable<Transform>(ShoppingMallCost.transform);
+            Disable<Transform>(PoliceStationCost.transform);
+
+            Disable<Transform>(RoadTab.transform);
+            Disable<Transform>(BuildingTab.transform);
+            Disable<Transform>(RoadTabText.transform);
+            Disable<Transform>(BuildingTabText.transform);
 
             Disable<Transform>(storeClose);
             
@@ -480,13 +658,16 @@ public class ButtonStore : MonoBehaviour
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
             StoreAction();
-
         }
+
+        InputManager.allowBuilding = false;
     }
 
     public override void OnMouseExit()
     {
         texture.ChangeTexture("Game/Store/Store");
+
+        InputManager.allowBuilding = true;
     }
 
     internal void ResumeAction()
@@ -494,6 +675,152 @@ public class ButtonStore : MonoBehaviour
         StoreAction();
     }
 
+    public void ToggleStore()
+    {
+        if (roadTabBool)
+        {
+            buildTabBool = false;
+
+            Enable<Transform>(StoreBG.transform);
+            Disable<Transform>(StoreBuildingBG.transform);
+            Enable<Transform>(RoadTab.transform);
+            Enable<Transform>(BuildingTab.transform);
+            Enable<Transform>(RoadPlus.transform);
+            Enable<Transform>(RoadMinus.transform);
+            Enable<Transform>(RoadNo.transform);
+            Enable<Transform>(RoadBuy.transform);
+            Enable<Transform>(RoadSell.transform);
+            Enable<Transform>(Roadx1.transform);
+            Enable<Transform>(Roadx10.transform);
+
+            if (combinedUI.buttonRoad.revealTrafficButton)
+            {
+                Enable<Transform>(TrafficPlus.transform);
+                Enable<Transform>(TrafficMinus.transform);
+                Enable<Transform>(TrafficNo.transform);
+                Enable<Transform>(TrafficBuy.transform);
+                Enable<Transform>(TrafficSell.transform);
+                Enable<Transform>(TLCost.transform);
+                Enable<Transform>(Trafficx1.transform);
+                Enable<Transform>(Trafficx10.transform);
+            }
+            if (combinedUI.buttonRoad.revealERPButton)
+            {
+                Enable<Transform>(ERPPlus.transform);
+                Enable<Transform>(ERPMinus.transform);
+                Enable<Transform>(ERPNo.transform);
+                Enable<Transform>(ERPBuy.transform);
+                Enable<Transform>(ERPSell.transform);
+                Enable<Transform>(ERPCost.transform);
+                Enable<Transform>(ERPx1.transform);
+                Enable<Transform>(ERPx10.transform);
+            }
+
+            Enable<Transform>(RoadCost.transform);
+
+            //disable UI for building store 
+            Disable<Transform>(ParkPlus.transform);
+            Disable<Transform>(ParkMinus.transform);
+            Disable<Transform>(ParkNo.transform);
+            Disable<Transform>(ParkBuy.transform);
+            Disable<Transform>(ParkSell.transform);
+
+            Disable<Transform>(HospitalPlus.transform);
+            Disable<Transform>(HospitalMinus.transform);
+            Disable<Transform>(HospitalNo.transform);
+            Disable<Transform>(HospitalBuy.transform);
+            Disable<Transform>(HospitalSell.transform);
+
+            Disable<Transform>(OfficePlus.transform);
+            Disable<Transform>(OfficeMinus.transform);
+            Disable<Transform>(OfficeNo.transform);
+            Disable<Transform>(OfficeBuy.transform);
+            Disable<Transform>(OfficeSell.transform);
+
+            Disable<Transform>(ShoppingMallPlus.transform);
+            Disable<Transform>(ShoppingMallMinus.transform);
+            Disable<Transform>(ShoppingMallNo.transform);
+            Disable<Transform>(ShoppingMallBuy.transform);
+            Disable<Transform>(ShoppingMallSell.transform);
+
+            Disable<Transform>(PoliceStationPlus.transform);
+            Disable<Transform>(PoliceStationMinus.transform);
+            Disable<Transform>(PoliceStationNo.transform);
+            Disable<Transform>(PoliceStationBuy.transform);
+            Disable<Transform>(PoliceStationSell.transform);
+
+        }
+        if(buildTabBool)
+        {
+            roadTabBool = false;
+
+            Disable<Transform>(StoreBG.transform);
+            Enable<Transform>(StoreBuildingBG.transform);
+            Enable<Transform>(RoadTab.transform);
+            Enable<Transform>(BuildingTab.transform);
+            Disable<Transform>(RoadPlus.transform);
+            Disable<Transform>(RoadMinus.transform);
+            Disable<Transform>(RoadNo.transform);
+            Disable<Transform>(RoadBuy.transform);
+            Disable<Transform>(RoadSell.transform);
+            Disable<Transform>(Roadx1.transform);
+            Disable<Transform>(Roadx10.transform);
+
+            Disable<Transform>(TrafficPlus.transform);
+            Disable<Transform>(TrafficMinus.transform);
+            Disable<Transform>(TrafficNo.transform);
+            Disable<Transform>(TrafficBuy.transform);
+            Disable<Transform>(TrafficSell.transform);
+            Disable<Transform>(Trafficx1.transform);
+            Disable<Transform>(Trafficx10.transform);
+
+            Disable<Transform>(ERPPlus.transform);
+            Disable<Transform>(ERPMinus.transform);
+            Disable<Transform>(ERPNo.transform);
+            Disable<Transform>(ERPBuy.transform);
+            Disable<Transform>(ERPSell.transform);
+            Disable<Transform>(ERPx1.transform);
+            Disable<Transform>(ERPx10.transform);
+
+            Disable<Transform>(RoadCost.transform);
+            Disable<Transform>(TLCost.transform);
+            Disable<Transform>(ERPCost.transform);
+
+            //enable UI for building store
+            Enable<Transform>(ParkPlus.transform);
+            Enable<Transform>(ParkMinus.transform);
+            Enable<Transform>(ParkNo.transform);
+            Enable<Transform>(ParkBuy.transform);
+            Enable<Transform>(ParkSell.transform);
+            
+            Enable<Transform>(HospitalPlus.transform);
+            Enable<Transform>(HospitalMinus.transform);
+            Enable<Transform>(HospitalNo.transform);
+            Enable<Transform>(HospitalBuy.transform);
+            Enable<Transform>(HospitalSell.transform);
+            
+            Enable<Transform>(OfficePlus.transform);
+            Enable<Transform>(OfficeMinus.transform);
+            Enable<Transform>(OfficeNo.transform);
+            Enable<Transform>(OfficeBuy.transform);
+            Enable<Transform>(OfficeSell.transform);
+            
+            Enable<Transform>(ShoppingMallPlus.transform);
+            Enable<Transform>(ShoppingMallMinus.transform);
+            Enable<Transform>(ShoppingMallNo.transform);
+            Enable<Transform>(ShoppingMallBuy.transform);
+            Enable<Transform>(ShoppingMallSell.transform);
+            
+            Enable<Transform>(PoliceStationPlus.transform);
+            Enable<Transform>(PoliceStationMinus.transform);
+            Enable<Transform>(PoliceStationNo.transform);
+            Enable<Transform>(PoliceStationBuy.transform);
+            Enable<Transform>(PoliceStationSell.transform);
+
+       
+        }
+            
+    }
     public void RevealStore()
     {
         revealCartButton = true;
@@ -509,6 +836,16 @@ public class ButtonStore : MonoBehaviour
 
         combinedUI.CloseAllUIExcept(UIType.None);
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
+    }
+
+    public void SetroadTabBool(bool type)
+    {
+        roadTabBool = type;
+    }
+
+    public void SetbuildingTabBool(bool type)
+    {
+        buildTabBool = type;
     }
 }
 

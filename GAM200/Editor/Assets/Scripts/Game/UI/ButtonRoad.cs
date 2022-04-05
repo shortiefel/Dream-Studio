@@ -15,6 +15,7 @@ public enum ButtonType
     PlacePoliceStation,
     Display,
     Ignore,
+    Latest, //Used to reopen the last buttontype
     None
 }
 
@@ -475,6 +476,7 @@ public class ButtonRoad : MonoBehaviour
         bool _activeType = true;
 
         if (_bt == choosenButton) _activeType = false;
+        if (_bt == ButtonType.Latest) _bt = choosenButton;
 
         switch (choosenButton)
         {
@@ -635,20 +637,21 @@ public class ButtonRoad : MonoBehaviour
             }
             
             SceneManager.SetDrawMode(true);
-            gameState.SetDrawMode(true);
+            //gameState.SetDrawMode(true);
             //cameraMovement.drawMode = true;
         }
         else
         {
 
             SceneManager.SetDrawMode(false);
-            gameState.SetDrawMode(false);
+            //gameState.SetDrawMode(false);
 
             EnableAllNormalExcept();
+
+            _bt = ButtonType.None;
         }
 
-
-        if (_bt == choosenButton) _bt = ButtonType.None;
+        
         choosenButton = _bt;
     }
 
@@ -748,7 +751,7 @@ public class ButtonRoad : MonoBehaviour
         gameManager.ClearInputActions();
 
         SceneManager.SetDrawMode(false);
-        gameState.SetDrawMode(false);
+        //gameState.SetDrawMode(false);
         //activeType = false;
     }
 
@@ -760,7 +763,7 @@ public class ButtonRoad : MonoBehaviour
         gameManager.ClearInputActions();
 
         SceneManager.SetDrawMode(false);
-        gameState.SetDrawMode(false);
+        //gameState.SetDrawMode(false);
         //activeType = false;
     }
 

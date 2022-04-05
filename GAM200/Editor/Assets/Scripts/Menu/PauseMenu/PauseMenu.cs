@@ -276,6 +276,7 @@ public class PauseMenu : MonoBehaviour
     public override void OnMouseEnter()
     {
         texture.color = new Color(1f, 1f, 1f);
+        InputManager.allowBuilding = false;
     }
 
     public override void OnMouseOver()
@@ -288,6 +289,7 @@ public class PauseMenu : MonoBehaviour
 
     public override void OnMouseExit()
     {
+        InputManager.allowBuilding = true;
         texture.color = new Color(1f, 1f, 1f);
     }
 

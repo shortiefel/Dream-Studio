@@ -54,6 +54,12 @@ namespace Engine {
 		}
 
 		template<typename T>
+		void RestoreCom() {
+			const char* TypeName = typeid(T).name();
+			mComponentArrayInter.insert({ TypeName, std::make_shared <ComponentArray<T>>() });//ptr to comarray
+		}
+
+		template<typename T>
 		ComponentType GetterComType() {
 			const char* TypeName = typeid(T).name();
 

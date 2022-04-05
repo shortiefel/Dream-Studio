@@ -17,6 +17,8 @@ public class InputManager : MonoBehaviour
 	//public LayerMask groundMask;
 	GameState gameState;
 
+	static public bool allowBuilding = true;
+
 	public override void Start()
 	{
 		gameState = GameObject.Find("GameManager").GetComponent<GameState>();
@@ -48,7 +50,7 @@ public class InputManager : MonoBehaviour
 			//placementManager.placementGrid.Expand();
 			gameState.ExpandGrid();
 		}
-		
+
 		//if (!gameState.GetPause())
 		//{
 		//	bool state = gameState.GetDrawMode();
@@ -82,7 +84,7 @@ public class InputManager : MonoBehaviour
 
 		////if (Mathf.Approximately(0f, Time.timeScale)) return;
 		//if (!gameState.ShouldDraw()) return;
-
+		if (!allowBuilding) return;
 		CheckClickDownEvent();
 		CheckClickHoldEvent();
 		CheckClickUpEvent();

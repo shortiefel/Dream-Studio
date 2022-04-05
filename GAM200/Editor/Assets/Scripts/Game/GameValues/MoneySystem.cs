@@ -10,7 +10,8 @@ public enum MoneySource
     DestOffice,
     DestPark,
     DestMall,
-    DestPolice
+    DestPolice,
+    Ignore
 }
 
 struct MoneyInfoTextStruct {
@@ -33,6 +34,11 @@ public class MoneySystem : MonoBehaviour
     public int erpCost;
     public int tlCost;
     public int roadCost;
+    public int parkCost;
+    public int hospitalCost;
+    public int officeCost;
+    public int shoppingmallCost;
+    public int policestationCost;
 
     public int roadNum;
     public int tlNum;
@@ -45,6 +51,11 @@ public class MoneySystem : MonoBehaviour
     public int road_counter;
     public int traffic_counter;
     public int erp_counter;
+    public int park_counter;
+    public int hospital_counter;
+    public int office_counter;
+    public int shoppingmall_counter;
+    public int policestation_counter;
 
     public bool road_bool;
     public bool traffic_bool;
@@ -52,6 +63,11 @@ public class MoneySystem : MonoBehaviour
 
     private int erpBuyCount;
     private int tlBuyCount;
+    private int parkBuyCount;
+    private int hospitalBuyCount;
+    private int officeBuyCount;
+    private int shoppingmallBuyCount;
+    private int policestationBuyCount;
 
     RoadManager roadManager;
     ERPManager erpManager;
@@ -117,12 +133,28 @@ public class MoneySystem : MonoBehaviour
         roadCost = 20;
         tlCost = 50;
         erpCost = 50;
+        parkCost = 100;
+        hospitalCost = 100;
+        officeCost = 100;
+        shoppingmallCost = 100;
+        policestationCost = 100;
+
         road_counter = 0;
         traffic_counter = 0;
         erp_counter = 0;
+        park_counter = 0;
+        hospital_counter = 0;
+        office_counter = 0;
+        shoppingmall_counter = 0;
+        policestation_counter = 0;
 
         erpBuyCount = 0;
         tlBuyCount = 0;
+        parkBuyCount = 0;
+        hospitalBuyCount = 0;
+        officeBuyCount = 0;
+        shoppingmallBuyCount = 0;
+        policestationBuyCount = 0;
 
         road_bool = false;
         traffic_bool = false;
@@ -273,7 +305,8 @@ public class MoneySystem : MonoBehaviour
         textComp.text = money.ToString();
 
         //Debug.Log("Adding money");
-        listOfCost.Enqueue(new MoneyInfoTextStruct(val, ms));
+        if (ms != MoneySource.Ignore)
+            listOfCost.Enqueue(new MoneyInfoTextStruct(val, ms));
     }
 
     public void MinusMoney(int val, MoneySource ms)
@@ -285,7 +318,8 @@ public class MoneySystem : MonoBehaviour
         balance = money;
 
         //Debug.Log("Minus money");
-        listOfCost.Enqueue(new MoneyInfoTextStruct(-val, ms));
+        if (ms != MoneySource.Ignore)
+            listOfCost.Enqueue(new MoneyInfoTextStruct(-val, ms));
     }
 
     public int GetMoney()
@@ -368,6 +402,13 @@ public class MoneySystem : MonoBehaviour
         roadManager.trafficLightManager.tlCount -= count;
     }
 
+    public void BuyPark(int count)
+    {
+        
+        MinusMoney(getParkCost(), MoneySource.Store);
+        parkCost = getParkCost();
+        //add park count
+    }
     public int road_count()
     {
         return road_counter;
@@ -381,6 +422,27 @@ public class MoneySystem : MonoBehaviour
     public int erp_count()
     {
         return erp_counter;
+    }
+
+    public int park_count()
+    {
+        return park_counter;
+    }
+    public int hospital_count()
+    {
+        return hospital_counter;
+    }
+    public int office_count()
+    {
+        return office_counter;
+    }
+    public int shoppingmall_count()
+    {
+        return shoppingmall_counter;
+    }
+    public int policestation_count()
+    {
+        return policestation_counter;
     }
 
     public int erpbuy_count()
@@ -408,6 +470,20 @@ public class MoneySystem : MonoBehaviour
         {
             total_amount += 50 + buyc * 10;
             buyc++;
+        }
+        return total_amount;
+    }
+
+    public int getParkCost()
+    {
+        if (parkBuyCount == 0 && park_counter <= 1)
+            return 100;
+        int total_amount = 0;
+        int temp = parkCost;
+        for(int i = 0; i < park_counter; i ++)
+        {
+            total_amount += (temp * 5);
+            temp = temp * 5;
         }
         return total_amount;
     }

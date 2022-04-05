@@ -49,6 +49,8 @@ public class TimeSystem : MonoBehaviour
 
     public static float previousTimeScale;
 
+    public bool isOn = false;
+
     //private static bool pauseOrUnpause = false;
     public override void Start()
     {
@@ -133,6 +135,7 @@ public class TimeSystem : MonoBehaviour
             else
                 Enable<Transform>(TimerFast);
 
+            isOn = true;
         }
         else
         {
@@ -143,7 +146,8 @@ public class TimeSystem : MonoBehaviour
             //Disable<Transform>(TimerWhite);
             //if (reenable)
             //    Enable<Transform>(Timer);
-            
+
+            isOn = false;
         }
     }
 

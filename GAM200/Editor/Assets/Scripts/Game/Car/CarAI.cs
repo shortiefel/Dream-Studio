@@ -74,12 +74,12 @@ public class CarAI : MonoBehaviour
         GameObject go1 = GameObject.Find("CollisionManager");
         if (go1 != null)
             collisionManager = go1.GetComponent<CollisionManager>();
-        //GameObject go2 = GameObject.Find("TrafficManager");
-        //if (go2 != null)
-        //{
-        //    tm = go2.GetComponent<TrafficManager>();
-        //    tm.RegisterCar(transform.entityId);
-        //}
+        GameObject go2 = GameObject.Find("TrafficManager");
+        if (go2 != null)
+        {
+            tm = go2.GetComponent<TrafficManager>();
+            //tm.RegisterCar(transform.entityId);
+        }
 
         changeTarget = false;
         tValue = 0f;

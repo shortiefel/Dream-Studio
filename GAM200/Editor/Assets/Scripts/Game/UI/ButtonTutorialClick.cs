@@ -3,11 +3,9 @@
 public class ButtonTutorialClick : MonoBehaviour
 {
     TutButtonType tbt;
-    bool type;
     //public bool active;
     ButtonTutorial buttonTut;
-    Text tooltipText;
-    Transform tooltipTrans;
+
     Vector2 tooltipOffset;
     //Texture lineDivider1;
     //Texture lineDivider2;
@@ -17,37 +15,34 @@ public class ButtonTutorialClick : MonoBehaviour
     public override void Start()
     {
         buttonTut = GameObject.Find("TutorialRoad").GetComponent<ButtonTutorial>();
-        tooltipText = GameObject.Find("stringname").GetComponent<Text>();
-        tooltipTrans = GameObject.Find("stringname").GetComponent<Transform>();
 
 
         if (entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId)
         {
             tbt = TutButtonType.Draw;
-            type = true;
+            tooltipOffset = transform.position + new Vector2(-3.60f, 7.70f);
             //active = true;
-        }
-
-        else if (entityId == GameObject.Find("DrawRoadWhite").GetComponent<Transform>().entityId)
-        {
-            tbt = TutButtonType.Draw;
-            type = false;
-            //active = false;
         }
 
         else if (entityId == GameObject.Find("RemoveRoad").GetComponent<Transform>().entityId)
         {
             tbt = TutButtonType.Remove;
-            type = true;
+            tooltipOffset = transform.position + new Vector2(-6.00f, 7.70f);
             //active = true;
         }
 
-        else if (entityId == GameObject.Find("RemoveRoadWhite").GetComponent<Transform>().entityId)
+        else if (entityId == GameObject.Find("RemoveCar").GetComponent<Transform>().entityId)
         {
-            tbt = TutButtonType.Remove;
-            type = false;
-            //active = false;
+            tbt = TutButtonType.RemoveCar;
+            tooltipOffset = transform.position + new Vector2(-8.80f, 7.70f);
         }
+
+        else if (entityId == GameObject.Find("PlaceHospital").GetComponent<Transform>().entityId)
+        {
+            tbt = TutButtonType.PlaceHospital;
+            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+        }
+
         //else if (entityId == GameObject.Find("RemoveRoadGlow").GetComponent<Transform>().entityId)
         //{
         //    tbt = TutButtonType.Remove;
@@ -62,14 +57,14 @@ public class ButtonTutorialClick : MonoBehaviour
         //}
 
 
-        if (entityId == GameObject.Find("Displaybtn").GetComponent<Transform>().entityId)
-        {
-            //Debug.Log("selected1");
-            tbt = TutButtonType.Display;
-            type = true;
-            //Debug.Log("selected2");
-            //active = true;
-        }
+        //if (entityId == GameObject.Find("Displaybtn").GetComponent<Transform>().entityId)
+        //{
+        //    //Debug.Log("selected1");
+        //    tbt = TutButtonType.Display;
+        //    type = true;
+        //    //Debug.Log("selected2");
+        //    //active = true;
+        //}
 
         //if (entityId == GameObject.Find("DisplayGlow").GetComponent<Transform>().entityId)
         //{
@@ -80,15 +75,9 @@ public class ButtonTutorialClick : MonoBehaviour
         //    //active = true;
         //}
 
-        if (entityId == GameObject.Find("DisplaybtnWhite").GetComponent<Transform>().entityId)
-        {
-            tbt = TutButtonType.Display;
-            type = false;
 
-            //active = false;
-        }
 
-        tooltipOffset = transform.position + new Vector2(-2f, 6.5f);
+        //tooltipOffset = transform.position + new Vector2(-2f, 6.5f);
 
     }
     public override void OnMouseOver()
@@ -99,37 +88,63 @@ public class ButtonTutorialClick : MonoBehaviour
         {
             switch (tbt)
             {
-                case TutButtonType.Display:
-                    if (Input.GetMouseButtonDown(MouseCode.Left))
-                    {
-                        //Debug.Log("Calling for switich");
-                        buttonTut.SwitchTabTut(type);
-                    }
+                //case TutButtonType.Display:
+                //    if (Input.GetMouseButtonDown(MouseCode.Left))
+                //    {
+                //        //Debug.Log("Calling for switich");
+                //        buttonTut.SwitchTabTut(type);
+                //    }
 
-                    Enable<Transform>(tooltipTrans);
-                    tooltipTrans.position = tooltipOffset;
-                    tooltipText.text = "Display buttons";
+                //    Enable<Transform>(tooltipTrans);
+                //    tooltipTrans.position = tooltipOffset;
+                //    tooltipText.text = "Display buttons";
 
-                    break;
+                //    break;
 
                 case TutButtonType.Draw:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonTut.CallFunctionTut(tbt, type);
+                            buttonTut.CallFunctionTut(tbt);
 
-                        Enable<Transform>(tooltipTrans);
-                        tooltipTrans.position = tooltipOffset;
-                        tooltipText.text = "Road";
+                        buttonTut.SetToolTips(true, tooltipOffset, "Road");
+
+                        //Enable<Transform>(tooltipTrans);
+                        //tooltipTrans.position = tooltipOffset;
+                        //tooltipText.text = "Road";
                         break;
                     }
                 case TutButtonType.Remove:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonTut.CallFunctionTut(tbt, type);
+                            buttonTut.CallFunctionTut(tbt);
 
-                        Enable<Transform>(tooltipTrans);
-                        tooltipTrans.position = tooltipOffset;
-                        tooltipText.text = "Remove ";
+                        buttonTut.SetToolTips(true, tooltipOffset, "Remove Road");
+                        //Enable<Transform>(tooltipTrans);
+                        //tooltipTrans.position = tooltipOffset;
+                        //tooltipText.text = "Remove ";
+                        break;
+                    }
+                case TutButtonType.RemoveCar:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                            buttonTut.CallFunctionTut(tbt);
+
+                        buttonTut.SetToolTips(true, tooltipOffset, "Remove Car");
+                        //Enable<Transform>(tooltipTrans);
+                        //tooltipText.text = "Remove Car";
+                        break;
+                    }
+                case TutButtonType.PlaceHospital:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            buttonTut.CallFunctionTut(tbt);
+                        }
+
+                        buttonTut.SetToolTips(true, tooltipOffset, "Place Hospital");
+                        //Enable<Transform>(tooltipTrans);
+                        //tooltipText.text = "Place Hospital";
+
                         break;
                     }
 
@@ -143,24 +158,25 @@ public class ButtonTutorialClick : MonoBehaviour
 
     public override void OnMouseExit()
     {
+        buttonTut.SetToolTips(false, Vector2.zero);
 
         //if (!transform.isActive) return;
-        if (transform.isActive)
-        {
-            switch (tbt)
-            {
-                case TutButtonType.Display:
-                case TutButtonType.Draw:
-                case TutButtonType.Remove:
-                    Disable<Transform>(tooltipTrans);
+        //if (transform.isActive)
+        //{
+        //    switch (tbt)
+        //    {
+        //        case TutButtonType.Display:
+        //        case TutButtonType.Draw:
+        //        case TutButtonType.Remove:
+        //            Disable<Transform>(tooltipTrans);
 
-                    break;
-                default:
+        //            break;
+        //        default:
 
-                    break;
-            }
+        //            break;
+        //    }
 
-        }
+        //}
     }
 
     public override void OnEnable()

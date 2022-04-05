@@ -664,7 +664,12 @@ public class ButtonRoad : MonoBehaviour
         if (closing)
             CloseTabs();
 
+        /****Shortcut keys in game***/
         if (Input.GetKeyDown(KeyCode.H)) CallFunction(ButtonType.PlaceHospital);
+        if (Input.GetKeyDown(KeyCode.M)) CallFunction(ButtonType.PlaceMall);
+        if (Input.GetKeyDown(KeyCode.P)) CallFunction(ButtonType.PlacePark);
+        if (Input.GetKeyDown(KeyCode.O)) CallFunction(ButtonType.PlaceOffice);
+        if (Input.GetKeyDown(KeyCode.S)) CallFunction(ButtonType.PlacePoliceStation);
     }
 
     public void SetToolTips(bool state, Vector2 position, string textToPut = "")

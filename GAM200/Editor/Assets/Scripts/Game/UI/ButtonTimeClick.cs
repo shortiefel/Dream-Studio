@@ -64,13 +64,11 @@ public class ButtonTimeClick : MonoBehaviour
       
     }
 
-
-
     public override void OnMouseOver()
     {
         //Debug.Log("I's here");
 
-        if (transform.isActive)
+        //if (transform.isActive)
         {
             switch (tt)
             {
@@ -125,9 +123,16 @@ public class ButtonTimeClick : MonoBehaviour
                     break;
             }
         }
+    }
 
+    public override void OnMouseEnter()
+    {
+        InputManager.allowBuilding = false;
+    }
 
-
+    public override void OnMouseExit()
+    {
+        InputManager.allowBuilding = true;
     }
 
 }

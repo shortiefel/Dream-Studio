@@ -623,6 +623,12 @@ public class ButtonStoreClick : MonoBehaviour
                     break;
                 }
         }
+
+        InputManager.allowBuilding = false;
     }
 
+    public override void OnMouseExit()
+    {
+        InputManager.allowBuilding = true;
+    }
 }

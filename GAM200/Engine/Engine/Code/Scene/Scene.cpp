@@ -202,18 +202,18 @@ namespace Engine {
                     DeltaTime::GetInstance().SetTimeScale(1.f);
                 }
 
-                dreamECSLoader->RegisterComponent<CameraComponent>();
-                dreamECSLoader->RegisterComponent<TransformComponent>();
-                dreamECSLoader->RegisterComponent<ColliderComponent>();
-                dreamECSLoader->RegisterComponent<TextureComponent>();
-                dreamECSLoader->RegisterComponent<RigidBodyComponent>();
-                dreamECSLoader->RegisterComponent<ScriptComponent>();
-                dreamECSLoader->RegisterComponent<UIComponent>();
-                dreamECSLoader->RegisterComponent<FontComponent>();
-                dreamECSLoader->RegisterComponent<SoundComponent>();
-                dreamECSLoader->RegisterComponent<ParticleComponent>();
-                dreamECSLoader->RegisterComponent<WaypointComponent>();
-                dreamECSLoader->RegisterComponent<LightComponent>();
+                dreamECSLoader->RestoreComponent<CameraComponent>();
+                dreamECSLoader->RestoreComponent<TransformComponent>();
+                dreamECSLoader->RestoreComponent<ColliderComponent>();
+                dreamECSLoader->RestoreComponent<TextureComponent>();
+                dreamECSLoader->RestoreComponent<RigidBodyComponent>();
+                dreamECSLoader->RestoreComponent<ScriptComponent>();
+                dreamECSLoader->RestoreComponent<UIComponent>();
+                dreamECSLoader->RestoreComponent<FontComponent>();
+                dreamECSLoader->RestoreComponent<SoundComponent>();
+                dreamECSLoader->RestoreComponent<ParticleComponent>();
+                dreamECSLoader->RestoreComponent<WaypointComponent>();
+                dreamECSLoader->RestoreComponent<LightComponent>();
             }
         }
 

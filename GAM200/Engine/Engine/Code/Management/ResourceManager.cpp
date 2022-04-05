@@ -23,6 +23,14 @@ Technology is prohibited.
 
 namespace Engine
 {
+	struct stbiSet {
+		stbi_uc* data = nullptr;
+		int width;
+		int height;
+		int channels_in_files;
+	};
+	std::map<std::string, stbiSet> stbiMap{};
+
 	// Create function for ResourceManager
 	void ResourceManager::Create()
 	{
@@ -52,6 +60,12 @@ namespace Engine
 			}
 		}
 		fontList.clear();
+
+		for (auto& i : stbiMap) {
+			stbi_image_free(i.second.data);
+		}
+		stbiMap.clear();
+
 
 		LOG_INSTANCE("ResourceManager destroyed");
 	}
@@ -251,17 +265,6 @@ namespace Engine
 
 		return true;
 	}
-
-
-
-	struct stbiSet {
-		stbi_uc* data = nullptr;
-		int width;
-		int height;
-		int channels_in_files;
-	};
-
-	std::map<std::string, stbiSet> stbiMap{};
 
 	void ResourceManager::TextureStbiLoad(TextureComponent& tc, std::string _filepath) {
 		if (_filepath.empty()) return;

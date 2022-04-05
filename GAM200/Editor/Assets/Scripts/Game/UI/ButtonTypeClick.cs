@@ -303,13 +303,17 @@ public class ButtonTypeClick : MonoBehaviour
                     
                     break;
             }
-
         //}
+    }
+
+    public override void OnMouseEnter()
+    {
+        InputManager.allowBuilding = false;
     }
 
     public override void OnMouseExit()
     {
-
+        InputManager.allowBuilding = true;
         buttonRoad.SetToolTips(false, Vector2.zero);
         //if (!transform.isActive) return;
         //if (transform.isActive)

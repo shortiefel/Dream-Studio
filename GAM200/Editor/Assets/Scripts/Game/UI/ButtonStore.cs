@@ -500,13 +500,16 @@ public class ButtonStore : MonoBehaviour
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
             StoreAction();
-
         }
+
+        InputManager.allowBuilding = false;
     }
 
     public override void OnMouseExit()
     {
         texture.ChangeTexture("Game/Store/Store");
+
+        InputManager.allowBuilding = true;
     }
 
     internal void ResumeAction()

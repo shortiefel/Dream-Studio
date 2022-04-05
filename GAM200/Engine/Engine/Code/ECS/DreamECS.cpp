@@ -23,7 +23,6 @@ Technology is prohibited.
 #include "Engine/Header/Parent/ParentManager.hpp"
 #include "Engine/Header/ECS/Factory.hpp"
 
-#include "Engine/Header/Scene/Prefab.hpp"
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp"
 
 #include <unordered_map>
@@ -81,16 +80,12 @@ namespace Engine {
 		return *this;
 	}
 
-	DreamECS::~DreamECS() {
-		delete dreamECSGame;
-		delete dreamECSLoader;
-	}
-
 	void DreamECS::Create() {
 		//compManager = std::make_unique<ComponentManager>();
 		//entityManager = std::make_unique<EntityManager>();
 
-		dreamECSLoader->entityManager.ignoredSafePlacement = true;
+		//dreamECSLoader->entityManager.ignoredSafePlacement = true;
+		entityManager.ignoredSafePlacement = true;
 	}
 
 	Entity DreamECS::CreateEntity(const char* _entityName, std::unordered_set<Entity_id> _child, Entity_id _parent) {

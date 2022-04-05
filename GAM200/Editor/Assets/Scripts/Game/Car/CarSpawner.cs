@@ -175,6 +175,8 @@ public class CarSpawner : MonoBehaviour
     {
         dt = Time.deltaTime;
 
+        if(Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
+
         //-----------------------------------------Only in House-------------------------------------
         //Only House has popupText
         if (popupText != null)
@@ -184,17 +186,6 @@ public class CarSpawner : MonoBehaviour
                 {
                     Debug.Log(entityId + " " + (BuildingType)i + " " + lifeTimeArray[i].active + " time: " + lifeTimeArray[i].timer);
                 }
-
-            //if (Input.GetKeyDown(KeyCode.B))
-            //{
-            //    popupTextQueue.Enqueue(-100);
-            //}
-            //
-            //if (Input.GetKeyDown(KeyCode.V))
-            //{
-            //    popupTextQueue.Enqueue(100);
-            //
-            //}
 
             PopupText();
 
@@ -382,7 +373,7 @@ public class CarSpawner : MonoBehaviour
 
             if (lifeTimeArray[i].timer > maxLifeTime)
             {
-                popupTextQueue.Enqueue(-100);
+                popupTextQueue.Enqueue(-GameState.minusMoneyValue);
 
                 lifeTimeArray[i].timer = 0f;
                 gameState.MissedDestinationTime((BuildingType)i);
@@ -413,7 +404,7 @@ public class CarSpawner : MonoBehaviour
 
     public void DisplayPopup()
     {
-        popupTextQueue.Enqueue(+100);
+        popupTextQueue.Enqueue(GameState.addMoneyValue);
     }
     //-------------------------------------------------------------------------------------------
 

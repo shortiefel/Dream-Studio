@@ -28,6 +28,7 @@ public class CombinedUI : MonoBehaviour
     UI listOfCostDestUI;
 
     bool isBuildOpen;
+    bool isClockOpen;
 
     public override void Start()
     {
@@ -50,12 +51,16 @@ public class CombinedUI : MonoBehaviour
         listOfCostDestUI = GameObject.Find("ListOfCostDest").GetComponent<UI>();
 
         isBuildOpen = false;
+        isClockOpen = false;
     }
 
     public void CloseAllUIExcept(UIType uitype)
     {
         if (buttonRoad.isOn) isBuildOpen = true;
         else isBuildOpen = false;
+
+        if (timeSystem.isOn) isClockOpen = true;
+        else isClockOpen = false;
 
         switch (uitype)
         {
@@ -148,7 +153,17 @@ public class CombinedUI : MonoBehaviour
         Enable<Transform>(timerButton);
         Enable<Transform>(storeButton);
 
-        if (isBuildOpen) buttonRoad.SwitchTabRoad(true);
+        if (isBuildOpen)
+        {
+            buttonRoad.SwitchTabRoad(true);
+            buttonRoad.CallFunction(ButtonType.Latest);
+
+        }
+        if (isClockOpen)
+        {
+            timeSystem.SwitchTabTimer(true);
+        }
+
         else Enable<Transform>(displayArrow);
 
         Enable<Transform>(moneyText);

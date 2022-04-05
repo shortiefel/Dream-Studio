@@ -25,6 +25,8 @@ Technology is prohibited.
 #include "Engine/Header/ECS/Entity/EntityManager.hpp"
 #include "Engine/Header/ECS/ECSGlobal.hpp"
 
+#include "Engine/Header/Scene/Prefab.hpp"
+
 #include <memory>
 #include <unordered_set>
 
@@ -41,7 +43,6 @@ if (ctype != nullptr) ctype->paramName = param;
 
 namespace Engine {
 	class DreamECS;
-	struct Prefab;
 
 	//extern std::unique_ptr<DreamECS> dreamECSGame;
 	//extern std::unique_ptr<DreamECS> dreamECSLoader;
@@ -53,7 +54,6 @@ namespace Engine {
 	class DreamECS {
 	public:
 		DreamECS& operator=(DreamECS&& rhs) noexcept;
-		~DreamECS();
 
 		void Create();
 		/*--------------------------------------------------------------------------------------------------------------
@@ -96,75 +96,15 @@ namespace Engine {
 		/*--------------------------------------------------------------------------------------------------------------
 		Component related functions
 		--------------------------------------------------------------------------------------------------------------*/
-#if 0 //For pointer type
-		template<typename T>
-		void RegisterComponent() {
-			compManager->RegisterCom<T>();
-		}
 
-		template<typename T>
-		bool AddComponent(T com) {
-			auto ptr = compManager->GetComPtr<T>(com.GetEntityId());
-			//LOG_ASSERT(!ptr && "Unable add the same component for one entity");
-			if (ptr) return false;
-			return compManager->AddComponent<T>(std::move(com));
-		}
-
-		template<>
-		bool AddComponent(ScriptComponent com) {
-			return compManager->AddScript(std::move(com));
-		}
-
-		template<typename T>
-		void RemoveComponent(Entity_id entity_id) {
-			auto ptr = compManager->GetComPtr<T>(entity_id);
-			//LOG_ASSERT(ptr && "Unable remove an entity that does not exist");
-			if (!ptr) return;
-			compManager->RemoveCom<T>(entity_id);
-		}
-
-		/*
-		* Get component by reference
-		*/
-		template <typename T>
-		T& GetComponent(Entity_id entity_id) {
-			return compManager->GetCom<T>(entity_id);
-		}
-		/*
-		* Get component by pointer
-		* For nullptr checks
-		*/
-		template <typename T>
-		T* GetComponentPTR(Entity_id entity_id) {
-			return compManager->GetComPtr<T>(entity_id);
-		}
-		/*
-		* Check only (data is not given)
-		*/
-		template<typename T>
-		bool HasComponentCheck(Entity_id entity_id) {
-			T* com;
-			return compManager->HasCom<T>(com, entity_id);
-		}
-
-		template<typename T>
-		ComponentType GetComponentType() {
-			return compManager->GetterComType<T>();
-		}
-
-		template<typename T>
-		std::array<T, MAX_ENTITIES>& GetComponentArrayData() {
-			return compManager->GetComponentArrayData<T>();
-		}
-
-		template<typename T>
-		size_t GetComponentArraySize() {
-			return compManager->GetComponentArraySize<T>();
-		}
-#else
 		template<typename T>
 		void RegisterComponent() {
 			compManager.RegisterCom<T>();
+		}
+
+		template<typename T>
+		void RestoreComponent() {
+			compManager.RestoreCom<T>();
 		}
 
 		template<typename T>
@@ -227,7 +167,7 @@ namespace Engine {
 		size_t GetComponentArraySize() {
 			return compManager.GetComponentArraySize<T>();
 		}
-#endif
+
 
 		/*--------------------------------------------------------------------------------------------------------------
 		System related functions

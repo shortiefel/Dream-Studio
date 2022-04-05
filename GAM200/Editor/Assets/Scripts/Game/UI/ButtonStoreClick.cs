@@ -46,20 +46,20 @@ public class ButtonStoreClick : MonoBehaviour
         CostRoad = GameObject.Find("RoadCost").GetComponent<Text>();
         CostTL = GameObject.Find("TrafficCost").GetComponent<Text>();
         CostERP = GameObject.Find("ERPCost").GetComponent<Text>();
-        //CostPark = GameObject.Find("ParkCost").GetComponent<Text>();
-        //CostHospital = GameObject.Find("HospitalCost").GetComponent<Text>();
-        //CostOffice = GameObject.Find("OfficeCost").GetComponent<Text>();
-        //CostShoppingMall = GameObject.Find("ShoppingMallCost").GetComponent<Text>();
-        //CostPoliceStation = GameObject.Find("PoliceStationCost").GetComponent<Text>();
+        CostPark = GameObject.Find("ParkCost").GetComponent<Text>();
+        CostHospital = GameObject.Find("HospitalCost").GetComponent<Text>();
+        CostOffice = GameObject.Find("OfficeCost").GetComponent<Text>();
+        CostShoppingMall = GameObject.Find("ShoppingMallCost").GetComponent<Text>();
+        CostPoliceStation = GameObject.Find("PoliceStationCost").GetComponent<Text>();
 
         storeRoadText = GameObject.Find("RoadQty").GetComponent<Text>();
         storeTrafficText = GameObject.Find("TrafficQty").GetComponent<Text>();
         storeERPText = GameObject.Find("ERPQty").GetComponent<Text>();
-        //storeParkText = GameObject.Find("ParkQty").GetComponent<Text>();
-        //storeHospitalText = GameObject.Find("HospitalQty").GetComponent<Text>();
-        //storeOfficeText = GameObject.Find("OfficeQty").GetComponent<Text>();
-        //storeShoppingMallText = GameObject.Find("ShoppingMallQty").GetComponent<Text>();
-        //storePoliceStationText = GameObject.Find("PoliceStationQty").GetComponent<Text>();
+        storeParkText = GameObject.Find("ParkQty").GetComponent<Text>();
+        storeHospitalText = GameObject.Find("HospitalQty").GetComponent<Text>();
+        storeOfficeText = GameObject.Find("OfficeQty").GetComponent<Text>();
+        storeShoppingMallText = GameObject.Find("ShoppingMallQty").GetComponent<Text>();
+        storePoliceStationText = GameObject.Find("PoliceStationQty").GetComponent<Text>();
 
         storePopText = GameObject.Find("ShopPopText").GetComponent<Transform>();
         storePopInfo = GameObject.Find("ShopPopInfo").GetComponent<Transform>();
@@ -138,86 +138,86 @@ public class ButtonStoreClick : MonoBehaviour
         {
             st = StoreButtonType.ERPx10;
         }
-        //else if (entityId == GameObject.Find("ParkPlus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.ParkPlus;
-        //}
-        //else if (entityId == GameObject.Find("ParkMinus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.ParkMinus;
-        //}
-        //else if (entityId == GameObject.Find("ParkBuy").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.ParkBuy;
-        //}
-        //else if (entityId == GameObject.Find("ParkSell").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.ParkSell;
-        //}
-        //else if (entityId == GameObject.Find("HospitalPlus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.HospitalPlus;
-        //}
-        //else if (entityId == GameObject.Find("HospitalMinus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.HospitalMinus;
-        //}
-        //else if (entityId == GameObject.Find("HospitalBuy").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.HospitalBuy;
-        //}
-        //else if (entityId == GameObject.Find("HospitalSell").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.HospitalSell;
-        //}
-        //else if (entityId == GameObject.Find("OfficePlus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.OfficePlus;
-        //}
-        //else if (entityId == GameObject.Find("OfficeMinus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.OfficeMinus;
-        //}
-        //else if (entityId == GameObject.Find("OfficeBuy").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.OfficeBuy;
-        //}
-        //else if (entityId == GameObject.Find("OfficeSell").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.OfficeSell;
-        //}
-        //else if (entityId == GameObject.Find("ShoppingMallPlus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.ShoppingMallPlus;
-        //}
-        //else if (entityId == GameObject.Find("ShoppingMallMinus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.ShoppingMallMinus;
-        //}
-        //else if (entityId == GameObject.Find("ShoppingMallBuy").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.ShoppingMallBuy;
-        //}
-        //else if (entityId == GameObject.Find("ShoppingMallSell").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.ShoppingMallSell;
-        //}
-        //else if (entityId == GameObject.Find("PoliceStationPlus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.PoliceStationPlus;
-        //}
-        //else if (entityId == GameObject.Find("PoliceStationMinus").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.PoliceStationMinus;
-        //}
-        //else if (entityId == GameObject.Find("PoliceStationBuy").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.PoliceStationBuy;
-        //}
-        //else if (entityId == GameObject.Find("PoliceStationSell").GetComponent<Transform>().entityId)
-        //{
-        //    st = StoreButtonType.PoliceStationSell;
-        //}
+        else if (entityId == GameObject.Find("ParkPlus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.ParkPlus;
+        }
+        else if (entityId == GameObject.Find("ParkMinus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.ParkMinus;
+        }
+        else if (entityId == GameObject.Find("ParkBuy").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.ParkBuy;
+        }
+        else if (entityId == GameObject.Find("ParkSell").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.ParkSell;
+        }
+        else if (entityId == GameObject.Find("HospitalPlus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.HospitalPlus;
+        }
+        else if (entityId == GameObject.Find("HospitalMinus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.HospitalMinus;
+        }
+        else if (entityId == GameObject.Find("HospitalBuy").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.HospitalBuy;
+        }
+        else if (entityId == GameObject.Find("HospitalSell").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.HospitalSell;
+        }
+        else if (entityId == GameObject.Find("OfficePlus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.OfficePlus;
+        }
+        else if (entityId == GameObject.Find("OfficeMinus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.OfficeMinus;
+        }
+        else if (entityId == GameObject.Find("OfficeBuy").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.OfficeBuy;
+        }
+        else if (entityId == GameObject.Find("OfficeSell").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.OfficeSell;
+        }
+        else if (entityId == GameObject.Find("ShoppingMallPlus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.ShoppingMallPlus;
+        }
+        else if (entityId == GameObject.Find("ShoppingMallMinus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.ShoppingMallMinus;
+        }
+        else if (entityId == GameObject.Find("ShoppingMallBuy").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.ShoppingMallBuy;
+        }
+        else if (entityId == GameObject.Find("ShoppingMallSell").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.ShoppingMallSell;
+        }
+        else if (entityId == GameObject.Find("PoliceStationPlus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.PoliceStationPlus;
+        }
+        else if (entityId == GameObject.Find("PoliceStationMinus").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.PoliceStationMinus;
+        }
+        else if (entityId == GameObject.Find("PoliceStationBuy").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.PoliceStationBuy;
+        }
+        else if (entityId == GameObject.Find("PoliceStationSell").GetComponent<Transform>().entityId)
+        {
+            st = StoreButtonType.PoliceStationSell;
+        }
         else if (entityId == GameObject.Find("StoreCloseButton").GetComponent<Transform>().entityId)
         {
             st = StoreButtonType.CloseStore;
@@ -226,11 +226,11 @@ public class ButtonStoreClick : MonoBehaviour
         CostRoad.text = "0";
         CostERP.text = "0"; 
         CostTL.text = "0";
-        //CostPark.text = "0";
-        //CostHospital.text = "0";
-        //CostOffice.text = "0";
-        //CostShoppingMall.text = "0";
-        //CostPoliceStation.text = "0";
+        CostPark.text = "0";
+        CostHospital.text = "0";
+        CostOffice.text = "0";
+        CostShoppingMall.text = "0";
+        CostPoliceStation.text = "0";
 
         buttonStore = GameObject.Find("Storebtn").GetComponent<ButtonStore>();
 
@@ -279,6 +279,28 @@ public class ButtonStoreClick : MonoBehaviour
 
                     break;
                 }
+            //case StoreButtonType.RoadTab:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //        {
+            //            buttonStore.roadTabBool = true;
+            //            buttonStore.buildTabBool = false;
+            //            buttonStore.ToggleStore();
+            //        }
+
+            //        break;
+            //    }
+            //case StoreButtonType.BuildingTab:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //        {
+            //            buttonStore.buildTabBool= true;
+            //            buttonStore.roadTabBool = false;
+            //            buttonStore.ToggleStore();
+            //        }
+
+            //        break;
+            //    }
             case StoreButtonType.Roadx1:
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
@@ -580,7 +602,7 @@ public class ButtonStoreClick : MonoBehaviour
                         if (moneySystem.park_counter > 0)
                         {
                             moneySystem.park_counter--;
-                            CostTL.text = moneySystem.getParkCost().ToString();
+                            CostPark.text = moneySystem.getParkCost().ToString();
                         }
                     }
                     storeParkText.text = moneySystem.park_count().ToString();
@@ -590,12 +612,6 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        if (moneySystem.getParkCost() <= moneySystem.GetMoney())
-                        {
-                            moneySystem.BuyPark(moneySystem.park_count());
-                            moneySystem.park_counter = 0;
-                        }
-                        //CostTL.text = moneySystem.calculatetl_cost().ToString();
                     }
                     else
                     {
@@ -604,7 +620,7 @@ public class ButtonStoreClick : MonoBehaviour
 
                         displayText = true;
                     }
-                    storeTrafficText.text = moneySystem.tl_count().ToString();
+                    storeParkText.text = "empty";
 
                     break;
                 }
@@ -612,14 +628,8 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                        if (trafficLightManager.tlCount >= moneySystem.traffic_counter)
-                        {
-                            moneySystem.SellTL(moneySystem.traffic_counter);
-                            moneySystem.traffic_counter = 0;
-                            CostTL.text = (moneySystem.tl_count() * 20).ToString();
-                        }
                     }
-                    storeRoadText.text = moneySystem.road_count().ToString();
+                    storeParkText.text = "empty";
                     break;
                 }
         }

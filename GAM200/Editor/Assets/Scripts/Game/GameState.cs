@@ -41,6 +41,9 @@ public class GameState : MonoBehaviour
 
     bool allowPause;
 
+    static public int addMoneyValue;
+    static public int minusMoneyValue;
+
     public override void Start()
     {
         pauseState = false;
@@ -100,7 +103,11 @@ public class GameState : MonoBehaviour
 
         allowPause = true;
 
-        
+
+        addMoneyValue = 25;
+        minusMoneyValue = 100;
+
+
     }
 
     public override void Update()
@@ -230,23 +237,28 @@ public class GameState : MonoBehaviour
         switch (bt)
         {
             case BuildingType.Office:
-                moneySystem.AddMoney(25, MoneySource.DestOffice);
+                //moneySystem.AddMoney(addMoneyValue, MoneySource.DestOffice);
+                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Hospital:
-                moneySystem.AddMoney(25, MoneySource.DestHospital);
+                //moneySystem.AddMoney(addMoneyValue, MoneySource.DestHospital);
+                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Park:
-                moneySystem.AddMoney(25, MoneySource.DestPark);
+                //moneySystem.AddMoney(addMoneyValue, MoneySource.DestPark);
+                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Mall:
-                moneySystem.AddMoney(25, MoneySource.DestMall);
+                //moneySystem.AddMoney(addMoneyValue, MoneySource.DestMall);
+                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.PoliceStation:
-                moneySystem.AddMoney(25, MoneySource.DestPolice);
+                //moneySystem.AddMoney(addMoneyValue, MoneySource.DestPolice);
+                moneySystem.AddMoney(addMoneyValue, MoneySource.Ignore);
                 break;
         }
         
@@ -259,23 +271,28 @@ public class GameState : MonoBehaviour
         switch (bt)
         {
             case BuildingType.Office:
-                moneySystem.MinusMoney(100, MoneySource.DestOffice);
+                //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestOffice);
+                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Hospital:
-                moneySystem.MinusMoney(100, MoneySource.DestHospital);
+                //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestHospital);
+                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Park:
-                moneySystem.MinusMoney(100, MoneySource.DestPark);
+                //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestPark);
+                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.Mall:
-                moneySystem.MinusMoney(100, MoneySource.DestMall);
+                //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestMall);
+                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
 
             case BuildingType.PoliceStation:
-                moneySystem.MinusMoney(100, MoneySource.DestPolice);
+                //moneySystem.MinusMoney(minusMoneyValue, MoneySource.DestPolice);
+                moneySystem.MinusMoney(minusMoneyValue, MoneySource.Ignore);
                 break;
         }
         

@@ -33,7 +33,7 @@ namespace Engine
     // Init function for Factory
     void Factory::Create()
     {
-        dreamECSGame->Create();
+        //dreamECSGame->Create();
         dreamECSGame->RegisterComponent<CameraComponent>();
         dreamECSGame->RegisterComponent<TransformComponent>();
         dreamECSGame->RegisterComponent<ColliderComponent>();
@@ -86,6 +86,9 @@ namespace Engine
         PhysicsSystem::GetInstance().Destroy();
         CollisionSystem::GetInstance().Destroy();
         CameraSystem::GetInstance().Destroy();
+
+        delete dreamECSLoader;
+        delete dreamECSGame;
     }
 
     // Function will be called when GUI inspector request a Square entity

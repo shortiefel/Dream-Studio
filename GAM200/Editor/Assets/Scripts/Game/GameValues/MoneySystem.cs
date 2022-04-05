@@ -10,7 +10,8 @@ public enum MoneySource
     DestOffice,
     DestPark,
     DestMall,
-    DestPolice
+    DestPolice,
+    Ignore
 }
 
 struct MoneyInfoTextStruct {
@@ -273,7 +274,8 @@ public class MoneySystem : MonoBehaviour
         textComp.text = money.ToString();
 
         //Debug.Log("Adding money");
-        listOfCost.Enqueue(new MoneyInfoTextStruct(val, ms));
+        if (ms != MoneySource.Ignore)
+            listOfCost.Enqueue(new MoneyInfoTextStruct(val, ms));
     }
 
     public void MinusMoney(int val, MoneySource ms)
@@ -285,7 +287,8 @@ public class MoneySystem : MonoBehaviour
         balance = money;
 
         //Debug.Log("Minus money");
-        listOfCost.Enqueue(new MoneyInfoTextStruct(-val, ms));
+        if (ms != MoneySource.Ignore)
+            listOfCost.Enqueue(new MoneyInfoTextStruct(-val, ms));
     }
 
     public int GetMoney()

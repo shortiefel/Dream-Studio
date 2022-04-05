@@ -28,9 +28,9 @@ public class InstructionsMain : MonoBehaviour
     Tutorial tutorial;
     RoadManager roadManager;
 
-    Transform displayArrowGlow;
-    Transform drawRoadGlow;
-    Transform removeRoadGlow;
+    //Transform displayArrowGlow;
+    //Transform drawRoadGlow;
+    //Transform removeRoadGlow;
 
     Transform roadCount;
 
@@ -76,9 +76,9 @@ public class InstructionsMain : MonoBehaviour
         tutorial = GameObject.Find("TutorialManager").GetComponent<Tutorial>();
         roadManager = GameObject.Find("RoadManager").GetComponent<RoadManager>();
 
-        displayArrowGlow = GameObject.Find("DisplayGlow").GetComponent<Transform>();
-        drawRoadGlow = GameObject.Find("DrawRoadGlow").GetComponent<Transform>();
-        removeRoadGlow = GameObject.Find("RemoveRoadGlow").GetComponent<Transform>();
+        //displayArrowGlow = GameObject.Find("DisplayGlow").GetComponent<Transform>();
+        //drawRoadGlow = GameObject.Find("DrawRoadGlow").GetComponent<Transform>();
+        //removeRoadGlow = GameObject.Find("RemoveRoadGlow").GetComponent<Transform>();
 
         stages = 0;
         timer = 0;
@@ -221,7 +221,7 @@ public class InstructionsMain : MonoBehaviour
                     tutorial.CheckPosition();
                     count = roadManager.roadCount;
 
-                    Enable<Transform>(displayArrowGlow);
+                    //Enable<Transform>(displayArrowGlow);
                 }
             }
         }
@@ -236,7 +236,7 @@ public class InstructionsMain : MonoBehaviour
                     instructions7Script.animation.Play("Close");
                     stateCheck = false;
 
-                    Disable<Transform>(displayArrowGlow);
+                    //Disable<Transform>(displayArrowGlow);
                 }
                 if (CheckTimer())
                 {
@@ -323,7 +323,7 @@ public class InstructionsMain : MonoBehaviour
                     if (CheckTimer())
                     {
 
-                        Disable<Transform>(removeRoadGlow);
+                        //Disable<Transform>(removeRoadGlow);
 
                         Disable<Transform>(go4.GetComponent<Transform>());
 

@@ -60,7 +60,7 @@ public class SpawnManager : MonoBehaviour
 
         spawnTimer = 0f;
         spawnTimerMax = spawnTimerRelax = 15f;
-        spawnTimerPeak = 5f;
+        spawnTimerPeak = 7f;
 
         stateChangeTimer = 0f;
         stateChangeMax = 20f;

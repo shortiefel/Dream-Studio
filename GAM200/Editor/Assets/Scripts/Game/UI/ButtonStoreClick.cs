@@ -34,6 +34,7 @@ public class ButtonStoreClick : MonoBehaviour
     RoadManager roadManager;
     ERPManager erpManager;
     TrafficLightManager trafficLightManager;
+    //private AudioSource purchaseSound;
 
     public override void Start()
     {
@@ -42,6 +43,7 @@ public class ButtonStoreClick : MonoBehaviour
         state = false;
         displayText = false;
         timer = 0.0f;
+        //purchaseSound = GameObject.Find("MoneyText").GetComponent<AudioSource>();
 
         CostRoad = GameObject.Find("RoadCost").GetComponent<Text>();
         CostTL = GameObject.Find("TrafficCost").GetComponent<Text>();
@@ -279,28 +281,6 @@ public class ButtonStoreClick : MonoBehaviour
 
                     break;
                 }
-            //case StoreButtonType.RoadTab:
-            //    {
-            //        if (Input.GetMouseButtonDown(MouseCode.Left))
-            //        {
-            //            buttonStore.roadTabBool = true;
-            //            buttonStore.buildTabBool = false;
-            //            buttonStore.ToggleStore();
-            //        }
-
-            //        break;
-            //    }
-            //case StoreButtonType.BuildingTab:
-            //    {
-            //        if (Input.GetMouseButtonDown(MouseCode.Left))
-            //        {
-            //            buttonStore.buildTabBool= true;
-            //            buttonStore.roadTabBool = false;
-            //            buttonStore.ToggleStore();
-            //        }
-
-            //        break;
-            //    }
             case StoreButtonType.Roadx1:
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
@@ -364,6 +344,7 @@ public class ButtonStoreClick : MonoBehaviour
                     {
                         if((moneySystem.road_count() > 0 ) && (moneySystem.road_count() * 20) <= moneySystem.GetMoney())
                         {
+                            //purchaseSound.Play();
                             moneySystem.BuyRoad(moneySystem.road_count());
                             moneySystem.road_counter = 0;
                         }
@@ -579,7 +560,7 @@ public class ButtonStoreClick : MonoBehaviour
                             CostTL.text = (moneySystem.tl_count() * 20).ToString();
                         }
                     }
-                    storeRoadText.text = moneySystem.road_count().ToString();
+                    storeTrafficText.text = moneySystem.tl_count().ToString();
                     break;
                 }
             case StoreButtonType.ParkPlus:
@@ -612,15 +593,21 @@ public class ButtonStoreClick : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
-                    }
-                    else
-                    {
-                        Enable<Transform>(storePopText);
-                        Enable<Transform>(storePopInfo);
+                        if(moneySystem.getParkCost() <= moneySystem.GetMoney())
+                        {
+                            moneySystem.BuyPark(moneySystem.park_count());
+                            moneySystem.park_counter = 0;
+                        }
+                        else
+                        {
+                            Enable<Transform>(storePopText);
+                            Enable<Transform>(storePopInfo);
 
-                        displayText = true;
+                            displayText = true;
+                        }
                     }
-                    storeParkText.text = "empty";
+                   
+                    storeParkText.text = moneySystem.park_count().ToString();
 
                     break;
                 }
@@ -629,7 +616,7 @@ public class ButtonStoreClick : MonoBehaviour
                     if (Input.GetMouseButtonDown(MouseCode.Left))
                     {
                     }
-                    storeParkText.text = "empty";
+                    storeParkText.text = moneySystem.park_count().ToString();
                     break;
                 }
         }

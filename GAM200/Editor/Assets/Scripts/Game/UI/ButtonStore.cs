@@ -749,6 +749,12 @@ public class ButtonStore : MonoBehaviour
             Disable<Transform>(PoliceStationBuy.transform);
             Disable<Transform>(PoliceStationSell.transform);
 
+            Disable<Transform>(ParkCost.transform);
+            Disable<Transform>(HospitalCost.transform);
+            Disable<Transform>(OfficeCost.transform);
+            Disable<Transform>(ShoppingMallCost.transform);
+            Disable<Transform>(PoliceStationCost.transform);
+
         }
         if(buildTabBool)
         {
@@ -817,7 +823,12 @@ public class ButtonStore : MonoBehaviour
             Enable<Transform>(PoliceStationBuy.transform);
             Enable<Transform>(PoliceStationSell.transform);
 
-       
+            Enable<Transform>(ParkCost.transform);
+            Enable<Transform>(HospitalCost.transform);
+            Enable<Transform>(OfficeCost.transform);
+            Enable<Transform>(ShoppingMallCost.transform);
+            Enable<Transform>(PoliceStationCost.transform);
+
         }
             
     }

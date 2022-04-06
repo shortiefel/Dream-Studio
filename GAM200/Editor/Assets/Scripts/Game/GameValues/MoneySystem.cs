@@ -476,13 +476,13 @@ public class MoneySystem : MonoBehaviour
 
     public int getParkCost()
     {
-        if (parkBuyCount == 0 && park_counter <= 1)
+        if (parkBuyCount == 0 && park_counter == 1)
             return 100;
         int total_amount = 0;
         int temp = parkCost;
-        for(int i = 0; i < park_counter; i ++)
+        for(int i = 1; i < park_counter; i ++)
         {
-            total_amount += (temp * 5);
+            total_amount = (temp * 5);
             temp = temp * 5;
         }
         return total_amount;

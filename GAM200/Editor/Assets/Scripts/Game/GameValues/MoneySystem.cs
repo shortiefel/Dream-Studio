@@ -68,6 +68,8 @@ public class MoneySystem : MonoBehaviour
     private int officeBuyCount;
     private int shoppingmallBuyCount;
     private int policestationBuyCount;
+    private AudioSource purchaseSound;
+
 
     RoadManager roadManager;
     ERPManager erpManager;
@@ -177,6 +179,7 @@ public class MoneySystem : MonoBehaviour
         imageStartPosition = new Vector2(56.7f, 41.1f);
         imageYFinalPosition = 35.5f;
 
+        purchaseSound = GameObject.Find("MoneyText").GetComponent<AudioSource>();
 
         GameObject goImageDestImage = GameObject.Find("ListOfCostDest");
         if (goImageDestImage != null)
@@ -354,6 +357,7 @@ public class MoneySystem : MonoBehaviour
     {
         MinusMoney(count * 20, MoneySource.Store);
         roadManager.roadCount += count;
+        purchaseSound.Play();
     }
 
     public void SellRoad(int count)

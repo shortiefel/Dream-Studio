@@ -34,7 +34,6 @@ public class ButtonStoreClick : MonoBehaviour
     RoadManager roadManager;
     ERPManager erpManager;
     TrafficLightManager trafficLightManager;
-    //private AudioSource purchaseSound;
 
     public override void Start()
     {
@@ -43,7 +42,6 @@ public class ButtonStoreClick : MonoBehaviour
         state = false;
         displayText = false;
         timer = 0.0f;
-        //purchaseSound = GameObject.Find("MoneyText").GetComponent<AudioSource>();
 
         CostRoad = GameObject.Find("RoadCost").GetComponent<Text>();
         CostTL = GameObject.Find("TrafficCost").GetComponent<Text>();
@@ -344,7 +342,7 @@ public class ButtonStoreClick : MonoBehaviour
                     {
                         if((moneySystem.road_count() > 0 ) && (moneySystem.road_count() * 20) <= moneySystem.GetMoney())
                         {
-                            //purchaseSound.Play();
+                            
                             moneySystem.BuyRoad(moneySystem.road_count());
                             moneySystem.road_counter = 0;
                         }

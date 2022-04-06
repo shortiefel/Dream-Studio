@@ -101,7 +101,6 @@
     <Compile Include="Game\UI\ButtonTutorial.cs" />
     <Compile Include="Game\UI\ButtonTutorialClick.cs" />
     <Compile Include="Game\UI\ButtonTypeClick.cs" />
-    <Compile Include="Game\UI\Clock.cs" />
     <Compile Include="Game\UI\ClockTime.cs" />
     <Compile Include="Game\UI\CloseReceipt.cs" />
     <Compile Include="Game\UI\CombinedUI.cs" />
@@ -151,7 +150,6 @@
     <Compile Include="TestFiles\Test2.cs" />
     <Compile Include="Tutorial.cs" />
     <Compile Include="Wait.cs" />
-    <Compile Include="Game\UI\ClockTime.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -83,9 +83,9 @@ public class GameState : MonoBehaviour
         dayText.text = "Day " +dayCounter.ToString();
 
         dayTimer = 0f;
-        dayCycle = 120f;
+        dayCycle = 144f;
 
-        nightCycle = 100f;
+        nightCycle = 72f;
         //nightCycle = 10f;
 
         cycle = Cycle.Day;

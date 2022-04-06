@@ -508,27 +508,27 @@ public class ButtonRoad : MonoBehaviour
 
             case ButtonType.PlaceHospital:
                 {
-                    placeHospitalUI.ChangeTexture("Game/UI/ERP");
+                    placeHospitalUI.ChangeTexture("Game/UI/Hospital");
                     break;
                 }
             case ButtonType.PlaceOffice:
                 {
-                    placeOfficeUI.ChangeTexture("Game/UI/ERP");
+                    placeOfficeUI.ChangeTexture("Game/UI/Office");
                     break;
                 }
             case ButtonType.PlacePark:
                 {
-                    placeParkUI.ChangeTexture("Game/UI/ERP");
+                    placeParkUI.ChangeTexture("Game/UI/Park");
                     break;
                 }
             case ButtonType.PlaceMall:
                 {
-                    placeMallUI.ChangeTexture("Game/UI/ERP");
+                    placeMallUI.ChangeTexture("Game/UI/ShoppingMall");
                     break;
                 }
             case ButtonType.PlacePoliceStation:
                 {
-                    placePoliceStationUI.ChangeTexture("Game/UI/ERP");
+                    placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation");
                     break;
                 }
         }
@@ -596,7 +596,7 @@ public class ButtonRoad : MonoBehaviour
                 case ButtonType.PlaceHospital:
                     {
                         gameManager.PlaceDestHospitalHandler();
-                        placeHospitalUI.ChangeTexture("Game/UI/Arrow_L");
+                        placeHospitalUI.ChangeTexture("Game/UI/Hospital_Click");
 
                         EnableAllNormalExcept();
                         break;
@@ -604,7 +604,7 @@ public class ButtonRoad : MonoBehaviour
                 case ButtonType.PlaceOffice:
                     {
                         gameManager.PlaceDestOfficeHandler();
-                        placeOfficeUI.ChangeTexture("Game/UI/Arrow_L");
+                        placeOfficeUI.ChangeTexture("Game/UI/Office_Click");
 
                         EnableAllNormalExcept();
                         break;
@@ -613,7 +613,7 @@ public class ButtonRoad : MonoBehaviour
                     {
                         gameManager.PlaceDestParkHandler();
                         
-                        placeParkUI.ChangeTexture("Game/UI/Arrow_L");
+                        placeParkUI.ChangeTexture("Game/UI/Park_Click");
 
                         EnableAllNormalExcept();
                         break;
@@ -621,7 +621,7 @@ public class ButtonRoad : MonoBehaviour
                 case ButtonType.PlaceMall:
                     {
                         gameManager.PlaceDestMallHandler();
-                        placeMallUI.ChangeTexture("Game/UI/Arrow_L");
+                        placeMallUI.ChangeTexture("Game/UI/ShoppingMall_Click");
 
                         EnableAllNormalExcept();
                         break;
@@ -629,7 +629,7 @@ public class ButtonRoad : MonoBehaviour
                 case ButtonType.PlacePoliceStation:
                     {
                         gameManager.PlaceDestPoliceStationHandler();
-                        placePoliceStationUI.ChangeTexture("Game/UI/Arrow_L");
+                        placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation_Click");
 
                         EnableAllNormalExcept();
                         break;

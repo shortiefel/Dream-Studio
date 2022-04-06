@@ -26,7 +26,7 @@ public class PlayButton : MonoBehaviour
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
             Console.WriteLine("Play");
-            SceneManager.LoadScene("Tutorial");
+            SceneManager.LoadScene("TutorialNew");
         }
     }
 

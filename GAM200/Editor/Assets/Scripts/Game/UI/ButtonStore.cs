@@ -115,8 +115,11 @@ public class ButtonStore : MonoBehaviour
     GameState gameState;
 
 
-    Transform displayArrow;
+    //Transform displayArrow;
     //Transform displayArrowWhite;
+    Transform roadTab;
+    Transform buildingsTab;
+
     Transform timerButton;
     Transform pauseIcon;
 
@@ -233,8 +236,10 @@ public class ButtonStore : MonoBehaviour
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
 
-        displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
+        //displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
         //displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
+        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<Transform>();
+        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>();
         timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
         pauseIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
 
@@ -316,7 +321,7 @@ public class ButtonStore : MonoBehaviour
                 Enable<Transform>(Roadx10.transform);
             }
 
-            if (combinedUI.buttonRoad.revealTrafficButton)
+            if (combinedUI.roadTab.revealTrafficButton)
             {
                 //Enable<Transform>(TrafficIcon.transform);
                 Enable<Transform>(TrafficPlus.transform);
@@ -329,7 +334,7 @@ public class ButtonStore : MonoBehaviour
                 Enable<Transform>(Trafficx10.transform);
             }
 
-            if (combinedUI.buttonRoad.revealERPButton)
+            if (combinedUI.roadTab.revealERPButton)
             {
                 //Enable<Transform>(ERPIcon.transform);
                 Enable<Transform>(ERPPlus.transform);
@@ -401,7 +406,9 @@ public class ButtonStore : MonoBehaviour
 
             if (reenable)
             {
-                Enable<Transform>(displayArrow);
+                //Enable<Transform>(displayArrow);
+                Enable<Transform>(roadTab);
+                Enable<Transform>(buildingsTab);
                 Enable<Transform>(timerButton);
                 Enable<Transform>(pauseIcon);
 

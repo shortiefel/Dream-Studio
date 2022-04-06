@@ -13,12 +13,16 @@ public class CombinedUI : MonoBehaviour
     PauseMenu pauseMenu;
     TimeSystem timeSystem;
     ButtonStore buttonStore;
-    public ButtonRoad buttonRoad;
+    //public ButtonRoad buttonRoad;
+    public ButtonRoad roadTab;
+    public ButtonRoad buildingsTab;
 
     Transform pauseIcon;
     Transform timerButton;
     Transform storeButton;
-    Transform displayArrow;
+    //Transform displayArrow;
+    Transform roadTabTransform;
+    Transform buildingsTabTransform;
 
     Transform moneyText;
     Transform coinSymbol;
@@ -28,6 +32,8 @@ public class CombinedUI : MonoBehaviour
     UI listOfCostDestUI;
 
     bool isBuildOpen;
+    bool isRoadTabOpen;
+    bool isBuildingsTabOpen;
     bool isClockOpen;
 
     public override void Start()
@@ -35,12 +41,16 @@ public class CombinedUI : MonoBehaviour
         pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
         timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
         buttonStore = GameObject.Find("Storebtn").GetComponent<ButtonStore>();
-        buttonRoad = GameObject.Find("Displaybtn").GetComponent<ButtonRoad>();
+        //buttonRoad = GameObject.Find("Displaybtn").GetComponent<ButtonRoad>();
+        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoad>();
+        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonRoad>();
 
         pauseIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
         timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
         storeButton = GameObject.Find("Storebtn").GetComponent<Transform>();
-        displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
+        //displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
+        roadTabTransform = GameObject.Find("DisplayRoadBtn").GetComponent<Transform>();
+        buildingsTabTransform = GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>();
 
 
         moneyText = GameObject.Find("MoneyText").GetComponent<Transform>();
@@ -51,13 +61,18 @@ public class CombinedUI : MonoBehaviour
         listOfCostDestUI = GameObject.Find("ListOfCostDest").GetComponent<UI>();
 
         isBuildOpen = false;
+        isRoadTabOpen = false;
+        isBuildingsTabOpen = false;
         isClockOpen = false;
     }
 
     public void CloseAllUIExcept(UIType uitype)
     {
-        if (buttonRoad.isOn) isBuildOpen = true;
-        else isBuildOpen = false;
+        if (roadTab.roadTabIsOn) isRoadTabOpen = true;
+        else isRoadTabOpen = false;
+
+        if (buildingsTab.buildingsTabIsOn) isBuildingsTabOpen = true;
+        else isBuildingsTabOpen = false;
 
         if (timeSystem.isOn) isClockOpen = true;
         else isClockOpen = false;
@@ -70,11 +85,14 @@ public class CombinedUI : MonoBehaviour
 
                     timeSystem.SwitchTabTimer(false, false);
                     buttonStore.SwitchTabStore(false, false);
-                    buttonRoad.SwitchTabRoad(false, false);
+                    //buttonRoad.SwitchTabRoad(false, false);
+                    roadTab.SwitchTabRoad(false, false);
 
                     Disable<Transform>(timerButton);
                     Disable<Transform>(storeButton);
-                    Disable<Transform>(displayArrow);
+                    //Disable<Transform>(displayArrow);
+                    Disable<Transform>(roadTabTransform);
+                    Disable<Transform>(buildingsTabTransform);
 
                     Disable<Transform>(moneyText);
                     Disable<Transform>(coinSymbol);
@@ -101,11 +119,14 @@ public class CombinedUI : MonoBehaviour
 
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
-                    buttonRoad.SwitchTabRoad(false, false);
-                    
+                    //buttonRoad.SwitchTabRoad(false, false);
+                    roadTab.SwitchTabRoad(false, false);
+
                     Disable<Transform>(pauseIcon);
                     Disable<Transform>(timerButton);
-                    Disable<Transform>(displayArrow);
+                    //Disable<Transform>(displayArrow);
+                    Disable<Transform>(roadTabTransform);
+                    Disable<Transform>(buildingsTabTransform);
                     break;
                 }
             //case UIType.Road:
@@ -127,12 +148,15 @@ public class CombinedUI : MonoBehaviour
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
                     buttonStore.SwitchTabStore(false, false);
-                    buttonRoad.SwitchTabRoad(false, false);
+                    //buttonRoad.SwitchTabRoad(false, false);
+                    roadTab.SwitchTabRoad(false, false);
 
                     Disable<Transform>(pauseIcon);
                     Disable<Transform>(timerButton);
                     Disable<Transform>(storeButton);
-                    Disable<Transform>(displayArrow);
+                    //Disable<Transform>(displayArrow);
+                    Disable<Transform>(roadTabTransform);
+                    Disable<Transform>(buildingsTabTransform);
 
                     Disable<Transform>(dayClock);
 
@@ -153,18 +177,31 @@ public class CombinedUI : MonoBehaviour
         Enable<Transform>(timerButton);
         Enable<Transform>(storeButton);
 
-        if (isBuildOpen)
+        //if (isBuildOpen)
+        //{
+        //    buttonRoad.SwitchTabRoad(true);
+        //    buttonRoad.CallFunction(ButtonType.Latest);
+
+        //}
+
+        if (isRoadTabOpen)
         {
-            buttonRoad.SwitchTabRoad(true);
-            buttonRoad.CallFunction(ButtonType.Latest);
+            roadTab.SwitchTabRoad(true);
+            roadTab.CallFunction(ButtonType.Latest);
 
         }
+
         if (isClockOpen)
         {
             timeSystem.SwitchTabTimer(true);
         }
 
-        else Enable<Transform>(displayArrow);
+        else
+        {
+            //Enable<Transform>(displayArrow);
+            Enable<Transform>(roadTabTransform);
+            Enable<Transform>(buildingsTabTransform);
+        }
 
         Enable<Transform>(moneyText);
         Enable<Transform>(coinSymbol);

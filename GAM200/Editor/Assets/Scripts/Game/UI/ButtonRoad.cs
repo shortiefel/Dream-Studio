@@ -16,6 +16,8 @@ public enum ButtonType
     Display,
     Ignore,
     Latest, //Used to reopen the last buttontype
+    RoadTab,
+    BuildingsTab,
     None
 }
 
@@ -58,6 +60,12 @@ public class ButtonRoad : MonoBehaviour
     Transform displayArrow;
     UI displayArrowUI;
     //Transform displayArrowWhite;
+
+    Transform roadTab;
+    UI roadTabUI;
+
+    Transform buildingsTab;
+    UI buildingsTabUI;
 
     Transform placeHospital;
     Transform placeOffice;
@@ -105,6 +113,13 @@ public class ButtonRoad : MonoBehaviour
 
     public bool opening;
     public bool closing;
+
+    public bool roadTabOpen;
+    public bool roadTabClose;
+
+    public bool buildingsTabOpen;
+    public bool buildingsTabClose;
+
     float timer;
 
     float closeXPosition;
@@ -119,6 +134,8 @@ public class ButtonRoad : MonoBehaviour
     CombinedUI combinedUI;
 
     public bool isOn;
+    public bool roadTabIsOn;
+    public bool buildingsTabIsOn;
 
     ButtonType choosenButton = ButtonType.None;
     bool displayState = false;
@@ -167,10 +184,18 @@ public class ButtonRoad : MonoBehaviour
         //drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
         drawRemoveCarPosition = drawRemoveCar.position;
 
-        GameObject displayGO = GameObject.Find("Displaybtn");
-        displayArrow = displayGO.GetComponent<Transform>();
-        displayArrowUI = displayGO.GetComponent<UI>();
+        //GameObject displayGO = GameObject.Find("Displaybtn");
+        //displayArrow = displayGO.GetComponent<Transform>();
+        //displayArrowUI = displayGO.GetComponent<UI>();
         //displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
+
+        GameObject displayRoadTabGO = GameObject.Find("DisplayRoadBtn");
+        roadTab = displayRoadTabGO.GetComponent<Transform>();
+        roadTabUI = displayRoadTabGO.GetComponent<UI>();
+
+        GameObject displayBuildingsTabGO = GameObject.Find("DisplayBuildingsBtn");
+        roadTab = displayBuildingsTabGO.GetComponent<Transform>();
+        roadTabUI = displayBuildingsTabGO.GetComponent<UI>();
 
         GameObject hopitalGO = GameObject.Find("PlaceHospital");
         placeHospital = hopitalGO.GetComponent<Transform>();
@@ -239,6 +264,10 @@ public class ButtonRoad : MonoBehaviour
 
         opening = false;
         closing = false;
+        roadTabOpen = false;
+        roadTabClose = false;
+        buildingsTabOpen = false;
+        buildingsTabClose = false;
         timer = 0f;
         closeXPosition = -96f;
         speedMultiply = 10f;
@@ -292,6 +321,8 @@ public class ButtonRoad : MonoBehaviour
             moneyText = go3.GetComponent<Transform>();
 
         isOn = false;
+        roadTabIsOn = false;
+        buildingsTabIsOn = false;
         //GameObject go4 = GameObject.Find("CounterText");
         //if (go4 != null)
         //    counterText = go4.GetComponent<Transform>();
@@ -353,13 +384,16 @@ public class ButtonRoad : MonoBehaviour
 
             //Disable<Transform>(displayArrow);
             //Enable<Transform>(displayArrowWhite);
-            displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
+            //displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
+            roadTabUI.ChangeTexture("Game/UI/Arrow_L");
 
             EnableAllNormalExcept();
 
             Enable<Transform>(lineDivider1);
 
             isOn = true;
+            roadTabIsOn = true;
+            buildingsTabIsOn = false;
         }
         else
         {
@@ -371,7 +405,9 @@ public class ButtonRoad : MonoBehaviour
             //if (reenable)
             //    Enable<Transform>(displayArrow);
 
-            displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
+            //displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
+
+            roadTabUI.ChangeTexture("Game/UI/Arrow_R");
             //if (reenable)
             //{
             //    Debug.Log("Enaalsaksd");
@@ -385,6 +421,8 @@ public class ButtonRoad : MonoBehaviour
 
             //cameraMovement.SetZoom(ZoomType.Out);
             isOn = false;
+            roadTabIsOn = false;
+            buildingsTabIsOn = false;
         }
 
         displayState = type;

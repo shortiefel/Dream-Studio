@@ -4,7 +4,9 @@ public class ButtonTypeClick : MonoBehaviour
 {
     ButtonType bt;
     //public bool active;
-    ButtonRoad buttonRoad;
+    //ButtonRoad buttonRoad;
+    ButtonRoad roadTab;
+    ButtonRoad buildingsTab;
     //Text tooltipText;
     //Transform tooltipTrans;
     Vector2 tooltipOffset;
@@ -15,7 +17,10 @@ public class ButtonTypeClick : MonoBehaviour
 
     public override void Start()
     {
-        buttonRoad = GameObject.Find("Displaybtn").GetComponent<ButtonRoad>();
+        //buttonRoad = GameObject.Find("Displaybtn").GetComponent<ButtonRoad>();
+        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoad>();
+        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonRoad>();
+
         //GameObject stringNameGo = GameObject.Find("stringname");
         //tooltipText = stringNameGo.GetComponent<Text>();
         //tooltipTrans = stringNameGo.GetComponent<Transform>();
@@ -188,9 +193,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.Draw:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonRoad.CallFunction(bt);
+                            roadTab.CallFunction(bt);
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "Road");
+                        roadTab.SetToolTips(true, tooltipOffset, "Road");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Road";
                         break;
@@ -198,9 +203,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.Remove:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonRoad.CallFunction(bt);
+                            roadTab.CallFunction(bt);
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "Remove Road");
+                        roadTab.SetToolTips(true, tooltipOffset, "Remove Road");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Remove ";
                         break;
@@ -208,9 +213,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.ERP:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonRoad.CallFunction(bt);
+                            roadTab.CallFunction(bt);
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "ERP");
+                        roadTab.SetToolTips(true, tooltipOffset, "ERP");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "ERP";
                         break;
@@ -218,9 +223,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.TrafficLight:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonRoad.CallFunction(bt);
+                            roadTab.CallFunction(bt);
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "TrafficLight");
+                        roadTab.SetToolTips(true, tooltipOffset, "TrafficLight");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "TrafficLight";
                         break;
@@ -228,9 +233,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.RemoveCar:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonRoad.CallFunction(bt);
+                            roadTab.CallFunction(bt);
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "Remove Car");
+                        roadTab.SetToolTips(true, tooltipOffset, "Remove Car");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Remove Car";
                         break;
@@ -240,10 +245,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buttonRoad.CallFunction(bt);
+                            buildingsTab.CallFunction(bt);
                         }
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "Place Hospital");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Hospital");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Hospital";
 
@@ -253,10 +258,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buttonRoad.CallFunction(bt);
+                            buildingsTab.CallFunction(bt);
                         }
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "Place Office");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Office");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Office";
 
@@ -266,10 +271,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buttonRoad.CallFunction(bt);
+                            buildingsTab.CallFunction(bt);
                         }
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "Place Park");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Park");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Park";
 
@@ -279,10 +284,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buttonRoad.CallFunction(bt);
+                            buildingsTab.CallFunction(bt);
                         }
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "Place Mall");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Mall");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Mall";
 
@@ -292,10 +297,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buttonRoad.CallFunction(bt);
+                            buildingsTab.CallFunction(bt);
                         }
 
-                        buttonRoad.SetToolTips(true, tooltipOffset, "Place Police Station");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Police Station");
 
                         break;
                     }
@@ -314,25 +319,26 @@ public class ButtonTypeClick : MonoBehaviour
     public override void OnMouseExit()
     {
         InputManager.allowBuilding = true;
-        buttonRoad.SetToolTips(false, Vector2.zero);
+        roadTab.SetToolTips(false, Vector2.zero);
+        buildingsTab.SetToolTips(false, Vector2.zero);
         //if (!transform.isActive) return;
         //if (transform.isActive)
         //{
-            //switch (bt)
-            //{
-            //    case ButtonType.Display:
-            //    case ButtonType.Draw:
-            //    case ButtonType.Remove:
-            //    case ButtonType.ERP:
-            //    case ButtonType.TrafficLight:
-            //    case ButtonType.RemoveCar:
-            //        Disable<Transform>(tooltipTrans);
-            //
-            //        break;
-            //    default:
-            //        
-            //        break;
-            //}
+        //switch (bt)
+        //{
+        //    case ButtonType.Display:
+        //    case ButtonType.Draw:
+        //    case ButtonType.Remove:
+        //    case ButtonType.ERP:
+        //    case ButtonType.TrafficLight:
+        //    case ButtonType.RemoveCar:
+        //        Disable<Transform>(tooltipTrans);
+        //
+        //        break;
+        //    default:
+        //        
+        //        break;
+        //}
 
         //}
     }

@@ -62,6 +62,8 @@ public class ButtonTutorial : MonoBehaviour
     Transform lineDivider1;
     Vector2 line1;
 
+    Transform dayClockText;
+
     GameManager gameManager;
 
     Transform moneyText;
@@ -92,6 +94,9 @@ public class ButtonTutorial : MonoBehaviour
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
+        dayClockText = GameObject.Find("DayClock").GetComponent<Transform>();
+
+        
 
         /*********************************** DRAWING ************************************/
         drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
@@ -152,6 +157,7 @@ public class ButtonTutorial : MonoBehaviour
         Disable<Transform>(removeRoadWhite);
         Disable<Transform>(drawRemoveCarWhite);
         Disable<Transform>(trafficCount);
+        Disable<Transform>(dayClockText);
 
 
         opening = false;
@@ -291,27 +297,27 @@ public class ButtonTutorial : MonoBehaviour
 
             case TutButtonType.PlaceHospital:
                 {
-                    placeHospitalUI.ChangeTexture("Game/UI/ERP");
+                    placeHospitalUI.ChangeTexture("Game/UI/Hospital");
                     break;
                 }
             case TutButtonType.PlaceOffice:
                 {
-                    placeOfficeUI.ChangeTexture("Game/UI/ERP");
+                    placeOfficeUI.ChangeTexture("Game/UI/Office");
                     break;
                 }
             case TutButtonType.PlacePark:
                 {
-                    placeParkUI.ChangeTexture("Game/UI/ERP");
+                    placeParkUI.ChangeTexture("Game/UI/Park");
                     break;
                 }
             case TutButtonType.PlaceMall:
                 {
-                    placeMallUI.ChangeTexture("Game/UI/ERP");
+                    placeMallUI.ChangeTexture("Game/UI/ShoppingMall");
                     break;
                 }
             case TutButtonType.PlacePoliceStation:
                 {
-                    placePoliceStationUI.ChangeTexture("Game/UI/ERP");
+                    placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation");
                     break;
                 }
         }
@@ -353,7 +359,7 @@ public class ButtonTutorial : MonoBehaviour
                 case TutButtonType.PlaceHospital:
                     {
                         gameManager.PlaceDestHospitalHandler();
-                        placeHospitalUI.ChangeTexture("Game/UI/Arrow_L");
+                        placeHospitalUI.ChangeTexture("Game/UI/Hospital_Click");
 
                         EnableAllNormalExcept();
                         break;
@@ -361,7 +367,7 @@ public class ButtonTutorial : MonoBehaviour
                 case TutButtonType.PlaceOffice:
                     {
                         gameManager.PlaceDestOfficeHandler();
-                        placeOfficeUI.ChangeTexture("Game/UI/Arrow_L");
+                        placeOfficeUI.ChangeTexture("Game/UI/Office_Click");
 
                         EnableAllNormalExcept();
                         break;
@@ -370,7 +376,7 @@ public class ButtonTutorial : MonoBehaviour
                     {
                         gameManager.PlaceDestParkHandler();
 
-                        placeParkUI.ChangeTexture("Game/UI/Arrow_L");
+                        placeParkUI.ChangeTexture("Game/UI/Park_Click");
 
                         EnableAllNormalExcept();
                         break;
@@ -378,7 +384,7 @@ public class ButtonTutorial : MonoBehaviour
                 case TutButtonType.PlaceMall:
                     {
                         gameManager.PlaceDestMallHandler();
-                        placeMallUI.ChangeTexture("Game/UI/Arrow_L");
+                        placeMallUI.ChangeTexture("Game/UI/ShoppingMall_Click");
 
                         EnableAllNormalExcept();
                         break;
@@ -386,7 +392,7 @@ public class ButtonTutorial : MonoBehaviour
                 case TutButtonType.PlacePoliceStation:
                     {
                         gameManager.PlaceDestPoliceStationHandler();
-                        placePoliceStationUI.ChangeTexture("Game/UI/Arrow_L");
+                        placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation_Click");
 
                         EnableAllNormalExcept();
                         break;
@@ -501,6 +507,7 @@ public class ButtonTutorial : MonoBehaviour
         Disable<Transform>(drawRoadWhite);
         Disable<Transform>(removeRoadWhite);
         Disable<Transform>(drawRemoveCarWhite);
+        Disable<Transform>(dayClockText);
     }
 
 
@@ -523,6 +530,7 @@ public class ButtonTutorial : MonoBehaviour
         Disable<Transform>(drawRemoveCar);
         Disable<Transform>(roadCount);
         Disable<Transform>(trafficCount);
+        Disable<Transform>(dayClockText);
     }
 
     public void DisableAll()

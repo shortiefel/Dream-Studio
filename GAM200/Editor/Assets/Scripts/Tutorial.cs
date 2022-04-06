@@ -53,7 +53,7 @@ public class Tutorial : MonoBehaviour
             //roadManager.PlaceSpawnHouse(roadPosition);
             //roadManager.PlaceSpawnDestination(roadPosition2);
             structureManager.PlaceHouse(roadPosition, 0);
-            structureManager.PlaceSpecial(roadPosition2, 0);
+            //structureManager.PlaceSpecial(roadPosition2, 0);
         //}
 
     }

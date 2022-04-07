@@ -54,6 +54,7 @@ public class StructureManager : MonoBehaviour
 {
     public StructurePrefabWeighted[] housesPrefabs, specialPrefabs;
     public PlacementManager placementManager;
+    MoneySystem moneySystem;
     //public NotificationManager notificationManager;
 
 
@@ -69,7 +70,7 @@ public class StructureManager : MonoBehaviour
     {
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
-
+        moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
         housesPrefabs = new StructurePrefabWeighted[2];
         housesPrefabs[0].prefab = new GameObject(new Prefab("House")); housesPrefabs[0].weight = 1;
 
@@ -163,24 +164,29 @@ public class StructureManager : MonoBehaviour
 
     public void PlaceDestHospital(Vector2Int position)
     {
-        PlaceSpecial(position, BuildingType.Hospital, 0);
+        if(moneySystem.BuyHospital())
+            PlaceSpecial(position, BuildingType.Hospital, 0);
     }
     public void PlaceDestOffice(Vector2Int position)
     {
-        PlaceSpecial(position, BuildingType.Office, 0);
+        if(moneySystem.BuyOffice())
+            PlaceSpecial(position, BuildingType.Office, 0);
     }
     public void PlaceDestPark(Vector2Int position)
     {
-        PlaceSpecial(position, BuildingType.Park, 0);
+        if(moneySystem.BuyPark())
+            PlaceSpecial(position, BuildingType.Park, 0);
     }
     public void PlaceDestMall(Vector2Int position)
     {
-        PlaceSpecial(position, BuildingType.Mall, 0);
+        if(moneySystem.BuyMall())
+            PlaceSpecial(position, BuildingType.Mall, 0);
     }
 
     public void PlaceDestPoliceStation(Vector2Int position)
     {
-        PlaceSpecial(position, BuildingType.PoliceStation, 0);
+        if(moneySystem.BuyPoliceStation())
+            PlaceSpecial(position, BuildingType.PoliceStation, 0);
     }
 
     private int GetRandomWeightedIndex(float[] weights)

@@ -31,18 +31,15 @@ public class ButtonRoad : MonoBehaviour
     //bool deleteRoadMode;
     Transform drawRoadWhite;
     Transform drawRoad;
-    Transform roadCount;
     Vector2 drawPosition;
     Vector2 drawRoadCount;
 
     Transform removeRoad;
     Transform removeRoadWhite;
-    Transform trafficCount;
     Vector2 removePosition;
 
     Transform drawERP;
     Transform drawERPWhite;
-    Transform ERPCount;
     Vector2 erpPosition;
     Vector2 drawERPCount;
 
@@ -141,9 +138,7 @@ public class ButtonRoad : MonoBehaviour
 
         drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
         drawRoad = GameObject.Find("DrawRoad").GetComponent<Transform>();
-        roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
         drawPosition = drawRoad.position;
-        drawRoadCount = roadCount.position;
 
         removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
         removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
@@ -151,15 +146,11 @@ public class ButtonRoad : MonoBehaviour
 
         drawERP = GameObject.Find("ERPbtn").GetComponent<Transform>();
         drawERPWhite = GameObject.Find("ERPbtnWhite").GetComponent<Transform>();
-        ERPCount = GameObject.Find("currERPDisplay").GetComponent<Transform>();
         erpPosition = drawERP.position;
-        drawERPCount = ERPCount.position;
 
         drawTraffic = GameObject.Find("TrafficLight").GetComponent<Transform>();
         drawTrafficWhite = GameObject.Find("TrafficLightWhite").GetComponent<Transform>();
-        trafficCount = GameObject.Find("currTrafficDisplay").GetComponent<Transform>();
         trafficPosition = drawTraffic.position;
-        drawTrafficCount = trafficCount.position;
 
         drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
         drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
@@ -221,9 +212,7 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(drawERPWhite);
         Disable<Transform>(drawTrafficWhite);
         Disable<Transform>(drawRemoveCarWhite);
-        Disable<Transform>(roadCount);
-        Disable<Transform>(ERPCount);
-        Disable<Transform>(trafficCount);
+       
 
         Disable<Transform>(drawERP);
         Disable<Transform>(drawTraffic);
@@ -245,18 +234,15 @@ public class ButtonRoad : MonoBehaviour
 
         drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
         drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
-        roadCount.position = new Vector2(closeXPosition, drawPosition.y);
 
         removeRoad.position = new Vector2(closeXPosition, removePosition.y);
         removeRoadWhite.position = new Vector2(closeXPosition, removePosition.y);
 
         drawERP.position = new Vector2(closeXPosition, erpPosition.y);
         drawERPWhite.position = new Vector2(closeXPosition, erpPosition.y);
-        ERPCount.position = new Vector2(closeXPosition, drawPosition.y);
 
         drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
         drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
-        trafficCount.position = new Vector2(closeXPosition, drawPosition.y);
 
         drawRemoveCar.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
@@ -393,18 +379,15 @@ public class ButtonRoad : MonoBehaviour
     {
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, closeXPosition, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, closeXPosition, timer), drawPosition.y);
-        roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, closeXPosition, timer), drawRoadCount.y);
 
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, closeXPosition, timer), removePosition.y);
         removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, closeXPosition, timer), removePosition.y);
 
         drawERP.position = new Vector2(Mathf.Lerp(drawERP.position.x, closeXPosition, timer), erpPosition.y);
         drawERPWhite.position = new Vector2(Mathf.Lerp(drawERPWhite.position.x, closeXPosition, timer), erpPosition.y);
-        ERPCount.position = new Vector2(Mathf.Lerp(ERPCount.position.x, closeXPosition, timer), drawERPCount.y);
 
         drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, closeXPosition, timer), trafficPosition.y);
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, closeXPosition, timer), trafficPosition.y);
-        trafficCount.position = new Vector2(Mathf.Lerp(trafficCount.position.x, closeXPosition, timer), drawTrafficCount.y );
 
         drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
@@ -436,18 +419,15 @@ public class ButtonRoad : MonoBehaviour
 
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, drawPosition.x, timer), drawPosition.y);
-        roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, drawRoadCount.x, timer), drawRoadCount.y);
 
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, removePosition.x, timer), removePosition.y);
         removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, removePosition.x, timer), removePosition.y);
 
         drawERP.position = new Vector2(Mathf.Lerp(drawERP.position.x, erpPosition.x, timer), erpPosition.y);
         drawERPWhite.position = new Vector2(Mathf.Lerp(drawERPWhite.position.x, erpPosition.x, timer), erpPosition.y);
-        ERPCount.position = new Vector2(Mathf.Lerp(ERPCount.position.x, drawERPCount.x, timer), drawERPCount.y);
 
         drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, trafficPosition.x, timer), trafficPosition.y);
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, trafficPosition.x, timer), trafficPosition.y);
-        trafficCount.position = new Vector2(Mathf.Lerp(trafficCount.position.x, drawTrafficCount.x, timer), drawTrafficCount.y);
 
         drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
@@ -691,7 +671,7 @@ public class ButtonRoad : MonoBehaviour
             Enable<Transform>(drawRoad);
         if (bt != ButtonType.Remove)
             Enable<Transform>(removeRoad);
-        Enable<Transform>(roadCount);
+        //Enable<Transform>(roadCount);
 
         if (bt != ButtonType.RemoveCar)
             Enable<Transform>(drawRemoveCar);
@@ -700,13 +680,13 @@ public class ButtonRoad : MonoBehaviour
         {
             if (bt != ButtonType.ERP)
                 Enable<Transform>(drawERP);
-            Enable<Transform>(ERPCount);
+            //Enable<Transform>(ERPCount);
         }
         if (revealTrafficButton)
         {
             if (bt != ButtonType.TrafficLight)
                 Enable<Transform>(drawTraffic);
-            Enable<Transform>(trafficCount);
+            //Enable<Transform>(trafficCount);
         }
     }
 
@@ -717,9 +697,7 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(drawERP);
         Disable<Transform>(drawTraffic);
         Disable<Transform>(drawRemoveCar);
-        Disable<Transform>(roadCount);
-        Disable<Transform>(ERPCount);
-        Disable<Transform>(trafficCount);
+
     }
 
     public void EnableAllWhite()
@@ -775,19 +753,13 @@ public class ButtonRoad : MonoBehaviour
     public void RevealERP()
     {
         revealERPButton = true;
-        //Enable<Transform>(drawERP);
 
         Disable<Transform>(moneyText);
-        //Disable<Transform>(counterText);
-        Disable<Transform>(roadCount);
-        Disable<Transform>(trafficCount);
-
         Enable<Transform>(erpIntro);
 
         closing = true;
 
         Time.timeScale = 0f;
-
 
         combinedUI.CloseAllUIExcept(UIType.None);
 
@@ -801,7 +773,6 @@ public class ButtonRoad : MonoBehaviour
 
         Disable<Transform>(moneyText);
         //Disable<Transform>(counterText);
-        Disable<Transform>(roadCount);
         //Debug.Log("Revealing traffic ");
         Enable<Transform>(trafficIntro);
 

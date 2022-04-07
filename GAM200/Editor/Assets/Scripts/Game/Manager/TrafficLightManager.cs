@@ -11,13 +11,9 @@ public class TrafficLightManager : MonoBehaviour
 
     //bool toDraw; //To Remove
 
-    public int tlCount;
 
     Transform TLInfoText;
     Transform TLInfo;
-
-    float timer;
-    bool addToTime;
 
     public override void Start()
     {
@@ -30,16 +26,12 @@ public class TrafficLightManager : MonoBehaviour
 
         //toDraw = false; //To Remove
 
-        tlCount = 1;
 
         TLInfoText = GameObject.Find("TLPopInfoText").GetComponent<Transform>();
         TLInfo = GameObject.Find("TLPopInfo").GetComponent<Transform>();
 
         Disable<Transform>(TLInfoText);
         Disable<Transform>(TLInfo);
-
-        timer = 0f;
-        addToTime = false;
     }
 
     public int trafficlightTaxCount()
@@ -47,23 +39,6 @@ public class TrafficLightManager : MonoBehaviour
         return trafficLights.Count;
     }
 
-    public override void FixedUpdate()
-    {
-        if (addToTime == true)
-        {
-            timer += Time.fixedDeltaTime;
-
-            if (timer > 2f)
-            {
-                Disable<Transform>(TLInfoText);
-                Disable<Transform>(TLInfo);
-
-                timer = 0f;
-                addToTime = false;
-            }
-        }
-           
-    }
 
     //public override void Update()
     //{
@@ -176,16 +151,6 @@ public class TrafficLightManager : MonoBehaviour
     public bool RequestPlacingTrafficLight(Vector2Int position)
     {
 
-        //if (tlCount <= 0)
-        //{
-        //    Enable<Transform>(TLInfoText);
-        //    Enable<Transform>(TLInfo);
-
-        //    addToTime = true;
-
-        //    return false;
-        //}
-
         if (trafficLights.ContainsKey(position))
             return false;
         if (erpManager.IsERP(position))
@@ -200,17 +165,12 @@ public class TrafficLightManager : MonoBehaviour
         if (!trafficLights.ContainsKey(position))
             return false;
 
-        ++tlCount;
+        moneySystem.SellTL();
         Destroy(trafficLights[position].entityId);
         trafficLights.Remove(position);
         return true;
 
     }
-    //public override void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.F))
-    //        ++tlCount;
-    //}
 }
 
 

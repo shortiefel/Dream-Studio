@@ -12,6 +12,7 @@ public enum MoneySource
     DestMall,
     DestPolice,
     RemoveCar,
+    Road,
     Ignore
 }
 
@@ -322,6 +323,11 @@ public class MoneySystem : MonoBehaviour
                             infoDestTexture.ChangeTexture("CarIcon");
                             break;
                         }
+                    case MoneySource.Road:
+                        {
+                            infoDestTexture.ChangeTexture("DrawRoad");
+                            break;
+                        }
                 }
             }
         }
@@ -392,7 +398,7 @@ public class MoneySystem : MonoBehaviour
 
         if (money >= 20)
         {
-            MinusMoney(20, MoneySource.Store);
+            MinusMoney(20, MoneySource.Road);
             //roadManager.roadCount++;	
             return true;
         }
@@ -405,7 +411,7 @@ public class MoneySystem : MonoBehaviour
 
     public void SellRoad()
     {
-        AddMoney(10, MoneySource.Store);
+        AddMoney(10, MoneySource.Road);
     }
 
     public bool BuyErp()

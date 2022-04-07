@@ -2,15 +2,17 @@
 
 public enum TutButtonType
 {
-    Display = 1,
-    Draw,
+    Draw = 0,
     Remove,
+    ERP,
+    TrafficLight,
     RemoveCar,
     PlaceHospital,
     PlaceOffice,
     PlacePark,
     PlaceMall,
     PlacePoliceStation,
+    Display,
     Ignore,
     Latest, //Used to reopen the last buttontype
     None
@@ -29,6 +31,17 @@ public class ButtonTutorial : MonoBehaviour
     Transform removeRoadWhite;
     Transform trafficCount;
     Vector2 removePosition;
+
+    Transform drawERP;
+    Transform drawERPWhite;
+    Transform ERPCount;
+    Vector2 erpPosition;
+    Vector2 drawERPCount;
+
+    Transform drawTraffic;
+    Transform drawTrafficWhite;
+    Vector2 trafficPosition;
+    Vector2 drawTrafficCount;
 
     Transform drawRemoveCar;
     Transform drawRemoveCarWhite;
@@ -79,7 +92,7 @@ public class ButtonTutorial : MonoBehaviour
 
     float speedMultiply;
 
-    ButtonTutorial buttonTutSys;
+   // ButtonTutorial buttonTutSys;
 
     TutButtonType choosenButton = TutButtonType.None;
 
@@ -111,6 +124,19 @@ public class ButtonTutorial : MonoBehaviour
 
         drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
         drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
+
+        drawERP = GameObject.Find("ERPbtn").GetComponent<Transform>();
+        drawERPWhite = GameObject.Find("ERPbtnWhite").GetComponent<Transform>();
+        ERPCount = GameObject.Find("currERPDisplay").GetComponent<Transform>();
+        erpPosition = drawERP.position;
+        drawERPCount = ERPCount.position;
+
+        drawTraffic = GameObject.Find("TrafficLight").GetComponent<Transform>();
+        drawTrafficWhite = GameObject.Find("TrafficLightWhite").GetComponent<Transform>();
+        trafficCount = GameObject.Find("currTrafficDisplay").GetComponent<Transform>();
+        trafficPosition = drawTraffic.position;
+        drawTrafficCount = trafficCount.position;
+
 
         GameObject displayGO = GameObject.Find("Displaybtn");
         displayArrow = displayGO.GetComponent<Transform>();
@@ -155,9 +181,15 @@ public class ButtonTutorial : MonoBehaviour
 
         Disable<Transform>(drawRoadWhite);
         Disable<Transform>(removeRoadWhite);
+        Disable<Transform>(drawERPWhite);
+        Disable<Transform>(drawTrafficWhite);
         Disable<Transform>(drawRemoveCarWhite);
+        Disable<Transform>(roadCount);
+        Disable<Transform>(ERPCount);
         Disable<Transform>(trafficCount);
-        Disable<Transform>(dayClockText);
+
+        Disable<Transform>(drawERP);
+        Disable<Transform>(drawTraffic);
 
 
         opening = false;
@@ -175,6 +207,14 @@ public class ButtonTutorial : MonoBehaviour
 
         removeRoad.position = new Vector2(closeXPosition, removePosition.y);
         removeRoadWhite.position = new Vector2(closeXPosition, removePosition.y);
+
+        drawERP.position = new Vector2(closeXPosition, erpPosition.y);
+        drawERPWhite.position = new Vector2(closeXPosition, erpPosition.y);
+        ERPCount.position = new Vector2(closeXPosition, drawPosition.y);
+
+        drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
+        drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
+        trafficCount.position = new Vector2(closeXPosition, drawPosition.y);
 
         drawRemoveCar.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
@@ -208,6 +248,14 @@ public class ButtonTutorial : MonoBehaviour
 
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, removePosition.x, timer), removePosition.y);
         removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, removePosition.x, timer), removePosition.y);
+
+        drawERP.position = new Vector2(Mathf.Lerp(drawERP.position.x, erpPosition.x, timer), erpPosition.y);
+        drawERPWhite.position = new Vector2(Mathf.Lerp(drawERPWhite.position.x, erpPosition.x, timer), erpPosition.y);
+        ERPCount.position = new Vector2(Mathf.Lerp(ERPCount.position.x, drawERPCount.x, timer), drawERPCount.y);
+
+        drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, trafficPosition.x, timer), trafficPosition.y);
+        drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, trafficPosition.x, timer), trafficPosition.y);
+        trafficCount.position = new Vector2(Mathf.Lerp(trafficCount.position.x, drawTrafficCount.x, timer), drawTrafficCount.y);
 
         drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
@@ -244,6 +292,14 @@ public class ButtonTutorial : MonoBehaviour
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, closeXPosition, timer), removePosition.y);
         removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, closeXPosition, timer), removePosition.y);
 
+        drawERP.position = new Vector2(Mathf.Lerp(drawERP.position.x, closeXPosition, timer), erpPosition.y);
+        drawERPWhite.position = new Vector2(Mathf.Lerp(drawERPWhite.position.x, closeXPosition, timer), erpPosition.y);
+        ERPCount.position = new Vector2(Mathf.Lerp(ERPCount.position.x, closeXPosition, timer), drawERPCount.y);
+
+        drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, closeXPosition, timer), trafficPosition.y);
+        drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, closeXPosition, timer), trafficPosition.y);
+        trafficCount.position = new Vector2(Mathf.Lerp(trafficCount.position.x, closeXPosition, timer), drawTrafficCount.y);
+
         drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
 
@@ -256,6 +312,7 @@ public class ButtonTutorial : MonoBehaviour
 
 
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, closeXPosition, timer), line1.y);
+
 
         /***************************** Timer **************************************************/
         timer += speedMultiply * Time.deltaTime;
@@ -486,11 +543,11 @@ public class ButtonTutorial : MonoBehaviour
             CloseTab();
 
         /****Shortcut keys in game***/
-        if (Input.GetKeyDown(KeyCode.H)) CallFunctionTut(TutButtonType.PlaceHospital);
-        if (Input.GetKeyDown(KeyCode.M)) CallFunctionTut(TutButtonType.PlaceMall);
-        if (Input.GetKeyDown(KeyCode.P)) CallFunctionTut(TutButtonType.PlacePark);
-        if (Input.GetKeyDown(KeyCode.O)) CallFunctionTut(TutButtonType.PlaceOffice);
-        if (Input.GetKeyDown(KeyCode.S)) CallFunctionTut(TutButtonType.PlacePoliceStation);
+        if (Input.GetKeyDown(KeyCode.T1)) CallFunctionTut(TutButtonType.PlaceHospital);
+        if (Input.GetKeyDown(KeyCode.T2)) CallFunctionTut(TutButtonType.PlaceMall);
+        if (Input.GetKeyDown(KeyCode.T3)) CallFunctionTut(TutButtonType.PlacePark);
+        if (Input.GetKeyDown(KeyCode.T4)) CallFunctionTut(TutButtonType.PlaceOffice);
+        if (Input.GetKeyDown(KeyCode.T5)) CallFunctionTut(TutButtonType.PlacePoliceStation);
 
     }
 

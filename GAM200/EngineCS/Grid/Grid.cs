@@ -167,6 +167,13 @@ public class Grid
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern int UnsetRoad_Engine(Vector2Int pos, Vector2Int[] roadRemoved);
 
+    public bool UnsetDestination(Vector2Int pos, out Vector2Int posToRemove)
+    {
+        return UnsetDestination_Engine(pos, out posToRemove);
+    }
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal static extern bool UnsetDestination_Engine(Vector2Int pos, out Vector2Int posToRemove);
+
     public void RevertGrid()
     {
         RevertGrid_Engine();

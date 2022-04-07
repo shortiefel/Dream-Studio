@@ -71,16 +71,17 @@ namespace Engine {
         if (_deserializeState) {
             //if (sceneName != "Intro") 
             //if (!ignore) 
-            //{
+            if (_sceneName == "TutorialNew" || _sceneName == "NewGame")
+            {
                 loadFinish = false;
                 toLoad = sceneName;
                 GameSceneSerializer::DeserializeScene("Loading");
                 asyncSceneThread = std::async(std::launch::async, AsyncSceneLoading);
-            //}
-            //else 
-            //{
-            //    GameSceneSerializer::DeserializeScene(sceneName);
-            //}
+            }
+            else 
+            {
+                GameSceneSerializer::DeserializeScene(sceneName);
+            }
         }
         else {
             GameSceneSerializer::DeserializeScene("temporary");

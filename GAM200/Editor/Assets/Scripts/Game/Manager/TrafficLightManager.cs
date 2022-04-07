@@ -176,24 +176,22 @@ public class TrafficLightManager : MonoBehaviour
     public bool RequestPlacingTrafficLight(Vector2Int position)
     {
 
-        if (tlCount <= 0)
-        {
-            Enable<Transform>(TLInfoText);
-            Enable<Transform>(TLInfo);
+        //if (tlCount <= 0)
+        //{
+        //    Enable<Transform>(TLInfoText);
+        //    Enable<Transform>(TLInfo);
 
-            addToTime = true;
+        //    addToTime = true;
 
-            return false;
-        }
+        //    return false;
+        //}
 
         if (trafficLights.ContainsKey(position))
             return false;
         if (erpManager.IsERP(position))
             return false;
-
-        --tlCount;
-
-        Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f), 3);
+        if (moneySystem.BuyTrafficLight())
+            Instantiate(trafficLightGO, new Vector3(position.x, position.y, 0f), 3);
         return true;
     }
 

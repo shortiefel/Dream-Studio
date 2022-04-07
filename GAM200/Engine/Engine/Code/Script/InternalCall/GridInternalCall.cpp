@@ -37,6 +37,7 @@ namespace Engine {
 
 	int SetRoad_Engine(MonoArray* monoArray, int size);
 	int UnsetRoad_Engine(Math::ivec2 pos, MonoArray* monoArray);
+	bool UnsetDestination_Engine(Math::ivec2 pos, Math::ivec2* posToRemove);
 
 	void RevertGrid_Engine();
 	void FinalizeGrid_Engine();
@@ -66,6 +67,7 @@ namespace Engine {
 		
 		mono_add_internal_call("Grid::SetRoad_Engine", SetRoad_Engine);
 		mono_add_internal_call("Grid::UnsetRoad_Engine", UnsetRoad_Engine);
+		mono_add_internal_call("Grid::UnsetDestination_Engine", UnsetDestination_Engine);
 		
 		mono_add_internal_call("Grid::RevertGrid_Engine", RevertGrid_Engine);
 		mono_add_internal_call("Grid::FinalizeGrid_Engine", FinalizeGrid_Engine);
@@ -166,6 +168,10 @@ namespace Engine {
 			mono_array_set(monoArray, Math::ivec2, i, (arr[i]));
 		}
 		return loop;
+	}
+
+	bool UnsetDestination_Engine(Math::ivec2 pos, Math::ivec2* posToRemove) {
+		return Game::Grid::GetInstance().UnsetDestination(pos, *posToRemove);
 	}
 
 	void RevertGrid_Engine() {

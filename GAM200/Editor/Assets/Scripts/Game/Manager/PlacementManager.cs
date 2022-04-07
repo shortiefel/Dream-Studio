@@ -74,7 +74,24 @@ public class PlacementManager : MonoBehaviour
 
         return structure;
     }
-  
+
+    public void RemoveDestination(Vector2Int position)
+    {
+        Vector2Int posToRemove;
+        bool result = placementGrid.UnsetDestination(position, out posToRemove);
+        if (result)
+        {
+            structureDictionary.Remove(posToRemove);
+            structureDictionary.Remove(new Vector2Int(posToRemove.x + 1, posToRemove.y));
+            structureDictionary.Remove(new Vector2Int(posToRemove.x, posToRemove.y + 1));
+            structureDictionary.Remove(new Vector2Int(posToRemove.x + 1, posToRemove.y + 1));
+
+            //AddMoney
+        }
+
+
+        //return result;
+    }
 
     internal bool CheckIfPositionIsFree(Vector2Int position)
     {

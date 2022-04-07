@@ -20,7 +20,7 @@ Technology is prohibited.
 #include "Engine/Header/Grid/Grid.hpp"
 #include "Engine/Header/Random/Random.hpp"
 
-#include "Engine/Header/ECS/DreamECS.hpp"
+
 
 #include "Engine/Header/Serialize/GameSceneSerializer.hpp" //Deserialize Prefab
 
@@ -762,13 +762,13 @@ namespace Engine {
                         //If L = cellL, S = special structure, C = cellC, - = ignore
                         //SS
                         //LC //L is part of the special structure
-                        if (cellL.ct == CellType::SpecialStructure) {
+                        if (xVal > 0 && cellL.entityId == cellC.entityId && cellL.ct == CellType::SpecialStructure) {
                             if (cellL.cellBinary != 0) continue;
                             //U = cellU
                             //SU
                             //LC //U is part of the special structure
                             Cell& cellU = *(*(grid + xVal) + yVal + 1);
-                            if (cellU.ct == CellType::SpecialStructure) {
+                            if (cellU.entityId == cellC.entityId && cellU.ct == CellType::SpecialStructure) {
                                 if (cellU.cellBinary != 0) continue;
                     
                                 //Check Up Left
@@ -796,7 +796,7 @@ namespace Engine {
                             //-US
                             //LCS   //U is part of the special structure
                             Cell& cellU = *(*(grid + xVal) + yVal + 1);
-                            if (cellU.ct == CellType::SpecialStructure) {
+                            if (cellU.entityId == cellC.entityId && cellU.ct == CellType::SpecialStructure) {
                                 if (cellU.cellBinary != 0) continue;
                                 //Check Up Right
                                 Cell& cellUR = *(*(grid + xVal + 1) + yVal + 1);
@@ -869,11 +869,11 @@ namespace Engine {
         }
 
         int Grid::UnsetRoads(Math::ivec2 pos, std::vector<Math::ivec2>* roadRemoved) {
-            if (!IsWithinGrid(pos)) return false;
+            if (!IsWithinGrid(pos)) return 0;
             
             Cell& cell = *(*(grid + pos.x - offset.x) + pos.y - offset.y);
-
             if (cell.entityId == EMPTY_ENTITY || cell.ct != CellType::Road) return 0;
+
             dreamECSGame->DestroyEntity(cell.entityId);
             cell.entityId = EMPTY_ENTITY;
             
@@ -929,6 +929,285 @@ namespace Engine {
             FinalizeGrid();
 
             return noOfRoadRemoved;
+        }
+
+        bool Grid::DestinationCheck(Entity_id idTocheck, Math::ivec2 pos) {
+            if (pos.x < 0) return false;
+            Cell& cell = *(*(grid + pos.x) + pos.y);
+            if (idTocheck != cell.entityId || cell.ct != CellType::SpecialStructure) return false;
+
+            if (cell.cellBinary & GET_BIN(CellDirection::Left)) {
+                Cell& roadCell = *(*(grid + pos.x - 1) + pos.y);
+                if (roadCell.ct == CellType::Road) {
+                    roadCell.cellBinary ^= GET_BIN(CellDirection::Right);
+                    UpdateCell(roadCell, { pos.x - 1, pos.y });
+                }
+            }
+
+            if (cell.cellBinary & GET_BIN(CellDirection::Right)) {
+                Cell& roadCell = *(*(grid + pos.x + 1) + pos.y);
+                if (roadCell.ct == CellType::Road) {
+                    roadCell.cellBinary ^= GET_BIN(CellDirection::Left);
+                    UpdateCell(roadCell, { pos.x + 1, pos.y });
+                }
+            }
+
+            if (cell.cellBinary & GET_BIN(CellDirection::Up)) {
+                Cell & roadCell = *(*(grid + pos.x) + pos.y + 1);
+                if (roadCell.ct == CellType::Road) {
+                    roadCell.cellBinary ^= GET_BIN(CellDirection::Down);
+                    UpdateCell(roadCell, { pos.x, pos.y + 1 });
+                }
+            }
+
+            if (cell.cellBinary & GET_BIN(CellDirection::Down)){
+                Cell & roadCell = *(*(grid + pos.x) + pos.y - 1);
+                if (roadCell.ct == CellType::Road) {
+                    roadCell.cellBinary ^= GET_BIN(CellDirection::Up);
+                    UpdateCell(roadCell, { pos.x, pos.y - 1 });
+                }
+            }
+
+            cell.entityId = EMPTY_ENTITY;
+            cell.ct = CellType::Empty;
+            cell.cellBinary = 0;
+
+            return true;
+        }
+
+        bool Grid::UnsetDestination(Math::ivec2 pos, Math::ivec2& posToRemove) {
+            if (!IsWithinGrid(pos)) return 0;
+
+            int xVal = pos.x - offset.x;
+            int yVal = pos.y - offset.y;
+            Cell& cellC = *(*(grid + xVal) + yVal);
+            if (cellC.entityId == EMPTY_ENTITY || cellC.ct != CellType::SpecialStructure) return false;
+            dreamECSGame->DestroyEntity(cellC.entityId);
+
+            posToRemove = pos;
+
+            if (DestinationCheck(cellC.entityId, { xVal - 1, yVal })) {
+                if (DestinationCheck(cellC.entityId, { xVal, yVal - 1 })) {
+                    posToRemove = { xVal - 1, yVal - 1 };
+                    DestinationCheck(cellC.entityId, posToRemove);
+                }
+
+                else if (DestinationCheck(cellC.entityId, { xVal, yVal + 1})) {
+                    DestinationCheck(cellC.entityId, { xVal - 1, yVal + 1 });
+                    posToRemove = { xVal - 1, yVal };
+                }
+            }
+
+            else if (DestinationCheck(cellC.entityId, { xVal + 1, yVal })) {
+                if (DestinationCheck(cellC.entityId, { xVal, yVal - 1 })) {
+                    DestinationCheck(cellC.entityId, { xVal + 1, yVal - 1 });
+                    posToRemove = { xVal, yVal - 1};
+                }
+
+                else if (DestinationCheck(cellC.entityId, { xVal, yVal + 1 })) {
+                    DestinationCheck(cellC.entityId, { xVal + 1, yVal + 1 });
+                }
+            }
+
+            DestinationCheck(cellC.entityId, { xVal, yVal });
+
+            return true;
+
+            
+            ////Check a 2x2 box around current point for the other parts of the special structure
+            //Cell& cellL = *(*(grid + xVal - 1) + yVal);
+            ////Do Note that in the first if and else, we do not know whether it is on top or below
+            ////If L = cellL, S = special structure, C = cellC, - = ignore
+            ////SS
+            ////LC //L is part of the special structure
+            //if (xVal > 0 && cellL.entityId == cellC.entityId && cellL.ct == CellType::SpecialStructure) {
+            //    if (cellL.cellBinary & GET_BIN(CellDirection::Left)) {
+            //        Cell& roadCellL = *(*(grid + xVal - 2) + yVal);
+            //        roadCellL.cellBinary ^= GET_BIN(CellDirection::Right);
+            //        if (roadCellL.ct == CellType::Road)
+            //            UpdateCell(roadCellL, { xVal - 2, yVal });
+            //    }
+            //
+            //    if (cellC.cellBinary & GET_BIN(CellDirection::Right)) {
+            //        Cell& roadCellR = *(*(grid + xVal + 1) + yVal);
+            //        roadCellR.cellBinary ^= GET_BIN(CellDirection::Left);
+            //        if (roadCellR.ct == CellType::Road)
+            //            UpdateCell(roadCellR, { xVal + 1, yVal });
+            //    }
+            //
+            //    
+            //    //U = cellU
+            //    //SU
+            //    //LC //U is part of the special structure
+            //    Cell& cellU = *(*(grid + xVal) + yVal + 1);
+            //    if (cellU.entityId == cellC.entityId && cellU.ct == CellType::SpecialStructure) {
+            //        if (cellL.cellBinary & GET_BIN(CellDirection::Down)) {
+            //            Cell& roadCellD = *(*(grid + xVal - 1) + yVal - 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Up);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal - 1, yVal - 1 });
+            //        }
+            //
+            //        if (cellC.cellBinary & GET_BIN(CellDirection::Down)) {
+            //            Cell& roadCellD = *(*(grid + xVal) + yVal - 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Up);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal, yVal - 1 });
+            //        }
+            //
+            //
+            //        if (cellU.cellBinary & GET_BIN(CellDirection::Right)) {
+            //            Cell& roadCellD = *(*(grid + xVal + 1) + yVal + 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Left);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal + 1, yVal + 1 });
+            //        }
+            //
+            //        if (cellU.cellBinary & GET_BIN(CellDirection::Up)) {
+            //            Cell& roadCellD = *(*(grid + xVal) + yVal + 2);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Down);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal, yVal + 2 });
+            //        }
+            //
+            //        //Check Up Left
+            //        Cell& cellUL = *(*(grid + xVal - 1) + yVal + 1);
+            //        if (cellUL.cellBinary != 0) continue;
+            //    }
+            //    //-U
+            //    //LC //U is not part of the special structure
+            //    //SS
+            //    else {
+            //        if (cellL.cellBinary & GET_BIN(CellDirection::Up)) {
+            //            Cell& roadCellD = *(*(grid + xVal - 1) + yVal + 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Down);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal - 1, yVal + 1 });
+            //        }
+            //
+            //        if (cellC.cellBinary & GET_BIN(CellDirection::Up)) {
+            //            Cell& roadCellD = *(*(grid + xVal) + yVal + 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Down);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal, yVal + 1 });
+            //        }
+            //
+            //        Cell& cellD = *(*(grid + xVal) + yVal - 1);
+            //        if (cellD.cellBinary & GET_BIN(CellDirection::Right)) {
+            //            Cell& roadCellD = *(*(grid + xVal + 1) + yVal - 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Left);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal + 1, yVal - 1 });
+            //        }
+            //
+            //        if (cellD.cellBinary & GET_BIN(CellDirection::Down)) {
+            //            Cell& roadCellD = *(*(grid + xVal) + yVal - 2);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Up);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal, yVal - 2 });
+            //        }
+            //
+            //        //Check Down Left
+            //        Cell& cellDL = *(*(grid + xVal - 1) + yVal - 1);
+            //        if (cellDL.cellBinary != 0) continue;
+            //    }
+            //            }
+            ////If L = cellL, S = special structure and C = cellC
+            ////-SS
+            ////LCS //L is not part of the special structure
+            //else {
+            //    Cell& cellR = *(*(grid + xVal + 1) + yVal);
+            //    if (cellR.cellBinary & GET_BIN(CellDirection::Right)) {
+            //        Cell& roadCellR = *(*(grid + xVal + 2) + yVal);
+            //        roadCellR.cellBinary ^= GET_BIN(CellDirection::Left);
+            //        if (roadCellR.ct == CellType::Road)
+            //            UpdateCell(roadCellR, { xVal + 2, yVal });
+            //    }
+            //
+            //    if (cellC.cellBinary & GET_BIN(CellDirection::Left)) {
+            //        Cell& roadCellR = *(*(grid + xVal - 1) + yVal);
+            //        roadCellR.cellBinary ^= GET_BIN(CellDirection::Right);
+            //        if (roadCellR.ct == CellType::Road)
+            //            UpdateCell(roadCellR, { xVal - 1, yVal });
+            //    }
+            //
+            //
+            //    //U = cellU
+            //    //-US
+            //    //LCS   //U is part of the special structure
+            //    Cell& cellU = *(*(grid + xVal) + yVal + 1);
+            //    if (cellU.entityId == cellC.entityId && cellU.ct == CellType::SpecialStructure) {
+            //        if (cellR.cellBinary & GET_BIN(CellDirection::Down)) {
+            //            Cell& roadCellD = *(*(grid + xVal + 1) + yVal - 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Up);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal + 1, yVal - 1 });
+            //        }
+            //
+            //        if (cellC.cellBinary & GET_BIN(CellDirection::Down)) {
+            //            Cell& roadCellD = *(*(grid + xVal) + yVal - 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Up);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal, yVal - 1 });
+            //        }
+            //
+            //        if (cellU.cellBinary & GET_BIN(CellDirection::Left)) {
+            //            Cell& roadCellD = *(*(grid + xVal - 1) + yVal + 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Right);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal - 1, yVal + 1 });
+            //        }
+            //
+            //        if (cellU.cellBinary & GET_BIN(CellDirection::Up)) {
+            //            Cell& roadCellD = *(*(grid + xVal ) + yVal + 2);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Down);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal , yVal + 2 });
+            //        }
+            //
+            //
+            //        //Check Up Right
+            //        Cell& cellUR = *(*(grid + xVal + 1) + yVal + 1);
+            //        if (cellDR.cellBinary != 0) continue;
+            //    }
+            //    //-U-
+            //    //LCS   //U is not part of the special structure
+            //    //-SS
+            //    else {
+            //        if (cellR.cellBinary & GET_BIN(CellDirection::Up)) {
+            //            Cell& roadCellD = *(*(grid + xVal + 1) + yVal + 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Down);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal + 1, yVal + 1 });
+            //        }
+            //
+            //        if (cellC.cellBinary & GET_BIN(CellDirection::Up)) {
+            //            Cell& roadCellD = *(*(grid + xVal) + yVal + 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Down);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal, yVal + 1 });
+            //        }
+            //
+            //        Cell& cellD = *(*(grid + xVal) + yVal - 1);
+            //        if (cellD.cellBinary & GET_BIN(CellDirection::Left)) {
+            //            Cell& roadCellD = *(*(grid + xVal - 1) + yVal - 1);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Right);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal - 1, yVal - 1 });
+            //        }
+            //
+            //        if (cellD.cellBinary & GET_BIN(CellDirection::Down)) {
+            //            Cell& roadCellD = *(*(grid + xVal) + yVal - 2);
+            //            roadCellD.cellBinary ^= GET_BIN(CellDirection::Up);
+            //            if (roadCellD.ct == CellType::Road)
+            //                UpdateCell(roadCellD, { xVal, yVal - 2 });
+            //        }
+            //
+            //        //Check Down Right
+            //        Cell& cellDR = *(*(grid + xVal + 1) + yVal - 1);
+            //        if (cellDR.cellBinary != 0) continue;
+            //    }
+            //}
         }
 
         void Grid::RevertGrid() {

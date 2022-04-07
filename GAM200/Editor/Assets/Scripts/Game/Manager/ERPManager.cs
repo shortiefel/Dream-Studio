@@ -2,7 +2,7 @@
 
 public class ERPManager : MonoBehaviour
 {
-    //MoneySystem moneySystem;
+    MoneySystem moneySystem;
     private TrafficLightManager trafficLightManager;
     //private bool toDraw; //To Remove ------------------------------------------------------
     private GameObject erpGO;
@@ -22,7 +22,7 @@ public class ERPManager : MonoBehaviour
     {
         erpList = new Dictionary<Vector2Int, uint>();
 
-        //moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
+        moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
 
         erpGO = new GameObject(new Prefab("ERP"));
 
@@ -111,23 +111,22 @@ public class ERPManager : MonoBehaviour
     public bool RequestPlacingERP(Vector2Int position)
     {
 
-        if (erpCount <= 0)
-        {
-            Enable<Transform>(ERPInfoText);
-            Enable<Transform>(ERPInfo);
+        //if (erpCount <= 0)
+        //{
+        //    Enable<Transform>(ERPInfoText);
+        //    Enable<Transform>(ERPInfo);
 
-            addToTime = true;
+        //    addToTime = true;
 
-            return false;
-        }
+        //    return false;
+        //}
 
         if (erpList.ContainsKey(position))
             return false;
         if (trafficLightManager.IsTrafficLight(position))
             return false;
-
-        --erpCount;
-        Instantiate(erpGO, new Vector3(position.x, position.y, 0f), 3);
+        if (moneySystem.BuyErp())
+            Instantiate(erpGO, new Vector3(position.x, position.y, 0f), 3);
         return true;
     }
 

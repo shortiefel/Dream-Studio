@@ -1,1 +1,63 @@
-[{"Entity":{"Name":"OfficeDestination","EntityId":149,"Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"Layer":2,"IsActive":true},"ColliderComponent":{"ColliderType":1,"Position":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"IsTrigger":true,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Game\\Houses\\Office.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true},"SoundComponent":{"IsActive":true,"IsLoop":false,"filepath":"Assets\\Sound\\NotificationCleared.wav","volume":5.0,"isSound":true,"IsMute":false,"SoundGroup":2},"LightComponent":{"Scale":[3.0,3.0],"Colour":[1.0,0.9576770663261414,0.0,1.0],"IsActive":true},"ScriptComponent":[{"Class":"CarSpawner","IsActive":true},{"Class":"StructureModel","IsActive":true}],"WaypointComponent":{"Waypoints":[0.10000000149011612,0.0,-0.10000000149011612,0.0],"Order":[1,1],"Section":1}}]
+[
+  
+  {
+    "Entity": {
+      "Name": "OfficeDestination",
+      "EntityId": 149,
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "ColliderComponent": {
+      "ColliderType": 1,
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 0.8, 0.8 ],
+      "Angle": 0.0,
+      "IsTrigger": true,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Game\\Houses\\Office.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "SoundComponent": {
+      "IsActive": true,
+      "IsLoop": false,
+      "filepath": "Assets\\Sound\\NotificationCleared.wav",
+      "volume": 5.0,
+      "isSound": true,
+      "IsMute": false,
+      "SoundGroup": 2
+    },
+    "LightComponent": {
+      "Scale": [ 3.0, 3.0 ],
+      "Colour": [ 1.0, 0.9576770663261414, 0.0, 1.0 ],
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CarSpawner",
+        "IsActive": true
+      },
+      {
+        "Class": "StructureModel",
+        "IsActive": true
+      }
+    ],
+    "WaypointComponent": {
+      "Waypoints": [ 0.10000000149011612, 0.0, -0.10000000149011612, 0.0 ],
+      "Order": [ 1, 1 ],
+      "Section": 1
+    }
+  }
+]

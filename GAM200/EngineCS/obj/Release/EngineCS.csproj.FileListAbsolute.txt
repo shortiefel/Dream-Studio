@@ -28,3 +28,15 @@ C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\obj\Relea
 C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.CoreCompileInputs.cache
 C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.dll
 C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.pdb
+C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.dll
+C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.pdb
+C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.AssemblyReference.cache
+C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.CoreCompileInputs.cache
+C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.dll
+C:\Users\jianwen.o\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.pdb
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.dll
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.pdb
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.AssemblyReference.cache
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.CoreCompileInputs.cache
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.dll
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.pdb

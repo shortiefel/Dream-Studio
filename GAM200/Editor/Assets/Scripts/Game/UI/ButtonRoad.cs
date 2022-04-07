@@ -554,7 +554,7 @@ public class ButtonRoad : MonoBehaviour
                     }
                 case ButtonType.Remove:
                     {
-                        gameManager.RemoveRoadHandler();
+                        gameManager.RemoveStructureHandler();
                         Enable<Transform>(removeRoadWhite);
 
                         EnableAllNormalExcept(ButtonType.Remove);

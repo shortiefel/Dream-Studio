@@ -117,7 +117,7 @@ namespace Engine
 					{
 						particle.ParticleUpdate(p, _dt, particle.isAngleRandom);
 
-						if (!p.isActive) continue; 
+						if (!p.isActive) continue;
 
 						// Fade away particles, for lerping
 						float life = p.lifeRemaining / p.lifeTime;
@@ -128,21 +128,21 @@ namespace Engine
 						Math::mat3 offsetPosition = Math::mat3(
 							// Translate
 							Math::mat3(Math::vec3(1.f, 0, 0),
-									   Math::vec3(0, 1.f, 0),
-									   Math::vec3(transform->position.x, transform->position.y, 1.f))
+								Math::vec3(0, 1.f, 0),
+								Math::vec3(transform->position.x, transform->position.y, 1.f))
 							*
 							// Rotate
 							Math::mat3(Math::vec3(cos(Math::radians(transform->angle)), sin(Math::radians(transform->angle)), 0.f),
-									   Math::vec3(-sin(Math::radians(transform->angle)), cos(Math::radians(transform->angle)), 0.f),
-									   Math::vec3(0.f, 0.f, 1.f))
+								Math::vec3(-sin(Math::radians(transform->angle)), cos(Math::radians(transform->angle)), 0.f),
+								Math::vec3(0.f, 0.f, 1.f))
 						);
 
 						// Change to all take in vec3 for position in the future
-						Math::vec3 v3position = offsetPosition * Math::vec3(p.offsetPosition.x, 
-																			p.offsetPosition.y, 
-																			1.0f);
+						Math::vec3 v3position = offsetPosition * Math::vec3(p.offsetPosition.x,
+							p.offsetPosition.y,
+							1.0f);
 						Math::vec2 v2position = { v3position.x, v3position.y };
-						
+
 						GraphicImplementation::Renderer::DrawQuad(v2position, size, p.angle, particle.texobj_hdl, 0.f, color);
 					}
 				}
@@ -205,12 +205,42 @@ namespace Engine
 
 		// Looping through all layers for game objects; batch rendering
 		int layerCount = LAYER_COUNT;
-		for (int i = 0; i < layerCount; i++)
+		for (int i = 1; i < layerCount; i++)
 		{
 			RenderLightLayer(lightArray, i);
 			RenderTextureLayer(textureArray, i, _dt);
 			RenderParticleLayer(particleArray, i, _dt);
 		}
+
+		GraphicImplementation::Renderer::EndQuadBatch();
+		GraphicImplementation::Renderer::FlushQuad();
+
+		// Unload Default shader program
+		GraphicImplementation::UnUseShaderHandle();
+
+		glDisable(GL_BLEND);
+	}
+
+	void RenderBG(Math::mat3, float _dt)
+	{
+		GraphicImplementation::Renderer::BeginQuadBatch();
+
+		// Get texture array for entities
+		auto& textureArray = dreamECSGame->GetComponentArrayData<TextureComponent>();
+
+		// Load Default shader program
+		const auto& shd_ref_handle =
+			GraphicImplementation::shdrpgms[GraphicShader::Default].GetHandle();
+		GraphicImplementation::UseShaderHandle(shd_ref_handle);
+
+		// Enable GL_BLEND for transparency of textures
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+
+		// Looping through all layers for game objects; batch rendering
+		RenderTextureLayer(textureArray, 0, _dt);
 
 		GraphicImplementation::Renderer::EndQuadBatch();
 		GraphicImplementation::Renderer::FlushQuad();
@@ -256,15 +286,15 @@ namespace Engine
 			if (collider.cType == ColliderType::Square)
 			{
 				GraphicImplementation::Renderer::DrawQuadDebug(collider.offset_position + transform->position,
-															   collider.offset_scale * transform->scale, collider.angle + transform->angle, 
-															   { 1.0f, 0.0f, 0.0f, 1.0f });
+					collider.offset_scale * transform->scale, collider.angle + transform->angle,
+					{ 1.0f, 0.0f, 0.0f, 1.0f });
 			}
 			// Render lines for circle
 			else if (collider.cType == ColliderType::Circle)
 			{
 				GraphicImplementation::Renderer::DrawCircleDebug(collider.offset_position + transform->position,
-																 collider.offset_scale * transform->scale, 
-																 { 1.0f, 0.0f, 0.0f, 1.0f });
+					collider.offset_scale * transform->scale,
+					{ 1.0f, 0.0f, 0.0f, 1.0f });
 			}
 		}
 
@@ -297,13 +327,13 @@ namespace Engine
 		Math::ivec2 startPoint = Game::Grid::GetInstance().GetStartPoint();
 		Math::ivec2 mapSize = Game::Grid::GetInstance().GetGridSize() + startPoint;
 
-		for(int xPos = startPoint.x; xPos <= mapSize.x; xPos++)
-			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, static_cast<float>(startPoint.y) -0.5f }, 
+		for (int xPos = startPoint.x; xPos <= mapSize.x; xPos++)
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(xPos) - 0.5f, static_cast<float>(startPoint.y) - 0.5f },
 				{ static_cast<float>(xPos) - 0.5f , static_cast<float>(mapSize.y) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
 
-		for(int yPos = startPoint.y; yPos <= mapSize.y; yPos++)
-			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(startPoint.x) -0.5f, static_cast<float>(yPos) - 0.5f }, 
-				{  static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
+		for (int yPos = startPoint.y; yPos <= mapSize.y; yPos++)
+			GraphicImplementation::Renderer::DrawLines({ static_cast<float>(startPoint.x) - 0.5f, static_cast<float>(yPos) - 0.5f },
+				{ static_cast<float>(mapSize.x) - 0.5f, static_cast<float>(yPos) - 0.5f }, { 0.4f, 0.4f, 0.4f, 1.f });
 
 		GraphicImplementation::Renderer::EndLinesBatch();
 
@@ -319,7 +349,7 @@ namespace Engine
 #ifdef _GAME_BUILD
 	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer*, Math::mat3 camMatrix, bool gameDraw) {
 #else
-	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer* _fbo, Math::mat3 camMatrix, bool gameDraw) {
+	void GraphicSystem::Render(float _dt, Graphic::FrameBuffer * _fbo, Math::mat3 camMatrix, bool gameDraw) {
 #endif
 		PROFILER_START("Rendering Default");
 
@@ -347,8 +377,9 @@ namespace Engine
 		GraphicImplementation::UnUseShaderHandle();
 
 		// Render game objects and collision lines through camera perspective
-		RenderGameObjectsD(camMatrix, _dt);
+		RenderBG(camMatrix, _dt);
 		RenderLines(camMatrix);
+		RenderGameObjectsD(camMatrix, _dt);
 		if (!gameDraw) RenderCollisionLines(camMatrix);
 
 #ifdef _GAME_BUILD
@@ -394,7 +425,7 @@ namespace Engine
 
 		LOG_INSTANCE("Graphic System destroyed");
 	}
-}
+	}
 
 
 

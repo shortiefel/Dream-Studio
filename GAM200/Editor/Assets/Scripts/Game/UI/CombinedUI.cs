@@ -12,12 +12,11 @@ public class CombinedUI : MonoBehaviour
  
     PauseMenu pauseMenu;
     TimeSystem timeSystem;
-    ButtonStore buttonStore;
+    //ButtonStore buttonStore;
     public ButtonRoad buttonRoad;
 
     Transform pauseIcon;
     Transform timerButton;
-    Transform storeButton;
     Transform displayArrow;
 
     Transform moneyText;
@@ -34,12 +33,10 @@ public class CombinedUI : MonoBehaviour
     {
         pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
         timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
-        buttonStore = GameObject.Find("Storebtn").GetComponent<ButtonStore>();
         buttonRoad = GameObject.Find("Displaybtn").GetComponent<ButtonRoad>();
 
         pauseIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
         timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
-        storeButton = GameObject.Find("Storebtn").GetComponent<Transform>();
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
 
 
@@ -69,11 +66,10 @@ public class CombinedUI : MonoBehaviour
                     SceneManager.drawNonUI = false;
 
                     timeSystem.SwitchTabTimer(false, false);
-                    buttonStore.SwitchTabStore(false, false);
+                    //buttonStore.SwitchTabStore(false, false);
                     buttonRoad.SwitchTabRoad(false, false);
 
                     Disable<Transform>(timerButton);
-                    Disable<Transform>(storeButton);
                     Disable<Transform>(displayArrow);
 
                     Disable<Transform>(moneyText);
@@ -126,12 +122,11 @@ public class CombinedUI : MonoBehaviour
 
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
-                    buttonStore.SwitchTabStore(false, false);
+                    //buttonStore.SwitchTabStore(false, false);
                     buttonRoad.SwitchTabRoad(false, false);
 
                     Disable<Transform>(pauseIcon);
                     Disable<Transform>(timerButton);
-                    Disable<Transform>(storeButton);
                     Disable<Transform>(displayArrow);
 
                     Disable<Transform>(dayClock);
@@ -147,11 +142,8 @@ public class CombinedUI : MonoBehaviour
     {
         SceneManager.drawNonUI = true;
 
-        
-
         Enable<Transform>(pauseIcon);
         Enable<Transform>(timerButton);
-        Enable<Transform>(storeButton);
 
         if (isBuildOpen)
         {

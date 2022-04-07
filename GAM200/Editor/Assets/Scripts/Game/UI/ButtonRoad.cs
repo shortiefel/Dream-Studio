@@ -139,7 +139,9 @@ public class ButtonRoad : MonoBehaviour
 
     ButtonType choosenButton = ButtonType.None;
     bool displayState = false;
-    
+    ButtonType bt;
+
+
 
     public override void Start()
     {
@@ -354,16 +356,39 @@ public class ButtonRoad : MonoBehaviour
         //}
     }
 
-    public override void OnMouseOver()
-    {
-        SetToolTips(true, toolTipsDisplayPosition, "Display buttons");
+    //public override void OnMouseOver()
+    //{
+    //    //SetToolTips(true, toolTipsDisplayPosition, "Display buttons");
 
-        if (Input.GetMouseButtonDown(MouseCode.Left))
-        {
-            SwitchTabRoad(!displayState);
-            SwitchTabBuildings(!displayState);
-        }
-    }
+    //    //if (Input.GetMouseButtonDown(MouseCode.Left))
+    //    //{
+    //    //    SwitchTabRoad(!displayState);
+    //    //    //SwitchTabBuildings(!displayState);
+    //    //}
+
+    //    switch (bt)
+    //    {
+    //        case ButtonType.RoadTab:
+    //            {
+    //                SetToolTips(true, toolTipsDisplayPosition, "Display Road Buttons");
+    //                if (Input.GetMouseButtonDown(MouseCode.Left))
+    //                    SwitchTabRoad(!displayState);
+
+    //                break;
+    //            }
+    //        case ButtonType.BuildingsTab:
+    //            {
+    //                SetToolTips(true, toolTipsDisplayPosition, "Display Buildings Buttons");
+    //                if (Input.GetMouseButtonDown(MouseCode.Left))
+    //                    SwitchTabBuildings(!displayState);
+
+    //                break;
+    //            }
+    //        default:
+
+    //            break;
+    //    }
+    //}
 
     public override void OnMouseExit()
     {
@@ -1092,6 +1117,7 @@ public class ButtonRoad : MonoBehaviour
             
         if (roadTabClose)
         {
+            Debug.Log("1");
             CloseRoadTabs();
             //CloseBuildingsTabs();
         }
@@ -1099,12 +1125,14 @@ public class ButtonRoad : MonoBehaviour
 
         if (buildingsTabOpen)
         {
+            Debug.Log("2");
             OpenBuildingsTabs();
             //CloseRoadTabs();
         }
             
         if (buildingsTabClose)
         {
+            Debug.Log("3");
             CloseBuildingsTabs();
             //CloseRoadTabs();
         }

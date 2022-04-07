@@ -133,6 +133,18 @@ public class ButtonTypeClick : MonoBehaviour
             tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
         }
 
+        else if (entityId == GameObject.Find("DisplayRoadBtn").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.RoadTab;
+            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+        }
+
+        else if (entityId == GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.BuildingsTab;
+            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+        }
+
 
 
 
@@ -177,20 +189,40 @@ public class ButtonTypeClick : MonoBehaviour
 
             switch (bt)
             {
-                //case ButtonType.Display:
-                //    if( Input.GetMouseButtonDown(MouseCode.Left))
-                //    {
-                //        //buttonRoad.SwitchTabRoad(type);
-                //        buttonRoad.SwitchTabRoad();
-                //    }
-                //
-                //    buttonRoad.SetToolTips(true, tooltipOffset, "Display buttons");
-                //    //Enable<Transform>(tooltipTrans);
-                //    //tooltipText.text =  "Display buttons";
-                //
-                //    break;
+            //case ButtonType.Display:
+            //    if( Input.GetMouseButtonDown(MouseCode.Left))
+            //    {
+            //        //buttonRoad.SwitchTabRoad(type);
+            //        buttonRoad.SwitchTabRoad();
+            //    }
+            //
+            //    buttonRoad.SetToolTips(true, tooltipOffset, "Display buttons");
+            //    //Enable<Transform>(tooltipTrans);
+            //    //tooltipText.text =  "Display buttons";
+            //
+            //    break;
 
-                case ButtonType.Draw:
+                case ButtonType.RoadTab:
+                    {
+                        if (Input.GetMouseButtonDown(MouseCode.Left))
+                        {
+                            roadTab.SwitchTabRoad(true);
+                        }
+
+                        break;
+                    }
+
+            case ButtonType.BuildingsTab:
+                {
+                    if (Input.GetMouseButtonDown(MouseCode.Left))
+                    {
+                        buildingsTab.SwitchTabBuildings(true);
+                    }
+
+                    break;
+                }
+
+            case ButtonType.Draw:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                             roadTab.CallRoadFunction(bt);

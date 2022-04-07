@@ -421,10 +421,10 @@ public class RoadManager : MonoBehaviour
                 return;
         }
         int tmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-
+        Debug.Log("stuff");
         if (tmp > 0) placeSound.Play();
 
-        roadCount -= tmp;
+        //roadCount -= tmp;
         taxRoadCount += tmp;
         //placementManager.placementGrid.SetRoad(temporaryRoadPositions);
         //Debug.Log("tmp " + tmp);

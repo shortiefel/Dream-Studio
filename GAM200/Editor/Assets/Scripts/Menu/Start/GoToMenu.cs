@@ -5,9 +5,13 @@
     public override void Start()
     {
         text = GetComponent<Text>();
-        texture = GameObject.Find("GOMenu").GetComponent<Texture>();
-        text.color = new Color(0f, 0f, 0f);
-        texture.color = new Color(1f, 1f, 1f);
+        GameObject gameGO = GameObject.Find("GOMenu");
+        if (gameGO != null)
+        {
+            texture = gameGO.GetComponent<Texture>();
+            text.color = new Color(0f, 0f, 0f);
+            texture.color = new Color(1f, 1f, 1f);
+        }
     }
     public override void OnMouseEnter()
     {

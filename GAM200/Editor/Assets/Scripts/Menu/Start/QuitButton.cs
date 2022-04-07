@@ -21,8 +21,8 @@ public class QuitButton : MonoBehaviour
         texture.color = new Color(1f, 1f, 1f);
 
         areYouSure = GameObject.Find("AreYouSureText").GetComponent<Transform>();
-        quitYes = GameObject.Find("YesText").GetComponent<Transform>();
-        quitNo = GameObject.Find("NoText").GetComponent<Transform>();
+        quitYes = GameObject.Find("QuitYesBtn").GetComponent<Transform>();
+        quitNo = GameObject.Find("QuitNoBtn").GetComponent<Transform>();
         quitOverlay = GameObject.Find("QuitOverlay").GetComponent<Transform>();
         quitBG = GameObject.Find("QuitBG").GetComponent<Transform>();
 

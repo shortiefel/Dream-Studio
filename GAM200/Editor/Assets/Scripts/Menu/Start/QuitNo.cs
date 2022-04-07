@@ -19,10 +19,6 @@ public class QuitNo : MonoBehaviour
         quitBG = GameObject.Find("QuitBG").GetComponent<Transform>();
     }
 
-    public override void OnMouseEnter()
-    {
-    }
-
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))

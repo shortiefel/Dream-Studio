@@ -12,7 +12,7 @@ public class CombinedUI : MonoBehaviour
  
     PauseMenu pauseMenu;
     TimeSystem timeSystem;
-    ButtonStore buttonStore;
+    //ButtonStore buttonStore;
     public ButtonRoad buttonRoad;
 
     Transform pauseIcon;
@@ -34,7 +34,7 @@ public class CombinedUI : MonoBehaviour
     {
         pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
         timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
-        buttonStore = GameObject.Find("Storebtn").GetComponent<ButtonStore>();
+        //buttonStore = GameObject.Find("Storebtn").GetComponent<ButtonStore>();
         buttonRoad = GameObject.Find("Displaybtn").GetComponent<ButtonRoad>();
 
         pauseIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
@@ -69,7 +69,7 @@ public class CombinedUI : MonoBehaviour
                     SceneManager.drawNonUI = false;
 
                     timeSystem.SwitchTabTimer(false, false);
-                    buttonStore.SwitchTabStore(false, false);
+                    //buttonStore.SwitchTabStore(false, false);
                     buttonRoad.SwitchTabRoad(false, false);
 
                     Disable<Transform>(timerButton);
@@ -126,7 +126,7 @@ public class CombinedUI : MonoBehaviour
 
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
-                    buttonStore.SwitchTabStore(false, false);
+                    //buttonStore.SwitchTabStore(false, false);
                     buttonRoad.SwitchTabRoad(false, false);
 
                     Disable<Transform>(pauseIcon);

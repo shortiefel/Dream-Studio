@@ -3,7 +3,7 @@
 public class PlayButton : MonoBehaviour
 {
     Text text;
-    UI texture;
+    Texture texture;
     Camera cam;
     private AudioSource btnClick;
     public override void Start()
@@ -11,7 +11,7 @@ public class PlayButton : MonoBehaviour
         Console.WriteLine("going in start play");
 
         text = GetComponent<Text>();
-        texture = GameObject.Find("Playbtn").GetComponent<UI>();
+        texture = GameObject.Find("Playbtn").GetComponent<Texture>();
         cam = GameObject.Find("Camera").GetComponent<Camera>();
         btnClick = GetComponent<AudioSource>();
         text.color = new Color(0f, 0f, 0f);

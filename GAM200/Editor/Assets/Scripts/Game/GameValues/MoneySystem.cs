@@ -105,6 +105,11 @@ public class MoneySystem : MonoBehaviour
 
     UI infoDestTexture;
 
+    Transform storePopText;
+    Transform storePopInfo;
+    static bool displayText = false;
+    float timer = 0f;
+
     float dt;
 
     public override void Start()
@@ -188,6 +193,11 @@ public class MoneySystem : MonoBehaviour
             infoDestTransform = goImageDestImage.GetComponent<Transform>();
             infoDestTexture = goImageDestImage.GetComponent<UI>();
         }
+
+        storePopText = GameObject.Find("ShopPopText").GetComponent<Transform>();
+        storePopInfo = GameObject.Find("ShopPopInfo").GetComponent<Transform>();
+        Disable<Transform>(storePopText);
+        Disable<Transform>(storePopInfo);
     }
 
 
@@ -200,6 +210,18 @@ public class MoneySystem : MonoBehaviour
         //Debug.Log(listOfCost.Count);
 
         dt = Time.fixedDeltaTime;
+
+        if (displayText == true)
+        {
+            timer += Time.fixedDeltaTime;
+            if (timer > 1.5f)
+            {
+                Disable<Transform>(storePopText);
+                Disable<Transform>(storePopInfo);
+                timer = 0f;
+                displayText = false;
+            }
+        }
 
         if (requireFading)
         {
@@ -365,158 +387,270 @@ public class MoneySystem : MonoBehaviour
         }
     }
 
-    public void BuyRoad(int count)
+    static public bool BuyRoad()
     {
-        MinusMoney(count * 20, MoneySource.Store);
-        roadManager.roadCount += count;
-        purchaseSound.Play();
+
+        if (money >= 20)
+        {
+            MinusMoney(20, MoneySource.Store);
+            //roadManager.roadCount++;	
+            return true;
+        }
+        else
+        {
+            displayText = true;
+        }
+        return false;
     }
 
-    public void SellRoad(int count)
+    static public void SellRoad()
     {
-        AddMoney(count * 10, MoneySource.Store);
-        roadManager.roadCount -= count;
+        AddMoney(10, MoneySource.Store);
     }
 
     public int GetErpCost()
     {
         return erpCost;
     }
-    public void BuyErp(int count)
+    public bool BuyErp()
     {
-        int tempvalue = 0;
-        for (int i = 0; i < count; i++)
+        //int tempvalue = 0;	
+        //for (int i = 0; i < count; i++)	
+        //{	
+        //    tempvalue += erpCost;	
+        //    erpBuyCount++;	
+        //    erpCost = 50 + erpBuyCount * 10;	
+        //}	
+        if (money >= erpCost)
         {
-            tempvalue += erpCost;
-            erpBuyCount++;
-            erpCost = 50 + erpBuyCount * 10;
+            MinusMoney(erpCost, MoneySource.Store);
+            erpCost *= (int)(1.1);
+            return true;
         }
-        MinusMoney(tempvalue, MoneySource.Store);
-        roadManager.erpManager.erpCount += count;
-       
-    }
-    public void SellErp(int count)
-    {
-        AddMoney(count * (int)(erpCost * 0.5), MoneySource.Store);
-        roadManager.erpManager.erpCount -= count;
-    }
-    public void BuyTrafficLight(int count)
-    {
-        int tempvalue = 0;
-        for (int i = 0; i < count; i++)
+        else
         {
-            tempvalue += tlCost;
-            tlBuyCount++;
-            tlCost = 50 + tlBuyCount * 10;
+            displayText = true;
         }
-        MinusMoney(tempvalue,MoneySource.Store);
-        roadManager.trafficLightManager.tlCount += count;
-    }
-    public void SellTL(int count)
-    {
-        AddMoney(count * (int)(tlCost * 0.5), MoneySource.Store);
-        roadManager.trafficLightManager.tlCount -= count;
+        return false;
+
+        //roadManager.erpManager.erpCount += count;	
     }
 
-    public void BuyPark(int count)
+    public void SellErp()
     {
-        
-        MinusMoney(getParkCost(), MoneySource.Store);
-        parkCost = getParkCost();
-        //add park count
-    }
-    public int road_count()
-    {
-        return road_counter;
+        AddMoney((int)(erpCost * 0.5), MoneySource.Store);
+        //roadManager.erpManager.erpCount -= count;	
     }
 
-    public int tl_count()
+    public bool BuyTrafficLight()
     {
-        return traffic_counter;
-    }
-
-    public int erp_count()
-    {
-        return erp_counter;
-    }
-
-    public int park_count()
-    {
-        return park_counter;
-    }
-    public int hospital_count()
-    {
-        return hospital_counter;
-    }
-    public int office_count()
-    {
-        return office_counter;
-    }
-    public int shoppingmall_count()
-    {
-        return shoppingmall_counter;
-    }
-    public int policestation_count()
-    {
-        return policestation_counter;
-    }
-
-    public int erpbuy_count()
-    {
-        return erpBuyCount;
-    }
-
-    public int calculatetl_cost()
-    {
-        int total_amount = 0;
-        int buyc = tlBuyCount ;
-        for (int i = 0; i < traffic_counter; i++)
+        //int tempvalue = 0;	
+        //for (int i = 0; i < count; i++)	
+        //{	
+        //    tempvalue += tlCost;	
+        //    tlBuyCount++;	
+        //    tlCost = 50 + tlBuyCount * 10;	
+        //}	
+        if (money >= tlCost)
         {
-            total_amount += 50 + buyc * 10;
-            buyc++;
+            MinusMoney(tlCost, MoneySource.Store);
+            tlCost *= (int)(1.1);
+            return true;
         }
-        return total_amount;
-    }
-
-    public int calculateerp_cost()
-    {
-        int total_amount = 0;
-        int buyc = erpBuyCount;
-        for (int i = 0; i < erp_counter; i++)
+        else
         {
-            total_amount += 50 + buyc * 10;
-            buyc++;
+            displayText = true;
         }
-        return total_amount;
+        return false;
+        //roadManager.trafficLightManager.tlCount += count;	
+    }
+    public void SellTL()
+    {
+        AddMoney((int)(tlCost * 0.5), MoneySource.Store);
+        //roadManager.trafficLightManager.tlCount -= count;	
     }
 
-    public int getParkCost()
+    public bool BuyPark()
     {
-        if (parkBuyCount == 0 && park_counter == 1)
-            return 100;
-        int total_amount = 0;
-        int temp = parkCost;
-        for(int i = 1; i < park_counter; i ++)
+        if (money >= parkCost)
         {
-            total_amount = (temp * 5);
-            temp = temp * 5;
+            MinusMoney(parkCost, MoneySource.Store);
+            parkCost *= 5;
+            purchaseSound.Play();
+            return true;
         }
-        return total_amount;
+        else
+        {
+            displayText = true;
+        }
+        return false;
+    }
+    public void SellPark()
+    {
+        AddMoney((int)(parkCost * 0.5), MoneySource.Store);
+    }
+    public bool BuyHospital()
+    {
+        if (money >= hospitalCost)
+        {
+            MinusMoney(hospitalCost, MoneySource.Store);
+            hospitalCost *= 5;
+            purchaseSound.Play();
+            return true;
+        }
+        else
+        {
+            displayText = true;
+        }
+        return false;
+    }
+    public void SellHospital()
+    {
+        AddMoney((int)(hospitalCost * 0.5), MoneySource.Store);
+    }
+    public bool BuyOffice()
+    {
+        if (money >= officeCost)
+        {
+            MinusMoney(officeCost, MoneySource.Store);
+            officeCost *= 5;
+            purchaseSound.Play();
+            return true;
+        }
+        else
+        {
+            displayText = true;
+        }
+        return false;
+    }
+    public void SellOffice()
+    {
+        AddMoney((int)(officeCost * 0.5), MoneySource.Store);
+    }
+    public bool BuyMall()
+    {
+        if (money >= shoppingmallCost)
+        {
+            MinusMoney(shoppingmallCost, MoneySource.Store);
+            shoppingmallCost *= 5;
+            purchaseSound.Play();
+            return true;
+        }
+        else
+        {
+            displayText = true;
+        }
+        return false;
+    }
+    public void SellMall()
+    {
+        AddMoney((int)(shoppingmallCost * 0.5), MoneySource.Store);
+    }
+    public bool BuyPoliceStation()
+    {
+        if (money >= policestationCost)
+        {
+            MinusMoney(policestationCost, MoneySource.Store);
+            policestationCost *= 5;
+            purchaseSound.Play();
+            return true;
+        }
+        else
+        {
+            displayText = true;
+        }
+        return false;
+    }
+    public void SellPoliceStation()
+    {
+        AddMoney((int)(policestationCost * 0.5), MoneySource.Store);
     }
 
-    public bool get_r_bool()
-    {
-        return road_bool;
-    }
+    //public int road_count()	
+    //{	
+    //    return road_counter;	
+    //}	
+    //public int tl_count()	
+    //{	
+    //    return traffic_counter;	
+    //}	
+    //public int erp_count()	
+    //{	
+    //    return erp_counter;	
+    //}	
+    //public int park_count()	
+    //{	
+    //    return park_counter;	
+    //}	
+    //public int hospital_count()	
+    //{	
+    //    return hospital_counter;	
+    //}	
+    //public int office_count()	
+    //{	
+    //    return office_counter;	
+    //}	
+    //public int shoppingmall_count()	
+    //{	
+    //    return shoppingmall_counter;	
+    //}	
+    //public int policestation_count()	
+    //{	
+    //    return policestation_counter;	
+    //}	
+    //public int erpbuy_count()	
+    //{	
+    //    return erpBuyCount;	
+    //}	
+    //public int calculatetl_cost()	
+    //{	
+    //    int total_amount = 0;	
+    //    int buyc = tlBuyCount ;	
+    //    for (int i = 0; i < traffic_counter; i++)	
+    //    {	
+    //        total_amount += 50 + buyc * 10;	
+    //        buyc++;	
+    //    }	
+    //    return total_amount;	
+    //}	
+    //public int calculateerp_cost()	
+    //{	
+    //    int total_amount = 0;	
+    //    int buyc = erpBuyCount;	
+    //    for (int i = 0; i < erp_counter; i++)	
+    //    {	
+    //        total_amount += 50 + buyc * 10;	
+    //        buyc++;	
+    //    }	
+    //    return total_amount;	
+    //}	
+    //public int getParkCost()	
+    //{	
+    //    if (parkBuyCount == 0 && park_counter == 1)	
+    //        return 100;	
+    //    int total_amount = 0;	
+    //    int temp = parkCost;	
+    //    for(int i = 1; i < park_counter; i ++)	
+    //    {	
+    //        total_amount = (temp * 5);	
+    //        temp = temp * 5;	
+    //    }	
+    //    return total_amount;	
+    //}	
+    //public bool get_r_bool()	
+    //{	
+    //    return road_bool;	
+    //}	
+    //public bool get_tl_bool()	
+    //{	
+    //    return traffic_bool;	
+    //}	
+    //public bool get_erp_bool()	
+    //{	
+    //    return erp_bool;	
+    //}
 
-    public bool get_tl_bool()
-    {
-        return traffic_bool;
-    }
 
-    public bool get_erp_bool()
-    {
-        return erp_bool;
-    }
+    
 }
 

@@ -32,7 +32,7 @@ public class GameState : MonoBehaviour
     Cycle cycle;
 
     UI TimerIcon;
-    ButtonStore store;
+    //ButtonStore store;
     GameObject receipt;
 
     //bool gameOverBool;
@@ -73,9 +73,9 @@ public class GameState : MonoBehaviour
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
 
-        GameObject buttonStoreGo = GameObject.Find("Storebtn");
-        if (buttonStoreGo != null)
-            store = buttonStoreGo.GetComponent<ButtonStore>();
+        //GameObject buttonStoreGo = GameObject.Find("Storebtn");
+        //if (buttonStoreGo != null)
+        //    store = buttonStoreGo.GetComponent<ButtonStore>();
 
         //previousTimeScale = 1f;
         dayCounter = 1;
@@ -212,11 +212,11 @@ public class GameState : MonoBehaviour
     {
         highscore++;
 
-        if (highscore == 1)
-        {
-            store.RevealStore();
-            SetAllowPause(false);
-        }
+        //if (highscore == 1)
+        //{
+        //    store.RevealStore();
+        //    SetAllowPause(false);
+        //}
 
         if (highscore == 10)
         {

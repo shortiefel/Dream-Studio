@@ -762,13 +762,13 @@ namespace Engine {
                         //If L = cellL, S = special structure, C = cellC, - = ignore
                         //SS
                         //LC //L is part of the special structure
-                        if (cellL.ct == CellType::SpecialStructure) {
+                        if (xVal > 0 && cellL.entityId == cellC.entityId && cellL.ct == CellType::SpecialStructure) {
                             if (cellL.cellBinary != 0) continue;
                             //U = cellU
                             //SU
                             //LC //U is part of the special structure
                             Cell& cellU = *(*(grid + xVal) + yVal + 1);
-                            if (cellU.ct == CellType::SpecialStructure) {
+                            if (cellU.entityId == cellC.entityId && cellU.ct == CellType::SpecialStructure) {
                                 if (cellU.cellBinary != 0) continue;
                     
                                 //Check Up Left
@@ -796,7 +796,7 @@ namespace Engine {
                             //-US
                             //LCS   //U is part of the special structure
                             Cell& cellU = *(*(grid + xVal) + yVal + 1);
-                            if (cellU.ct == CellType::SpecialStructure) {
+                            if (cellU.entityId == cellC.entityId && cellU.ct == CellType::SpecialStructure) {
                                 if (cellU.cellBinary != 0) continue;
                                 //Check Up Right
                                 Cell& cellUR = *(*(grid + xVal + 1) + yVal + 1);

@@ -17,7 +17,6 @@ public class CombinedUI : MonoBehaviour
 
     Transform pauseIcon;
     Transform timerButton;
-    Transform storeButton;
     Transform displayArrow;
 
     Transform moneyText;
@@ -34,12 +33,10 @@ public class CombinedUI : MonoBehaviour
     {
         pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
         timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
-        //buttonStore = GameObject.Find("Storebtn").GetComponent<ButtonStore>();
         buttonRoad = GameObject.Find("Displaybtn").GetComponent<ButtonRoad>();
 
         pauseIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
         timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
-        storeButton = GameObject.Find("Storebtn").GetComponent<Transform>();
         displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
 
 
@@ -73,7 +70,6 @@ public class CombinedUI : MonoBehaviour
                     buttonRoad.SwitchTabRoad(false, false);
 
                     Disable<Transform>(timerButton);
-                    Disable<Transform>(storeButton);
                     Disable<Transform>(displayArrow);
 
                     Disable<Transform>(moneyText);
@@ -131,7 +127,6 @@ public class CombinedUI : MonoBehaviour
 
                     Disable<Transform>(pauseIcon);
                     Disable<Transform>(timerButton);
-                    Disable<Transform>(storeButton);
                     Disable<Transform>(displayArrow);
 
                     Disable<Transform>(dayClock);
@@ -147,11 +142,8 @@ public class CombinedUI : MonoBehaviour
     {
         SceneManager.drawNonUI = true;
 
-        
-
         Enable<Transform>(pauseIcon);
         Enable<Transform>(timerButton);
-        Enable<Transform>(storeButton);
 
         if (isBuildOpen)
         {

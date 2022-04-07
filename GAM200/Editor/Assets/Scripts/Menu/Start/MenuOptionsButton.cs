@@ -8,7 +8,7 @@ public class MenuOptionsButton : MonoBehaviour
     public override void Start()
     {
         MenuOptionsBtn = GetComponent<UI>();
-        MenuOptionsBtn.color = new Color(0f, 0f, 0f);
+        MenuOptionsBtn.color = new Color(1f, 1f, 1f);
 
     }
 
@@ -30,6 +30,6 @@ public class MenuOptionsButton : MonoBehaviour
     public override void OnMouseExit()
     {
         if (MenuOptionsBtn == null) Debug.Log("This is actually null");
-        MenuOptionsBtn.color = new Color(0f, 0f, 0f);
+        MenuOptionsBtn.color = new Color(1f, 1f, 1f);
     }
 }

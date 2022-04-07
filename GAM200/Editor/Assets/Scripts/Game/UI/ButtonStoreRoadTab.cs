@@ -1,16 +1,16 @@
-﻿
-public class RestartLevel : MonoBehaviour
+﻿public class ButtonStoreRoadTab : MonoBehaviour
 {
+    ButtonStore buttonStore;
     Text text;
-    Texture texture;
+    UI texture;
     public override void Start()
     {
+        buttonStore = GameObject.Find("RoadTab").GetComponent<ButtonStore>();
         text = GetComponent<Text>();
-        texture = GameObject.Find("GORestart").GetComponent<Texture>();
-        text.color = new Color(0f, 0f, 0f);
+        texture = GameObject.Find("RoadTab").GetComponent<UI>();
         texture.color = new Color(1f, 1f, 1f);
+        text.color = new Color(0f, 0f, 0f);
     }
-
     public override void OnMouseEnter()
     {
         text.color = new Color(1f, 1f, 1f);
@@ -20,8 +20,9 @@ public class RestartLevel : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            Time.timeScale = 1;
-            SceneManager.LoadScene("NewGame");
+            buttonStore.SetroadTabBool(true);
+            buttonStore.SetbuildingTabBool(false);
+            buttonStore.ToggleStore();
         }
     }
     public override void OnMouseExit()

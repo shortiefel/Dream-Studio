@@ -151,13 +151,26 @@ public class StructureManager : MonoBehaviour
             {
                 if (position == i.pos)
                 {
+                    if(t == (int)BuildingType.Hospital)
+                        moneySystem.SellHospital();
+                    else if (t == (int)BuildingType.Park)
+                        moneySystem.SellPark();
+                    else if (t == (int)BuildingType.Office)
+                        moneySystem.SellOffice();
+                    else if (t == (int)BuildingType.Mall)
+                        moneySystem.SellMall();
+                    else if (t == (int)BuildingType.PoliceStation)
+                        moneySystem.SellPoliceStation();
+
                     destinationList[t].Remove(i);
                     found = true;
+                    
                     break;
                 }
             }
 
             if (found) break;
+            
         }
 
         placementManager.RemoveDestination(position);
@@ -167,6 +180,16 @@ public class StructureManager : MonoBehaviour
     {
         if (CheckPositionBeforePlacement(position, CellType.SpecialStructure))
         {
+            if (_bt == BuildingType.Hospital)
+                moneySystem.BuyHospital();
+            else if (_bt == BuildingType.Park)
+                moneySystem.BuyPark();
+            else if (_bt == BuildingType.Office)
+                moneySystem.BuyOffice();
+            else if (_bt == BuildingType.Mall)
+                moneySystem.BuyMall();
+            else if (_bt == BuildingType.PoliceStation)
+                moneySystem.BuyPoliceStation();
             //int randomIndex = GetRandomWeightedIndex(specialWeights);
             uint id = placementManager.PlaceObjectOnTheMap(position, specialPrefabs[(int)_bt].prefab, CellType.SpecialStructure, rotation).entityId;
             destinationList[(int)_bt].Add(new PosIdSet(id, position));
@@ -180,29 +203,24 @@ public class StructureManager : MonoBehaviour
 
     public void PlaceDestHospital(Vector2Int position)
     {
-        if(moneySystem.BuyHospital())
-            PlaceSpecial(position, BuildingType.Hospital, 0);
+        PlaceSpecial(position, BuildingType.Hospital, 0);
     }
     public void PlaceDestOffice(Vector2Int position)
     {
-        if(moneySystem.BuyOffice())
-            PlaceSpecial(position, BuildingType.Office, 0);
+        PlaceSpecial(position, BuildingType.Office, 0);
     }
     public void PlaceDestPark(Vector2Int position)
     {
-        if(moneySystem.BuyPark())
-            PlaceSpecial(position, BuildingType.Park, 0);
+        PlaceSpecial(position, BuildingType.Park, 0);
     }
     public void PlaceDestMall(Vector2Int position)
     {
-        if(moneySystem.BuyMall())
-            PlaceSpecial(position, BuildingType.Mall, 0);
+        PlaceSpecial(position, BuildingType.Mall, 0);
     }
 
     public void PlaceDestPoliceStation(Vector2Int position)
     {
-        if(moneySystem.BuyPoliceStation())
-            PlaceSpecial(position, BuildingType.PoliceStation, 0);
+        PlaceSpecial(position, BuildingType.PoliceStation, 0);
     }
 
     private int GetRandomWeightedIndex(float[] weights)

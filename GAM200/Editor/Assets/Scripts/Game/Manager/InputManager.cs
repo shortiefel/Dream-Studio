@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour
 
 		OverGameObject = false;
 
-		removeCarCursor = GameObject.Find("RemoveCarCursor").GetComponent<Transform>();
+		removeCarCursor = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
 	}
 
 	//private void Update()

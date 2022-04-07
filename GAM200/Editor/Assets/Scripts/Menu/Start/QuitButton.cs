@@ -12,14 +12,14 @@ public class QuitButton : MonoBehaviour
 
     public override void Start()
     {
-        Console.WriteLine("going in start play");
+        //Console.WriteLine("going in start play");
 
         text = GetComponent<Text>();
         texture = GameObject.Find("Quitbtn").GetComponent<Texture>();
 
         areYouSure = GameObject.Find("AreYouSureText").GetComponent<Transform>();
-        quitYes = GameObject.Find("QuitYesBtn").GetComponent<Transform>();
-        quitNo = GameObject.Find("QuitNoBtn").GetComponent<Transform>();
+        quitYes = GameObject.Find("YesText").GetComponent<Transform>();
+        quitNo = GameObject.Find("NoText").GetComponent<Transform>();
         quitOverlay = GameObject.Find("QuitOverlay").GetComponent<Transform>();
 
         Disable<Transform>(areYouSure);

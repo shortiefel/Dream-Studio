@@ -105,24 +105,24 @@ public class AIDirector : MonoBehaviour
 
         if (bt == BuildingType.None) return false;
 
-        if (possibleDest[(int)bt].pos != startPos)
-        {
-            //Debug.Log("Using this");
-            //int roadNum;
-            //List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, out roadNum);
-            List<Vector2> list = placementManager.GetPathBetween(out startPos, possibleDest[(int)bt].pos, RouteType.HouseToDest);
-
-            if (list.Count != 0)
-            {
-                var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
-                car.GetComponent<CarAI>().SetPath(list, possibleDest[(int)bt].entityId, startId);
-
-                posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, possibleDest[(int)bt].pos);
-                return true;
-                //Skip the major check
-            }
-            //Debug.Log("Unsuccessful " + list.Count + "  " + bt  + "   "+ possibleDest[(int)bt].pos);
-        }
+        //if (possibleDest[(int)bt].pos != startPos)
+        //{
+        //    //Debug.Log("Using this");
+        //    //int roadNum;
+        //    //List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, out roadNum);
+        //    List<Vector2> list = placementManager.GetPathBetween(out startPos, possibleDest[(int)bt].pos, RouteType.HouseToDest);
+        //
+        //    if (list.Count != 0)
+        //    {
+        //        var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
+        //        car.GetComponent<CarAI>().SetPath(list, possibleDest[(int)bt].entityId, startId);
+        //
+        //        posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, possibleDest[(int)bt].pos);
+        //        return true;
+        //        //Skip the major check
+        //    }
+        //    //Debug.Log("Unsuccessful " + list.Count + "  " + bt  + "   "+ possibleDest[(int)bt].pos);
+        //}
 
         List<Vector2> path = new List<Vector2>();
         int count = 0;

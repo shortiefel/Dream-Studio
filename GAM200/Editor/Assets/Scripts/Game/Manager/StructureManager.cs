@@ -144,6 +144,22 @@ public class StructureManager : MonoBehaviour
 
     public void RemoveDestination(Vector2Int position)
     {
+        bool found = false;
+        for (int t = 0; t < (int)BuildingType.House; t++)
+        {
+            foreach (var i in destinationList[t])
+            {
+                if (position == i.pos)
+                {
+                    destinationList[t].Remove(i);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) break;
+        }
+
         placementManager.RemoveDestination(position);
     }
 

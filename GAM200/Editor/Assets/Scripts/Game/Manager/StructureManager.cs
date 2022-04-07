@@ -142,6 +142,31 @@ public class StructureManager : MonoBehaviour
         return false;
     }
 
+    //public override void Update()
+    //{
+    //    Debug.Log("Start ");
+    //    foreach (var i in destinationList[(int)BuildingType.Hospital])
+    //    {
+    //        Debug.Log(BuildingType.Hospital + " " + i);
+    //    }
+    //    foreach (var i in destinationList[(int)BuildingType.Office])
+    //    {
+    //        Debug.Log(BuildingType.Office + " " + i);
+    //    }
+    //    foreach (var i in destinationList[(int)BuildingType.Park])
+    //    {
+    //        Debug.Log(BuildingType.Park + " " + i);
+    //    }
+    //    foreach (var i in destinationList[(int)BuildingType.Mall])
+    //    {
+    //        Debug.Log(BuildingType.Mall + " " + i);
+    //    }
+    //    foreach (var i in destinationList[(int)BuildingType.PoliceStation])
+    //    {
+    //        Debug.Log(BuildingType.PoliceStation + " " + i);
+    //    }
+    //}
+
     public void RemoveDestination(Vector2Int position)
     {
         bool found = false;
@@ -159,6 +184,7 @@ public class StructureManager : MonoBehaviour
 
             if (found) break;
         }
+
 
         placementManager.RemoveDestination(position);
     }

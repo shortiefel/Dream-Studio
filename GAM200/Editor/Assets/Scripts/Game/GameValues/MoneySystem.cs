@@ -29,7 +29,7 @@ public class MoneySystem : MonoBehaviour
 {
     //GameState gameState;
     static Text textComp;
-    static int money;
+    static public int money;
 
     public int erpCost;
     public int tlCost;

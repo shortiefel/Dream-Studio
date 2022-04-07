@@ -41,6 +41,8 @@ public class RoadManager : MonoBehaviour
     bool removeCarBool;
     float removeCarTimer;
 
+    MoneySystem moneySystem;
+
     public override void Start()
     {
         roadFixer = GetComponent<RoadFixer>();
@@ -96,6 +98,8 @@ public class RoadManager : MonoBehaviour
         removeCarCollider = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
         removeCarBool = false;
         removeCarTimer = 0f;
+
+        moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
     }
 
     public override void FixedUpdate()
@@ -355,74 +359,83 @@ public class RoadManager : MonoBehaviour
             return;
         if (temporaryRoadPositions.Count > 0 && temporaryRoadPositions[temporaryRoadPositions.Count - 1] == position)
             return;
-        //Remove last one if current position is the same as the second last position
-        //Require at least two road to remove one road
-        //else if (temporaryRoadPositions.Count > 1 && temporaryRoadPositions[temporaryRoadPositions.Count - 2] == position)
+        
+        if (temporaryRoadCount >= 20)
+        {
+            Debug.Log("Max temporary road count reached (RoadManager PlaceRoad)");
+            return;
+        }
+        //if (roadCount < 1)
         //{
-        //    //placementManager.placementGrid.UnsetRoad(temporaryRoadPositions[temporaryRoadPositions.Count - 1]);
-        //    //Revert grid
-        //    placementManager.placementGrid.RevertGrid();
-        //    temporaryRoadPositions.RemoveAt(temporaryRoadPositions.Count - 1);
-        //    //Debug.Log("Previous " + previousRoadMinus);
-        //    //roadCount += previousRoadMinus;
+        //    Enable<Transform>(RoadInfoText);
+        //    Enable<Transform>(RoadInfo);
         //
-        //
-        //    int nTmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-        //    roadCount += previousRoadMinus - nTmp;
-        //    previousRoadMinus = nTmp;
-        //
-        //    temporaryRoadCount = temporaryRoadPositions.Count;
-        //
-        //    taxRoadCount++;
-        //
+        //    addToTime = true;
         //    return;
         //}
-        //else
+        if (temporaryRoadPositions.Count > 0)
         {
-            if (temporaryRoadCount >= 20)
-            {
-                Debug.Log("Max temporary road count reached (RoadManager PlaceRoad)");
-                return;
-            }
-            if (roadCount < 1)
-            {
-                Enable<Transform>(RoadInfoText);
-                Enable<Transform>(RoadInfo);
+            //Tile should be side by side to last tile so in the event that
+            //the user draw too quickly that it becomes diagonal, it would not be added
+            Vector2Int lp = temporaryRoadPositions[temporaryRoadPositions.Count - 1];
 
-                addToTime = true;
-                return;
-            }
-            if (temporaryRoadPositions.Count > 0)
-            {
-                //Tile should be side by side to last tile so in the event that
-                //the user draw too quickly that it becomes diagonal, it would not be added
-                Vector2Int lp = temporaryRoadPositions[temporaryRoadPositions.Count - 1];
+            int count = 0;
+            if (lp.x == position.x + 1 || lp.x == position.x - 1) 
+                if (lp.y == position.y) 
+                    ++count;
+            if (lp.y == position.y + 1 || lp.y == position.y - 1)
+                if (lp.x == position.x) 
+                    ++count;
 
-                int count = 0;
-                if (lp.x == position.x + 1 || lp.x == position.x - 1) 
-                    if (lp.y == position.y) 
-                        ++count;
-                if (lp.y == position.y + 1 || lp.y == position.y - 1)
-                    if (lp.x == position.x) 
-                        ++count;
-
-                if (count != 1) return;
-            }
-            //Console.WriteLine("Adding ");
-            temporaryRoadPositions.Add(position);
-            //foreach (var i in temporaryRoadPositions) Console.WriteLine(i);
+            if (count != 1) return;
         }
+        //Console.WriteLine("Adding ");
+        temporaryRoadPositions.Add(position);
 
         if (temporaryRoadCount == temporaryRoadPositions.Count) return;
-        if(roadCount == 1 && temporaryRoadPositions.Count > 1)
+        //if(roadCount == 1 && temporaryRoadPositions.Count > 1)
+        //{
+        //    if (placementManager.placementGrid.IsPosFree(temporaryRoadPositions[0])
+        //        && placementManager.placementGrid.IsPosFree(temporaryRoadPositions[1]))
+        //        return;
+        //}
+
+        if (temporaryRoadPositions.Count == 1)
         {
-            if (placementManager.placementGrid.IsPosFree(temporaryRoadPositions[0])
-                && placementManager.placementGrid.IsPosFree(temporaryRoadPositions[1]))
+            bool state0 = placementManager.placementGrid.IsPosFree(temporaryRoadPositions[0]);
+            if (state0 && MoneySystem.money < 20)
+            {
+                temporaryRoadPositions.Clear();
                 return;
+            }
         }
+
+        if (temporaryRoadPositions.Count > 1)
+        {
+            bool state0 = placementManager.placementGrid.IsPosFree(temporaryRoadPositions[temporaryRoadPositions.Count - 2]);
+            bool state1 = placementManager.placementGrid.IsPosFree(temporaryRoadPositions[temporaryRoadPositions.Count - 1]);
+            if (state0 && state1 && MoneySystem.money < 40)
+            {
+                temporaryRoadPositions.Clear();
+                return;
+            }
+            if ((state0 || state1) && MoneySystem.money < 20)
+            {
+                temporaryRoadPositions.Clear();
+                return;
+            }
+        }
+
         int tmp = placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-        Debug.Log("stuff");
-        if (tmp > 0) placeSound.Play();
+        //Debug.Log("stuff");
+        if (tmp > 0)
+        {
+            placeSound.Play();
+            for (int i = 0; i < tmp; i++)
+            {
+                moneySystem.BuyRoad();
+            }
+        }
 
         //roadCount -= tmp;
         taxRoadCount += tmp;
@@ -548,10 +561,16 @@ public class RoadManager : MonoBehaviour
 
         if (roadInc > 0)
         {
-            roadCount += roadInc;
+            //roadCount += roadInc;
             removeSound.Play();
 
             taxRoadCount -= roadInc;
+
+            for (int i = 0; i < roadInc; i++)
+            {
+                moneySystem.SellRoad();
+            }
+            
         }
         //if (result == true)
         //    return;

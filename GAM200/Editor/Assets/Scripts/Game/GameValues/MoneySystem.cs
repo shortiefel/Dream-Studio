@@ -68,7 +68,7 @@ public class MoneySystem : MonoBehaviour
     private int officeBuyCount;
     private int shoppingmallBuyCount;
     private int policestationBuyCount;
-    private AudioSource purchaseSound;
+    static private AudioSource purchaseSound;
 
 
     RoadManager roadManager;
@@ -387,7 +387,7 @@ public class MoneySystem : MonoBehaviour
         }
     }
 
-    static public bool BuyRoad()
+    public bool BuyRoad()
     {
 
         if (money >= 20)
@@ -403,24 +403,13 @@ public class MoneySystem : MonoBehaviour
         return false;
     }
 
-    static public void SellRoad()
+    public void SellRoad()
     {
         AddMoney(10, MoneySource.Store);
     }
 
-    public int GetErpCost()
-    {
-        return erpCost;
-    }
     public bool BuyErp()
     {
-        //int tempvalue = 0;	
-        //for (int i = 0; i < count; i++)	
-        //{	
-        //    tempvalue += erpCost;	
-        //    erpBuyCount++;	
-        //    erpCost = 50 + erpBuyCount * 10;	
-        //}	
         if (money >= erpCost)
         {
             MinusMoney(erpCost, MoneySource.Store);
@@ -430,27 +419,20 @@ public class MoneySystem : MonoBehaviour
         else
         {
             displayText = true;
+            
+            Enable<Transform>(storePopText);
+            Enable<Transform>(storePopInfo);
         }
         return false;
-
-        //roadManager.erpManager.erpCount += count;	
     }
 
     public void SellErp()
     {
         AddMoney((int)(erpCost * 0.5), MoneySource.Store);
-        //roadManager.erpManager.erpCount -= count;	
     }
 
     public bool BuyTrafficLight()
     {
-        //int tempvalue = 0;	
-        //for (int i = 0; i < count; i++)	
-        //{	
-        //    tempvalue += tlCost;	
-        //    tlBuyCount++;	
-        //    tlCost = 50 + tlBuyCount * 10;	
-        //}	
         if (money >= tlCost)
         {
             MinusMoney(tlCost, MoneySource.Store);
@@ -460,14 +442,14 @@ public class MoneySystem : MonoBehaviour
         else
         {
             displayText = true;
+            Enable<Transform>(storePopText);
+            Enable<Transform>(storePopInfo);
         }
         return false;
-        //roadManager.trafficLightManager.tlCount += count;	
     }
     public void SellTL()
     {
         AddMoney((int)(tlCost * 0.5), MoneySource.Store);
-        //roadManager.trafficLightManager.tlCount -= count;	
     }
 
     public bool BuyPark()
@@ -482,6 +464,8 @@ public class MoneySystem : MonoBehaviour
         else
         {
             displayText = true;
+            Enable<Transform>(storePopText);
+            Enable<Transform>(storePopInfo);
         }
         return false;
     }
@@ -501,6 +485,8 @@ public class MoneySystem : MonoBehaviour
         else
         {
             displayText = true;
+            Enable<Transform>(storePopText);
+            Enable<Transform>(storePopInfo);
         }
         return false;
     }
@@ -520,6 +506,8 @@ public class MoneySystem : MonoBehaviour
         else
         {
             displayText = true;
+            Enable<Transform>(storePopText);
+            Enable<Transform>(storePopInfo);
         }
         return false;
     }
@@ -539,6 +527,8 @@ public class MoneySystem : MonoBehaviour
         else
         {
             displayText = true;
+            Enable<Transform>(storePopText);
+            Enable<Transform>(storePopInfo);
         }
         return false;
     }
@@ -558,6 +548,8 @@ public class MoneySystem : MonoBehaviour
         else
         {
             displayText = true;
+            Enable<Transform>(storePopText);
+            Enable<Transform>(storePopInfo);
         }
         return false;
     }

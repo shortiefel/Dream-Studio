@@ -193,7 +193,7 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.Draw:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            roadTab.CallFunction(bt);
+                            roadTab.CallRoadFunction(bt);
 
                         roadTab.SetToolTips(true, tooltipOffset, "Road");
                         //Enable<Transform>(tooltipTrans);
@@ -203,7 +203,7 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.Remove:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            roadTab.CallFunction(bt);
+                            roadTab.CallRoadFunction(bt);
 
                         roadTab.SetToolTips(true, tooltipOffset, "Remove Road");
                         //Enable<Transform>(tooltipTrans);
@@ -213,7 +213,7 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.ERP:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            roadTab.CallFunction(bt);
+                            roadTab.CallRoadFunction(bt);
 
                         roadTab.SetToolTips(true, tooltipOffset, "ERP");
                         //Enable<Transform>(tooltipTrans);
@@ -223,7 +223,7 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.TrafficLight:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            roadTab.CallFunction(bt);
+                            roadTab.CallRoadFunction(bt);
 
                         roadTab.SetToolTips(true, tooltipOffset, "TrafficLight");
                         //Enable<Transform>(tooltipTrans);
@@ -233,7 +233,7 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.RemoveCar:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            roadTab.CallFunction(bt);
+                            roadTab.CallRoadFunction(bt);
 
                         roadTab.SetToolTips(true, tooltipOffset, "Remove Car");
                         //Enable<Transform>(tooltipTrans);
@@ -245,7 +245,7 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                            buildingsTab.CallBuildingsFunction(bt);
                         }
 
                         buildingsTab.SetToolTips(true, tooltipOffset, "Place Hospital");
@@ -258,7 +258,7 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                            buildingsTab.CallBuildingsFunction(bt);
                         }
 
                         buildingsTab.SetToolTips(true, tooltipOffset, "Place Office");
@@ -271,7 +271,7 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                            buildingsTab.CallBuildingsFunction(bt);
                         }
 
                         buildingsTab.SetToolTips(true, tooltipOffset, "Place Park");
@@ -284,7 +284,7 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                            buildingsTab.CallBuildingsFunction(bt);
                         }
 
                         buildingsTab.SetToolTips(true, tooltipOffset, "Place Mall");
@@ -297,7 +297,7 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                            buildingsTab.CallBuildingsFunction(bt);
                         }
 
                         buildingsTab.SetToolTips(true, tooltipOffset, "Place Police Station");

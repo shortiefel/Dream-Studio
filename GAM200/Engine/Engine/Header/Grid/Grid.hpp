@@ -20,6 +20,7 @@ Technology is prohibited.
 
 #include "Engine/Header/Math/MathLib.hpp"
 #include "Engine/Header/Singleton/Singleton.hpp"
+#include "Engine/Header/ECS/DreamECS.hpp"
 
 #include <list>
 #include <unordered_map>
@@ -116,6 +117,8 @@ namespace Engine {
 			int SetRoads(Math::ivec2 posArr[MAX_LINE], int size);
 			int UnsetRoads(Math::ivec2 pos, std::vector<Math::ivec2>* roadRemoved);
 
+			bool UnsetDestination(Math::ivec2 pos, Math::ivec2& posToRemove);
+
 			void RevertGrid();
 			void FinalizeGrid();
 
@@ -129,6 +132,8 @@ namespace Engine {
 			std::list<Math::ivec2> RetryAStar(Math::ivec2& housePos, Math::ivec2 destPos);
 			std::list<Math::ivec2> AStarSearchInternal(Math::ivec2 startPosition, Math::ivec2& endPosition, RouteType routeType);
 			std::list<Math::ivec2> GetAdjacentCells(Math::ivec2 cell, bool isAgent);
+
+			bool DestinationCheck(Entity_id idTocheck, Math::ivec2 pos);
 
 			//Number of tiles in x and y
 			Math::ivec2 mapSize{};

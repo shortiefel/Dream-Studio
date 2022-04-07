@@ -62,12 +62,18 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
     }
 
-    internal void RemoveRoadHandler()
+    internal void RemoveStructureHandler()
     {
         ClearInputActions();
-        inputManager.OnMouseClick += roadManager.RemoveRoad;
-        inputManager.OnMouseHold += roadManager.RemoveRoad;
+        inputManager.OnMouseClick += RemoveStructure;
+        inputManager.OnMouseHold += RemoveStructure;
         inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
+    }
+
+    internal void RemoveStructure(Vector2Int pos)
+    {
+        roadManager.RemoveRoad(pos);
+        structureManager.RemoveDestination(pos);
     }
 
     internal void ERPHandler()
@@ -90,9 +96,7 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
         inputManager.OnMouseClick += roadManager.RemoveCarGrid;
-        Enable<Transform>(inputManager.removeCarCursor);
-
-        inputManager.removeCarBool = true;
+    
         //inputManager.OnMouseHold += roadManager.RemoveRoad;
         //inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
     }

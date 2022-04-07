@@ -624,6 +624,7 @@ public class RoadManager : MonoBehaviour
     
     public void RemoveCarGrid(Vector2Int position)
     {
+        Debug.Log("Removing handler");
         removeCarBool = true;
         removeCarTimer = 0f;
 

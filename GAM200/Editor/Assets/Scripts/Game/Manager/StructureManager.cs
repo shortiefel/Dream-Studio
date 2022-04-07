@@ -141,6 +141,11 @@ public class StructureManager : MonoBehaviour
         return false;
     }
 
+    public void RemoveDestination(Vector2Int position)
+    {
+        placementManager.RemoveDestination(position);
+    }
+
     public bool PlaceSpecial(Vector2Int position, BuildingType _bt,  float rotation = 0)
     {
         if (CheckPositionBeforePlacement(position, CellType.SpecialStructure))

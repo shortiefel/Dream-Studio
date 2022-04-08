@@ -5,8 +5,8 @@ public class ButtonTypeClick : MonoBehaviour
     ButtonType bt;
     //public bool active;
 
-    ButtonRoad roadTab;
-    ButtonRoad buildingsTab;
+    ButtonRoadTab roadTab;
+    ButtonBuildingsTab buildingsTab;
 
     //Text tooltipText;
     //Transform tooltipTrans;
@@ -18,8 +18,8 @@ public class ButtonTypeClick : MonoBehaviour
 
     public override void Start()
     {
-        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoad>();
-        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonRoad>();
+        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoadTab>();
+        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonBuildingsTab>();
         
 
 

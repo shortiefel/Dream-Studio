@@ -15,7 +15,7 @@ public class GameState : MonoBehaviour
     //Text highscoreText;
     Text dayText;
     CameraMovement camMovement;
-    ButtonRoad buttonRoad;
+    ButtonRoadTab buttonRoad;
 
     MoneySystem moneySystem;
 
@@ -65,7 +65,7 @@ public class GameState : MonoBehaviour
 
         GameObject buttonRoadGO = GameObject.Find("DisplayRoadBtn");
         if (buttonRoadGO != null)
-            buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
+            buttonRoad = buttonRoadGO.GetComponent<ButtonRoadTab>();
 
         GameObject moneySystemGO = GameObject.Find("MoneyText");
         if (moneySystemGO != null)

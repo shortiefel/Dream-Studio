@@ -61,6 +61,8 @@ public class CarSpawner : MonoBehaviour
     BuildingType outBt;
     PosIdSet posIdSet;
 
+    int carSpawnCounter = 2;
+
     //-------------------------------------------
 
     //-------------Only in Destination-----------------
@@ -181,11 +183,11 @@ public class CarSpawner : MonoBehaviour
         //Only House has popupText
         if (popupText != null)
         {
-            if (Input.GetKeyDown(KeyCode.C))
-                for (int i = 0; i < (int)BuildingType.House; i++)
-                {
-                    Debug.Log(entityId + " " + (BuildingType)i + " " + lifeTimeArray[i].active + " time: " + lifeTimeArray[i].timer);
-                }
+            //if (Input.GetKeyDown(KeyCode.C))
+            //    for (int i = 0; i < (int)BuildingType.House; i++)
+            //    {
+            //        Debug.Log(entityId + " " + (BuildingType)i + " " + lifeTimeArray[i].active + " time: " + lifeTimeArray[i].timer);
+            //    }
 
             PopupText();
 
@@ -199,6 +201,8 @@ public class CarSpawner : MonoBehaviour
                     //Debug.Log("Trying to s")
                     if (aiDirector.SpawnRetryWithType(selfPos, _bt, entityId))
                     {
+                        --carSpawnCounter;
+
                         backlog.Dequeue();
                         DisableNotification(_bt);
 
@@ -214,6 +218,8 @@ public class CarSpawner : MonoBehaviour
 
                 if (aiDirector.SelectADestAndSpawn(selfPos, entityId, possibleDest, out outBt, out posIdSet))
                 {
+                    --carSpawnCounter;
+
                     //Debug.Log("    " + posIdSet.pos);
                     possibleDest[(int)outBt] = posIdSet;
                     //Debug.Log(" aaaa " + possibleDest[(int)outBt].pos);
@@ -404,6 +410,7 @@ public class CarSpawner : MonoBehaviour
 
     public void DisplayPopup()
     {
+        carSpawnCounter++;
         popupTextQueue.Enqueue(GameState.addMoneyValue);
     }
     //-------------------------------------------------------------------------------------------
@@ -413,7 +420,7 @@ public class CarSpawner : MonoBehaviour
     {
         gameState.ReachedDestination(buildingType);
 
-        destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
+        //destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
     }
     //-------------------------------------------------------------------------------------------
 }

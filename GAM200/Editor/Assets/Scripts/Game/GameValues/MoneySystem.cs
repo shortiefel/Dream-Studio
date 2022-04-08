@@ -12,6 +12,7 @@ public enum MoneySource
     DestMall,
     DestPolice,
     RemoveCar,
+    Road,
     Ignore
 }
 
@@ -134,18 +135,18 @@ public class MoneySystem : MonoBehaviour
         if (go5 != null)
             receipt = go5.GetComponent<Receipt>();
 
-        money = 100;
+        money = 4500;
         textComp = GetComponent<Text>();
         textComp.text = money.ToString();
 
         roadCost = 20;
         tlCost = 50;
         erpCost = 50;
-        parkCost = 100;
-        hospitalCost = 100;
-        officeCost = 100;
-        shoppingmallCost = 100;
-        policestationCost = 100;
+        parkCost = 20;
+        hospitalCost = 20;
+        officeCost = 20;
+        shoppingmallCost = 20;
+        policestationCost = 20;
 
         road_counter = 0;
         traffic_counter = 0;
@@ -322,6 +323,11 @@ public class MoneySystem : MonoBehaviour
                             infoDestTexture.ChangeTexture("CarIcon");
                             break;
                         }
+                    case MoneySource.Road:
+                        {
+                            infoDestTexture.ChangeTexture("DrawRoad");
+                            break;
+                        }
                 }
             }
         }
@@ -392,7 +398,7 @@ public class MoneySystem : MonoBehaviour
 
         if (money >= 20)
         {
-            MinusMoney(20, MoneySource.Store);
+            MinusMoney(20, MoneySource.Road);
             //roadManager.roadCount++;	
             return true;
         }
@@ -405,7 +411,7 @@ public class MoneySystem : MonoBehaviour
 
     public void SellRoad()
     {
-        AddMoney(10, MoneySource.Store);
+        AddMoney(10, MoneySource.Road);
     }
 
     public bool BuyErp()
@@ -456,8 +462,8 @@ public class MoneySystem : MonoBehaviour
     {
         if (money >= parkCost)
         {
-            MinusMoney(parkCost, MoneySource.Store);
             parkCost *= 5;
+            MinusMoney(parkCost, MoneySource.DestPark);
             purchaseSound.Play();
             return true;
         }
@@ -471,14 +477,14 @@ public class MoneySystem : MonoBehaviour
     }
     public void SellPark()
     {
-        AddMoney((int)(parkCost * 0.5), MoneySource.Store);
+        AddMoney((int)(parkCost * 0.5), MoneySource.DestPark);
     }
     public bool BuyHospital()
     {
         if (money >= hospitalCost)
         {
-            MinusMoney(hospitalCost, MoneySource.Store);
             hospitalCost *= 5;
+            MinusMoney(hospitalCost, MoneySource.DestHospital);
             purchaseSound.Play();
             return true;
         }
@@ -492,14 +498,14 @@ public class MoneySystem : MonoBehaviour
     }
     public void SellHospital()
     {
-        AddMoney((int)(hospitalCost * 0.5), MoneySource.Store);
+        AddMoney((int)(hospitalCost * 0.5), MoneySource.DestHospital);
     }
     public bool BuyOffice()
     {
         if (money >= officeCost)
         {
-            MinusMoney(officeCost, MoneySource.Store);
             officeCost *= 5;
+            MinusMoney(officeCost, MoneySource.DestOffice);
             purchaseSound.Play();
             return true;
         }
@@ -513,14 +519,14 @@ public class MoneySystem : MonoBehaviour
     }
     public void SellOffice()
     {
-        AddMoney((int)(officeCost * 0.5), MoneySource.Store);
+        AddMoney((int)(officeCost * 0.5), MoneySource.DestOffice);
     }
     public bool BuyMall()
     {
         if (money >= shoppingmallCost)
         {
-            MinusMoney(shoppingmallCost, MoneySource.Store);
             shoppingmallCost *= 5;
+            MinusMoney(shoppingmallCost, MoneySource.DestMall);
             purchaseSound.Play();
             return true;
         }
@@ -534,14 +540,14 @@ public class MoneySystem : MonoBehaviour
     }
     public void SellMall()
     {
-        AddMoney((int)(shoppingmallCost * 0.5), MoneySource.Store);
+        AddMoney((int)(shoppingmallCost * 0.5), MoneySource.DestMall);
     }
     public bool BuyPoliceStation()
     {
         if (money >= policestationCost)
         {
-            MinusMoney(policestationCost, MoneySource.Store);
             policestationCost *= 5;
+            MinusMoney(policestationCost, MoneySource.DestPolice);
             purchaseSound.Play();
             return true;
         }
@@ -555,7 +561,7 @@ public class MoneySystem : MonoBehaviour
     }
     public void SellPoliceStation()
     {
-        AddMoney((int)(policestationCost * 0.5), MoneySource.Store);
+        AddMoney((int)(policestationCost * 0.5), MoneySource.DestPolice);
     }
 
     //public int road_count()	

@@ -11,13 +11,9 @@ public class TrafficLightManager : MonoBehaviour
 
     //bool toDraw; //To Remove
 
-    public int tlCount;
 
     Transform TLInfoText;
     Transform TLInfo;
-
-    float timer;
-    bool addToTime;
 
     public override void Start()
     {
@@ -30,16 +26,12 @@ public class TrafficLightManager : MonoBehaviour
 
         //toDraw = false; //To Remove
 
-        tlCount = 1;
 
         TLInfoText = GameObject.Find("TLPopInfoText").GetComponent<Transform>();
         TLInfo = GameObject.Find("TLPopInfo").GetComponent<Transform>();
 
         Disable<Transform>(TLInfoText);
         Disable<Transform>(TLInfo);
-
-        timer = 0f;
-        addToTime = false;
     }
 
     public int trafficlightTaxCount()
@@ -47,23 +39,6 @@ public class TrafficLightManager : MonoBehaviour
         return trafficLights.Count;
     }
 
-    public override void FixedUpdate()
-    {
-        if (addToTime == true)
-        {
-            timer += Time.fixedDeltaTime;
-
-            if (timer > 2f)
-            {
-                Disable<Transform>(TLInfoText);
-                Disable<Transform>(TLInfo);
-
-                timer = 0f;
-                addToTime = false;
-            }
-        }
-           
-    }
 
     //public override void Update()
     //{
@@ -109,45 +84,27 @@ public class TrafficLightManager : MonoBehaviour
     //    trafficLights.Remove(pos);
     //}
 
-    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle)
+    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle, bool state)
     {
         _carAngle = _carAngle % 360;
         //angle 0/360/-360 - up, 90/-270 - right, -90/270 - left, 180/-180 - down
         //+-45 degree for range
         //if left or right
         DirectionState ds = DirectionState.Horizontal;
-        //bool lrState = true;
+        if (state) ds = DirectionState.HorizontalLeft;
+
         if ((45f < _carAngle && _carAngle < 135f) || (-315f < _carAngle && _carAngle < -225f) ||
             (225f < _carAngle && _carAngle < 315f) || (-135f < _carAngle && _carAngle < -45f))
         {
             ds = DirectionState.Vertical;
-            //lrState = false;
+            if (state) ds = DirectionState.VerticalLeft;
         }
-
-        
-        //if (Input.GetKey(KeyCode.B)) return true;
-        //return false;
-
+        Debug.Log(ds + " " + state);
         if (!trafficLights.ContainsKey(tlPos)) return true;
 
         DirectionState tem = trafficLights[tlPos].directionState;
-        //Debug.Log("TLM" + tem + " " + trafficLights[tlPos].entityId);
-        //if (Input.GetKey(KeyCode.B))
-        //    Debug.Log("TLM" + tem + " " + trafficLights[tlPos].entityId);
-        //Debug.Log("ds " + ds + "  tem " + tem);
+        
         return ds == tem;
-
-        //return ds == trafficLights[tlPos].GetTrafficLightState();
-
-        //bool cState = GetComponent<TrafficLight>(trafficLights[tlPos].entityId).state;
-        //cState == true means allows horizontal movement
-        //cState == false means allow vertical movement
-        //if lrState == true means moving left right (horizontally) and false means moving up down (vertically)
-        //It means that when they are the same then they are allowed to move
-
-        //Debug.Log("Reach");
-        //if (lrState == cState) return true;
-        //return false;
     }
 
     public List<uint> GetTrafficLightIndex(List<Vector2> toCheck)
@@ -176,16 +133,6 @@ public class TrafficLightManager : MonoBehaviour
     public bool RequestPlacingTrafficLight(Vector2Int position)
     {
 
-        //if (tlCount <= 0)
-        //{
-        //    Enable<Transform>(TLInfoText);
-        //    Enable<Transform>(TLInfo);
-
-        //    addToTime = true;
-
-        //    return false;
-        //}
-
         if (trafficLights.ContainsKey(position))
             return false;
         if (erpManager.IsERP(position))
@@ -200,17 +147,12 @@ public class TrafficLightManager : MonoBehaviour
         if (!trafficLights.ContainsKey(position))
             return false;
 
-        ++tlCount;
+        moneySystem.SellTL();
         Destroy(trafficLights[position].entityId);
         trafficLights.Remove(position);
         return true;
 
     }
-    //public override void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.F))
-    //        ++tlCount;
-    //}
 }
 
 

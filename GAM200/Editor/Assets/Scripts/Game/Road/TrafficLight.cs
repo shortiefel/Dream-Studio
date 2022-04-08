@@ -3,7 +3,9 @@
 public enum DirectionState
 {
     Horizontal,
+    HorizontalLeft,
     Vertical,
+    VerticalLeft,
     None
 }
 
@@ -52,7 +54,7 @@ public class TrafficLight : MonoBehaviour
         carCounter = 0;
 
         timer = 0f;
-        switchTimer = 5f;
+        switchTimer = 2f;
 
         inBetweenTimer = 0f;
     }
@@ -72,19 +74,15 @@ public class TrafficLight : MonoBehaviour
 
     private void SwapState()
     {
-        //toState = state = !state;
-        //if (state)
-        //    transform.angle = 0;
-        ////texture.color = new Color(1, 0, 0, 1);
-        //else
-        //    transform.angle = 90;
-        //texture.color = new Color(0, 1, 0, 1);
-        //Debug.Log("Change State " + directionState);
-        //Test
 
-        //directionState = nextState;
-        if (directionState == DirectionState.Horizontal) nextState = DirectionState.Vertical;
-        else if (directionState == DirectionState.Vertical) nextState = DirectionState.Horizontal;
+        //if (directionState == DirectionState.Horizontal) nextState = DirectionState.Vertical;
+        //else if (directionState == DirectionState.Vertical) nextState = DirectionState.Horizontal;
+
+        if (directionState == DirectionState.Horizontal) nextState = DirectionState.HorizontalLeft;
+        else if (directionState == DirectionState.HorizontalLeft) nextState = DirectionState.Vertical;
+        else if (directionState == DirectionState.Vertical) nextState = DirectionState.VerticalLeft;
+        else if (directionState == DirectionState.VerticalLeft) nextState = DirectionState.Horizontal;
+
         directionState = DirectionState.None;
 
         
@@ -93,10 +91,12 @@ public class TrafficLight : MonoBehaviour
 
     public override void Update()
     {
+        //if (carCounter == 0)
+        //    Debug.Log(carCounter);
         float deltaTime = Time.deltaTime;
         //Console.WriteLine("State " + directionState);
-        if (Input.GetKeyDown(KeyCode.V))
-            SwapState();
+        //if (Input.GetKeyDown(KeyCode.V))
+        //    SwapState();
         timer += deltaTime;
         if (timer >= switchTimer)
         {
@@ -112,28 +112,34 @@ public class TrafficLight : MonoBehaviour
             //}
             //Might have problem where car move too fast and enter but doesnt move
             //Check timer to 1.5 of switchTimer to prevent infinite waiting to change direction
-            if (carCounter == 0 || timer >= switchTimer * 1.5f)
+            //if (carCounter == 0 && timer >= switchTimer * 1.5f)
+            if (timer >= switchTimer)
             {
                 timer = 0f;
                 SwapState();
             }
         }
-
+        //Debug.Log(nextState);
         //Put traffic light in a state where cars are not allowed to go for both direction
         if (directionState == DirectionState.None)
         {
             inBetweenTimer += deltaTime;
-            if (inBetweenTimer >= 0.5f)
+            //if (inBetweenTimer >= 0.5f)
+            if (inBetweenTimer >= 1.5f || carCounter == 0)
             {
                 //toState = state = !state;
-                state = !state;
-                if (state)
-                    transform.angle = 0;
-                //texture.color = new Color(1, 0, 0, 1);
-                else
-                    transform.angle = 90;
+                //state = !state;
+                //if (state)
+                //    transform.angle = 0;
+                ////texture.color = new Color(1, 0, 0, 1);
+                //else
+                //    transform.angle = 90;
 
                 directionState = nextState;
+                if (nextState == DirectionState.Horizontal || nextState == DirectionState.HorizontalLeft)
+                    transform.angle = 0;
+                else
+                    transform.angle = 90;
                 inBetweenTimer = 0f;
             }
         }

@@ -1431,7 +1431,45 @@ namespace Engine {
             //return std::list<Math::ivec2>{};
         }
 
-        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2* housePos, Math::ivec2 destPos, int routeType) {
+        bool CheckIfTurnLeft(const Math::ivec2& p1, const Math::ivec2& p2, const Math::ivec2& p3) {
+            Math::ivec2 first = p2 - p1;
+            Math::ivec2 second = p3 - p2;
+
+            //Example grid
+            //1 2 3     high y
+            //4 5 6      |
+            //7 8 9     low y
+            //low x - high x
+
+            //p1 - 5, p2 - 4
+            if (first.x == -1) {
+                //p3 = 7
+                if (second.y == -1) return true;
+            }
+
+            //p1 - 5, p2 - 6
+            else if (first.x == 1) {
+                //p3 = 3
+                if (second.y == 1) return true;
+            }
+
+            //p1 - 5, p2 - 8
+            else if (first.y == -1) {
+                //p3 = 9
+                if (second.x == 1) return true;
+            }
+
+            //p1 - 5, p2 - 2
+            else if (first.y == 1) {
+                //p3 = 1
+                if (second.x == -1) return true;
+            }
+
+            return false;
+
+        }
+
+        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2(&leftArr)[MAX_LEFT_TURNS], int* leftArrCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType) {
             std::list<Math::ivec2> vlist = AStarSearchInternal(*housePos, destPos, (RouteType)routeType);
 
             if (vlist.empty() && (RouteType)routeType == RouteType::DestToHouse) {
@@ -1442,13 +1480,9 @@ namespace Engine {
             //vlist.reverse();
             
             int index = *count = 0;
-            if (vlist.size() == 0) return;
+            size_t vlistSize = vlist.size();
+            if (vlistSize == 0) return;
 
-            ////Remove the housePos and destPos
-            //vlist.pop_front();
-            //vlist.pop_back();
-
-            //std::cout << "\n " << vlist.size() << " Starting of A Star(C++)---------------------------------- - \n";
 
             //How it works vlist contains the roads the car will have to follow
             //to get the individual routes u need to know which direction the car is going
@@ -1459,7 +1493,24 @@ namespace Engine {
             //                 Another possible Route: A 6 7 8 9 D are the lists of points for prefab B (first and last are the direction it would be going) (this is going right and down)
             //3. To get the correct route, check the first prev position and the next position.
 #if 1
-            std::array<Math::vec2, 100> path{};
+            std::list<Math::ivec2> leftTurnList;
+
+            if (vlistSize == 1) {
+                if (CheckIfTurnLeft(*housePos, *(vlist.begin()), destPos)) {
+                    leftTurnList.emplace_back(*(vlist.begin()));
+                }
+            }
+
+            else {
+                auto iter = vlist.begin(); ++iter;
+                if (CheckIfTurnLeft(*housePos, *(vlist.begin()), *iter)) {
+                    leftTurnList.emplace_back(*(vlist.begin()));
+                }
+            }
+            std::queue<Math::ivec2> temQueue;
+            
+
+            std::array<Math::vec2, MAX_WAYPOINTS> path{};
 
             Math::ivec2 prevPosition = *housePos;
             Math::ivec2 nextPosition{};
@@ -1467,9 +1518,27 @@ namespace Engine {
                 Math::ivec2 pos = vlist.front();
                 auto& entId = (*(grid + pos.x - offset.x) + pos.y - offset.y)->entityId;
 
+                temQueue.push(pos);
                 //path[index] = vlist.front();
                 //index++;
                 vlist.pop_front();
+
+                if (temQueue.size() == 3) {
+                    Math::ivec2 p1 = temQueue.front();
+                    temQueue.pop();
+                    Math::ivec2 p2 = temQueue.front();
+                    Math::ivec2 p3 = temQueue.back(); 
+
+                    if (CheckIfTurnLeft(p1, p2, p3)) {
+                        leftTurnList.emplace_back(p2);
+                    }
+
+                    if (vlist.size() == 0) {
+                        if (CheckIfTurnLeft(p2, p3, destPos)) {
+                            leftTurnList.emplace_back(p3);
+                        }
+                    }
+                }
 
                 bool added = false;
                 auto& wp = dreamECSGame->GetComponent<WaypointComponent>(entId);
@@ -1541,6 +1610,15 @@ namespace Engine {
                 //std::cout << arr[i] << "\n";
             }
             //std::cout << " New end --------------------\n";
+
+            int leftArrIndex = 0;
+            for (auto& i : leftTurnList) {
+                leftArr[leftArrIndex] = i;
+                ++leftArrIndex;
+            }
+
+            *leftArrCount = leftArrIndex;
+
 #else
 
             for (auto& i : vlist) {

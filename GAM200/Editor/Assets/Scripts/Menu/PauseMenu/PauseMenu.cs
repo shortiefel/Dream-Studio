@@ -41,7 +41,8 @@ public class PauseMenu : MonoBehaviour
 
     UI texture;
 
-    Transform displayArrow;
+    Transform roadTab;
+    Transform buildingsTab;
     //Transform displayArrowWhite;
 
 
@@ -133,7 +134,8 @@ public class PauseMenu : MonoBehaviour
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
 
-        displayArrow = GameObject.Find("Displaybtn").GetComponent<Transform>();
+        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<Transform>();
+        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>();
         //displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
         //GameObject timerButtonGO = GameObject.Find("TimerIcon");
@@ -195,7 +197,8 @@ public class PauseMenu : MonoBehaviour
             if (combinedUI != null)
                 combinedUI.CloseAllUIExcept(UIType.Pause);
 
-            Disable<Transform>(displayArrow);
+            Disable<Transform>(roadTab);
+            Disable<Transform>(buildingsTab);
             //Disable<Transform>(displayArrowWhite);
 
         }
@@ -226,7 +229,8 @@ public class PauseMenu : MonoBehaviour
 
             Disable<Transform>(settingBtn);
 
-            Enable<Transform>(displayArrow);
+            Enable<Transform>(roadTab);
+            Enable<Transform>(buildingsTab);
             //Application.SetPause(false);
 
             if (reenable)

@@ -31,9 +31,6 @@ public class RoadManager : MonoBehaviour
     public int roadCount;
     private int previousRoadMinus;
 
-    Transform RoadInfoText;
-    Transform RoadInfo;
-
     float timer;
     bool addToTime;
 
@@ -81,17 +78,6 @@ public class RoadManager : MonoBehaviour
         roadCount = 20;
         previousRoadMinus = 0;
 
-        GameObject go3 = GameObject.Find("RoadPopInfoText");
-        if (go3 != null)
-            RoadInfoText = go3.GetComponent<Transform>();
-
-        GameObject go4 = GameObject.Find("RoadPopInfo");
-        if (go4 != null)
-            RoadInfo = go4.GetComponent<Transform>();
-
-        Disable<Transform>(RoadInfoText);
-        Disable<Transform>(RoadInfo);
-
         timer = 0f;
         addToTime = false;
 
@@ -101,25 +87,6 @@ public class RoadManager : MonoBehaviour
 
         moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
     }
-
-    public override void FixedUpdate()
-    {
-        if (addToTime == true)
-        {
-            timer += Time.fixedDeltaTime;
-
-            if (timer > 2f)
-            {
-                Disable<Transform>(RoadInfoText);
-                Disable<Transform>(RoadInfo);
-
-                timer = 0f;
-                addToTime = false;
-            }
-        }
-
-    }
-
     public void PlaceSpawnHouse(Vector2Int position)
     {
         /*if (placementManager.CheckIfPositionInBound(position) == false)
@@ -365,14 +332,6 @@ public class RoadManager : MonoBehaviour
             Debug.Log("Max temporary road count reached (RoadManager PlaceRoad)");
             return;
         }
-        //if (roadCount < 1)
-        //{
-        //    Enable<Transform>(RoadInfoText);
-        //    Enable<Transform>(RoadInfo);
-        //
-        //    addToTime = true;
-        //    return;
-        //}
         if (temporaryRoadPositions.Count > 0)
         {
             //Tile should be side by side to last tile so in the event that

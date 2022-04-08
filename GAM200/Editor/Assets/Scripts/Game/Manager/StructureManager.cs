@@ -54,6 +54,7 @@ public class StructureManager : MonoBehaviour
 {
     public StructurePrefabWeighted[] housesPrefabs, specialPrefabs;
     public PlacementManager placementManager;
+    MoneySystem moneySystem;
     //public NotificationManager notificationManager;
 
 
@@ -69,7 +70,7 @@ public class StructureManager : MonoBehaviour
     {
 
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
-
+        moneySystem = GameObject.Find("MoneyText").GetComponent<MoneySystem>();
         housesPrefabs = new StructurePrefabWeighted[2];
         housesPrefabs[0].prefab = new GameObject(new Prefab("House")); housesPrefabs[0].weight = 1;
 
@@ -141,8 +142,63 @@ public class StructureManager : MonoBehaviour
         return false;
     }
 
+    //public override void Update()
+    //{
+    //    Debug.Log("Start ");
+    //    foreach (var i in destinationList[(int)BuildingType.Hospital])
+    //    {
+    //        Debug.Log(BuildingType.Hospital + " " + i);
+    //    }
+    //    foreach (var i in destinationList[(int)BuildingType.Office])
+    //    {
+    //        Debug.Log(BuildingType.Office + " " + i);
+    //    }
+    //    foreach (var i in destinationList[(int)BuildingType.Park])
+    //    {
+    //        Debug.Log(BuildingType.Park + " " + i);
+    //    }
+    //    foreach (var i in destinationList[(int)BuildingType.Mall])
+    //    {
+    //        Debug.Log(BuildingType.Mall + " " + i);
+    //    }
+    //    foreach (var i in destinationList[(int)BuildingType.PoliceStation])
+    //    {
+    //        Debug.Log(BuildingType.PoliceStation + " " + i);
+    //    }
+    //}
+
     public void RemoveDestination(Vector2Int position)
     {
+        bool found = false;
+        for (int t = 0; t < (int)BuildingType.House; t++)
+        {
+            foreach (var i in destinationList[t])
+            {
+                if (position == i.pos)
+                {
+                    if(t == (int)BuildingType.Hospital)
+                        moneySystem.SellHospital();
+                    else if (t == (int)BuildingType.Park)
+                        moneySystem.SellPark();
+                    else if (t == (int)BuildingType.Office)
+                        moneySystem.SellOffice();
+                    else if (t == (int)BuildingType.Mall)
+                        moneySystem.SellMall();
+                    else if (t == (int)BuildingType.PoliceStation)
+                        moneySystem.SellPoliceStation();
+
+                    destinationList[t].Remove(i);
+                    found = true;
+                    
+                    break;
+                }
+            }
+
+            if (found) break;
+            
+        }
+
+
         placementManager.RemoveDestination(position);
     }
 
@@ -150,6 +206,16 @@ public class StructureManager : MonoBehaviour
     {
         if (CheckPositionBeforePlacement(position, CellType.SpecialStructure))
         {
+            if (_bt == BuildingType.Hospital)
+                moneySystem.BuyHospital();
+            else if (_bt == BuildingType.Park)
+                moneySystem.BuyPark();
+            else if (_bt == BuildingType.Office)
+                moneySystem.BuyOffice();
+            else if (_bt == BuildingType.Mall)
+                moneySystem.BuyMall();
+            else if (_bt == BuildingType.PoliceStation)
+                moneySystem.BuyPoliceStation();
             //int randomIndex = GetRandomWeightedIndex(specialWeights);
             uint id = placementManager.PlaceObjectOnTheMap(position, specialPrefabs[(int)_bt].prefab, CellType.SpecialStructure, rotation).entityId;
             destinationList[(int)_bt].Add(new PosIdSet(id, position));

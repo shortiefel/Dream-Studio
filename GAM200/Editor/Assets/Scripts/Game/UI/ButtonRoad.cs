@@ -16,6 +16,8 @@ public enum ButtonType
     Display,
     Ignore,
     Latest, //Used to reopen the last buttontype
+    RoadTab,
+    BuildingsTab,
     None
 }
 
@@ -29,20 +31,24 @@ public class ButtonRoad : MonoBehaviour
     //bool activeType;
     //bool drawRoadMode;
     //bool deleteRoadMode;
+
+    Transform roadTab;
+    UI roadTabUI;
+    Transform buildingsTab;
+    UI buildingsTabUI;
+
+
     Transform drawRoadWhite;
     Transform drawRoad;
-    Transform roadCount;
     Vector2 drawPosition;
     Vector2 drawRoadCount;
 
     Transform removeRoad;
     Transform removeRoadWhite;
-    Transform trafficCount;
     Vector2 removePosition;
 
     Transform drawERP;
     Transform drawERPWhite;
-    Transform ERPCount;
     Vector2 erpPosition;
     Vector2 drawERPCount;
 
@@ -55,8 +61,8 @@ public class ButtonRoad : MonoBehaviour
     Transform drawRemoveCarWhite;
     Vector2 drawRemoveCarPosition;
 
-    Transform displayArrow;
-    UI displayArrowUI;
+    //Transform displayArrow;
+    //UI displayArrowUI;
     //Transform displayArrowWhite;
 
     Transform placeHospital;
@@ -103,8 +109,13 @@ public class ButtonRoad : MonoBehaviour
 
     //private Camera mainCamera;
 
-    public bool opening;
-    public bool closing;
+    //public bool opening;
+    //public bool closing;
+    static public bool roadTabOpen;
+    static public bool roadTabClose;
+    static public bool buildingsTabOpen;
+    static public bool buildingsTabClose;
+
     float timer;
 
     float closeXPosition;
@@ -118,7 +129,11 @@ public class ButtonRoad : MonoBehaviour
 
     CombinedUI combinedUI;
 
-    public bool isOn;
+    //public bool isOn;
+    public bool roadTabIsOn;
+    public bool buildingsTabIsOn;
+
+    ButtonType bt;
 
     ButtonType choosenButton = ButtonType.None;
     bool displayState = false;
@@ -139,66 +154,111 @@ public class ButtonRoad : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
-        drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
-        drawRoad = GameObject.Find("DrawRoad").GetComponent<Transform>();
-        roadCount = GameObject.Find("currRoadDisplay").GetComponent<Transform>();
-        drawPosition = drawRoad.position;
-        drawRoadCount = roadCount.position;
 
-        removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
-        removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
-        removePosition = removeRoad.position;
+        if (entityId == GameObject.Find("DisplayRoadBtn").GetComponent<Transform>().entityId)
+        {
+            drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
+            drawRoad = GameObject.Find("DrawRoad").GetComponent<Transform>();
+            drawPosition = drawRoad.position;
 
-        drawERP = GameObject.Find("ERPbtn").GetComponent<Transform>();
-        drawERPWhite = GameObject.Find("ERPbtnWhite").GetComponent<Transform>();
-        ERPCount = GameObject.Find("currERPDisplay").GetComponent<Transform>();
-        erpPosition = drawERP.position;
-        drawERPCount = ERPCount.position;
+            removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
+            removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
+            removePosition = removeRoad.position;
 
-        drawTraffic = GameObject.Find("TrafficLight").GetComponent<Transform>();
-        drawTrafficWhite = GameObject.Find("TrafficLightWhite").GetComponent<Transform>();
-        trafficCount = GameObject.Find("currTrafficDisplay").GetComponent<Transform>();
-        trafficPosition = drawTraffic.position;
-        drawTrafficCount = trafficCount.position;
+            drawERP = GameObject.Find("ERPbtn").GetComponent<Transform>();
+            drawERPWhite = GameObject.Find("ERPbtnWhite").GetComponent<Transform>();
+            erpPosition = drawERP.position;
 
-        drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
-        drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
-        //drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
-        //drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
-        drawRemoveCarPosition = drawRemoveCar.position;
+            drawTraffic = GameObject.Find("TrafficLight").GetComponent<Transform>();
+            drawTrafficWhite = GameObject.Find("TrafficLightWhite").GetComponent<Transform>();
+            trafficPosition = drawTraffic.position;
 
-        GameObject displayGO = GameObject.Find("Displaybtn");
-        displayArrow = displayGO.GetComponent<Transform>();
-        displayArrowUI = displayGO.GetComponent<UI>();
-        //displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
+            drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
+            drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
+            //drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
+            //drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
+            drawRemoveCarPosition = drawRemoveCar.position;
 
-        GameObject hopitalGO = GameObject.Find("PlaceHospital");
-        placeHospital = hopitalGO.GetComponent<Transform>();
-        placeHospitalUI = hopitalGO.GetComponent<UI>();
+            GameObject displayRoadTabGO = GameObject.Find("DisplayRoadBtn");
+            roadTab = displayRoadTabGO.GetComponent<Transform>();
+            roadTabUI = displayRoadTabGO.GetComponent<UI>();
 
-        GameObject officeGO = GameObject.Find("PlaceOffice");
-        placeOffice = officeGO.GetComponent<Transform>();
-        placeOfficeUI = officeGO.GetComponent<UI>();
 
-        GameObject parkGO = GameObject.Find("PlacePark");
-        placePark = parkGO.GetComponent<Transform>();
-        placeParkUI = parkGO.GetComponent<UI>();
+            bt = ButtonType.RoadTab;
+            drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
+            drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
 
-        GameObject mallGO = GameObject.Find("PlaceMall");
-        placeMall = mallGO.GetComponent<Transform>();
-        placeMallUI = mallGO.GetComponent<UI>();
+            removeRoad.position = new Vector2(closeXPosition, removePosition.y);
+            removeRoadWhite.position = new Vector2(closeXPosition, removePosition.y);
 
-        GameObject psGO = GameObject.Find("PlacePoliceStation");
-        placePoliceStation = psGO.GetComponent<Transform>();
-        placePoliceStationUI = psGO.GetComponent<UI>();
+            drawERP.position = new Vector2(closeXPosition, erpPosition.y);
+            drawERPWhite.position = new Vector2(closeXPosition, erpPosition.y);
+
+            drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
+            drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
+
+            drawRemoveCar.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
+            drawRemoveCarWhite.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
 
 
 
-        placeHospitalPos = placeHospital.position;
-        placeOfficePos = placeOffice.position;
-        placeParkPos = placePark.position;
-        placeMallPos = placeMall.position;
-        placePoliceStationPos = placePoliceStation.position;
+            Disable<Transform>(drawRoadWhite);
+            Disable<Transform>(removeRoadWhite);
+            Disable<Transform>(drawERPWhite);
+            Disable<Transform>(drawTrafficWhite);
+            Disable<Transform>(drawRemoveCarWhite);
+
+            Disable<Transform>(drawERP);
+            Disable<Transform>(drawTraffic);
+        }
+        else if (entityId == GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>().entityId)
+        {
+            GameObject hopitalGO = GameObject.Find("PlaceHospital");
+            placeHospital = hopitalGO.GetComponent<Transform>();
+            placeHospitalUI = hopitalGO.GetComponent<UI>();
+
+            GameObject officeGO = GameObject.Find("PlaceOffice");
+            placeOffice = officeGO.GetComponent<Transform>();
+            placeOfficeUI = officeGO.GetComponent<UI>();
+
+            GameObject parkGO = GameObject.Find("PlacePark");
+            placePark = parkGO.GetComponent<Transform>();
+            placeParkUI = parkGO.GetComponent<UI>();
+
+            GameObject mallGO = GameObject.Find("PlaceMall");
+            placeMall = mallGO.GetComponent<Transform>();
+            placeMallUI = mallGO.GetComponent<UI>();
+
+            GameObject psGO = GameObject.Find("PlacePoliceStation");
+            placePoliceStation = psGO.GetComponent<Transform>();
+            placePoliceStationUI = psGO.GetComponent<UI>();
+
+            GameObject displayBuildingsTabGO = GameObject.Find("DisplayBuildingsBtn");
+            buildingsTab = displayBuildingsTabGO.GetComponent<Transform>();
+            buildingsTabUI = displayBuildingsTabGO.GetComponent<UI>();
+
+            placeHospitalPos = placeHospital.position;
+            placeOfficePos = placeOffice.position;
+            placeParkPos = placePark.position;
+            placeMallPos = placeMall.position;
+            placePoliceStationPos = placePoliceStation.position;
+
+
+            bt = ButtonType.BuildingsTab;
+            placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
+            placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
+            placePark.position = new Vector2(closeXPosition, placeParkPos.y);
+            placeMall.position = new Vector2(closeXPosition, placeMallPos.y);
+            placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
+        }
+
+        
+
+        
+
+
+
+        
 
         //placeHospitalWhite = GameObject.Find("PlaceHospitalWhite").GetComponent<Transform>();
         //placeOfficeWhite = GameObject.Find("PlaceOfficeWhite").GetComponent<Transform>();
@@ -215,19 +275,6 @@ public class ButtonRoad : MonoBehaviour
         line1 = lineDivider1.position;
 
 
-
-        Disable<Transform>(drawRoadWhite);
-        Disable<Transform>(removeRoadWhite);
-        Disable<Transform>(drawERPWhite);
-        Disable<Transform>(drawTrafficWhite);
-        Disable<Transform>(drawRemoveCarWhite);
-        Disable<Transform>(roadCount);
-        Disable<Transform>(ERPCount);
-        Disable<Transform>(trafficCount);
-
-        Disable<Transform>(drawERP);
-        Disable<Transform>(drawTraffic);
-
         //Disable<Transform>(displayArrowWhite);
 
         //Disable<Transform>(placeHospitalWhite);
@@ -237,35 +284,14 @@ public class ButtonRoad : MonoBehaviour
         //Disable<Transform>(placePoliceStationWhite);
 
 
-        opening = false;
-        closing = false;
+        roadTabOpen = false;
+        roadTabClose = false;
+        buildingsTabOpen = false;
+        buildingsTabClose = false;
+
         timer = 0f;
         closeXPosition = -96f;
         speedMultiply = 10f;
-
-        drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
-        drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
-        roadCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-        removeRoad.position = new Vector2(closeXPosition, removePosition.y);
-        removeRoadWhite.position = new Vector2(closeXPosition, removePosition.y);
-
-        drawERP.position = new Vector2(closeXPosition, erpPosition.y);
-        drawERPWhite.position = new Vector2(closeXPosition, erpPosition.y);
-        ERPCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-        drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
-        drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
-        trafficCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-        drawRemoveCar.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
-        drawRemoveCarWhite.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
-
-        placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
-        placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
-        placePark.position = new Vector2(closeXPosition, placeParkPos.y);
-        placeMall.position = new Vector2(closeXPosition, placeMallPos.y);
-        placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
 
         lineDivider1.position = new Vector2(closeXPosition, line1.y);
 
@@ -291,7 +317,9 @@ public class ButtonRoad : MonoBehaviour
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
 
-        isOn = false;
+        //isOn = false;
+        roadTabIsOn = false;
+        buildingsTabIsOn = false;
         //GameObject go4 = GameObject.Find("CounterText");
         //if (go4 != null)
         //    counterText = go4.GetComponent<Transform>();
@@ -331,11 +359,24 @@ public class ButtonRoad : MonoBehaviour
 
     public override void OnMouseOver()
     {
-        SetToolTips(true, toolTipsDisplayPosition, "Display buttons");
-
-        if (Input.GetMouseButtonDown(MouseCode.Left))
+        switch (bt)
         {
-            SwitchTabRoad(!displayState);
+            case ButtonType.RoadTab:
+                {
+                    SetToolTips(true, toolTipsDisplayPosition, "Display Road Buttons");
+                    if (Input.GetMouseButtonDown(MouseCode.Left))
+                        SwitchTabRoad(!displayState);
+                    break;
+                }
+            case ButtonType.BuildingsTab:
+                {
+                    SetToolTips(true, toolTipsDisplayPosition, "Display Buildings Buttons");
+                    if (Input.GetMouseButtonDown(MouseCode.Left))
+                        SwitchTabBuildings(!displayState);
+                    break;
+                }
+            default:
+                break;
         }
     }
 
@@ -349,29 +390,72 @@ public class ButtonRoad : MonoBehaviour
     {
         if (type)
         {
-            opening = true;
+            roadTabOpen = true;
+            //buildingsTabOpen = false;
 
             //Disable<Transform>(displayArrow);
             //Enable<Transform>(displayArrowWhite);
-            displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
+            //displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
+            roadTabUI.ChangeTexture("Game/UI/Arrow_L");
 
             EnableAllNormalExcept();
 
             Enable<Transform>(lineDivider1);
 
-            isOn = true;
+            roadTabIsOn = true;
+            buildingsTabIsOn = false;
         }
         else
         {
             ResetAll();
 
-            closing = true;
+            //closing = true;
+            roadTabClose = true;
+            buildingsTabClose = true;
 
             //Disable<Transform>(displayArrowWhite);
             //if (reenable)
             //    Enable<Transform>(displayArrow);
 
-            displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
+            //displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
+            roadTabUI.ChangeTexture("Game/UI/Arrow_R");
+
+    
+            //isOn = false;
+            roadTabIsOn = false;
+            buildingsTabIsOn = false;
+        }
+
+        displayState = type;
+    }
+    public void SwitchTabBuildings(bool type, bool reenable = true)
+    {
+        if (type)
+        {
+            //opening = true;
+            roadTabOpen = false;
+            buildingsTabOpen = true;
+            //Disable<Transform>(displayArrow);
+            //Enable<Transform>(displayArrowWhite);
+            //displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
+            buildingsTabUI.ChangeTexture("Game/UI/Arrow_L");
+            EnableAllNormalExcept();
+            //Enable<Transform>(lineDivider1);
+            //isOn = true;
+            roadTabIsOn = false;
+            buildingsTabIsOn = true;
+        }
+        else
+        {
+            ResetAll();
+            //closing = true;
+            roadTabClose = true;
+            buildingsTabClose = true;
+            //Disable<Transform>(displayArrowWhite);
+            //if (reenable)
+            //    Enable<Transform>(displayArrow);
+            //displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
+            buildingsTabUI.ChangeTexture("Game/UI/Arrow_R");
             //if (reenable)
             //{
             //    Debug.Log("Enaalsaksd");
@@ -382,40 +466,30 @@ public class ButtonRoad : MonoBehaviour
             //    Debug.Log("Disabling 3231323132131333333333333");
             //    Disable<Transform>(displayArrow);
             //}
-
             //cameraMovement.SetZoom(ZoomType.Out);
-            isOn = false;
+            //isOn = false;
+            roadTabIsOn = false;
+            buildingsTabIsOn = false;
         }
-
         displayState = type;
     }
-    private void CloseTabs()
+
+    private void CloseRoadTabs()
     {
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, closeXPosition, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, closeXPosition, timer), drawPosition.y);
-        roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, closeXPosition, timer), drawRoadCount.y);
 
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, closeXPosition, timer), removePosition.y);
         removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, closeXPosition, timer), removePosition.y);
 
         drawERP.position = new Vector2(Mathf.Lerp(drawERP.position.x, closeXPosition, timer), erpPosition.y);
         drawERPWhite.position = new Vector2(Mathf.Lerp(drawERPWhite.position.x, closeXPosition, timer), erpPosition.y);
-        ERPCount.position = new Vector2(Mathf.Lerp(ERPCount.position.x, closeXPosition, timer), drawERPCount.y);
 
         drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, closeXPosition, timer), trafficPosition.y);
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, closeXPosition, timer), trafficPosition.y);
-        trafficCount.position = new Vector2(Mathf.Lerp(trafficCount.position.x, closeXPosition, timer), drawTrafficCount.y );
 
         drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, closeXPosition, timer), drawRemoveCarPosition.y);
-
-
-        placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, closeXPosition, timer), placeHospitalPos.y);
-        placeOffice.position = new Vector2(Mathf.Lerp(placeOffice.position.x, closeXPosition, timer), placeOfficePos.y);
-        placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, closeXPosition, timer), placeParkPos.y);
-        placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, closeXPosition, timer), placeMallPos.y);
-        placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, closeXPosition, timer), placePoliceStationPos.y);
-
 
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, closeXPosition, timer), line1.y);
 
@@ -427,36 +501,44 @@ public class ButtonRoad : MonoBehaviour
 
 
             timer = 0f;
-            closing = false;
+            roadTabClose = false;
         }
     }
 
-    private void OpenTabs()
+    private void CloseBuildingsTabs()
+    {
+
+        placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, closeXPosition, timer), placeHospitalPos.y);
+        placeOffice.position = new Vector2(Mathf.Lerp(placeOffice.position.x, closeXPosition, timer), placeOfficePos.y);
+        placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, closeXPosition, timer), placeParkPos.y);
+        placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, closeXPosition, timer), placeMallPos.y);
+        placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, closeXPosition, timer), placePoliceStationPos.y);
+
+        timer += speedMultiply * Time.fixedDeltaTime;
+        if (timer >= 1f)
+        {
+            timer = 0f;
+            buildingsTabClose = false;
+        }
+    }
+
+    private void OpenRoadTabs()
     {
 
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, drawPosition.x, timer), drawPosition.y);
-        roadCount.position = new Vector2(Mathf.Lerp(roadCount.position.x, drawRoadCount.x, timer), drawRoadCount.y);
 
         removeRoad.position = new Vector2(Mathf.Lerp(removeRoad.position.x, removePosition.x, timer), removePosition.y);
         removeRoadWhite.position = new Vector2(Mathf.Lerp(removeRoadWhite.position.x, removePosition.x, timer), removePosition.y);
 
         drawERP.position = new Vector2(Mathf.Lerp(drawERP.position.x, erpPosition.x, timer), erpPosition.y);
         drawERPWhite.position = new Vector2(Mathf.Lerp(drawERPWhite.position.x, erpPosition.x, timer), erpPosition.y);
-        ERPCount.position = new Vector2(Mathf.Lerp(ERPCount.position.x, drawERPCount.x, timer), drawERPCount.y);
 
         drawTraffic.position = new Vector2(Mathf.Lerp(drawTraffic.position.x, trafficPosition.x, timer), trafficPosition.y);
         drawTrafficWhite.position = new Vector2(Mathf.Lerp(drawTrafficWhite.position.x, trafficPosition.x, timer), trafficPosition.y);
-        trafficCount.position = new Vector2(Mathf.Lerp(trafficCount.position.x, drawTrafficCount.x, timer), drawTrafficCount.y);
 
         drawRemoveCar.position = new Vector2(Mathf.Lerp(drawRemoveCar.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
         drawRemoveCarWhite.position = new Vector2(Mathf.Lerp(drawRemoveCarWhite.position.x, drawRemoveCarPosition.x, timer), drawRemoveCarPosition.y);
-
-        placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, placeHospitalPos.x, timer), placeHospitalPos.y);
-        placeOffice.position = new Vector2(Mathf.Lerp(placeOffice.position.x, placeOfficePos.x, timer), placeOfficePos.y);
-        placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, placeParkPos.x, timer), placeParkPos.y);
-        placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, placeMallPos.x, timer), placeMallPos.y);
-        placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, placePoliceStationPos.x, timer), placePoliceStationPos.y);
 
         lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, line1.x, timer), line1.y);
 
@@ -467,7 +549,26 @@ public class ButtonRoad : MonoBehaviour
 
 
             timer = 0f;
-            opening = false;
+            roadTabOpen = false;
+        }
+
+    }
+
+    private void OpenBuildingsTabs()
+    {
+        placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, placeHospitalPos.x, timer), placeHospitalPos.y);
+        placeOffice.position = new Vector2(Mathf.Lerp(placeOffice.position.x, placeOfficePos.x, timer), placeOfficePos.y);
+        placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, placeParkPos.x, timer), placeParkPos.y);
+        placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, placeMallPos.x, timer), placeMallPos.y);
+        placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, placePoliceStationPos.x, timer), placePoliceStationPos.y);
+
+        timer += speedMultiply * Time.fixedDeltaTime;
+        if (timer >= 1f)
+        {
+
+
+            timer = 0f;
+            buildingsTabOpen = false;
         }
 
     }
@@ -658,11 +759,41 @@ public class ButtonRoad : MonoBehaviour
 
     public override void FixedUpdate()
     {
- 
-        if (opening)
-            OpenTabs();
-        if (closing)
-            CloseTabs();
+
+        //if (opening)
+        //    OpenTabs();
+        //if (closing)
+        //    CloseTabs();
+
+        if (roadTabOpen)
+        {
+            if (bt == ButtonType.RoadTab)
+                OpenRoadTabs();
+            else
+                CloseBuildingsTabs();
+        }
+
+        if (roadTabClose)
+        {
+            if (bt == ButtonType.RoadTab)
+                CloseRoadTabs();
+            //CloseBuildingsTabs();
+        }
+
+        if (buildingsTabOpen)
+        {
+            if (bt == ButtonType.BuildingsTab)
+                OpenBuildingsTabs();
+            else
+                CloseRoadTabs();
+        }
+
+        if (buildingsTabClose)
+        {
+            if (bt == ButtonType.BuildingsTab)
+                CloseBuildingsTabs();
+            //CloseRoadTabs();
+        }
 
         /****Shortcut keys in game***/
         if (Input.GetKeyDown(KeyCode.T1)) CallFunction(ButtonType.PlaceHospital);
@@ -691,7 +822,7 @@ public class ButtonRoad : MonoBehaviour
             Enable<Transform>(drawRoad);
         if (bt != ButtonType.Remove)
             Enable<Transform>(removeRoad);
-        Enable<Transform>(roadCount);
+        //Enable<Transform>(roadCount);
 
         if (bt != ButtonType.RemoveCar)
             Enable<Transform>(drawRemoveCar);
@@ -700,13 +831,13 @@ public class ButtonRoad : MonoBehaviour
         {
             if (bt != ButtonType.ERP)
                 Enable<Transform>(drawERP);
-            Enable<Transform>(ERPCount);
+            //Enable<Transform>(ERPCount);
         }
         if (revealTrafficButton)
         {
             if (bt != ButtonType.TrafficLight)
                 Enable<Transform>(drawTraffic);
-            Enable<Transform>(trafficCount);
+            //Enable<Transform>(trafficCount);
         }
     }
 
@@ -717,9 +848,7 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(drawERP);
         Disable<Transform>(drawTraffic);
         Disable<Transform>(drawRemoveCar);
-        Disable<Transform>(roadCount);
-        Disable<Transform>(ERPCount);
-        Disable<Transform>(trafficCount);
+
     }
 
     public void EnableAllWhite()
@@ -775,19 +904,15 @@ public class ButtonRoad : MonoBehaviour
     public void RevealERP()
     {
         revealERPButton = true;
-        //Enable<Transform>(drawERP);
 
         Disable<Transform>(moneyText);
-        //Disable<Transform>(counterText);
-        Disable<Transform>(roadCount);
-        Disable<Transform>(trafficCount);
-
         Enable<Transform>(erpIntro);
 
-        closing = true;
+        //closing = true; 
+        roadTabClose = true;
+        buildingsTabClose = true;
 
         Time.timeScale = 0f;
-
 
         combinedUI.CloseAllUIExcept(UIType.None);
 
@@ -801,11 +926,12 @@ public class ButtonRoad : MonoBehaviour
 
         Disable<Transform>(moneyText);
         //Disable<Transform>(counterText);
-        Disable<Transform>(roadCount);
         //Debug.Log("Revealing traffic ");
         Enable<Transform>(trafficIntro);
 
-        closing = true;
+        //closing = true;
+        roadTabClose = true;
+        buildingsTabClose = true;
 
         Time.timeScale = 0f;
 
@@ -814,4 +940,8 @@ public class ButtonRoad : MonoBehaviour
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }
 
+    public override void OnMouseEnter()
+    {
+        InputManager.allowBuilding = false;
+    }
 }

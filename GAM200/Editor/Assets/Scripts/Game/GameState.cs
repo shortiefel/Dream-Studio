@@ -34,6 +34,10 @@ public class GameState : MonoBehaviour
     UI TimerIcon;
     //ButtonStore store;
     GameObject receipt;
+    Text clockTimer;
+    Text AmPm;
+    Text moneyText;
+    Text dayClock;
 
     //bool gameOverBool;
 
@@ -57,7 +61,10 @@ public class GameState : MonoBehaviour
         //    highscoreText = go1.GetComponent<Text>();
 
         camMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
-
+        clockTimer = GameObject.Find("Clock").GetComponent<Text>();
+        AmPm = GameObject.Find("AMPM").GetComponent<Text>();
+        moneyText = GameObject.Find("MoneyText").GetComponent<Text>();
+        dayClock = GameObject.Find("DayClock").GetComponent<Text>();
         //GameObject overlayNightGo = GameObject.Find("OverlayNight");
         //if (overlayNightGo != null)
         //    overlayNight = overlayNightGo.GetComponent<Transform>();
@@ -103,11 +110,8 @@ public class GameState : MonoBehaviour
 
         allowPause = true;
 
-
         addMoneyValue = 25;
         minusMoneyValue = 100;
-
-
     }
 
     public override void Update()
@@ -122,6 +126,10 @@ public class GameState : MonoBehaviour
             if (dayTimer >= nightCycle)
             {
                 TimerIcon.ChangeTexture("Game/UI/Clock_Night");
+                clockTimer.color = new Color(1f, 1f, 1f);
+                AmPm.color = new Color(1f, 1f, 1f);
+                moneyText.color = new Color(1f, 1f, 1f);
+                dayClock.color = new Color(1f, 1f, 1f);
                 overlayAlpha += 0.01f;
                 if (overlayAlpha > 0.6f) overlayAlpha = 0.6f;
                 else
@@ -138,6 +146,10 @@ public class GameState : MonoBehaviour
                 moneySystem.TaxMoney();
                 dayTimer = 0f;
                 TimerIcon.ChangeTexture("Game/UI/Clock_Day");
+                clockTimer.color = new Color(0f, 0f, 0f);
+                AmPm.color = new Color(0f, 0f, 0f);
+                moneyText.color = new Color(0f, 0f, 0f);
+                dayClock.color = new Color(0f, 0f, 0f);
                 //dayCounter++;
                 //dayText.text = "Day " + dayCounter.ToString();
                 //Moved to gameState gameover

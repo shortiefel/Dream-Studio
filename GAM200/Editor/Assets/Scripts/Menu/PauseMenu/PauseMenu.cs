@@ -23,6 +23,7 @@ public class PauseMenu : MonoBehaviour
     GameObject areYouSure;
     GameObject quitYes;
     GameObject quitNo;
+    GameObject dayText;
 
     Transform settingBtn;
 
@@ -43,6 +44,8 @@ public class PauseMenu : MonoBehaviour
 
     Transform roadTab;
     Transform buildingsTab;
+    GameObject clockTimer;
+    GameObject AmPm;
     //Transform displayArrowWhite;
 
 
@@ -86,6 +89,9 @@ public class PauseMenu : MonoBehaviour
         //options = GameObject.Find("OptionText");
         pauseQuit = GameObject.Find("QuitText");
 
+        dayText = GameObject.Find("DayClock");
+        clockTimer = GameObject.Find("Clock");
+        AmPm = GameObject.Find("AMPM");
         //resumeTextPosition = resume.transform.position;
         //htpTextPosition = howToPlay.transform.position;
         //quitTextPosition = pauseQuit.transform.position;
@@ -169,6 +175,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (type)
         {
+            Debug.Log("I am PAUSING");
             //Console.WriteLine("Pausing now");
             Enable<Transform>(pauseBG.transform);
 
@@ -183,8 +190,9 @@ public class PauseMenu : MonoBehaviour
             //Enable<Transform>(optionsBtn.transform);
             Enable<Transform>(howToPlayBtn.transform);
             Enable<Transform>(pauseQuitBtn.transform);
-
-            Enable<Transform>(pauseQuit.transform);
+            Disable<Transform>(dayText.transform);
+            Disable<Transform>(clockTimer.transform);
+            Disable<Transform>(AmPm.transform);
 
             Enable<Transform>(settingBtn);
             //Disable<Transform>(moneyText);
@@ -215,6 +223,9 @@ public class PauseMenu : MonoBehaviour
             Disable<Transform>(menuText.transform);
             //Disable<Transform>(options.transform);
             Disable<Transform>(pauseQuit.transform);
+            Enable<Transform>(dayText.transform);
+            Enable<Transform>(clockTimer.transform);
+            Enable<Transform>(AmPm.transform);
 
             Disable<Transform>(resumeBtn.transform);
             Disable<Transform>(menuBtn.transform);

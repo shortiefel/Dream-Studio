@@ -4,15 +4,11 @@ public class PauseMusicClick: MonoBehaviour
 {
 
     Transform pauseMenuBackIcon;
-    Transform howToPlayBGTransform;
-    Transform newBackTransform;
 
     Transform howToPlayTransform;
     Transform resumeTransform;
     Transform menuTransform;
     Transform quitTransform;
-
-    Transform moneyText;
 
     Transform MasterText;
     Transform BGMText;
@@ -29,32 +25,27 @@ public class PauseMusicClick: MonoBehaviour
     Transform downVolSFX;
 
     Transform settingBG;
+    Transform optionSetting;
     Transform settingBtn;
     Transform settingBack;
+    Transform soundBg;
+    Transform soundBg2;
+    Transform soundBg3;
 
-    //Texture settingBackTexture;
-
+    UI settingBackBtn;
     static bool optionMusic;
 
     public override void Start()
     {
         optionMusic = false;
-
-        GameObject go3 = GameObject.Find("MoneyText");
-        if (go3 != null)
-            moneyText = go3.GetComponent<Transform>();
-
+        settingBackBtn = GetComponent<UI>();
+        settingBackBtn.color = new Color(1f, 1f, 1f);
         pauseMenuBackIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
-        howToPlayBGTransform = GameObject.Find("HowToBG").GetComponent<Transform>();
-        newBackTransform = GameObject.Find("HowToPlayBack").GetComponent<Transform>();
 
         howToPlayTransform = GameObject.Find("HowToText").GetComponent<Transform>();
         resumeTransform = GameObject.Find("ResumeText").GetComponent<Transform>();
         quitTransform = GameObject.Find("QuitText").GetComponent<Transform>();
         menuTransform = GameObject.Find("MenuText").GetComponent<Transform>();
-
-
-
 
         MasterText = GameObject.Find("MasterText").GetComponent<Transform>();
         BGMText = GameObject.Find("BGMText").GetComponent<Transform>();
@@ -72,43 +63,59 @@ public class PauseMusicClick: MonoBehaviour
         downVolSFX = GameObject.Find("DownSFXVol").GetComponent<Transform>();
 
         settingBG = GameObject.Find("settingBG").GetComponent<Transform>();
+        optionSetting = GameObject.Find("OptionSetting").GetComponent<Transform>();
         settingBtn = GameObject.Find("settingBtn").GetComponent<Transform>();
         settingBack = GameObject.Find("settingBack").GetComponent<Transform>();
+        soundBg = GameObject.Find("SoundBg").GetComponent<Transform>();
+        soundBg2 = GameObject.Find("SoundBg2").GetComponent<Transform>();
+        soundBg3 = GameObject.Find("SoundBg3").GetComponent<Transform>();
 
-        //settingBackTexture = GameObject.Find("settingBack").GetComponent<Texture>();
+
+        Disable<Transform>(MasterText);
+        Disable<Transform>(BGMText);
+        Disable<Transform>(SFXText);
+        Disable<Transform>(VolumeAdjustSFX);
+        Disable<Transform>(VolumeAdjustBGM);
+        Disable<Transform>(VolumeAdjust);
+
+        Disable<Transform>(upVolMaster);
+        Disable<Transform>(downVolMaster);
+        Disable<Transform>(upVolBGM);
+        Disable<Transform>(downVolBGM);
+        Disable<Transform>(upVolSFX);
+        Disable<Transform>(downVolSFX);
+
+
+        Disable<Transform>(settingBG);
+        Disable<Transform>(optionSetting);
+        Disable<Transform>(settingBack);
+        Disable<Transform>(settingBtn);
+
+        Disable<Transform>(soundBg);
+        Disable<Transform>(soundBg2);
+        Disable<Transform>(soundBg3);
+
     }
 
-    //public override void OnMouseEnter()
-    //{
-    //    if (!optionMusic)
-    //    {
-    //        settingBackTexture.color = new Color(1f, 1f, 1f);
-    //    }
-    //}
-    //
-    //public override void OnMouseExit()
-    //{
-    //    if (!optionMusic)
-    //    {
-    //        settingBackTexture.color = new Color(0f, 0f, 0f);
-    //    }
-    //
-    //}
-
+    public override void OnMouseEnter()
+    {
+        settingBackBtn.color = new Color(1f, 0.5f, 0f);
+    }
+    public override void OnMouseExit()
+    {
+        settingBackBtn.color = new Color(1f, 1f, 1f);
+    }
     public override void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
             if (optionMusic)
             {
-                //Enable<Transform>(howToPlayBGTransform);
-                //Enable<Transform>(newBackTransform);
 
                 Enable<Transform>(howToPlayTransform);
                 Enable<Transform>(resumeTransform);
                 Enable<Transform>(menuTransform);
                 Enable<Transform>(quitTransform);
-                Enable<Transform>(moneyText);
 
                 Enable<Transform>(pauseMenuBackIcon);
 
@@ -130,8 +137,12 @@ public class PauseMusicClick: MonoBehaviour
 
                 Disable<Transform>(settingBG);
                 Disable<Transform>(settingBack);
-
+                Disable<Transform>(optionSetting);
                 Enable<Transform>(settingBtn);
+                Disable<Transform>(soundBg);
+                Disable<Transform>(soundBg2);
+                Disable<Transform>(soundBg3);
+
 
                 optionMusic = false;
             }
@@ -141,7 +152,6 @@ public class PauseMusicClick: MonoBehaviour
                 Disable<Transform>(resumeTransform);
                 Disable<Transform>(menuTransform);
                 Disable<Transform>(quitTransform);
-                Disable<Transform>(moneyText);
 
                 Disable<Transform>(pauseMenuBackIcon);
 
@@ -162,7 +172,11 @@ public class PauseMusicClick: MonoBehaviour
 
                 Enable<Transform>(settingBG);
                 Enable<Transform>(settingBack);
+                Enable<Transform>(optionSetting);
 
+                Enable<Transform>(soundBg);
+                Enable<Transform>(soundBg2);
+                Enable<Transform>(soundBg3);
                 Disable<Transform>(settingBtn);
 
                 optionMusic = true;

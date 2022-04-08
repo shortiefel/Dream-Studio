@@ -325,7 +325,7 @@ public class MoneySystem : MonoBehaviour
                         }
                     case MoneySource.Road:
                         {
-                            infoDestTexture.ChangeTexture("DrawRoad");
+                            infoDestTexture.ChangeTexture("Game/BuildRoad-White");
                             break;
                         }
                 }

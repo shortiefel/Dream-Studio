@@ -109,8 +109,6 @@ public class ButtonTutorial : MonoBehaviour
 
         dayClockText = GameObject.Find("DayClock").GetComponent<Transform>();
 
-        
-
         /*********************************** DRAWING ************************************/
         drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
         drawRoad = GameObject.Find("DrawRoad").GetComponent<Transform>();
@@ -191,6 +189,7 @@ public class ButtonTutorial : MonoBehaviour
         Disable<Transform>(drawERP);
         Disable<Transform>(drawTraffic);
 
+        Disable<Transform>(dayClockText);
 
         opening = false;
         closing = false;

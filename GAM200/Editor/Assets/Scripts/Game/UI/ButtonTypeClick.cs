@@ -184,8 +184,8 @@ public class ButtonTypeClick : MonoBehaviour
         //if (!transform.isActive) return;
         //if (transform.isActive)
         //{
-            //tooltipTrans.position = transform.position;
-            //tooltipText.position = tooltipOffset;
+        //tooltipTrans.position = transform.position;
+        //tooltipText.position = tooltipOffset;
 
             switch (bt)
             {
@@ -202,25 +202,26 @@ public class ButtonTypeClick : MonoBehaviour
             //
             //    break;
 
-                case ButtonType.RoadTab:
-                    {
-                        if (Input.GetMouseButtonDown(MouseCode.Left))
-                        {
-                            roadTab.SwitchTabRoad(true);
-                        }
+            //case ButtonType.RoadTab:
+            //        {
+            //            if (Input.GetMouseButtonDown(MouseCode.Left))
+            //            {
+            //                roadTab.SwitchTabRoad(true);
+            //                Debug.Log("clicked");
+            //            }
 
-                        break;
-                    }
+            //            break;
+            //        }
 
-            case ButtonType.BuildingsTab:
-                {
-                    if (Input.GetMouseButtonDown(MouseCode.Left))
-                    {
-                        buildingsTab.SwitchTabBuildings(true);
-                    }
+            //case ButtonType.BuildingsTab:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //        {
+            //            buildingsTab.SwitchTabBuildings(true);
+            //        }
 
-                    break;
-                }
+            //        break;
+            //    }
 
             case ButtonType.Draw:
                     {

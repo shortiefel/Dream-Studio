@@ -274,24 +274,6 @@ public class ButtonRoad : MonoBehaviour
         closeXPosition = -96f;
         speedMultiply = 10f;
 
-        drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
-        drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
-        roadCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-        drawERP.position = new Vector2(closeXPosition, erpPosition.y);
-        drawERPWhite.position = new Vector2(closeXPosition, erpPosition.y);
-        ERPCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-        drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
-        drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
-        trafficCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-        placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
-        placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
-        placePark.position = new Vector2(closeXPosition, placeParkPos.y);
-        placeMall.position = new Vector2(closeXPosition, placeMallPos.y);
-        placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
-
         lineDivider1.position = new Vector2(closeXPosition, line1.y);
 
 
@@ -354,41 +336,68 @@ public class ButtonRoad : MonoBehaviour
         //    buttonType = true;
         //
         //}
+
+        if (entityId == GameObject.Find("DisplayRoadBtn").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.RoadTab;
+            drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
+            drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
+            roadCount.position = new Vector2(closeXPosition, drawPosition.y);
+
+            drawERP.position = new Vector2(closeXPosition, erpPosition.y);
+            drawERPWhite.position = new Vector2(closeXPosition, erpPosition.y);
+            ERPCount.position = new Vector2(closeXPosition, drawPosition.y);
+
+            drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
+            drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
+            trafficCount.position = new Vector2(closeXPosition, drawPosition.y);
+        }
+
+        else if (entityId == GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>().entityId)
+        {
+            bt = ButtonType.BuildingsTab;
+            placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
+            placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
+            placePark.position = new Vector2(closeXPosition, placeParkPos.y);
+            placeMall.position = new Vector2(closeXPosition, placeMallPos.y);
+            placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
+        }
+
     }
 
-    //public override void OnMouseOver()
-    //{
-    //    //SetToolTips(true, toolTipsDisplayPosition, "Display buttons");
+    public override void OnMouseOver()
+    {
+        //SetToolTips(true, toolTipsDisplayPosition, "Display buttons");
 
-    //    //if (Input.GetMouseButtonDown(MouseCode.Left))
-    //    //{
-    //    //    SwitchTabRoad(!displayState);
-    //    //    //SwitchTabBuildings(!displayState);
-    //    //}
+        //if (Input.GetMouseButtonDown(MouseCode.Left))
+        //{
+        //    SwitchTabRoad(!displayState);
+        //    //SwitchTabBuildings(!displayState);
+        //}
 
-    //    switch (bt)
-    //    {
-    //        case ButtonType.RoadTab:
-    //            {
-    //                SetToolTips(true, toolTipsDisplayPosition, "Display Road Buttons");
-    //                if (Input.GetMouseButtonDown(MouseCode.Left))
-    //                    SwitchTabRoad(!displayState);
+        switch (bt)
+        {
+            case ButtonType.RoadTab:
+                {
+                    SetToolTips(true, toolTipsDisplayPosition, "Display Road Buttons");
+                    if (Input.GetMouseButtonDown(MouseCode.Left))
+                        SwitchTabRoad(!displayState);
 
-    //                break;
-    //            }
-    //        case ButtonType.BuildingsTab:
-    //            {
-    //                SetToolTips(true, toolTipsDisplayPosition, "Display Buildings Buttons");
-    //                if (Input.GetMouseButtonDown(MouseCode.Left))
-    //                    SwitchTabBuildings(!displayState);
+                    break;
+                }
+            case ButtonType.BuildingsTab:
+                {
+                    SetToolTips(true, toolTipsDisplayPosition, "Display Buildings Buttons");
+                    if (Input.GetMouseButtonDown(MouseCode.Left))
+                        SwitchTabBuildings(!displayState);
 
-    //                break;
-    //            }
-    //        default:
+                    break;
+                }
+            default:
 
-    //            break;
-    //    }
-    //}
+                break;
+        }
+    }
 
     public override void OnMouseExit()
     {
@@ -402,7 +411,7 @@ public class ButtonRoad : MonoBehaviour
         {
             //opening = true;
             roadTabOpen = true;
-            //buildingsTabOpen = false;
+            buildingsTabOpen = false;
 
             //Disable<Transform>(displayArrow);
             //Enable<Transform>(displayArrowWhite);
@@ -415,7 +424,7 @@ public class ButtonRoad : MonoBehaviour
 
             //isOn = true;
             roadTabIsOn = true;
-            //buildingsTabIsOn = false;
+            buildingsTabIsOn = false;
         }
         else
         {
@@ -423,62 +432,6 @@ public class ButtonRoad : MonoBehaviour
 
             //closing = true;
             roadTabClose = true;
-            //buildingsTabClose = true;
-
-            //Disable<Transform>(displayArrowWhite);
-            //if (reenable)
-            //    Enable<Transform>(displayArrow);
-
-            //displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
-
-            roadTabUI.ChangeTexture("Game/UI/Arrow_R");
-            //if (reenable)
-            //{
-            //    Debug.Log("Enaalsaksd");
-            //    Enable<Transform>(displayArrow);
-            //}
-            //else
-            //{
-            //    Debug.Log("Disabling 3231323132131333333333333");
-            //    Disable<Transform>(displayArrow);
-            //}
-
-            //cameraMovement.SetZoom(ZoomType.Out);
-            //isOn = false;
-            roadTabIsOn = false;
-            //buildingsTabIsOn = false;
-        }
-
-        displayState = type;
-    }
-
-    public void SwitchTabBuildings(bool type, bool reenable = true)
-    {
-        if (type)
-        {
-            //opening = true;
-            //roadTabOpen = false;
-            buildingsTabOpen = true;
-
-            //Disable<Transform>(displayArrow);
-            //Enable<Transform>(displayArrowWhite);
-            //displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
-            roadTabUI.ChangeTexture("Game/UI/Arrow_L");
-
-            EnableAllNormalExcept();
-
-            Enable<Transform>(lineDivider1);
-
-            //isOn = true;
-            //roadTabIsOn = false;
-            buildingsTabIsOn = true;
-        }
-        else
-        {
-            ResetAll();
-
-            //closing = true;
-            //roadTabClose = true;
             buildingsTabClose = true;
 
             //Disable<Transform>(displayArrowWhite);
@@ -501,7 +454,63 @@ public class ButtonRoad : MonoBehaviour
 
             //cameraMovement.SetZoom(ZoomType.Out);
             //isOn = false;
-            // roadTabIsOn = false;
+            roadTabIsOn = false;
+            buildingsTabIsOn = false;
+        }
+
+        displayState = type;
+    }
+
+    public void SwitchTabBuildings(bool type, bool reenable = true)
+    {
+        if (type)
+        {
+            //opening = true;
+            roadTabOpen = false;
+            buildingsTabOpen = true;
+
+            //Disable<Transform>(displayArrow);
+            //Enable<Transform>(displayArrowWhite);
+            //displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
+            buildingsTabUI.ChangeTexture("Game/UI/Arrow_L");
+
+            EnableAllNormalExcept();
+
+            //Enable<Transform>(lineDivider1);
+
+            //isOn = true;
+            roadTabIsOn = false;
+            buildingsTabIsOn = true;
+        }
+        else
+        {
+            ResetAll();
+
+            //closing = true;
+            roadTabClose = true;
+            buildingsTabClose = true;
+
+            //Disable<Transform>(displayArrowWhite);
+            //if (reenable)
+            //    Enable<Transform>(displayArrow);
+
+            //displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
+
+            buildingsTabUI.ChangeTexture("Game/UI/Arrow_R");
+            //if (reenable)
+            //{
+            //    Debug.Log("Enaalsaksd");
+            //    Enable<Transform>(displayArrow);
+            //}
+            //else
+            //{
+            //    Debug.Log("Disabling 3231323132131333333333333");
+            //    Disable<Transform>(displayArrow);
+            //}
+
+            //cameraMovement.SetZoom(ZoomType.Out);
+            //isOn = false;
+            roadTabIsOn = false;
             buildingsTabIsOn = false;
         }
 
@@ -1111,13 +1120,12 @@ public class ButtonRoad : MonoBehaviour
 
         if (roadTabOpen)
         {
+            CloseBuildingsTabs();
             OpenRoadTabs();
-            //CloseBuildingsTabs();
         }
             
         if (roadTabClose)
         {
-            Debug.Log("1");
             CloseRoadTabs();
             //CloseBuildingsTabs();
         }
@@ -1125,14 +1133,12 @@ public class ButtonRoad : MonoBehaviour
 
         if (buildingsTabOpen)
         {
-            Debug.Log("2");
+            CloseRoadTabs();
             OpenBuildingsTabs();
-            //CloseRoadTabs();
         }
             
         if (buildingsTabClose)
         {
-            Debug.Log("3");
             CloseBuildingsTabs();
             //CloseRoadTabs();
         }

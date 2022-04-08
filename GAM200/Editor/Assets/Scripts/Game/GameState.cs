@@ -63,7 +63,7 @@ public class GameState : MonoBehaviour
         //    overlayNight = overlayNightGo.GetComponent<Transform>();
         TimerIcon = GameObject.Find("TimerIcon").GetComponent<UI>();
 
-        GameObject buttonRoadGO = GameObject.Find("Displaybtn");
+        GameObject buttonRoadGO = GameObject.Find("DisplayRoadBtn");
         if (buttonRoadGO != null)
             buttonRoad = buttonRoadGO.GetComponent<ButtonRoad>();
 
@@ -83,9 +83,9 @@ public class GameState : MonoBehaviour
         dayText.text = "Day " +dayCounter.ToString();
 
         dayTimer = 0f;
-        dayCycle = 120f;
+        dayCycle = 144f;
 
-        nightCycle = 100f;
+        nightCycle = 72f;
         //nightCycle = 10f;
 
         cycle = Cycle.Day;

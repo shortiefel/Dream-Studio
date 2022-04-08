@@ -7,6 +7,8 @@ public class CarAI : MonoBehaviour
     private List<Vector2> path;
     private List<uint> tlIndex;
 
+    private List<Vector2> leftList;
+
     
     private float arriveDistance, lastPointArriveDistance;
 
@@ -50,6 +52,7 @@ public class CarAI : MonoBehaviour
 
     Vector2Int nextDestination;
 
+    Vector2Int targetPos;
     public override void Start()
     {
         carLength = transform.scale.x;
@@ -91,7 +94,7 @@ public class CarAI : MonoBehaviour
         nextDestination = new Vector2Int(transform.position);
     }
 
-    public void SetPath(List<Vector2> newPath, uint destinationID, uint houseId)
+    public void SetPath(List<Vector2> newPath, List<Vector2> _leftList, uint destinationID, uint houseId)
     {
         stop = false;
        
@@ -113,6 +116,8 @@ public class CarAI : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        leftList = _leftList;
         //Console.WriteLine("p1 " + newPath.Count);
         this.path = newPath;
        
@@ -157,6 +162,12 @@ public class CarAI : MonoBehaviour
 
         
         SetNextTargetIndex();
+
+        foreach (var it in leftList)
+        {
+            Debug.Log(it);
+        }
+        Debug.Log("End -----");
     }
 
     public override void Update()
@@ -174,7 +185,7 @@ public class CarAI : MonoBehaviour
             for (int i = 0; i < hit.count; i++)
             {
 
-                Vector2Int targetPos = Vector2Int.RoundToInt(hit.transform[i].position);
+                targetPos = Vector2Int.RoundToInt(hit.transform[i].position);
                 uint entId = hit.transform[i].entityId;
                 switch (collisionManager.RayTypeCheck(targetPos, entId))
                 {
@@ -185,8 +196,13 @@ public class CarAI : MonoBehaviour
                         {
                             break;
                         }
-
-                        bool state = !tm.GetTrafficLightState(targetPos, transform.angle);
+                        //Debug.Log(targetPos);
+                        //foreach (var it in leftList)
+                        //{
+                        //    Debug.Log(it);
+                        //}
+                        //Debug.Log("End -----");
+                        bool state = !tm.GetTrafficLightState(targetPos, transform.angle, leftList.Contains(targetPos));
                         stop |= state;
                         if (stop) power = 1;
                         if (state == false)
@@ -230,7 +246,7 @@ public class CarAI : MonoBehaviour
         //Drive();
         if (stop) {
             if (tm != null)
-                stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
+                stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle, leftList.Contains(targetPos));
         }
 
         if (power < maxPower)

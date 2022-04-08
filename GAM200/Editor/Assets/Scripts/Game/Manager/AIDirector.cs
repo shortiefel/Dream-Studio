@@ -66,17 +66,16 @@ public class AIDirector : MonoBehaviour
     //    return true;
     //}
 
-    //Spawning Car with position
+    //Spawning Car with position from Destination to House
     public bool SpawnCar(Vector2 spawnPos, uint startId, BuildingType bt, Vector2Int endPos, RouteType rt)
     {
 
         Vector2Int spawnPosInt = new Vector2Int(spawnPos);
-        
+        List<Vector2> leftList = new List<Vector2>();
         //int roadCount;
         //uint prevEntId = structureManager.destinationList[endPos].entityId;
 
-        //var path = placementManager.GetPathBetween(spawnPosInt, new Vector2Int(endPos), rt, out roadCount);
-        var path = placementManager.GetPathBetween(out spawnPosInt, new Vector2Int(endPos), rt);
+        var path = placementManager.GetPathBetween(out spawnPosInt, new Vector2Int(endPos), rt, ref leftList);
         
         //if (path.Count == 0 || prevEntId != structureManager.destinationList[endPos].entityId)
         if (path.Count == 0)
@@ -87,7 +86,7 @@ public class AIDirector : MonoBehaviour
         }
 
         var car = Instantiate(SelectACarPrefab(bt), new Vector3(spawnPosInt.x, spawnPosInt.y, 0), 2);
-        car.GetComponent<CarAI>().SetPath(path, 0, 0);
+        car.GetComponent<CarAI>().SetPath(path, leftList, 0, 0);
 
         return true;
     }
@@ -125,19 +124,19 @@ public class AIDirector : MonoBehaviour
         //}
 
         List<Vector2> path = new List<Vector2>();
+        List<Vector2> leftList = new List<Vector2>();
         int count = 0;
         uint newId = 0;
         foreach (var endDestination in structureManager.destinationList[(int)bt])
         {
             //int roadNum;
-            List<Vector2> list = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest);
+            path = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest, ref leftList);
             //List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
-            if (list.Count == 0) continue;
+            if (path.Count == 0) continue;
 
-            if (list.Count < count || count == 0)
+            if (path.Count < count || count == 0)
             {
-                count = list.Count;
-                path = list;
+                count = path.Count;
                 newId = endDestination.entityId;
             }
         }
@@ -145,7 +144,7 @@ public class AIDirector : MonoBehaviour
         if (count != 0)
         {
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
-            car.GetComponent<CarAI>().SetPath(path, newId, startId);
+            car.GetComponent<CarAI>().SetPath(path, leftList, newId, startId);
             posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, startPos);
 
             return true;
@@ -158,13 +157,14 @@ public class AIDirector : MonoBehaviour
     public bool SpawnRetryWithType(Vector2Int startPos, BuildingType bt, uint startId)
     {
         List<Vector2> path = new List<Vector2>();
+        List<Vector2> leftList = new List<Vector2>();
         int count = 0;
         uint newId = 0;
         foreach (var endDestination in structureManager.destinationList[(int)bt])
         {
             //int roadNum;
             //List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
-            List<Vector2> list = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest);
+            List<Vector2> list = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest, ref leftList);
             if (list.Count == 0) continue;
 
             if (list.Count < count || count == 0)
@@ -178,7 +178,7 @@ public class AIDirector : MonoBehaviour
         if (count != 0)
         {
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
-            car.GetComponent<CarAI>().SetPath(path, newId, startId);
+            car.GetComponent<CarAI>().SetPath(path, leftList, newId, startId);
             return true;
         }
         return false;

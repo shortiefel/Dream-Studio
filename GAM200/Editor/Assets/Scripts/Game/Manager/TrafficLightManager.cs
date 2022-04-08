@@ -84,45 +84,27 @@ public class TrafficLightManager : MonoBehaviour
     //    trafficLights.Remove(pos);
     //}
 
-    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle)
+    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle, bool state)
     {
         _carAngle = _carAngle % 360;
         //angle 0/360/-360 - up, 90/-270 - right, -90/270 - left, 180/-180 - down
         //+-45 degree for range
         //if left or right
         DirectionState ds = DirectionState.Horizontal;
-        //bool lrState = true;
+        if (state) ds = DirectionState.HorizontalLeft;
+
         if ((45f < _carAngle && _carAngle < 135f) || (-315f < _carAngle && _carAngle < -225f) ||
             (225f < _carAngle && _carAngle < 315f) || (-135f < _carAngle && _carAngle < -45f))
         {
             ds = DirectionState.Vertical;
-            //lrState = false;
+            if (state) ds = DirectionState.VerticalLeft;
         }
-
-        
-        //if (Input.GetKey(KeyCode.B)) return true;
-        //return false;
-
+        //Debug.Log(ds + " " + state);
         if (!trafficLights.ContainsKey(tlPos)) return true;
 
         DirectionState tem = trafficLights[tlPos].directionState;
-        //Debug.Log("TLM" + tem + " " + trafficLights[tlPos].entityId);
-        //if (Input.GetKey(KeyCode.B))
-        //    Debug.Log("TLM" + tem + " " + trafficLights[tlPos].entityId);
-        //Debug.Log("ds " + ds + "  tem " + tem);
+        
         return ds == tem;
-
-        //return ds == trafficLights[tlPos].GetTrafficLightState();
-
-        //bool cState = GetComponent<TrafficLight>(trafficLights[tlPos].entityId).state;
-        //cState == true means allows horizontal movement
-        //cState == false means allow vertical movement
-        //if lrState == true means moving left right (horizontally) and false means moving up down (vertically)
-        //It means that when they are the same then they are allowed to move
-
-        //Debug.Log("Reach");
-        //if (lrState == cState) return true;
-        //return false;
     }
 
     public List<uint> GetTrafficLightIndex(List<Vector2> toCheck)

@@ -34,7 +34,7 @@ namespace Engine
 
 	FontComponent::FontComponent(Entity_id entId, const FontComponent& rhs) :
 		IComponent{ entId }, filepath{ rhs.filepath }, text{ rhs.text }, isFont{ rhs.isFont },
-		colour{ rhs.colour }, isActive{ rhs.isActive }, position{ rhs.position }, scale{ rhs.scale }, fontName{ rhs.fontName } {
+		colour{ rhs.colour }, isActive{ rhs.isActive }, position{ rhs.position }, scale{ rhs.scale }, fontName{ rhs.fontName }, isUI{ rhs.isUI } {
 
 	}
 

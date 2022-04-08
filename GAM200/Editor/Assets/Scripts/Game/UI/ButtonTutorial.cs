@@ -235,19 +235,6 @@ public class ButtonTutorial : MonoBehaviour
         tooltipTrans = stringNameGo.GetComponent<Transform>();
         toolTipsDisplayPosition = transform.position + new Vector2(-2.40f, 7.70f);
 
-
-        //Disable<Transform>(drawRoadWhite);
-        //Disable<Transform>(removeRoadWhite);
-        //Disable<Transform>(drawERPWhite);
-        //Disable<Transform>(drawTrafficWhite);
-        //Disable<Transform>(drawRemoveCarWhite);
-        //Disable<Transform>(roadCount);
-        //Disable<Transform>(ERPCount);
-        //Disable<Transform>(trafficCount);
-
-        //Disable<Transform>(drawERP);
-        //Disable<Transform>(drawTraffic);
-
         Disable<Transform>(dayClockText);
 
         roadTabOpen = false;
@@ -261,36 +248,6 @@ public class ButtonTutorial : MonoBehaviour
         timer = 0f;
         closeXPosition = -96f;
         speedMultiply = 5f;
-
-        ///*********************************** Position ************************************/
-
-
-        //drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
-        //drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
-        //roadCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-        //removeRoad.position = new Vector2(closeXPosition, removePosition.y);
-        //removeRoadWhite.position = new Vector2(closeXPosition, removePosition.y);
-
-        //drawERP.position = new Vector2(closeXPosition, erpPosition.y);
-        //drawERPWhite.position = new Vector2(closeXPosition, erpPosition.y);
-        //ERPCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-        //drawTraffic.position = new Vector2(closeXPosition, trafficPosition.y);
-        //drawTrafficWhite.position = new Vector2(closeXPosition, trafficPosition.y);
-        //trafficCount.position = new Vector2(closeXPosition, drawPosition.y);
-
-        //drawRemoveCar.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
-        //drawRemoveCarWhite.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
-
-        //placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
-        //placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
-        //placePark.position = new Vector2(closeXPosition, placeParkPos.y);
-        //placeMall.position = new Vector2(closeXPosition, placeMallPos.y);
-        //placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
-
-        //lineDivider1.position = new Vector2(closeXPosition, line1.y);
-
 
         /*********************************** Game Objects ************************************/
         GameObject go3 = GameObject.Find("MoneyText");

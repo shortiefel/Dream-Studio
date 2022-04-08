@@ -252,20 +252,7 @@ public class ButtonRoad : MonoBehaviour
             placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
         }
 
-        
-
-        
-
-
-
-        
-
-        //placeHospitalWhite = GameObject.Find("PlaceHospitalWhite").GetComponent<Transform>();
-        //placeOfficeWhite = GameObject.Find("PlaceOfficeWhite").GetComponent<Transform>();
-        //placeParkWhite = GameObject.Find("PlaceParkWhite").GetComponent<Transform>();
-        //placeMallWhite = GameObject.Find("PlaceMallWhite").GetComponent<Transform>();
-        //placePoliceStationWhite = GameObject.Find("PlacePoliceStationWhite").GetComponent<Transform>();
-
+     
         GameObject stringNameGo = GameObject.Find("stringname");
         tooltipText = stringNameGo.GetComponent<Text>();
         tooltipTrans = stringNameGo.GetComponent<Transform>();
@@ -273,16 +260,6 @@ public class ButtonRoad : MonoBehaviour
 
         lineDivider1 = GameObject.Find("Line1").GetComponent<Transform>();
         line1 = lineDivider1.position;
-
-
-        //Disable<Transform>(displayArrowWhite);
-
-        //Disable<Transform>(placeHospitalWhite);
-        //Disable<Transform>(placeOfficeWhite);
-        //Disable<Transform>(placeParkWhite);
-        //Disable<Transform>(placeMallWhite);
-        //Disable<Transform>(placePoliceStationWhite);
-
 
         roadTabOpen = false;
         roadTabClose = false;
@@ -317,44 +294,11 @@ public class ButtonRoad : MonoBehaviour
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
 
-        //isOn = false;
+
         roadTabIsOn = false;
         buildingsTabIsOn = false;
-        //GameObject go4 = GameObject.Find("CounterText");
-        //if (go4 != null)
-        //    counterText = go4.GetComponent<Transform>();
 
-
-        //cameraMovement = GameObject.Find("Camera").GetComponent<CameraMovement>();
-
-        //drawRoadMode = false;
-        //deleteRoadMode = false;
-
-        //activeType = false;
-        //
-        //if (transform.entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId || 
-        //    transform.entityId == GameObject.Find("DrawRoadWhite").GetComponent<Transform>().entityId)
-        //{
-        //    buttonType = true;
-        //
-        //}
-        //else if (transform.entityId == GameObject.Find("RemoveRoad").GetComponent<Transform>().entityId ||
-        //    transform.entityId == GameObject.Find("RemoveRoadWhite").GetComponent<Transform>().entityId)
-        //{
-        //    buttonType = false;
-        //}
-        //else if (transform.entityId == GameObject.Find("ERPbtn").GetComponent<Transform>().entityId ||
-        //    transform.entityId == GameObject.Find("ERPbtnWhite").GetComponent<Transform>().entityId)
-        //{
-        //    buttonType = true;
-        //
-        //}
-        //else if (transform.entityId == GameObject.Find("TrafficLight").GetComponent<Transform>().entityId ||
-        //  transform.entityId == GameObject.Find("TrafficLightWhite").GetComponent<Transform>().entityId)
-        //{
-        //    buttonType = true;
-        //
-        //}
+    
     }
 
     public override void OnMouseOver()
@@ -393,9 +337,6 @@ public class ButtonRoad : MonoBehaviour
             roadTabOpen = true;
             //buildingsTabOpen = false;
 
-            //Disable<Transform>(displayArrow);
-            //Enable<Transform>(displayArrowWhite);
-            //displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
             roadTabUI.ChangeTexture("Game/UI/Arrow_L");
 
             EnableAllNormalExcept();

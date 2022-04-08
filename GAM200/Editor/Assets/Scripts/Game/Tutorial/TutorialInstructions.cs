@@ -58,6 +58,8 @@
 
     bool clickCheck;
 
+    private int hour = 8;
+    private int minutes = 0;
 
     public override void Start()
     {
@@ -128,6 +130,7 @@
     public bool CheckTimer()
     {
         timer += Time.deltaTime;
+
         if (timer > 0.4f)
         {
             timer = 0;
@@ -361,11 +364,13 @@
 
         else if (stages == 9)
         {
-            if (instructions8Script.state)
+            if (instructions9Script.state)
             {
                 if (stateCheck)
                 {
-                    instructions8Script.animation.Play("Close");
+                    Debug.Log("in here");
+
+                    instructions9Script.animation.Play("Close");
                     stateCheck = false;
                 }
             }
@@ -377,7 +382,76 @@
                 stages++;
                 stateCheck = true;
                 tutorial.CheckPosition();
-                instructions8Script.state = false;
+                instructions9Script.state = false;
+            }
+
+        }
+
+        else if (stages == 10)
+        {
+            if (instructions10Script.state)
+            {
+                if (stateCheck)
+                {
+                    instructions10Script.animation.Play("Close");
+                    stateCheck = false;
+                }
+            }
+            if (CheckTimer())
+            {
+                Disable<Transform>(go10.GetComponent<Transform>());
+                instructions11Script.animation.Play("Open");
+                Enable<Transform>(go11.GetComponent<Transform>());
+                stages++;
+                stateCheck = true;
+                tutorial.CheckPosition();
+                instructions10Script.state = false;
+            }
+
+        }
+
+        else if (stages == 11)
+        {
+            if (instructions11Script.state)
+            {
+                if (stateCheck)
+                {
+                    instructions11Script.animation.Play("Close");
+                    stateCheck = false;
+                }
+            }
+            if (CheckTimer())
+            {
+                Disable<Transform>(go11.GetComponent<Transform>());
+                instructions12Script.animation.Play("Open");
+                Enable<Transform>(go12.GetComponent<Transform>());
+                stages++;
+                stateCheck = true;
+                tutorial.CheckPosition();
+                instructions11Script.state = false;
+            }
+
+        }
+
+        else if (stages == 12)
+        {
+            if (instructions12Script.state)
+            {
+                if (stateCheck)
+                {
+                    instructions12Script.animation.Play("Close");
+                    stateCheck = false;
+                }
+            }
+            if (CheckTimer())
+            {
+                Disable<Transform>(go12.GetComponent<Transform>());
+                instructions13Script.animation.Play("Open");
+                Enable<Transform>(go13.GetComponent<Transform>());
+                stages++;
+                stateCheck = true;
+                tutorial.CheckPosition();
+                instructions12Script.state = false;
             }
 
         }

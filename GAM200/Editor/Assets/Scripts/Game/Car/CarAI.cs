@@ -7,7 +7,7 @@ public class CarAI : MonoBehaviour
     private List<Vector2> path;
     private List<uint> tlIndex;
 
-    private List<Vector2> leftList;
+    private List<Vector2Int> leftList;
 
     
     private float arriveDistance, lastPointArriveDistance;
@@ -94,7 +94,7 @@ public class CarAI : MonoBehaviour
         nextDestination = new Vector2Int(transform.position);
     }
 
-    public void SetPath(List<Vector2> newPath, List<Vector2> _leftList, uint destinationID, uint houseId)
+    public void SetPath(List<Vector2> newPath, List<Vector2Int> _leftList, uint destinationID, uint houseId)
     {
         stop = false;
        
@@ -202,6 +202,7 @@ public class CarAI : MonoBehaviour
                         //    Debug.Log(it);
                         //}
                         //Debug.Log("End -----");
+                        Debug.Log(leftList.Contains(targetPos) + " " + targetPos);
                         bool state = !tm.GetTrafficLightState(targetPos, transform.angle, leftList.Contains(targetPos));
                         stop |= state;
                         if (stop) power = 1;

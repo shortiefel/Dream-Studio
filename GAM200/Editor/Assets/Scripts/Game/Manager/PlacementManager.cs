@@ -116,7 +116,7 @@ public class PlacementManager : MonoBehaviour
     }
 
    
-    internal List<Vector2> GetPathBetween(out Vector2Int housePos, Vector2Int destPos, RouteType rt, ref List<Vector2> leftList)
+    internal List<Vector2> GetPathBetween(out Vector2Int housePos, Vector2Int destPos, RouteType rt, ref List<Vector2Int> leftList)
     {
         //Console.WriteLine("START OF ALL A STAR");
         //var resultPath = GridSearch.AStarSearch(placementGrid, housePos, destPos, out roadCount);

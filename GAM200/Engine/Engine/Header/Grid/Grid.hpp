@@ -124,7 +124,7 @@ namespace Engine {
 			void RevertGrid();
 			void FinalizeGrid();
 
-			void AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::vec2(&leftArr)[MAX_LEFT_TURNS], int* leftArrCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType);
+			void AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2(&leftArr)[MAX_LEFT_TURNS], int* leftArrCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType);
 
 			void GetAllAdjacentCells(Math::ivec2(&arr)[4], int* count, int x, int y); // Should be private
 

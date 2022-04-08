@@ -200,7 +200,7 @@ namespace Engine {
 
 	void AStarSearch_Engine(MonoArray* monoArray, int* count, MonoArray* leftMonoArray, int* leftCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType) {
 		Math::vec2 arr[MAX_WAYPOINTS];
-		Math::vec2 leftArr[MAX_LEFT_TURNS];
+		Math::ivec2 leftArr[MAX_LEFT_TURNS];
 		Game::Grid::GetInstance().AStarSearch(arr, count, leftArr, leftCount, housePos, destPos, routeType);
 		int loop = *count;
 		for (int i = 0; i < loop; i++) {

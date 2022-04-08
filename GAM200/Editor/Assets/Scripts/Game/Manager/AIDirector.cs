@@ -71,7 +71,7 @@ public class AIDirector : MonoBehaviour
     {
 
         Vector2Int spawnPosInt = new Vector2Int(spawnPos);
-        List<Vector2> leftList = new List<Vector2>();
+        List<Vector2Int> leftList = new List<Vector2Int>();
         //int roadCount;
         //uint prevEntId = structureManager.destinationList[endPos].entityId;
 
@@ -124,7 +124,7 @@ public class AIDirector : MonoBehaviour
         //}
 
         List<Vector2> path = new List<Vector2>();
-        List<Vector2> leftList = new List<Vector2>();
+        List<Vector2Int> leftList = new List<Vector2Int>();
         int count = 0;
         uint newId = 0;
         foreach (var endDestination in structureManager.destinationList[(int)bt])
@@ -157,7 +157,7 @@ public class AIDirector : MonoBehaviour
     public bool SpawnRetryWithType(Vector2Int startPos, BuildingType bt, uint startId)
     {
         List<Vector2> path = new List<Vector2>();
-        List<Vector2> leftList = new List<Vector2>();
+        List<Vector2Int> leftList = new List<Vector2Int>();
         int count = 0;
         uint newId = 0;
         foreach (var endDestination in structureManager.destinationList[(int)bt])

@@ -1469,7 +1469,7 @@ namespace Engine {
 
         }
 
-        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::vec2(&leftArr)[MAX_LEFT_TURNS], int* leftArrCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType) {
+        void Grid::AStarSearch(Math::vec2(&arr)[MAX_WAYPOINTS], int* count, Math::ivec2(&leftArr)[MAX_LEFT_TURNS], int* leftArrCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType) {
             std::list<Math::ivec2> vlist = AStarSearchInternal(*housePos, destPos, (RouteType)routeType);
 
             if (vlist.empty() && (RouteType)routeType == RouteType::DestToHouse) {

@@ -420,7 +420,7 @@ public class CarSpawner : MonoBehaviour
     {
         gameState.ReachedDestination(buildingType);
 
-        destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
+        //destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
     }
     //-------------------------------------------------------------------------------------------
 }

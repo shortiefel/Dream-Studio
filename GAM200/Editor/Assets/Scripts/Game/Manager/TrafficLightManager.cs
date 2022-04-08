@@ -99,7 +99,7 @@ public class TrafficLightManager : MonoBehaviour
             ds = DirectionState.Vertical;
             if (state) ds = DirectionState.VerticalLeft;
         }
-        //Debug.Log(ds + " " + state);
+        Debug.Log(ds + " " + state);
         if (!trafficLights.ContainsKey(tlPos)) return true;
 
         DirectionState tem = trafficLights[tlPos].directionState;

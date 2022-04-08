@@ -7,23 +7,24 @@ public class CarAI : MonoBehaviour
     private List<Vector2> path;
     private List<uint> tlIndex;
 
-    private List<Vector2Int> leftList;
+    //private List<Vector2Int> leftList;
 
-    
     private float arriveDistance, lastPointArriveDistance;
 
     private Vector2 currentTargetPosition;
 
-
+    private uint hitTarget = 0;
 
     private int index;
 
     private bool stop;
+    private bool couterStop = false;
 
     //private Rigidbody2D rb;
 
     private float power;
     private float maxPower;
+    private float halfPower;
 
 
     private CarSpawner endPoint;
@@ -32,8 +33,9 @@ public class CarAI : MonoBehaviour
     private TrafficManager tm;
     private CollisionManager collisionManager;
 
-    private float raycastLength;
+    //private float raycastLength;
     private float carLength;
+    private float fullLength;
 
     //private float targetAngle;
 
@@ -53,11 +55,16 @@ public class CarAI : MonoBehaviour
     Vector2Int nextDestination;
 
     Vector2Int targetPos;
+
+    Vector2 newHouseLocation;
+
+    float dt;
     public override void Start()
     {
         carLength = transform.scale.x;
-        raycastLength = carLength * 0.7f;
-        
+        fullLength = carLength * 2f;
+        //raycastLength = carLength * 0.7f;
+
         path = null;
         index = 0;
         stop = true;
@@ -71,6 +78,7 @@ public class CarAI : MonoBehaviour
        
         power = 1;
         maxPower = 4.5f;
+        halfPower = maxPower/2f;
         
 
         //tlPath = null;
@@ -94,7 +102,7 @@ public class CarAI : MonoBehaviour
         nextDestination = new Vector2Int(transform.position);
     }
 
-    public void SetPath(List<Vector2> newPath, List<Vector2Int> _leftList, uint destinationID, uint houseId)
+    public void SetPath(List<Vector2> newPath, List<Vector2Int> notUsedYet, uint destinationID, uint houseId)
     {
         stop = false;
        
@@ -116,8 +124,13 @@ public class CarAI : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        //Debug.Log(newPath[newPath.Count - 1] + " fdsfsfsdfsdfds");
+        transform.position = newPath[newPath.Count - 1]; //Realignment
+        newPath.RemoveAt(newPath.Count - 1);
+        newHouseLocation = newPath[newPath.Count - 1]; 
+        newPath.RemoveAt(newPath.Count - 1);
 
-        leftList = _leftList;
+        //leftList = _leftList;
         //Console.WriteLine("p1 " + newPath.Count);
         this.path = newPath;
        
@@ -163,21 +176,26 @@ public class CarAI : MonoBehaviour
         
         SetNextTargetIndex();
 
-        foreach (var it in leftList)
-        {
-            Debug.Log(it);
-        }
-        Debug.Log("End -----");
+        //foreach (var it in leftList)
+        //{
+        //    Debug.Log(it);
+        //}
+        //Debug.Log("End -----");
+
+        CarManager.carLists.Add(entityId);
     }
 
     public override void Update()
     {
+        dt = Time.deltaTime;
 
         Vector2 headOfCar = transform.position + transform.right * carLength;
 
-        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, raycastLength * power, (int)transform.entityId);
+        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, (turning ? carLength : fullLength) * power, (int)transform.entityId);
+        //RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, carLength * power, (int)transform.entityId);
 
         stop = false;
+        couterStop = false;
 
         if (hit.count != 0 && collisionManager != null)
         {
@@ -202,10 +220,9 @@ public class CarAI : MonoBehaviour
                         //    Debug.Log(it);
                         //}
                         //Debug.Log("End -----");
-                        Debug.Log(leftList.Contains(targetPos) + " " + targetPos);
-                        bool state = !tm.GetTrafficLightState(targetPos, transform.angle, leftList.Contains(targetPos));
+                        bool state = !tm.GetTrafficLightState(targetPos, transform.angle);
                         stop |= state;
-                        if (stop) power = 1;
+                        if (stop) power = halfPower;
                         if (state == false)
                             pastTrafficLight.Add(entId);
                         
@@ -213,7 +230,7 @@ public class CarAI : MonoBehaviour
                     case CollisionType.ERP:
                         //Do nothing much if its ERP as the logic is already in ERP
                         break;
-                    case CollisionType.Unknown:
+                    case CollisionType.Car:
                         //Stop car because might be other cars
                         //Debug.Log("Hit Car " + power + " " + (carLength * power));
                         collisionManager.AddRaycastCollision(entityId, hit.transform[i].entityId);
@@ -223,7 +240,14 @@ public class CarAI : MonoBehaviour
                             stop |= true;
                             power = power > 2f ? power / 2f : 1f;
                         }
-                        //Debug.Log("hit");
+
+                        if (entId == hitTarget)
+                        {
+                            couterStop = true;
+                            //power = power > 2f ? power / 2f : 1f;
+                            //Debug.Log("hit stop");
+                        }
+                        //
                         break;
                     case CollisionType.Building:
                         break;
@@ -242,24 +266,25 @@ public class CarAI : MonoBehaviour
         //if (!testBool)
         //stop = true;
         if (stop) return;
+        if (couterStop) return;
 
         CheckIfArrived();
         //Drive();
         if (stop) {
             if (tm != null)
-                stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle, leftList.Contains(targetPos));
+                stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
         }
 
         if (power < maxPower)
         {
-            power += Time.deltaTime;
+            power += dt;
         
             if (power >= maxPower) power = maxPower;
         }
 
         if (turning)
         {
-            tValue += 0.6f * power * Time.deltaTime;
+            tValue += 0.6f * power * dt;
             transform.position = Vector2.QuadraticBezier(p0, p1, p2, tValue, out angle);
             transform.angle = angle;
 
@@ -267,7 +292,7 @@ public class CarAI : MonoBehaviour
         }
         else
         {
-            tValue += power * Time.deltaTime;
+            tValue += power * dt;
             transform.position = new Vector2(Mathf.Lerp(prevPos.x, currentTargetPosition.x, tValue), Mathf.Lerp(prevPos.y, currentTargetPosition.y, tValue));
             //transform.angle = Mathf.Lerp(prevAngle, targetAngle, tValue);
         }
@@ -356,10 +381,11 @@ public class CarAI : MonoBehaviour
 
     private void ReachToEndPoint()
     {
+        CarManager.carLists.Remove(entityId);
         Destroy(gameObject);
 
         if (endPoint != null)
-            endPoint.Notify(new Vector2Int(path[path.Count-1]), nextDestination);
+            endPoint.Notify(new Vector2(newHouseLocation), nextDestination);
         if (startPoint != null)
             startPoint.DisplayPopup();
 
@@ -377,6 +403,70 @@ public class CarAI : MonoBehaviour
         if (tlIndex != null)
             if (tlIndex.Contains(entId)) tlIndex.Remove(entId);
 
-        if (collisionManager.ShouldRemoveCar(entId)) Destroy(gameObject);
+        if (collisionManager.ShouldRemoveCar(entId))
+        {
+            CarManager.carLists.Remove(entityId);
+            Destroy(gameObject);
+        }
+
+        if (CarManager.carLists.Contains(entId))
+        {
+            hitTarget = entId;
+            //Debug.Log("Override fix");
+            //Vector2 headOfCar = transform.position + transform.right * carLength;
+            //RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, fullLength * power, (int)transform.entityId);
+            //
+            //if (hit.count != 0 && collisionManager != null)
+            //{
+            //
+            //    for (int i = 0; i < hit.count; i++)
+            //    {
+            //        uint hitId = hit.transform[i].entityId;
+            //
+            //        if (entId == hitTarget)
+            //        {
+            //            Debug.Log("Stopping");
+            //            couterStop = true;
+            //            //power = power > 2f ? power / 2f : 1f;
+            //        }
+            //    }
+            //}
+        }
     }
+
+    //For car overlapping each other
+    //public override void OnTriggerStay(uint entId)
+    //{
+    //    //couterStop = false;
+    //
+    //    if (CarManager.carLists.Contains(entId))
+    //    {
+    //
+    //        Debug.Log("Override fix");
+    //        Vector2 headOfCar = transform.position + transform.right * carLength;
+    //        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, fullLength * power, (int)transform.entityId);
+    //
+    //        if (hit.count != 0 && collisionManager != null)
+    //        {
+    //
+    //            for (int i = 0; i < hit.count; i++)
+    //            {
+    //                uint hitId = hit.transform[i].entityId;
+    //
+    //                if (entId == hitId)
+    //                {
+    //                    Debug.Log("Stopping");
+    //                    couterStop = true;
+    //                    //power = power > 2f ? power / 2f : 1f;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+
+    public override void OnTriggerExit(uint entId)
+    {
+        couterStop = false;
+    }
+
 }

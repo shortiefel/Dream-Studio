@@ -26,3 +26,5 @@ C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\S
 C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CopyComplete
 C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
 C:\Users\yishanjonathan.lim\Documents\GitHub\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb
+C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.AssemblyReference.cache
+C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CoreCompileInputs.cache

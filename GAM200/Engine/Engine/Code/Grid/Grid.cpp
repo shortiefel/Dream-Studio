@@ -1478,7 +1478,7 @@ namespace Engine {
                 vlist = RetryAStar(*housePos, destPos);
             }
             //vlist.reverse();
-            
+
             int index = *count = 0;
             size_t vlistSize = vlist.size();
             if (vlistSize == 0) return;
@@ -1508,26 +1508,25 @@ namespace Engine {
                 }
             }
             std::queue<Math::ivec2> temQueue;
-            
+
 
             std::array<Math::vec2, MAX_WAYPOINTS> path{};
 
             Math::ivec2 prevPosition = *housePos;
             Math::ivec2 nextPosition{};
-            while(vlist.size() > 0) {
+            while (vlist.size() > 0) {
                 Math::ivec2 pos = vlist.front();
                 auto& entId = (*(grid + pos.x - offset.x) + pos.y - offset.y)->entityId;
 
                 temQueue.push(pos);
-                //path[index] = vlist.front();
-                //index++;
+
                 vlist.pop_front();
 
                 if (temQueue.size() == 3) {
                     Math::ivec2 p1 = temQueue.front();
                     temQueue.pop();
                     Math::ivec2 p2 = temQueue.front();
-                    Math::ivec2 p3 = temQueue.back(); 
+                    Math::ivec2 p3 = temQueue.back();
 
                     if (CheckIfTurnLeft(p1, p2, p3)) {
                         leftTurnList.emplace_back(p2);
@@ -1546,11 +1545,11 @@ namespace Engine {
                     TransformComponent& tc = dreamECSGame->GetComponent<TransformComponent>(entId);
                     float angle = tc.angle;
                     Math::vec2 position = tc.position;
-                
+
                     float cosX = Math::cosDeg(angle);
                     float sinX = Math::sinDeg(angle);
                     Math::mat3 rotationAndTranslate{ cosX, sinX, 0.f, -sinX, cosX, 0.f, position.x, position.y, 1.f };
-                
+
                     for (auto& listWP : wp.temWaypoint) {
                         int c = 0;
                         for (auto& t : listWP) {
@@ -1565,12 +1564,12 @@ namespace Engine {
                             c++;
                         }
                     }
-                
+
                     wp.updated = true;
                 }
-                
+
                 auto wpList = std::list<std::list<Math::vec2>>{ wp.temWaypoint };
-                
+
                 for (auto& t : wpList) {
                     if (t.size() == 0) return; //If road was deleted while points are added
                     if (prevPosition == Math::ivec2{ (int)t.front().x, (int)t.front().y }) t.pop_front();
@@ -1579,12 +1578,12 @@ namespace Engine {
                         nextPosition = destPos;
                     else
                         nextPosition = vlist.front();
-                
-                    if(nextPosition == Math::ivec2{ (int)t.front().x, (int)t.front().y }) t.pop_front();
+
+                    if (nextPosition == Math::ivec2{ (int)t.front().x, (int)t.front().y }) t.pop_front();
                     else continue;
-                
+
                     added = true;
-                    
+
                     //std::cout << "for points " << path[index - 1] << "\n";
                     for (auto& pt : t) {
                         //Add all points in
@@ -1593,16 +1592,46 @@ namespace Engine {
                         index++;
                     }
                     //std::cout << "\n\n";
-                
+
                     break;
                 }
                 if (!added) LOG_WARNING("Grid.cpp waypoint is not added for ", pos);
-                
+
                 prevPosition = pos;
             }
 
-            path[index] = destPos;
+            {
+                Math::vec2 lastPos{ (float)destPos.x,  (float)destPos.y };
+                const Cell& cell = *(*(grid + destPos.x - offset.x) + destPos.y - offset.y);
+                if ((cell.cellBinary & GET_BIN(CellDirection::Up)) || (cell.cellBinary & GET_BIN(CellDirection::Down))) {
+                    lastPos.x = path[index - 1].x;
+                }
+
+                else if ((cell.cellBinary & GET_BIN(CellDirection::Left)) || cell.cellBinary & GET_BIN(CellDirection::Right)) {
+                    lastPos.y = path[index - 1].y;
+                }
+
+                path[index] = lastPos;
+                index++;
+            }
+            //std::cout << destPos << " dest position\n";
+            path[index] = destPos; //For destination respawning
             index++;
+
+            {
+                Math::vec2 lastPos{ (float)(*housePos).x,  (float)(*housePos).y };
+                const Cell& cell = *(*(grid + (int)lastPos.x - offset.x) + (int)lastPos.y - offset.y);
+                if ((cell.cellBinary & GET_BIN(CellDirection::Up)) || (cell.cellBinary & GET_BIN(CellDirection::Down))) {
+                    lastPos.x = path[0].x;
+                }
+
+                else if ((cell.cellBinary & GET_BIN(CellDirection::Left)) || cell.cellBinary & GET_BIN(CellDirection::Right)) {
+                    lastPos.y = path[0].y;
+                }
+                //std::cout << lastPos << " fdfsdfsfsdfdsfsdfdsf\n";
+                path[index] = lastPos; //for starting position realignment
+                index++;
+            }
 
             //std::cout << " New start --------------------\n";
             for (int i = 0; i < index; i++) {

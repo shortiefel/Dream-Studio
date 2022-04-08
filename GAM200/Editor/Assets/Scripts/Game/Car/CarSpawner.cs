@@ -5,11 +5,11 @@ using System;
 
 struct DestToHouseSet
 {
-    public Vector2Int startPos;
+    public Vector2 startPos;
     public Vector2Int endPos;
     public BuildingType bt;
 
-    public DestToHouseSet(Vector2Int _startPos, Vector2Int _endPos, BuildingType _bt)
+    public DestToHouseSet(Vector2 _startPos, Vector2Int _endPos, BuildingType _bt)
     {
         startPos = _startPos;
         endPos = _endPos;
@@ -177,7 +177,8 @@ public class CarSpawner : MonoBehaviour
     {
         dt = Time.deltaTime;
 
-        if(Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
+        if(Input.GetKey(KeyCode.V)) return; //TO REMOVE
+        if (Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
 
         //-----------------------------------------Only in House-------------------------------------
         //Only House has popupText
@@ -193,6 +194,7 @@ public class CarSpawner : MonoBehaviour
 
             CheckLifetime(dt);
             spawnTimer += dt;
+            //if (carSpawnCounter != 0 && spawnTimer >= spawnTimerMax && carCounter == 0)
             if (spawnTimer >= spawnTimerMax && carCounter == 0)
             {
                 if (backlog.Count != 0)
@@ -416,11 +418,11 @@ public class CarSpawner : MonoBehaviour
     //-------------------------------------------------------------------------------------------
 
     //-----------------------------------------Only in Destination-------------------------------
-    public void Notify(Vector2Int spawnPoint, Vector2Int nextDest)
+    public void Notify(Vector2 spawnPoint, Vector2Int nextDest)
     {
         gameState.ReachedDestination(buildingType);
 
-        //destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
+        destToHouseQueue.Enqueue(new DestToHouseSet(spawnPoint, nextDest, buildingType));
     }
     //-------------------------------------------------------------------------------------------
 }

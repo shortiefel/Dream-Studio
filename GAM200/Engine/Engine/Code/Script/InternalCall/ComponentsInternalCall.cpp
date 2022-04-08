@@ -269,47 +269,47 @@ namespace Engine {
 				
 				TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 				if (!ctype) return;
-				Math::vec2 moveDis = *inVec2 - ctype->position;
+				//Math::vec2 moveDis = *inVec2 - ctype->position;
 				ctype->position = *inVec2;
 
-				auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
-				const auto& itr = entityMap.find(ctype->GetEntityId());
-				const auto& entity = itr->second;
-				Entity_id parent = entity.parent;
+				//auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
+				//const auto& itr = entityMap.find(ctype->GetEntityId());
+				//const auto& entity = itr->second;
+				//Entity_id parent = entity.parent;
 
-				if (parent != DEFAULT_ENTITY_ID) //TODO: Need to fix parent-child
-					ctype->position -= dreamECSGame->GetComponent<TransformComponent>(parent).position;
-				else
-					ctype->position = *inVec2;
+				//if (parent != DEFAULT_ENTITY_ID) //TODO: Need to fix parent-child
+				//	ctype->position -= dreamECSGame->GetComponent<TransformComponent>(parent).position;
+				//else
+				//	ctype->position = *inVec2;
 
-				for (auto& newId : entity.child) {
-					TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
-					if (newTransform != nullptr)
-						newTransform->position += moveDis;
-				}
+				//for (auto& newId : entity.child) {
+				//	TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
+				//	if (newTransform != nullptr)
+				//		newTransform->position += moveDis;
+				//}
 			}
 			else {
 				//SetEngineType(id, TransformComponent, localPosition, *inVec2);
 				
 				TransformComponent* ctype = dreamECSGame->GetComponentPTR<TransformComponent>(id);
 				if (!ctype) return;
-				Math::vec2 moveDis = *inVec2 - ctype->position;
+				//Math::vec2 moveDis = *inVec2 - ctype->position;
 				ctype->position = *inVec2;
-				auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
-				const auto& itr = entityMap.find(ctype->GetEntityId());
-				const auto& entity = itr->second;
-				Entity_id parent = entity.parent;
+				//auto& entityMap = dreamECSGame->GetUsedConstEntityMap();
+				//const auto& itr = entityMap.find(ctype->GetEntityId());
+				//const auto& entity = itr->second;
+				//Entity_id parent = entity.parent;
 
-				if (parent != DEFAULT_ENTITY_ID) //TODO: Need to fix parent-child
-					ctype->position = ctype->position + dreamECSGame->GetComponent<TransformComponent>(parent).position;
-				else
-					ctype->position = *inVec2;
-
-				for (auto& newId : entity.child) {
-					TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
-					if (newTransform != nullptr)
-						newTransform->position += moveDis;
-				}
+				//if (parent != DEFAULT_ENTITY_ID) //TODO: Need to fix parent-child
+				//	ctype->position = ctype->position + dreamECSGame->GetComponent<TransformComponent>(parent).position;
+				//else
+				//	ctype->position = *inVec2;
+				//
+				//for (auto& newId : entity.child) {
+				//	TransformComponent* newTransform = dreamECSGame->GetComponentPTR<TransformComponent>(newId);
+				//	if (newTransform != nullptr)
+				//		newTransform->position += moveDis;
+				//}
 			}
 
 		}

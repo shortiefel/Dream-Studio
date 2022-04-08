@@ -84,24 +84,25 @@ public class TrafficLightManager : MonoBehaviour
     //    trafficLights.Remove(pos);
     //}
 
-    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle, bool state)
+    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle)
     {
         _carAngle = _carAngle % 360;
         //angle 0/360/-360 - up, 90/-270 - right, -90/270 - left, 180/-180 - down
         //+-45 degree for range
         //if left or right
         DirectionState ds = DirectionState.Horizontal;
-        if (state) ds = DirectionState.HorizontalLeft;
+        //if (state) ds = DirectionState.HorizontalLeft;
 
         if ((45f < _carAngle && _carAngle < 135f) || (-315f < _carAngle && _carAngle < -225f) ||
             (225f < _carAngle && _carAngle < 315f) || (-135f < _carAngle && _carAngle < -45f))
         {
             ds = DirectionState.Vertical;
-            if (state) ds = DirectionState.VerticalLeft;
+            //if (state) ds = DirectionState.VerticalLeft;
         }
-        Debug.Log(ds + " " + state);
+        //Debug.Log(ds + " " + state);
         if (!trafficLights.ContainsKey(tlPos)) return true;
 
+        trafficLights[tlPos].RequestChange(ds);
         DirectionState tem = trafficLights[tlPos].directionState;
         
         return ds == tem;

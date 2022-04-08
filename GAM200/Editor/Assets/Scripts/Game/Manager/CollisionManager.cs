@@ -8,7 +8,8 @@ public enum CollisionType
     ERP,
     Traffic,
     Building,
-    RemoveCar
+    RemoveCar,
+    Car
 }
 
 public class CollisionManager : MonoBehaviour
@@ -55,6 +56,8 @@ public class CollisionManager : MonoBehaviour
         }
 
         else if (entId == removeCarUint) return CollisionType.RemoveCar;
+
+        else if (CarManager.carLists.Contains(entId)) return CollisionType.Car;
 
 
         return CollisionType.Unknown;

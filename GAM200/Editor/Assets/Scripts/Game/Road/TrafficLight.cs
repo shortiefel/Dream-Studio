@@ -32,6 +32,7 @@ public class TrafficLight : MonoBehaviour
 
     private TrafficLightManager tlm;
 
+    bool reqeusting = false;
     public override void Start()
     {
         //Debug.Log("Making new start -----------------------------------");
@@ -65,23 +66,28 @@ public class TrafficLight : MonoBehaviour
     //        toState = inState;
     //}
 
-    //public DirectionState GetTrafficLightState()
-    //{
-    //    if (Input.GetKey(KeyCode.B))
-    //        Debug.Log(directionState + " Getting from " + entityId);
-    //    return directionState;
-    //}
+    public void RequestChange(DirectionState requestDirec)
+    {
+        if (!reqeusting && carCounter == 0)
+        {
+            timer = 0f;
+            nextState = requestDirec;
+            directionState = DirectionState.None;
+            Debug.Log("Reqeust switch");
+            reqeusting = true;
+        }
+    }
 
     private void SwapState()
     {
 
-        //if (directionState == DirectionState.Horizontal) nextState = DirectionState.Vertical;
-        //else if (directionState == DirectionState.Vertical) nextState = DirectionState.Horizontal;
+        if (directionState == DirectionState.Horizontal) nextState = DirectionState.Vertical;
+        else if (directionState == DirectionState.Vertical) nextState = DirectionState.Horizontal;
 
-        if (directionState == DirectionState.Horizontal) nextState = DirectionState.HorizontalLeft;
-        else if (directionState == DirectionState.HorizontalLeft) nextState = DirectionState.Vertical;
-        else if (directionState == DirectionState.Vertical) nextState = DirectionState.VerticalLeft;
-        else if (directionState == DirectionState.VerticalLeft) nextState = DirectionState.Horizontal;
+        //if (directionState == DirectionState.Horizontal) nextState = DirectionState.HorizontalLeft;
+        //else if (directionState == DirectionState.HorizontalLeft) nextState = DirectionState.Vertical;
+        //else if (directionState == DirectionState.Vertical) nextState = DirectionState.VerticalLeft;
+        //else if (directionState == DirectionState.VerticalLeft) nextState = DirectionState.Horizontal;
 
         directionState = DirectionState.None;
 
@@ -113,11 +119,8 @@ public class TrafficLight : MonoBehaviour
             //Might have problem where car move too fast and enter but doesnt move
             //Check timer to 1.5 of switchTimer to prevent infinite waiting to change direction
             //if (carCounter == 0 && timer >= switchTimer * 1.5f)
-            if (timer >= switchTimer)
-            {
-                timer = 0f;
-                SwapState();
-            }
+            timer = 0f;
+            SwapState();
         }
         //Debug.Log(nextState);
         //Put traffic light in a state where cars are not allowed to go for both direction
@@ -142,6 +145,8 @@ public class TrafficLight : MonoBehaviour
                     transform.angle = 90;
                 inBetweenTimer = 0f;
             }
+
+            //reqeusting = false;
         }
         //if (Input.GetKeyDown(KeyCode.C))
         //{

@@ -326,7 +326,7 @@
                 Enable<Transform>(go8.GetComponent<Transform>());
                 stages++;
                 stateCheck = true;
-                instructions8Script.state = false;
+                instructions7Script.state = false;
             }
 
         }
@@ -334,10 +334,53 @@
 
         /****************************tut begin(9)********************************/
 
+        else if (stages == 8)
+        {
+            if (instructions8Script.state)
+            {
+                if (stateCheck)
+                {
+                    instructions8Script.animation.Play("Close");
+                    stateCheck = false;
+                }
+            }
+            if (CheckTimer())
+            {
+                Disable<Transform>(go8.GetComponent<Transform>());
+                instructions9Script.animation.Play("Open");
+                Enable<Transform>(go9.GetComponent<Transform>());
+                stages++;
+                stateCheck = true;
+                instructions8Script.state = false;
+            }
+
+        }
 
 
         /****************************build destination(10-12)********************************/
 
+        else if (stages == 9)
+        {
+            if (instructions8Script.state)
+            {
+                if (stateCheck)
+                {
+                    instructions8Script.animation.Play("Close");
+                    stateCheck = false;
+                }
+            }
+            if (CheckTimer())
+            {
+                Disable<Transform>(go9.GetComponent<Transform>());
+                instructions10Script.animation.Play("Open");
+                Enable<Transform>(go10.GetComponent<Transform>());
+                stages++;
+                stateCheck = true;
+                tutorial.CheckPosition();
+                instructions8Script.state = false;
+            }
+
+        }
 
         /****************************build roads and car appear (13-15)********************************/
 

@@ -22,6 +22,7 @@ public class CarAI : MonoBehaviour
 
     //private Rigidbody2D rb;
 
+    private float defaultPower;
     private float power;
     private float maxPower;
     private float halfPower;
@@ -75,8 +76,8 @@ public class CarAI : MonoBehaviour
         arriveDistance = 0.3f;
         lastPointArriveDistance = 0.1f;
 
-       
-        power = 1;
+        defaultPower = 1.5f;
+        power = defaultPower;
         maxPower = 4.5f;
         halfPower = maxPower/2f;
         
@@ -191,8 +192,8 @@ public class CarAI : MonoBehaviour
 
         Vector2 headOfCar = transform.position + transform.right * carLength;
 
-        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, (turning ? carLength : fullLength) * power, (int)transform.entityId);
-        //RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, carLength * power, (int)transform.entityId);
+        //RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, (turning ? carLength : fullLength) * power, (int)transform.entityId);
+        RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, carLength * (power / 2f), (int)transform.entityId);
 
         stop = false;
         couterStop = false;
@@ -238,7 +239,8 @@ public class CarAI : MonoBehaviour
                         if (collisionManager.CheckStopRaycastCollision(entityId, hit.transform[i].entityId))
                         {
                             stop |= true;
-                            power = power > 2f ? power / 2f : 1f;
+                            //power = power > 2f ? power / 2f : 1f;
+                            power = defaultPower;
                         }
 
                         if (entId == hitTarget)
@@ -284,7 +286,7 @@ public class CarAI : MonoBehaviour
 
         if (turning)
         {
-            tValue += 0.6f * power * dt;
+            tValue += 0.8f * power * dt;
             transform.position = Vector2.QuadraticBezier(p0, p1, p2, tValue, out angle);
             transform.angle = angle;
 

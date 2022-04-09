@@ -402,13 +402,15 @@ public class CarAI : MonoBehaviour
                 //    turning = true;
                 //    index++;
                 //
-                //    Debug.Log("Turning now");
+                //    //Debug.Log("Turning now");
                 //}
 
 
-                if (leftTurns.Contains(checkPos) || rightTurns.Contains(checkPos)) {
+                //if (leftTurns.Contains(checkPos) || rightTurns.Contains(checkPos)) {
+                if (angle > 10f) {
                     turning = true;
                     index++;
+                    Debug.Log("Turning now");
                 }
                 else
                 {

@@ -142,8 +142,8 @@ public class TrafficLight : MonoBehaviour
         {
             inBetweenTimer += deltaTime;
             //if (inBetweenTimer >= 0.5f)
-            //if (inBetweenTimer >= 1.5f || carCounter == 0)
-            if (carCounter == 0)
+            if (inBetweenTimer >= 1.5f || carCounter == 0)
+            //if (carCounter == 0)
             {
                 //toState = state = !state;
                 //state = !state;

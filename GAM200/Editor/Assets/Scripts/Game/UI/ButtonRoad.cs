@@ -1,7 +1,7 @@
 ﻿using System;
 
 //The U behind means its being used = button is white
-public enum ButtonType
+/*public enum ButtonType
 {
     Draw = 0,
     Remove,
@@ -19,7 +19,7 @@ public enum ButtonType
     RoadTab,
     BuildingsTab,
     None
-}
+}*/
 
 
 public class ButtonRoad : MonoBehaviour

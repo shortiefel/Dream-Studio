@@ -135,7 +135,7 @@ public class MoneySystem : MonoBehaviour
         if (go5 != null)
             receipt = go5.GetComponent<Receipt>();
 
-        money = 4500;
+        money = 800;
         textComp = GetComponent<Text>();
         textComp.text = money.ToString();
 
@@ -381,9 +381,9 @@ public class MoneySystem : MonoBehaviour
         tlNum = trafficLightManager.trafficlightTaxCount();
         erpNum = erpManager.erpTaxCount();
 
-        roadTax =  (roadNum* 25) + (count * 10);
-        trafficTax = (tlNum * 50) + (count * 10);
-        erpTax = (erpNum * 75) + (count * 10);
+        roadTax =  (roadNum* (15 + (count * 10)));
+        trafficTax = (tlNum * (40 + (count * 10)));
+        erpTax = (erpNum * (75 + (count * 10)));
         
 
         totalTax = roadTax + erpTax + trafficTax;
@@ -397,13 +397,16 @@ public class MoneySystem : MonoBehaviour
     }
     public int getTaxMoney()
     {
+        int count = 0;
+        count = gameState.getDayCounter();
+
         roadNum = roadManager.taxRoadCount;
         tlNum = trafficLightManager.trafficlightTaxCount();
         erpNum = erpManager.erpTaxCount();
 
-        roadTax = roadNum * 25;
-        trafficTax = tlNum * 50;
-        erpTax = erpNum * 75;
+        roadTax = (roadNum * (15 + (count * 10)));
+        trafficTax = (tlNum * (40 + (count * 10)));
+        erpTax = (erpNum * (75 + (count * 10)));
 
 
         totalTax = roadTax + erpTax + trafficTax;

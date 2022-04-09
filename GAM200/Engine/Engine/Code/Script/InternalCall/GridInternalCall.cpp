@@ -47,7 +47,7 @@ namespace Engine {
 	bool IsPosRoad_Engine(Math::ivec2 pos);
 	bool IsSurrounded_Engine(Math::ivec2 pos, int type);
 
-	void AStarSearch_Engine(MonoArray* monoArray, int* count, MonoArray* leftMonoArray, int* leftCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType);
+	void AStarSearch_Engine(MonoArray* monoArray, int* count, MonoArray* turnsMonoArray, int* leftCount, int* rightCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType);
 
 	void PrintGridOut_Engine();
 	/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -198,21 +198,23 @@ namespace Engine {
 		return Game::Grid::GetInstance().IsSurrounded(pos, type);
 	}
 
-	void AStarSearch_Engine(MonoArray* monoArray, int* count, MonoArray* leftMonoArray, int* leftCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType) {
+	void AStarSearch_Engine(MonoArray* monoArray, int* count, MonoArray* turnsMonoArray, int* leftCount, int* rightCount, Math::ivec2* housePos, Math::ivec2 destPos, int routeType) {
 		Math::vec2 arr[MAX_WAYPOINTS];
-		Math::ivec2 leftArr[MAX_LEFT_TURNS];
-		Game::Grid::GetInstance().AStarSearch(arr, count, leftArr, leftCount, housePos, destPos, routeType);
+		Math::ivec2 turnArr[MAX_LEFT_TURNS];
+		Game::Grid::GetInstance().AStarSearch(arr, count, turnArr, leftCount, rightCount, housePos, destPos, routeType);
 		int loop = *count;
 		for (int i = 0; i < loop; i++) {
 			//std::cout << arr[i] << " before\n";
 			mono_array_set(monoArray, Math::vec2, i, (arr[i]));
 		}
 
-		loop = *leftCount;
+		loop = *leftCount + *rightCount;
 		for (int i = 0; i < loop; i++) {
 			//std::cout << arr[i] << " before\n";
-			mono_array_set(leftMonoArray, Math::vec2, i, (leftArr[i]));
+			mono_array_set(turnsMonoArray, Math::ivec2, i, (turnArr[i]));
 		}
+
+
 	}
 
 	void PrintGridOut_Engine() {

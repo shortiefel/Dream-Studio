@@ -33,6 +33,13 @@ public class TrafficLight : MonoBehaviour
     private TrafficLightManager tlm;
 
     bool reqeusting = false;
+
+    TrafficColliderCheck leftCollider;
+    TrafficColliderCheck rightCollider;
+    TrafficColliderCheck upCollider;
+    TrafficColliderCheck downCollider;
+
+
     public override void Start()
     {
         //Debug.Log("Making new start -----------------------------------");
@@ -58,6 +65,13 @@ public class TrafficLight : MonoBehaviour
         switchTimer = 2f;
 
         inBetweenTimer = 0f;
+
+        Vector2 transPos = transform.position;
+        leftCollider = Instantiate(new Prefab("TrafficColliderCheck"), new Vector3(transPos.x - 0.55f, transPos.y + 0.19f, 0f)).GetComponent<TrafficColliderCheck>();
+        rightCollider = Instantiate(new Prefab("TrafficColliderCheck"), new Vector3(transPos.x + 0.55f, transPos.y - 0.19f, 0f)).GetComponent<TrafficColliderCheck>();
+        upCollider = Instantiate(new Prefab("TrafficColliderCheck"), new Vector3(transPos.x + 0.19f, transPos.y + 0.55f, 0f)).GetComponent<TrafficColliderCheck>();
+        downCollider = Instantiate(new Prefab("TrafficColliderCheck"), new Vector3(transPos.x - 0.19f, transPos.y - 0.55f, 0f)).GetComponent<TrafficColliderCheck>();
+
     }
 
     //public void RequestSwap(bool inState)
@@ -128,7 +142,8 @@ public class TrafficLight : MonoBehaviour
         {
             inBetweenTimer += deltaTime;
             //if (inBetweenTimer >= 0.5f)
-            if (inBetweenTimer >= 1.5f || carCounter == 0)
+            //if (inBetweenTimer >= 1.5f || carCounter == 0)
+            if (carCounter == 0)
             {
                 //toState = state = !state;
                 //state = !state;

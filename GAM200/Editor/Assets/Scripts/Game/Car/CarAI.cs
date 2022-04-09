@@ -6,8 +6,8 @@ public class CarAI : MonoBehaviour
 {
     private List<Vector2> path;
     private List<uint> tlIndex;
-
-    //private List<Vector2Int> leftList;
+    private List<Vector2Int> leftTurns;
+    private List<Vector2Int> rightTurns;
 
     private float arriveDistance, lastPointArriveDistance;
 
@@ -59,7 +59,10 @@ public class CarAI : MonoBehaviour
 
     Vector2 newHouseLocation;
 
+    Vector2 headOfCar;
+
     float dt;
+
     public override void Start()
     {
         carLength = transform.scale.x;
@@ -103,7 +106,7 @@ public class CarAI : MonoBehaviour
         nextDestination = new Vector2Int(transform.position);
     }
 
-    public void SetPath(List<Vector2> newPath, List<Vector2Int> notUsedYet, uint destinationID, uint houseId)
+    public void SetPath(List<Vector2> newPath, List<Vector2Int> _leftTurns, List<Vector2Int> _rightTurns, uint destinationID, uint houseId)
     {
         stop = false;
        
@@ -134,7 +137,9 @@ public class CarAI : MonoBehaviour
         //leftList = _leftList;
         //Console.WriteLine("p1 " + newPath.Count);
         this.path = newPath;
-       
+        leftTurns = _leftTurns;
+        rightTurns = _rightTurns;
+
         index = 0;
         currentTargetPosition = this.path[index];
         
@@ -190,7 +195,7 @@ public class CarAI : MonoBehaviour
     {
         dt = Time.deltaTime;
 
-        Vector2 headOfCar = transform.position + transform.right * carLength;
+        headOfCar = transform.position + transform.right * carLength;
 
         //RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, (turning ? carLength : fullLength) * power, (int)transform.entityId);
         RaycastHit2DGroup hit = Physics2D.RayCastGroup(new Vector3(headOfCar, 0f), transform.right, carLength * (power / 2f), (int)transform.entityId);
@@ -215,13 +220,35 @@ public class CarAI : MonoBehaviour
                         {
                             break;
                         }
-                        //Debug.Log(targetPos);
-                        //foreach (var it in leftList)
+
+
+                        DirectionToTL dtl = DirectionToTL.Down;
+                        TurnDirection td = leftTurns.Contains(targetPos) ? TurnDirection.Left : (rightTurns.Contains(targetPos) ? TurnDirection.Right : TurnDirection.None);
+
+                        if (targetPos.x + 0.5f < headOfCar.x)
+                        {
+                            //Debug.Log((leftTurns.Contains(targetPos) ? "Turning left " : (rightTurns.Contains(targetPos) ? "Turning Right " : "Going straight ")) + " from " + DirectionToTL.Right);
+                            dtl = DirectionToTL.Right;
+                        }
+
+                        else if (targetPos.x - 0.5f > headOfCar.x)
+                        {
+                            //Debug.Log((leftTurns.Contains(targetPos) ? "Turning left " : (rightTurns.Contains(targetPos) ? "Turning Right " : "Going straight ")) + " from " + DirectionToTL.Left);
+                            dtl = DirectionToTL.Left;
+                        }
+
+                        else if (targetPos.y + 0.5f < headOfCar.y)
+                        {
+                            //Debug.Log((leftTurns.Contains(targetPos) ? "Turning left " : (rightTurns.Contains(targetPos) ? "Turning Right " : "Going straight ")) + " from " + DirectionToTL.Up);
+                            dtl = DirectionToTL.Up;
+                        }
+
+                        //else if (targetPos.y - 0.5f > headOfCar.y)
                         //{
-                        //    Debug.Log(it);
+                        //    Debug.Log((leftTurns.Contains(targetPos) ? "Turning left " : (rightTurns.Contains(targetPos) ? "Turning Right " : "Going straight ")) + " from " + DirectionToTL.Down);
                         //}
-                        //Debug.Log("End -----");
-                        bool state = !tm.GetTrafficLightState(targetPos, transform.angle);
+                        
+                        bool state = !tm.GetTrafficLightState(targetPos, transform.angle, dtl, td);
                         stop |= state;
                         if (stop) power = halfPower;
                         if (state == false)
@@ -272,10 +299,10 @@ public class CarAI : MonoBehaviour
 
         CheckIfArrived();
         //Drive();
-        if (stop) {
-            if (tm != null)
-                stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
-        }
+        //if (stop) {
+        //    if (tm != null)
+        //        stop = !tm.GetTrafficLightState(new Vector2Int(currentTargetPosition), transform.angle);
+        //}
 
         if (power < maxPower)
         {
@@ -288,6 +315,7 @@ public class CarAI : MonoBehaviour
         {
             tValue += 0.8f * power * dt;
             transform.position = Vector2.QuadraticBezier(p0, p1, p2, tValue, out angle);
+            //Debug.Log(angle);
             transform.angle = angle;
 
            
@@ -367,13 +395,24 @@ public class CarAI : MonoBehaviour
 
                 float angle = Vector2.AngleBetween(p2 - p0, p1 - p0);
                 //Debug.Log(angle);
-                if (angle < 20f) turning = false;
-                else
-                {
+                Vector2Int checkPos = new Vector2Int((int)Math.Round(p1.x), (int)Math.Round(p1.y));
+                //if (angle < 10f) turning = false;
+                //else
+                //{
+                //    turning = true;
+                //    index++;
+                //
+                //    Debug.Log("Turning now");
+                //}
+
+
+                if (leftTurns.Contains(checkPos) || rightTurns.Contains(checkPos)) {
                     turning = true;
                     index++;
-
-                    //Debug.Log("Turning now");
+                }
+                else
+                {
+                    turning = false;
                 }
             }
         }

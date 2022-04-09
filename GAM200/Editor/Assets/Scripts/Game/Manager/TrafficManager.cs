@@ -15,9 +15,9 @@ public class TrafficManager : MonoBehaviour
     //TrafficLightManager-------------------------------------------------------------------
     //if state = true, car will be turning left
     //state = false, car will be going straight or right
-    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle)
+    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle, DirectionToTL _dtl, TurnDirection _td)
     {
-        return tlm.GetTrafficLightState(tlPos, _carAngle);
+        return tlm.GetTrafficLightState(tlPos, _carAngle, _dtl, _td);
     }
 
     public List<uint> GetTrafficLightIndex(List<Vector2> toCheck)

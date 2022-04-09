@@ -72,10 +72,11 @@ public class AIDirector : MonoBehaviour
 
         Vector2Int spawnPosInt = new Vector2Int(spawnPos);
         List<Vector2Int> leftList = new List<Vector2Int>();
+        List<Vector2Int> rightList = new List<Vector2Int>();
         //int roadCount;
         //uint prevEntId = structureManager.destinationList[endPos].entityId;
 
-        var path = placementManager.GetPathBetween(out spawnPosInt, new Vector2Int(endPos), rt, ref leftList);
+        var path = placementManager.GetPathBetween(out spawnPosInt, new Vector2Int(endPos), rt, ref leftList, ref rightList);
         
         //if (path.Count == 0 || prevEntId != structureManager.destinationList[endPos].entityId)
         if (path.Count == 0)
@@ -86,7 +87,7 @@ public class AIDirector : MonoBehaviour
         }
 
         var car = Instantiate(SelectACarPrefab(bt), new Vector3(spawnPosInt.x, spawnPosInt.y, 0), 2);
-        car.GetComponent<CarAI>().SetPath(path, leftList, 0, 0);
+        car.GetComponent<CarAI>().SetPath(path, leftList, rightList, 0, 0);
 
         return true;
     }
@@ -125,12 +126,13 @@ public class AIDirector : MonoBehaviour
 
         List<Vector2> path = new List<Vector2>();
         List<Vector2Int> leftList = new List<Vector2Int>();
+        List<Vector2Int> rightList = new List<Vector2Int>();
         int count = 0;
         uint newId = 0;
         foreach (var endDestination in structureManager.destinationList[(int)bt])
         {
             //int roadNum;
-            path = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest, ref leftList);
+            path = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest, ref leftList, ref rightList);
             //List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
             if (path.Count == 0) continue;
 
@@ -144,7 +146,7 @@ public class AIDirector : MonoBehaviour
         if (count != 0)
         {
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
-            car.GetComponent<CarAI>().SetPath(path, leftList, newId, startId);
+            car.GetComponent<CarAI>().SetPath(path, leftList, rightList, newId, startId);
             posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, startPos);
 
             return true;
@@ -158,13 +160,14 @@ public class AIDirector : MonoBehaviour
     {
         List<Vector2> path = new List<Vector2>();
         List<Vector2Int> leftList = new List<Vector2Int>();
+        List<Vector2Int> rightList = new List<Vector2Int>();
         int count = 0;
         uint newId = 0;
         foreach (var endDestination in structureManager.destinationList[(int)bt])
         {
             //int roadNum;
             //List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
-            List<Vector2> list = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest, ref leftList);
+            List<Vector2> list = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest, ref leftList, ref rightList);
             if (list.Count == 0) continue;
 
             if (list.Count < count || count == 0)
@@ -178,7 +181,7 @@ public class AIDirector : MonoBehaviour
         if (count != 0)
         {
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
-            car.GetComponent<CarAI>().SetPath(path, leftList, newId, startId);
+            car.GetComponent<CarAI>().SetPath(path, leftList, rightList, newId, startId);
             return true;
         }
         return false;

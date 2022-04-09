@@ -114,11 +114,53 @@ public class TrafficLightManager : MonoBehaviour
         //    ds = DirectionState.Vertical;
         //    //if (state) ds = DirectionState.VerticalLeft;
         //}
-        DirectionState ds = DirectionState.Horizontal;
-        if (_dtl == DirectionToTL.Up || _dtl == DirectionToTL.Down) ds = DirectionState.Vertical;
 
-        //Debug.Log(ds + " " + state);
-        if (!trafficLights.ContainsKey(tlPos)) return true;
+        if (!trafficLights.ContainsKey(tlPos)) return false;
+
+        DirectionState ds = DirectionState.Right;
+        switch(_dtl)
+        {
+            case DirectionToTL.Up:
+                {
+                    if (_td == TurnDirection.None && trafficLights[tlPos].downCollider.carCount != 0) return false;
+                    else if (_td == TurnDirection.Left && trafficLights[tlPos].rightCollider.carCount != 0) return false;
+                    else if (_td == TurnDirection.Right && trafficLights[tlPos].leftCollider.carCount != 0) return false;
+                    ds = DirectionState.Up;
+                    
+                    break;
+                }
+            case DirectionToTL.Down:
+                {
+                    if (_td == TurnDirection.None && trafficLights[tlPos].upCollider.carCount != 0) return false;
+                    else if (_td == TurnDirection.Left && trafficLights[tlPos].leftCollider.carCount != 0) return false;
+                    else if (_td == TurnDirection.Right && trafficLights[tlPos].rightCollider.carCount != 0) return false;
+                    ds = DirectionState.Down;
+                    break;
+                }
+            case DirectionToTL.Left:
+                {
+                    if (_td == TurnDirection.None && trafficLights[tlPos].rightCollider.carCount != 0) return false;
+                    else if (_td == TurnDirection.Left && trafficLights[tlPos].upCollider.carCount != 0) return false;
+                    else if (_td == TurnDirection.Right && trafficLights[tlPos].downCollider.carCount != 0) return false;
+                    ds = DirectionState.Left;
+                    break;
+                }
+            case DirectionToTL.Right:
+                {
+                    if (_td == TurnDirection.None && trafficLights[tlPos].leftCollider.carCount != 0) return false;
+                    else if (_td == TurnDirection.Left && trafficLights[tlPos].downCollider.carCount != 0) return false;
+                    else if (_td == TurnDirection.Right && trafficLights[tlPos].upCollider.carCount != 0) return false;
+                    break;
+                }
+        }
+
+        //if (_dtl == DirectionToTL.Up) ds = DirectionState.Up;
+        //else if (_dtl == DirectionToTL.Down) ds = DirectionState.Down;
+        //else if (_dtl == DirectionToTL.Left) ds = DirectionState.Left;
+        //else if (_dtl == DirectionToTL.Left)
+
+            //Debug.Log(ds + " " + state);
+            
 
         //trafficLights[tlPos].RequestChange(ds);
         DirectionState tem = trafficLights[tlPos].directionState;
@@ -167,6 +209,10 @@ public class TrafficLightManager : MonoBehaviour
             return false;
 
         moneySystem.SellTL();
+        Destroy(trafficLights[position].leftCollider.entityId);
+        Destroy(trafficLights[position].rightCollider.entityId);
+        Destroy(trafficLights[position].upCollider.entityId);
+        Destroy(trafficLights[position].downCollider.entityId);
         Destroy(trafficLights[position].entityId);
         trafficLights.Remove(position);
         return true;

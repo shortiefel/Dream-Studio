@@ -6,6 +6,10 @@ public enum DirectionState
     HorizontalLeft,
     Vertical,
     VerticalLeft,
+    Up,
+    Down,
+    Left,
+    Right,
     None
 }
 
@@ -34,16 +38,17 @@ public class TrafficLight : MonoBehaviour
 
     bool reqeusting = false;
 
-    TrafficColliderCheck leftCollider;
-    TrafficColliderCheck rightCollider;
-    TrafficColliderCheck upCollider;
-    TrafficColliderCheck downCollider;
+    public TrafficColliderCheck leftCollider;
+    public TrafficColliderCheck rightCollider;
+    public TrafficColliderCheck upCollider;
+    public TrafficColliderCheck downCollider;
 
 
     public override void Start()
     {
         //Debug.Log("Making new start -----------------------------------");
         directionState = DirectionState.Horizontal;
+        directionState = DirectionState.Up;
 
         GameObject go = GameObject.Find("TrafficManager");
         if (go != null)
@@ -95,8 +100,13 @@ public class TrafficLight : MonoBehaviour
     private void SwapState()
     {
 
-        if (directionState == DirectionState.Horizontal) nextState = DirectionState.Vertical;
-        else if (directionState == DirectionState.Vertical) nextState = DirectionState.Horizontal;
+        //if (directionState == DirectionState.Horizontal) nextState = DirectionState.Vertical;
+        //else if (directionState == DirectionState.Vertical) nextState = DirectionState.Horizontal;
+
+        if (directionState == DirectionState.Up) nextState = DirectionState.Left;
+        else if (directionState == DirectionState.Left) nextState = DirectionState.Down;
+        else if (directionState == DirectionState.Down) nextState = DirectionState.Right;
+        else if (directionState == DirectionState.Right) nextState = DirectionState.Up;
 
         //if (directionState == DirectionState.Horizontal) nextState = DirectionState.HorizontalLeft;
         //else if (directionState == DirectionState.HorizontalLeft) nextState = DirectionState.Vertical;
@@ -154,7 +164,8 @@ public class TrafficLight : MonoBehaviour
                 //    transform.angle = 90;
 
                 directionState = nextState;
-                if (nextState == DirectionState.Horizontal || nextState == DirectionState.HorizontalLeft)
+                //if (nextState == DirectionState.Horizontal || nextState == DirectionState.HorizontalLeft)
+                if (nextState == DirectionState.Left || nextState == DirectionState.Right)
                     transform.angle = 0;
                 else
                     transform.angle = 90;

@@ -1,5 +1,5 @@
 ﻿
-class TrafficColliderCheck : MonoBehaviour
+public class TrafficColliderCheck : MonoBehaviour
 {
     public int carCount = 0;
 

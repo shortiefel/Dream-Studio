@@ -395,7 +395,7 @@ public class CarAI : MonoBehaviour
 
                 float angle = Vector2.AngleBetween(p2 - p0, p1 - p0);
                 //Debug.Log(angle);
-                Vector2Int checkPos = new Vector2Int((int)Math.Round(p1.x), (int)Math.Round(p1.y));
+                //Vector2Int checkPos = new Vector2Int((int)Math.Round(p2.x), (int)Math.Round(p2.y));
                 //if (angle < 10f) turning = false;
                 //else
                 //{
@@ -410,7 +410,7 @@ public class CarAI : MonoBehaviour
                 if (angle > 10f) {
                     turning = true;
                     index++;
-                    Debug.Log("Turning now");
+                    //Debug.Log("Turning now");
                 }
                 else
                 {

@@ -28,9 +28,9 @@ public class ClockTutorial : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        hour = (int)(timer / 6);
-        minutes = (int)(timer - hour * 6);
-        minutes *= 10;
+        hour = (int)(timer / 12);
+        minutes = (int)(timer - hour * 12);
+        minutes *= 20;
         //timeText.text = hour.ToString() + " : " + minutes.ToString();
 
         if (timer > 72f && switched == false)

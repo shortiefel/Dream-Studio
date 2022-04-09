@@ -201,12 +201,14 @@ public class ButtonRoad : MonoBehaviour
             drawRemoveCarWhite.position = new Vector2(closeXPosition, drawRemoveCarPosition.y);
 
 
-
+            Disable<Transform>(drawRoad);
             Disable<Transform>(drawRoadWhite);
             Disable<Transform>(removeRoadWhite);
             Disable<Transform>(drawERPWhite);
             Disable<Transform>(drawTrafficWhite);
             Disable<Transform>(drawRemoveCarWhite);
+            Disable<Transform>(removeRoad);
+            Disable<Transform>(drawRemoveCar);
 
             Disable<Transform>(drawERP);
             Disable<Transform>(drawTraffic);
@@ -250,8 +252,15 @@ public class ButtonRoad : MonoBehaviour
             placePark.position = new Vector2(closeXPosition, placeParkPos.y);
             placeMall.position = new Vector2(closeXPosition, placeMallPos.y);
             placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
+
+            Disable<Transform>(placeHospital);
+            Disable<Transform>(placeOffice);
+            Disable<Transform>(placePark);
+            Disable<Transform>(placeMall);
+            Disable<Transform>(placePoliceStation);
         }
 
+        
      
         GameObject stringNameGo = GameObject.Find("stringname");
         tooltipText = stringNameGo.GetComponent<Text>();
@@ -337,7 +346,7 @@ public class ButtonRoad : MonoBehaviour
             roadTabOpen = true;
             //buildingsTabOpen = false;
 
-            roadTabUI.ChangeTexture("Game/UI/Arrow_L");
+            roadTabUI.ChangeTexture("Game/UI/BuildingRoad_Click");
 
             EnableAllNormalExcept();
 
@@ -359,7 +368,7 @@ public class ButtonRoad : MonoBehaviour
             //    Enable<Transform>(displayArrow);
 
             //displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
-            roadTabUI.ChangeTexture("Game/UI/Arrow_R");
+            roadTabUI.ChangeTexture("Game/UI/BuildingRoad");
 
     
             //isOn = false;
@@ -379,8 +388,13 @@ public class ButtonRoad : MonoBehaviour
             //Disable<Transform>(displayArrow);
             //Enable<Transform>(displayArrowWhite);
             //displayArrowUI.ChangeTexture("Game/UI/Arrow_L");
-            buildingsTabUI.ChangeTexture("Game/UI/Arrow_L");
+            buildingsTabUI.ChangeTexture("Game/UI/Buildings_Click");
             EnableAllNormalExcept();
+            Enable<Transform>(placeHospital);
+            Enable<Transform>(placeOffice);
+            Enable<Transform>(placePark);
+            Enable<Transform>(placeMall);
+            Enable<Transform>(placePoliceStation);
             //Enable<Transform>(lineDivider1);
             //isOn = true;
             roadTabIsOn = false;
@@ -396,7 +410,7 @@ public class ButtonRoad : MonoBehaviour
             //if (reenable)
             //    Enable<Transform>(displayArrow);
             //displayArrowUI.ChangeTexture("Game/UI/Arrow_R");
-            buildingsTabUI.ChangeTexture("Game/UI/Arrow_R");
+            buildingsTabUI.ChangeTexture("Game/UI/Buildings");
             //if (reenable)
             //{
             //    Debug.Log("Enaalsaksd");

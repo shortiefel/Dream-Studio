@@ -99,7 +99,7 @@ public class TrafficLightManager : MonoBehaviour
     //    trafficLights.Remove(pos);
     //}
 
-    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle, DirectionToTL _dtl, TurnDirection _td)
+    public bool GetTrafficLightState(Vector2Int tlPos, float _carAngle, DirectionToTL _dtl, TurnDirection _td, uint toCheckId)
     {
         //_carAngle = _carAngle % 360;
         ////angle 0/360/-360 - up, 90/-270 - right, -90/270 - left, 180/-180 - down
@@ -115,7 +115,9 @@ public class TrafficLightManager : MonoBehaviour
         //    //if (state) ds = DirectionState.VerticalLeft;
         //}
 
+
         if (!trafficLights.ContainsKey(tlPos)) return false;
+        if (trafficLights[tlPos].CheckIfJustSpawn(toCheckId)) return true;
 
         DirectionState ds = DirectionState.Right;
         switch(_dtl)
@@ -193,9 +195,17 @@ public class TrafficLightManager : MonoBehaviour
 
     public bool RequestPlacingTrafficLight(Vector2Int position)
     {
-
         if (trafficLights.ContainsKey(position))
             return false;
+        if (trafficLights.ContainsKey(new Vector2Int(position.x + 1, position.y)))
+            return false;
+        if (trafficLights.ContainsKey(new Vector2Int(position.x - 1, position.y)))
+            return false;
+        if (trafficLights.ContainsKey(new Vector2Int(position.x, position.y + 1)))
+            return false;
+        if (trafficLights.ContainsKey(new Vector2Int(position.x, position.y - 1)))
+            return false;
+
         if (erpManager.IsERP(position))
             return false;
         if (moneySystem.BuyTrafficLight())

@@ -248,7 +248,7 @@ public class CarAI : MonoBehaviour
                         //    Debug.Log((leftTurns.Contains(targetPos) ? "Turning left " : (rightTurns.Contains(targetPos) ? "Turning Right " : "Going straight ")) + " from " + DirectionToTL.Down);
                         //}
                         
-                        bool state = !tm.GetTrafficLightState(targetPos, transform.angle, dtl, td);
+                        bool state = !tm.GetTrafficLightState(targetPos, transform.angle, dtl, td, entityId);
                         stop |= state;
                         if (stop) power = halfPower;
                         if (state == false)

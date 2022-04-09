@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public enum DirectionState
 {
@@ -43,12 +44,15 @@ public class TrafficLight : MonoBehaviour
     public TrafficColliderCheck upCollider;
     public TrafficColliderCheck downCollider;
 
+    bool spawnCheck = true;
+    List<uint> spawnCheckCollide;
 
     public override void Start()
     {
         //Debug.Log("Making new start -----------------------------------");
-        directionState = DirectionState.Horizontal;
+        //directionState = DirectionState.Horizontal;
         directionState = DirectionState.Up;
+        transform.angle = 90;
 
         GameObject go = GameObject.Find("TrafficManager");
         if (go != null)
@@ -63,7 +67,7 @@ public class TrafficLight : MonoBehaviour
         state = true;
         //texture = gameObject.GetComponent<Texture>();
         //texture.color = new Color(1, 0, 0, 1);
-        transform.angle = 0;
+        //transform.angle = 0;
         carCounter = 0;
 
         timer = 0f;
@@ -77,6 +81,7 @@ public class TrafficLight : MonoBehaviour
         upCollider = Instantiate(new Prefab("TrafficColliderCheck"), new Vector3(transPos.x + 0.19f, transPos.y + 0.55f, 0f)).GetComponent<TrafficColliderCheck>();
         downCollider = Instantiate(new Prefab("TrafficColliderCheck"), new Vector3(transPos.x - 0.19f, transPos.y - 0.55f, 0f)).GetComponent<TrafficColliderCheck>();
 
+        spawnCheckCollide = new List<uint>();
     }
 
     //public void RequestSwap(bool inState)
@@ -180,15 +185,28 @@ public class TrafficLight : MonoBehaviour
         //}
     }
 
+    //True = just spawn and ignore traffic light 
+    //False = look at traffic light state
+    public bool CheckIfJustSpawn(uint toCheck)
+    {
+        if (spawnCheck && spawnCheckCollide.Contains(toCheck))
+        {
+            spawnCheckCollide.Remove(toCheck);
+            if (spawnCheckCollide.Count == 0) spawnCheck = false;
+            return true;
+        }
+        return false;
+    }
+
     public override void OnTriggerEnter(uint entId)
     {
         ++carCounter;
         //Debug.Log("The id is " + id);
+        if (spawnCheck) spawnCheckCollide.Add(entId);
     }
 
     public override void OnTriggerExit(uint entId)
     {
-
         --carCounter;
     }
 

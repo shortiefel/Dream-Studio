@@ -131,7 +131,8 @@
     {
         timer += Time.deltaTime;
 
-        if (timer > 0.4f)
+      
+        if (timer > 0.1f)
         {
             timer = 0;
             return true;
@@ -149,6 +150,7 @@
             {
                 if (stateCheck)
                 {
+                    //timer++;
                     instructions1Script.animation.Play("Close");
                     stateCheck = false;
                 }
@@ -159,6 +161,7 @@
                     instructions2Script.animation.Play("Open");
                     Enable<Transform>(go2.GetComponent<Transform>());
                     stages++;
+                    //timer++;
                     stateCheck = true;
                     instructions1Script.state = false;
                 }
@@ -181,6 +184,7 @@
                 instructions3Script.animation.Play("Open");
                 Enable<Transform>(go3.GetComponent<Transform>());
                 stages++;
+                timer++;
                 stateCheck = true;
                 instructions2Script.state = false;
             }
@@ -458,8 +462,100 @@
 
         /****************************build roads and car appear (13-15)********************************/
 
+        else if (stages == 13)
+        {
+            if (instructions13Script.state)
+            {
+                if (stateCheck)
+                {
+                    instructions13Script.animation.Play("Close");
+                    stateCheck = false;
+                }
+            }
+            if (CheckTimer())
+            {
+                Disable<Transform>(go13.GetComponent<Transform>());
+                instructions14Script.animation.Play("Open");
+                Enable<Transform>(go15.GetComponent<Transform>());
+                stages++;
+                stateCheck = true;
+
+                instructions13Script.state = false;
+            }
+
+        }
+
+        else if (stages == 14)
+        {
+            if (instructions14Script.state)
+            {
+                if (stateCheck)
+                {
+                    instructions14Script.animation.Play("Close");
+                    stateCheck = false;
+                }
+            }
+            if (CheckTimer())
+            {
+                Disable<Transform>(go14.GetComponent<Transform>());
+                instructions14Script.animation.Play("Open");
+                Enable<Transform>(go15.GetComponent<Transform>());
+                stages++;
+                stateCheck = true;
+
+                instructions15Script.state = false;
+            }
+
+        }
+
+        else if (stages == 15)
+        {
+            if (instructions15Script.state)
+            {
+                if (stateCheck)
+                {
+                    instructions15Script.animation.Play("Close");
+                    stateCheck = false;
+                }
+            }
+            if (CheckTimer())
+            {
+                Disable<Transform>(go15.GetComponent<Transform>());
+                instructions16Script.animation.Play("Open");
+                Enable<Transform>(go17.GetComponent<Transform>());
+                stages++;
+                stateCheck = true;
+    
+                instructions17Script.state = false;
+            }
+
+        }
+
 
         /****************************removing car (16)********************************/
+
+        else if (stages == 16)
+        {
+            if (instructions16Script.state)
+            {
+                if (stateCheck)
+                {
+                    instructions16Script.animation.Play("Close");
+                    stateCheck = false;
+                }
+            }
+            if (CheckTimer())
+            {
+                Disable<Transform>(go16.GetComponent<Transform>());
+                instructions17Script.animation.Play("Open");
+                Enable<Transform>(go17.GetComponent<Transform>());
+                stages++;
+                stateCheck = true;
+
+                instructions16Script.state = false;
+            }
+
+        }
 
 
         /****************************removing road (17)********************************/

@@ -17,17 +17,17 @@ struct DestToHouseSet
     }
 }
 
-struct TimerGroup
-{
-    public float timer;
-    public bool active;
-
-    public TimerGroup(float _timer, bool _active)
-    {
-        timer = _timer;
-        active = _active;
-    }
-}
+//struct TimerGroup
+//{
+//    public float timer;
+//    public bool active;
+//
+//    public TimerGroup(float _timer, bool _active)
+//    {
+//        timer = _timer;
+//        active = _active;
+//    }
+//}
 public class CarSpawner : MonoBehaviour
 {
     //-------------Only in House-----------------
@@ -51,15 +51,17 @@ public class CarSpawner : MonoBehaviour
     private bool notifiFlashDirection; //true = minus, false = plus
 
     Queue<BuildingType> backlog; //For unsuccessful spawn
+    BuildingType backlogType = BuildingType.None; //For unsuccessful spawn
+    float backlogTimer = 0f;
 
     float warningLifeTime;
     float maxLifeTime;
 
-    PosIdSet[] possibleDest; //Contains previously spawned dest (for efficency)
-    TimerGroup[] lifeTimeArray;
+    //PosIdSet[] possibleDest; //Contains previously spawned dest (for efficency)
+    //TimerGroup[] lifeTimeArray;
 
     BuildingType outBt;
-    PosIdSet posIdSet;
+    //PosIdSet posIdSet;
 
     int carSpawnCounter = 2;
 
@@ -118,14 +120,14 @@ public class CarSpawner : MonoBehaviour
             maxLifeTime = 30f;
             warningLifeTime = 0.7f * maxLifeTime;
 
-            possibleDest = new PosIdSet[(int)BuildingType.House];
+            //possibleDest = new PosIdSet[(int)BuildingType.House];
 
-            lifeTimeArray = new TimerGroup[(int)BuildingType.House];
-            lifeTimeArray[(int)BuildingType.Hospital] = new TimerGroup(0f, false);
-            lifeTimeArray[(int)BuildingType.Mall] = new TimerGroup(0f, false);
-            lifeTimeArray[(int)BuildingType.Office] = new TimerGroup(0f, false);
-            lifeTimeArray[(int)BuildingType.Park] = new TimerGroup(0f, false);
-            lifeTimeArray[(int)BuildingType.PoliceStation] = new TimerGroup(0f, false);
+            //lifeTimeArray = new TimerGroup[(int)BuildingType.House];
+            //lifeTimeArray[(int)BuildingType.Hospital] = new TimerGroup(0f, false);
+            //lifeTimeArray[(int)BuildingType.Mall] = new TimerGroup(0f, false);
+            //lifeTimeArray[(int)BuildingType.Office] = new TimerGroup(0f, false);
+            //lifeTimeArray[(int)BuildingType.Park] = new TimerGroup(0f, false);
+            //lifeTimeArray[(int)BuildingType.PoliceStation] = new TimerGroup(0f, false);
 
         }
         //-------------------------------------------
@@ -197,57 +199,81 @@ public class CarSpawner : MonoBehaviour
             if (carSpawnCounter != 0 && spawnTimer >= spawnTimerMax && carCounter == 0)
             //if (spawnTimer >= spawnTimerMax && carCounter == 0)
             {
-                if (backlog.Count != 0)
+                //Debug.Log("Attempt spawning ");
+                spawnTimer = 0f;
+
+                //if (backlog.Count != 0)
+                if (backlogType != BuildingType.None)
                 {
-                    BuildingType _bt = backlog.Peek();
+                    //BuildingType _bt = backlog.Peek();
                     //Debug.Log("Trying to s")
-                    if (aiDirector.SpawnRetryWithType(selfPos, _bt, entityId))
+                    //if (aiDirector.SpawnRetryWithType(selfPos, _bt, entityId))
+                    if (aiDirector.SpawnRetryWithType(selfPos, backlogType, entityId))
                     {
                         --carSpawnCounter;
 
-                        backlog.Dequeue();
-                        DisableNotification(_bt);
+                        //backlog.Dequeue();
+                        backlogType = BuildingType.None;
+                        //DisableNotification(_bt);
+                        DisableNotification();
 
-                        spawnTimer = 0f;
+                        //spawnTimer = 0f;
                         return;
                     }
 
-                    else
+                    //else
+                    //{
+                    //    EnableNotification();
+                    //}
+                }
+
+                //if (aiDirector.SelectADestAndSpawn(selfPos, entityId, possibleDest, out outBt, out posIdSet))
+                if (aiDirector.SelectADestAndSpawn(selfPos, entityId, out outBt))
+                {
+                    --carSpawnCounter;
+
+                    //Debug.Log("    " + posIdSet.pos);
+                    //possibleDest[(int)outBt] = posIdSet;
+                    //Debug.Log(" aaaa " + possibleDest[(int)outBt].pos);
+
+                    //lifeTimeArray[(int)outBt].timer = 0f;
+                    //lifeTimeArray[(int)outBt].active = false;
+
+                    if (outBt == backlogType)
                     {
-                        EnableNotification(_bt);
+                        backlogType = BuildingType.None;
+                        backlogTimer = 0f;
                     }
+
+                    //spawnTimer = 0f;
                 }
 
                 else
                 {
-                    if (aiDirector.SelectADestAndSpawn(selfPos, entityId, possibleDest, out outBt, out posIdSet))
-                    {
-                        --carSpawnCounter;
+                    //if (outBt != BuildingType.None)
+                    //{
+                    //    if (lifeTimeArray[(int)outBt].active) return;
+                    //    //backlog.Enqueue(outBt);
+                    //    backlogType = outBt;
+                    //    //EnableNotification(outBt);
+                    //    EnableNotification(backlogType);
+                    //
+                    //    //
+                    //}
+                    Debug.Log("Try spawn " + outBt);
+                    if (outBt == BuildingType.None) return;
+                    //if (backlogType != BuildingType.None || lifeTimeArray[(int)outBt].active) return;
+                    if (backlogType != BuildingType.None) return;
+                    //backlog.Enqueue(outBt);
+                    backlogType = outBt;
+                    //EnableNotification(outBt);
+                    EnableNotification();
+                    Debug.Log("Set fail " + outBt);
 
-                        //Debug.Log("    " + posIdSet.pos);
-                        possibleDest[(int)outBt] = posIdSet;
-                        //Debug.Log(" aaaa " + possibleDest[(int)outBt].pos);
-
-                        lifeTimeArray[(int)outBt].timer = 0f;
-                        lifeTimeArray[(int)outBt].active = false;
-
-                        spawnTimer = 0f;
-                    }
-
-                    else
-                    {
-                        if (outBt != BuildingType.None)
-                        {
-                            if (lifeTimeArray[(int)outBt].active) return;
-                            backlog.Enqueue(outBt);
-                            EnableNotification(outBt);
-
-                            //Debug.Log("Enqueue " + outBt);
-                        }
+                    //Debug.Log("Enqueue " + outBt);
 
 
-                        spawnTimer = 0f;
-                    }
+                    //spawnTimer = 0f;
                 }
             }
         }
@@ -319,18 +345,20 @@ public class CarSpawner : MonoBehaviour
             }
         }
     }
-    private void EnableNotification(BuildingType _bt)
+    //private void EnableNotification(BuildingType _bt)
+    private void EnableNotification()
     {
         //lifeTimeArray[(int)_bt].count = 1;
-        lifeTimeArray[(int)_bt].active = true;
+        //lifeTimeArray[(int)_bt].active = true;
+        //backlogType = _bt;
 
         if (isNotifiActive) return;
 
-        currentNotifiType = _bt;
+        //currentNotifiType = _bt;
         Enable<Transform>(notifiSymbol.transform);
         isNotifiActive = true;
 
-        switch (_bt)
+        switch (backlogType)
         {
             case BuildingType.Hospital:
                 {
@@ -361,11 +389,12 @@ public class CarSpawner : MonoBehaviour
         }
     }
 
-    private void DisableNotification(BuildingType _bt)
+    //private void DisableNotification(BuildingType _bt)
+    private void DisableNotification()
     {
-        lifeTimeArray[(int)_bt].timer = 0f;
-        //lifeTimeArray[(int)_bt].count = 0;
-        lifeTimeArray[(int)_bt].active = false;
+        //lifeTimeArray[(int)_bt].timer = 0f;
+        ////lifeTimeArray[(int)_bt].count = 0;
+        //lifeTimeArray[(int)_bt].active = false;
 
         Disable<Transform>(notifiSymbol.transform);
         isNotifiActive = false;
@@ -377,24 +406,20 @@ public class CarSpawner : MonoBehaviour
 
     private void CheckLifetime(float dt)
     {
-        for (int i = 0; i < (int)BuildingType.House; i++)
+        if (backlogType != BuildingType.None)
+            backlogTimer += dt;
+
+        if (backlogTimer > maxLifeTime)
         {
-            if (lifeTimeArray[i].active)
-                lifeTimeArray[i].timer += dt;
+            popupTextQueue.Enqueue(-GameState.minusMoneyValue);
 
-            if (lifeTimeArray[i].timer > maxLifeTime)
-            {
-                popupTextQueue.Enqueue(-GameState.minusMoneyValue);
+            backlogTimer = 0f;
+            gameState.MissedDestinationTime(backlogType);
 
-                lifeTimeArray[i].timer = 0f;
-                gameState.MissedDestinationTime((BuildingType)i);
-
-                if ((int)currentNotifiType == i)
-                    notifiTexture.color = new Color(1f, 1f, 1f);
-            }
+            notifiTexture.color = new Color(1f, 1f, 1f);
         }
 
-        if (lifeTimeArray[(int)currentNotifiType].timer > warningLifeTime)
+        if (backlogTimer > warningLifeTime)
         {
             if (notifiFlashDirection)
             {
@@ -411,6 +436,41 @@ public class CarSpawner : MonoBehaviour
 
             notifiTexture.color = new Color(1f, notifiFlashTimer, notifiFlashTimer);
         }
+
+        //for (int i = 0; i < (int)BuildingType.House; i++)
+        //{
+        //    if (lifeTimeArray[i].active)
+        //        lifeTimeArray[i].timer += dt;
+        //
+        //    if (lifeTimeArray[i].timer > maxLifeTime)
+        //    {
+        //        popupTextQueue.Enqueue(-GameState.minusMoneyValue);
+        //
+        //        lifeTimeArray[i].timer = 0f;
+        //        gameState.MissedDestinationTime((BuildingType)i);
+        //
+        //        if ((int)currentNotifiType == i)
+        //            notifiTexture.color = new Color(1f, 1f, 1f);
+        //    }
+        //}
+
+        //if (lifeTimeArray[(int)currentNotifiType].timer > warningLifeTime)
+        //{
+        //    if (notifiFlashDirection)
+        //    {
+        //        notifiFlashTimer -= dt;
+        //
+        //        if (notifiFlashTimer < 0f) notifiFlashDirection = false;
+        //    }
+        //    else
+        //    {
+        //        notifiFlashTimer += dt;
+        //
+        //        if (notifiFlashTimer > 1f) notifiFlashDirection = true;
+        //    }
+        //
+        //    notifiTexture.color = new Color(1f, notifiFlashTimer, notifiFlashTimer);
+        //}
     }
 
     public void DisplayPopup()

@@ -95,12 +95,13 @@ public class AIDirector : MonoBehaviour
     //Return true if spawn
     //possibleDest is when the house previously spawned in that place
     //If return false, then it will retry spawn at a later time
-    public bool SelectADestAndSpawn(Vector2Int startPos, uint startId, PosIdSet[] possibleDest, out BuildingType outBt, out PosIdSet posIdSet)
+    //public bool SelectADestAndSpawn(Vector2Int startPos, uint startId, PosIdSet[] possibleDest, out BuildingType outBt, out PosIdSet posIdSet)
+    public bool SelectADestAndSpawn(Vector2Int startPos, uint startId, out BuildingType outBt)
     {
         BuildingType bt = structureManager.GetRandomBuildingType();
 
         outBt = bt;
-        posIdSet = new PosIdSet(0, startPos);
+        //posIdSet = new PosIdSet(0, startPos);
 
 
         if (bt == BuildingType.None) return false;
@@ -147,7 +148,7 @@ public class AIDirector : MonoBehaviour
         {
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
             car.GetComponent<CarAI>().SetPath(path, leftList, rightList, newId, startId);
-            posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, startPos);
+            //posIdSet = new PosIdSet(possibleDest[(int)bt].entityId, startPos);
 
             return true;
         }

@@ -480,7 +480,7 @@ public class MoneySystem : MonoBehaviour
 
     public bool BuyPark()
     {
-        if (money >= parkCost)
+        if (money >= parkCost * 5)
         {
             parkCost *= 5;
             MinusMoney(parkCost, MoneySource.DestPark);
@@ -501,7 +501,7 @@ public class MoneySystem : MonoBehaviour
     }
     public bool BuyHospital()
     {
-        if (money >= hospitalCost)
+        if (money >= hospitalCost * 5)
         {
             hospitalCost *= 5;
             MinusMoney(hospitalCost, MoneySource.DestHospital);
@@ -522,7 +522,7 @@ public class MoneySystem : MonoBehaviour
     }
     public bool BuyOffice()
     {
-        if (money >= officeCost)
+        if (money >= officeCost * 5)
         {
             officeCost *= 5;
             MinusMoney(officeCost, MoneySource.DestOffice);
@@ -543,7 +543,7 @@ public class MoneySystem : MonoBehaviour
     }
     public bool BuyMall()
     {
-        if (money >= shoppingmallCost)
+        if (money >= shoppingmallCost * 5)
         {
             shoppingmallCost *= 5;
             MinusMoney(shoppingmallCost, MoneySource.DestMall);
@@ -564,7 +564,7 @@ public class MoneySystem : MonoBehaviour
     }
     public bool BuyPoliceStation()
     {
-        if (money >= policestationCost)
+        if (money >= policestationCost * 5)
         {
             policestationCost *= 5;
             MinusMoney(policestationCost, MoneySource.DestPolice);

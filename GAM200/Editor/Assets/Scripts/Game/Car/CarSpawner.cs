@@ -177,8 +177,8 @@ public class CarSpawner : MonoBehaviour
     {
         dt = Time.deltaTime;
 
-        if(Input.GetKey(KeyCode.V)) return; //TO REMOVE
-        if (Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
+        //if(Input.GetKey(KeyCode.V)) return; //TO REMOVE
+        //if (Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
 
         //-----------------------------------------Only in House-------------------------------------
         //Only House has popupText
@@ -194,8 +194,8 @@ public class CarSpawner : MonoBehaviour
 
             CheckLifetime(dt);
             spawnTimer += dt;
-            //if (carSpawnCounter != 0 && spawnTimer >= spawnTimerMax && carCounter == 0)
-            if (spawnTimer >= spawnTimerMax && carCounter == 0)
+            if (carSpawnCounter != 0 && spawnTimer >= spawnTimerMax && carCounter == 0)
+            //if (spawnTimer >= spawnTimerMax && carCounter == 0)
             {
                 if (backlog.Count != 0)
                 {
@@ -240,7 +240,7 @@ public class CarSpawner : MonoBehaviour
                         backlog.Enqueue(outBt);
                         EnableNotification(outBt);
 
-                        Debug.Log("Enqueue " + outBt);
+                        //Debug.Log("Enqueue " + outBt);
                     }
 
                     

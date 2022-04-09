@@ -219,7 +219,7 @@ public class StructureManager : MonoBehaviour
             //int randomIndex = GetRandomWeightedIndex(specialWeights);
             uint id = placementManager.PlaceObjectOnTheMap(position, specialPrefabs[(int)_bt].prefab, CellType.SpecialStructure, rotation).entityId;
             destinationList[(int)_bt].Add(new PosIdSet(id, position));
-            Debug.Log("Created special with id " + id);
+            //Debug.Log("Created special with id " + id);
             //AudioPlayer.instance.PlayPlacementSound();
             return true;
         }

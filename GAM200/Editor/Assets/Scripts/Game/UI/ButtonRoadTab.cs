@@ -242,7 +242,8 @@ public class ButtonRoadTab : MonoBehaviour
         }
         else
         {
-            ResetAll();
+            if (reenable)
+                ResetAll();
 
             roadTabClose = true;
             

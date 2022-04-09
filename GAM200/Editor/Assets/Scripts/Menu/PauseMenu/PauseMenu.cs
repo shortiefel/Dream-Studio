@@ -24,6 +24,7 @@ public class PauseMenu : MonoBehaviour
     GameObject quitYes;
     GameObject quitNo;
     GameObject dayText;
+    
 
     Transform settingBtn;
 
@@ -44,8 +45,13 @@ public class PauseMenu : MonoBehaviour
 
     Transform roadTab;
     Transform buildingsTab;
+    Transform removeRoadbtn;
+    Transform removeCarbtn;
+    Transform removeRoadbtnw;
+    Transform removeCarbtnw;
     GameObject clockTimer;
     GameObject AmPm;
+    Transform maintenancefee;
     //Transform displayArrowWhite;
 
 
@@ -92,6 +98,11 @@ public class PauseMenu : MonoBehaviour
         dayText = GameObject.Find("DayClock");
         clockTimer = GameObject.Find("Clock");
         AmPm = GameObject.Find("AMPM");
+        removeRoadbtn = GameObject.Find("RemoveRoad").GetComponent<Transform>();
+        removeCarbtn = GameObject.Find("RemoveCar").GetComponent<Transform>();
+        removeRoadbtnw = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
+        removeCarbtnw = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
+        maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
         //resumeTextPosition = resume.transform.position;
         //htpTextPosition = howToPlay.transform.position;
         //quitTextPosition = pauseQuit.transform.position;
@@ -193,6 +204,7 @@ public class PauseMenu : MonoBehaviour
             Disable<Transform>(dayText.transform);
             Disable<Transform>(clockTimer.transform);
             Disable<Transform>(AmPm.transform);
+            
 
             Enable<Transform>(settingBtn);
             //Disable<Transform>(moneyText);
@@ -205,13 +217,17 @@ public class PauseMenu : MonoBehaviour
             if (combinedUI != null)
                 combinedUI.CloseAllUIExcept(UIType.Pause);
 
-            Disable<Transform>(roadTab);
-            Disable<Transform>(buildingsTab);
+            Disable<Transform>(removeCarbtn);
+            Disable<Transform>(removeRoadbtn);
+            Disable<Transform>(removeCarbtnw);
+            Disable<Transform>(removeRoadbtnw);
+            Disable<Transform>(maintenancefee);
             //Disable<Transform>(displayArrowWhite);
 
         }
         else
         {
+            Debug.Log("I am UN-PAUSING");
             //Console.WriteLine("Unpausing now");
             //Enable<Transform>(moneyText);
             //Enable<Transform>(coinSymbol);
@@ -226,6 +242,7 @@ public class PauseMenu : MonoBehaviour
             Enable<Transform>(dayText.transform);
             Enable<Transform>(clockTimer.transform);
             Enable<Transform>(AmPm.transform);
+            
 
             Disable<Transform>(resumeBtn.transform);
             Disable<Transform>(menuBtn.transform);
@@ -240,8 +257,11 @@ public class PauseMenu : MonoBehaviour
 
             Disable<Transform>(settingBtn);
 
-            Enable<Transform>(roadTab);
-            Enable<Transform>(buildingsTab);
+            Enable<Transform>(removeCarbtn);
+            Enable<Transform>(removeRoadbtn);
+            Disable<Transform>(removeCarbtnw);
+            Disable<Transform>(removeRoadbtnw);
+            Enable<Transform>(maintenancefee);
             //Application.SetPause(false);
 
             if (reenable)

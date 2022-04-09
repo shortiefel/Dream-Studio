@@ -11,6 +11,7 @@ public class HowToPlayButton : MonoBehaviour
     Transform resumeTransform;
     Transform quitTransform;
     Transform mainMenuTransform;
+    Transform optionbtn;
 
     Transform areYouSureTransform;
     Transform quitYesTransform;
@@ -43,6 +44,7 @@ public class HowToPlayButton : MonoBehaviour
         areYouSureTransform = GameObject.Find("AreYouSureText").GetComponent<Transform>();
         quitYesTransform = GameObject.Find("YesText").GetComponent<Transform>();
         quitNoTransform = GameObject.Find("NoText").GetComponent<Transform>();
+        optionbtn = GameObject.Find("settingBtn").GetComponent<Transform>();
         backButtonUI = GetComponent<UI>();
 
 
@@ -90,9 +92,9 @@ public class HowToPlayButton : MonoBehaviour
                 Disable<Transform>(howToPlayTransform);
                 Disable<Transform>(resumeTransform);
                 Disable<Transform>(quitTransform);
-                Disable<Transform>(moneyText);
                 Disable<Transform>(mainMenuTransform);
                 Disable<Transform>(pauseMenuBackIcon);
+                Disable<Transform>(optionbtn);
 
                 Disable<Transform>(areYouSureTransform);
                 Disable<Transform>(quitYesTransform);
@@ -105,12 +107,12 @@ public class HowToPlayButton : MonoBehaviour
                 Disable<Transform>(howToPlayBGTransform);
                 Disable<Transform>(newBackTransform);
 
-                Enable<Transform>(moneyText);
                 Enable<Transform>(howToPlayTransform);
                 Enable<Transform>(resumeTransform);
                 Enable<Transform>(quitTransform);
                 Enable<Transform>(mainMenuTransform);
                 Enable<Transform>(pauseMenuBackIcon);
+                Enable<Transform>(optionbtn);
             }
         }
     }

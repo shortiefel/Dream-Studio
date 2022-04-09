@@ -401,4 +401,9 @@ public class GameState : MonoBehaviour
         overlayAlpha = 0.0f;
         overlayNightUI.alpha = overlayAlpha;
     }
+
+    public int getDayCounter()
+    {
+        return dayCounter;
+    }
 }

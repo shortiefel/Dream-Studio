@@ -174,14 +174,9 @@ public class CombinedUI : MonoBehaviour
         {
             timeSystem.SwitchTabTimer(true);
         }
-
-        else
-        {
             //Enable<Transform>(displayArrow);
-            Enable<Transform>(roadTabTransform);
-            Enable<Transform>(buildingsTabTransform);
-        }
-
+        Enable<Transform>(roadTabTransform);
+        Enable<Transform>(buildingsTabTransform);
         Enable<Transform>(moneyText);
         Enable<Transform>(coinSymbol);
         Enable<Transform>(dayClock);

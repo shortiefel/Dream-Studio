@@ -233,7 +233,7 @@ public class ButtonRoadTab : MonoBehaviour
             
             roadTabUI.ChangeTexture("Game/UI/Arrow_L");
 
-            EnableAllNormalExcept();
+            //EnableAllNormalExcept();
 
             //Enable<Transform>(lineDivider1);
 
@@ -242,7 +242,7 @@ public class ButtonRoadTab : MonoBehaviour
         }
         else
         {
-            if (reenable)
+            if(reenable)
                 ResetAll();
 
             roadTabClose = true;

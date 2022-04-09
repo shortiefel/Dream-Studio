@@ -374,13 +374,16 @@ public class MoneySystem : MonoBehaviour
 
     public void TaxMoney()
     {
+        int count = 0;
+        count = gameState.getDayCounter();
+
         roadNum = roadManager.taxRoadCount;
         tlNum = trafficLightManager.trafficlightTaxCount();
         erpNum = erpManager.erpTaxCount();
 
-        roadTax =  roadNum* 25;
-        trafficTax = tlNum * 50;
-        erpTax = erpNum * 75;
+        roadTax =  (roadNum* 25) + (count * 10);
+        trafficTax = (tlNum * 50) + (count * 10);
+        erpTax = (erpNum * 75) + (count * 10);
         
 
         totalTax = roadTax + erpTax + trafficTax;
@@ -391,6 +394,20 @@ public class MoneySystem : MonoBehaviour
         {
             gameState.shouldEnd = true;
         }
+    }
+    public int getTaxMoney()
+    {
+        roadNum = roadManager.taxRoadCount;
+        tlNum = trafficLightManager.trafficlightTaxCount();
+        erpNum = erpManager.erpTaxCount();
+
+        roadTax = roadNum * 25;
+        trafficTax = tlNum * 50;
+        erpTax = erpNum * 75;
+
+
+        totalTax = roadTax + erpTax + trafficTax;
+        return totalTax;
     }
 
     public bool BuyRoad()

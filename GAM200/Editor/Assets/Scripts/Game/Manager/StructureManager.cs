@@ -207,15 +207,30 @@ public class StructureManager : MonoBehaviour
         if (CheckPositionBeforePlacement(position, CellType.SpecialStructure))
         {
             if (_bt == BuildingType.Hospital)
-                moneySystem.BuyHospital();
+            {
+                if (!moneySystem.BuyHospital())
+                    return false;
+            }
             else if (_bt == BuildingType.Park)
-                moneySystem.BuyPark();
+            {
+                if (!moneySystem.BuyPark())
+                    return false;
+            }
             else if (_bt == BuildingType.Office)
-                moneySystem.BuyOffice();
+            {
+                if (!moneySystem.BuyOffice())
+                return false;
+            }
             else if (_bt == BuildingType.Mall)
-                moneySystem.BuyMall();
+            {
+                if (!moneySystem.BuyMall())
+                    return false;
+            }
             else if (_bt == BuildingType.PoliceStation)
-                moneySystem.BuyPoliceStation();
+            {
+                if (!moneySystem.BuyPoliceStation())
+                    return false;
+            }
             //int randomIndex = GetRandomWeightedIndex(specialWeights);
             uint id = placementManager.PlaceObjectOnTheMap(position, specialPrefabs[(int)_bt].prefab, CellType.SpecialStructure, rotation).entityId;
             destinationList[(int)_bt].Add(new PosIdSet(id, position));

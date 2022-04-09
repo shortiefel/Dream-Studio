@@ -79,6 +79,7 @@ namespace Engine
 						GameState::GetInstance().GetPlaying())
 					{
 						texture.AnimationUpdate(_dt, state);
+						
 					}
 				}
 
@@ -205,10 +206,11 @@ namespace Engine
 
 		// Looping through all layers for game objects; batch rendering
 		int layerCount = LAYER_COUNT;
+		float _fixedDt = DeltaTime::GetInstance().GetFixedDeltaTime() / 10.f;
 		for (int i = 1; i < layerCount; i++)
 		{
 			RenderLightLayer(lightArray, i);
-			RenderTextureLayer(textureArray, i, _dt);
+			RenderTextureLayer(textureArray, i, _fixedDt);
 			RenderParticleLayer(particleArray, i, _dt);
 		}
 

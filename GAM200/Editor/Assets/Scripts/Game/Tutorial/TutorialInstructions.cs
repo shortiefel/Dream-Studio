@@ -61,6 +61,10 @@
     private int hour = 8;
     private int minutes = 0;
 
+    TimeSystem timeSystem;
+    ButtonRoadTab roadTab;
+    ButtonBuildingsTab buildingsTab;
+    GameState gameState;
 
     public override void Start()
     {
@@ -126,12 +130,16 @@
 
         Disable<Transform>(roadCount);
 
+        timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
+        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoadTab>();
+        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonBuildingsTab>();
+        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
     }
 
     public bool CheckTimer()
     {
         timer += Time.fixedDeltaTime;
-        if (timer > 0.1f)
+        if (timer > 0.6f)
         {
             timer = 0;
             return true;
@@ -139,8 +147,10 @@
         return false;
     }
 
-    public override void FixedUpdate()
+
+    public override void Update()
     {
+        gameState.dayTimer = 0f;
         /****************************Intro (1-3)********************************/
 
         if (stages == 0)
@@ -160,14 +170,14 @@
                     instructions2Script.animation.Play("Open");
                     Enable<Transform>(go2.GetComponent<Transform>());
                     stages++;
-                   
+
                     stateCheck = true;
                     instructions1Script.state = false;
                 }
             }
         }
 
-        else  if (stages == 1)
+        else if (stages == 1)
         {
             if (instructions2Script.state)
             {
@@ -184,7 +194,7 @@
                     instructions3Script.animation.Play("Open");
                     Enable<Transform>(go3.GetComponent<Transform>());
                     stages++;
-               
+
                     stateCheck = true;
                     instructions3Script.state = false;
                 }
@@ -252,7 +262,7 @@
                 clickCheck = true;
             }
 
-            if (clickCheck && instructions5Script.state)
+            if (clickCheck)
             {
                 if (stateCheck)
                 {
@@ -268,6 +278,8 @@
                     stages++;
                     stateCheck = true;
                     instructions6Script.state = false;
+
+                    clickCheck = false;
                 }
             }
 
@@ -277,7 +289,12 @@
 
         else if (stages == 5)
         {
-            if (instructions6Script.state)
+            if (Input.GetMouseScroll().y != 0)
+            {
+                clickCheck = true;
+            }
+
+            if (clickCheck)
             {
                 if (stateCheck)
                 {
@@ -294,10 +311,17 @@
 
                     stateCheck = true;
                     instructions7Script.state = false;
+
+                    clickCheck = false;
                 }
             }
 
         }
+    //}
+    //
+    //public override void FixedUpdate()
+    //{
+        
 
         /****************************clock (7-8)********************************/
 
@@ -325,7 +349,12 @@
 
         else if (stages == 7)
         {
-            if (instructions8Script.state)
+            if (timeSystem.isOn)
+            {
+                clickCheck = true;
+            }
+
+            if (clickCheck)
             {
                 if (stateCheck)
                 {
@@ -341,6 +370,8 @@
                     stages++;
                     stateCheck = true;
                     instructions9Script.state = false;
+
+                    clickCheck = false;
                 }
             }
 
@@ -378,12 +409,11 @@
 
         else if (stages == 9)
         {
+
             if (instructions10Script.state)
             {
                 if (stateCheck)
                 {
-                    Debug.Log("in here");
-
                     instructions10Script.animation.Play("Close");
                     stateCheck = false;
                 }
@@ -404,7 +434,12 @@
 
         else if (stages == 10)
         {
-            if (instructions11Script.state)
+            if (buildingsTab.buildingsTabIsOn)
+            {
+                clickCheck = true;
+            }
+
+            if (clickCheck)
             {
                 if (stateCheck)
                 {
@@ -421,12 +456,15 @@
                     stateCheck = true;
                     tutorial.CheckPosition();
                     instructions12Script.state = false;
+
+                    clickCheck = false;
                 }
             }
         }
 
         else if (stages == 11)
         {
+
             if (instructions12Script.state)
             {
                 if (stateCheck)
@@ -450,7 +488,13 @@
 
         else if (stages == 12)
         {
-            if (instructions13Script.state)
+
+            if (roadTab.roadTabIsOn)
+            {
+                clickCheck = true;
+            }
+
+            if (clickCheck)
             {
                 if (stateCheck)
                 {
@@ -467,6 +511,8 @@
                     stateCheck = true;
                     tutorial.CheckPosition();
                     instructions14Script.state = false;
+
+                    clickCheck = false;
                 }
             }
         }
@@ -475,7 +521,12 @@
 
         else if (stages == 13)
         {
-            if (instructions14Script.state)
+            if (roadTab.choosenButton == ButtonType.Draw)
+            {
+                clickCheck = true;
+            }
+
+            if (clickCheck)
             {
                 if (stateCheck)
                 {
@@ -492,6 +543,8 @@
                     stateCheck = true;
 
                     instructions15Script.state = false;
+
+                    clickCheck = false;
                 }
             }
         }

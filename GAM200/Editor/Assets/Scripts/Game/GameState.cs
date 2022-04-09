@@ -21,7 +21,7 @@ public class GameState : MonoBehaviour
 
     PlacementManager placementManager;
 
-    private float dayTimer;
+    public float dayTimer;
     private float dayCycle;
     private float nightCycle;
     private int dayCounter;

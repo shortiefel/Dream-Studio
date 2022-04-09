@@ -89,9 +89,9 @@ public class ButtonRoadTab : MonoBehaviour
     public bool roadTabIsOn;
     public bool buildingsTabIsOn;
 
-    ButtonType bt;
+    //ButtonType bt;
 
-    ButtonType choosenButton = ButtonType.None;
+    public ButtonType choosenButton = ButtonType.None;
     bool displayState = false;
 
 
@@ -141,7 +141,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         closeXPosition = -96f;
 
-        bt = ButtonType.RoadTab;
+        //bt = ButtonType.RoadTab;
         drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
         drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
 
@@ -447,7 +447,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         if (roadTabOpen)
         {
-            if (bt == ButtonType.RoadTab)
+            //if (bt == ButtonType.RoadTab)
             {
                 OpenRoadTabs();
                 buildingsTab.SwitchTabBuildings(false);
@@ -457,7 +457,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         if (roadTabClose)
         {
-            if (bt == ButtonType.RoadTab)
+            //if (bt == ButtonType.RoadTab)
                 CloseRoadTabs();
             //CloseBuildingsTabs();
         }

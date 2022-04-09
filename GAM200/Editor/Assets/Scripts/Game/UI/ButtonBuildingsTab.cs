@@ -68,8 +68,8 @@ public class ButtonBuildingsTab : MonoBehaviour
 
     //private Camera mainCamera;
 
-    static public bool buildingsTabOpen;
-    static public bool buildingsTabClose;
+    private bool buildingsTabOpen;
+    private bool buildingsTabClose;
 
     float timer;
 
@@ -88,11 +88,10 @@ public class ButtonBuildingsTab : MonoBehaviour
     //public bool isOn;
     public bool roadTabIsOn;
     public bool buildingsTabIsOn;
-
-    ButtonType bt;
-
+    
     ButtonType choosenButton = ButtonType.None;
     bool displayState = false;
+
 
 
     public override void Start()
@@ -145,7 +144,7 @@ public class ButtonBuildingsTab : MonoBehaviour
 
         closeXPosition = -96f;
 
-        bt = ButtonType.BuildingsTab;
+
         placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
         placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
         placePark.position = new Vector2(closeXPosition, placeParkPos.y);
@@ -393,7 +392,7 @@ public class ButtonBuildingsTab : MonoBehaviour
     {
         if (buildingsTabOpen)
         {
-            if (bt == ButtonType.BuildingsTab)
+            //if (bt == ButtonType.BuildingsTab)
             {
                 OpenBuildingsTabs();
                 roadTab.SwitchTabRoad(false);
@@ -401,7 +400,7 @@ public class ButtonBuildingsTab : MonoBehaviour
         }
         if (buildingsTabClose)
         {
-            if (bt == ButtonType.BuildingsTab)
+            //if (bt == ButtonType.BuildingsTab)
                 CloseBuildingsTabs();
             //CloseRoadTabs();
         }

@@ -38,6 +38,7 @@ public class CameraMovement : MonoBehaviour
 
     private Vector2 moveUpSpeed;
     private Vector2 moveRightSpeed;
+    private float camSpeed, maxSpeed;
 
     private Vector2 cameraPosition;
 
@@ -67,6 +68,8 @@ public class CameraMovement : MonoBehaviour
 
         minZoom = 8f;
         maxZoom = 10f;
+        camSpeed = 0f;
+        maxSpeed = 0.5f;
 
         moveUpSpeed = 0.5f * transform.up;
         moveRightSpeed = 0.5f * transform.right;
@@ -130,22 +133,26 @@ public class CameraMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W))
             {
-                cameraPosition += moveUpSpeed;
+                camSpeed = maxSpeed * (zoomHeight / maxZoom);
+                cameraPosition.y += camSpeed;
                 positionChange = true;
             }
             else if (Input.GetKey(KeyCode.S))
             {
-                cameraPosition -= moveUpSpeed;
+                camSpeed = maxSpeed * (zoomHeight / maxZoom);
+                cameraPosition.y -= camSpeed;
                 positionChange = true;
             }
             if (Input.GetKey(KeyCode.A))
             {
-                cameraPosition -= moveRightSpeed;
+                camSpeed = maxSpeed * (zoomHeight / maxZoom);
+                cameraPosition.x -= camSpeed;
                 positionChange = true;
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                cameraPosition += moveRightSpeed;
+                camSpeed = maxSpeed * (zoomHeight / maxZoom);
+                cameraPosition.x += camSpeed;
                 positionChange = true;
             }
 

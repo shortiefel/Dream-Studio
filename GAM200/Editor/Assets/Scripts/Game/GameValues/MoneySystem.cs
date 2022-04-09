@@ -498,6 +498,7 @@ public class MoneySystem : MonoBehaviour
     public void SellPark()
     {
         AddMoney((int)(parkCost * 0.5), MoneySource.DestPark);
+        parkCost /= 5;
     }
     public bool BuyHospital()
     {
@@ -519,6 +520,7 @@ public class MoneySystem : MonoBehaviour
     public void SellHospital()
     {
         AddMoney((int)(hospitalCost * 0.5), MoneySource.DestHospital);
+        hospitalCost /= 5;
     }
     public bool BuyOffice()
     {
@@ -540,6 +542,7 @@ public class MoneySystem : MonoBehaviour
     public void SellOffice()
     {
         AddMoney((int)(officeCost * 0.5), MoneySource.DestOffice);
+        officeCost /= 5;
     }
     public bool BuyMall()
     {
@@ -561,6 +564,7 @@ public class MoneySystem : MonoBehaviour
     public void SellMall()
     {
         AddMoney((int)(shoppingmallCost * 0.5), MoneySource.DestMall);
+        shoppingmallCost /= 5;
     }
     public bool BuyPoliceStation()
     {
@@ -582,6 +586,7 @@ public class MoneySystem : MonoBehaviour
     public void SellPoliceStation()
     {
         AddMoney((int)(policestationCost * 0.5), MoneySource.DestPolice);
+        policestationCost /= 5;
     }
 
     //public int road_count()	

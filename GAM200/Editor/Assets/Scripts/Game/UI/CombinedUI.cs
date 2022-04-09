@@ -24,7 +24,9 @@ public class CombinedUI : MonoBehaviour
     Transform moneyText;
     Transform coinSymbol;
     Transform dayClock;
-
+    Transform dayTimer;
+    Transform maintenancefee;
+    Transform ampm;
     Transform listOfCostText;
     UI listOfCostDestUI;
 
@@ -48,6 +50,9 @@ public class CombinedUI : MonoBehaviour
         moneyText = GameObject.Find("MoneyText").GetComponent<Transform>();
         coinSymbol = GameObject.Find("CoinBag").GetComponent<Transform>();
         dayClock = GameObject.Find("DayClock").GetComponent<Transform>();
+        dayTimer = GameObject.Find("Clock").GetComponent<Transform>();
+        ampm = GameObject.Find("AMPM").GetComponent<Transform>();
+        maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
 
         listOfCostText = GameObject.Find("ListOfCostText").GetComponent<Transform>();
         listOfCostDestUI = GameObject.Find("ListOfCostDest").GetComponent<UI>();
@@ -142,8 +147,10 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(timerButton);
                     Disable<Transform>(roadTabTransform);
                     Disable<Transform>(buildingsTabTransform);
-
                     Disable<Transform>(dayClock);
+                    Disable<Transform>(dayTimer);
+                    Disable<Transform>(ampm);
+                    Disable<Transform>(maintenancefee);
 
                     Disable<Transform>(listOfCostText);
                     listOfCostDestUI.alpha = 0f;
@@ -180,6 +187,9 @@ public class CombinedUI : MonoBehaviour
         Enable<Transform>(moneyText);
         Enable<Transform>(coinSymbol);
         Enable<Transform>(dayClock);
+        Enable<Transform>(dayTimer);
+        Enable<Transform>(ampm);
+        Enable<Transform>(maintenancefee);
 
         Enable<Transform>(listOfCostText);
         listOfCostDestUI.alpha = 1f;

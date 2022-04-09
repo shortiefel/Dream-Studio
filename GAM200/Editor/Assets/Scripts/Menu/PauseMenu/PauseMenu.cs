@@ -239,9 +239,9 @@ public class PauseMenu : MonoBehaviour
             Disable<Transform>(menuText.transform);
             //Disable<Transform>(options.transform);
             Disable<Transform>(pauseQuit.transform);
-            Enable<Transform>(dayText.transform);
-            Enable<Transform>(clockTimer.transform);
-            Enable<Transform>(AmPm.transform);
+            //Enable<Transform>(dayText.transform);
+            //Enable<Transform>(clockTimer.transform);
+            //Enable<Transform>(AmPm.transform);
             
 
             Disable<Transform>(resumeBtn.transform);
@@ -261,7 +261,6 @@ public class PauseMenu : MonoBehaviour
             Enable<Transform>(removeRoadbtn);
             Disable<Transform>(removeCarbtnw);
             Disable<Transform>(removeRoadbtnw);
-            Enable<Transform>(maintenancefee);
             //Application.SetPause(false);
 
             if (reenable)

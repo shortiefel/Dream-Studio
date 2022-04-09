@@ -174,9 +174,12 @@ public class StructureManager : MonoBehaviour
         {
             foreach (var i in destinationList[t])
             {
-                if (position == i.pos)
+                if (position == i.pos 
+                    || position == new Vector2Int(i.pos.x + 1, i.pos.y)
+                    || position == new Vector2Int(i.pos.x + 1, i.pos.y + 1) 
+                    || position == new Vector2Int(i.pos.x , i.pos.y + 1))
                 {
-                    if(t == (int)BuildingType.Hospital)
+                    if (t == (int)BuildingType.Hospital)
                         moneySystem.SellHospital();
                     else if (t == (int)BuildingType.Park)
                         moneySystem.SellPark();

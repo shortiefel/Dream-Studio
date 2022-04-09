@@ -59,7 +59,7 @@ public class ButtonRoadTab : MonoBehaviour
 
     Transform trafficIntro;
     Transform erpIntro;
-
+    Transform maintenancefee;
     GameManager gameManager;
     //InputManager inputManager;
 
@@ -99,6 +99,8 @@ public class ButtonRoadTab : MonoBehaviour
     {
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
         buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonBuildingsTab>();
+        maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
+
 
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
         //disable the different effect.
@@ -582,7 +584,7 @@ public class ButtonRoadTab : MonoBehaviour
     {
         revealTrafficButton = true;
         //Enable<Transform>(drawTraffic);
-
+        Disable<Transform>(maintenancefee);
         Disable<Transform>(moneyText);
         //Disable<Transform>(counterText);
         //Debug.Log("Revealing traffic ");

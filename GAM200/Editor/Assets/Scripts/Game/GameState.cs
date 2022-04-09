@@ -39,6 +39,7 @@ public class GameState : MonoBehaviour
     Text moneyText;
     Text dayClock;
 
+
     //bool gameOverBool;
 
     //float previousTimeScale;
@@ -65,6 +66,7 @@ public class GameState : MonoBehaviour
         AmPm = GameObject.Find("AMPM").GetComponent<Text>();
         moneyText = GameObject.Find("MoneyText").GetComponent<Text>();
         dayClock = GameObject.Find("DayClock").GetComponent<Text>();
+
         //GameObject overlayNightGo = GameObject.Find("OverlayNight");
         //if (overlayNightGo != null)
         //    overlayNight = overlayNightGo.GetComponent<Transform>();

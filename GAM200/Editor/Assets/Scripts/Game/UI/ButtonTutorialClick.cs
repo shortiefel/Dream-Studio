@@ -4,7 +4,8 @@ public class ButtonTutorialClick : MonoBehaviour
 {
     TutButtonType tbt;
     //public bool active;
-    ButtonTutorial buttonTut;
+    ButtonTutorial roadTab;
+    ButtonTutorial buildingsTab;
 
     Vector2 tooltipOffset;
     //Texture lineDivider1;
@@ -14,9 +15,9 @@ public class ButtonTutorialClick : MonoBehaviour
 
     public override void Start()
     {
-        buttonTut = GameObject.Find("Displaybtn").GetComponent<ButtonTutorial>();
+        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonTutorial>();
+        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonTutorial>();
 
-        
         if (entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId)
         {
             tbt = TutButtonType.Draw;
@@ -125,148 +126,127 @@ public class ButtonTutorialClick : MonoBehaviour
     }
     public override void OnMouseOver()
     {
+        switch (tbt)
+        {
 
-        //if (!transform.isActive) return;
-       // if (transform.isActive)
-        //{
-            switch (tbt)
-            {
-                //case TutButtonType.Display:
-                //    if (Input.GetMouseButtonDown(MouseCode.Left))
-                //    {
-                //        //Debug.Log("Calling for switich");
-                //        buttonTut.SwitchTabTut(type);
-                //    }
-
-                //    Enable<Transform>(tooltipTrans);
-                //    tooltipTrans.position = tooltipOffset;
-                //    tooltipText.text = "Display buttons";
-
-                //    break;
-
-                case TutButtonType.Draw:
-                    {
-                        if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonTut.CallFunctionTut(tbt);
-
-                        buttonTut.SetToolTips(true, tooltipOffset, "Road");
-
-                        //Enable<Transform>(tooltipTrans);
-                        //tooltipTrans.position = tooltipOffset;
-                        //tooltipText.text = "Road";
-                        break;
-                    }
-                case TutButtonType.Remove:
-                    {
-                        if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonTut.CallFunctionTut(tbt);
-
-                        buttonTut.SetToolTips(true, tooltipOffset, "Remove Road");
-                        //Enable<Transform>(tooltipTrans);
-                        //tooltipTrans.position = tooltipOffset;
-                        //tooltipText.text = "Remove ";
-                        break;
-                    }
-                case TutButtonType.RemoveCar:
-                    {
-                        if (Input.GetMouseButtonDown(MouseCode.Left))
-                            buttonTut.CallFunctionTut(tbt);
-
-                        buttonTut.SetToolTips(true, tooltipOffset, "Remove Car");
-                        //Enable<Transform>(tooltipTrans);
-                        //tooltipText.text = "Remove Car";
-                        break;
-                    }
-
-            case TutButtonType.ERP:
+            case TutButtonType.Draw:
                 {
                     if (Input.GetMouseButtonDown(MouseCode.Left))
-                        buttonTut.CallFunctionTut(tbt);
+                        roadTab.CallFunctionTut(tbt);
 
-                    buttonTut.SetToolTips(true, tooltipOffset, "ERP");
+                    roadTab.SetToolTips(true, tooltipOffset, "Road");
                     //Enable<Transform>(tooltipTrans);
-                    //tooltipText.text = "ERP";
+                    //tooltipText.text = "Road";
                     break;
                 }
-            case TutButtonType.TrafficLight:
-                {
-                    if (Input.GetMouseButtonDown(MouseCode.Left))
-                        buttonTut.CallFunctionTut(tbt);
+            //case TutButtonType.Remove:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //            roadTab.CallFunctionTut(tbt);
 
-                    buttonTut.SetToolTips(true, tooltipOffset, "TrafficLight");
-                    //Enable<Transform>(tooltipTrans);
-                    //tooltipText.text = "TrafficLight";
-                    break;
-                }
-            case TutButtonType.PlaceHospital:
-                    {
-                        if (Input.GetMouseButtonDown(MouseCode.Left))
-                        {
-                            buttonTut.CallFunctionTut(tbt);
-                        }
+            //        roadTab.SetToolTips(true, tooltipOffset, "Remove Road");
+            //        //Enable<Transform>(tooltipTrans);
+            //        //tooltipText.text = "Remove ";
+            //        break;
+            //    }
+            //case TutButtonType.ERP:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //            roadTab.CallFunctionTut(tbt);
 
-                        buttonTut.SetToolTips(true, tooltipOffset, "Place Hospital");
-                        //Enable<Transform>(tooltipTrans);
-                        //tooltipText.text = "Place Hospital";
+            //        roadTab.SetToolTips(true, tooltipOffset, "ERP");
+            //        //Enable<Transform>(tooltipTrans);
+            //        //tooltipText.text = "ERP";
+            //        break;
+            //    }
+            //case TutButtonType.TrafficLight:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //            roadTab.CallFunctionTut(tbt);
 
-                        break;
-                    }
-                case TutButtonType.PlaceOffice:
-                    {
-                        if (Input.GetMouseButtonDown(MouseCode.Left))
-                        {
-                            buttonTut.CallFunctionTut(tbt);
-                        }
+            //        roadTab.SetToolTips(true, tooltipOffset, "TrafficLight");
+            //        //Enable<Transform>(tooltipTrans);
+            //        //tooltipText.text = "TrafficLight";
+            //        break;
+            //    }
+            //case TutButtonType.RemoveCar:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //            roadTab.CallFunctionTut(tbt);
 
-                        buttonTut.SetToolTips(true, tooltipOffset, "Place Office");
-                        //Enable<Transform>(tooltipTrans);
-                        //tooltipText.text = "Place Office";
+            //        roadTab.SetToolTips(true, tooltipOffset, "Remove Car");
+            //        //Enable<Transform>(tooltipTrans);
+            //        //tooltipText.text = "Remove Car";
+            //        break;
+            //    }
 
-                        break;
-                    }
-                case TutButtonType.PlacePark:
-                    {
-                        if (Input.GetMouseButtonDown(MouseCode.Left))
-                        {
-                            buttonTut.CallFunctionTut(tbt);
-                        }
+            //case TutButtonType.PlaceHospital:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //        {
+            //            buildingsTab.CallFunctionTut(tbt);
+            //        }
 
-                        buttonTut.SetToolTips(true, tooltipOffset, "Place Park");
-                        //Enable<Transform>(tooltipTrans);
-                        //tooltipText.text = "Place Park";
+            //        buildingsTab.SetToolTips(true, tooltipOffset, "Place Hospital");
+            //        //Enable<Transform>(tooltipTrans);
+            //        //tooltipText.text = "Place Hospital";
 
-                        break;
-                    }
-                case TutButtonType.PlaceMall:
-                    {
-                        if (Input.GetMouseButtonDown(MouseCode.Left))
-                        {
-                            buttonTut.CallFunctionTut(tbt);
-                        }
+            //        break;
+            //    }
+            //case TutButtonType.PlaceOffice:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //        {
+            //            buildingsTab.CallFunctionTut(tbt);
+            //        }
 
-                        buttonTut.SetToolTips(true, tooltipOffset, "Place Mall");
-                        //Enable<Transform>(tooltipTrans);
-                        //tooltipText.text = "Place Mall";
+            //        buildingsTab.SetToolTips(true, tooltipOffset, "Place Office");
+            //        //Enable<Transform>(tooltipTrans);
+            //        //tooltipText.text = "Place Office";
 
-                        break;
-                    }
-                case TutButtonType.PlacePoliceStation:
-                    {
-                        if (Input.GetMouseButtonDown(MouseCode.Left))
-                        {
-                            buttonTut.CallFunctionTut(tbt);
-                        }
+            //        break;
+            //    }
+            //case TutButtonType.PlacePark:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //        {
+            //            buildingsTab.CallFunctionTut(tbt);
+            //        }
 
-                        buttonTut.SetToolTips(true, tooltipOffset, "Place Police Station");
+            //        buildingsTab.SetToolTips(true, tooltipOffset, "Place Park");
+            //        //Enable<Transform>(tooltipTrans);
+            //        //tooltipText.text = "Place Park";
 
-                        break;
-                    }
+            //        break;
+            //    }
+            //case TutButtonType.PlaceMall:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //        {
+            //            buildingsTab.CallFunctionTut(tbt);
+            //        }
 
-                default:
+            //        buildingsTab.SetToolTips(true, tooltipOffset, "Place Mall");
+            //        //Enable<Transform>(tooltipTrans);
+            //        //tooltipText.text = "Place Mall";
 
-                    break;
-            }
+            //        break;
+            //    }
+            //case TutButtonType.PlacePoliceStation:
+            //    {
+            //        if (Input.GetMouseButtonDown(MouseCode.Left))
+            //        {
+            //            buildingsTab.CallFunctionTut(tbt);
+            //        }
 
+            //        buildingsTab.SetToolTips(true, tooltipOffset, "Place Police Station");
+
+            //        break;
+            //    }
+            default:
+
+                break;
+        }
         //}
     }
 
@@ -277,26 +257,9 @@ public class ButtonTutorialClick : MonoBehaviour
 
     public override void OnMouseExit()
     {
-        InputManager.allowBuilding = true;
-        buttonTut.SetToolTips(false, Vector2.zero);
-
-        //if (!transform.isActive) return;
-        //if (transform.isActive)
-        //{
-        //    switch (tbt)
-        //    {
-        //        case TutButtonType.Display:
-        //        case TutButtonType.Draw:
-        //        case TutButtonType.Remove:
-        //            Disable<Transform>(tooltipTrans);
-
-        //            break;
-        //        default:
-
-        //            break;
-        //    }
-
-        //}
+        //InputManager.allowBuilding = true;
+        //roadTab.SetToolTips(false, Vector2.zero);
+        //buildingsTab.SetToolTips(false, Vector2.zero);
     }
 
     public override void OnEnable()

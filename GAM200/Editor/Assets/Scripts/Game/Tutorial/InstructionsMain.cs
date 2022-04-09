@@ -91,7 +91,8 @@ public class InstructionsMain : MonoBehaviour
     public bool CheckTimer()
     {
         timer += Time.deltaTime;
-        if (timer > 0.4f)
+
+        if (timer > 0.2f)
         {
             timer = 0;
             return true;

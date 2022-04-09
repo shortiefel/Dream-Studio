@@ -55,9 +55,6 @@ public class ButtonBuildingsTab : MonoBehaviour
     Transform tooltipTrans;
     Vector2 toolTipsDisplayPosition;
 
-    Transform lineDivider1;
-    Vector2 line1;
-
     Transform trafficIntro;
     Transform erpIntro;
 
@@ -162,9 +159,6 @@ public class ButtonBuildingsTab : MonoBehaviour
         tooltipTrans = stringNameGo.GetComponent<Transform>();
         toolTipsDisplayPosition = transform.position + new Vector2(-2.40f, 7.70f);
 
-        lineDivider1 = GameObject.Find("Line1").GetComponent<Transform>();
-        line1 = lineDivider1.position;
-
 
         //Disable<Transform>(displayArrowWhite);
 
@@ -180,8 +174,6 @@ public class ButtonBuildingsTab : MonoBehaviour
         timer = 0f;
         closeXPosition = -96f;
         speedMultiply = 10f;
-
-        lineDivider1.position = new Vector2(closeXPosition, line1.y);
 
 
         revealERPButton = false;

@@ -13,8 +13,8 @@ public class CombinedUI : MonoBehaviour
     PauseMenu pauseMenu;
     TimeSystem timeSystem;
     //ButtonStore buttonStore;
-    public ButtonRoad roadTab;
-    public ButtonRoad buildingsTab;
+    public ButtonRoadTab roadTab;
+    public ButtonBuildingsTab buildingsTab;
 
     Transform pauseIcon;
     Transform timerButton;
@@ -36,8 +36,8 @@ public class CombinedUI : MonoBehaviour
     {
         pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
         timeSystem = GameObject.Find("TimerIcon").GetComponent<TimeSystem>();
-        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoad>();
-        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonRoad>();
+        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoadTab>();
+        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonBuildingsTab>();
 
         pauseIcon = GameObject.Find("PauseIcon").GetComponent<Transform>();
         timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();

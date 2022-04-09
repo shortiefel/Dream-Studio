@@ -130,7 +130,7 @@
 
     public bool CheckTimer()
     {
-        timer += Time.deltaTime;
+        timer += Time.fixedDeltaTime;
         if (timer > 0.1f)
         {
             timer = 0;

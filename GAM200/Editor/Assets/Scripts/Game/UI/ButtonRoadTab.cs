@@ -231,7 +231,7 @@ public class ButtonRoadTab : MonoBehaviour
         {
             roadTabOpen = true;
             
-            roadTabUI.ChangeTexture("Game/UI/Arrow_L");
+            roadTabUI.ChangeTexture("Game/UI/BuildingRoad_Click");
 
             //EnableAllNormalExcept();
 
@@ -247,7 +247,7 @@ public class ButtonRoadTab : MonoBehaviour
 
             roadTabClose = true;
             
-            roadTabUI.ChangeTexture("Game/UI/Arrow_R");
+            roadTabUI.ChangeTexture("Game/UI/BuildingRoad");
 
 
             //isOn = false;

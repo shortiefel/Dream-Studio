@@ -218,33 +218,36 @@ public class CarSpawner : MonoBehaviour
                     }
                 }
 
-                if (aiDirector.SelectADestAndSpawn(selfPos, entityId, possibleDest, out outBt, out posIdSet))
-                {
-                    --carSpawnCounter;
-
-                    //Debug.Log("    " + posIdSet.pos);
-                    possibleDest[(int)outBt] = posIdSet;
-                    //Debug.Log(" aaaa " + possibleDest[(int)outBt].pos);
-
-                    lifeTimeArray[(int)outBt].timer = 0f;
-                    lifeTimeArray[(int)outBt].active = false;
-
-                    spawnTimer = 0f;
-                }
-
                 else
                 {
-                    if (outBt != BuildingType.None)
+                    if (aiDirector.SelectADestAndSpawn(selfPos, entityId, possibleDest, out outBt, out posIdSet))
                     {
-                        if (lifeTimeArray[(int)outBt].active) return;
-                        backlog.Enqueue(outBt);
-                        EnableNotification(outBt);
+                        --carSpawnCounter;
 
-                        //Debug.Log("Enqueue " + outBt);
+                        //Debug.Log("    " + posIdSet.pos);
+                        possibleDest[(int)outBt] = posIdSet;
+                        //Debug.Log(" aaaa " + possibleDest[(int)outBt].pos);
+
+                        lifeTimeArray[(int)outBt].timer = 0f;
+                        lifeTimeArray[(int)outBt].active = false;
+
+                        spawnTimer = 0f;
                     }
 
-                    
-                    spawnTimer = 0f;
+                    else
+                    {
+                        if (outBt != BuildingType.None)
+                        {
+                            if (lifeTimeArray[(int)outBt].active) return;
+                            backlog.Enqueue(outBt);
+                            EnableNotification(outBt);
+
+                            //Debug.Log("Enqueue " + outBt);
+                        }
+
+
+                        spawnTimer = 0f;
+                    }
                 }
             }
         }

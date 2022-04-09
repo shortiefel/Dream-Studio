@@ -399,20 +399,25 @@ public class ButtonBuildingsTab : MonoBehaviour
                 roadTab.SwitchTabRoad(false);
             }
         }
-
         if (buildingsTabClose)
         {
             if (bt == ButtonType.BuildingsTab)
                 CloseBuildingsTabs();
             //CloseRoadTabs();
         }
+    }
 
-        /****Shortcut keys in game***/
-        if (Input.GetKeyDown(KeyCode.T1)) CallFunction(ButtonType.PlaceHospital);
-        if (Input.GetKeyDown(KeyCode.T2)) CallFunction(ButtonType.PlaceMall);
-        if (Input.GetKeyDown(KeyCode.T3)) CallFunction(ButtonType.PlacePark);
-        if (Input.GetKeyDown(KeyCode.T4)) CallFunction(ButtonType.PlaceOffice);
-        if (Input.GetKeyDown(KeyCode.T5)) CallFunction(ButtonType.PlacePoliceStation);
+    public override void Update()
+    {
+        if(buildingsTabIsOn)
+        {
+            /****Shortcut keys in game***/
+            if (Input.GetKeyDown(KeyCode.T1)) CallFunction(ButtonType.PlaceHospital);
+            if (Input.GetKeyDown(KeyCode.T2)) CallFunction(ButtonType.PlaceOffice);
+            if (Input.GetKeyDown(KeyCode.T3)) CallFunction(ButtonType.PlacePark);
+            if (Input.GetKeyDown(KeyCode.T4)) CallFunction(ButtonType.PlaceMall);
+            if (Input.GetKeyDown(KeyCode.T5)) CallFunction(ButtonType.PlacePoliceStation);
+        }
     }
 
     public void SetToolTips(bool state, Vector2 position, string textToPut = "")

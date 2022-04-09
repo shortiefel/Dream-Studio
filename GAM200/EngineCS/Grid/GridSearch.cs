@@ -19,8 +19,8 @@ public class GridSearch
     {
         //grid.PrintGridOut();
         //
-        Vector2[] pos2 = new Vector2[100];
-        Vector2Int[] turnArr = new Vector2Int[33];
+        Vector2[] pos2 = new Vector2[150];
+        Vector2Int[] turnArr = new Vector2Int[50];
         List<Vector2> path = new List<Vector2>();
         AStarSearch_Engine(pos2, out int numOfElement2, turnArr, out int leftArrCount, out int rightArrCount, out housePoint, destPoint, routeType);
         //Console.WriteLine("\n Cs c++    Testing path------------------------------------------------------"); //------------------------To  Remove

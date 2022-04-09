@@ -264,63 +264,6 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceRoad(Vector2Int position)
     {
-        //Debug.Log(temporaryRoadPositions.Count);
-        //foreach (var i in temporaryRoadPositions)
-        //{
-        //    Debug.Log(i);
-        //}
-        /*//Debug.Log("here");
-        if (placementManager.CheckIfPositionInBound(position) == false)
-            return;
-        if (placementManager.CheckIfPositionIsFree(position) == false)
-            return;
-        //if (placementMode == false)
-        //{
-            temporaryPlacementPositions.Clear();
-            roadPositionsToRecheck.Clear();
-
-            //placementMode = true;
-            startPosition = position;
-            Debug.Log(position + " -----------------\n");
-
-            temporaryPlacementPositions.Add(position);
-            placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
-            //Console.WriteLine("call function");
-
-        //}
-        //else
-        //{
-        //    //Console.WriteLine("call function2222222222");
-        //    placementManager.RemoveAllTemporaryStructures();
-        //    temporaryPlacementPositions.Clear();
-
-        //    foreach (var positionsToFix in roadPositionsToRecheck)
-        //    {
-        //        roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
-        //    }
-
-        //    roadPositionsToRecheck.Clear();
-
-        //    temporaryPlacementPositions = placementManager.GetPathBetween(startPosition, position);
-
-        //    foreach (var temporaryPosition in temporaryPlacementPositions)
-        //    {
-        //        if (placementManager.CheckIfPositionIsFree(temporaryPosition) == false)
-        //        {
-        //            roadPositionsToRecheck.Add(temporaryPosition);
-        //            continue;
-        //        }
-        //        placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road, 1);
-        //    }
-        //}
-
-        FixRoadPrefabs();*/
-
-
-
-        //placementMode = true;
-        //startPosition = position;
-        //Debug.Log(position + " -----------------\n");
 
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
@@ -402,9 +345,10 @@ public class RoadManager : MonoBehaviour
         //Debug.Log("tmp " + tmp);
         //previousRoadMinus += tmp;
         //roadCount -= tmp;
-
+        //temporaryRoadPositions.Clear();
         temporaryRoadCount = temporaryRoadPositions.Count;
 
+        //Debug.Log(temporaryRoadCount + "  sdfsdf ");
         //taxRoadCount++;
 
         //placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);

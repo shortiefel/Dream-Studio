@@ -33,9 +33,9 @@ Technology is prohibited.
 //How long one line can (when drawing)
 #define MAX_LINE 100
 //The number of waypoints
-#define MAX_WAYPOINTS 100
-//Technically each left turns is about 3 waypoints so MAX_WAYPOINTS / 3
-#define MAX_LEFT_TURNS 33
+#define MAX_WAYPOINTS 150
+//Technically each turns is about 3 waypoints so MAX_WAYPOINTS / 3
+#define MAX_LEFT_TURNS 50
 
 namespace Engine {
 	namespace Game {

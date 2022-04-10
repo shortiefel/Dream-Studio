@@ -236,13 +236,13 @@ public class GameState : MonoBehaviour
         //    SetAllowPause(false);
         //}
 
-        if (highscore == 10)
+        if (highscore == 15)
         {
             buttonRoad.RevealTraffic();
             SetAllowPause(false);
         }
 
-        else if (highscore == 15)
+        else if (highscore == 35)
         {
             buttonRoad.RevealERP();
             SetAllowPause(false);

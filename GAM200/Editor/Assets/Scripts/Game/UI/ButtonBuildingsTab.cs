@@ -1,26 +1,6 @@
 ﻿using System;
 
 //The U behind means its being used = button is white
-//public enum ButtonType
-//{
-//    Draw = 0,
-//    Remove,
-//    ERP,
-//    TrafficLight,
-//    RemoveCar,
-//    PlaceHospital,
-//    PlaceOffice,
-//    PlacePark,
-//    PlaceMall,
-//    PlacePoliceStation,
-//    Display,
-//    Ignore,
-//    Latest, //Used to reopen the last buttontype
-//    RoadTab,
-//    BuildingsTab,
-//    None
-//}
-
 
 public class ButtonBuildingsTab : MonoBehaviour
 {
@@ -88,7 +68,7 @@ public class ButtonBuildingsTab : MonoBehaviour
     //public bool isOn;
     public bool roadTabIsOn;
     public bool buildingsTabIsOn;
-    
+
     ButtonType choosenButton = ButtonType.None;
     bool displayState = false;
 
@@ -167,7 +147,7 @@ public class ButtonBuildingsTab : MonoBehaviour
         //Disable<Transform>(placeMallWhite);
         //Disable<Transform>(placePoliceStationWhite);
 
-        buildingsTabOpen = false;
+        buildingsTabOpen = true;
         buildingsTabClose = false;
 
         timer = 0f;
@@ -198,14 +178,14 @@ public class ButtonBuildingsTab : MonoBehaviour
 
         //isOn = false;
         roadTabIsOn = false;
-        buildingsTabIsOn = false;
-        
+        buildingsTabIsOn = true;
+
     }
 
     public override void OnMouseOver()
     {
-       
-        SetToolTips(true, toolTipsDisplayPosition, "Display Buildings Buttons");
+
+        SetToolTips(true, toolTipsDisplayPosition, "Buildings");
         if (Input.GetMouseButtonDown(MouseCode.Left))
             SwitchTabBuildings(!displayState);
     }
@@ -216,7 +196,7 @@ public class ButtonBuildingsTab : MonoBehaviour
     }
 
     //_activeType = false means u r clicking the white version
-    
+
     public void SwitchTabBuildings(bool type, bool reenable = true)
     {
         if (type)
@@ -231,19 +211,20 @@ public class ButtonBuildingsTab : MonoBehaviour
         }
         else
         {
-            ResetAll();
-            
+            if (reenable)
+                ResetAll();
+
             buildingsTabClose = true;
-            
+
             buildingsTabUI.ChangeTexture("Game/UI/Buildings");
-            
+
             roadTabIsOn = false;
             buildingsTabIsOn = false;
         }
         displayState = type;
     }
 
-    
+
     private void CloseBuildingsTabs()
     {
 
@@ -252,6 +233,8 @@ public class ButtonBuildingsTab : MonoBehaviour
         placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, closeXPosition, timer), placeParkPos.y);
         placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, closeXPosition, timer), placeMallPos.y);
         placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, closeXPosition, timer), placePoliceStationPos.y);
+
+        choosenButton = ButtonType.None;
 
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
@@ -401,14 +384,14 @@ public class ButtonBuildingsTab : MonoBehaviour
         if (buildingsTabClose)
         {
             //if (bt == ButtonType.BuildingsTab)
-                CloseBuildingsTabs();
+            CloseBuildingsTabs();
             //CloseRoadTabs();
         }
     }
 
     public override void Update()
     {
-        if(buildingsTabIsOn)
+        if (buildingsTabIsOn)
         {
             /****Shortcut keys in game***/
             if (Input.GetKeyDown(KeyCode.T1)) CallFunction(ButtonType.PlaceHospital);
@@ -437,9 +420,19 @@ public class ButtonBuildingsTab : MonoBehaviour
 
     }
 
+    public void ResetAllTextures()
+    {
+        placeHospitalUI.ChangeTexture("Game/UI/Hospital");
+        placeOfficeUI.ChangeTexture("Game/UI/Office");
+        placeParkUI.ChangeTexture("Game/UI/Park");
+        placeMallUI.ChangeTexture("Game/UI/ShoppingMall");
+        placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation");
+    }
+
     public void ResetAll()
     {
         gameManager.ClearInputActions();
+        ResetAllTextures();
 
         SceneManager.SetDrawMode(false);
         //gameState.SetDrawMode(false);
@@ -450,45 +443,51 @@ public class ButtonBuildingsTab : MonoBehaviour
     {
         gameManager.ClearInputActions();
 
+        //Disable<Transform>(placeHospital);
+        //Disable<Transform>(placeOffice);
+        //Disable<Transform>(placePark);
+        //Disable<Transform>(placeMall);
+        //Disable<Transform>(placePoliceStation);
+
         SceneManager.SetDrawMode(false);
         //gameState.SetDrawMode(false);
         //activeType = false;
     }
 
-    public void RevealERP()
-    {
-        revealERPButton = true;
+    //public void RevealERP()
+    //{
+    //    revealERPButton = true;
 
-        Disable<Transform>(moneyText);
-        Enable<Transform>(erpIntro);
+    //    Disable<Transform>(moneyText);
+    //    Enable<Transform>(erpIntro);
 
-        buildingsTabClose = true;
+    //    buildingsTabClose = true;
 
-        Time.timeScale = 0f;
+    //    Time.timeScale = 0f;
 
-        combinedUI.CloseAllUIExcept(UIType.None);
+    //    combinedUI.CloseAllUIExcept(UIType.None);
 
-        Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
-    }
+    //    Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
+    //}
 
-    public void RevealTraffic()
-    {
-        revealTrafficButton = true;
-        //Enable<Transform>(drawTraffic);
+    //public void RevealTraffic()
+    //{
+    //    revealTrafficButton = true;
+    //    //Enable<Transform>(drawTraffic);
 
-        Disable<Transform>(moneyText);
-        //Disable<Transform>(counterText);
-        //Debug.Log("Revealing traffic ");
-        Enable<Transform>(trafficIntro);
+    //    Disable<Transform>(moneyText);
+    //    //Disable<Transform>(counterText);
+    //    //Debug.Log("Revealing traffic ");
+    //    Enable<Transform>(trafficIntro);
 
-        buildingsTabClose = true;
+    //    buildingsTabClose = true;
 
-        Time.timeScale = 0f;
+    //    Time.timeScale = 0f;
 
-        combinedUI.CloseAllUIExcept(UIType.None);
+    //    combinedUI.CloseAllUIExcept(UIType.None);
 
-        Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
-    }
+    //    Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
+    //}
 
     public override void OnMouseEnter()
     {

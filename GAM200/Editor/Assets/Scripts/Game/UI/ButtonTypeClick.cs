@@ -186,7 +186,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.Draw:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                        roadTab.CallFunction(bt);
+                        {
+                            roadTab.CallFunction(bt);
+                        } 
 
                         roadTab.SetToolTips(true, tooltipOffset, "Road");
                     
@@ -220,7 +222,7 @@ public class ButtonTypeClick : MonoBehaviour
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                             roadTab.CallFunction(bt);
 
-                        roadTab.SetToolTips(true, tooltipOffset, "TrafficLight");
+                        roadTab.SetToolTips(true, tooltipOffset, "Traffic Light");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "TrafficLight";
                         break;
@@ -243,7 +245,7 @@ public class ButtonTypeClick : MonoBehaviour
                             buildingsTab.CallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Hospital");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Hospital");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Hospital";
 
@@ -256,7 +258,7 @@ public class ButtonTypeClick : MonoBehaviour
                             buildingsTab.CallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Office");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Office");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Office";
 
@@ -269,7 +271,7 @@ public class ButtonTypeClick : MonoBehaviour
                             buildingsTab.CallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Park");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Park");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Park";
 
@@ -282,7 +284,7 @@ public class ButtonTypeClick : MonoBehaviour
                             buildingsTab.CallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Mall");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Mall");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Mall";
 
@@ -295,7 +297,7 @@ public class ButtonTypeClick : MonoBehaviour
                             buildingsTab.CallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Place Police Station");
+                        buildingsTab.SetToolTips(true, tooltipOffset, "Police Station");
 
                         break;
                     }

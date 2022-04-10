@@ -272,11 +272,11 @@ public class RoadManager : MonoBehaviour
         if (temporaryRoadPositions.Count > 0 && temporaryRoadPositions[temporaryRoadPositions.Count - 1] == position)
             return;
         
-        if (temporaryRoadCount >= 20)
-        {
-            Debug.Log("Max temporary road count reached (RoadManager PlaceRoad)");
-            return;
-        }
+        //if (temporaryRoadCount >= 20)
+        //{
+        //    Debug.Log("Max temporary road count reached (RoadManager PlaceRoad)");
+        //    return;
+        //}
         if (temporaryRoadPositions.Count > 0)
         {
             //Tile should be side by side to last tile so in the event that
@@ -304,28 +304,32 @@ public class RoadManager : MonoBehaviour
         //        return;
         //}
 
-        if (temporaryRoadPositions.Count == 1)
-        {
-            bool state0 = placementManager.placementGrid.IsPosFree(temporaryRoadPositions[0]);
-            if (state0 && MoneySystem.money < 20)
-            {
-                temporaryRoadPositions.Clear();
-                return;
-            }
-        }
+        //if (temporaryRoadPositions.Count == 1)
+        //{
+        //    bool state0 = placementManager.placementGrid.IsPosFree(temporaryRoadPositions[0]);
+        //    if (state0 && MoneySystem.money < 20)
+        //    {
+        //        temporaryRoadPositions.Clear();
+        //        return;
+        //    }
+        //}
 
         if (temporaryRoadPositions.Count > 1)
         {
             bool state0 = placementManager.placementGrid.IsPosFree(temporaryRoadPositions[temporaryRoadPositions.Count - 2]);
             bool state1 = placementManager.placementGrid.IsPosFree(temporaryRoadPositions[temporaryRoadPositions.Count - 1]);
+
+
             if (state0 && state1 && MoneySystem.money < 40)
             {
                 temporaryRoadPositions.Clear();
+                moneySystem.RoadDisplayNotEnoughMoney();
                 return;
             }
             if ((state0 || state1) && MoneySystem.money < 20)
             {
                 temporaryRoadPositions.Clear();
+                moneySystem.RoadDisplayNotEnoughMoney();
                 return;
             }
         }
@@ -334,7 +338,6 @@ public class RoadManager : MonoBehaviour
         //Debug.Log("stuff");
         if (tmp > 0)
         {
-            Debug.Log("enter here to place road");
             placeSound.Play();
             for (int i = 0; i < tmp; i++)
             {
@@ -344,19 +347,15 @@ public class RoadManager : MonoBehaviour
 
         //roadCount -= tmp;
         taxRoadCount += tmp;
-        //placementManager.placementGrid.SetRoad(temporaryRoadPositions);
-        //Debug.Log("tmp " + tmp);
-        //previousRoadMinus += tmp;
-        //roadCount -= tmp;
-        //temporaryRoadPositions.Clear();
+ 
+        if (temporaryRoadPositions.Count == 2)
+        {
+            temporaryRoadPositions.RemoveAt(0);
+        }
+
         temporaryRoadCount = temporaryRoadPositions.Count;
-
-        //Debug.Log(temporaryRoadCount + "  sdfsdf ");
-        //taxRoadCount++;
-
-        //placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road, 1);
-
     }
+
     public override void Update()
     {
         //Debug.Log(temporaryRoadPositions.Count);

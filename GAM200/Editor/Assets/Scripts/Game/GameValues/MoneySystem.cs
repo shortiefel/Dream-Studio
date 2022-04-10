@@ -413,10 +413,16 @@ public class MoneySystem : MonoBehaviour
         return totalTax;
     }
 
+    public void RoadDisplayNotEnoughMoney()
+    {
+        displayText = true;
+        Enable<Transform>(storePopText);
+        Enable<Transform>(storePopInfo);
+    }
     public bool BuyRoad()
     {
 
-        if (money > 20)
+        if (money >= 20)
         {
             MinusMoney(20, MoneySource.Road);
             return true;

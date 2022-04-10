@@ -71,7 +71,7 @@ namespace Engine {
         if (_deserializeState) {
             //if (sceneName != "Intro") 
             //if (!ignore) 
-            if (_sceneName == "TutorialNew" || _sceneName == "NewGame")
+            if (_sceneName == "TutorialNew" || _sceneName == "NewGame" || _sceneName == "MainMenu")
             {
                 loadFinish = false;
                 toLoad = sceneName;

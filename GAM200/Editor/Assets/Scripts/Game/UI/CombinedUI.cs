@@ -26,6 +26,7 @@ public class CombinedUI : MonoBehaviour
     Transform dayClock;
     Transform dayTimer;
     Transform maintenancefee;
+    Transform maintenanceIcon;
     Transform ampm;
     Transform listOfCostText;
     UI listOfCostDestUI;
@@ -53,6 +54,7 @@ public class CombinedUI : MonoBehaviour
         dayTimer = GameObject.Find("Clock").GetComponent<Transform>();
         ampm = GameObject.Find("AMPM").GetComponent<Transform>();
         maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
+        maintenanceIcon = GameObject.Find("MaintenanceIcon").GetComponent<Transform>();
 
         listOfCostText = GameObject.Find("ListOfCostText").GetComponent<Transform>();
         listOfCostDestUI = GameObject.Find("ListOfCostDest").GetComponent<UI>();
@@ -121,17 +123,31 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(buildingsTabTransform);
                     break;
                 }
-            //case UIType.Road:
-            //    {
-            //        pauseMenu.SwitchTabPause(false, false);
-            //        timeSystem.SwitchTabTimer(false, false);
-            //        buttonStore.SwitchTabStore(false, false);
-            //
-            //        Disable<Transform>(pauseIcon);
-            //        Disable<Transform>(timerButton);
-            //        Disable<Transform>(storeButton);
-            //        break;
-            //    }
+            case UIType.Road:
+                {
+                    SceneManager.drawNonUI = false;
+
+
+                    pauseMenu.SwitchTabPause(false, false);
+                    timeSystem.SwitchTabTimer(false, false);
+                    //buttonStore.SwitchTabStore(false, false);
+                    //roadTab.SwitchTabRoad(false, true);
+                    //buildingsTab.SwitchTabBuildings(false, true);
+
+                    Disable<Transform>(pauseIcon);
+                    Disable<Transform>(timerButton);
+                    //Disable<Transform>(roadTabTransform);
+                    //Disable<Transform>(buildingsTabTransform);
+                    Disable<Transform>(dayClock);
+                    Disable<Transform>(dayTimer);
+                    Disable<Transform>(ampm);
+                    Disable<Transform>(maintenancefee);
+                    Disable<Transform>(maintenanceIcon);
+
+                    Disable<Transform>(listOfCostText);
+                    listOfCostDestUI.alpha = 0f;
+                    break;
+                }
             case UIType.None:
                 {
                     SceneManager.drawNonUI = false;
@@ -151,6 +167,7 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(dayTimer);
                     Disable<Transform>(ampm);
                     Disable<Transform>(maintenancefee);
+                    Disable<Transform>(maintenanceIcon);
 
                     Disable<Transform>(listOfCostText);
                     listOfCostDestUI.alpha = 0f;
@@ -190,6 +207,7 @@ public class CombinedUI : MonoBehaviour
         Enable<Transform>(dayTimer);
         Enable<Transform>(ampm);
         Enable<Transform>(maintenancefee);
+        Enable<Transform>(maintenanceIcon);
 
         Enable<Transform>(listOfCostText);
         listOfCostDestUI.alpha = 1f;

@@ -601,7 +601,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        //combinedUI.CloseAllUIExcept(UIType.None);
+        combinedUI.CloseAllUIExcept(UIType.Road);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }

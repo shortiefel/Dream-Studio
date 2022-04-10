@@ -1,1 +1,406 @@
-[{"Entity":{"Name":"Camera","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[1.0,1.0],"Angle":0.0,"Layer":2,"IsActive":true},"CameraComponent":{"Height":15.0,"FOV":1.0,"AR":1.7777777910232545,"IsActive":true}},{"Entity":{"Name":"Text","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-82.30000305175781,-31.600000381469728],"LocalPosition":[0.0,0.0],"Scale":[3.0,3.0],"Angle":0.0,"Layer":2,"IsActive":true},"FontComponent":{"Filepath":"Assets\\Fonts\\Montserrat\\static\\Montserrat-ExtraBold.ttf","Text":"Loading...","Colour":[0.46439558267593386,0.36296141147613528,0.25314924120903017,1.0],"Position":[0.0,0.0],"Scale":[1.0,1.0],"IsUI":true,"IsActive":true}},{"Entity":{"Name":"BG","Parent":10001,"Child":[]},"TransformComponent":{"Position":[0.0,0.0],"LocalPosition":[0.0,0.0],"Scale":[13.5,8.0],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\LoadingScreen.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true}},{"Entity":{"Name":"Entity4","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-14.37442398071289,5.496103763580322],"LocalPosition":[0.0,0.0],"Scale":[1.972934603691101,0.412955641746521],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud2.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-13.44431209564209,4.4814372062683109],"LocalPosition":[0.0,0.0],"Scale":[1.5312837362289429,0.405599981546402],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud1.png","Shape":0,"Colour":[1.0,1.0,1.0,0.9333333373069763],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity1","Parent":10001,"Child":[]},"TransformComponent":{"Position":[3.80499267578125,6.510770320892334],"LocalPosition":[0.0,0.0],"Scale":[2.069999933242798,0.522599995136261],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud1.png","Shape":0,"Colour":[1.0,1.0,1.0,0.8039215803146362],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity2","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-2.2829978466033937,4.735105037689209],"LocalPosition":[0.0,0.0],"Scale":[0.9955417513847351,0.46176934242248537],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud1.png","Shape":0,"Colour":[1.0,1.0,1.0,1.0],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity3","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-8.03276538848877,4.143213748931885],"LocalPosition":[0.0,0.0],"Scale":[2.9000000953674318,0.800000011920929],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud2.png","Shape":0,"Colour":[1.0,1.0,1.0,0.800000011920929],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity5","Parent":10001,"Child":[]},"TransformComponent":{"Position":[10.653987884521485,6.679877758026123],"LocalPosition":[0.0,0.0],"Scale":[1.8778536319732667,0.33572736382484438],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud2.png","Shape":0,"Colour":[1.0,1.0,1.0,0.686274528503418],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity6","Parent":10001,"Child":[]},"TransformComponent":{"Position":[2.621215581893921,4.058659553527832],"LocalPosition":[0.0,0.0],"Scale":[2.0237958431243898,0.5125640034675598],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud1.png","Shape":0,"Colour":[1.0,1.0,1.0,0.7333333492279053],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity7","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-2.874884605407715,5.91887903213501],"LocalPosition":[0.0,0.0],"Scale":[2.3770298957824709,0.424971342086792],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud2.png","Shape":0,"Colour":[1.0,1.0,1.0,0.7137255072593689],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity8","Parent":10001,"Child":[]},"TransformComponent":{"Position":[8.45553970336914,5.665208339691162],"LocalPosition":[0.0,0.0],"Scale":[1.6328836679458619,0.424971342086792],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud2.png","Shape":0,"Colour":[1.0,1.0,1.0,0.7058823704719544],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity9","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-9.30109691619873,5.834326267242432],"LocalPosition":[0.0,0.0],"Scale":[1.1699999570846558,0.38999998569488528],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud1.png","Shape":0,"Colour":[1.0,1.0,1.0,0.8392156958580017],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity12","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-16.741973876953126,3.889547824859619],"LocalPosition":[0.0,0.0],"Scale":[2.3770298957824709,0.424971342086792],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud2.png","Shape":0,"Colour":[1.0,1.0,1.0,0.772549033164978],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]},{"Entity":{"Name":"Entity56","Parent":10001,"Child":[]},"TransformComponent":{"Position":[-21.307964324951173,4.988768100738525],"LocalPosition":[0.0,0.0],"Scale":[2.9000000953674318,0.800000011920929],"Angle":0.0,"Layer":2,"IsActive":true},"TextureComponent":{"Filepath":"Assets\\Textures\\Menu\\Cloud2.png","Shape":0,"Colour":[1.0,1.0,1.0,0.7529411911964417],"IsAnimation":false,"IsActive":true},"ScriptComponent":[{"Class":"CloudMovement","IsActive":true}]}]
+[
+  
+  {
+    "Entity": {
+      "Name": "Camera",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "CameraComponent": {
+      "Height": 15.0,
+      "FOV": 1.0,
+      "AR": 1.7777777910232545,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Text",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -82.30000305175781, -31.600000381469728 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 3.0, 3.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "FontComponent": {
+      "Filepath": "Assets\\Fonts\\Montserrat\\static\\Montserrat-ExtraBold.ttf",
+      "Text": "Loading...",
+      "Colour": [ 0.46439558267593386, 0.36296141147613528, 0.25314924120903017, 1.0 ],
+      "Position": [ 0.0, 0.0 ],
+      "Scale": [ 1.0, 1.0 ],
+      "IsUI": true,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "BG",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 13.5, 8.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\LoadingScreen.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "Entity4",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -14.37442398071289, 5.496103763580322 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.972934603691101, 0.412955641746521 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud2.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -13.44431209564209, 4.4814372062683109 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.5312837362289429, 0.405599981546402 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud1.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.9333333373069763 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity1",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 3.80499267578125, 6.510770320892334 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 2.069999933242798, 0.522599995136261 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud1.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.8039215803146362 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity2",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -2.2829978466033937, 4.735105037689209 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 0.9955417513847351, 0.46176934242248537 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud1.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity3",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -8.03276538848877, 4.143213748931885 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 2.9000000953674318, 0.800000011920929 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud2.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.800000011920929 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity5",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 10.653987884521485, 6.679877758026123 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.8778536319732667, 0.33572736382484438 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud2.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.686274528503418 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity6",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 2.621215581893921, 4.058659553527832 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 2.0237958431243898, 0.5125640034675598 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud1.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.7333333492279053 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity7",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -2.874884605407715, 5.91887903213501 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 2.3770298957824709, 0.424971342086792 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud2.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.7137255072593689 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity8",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 8.45553970336914, 5.665208339691162 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.6328836679458619, 0.424971342086792 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud2.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.7058823704719544 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity9",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -9.30109691619873, 5.834326267242432 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 1.1699999570846558, 0.38999998569488528 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud1.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.8392156958580017 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity12",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -16.741973876953126, 3.889547824859619 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 2.3770298957824709, 0.424971342086792 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud2.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.772549033164978 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  },
+  {
+    "Entity": {
+      "Name": "Entity56",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -21.307964324951173, 4.988768100738525 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 2.9000000953674318, 0.800000011920929 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Cloud2.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 0.7529411911964417 ],
+      "IsAnimation": false,
+      "IsActive": true
+    },
+    "ScriptComponent": [
+      {
+        "Class": "CloudMovement",
+        "IsActive": true
+      }
+    ]
+  }
+]

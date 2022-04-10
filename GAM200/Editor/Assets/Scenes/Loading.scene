@@ -1,5 +1,5 @@
 [
-  
+
   {
     "Entity": {
       "Name": "Camera",
@@ -18,6 +18,28 @@
       "Height": 15.0,
       "FOV": 1.0,
       "AR": 1.7777777910232545,
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "BG",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 13.5, 8.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\LoadingScreen.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
       "IsActive": true
     }
   },
@@ -42,28 +64,6 @@
       "Position": [ 0.0, 0.0 ],
       "Scale": [ 1.0, 1.0 ],
       "IsUI": true,
-      "IsActive": true
-    }
-  },
-  {
-    "Entity": {
-      "Name": "BG",
-      "Parent": 10001,
-      "Child": []
-    },
-    "TransformComponent": {
-      "Position": [ 0.0, 0.0 ],
-      "LocalPosition": [ 0.0, 0.0 ],
-      "Scale": [ 13.5, 8.0 ],
-      "Angle": 0.0,
-      "Layer": 2,
-      "IsActive": true
-    },
-    "TextureComponent": {
-      "Filepath": "Assets\\Textures\\Menu\\LoadingScreen.png",
-      "Shape": 0,
-      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
-      "IsAnimation": false,
       "IsActive": true
     }
   },
@@ -402,5 +402,27 @@
         "IsActive": true
       }
     ]
+  },
+  {
+    "Entity": {
+      "Name": "Merlion",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ 0.0, 0.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 13.5, 8.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "TextureComponent": {
+      "Filepath": "Assets\\Textures\\Menu\\Merlion.png",
+      "Shape": 0,
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsAnimation": false,
+      "IsActive": true
+    }
   }
 ]

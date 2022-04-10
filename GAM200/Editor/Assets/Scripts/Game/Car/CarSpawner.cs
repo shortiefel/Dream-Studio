@@ -260,7 +260,7 @@ public class CarSpawner : MonoBehaviour
                     //
                     //    //
                     //}
-                    Debug.Log("Try spawn " + outBt);
+                    //Debug.Log("Try spawn " + outBt);
                     if (outBt == BuildingType.None) return;
                     //if (backlogType != BuildingType.None || lifeTimeArray[(int)outBt].active) return;
                     if (backlogType != BuildingType.None) return;
@@ -268,7 +268,7 @@ public class CarSpawner : MonoBehaviour
                     backlogType = outBt;
                     //EnableNotification(outBt);
                     EnableNotification();
-                    Debug.Log("Set fail " + outBt);
+                    //Debug.Log("Set fail " + outBt);
 
                     //Debug.Log("Enqueue " + outBt);
 
@@ -477,6 +477,12 @@ public class CarSpawner : MonoBehaviour
     {
         carSpawnCounter++;
         popupTextQueue.Enqueue(GameState.addMoneyValue);
+    }
+
+    //If destroyed before reaching destination
+    public void AddToCarCounter()
+    {
+        carSpawnCounter++;
     }
     //-------------------------------------------------------------------------------------------
 

@@ -450,6 +450,8 @@ public class CarAI : MonoBehaviour
         {
             CarManager.carLists.Remove(entityId);
             Destroy(gameObject);
+            if (startPoint != null)
+                startPoint.AddToCarCounter();
         }
 
         if (CarManager.carLists.Contains(entId))

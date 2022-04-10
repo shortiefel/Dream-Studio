@@ -34,7 +34,8 @@ public class RoadManager : MonoBehaviour
     float timer;
     bool addToTime;
 
-    Transform removeCarCollider;
+    Transform removeCarTransform;
+    Collider removeCarCollider;
     bool removeCarBool;
     float removeCarTimer;
 
@@ -81,7 +82,8 @@ public class RoadManager : MonoBehaviour
         timer = 0f;
         addToTime = false;
 
-        removeCarCollider = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
+        removeCarTransform = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
+        removeCarCollider = GameObject.Find("RemoveCarCollider").GetComponent<Collider>();
         removeCarBool = false;
         removeCarTimer = 0f;
 
@@ -366,7 +368,7 @@ public class RoadManager : MonoBehaviour
             {
                 removeCarTimer = 0f;
                 removeCarBool = false;
-                Disable<Transform>(removeCarCollider);
+                Disable<Collider>(removeCarCollider);
             }
         }
     }
@@ -550,8 +552,8 @@ public class RoadManager : MonoBehaviour
         removeCarBool = true;
         removeCarTimer = 0f;
 
-        removeCarCollider.position = position;
-        Enable<Transform>(removeCarCollider);
+        removeCarTransform.position = position;
+        Enable<Collider>(removeCarCollider);
 
         MoneySystem.RemoveCarMoney();
     }

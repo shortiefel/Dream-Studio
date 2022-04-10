@@ -362,27 +362,27 @@ public class CarSpawner : MonoBehaviour
         {
             case BuildingType.Hospital:
                 {
-                    notifiTexture.ChangeTexture("Game/UI/Hospital");
+                    notifiTexture.ChangeTexture("Game/UI/HospitalIcon");
                     break;
                 }
             case BuildingType.Mall:
                 {
-                    notifiTexture.ChangeTexture("Game/UI/ShoppingMall");
+                    notifiTexture.ChangeTexture("Game/UI/ShoppingMallIcon");
                     break;
                 }
             case BuildingType.Office:
                 {
-                    notifiTexture.ChangeTexture("Game/UI/Office");
+                    notifiTexture.ChangeTexture("Game/UI/OfficeIcon");
                     break;
                 }
             case BuildingType.Park:
                 {
-                    notifiTexture.ChangeTexture("Game/UI/Park");
+                    notifiTexture.ChangeTexture("Game/UI/ParkIcon");
                     break;
                 }
             case BuildingType.PoliceStation:
                 {
-                    notifiTexture.ChangeTexture("Game/UI/PoliceStation");
+                    notifiTexture.ChangeTexture("Game/UI/PoliceStationIcon");
                     break;
                 }
 

@@ -68,22 +68,22 @@ public class SpawnManager : MonoBehaviour
         spawnState = SpawnState.BuildUp;
 
         Vector2Int roadPosition = SpawnRandomRoad();
-        roadPosition = new Vector2Int(6, 1);
+        //roadPosition = new Vector2Int(6, 1);
         structureManager.PlaceHouse(roadPosition, 0);
 
-        roadPosition = new Vector2Int(8, 1);
-        structureManager.PlaceHouse(roadPosition, 0);
-        roadPosition = new Vector2Int(8, 6);
-        structureManager.PlaceHouse(roadPosition, 0);
-        roadPosition = new Vector2Int(6, 6);
-        structureManager.PlaceHouse(roadPosition, 0);
-        
-        roadPosition = new Vector2Int(10, 6);
-        structureManager.PlaceHouse(roadPosition, 0);
-        roadPosition = new Vector2Int(10, 4);
-        structureManager.PlaceHouse(roadPosition, 0);
-        roadPosition = new Vector2Int(10, 2);
-        structureManager.PlaceHouse(roadPosition, 0);
+        //roadPosition = new Vector2Int(8, 1);
+        //structureManager.PlaceHouse(roadPosition, 0);
+        //roadPosition = new Vector2Int(8, 6);
+        //structureManager.PlaceHouse(roadPosition, 0);
+        //roadPosition = new Vector2Int(6, 6);
+        //structureManager.PlaceHouse(roadPosition, 0);
+        //
+        //roadPosition = new Vector2Int(10, 6);
+        //structureManager.PlaceHouse(roadPosition, 0);
+        //roadPosition = new Vector2Int(10, 4);
+        //structureManager.PlaceHouse(roadPosition, 0);
+        //roadPosition = new Vector2Int(10, 2);
+        //structureManager.PlaceHouse(roadPosition, 0);
 
 
         //Check if have 1 house and 1 destination to start off

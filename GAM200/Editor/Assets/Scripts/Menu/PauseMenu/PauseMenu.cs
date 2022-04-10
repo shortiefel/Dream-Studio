@@ -55,6 +55,9 @@ public class PauseMenu : MonoBehaviour
     //Transform displayArrowWhite;
 
 
+    GameObject MquitYes;
+    GameObject MquitNo;
+
     //Transform timerButton;
     //Transform storeButton;
 
@@ -124,6 +127,8 @@ public class PauseMenu : MonoBehaviour
         quitYes = GameObject.Find("QuitYesBtn");
         quitNo = GameObject.Find("QuitNoBtn");
 
+        MquitYes = GameObject.Find("MenuYesBtn");
+        MquitNo = GameObject.Find("MenuNoBtn");
 
         settingBtn = GameObject.Find("settingBtn").GetComponent<Transform>();
 
@@ -149,6 +154,11 @@ public class PauseMenu : MonoBehaviour
         Disable<Transform>(areYouSure.transform);
         Disable<Transform>(quitYes.transform);
         Disable<Transform>(quitNo.transform);
+
+        Disable<Transform>(MquitYes.transform);
+        Disable<Transform>(MquitNo.transform);
+
+
 
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
@@ -259,6 +269,10 @@ public class PauseMenu : MonoBehaviour
             Disable<Transform>(quitYes.transform);
             Disable<Transform>(quitNo.transform);
 
+            Disable<Transform>(MquitYes.transform);
+            Disable<Transform>(MquitNo.transform);
+
+
             Disable<Transform>(settingBtn);
 
             //Enable<Transform>(removeCarbtn);
@@ -368,7 +382,19 @@ public class PauseMenu : MonoBehaviour
 
     internal void MenuAction()
     {
+        Console.WriteLine("Menu selected");
+        Enable<Transform>(quitBG.transform);
+        Enable<Transform>(areYouSure.transform);
+        Enable<Transform>(MquitYes.transform);
+        Enable<Transform>(MquitNo.transform);
+
+
+    }
+
+    internal void MenuYesAction()
+    {
         SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
     }
 
     internal void QuitAction()

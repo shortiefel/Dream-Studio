@@ -6,14 +6,16 @@ public class IntroScene : MonoBehaviour
     private int counter;
     private bool fading;
     private float fadespeed;
-    Vector2 vAdobe,vOpenGL,vMono,vFmod,vDreamStudio;
+    Vector2 vAdobe,vOpenGL,vMono,vFmod,vDreamStudio,test;
     public override void Start()
     {
         logos = GameObject.Find("Logos").GetComponent<Texture>();
         logosT = GameObject.Find("Logos").GetComponent<Transform>();
         Console.WriteLine("Enter Intro Start");
+        test.x = 0f;
+        test.y = 0f;
         logos.alpha = 1.0f;
-        fadespeed = 0.003f;
+        fadespeed = 0.002f;
         fading = false;
         counter = 0;
         vAdobe.x = 5.0f;
@@ -29,11 +31,14 @@ public class IntroScene : MonoBehaviour
     }
     public override void Update()
     {
-        if(fading == false)
+        if (fading == false)
         {
             logos.alpha -= fadespeed;
-            if(counter == 5 && logos.alpha <= 0.0f)
+            if (counter == 5 && logos.alpha <= 0.0f)
+            {
+                transform.scale = test;
                 SceneManager.LoadScene("MainMenu");
+            }
         }
         else
         {
@@ -68,7 +73,7 @@ public class IntroScene : MonoBehaviour
             }
             if (counter == 4)
             {
-                logos.ChangeTexture("Logo//Dream_Studio_Logo");
+                logos.ChangeTexture("Logo//DreamStudio_Logo");
                 transform.scale = vDreamStudio;
             }
             counter++;

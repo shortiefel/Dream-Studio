@@ -940,7 +940,7 @@ namespace Engine {
                 Cell& roadCell = *(*(grid + pos.x - 1) + pos.y);
                 if (roadCell.ct == CellType::Road) {
                     roadCell.cellBinary ^= GET_BIN(CellDirection::Right);
-                    UpdateCell(roadCell, { pos.x - 1, pos.y });
+                    UpdateCell(roadCell, { pos.x - 1 + offset.x, pos.y + offset.y });
                 }
             }
 
@@ -948,7 +948,7 @@ namespace Engine {
                 Cell& roadCell = *(*(grid + pos.x + 1) + pos.y);
                 if (roadCell.ct == CellType::Road) {
                     roadCell.cellBinary ^= GET_BIN(CellDirection::Left);
-                    UpdateCell(roadCell, { pos.x + 1, pos.y });
+                    UpdateCell(roadCell, { pos.x + 1 + offset.x, pos.y + offset.y });
                 }
             }
 
@@ -956,7 +956,7 @@ namespace Engine {
                 Cell & roadCell = *(*(grid + pos.x) + pos.y + 1);
                 if (roadCell.ct == CellType::Road) {
                     roadCell.cellBinary ^= GET_BIN(CellDirection::Down);
-                    UpdateCell(roadCell, { pos.x, pos.y + 1 });
+                    UpdateCell(roadCell, { pos.x + offset.x, pos.y + 1 + offset.y });
                 }
             }
 
@@ -964,7 +964,7 @@ namespace Engine {
                 Cell & roadCell = *(*(grid + pos.x) + pos.y - 1);
                 if (roadCell.ct == CellType::Road) {
                     roadCell.cellBinary ^= GET_BIN(CellDirection::Up);
-                    UpdateCell(roadCell, { pos.x, pos.y - 1 });
+                    UpdateCell(roadCell, { pos.x + offset.x, pos.y - 1 + offset.y });
                 }
             }
 

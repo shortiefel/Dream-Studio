@@ -988,20 +988,20 @@ namespace Engine {
 
             if (DestinationCheck(cellC.entityId, { xVal - 1, yVal })) {
                 if (DestinationCheck(cellC.entityId, { xVal, yVal - 1 })) {
-                    posToRemove = { xVal - 1, yVal - 1 };
+                    posToRemove = { pos.x - 1, pos.y - 1 };
                     DestinationCheck(cellC.entityId, posToRemove);
                 }
 
                 else if (DestinationCheck(cellC.entityId, { xVal, yVal + 1})) {
                     DestinationCheck(cellC.entityId, { xVal - 1, yVal + 1 });
-                    posToRemove = { xVal - 1, yVal };
+                    posToRemove = { pos.x - 1, pos.y };
                 }
             }
 
             else if (DestinationCheck(cellC.entityId, { xVal + 1, yVal })) {
                 if (DestinationCheck(cellC.entityId, { xVal, yVal - 1 })) {
                     DestinationCheck(cellC.entityId, { xVal + 1, yVal - 1 });
-                    posToRemove = { xVal, yVal - 1};
+                    posToRemove = { pos.x, pos.y - 1};
                 }
 
                 else if (DestinationCheck(cellC.entityId, { xVal, yVal + 1 })) {

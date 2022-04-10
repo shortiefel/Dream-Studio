@@ -22,12 +22,12 @@ public class HowToPlayButton : MonoBehaviour
     UI backButtonUI;
 
     bool htw;
-
+    private AudioSource btnClick;
 
     public override void Start()
     {
         htw = false;
-
+        btnClick = GetComponent<AudioSource>();
         GameObject go3 = GameObject.Find("MoneyText");
         if (go3 != null)
             moneyText = go3.GetComponent<Transform>();
@@ -67,6 +67,7 @@ public class HowToPlayButton : MonoBehaviour
 
     public override void OnMouseEnter()
     {
+        btnClick.Play();
         if (htw)
         {
             text.color = new Color(1f, 1f, 1f);

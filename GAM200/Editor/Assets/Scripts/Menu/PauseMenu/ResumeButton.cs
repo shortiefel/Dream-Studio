@@ -5,11 +5,11 @@ public class ResumeButton : MonoBehaviour
 
     Text text;
     UI texture;
-
+    private AudioSource btnClick;
     public override void Start()
     {
         pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
-
+        btnClick = GetComponent<AudioSource>();
         text = GetComponent<Text>();
         texture = GameObject.Find("ResumeBtn").GetComponent<UI>();
         texture.color = new Color(1f, 1f, 1f);
@@ -18,6 +18,7 @@ public class ResumeButton : MonoBehaviour
 
     public override void OnMouseEnter()
     {
+        btnClick.Play();
         text.color = new Color(1f, 1f, 1f);
         texture.color = new Color(1f, 0.5f, 0f);
     }

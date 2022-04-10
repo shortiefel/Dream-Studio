@@ -3,6 +3,7 @@
     PauseMenu pauseMenu;
     Text text;
     UI texture;
+    private AudioSource btnClick;
     public override void Start()
     {
         pauseMenu = GameObject.Find("PauseIcon").GetComponent<PauseMenu>();
@@ -10,9 +11,11 @@
         texture = GameObject.Find("BackToMenuBtn").GetComponent<UI>();
         texture.color = new Color(1f, 1f, 1f);
         text.color = new Color(0f, 0f, 0f);
+        btnClick = GetComponent<AudioSource>();
     }
     public override void OnMouseEnter()
     {
+        btnClick.Play();
         text.color = new Color(1f, 1f, 1f);
         texture.color = new Color(1f, 0.5f, 0f);
     }

@@ -362,6 +362,7 @@ public class PauseMenu : MonoBehaviour
 
     public override void OnMouseEnter()
     {
+        //btnClick.Play();
         texture.color = new Color(1f, 1f, 1f);
         InputManager.allowBuilding = false;
     }

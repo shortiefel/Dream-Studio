@@ -338,8 +338,8 @@ public class ButtonTypeClick : MonoBehaviour
         //}
     }
 
-    public override void OnEnable()
-    {
-        Debug.Log("Enabling \n");
-    }
+    //public override void OnEnable()
+    //{
+    //    Debug.Log("Enabling \n");
+    //}
 }

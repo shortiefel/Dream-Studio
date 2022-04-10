@@ -156,7 +156,7 @@ namespace Engine {
 
 		// Read png file for cursor
 		GLFWimage image;
-		image.pixels = stbi_load("Assets/Textures/cursor.png", &image.width, &image.height, 0, 4);
+		image.pixels = stbi_load("Assets/Textures/MouseCursor_New.png", &image.width, &image.height, 0, 4);
 
 		// Create the cursor object
 		glfw_custom_cursor = glfwCreateCursor(&image, 0, 0);

@@ -80,8 +80,8 @@ public class CombinedUI : MonoBehaviour
 
                     timeSystem.SwitchTabTimer(false, false);
                     //buttonStore.SwitchTabStore(false, false);
-                    roadTab.SwitchTabRoad(false, false);
-                    buildingsTab.SwitchTabBuildings(false, false);
+                    roadTab.SwitchTabRoad(false, true);
+                    buildingsTab.SwitchTabBuildings(false, true);
 
                     Disable<Transform>(timerButton);
                     Disable<Transform>(roadTabTransform);
@@ -112,8 +112,8 @@ public class CombinedUI : MonoBehaviour
 
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
-                    roadTab.SwitchTabRoad(false, false);
-                    buildingsTab.SwitchTabBuildings(false, false);
+                    roadTab.SwitchTabRoad(false, true);
+                    buildingsTab.SwitchTabBuildings(false, true);
 
                     Disable<Transform>(pauseIcon);
                     Disable<Transform>(timerButton);
@@ -140,8 +140,8 @@ public class CombinedUI : MonoBehaviour
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
                     //buttonStore.SwitchTabStore(false, false);
-                    roadTab.SwitchTabRoad(false, false);
-                    buildingsTab.SwitchTabBuildings(false, false);
+                    roadTab.SwitchTabRoad(false, true);
+                    buildingsTab.SwitchTabBuildings(false, true);
 
                     Disable<Transform>(pauseIcon);
                     Disable<Transform>(timerButton);

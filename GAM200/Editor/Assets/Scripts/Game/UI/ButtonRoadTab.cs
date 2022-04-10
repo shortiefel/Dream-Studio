@@ -221,7 +221,7 @@ public class ButtonRoadTab : MonoBehaviour
 
     public override void OnMouseOver()
     {
-        SetToolTips(true, toolTipsDisplayPosition, "Display Road Buttons");
+        SetToolTips(true, toolTipsDisplayPosition, "Roads");
         if (Input.GetMouseButtonDown(MouseCode.Left))
             SwitchTabRoad(!displayState);
     }
@@ -284,7 +284,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         //lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, closeXPosition, timer), line1.y);
 
-
+        choosenButton = ButtonType.None;
 
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
@@ -320,8 +320,6 @@ public class ButtonRoadTab : MonoBehaviour
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
         {
-
-
             timer = 0f;
             roadTabOpen = false;
         }
@@ -335,34 +333,34 @@ public class ButtonRoadTab : MonoBehaviour
         if (_bt == choosenButton) _activeType = false;
         if (_bt == ButtonType.Latest) _bt = choosenButton;
 
-        switch (choosenButton)
-        {
-            case ButtonType.Draw:
-                {
+        //switch (choosenButton)
+        //{
+        //    case ButtonType.Draw:
+        //        {
 
-                    break;
-                }
-            case ButtonType.Remove:
-                {
+        //            break;
+        //        }
+        //    case ButtonType.Remove:
+        //        {
 
-                    break;
-                }
-            case ButtonType.ERP:
-                {
+        //            break;
+        //        }
+        //    case ButtonType.ERP:
+        //        {
 
-                    break;
-                }
-            case ButtonType.TrafficLight:
-                {
+        //            break;
+        //        }
+        //    case ButtonType.TrafficLight:
+        //        {
 
-                    break;
-                }
-            case ButtonType.RemoveCar:
-                {
+        //            break;
+        //        }
+        //    case ButtonType.RemoveCar:
+        //        {
 
-                    break;
-                }
-        }
+        //            break;
+        //        }
+        //}
 
         //Debug.Log("Calling " + _bt + " " + _activeType);
         DisableAll();
@@ -579,11 +577,11 @@ public class ButtonRoadTab : MonoBehaviour
         Enable<Transform>(erpIntro);
 
         //closing = true; 
-        roadTabClose = true;
+        //roadTabClose = true;
 
         Time.timeScale = 0f;
 
-        combinedUI.CloseAllUIExcept(UIType.None);
+        //combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }
@@ -599,11 +597,11 @@ public class ButtonRoadTab : MonoBehaviour
         Enable<Transform>(trafficIntro);
 
         //closing = true;
-        roadTabClose = true;
+        //roadTabClose = true;
 
         Time.timeScale = 0f;
 
-        combinedUI.CloseAllUIExcept(UIType.None);
+        //combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }

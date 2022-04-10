@@ -89,7 +89,8 @@ public class CombinedUI : MonoBehaviour
                 {
                     SceneManager.drawNonUI = false;
 
-                    timeSystem.SwitchTabTimer(false, false);
+                    //timeSystem.SwitchTabTimer(false, false);
+                    timeSystem.FullClose();
                     //buttonStore.SwitchTabStore(false, false);
                     roadTab.SwitchTabRoad(false, false);
                     buildingsTab.SwitchTabBuildings(false, false);
@@ -117,53 +118,54 @@ public class CombinedUI : MonoBehaviour
             //        Disable<Transform>(displayArrow);
             //        break;
             //    }
-            case UIType.Store:
-                {
-                    SceneManager.drawNonUI = false;
-
-                    pauseMenu.SwitchTabPause(false, false);
-                    timeSystem.SwitchTabTimer(false, false);
-                    roadTab.SwitchTabRoad(false, false);
-                    buildingsTab.SwitchTabBuildings(false, false);
-
-                    Disable<Transform>(pauseIcon);
-                    Disable<Transform>(timerButton);
-                    Disable<Transform>(roadTabTransform);
-                    Disable<Transform>(buildingsTabTransform);
-                    break;
-                }
-            case UIType.Road:
-                {
-                    SceneManager.drawNonUI = false;
-
-
-                    pauseMenu.SwitchTabPause(false, false);
-                    timeSystem.SwitchTabTimer(false, false);
-                    //buttonStore.SwitchTabStore(false, false);
-                    //roadTab.SwitchTabRoad(false, true);
-                    //buildingsTab.SwitchTabBuildings(false, true);
-
-                    Disable<Transform>(pauseIcon);
-                    Disable<Transform>(timerButton);
-                    //Disable<Transform>(roadTabTransform);
-                    //Disable<Transform>(buildingsTabTransform);
-                    Disable<Transform>(dayClock);
-                    Disable<Transform>(dayTimer);
-                    Disable<Transform>(ampm);
-                    Disable<Transform>(maintenancefee);
-                    Disable<Transform>(maintenanceIcon);
-
-                    Disable<Transform>(listOfCostText);
-                    listOfCostDestUI.alpha = 0f;
-                    break;
-                }
+            //case UIType.Store:
+            //    {
+            //        SceneManager.drawNonUI = false;
+            //
+            //        pauseMenu.SwitchTabPause(false, false);
+            //        timeSystem.SwitchTabTimer(false, false);
+            //        roadTab.SwitchTabRoad(false, false);
+            //        buildingsTab.SwitchTabBuildings(false, false);
+            //
+            //        Disable<Transform>(pauseIcon);
+            //        Disable<Transform>(timerButton);
+            //        Disable<Transform>(roadTabTransform);
+            //        Disable<Transform>(buildingsTabTransform);
+            //        break;
+            //    }
+            //case UIType.Road:
+            //    {
+            //        SceneManager.drawNonUI = false;
+            //
+            //
+            //        pauseMenu.SwitchTabPause(false, false);
+            //        timeSystem.SwitchTabTimer(false, false);
+            //        //buttonStore.SwitchTabStore(false, false);
+            //        //roadTab.SwitchTabRoad(false, true);
+            //        //buildingsTab.SwitchTabBuildings(false, true);
+            //
+            //        Disable<Transform>(pauseIcon);
+            //        Disable<Transform>(timerButton);
+            //        //Disable<Transform>(roadTabTransform);
+            //        //Disable<Transform>(buildingsTabTransform);
+            //        Disable<Transform>(dayClock);
+            //        Disable<Transform>(dayTimer);
+            //        Disable<Transform>(ampm);
+            //        Disable<Transform>(maintenancefee);
+            //        Disable<Transform>(maintenanceIcon);
+            //
+            //        Disable<Transform>(listOfCostText);
+            //        listOfCostDestUI.alpha = 0f;
+            //        break;
+            //    }
             case UIType.None:
                 {
                     SceneManager.drawNonUI = false;
 
 
                     pauseMenu.SwitchTabPause(false, false);
-                    timeSystem.SwitchTabTimer(false, false);
+                    //timeSystem.SwitchTabTimer(false, false);
+                    timeSystem.FullClose();
                     //buttonStore.SwitchTabStore(false, false);
                     roadTab.SwitchTabRoad(false, false);
                     buildingsTab.SwitchTabBuildings(false, false);
@@ -208,9 +210,10 @@ public class CombinedUI : MonoBehaviour
             buildingsTab.CallFunction(ButtonType.Latest);
         }
 
-        if (isClockOpen)
+        //if (isClockOpen)
         {
-            timeSystem.SwitchTabTimer(true);
+            //timeSystem.SwitchTabTimer(true);
+            timeSystem.FullOpen();
         }
             //Enable<Transform>(displayArrow);
         Enable<Transform>(roadTabTransform);

@@ -23,7 +23,7 @@ public class PauseMenu : MonoBehaviour
     GameObject areYouSure;
     GameObject quitYes;
     GameObject quitNo;
-    GameObject dayText;
+    //GameObject dayText;
     
 
     Transform settingBtn;
@@ -43,15 +43,15 @@ public class PauseMenu : MonoBehaviour
 
     UI texture;
 
-    Transform roadTab;
-    Transform buildingsTab;
+    //Transform roadTab;
+    //Transform buildingsTab;
     Transform removeRoadbtn;
     Transform removeCarbtn;
     Transform removeRoadbtnw;
     Transform removeCarbtnw;
-    GameObject clockTimer;
-    GameObject AmPm;
-    Transform maintenancefee;
+    //GameObject clockTimer;
+    //GameObject AmPm;
+    //Transform maintenancefee;
     //Transform displayArrowWhite;
 
 
@@ -97,14 +97,14 @@ public class PauseMenu : MonoBehaviour
         //options = GameObject.Find("OptionText");
         pauseQuit = GameObject.Find("QuitText");
 
-        dayText = GameObject.Find("DayClock");
-        clockTimer = GameObject.Find("Clock");
-        AmPm = GameObject.Find("AMPM");
+        //dayText = GameObject.Find("DayClock");
+        //clockTimer = GameObject.Find("Clock");
+        //AmPm = GameObject.Find("AMPM");
         removeRoadbtn = GameObject.Find("RemoveRoad").GetComponent<Transform>();
         removeCarbtn = GameObject.Find("RemoveCar").GetComponent<Transform>();
         removeRoadbtnw = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
         removeCarbtnw = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
-        maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
+        //maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
         //resumeTextPosition = resume.transform.position;
         //htpTextPosition = howToPlay.transform.position;
         //quitTextPosition = pauseQuit.transform.position;
@@ -153,8 +153,8 @@ public class PauseMenu : MonoBehaviour
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
 
-        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<Transform>();
-        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>();
+        //roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<Transform>();
+        //buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>();
         //displayArrowWhite = GameObject.Find("DisplaybtnWhite").GetComponent<Transform>();
 
         //GameObject timerButtonGO = GameObject.Find("TimerIcon");
@@ -204,9 +204,9 @@ public class PauseMenu : MonoBehaviour
             //Enable<Transform>(optionsBtn.transform);
             Enable<Transform>(howToPlayBtn.transform);
             Enable<Transform>(pauseQuitBtn.transform);
-            Disable<Transform>(dayText.transform);
-            Disable<Transform>(clockTimer.transform);
-            Disable<Transform>(AmPm.transform);
+            //Disable<Transform>(dayText.transform);
+            //Disable<Transform>(clockTimer.transform);
+            //Disable<Transform>(AmPm.transform);
             
 
             Enable<Transform>(settingBtn);
@@ -224,7 +224,7 @@ public class PauseMenu : MonoBehaviour
             Disable<Transform>(removeRoadbtn);
             Disable<Transform>(removeCarbtnw);
             Disable<Transform>(removeRoadbtnw);
-            Disable<Transform>(maintenancefee);
+            //Disable<Transform>(maintenancefee);
             //Disable<Transform>(displayArrowWhite);
 
         }
@@ -261,8 +261,11 @@ public class PauseMenu : MonoBehaviour
 
             Disable<Transform>(settingBtn);
 
-            Disable<Transform>(removeCarbtnw);
-            Disable<Transform>(removeRoadbtnw);
+            //Enable<Transform>(removeCarbtn);
+            //Enable<Transform>(removeRoadbtn);
+            //Disable<Transform>(removeCarbtnw);
+            //Disable<Transform>(removeRoadbtnw);
+
             //Application.SetPause(false);
 
             if (reenable)
@@ -309,6 +312,39 @@ public class PauseMenu : MonoBehaviour
 
         
     }
+
+    public void FullOpen()
+    {
+
+    }
+    public void FullClose()
+    {
+        btnClick.Play();
+
+        Disable<Transform>(pauseBG.transform);
+        Disable<Transform>(HowToBG.transform);
+
+        Disable<Transform>(resume.transform);
+        Disable<Transform>(howToPlay.transform);
+        Disable<Transform>(menuText.transform);
+
+        Disable<Transform>(pauseQuit.transform);
+
+        Disable<Transform>(resumeBtn.transform);
+        Disable<Transform>(menuBtn.transform);
+
+        Disable<Transform>(howToPlayBtn.transform);
+        Disable<Transform>(pauseQuitBtn.transform);
+
+        Disable<Transform>(quitBG.transform);
+        Disable<Transform>(areYouSure.transform);
+        Disable<Transform>(quitYes.transform);
+        Disable<Transform>(quitNo.transform);
+
+        Disable<Transform>(settingBtn);
+    }
+
+
     public override void OnMouseEnter()
     {
         texture.color = new Color(1f, 1f, 1f);

@@ -24,6 +24,10 @@ public class TimeSystem : MonoBehaviour
     Transform TimerNormalWhite;
     Transform TimerFastWhite;
 
+    Transform dayText;
+    Transform clockTimer;
+    Transform AmPm;
+
     Vector2 tStopPosition;
     Vector2 tNormalPosition;
     Vector2 tFastPosition;
@@ -76,6 +80,10 @@ public class TimeSystem : MonoBehaviour
         TimerFast = GameObject.Find("TimerForward").GetComponent<Transform>();
         TimerFastWhite = GameObject.Find("TimerForwardWhite").GetComponent<Transform>();
         tFastPosition = TimerFast.position;
+
+        dayText = GameObject.Find("DayClock").GetComponent<Transform>();
+        clockTimer = GameObject.Find("Clock").GetComponent<Transform>();
+        AmPm = GameObject.Find("AMPM").GetComponent<Transform>();
 
         Enable<Transform>(Timer);
         Disable<Transform>(TimerStop);
@@ -278,6 +286,25 @@ public class TimeSystem : MonoBehaviour
         DisableAllWhite();
 
         gameManager.ClearInputActions();
+    }
+
+    public void FullClose()
+    {
+        ResetAll();
+
+        Disable<Transform>(dayText);
+        Disable<Transform>(clockTimer);
+        Disable<Transform>(AmPm);
+    }
+
+    public void FullOpen()
+    {
+        Enable<Transform>(dayText);
+        Enable<Transform>(clockTimer);
+        Enable<Transform>(AmPm);
+
+        if (isOn)
+            SwitchTabTimer(true);
     }
 
     public void DisableAll()

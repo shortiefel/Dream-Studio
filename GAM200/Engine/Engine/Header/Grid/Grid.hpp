@@ -31,7 +31,7 @@ Technology is prohibited.
 #define GRID_NULL_VALUE_CHECK(value) (!(value.x == GRID_NULL_VALUE) && !(value.y == GRID_NULL_VALUE))
 
 //How long one line can (when drawing)
-#define MAX_LINE 100
+#define MAX_LINE 10
 //The number of waypoints
 #define MAX_WAYPOINTS 150
 //Technically each turns is about 3 waypoints so MAX_WAYPOINTS / 3

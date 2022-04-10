@@ -73,7 +73,7 @@ public class CloseReceipt : MonoBehaviour
             Disable<Transform>(receipt.transform);
             Disable<Transform>(closeTransform);
 
-            gameState.ResetDay();
+            //gameState.ResetDay();
             if (!gameState.GameOver())
                 gameState.SetAllowPause(true); //Doesnt allow pause when its loading into the Next scene
             gameState.SetPause(false);

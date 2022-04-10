@@ -49,6 +49,7 @@ public class ButtonRoadTab : MonoBehaviour
     Transform drawRemoveCar;
     Transform drawRemoveCarWhite;
     Vector2 drawRemoveCarPosition;
+    Transform removeCarTransform;
 
     Text tooltipText;
     Transform tooltipTrans;
@@ -133,6 +134,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
         drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
+        removeCarTransform = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
         //drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
         //drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
         //drawRemoveCarPosition = drawRemoveCar.position;
@@ -166,6 +168,7 @@ public class ButtonRoadTab : MonoBehaviour
         Disable<Transform>(drawERPWhite);
         Disable<Transform>(drawTrafficWhite);
         Disable<Transform>(drawRemoveCarWhite);
+        Disable<Transform>(removeCarTransform);
 
         Disable<Transform>(drawERP);
         Disable<Transform>(drawTraffic);
@@ -211,7 +214,9 @@ public class ButtonRoadTab : MonoBehaviour
 
         roadTabIsOn = false;
         buildingsTabIsOn = false;
+
         
+
     }
 
     public override void OnMouseOver()
@@ -413,6 +418,7 @@ public class ButtonRoadTab : MonoBehaviour
                         gameManager.RemoveCarHandler();
 
                         Enable<Transform>(drawRemoveCarWhite);
+                        Enable<Transform>(removeCarTransform);
 
                         EnableAllNormalExcept(ButtonType.RemoveCar);
 
@@ -518,6 +524,7 @@ public class ButtonRoadTab : MonoBehaviour
         Enable<Transform>(drawRoadWhite);
         Enable<Transform>(removeRoadWhite);
         Enable<Transform>(drawRemoveCarWhite);
+        Enable<Transform>(removeCarTransform);
 
         if (revealERPButton)
         {
@@ -536,6 +543,7 @@ public class ButtonRoadTab : MonoBehaviour
         Disable<Transform>(drawERPWhite);
         Disable<Transform>(drawTrafficWhite);
         Disable<Transform>(drawRemoveCarWhite);
+        Disable<Transform>(removeCarTransform);
     }
 
 

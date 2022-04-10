@@ -547,16 +547,21 @@ public class RoadManager : MonoBehaviour
 
     }
     
-    public void RemoveCarGrid(Vector2Int position)
+    public void RemoveCarClick(Vector2Int position)
     {
-        Debug.Log("Removing handler");
         removeCarBool = true;
         removeCarTimer = 0f;
 
-        removeCarTransform.position = position;
+        //removeCarTransform.position = position;
         Enable<Collider>(removeCarCollider);
 
         MoneySystem.RemoveCarMoney();
+    }
+
+    public void RemoveCarHover(Vector2Int position)
+    {
+        if (placementManager.CheckIfPositionInBound(position))
+            removeCarTransform.position = position;
     }
 
 }

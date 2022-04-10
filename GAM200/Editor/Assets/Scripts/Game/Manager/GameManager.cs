@@ -95,7 +95,8 @@ public class GameManager : MonoBehaviour
     internal void RemoveCarHandler()
     {
         ClearInputActions();
-        inputManager.OnMouseClick += roadManager.RemoveCarGrid;
+        inputManager.OnMouseClick += roadManager.RemoveCarClick;
+        inputManager.OnMouseHover += roadManager.RemoveCarHover;
     
         //inputManager.OnMouseHold += roadManager.RemoveRoad;
         //inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
@@ -136,10 +137,7 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick = null;
         inputManager.OnMouseHold = null;
         inputManager.OnMouseUp = null;
-
-        if (inputManager.removeCarBool) Disable<Transform>(inputManager.removeCarCursor);
-
-        inputManager.removeCarBool = false;
+        inputManager.OnMouseHover = null;
     }
 
     //private void Update()

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour
 {
-	public Action<Vector2Int> OnMouseClick, OnMouseHold;
+	public Action<Vector2Int> OnMouseClick, OnMouseHold, OnMouseHover;
 	public Action OnMouseUp;
 	//private Vector2 cameraMovementVector;
 
@@ -19,8 +19,10 @@ public class InputManager : MonoBehaviour
 
 	static public bool allowBuilding = true;
 
-	public bool removeCarBool = false;
-	public Transform removeCarCursor;
+	//static public bool removeCarBool = false;
+	//public Transform removeCarTransform;
+
+	private Vector2Int raycastPosition;
 
 	public override void Start()
 	{
@@ -31,19 +33,19 @@ public class InputManager : MonoBehaviour
 
 		OverGameObject = false;
 
-		removeCarCursor = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
+		//removeCarTransform = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
 	}
 
 	//private void Update()
 	public override void Update()
 	{
-		if (removeCarBool)
-        {
-			Vector2Int pos = RaycastGround();
-			if (placementManager.CheckIfPositionInBound(pos))
-				removeCarCursor.position = new Vector2(pos);
-
-		}
+		//if (removeCarBool)
+        //{
+		//	Vector2Int pos = RaycastGround();
+		//	if (placementManager.CheckIfPositionInBound(pos))
+		//		removeCarTransform.position = new Vector2(pos);
+		//
+		//}
 		//if (Input.GetMouseButtonDown(MouseCode.Left))
 		//{
 		//	Vector3 mPos = mainCamera.ScreenToWorldPoint(Input.GetMousePosition());
@@ -97,8 +99,35 @@ public class InputManager : MonoBehaviour
 		////if (Mathf.Approximately(0f, Time.timeScale)) return;
 		//if (!gameState.ShouldDraw()) return;
 		if (!allowBuilding) return;
-		CheckClickDownEvent();
-		CheckClickHoldEvent();
+
+		raycastPosition = RaycastGround();
+
+		if (OnMouseHover != null)
+			OnMouseHover.Invoke(raycastPosition);
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			/*if (position != null)
+				OnMouseClick?.Invoke(position.Value);*/
+			//if (position != null) {
+			if (OnMouseClick != null)
+				OnMouseClick.Invoke(raycastPosition);
+			//OnMouseClick.Invoke(position.Value);
+			//}
+		}
+		//if (Input.GetMouseButton(0) && OverGameObject)
+		if (Input.GetMouseButton(0))
+		{
+			/*if (position != null)
+				OnMouseHold?.Invoke(position.Value);*/
+			//if (position != null) {
+			if (OnMouseHold != null)
+				OnMouseHold.Invoke(raycastPosition);
+			//OnMouseHold.Invoke(position.value); 
+			//}
+		}
+		//CheckClickDownEvent();
+		//CheckClickHoldEvent();
 		CheckClickUpEvent();
 		//CheckArrowInput();
 	}

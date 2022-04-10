@@ -34,6 +34,7 @@ public class PauseMusicClick: MonoBehaviour
 
     UI settingBackBtn;
     static bool optionMusic;
+    static bool settingBool;
 
     public override void Start()
     {
@@ -70,6 +71,7 @@ public class PauseMusicClick: MonoBehaviour
         soundBg2 = GameObject.Find("SoundBg2").GetComponent<Transform>();
         soundBg3 = GameObject.Find("SoundBg3").GetComponent<Transform>();
 
+        settingBool = false;
 
         Disable<Transform>(MasterText);
         Disable<Transform>(BGMText);
@@ -111,7 +113,8 @@ public class PauseMusicClick: MonoBehaviour
         {
             if (optionMusic)
             {
-
+                Debug.Log("Closing setting");
+                settingBool = false;
                 Enable<Transform>(howToPlayTransform);
                 Enable<Transform>(resumeTransform);
                 Enable<Transform>(menuTransform);
@@ -138,16 +141,18 @@ public class PauseMusicClick: MonoBehaviour
                 Disable<Transform>(settingBG);
                 Disable<Transform>(settingBack);
                 Disable<Transform>(optionSetting);
-                Enable<Transform>(settingBtn);
                 Disable<Transform>(soundBg);
                 Disable<Transform>(soundBg2);
                 Disable<Transform>(soundBg3);
+                Enable<Transform>(settingBtn);
 
 
                 optionMusic = false;
             }
             else
             {
+                Debug.Log("Opening setting");
+                settingBool = true;
                 Disable<Transform>(howToPlayTransform);
                 Disable<Transform>(resumeTransform);
                 Disable<Transform>(menuTransform);
@@ -185,7 +190,10 @@ public class PauseMusicClick: MonoBehaviour
         }
     }
 
-
+    public bool getSettingBool()
+    {
+        return settingBool;
+    }
 
 }
 

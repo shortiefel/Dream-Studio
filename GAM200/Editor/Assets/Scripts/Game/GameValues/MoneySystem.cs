@@ -446,7 +446,7 @@ public class MoneySystem : MonoBehaviour
         if (money >= erpCost)
         {
             MinusMoney(erpCost, MoneySource.Store);
-            erpCost *= (int)(1.1);
+            erpCost *= (int)(2);
             return true;
         }
         else

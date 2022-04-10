@@ -25,6 +25,7 @@ public class PauseMenu : MonoBehaviour
     GameObject quitNo;
     //GameObject dayText;
     
+    
 
     Transform settingBtn;
 
@@ -49,6 +50,7 @@ public class PauseMenu : MonoBehaviour
     Transform removeCarbtn;
     Transform removeRoadbtnw;
     Transform removeCarbtnw;
+    PauseMusicClick settingCogBool;
     //GameObject clockTimer;
     //GameObject AmPm;
     //Transform maintenancefee;
@@ -126,6 +128,7 @@ public class PauseMenu : MonoBehaviour
 
 
         settingBtn = GameObject.Find("settingBtn").GetComponent<Transform>();
+        settingCogBool = GameObject.Find("settingBtn").GetComponent<PauseMusicClick>();
 
         //outsidePosition = new Vector2(-200, 0);
 
@@ -306,7 +309,9 @@ public class PauseMenu : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                PauseAction();
+                Debug.Log(settingCogBool.getSettingBool());
+                if(!settingCogBool.getSettingBool())
+                    PauseAction();
             }
         }
 

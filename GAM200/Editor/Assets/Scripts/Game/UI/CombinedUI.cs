@@ -103,6 +103,9 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(coinSymbol);
                     Disable<Transform>(dayClock);
 
+                    Disable<Transform>(maintenancefee);
+                    Disable<Transform>(maintenanceIcon);
+
                     Disable<Transform>(listOfCostText);
                     listOfCostDestUI.alpha = 0f;
                     break;             

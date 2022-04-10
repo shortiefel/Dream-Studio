@@ -202,6 +202,7 @@ public class ButtonBuildingsTab : MonoBehaviour
         if (type)
         {
             buildingsTabOpen = true;
+            choosenButton = ButtonType.Latest;
 
             buildingsTabUI.ChangeTexture("Game/UI/Buildings_Click");
             //EnableAllNormalExcept();
@@ -212,7 +213,10 @@ public class ButtonBuildingsTab : MonoBehaviour
         else
         {
             if (reenable)
+            {
                 ResetAll();
+                choosenButton = ButtonType.None;
+            }
 
             buildingsTabClose = true;
 
@@ -234,8 +238,6 @@ public class ButtonBuildingsTab : MonoBehaviour
         placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, closeXPosition, timer), placeMallPos.y);
         placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, closeXPosition, timer), placePoliceStationPos.y);
 
-        choosenButton = ButtonType.None;
-
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
         {
@@ -255,8 +257,6 @@ public class ButtonBuildingsTab : MonoBehaviour
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
         {
-
-
             timer = 0f;
             buildingsTabOpen = false;
         }
@@ -265,6 +265,9 @@ public class ButtonBuildingsTab : MonoBehaviour
     public void CallFunction(ButtonType _bt)
     {
         bool _activeType = true;
+
+        Debug.Log(choosenButton.ToString());
+        Debug.Log(_bt.ToString());
 
         if (_bt == choosenButton) _activeType = false;
         if (_bt == ButtonType.Latest) _bt = choosenButton;
@@ -294,6 +297,11 @@ public class ButtonBuildingsTab : MonoBehaviour
             case ButtonType.PlacePoliceStation:
                 {
                     placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation");
+                    break;
+                }
+            case ButtonType.Latest:
+                {
+                    ResetAllTextures();
                     break;
                 }
         }

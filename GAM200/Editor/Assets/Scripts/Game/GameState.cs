@@ -24,6 +24,7 @@ public class GameState : MonoBehaviour
     public float dayTimer;
     private float dayCycle;
     private float nightCycle;
+    private float nightCycleEnd;
     private int dayCounter;
 
     Texture overlayNightUI;
@@ -96,8 +97,8 @@ public class GameState : MonoBehaviour
         dayTimer = 0f;
         dayCycle = 144f;
 
-        nightCycle = 72f;
-        //nightCycle = 10f;
+        nightCycle = 66f;
+        nightCycleEnd = 138f;
 
         cycle = Cycle.Day;
 
@@ -144,18 +145,23 @@ public class GameState : MonoBehaviour
                     cycle = Cycle.Night;
             }
 
-            if (dayTimer >= dayCycle)
+            if (dayTimer >= nightCycleEnd)
             {
-                Enable<Transform>(receipt.transform);
-                SetPause(true);
-                moneySystem.TaxMoney();
-                dayTimer = 0f;
                 TimerIcon.ChangeTexture("Game/UI/Clock_Day");
                 clockTimer.color = new Color(0f, 0f, 0f);
                 AmPm.color = new Color(0f, 0f, 0f);
                 moneyText.color = new Color(0f, 0f, 0f);
                 dayClock.color = new Color(0f, 0f, 0f);
                 maintenanceFee.color = new Color(0f, 0f, 0f);
+                ResetDay();
+            }
+
+            if (dayTimer >= dayCycle)
+            {
+                Enable<Transform>(receipt.transform);
+                SetPause(true);
+                moneySystem.TaxMoney();
+                dayTimer = 0f;
                 //dayCounter++;
                 //dayText.text = "Day " + dayCounter.ToString();
                 //Moved to gameState gameover

@@ -402,6 +402,15 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    internal void MenuNoAction()
+    {
+        Console.WriteLine("Quit stopped");
+        Disable<Transform>(quitBG.transform);
+        Disable<Transform>(areYouSure.transform);
+        Disable<Transform>(MquitYes.transform);
+        Disable<Transform>(MquitNo.transform);
+    }
+
     internal void QuitAction()
     {
         Console.WriteLine("Quit selected");

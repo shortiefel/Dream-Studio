@@ -237,7 +237,8 @@ public class ButtonRoadTab : MonoBehaviour
         if (type)
         {
             roadTabOpen = true;
-            
+            choosenButton = ButtonType.Latest;
+
             roadTabUI.ChangeTexture("Game/UI/BuildingRoad_Click");
 
             //EnableAllNormalExcept();

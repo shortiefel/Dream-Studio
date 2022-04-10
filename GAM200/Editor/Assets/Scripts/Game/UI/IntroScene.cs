@@ -6,7 +6,7 @@ public class IntroScene : MonoBehaviour
     private int counter;
     private bool fading;
     private float fadespeed;
-    Vector2 vAdobe,vOpenGL,vMono,vFmod,vDreamStudio,test;
+    Vector2 vAdobe,vOpenGL,vMono,vFmod,vDreamStudio,vImGui,test;
     public override void Start()
     {
         logos = GameObject.Find("Logos").GetComponent<Texture>();
@@ -26,15 +26,17 @@ public class IntroScene : MonoBehaviour
         vMono.y = 3.0f;
         vFmod.x = 3.7035884857177736f;
         vFmod.y = 2.0f;
-        vDreamStudio.x = 3.0f;
+        vDreamStudio.x = 3.5f;
         vDreamStudio.y = 3.0f;
+        vImGui.x = 5.0f;
+        vImGui.y = 2.0f;
     }
     public override void Update()
     {
         if (fading == false)
         {
             logos.alpha -= fadespeed;
-            if (counter == 5 && logos.alpha <= 0.0f)
+            if (counter == 6 && logos.alpha <= 0.0f)
             {
                 transform.scale = test;
                 SceneManager.LoadScene("MainMenu");
@@ -72,6 +74,11 @@ public class IntroScene : MonoBehaviour
                 transform.scale = vOpenGL;
             }
             if (counter == 4)
+            {
+                logos.ChangeTexture("Logo//DearImGui");
+                transform.scale = vOpenGL;
+            }
+            if (counter == 5)
             {
                 logos.ChangeTexture("Logo//DreamStudio_Logo");
                 transform.scale = vDreamStudio;

@@ -313,10 +313,6 @@ public class PauseMenu : MonoBehaviour
         
     }
 
-    public void FullOpen()
-    {
-
-    }
     public void FullClose()
     {
         btnClick.Play();

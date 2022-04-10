@@ -261,8 +261,6 @@ public class PauseMenu : MonoBehaviour
 
             Disable<Transform>(settingBtn);
 
-            Enable<Transform>(removeCarbtn);
-            Enable<Transform>(removeRoadbtn);
             Disable<Transform>(removeCarbtnw);
             Disable<Transform>(removeRoadbtnw);
             //Application.SetPause(false);

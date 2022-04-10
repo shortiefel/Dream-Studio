@@ -20,6 +20,10 @@ public class CombinedUI : MonoBehaviour
     Transform timerButton;
     Transform roadTabTransform;
     Transform buildingsTabTransform;
+    Transform removeRoad;
+    Transform removeRoadWhite;
+    Transform drawRemoveCar;
+    Transform drawRemoveCarWhite;
 
     Transform moneyText;
     Transform coinSymbol;
@@ -56,6 +60,11 @@ public class CombinedUI : MonoBehaviour
         maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
         maintenanceIcon = GameObject.Find("MaintenanceIcon").GetComponent<Transform>();
 
+        removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
+        removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
+        drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
+        drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
+
         listOfCostText = GameObject.Find("ListOfCostText").GetComponent<Transform>();
         listOfCostDestUI = GameObject.Find("ListOfCostDest").GetComponent<UI>();
 
@@ -82,8 +91,8 @@ public class CombinedUI : MonoBehaviour
 
                     timeSystem.SwitchTabTimer(false, false);
                     //buttonStore.SwitchTabStore(false, false);
-                    roadTab.SwitchTabRoad(false, true);
-                    buildingsTab.SwitchTabBuildings(false, true);
+                    roadTab.SwitchTabRoad(false, false);
+                    buildingsTab.SwitchTabBuildings(false, false);
 
                     Disable<Transform>(timerButton);
                     Disable<Transform>(roadTabTransform);
@@ -114,8 +123,8 @@ public class CombinedUI : MonoBehaviour
 
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
-                    roadTab.SwitchTabRoad(false, true);
-                    buildingsTab.SwitchTabBuildings(false, true);
+                    roadTab.SwitchTabRoad(false, false);
+                    buildingsTab.SwitchTabBuildings(false, false);
 
                     Disable<Transform>(pauseIcon);
                     Disable<Transform>(timerButton);
@@ -156,8 +165,8 @@ public class CombinedUI : MonoBehaviour
                     pauseMenu.SwitchTabPause(false, false);
                     timeSystem.SwitchTabTimer(false, false);
                     //buttonStore.SwitchTabStore(false, false);
-                    roadTab.SwitchTabRoad(false, true);
-                    buildingsTab.SwitchTabBuildings(false, true);
+                    roadTab.SwitchTabRoad(false, false);
+                    buildingsTab.SwitchTabBuildings(false, false);
 
                     Disable<Transform>(pauseIcon);
                     Disable<Transform>(timerButton);
@@ -168,6 +177,11 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(ampm);
                     Disable<Transform>(maintenancefee);
                     Disable<Transform>(maintenanceIcon);
+
+                    Disable<Transform>(removeRoad);
+                    Disable<Transform>(removeRoadWhite);
+                    Disable<Transform>(drawRemoveCar);
+                    Disable<Transform>(drawRemoveCarWhite);
 
                     Disable<Transform>(listOfCostText);
                     listOfCostDestUI.alpha = 0f;
@@ -208,6 +222,9 @@ public class CombinedUI : MonoBehaviour
         Enable<Transform>(ampm);
         Enable<Transform>(maintenancefee);
         Enable<Transform>(maintenanceIcon);
+
+        Enable<Transform>(removeRoad);
+        Enable<Transform>(drawRemoveCar);
 
         Enable<Transform>(listOfCostText);
         listOfCostDestUI.alpha = 1f;

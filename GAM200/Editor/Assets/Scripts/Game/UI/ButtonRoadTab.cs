@@ -250,10 +250,14 @@ public class ButtonRoadTab : MonoBehaviour
         else
         {
             if(reenable)
+            {
                 ResetAll();
+                choosenButton = ButtonType.None;
+            }
 
             roadTabClose = true;
             
+
             roadTabUI.ChangeTexture("Game/UI/BuildingRoad");
 
 
@@ -284,13 +288,9 @@ public class ButtonRoadTab : MonoBehaviour
 
         //lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, closeXPosition, timer), line1.y);
 
-        choosenButton = ButtonType.None;
-
         timer += speedMultiply * Time.fixedDeltaTime;
         if (timer >= 1f)
         {
-
-
             timer = 0f;
             roadTabClose = false;
         }
@@ -464,7 +464,8 @@ public class ButtonRoadTab : MonoBehaviour
         if (roadTabClose)
         {
             //if (bt == ButtonType.RoadTab)
-                CloseRoadTabs();
+            
+            CloseRoadTabs();
             //CloseBuildingsTabs();
         }
     }
@@ -477,9 +478,8 @@ public class ButtonRoadTab : MonoBehaviour
             tooltipTrans.position = position;
             tooltipText.text = textToPut;
         }
-        else Disable<Transform>(tooltipTrans);
-
-
+        else 
+            Disable<Transform>(tooltipTrans);
     }
 
     public void EnableAllNormalExcept(ButtonType bt = ButtonType.Ignore)
@@ -581,7 +581,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        //combinedUI.CloseAllUIExcept(UIType.None);
+        combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }
@@ -601,7 +601,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        combinedUI.CloseAllUIExcept(UIType.Road);
+        combinedUI.CloseAllUIExcept(UIType.None);
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }

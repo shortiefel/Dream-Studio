@@ -20,6 +20,7 @@ public class PlayButton : MonoBehaviour
 
     public override void OnMouseEnter()
     {
+        btnClick.Play();
         text.color = new Color(1f, 1f, 1f);
         texture.color = new Color(1f, 0.5f, 0f);
     }
@@ -29,7 +30,6 @@ public class PlayButton : MonoBehaviour
         //Console.WriteLine(Input.GetMousePosition());
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            btnClick.Play();
             Console.WriteLine("Play");
             SceneManager.LoadScene("TutorialNew");
         }

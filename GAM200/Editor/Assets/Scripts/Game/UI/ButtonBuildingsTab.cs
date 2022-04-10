@@ -426,6 +426,11 @@ public class ButtonBuildingsTab : MonoBehaviour
             Enable<Transform>(tooltipTrans);
             tooltipTrans.position = position;
             tooltipText.text = textToPut;
+            if(gameState.GetNight())
+                tooltipText.color = new Color(1f, 1f, 1f);
+            else
+                tooltipText.color = new Color(0f, 0f, 0f);
+
         }
         else Disable<Transform>(tooltipTrans);
 

@@ -9,12 +9,13 @@ public class ButtonTimeClick : MonoBehaviour
     TimeSystem timeSystem;
 
     bool type;
-
+    private AudioSource btnClick;
 
     public override void Start()
     {
         GameObject timeGO = GameObject.Find("TimerIcon");
         timeSystem = timeGO.GetComponent<TimeSystem>();
+        btnClick = GetComponent<AudioSource>();
         //gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         if (entityId == timeGO.GetComponent<Transform>().entityId)
@@ -91,6 +92,7 @@ public class ButtonTimeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
+                            btnClick.Play();
                             timeSystem.CallFunctionTimer(tt, type);
                         }
 

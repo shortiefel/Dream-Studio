@@ -10,7 +10,7 @@ public class QuitButton : MonoBehaviour
     Transform quitNo;
     Transform quitOverlay;
     Transform quitBG;
-
+    private AudioSource btnClick;
     public override void Start()
     {
         //Console.WriteLine("going in start play");
@@ -19,6 +19,7 @@ public class QuitButton : MonoBehaviour
         text.color = new Color(0f, 0f, 0f);
         texture = GameObject.Find("Quitbtn").GetComponent<Texture>();
         texture.color = new Color(1f, 1f, 1f);
+        btnClick = GetComponent<AudioSource>();
 
         areYouSure = GameObject.Find("AreYouSureText").GetComponent<Transform>();
         quitYes = GameObject.Find("QuitYesBtn").GetComponent<Transform>();
@@ -36,6 +37,7 @@ public class QuitButton : MonoBehaviour
 
     public override void OnMouseEnter()
     {
+        btnClick.Play();
         text.color = new Color(1f, 1f, 1f);
         texture.color = new Color(1f, 0.5f, 0f);
     }

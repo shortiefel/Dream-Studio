@@ -189,6 +189,8 @@ public class ButtonTypeClick : MonoBehaviour
                         roadTab.CallFunction(bt);
 
                         roadTab.SetToolTips(true, tooltipOffset, "Road");
+                    
+                    
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Road";
                         break;

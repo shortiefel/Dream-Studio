@@ -73,6 +73,7 @@ public class PauseMenu : MonoBehaviour
 
     //Transform moneyText;
     //Transform coinSymbol;
+    private AudioSource btnClick;
 
     public override void Start()
     {
@@ -82,6 +83,7 @@ public class PauseMenu : MonoBehaviour
         //
         //coinSymbol = GameObject.Find("CoinBag").GetComponent<Transform>();
 
+        btnClick = GetComponent<AudioSource>();
         texture = GetComponent<UI>();
         texture.color = new Color(1f, 1f, 1f);
 
@@ -187,6 +189,7 @@ public class PauseMenu : MonoBehaviour
         if (type)
         {
             Debug.Log("I am PAUSING");
+            btnClick.Play();
             //Console.WriteLine("Pausing now");
             Enable<Transform>(pauseBG.transform);
 
@@ -228,6 +231,7 @@ public class PauseMenu : MonoBehaviour
         else
         {
             Debug.Log("I am UN-PAUSING");
+            btnClick.Play();
             //Console.WriteLine("Unpausing now");
             //Enable<Transform>(moneyText);
             //Enable<Transform>(coinSymbol);

@@ -416,15 +416,16 @@ public class MoneySystem : MonoBehaviour
     public bool BuyRoad()
     {
 
-        if (money >= 20)
+        if (money > 20)
         {
             MinusMoney(20, MoneySource.Road);
-            //roadManager.roadCount++;	
             return true;
         }
         else
         {
             displayText = true;
+            Enable<Transform>(storePopText);
+            Enable<Transform>(storePopInfo);
         }
         return false;
     }

@@ -334,6 +334,7 @@ public class RoadManager : MonoBehaviour
         //Debug.Log("stuff");
         if (tmp > 0)
         {
+            Debug.Log("enter here to place road");
             placeSound.Play();
             for (int i = 0; i < tmp; i++)
             {

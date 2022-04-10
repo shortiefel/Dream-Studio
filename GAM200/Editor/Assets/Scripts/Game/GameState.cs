@@ -38,6 +38,7 @@ public class GameState : MonoBehaviour
     Text AmPm;
     Text moneyText;
     Text dayClock;
+    Text maintenanceFee;
 
 
     //bool gameOverBool;
@@ -66,6 +67,7 @@ public class GameState : MonoBehaviour
         AmPm = GameObject.Find("AMPM").GetComponent<Text>();
         moneyText = GameObject.Find("MoneyText").GetComponent<Text>();
         dayClock = GameObject.Find("DayClock").GetComponent<Text>();
+        maintenanceFee = GameObject.Find("MaintenanceFee").GetComponent<Text>();
 
         //GameObject overlayNightGo = GameObject.Find("OverlayNight");
         //if (overlayNightGo != null)
@@ -132,6 +134,7 @@ public class GameState : MonoBehaviour
                 AmPm.color = new Color(1f, 1f, 1f);
                 moneyText.color = new Color(1f, 1f, 1f);
                 dayClock.color = new Color(1f, 1f, 1f);
+                maintenanceFee.color = new Color(1f, 1f, 1f);
                 overlayAlpha += 0.01f;
                 if (overlayAlpha > 0.6f) overlayAlpha = 0.6f;
                 else
@@ -152,6 +155,7 @@ public class GameState : MonoBehaviour
                 AmPm.color = new Color(0f, 0f, 0f);
                 moneyText.color = new Color(0f, 0f, 0f);
                 dayClock.color = new Color(0f, 0f, 0f);
+                maintenanceFee.color = new Color(0f, 0f, 0f);
                 //dayCounter++;
                 //dayText.text = "Day " + dayCounter.ToString();
                 //Moved to gameState gameover

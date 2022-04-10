@@ -10,6 +10,6 @@
     "DefaultSquare": "Assets\\Textures\\Default_Square.png"
   },
   "Scene": {
-    "DefaultScene": "Intro"
+    "DefaultScene": "Logo"
   }
 }

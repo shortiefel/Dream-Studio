@@ -49,7 +49,47 @@ public class TrafficLightManager : MonoBehaviour
         Disable<Transform>(TLInfo);
     }
 
-    public int trafficlightTaxCount()
+    public override void Update()
+    {
+        //if (carCounter == 0)
+        //    Debug.Log(carCounter);
+        float deltaTime = Time.deltaTime;
+        //Console.WriteLine("State " + directionState);
+        //if (Input.GetKeyDown(KeyCode.V))
+        //    SwapState();
+        TrafficLight.timer += deltaTime;
+        if (TrafficLight.timer >= TrafficLight.switchTimer)
+        {
+            TrafficLight.timer = 0f;
+            TrafficLight.SwapState();
+        }
+
+        if (TrafficLight.changeState)
+        {
+            TrafficLight.inBetweenTimer += deltaTime;
+            if (TrafficLight.inBetweenTimer >= 1.5f)
+            //if (inBetweenTimer >= 1.5f || carCounter == 0)
+            //if (carCounter == 0)
+            {
+                //toState = state = !state;
+                //state = !state;
+                //if (state)
+                //    transform.angle = 0;
+                ////texture.color = new Color(1, 0, 0, 1);
+                //else
+                //    transform.angle = 90;
+
+                TrafficLight.directionState = TrafficLight.nextState;
+                //if (nextState == DirectionState.Horizontal || nextState == DirectionState.HorizontalLeft)
+
+                TrafficLight.inBetweenTimer = 0f;
+                TrafficLight.changeState = false;
+            }
+
+            //reqeusting = false;
+        }
+    }
+        public int trafficlightTaxCount()
     {
         return trafficLights.Count;
     }
@@ -165,9 +205,10 @@ public class TrafficLightManager : MonoBehaviour
             
 
         //trafficLights[tlPos].RequestChange(ds);
-        DirectionState tem = trafficLights[tlPos].directionState;
+        //DirectionState tem = trafficLights[tlPos].directionState;
         
-        return ds == tem;
+        //return ds == tem;
+        return ds == TrafficLight.directionState;
     }
 
     public List<uint> GetTrafficLightIndex(List<Vector2> toCheck)

@@ -21,17 +21,17 @@ public class TrafficLight : MonoBehaviour
     public bool state;
     //private bool toState;
 
-    public DirectionState directionState;
-    public DirectionState nextState;
+    static public DirectionState directionState = DirectionState.Up;
+    static public DirectionState nextState;
 
     private int carCounter;
 
     //private Texture texture;
 
-    private float timer;
-    private float switchTimer;
+    static public float timer = 0f;
+    static public float switchTimer = 2f;
 
-    private float inBetweenTimer;
+    static public float inBetweenTimer;
 
     //private float secondaryTimer;
 
@@ -47,12 +47,19 @@ public class TrafficLight : MonoBehaviour
     bool spawnCheck = true;
     List<uint> spawnCheckCollide;
 
+    static public bool changeState = false;
+
     public override void Start()
     {
         //Debug.Log("Making new start -----------------------------------");
         //directionState = DirectionState.Horizontal;
-        directionState = DirectionState.Up;
-        transform.angle = 90;
+        //directionState 
+        //transform.angle = 90;
+
+        if (directionState == DirectionState.Left || directionState == DirectionState.Right)
+            transform.angle = 0;
+        else
+            transform.angle = 90;
 
         GameObject go = GameObject.Find("TrafficManager");
         if (go != null)
@@ -69,9 +76,6 @@ public class TrafficLight : MonoBehaviour
         //texture.color = new Color(1, 0, 0, 1);
         //transform.angle = 0;
         carCounter = 0;
-
-        timer = 0f;
-        switchTimer = 2f;
 
         inBetweenTimer = 0f;
 
@@ -102,7 +106,7 @@ public class TrafficLight : MonoBehaviour
         }
     }
 
-    private void SwapState()
+    static public void SwapState()
     {
 
         //if (directionState == DirectionState.Horizontal) nextState = DirectionState.Vertical;
@@ -118,67 +122,86 @@ public class TrafficLight : MonoBehaviour
         //else if (directionState == DirectionState.Vertical) nextState = DirectionState.VerticalLeft;
         //else if (directionState == DirectionState.VerticalLeft) nextState = DirectionState.Horizontal;
 
-        directionState = DirectionState.None;
-
+        //directionState = DirectionState.None;
+        changeState = true;
         
         //Debug.Log("After " + directionState + " " + entityId);
     }
 
     public override void Update()
     {
+        Debug.Log(inBetweenTimer + " " + directionState);
+        if (inBetweenTimer >= 1.4f)
+        //if (inBetweenTimer >= 1.5f || carCounter == 0)
+        //if (carCounter == 0)
+        {
+            //toState = state = !state;
+            //state = !state;
+            //if (state)
+            //    transform.angle = 0;
+            ////texture.color = new Color(1, 0, 0, 1);
+            //else
+            //    transform.angle = 90;
+
+            if (nextState == DirectionState.Left || nextState == DirectionState.Right)
+                transform.angle = 0;
+            else
+                transform.angle = 90;
+        }
+
         //if (carCounter == 0)
         //    Debug.Log(carCounter);
-        float deltaTime = Time.deltaTime;
+        //float deltaTime = Time.deltaTime;
         //Console.WriteLine("State " + directionState);
         //if (Input.GetKeyDown(KeyCode.V))
         //    SwapState();
-        timer += deltaTime;
-        if (timer >= switchTimer)
-        {
-            //secondaryTimer += Time.deltaTime;
-            //
-            //if (secondaryTimer > 0.2f)
-            //{
-            //    timer = 0f;
-            //    secondaryTimer = 0f;
-            //    SwapState();
-            //    Console.WriteLine("Secondary timer activated ");
-            //
-            //}
-            //Might have problem where car move too fast and enter but doesnt move
-            //Check timer to 1.5 of switchTimer to prevent infinite waiting to change direction
-            //if (carCounter == 0 && timer >= switchTimer * 1.5f)
-            timer = 0f;
-            SwapState();
-        }
+        //timer += deltaTime;
+        //if (timer >= switchTimer)
+        //{
+        //    //secondaryTimer += Time.deltaTime;
+        //    //
+        //    //if (secondaryTimer > 0.2f)
+        //    //{
+        //    //    timer = 0f;
+        //    //    secondaryTimer = 0f;
+        //    //    SwapState();
+        //    //    Console.WriteLine("Secondary timer activated ");
+        //    //
+        //    //}
+        //    //Might have problem where car move too fast and enter but doesnt move
+        //    //Check timer to 1.5 of switchTimer to prevent infinite waiting to change direction
+        //    //if (carCounter == 0 && timer >= switchTimer * 1.5f)
+        //    timer = 0f;
+        //    SwapState();
+        //}
         //Debug.Log(nextState);
         //Put traffic light in a state where cars are not allowed to go for both direction
-        if (directionState == DirectionState.None)
-        {
-            inBetweenTimer += deltaTime;
-            //if (inBetweenTimer >= 0.5f)
-            if (inBetweenTimer >= 1.5f || carCounter == 0)
-            //if (carCounter == 0)
-            {
-                //toState = state = !state;
-                //state = !state;
-                //if (state)
-                //    transform.angle = 0;
-                ////texture.color = new Color(1, 0, 0, 1);
-                //else
-                //    transform.angle = 90;
-
-                directionState = nextState;
-                //if (nextState == DirectionState.Horizontal || nextState == DirectionState.HorizontalLeft)
-                if (nextState == DirectionState.Left || nextState == DirectionState.Right)
-                    transform.angle = 0;
-                else
-                    transform.angle = 90;
-                inBetweenTimer = 0f;
-            }
-
-            //reqeusting = false;
-        }
+        //if (directionState == DirectionState.None)
+        //{
+        //    inBetweenTimer += deltaTime;
+        //    if (inBetweenTimer >= 1.5f)
+        //    //if (inBetweenTimer >= 1.5f || carCounter == 0)
+        //    //if (carCounter == 0)
+        //    {
+        //        //toState = state = !state;
+        //        //state = !state;
+        //        //if (state)
+        //        //    transform.angle = 0;
+        //        ////texture.color = new Color(1, 0, 0, 1);
+        //        //else
+        //        //    transform.angle = 90;
+        //
+        //        directionState = nextState;
+        //        //if (nextState == DirectionState.Horizontal || nextState == DirectionState.HorizontalLeft)
+        //        if (nextState == DirectionState.Left || nextState == DirectionState.Right)
+        //            transform.angle = 0;
+        //        else
+        //            transform.angle = 90;
+        //        inBetweenTimer = 0f;
+        //    }
+        //
+        //    //reqeusting = false;
+        //}
         //if (Input.GetKeyDown(KeyCode.C))
         //{
         //    SwapState();

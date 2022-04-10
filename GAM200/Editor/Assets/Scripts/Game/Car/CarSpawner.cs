@@ -180,7 +180,7 @@ public class CarSpawner : MonoBehaviour
         dt = Time.deltaTime;
 
         //if(Input.GetKey(KeyCode.V)) return; //TO REMOVE
-        //if (Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
+        if (Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
 
         //-----------------------------------------Only in House-------------------------------------
         //Only House has popupText

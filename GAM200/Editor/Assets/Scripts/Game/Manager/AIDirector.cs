@@ -133,13 +133,14 @@ public class AIDirector : MonoBehaviour
         foreach (var endDestination in structureManager.destinationList[(int)bt])
         {
             //int roadNum;
-            path = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest, ref leftList, ref rightList);
+            List<Vector2> list = placementManager.GetPathBetween(out startPos, endDestination.pos, RouteType.HouseToDest, ref leftList, ref rightList);
             //List<Vector2> list = placementManager.GetPathBetween(startPos, endDestination.pos, out roadNum);
-            if (path.Count == 0) continue;
+            if (list.Count == 0) continue;
 
-            if (path.Count < count || count == 0)
+            if (list.Count < count || count == 0)
             {
-                count = path.Count;
+                path = list;
+                count = list.Count;
                 newId = endDestination.entityId;
             }
         }
@@ -181,6 +182,7 @@ public class AIDirector : MonoBehaviour
 
         if (count != 0)
         {
+            Debug.Log(bt + " with " + path.Count);
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
             car.GetComponent<CarAI>().SetPath(path, leftList, rightList, newId, startId);
             return true;

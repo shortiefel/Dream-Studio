@@ -656,6 +656,7 @@ public class ButtonRoadTab : MonoBehaviour
         Time.timeScale = 0f;
 
         combinedUI.CloseAllUIExcept(UIType.None);
+        CombinedUI.allowKeyButton = false;
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }
@@ -676,6 +677,7 @@ public class ButtonRoadTab : MonoBehaviour
         Time.timeScale = 0f;
 
         combinedUI.CloseAllUIExcept(UIType.None);
+        CombinedUI.allowKeyButton = false;
 
         Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     }

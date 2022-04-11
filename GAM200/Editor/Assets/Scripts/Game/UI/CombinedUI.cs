@@ -20,6 +20,7 @@ public class CombinedUI : MonoBehaviour
     Transform timerButton;
     Transform roadTabTransform;
     Transform buildingsTabTransform;
+    Transform displayTabTransform;
     //Transform removeRoad;
     //Transform removeRoadWhite;
     //Transform drawRemoveCar;
@@ -37,7 +38,7 @@ public class CombinedUI : MonoBehaviour
 
     bool isRoadTabOpen;
     bool isBuildingsTabOpen;
-    bool isClockOpen;
+    //bool isClockOpen;
 
     GameManager gameManager;
     GameState gameState;
@@ -46,6 +47,7 @@ public class CombinedUI : MonoBehaviour
     Transform tooltipTrans;
     
     static public ButtonType choosenButton = ButtonType.None;
+    static public bool allowKeyButton = true;
 
     public override void Start()
     {
@@ -58,6 +60,7 @@ public class CombinedUI : MonoBehaviour
         timerButton = GameObject.Find("TimerIcon").GetComponent<Transform>();
         roadTabTransform = GameObject.Find("DisplayRoadBtn").GetComponent<Transform>();
         buildingsTabTransform = GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>();
+        displayTabTransform = GameObject.Find("DisplayTab").GetComponent<Transform>();
 
 
         moneyText = GameObject.Find("MoneyText").GetComponent<Transform>();
@@ -78,7 +81,7 @@ public class CombinedUI : MonoBehaviour
 
         isRoadTabOpen = false;
         isBuildingsTabOpen = false;
-        isClockOpen = false;
+        //isClockOpen = false;
 
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
@@ -96,8 +99,8 @@ public class CombinedUI : MonoBehaviour
         if (buildingsTab.buildingsTabIsOn) isBuildingsTabOpen = true;
         else isBuildingsTabOpen = false;
 
-        if (timeSystem.isOn) isClockOpen = true;
-        else isClockOpen = false;
+        //if (timeSystem.isOn) isClockOpen = true;
+        //else isClockOpen = false;
 
         switch (uitype)
         {
@@ -114,6 +117,7 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(timerButton);
                     Disable<Transform>(roadTabTransform);
                     Disable<Transform>(buildingsTabTransform);
+                    Disable<Transform>(displayTabTransform);
 
                     Disable<Transform>(moneyText);
                     Disable<Transform>(coinSymbol);
@@ -124,6 +128,8 @@ public class CombinedUI : MonoBehaviour
 
                     Disable<Transform>(listOfCostText);
                     listOfCostDestUI.alpha = 0f;
+
+                    allowKeyButton = false;
                     break;             
                 }
             //case UIType.Time:
@@ -193,6 +199,7 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(timerButton);
                     Disable<Transform>(roadTabTransform);
                     Disable<Transform>(buildingsTabTransform);
+                    Disable<Transform>(displayTabTransform);
                     Disable<Transform>(dayClock);
                     Disable<Transform>(dayTimer);
                     Disable<Transform>(ampm);
@@ -206,6 +213,8 @@ public class CombinedUI : MonoBehaviour
 
                     Disable<Transform>(listOfCostText);
                     listOfCostDestUI.alpha = 0f;
+
+                    allowKeyButton = true;
                     break;
                 }
         }
@@ -229,6 +238,8 @@ public class CombinedUI : MonoBehaviour
             BRCallFunction(ButtonType.Latest);
         }
 
+        allowKeyButton = true;
+
         //if (isClockOpen)
         {
             //timeSystem.SwitchTabTimer(true);
@@ -237,6 +248,7 @@ public class CombinedUI : MonoBehaviour
             //Enable<Transform>(displayArrow);
         Enable<Transform>(roadTabTransform);
         Enable<Transform>(buildingsTabTransform);
+        Enable<Transform>(displayTabTransform);
         Enable<Transform>(moneyText);
         Enable<Transform>(coinSymbol);
         Enable<Transform>(dayClock);
@@ -472,66 +484,68 @@ public class CombinedUI : MonoBehaviour
 
     public override void Update()
     {
+        if (allowKeyButton)
+        {
 
-
-        if (Input.GetKeyDown(KeyCode.T1))
-        {
-            buildingsTab.SwitchTabBuildings(true, false);
-            BRCallFunction(ButtonType.PlaceHospital);
-        }
-        if (Input.GetKeyDown(KeyCode.T2)) 
-        {
-            buildingsTab.SwitchTabBuildings(true, false);
-            BRCallFunction(ButtonType.PlaceOffice); 
-        }
-        if (Input.GetKeyDown(KeyCode.T3)) 
-        {
-            buildingsTab.SwitchTabBuildings(true, false);
-            BRCallFunction(ButtonType.PlacePark); 
-        }
-        if (Input.GetKeyDown(KeyCode.T4)) 
-        {
-            buildingsTab.SwitchTabBuildings(true, false);
-            BRCallFunction(ButtonType.PlaceMall); 
-        }
-        if (Input.GetKeyDown(KeyCode.T5))
-        {
-            buildingsTab.SwitchTabBuildings(true, false);
-            BRCallFunction(ButtonType.PlacePoliceStation); 
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            //roadTab.SwitchTabRoad(true, false);
-            BRCallFunction(ButtonType.Remove);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //roadTab.SwitchTabRoad(true, false);
-            BRCallFunction(ButtonType.RemoveCar);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            roadTab.SwitchTabRoad(true, false);
-            BRCallFunction(ButtonType.Draw);
-        }
-        if (roadTab.revealTrafficButton)
-        {
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.T1))
             {
-                roadTab.SwitchTabRoad(true, false);
-                BRCallFunction(ButtonType.TrafficLight);
+                buildingsTab.SwitchTabBuildings(true, false);
+                BRCallFunction(ButtonType.PlaceHospital);
             }
-        }
-        if (roadTab.revealERPButton)
-        {
-            if (Input.GetKeyDown(KeyCode.Y))
+            if (Input.GetKeyDown(KeyCode.T2))
+            {
+                buildingsTab.SwitchTabBuildings(true, false);
+                BRCallFunction(ButtonType.PlaceOffice);
+            }
+            if (Input.GetKeyDown(KeyCode.T3))
+            {
+                buildingsTab.SwitchTabBuildings(true, false);
+                BRCallFunction(ButtonType.PlacePark);
+            }
+            if (Input.GetKeyDown(KeyCode.T4))
+            {
+                buildingsTab.SwitchTabBuildings(true, false);
+                BRCallFunction(ButtonType.PlaceMall);
+            }
+            if (Input.GetKeyDown(KeyCode.T5))
+            {
+                buildingsTab.SwitchTabBuildings(true, false);
+                BRCallFunction(ButtonType.PlacePoliceStation);
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                //roadTab.SwitchTabRoad(true, false);
+                BRCallFunction(ButtonType.Remove);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                //roadTab.SwitchTabRoad(true, false);
+                BRCallFunction(ButtonType.RemoveCar);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 roadTab.SwitchTabRoad(true, false);
-                BRCallFunction(ButtonType.ERP);
+                BRCallFunction(ButtonType.Draw);
+            }
+            if (roadTab.revealTrafficButton)
+            {
+                if (Input.GetKeyDown(KeyCode.T))
+                {
+                    roadTab.SwitchTabRoad(true, false);
+                    BRCallFunction(ButtonType.TrafficLight);
+                }
+            }
+            if (roadTab.revealERPButton)
+            {
+                if (Input.GetKeyDown(KeyCode.Y))
+                {
+                    roadTab.SwitchTabRoad(true, false);
+                    BRCallFunction(ButtonType.ERP);
+                }
             }
         }
     }

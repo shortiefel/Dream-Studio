@@ -4,6 +4,11 @@
 
 public class ButtonBuildingsTab : MonoBehaviour
 {
+
+    UI buildingDisplayTab;
+    Vector2 displayTabPos;
+    Transform buildingTab;
+
     Transform buildingsTab;
     UI buildingsTabUI;
 
@@ -54,6 +59,9 @@ public class ButtonBuildingsTab : MonoBehaviour
     float timer;
 
     float closeXPosition;
+    float tabXPosition;
+    float closetabXPosition;
+
 
     float speedMultiply;
 
@@ -78,6 +86,16 @@ public class ButtonBuildingsTab : MonoBehaviour
     {
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
         roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoadTab>();
+
+        GameObject displaytabGO = GameObject.Find("DisplayBuildings");
+        buildingTab = displaytabGO.GetComponent<Transform>();
+        buildingDisplayTab = displaytabGO.GetComponent<UI>();
+
+        displayTabPos = buildingTab.position;
+        tabXPosition = -20.85f;
+        closetabXPosition = -150f;
+
+        buildingTab.position = new Vector2(tabXPosition, displayTabPos.y);
 
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
         //disable the different effect.
@@ -232,7 +250,7 @@ public class ButtonBuildingsTab : MonoBehaviour
 
     private void CloseBuildingsTabs()
     {
-
+        buildingTab.position = new Vector2(Mathf.Lerp(buildingTab.position.x, closetabXPosition, timer), displayTabPos.y);
         placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, closeXPosition, timer), placeHospitalPos.y);
         placeOffice.position = new Vector2(Mathf.Lerp(placeOffice.position.x, closeXPosition, timer), placeOfficePos.y);
         placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, closeXPosition, timer), placeParkPos.y);
@@ -249,6 +267,7 @@ public class ButtonBuildingsTab : MonoBehaviour
 
     private void OpenBuildingsTabs()
     {
+        buildingTab.position = new Vector2(Mathf.Lerp(tabXPosition, tabXPosition, timer), displayTabPos.y);
         placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, placeHospitalPos.x, timer), placeHospitalPos.y);
         placeOffice.position = new Vector2(Mathf.Lerp(placeOffice.position.x, placeOfficePos.x, timer), placeOfficePos.y);
         placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, placeParkPos.x, timer), placeParkPos.y);

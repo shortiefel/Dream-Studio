@@ -27,6 +27,12 @@ public class ButtonRoadTab : MonoBehaviour
     Transform roadTab;
     UI roadTabUI;
 
+    Transform displayRoadtab;
+    Vector2 displayRoadtabPos;
+
+    float tabXPosition;
+    float closetabXPosition;
+
     Transform drawRoadWhite;
     Transform drawRoad;
     Vector2 drawPosition;
@@ -98,6 +104,15 @@ public class ButtonRoadTab : MonoBehaviour
 
     public override void Start()
     {
+
+        displayRoadtab = GameObject.Find("DisplayItems").GetComponent<Transform>();
+        displayRoadtabPos = displayRoadtab.position;
+
+        tabXPosition = -38f;
+        closetabXPosition = -150f;
+
+        displayRoadtab.position = new Vector2(tabXPosition, displayRoadtabPos.y);
+
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
         buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonBuildingsTab>();
         maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
@@ -144,7 +159,7 @@ public class ButtonRoadTab : MonoBehaviour
         roadTabUI = displayRoadTabGO.GetComponent<UI>();
 
         closeXPosition = -96f;
-
+       
         //bt = ButtonType.RoadTab;
         drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
         drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
@@ -272,6 +287,8 @@ public class ButtonRoadTab : MonoBehaviour
 
     private void CloseRoadTabs()
     {
+        displayRoadtab.position = new Vector2(Mathf.Lerp(displayRoadtab.position.x, closetabXPosition, timer), displayRoadtabPos.y);
+
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, closeXPosition, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, closeXPosition, timer), drawPosition.y);
 
@@ -299,7 +316,7 @@ public class ButtonRoadTab : MonoBehaviour
 
     private void OpenRoadTabs()
     {
-
+        displayRoadtab.position = new Vector2(Mathf.Lerp(tabXPosition, tabXPosition, timer), displayRoadtabPos.y);
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, drawPosition.x, timer), drawPosition.y);
 

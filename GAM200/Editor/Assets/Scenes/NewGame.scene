@@ -474,6 +474,87 @@
   },
   {
     "Entity": {
+      "Name": "DisplayTab",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -74.30000305175781, -43.0 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 15.0, 15.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "UIComponent": {
+      "Filepath": "Assets\\Textures\\Game\\UI\\DisplayTab.png",
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "DisplayItems",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -36.79999923706055, -42.79999923706055 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 23.5, 15.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": false
+    },
+    "UIComponent": {
+      "Filepath": "Assets\\Textures\\Game\\UI\\DisplayBox.png",
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
+      "Name": "DisplayBuildings",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -20.200000762939454, -44.20000076293945 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 40.0, 15.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "UIComponent": {
+      "Filepath": "Assets\\Textures\\Game\\UI\\DisplayBuildingBox.png",
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsActive": true
+    }
+  },
+
+  {
+    "Entity": {
+      "Name": "DisplayBuildings",
+      "Parent": 10001,
+      "Child": []
+    },
+    "TransformComponent": {
+      "Position": [ -20.200000762939454, -44.20000076293945 ],
+      "LocalPosition": [ 0.0, 0.0 ],
+      "Scale": [ 40.0, 15.0 ],
+      "Angle": 0.0,
+      "Layer": 2,
+      "IsActive": true
+    },
+    "UIComponent": {
+      "Filepath": "Assets\\Textures\\Game\\UI\\DisplayBuildingBox.png",
+      "Colour": [ 1.0, 1.0, 1.0, 1.0 ],
+      "IsActive": true
+    }
+  },
+  {
+    "Entity": {
       "Name": "DrawRoad",
       "Parent": 10001,
       "Child": []

@@ -3,6 +3,7 @@ public class HowToPlayButton : MonoBehaviour
 {
     Text text;
     UI texture;
+    UI texture2btn;
     Transform pauseMenuBackIcon;
     Transform howToPlayBGTransform;
     Transform newBackTransform;
@@ -23,7 +24,7 @@ public class HowToPlayButton : MonoBehaviour
 
     bool htw;
     private AudioSource btnClick;
-
+    static bool htwBool;
     public override void Start()
     {
         htw = false;
@@ -40,6 +41,7 @@ public class HowToPlayButton : MonoBehaviour
         quitTransform = GameObject.Find("QuitText").GetComponent<Transform>();
         mainMenuTransform = GameObject.Find("MenuText").GetComponent<Transform>();
         texture = GameObject.Find("howToPlayBtn").GetComponent<UI>();
+        texture2btn = GameObject.Find("HowToPlayBack").GetComponent<UI>();
 
         areYouSureTransform = GameObject.Find("AreYouSureText").GetComponent<Transform>();
         quitYesTransform = GameObject.Find("YesText").GetComponent<Transform>();
@@ -49,7 +51,7 @@ public class HowToPlayButton : MonoBehaviour
 
 
         text = GetComponent<Text>();
-
+        htwBool = false;
         //Is actually How to play button
         if (text != null)
         {
@@ -72,11 +74,12 @@ public class HowToPlayButton : MonoBehaviour
         {
             text.color = new Color(1f, 1f, 1f);
             texture.color = new Color(1f, 0.5f, 0f);
+            
         }
-
         else
         {
-            backButtonUI.color = new Color(1f, 1f, 1f);
+            Debug.Log("Entering shiteete");
+            backButtonUI.color = new Color(1f, 0.5f, 0f);
         }
     }
 
@@ -86,6 +89,8 @@ public class HowToPlayButton : MonoBehaviour
         {
             if (htw)
             {
+                Debug.Log("Opennnnnn HTW");
+                htwBool = true;
                 Enable<Transform>(howToPlayBGTransform);
                 Enable<Transform>(newBackTransform);
 
@@ -100,11 +105,11 @@ public class HowToPlayButton : MonoBehaviour
                 Disable<Transform>(areYouSureTransform);
                 Disable<Transform>(quitYesTransform);
                 Disable<Transform>(quitNoTransform);
-                
             }
-
             else
             {
+                Debug.Log("Clossssing HTW");
+                htwBool = false;
                 Disable<Transform>(howToPlayBGTransform);
                 Disable<Transform>(newBackTransform);
 
@@ -127,7 +132,11 @@ public class HowToPlayButton : MonoBehaviour
         }
         else
         {
-            backButtonUI.color = new Color(0f, 0f, 0f); 
+            backButtonUI.color = new Color(1f, 1f, 1f);
         }
+    }
+    public bool gethtwBool()
+    {
+        return htwBool;
     }
 }

@@ -51,6 +51,7 @@ public class PauseMenu : MonoBehaviour
     Transform removeRoadbtnw;
     Transform removeCarbtnw;
     PauseMusicClick settingCogBool;
+    HowToPlayButton htwBool;
     //GameObject clockTimer;
     //GameObject AmPm;
     //Transform maintenancefee;
@@ -79,6 +80,7 @@ public class PauseMenu : MonoBehaviour
     //Transform moneyText;
     //Transform coinSymbol;
     private AudioSource btnClick;
+    
 
     public override void Start()
     {
@@ -89,6 +91,7 @@ public class PauseMenu : MonoBehaviour
         //coinSymbol = GameObject.Find("CoinBag").GetComponent<Transform>();
 
         btnClick = GetComponent<AudioSource>();
+
         texture = GetComponent<UI>();
         texture.color = new Color(1f, 1f, 1f);
 
@@ -134,7 +137,7 @@ public class PauseMenu : MonoBehaviour
 
         settingBtn = GameObject.Find("settingBtn").GetComponent<Transform>();
         settingCogBool = GameObject.Find("settingBtn").GetComponent<PauseMusicClick>();
-
+        htwBool = GameObject.Find("HowToPlayBack").GetComponent<HowToPlayButton>();
         //outsidePosition = new Vector2(-200, 0);
 
 
@@ -201,7 +204,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (type)
         {
-            Debug.Log("I am PAUSING");
+            //Debug.Log("I am PAUSING");
             btnClick.Play();
             //Console.WriteLine("Pausing now");
             Enable<Transform>(pauseBG.transform);
@@ -243,7 +246,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            Debug.Log("I am UN-PAUSING");
+            //Debug.Log("I am UN-PAUSING");
             btnClick.Play();
             //Console.WriteLine("Unpausing now");
             //Enable<Transform>(moneyText);
@@ -323,9 +326,9 @@ public class PauseMenu : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Debug.Log(settingCogBool.getSettingBool());
-                if(!settingCogBool.getSettingBool())
+                if(!settingCogBool.getSettingBool() && !htwBool.gethtwBool())
                     PauseAction();
+               
             }
         }
 

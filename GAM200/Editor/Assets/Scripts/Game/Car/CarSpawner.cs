@@ -181,7 +181,10 @@ public class CarSpawner : MonoBehaviour
 
         //if(Input.GetKey(KeyCode.V)) return; //TO REMOVE
         if (Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
-
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log("CarCounter: " + carSpawnCounter + "timer: " + spawnTimer + " entID: " + entityId);
+        }
         //-----------------------------------------Only in House-------------------------------------
         //Only House has popupText
         if (popupText != null)

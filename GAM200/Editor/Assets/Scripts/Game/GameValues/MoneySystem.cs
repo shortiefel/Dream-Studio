@@ -180,10 +180,10 @@ public class MoneySystem : MonoBehaviour
             listOfCostText = goListCost.GetComponent<Text>();
         }
         requireFading = false;
-        textStartPosition = new Vector2(62f, 41.1f);
+        textStartPosition = new Vector2(52f, 41.1f);
         textYFinalPosition = 34.9f;
 
-        imageStartPosition = new Vector2(56.7f, 41.1f);
+        imageStartPosition = new Vector2(47f, 41.1f);
         imageYFinalPosition = 35.5f;
 
         purchaseSound = GameObject.Find("MoneyText").GetComponent<AudioSource>();
@@ -202,14 +202,14 @@ public class MoneySystem : MonoBehaviour
     }
 
 
-    public override void FixedUpdate()
+    public override void Update()
     {
 
-        dt = Time.fixedDeltaTime;
+        dt = Time.deltaTime;
 
         if (displayText == true)
         {
-            timer += Time.fixedDeltaTime;
+            timer += dt;
             if (timer > 1.5f)
             {
                 Disable<Transform>(storePopText);
@@ -240,6 +240,8 @@ public class MoneySystem : MonoBehaviour
 
         if (listOfCost.Count != 0)
         {
+            if (listOfCost.Count > 10) listOfCost.Dequeue();
+
             listOfCostTimer += dt * 2f;
 
             if (listOfCostTimer > listOfCostTimerMax)

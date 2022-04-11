@@ -521,7 +521,7 @@
 
         else if (stages == 13)
         {
-            if (ButtonRoadTab.choosenButton == ButtonType.Draw)
+            if (CombinedUI.choosenButton == ButtonType.Draw)
             {
                 clickCheck = true;
             }

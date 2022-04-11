@@ -18,11 +18,11 @@ public class ButtonBuildingsTab : MonoBehaviour
     Transform placeMall;
     Transform placePoliceStation;
 
-    UI placeHospitalUI;
-    UI placeOfficeUI;
-    UI placeParkUI;
-    UI placeMallUI;
-    UI placePoliceStationUI;
+    public UI placeHospitalUI;
+    public UI placeOfficeUI;
+    public UI placeParkUI;
+    public UI placeMallUI;
+    public UI placePoliceStationUI;
 
     Vector2 placeHospitalPos;
     Vector2 placeOfficePos;
@@ -36,8 +36,8 @@ public class ButtonBuildingsTab : MonoBehaviour
     //Transform placeMallWhite;
     //Transform placePoliceStationWhite;
 
-    Text tooltipText;
-    Transform tooltipTrans;
+    //Text tooltipText;
+    //Transform tooltipTrans;
     Vector2 toolTipsDisplayPosition;
 
     Transform trafficIntro;
@@ -49,7 +49,7 @@ public class ButtonBuildingsTab : MonoBehaviour
     Transform moneyText;
     //Transform counterText;
 
-    GameState gameState;
+    //GameState gameState;
 
     //private Camera mainCamera;
 
@@ -77,8 +77,8 @@ public class ButtonBuildingsTab : MonoBehaviour
     public bool roadTabIsOn;
     public bool buildingsTabIsOn;
 
-    static public ButtonType choosenButton = ButtonType.None;
-    bool displayState = false;
+    //static public ButtonType choosenButton = ButtonType.None;
+    bool displayState = true;
 
 
 
@@ -106,7 +106,7 @@ public class ButtonBuildingsTab : MonoBehaviour
 
         //buttonUI = GetComponent<UI>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+        //gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         //else if (entityId == GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>().entityId)
         //{
@@ -151,9 +151,9 @@ public class ButtonBuildingsTab : MonoBehaviour
         //}
 
 
-        GameObject stringNameGo = GameObject.Find("stringname");
-        tooltipText = stringNameGo.GetComponent<Text>();
-        tooltipTrans = stringNameGo.GetComponent<Transform>();
+        //GameObject stringNameGo = GameObject.Find("stringname");
+        //tooltipText = stringNameGo.GetComponent<Text>();
+        //tooltipTrans = stringNameGo.GetComponent<Transform>();
         toolTipsDisplayPosition = transform.position + new Vector2(-6.8f, 7.70f);
 
 
@@ -200,17 +200,22 @@ public class ButtonBuildingsTab : MonoBehaviour
 
     }
 
+    public override void OnMouseEnter()
+    {
+        InputManager.allowBuilding = false;
+    }
     public override void OnMouseOver()
     {
 
-        SetToolTips(true, toolTipsDisplayPosition, "Buildings");
+        combinedUI.SetToolTips(true, toolTipsDisplayPosition, "Buildings");
         if (Input.GetMouseButtonDown(MouseCode.Left))
             SwitchTabBuildings(!displayState);
     }
 
     public override void OnMouseExit()
     {
-        SetToolTips(false, Vector2.zero);
+        InputManager.allowBuilding = true;
+        combinedUI.SetToolTips(false, Vector2.zero);
     }
 
     //_activeType = false means u r clicking the white version
@@ -219,8 +224,19 @@ public class ButtonBuildingsTab : MonoBehaviour
     {
         if (type)
         {
+            //switch (CombinedUI.choosenButton)
+            //{
+            //    case ButtonType.PlaceHospital:
+            //    case ButtonType.PlaceOffice:
+            //    case ButtonType.PlacePark:
+            //    case ButtonType.PlaceMall:
+            //    case ButtonType.PlacePoliceStation:
+            //        CombinedUI.choosenButton = ButtonType.None;
+            //        break;
+            //}
+
             buildingsTabOpen = true;
-            choosenButton = ButtonType.Latest;
+            //choosenButton = ButtonType.Latest;
 
             buildingsTabUI.ChangeTexture("Game/UI/Buildings_Click");
             //EnableAllNormalExcept();
@@ -230,10 +246,27 @@ public class ButtonBuildingsTab : MonoBehaviour
         }
         else
         {
+            
+            
+
             if (reenable)
             {
-                ResetAll();
-                choosenButton = ButtonType.None;
+                
+                ResetAllTextures();
+
+                switch (CombinedUI.choosenButton)
+                {
+                    case ButtonType.PlaceHospital:
+                    case ButtonType.PlaceOffice:
+                    case ButtonType.PlacePark:
+                    case ButtonType.PlaceMall:
+                    case ButtonType.PlacePoliceStation:
+                        gameManager.ClearInputActions();
+                        //Disable<Transform>(GameManager.bigHoverBox);
+                        SceneManager.SetDrawMode(false);
+                        CombinedUI.choosenButton = ButtonType.None;
+                        break;
+                }
             }
 
             buildingsTabClose = true;
@@ -282,132 +315,7 @@ public class ButtonBuildingsTab : MonoBehaviour
         }
 
     }
-    public void CallFunction(ButtonType _bt)
-    {
-        bool _activeType = true;
-
-        Debug.Log(choosenButton.ToString());
-        Debug.Log(_bt.ToString());
-
-        if (_bt == choosenButton) _activeType = false;
-        if (_bt == ButtonType.Latest) _bt = choosenButton;
-
-        switch (choosenButton)
-        {
-            case ButtonType.PlaceHospital:
-                {
-                    placeHospitalUI.ChangeTexture("Game/UI/Hospital");
-                    break;
-                }
-            case ButtonType.PlaceOffice:
-                {
-                    placeOfficeUI.ChangeTexture("Game/UI/Office");
-                    break;
-                }
-            case ButtonType.PlacePark:
-                {
-                    placeParkUI.ChangeTexture("Game/UI/Park");
-                    break;
-                }
-            case ButtonType.PlaceMall:
-                {
-                    placeMallUI.ChangeTexture("Game/UI/ShoppingMall");
-                    break;
-                }
-            case ButtonType.PlacePoliceStation:
-                {
-                    placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation");
-                    break;
-                }
-            case ButtonType.Latest:
-                {
-                    ResetAllTextures();
-                    break;
-                }
-        }
-
-        //Debug.Log("Calling " + _bt + " " + _activeType);
-        DisableAll();
-
-        if (_activeType)
-        {
-            //if (Input.GetMouseButtonDown(MouseCode.Left))
-            //    cameraMovement.SetZoom(ZoomType.In);
-
-            switch (_bt)
-            {
-                case ButtonType.PlaceHospital:
-                    {
-                        gameManager.PlaceDestHospitalHandler();
-                        placeHospitalUI.ChangeTexture("Game/UI/Hospital_Click");
-
-                        Enable<Transform>(GameManager.bigHoverBox);
-                        Disable<Transform>(GameManager.smallHoverBox);
-                        //EnableAllNormalExcept();
-                        break;
-                    }
-                case ButtonType.PlaceOffice:
-                    {
-                        gameManager.PlaceDestOfficeHandler();
-                        placeOfficeUI.ChangeTexture("Game/UI/Office_Click");
-
-                        Enable<Transform>(GameManager.bigHoverBox);
-                        Disable<Transform>(GameManager.smallHoverBox);
-                        //EnableAllNormalExcept();
-                        break;
-                    }
-                case ButtonType.PlacePark:
-                    {
-                        gameManager.PlaceDestParkHandler();
-
-                        placeParkUI.ChangeTexture("Game/UI/Park_Click");
-
-                        Enable<Transform>(GameManager.bigHoverBox);
-                        Disable<Transform>(GameManager.smallHoverBox);
-                        //EnableAllNormalExcept();
-                        break;
-                    }
-                case ButtonType.PlaceMall:
-                    {
-                        gameManager.PlaceDestMallHandler();
-                        placeMallUI.ChangeTexture("Game/UI/ShoppingMall_Click");
-
-                        Enable<Transform>(GameManager.bigHoverBox);
-                        Disable<Transform>(GameManager.smallHoverBox);
-                        //EnableAllNormalExcept();
-                        break;
-                    }
-                case ButtonType.PlacePoliceStation:
-                    {
-                        gameManager.PlaceDestPoliceStationHandler();
-                        placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation_Click");
-
-                        Enable<Transform>(GameManager.bigHoverBox);
-                        Disable<Transform>(GameManager.smallHoverBox);
-                        //EnableAllNormalExcept();
-                        break;
-                    }
-            }
-
-            SceneManager.SetDrawMode(true);
-            //gameState.SetDrawMode(true);
-            //cameraMovement.drawMode = true;
-        }
-        else
-        {
-
-            SceneManager.SetDrawMode(false);
-            //gameState.SetDrawMode(false);
-
-            //EnableAllNormalExcept();
-            Disable<Transform>(GameManager.bigHoverBox);
-
-            _bt = ButtonType.None;
-        }
-
-
-        choosenButton = _bt;
-    }
+    
 
 
     public override void FixedUpdate()
@@ -417,7 +325,7 @@ public class ButtonBuildingsTab : MonoBehaviour
             //if (bt == ButtonType.BuildingsTab)
             {
                 OpenBuildingsTabs();
-                roadTab.SwitchTabRoad(false);
+                roadTab.SwitchTabRoad(false, true);
             }
         }
         if (buildingsTabClose)
@@ -428,36 +336,34 @@ public class ButtonBuildingsTab : MonoBehaviour
         }
     }
 
-    public override void Update()
-    {
-        if (buildingsTabIsOn)
-        {
-            /****Shortcut keys in game***/
-            if (Input.GetKeyDown(KeyCode.T1)) CallFunction(ButtonType.PlaceHospital);
-            if (Input.GetKeyDown(KeyCode.T2)) CallFunction(ButtonType.PlaceOffice);
-            if (Input.GetKeyDown(KeyCode.T3)) CallFunction(ButtonType.PlacePark);
-            if (Input.GetKeyDown(KeyCode.T4)) CallFunction(ButtonType.PlaceMall);
-            if (Input.GetKeyDown(KeyCode.T5)) CallFunction(ButtonType.PlacePoliceStation);
-        }
-    }
+    //public override void Update()
+    //{
+    //    if (buildingsTabIsOn)
+    //    {
+    //        /****Shortcut keys in game***/
+    //        if (Input.GetKeyDown(KeyCode.T1)) CallFunction(ButtonType.PlaceHospital);
+    //        if (Input.GetKeyDown(KeyCode.T2)) CallFunction(ButtonType.PlaceOffice);
+    //        if (Input.GetKeyDown(KeyCode.T3)) CallFunction(ButtonType.PlacePark);
+    //        if (Input.GetKeyDown(KeyCode.T4)) CallFunction(ButtonType.PlaceMall);
+    //        if (Input.GetKeyDown(KeyCode.T5)) CallFunction(ButtonType.PlacePoliceStation);
+    //    }
+    //}
 
-    public void SetToolTips(bool state, Vector2 position, string textToPut = "")
-    {
-        if (state)
-        {
-            Enable<Transform>(tooltipTrans);
-            tooltipTrans.position = position;
-            tooltipText.text = textToPut;
-            if(gameState.GetNight())
-                tooltipText.color = new Color(1f, 1f, 1f);
-            else
-                tooltipText.color = new Color(0f, 0f, 0f);
-
-        }
-        else Disable<Transform>(tooltipTrans);
-
-
-    }
+    //public void SetToolTips(bool state, Vector2 position, string textToPut = "")
+    //{
+    //    if (state)
+    //    {
+    //        Enable<Transform>(tooltipTrans);
+    //        tooltipTrans.position = position;
+    //        tooltipText.text = textToPut;
+    //        if(gameState.GetNight())
+    //            tooltipText.color = new Color(1f, 1f, 1f);
+    //        else
+    //            tooltipText.color = new Color(0f, 0f, 0f);
+    //
+    //    }
+    //    else Disable<Transform>(tooltipTrans);
+    //}
 
     public void ResetAllTextures()
     {
@@ -468,30 +374,28 @@ public class ButtonBuildingsTab : MonoBehaviour
         placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation");
     }
 
-    public void ResetAll()
-    {
-        gameManager.ClearInputActions();
-        ResetAllTextures();
-
-        SceneManager.SetDrawMode(false);
-        //gameState.SetDrawMode(false);
-        //activeType = false;
-    }
-
-    public void DisableAll()
-    {
-        gameManager.ClearInputActions();
-
-        //Disable<Transform>(placeHospital);
-        //Disable<Transform>(placeOffice);
-        //Disable<Transform>(placePark);
-        //Disable<Transform>(placeMall);
-        //Disable<Transform>(placePoliceStation);
-
-        SceneManager.SetDrawMode(false);
-        //gameState.SetDrawMode(false);
-        //activeType = false;
-    }
+    //public void ResetAll()
+    //{
+    //    gameManager.ClearInputActions();
+    //    ResetAllTextures();
+    //    Test.choosenButton = ButtonType.None;
+    //    SceneManager.SetDrawMode(false);
+    //}
+    //
+    //public void DisableAll()
+    //{
+    //    gameManager.ClearInputActions();
+    //
+    //    //Disable<Transform>(placeHospital);
+    //    //Disable<Transform>(placeOffice);
+    //    //Disable<Transform>(placePark);
+    //    //Disable<Transform>(placeMall);
+    //    //Disable<Transform>(placePoliceStation);
+    //
+    //    SceneManager.SetDrawMode(false);
+    //    //gameState.SetDrawMode(false);
+    //    //activeType = false;
+    //}
 
     //public void RevealERP()
     //{
@@ -528,8 +432,6 @@ public class ButtonBuildingsTab : MonoBehaviour
     //    Disable<Transform>(GameObject.Find("stringname").GetComponent<Transform>());
     //}
 
-    public override void OnMouseEnter()
-    {
-        InputManager.allowBuilding = false;
-    }
+    
+
 }

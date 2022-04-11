@@ -5,8 +5,8 @@ public class ButtonTypeClick : MonoBehaviour
     ButtonType bt;
     //public bool active;
 
-    ButtonRoadTab roadTab;
-    ButtonBuildingsTab buildingsTab;
+    //ButtonRoadTab roadTab;
+    //ButtonBuildingsTab buildingsTab;
 
     //Text tooltipText;
     //Transform tooltipTrans;
@@ -15,12 +15,14 @@ public class ButtonTypeClick : MonoBehaviour
     //Texture lineDivider2;
     //Texture lineDivider3;
 
+    CombinedUI combinedUi;
+
 
     public override void Start()
     {
-        roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoadTab>();
-        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonBuildingsTab>();
-        
+        //roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoadTab>();
+        combinedUi = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
+
 
 
         if (entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId)
@@ -187,10 +189,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            roadTab.CallFunction(bt);
-                        } 
+                            combinedUi.BRCallFunction(bt);
+                        }
 
-                        roadTab.SetToolTips(true, tooltipOffset, "Road");
+                        combinedUi.SetToolTips(true, tooltipOffset, "Road");
                     
                     
                         //Enable<Transform>(tooltipTrans);
@@ -200,9 +202,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.Remove:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            roadTab.CallFunction(bt);
+                            combinedUi.BRCallFunction(bt);
 
-                        roadTab.SetToolTips(true, tooltipOffset, "Remove Road");
+                        combinedUi.SetToolTips(true, tooltipOffset, "Remove Road");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Remove ";
                         break;
@@ -210,9 +212,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.ERP:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            roadTab.CallFunction(bt);
+                            combinedUi.BRCallFunction(bt);
 
-                        roadTab.SetToolTips(true, tooltipOffset, "ERP");
+                        combinedUi.SetToolTips(true, tooltipOffset, "ERP");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "ERP";
                         break;
@@ -220,9 +222,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.TrafficLight:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            roadTab.CallFunction(bt);
+                            combinedUi.BRCallFunction(bt);
 
-                        roadTab.SetToolTips(true, tooltipOffset, "Traffic Light");
+                        combinedUi.SetToolTips(true, tooltipOffset, "Traffic Light");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "TrafficLight";
                         break;
@@ -230,9 +232,9 @@ public class ButtonTypeClick : MonoBehaviour
                 case ButtonType.RemoveCar:
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
-                            roadTab.CallFunction(bt);
+                            combinedUi.BRCallFunction(bt);
 
-                        roadTab.SetToolTips(true, tooltipOffset, "Remove Car");
+                        combinedUi.SetToolTips(true, tooltipOffset, "Remove Car");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Remove Car";
                         break;
@@ -242,10 +244,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                        combinedUi.BRCallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Hospital");
+                        combinedUi.SetToolTips(true, tooltipOffset, "Hospital");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Hospital";
 
@@ -255,10 +257,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                        combinedUi.BRCallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Office");
+                        combinedUi.SetToolTips(true, tooltipOffset, "Office");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Office";
 
@@ -268,10 +270,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                        combinedUi.BRCallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Park");
+                        combinedUi.SetToolTips(true, tooltipOffset, "Park");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Park";
 
@@ -281,10 +283,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                        combinedUi.BRCallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Mall");
+                        combinedUi.SetToolTips(true, tooltipOffset, "Mall");
                         //Enable<Transform>(tooltipTrans);
                         //tooltipText.text = "Place Mall";
 
@@ -294,10 +296,10 @@ public class ButtonTypeClick : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(MouseCode.Left))
                         {
-                            buildingsTab.CallFunction(bt);
+                        combinedUi.BRCallFunction(bt);
                         }
 
-                        buildingsTab.SetToolTips(true, tooltipOffset, "Police Station");
+                        combinedUi.SetToolTips(true, tooltipOffset, "Police Station");
 
                         break;
                     }
@@ -316,8 +318,8 @@ public class ButtonTypeClick : MonoBehaviour
     public override void OnMouseExit()
     {
         InputManager.allowBuilding = true;
-        roadTab.SetToolTips(false, Vector2.zero);
-        buildingsTab.SetToolTips(false, Vector2.zero);
+        combinedUi.SetToolTips(false, Vector2.zero);
+        
         //if (!transform.isActive) return;
         //if (transform.isActive)
         //{

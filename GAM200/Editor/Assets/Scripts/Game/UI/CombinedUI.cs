@@ -20,10 +20,10 @@ public class CombinedUI : MonoBehaviour
     Transform timerButton;
     Transform roadTabTransform;
     Transform buildingsTabTransform;
-    Transform removeRoad;
-    Transform removeRoadWhite;
-    Transform drawRemoveCar;
-    Transform drawRemoveCarWhite;
+    //Transform removeRoad;
+    //Transform removeRoadWhite;
+    //Transform drawRemoveCar;
+    //Transform drawRemoveCarWhite;
 
     Transform moneyText;
     Transform coinSymbol;
@@ -38,6 +38,14 @@ public class CombinedUI : MonoBehaviour
     bool isRoadTabOpen;
     bool isBuildingsTabOpen;
     bool isClockOpen;
+
+    GameManager gameManager;
+    GameState gameState;
+
+    Text tooltipText;
+    Transform tooltipTrans;
+    
+    static public ButtonType choosenButton = ButtonType.None;
 
     public override void Start()
     {
@@ -60,10 +68,10 @@ public class CombinedUI : MonoBehaviour
         maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
         maintenanceIcon = GameObject.Find("MaintenanceIcon").GetComponent<Transform>();
 
-        removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
-        removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
-        drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
-        drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
+        //removeRoad = GameObject.Find("RemoveRoad").GetComponent<Transform>();
+        //removeRoadWhite = GameObject.Find("RemoveRoadWhite").GetComponent<Transform>();
+        //drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
+        //drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
 
         listOfCostText = GameObject.Find("ListOfCostText").GetComponent<Transform>();
         listOfCostDestUI = GameObject.Find("ListOfCostDest").GetComponent<UI>();
@@ -71,6 +79,14 @@ public class CombinedUI : MonoBehaviour
         isRoadTabOpen = false;
         isBuildingsTabOpen = false;
         isClockOpen = false;
+
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+
+        GameObject stringNameGo = GameObject.Find("stringname");
+        tooltipText = stringNameGo.GetComponent<Text>();
+        tooltipTrans = stringNameGo.GetComponent<Transform>();
+
     }
 
     public void CloseAllUIExcept(UIType uitype)
@@ -183,10 +199,10 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(maintenancefee);
                     Disable<Transform>(maintenanceIcon);
 
-                    Disable<Transform>(removeRoad);
-                    Disable<Transform>(removeRoadWhite);
-                    Disable<Transform>(drawRemoveCar);
-                    Disable<Transform>(drawRemoveCarWhite);
+                    Disable<Transform>(roadTab.removeRoad);
+                    Disable<Transform>(roadTab.removeRoadWhite);
+                    Disable<Transform>(roadTab.drawRemoveCar);
+                    Disable<Transform>(roadTab.drawRemoveCarWhite);
 
                     Disable<Transform>(listOfCostText);
                     listOfCostDestUI.alpha = 0f;
@@ -204,13 +220,13 @@ public class CombinedUI : MonoBehaviour
 
         if (isRoadTabOpen)
         {
-            roadTab.SwitchTabRoad(true);
-            roadTab.CallFunction(ButtonType.Latest);
+            roadTab.SwitchTabRoad(true, false);
+            BRCallFunction(ButtonType.Latest);
         }
         if (isBuildingsTabOpen)
         {
-            buildingsTab.SwitchTabBuildings(true);
-            buildingsTab.CallFunction(ButtonType.Latest);
+            buildingsTab.SwitchTabBuildings(true, false);
+            BRCallFunction(ButtonType.Latest);
         }
 
         //if (isClockOpen)
@@ -229,12 +245,228 @@ public class CombinedUI : MonoBehaviour
         Enable<Transform>(maintenancefee);
         Enable<Transform>(maintenanceIcon);
 
-        Enable<Transform>(removeRoad);
-        Enable<Transform>(drawRemoveCar);
+        Enable<Transform>(roadTab.removeRoad);
+        Enable<Transform>(roadTab.drawRemoveCar);
 
         Enable<Transform>(listOfCostText);
         listOfCostDestUI.alpha = 1f;
     }
 
 
+    public void BRCallFunction(ButtonType _bt)
+    {
+        bool _activeType = true;
+        if (_bt == choosenButton) _activeType = false;
+        if (_bt == ButtonType.Latest) _bt = choosenButton;
+        
+        switch (choosenButton)
+        {
+            case ButtonType.Draw:
+                {
+                    Enable<Transform>(roadTab.drawRoad);
+                    Disable<Transform>(roadTab.drawRoadWhite);
+                    break;
+                }
+            
+            case ButtonType.ERP:
+                {
+                    Enable<Transform>(roadTab.drawERP);
+                    Disable<Transform>(roadTab.drawERPWhite);
+                    break;
+                }
+            case ButtonType.TrafficLight:
+                {
+                    Enable<Transform>(roadTab.drawTraffic);
+                    Disable<Transform>(roadTab.drawTrafficWhite);
+                    break;
+                }
+            case ButtonType.Remove:
+                {
+                    Enable<Transform>(roadTab.removeRoad);
+                    Disable<Transform>(roadTab.removeRoadWhite);
+                    break;
+                }
+            case ButtonType.RemoveCar:
+                {
+                    Enable<Transform>(roadTab.drawRemoveCar);
+                    Disable<Transform>(roadTab.drawRemoveCarWhite);
+                    break;
+                }
+
+            case ButtonType.PlaceHospital:
+                {
+                    buildingsTab.placeHospitalUI.ChangeTexture("Game/UI/Hospital");
+                    break;
+                }
+            case ButtonType.PlaceOffice:
+                {
+                    buildingsTab.placeOfficeUI.ChangeTexture("Game/UI/Office");
+                    break;
+                }
+            case ButtonType.PlacePark:
+                {
+                    buildingsTab.placeParkUI.ChangeTexture("Game/UI/Park");
+                    break;
+                }
+            case ButtonType.PlaceMall:
+                {
+                    buildingsTab.placeMallUI.ChangeTexture("Game/UI/ShoppingMall");
+                    break;
+                }
+            case ButtonType.PlacePoliceStation:
+                {
+                    buildingsTab.placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation");
+                    break;
+                }
+            case ButtonType.Latest:
+                {
+                    buildingsTab.ResetAllTextures();
+                    break;
+                }
+        }
+
+        //Debug.Log("Calling " + _bt + " " + _activeType);
+        //DisableAll();
+
+        if (_activeType)
+        {
+            //if (Input.GetMouseButtonDown(MouseCode.Left))
+            //    cameraMovement.SetZoom(ZoomType.In);
+
+            switch (_bt)
+            {
+                case ButtonType.Draw:
+                    {
+                        gameManager.RoadPlacementHandler();
+
+                        Disable<Transform>(roadTab.drawRoad);
+                        Enable<Transform>(roadTab.drawRoadWhite);
+
+                        GameManager.smallHoverText.text = "Cost: -20";
+                        Enable<Transform>(GameManager.smallHoverBox);
+                        break;
+                    }
+                case ButtonType.Remove:
+                    {
+                        gameManager.RemoveStructureHandler();
+
+                        Disable<Transform>(roadTab.removeRoad);
+                        Enable<Transform>(roadTab.removeRoadWhite);
+
+                        Enable<Transform>(GameManager.smallHoverBox);
+                        Disable<Transform>(GameManager.bigHoverBox);
+                        break;
+                    }
+                case ButtonType.ERP:
+                    {
+                        gameManager.ERPHandler();
+
+                        Disable<Transform>(roadTab.drawERP);
+                        Enable<Transform>(roadTab.drawERPWhite);
+
+                        Enable<Transform>(GameManager.smallHoverBox);
+                        Disable<Transform>(GameManager.bigHoverBox);
+                        break;
+                    }
+                case ButtonType.TrafficLight:
+                    {
+                        gameManager.TrafficLightHandler();
+
+                        Disable<Transform>(roadTab.drawTraffic);
+                        Enable<Transform>(roadTab.drawTrafficWhite);
+
+                        Enable<Transform>(GameManager.smallHoverBox);
+                        Disable<Transform>(GameManager.bigHoverBox);
+                        break;
+                    }
+                case ButtonType.RemoveCar:
+                    {
+                        gameManager.RemoveCarHandler();
+
+                        Disable<Transform>(roadTab.drawRemoveCar);
+                        Enable<Transform>(roadTab.drawRemoveCarWhite);
+
+                        GameManager.smallHoverText.text = "Cost: -20";
+                        Enable<Transform>(GameManager.smallHoverBox);
+                        Disable<Transform>(GameManager.bigHoverBox);
+                        break;
+                    }
+
+                case ButtonType.PlaceHospital:
+                    {
+                        gameManager.PlaceDestHospitalHandler();
+                        buildingsTab.placeHospitalUI.ChangeTexture("Game/UI/Hospital_Click");
+
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
+                        break;
+                    }
+                case ButtonType.PlaceOffice:
+                    {
+                        gameManager.PlaceDestOfficeHandler();
+                        buildingsTab.placeOfficeUI.ChangeTexture("Game/UI/Office_Click");
+
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
+                        break;
+                    }
+                case ButtonType.PlacePark:
+                    {
+                        gameManager.PlaceDestParkHandler();
+                        buildingsTab.placeParkUI.ChangeTexture("Game/UI/Park_Click");
+
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
+                        break;
+                    }
+                case ButtonType.PlaceMall:
+                    {
+                        gameManager.PlaceDestMallHandler();
+                        buildingsTab.placeMallUI.ChangeTexture("Game/UI/ShoppingMall_Click");
+
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
+                        break;
+                    }
+                case ButtonType.PlacePoliceStation:
+                    {
+                        gameManager.PlaceDestPoliceStationHandler();
+                        buildingsTab.placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation_Click");
+
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
+                        break;
+                    }
+            }
+            choosenButton = _bt;
+            SceneManager.SetDrawMode(true);
+        }
+        else
+        {
+            gameManager.ClearInputActions();
+
+            SceneManager.SetDrawMode(false);
+            Disable<Transform>(GameManager.bigHoverBox);
+            Disable<Transform>(GameManager.smallHoverBox);
+
+            choosenButton = ButtonType.None;
+        }
+
+    }
+
+    public void SetToolTips(bool state, Vector2 position, string textToPut = "")
+    {
+        if (state)
+        {
+            Enable<Transform>(tooltipTrans);
+            tooltipTrans.position = position;
+            tooltipText.text = textToPut;
+            if (gameState.GetNight())
+                tooltipText.color = new Color(1f, 1f, 1f);
+            else
+                tooltipText.color = new Color(0f, 0f, 0f);
+
+        }
+        else Disable<Transform>(tooltipTrans);
+    }
 }

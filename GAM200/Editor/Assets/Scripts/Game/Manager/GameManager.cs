@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         if (!roadManager.placementManager.CheckIfPositionInBound(position)) return;
         smallHoverBox.position = position;
 
-        switch (ButtonRoadTab.choosenButton)
+        switch (CombinedUI.choosenButton)
         {
             case ButtonType.Remove:
                 {
@@ -207,7 +207,7 @@ public class GameManager : MonoBehaviour
     {
         bigHoverBox.position = position + new Vector2(0.5f, 0.5f);
 
-        switch (ButtonBuildingsTab.choosenButton)
+        switch (CombinedUI.choosenButton)
         {
             case ButtonType.PlaceHospital:
                 {

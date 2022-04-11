@@ -148,64 +148,6 @@ public class TrafficLight : MonoBehaviour
             else
                 transform.angle = 90;
         }
-
-        //if (carCounter == 0)
-        //    Debug.Log(carCounter);
-        //float deltaTime = Time.deltaTime;
-        //Console.WriteLine("State " + directionState);
-        //if (Input.GetKeyDown(KeyCode.V))
-        //    SwapState();
-        //timer += deltaTime;
-        //if (timer >= switchTimer)
-        //{
-        //    //secondaryTimer += Time.deltaTime;
-        //    //
-        //    //if (secondaryTimer > 0.2f)
-        //    //{
-        //    //    timer = 0f;
-        //    //    secondaryTimer = 0f;
-        //    //    SwapState();
-        //    //    Console.WriteLine("Secondary timer activated ");
-        //    //
-        //    //}
-        //    //Might have problem where car move too fast and enter but doesnt move
-        //    //Check timer to 1.5 of switchTimer to prevent infinite waiting to change direction
-        //    //if (carCounter == 0 && timer >= switchTimer * 1.5f)
-        //    timer = 0f;
-        //    SwapState();
-        //}
-        //Debug.Log(nextState);
-        //Put traffic light in a state where cars are not allowed to go for both direction
-        //if (directionState == DirectionState.None)
-        //{
-        //    inBetweenTimer += deltaTime;
-        //    if (inBetweenTimer >= 1.5f)
-        //    //if (inBetweenTimer >= 1.5f || carCounter == 0)
-        //    //if (carCounter == 0)
-        //    {
-        //        //toState = state = !state;
-        //        //state = !state;
-        //        //if (state)
-        //        //    transform.angle = 0;
-        //        ////texture.color = new Color(1, 0, 0, 1);
-        //        //else
-        //        //    transform.angle = 90;
-        //
-        //        directionState = nextState;
-        //        //if (nextState == DirectionState.Horizontal || nextState == DirectionState.HorizontalLeft)
-        //        if (nextState == DirectionState.Left || nextState == DirectionState.Right)
-        //            transform.angle = 0;
-        //        else
-        //            transform.angle = 90;
-        //        inBetweenTimer = 0f;
-        //    }
-        //
-        //    //reqeusting = false;
-        //}
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-        //    SwapState();
-        //}
     }
 
     //True = just spawn and ignore traffic light 

@@ -161,10 +161,6 @@ public class SpawnManager : MonoBehaviour
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N) && Input.GetKey(KeyCode.Shift))
-        {
-            CheckPosition(SpawnRequestType.Destination);
-        }
 
         if (Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.Shift))
         {

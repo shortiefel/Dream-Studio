@@ -43,6 +43,8 @@ public class CameraMovement : MonoBehaviour
     private Vector2 cameraPosition;
 
     private bool positionChange;
+
+    float dt;
     public override void Start()
     {
         toZoomLose = false;
@@ -64,12 +66,12 @@ public class CameraMovement : MonoBehaviour
 
         zoomHeight = cam.height;
 
-        speed = 1f;
+        speed = 60f;
 
         minZoom = 8f;
         maxZoom = 10f;
         camSpeed = 0f;
-        maxSpeed = 0.5f;
+        maxSpeed = 10f;
 
         moveUpSpeed = 0.5f * transform.up;
         moveRightSpeed = 0.5f * transform.right;
@@ -77,6 +79,62 @@ public class CameraMovement : MonoBehaviour
         cameraPosition = transform.position;
 
         positionChange = false;
+    }
+
+    public override void Update()
+    {
+        dt = Time.deltaTime;
+
+        zoomHeight -= speed * dt * Input.GetMouseScroll().y;
+        if (zoomHeight < minZoom) zoomHeight = minZoom;
+        else if (zoomHeight > maxZoom) zoomHeight = maxZoom;
+        cam.height = zoomHeight;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            camSpeed = dt * maxSpeed * (zoomHeight / maxZoom);
+            cameraPosition.y += camSpeed;
+            positionChange = true;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            camSpeed = dt * maxSpeed * (zoomHeight / maxZoom);
+            cameraPosition.y -= camSpeed;
+            positionChange = true;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            camSpeed = dt * maxSpeed * (zoomHeight / maxZoom);
+            cameraPosition.x -= camSpeed;
+            positionChange = true;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            camSpeed = dt * maxSpeed * (zoomHeight / maxZoom);
+            cameraPosition.x += camSpeed;
+            positionChange = true;
+        }
+
+        if (positionChange)
+        {
+            //Check position before set (with the border)
+            if (placementManager != null)
+            {
+                Vector2Int sp = placementManager.placementGrid.GetStartPoint();
+                Vector2Int ep = placementManager.placementGrid.GetGridSize();
+                ep += sp;
+
+                if (cameraPosition.x < sp.x) cameraPosition.x = sp.x;
+                else if (cameraPosition.x > ep.x) cameraPosition.x = ep.x;
+
+                if (cameraPosition.y < sp.y) cameraPosition.y = sp.y;
+                else if (cameraPosition.y > ep.y) cameraPosition.y = ep.y;
+            }
+
+
+            transform.position = cameraPosition;
+            positionChange = false;
+        }
     }
 
     public override void FixedUpdate()
@@ -126,64 +184,7 @@ public class CameraMovement : MonoBehaviour
             //    //transform.position -= new Vector2(offset.x * mouseMultiply, offset.y * mouseMultiply);
             //    
             //}
-            zoomHeight -= speed * Input.GetMouseScroll().y;
-            if (zoomHeight < minZoom) zoomHeight = minZoom;
-            else if (zoomHeight > maxZoom) zoomHeight = maxZoom;
-            cam.height = zoomHeight;
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                camSpeed = maxSpeed * (zoomHeight / maxZoom);
-                cameraPosition.y += camSpeed;
-                positionChange = true;
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                camSpeed = maxSpeed * (zoomHeight / maxZoom);
-                cameraPosition.y -= camSpeed;
-                positionChange = true;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                camSpeed = maxSpeed * (zoomHeight / maxZoom);
-                cameraPosition.x -= camSpeed;
-                positionChange = true;
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                camSpeed = maxSpeed * (zoomHeight / maxZoom);
-                cameraPosition.x += camSpeed;
-                positionChange = true;
-            }
-
-            if (positionChange)
-            {
-                //Check position before set (with the border)
-                if (placementManager != null)
-                {
-                    Vector2Int sp = placementManager.placementGrid.GetStartPoint();
-                    Vector2Int ep = placementManager.placementGrid.GetGridSize();
-                    ep += sp;
-
-                    //Debug.Log("cam Pos:" + cameraPosition.x.ToString() + " " + cameraPosition.y.ToString());
-                    //Debug.Log("end pos " + ep.y.ToString());
-                    //if (cameraPosition.x < (ep.x / 2.0f) - 1.0f) cameraPosition.x = (ep.x / 2.0f) - 1.0f;
-                    //else if (cameraPosition.x > (ep.x / 2.0f) + 1.0f) cameraPosition.x = (ep.x / 2.0f) + 1.0f;
-                    //
-                    //if (cameraPosition.y < (ep.y / 2.0f) - 2.0f) cameraPosition.y = (ep.y / 2.0f) - 2.0f;
-                    //else if (cameraPosition.y > (ep.y / 2.0f)) cameraPosition.y = (ep.y / 2.0f);
-
-                    if (cameraPosition.x < sp.x) cameraPosition.x = sp.x;
-                    else if (cameraPosition.x > ep.x) cameraPosition.x = ep.x;
-
-                    if (cameraPosition.y < sp.y) cameraPosition.y = sp.y;
-                    else if (cameraPosition.y > ep.y) cameraPosition.y = ep.y;
-                }
-
-
-                transform.position = cameraPosition;
-                positionChange = false;
-            }
+            
         }
 
         //mousePosition = Input.GetMousePosition();

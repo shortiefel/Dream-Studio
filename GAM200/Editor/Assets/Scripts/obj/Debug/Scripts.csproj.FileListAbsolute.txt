@@ -30,3 +30,9 @@ C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\Editor\Assets\Scri
 C:\Users\jw\Desktop\Github_Desktop_Folder\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CoreCompileInputs.cache
 C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.AssemblyReference.cache
 C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CoreCompileInputs.cache
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.dll
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\CSScript.pdb
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\Editor\Assets\Scripts\bin\Debug\EngineCS.dll
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\Scripts.csproj.CopyComplete
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.dll
+C:\Users\jianwen.o\Desktop\Dream-Studio\GAM200\Editor\Assets\Scripts\obj\Debug\CSScript.pdb

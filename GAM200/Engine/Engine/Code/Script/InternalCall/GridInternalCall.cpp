@@ -36,8 +36,8 @@ namespace Engine {
 	void GetAllAdjacentCellTypes_Engine(MonoArray* monoArray, int x, int y);
 
 	int SetRoad_Engine(MonoArray* monoArray, int size);
-	int UnsetRoad_Engine(Math::ivec2 pos, MonoArray* monoArray);
-	bool UnsetDestination_Engine(Math::ivec2 pos, Math::ivec2* posToRemove);
+	int UnsetRoad_Engine(Math::ivec2 pos, MonoArray* monoArray, unsigned int* entityId);
+	bool UnsetDestination_Engine(Math::ivec2 pos, Math::ivec2* posToRemove, unsigned int* entityId);
 
 	void RevertGrid_Engine();
 	void FinalizeGrid_Engine();
@@ -161,17 +161,17 @@ namespace Engine {
 		return Game::Grid::GetInstance().SetRoads(posArr, size);
 	}
 
-	int UnsetRoad_Engine(Math::ivec2 pos, MonoArray* monoArray) {
+	int UnsetRoad_Engine(Math::ivec2 pos, MonoArray* monoArray, unsigned int* entityId) {
 		std::vector<Math::ivec2> arr;
-		int loop = Game::Grid::GetInstance().UnsetRoads(pos, &arr);
+		int loop = Game::Grid::GetInstance().UnsetRoads(pos, &arr, entityId);
 		for (int i = 0; i < loop; i++) {
 			mono_array_set(monoArray, Math::ivec2, i, (arr[i]));
 		}
 		return loop;
 	}
 
-	bool UnsetDestination_Engine(Math::ivec2 pos, Math::ivec2* posToRemove) {
-		return Game::Grid::GetInstance().UnsetDestination(pos, *posToRemove);
+	bool UnsetDestination_Engine(Math::ivec2 pos, Math::ivec2* posToRemove, unsigned int* entityId) {
+		return Game::Grid::GetInstance().UnsetDestination(pos, *posToRemove, entityId);
 	}
 
 	void RevertGrid_Engine() {

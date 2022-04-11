@@ -77,7 +77,6 @@ public class IBehaviour : IComponent
 
     protected void RecordComponent<T>(uint entityId) where T : IComponent, new()
     {
-        //Console.WriteLine("Custom typeeeeeeeeeeeeeeeeeeeeeeeeee ");
         Type type = typeof(T);
         if (!dictonaryOfTypes.ContainsKey(type))
         {
@@ -260,14 +259,16 @@ public class IBehaviour : IComponent
     //Destroy
     public void Destroy(uint id)
     {
-        foreach(var i in dictonaryOfTypes)
-        {
-            if (i.Value.ContainsKey(id)) i.Value.Remove(id);
-        }
+        Debug.Log("destroy enityId ");
+        //foreach(var i in dictonaryOfTypes)
+        //{
+        //    if (i.Value.ContainsKey(id)) i.Value.Remove(id);
+        //}
+        Remove_Types(id);
         Destroy_Entity_Engine(id);
     }
 
-    private void Remove_Types(uint entityId)
+    static public void Remove_Types(uint entityId)
     {
         foreach (KeyValuePair<Type, Dictionary<uint, dynamic>> entry in dictonaryOfTypes)
         {
@@ -280,35 +281,36 @@ public class IBehaviour : IComponent
 
     public void Destroy(GameObject go)
     {
+        Debug.Log("destroy gameobject entityid ");
         Remove_Types(go.entityId);
         Destroy_Entity_Engine(go.entityId);
     }
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Destroy_Entity_Engine(uint entityID);
 
-    public void Destroy<T>(T type = default)
-    {
-        //Console.WriteLine("Destroy not yet done");
-        if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
-        {
-            Destroy_Script_Engine(entityId, typeof(T).ToString());
-            return;
-        }
-
-        switch (GenericTypeFinder.dictonary[typeof(T)])
-        {
-            case genTypes.Transform:
-                Destroy_Transform_Engine(entityId);
-                break;
-            case genTypes.Collider:
-                Destroy_Collider_Engine(entityId);
-                break;
-            default:
-                Console.WriteLine("Type cant be destroy yet");
-                return;
-
-        }
-    }
+    //public void Destroy<T>(T type = default)
+    //{
+    //    //Console.WriteLine("Destroy not yet done");
+    //    if (!GenericTypeFinder.dictonary.ContainsKey(typeof(T)))
+    //    {
+    //        Destroy_Script_Engine(entityId, typeof(T).ToString());
+    //        return;
+    //    }
+    //
+    //    switch (GenericTypeFinder.dictonary[typeof(T)])
+    //    {
+    //        case genTypes.Transform:
+    //            Destroy_Transform_Engine(entityId);
+    //            break;
+    //        case genTypes.Collider:
+    //            Destroy_Collider_Engine(entityId);
+    //            break;
+    //        default:
+    //            Console.WriteLine("Type cant be destroy yet");
+    //            return;
+    //
+    //    }
+    //}
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal static extern void Destroy_Transform_Engine(uint entityID);
 

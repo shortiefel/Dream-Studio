@@ -868,11 +868,13 @@ namespace Engine {
             return noOfRoadToAdd;
         }
 
-        int Grid::UnsetRoads(Math::ivec2 pos, std::vector<Math::ivec2>* roadRemoved) {
+        int Grid::UnsetRoads(Math::ivec2 pos, std::vector<Math::ivec2>* roadRemoved, unsigned int* entityId) {
+            *entityId = 0;
             if (!IsWithinGrid(pos)) return 0;
             
             Cell& cell = *(*(grid + pos.x - offset.x) + pos.y - offset.y);
             if (cell.entityId == EMPTY_ENTITY || cell.ct != CellType::Road) return 0;
+            *entityId = cell.entityId;
 
             dreamECSGame->DestroyEntity(cell.entityId);
             cell.entityId = EMPTY_ENTITY;
@@ -975,13 +977,15 @@ namespace Engine {
             return true;
         }
 
-        bool Grid::UnsetDestination(Math::ivec2 pos, Math::ivec2& posToRemove) {
+        bool Grid::UnsetDestination(Math::ivec2 pos, Math::ivec2& posToRemove, unsigned int* entityId) {
+            *entityId = 0;
             if (!IsWithinGrid(pos)) return 0;
 
             int xVal = pos.x - offset.x;
             int yVal = pos.y - offset.y;
             Cell& cellC = *(*(grid + xVal) + yVal);
             if (cellC.entityId == EMPTY_ENTITY || cellC.ct != CellType::SpecialStructure) return false;
+            *entityId = cellC.entityId;
             dreamECSGame->DestroyEntity(cellC.entityId);
 
             posToRemove = pos;

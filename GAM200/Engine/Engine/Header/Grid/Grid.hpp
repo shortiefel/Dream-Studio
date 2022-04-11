@@ -117,9 +117,9 @@ namespace Engine {
 			bool IsSurrounded(Math::ivec2 pos, int type);
 
 			int SetRoads(Math::ivec2 posArr[MAX_LINE], int size);
-			int UnsetRoads(Math::ivec2 pos, std::vector<Math::ivec2>* roadRemoved);
+			int UnsetRoads(Math::ivec2 pos, std::vector<Math::ivec2>* roadRemoved, unsigned int* entityId);
 
-			bool UnsetDestination(Math::ivec2 pos, Math::ivec2& posToRemove);
+			bool UnsetDestination(Math::ivec2 pos, Math::ivec2& posToRemove, unsigned int* entityId);
 
 			void RevertGrid();
 			void FinalizeGrid();

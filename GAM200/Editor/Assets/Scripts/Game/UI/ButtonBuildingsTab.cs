@@ -92,7 +92,7 @@ public class ButtonBuildingsTab : MonoBehaviour
         buildingDisplayTab = displaytabGO.GetComponent<UI>();
 
         displayTabPos = buildingTab.position;
-        tabXPosition = -20.85f;
+        tabXPosition = -22.10f;
         closetabXPosition = -150f;
 
         buildingTab.position = new Vector2(tabXPosition, displayTabPos.y);

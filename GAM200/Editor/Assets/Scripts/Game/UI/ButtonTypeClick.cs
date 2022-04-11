@@ -26,61 +26,61 @@ public class ButtonTypeClick : MonoBehaviour
         if (entityId == GameObject.Find("DrawRoad").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Draw;
-            tooltipOffset = transform.position + new Vector2(-3.60f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-4.0f, 7.70f);
         }
 
         else if(entityId == GameObject.Find("DrawRoadWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Draw;
-            tooltipOffset = transform.position + new Vector2(-3.60f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-4.0f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("RemoveRoad").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Remove;
-            tooltipOffset = transform.position + new Vector2(-6.00f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-10.4f, 7.70f);
         }
 
         else if(entityId == GameObject.Find("RemoveRoadWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.Remove;
-            tooltipOffset = transform.position + new Vector2(-6.00f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-10.4f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("ERPbtn").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.ERP;
-            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-2.80f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("ERPbtnWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.ERP;
-            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-2.80f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("TrafficLight").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.TrafficLight;
-            tooltipOffset = transform.position + new Vector2(-10.10f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-10.80f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("TrafficLightWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.TrafficLight;
-            tooltipOffset = transform.position + new Vector2(-10.10f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-10.80f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("RemoveCar").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.RemoveCar;
-            tooltipOffset = transform.position + new Vector2(-8.80f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-9.0f, 7.70f);
         }
         
         else if (entityId == GameObject.Find("RemoveCarWhite").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.RemoveCar;
-            tooltipOffset = transform.position + new Vector2(-8.80f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-9.0f, 7.70f);
         }
 
         //else if (entityId == GameObject.Find("Displaybtn").GetComponent<Transform>().entityId)
@@ -99,31 +99,31 @@ public class ButtonTypeClick : MonoBehaviour
         else if (entityId == GameObject.Find("PlaceHospital").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.PlaceHospital;
-            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-7.10f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("PlaceOffice").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.PlaceOffice;
-            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-5.6f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("PlacePark").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.PlacePark;
-            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-4.0f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("PlaceMall").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.PlaceMall;
-            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-4.50f, 7.70f);
         }
 
         else if (entityId == GameObject.Find("PlacePoliceStation").GetComponent<Transform>().entityId)
         {
             bt = ButtonType.PlacePoliceStation;
-            tooltipOffset = transform.position + new Vector2(-2.40f, 7.70f);
+            tooltipOffset = transform.position + new Vector2(-12.30f, 7.70f);
         }
 
 

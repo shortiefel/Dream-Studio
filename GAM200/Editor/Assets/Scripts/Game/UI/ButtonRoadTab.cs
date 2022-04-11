@@ -176,7 +176,7 @@ public class ButtonRoadTab : MonoBehaviour
         GameObject stringNameGo = GameObject.Find("stringname");
         tooltipText = stringNameGo.GetComponent<Text>();
         tooltipTrans = stringNameGo.GetComponent<Transform>();
-        toolTipsDisplayPosition = transform.position + new Vector2(-2.40f, 7.70f);
+        toolTipsDisplayPosition = transform.position + new Vector2(-4.0f, 7.70f);
 
         //lineDivider1 = GameObject.Find("Line1").GetComponent<Transform>();
         //line1 = lineDivider1.position;

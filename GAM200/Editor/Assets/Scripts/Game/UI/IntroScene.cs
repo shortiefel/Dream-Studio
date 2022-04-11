@@ -15,7 +15,7 @@ public class IntroScene : MonoBehaviour
         test.x = 0f;
         test.y = 0f;
         logos.alpha = 1.0f;
-        fadespeed = 0.002f;
+        fadespeed = 1f;
         fading = false;
         counter = 0;
         vAdobe.x = 5.0f;
@@ -35,60 +35,64 @@ public class IntroScene : MonoBehaviour
     {
         if (fading == false)
         {
-            logos.alpha -= fadespeed;
+            logos.alpha -= fadespeed * Time.deltaTime;
             if (counter == 6 && logos.alpha <= 0.0f)
             {
                 transform.scale = test;
                 SceneManager.LoadScene("MainMenu");
             }
+
+            if (logos.alpha <= 0.0f)
+            {
+                if (counter == 0)
+                {
+                    logos.ChangeTexture("Logo//Adobe");
+                    transform.scale = vAdobe;
+                }
+                if (counter == 1)
+                {
+                    logos.ChangeTexture("Logo//FMod");
+                    transform.scale = vFmod;
+                }
+                if (counter == 2)
+                {
+                    logos.ChangeTexture("Logo//Mono");
+                    transform.scale = vMono;
+                }
+                if (counter == 3)
+                {
+                    logos.ChangeTexture("Logo//OpenGL");
+                    transform.scale = vOpenGL;
+                }
+                if (counter == 4)
+                {
+                    logos.ChangeTexture("Logo//DearImGui");
+                    transform.scale = vOpenGL;
+                }
+                if (counter == 5)
+                {
+                    logos.ChangeTexture("Logo//DreamStudio_Logo");
+                    transform.scale = vDreamStudio;
+                }
+                counter++;
+                fading = true;
+            }
+            
         }
         else
         {
-            logos.alpha += fadespeed;
+            logos.alpha += fadespeed * Time.deltaTime;
+            if (logos.alpha >= 1.0f)
+            {
+                fading = false;
+            }
         }
-        if(logos.alpha >= 1.0f)
-        {
-            fading = false;
-        }
-        Console.WriteLine("Logo Alpha = " + logos.alpha.ToString());
-        if(logos.alpha <= 0.0f)
-        {
-            if(counter == 0)
-            {
-                logos.ChangeTexture("Logo//Adobe");
-                transform.scale = vAdobe;
-            }
-            if(counter == 1)
-            {
-                logos.ChangeTexture("Logo//FMod");
-                transform.scale = vFmod;
-            }
-            if(counter == 2)
-            {
-                logos.ChangeTexture("Logo//Mono");
-                transform.scale = vMono;
-            }
-            if (counter == 3)
-            {
-                logos.ChangeTexture("Logo//OpenGL");
-                transform.scale = vOpenGL;
-            }
-            if (counter == 4)
-            {
-                logos.ChangeTexture("Logo//DearImGui");
-                transform.scale = vOpenGL;
-            }
-            if (counter == 5)
-            {
-                logos.ChangeTexture("Logo//DreamStudio_Logo");
-                transform.scale = vDreamStudio;
-            }
-            counter++;
-            fading = true;
-        }
+        
+        //Console.WriteLine("Logo Alpha = " + logos.alpha.ToString());
+        
         if (Input.GetMouseButtonDown(MouseCode.Left))
         {
-            Console.WriteLine("Intro Skip");
+            //Console.WriteLine("Intro Skip");
             SceneManager.LoadScene("MainMenu");
         }
     }

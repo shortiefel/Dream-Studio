@@ -136,7 +136,7 @@ public class ButtonBuildingsTab : MonoBehaviour
         GameObject stringNameGo = GameObject.Find("stringname");
         tooltipText = stringNameGo.GetComponent<Text>();
         tooltipTrans = stringNameGo.GetComponent<Transform>();
-        toolTipsDisplayPosition = transform.position + new Vector2(-2.40f, 7.70f);
+        toolTipsDisplayPosition = transform.position + new Vector2(-6.8f, 7.70f);
 
 
         //Disable<Transform>(displayArrowWhite);

@@ -27,6 +27,9 @@ public class ButtonRoadTab : MonoBehaviour
     Transform roadTab;
     UI roadTabUI;
 
+    Transform displayRoadtab;
+    Vector2 displayRoadtabPos;
+
     Transform drawRoadWhite;
     Transform drawRoad;
     Vector2 drawPosition;
@@ -75,6 +78,8 @@ public class ButtonRoadTab : MonoBehaviour
     float timer;
 
     float closeXPosition;
+    float tabXPosition;
+    float closetabXPosition;
 
     float speedMultiply;
 
@@ -103,6 +108,13 @@ public class ButtonRoadTab : MonoBehaviour
         maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
 
 
+
+        displayRoadtab = GameObject.Find("DisplayItems").GetComponent<Transform>();
+        displayRoadtabPos = displayRoadtab.position;
+
+
+
+
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
         //disable the different effect.
 
@@ -115,7 +127,10 @@ public class ButtonRoadTab : MonoBehaviour
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         closeXPosition = -96f;
-      
+        tabXPosition = -38f;
+        closetabXPosition = -150f;
+
+
         drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
         drawRoad = GameObject.Find("DrawRoad").GetComponent<Transform>();
         drawPosition = drawRoad.position;
@@ -143,8 +158,9 @@ public class ButtonRoadTab : MonoBehaviour
         roadTab = displayRoadTabGO.GetComponent<Transform>();
         roadTabUI = displayRoadTabGO.GetComponent<UI>();
 
-        closeXPosition = -96f;
+    
 
+        displayRoadtab.position = new Vector2(tabXPosition, displayRoadtabPos.y);
         //bt = ButtonType.RoadTab;
         drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
         drawRoad.position = new Vector2(closeXPosition, drawPosition.y);
@@ -272,6 +288,8 @@ public class ButtonRoadTab : MonoBehaviour
 
     private void CloseRoadTabs()
     {
+        displayRoadtab.position = new Vector2(Mathf.Lerp(displayRoadtab.position.x, closetabXPosition, timer), displayRoadtabPos.y);
+
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, closeXPosition, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, closeXPosition, timer), drawPosition.y);
 
@@ -299,7 +317,7 @@ public class ButtonRoadTab : MonoBehaviour
 
     private void OpenRoadTabs()
     {
-
+        displayRoadtab.position = new Vector2(Mathf.Lerp(tabXPosition, tabXPosition, timer), displayRoadtabPos.y);
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, drawPosition.x, timer), drawPosition.y);
 

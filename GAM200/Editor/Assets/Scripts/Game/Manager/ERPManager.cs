@@ -19,22 +19,7 @@ public class ERPManager : MonoBehaviour
     }
 
 
-    //public override void Update()
-    //{
-    //    //To Remove ------------------------------------------------------
-    //    if (toDraw && Input.GetMouseButtonDown(MouseCode.Left))
-    //    {
-    //        Vector3Int mousePos = Vector3Int.RoundToInt(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()));
-    //    
-    //        Instantiate(erpGO, new Vector3(mousePos.x, mousePos.y, 0f));
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.F))
-    //    {
-    //        toDraw = !toDraw;
-    //    }
-    //    //To Remove ------------------------------------------------------
-    //}
-
+    
     public void Notify()
     {
         //Increase money

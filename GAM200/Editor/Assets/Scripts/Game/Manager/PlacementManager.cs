@@ -66,8 +66,6 @@ public class PlacementManager : MonoBehaviour
             structureDictionary.Add(new Vector2Int(position.x + 1, position.y    ), sm); //Right
             structureDictionary.Add(new Vector2Int(position.x    , position.y + 1), sm); //Up
             structureDictionary.Add(new Vector2Int(position.x + 1, position.y + 1), sm); //Up Right
-
-            Debug.Log(position + " " + new Vector2Int(position.x + 1, position.y) + " " + new Vector2Int(position.x, position.y + 1) + " " + new Vector2Int(position.x + 1, position.y + 1));
         }
         else
         {
@@ -87,10 +85,6 @@ public class PlacementManager : MonoBehaviour
             structureDictionary.Remove(new Vector2Int(posToRemove.x + 1, posToRemove.y));
             structureDictionary.Remove(new Vector2Int(posToRemove.x, posToRemove.y + 1));
             structureDictionary.Remove(new Vector2Int(posToRemove.x + 1, posToRemove.y + 1));
-
-            Debug.Log(posToRemove + " " + new Vector2Int(posToRemove.x + 1, posToRemove.y) + " " + new Vector2Int(posToRemove.x, posToRemove.y + 1) + " " + new Vector2Int(posToRemove.x + 1, posToRemove.y + 1));
-
-            //AddMoney
         }
 
 

@@ -526,6 +526,7 @@ namespace Engine {
 
         //Return true if free
         bool Grid::IsPosFree(Math::ivec2 pos) {
+            if (!IsWithinGrid(pos)) return false;
             const Cell& cell = *(*(grid + pos.x - offset.x) + pos.y - offset.y);
             if (cell.ct == CellType::Empty || cell.ct == CellType::None) return true;
             return false;

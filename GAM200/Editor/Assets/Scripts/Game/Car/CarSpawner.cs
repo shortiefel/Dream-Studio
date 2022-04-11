@@ -179,21 +179,12 @@ public class CarSpawner : MonoBehaviour
     {
         dt = Time.deltaTime;
 
-        //if(Input.GetKey(KeyCode.V)) return; //TO REMOVE
-        if (Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
-        if(Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.Log("CarCounter: " + carSpawnCounter + "timer: " + spawnTimer + " entID: " + entityId);
-        }
+        if (Input.GetKey(KeyCode.Shift) && Input.GetKeyDown(KeyCode.C)) gameState.ReachedDestination(BuildingType.Hospital); //TO REMOVE
+
         //-----------------------------------------Only in House-------------------------------------
         //Only House has popupText
         if (popupText != null)
         {
-            //if (Input.GetKeyDown(KeyCode.C))
-            //    for (int i = 0; i < (int)BuildingType.House; i++)
-            //    {
-            //        Debug.Log(entityId + " " + (BuildingType)i + " " + lifeTimeArray[i].active + " time: " + lifeTimeArray[i].timer);
-            //    }
 
             PopupText();
 

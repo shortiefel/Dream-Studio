@@ -259,7 +259,7 @@ public class IBehaviour : IComponent
     //Destroy
     public void Destroy(uint id)
     {
-        Debug.Log("destroy enityId ");
+        //Debug.Log("destroy enityId ");
         //foreach(var i in dictonaryOfTypes)
         //{
         //    if (i.Value.ContainsKey(id)) i.Value.Remove(id);
@@ -281,7 +281,7 @@ public class IBehaviour : IComponent
 
     public void Destroy(GameObject go)
     {
-        Debug.Log("destroy gameobject entityid ");
+        //Debug.Log("destroy gameobject entityid ");
         Remove_Types(go.entityId);
         Destroy_Entity_Engine(go.entityId);
     }

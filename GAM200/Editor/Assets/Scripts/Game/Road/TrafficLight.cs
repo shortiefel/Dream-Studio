@@ -101,7 +101,7 @@ public class TrafficLight : MonoBehaviour
             timer = 0f;
             nextState = requestDirec;
             directionState = DirectionState.None;
-            Debug.Log("Reqeust switch");
+            //Debug.Log("Reqeust switch");
             reqeusting = true;
         }
     }
@@ -130,7 +130,7 @@ public class TrafficLight : MonoBehaviour
 
     public override void Update()
     {
-        Debug.Log(inBetweenTimer + " " + directionState);
+        //Debug.Log(inBetweenTimer + " " + directionState);
         if (inBetweenTimer >= 1.4f)
         //if (inBetweenTimer >= 1.5f || carCounter == 0)
         //if (carCounter == 0)

@@ -287,10 +287,6 @@ public class CarAI : MonoBehaviour
             //Debug.Log("------------------------------");
         }
 
-        //stop = true;
-        if (Input.GetKey(KeyCode.T)) stop = true;
-        //stop = true;
-
 
         //if (!testBool)
         //stop = true;

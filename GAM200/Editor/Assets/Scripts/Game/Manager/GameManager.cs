@@ -13,7 +13,10 @@ public class GameManager : MonoBehaviour
     public StructureManager structureManager;
     public KeysController keysController;
 
-
+    static public Transform smallHoverBox;
+    static public Text smallHoverText;
+    static public Transform bigHoverBox;
+    static public Text bigHoverText;
 
     //private void Start()
     public override void Start()
@@ -30,6 +33,15 @@ public class GameManager : MonoBehaviour
         keysController.OnRoadPlacement += RoadPlacementHandler;
         //keysController.OnHousePlacement += HousePlacementHandler;
         //keysController.OnSpecialPlacement += SpecialPlacementHandler;
+        GameObject shGO = GameObject.Find("SmallHoverBox");
+        smallHoverBox = shGO.GetComponent<Transform>();
+        smallHoverText = shGO.GetComponent<Text>();
+        GameObject bhGO = GameObject.Find("BigHoverBox");
+        bigHoverBox = bhGO.GetComponent<Transform>();
+        bigHoverText = bhGO.GetComponent<Text>();
+
+        Disable<Transform>(smallHoverBox);
+        Disable<Transform>(bigHoverBox);
     }
 
     //private void SpecialPlacementHandler()
@@ -60,14 +72,16 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick += roadManager.PlaceRoad;
         inputManager.OnMouseHold += roadManager.PlaceRoad;
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
+        inputManager.OnMouseHover += HoverSmallIcon;
     }
 
     internal void RemoveStructureHandler()
     {
         ClearInputActions();
         inputManager.OnMouseClick += RemoveStructure;
-        inputManager.OnMouseHold += RemoveStructure;
+        //inputManager.OnMouseHold += RemoveStructure;
         inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
+        inputManager.OnMouseHover += HoverSmallIcon;
     }
 
     internal void RemoveStructure(Vector2Int pos)
@@ -80,6 +94,7 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
         inputManager.OnMouseClick += roadManager.PlaceERP;
+        inputManager.OnMouseHover += HoverSmallIcon;
         //inputManager.OnMouseHold += roadManager.PlaceRoad;
         //inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
     }
@@ -88,6 +103,7 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
         inputManager.OnMouseClick += roadManager.PlaceTrafficLight;
+        inputManager.OnMouseHover += HoverSmallIcon;
         //inputManager.OnMouseHold += roadManager.RemoveRoad;
         //inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
     }
@@ -102,34 +118,123 @@ public class GameManager : MonoBehaviour
         //inputManager.OnMouseUp += roadManager.FinishRemovingRoad;
     }
 
+    public void HoverSmallIcon(Vector2Int position)
+    {
+        if (!roadManager.placementManager.CheckIfPositionInBound(position)) return;
+        smallHoverBox.position = position;
+
+        switch (ButtonRoadTab.choosenButton)
+        {
+            case ButtonType.Remove:
+                {
+                    BuildingType bt;
+                    if (roadManager.trafficLightManager.IsTrafficLight(position))
+                    {
+                        smallHoverText.text = "Cost: +" + (MoneySystem.tlCost / 4f);
+                    }
+                    
+                    else if (roadManager.erpManager.IsERP(position))
+                    {
+                        smallHoverText.text = "Cost: +" + (MoneySystem.erpCost / 4f);
+                    }
+                    else if ((bt = structureManager.RequestRemovingDestination(position)) != BuildingType.None)
+                    {
+                        smallHoverText.text = "Cost: +" + (MoneySystem.GetCostOfDest(bt) / 10f);
+                    }
+
+                    else if (roadManager.placementManager.placementGrid.IsPosRoad(position))
+                    {
+                        smallHoverText.text = "Cost: +10";
+                    }
+
+                    else
+                    {
+                        smallHoverText.text = "Cost: 0";
+                    }
+                    break;
+                }
+            case ButtonType.ERP:
+                {
+                    smallHoverText.text = "Cost: -" + MoneySystem.erpCost.ToString();
+                    break;
+                }
+            case ButtonType.TrafficLight:
+                {
+                    //Debug.Log(MoneySystem.tlCost);
+                    smallHoverText.text = "Cost: -" + MoneySystem.tlCost.ToString();
+                    break;
+                }
+        }
+
+    }
+
     internal void PlaceDestHospitalHandler()
     {
         ClearInputActions();
         inputManager.OnMouseClick += structureManager.PlaceDestHospital;
+        inputManager.OnMouseHover += HoverBigIcon;
     }
 
     internal void PlaceDestOfficeHandler()
     {
         ClearInputActions();
         inputManager.OnMouseClick += structureManager.PlaceDestOffice;
+        inputManager.OnMouseHover += HoverBigIcon;
     }
 
     internal void PlaceDestParkHandler()
     {
         ClearInputActions();
         inputManager.OnMouseClick += structureManager.PlaceDestPark;
+        inputManager.OnMouseHover += HoverBigIcon;
     }
 
     internal void PlaceDestMallHandler()
     {
         ClearInputActions();
         inputManager.OnMouseClick += structureManager.PlaceDestMall;
+        inputManager.OnMouseHover += HoverBigIcon;
     }
 
     internal void PlaceDestPoliceStationHandler()
     {
         ClearInputActions();
         inputManager.OnMouseClick += structureManager.PlaceDestPoliceStation;
+        inputManager.OnMouseHover += HoverBigIcon;
+    }
+
+    public void HoverBigIcon(Vector2Int position)
+    {
+        bigHoverBox.position = position + new Vector2(0.5f, 0.5f);
+
+        switch (ButtonBuildingsTab.choosenButton)
+        {
+            case ButtonType.PlaceHospital:
+                {
+                    bigHoverText.text = "Cost: -" + MoneySystem.hospitalCost.ToString();
+                    break;
+                }
+            case ButtonType.PlaceOffice:
+                {
+                    bigHoverText.text = "Cost: -" + MoneySystem.officeCost.ToString();
+                    break;
+                }
+            case ButtonType.PlacePark:
+                {
+                    bigHoverText.text = "Cost: -" + MoneySystem.parkCost.ToString();
+                    break;
+                }
+            case ButtonType.PlaceMall:
+                {
+                    bigHoverText.text = "Cost: -" + MoneySystem.shoppingmallCost.ToString();
+                    break;
+                }
+            case ButtonType.PlacePoliceStation:
+                {
+                    bigHoverText.text = "Cost: -" + MoneySystem.policestationCost.ToString();
+                    break;
+                }
+        }
     }
 
     internal void ClearInputActions()

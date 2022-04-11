@@ -104,6 +104,21 @@ public class StructureManager : MonoBehaviour
     }
 
 
+    public BuildingType RequestRemovingDestination(Vector2Int position)
+    {
+        for (int t = 0; t < (int)BuildingType.House; t++)
+        {
+            foreach (var i in destinationList[t])
+            {
+                if (position == i.pos || position == new Vector2Int(i.pos.x + 1, i.pos.y)
+                    || position == new Vector2Int(i.pos.x + 1, i.pos.y + 1)
+                    || position == new Vector2Int(i.pos.x, i.pos.y + 1)) return (BuildingType)t;
+            }
+        }
+
+        return BuildingType.None;
+    }
+
     public BuildingType GetRandomBuildingType()
     {
         

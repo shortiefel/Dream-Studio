@@ -69,7 +69,7 @@ public class ButtonBuildingsTab : MonoBehaviour
     public bool roadTabIsOn;
     public bool buildingsTabIsOn;
 
-    ButtonType choosenButton = ButtonType.None;
+    static public ButtonType choosenButton = ButtonType.None;
     bool displayState = false;
 
 
@@ -221,6 +221,7 @@ public class ButtonBuildingsTab : MonoBehaviour
             buildingsTabClose = true;
 
             buildingsTabUI.ChangeTexture("Game/UI/Buildings");
+            Disable<Transform>(GameManager.bigHoverBox);
 
             roadTabIsOn = false;
             buildingsTabIsOn = false;
@@ -321,6 +322,8 @@ public class ButtonBuildingsTab : MonoBehaviour
                         gameManager.PlaceDestHospitalHandler();
                         placeHospitalUI.ChangeTexture("Game/UI/Hospital_Click");
 
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
                         //EnableAllNormalExcept();
                         break;
                     }
@@ -329,6 +332,8 @@ public class ButtonBuildingsTab : MonoBehaviour
                         gameManager.PlaceDestOfficeHandler();
                         placeOfficeUI.ChangeTexture("Game/UI/Office_Click");
 
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
                         //EnableAllNormalExcept();
                         break;
                     }
@@ -338,6 +343,8 @@ public class ButtonBuildingsTab : MonoBehaviour
 
                         placeParkUI.ChangeTexture("Game/UI/Park_Click");
 
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
                         //EnableAllNormalExcept();
                         break;
                     }
@@ -346,6 +353,8 @@ public class ButtonBuildingsTab : MonoBehaviour
                         gameManager.PlaceDestMallHandler();
                         placeMallUI.ChangeTexture("Game/UI/ShoppingMall_Click");
 
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
                         //EnableAllNormalExcept();
                         break;
                     }
@@ -354,6 +363,8 @@ public class ButtonBuildingsTab : MonoBehaviour
                         gameManager.PlaceDestPoliceStationHandler();
                         placePoliceStationUI.ChangeTexture("Game/UI/PoliceStation_Click");
 
+                        Enable<Transform>(GameManager.bigHoverBox);
+                        Disable<Transform>(GameManager.smallHoverBox);
                         //EnableAllNormalExcept();
                         break;
                     }
@@ -370,6 +381,7 @@ public class ButtonBuildingsTab : MonoBehaviour
             //gameState.SetDrawMode(false);
 
             //EnableAllNormalExcept();
+            Disable<Transform>(GameManager.bigHoverBox);
 
             _bt = ButtonType.None;
         }

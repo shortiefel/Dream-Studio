@@ -187,14 +187,14 @@ public class GameState : MonoBehaviour
         //}
         //--------------------------
         //Cheat code
-        if (Input.GetKeyDown(KeyCode.L) && Input.GetKey(KeyCode.Shift))
-        {
-            GameOver();
-        }
-        if (Input.GetKeyDown(KeyCode.P) && Input.GetKey(KeyCode.Shift))
-        {
-            IncrementScore();
-        }
+        //if (Input.GetKeyDown(KeyCode.L) && Input.GetKey(KeyCode.Shift))
+        //{
+        //    GameOver();
+        //}
+        //if (Input.GetKeyDown(KeyCode.P) && Input.GetKey(KeyCode.Shift))
+        //{
+        //    IncrementScore();
+        //}
 
         if (Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.Shift))
         {

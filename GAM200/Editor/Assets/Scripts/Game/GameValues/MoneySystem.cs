@@ -32,14 +32,14 @@ public class MoneySystem : MonoBehaviour
     static Text textComp;
     static public int money;
 
-    public int erpCost;
-    public int tlCost;
+    static public int erpCost;
+    static public int tlCost;
     public int roadCost;
-    public int parkCost;
-    public int hospitalCost;
-    public int officeCost;
-    public int shoppingmallCost;
-    public int policestationCost;
+    static public int parkCost;
+    static public int hospitalCost;
+    static public int officeCost;
+    static public int shoppingmallCost;
+    static public int policestationCost;
 
     public int roadNum;
     public int tlNum;
@@ -142,11 +142,11 @@ public class MoneySystem : MonoBehaviour
         roadCost = 20;
         tlCost = 50;
         erpCost = 50;
-        parkCost = 20;
-        hospitalCost = 20;
-        officeCost = 20;
-        shoppingmallCost = 20;
-        policestationCost = 20;
+        parkCost = 100;
+        hospitalCost = 100;
+        officeCost = 100;
+        shoppingmallCost = 100;
+        policestationCost = 100;
 
         road_counter = 0;
         traffic_counter = 0;
@@ -469,7 +469,8 @@ public class MoneySystem : MonoBehaviour
         if (money >= tlCost)
         {
             MinusMoney(tlCost, MoneySource.Store);
-            tlCost *= (int)(1.1);
+            tlCost *= (int)(2);
+
             return true;
         }
         else
@@ -487,98 +488,84 @@ public class MoneySystem : MonoBehaviour
 
     public bool BuyPark()
     {
-        if (money >= parkCost * 5)
-        {
-            parkCost *= 5;
-            MinusMoney(parkCost, MoneySource.DestPark);
-            purchaseSound.Play();
-            return true;
-        }
-        else
-        {
-            displayText = true;
-            Enable<Transform>(storePopText);
-            Enable<Transform>(storePopInfo);
-        }
-        return false;
+        return BuyDestination(ref parkCost, MoneySource.DestPark);
     }
     public void SellPark()
     {
-        AddMoney((int)(parkCost * 0.5), MoneySource.DestPark);
-        parkCost /= 5;
+        SellDestination(ref parkCost, MoneySource.DestPark);
     }
+
     public bool BuyHospital()
     {
-        if (money >= hospitalCost * 5)
-        {
-            hospitalCost *= 5;
-            MinusMoney(hospitalCost, MoneySource.DestHospital);
-            purchaseSound.Play();
-            return true;
-        }
-        else
-        {
-            displayText = true;
-            Enable<Transform>(storePopText);
-            Enable<Transform>(storePopInfo);
-        }
-        return false;
+        return BuyDestination(ref hospitalCost, MoneySource.DestHospital);
     }
     public void SellHospital()
     {
-        AddMoney((int)(hospitalCost * 0.5), MoneySource.DestHospital);
-        hospitalCost /= 5;
+        SellDestination(ref hospitalCost, MoneySource.DestHospital);
     }
+
     public bool BuyOffice()
     {
-        if (money >= officeCost * 5)
-        {
-            officeCost *= 5;
-            MinusMoney(officeCost, MoneySource.DestOffice);
-            purchaseSound.Play();
-            return true;
-        }
-        else
-        {
-            displayText = true;
-            Enable<Transform>(storePopText);
-            Enable<Transform>(storePopInfo);
-        }
-        return false;
+        return BuyDestination(ref officeCost, MoneySource.DestOffice);
     }
     public void SellOffice()
     {
-        AddMoney((int)(officeCost * 0.5), MoneySource.DestOffice);
-        officeCost /= 5;
+        SellDestination(ref officeCost, MoneySource.DestOffice);
     }
+
     public bool BuyMall()
     {
-        if (money >= shoppingmallCost * 5)
-        {
-            shoppingmallCost *= 5;
-            MinusMoney(shoppingmallCost, MoneySource.DestMall);
-            purchaseSound.Play();
-            return true;
-        }
-        else
-        {
-            displayText = true;
-            Enable<Transform>(storePopText);
-            Enable<Transform>(storePopInfo);
-        }
-        return false;
+        return BuyDestination(ref shoppingmallCost, MoneySource.DestMall);
     }
     public void SellMall()
     {
-        AddMoney((int)(shoppingmallCost * 0.5), MoneySource.DestMall);
-        shoppingmallCost /= 5;
+        SellDestination(ref shoppingmallCost, MoneySource.DestMall);
     }
+
     public bool BuyPoliceStation()
     {
-        if (money >= policestationCost * 5)
+        return BuyDestination(ref policestationCost, MoneySource.DestPolice);
+    }
+    public void SellPoliceStation()
+    {
+        SellDestination(ref policestationCost, MoneySource.DestPolice);
+    }
+
+    static public int GetCostOfDest(BuildingType bt)
+    {
+        switch (bt)
         {
-            policestationCost *= 5;
-            MinusMoney(policestationCost, MoneySource.DestPolice);
+            case BuildingType.Hospital:
+                {
+                    return hospitalCost;
+                }
+            case BuildingType.Park:
+                {
+                    return parkCost;
+                }
+            case BuildingType.Office:
+                {
+                    return officeCost;
+                }
+            case BuildingType.Mall:
+                {
+                    return shoppingmallCost;
+                }
+            case BuildingType.PoliceStation:
+                {
+                    return policestationCost;
+                }
+        }
+
+        return 0;
+    }
+
+    public bool BuyDestination(ref int cost, MoneySource ms)
+    {
+        if (money >= cost)
+        {
+            MinusMoney(cost, ms);
+            cost *= 5;
             purchaseSound.Play();
             return true;
         }
@@ -590,10 +577,11 @@ public class MoneySystem : MonoBehaviour
         }
         return false;
     }
-    public void SellPoliceStation()
+
+    public void SellDestination(ref int cost, MoneySource ms)
     {
-        AddMoney((int)(policestationCost * 0.5), MoneySource.DestPolice);
-        policestationCost /= 5;
+        cost /= 5;
+        AddMoney((int)(cost * 0.5), ms);
     }
 
     //public int road_count()	
@@ -681,6 +669,6 @@ public class MoneySystem : MonoBehaviour
     //}
 
 
-    
+
 }
 

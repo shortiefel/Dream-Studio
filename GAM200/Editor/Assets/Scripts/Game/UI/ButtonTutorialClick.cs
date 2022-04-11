@@ -257,13 +257,13 @@ public class ButtonTutorialClick : MonoBehaviour
 
     public override void OnMouseExit()
     {
-        //InputManager.allowBuilding = true;
+        InputManager.allowBuilding = true;
         //roadTab.SetToolTips(false, Vector2.zero);
         //buildingsTab.SetToolTips(false, Vector2.zero);
     }
 
-    public override void OnEnable()
-    {
-        Debug.Log("Enabling \n");
-    }
+    //public override void OnEnable()
+    //{
+    //    Debug.Log("Enabling \n");
+    //}
 }

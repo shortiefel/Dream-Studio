@@ -158,21 +158,21 @@ public class InputManager : MonoBehaviour
 	//	cameraMovementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 	//}
 
-	private void CheckClickHoldEvent()
-	{
-		//if (Input.GetMouseButton(0) && OverGameObject)
-		if (Input.GetMouseButton(0))
-		{
-			var position = RaycastGround();
-			/*if (position != null)
-				OnMouseHold?.Invoke(position.Value);*/
-			//if (position != null) {
-				if (OnMouseHold != null)
-					OnMouseHold.Invoke(position); 
-					//OnMouseHold.Invoke(position.value); 
-			//}
-		}
-	}
+	//private void CheckClickHoldEvent()
+	//{
+	//	//if (Input.GetMouseButton(0) && OverGameObject)
+	//	if (Input.GetMouseButton(0))
+	//	{
+	//		var position = RaycastGround();
+	//		/*if (position != null)
+	//			OnMouseHold?.Invoke(position.Value);*/
+	//		//if (position != null) {
+	//			if (OnMouseHold != null)
+	//				OnMouseHold.Invoke(position); 
+	//				//OnMouseHold.Invoke(position.value); 
+	//		//}
+	//	}
+	//}
 
 	private void CheckClickUpEvent()
 	{
@@ -189,21 +189,21 @@ public class InputManager : MonoBehaviour
 		}
 	}
 
-	private void CheckClickDownEvent()
-	{
-		//if (Input.GetMouseButtonDown(0) && OverGameObject)
-		if (Input.GetMouseButtonDown(0))
-		{
-			var position = RaycastGround();
-			/*if (position != null)
-				OnMouseClick?.Invoke(position.Value);*/
-			//if (position != null) {
-				if (OnMouseClick != null)
-					OnMouseClick.Invoke(position);
-					//OnMouseClick.Invoke(position.Value);
-			//}
-		}
-	}
+	//private void CheckClickDownEvent()
+	//{
+	//	//if (Input.GetMouseButtonDown(0) && OverGameObject)
+	//	if (Input.GetMouseButtonDown(0))
+	//	{
+	//		var position = RaycastGround();
+	//		/*if (position != null)
+	//			OnMouseClick?.Invoke(position.Value);*/
+	//		//if (position != null) {
+	//			if (OnMouseClick != null)
+	//				OnMouseClick.Invoke(position);
+	//				//OnMouseClick.Invoke(position.Value);
+	//		//}
+	//	}
+	//}
 
 	//public void SwitchMode()
 	//{

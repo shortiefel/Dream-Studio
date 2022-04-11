@@ -438,14 +438,15 @@ public class RoadManager : MonoBehaviour
 
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
-        //bool result = false;
-        //if (trafficLightManager != null)
-        //    result |= trafficLightManager.RequestRemovingTrafficLight(position);
-        //if (erpManager != null)
-        //    result |= erpManager.RequestRemovingERP(position);
-
-        //if (result == true)
-        //    return;
+        //
+        bool result = false;
+        if (trafficLightManager != null)
+            result |= trafficLightManager.RequestRemovingTrafficLight(position);
+        if (erpManager != null)
+            result |= erpManager.RequestRemovingERP(position);
+        Debug.Log(result + " result");
+        if (result == true)
+            return;
 
         //if (placementManager.placementGrid.UnsetRoad(position))
         //{
@@ -559,6 +560,7 @@ public class RoadManager : MonoBehaviour
 
     public void RemoveCarHover(Vector2Int position)
     {
+        GameManager.smallHoverBox.position = position;
         if (placementManager.CheckIfPositionInBound(position))
             removeCarTransform.position = position;
     }

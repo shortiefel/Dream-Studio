@@ -49,7 +49,7 @@ public class ButtonRoadTab : MonoBehaviour
     Transform drawRemoveCar;
     Transform drawRemoveCarWhite;
     Vector2 drawRemoveCarPosition;
-    Transform removeCarTransform;
+    //Transform removeCarTransform;
 
     Text tooltipText;
     Transform tooltipTrans;
@@ -92,7 +92,7 @@ public class ButtonRoadTab : MonoBehaviour
 
     //ButtonType bt;
 
-    public ButtonType choosenButton = ButtonType.None;
+    static public ButtonType choosenButton = ButtonType.None;
     bool displayState = false;
 
 
@@ -134,7 +134,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
         drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
-        removeCarTransform = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
+        //removeCarTransform = GameObject.Find("RemoveCarCollider").GetComponent<Transform>();
         //drawRemoveCar = GameObject.Find("RemoveCar").GetComponent<Transform>();
         //drawRemoveCarWhite = GameObject.Find("RemoveCarWhite").GetComponent<Transform>();
         //drawRemoveCarPosition = drawRemoveCar.position;
@@ -168,7 +168,7 @@ public class ButtonRoadTab : MonoBehaviour
         Disable<Transform>(drawERPWhite);
         Disable<Transform>(drawTrafficWhite);
         Disable<Transform>(drawRemoveCarWhite);
-        Disable<Transform>(removeCarTransform);
+        //Disable<Transform>(removeCarTransform);
 
         Disable<Transform>(drawERP);
         Disable<Transform>(drawTraffic);
@@ -260,7 +260,7 @@ public class ButtonRoadTab : MonoBehaviour
             
 
             roadTabUI.ChangeTexture("Game/UI/BuildingRoad");
-
+            Disable<Transform>(GameManager.smallHoverBox);
 
             //isOn = false;
             roadTabIsOn = false;
@@ -380,6 +380,8 @@ public class ButtonRoadTab : MonoBehaviour
 
                         EnableAllNormalExcept(ButtonType.Draw);
 
+                        GameManager.smallHoverText.text = "Cost: -20";
+                        Enable<Transform>(GameManager.smallHoverBox);
                         break;
                     }
                 case ButtonType.Remove:
@@ -389,7 +391,10 @@ public class ButtonRoadTab : MonoBehaviour
 
                         EnableAllNormalExcept(ButtonType.Remove);
 
+                        //GameManager.smallHoverText.text = "Cost: +10";
                         //Disable<Transform>(removeRoad);
+                        Enable<Transform>(GameManager.smallHoverBox);
+                        Disable<Transform>(GameManager.bigHoverBox);
                         break;
                     }
                 case ButtonType.ERP:
@@ -400,6 +405,8 @@ public class ButtonRoadTab : MonoBehaviour
                         EnableAllNormalExcept(ButtonType.ERP);
 
                         //Disable<Transform>(drawERP);
+                        Enable<Transform>(GameManager.smallHoverBox);
+                        Disable<Transform>(GameManager.bigHoverBox);
                         break;
                     }
                 case ButtonType.TrafficLight:
@@ -410,6 +417,8 @@ public class ButtonRoadTab : MonoBehaviour
                         EnableAllNormalExcept(ButtonType.TrafficLight);
 
                         //Disable<Transform>(drawTraffic);
+                        Enable<Transform>(GameManager.smallHoverBox);
+                        Disable<Transform>(GameManager.bigHoverBox);
                         break;
                     }
                 case ButtonType.RemoveCar:
@@ -417,10 +426,13 @@ public class ButtonRoadTab : MonoBehaviour
                         gameManager.RemoveCarHandler();
 
                         Enable<Transform>(drawRemoveCarWhite);
-                        Enable<Transform>(removeCarTransform);
+                        //Enable<Transform>(removeCarTransform);
 
                         EnableAllNormalExcept(ButtonType.RemoveCar);
 
+                        GameManager.smallHoverText.text = "Cost: -20";
+                        Enable<Transform>(GameManager.smallHoverBox);
+                        Disable<Transform>(GameManager.bigHoverBox);
                         break;
                     }
             }
@@ -433,6 +445,7 @@ public class ButtonRoadTab : MonoBehaviour
         {
 
             SceneManager.SetDrawMode(false);
+            Disable<Transform>(GameManager.smallHoverBox);
             //gameState.SetDrawMode(false);
 
             EnableAllNormalExcept();
@@ -534,7 +547,7 @@ public class ButtonRoadTab : MonoBehaviour
         Enable<Transform>(drawRoadWhite);
         Enable<Transform>(removeRoadWhite);
         Enable<Transform>(drawRemoveCarWhite);
-        Enable<Transform>(removeCarTransform);
+        //Enable<Transform>(removeCarTransform);
 
         if (revealERPButton)
         {
@@ -553,7 +566,7 @@ public class ButtonRoadTab : MonoBehaviour
         Disable<Transform>(drawERPWhite);
         Disable<Transform>(drawTrafficWhite);
         Disable<Transform>(drawRemoveCarWhite);
-        Disable<Transform>(removeCarTransform);
+        //Disable<Transform>(removeCarTransform);
     }
 
 

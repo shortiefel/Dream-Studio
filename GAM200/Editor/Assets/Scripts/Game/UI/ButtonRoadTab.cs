@@ -444,6 +444,17 @@ public class ButtonRoadTab : MonoBehaviour
         choosenButton = _bt;
     }
 
+    public override void Update()
+    {
+        if(roadTabIsOn)
+        {
+            if (Input.GetKeyDown(KeyCode.T1)) CallFunction(ButtonType.Draw);
+            if(revealTrafficButton)
+                if (Input.GetKeyDown(KeyCode.T2)) CallFunction(ButtonType.TrafficLight);
+            if(revealERPButton)
+                if (Input.GetKeyDown(KeyCode.T3)) CallFunction(ButtonType.ERP);
+        }
+    }
     public override void FixedUpdate()
     {
 

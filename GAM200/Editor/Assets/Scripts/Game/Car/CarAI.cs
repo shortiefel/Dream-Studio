@@ -289,7 +289,7 @@ public class CarAI : MonoBehaviour
 
 
         //if (!testBool)
-        //stop = true;
+        stop = true;
         if (stop) return;
         if (couterStop) return;
 

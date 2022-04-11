@@ -561,7 +561,7 @@ public class RoadManager : MonoBehaviour
     public void RemoveCarHover(Vector2Int position)
     {
         GameManager.smallHoverBox.position = position;
-        if (placementManager.CheckIfPositionInBound(position))
+        if (!removeCarBool && placementManager.CheckIfPositionInBound(position))
             removeCarTransform.position = position;
     }
 

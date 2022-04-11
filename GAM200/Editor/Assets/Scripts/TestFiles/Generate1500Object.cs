@@ -1,6 +1,6 @@
-﻿
-public class Generate1500Object : MonoBehaviour
-{
-    
-}
-
+﻿//
+//public class Generate1500Object : MonoBehaviour
+//{
+//    
+//}
+//

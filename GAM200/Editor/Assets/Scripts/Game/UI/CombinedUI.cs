@@ -469,4 +469,70 @@ public class CombinedUI : MonoBehaviour
         }
         else Disable<Transform>(tooltipTrans);
     }
+
+    public override void Update()
+    {
+
+
+        if (Input.GetKeyDown(KeyCode.T1))
+        {
+            buildingsTab.SwitchTabBuildings(true, false);
+            BRCallFunction(ButtonType.PlaceHospital);
+        }
+        if (Input.GetKeyDown(KeyCode.T2)) 
+        {
+            buildingsTab.SwitchTabBuildings(true, false);
+            BRCallFunction(ButtonType.PlaceOffice); 
+        }
+        if (Input.GetKeyDown(KeyCode.T3)) 
+        {
+            buildingsTab.SwitchTabBuildings(true, false);
+            BRCallFunction(ButtonType.PlacePark); 
+        }
+        if (Input.GetKeyDown(KeyCode.T4)) 
+        {
+            buildingsTab.SwitchTabBuildings(true, false);
+            BRCallFunction(ButtonType.PlaceMall); 
+        }
+        if (Input.GetKeyDown(KeyCode.T5))
+        {
+            buildingsTab.SwitchTabBuildings(true, false);
+            BRCallFunction(ButtonType.PlacePoliceStation); 
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            //roadTab.SwitchTabRoad(true, false);
+            BRCallFunction(ButtonType.Remove);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            //roadTab.SwitchTabRoad(true, false);
+            BRCallFunction(ButtonType.RemoveCar);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            roadTab.SwitchTabRoad(true, false);
+            BRCallFunction(ButtonType.Draw);
+        }
+        if (roadTab.revealTrafficButton)
+        {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                roadTab.SwitchTabRoad(true, false);
+                BRCallFunction(ButtonType.TrafficLight);
+            }
+        }
+        if (roadTab.revealERPButton)
+        {
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                roadTab.SwitchTabRoad(true, false);
+                BRCallFunction(ButtonType.ERP);
+            }
+        }
+    }
 }

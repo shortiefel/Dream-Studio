@@ -45,6 +45,9 @@ public class CarSpawner : MonoBehaviour
 
     private GameObject notifiSymbol;
     private Texture notifiTexture;
+    private Animation notifiAnimation;
+    private float animationTimer = 0f;
+    private bool animationBool = false;
     private bool isNotifiActive;
     private BuildingType currentNotifiType;
     private float notifiFlashTimer;
@@ -87,6 +90,7 @@ public class CarSpawner : MonoBehaviour
     float dt;
 
 
+
     public override void Start()
     {
         //-------------Only in House-----------------
@@ -108,6 +112,7 @@ public class CarSpawner : MonoBehaviour
 
             notifiSymbol = Instantiate(new Prefab("Popup"), new Vector3(transform.position.x, transform.position.y + 1f, 0f), 4);
             notifiTexture = notifiSymbol.GetComponent<Texture>();
+            notifiAnimation = notifiSymbol.GetComponent<Animation>();
             Disable<Transform>(notifiSymbol.transform);
             isNotifiActive = false;
             currentNotifiType = BuildingType.Hospital;
@@ -185,6 +190,18 @@ public class CarSpawner : MonoBehaviour
         //Only House has popupText
         if (popupText != null)
         {
+
+            if (animationBool)
+            {
+                animationTimer += dt;
+                if (animationTimer > 0.5f)
+                {
+                    animationTimer = 0f;
+                    animationBool = false;
+
+                    notifiAnimation.Play("Loop");
+                }
+            }
 
             PopupText();
 
@@ -351,36 +368,43 @@ public class CarSpawner : MonoBehaviour
         //currentNotifiType = _bt;
         Enable<Transform>(notifiSymbol.transform);
         isNotifiActive = true;
+        //notifiAnimation.Play("break");
+        
 
         switch (backlogType)
         {
             case BuildingType.Hospital:
                 {
-                    notifiTexture.ChangeTexture("Game/UI/HospitalIcon");
+                    //notifiTexture.ChangeTexture("Game/UI/HospitalIcon");
+                    notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_Hospital");
                     break;
                 }
-            case BuildingType.Mall:
-                {
-                    notifiTexture.ChangeTexture("Game/UI/ShoppingMallIcon");
-                    break;
-                }
-            case BuildingType.Office:
-                {
-                    notifiTexture.ChangeTexture("Game/UI/OfficeIcon");
-                    break;
-                }
-            case BuildingType.Park:
-                {
-                    notifiTexture.ChangeTexture("Game/UI/ParkIcon");
-                    break;
-                }
-            case BuildingType.PoliceStation:
-                {
-                    notifiTexture.ChangeTexture("Game/UI/PoliceStationIcon");
-                    break;
-                }
+           case BuildingType.Mall:
+               {
+                   notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_ShoppingMall");
+                   break;
+               }
+           case BuildingType.Office:
+               {
+                   notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_Office");
+                   break;
+               }
+           case BuildingType.Park:
+               {
+                   notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_Park");
+                   break;
+               }
+           case BuildingType.PoliceStation:
+               {
+                   notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_PoliceStation");
+                   break;
+               }
 
         }
+        
+        notifiAnimation.Play("start");
+
+        animationBool = true;
     }
 
     //private void DisableNotification(BuildingType _bt)
@@ -389,7 +413,7 @@ public class CarSpawner : MonoBehaviour
         //lifeTimeArray[(int)_bt].timer = 0f;
         ////lifeTimeArray[(int)_bt].count = 0;
         //lifeTimeArray[(int)_bt].active = false;
-
+        //notifiAnimation.Play("break");
         Disable<Transform>(notifiSymbol.transform);
         isNotifiActive = false;
 

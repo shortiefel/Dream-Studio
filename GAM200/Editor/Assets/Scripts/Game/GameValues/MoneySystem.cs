@@ -204,11 +204,6 @@ public class MoneySystem : MonoBehaviour
 
     public override void FixedUpdate()
     {
-        //if (Input.GetKeyDown(KeyCode.H))
-        //{
-        //    AddMoney(100, MoneySource.DestHospital);
-        //}
-        //Debug.Log(listOfCost.Count);
 
         dt = Time.fixedDeltaTime;
 
@@ -331,11 +326,6 @@ public class MoneySystem : MonoBehaviour
                 }
             }
         }
-
-        //if (Input.GetKey(KeyCode.F))
-        //{
-        //    TimeSystem.NormalTime();
-        //}
 
     }
 

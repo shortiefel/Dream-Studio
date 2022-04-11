@@ -54,9 +54,7 @@ public class TrafficLightManager : MonoBehaviour
         //if (carCounter == 0)
         //    Debug.Log(carCounter);
         float deltaTime = Time.deltaTime;
-        //Console.WriteLine("State " + directionState);
-        //if (Input.GetKeyDown(KeyCode.V))
-        //    SwapState();
+
         TrafficLight.timer += deltaTime;
         if (TrafficLight.timer >= TrafficLight.switchTimer)
         {
@@ -94,34 +92,6 @@ public class TrafficLightManager : MonoBehaviour
         return trafficLights.Count;
     }
 
-
-    //public override void Update()
-    //{
-    //    //To Remove ------------------------------------------------------
-    //    if (toDraw && Input.GetMouseButtonDown(MouseCode.Left))
-    //    {
-    //        Vector3Int mousePos = Vector3Int.RoundToInt(mainCamera.ScreenToWorldPoint(Input.GetMousePosition()));
-    //        
-    //        Instantiate(trafficLightGO, new Vector3(mousePos.x, mousePos.y, 0f));
-    //        Debug.Log("Traffic light placement");
-    //    
-    //        //foreach (var i in trafficLights) Debug.Log(" Traffic: " + i);
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.D))
-    //    {
-    //        toDraw = !toDraw;
-    //    }
-    //    
-    //    if (Input.GetKeyDown(KeyCode.A))
-    //    {
-    //        Time.timeScale = 1f;
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.S))
-    //    {
-    //        Time.timeScale = 3f;
-    //    }
-    //    //To Remove ------------------------------------------------------
-    //}
 
     public void RegisterTrafficLight(Vector2Int pos, uint id)
     {

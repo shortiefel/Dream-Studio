@@ -30,6 +30,9 @@ public class ButtonRoadTab : MonoBehaviour
     Transform displayRoadtab;
     Vector2 displayRoadtabPos;
 
+    float tabXPosition;
+    float closetabXPosition;
+
     Transform drawRoadWhite;
     Transform drawRoad;
     Vector2 drawPosition;
@@ -78,8 +81,6 @@ public class ButtonRoadTab : MonoBehaviour
     float timer;
 
     float closeXPosition;
-    float tabXPosition;
-    float closetabXPosition;
 
     float speedMultiply;
 
@@ -103,16 +104,18 @@ public class ButtonRoadTab : MonoBehaviour
 
     public override void Start()
     {
-        combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
-        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonBuildingsTab>();
-        maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
-
-
 
         displayRoadtab = GameObject.Find("DisplayItems").GetComponent<Transform>();
         displayRoadtabPos = displayRoadtab.position;
 
+        tabXPosition = -38f;
+        closetabXPosition = -150f;
 
+        displayRoadtab.position = new Vector2(tabXPosition, displayRoadtabPos.y);
+
+        combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
+        buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonBuildingsTab>();
+        maintenancefee = GameObject.Find("MaintenanceFee").GetComponent<Transform>();
 
 
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
@@ -127,10 +130,7 @@ public class ButtonRoadTab : MonoBehaviour
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         closeXPosition = -96f;
-        tabXPosition = -38f;
-        closetabXPosition = -150f;
-
-
+      
         drawRoadWhite = GameObject.Find("DrawRoadWhite").GetComponent<Transform>();
         drawRoad = GameObject.Find("DrawRoad").GetComponent<Transform>();
         drawPosition = drawRoad.position;
@@ -158,9 +158,8 @@ public class ButtonRoadTab : MonoBehaviour
         roadTab = displayRoadTabGO.GetComponent<Transform>();
         roadTabUI = displayRoadTabGO.GetComponent<UI>();
 
-    
-
-        displayRoadtab.position = new Vector2(tabXPosition, displayRoadtabPos.y);
+        closeXPosition = -96f;
+       
         //bt = ButtonType.RoadTab;
         drawRoadWhite.position = new Vector2(closeXPosition, drawPosition.y);
         drawRoad.position = new Vector2(closeXPosition, drawPosition.y);

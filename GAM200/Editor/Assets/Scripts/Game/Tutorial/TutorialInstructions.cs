@@ -543,7 +543,7 @@
                     stateCheck = true;
 
                     instructions15Script.state = false;
-
+                    count = roadManager.roadCount;
                     clickCheck = false;
                 }
             }
@@ -553,6 +553,7 @@
         {
             if (instructions15Script.state)
             {
+
                 if (stateCheck)
                 {
                     instructions15Script.animation.Play("Close");
@@ -567,7 +568,7 @@
                     stages++;
                     stateCheck = true;
                     tutorial.CheckPosition();
-                    count = roadManager.roadCount;
+                    //count = roadManager.roadCount;
 
                     instructions16Script.state = false;
                 }
@@ -592,7 +593,7 @@
                     Enable<Transform>(go17.GetComponent<Transform>());
                     stages++;
                     stateCheck = true;
-
+                    count = roadManager.roadCount;
                     instructions17Script.state = false;
                 }
             }
@@ -605,22 +606,26 @@
         {
             if (instructions17Script.state)
             {
-                if (stateCheck)
+               if (roadManager.roadCount < 20)
                 {
-                    instructions17Script.animation.Play("Close");
-                    stateCheck = false;
-                }
+                    if (stateCheck)
+                    {
+                        instructions17Script.animation.Play("Close");
+                        stateCheck = false;
+                    }
 
-                if (CheckTimer())
-                {
-                    Disable<Transform>(go17.GetComponent<Transform>());
-                    instructions18Script.animation.Play("Open");
-                    Enable<Transform>(go18.GetComponent<Transform>());
-                    stages++;
-                    stateCheck = true;
+                    if (CheckTimer())
+                    {
+                        Disable<Transform>(go17.GetComponent<Transform>());
+                        instructions18Script.animation.Play("Open");
+                        Enable<Transform>(go18.GetComponent<Transform>());
+                        stages++;
+                        stateCheck = true;
 
-                    instructions18Script.state = false;
+                        instructions18Script.state = false;
+                    }
                 }
+                
             }
         }
 

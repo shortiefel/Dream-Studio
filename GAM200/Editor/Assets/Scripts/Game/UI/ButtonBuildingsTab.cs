@@ -4,6 +4,11 @@
 
 public class ButtonBuildingsTab : MonoBehaviour
 {
+
+    UI buildingDisplayTab;
+    Vector2 displayTabPos;
+    Transform buildingTab;
+
     Transform buildingsTab;
     UI buildingsTabUI;
 
@@ -12,16 +17,13 @@ public class ButtonBuildingsTab : MonoBehaviour
     Transform placePark;
     Transform placeMall;
     Transform placePoliceStation;
-    Transform buildingTab;
 
-    UI buildingDisplayTab;
     UI placeHospitalUI;
     UI placeOfficeUI;
     UI placeParkUI;
     UI placeMallUI;
     UI placePoliceStationUI;
 
-    Vector2 displayTabPos;
     Vector2 placeHospitalPos;
     Vector2 placeOfficePos;
     Vector2 placeParkPos;
@@ -60,6 +62,7 @@ public class ButtonBuildingsTab : MonoBehaviour
     float tabXPosition;
     float closetabXPosition;
 
+
     float speedMultiply;
 
     public bool revealERPButton;
@@ -84,6 +87,16 @@ public class ButtonBuildingsTab : MonoBehaviour
         combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
         roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoadTab>();
 
+        GameObject displaytabGO = GameObject.Find("DisplayBuildings");
+        buildingTab = displaytabGO.GetComponent<Transform>();
+        buildingDisplayTab = displaytabGO.GetComponent<UI>();
+
+        displayTabPos = buildingTab.position;
+        tabXPosition = -22.10f;
+        closetabXPosition = -150f;
+
+        buildingTab.position = new Vector2(tabXPosition, displayTabPos.y);
+
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
         //disable the different effect.
 
@@ -95,9 +108,6 @@ public class ButtonBuildingsTab : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
-        GameObject displaytabGO = GameObject.Find("DisplayBuildings");
-        buildingTab = displaytabGO.GetComponent<Transform>();
-        buildingDisplayTab = displaytabGO.GetComponent<UI>();
         //else if (entityId == GameObject.Find("DisplayBuildingsBtn").GetComponent<Transform>().entityId)
         //{
         GameObject hopitalGO = GameObject.Find("PlaceHospital");
@@ -124,8 +134,6 @@ public class ButtonBuildingsTab : MonoBehaviour
         buildingsTab = displayBuildingsTabGO.GetComponent<Transform>();
         buildingsTabUI = displayBuildingsTabGO.GetComponent<UI>();
 
-        displayTabPos = buildingTab.position;
-
         placeHospitalPos = placeHospital.position;
         placeOfficePos = placeOffice.position;
         placeParkPos = placePark.position;
@@ -133,10 +141,8 @@ public class ButtonBuildingsTab : MonoBehaviour
         placePoliceStationPos = placePoliceStation.position;
 
         closeXPosition = -96f;
-        tabXPosition = -20.85f;
-        closetabXPosition = -150f;
 
-        buildingTab.position = new Vector2(tabXPosition, displayTabPos.y);
+
         placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
         placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
         placePark.position = new Vector2(closeXPosition, placeParkPos.y);

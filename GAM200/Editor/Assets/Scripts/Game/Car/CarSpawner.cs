@@ -108,6 +108,7 @@ public class CarSpawner : MonoBehaviour
 
             notifiSymbol = Instantiate(new Prefab("Popup"), new Vector3(transform.position.x, transform.position.y + 1f, 0f), 4);
             notifiTexture = notifiSymbol.GetComponent<Texture>();
+            notifiSymbol.GetComponent<Animation>().Play("start");
             Disable<Transform>(notifiSymbol.transform);
             isNotifiActive = false;
             currentNotifiType = BuildingType.Hospital;
@@ -356,29 +357,30 @@ public class CarSpawner : MonoBehaviour
         {
             case BuildingType.Hospital:
                 {
-                    notifiTexture.ChangeTexture("Game/UI/HospitalIcon");
+                    //notifiTexture.ChangeTexture("Game/UI/HospitalIcon");
+                    notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_Hospital");
                     break;
                 }
-            case BuildingType.Mall:
-                {
-                    notifiTexture.ChangeTexture("Game/UI/ShoppingMallIcon");
-                    break;
-                }
-            case BuildingType.Office:
-                {
-                    notifiTexture.ChangeTexture("Game/UI/OfficeIcon");
-                    break;
-                }
-            case BuildingType.Park:
-                {
-                    notifiTexture.ChangeTexture("Game/UI/ParkIcon");
-                    break;
-                }
-            case BuildingType.PoliceStation:
-                {
-                    notifiTexture.ChangeTexture("Game/UI/PoliceStationIcon");
-                    break;
-                }
+           case BuildingType.Mall:
+               {
+                   notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_ShoppingMall");
+                   break;
+               }
+           case BuildingType.Office:
+               {
+                   notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_Office");
+                   break;
+               }
+           case BuildingType.Park:
+               {
+                   notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_Park");
+                   break;
+               }
+           case BuildingType.PoliceStation:
+               {
+                   notifiTexture.ChangeTexture("Game/Notification/Notification_Sprite_PoliceStation");
+                   break;
+               }
 
         }
     }

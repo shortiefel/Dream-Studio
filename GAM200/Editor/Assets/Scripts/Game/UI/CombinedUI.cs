@@ -165,8 +165,8 @@ public class CombinedUI : MonoBehaviour
                 {
                     SceneManager.drawNonUI = false;
 
-
-                    pauseMenu.SwitchTabPause(false, false);
+                    if (pauseMenu != null)
+                        pauseMenu.SwitchTabPause(false, false);
                     //timeSystem.SwitchTabTimer(false, false);
                     timeSystem.FullClose();
                     //buttonStore.SwitchTabStore(false, false);

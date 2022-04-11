@@ -46,3 +46,9 @@ C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\EngineCS\obj\Release\EngineCS.cspr
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\EngineCS\obj\Release\EngineCS.csproj.CoreCompileInputs.cache
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\EngineCS\obj\Release\EngineCS.dll
 C:\Users\tanwe\OneDrive\Desktop\GAM200\GAM200\EngineCS\obj\Release\EngineCS.pdb
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.dll
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\bin\Release\EngineCS.pdb
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.AssemblyReference.cache
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.csproj.CoreCompileInputs.cache
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.dll
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Release\EngineCS.pdb

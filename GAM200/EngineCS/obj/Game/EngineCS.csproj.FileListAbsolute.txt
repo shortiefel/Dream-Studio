@@ -22,3 +22,9 @@ C:\Users\jonat\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.c
 C:\Users\jonat\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.CoreCompileInputs.cache
 C:\Users\jonat\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.dll
 C:\Users\jonat\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.pdb
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.dll
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\bin\Game\EngineCS.pdb
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.AssemblyReference.cache
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.csproj.CoreCompileInputs.cache
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.dll
+C:\Users\c.yida\Documents\GitHub\Dream-Studio\GAM200\EngineCS\obj\Game\EngineCS.pdb

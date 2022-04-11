@@ -1,13 +1,16 @@
-# Dream Studio
+# Team Name: Dream Studio
 
 #-----------------Brief---------------------------------
 
-Dream Express is a top-down road builder game where players design a map by building roads to connect between different places
-—building one road at a time creates a transport system for the bustling city.
+Dreamland is a strategy simulation game where the player help to build a new city by building 
+destinations that the residents wants and connect the roads from the houses to the destinations. 
+Try to expand the city as much as possible without having a money deficit and redesign your routes 
+to get everyone to their destinations.
 
 
 #------------Software Name------------------------------
-Dream Express
+
+Dreamland
 
 #-------------Authors-----------------------------------
 							              
@@ -16,13 +19,8 @@ Goh See Yong Denise	(g.seeyongdenise@digipen.edu)
 Ow Jian Wen		(jianwen.o@digipen.edu)				
 Chia Yi Da		(c.yida@digipen.edu)
 Wang Ao			(Ao.Wang@digipen.edu)
+Lim Yi Shan Jonathan    (yishanjonathan.lim@digipen.edu)
 
-
-#Game Instructions:
----TO BE ADDED---
-
-#Installation Instructions:
----TO BE ADDED---
 
 #-------------Credits------------------------------------
 

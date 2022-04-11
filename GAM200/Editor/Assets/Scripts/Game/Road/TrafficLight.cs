@@ -49,6 +49,8 @@ public class TrafficLight : MonoBehaviour
 
     static public bool changeState = false;
 
+    static public uint ignoreId = GameObject.Find("RemoveCarCollider").entityId;
+
     public override void Start()
     {
         //Debug.Log("Making new start -----------------------------------");
@@ -148,6 +150,11 @@ public class TrafficLight : MonoBehaviour
             else
                 transform.angle = 90;
         }
+
+        if (Input.GetKey(KeyCode.B))
+        {
+            Debug.Log(leftCollider.carCount + " " + rightCollider.carCount + " " + upCollider.carCount + " " + downCollider.carCount);
+}
     }
 
     //True = just spawn and ignore traffic light 

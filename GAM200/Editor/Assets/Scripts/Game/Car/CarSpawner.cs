@@ -341,7 +341,7 @@ public class CarSpawner : MonoBehaviour
 
         if (requireFading)
         {
-            fadeTimer += Time.fixedDeltaTime;
+            fadeTimer += dt;
 
             popupText.position = new Vector2(popupText.position.x, Mathf.Lerp(popupText.position.y, popupTextEndYPos, fadeTimer));
 

@@ -5,13 +5,13 @@ public class TrafficColliderCheck : MonoBehaviour
 
     public override void OnTriggerEnter(uint entId)
     {
+        if (entId == TrafficLight.ignoreId) return;
         ++carCount;
-        //Debug.Log("The id is " + id);
     }
 
     public override void OnTriggerExit(uint entId)
     {
-
+        if (entId == TrafficLight.ignoreId) return;
         --carCount;
     }
 }

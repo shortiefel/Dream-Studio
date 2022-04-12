@@ -95,7 +95,7 @@ public class ButtonBuildingsTab : MonoBehaviour
         tabXPosition = -22.10f;
         closetabXPosition = -150f;
 
-        buildingTab.position = new Vector2(closetabXPosition, displayTabPos.y);
+        //buildingTab.position = new Vector2(closetabXPosition, displayTabPos.y);
 
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
         //disable the different effect.
@@ -143,11 +143,11 @@ public class ButtonBuildingsTab : MonoBehaviour
         closeXPosition = -96f;
 
 
-        placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
-        placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
-        placePark.position = new Vector2(closeXPosition, placeParkPos.y);
-        placeMall.position = new Vector2(closeXPosition, placeMallPos.y);
-        placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
+        //placeHospital.position = new Vector2(closeXPosition, placeHospitalPos.y);
+        //placeOffice.position = new Vector2(closeXPosition, placeOfficePos.y);
+        //placePark.position = new Vector2(closeXPosition, placeParkPos.y);
+        //placeMall.position = new Vector2(closeXPosition, placeMallPos.y);
+        //placePoliceStation.position = new Vector2(closeXPosition, placePoliceStationPos.y);
         //}
 
 

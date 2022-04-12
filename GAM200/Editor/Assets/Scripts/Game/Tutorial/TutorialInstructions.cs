@@ -66,6 +66,10 @@
     ButtonBuildingsTab buildingsTab;
     GameState gameState;
 
+    GameObject houseGO;
+    CarSpawner houseSpawner = null;
+    StructureManager structureManager;
+
     public override void Start()
     {
         clickCheck = false;
@@ -134,6 +138,10 @@
         roadTab = GameObject.Find("DisplayRoadBtn").GetComponent<ButtonRoadTab>();
         buildingsTab = GameObject.Find("DisplayBuildingsBtn").GetComponent<ButtonBuildingsTab>();
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+        structureManager = GameObject.Find("StructureManager").GetComponent<StructureManager>();
+
+        MoneySystem.money = 9999; 
+        MoneySystem.textComp.text = MoneySystem.money.ToString();
     }
 
     public bool CheckTimer()
@@ -421,51 +429,64 @@
                 if (CheckTimer())
                 {
                     Disable<Transform>(go10.GetComponent<Transform>());
-                    instructions11Script.animation.Play("Open");
-                    Enable<Transform>(go11.GetComponent<Transform>());
-                    stages++;
-                    stateCheck = true;
-                    tutorial.CheckPosition();
-                    instructions11Script.state = false;
-                }
-            }
-
-        }
-
-        else if (stages == 10)
-        {
-            if (buildingsTab.buildingsTabIsOn)
-            {
-                clickCheck = true;
-            }
-
-            if (clickCheck)
-            {
-                if (stateCheck)
-                {
-                    instructions11Script.animation.Play("Close");
-                    stateCheck = false;
-                }
-
-                if (CheckTimer())
-                {
-                    Disable<Transform>(go11.GetComponent<Transform>());
+                    //instructions11Script.animation.Play("Open");
                     instructions12Script.animation.Play("Open");
+                    //Enable<Transform>(go11.GetComponent<Transform>());
                     Enable<Transform>(go12.GetComponent<Transform>());
                     stages++;
+                    stages++;
                     stateCheck = true;
                     tutorial.CheckPosition();
+                    //instructions11Script.state = false;
                     instructions12Script.state = false;
-
-                    clickCheck = false;
                 }
             }
+
         }
+
+        //else if (stages == 10)
+        //{
+        //    if (buildingsTab.buildingsTabIsOn)
+        //    {
+        //        clickCheck = true;
+        //    }
+        //
+        //    if (clickCheck)
+        //    {
+        //        if (stateCheck)
+        //        {
+        //            instructions11Script.animation.Play("Close");
+        //            stateCheck = false;
+        //        }
+        //
+        //        if (CheckTimer())
+        //        {
+        //            Disable<Transform>(go11.GetComponent<Transform>());
+        //            instructions12Script.animation.Play("Open");
+        //            Enable<Transform>(go12.GetComponent<Transform>());
+        //            stages++;
+        //            stateCheck = true;
+        //            tutorial.CheckPosition();
+        //            instructions12Script.state = false;
+        //
+        //            clickCheck = false;
+        //        }
+        //    }
+        //}
 
         else if (stages == 11)
         {
+            if (houseGO == null && (houseGO = GameObject.Find("House")) != null) {
+                if (houseSpawner == null)
+                    houseSpawner = houseGO.GetComponent<CarSpawner>();
+            }
 
-            if (instructions12Script.state)
+            if (houseSpawner.backlogType != BuildingType.None)
+            {
+                if (structureManager.destinationList[(int)houseSpawner.backlogType].Count > 0) clickCheck = true;
+            }
+
+            if (clickCheck)
             {
                 if (stateCheck)
                 {
@@ -480,6 +501,7 @@
                     Enable<Transform>(go13.GetComponent<Transform>());
                     stages++;
                     stateCheck = true;
+                    clickCheck = false;
                     tutorial.CheckPosition();
                     instructions13Script.state = false;
                 }
@@ -488,7 +510,6 @@
 
         else if (stages == 12)
         {
-
             if (roadTab.roadTabIsOn)
             {
                 clickCheck = true;
@@ -521,7 +542,7 @@
 
         else if (stages == 13)
         {
-            if (CombinedUI.choosenButton == ButtonType.Draw)
+            if (houseSpawner.backlogType == BuildingType.None)
             {
                 clickCheck = true;
             }
@@ -543,7 +564,7 @@
                     stateCheck = true;
 
                     instructions15Script.state = false;
-                    count = roadManager.roadCount;
+  
                     clickCheck = false;
                 }
             }
@@ -576,6 +597,8 @@
 
         }
 
+        /****************************removing car (16)********************************/
+
         else if (stages == 15)
         {
             if (instructions16Script.state)
@@ -593,47 +616,56 @@
                     Enable<Transform>(go17.GetComponent<Transform>());
                     stages++;
                     stateCheck = true;
-                    count = roadManager.roadCount;
+
+                    count = roadManager.taxRoadCount;
+
                     instructions17Script.state = false;
                 }
             }
         }
 
 
-        /****************************removing car (16)********************************/
+        
+        /****************************removing road (17)********************************/
 
         else if (stages == 16)
         {
-            if (instructions17Script.state)
+            if (roadManager.taxRoadCount < count)
             {
-               if (roadManager.roadCount < 20)
+                clickCheck = true;
+            }
+
+            if (clickCheck)
+            {
+
+                if (stateCheck)
                 {
-                    if (stateCheck)
-                    {
-                        instructions17Script.animation.Play("Close");
-                        stateCheck = false;
-                    }
+                    instructions17Script.animation.Play("Close");
+                    stateCheck = false;
+                }
 
-                    if (CheckTimer())
-                    {
-                        Disable<Transform>(go17.GetComponent<Transform>());
-                        instructions18Script.animation.Play("Open");
-                        Enable<Transform>(go18.GetComponent<Transform>());
-                        stages++;
-                        stateCheck = true;
+                if (CheckTimer())
+                {
+                    Disable<Transform>(go17.GetComponent<Transform>());
+                    instructions18Script.animation.Play("Open");
+                    Enable<Transform>(go18.GetComponent<Transform>());
+                    stages++;
+                    stateCheck = true;
 
-                        instructions18Script.state = false;
-                    }
+                    
+
+                    instructions18Script.state = false;
                 }
                 
             }
         }
 
 
-        /****************************removing road (17)********************************/
+       
 
         else if (stages == 17)
         {
+           
             if (instructions18Script.state)
             {
                 if (stateCheck)
@@ -649,7 +681,8 @@
                     Enable<Transform>(go19.GetComponent<Transform>());
                     stages++;
                     stateCheck = true;
-                    count = roadManager.roadCount;
+                    clickCheck = false;
+
                     instructions19Script.state = false;
                 }
             }

@@ -359,8 +359,8 @@ namespace Editor {
 						static ImGuiComboFlags flags = 0;
 						int index = static_cast<int>(transComp->layer);
 						//arrays
-						const int sz = 5;
-						const char* layerName[sz] = { "Background", "Layer 1", "Layer 2", "Layer 3", "Layer 4" };
+						const int sz = 9;
+						const char* layerName[sz] = { "Background", "Layer 1", "Layer 2", "Layer 3", "Layer 4", "Layer 5", "Layer 6", "Layer 7", "Layer 8" };
 						const char* previewLayer = layerName[index];
 
 						ImGui::AlignTextToFramePadding();

@@ -54,7 +54,7 @@ public class CarSpawner : MonoBehaviour
     private bool notifiFlashDirection; //true = minus, false = plus
 
     Queue<BuildingType> backlog; //For unsuccessful spawn
-    BuildingType backlogType = BuildingType.None; //For unsuccessful spawn
+    public BuildingType backlogType = BuildingType.None; //For unsuccessful spawn
     float backlogTimer = 0f;
 
     float warningLifeTime;

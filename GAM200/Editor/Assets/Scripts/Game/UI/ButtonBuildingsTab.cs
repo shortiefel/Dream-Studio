@@ -196,7 +196,7 @@ public class ButtonBuildingsTab : MonoBehaviour
 
         //isOn = false;
         //roadTabIsOn = false;
-        //buildingsTabIsOn = true;
+        buildingsTabIsOn = true;
         
     }
 

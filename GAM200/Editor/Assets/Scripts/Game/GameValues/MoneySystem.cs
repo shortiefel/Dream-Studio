@@ -29,7 +29,7 @@ struct MoneyInfoTextStruct {
 public class MoneySystem : MonoBehaviour
 {
     //GameState gameState;
-    static Text textComp;
+    static public Text textComp;
     static public int money;
 
     static public int erpCost;

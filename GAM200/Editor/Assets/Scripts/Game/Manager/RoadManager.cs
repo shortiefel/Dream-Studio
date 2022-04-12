@@ -28,7 +28,7 @@ public class RoadManager : MonoBehaviour
 
     public List<Vector2Int> temporaryRoadPositions;
 
-    public int roadCount;
+    //public int roadCount;
     private int previousRoadMinus;
 
     float timer;
@@ -76,7 +76,7 @@ public class RoadManager : MonoBehaviour
 
         temporaryRoadPositions = new List<Vector2Int>();
 
-        roadCount = 20;
+        //roadCount = 20;
         previousRoadMinus = 0;
 
         timer = 0f;

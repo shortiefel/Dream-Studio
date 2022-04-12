@@ -106,11 +106,14 @@ namespace Engine {
 	//}
 	void Window::ToggleFullscreen() {
 		if (fullScreen) {
-			glfwSetWindowMonitor(glfw_window, NULL, 0, 0, Settings::windowWidth, Settings::windowHeight, GLFW_DONT_CARE);
+			//glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
+			glfwSetWindowMonitor(glfw_window, NULL, 100, 100, Settings::windowWidth, Settings::windowHeight, GLFW_DONT_CARE);
 			std::cout << "Not full screen \n";
 			fullScreen = false;
 		}
 		else {
+			//glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+
 			glfwSetWindowMonitor(glfw_window, glfwGetPrimaryMonitor(), 0, 0, Settings::windowWidth, Settings::windowHeight, GLFW_DONT_CARE);
 			std::cout << " full screen \n";
 			fullScreen = true;

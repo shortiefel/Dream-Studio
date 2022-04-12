@@ -265,19 +265,9 @@ namespace Engine {
         //GraphicImplementation::FadeScene(3.f, dt, camMatrix);
 
         
-        //if (Input::IsKeyPressed(Input_KeyCode::F)) {
-        //    std::cout << "List of all entities \n";
-        //    for (auto& [id, ent] : dreamECSGame->GetUsedEntityMap()) {
-        //        std::cout << id << " " << ent.name << "\n";
-        //    }
-        //    std::cout << " \n\n\n";
-        //
-        //    std::cout << "List of all entities \n";
-        //    for (auto& [id, ent] : dreamECSLoader->GetUsedEntityMap()) {
-        //        std::cout << id << " " << ent.name << "\n";
-        //    }
-        //    std::cout << " \n\n\n";
-        //}
+        if (Input::IsKeyPressed(Input_KeyCode::F5)) {
+            Window::GetInstance().ToggleFullscreen();
+        }
 
         //if (Input::IsKeyPressed(Input_KeyCode::E)) {
         //    //Deserialize will be async and once done do the rest below

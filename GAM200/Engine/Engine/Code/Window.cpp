@@ -128,7 +128,13 @@ namespace Engine {
 		w_data.title = ttitle;
 		w_data.width = twidth;
 		w_data.height = theight;
+
+#ifdef _GAME_BUILD
 		fullScreen = true;
+#else 
+		fullScreen = false;
+#endif // _GAME_BUILD
+
 
 		aspectRatio = (float)w_data.height / (float)w_data.width;
 
@@ -146,7 +152,7 @@ namespace Engine {
 		//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
 
 #ifdef _GAME_BUILD
-		glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+		//glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 
 		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		//std::cout << mode->width << " " << mode->height << "\n";
@@ -154,9 +160,9 @@ namespace Engine {
 		Settings::windowHeight = w_data.height = mode->height;
 		//glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), nullptr, nullptr);
 
-		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), NULL, nullptr);
+		glfw_window = glfwCreateWindow((int)w_data.width, (int)w_data.height, w_data.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 		glViewport(0, 0, w_data.width, w_data.height);
-
+		
 		// Read png file for cursor
 		GLFWimage image;
 		image.pixels = stbi_load("Assets/Textures/MouseCursor_New.png", &image.width, &image.height, 0, 4);

@@ -193,6 +193,7 @@ public class SpawnManager : MonoBehaviour
         //    else if (!testTobeDeletedBool) Debug.Log("Spawn Enable");
         //}
         //if (!testTobeDeletedBool)
+        if (MoneySystem.money < 0) return;
            spawnTimer += dt;
 
         if (spawnTimer > spawnTimerMax)
@@ -219,44 +220,6 @@ public class SpawnManager : MonoBehaviour
                 }
             }
         }
-
-        //Debug.Log(spawnState + " state change from " + stateChangeTimer + " til " + stateChangeMax + " Spawn " + spawnTimer + " til " + spawnTimerMax);
-        //if (score == scoreToSpawn)
-        //{
-        //    //if(score == 10)
-        //    //{
-        //    //    buttonRoad.RevealTraffic();
-        //    //}
-        //    //
-        //    //else if (score == 15)
-        //    //{
-        //    //    buttonRoad.RevealERP();
-        //    //}
-        //
-        //    CheckPosition();
-        //    //if (checkForNoSpawn)
-        //    //{
-        //    //    while (checkForNoSpawn)
-        //    //    {
-        //    //        if (placementManager.placementGrid.GetAllHouses().Count != 0 && placementManager.placementGrid.GetAllSpecialStructure().Count != 0)
-        //    //        {
-        //    //            checkForNoSpawn = false;
-        //    //            break;
-        //    //        }
-        //    //
-        //    //        Vector2Int roadPosition = SpawnRandomRoad();
-        //    //        //Vector2Int housePosition = SpawnRandomHouse(roadPosition);
-        //    //        Vector2Int roadPosition2 = SpawnRandomRoad();
-        //    //
-        //    //        if (placementManager.GetNeighboursOfTypeFor(roadPosition, CellType.Empty).Count == 4)
-        //    //        {
-        //    //            roadManager.PlaceSpawnHouse(roadPosition);
-        //    //            roadManager.PlaceSpawnDestination(roadPosition2);
-        //    //        }
-        //    //        
-        //    //    }
-        //    //}
-        //}
     }
 
     void SwapSpawnState()

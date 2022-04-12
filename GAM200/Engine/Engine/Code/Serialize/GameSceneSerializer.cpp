@@ -1088,7 +1088,7 @@ namespace Engine {
 	void GameSceneSerializer::RefreshPrefab(std::string filename, Entity_id id) {
 		filename;
 		id;
-		std::cout << "Refresh not in use, please delete and add the prefab\n";
+
 		//filename = TO_FULL_PREFAB(filename);
 
 		//std::ifstream fileStream;

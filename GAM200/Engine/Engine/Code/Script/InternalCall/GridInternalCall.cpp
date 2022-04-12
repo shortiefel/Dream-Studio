@@ -153,7 +153,7 @@ namespace Engine {
 	int SetRoad_Engine(MonoArray* monoArray, int size) {
 		Math::ivec2 posArr[MAX_LINE]{};
 
-		if (size > MAX_LINE) std::cout << "SetRoad_Engine size is more than MAX_LINE\n";
+		//if (size > MAX_LINE) std::cout << "SetRoad_Engine size is more than MAX_LINE\n";
 
 		for (int i = 0; i < size; i++) {
 			posArr[i] = mono_array_get(monoArray, Math::ivec2, i);

@@ -20,7 +20,7 @@ namespace Editor {
 
 	void UndoRedoManager::RecordState(CommandPtr cmd)
 	{
-		std::cout << "Record State!\n";
+	
 		//push the command into undo stack
 		undostack.push(cmd);
 

@@ -447,41 +447,41 @@ namespace Engine {
         }
 
         void Grid::PrintGridOut_Engine() {
-            std::cout << "C++ grid print new map ----------------------------------------------------\n";
-            std::vector<Math::ivec2> fv;
-            std::vector<int> fg;
-            std::vector<Math::ivec2> fp;
-            for (int y = mapSize.y - 1; y >= 0; y--) {
-                for (int x = 0; x < mapSize.x; x++) {
-                    //if ((int)(((grid + (y * mapSize.x) + x))->ct) == 0) std::cout << "- ";
-                    //else std::cout << (int)(((grid + (y * mapSize.x) + x))->ct) << " ";
-                    if ((int)(  (*(grid + x) + y)->ct   ) == 0) std::cout << "- ";
-                    else {
-                        std::cout << (int)((*(grid + x) + y)->ct) << " ";
-                        if (((*(grid + x) + y)->ct) == CellType::SpecialStructure) {
-                            auto& tem = *(*(grid + x) + y);
-                            fv.push_back({ x, y });
-
-                            fg.push_back(tem.cellBinary);
-                            
-                            fp.push_back(tem.adjacentCell[(int)CellDirection::Left]);
-                            fp.push_back(tem.adjacentCell[(int)CellDirection::Right]);
-                            fp.push_back(tem.adjacentCell[(int)CellDirection::Up]);
-                            fp.push_back(tem.adjacentCell[(int)CellDirection::Down]);
-                        }
-                    }
-                }
-                std::cout << "\n";
-            }
-
-            for (int i = 0; i < fv.size(); i++) {
-                int t = 4 * i;
-                std::cout << fv[i] << " with " << fg[i] << "     " << fp[t] << fp[t + 1] << fp[t + 2] << fp[t + 3] << "\n";
-            }
-
-            fv.clear(); fg.clear(); fp.clear();
-
-            std::cout << "\n";
+            //std::cout << "C++ grid print new map ----------------------------------------------------\n";
+            //std::vector<Math::ivec2> fv;
+            //std::vector<int> fg;
+            //std::vector<Math::ivec2> fp;
+            //for (int y = mapSize.y - 1; y >= 0; y--) {
+            //    for (int x = 0; x < mapSize.x; x++) {
+            //        //if ((int)(((grid + (y * mapSize.x) + x))->ct) == 0) std::cout << "- ";
+            //        //else std::cout << (int)(((grid + (y * mapSize.x) + x))->ct) << " ";
+            //        if ((int)(  (*(grid + x) + y)->ct   ) == 0) std::cout << "- ";
+            //        else {
+            //            std::cout << (int)((*(grid + x) + y)->ct) << " ";
+            //            if (((*(grid + x) + y)->ct) == CellType::SpecialStructure) {
+            //                auto& tem = *(*(grid + x) + y);
+            //                fv.push_back({ x, y });
+            //
+            //                fg.push_back(tem.cellBinary);
+            //                
+            //                fp.push_back(tem.adjacentCell[(int)CellDirection::Left]);
+            //                fp.push_back(tem.adjacentCell[(int)CellDirection::Right]);
+            //                fp.push_back(tem.adjacentCell[(int)CellDirection::Up]);
+            //                fp.push_back(tem.adjacentCell[(int)CellDirection::Down]);
+            //            }
+            //        }
+            //    }
+            //    std::cout << "\n";
+            //}
+            //
+            //for (int i = 0; i < fv.size(); i++) {
+            //    int t = 4 * i;
+            //    std::cout << fv[i] << " with " << fg[i] << "     " << fp[t] << fp[t + 1] << fp[t + 2] << fp[t + 3] << "\n";
+            //}
+            //
+            //fv.clear(); fg.clear(); fp.clear();
+            //
+            //std::cout << "\n";
             //std::cout << "C++ backup grid print new map ----------------------------------------------------\n";
             //for (int y = mapSize.y - 1; y >= 0; y--) {
             //    for (int x = 0; x < mapSize.x; x++) {
@@ -507,14 +507,14 @@ namespace Engine {
             //    std::cout << "\n";
             //}
 
-            for (int i = 0; i < fv.size(); i++) {
-                int t = 4 * i;
-                std::cout << fv[i] << " with " << fg[i] << "     " << fp[t] << fp[t + 1] << fp[t + 2] << fp[t + 3] << "\n";
-            }
-
-            std::cout << "\n";
-
-            std::cout << "-----------------------------------------------------------------\n";
+            //for (int i = 0; i < fv.size(); i++) {
+            //    int t = 4 * i;
+            //    std::cout << fv[i] << " with " << fg[i] << "     " << fp[t] << fp[t + 1] << fp[t + 2] << fp[t + 3] << "\n";
+            //}
+            //
+            //std::cout << "\n";
+            //
+            //std::cout << "-----------------------------------------------------------------\n";
         }
 
         bool Grid::IsWithinGrid(Math::ivec2 pos) {

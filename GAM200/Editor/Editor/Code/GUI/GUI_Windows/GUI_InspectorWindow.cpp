@@ -129,22 +129,6 @@ namespace Editor {
 					}
 				}
 
-				//if (enter && firstEnter)
-				//{
-				//	firstEnter = false;
-				//	//Record here 
-				//	firstTransform = *transComp;
-				//	std::cout << "Holding \n";
-				//}
-
-				//if (!enter && !firstEnter)
-				//{
-				//	firstEnter = true;
-				//	//Record State
-				//	auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
-				//	UndoRedoManager::GetInstance().RecordState(move_command);
-				//	std::cout << transComp->GetEntityId() << "\n";
-				//}
 
 				ImGui::PopItemWidth();
 
@@ -235,7 +219,7 @@ namespace Editor {
 							firstEnter = false;
 							//Record here 
 							firstTransform = *transComp;
-							std::cout << "Holding \n";
+			
 						}
 
 						if (!enter && !firstEnter)
@@ -244,7 +228,7 @@ namespace Editor {
 							//Record State
 							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
 							UndoRedoManager::GetInstance().RecordState(move_command);
-							std::cout << transComp->GetEntityId() << "\n";
+			
 						}
 
 						ImGui::SameLine(halfWidth * 1.7f);
@@ -261,7 +245,7 @@ namespace Editor {
 							firstEnter = false;
 							//Record here 
 							firstTransform = *transComp;
-							std::cout << "Holding \n";
+	
 						}
 
 						if (!enter && !firstEnter)
@@ -270,7 +254,7 @@ namespace Editor {
 							//Record State
 							auto move_command = std::make_shared<ObjectTransformChangeCommand>(firstTransform, *transComp);
 							UndoRedoManager::GetInstance().RecordState(move_command);
-							std::cout << transComp->GetEntityId() << "\n";
+					
 						}
 						ImGui::PopFont();
 
@@ -329,7 +313,7 @@ namespace Editor {
 							firstEnter = false;
 							//Record here 
 							firstTransform = *transComp;
-							std::cout << "Holding \n";
+		
 						}
 
 						if (!enter && !firstEnter)
@@ -338,7 +322,7 @@ namespace Editor {
 							//Record State
 							auto move_command = std::make_shared<ObjectTransformChangeCommand>(firstTransform, *transComp);
 							UndoRedoManager::GetInstance().RecordState(move_command);
-							std::cout << transComp->GetEntityId() << "\n";
+	
 						}
 
 						ImGui::PopFont();
@@ -533,7 +517,7 @@ namespace Editor {
 							firstEnter = false;
 							//Record here 
 							firstTransform = *transComp;
-							std::cout << "Holding \n";
+
 						}
 
 						if (!enter && !firstEnter)
@@ -542,7 +526,7 @@ namespace Editor {
 							//Record State
 							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
 							UndoRedoManager::GetInstance().RecordState(move_command);
-							std::cout << transComp->GetEntityId() << "\n";
+	
 						}
 						ImGui::PopFont();
 
@@ -633,7 +617,7 @@ namespace Editor {
 							firstEnter = false;
 							//Record here 
 							firstTransform = *transComp;
-							std::cout << "Holding \n";
+	
 						}
 						if (!enter && !firstEnter)
 						{
@@ -641,7 +625,7 @@ namespace Editor {
 							//Record State
 							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
 							UndoRedoManager::GetInstance().RecordState(move_command);
-							std::cout << transComp->GetEntityId() << "\n";
+
 						}
 
 						ImGui::PopFont();
@@ -666,7 +650,7 @@ namespace Editor {
 							firstEnter = false;
 							//Record here 
 							firstTransform = *transComp;
-							std::cout << "Holding \n";
+
 						}
 
 						if (!enter && !firstEnter)
@@ -675,7 +659,7 @@ namespace Editor {
 							//Record State
 							auto move_command = std::make_shared<ObjectTransformCommand>(firstTransform, *transComp);
 							UndoRedoManager::GetInstance().RecordState(move_command);
-							std::cout << transComp->GetEntityId() << "\n";
+		
 						}
 
 						ImGui::Text("Trigger");
@@ -1048,11 +1032,7 @@ namespace Editor {
 								{
 									animation_bool = true;
 									ani = aniDisplay;
-									//dosomething
-									std::cout << aniDisplay << std::endl;
-									std::cout << "Rows" << animState.stateRow << std::endl;
-									std::cout << "Start" << animState.startX << std::endl;
-									std::cout << "End" << animState.endX << std::endl;
+					
 									
 								}
 								if (ImGui::Button("Delete State"))
@@ -1272,8 +1252,7 @@ namespace Editor {
 									soundComp->filepath = filePath = filePath.substr(filePath.rfind("Assets"));
 									filePath = filePath.substr(filePath.find_last_of("\\") + 1);
 									soundComp->soundName = filePath.substr(0, filePath.find_last_of("."));
-									std::cout << soundComp->filepath << "\n";
-									std::cout << soundComp->soundName << "\n";
+	
 
 
 
@@ -1307,8 +1286,7 @@ namespace Editor {
 									soundComp->filepath = soundPath.string().substr(soundPath.string().rfind("Assets"));
 									soundPath = soundPath.string().substr(soundPath.string().find_last_of("\\") + 1);
 									soundComp->soundName = soundPath.string().substr(0, soundPath.string().find_last_of("."));
-									std::cout << soundComp->filepath << "\n";
-									std::cout << soundComp->soundName << "\n";
+						
 								}
 
 							}
@@ -1442,7 +1420,7 @@ namespace Editor {
 						if (ImGui::Button("Stop"))
 						{
 							//int channelID = Engine::SoundManager::GetInstance().ChannelID;
-							std::cout << "stopping \n";
+				
 							Engine::SoundSystem::GetInstance().SoundStopAllSound();
 						}
 

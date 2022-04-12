@@ -258,7 +258,7 @@ namespace Engine {
             }
 
             else if (ent2IsMoveable) {
-                //std::cout << "Resolving 3\n";
+      
                 trans2.position += dir;
                 ParentManager::GetInstance().UpdateLocalPos(trans2.GetEntityId());
             }

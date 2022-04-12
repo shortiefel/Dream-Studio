@@ -67,7 +67,7 @@ namespace Engine
 			FMOD_MODE eMode = FMOD_DEFAULT;
 			eMode |= FMOD_LOOP_OFF;
 			FMOD::Sound* pSound;
-			std::cout << soundCom->filepath << "\n";
+
 			SoundManager::System->createSound(soundCom->filepath.c_str(), eMode, nullptr, &pSound);
 			//throw std::runtime_error("FMOD: Unable to create sound" + _path);
 
@@ -86,7 +86,7 @@ namespace Engine
 
 	int SoundManager::SetPlay(SoundComponent* soundCom)
 	{
-		std::cout << "playing-------------------------- \n";
+
 		int ID;
 		if (soundCom->channelID != -1) {
 			ID = soundCom->channelID;
@@ -132,7 +132,7 @@ namespace Engine
 
 			channelMap[ID] = pChannel;
 		}
-		std::cout << "channel ID Play" << ID << "\n";
+
 		return ID;
 	}
 
@@ -272,7 +272,7 @@ namespace Engine
 		case SoundGrp::SFX:
 			return (float)volSFX;
 		default:
-			std::cout << "Sound master " <<  volMaster << "\n";
+			
 			return (float)volMaster;
 		}
 

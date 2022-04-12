@@ -331,7 +331,7 @@ namespace Engine {
 #endif
 		if (focused) {
 			// The window gained input focus
-			std::cout << "in focus \n";
+			//std::cout << "in focus \n";
 #ifdef _GAME_BUILD
 			glfwRestoreWindow(window);
 #endif
@@ -339,7 +339,7 @@ namespace Engine {
 		}
 		else {
 			// The window lost input focus
-			std::cout << "lose focus \n";
+			//std::cout << "lose focus \n";
 #ifdef _GAME_BUILD
 			glfwIconifyWindow(window);
 #endif

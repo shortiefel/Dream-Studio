@@ -170,7 +170,7 @@ public class TimeSystem : MonoBehaviour
         TimerFast.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
         TimerFastWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
 
-        timer += speedMultiply * Time.fixedDeltaTime;
+        timer += speedMultiply * Time.unscaledDeltaTime;
         //Debug.Log("C Timer " + timer + " delta time " + Time.fixedDeltaTime);
         if (timer > 0.8f)
         {
@@ -190,7 +190,7 @@ public class TimeSystem : MonoBehaviour
         TimerFast.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
         TimerFastWhite.position = new Vector2(tStopPosition.x, (Mathf.Lerp(tStopPosition.y, closeYPosition2, timer)));
 
-        timer += speedMultiply * Time.fixedDeltaTime;
+        timer += speedMultiply * Time.unscaledDeltaTime;
         //Debug.Log("O Timer " + timer + " delta time " + Time.fixedDeltaTime);
 
         if (timer > 0.8f)
@@ -241,7 +241,7 @@ public class TimeSystem : MonoBehaviour
     }
 
 
-    public override void FixedUpdate()
+    public override void Update()
     {
         if (opening)
             OpenTabs();

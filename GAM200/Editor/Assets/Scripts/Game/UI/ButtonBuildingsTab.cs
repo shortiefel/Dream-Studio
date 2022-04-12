@@ -95,7 +95,7 @@ public class ButtonBuildingsTab : MonoBehaviour
         tabXPosition = -22.10f;
         closetabXPosition = -150f;
 
-        buildingTab.position = new Vector2(tabXPosition, displayTabPos.y);
+        buildingTab.position = new Vector2(closetabXPosition, displayTabPos.y);
 
         //Have one more script that is checking if its draw/remove/erp/traffic then when onmouseover and onclick will call the different functions that is stored here to enable or
         //disable the different effect.
@@ -195,9 +195,9 @@ public class ButtonBuildingsTab : MonoBehaviour
             moneyText = go3.GetComponent<Transform>();
 
         //isOn = false;
-        roadTabIsOn = false;
-        buildingsTabIsOn = true;
-
+        //roadTabIsOn = false;
+        //buildingsTabIsOn = true;
+        
     }
 
     public override void OnMouseEnter()
@@ -290,7 +290,7 @@ public class ButtonBuildingsTab : MonoBehaviour
         placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, closeXPosition, timer), placeMallPos.y);
         placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, closeXPosition, timer), placePoliceStationPos.y);
 
-        timer += speedMultiply * Time.fixedDeltaTime;
+        timer += speedMultiply * Time.unscaledDeltaTime;
         if (timer >= 1f)
         {
             timer = 0f;
@@ -300,14 +300,14 @@ public class ButtonBuildingsTab : MonoBehaviour
 
     private void OpenBuildingsTabs()
     {
-        buildingTab.position = new Vector2(Mathf.Lerp(tabXPosition, tabXPosition, timer), displayTabPos.y);
+        buildingTab.position = new Vector2(Mathf.Lerp(buildingTab.position.x, tabXPosition, timer), displayTabPos.y);
         placeHospital.position = new Vector2(Mathf.Lerp(placeHospital.position.x, placeHospitalPos.x, timer), placeHospitalPos.y);
         placeOffice.position = new Vector2(Mathf.Lerp(placeOffice.position.x, placeOfficePos.x, timer), placeOfficePos.y);
         placePark.position = new Vector2(Mathf.Lerp(placePark.position.x, placeParkPos.x, timer), placeParkPos.y);
         placeMall.position = new Vector2(Mathf.Lerp(placeMall.position.x, placeMallPos.x, timer), placeMallPos.y);
         placePoliceStation.position = new Vector2(Mathf.Lerp(placePoliceStation.position.x, placePoliceStationPos.x, timer), placePoliceStationPos.y);
 
-        timer += speedMultiply * Time.fixedDeltaTime;
+        timer += speedMultiply * Time.unscaledDeltaTime;
         if (timer >= 1f)
         {
             timer = 0f;
@@ -318,7 +318,7 @@ public class ButtonBuildingsTab : MonoBehaviour
     
 
 
-    public override void FixedUpdate()
+    public override void Update()
     {
         if (buildingsTabOpen)
         {

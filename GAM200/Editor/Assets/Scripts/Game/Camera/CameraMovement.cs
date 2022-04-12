@@ -18,7 +18,7 @@ public class CameraMovement : MonoBehaviour
 
     bool hasEnter;
     float targetHeight, startHeight;
-    float tempZoomHeight;
+    //float tempZoomHeight;
     float t;
 
     Vector2 targetPosition;
@@ -53,7 +53,7 @@ public class CameraMovement : MonoBehaviour
 
         cam = GetComponent<Camera>();
         startHeight = cam.height;
-        tempZoomHeight = cam.height;
+        //tempZoomHeight = cam.height;
         targetHeight = 4f;
         t = 0f;
         hasEnter = false;
@@ -83,7 +83,21 @@ public class CameraMovement : MonoBehaviour
 
     public override void Update()
     {
-        dt = Time.deltaTime;
+        dt = Time.unscaledDeltaTime;
+
+        if (toZoomExpand)
+        {
+            t += dt;
+            //if (t > 1f) t = 1f;
+            zoomHeight = Mathf.Lerp(cam.height, maxZoom, t);
+            if (zoomHeight >= maxZoom)
+            {
+                zoomHeight = maxZoom;
+                t = 0.0f;
+                toZoomExpand = false;
+            }
+            cam.height = zoomHeight;
+        }
 
         zoomHeight -= speed * dt * Input.GetMouseScroll().y;
         if (zoomHeight < minZoom) zoomHeight = minZoom;
@@ -154,20 +168,7 @@ public class CameraMovement : MonoBehaviour
                 SceneManager.LoadScene("GameOver");
             }
         }
-        if (toZoomExpand)
-        {
-            t += Time.unscaledDeltaTime;
-            if (t > 1f) t = 1f;
-            float ExpandZoomSpeed = cam.height = Mathf.Lerp(tempZoomHeight, maxZoom, t);
-            zoomHeight = ExpandZoomSpeed;
-            if (ExpandZoomSpeed == maxZoom)
-            {
-                tempZoomHeight = cam.height;
-                Debug.Log("Expanded");
-                t = 0.0f;
-                toZoomExpand = false;
-            }
-        }
+       
 
         //else if (drawMode)
         {
@@ -207,32 +208,32 @@ public class CameraMovement : MonoBehaviour
         hasEnter = true;
     }
 
-    public void SetZoom(ZoomType _zoomType)
-    {
-        zt = _zoomType;
-        switch (zt)
-        {
-            case ZoomType.In:
-                //zt = ZoomType.In;
-                //targetHeight = minZoom;
-                zoomHeight = minZoom;
-                break;
-            case ZoomType.Out:
-                //zt = ZoomType.Out;
-                //targetHeight = maxZoom;
-                //zoomHeight = maxZoom;
-                break;
-        }
-        //startHeight = cam.height;
-        //t = 0f;
-        //gameZoom = true;
-    }
+    //public void SetZoom(ZoomType _zoomType)
+    //{
+    //    zt = _zoomType;
+    //    switch (zt)
+    //    {
+    //        case ZoomType.In:
+    //            //zt = ZoomType.In;
+    //            //targetHeight = minZoom;
+    //            zoomHeight = minZoom;
+    //            break;
+    //        case ZoomType.Out:
+    //            //zt = ZoomType.Out;
+    //            //targetHeight = maxZoom;
+    //            //zoomHeight = maxZoom;
+    //            break;
+    //    }
+    //    //startHeight = cam.height;
+    //    //t = 0f;
+    //    //gameZoom = true;
+    //}
 
     public void Expand()
     {
         maxZoom += 6f;
         speed *= 1.5f;
-        minZoom *= 0.5f;
+        //minZoom *= 0.5f;
         toZoomExpand = true;
         //SetZoom(ZoomType.Out);
     }

@@ -350,7 +350,7 @@ public class ButtonRoadTab : MonoBehaviour
 
         //lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, closeXPosition, timer), line1.y);
 
-        timer += speedMultiply * Time.fixedDeltaTime;
+        timer += speedMultiply * Time.unscaledDeltaTime;
         if (timer >= 1f)
         {
             timer = 0f;
@@ -360,7 +360,7 @@ public class ButtonRoadTab : MonoBehaviour
 
     private void OpenRoadTabs()
     {
-        displayRoadtab.position = new Vector2(Mathf.Lerp(tabXPosition, tabXPosition, timer), displayRoadtabPos.y);
+        displayRoadtab.position = new Vector2(Mathf.Lerp(displayRoadtab.position.x, tabXPosition, timer), displayRoadtabPos.y);
         drawRoad.position = new Vector2(Mathf.Lerp(drawRoad.position.x, drawPosition.x, timer), drawPosition.y);
         drawRoadWhite.position = new Vector2(Mathf.Lerp(drawRoadWhite.position.x, drawPosition.x, timer), drawPosition.y);
 
@@ -379,7 +379,7 @@ public class ButtonRoadTab : MonoBehaviour
         //lineDivider1.position = new Vector2(Mathf.Lerp(lineDivider1.position.x, line1.x, timer), line1.y);
 
 
-        timer += speedMultiply * Time.fixedDeltaTime;
+        timer += speedMultiply * Time.unscaledDeltaTime;
         if (timer >= 1f)
         {
             timer = 0f;
@@ -529,7 +529,7 @@ public class ButtonRoadTab : MonoBehaviour
     //            if (Input.GetKeyDown(KeyCode.T3)) CallFunction(ButtonType.ERP);
     //    }
     //}
-    public override void FixedUpdate()
+    public override void Update()
     {
 
         //if (opening)

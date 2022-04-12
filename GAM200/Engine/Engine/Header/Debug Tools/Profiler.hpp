@@ -55,9 +55,12 @@ namespace Engine {
 		SINGLETON_SETUP(Profiler);
 	};
 }
-
+#ifdef _GAME_BUILD
+#define PROFILER_START(name)
+#else
 #define PROFILER_START(name) Engine::Timer timer(name, std::move([&](Engine::ProfilerResult&& result) {\
 Engine::Profiler::GetInstance().profilerResult.emplace_back(std::move(result)); }));
+#endif
 //#define PROFILER_START(name) Engine::Timer timer(name, std::move([&](Engine::ProfilerResult&& result) {\
 // }));
 

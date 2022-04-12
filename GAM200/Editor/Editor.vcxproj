@@ -141,7 +141,7 @@
     <LibraryPath>$(SolutionDir)/External Resources/lib/$(Platform);$(SolutionDir)/bin/$(Configuration)/$(Platform)/Engine;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin-int\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <TargetName>Dream_Express</TargetName>
+    <TargetName>DreamLand</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

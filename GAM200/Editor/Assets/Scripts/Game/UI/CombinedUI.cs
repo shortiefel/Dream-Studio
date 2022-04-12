@@ -127,6 +127,9 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(maintenanceIcon);
 
                     Disable<Transform>(listOfCostText);
+
+                    Disable<Transform>(tooltipTrans);
+
                     listOfCostDestUI.alpha = 0f;
 
                     allowKeyButton = false;

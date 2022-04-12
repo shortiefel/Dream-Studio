@@ -141,7 +141,7 @@ public class Grid
         int rCt = roads.Count;
         if (rCt < 2)
         {
-            Debug.Log("SetRoad require minimum of 2 road points");
+            //Debug.Log("SetRoad require minimum of 2 road points");
             return 0;
         }
         Vector2Int[] roadsArr = new Vector2Int[rCt];

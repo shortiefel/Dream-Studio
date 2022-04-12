@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour
     float dt;
 
     //ButtonRoad buttonRoad;
-    bool testTobeDeletedBool = false;
+    //bool testTobeDeletedBool = false;
     public override void Start()
     {
         placementManager = GameObject.Find("PlacementManager").GetComponent<PlacementManager>();
@@ -59,11 +59,11 @@ public class SpawnManager : MonoBehaviour
         gameState = GameObject.Find("GameManager").GetComponent<GameState>();
 
         spawnTimer = 0f;
-        spawnTimerMax = spawnTimerRelax = 15f;
-        spawnTimerPeak = 7f;
+        spawnTimerMax = spawnTimerRelax = 25f;
+        spawnTimerPeak = 15f;
 
         stateChangeTimer = 0f;
-        stateChangeMax = 20f;
+        stateChangeMax = 30f;
 
         spawnState = SpawnState.BuildUp;
 
@@ -186,13 +186,13 @@ public class SpawnManager : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            testTobeDeletedBool = !testTobeDeletedBool;
-            if (testTobeDeletedBool) Debug.Log("Spawn Disable");
-            else if (!testTobeDeletedBool) Debug.Log("Spawn Enable");
-        }
-        if (!testTobeDeletedBool)
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    testTobeDeletedBool = !testTobeDeletedBool;
+        //    if (testTobeDeletedBool) Debug.Log("Spawn Disable");
+        //    else if (!testTobeDeletedBool) Debug.Log("Spawn Enable");
+        //}
+        //if (!testTobeDeletedBool)
            spawnTimer += dt;
 
         if (spawnTimer > spawnTimerMax)

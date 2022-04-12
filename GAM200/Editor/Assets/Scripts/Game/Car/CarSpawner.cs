@@ -210,14 +210,14 @@ public class CarSpawner : MonoBehaviour
             if (carSpawnCounter != 0 && spawnTimer >= spawnTimerMax && carCounter == 0)
             //if (spawnTimer >= spawnTimerMax && carCounter == 0)
             {
-                //Debug.Log("Attempt spawning ");
+
                 spawnTimer = 0f;
 
                 //if (backlog.Count != 0)
                 if (backlogType != BuildingType.None)
                 {
                     //BuildingType _bt = backlog.Peek();
-                    //Debug.Log("Trying to s")
+
                     //if (aiDirector.SpawnRetryWithType(selfPos, _bt, entityId))
                     if (aiDirector.SpawnRetryWithType(selfPos, backlogType, entityId))
                     {

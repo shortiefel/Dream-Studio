@@ -108,7 +108,7 @@ public class AIDirector : MonoBehaviour
 
         //if (possibleDest[(int)bt].pos != startPos)
         //{
-        //    //Debug.Log("Using this");
+
         //    //int roadNum;
         //    //List<Vector2> list = placementManager.GetPathBetween(startPos, possibleDest[(int)bt].pos, out roadNum);
         //    List<Vector2> list = placementManager.GetPathBetween(out startPos, possibleDest[(int)bt].pos, RouteType.HouseToDest);
@@ -122,7 +122,6 @@ public class AIDirector : MonoBehaviour
         //        return true;
         //        //Skip the major check
         //    }
-        //    //Debug.Log("Unsuccessful " + list.Count + "  " + bt  + "   "+ possibleDest[(int)bt].pos);
         //}
 
         List<Vector2> path = new List<Vector2>();
@@ -182,7 +181,6 @@ public class AIDirector : MonoBehaviour
 
         if (count != 0)
         {
-            Debug.Log(bt + " with " + path.Count);
             var car = Instantiate(SelectACarPrefab(bt), new Vector3(startPos.x, startPos.y, 0), 2);
             car.GetComponent<CarAI>().SetPath(path, leftList, rightList, newId, startId);
             return true;

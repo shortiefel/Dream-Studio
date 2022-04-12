@@ -444,7 +444,7 @@ public class RoadManager : MonoBehaviour
             result |= trafficLightManager.RequestRemovingTrafficLight(position);
         if (erpManager != null)
             result |= erpManager.RequestRemovingERP(position);
-        Debug.Log(result + " result");
+        //Debug.Log(result + " result");
         if (result == true)
             return;
 

@@ -1,10 +1,10 @@
 ﻿using System;
 
-public enum ZoomType
-{
-    In = 0,
-    Out
-}
+//public enum ZoomType
+//{
+//    In = 0,
+//    Out
+//}
 public class CameraMovement : MonoBehaviour
 {
 
@@ -30,7 +30,7 @@ public class CameraMovement : MonoBehaviour
     bool gameZoom;
     public float minZoom;
     public float maxZoom;
-    ZoomType zt;
+    //ZoomType zt;
 
     private float zoomHeight;
 
@@ -62,7 +62,7 @@ public class CameraMovement : MonoBehaviour
         //mouseMultiply = 0.15f;
 
         gameZoom = false;
-        zt = ZoomType.Out;
+        //zt = ZoomType.Out;
 
         zoomHeight = cam.height;
 
@@ -160,7 +160,7 @@ public class CameraMovement : MonoBehaviour
             if (t > 1f) t = 1f;
             float h = cam.height = Mathf.Lerp(startHeight, targetHeight, t);
             transform.position = new Vector2(Mathf.Lerp(startPosition.x, targetPosition.x, t), Mathf.Lerp(startPosition.y, targetPosition.y, t));
-            //Debug.Log(h);
+
             if (h < targetHeight + 0.2)
             {
                 toZoomLose = false;

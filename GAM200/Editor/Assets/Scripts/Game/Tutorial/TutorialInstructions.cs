@@ -724,7 +724,7 @@
 
                 if (CheckTimer())
                 {
-                    Disable<Transform>(go19.GetComponent<Transform>());
+                    Disable<Transform>(go20.GetComponent<Transform>());
                     instructions21Script.animation.Play("Open");
                     Enable<Transform>(go21.GetComponent<Transform>());
                     stages++;

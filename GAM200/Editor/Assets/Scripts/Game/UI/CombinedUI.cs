@@ -5,6 +5,7 @@ public enum UIType
     Time,
     Store,
     Road, //Bottom left button that build road and stuff
+    Tutorial,
     None
 }
 public class CombinedUI : MonoBehaviour
@@ -134,6 +135,40 @@ public class CombinedUI : MonoBehaviour
 
                     allowKeyButton = false;
                     break;             
+                }
+            case UIType.Tutorial:
+                {
+                    SceneManager.drawNonUI = false;
+
+                    if (pauseMenu != null)
+                        pauseMenu.SwitchTabPause(false, false);
+                    //timeSystem.SwitchTabTimer(false, false);
+                    //timeSystem.FullClose();
+                    //buttonStore.SwitchTabStore(false, false);
+                    roadTab.SwitchTabRoad(false, false);
+                    buildingsTab.SwitchTabBuildings(false, false);
+
+                    Disable<Transform>(pauseIcon);
+                    //Disable<Transform>(timerButton);
+                    Disable<Transform>(roadTabTransform);
+                    Disable<Transform>(buildingsTabTransform);
+                    Disable<Transform>(displayTabTransform);
+                    //Disable<Transform>(dayClock);
+                    //Disable<Transform>(dayTimer);
+                    //Disable<Transform>(ampm);
+                    //Disable<Transform>(maintenancefee);
+                    //Disable<Transform>(maintenanceIcon);
+
+                    Disable<Transform>(roadTab.removeRoad);
+                    Disable<Transform>(roadTab.removeRoadWhite);
+                    Disable<Transform>(roadTab.drawRemoveCar);
+                    Disable<Transform>(roadTab.drawRemoveCarWhite);
+
+                    Disable<Transform>(listOfCostText);
+                    listOfCostDestUI.alpha = 0f;
+
+                    allowKeyButton = false;
+                    break;
                 }
             //case UIType.Time:
             //    {

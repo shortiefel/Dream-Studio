@@ -69,7 +69,8 @@
     GameObject houseGO;
     CarSpawner houseSpawner = null;
     StructureManager structureManager;
-
+    CombinedUI combinedUI;
+    bool stopClose = true;
     public override void Start()
     {
         clickCheck = false;
@@ -142,6 +143,9 @@
 
         MoneySystem.money = 9999; 
         MoneySystem.textComp.text = MoneySystem.money.ToString();
+
+        combinedUI = GameObject.Find("CombinedUI").GetComponent<CombinedUI>();
+        //combinedUI.CloseAllUIExcept(UIType.None);
     }
 
     public bool CheckTimer()
@@ -163,6 +167,13 @@
 
         if (stages == 0)
         {
+            if (stopClose)
+            {
+                combinedUI.CloseAllUIExcept(UIType.Tutorial);
+
+                Disable<Transform>(GameObject.Find("TimerIcon").GetComponent<Transform>());
+                stopClose = false;
+            }
             if (instructions1Script.state)
             {
                 if (stateCheck)
@@ -407,6 +418,8 @@
                     tutorial.CheckPosition();
                     stateCheck = true;
                     instructions10Script.state = false;
+
+                    combinedUI.EnableAllMasterButton();
                 }
             }
 

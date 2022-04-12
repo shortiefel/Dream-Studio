@@ -396,9 +396,9 @@ public class MoneySystem : MonoBehaviour
         tlNum = trafficLightManager.trafficlightTaxCount();
         erpNum = erpManager.erpTaxCount();
 
-        roadTax = (roadNum * (15 + (count * 10)));
-        trafficTax = (tlNum * (40 + (count * 10)));
-        erpTax = (erpNum * (75 + (count * 10)));
+        roadTax = (roadNum * (5 + (count * 20)));
+        trafficTax = (tlNum * (30 + (count * 20)));
+        erpTax = (erpNum * (65 + (count * 20)));
 
 
         totalTax = roadTax + erpTax + trafficTax;

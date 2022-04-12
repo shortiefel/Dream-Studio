@@ -58,10 +58,15 @@ public class TrafficLight : MonoBehaviour
         //directionState 
         //transform.angle = 90;
 
-        if (directionState == DirectionState.Left || directionState == DirectionState.Right)
+        if (directionState == DirectionState.Left)
             transform.angle = 0;
-        else
+        else if (directionState == DirectionState.Right)
+            transform.angle = 180;
+
+        else if (directionState == DirectionState.Down)
             transform.angle = 90;
+        else
+            transform.angle = 270;
 
         GameObject go = GameObject.Find("TrafficManager");
         if (go != null)
@@ -145,10 +150,16 @@ public class TrafficLight : MonoBehaviour
             //else
             //    transform.angle = 90;
 
-            if (nextState == DirectionState.Left || nextState == DirectionState.Right)
+            if (nextState == DirectionState.Left)
                 transform.angle = 0;
-            else
+            else if (nextState == DirectionState.Right)
+                transform.angle = 180;
+
+            else if (nextState == DirectionState.Down)
                 transform.angle = 90;
+            else
+                transform.angle = 270;
+
         }
 
         if (Input.GetKey(KeyCode.B))

@@ -169,6 +169,9 @@
         {
             if (stopClose)
             {
+                roadTab.SwitchTabRoad(false, false);
+                buildingsTab.SwitchTabBuildings(false, true);
+
                 combinedUI.CloseAllUIExcept(UIType.Tutorial);
 
                 Disable<Transform>(GameObject.Find("TimerIcon").GetComponent<Transform>());

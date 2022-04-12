@@ -261,6 +261,7 @@ public class ButtonRoadTab : MonoBehaviour
             //        choosenButton = ButtonType.None;
             //        break;
             //}
+            Enable<Transform>(displayRoadtab);
 
             roadTabOpen = true;
             //choosenButton = ButtonType.Latest;

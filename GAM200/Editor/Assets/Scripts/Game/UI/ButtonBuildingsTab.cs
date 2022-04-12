@@ -241,6 +241,13 @@ public class ButtonBuildingsTab : MonoBehaviour
             buildingsTabUI.ChangeTexture("Game/UI/Buildings_Click");
             //EnableAllNormalExcept();
 
+            Enable<Transform>(buildingTab);
+            Enable<Transform>(placeHospital);
+            Enable<Transform>(placeOffice);
+            Enable<Transform>(placePark);
+            Enable<Transform>(placeMall);
+            Enable<Transform>(placePoliceStation);
+
             roadTabIsOn = false;
             buildingsTabIsOn = true;
         }

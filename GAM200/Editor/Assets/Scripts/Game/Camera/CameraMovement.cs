@@ -34,7 +34,8 @@ public class CameraMovement : MonoBehaviour
 
     private float zoomHeight;
 
-    public float speed;
+    public float minScrollSpeed;
+    public float scrollSpeed;
 
     private Vector2 moveUpSpeed;
     private Vector2 moveRightSpeed;
@@ -66,7 +67,7 @@ public class CameraMovement : MonoBehaviour
 
         zoomHeight = cam.height;
 
-        speed = 60f;
+        minScrollSpeed = scrollSpeed = 60f;
 
         minZoom = 8f;
         maxZoom = 10f;
@@ -99,9 +100,7 @@ public class CameraMovement : MonoBehaviour
             cam.height = zoomHeight;
         }
 
-        zoomHeight -= speed * dt * Input.GetMouseScroll().y;
-        if (zoomHeight < minZoom) zoomHeight = minZoom;
-        else if (zoomHeight > maxZoom) zoomHeight = maxZoom;
+       
         cam.height = zoomHeight;
 
         if (Input.GetKey(KeyCode.W))
@@ -128,6 +127,10 @@ public class CameraMovement : MonoBehaviour
             cameraPosition.x += camSpeed;
             positionChange = true;
         }
+
+        zoomHeight -= Input.GetMouseScroll().y * (scrollSpeed * (zoomHeight / maxZoom)) * dt;
+        if (zoomHeight < minZoom) zoomHeight = minZoom;
+        else if (zoomHeight > maxZoom) zoomHeight = maxZoom;
 
         if (positionChange)
         {
@@ -232,7 +235,7 @@ public class CameraMovement : MonoBehaviour
     public void Expand()
     {
         maxZoom += 6f;
-        speed *= 1.5f;
+        scrollSpeed *= 1.3f;
         //minZoom *= 0.5f;
         toZoomExpand = true;
         //SetZoom(ZoomType.Out);

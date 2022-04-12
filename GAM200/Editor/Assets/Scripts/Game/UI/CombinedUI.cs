@@ -217,7 +217,7 @@ public class CombinedUI : MonoBehaviour
                     Disable<Transform>(listOfCostText);
                     listOfCostDestUI.alpha = 0f;
 
-                    allowKeyButton = true;
+                    allowKeyButton = false;
                     break;
                 }
         }

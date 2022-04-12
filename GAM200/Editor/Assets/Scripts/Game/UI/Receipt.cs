@@ -103,5 +103,6 @@ public class Receipt : MonoBehaviour
         combinedUI.CloseAllUIExcept(UIType.None);
         gameState.SetAllowPause(false);
 
+
     }
 }
